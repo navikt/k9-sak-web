@@ -6,7 +6,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { screen } from '@testing-library/react';
 import { expect } from 'chai';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { CheckPersonStatusFormImpl as UnwrappedForm, buildInitialValues } from './CheckPersonStatusForm';
@@ -27,25 +26,21 @@ describe('<CheckPersonStatusForm>', () => {
     ],
   };
 
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
   it('skal vise hjelpetekst med original personstatus og begrunnelse/submit', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <UnwrappedForm
-          {...reduxFormPropsMock}
-          intl={intlMock}
-          readOnly={false}
-          readOnlySubmitButton
-          fortsettBehandling="false"
-          originalPersonstatusName="Ukjent"
-          personstatusName=""
-          personStatuser={[]}
-          gjeldeneFom="2018-10-10"
-          behandlingId={1}
-          behandlingVersjon={1}
-        />
-      </MockForm>,
+      <UnwrappedForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        readOnly={false}
+        readOnlySubmitButton
+        fortsettBehandling="false"
+        originalPersonstatusName="Ukjent"
+        personstatusName=""
+        personStatuser={[]}
+        gjeldeneFom="2018-10-10"
+        behandlingId={1}
+        behandlingVersjon={1}
+      />,
       { messages },
     );
 
@@ -59,21 +54,19 @@ describe('<CheckPersonStatusForm>', () => {
 
   it('skal vise radioknapper for å velge om behandlingen skal fortsette eller henlegges', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <UnwrappedForm
-          {...reduxFormPropsMock}
-          intl={intlMock}
-          readOnly={false}
-          readOnlySubmitButton
-          fortsettBehandling="false"
-          originalPersonstatusName="Ukjent"
-          personstatusName=""
-          personStatuser={[]}
-          gjeldeneFom="2018-10-10"
-          behandlingId={1}
-          behandlingVersjon={1}
-        />
-      </MockForm>,
+      <UnwrappedForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        readOnly={false}
+        readOnlySubmitButton
+        fortsettBehandling="false"
+        originalPersonstatusName="Ukjent"
+        personstatusName=""
+        personStatuser={[]}
+        gjeldeneFom="2018-10-10"
+        behandlingId={1}
+        behandlingVersjon={1}
+      />,
       { messages },
     );
 
@@ -93,21 +86,19 @@ describe('<CheckPersonStatusForm>', () => {
       },
     ];
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <UnwrappedForm
-          {...reduxFormPropsMock}
-          intl={intlMock}
-          readOnly={false}
-          readOnlySubmitButton
-          fortsettBehandling
-          originalPersonstatusName="Ukjent"
-          personstatusName=""
-          personStatuser={personstatuser}
-          gjeldeneFom="2018-10-10"
-          behandlingId={1}
-          behandlingVersjon={1}
-        />
-      </MockForm>,
+      <UnwrappedForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        readOnly={false}
+        readOnlySubmitButton
+        fortsettBehandling
+        originalPersonstatusName="Ukjent"
+        personstatusName=""
+        personStatuser={personstatuser}
+        gjeldeneFom="2018-10-10"
+        behandlingId={1}
+        behandlingVersjon={1}
+      />,
       { messages },
     );
 
@@ -121,22 +112,20 @@ describe('<CheckPersonStatusForm>', () => {
       begrunnelse: 'Dette er en begrunnelse',
     };
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <UnwrappedForm
-          {...reduxFormPropsMock}
-          intl={intlMock}
-          readOnly
-          readOnlySubmitButton
-          fortsettBehandling="false"
-          originalPersonstatusName="Ukjent"
-          personstatusName="Bosatt"
-          initialValues={initialValues}
-          personStatuser={[{}]}
-          gjeldeneFom="2018-10-10"
-          behandlingId={1}
-          behandlingVersjon={1}
-        />
-      </MockForm>,
+      <UnwrappedForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        readOnly
+        readOnlySubmitButton
+        fortsettBehandling="false"
+        originalPersonstatusName="Ukjent"
+        personstatusName="Bosatt"
+        initialValues={initialValues}
+        personStatuser={[{}]}
+        gjeldeneFom="2018-10-10"
+        behandlingId={1}
+        behandlingVersjon={1}
+      />,
       { messages },
     );
 

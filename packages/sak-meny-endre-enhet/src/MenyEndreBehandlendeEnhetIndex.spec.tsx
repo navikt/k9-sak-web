@@ -2,39 +2,34 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import sinon from 'sinon';
 import messages from '../i18n/nb_NO.json';
 import MenyEndreBehandlendeEnhetIndex from './MenyEndreBehandlendeEnhetIndex';
 
 describe('<MenyEndreBehandlendeEnhetIndex>', () => {
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
   it('skal vise modal og så lagre ny enhet', async () => {
     const nyBehandlendeEnhetCallback = sinon.spy();
     const lukkModalCallback = sinon.spy();
 
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <MenyEndreBehandlendeEnhetIndex
-          behandlingId={3}
-          behandlingVersjon={1}
-          behandlendeEnhetId="NAVV"
-          behandlendeEnhetNavn="NAV Viken"
-          nyBehandlendeEnhet={nyBehandlendeEnhetCallback}
-          behandlendeEnheter={[
-            {
-              enhetId: 'NAVV',
-              enhetNavn: 'NAV Viken',
-            },
-            {
-              enhetId: 'TEST',
-              enhetNavn: 'TEST ENHET',
-            },
-          ]}
-          lukkModal={lukkModalCallback}
-        />
-      </MockForm>,
+      <MenyEndreBehandlendeEnhetIndex
+        behandlingId={3}
+        behandlingVersjon={1}
+        behandlendeEnhetId="NAVV"
+        behandlendeEnhetNavn="NAV Viken"
+        nyBehandlendeEnhet={nyBehandlendeEnhetCallback}
+        behandlendeEnheter={[
+          {
+            enhetId: 'NAVV',
+            enhetNavn: 'NAV Viken',
+          },
+          {
+            enhetId: 'TEST',
+            enhetNavn: 'TEST ENHET',
+          },
+        ]}
+        lukkModal={lukkModalCallback}
+      />,
       { messages },
     );
 

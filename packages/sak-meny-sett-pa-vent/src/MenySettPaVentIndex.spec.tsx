@@ -44,16 +44,14 @@ describe('<MenySettPaVentIndex>', () => {
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
         <MemoryRouter>
-          <MockForm>
-            <MenySettPaVentIndex
-              behandlingId={3}
-              behandlingVersjon={1}
-              settBehandlingPaVent={settBehandlingPaVent}
-              ventearsaker={ventearsaker}
-              lukkModal={lukkModalCallback}
-              erTilbakekreving={false}
-            />
-          </MockForm>
+          <MenySettPaVentIndex
+            behandlingId={3}
+            behandlingVersjon={1}
+            settBehandlingPaVent={settBehandlingPaVent}
+            ventearsaker={ventearsaker}
+            lukkModal={lukkModalCallback}
+            erTilbakekreving={false}
+          />
         </MemoryRouter>
       </Provider>,
     );

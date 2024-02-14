@@ -4,7 +4,6 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import OpptjeningVilkarForm from './OpptjeningVilkarForm';
@@ -22,38 +21,34 @@ const periode = {
 };
 
 describe('<OpptjeningVilkarForm>', () => {
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
   it('skal vise OpptjeningVilkarAksjonspunktPanel når en har aksjonspunkt', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <OpptjeningVilkarForm
-          readOnlySubmitButton
-          readOnly
-          isAksjonspunktOpen
-          submitCallback={sinon.spy()}
-          behandlingId={1}
-          behandlingVersjon={2}
-          aksjonspunkter={
-            [
-              {
-                definisjon: {
-                  kode: aksjonspunktCodes.SVANGERSKAPSVILKARET,
-                },
-                status: {
-                  kode: aksjonspunktStatus.OPPRETTET,
-                },
-                begrunnelse: undefined,
+      <OpptjeningVilkarForm
+        readOnlySubmitButton
+        readOnly
+        isAksjonspunktOpen
+        submitCallback={sinon.spy()}
+        behandlingId={1}
+        behandlingVersjon={2}
+        aksjonspunkter={
+          [
+            {
+              definisjon: {
+                kode: aksjonspunktCodes.SVANGERSKAPSVILKARET,
               },
-            ] as Aksjonspunkt[]
-          }
-          status="test"
-          lovReferanse="Dette er en lovreferanse"
-          periodeIndex={0}
-          vilkårPerioder={[periode]}
-          opptjeninger={[]}
-        />
-      </MockForm>,
+              status: {
+                kode: aksjonspunktStatus.OPPRETTET,
+              },
+              begrunnelse: undefined,
+            },
+          ] as Aksjonspunkt[]
+        }
+        status="test"
+        lovReferanse="Dette er en lovreferanse"
+        periodeIndex={0}
+        vilkårPerioder={[periode]}
+        opptjeninger={[]}
+      />,
       { messages },
     );
 

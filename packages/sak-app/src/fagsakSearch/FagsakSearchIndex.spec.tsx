@@ -51,11 +51,9 @@ describe('<FagsakSearchIndex>', () => {
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
-        <MockForm>
-          <MemoryRouter>
-            <FagsakSearchIndex />
-          </MemoryRouter>
-        </MockForm>
+        <MemoryRouter>
+          <FagsakSearchIndex />
+        </MemoryRouter>
       </Provider>,
     );
 
@@ -78,13 +76,11 @@ describe('<FagsakSearchIndex>', () => {
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
-        <MockForm>
-          <MemoryRouter>
-            <RestApiErrorProvider>
-              <FagsakSearchIndex />
-            </RestApiErrorProvider>
-          </MemoryRouter>
-        </MockForm>
+        <MemoryRouter>
+          <RestApiErrorProvider>
+            <FagsakSearchIndex />
+          </RestApiErrorProvider>
+        </MemoryRouter>
       </Provider>,
     );
 

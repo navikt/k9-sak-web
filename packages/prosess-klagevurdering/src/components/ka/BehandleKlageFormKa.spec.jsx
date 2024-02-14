@@ -5,7 +5,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { screen } from '@testing-library/react';
 import { expect } from 'chai';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import sinon from 'sinon';
 import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
@@ -21,7 +20,6 @@ describe('<BehandleKlageFormKaImpl>', () => {
     klageVurdering: klageVurdering.STADFESTE_YTELSESVEDTAK,
   };
 
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
   const alleKodeverk = {
     KlageMedholdÅrsak: [
       {
@@ -49,21 +47,19 @@ describe('<BehandleKlageFormKaImpl>', () => {
 
   it('skal vise lenke til forhåndsvis brev når fritekst er fylt, og klagevurdering valgt', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <BehandleKlageFormKaImpl
-          readOnly={false}
-          readOnlySubmitButton
-          aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
-          formValues={formValues1}
-          previewCallback={sinon.spy()}
-          saveKlage={sinon.spy()}
-          intl={intlMock}
-          formProps={{}}
-          sprakkode={sprakkode}
-          alleKodeverk={alleKodeverk}
-          {...reduxFormPropsMock}
-        />
-      </MockForm>,
+      <BehandleKlageFormKaImpl
+        readOnly={false}
+        readOnlySubmitButton
+        aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
+        formValues={formValues1}
+        previewCallback={sinon.spy()}
+        saveKlage={sinon.spy()}
+        intl={intlMock}
+        formProps={{}}
+        sprakkode={sprakkode}
+        alleKodeverk={alleKodeverk}
+        {...reduxFormPropsMock}
+      />,
       { messages },
     );
     expect(screen.getByRole('link', { name: 'Lagre og forhåndsvis brev' })).toBeInTheDocument();
@@ -74,21 +70,19 @@ describe('<BehandleKlageFormKaImpl>', () => {
 
   it('skal ikke vise lenke til forhåndsvis brev når fritekst fylt, og klagevurdering ikke valgt', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <BehandleKlageFormKaImpl
-          readOnly={false}
-          readOnlySubmitButton
-          formValues={formValues2}
-          aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
-          previewCallback={sinon.spy()}
-          saveKlage={sinon.spy()}
-          intl={intlMock}
-          formProps={{}}
-          sprakkode={sprakkode}
-          alleKodeverk={alleKodeverk}
-          {...reduxFormPropsMock}
-        />
-      </MockForm>,
+      <BehandleKlageFormKaImpl
+        readOnly={false}
+        readOnlySubmitButton
+        formValues={formValues2}
+        aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
+        previewCallback={sinon.spy()}
+        saveKlage={sinon.spy()}
+        intl={intlMock}
+        formProps={{}}
+        sprakkode={sprakkode}
+        alleKodeverk={alleKodeverk}
+        {...reduxFormPropsMock}
+      />,
       { messages },
     );
     expect(screen.queryByRole('link', { name: 'Lagre og forhåndsvis brev' })).not.toBeInTheDocument();
@@ -99,21 +93,19 @@ describe('<BehandleKlageFormKaImpl>', () => {
 
   it('skal ikke vise lenke til forhåndsvis brev når fritekst ikke fylt, og klagevurdering valgt', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <BehandleKlageFormKaImpl
-          readOnly={false}
-          readOnlySubmitButton
-          formValues={formValues3}
-          aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
-          previewCallback={sinon.spy()}
-          saveKlage={sinon.spy()}
-          intl={intlMock}
-          formProps={{}}
-          sprakkode={sprakkode}
-          alleKodeverk={alleKodeverk}
-          {...reduxFormPropsMock}
-        />
-      </MockForm>,
+      <BehandleKlageFormKaImpl
+        readOnly={false}
+        readOnlySubmitButton
+        formValues={formValues3}
+        aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
+        previewCallback={sinon.spy()}
+        saveKlage={sinon.spy()}
+        intl={intlMock}
+        formProps={{}}
+        sprakkode={sprakkode}
+        alleKodeverk={alleKodeverk}
+        {...reduxFormPropsMock}
+      />,
       { messages },
     );
     expect(screen.queryByRole('link', { name: 'Lagre og forhåndsvis brev' })).not.toBeInTheDocument();

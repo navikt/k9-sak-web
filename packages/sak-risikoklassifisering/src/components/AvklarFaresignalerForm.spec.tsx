@@ -3,7 +3,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { Risikoklassifisering } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import messages from '../../i18n/nb_NO.json';
 import faresignalVurdering from '../kodeverk/faresignalVurdering';
 import {
@@ -41,18 +40,15 @@ const mockRisikoklassifisering = kode => ({
 });
 
 describe('<AvklarFaresignalerForm>', () => {
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
   it('skal teste at komponent mountes korrekt med inputfelter', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <AvklarFaresignalerForm
-          readOnly={false}
-          aksjonspunkt={mockAksjonspunkt('UTFO', undefined)}
-          submitCallback={() => undefined}
-          risikoklassifisering={{} as Risikoklassifisering}
-          {...reduxFormPropsMock}
-        />
-      </MockForm>,
+      <AvklarFaresignalerForm
+        readOnly={false}
+        aksjonspunkt={mockAksjonspunkt('UTFO', undefined)}
+        submitCallback={() => undefined}
+        risikoklassifisering={{} as Risikoklassifisering}
+        {...reduxFormPropsMock}
+      />,
       { messages },
     );
     expect(screen.getByRole('radio', { name: 'Faresignalene hadde innvirkning på behandlingen' })).toBeInTheDocument();
@@ -64,15 +60,13 @@ describe('<AvklarFaresignalerForm>', () => {
 
   it('skal teste at komponent gir inputfelter korrekte verdier', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <AvklarFaresignalerForm
-          readOnly
-          aksjonspunkt={mockAksjonspunkt('UTFO', undefined)}
-          submitCallback={() => undefined}
-          risikoklassifisering={{} as Risikoklassifisering}
-          {...reduxFormPropsMock}
-        />
-      </MockForm>,
+      <AvklarFaresignalerForm
+        readOnly
+        aksjonspunkt={mockAksjonspunkt('UTFO', undefined)}
+        submitCallback={() => undefined}
+        risikoklassifisering={{} as Risikoklassifisering}
+        {...reduxFormPropsMock}
+      />,
       { messages },
     );
     expect(screen.queryByRole('textbox', { name: 'Vurdering' })).not.toBeInTheDocument();

@@ -3,7 +3,6 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import messages from '../../i18n/nb_NO.json';
 import Aktsomhet from '../kodeverk/aktsomhet';
 import VilkarResultat from '../kodeverk/vilkarResultat';
@@ -55,8 +54,6 @@ const alleKodeverk = {
 };
 
 describe('<TilbakekrevingForm>', () => {
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
   it('skal vise tidslinje når en har perioder', () => {
     const perioder = [
       {
@@ -75,28 +72,26 @@ describe('<TilbakekrevingForm>', () => {
     ] as DataForPeriode[];
 
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <TilbakekrevingFormImpl
-          {...reduxFormPropsMock}
-          vilkarsVurdertePerioder={perioder}
-          dataForDetailForm={perioderDetail}
-          behandlingFormPrefix="behandling_V1"
-          navBrukerKjonn={navBrukerKjonn.KVINNE}
-          readOnly={false}
-          readOnlySubmitButton={false}
-          reduxFormChange={() => undefined}
-          reduxFormInitialize={() => undefined}
-          antallPerioderMedAksjonspunkt={2}
-          handleSubmit={() => undefined}
-          merknaderFraBeslutter={{
-            notAccepted: false,
-          }}
-          behandlingId={1}
-          behandlingVersjon={2}
-          alleKodeverk={alleKodeverk}
-          beregnBelop={() => undefined}
-        />
-      </MockForm>,
+      <TilbakekrevingFormImpl
+        {...reduxFormPropsMock}
+        vilkarsVurdertePerioder={perioder}
+        dataForDetailForm={perioderDetail}
+        behandlingFormPrefix="behandling_V1"
+        navBrukerKjonn={navBrukerKjonn.KVINNE}
+        readOnly={false}
+        readOnlySubmitButton={false}
+        reduxFormChange={() => undefined}
+        reduxFormInitialize={() => undefined}
+        antallPerioderMedAksjonspunkt={2}
+        handleSubmit={() => undefined}
+        merknaderFraBeslutter={{
+          notAccepted: false,
+        }}
+        behandlingId={1}
+        behandlingVersjon={2}
+        alleKodeverk={alleKodeverk}
+        beregnBelop={() => undefined}
+      />,
       { messages },
     );
 
@@ -108,28 +103,26 @@ describe('<TilbakekrevingForm>', () => {
   it('skal ikke vise tidslinje når en har perioder', () => {
     const perioder = undefined;
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <TilbakekrevingFormImpl
-          {...reduxFormPropsMock}
-          vilkarsVurdertePerioder={perioder}
-          dataForDetailForm={perioder}
-          behandlingFormPrefix="behandling_V1"
-          navBrukerKjonn={navBrukerKjonn.KVINNE}
-          readOnly={false}
-          readOnlySubmitButton={false}
-          reduxFormChange={() => undefined}
-          reduxFormInitialize={() => undefined}
-          antallPerioderMedAksjonspunkt={2}
-          handleSubmit={() => undefined}
-          merknaderFraBeslutter={{
-            notAccepted: false,
-          }}
-          behandlingId={1}
-          behandlingVersjon={2}
-          alleKodeverk={alleKodeverk}
-          beregnBelop={() => undefined}
-        />
-      </MockForm>,
+      <TilbakekrevingFormImpl
+        {...reduxFormPropsMock}
+        vilkarsVurdertePerioder={perioder}
+        dataForDetailForm={perioder}
+        behandlingFormPrefix="behandling_V1"
+        navBrukerKjonn={navBrukerKjonn.KVINNE}
+        readOnly={false}
+        readOnlySubmitButton={false}
+        reduxFormChange={() => undefined}
+        reduxFormInitialize={() => undefined}
+        antallPerioderMedAksjonspunkt={2}
+        handleSubmit={() => undefined}
+        merknaderFraBeslutter={{
+          notAccepted: false,
+        }}
+        behandlingId={1}
+        behandlingVersjon={2}
+        alleKodeverk={alleKodeverk}
+        beregnBelop={() => undefined}
+      />,
       { messages },
     );
 
@@ -142,29 +135,27 @@ describe('<TilbakekrevingForm>', () => {
   it('skal vise feilmelding når en har dette', () => {
     const perioder = undefined;
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <TilbakekrevingFormImpl
-          {...reduxFormPropsMock}
-          vilkarsVurdertePerioder={perioder}
-          dataForDetailForm={perioder}
-          behandlingFormPrefix="behandling_V1"
-          navBrukerKjonn={navBrukerKjonn.KVINNE}
-          readOnly={false}
-          readOnlySubmitButton={false}
-          reduxFormChange={() => undefined}
-          reduxFormInitialize={() => undefined}
-          antallPerioderMedAksjonspunkt={2}
-          handleSubmit={() => undefined}
-          merknaderFraBeslutter={{
-            notAccepted: false,
-          }}
-          behandlingId={1}
-          behandlingVersjon={2}
-          alleKodeverk={alleKodeverk}
-          beregnBelop={() => undefined}
-          error="TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr"
-        />
-      </MockForm>,
+      <TilbakekrevingFormImpl
+        {...reduxFormPropsMock}
+        vilkarsVurdertePerioder={perioder}
+        dataForDetailForm={perioder}
+        behandlingFormPrefix="behandling_V1"
+        navBrukerKjonn={navBrukerKjonn.KVINNE}
+        readOnly={false}
+        readOnlySubmitButton={false}
+        reduxFormChange={() => undefined}
+        reduxFormInitialize={() => undefined}
+        antallPerioderMedAksjonspunkt={2}
+        handleSubmit={() => undefined}
+        merknaderFraBeslutter={{
+          notAccepted: false,
+        }}
+        behandlingId={1}
+        behandlingVersjon={2}
+        alleKodeverk={alleKodeverk}
+        beregnBelop={() => undefined}
+        error="TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr"
+      />,
       { messages },
     );
 

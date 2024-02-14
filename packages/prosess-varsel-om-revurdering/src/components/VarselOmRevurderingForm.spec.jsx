@@ -4,7 +4,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { screen } from '@testing-library/react';
 import { expect } from 'chai';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import sinon from 'sinon';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
@@ -28,32 +27,28 @@ const originalBehandling = {
 };
 
 describe('<VarselOmRevurderingFormImpl>', () => {
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
   it('skal vise fritekst og forhåndsvis av brev når varsel skal sendes', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <UnwrappedForm
-          {...reduxFormPropsMock}
-          intl={intlMock}
-          previewCallback={sinon.spy()}
-          dispatchSubmitFailed={sinon.spy()}
-          erAutomatiskRevurdering={false}
-          languageCode="NN"
-          readOnly={false}
-          sendVarsel
-          frist="2017-05-15"
-          aksjonspunktStatus="OPPR"
-          begrunnelse="Begrunnelse"
-          avklartBarn={[]}
-          behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-          soknad={soknad}
-          termindato="2019-01-01"
-          soknadOriginalBehandling={originalBehandling.soknad}
-          familiehendelseOriginalBehandling={originalBehandling.familiehendelse}
-          vedtaksDatoSomSvangerskapsuke="2019-01-01"
-        />
-      </MockForm>,
-
+      <UnwrappedForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        previewCallback={sinon.spy()}
+        dispatchSubmitFailed={sinon.spy()}
+        erAutomatiskRevurdering={false}
+        languageCode="NN"
+        readOnly={false}
+        sendVarsel
+        frist="2017-05-15"
+        aksjonspunktStatus="OPPR"
+        begrunnelse="Begrunnelse"
+        avklartBarn={[]}
+        behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
+        soknad={soknad}
+        termindato="2019-01-01"
+        soknadOriginalBehandling={originalBehandling.soknad}
+        familiehendelseOriginalBehandling={originalBehandling.familiehendelse}
+        vedtaksDatoSomSvangerskapsuke="2019-01-01"
+      />,
       { messages },
     );
 
@@ -63,60 +58,56 @@ describe('<VarselOmRevurderingFormImpl>', () => {
 
   it('skal ikke vise fritekst og forhåndsvis av brev når varsel ikke skal sendes', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <UnwrappedForm
-          {...reduxFormPropsMock}
-          intl={intlMock}
-          previewCallback={sinon.spy()}
-          dispatchSubmitFailed={sinon.spy()}
-          erAutomatiskRevurdering={false}
-          languageCode="NN"
-          readOnly={false}
-          sendVarsel={false}
-          frist="2017-05-15"
-          aksjonspunktStatus="OPPR"
-          begrunnelse="Begrunnelse"
-          avklartBarn={[]}
-          behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-          soknad={soknad}
-          termindato="2019-01-01"
-          soknadOriginalBehandling={originalBehandling.soknad}
-          familiehendelseOriginalBehandling={originalBehandling.familiehendelse}
-          vedtaksDatoSomSvangerskapsuke="2019-01-01"
-        />
-      </MockForm>,
+      <UnwrappedForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        previewCallback={sinon.spy()}
+        dispatchSubmitFailed={sinon.spy()}
+        erAutomatiskRevurdering={false}
+        languageCode="NN"
+        readOnly={false}
+        sendVarsel={false}
+        frist="2017-05-15"
+        aksjonspunktStatus="OPPR"
+        begrunnelse="Begrunnelse"
+        avklartBarn={[]}
+        behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
+        soknad={soknad}
+        termindato="2019-01-01"
+        soknadOriginalBehandling={originalBehandling.soknad}
+        familiehendelseOriginalBehandling={originalBehandling.familiehendelse}
+        vedtaksDatoSomSvangerskapsuke="2019-01-01"
+      />,
       { messages },
     );
 
     expect(screen.getByRole('textbox', { name: 'Begrunnelse' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Forhåndsvis' })).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'Forhåndsvis' })).not.toBeInTheDocument();
   });
 
   it('skal vises i readonly visning', () => {
     const begrunnelse = 'Begrunnelse';
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <UnwrappedForm
-          {...reduxFormPropsMock}
-          intl={intlMock}
-          previewCallback={sinon.spy()}
-          dispatchSubmitFailed={sinon.spy()}
-          erAutomatiskRevurdering={false}
-          languageCode="NN"
-          readOnly={false}
-          sendVarsel={false}
-          frist="2017-05-15"
-          aksjonspunktStatus="UTFRT"
-          begrunnelse={begrunnelse}
-          avklartBarn={[]}
-          behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-          soknad={soknad}
-          termindato="2019-01-01"
-          soknadOriginalBehandling={originalBehandling.soknad}
-          familiehendelseOriginalBehandling={originalBehandling.familiehendelse}
-          vedtaksDatoSomSvangerskapsuke="2019-01-01"
-        />
-      </MockForm>,
+      <UnwrappedForm
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        previewCallback={sinon.spy()}
+        dispatchSubmitFailed={sinon.spy()}
+        erAutomatiskRevurdering={false}
+        languageCode="NN"
+        readOnly={false}
+        sendVarsel={false}
+        frist="2017-05-15"
+        aksjonspunktStatus="UTFRT"
+        begrunnelse={begrunnelse}
+        avklartBarn={[]}
+        behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
+        soknad={soknad}
+        termindato="2019-01-01"
+        soknadOriginalBehandling={originalBehandling.soknad}
+        familiehendelseOriginalBehandling={originalBehandling.familiehendelse}
+        vedtaksDatoSomSvangerskapsuke="2019-01-01"
+      />,
       { messages },
     );
 

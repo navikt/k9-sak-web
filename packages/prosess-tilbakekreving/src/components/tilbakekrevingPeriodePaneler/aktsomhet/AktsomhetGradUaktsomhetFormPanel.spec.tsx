@@ -1,15 +1,12 @@
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/src/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import messages from '../../../../i18n/nb_NO.json';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 import SarligGrunn from '../../../kodeverk/sarligGrunn';
 import AktsomhetGradUaktsomhetFormPanel from './AktsomhetGradUaktsomhetFormPanel';
 
 describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
   const sarligGrunnTyper = [
     {
       kode: SarligGrunn.GRAD_AV_UAKTSOMHET,
@@ -25,18 +22,16 @@ describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
 
   it('skal måtte velge om en skal tilbakekreve beløp når totalbeløpet er under 4 rettsgebyr når grad er simpel uaktsom', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <AktsomhetGradUaktsomhetFormPanel
-          harGrunnerTilReduksjon
-          readOnly={false}
-          handletUaktsomhetGrad={Aktsomhet.SIMPEL_UAKTSOM}
-          erSerligGrunnAnnetValgt={false}
-          sarligGrunnTyper={sarligGrunnTyper}
-          harMerEnnEnYtelse
-          feilutbetalingBelop={100}
-          erTotalBelopUnder4Rettsgebyr
-        />
-      </MockForm>,
+      <AktsomhetGradUaktsomhetFormPanel
+        harGrunnerTilReduksjon
+        readOnly={false}
+        handletUaktsomhetGrad={Aktsomhet.SIMPEL_UAKTSOM}
+        erSerligGrunnAnnetValgt={false}
+        sarligGrunnTyper={sarligGrunnTyper}
+        harMerEnnEnYtelse
+        feilutbetalingBelop={100}
+        erTotalBelopUnder4Rettsgebyr
+      />,
       { messages },
     );
 
@@ -49,18 +44,16 @@ describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
 
   it('skal ikke måtte velge om en skal tilbakekreve beløp når totalbeløpet er under 4 rettsgebyr med grad er ulik simpel uaktsom', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <AktsomhetGradUaktsomhetFormPanel
-          harGrunnerTilReduksjon
-          readOnly={false}
-          handletUaktsomhetGrad={Aktsomhet.GROVT_UAKTSOM}
-          erSerligGrunnAnnetValgt={false}
-          sarligGrunnTyper={sarligGrunnTyper}
-          harMerEnnEnYtelse
-          feilutbetalingBelop={100}
-          erTotalBelopUnder4Rettsgebyr
-        />
-      </MockForm>,
+      <AktsomhetGradUaktsomhetFormPanel
+        harGrunnerTilReduksjon
+        readOnly={false}
+        handletUaktsomhetGrad={Aktsomhet.GROVT_UAKTSOM}
+        erSerligGrunnAnnetValgt={false}
+        sarligGrunnTyper={sarligGrunnTyper}
+        harMerEnnEnYtelse
+        feilutbetalingBelop={100}
+        erTotalBelopUnder4Rettsgebyr
+      />,
       { messages },
     );
 
@@ -75,18 +68,16 @@ describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
 
   it('skal ikke måtte velge om en skal tilbakekreve beløp når totalbeløpet er over 4 rettsgebyr med grad er lik simpel uaktsom', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <AktsomhetGradUaktsomhetFormPanel
-          harGrunnerTilReduksjon
-          readOnly={false}
-          handletUaktsomhetGrad={Aktsomhet.SIMPEL_UAKTSOM}
-          erSerligGrunnAnnetValgt={false}
-          sarligGrunnTyper={sarligGrunnTyper}
-          harMerEnnEnYtelse
-          feilutbetalingBelop={100}
-          erTotalBelopUnder4Rettsgebyr={false}
-        />
-      </MockForm>,
+      <AktsomhetGradUaktsomhetFormPanel
+        harGrunnerTilReduksjon
+        readOnly={false}
+        handletUaktsomhetGrad={Aktsomhet.SIMPEL_UAKTSOM}
+        erSerligGrunnAnnetValgt={false}
+        sarligGrunnTyper={sarligGrunnTyper}
+        harMerEnnEnYtelse
+        feilutbetalingBelop={100}
+        erTotalBelopUnder4Rettsgebyr={false}
+      />,
       { messages },
     );
 

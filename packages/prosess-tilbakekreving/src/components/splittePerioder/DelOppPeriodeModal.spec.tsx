@@ -3,7 +3,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import sinon from 'sinon';
 import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
@@ -15,20 +14,17 @@ describe('<DelOppPeriodeModal>', () => {
     tom: '2018-03-01',
   };
   const cancelEvent = sinon.spy();
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
 
   it('skal rendre modal for del opp periode', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <DelOppPeriodeModalImpl
-          {...reduxFormPropsMock}
-          periodeData={periodeData}
-          showModal
-          intl={intlMock}
-          cancelEvent={cancelEvent}
-          finnesBelopMed0Verdi={false}
-        />
-      </MockForm>,
+      <DelOppPeriodeModalImpl
+        {...reduxFormPropsMock}
+        periodeData={periodeData}
+        showModal
+        intl={intlMock}
+        cancelEvent={cancelEvent}
+        finnesBelopMed0Verdi={false}
+      />,
       { messages },
     );
 
@@ -39,16 +35,14 @@ describe('<DelOppPeriodeModal>', () => {
 
   it('skal lukke modal ved klikk på avbryt-knapp', async () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <DelOppPeriodeModalImpl
-          {...reduxFormPropsMock}
-          periodeData={periodeData}
-          showModal
-          intl={intlMock}
-          cancelEvent={cancelEvent}
-          finnesBelopMed0Verdi={false}
-        />
-      </MockForm>,
+      <DelOppPeriodeModalImpl
+        {...reduxFormPropsMock}
+        periodeData={periodeData}
+        showModal
+        intl={intlMock}
+        cancelEvent={cancelEvent}
+        finnesBelopMed0Verdi={false}
+      />,
       { messages },
     );
     await act(async () => {

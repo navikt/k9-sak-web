@@ -2,7 +2,6 @@ import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/util
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import sinon from 'sinon';
 import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
@@ -10,8 +9,6 @@ import DataForPeriode from '../../types/dataForPeriodeTsType';
 import { PeriodeController } from './PeriodeController';
 
 describe('<PeriodeController>', () => {
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
   it('skal vise knapp for å dele opp perioden og knapper for å velge forrige eller neste periode', () => {
     renderWithIntl(
       <PeriodeController
@@ -73,19 +70,17 @@ describe('<PeriodeController>', () => {
       tom: '2019-12-10',
     };
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <PeriodeController
-          intl={intlMock}
-          behandlingId={1}
-          behandlingVersjon={1}
-          beregnBelop={beregnBelop}
-          oppdaterSplittedePerioder={oppdaterSplittedePerioder}
-          callbackForward={sinon.spy()}
-          callbackBackward={sinon.spy()}
-          periode={periode as DataForPeriode}
-          readOnly={false}
-        />
-      </MockForm>,
+      <PeriodeController
+        intl={intlMock}
+        behandlingId={1}
+        behandlingVersjon={1}
+        beregnBelop={beregnBelop}
+        oppdaterSplittedePerioder={oppdaterSplittedePerioder}
+        callbackForward={sinon.spy()}
+        callbackBackward={sinon.spy()}
+        periode={periode as DataForPeriode}
+        readOnly={false}
+      />,
       { messages },
     );
 

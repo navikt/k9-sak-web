@@ -5,7 +5,6 @@ import { UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import messages from '../../i18n/nb_NO.json';
 import Aktivitet from '../dto/Aktivitet';
 import { FormContent, FormValues, begrunnelseUavklartePerioder, transformValues } from './AksjonspunktForm9014';
@@ -38,8 +37,6 @@ describe('<AksjonspunktForm>', () => {
   };
 
   describe('<FormContent>', () => {
-    const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
     it('viser kun en checkbox hvis man har minst én uavklart periode', () => {
       const aktiviteter: Aktivitet[] = [
         {
@@ -52,16 +49,14 @@ describe('<AksjonspunktForm>', () => {
         },
       ];
       renderWithIntlAndReduxForm(
-        <MockForm>
-          <FormContent
-            {...reduxFormPropsMock}
-            aktiviteter={aktiviteter}
-            isAksjonspunktOpen
-            fosterbarn={[]}
-            aksjonspunktKode={aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE}
-            valgValue={null}
-          />
-        </MockForm>,
+        <FormContent
+          {...reduxFormPropsMock}
+          aktiviteter={aktiviteter}
+          isAksjonspunktOpen
+          fosterbarn={[]}
+          aksjonspunktKode={aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE}
+          valgValue={null}
+        />,
         { messages },
       );
 
@@ -86,16 +81,14 @@ describe('<AksjonspunktForm>', () => {
         },
       ];
       renderWithIntlAndReduxForm(
-        <MockForm>
-          <FormContent
-            {...reduxFormPropsMock}
-            aktiviteter={aktiviteter}
-            isAksjonspunktOpen
-            fosterbarn={[]}
-            aksjonspunktKode={aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE}
-            valgValue={null}
-          />
-        </MockForm>,
+        <FormContent
+          {...reduxFormPropsMock}
+          aktiviteter={aktiviteter}
+          isAksjonspunktOpen
+          fosterbarn={[]}
+          aksjonspunktKode={aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE}
+          valgValue={null}
+        />,
         { messages },
       );
 

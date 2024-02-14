@@ -6,7 +6,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import sinon from 'sinon';
 import { intlMock } from '../../i18n/index';
 import messages from '../../i18n/nb_NO.json';
@@ -26,50 +25,46 @@ describe('<NyBehandlingModal>', () => {
     kodeverk: '',
   };
 
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
   it('skal rendre komponent korrekt', () => {
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <NyBehandlingModal
-          {...reduxFormPropsMock}
-          handleSubmit={submitEventCallback}
-          cancelEvent={cancelEventCallback}
-          intl={intlMock}
-          behandlingTyper={behandlingstyper}
-          behandlingstyper={behandlingstyper}
-          behandlingArsakTyper={[
-            { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
-          ]}
-          enabledBehandlingstyper={behandlingstyper}
-          erTilbakekrevingAktivert={false}
-          saksnummer={123}
-          sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-          sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
-          ytelseType={ytelseType}
-          submitCallback={sinon.spy()}
-          behandlingOppretting={[
-            {
-              behandlingType: {
-                kode: behandlingType.FORSTEGANGSSOKNAD,
-                kodeverk: '',
-              },
-              kanOppretteBehandling: true,
+      <NyBehandlingModal
+        {...reduxFormPropsMock}
+        handleSubmit={submitEventCallback}
+        cancelEvent={cancelEventCallback}
+        intl={intlMock}
+        behandlingTyper={behandlingstyper}
+        behandlingstyper={behandlingstyper}
+        behandlingArsakTyper={[
+          { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
+        ]}
+        enabledBehandlingstyper={behandlingstyper}
+        erTilbakekrevingAktivert={false}
+        saksnummer={123}
+        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        ytelseType={ytelseType}
+        submitCallback={sinon.spy()}
+        behandlingOppretting={[
+          {
+            behandlingType: {
+              kode: behandlingType.FORSTEGANGSSOKNAD,
+              kodeverk: '',
             },
-          ]}
-          tilbakekrevingRevurderingArsaker={[]}
-          revurderingArsaker={[]}
-          kanTilbakekrevingOpprettes={{
-            kanBehandlingOpprettes: true,
-            kanRevurderingOpprettes: true,
-          }}
-          valgtBehandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-          erTilbakekreving={false}
-        />
-      </MockForm>,
+            kanOppretteBehandling: true,
+          },
+        ]}
+        tilbakekrevingRevurderingArsaker={[]}
+        revurderingArsaker={[]}
+        kanTilbakekrevingOpprettes={{
+          kanBehandlingOpprettes: true,
+          kanRevurderingOpprettes: true,
+        }}
+        valgtBehandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
+        erTilbakekreving={false}
+      />,
       { messages },
     );
 
@@ -83,43 +78,41 @@ describe('<NyBehandlingModal>', () => {
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <NyBehandlingModal
-          {...reduxFormPropsMock}
-          handleSubmit={submitEventCallback}
-          cancelEvent={sinon.spy()}
-          intl={intlMock}
-          behandlingTyper={behandlingstyper}
-          behandlingstyper={behandlingstyper}
-          behandlingArsakTyper={[
-            { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
-          ]}
-          enabledBehandlingstyper={behandlingstyper}
-          sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-          sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
-          erTilbakekrevingAktivert={false}
-          saksnummer={123}
-          ytelseType={ytelseType}
-          submitCallback={sinon.spy()}
-          behandlingOppretting={[
-            {
-              behandlingType: {
-                kode: behandlingType.FORSTEGANGSSOKNAD,
-                kodeverk: '',
-              },
-              kanOppretteBehandling: true,
+      <NyBehandlingModal
+        {...reduxFormPropsMock}
+        handleSubmit={submitEventCallback}
+        cancelEvent={sinon.spy()}
+        intl={intlMock}
+        behandlingTyper={behandlingstyper}
+        behandlingstyper={behandlingstyper}
+        behandlingArsakTyper={[
+          { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
+        ]}
+        enabledBehandlingstyper={behandlingstyper}
+        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        erTilbakekrevingAktivert={false}
+        saksnummer={123}
+        ytelseType={ytelseType}
+        submitCallback={sinon.spy()}
+        behandlingOppretting={[
+          {
+            behandlingType: {
+              kode: behandlingType.FORSTEGANGSSOKNAD,
+              kodeverk: '',
             },
-          ]}
-          tilbakekrevingRevurderingArsaker={[]}
-          revurderingArsaker={[]}
-          kanTilbakekrevingOpprettes={{
-            kanBehandlingOpprettes: true,
-            kanRevurderingOpprettes: true,
-          }}
-          valgtBehandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-          erTilbakekreving={false}
-        />
-      </MockForm>,
+            kanOppretteBehandling: true,
+          },
+        ]}
+        tilbakekrevingRevurderingArsaker={[]}
+        revurderingArsaker={[]}
+        kanTilbakekrevingOpprettes={{
+          kanBehandlingOpprettes: true,
+          kanRevurderingOpprettes: true,
+        }}
+        valgtBehandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
+        erTilbakekreving={false}
+      />,
       { messages },
     );
 
@@ -134,43 +127,41 @@ describe('<NyBehandlingModal>', () => {
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <NyBehandlingModal
-          {...reduxFormPropsMock}
-          handleSubmit={submitEventCallback}
-          cancelEvent={cancelEventCallback}
-          intl={intlMock}
-          behandlingTyper={behandlingstyper}
-          behandlingstyper={behandlingstyper}
-          behandlingArsakTyper={[
-            { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
-          ]}
-          enabledBehandlingstyper={behandlingstyper}
-          erTilbakekrevingAktivert={false}
-          sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-          sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
-          saksnummer={123}
-          ytelseType={ytelseType}
-          submitCallback={sinon.spy()}
-          behandlingOppretting={[
-            {
-              behandlingType: {
-                kode: behandlingType.FORSTEGANGSSOKNAD,
-                kodeverk: '',
-              },
-              kanOppretteBehandling: true,
+      <NyBehandlingModal
+        {...reduxFormPropsMock}
+        handleSubmit={submitEventCallback}
+        cancelEvent={cancelEventCallback}
+        intl={intlMock}
+        behandlingTyper={behandlingstyper}
+        behandlingstyper={behandlingstyper}
+        behandlingArsakTyper={[
+          { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
+        ]}
+        enabledBehandlingstyper={behandlingstyper}
+        erTilbakekrevingAktivert={false}
+        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        saksnummer={123}
+        ytelseType={ytelseType}
+        submitCallback={sinon.spy()}
+        behandlingOppretting={[
+          {
+            behandlingType: {
+              kode: behandlingType.FORSTEGANGSSOKNAD,
+              kodeverk: '',
             },
-          ]}
-          tilbakekrevingRevurderingArsaker={[]}
-          revurderingArsaker={[]}
-          kanTilbakekrevingOpprettes={{
-            kanBehandlingOpprettes: true,
-            kanRevurderingOpprettes: true,
-          }}
-          valgtBehandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-          erTilbakekreving={false}
-        />{' '}
-      </MockForm>,
+            kanOppretteBehandling: true,
+          },
+        ]}
+        tilbakekrevingRevurderingArsaker={[]}
+        revurderingArsaker={[]}
+        kanTilbakekrevingOpprettes={{
+          kanBehandlingOpprettes: true,
+          kanRevurderingOpprettes: true,
+        }}
+        valgtBehandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
+        erTilbakekreving={false}
+      />,
       { messages },
     );
 
@@ -185,43 +176,41 @@ describe('<NyBehandlingModal>', () => {
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <NyBehandlingModal
-          {...reduxFormPropsMock}
-          handleSubmit={submitEventCallback}
-          cancelEvent={cancelEventCallback}
-          intl={intlMock}
-          behandlingTyper={behandlingstyper}
-          behandlingstyper={behandlingstyper}
-          behandlingArsakTyper={[
-            { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
-          ]}
-          enabledBehandlingstyper={behandlingstyper}
-          sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-          sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
-          erTilbakekrevingAktivert={false}
-          saksnummer={123}
-          ytelseType={ytelseType}
-          submitCallback={sinon.spy()}
-          behandlingOppretting={[
-            {
-              behandlingType: {
-                kode: behandlingType.FORSTEGANGSSOKNAD,
-                kodeverk: '',
-              },
-              kanOppretteBehandling: true,
+      <NyBehandlingModal
+        {...reduxFormPropsMock}
+        handleSubmit={submitEventCallback}
+        cancelEvent={cancelEventCallback}
+        intl={intlMock}
+        behandlingTyper={behandlingstyper}
+        behandlingstyper={behandlingstyper}
+        behandlingArsakTyper={[
+          { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
+        ]}
+        enabledBehandlingstyper={behandlingstyper}
+        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        erTilbakekrevingAktivert={false}
+        saksnummer={123}
+        ytelseType={ytelseType}
+        submitCallback={sinon.spy()}
+        behandlingOppretting={[
+          {
+            behandlingType: {
+              kode: behandlingType.FORSTEGANGSSOKNAD,
+              kodeverk: '',
             },
-          ]}
-          tilbakekrevingRevurderingArsaker={[]}
-          revurderingArsaker={[]}
-          kanTilbakekrevingOpprettes={{
-            kanBehandlingOpprettes: true,
-            kanRevurderingOpprettes: true,
-          }}
-          valgtBehandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-          erTilbakekreving={false}
-        />
-      </MockForm>,
+            kanOppretteBehandling: true,
+          },
+        ]}
+        tilbakekrevingRevurderingArsaker={[]}
+        revurderingArsaker={[]}
+        kanTilbakekrevingOpprettes={{
+          kanBehandlingOpprettes: true,
+          kanRevurderingOpprettes: true,
+        }}
+        valgtBehandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
+        erTilbakekreving={false}
+      />,
       { messages },
     );
     expect(
@@ -234,43 +223,41 @@ describe('<NyBehandlingModal>', () => {
       { kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN', kodeverk: 'BEHANDLING_TYPE' },
     ];
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <NyBehandlingModal
-          {...reduxFormPropsMock}
-          handleSubmit={submitEventCallback}
-          cancelEvent={cancelEventCallback}
-          intl={intlMock}
-          behandlingTyper={behandlingstyper}
-          behandlingstyper={behandlingstyper}
-          behandlingArsakTyper={[
-            { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
-          ]}
-          enabledBehandlingstyper={behandlingstyper}
-          sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-          sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
-          erTilbakekrevingAktivert={false}
-          saksnummer={123}
-          ytelseType={ytelseType}
-          submitCallback={sinon.spy()}
-          behandlingOppretting={[
-            {
-              behandlingType: {
-                kode: behandlingType.FORSTEGANGSSOKNAD,
-                kodeverk: '',
-              },
-              kanOppretteBehandling: true,
+      <NyBehandlingModal
+        {...reduxFormPropsMock}
+        handleSubmit={submitEventCallback}
+        cancelEvent={cancelEventCallback}
+        intl={intlMock}
+        behandlingTyper={behandlingstyper}
+        behandlingstyper={behandlingstyper}
+        behandlingArsakTyper={[
+          { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
+        ]}
+        enabledBehandlingstyper={behandlingstyper}
+        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        erTilbakekrevingAktivert={false}
+        saksnummer={123}
+        ytelseType={ytelseType}
+        submitCallback={sinon.spy()}
+        behandlingOppretting={[
+          {
+            behandlingType: {
+              kode: behandlingType.FORSTEGANGSSOKNAD,
+              kodeverk: '',
             },
-          ]}
-          tilbakekrevingRevurderingArsaker={[]}
-          revurderingArsaker={[]}
-          kanTilbakekrevingOpprettes={{
-            kanBehandlingOpprettes: true,
-            kanRevurderingOpprettes: true,
-          }}
-          valgtBehandlingTypeKode={behandlingType.DOKUMENTINNSYN}
-          erTilbakekreving={false}
-        />
-      </MockForm>,
+            kanOppretteBehandling: true,
+          },
+        ]}
+        tilbakekrevingRevurderingArsaker={[]}
+        revurderingArsaker={[]}
+        kanTilbakekrevingOpprettes={{
+          kanBehandlingOpprettes: true,
+          kanRevurderingOpprettes: true,
+        }}
+        valgtBehandlingTypeKode={behandlingType.DOKUMENTINNSYN}
+        erTilbakekreving={false}
+      />,
       { messages },
     );
 
@@ -282,43 +269,41 @@ describe('<NyBehandlingModal>', () => {
   it('skal vise dropdown for revuderingsårsaker når revurdering er valgt', () => {
     const behandlingstyper = [{ kode: behandlingType.REVURDERING, navn: 'REVURDERING', kodeverk: 'BEHANDLING_TYPE' }];
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <NyBehandlingModal
-          {...reduxFormPropsMock}
-          handleSubmit={submitEventCallback}
-          cancelEvent={cancelEventCallback}
-          intl={intlMock}
-          behandlingTyper={behandlingstyper}
-          behandlingstyper={behandlingstyper}
-          behandlingArsakTyper={[
-            { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
-          ]}
-          enabledBehandlingstyper={behandlingstyper}
-          sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-          sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
-          erTilbakekrevingAktivert={false}
-          saksnummer={123}
-          ytelseType={ytelseType}
-          submitCallback={sinon.spy()}
-          behandlingOppretting={[
-            {
-              behandlingType: {
-                kode: behandlingType.FORSTEGANGSSOKNAD,
-                kodeverk: '',
-              },
-              kanOppretteBehandling: true,
+      <NyBehandlingModal
+        {...reduxFormPropsMock}
+        handleSubmit={submitEventCallback}
+        cancelEvent={cancelEventCallback}
+        intl={intlMock}
+        behandlingTyper={behandlingstyper}
+        behandlingstyper={behandlingstyper}
+        behandlingArsakTyper={[
+          { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
+        ]}
+        enabledBehandlingstyper={behandlingstyper}
+        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        erTilbakekrevingAktivert={false}
+        saksnummer={123}
+        ytelseType={ytelseType}
+        submitCallback={sinon.spy()}
+        behandlingOppretting={[
+          {
+            behandlingType: {
+              kode: behandlingType.FORSTEGANGSSOKNAD,
+              kodeverk: '',
             },
-          ]}
-          tilbakekrevingRevurderingArsaker={[]}
-          revurderingArsaker={[]}
-          kanTilbakekrevingOpprettes={{
-            kanBehandlingOpprettes: true,
-            kanRevurderingOpprettes: true,
-          }}
-          valgtBehandlingTypeKode={behandlingType.REVURDERING}
-          erTilbakekreving={false}
-        />
-      </MockForm>,
+            kanOppretteBehandling: true,
+          },
+        ]}
+        tilbakekrevingRevurderingArsaker={[]}
+        revurderingArsaker={[]}
+        kanTilbakekrevingOpprettes={{
+          kanBehandlingOpprettes: true,
+          kanRevurderingOpprettes: true,
+        }}
+        valgtBehandlingTypeKode={behandlingType.REVURDERING}
+        erTilbakekreving={false}
+      />,
       { messages },
     );
     expect(screen.getAllByRole('combobox').length).toBe(2);
@@ -331,41 +316,39 @@ describe('<NyBehandlingModal>', () => {
       { kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN', kodeverk: 'BEHANDLING_TYPE' },
     ];
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <NyBehandlingModal
-          {...reduxFormPropsMock}
-          handleSubmit={submitEventCallback}
-          cancelEvent={cancelEventCallback}
-          intl={intlMock}
-          behandlingTyper={behandlingstyper}
-          behandlingstyper={behandlingstyper}
-          behandlingArsakTyper={[]}
-          enabledBehandlingstyper={behandlingstyper}
-          sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-          sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
-          erTilbakekrevingAktivert={false}
-          saksnummer={123}
-          ytelseType={ytelseType}
-          submitCallback={sinon.spy()}
-          behandlingOppretting={[
-            {
-              behandlingType: {
-                kode: behandlingType.FORSTEGANGSSOKNAD,
-                kodeverk: '',
-              },
-              kanOppretteBehandling: true,
+      <NyBehandlingModal
+        {...reduxFormPropsMock}
+        handleSubmit={submitEventCallback}
+        cancelEvent={cancelEventCallback}
+        intl={intlMock}
+        behandlingTyper={behandlingstyper}
+        behandlingstyper={behandlingstyper}
+        behandlingArsakTyper={[]}
+        enabledBehandlingstyper={behandlingstyper}
+        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        erTilbakekrevingAktivert={false}
+        saksnummer={123}
+        ytelseType={ytelseType}
+        submitCallback={sinon.spy()}
+        behandlingOppretting={[
+          {
+            behandlingType: {
+              kode: behandlingType.FORSTEGANGSSOKNAD,
+              kodeverk: '',
             },
-          ]}
-          tilbakekrevingRevurderingArsaker={[]}
-          revurderingArsaker={[]}
-          kanTilbakekrevingOpprettes={{
-            kanBehandlingOpprettes: true,
-            kanRevurderingOpprettes: true,
-          }}
-          valgtBehandlingTypeKode={behandlingType.DOKUMENTINNSYN}
-          erTilbakekreving={false}
-        />{' '}
-      </MockForm>,
+            kanOppretteBehandling: true,
+          },
+        ]}
+        tilbakekrevingRevurderingArsaker={[]}
+        revurderingArsaker={[]}
+        kanTilbakekrevingOpprettes={{
+          kanBehandlingOpprettes: true,
+          kanRevurderingOpprettes: true,
+        }}
+        valgtBehandlingTypeKode={behandlingType.DOKUMENTINNSYN}
+        erTilbakekreving={false}
+      />,
       { messages },
     );
 

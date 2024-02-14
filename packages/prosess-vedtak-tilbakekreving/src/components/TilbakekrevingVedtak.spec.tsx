@@ -1,7 +1,6 @@
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
@@ -32,25 +31,21 @@ describe('<TilbakekrevingVedtak>', () => {
     },
   ];
 
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
   it('skal vise vedtakspanel for tilbakekreving', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <TilbakekrevingVedtak
-          submitCallback={sinon.spy()}
-          readOnly={false}
-          resultat={{ kode: 'testresultat', kodeverk: '' }}
-          perioder={perioder as BeregningResultatPeriode[]}
-          behandlingId={1}
-          behandlingUuid="uuid"
-          behandlingVersjon={1}
-          alleKodeverk={{}}
-          avsnittsliste={[]}
-          fetchPreviewVedtaksbrev={sinon.spy()}
-          aksjonspunktKodeForeslaVedtak="1234"
-        />
-      </MockForm>,
+      <TilbakekrevingVedtak
+        submitCallback={sinon.spy()}
+        readOnly={false}
+        resultat={{ kode: 'testresultat', kodeverk: '' }}
+        perioder={perioder as BeregningResultatPeriode[]}
+        behandlingId={1}
+        behandlingUuid="uuid"
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        avsnittsliste={[]}
+        fetchPreviewVedtaksbrev={sinon.spy()}
+        aksjonspunktKodeForeslaVedtak="1234"
+      />,
       { messages },
     );
 

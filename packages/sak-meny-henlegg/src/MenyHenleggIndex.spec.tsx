@@ -5,50 +5,46 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import sinon from 'sinon';
 import messages from '../i18n/nb_NO.json';
 import MenyHenleggIndex from './MenyHenleggIndex';
 
 describe('<MenyHenleggIndex>', () => {
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
   it('skal vise modal og så henlegge behandling', async () => {
     const henleggBehandlingCallback = sinon.stub().resolves();
     const lukkModalCallback = sinon.spy();
 
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <MenyHenleggIndex
-          behandlingId={3}
-          behandlingVersjon={1}
-          henleggBehandling={henleggBehandlingCallback}
-          forhandsvisHenleggBehandling={sinon.spy()}
-          ytelseType={{
-            kode: fagsakYtelseType.FORELDREPENGER,
-            kodeverk: 'FAGSAK_YTELSE_TYPE',
-          }}
-          behandlingType={{
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: 'BEHANDLING_TYPE',
-          }}
-          behandlingUuid="2323"
-          behandlingResultatTyper={[
-            {
-              kode: behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
-              kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-              navn: 'test',
-            },
-            {
-              kode: behandlingResultatType.HENLAGT_FEILOPPRETTET,
-              kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-              navn: 'test',
-            },
-          ]}
-          gaaTilSokeside={sinon.spy()}
-          lukkModal={lukkModalCallback}
-          hentMottakere={sinon.spy()}
-        />
-      </MockForm>,
+      <MenyHenleggIndex
+        behandlingId={3}
+        behandlingVersjon={1}
+        henleggBehandling={henleggBehandlingCallback}
+        forhandsvisHenleggBehandling={sinon.spy()}
+        ytelseType={{
+          kode: fagsakYtelseType.FORELDREPENGER,
+          kodeverk: 'FAGSAK_YTELSE_TYPE',
+        }}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+          kodeverk: 'BEHANDLING_TYPE',
+        }}
+        behandlingUuid="2323"
+        behandlingResultatTyper={[
+          {
+            kode: behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
+            kodeverk: 'BEHANDLING_RESULTAT_TYPE',
+            navn: 'test',
+          },
+          {
+            kode: behandlingResultatType.HENLAGT_FEILOPPRETTET,
+            kodeverk: 'BEHANDLING_RESULTAT_TYPE',
+            navn: 'test',
+          },
+        ]}
+        gaaTilSokeside={sinon.spy()}
+        lukkModal={lukkModalCallback}
+        hentMottakere={sinon.spy()}
+      />,
       { messages },
     );
 

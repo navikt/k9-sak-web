@@ -1,15 +1,12 @@
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/src/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import messages from '../../../../i18n/nb_NO.json';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 import SarligGrunn from '../../../kodeverk/sarligGrunn';
 import AktsomhetGradFormPanel from './AktsomhetGradFormPanel';
 
 describe('<AktsomhetGradFormPanel>', () => {
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
   const sarligGrunnTyper = [
     {
       kode: SarligGrunn.GRAD_AV_UAKTSOMHET,
@@ -25,18 +22,16 @@ describe('<AktsomhetGradFormPanel>', () => {
 
   it('skal vise panel for å forsett når denne radio-knappen er valgt', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <AktsomhetGradFormPanel
-          harGrunnerTilReduksjon
-          readOnly={false}
-          handletUaktsomhetGrad={Aktsomhet.FORSETT}
-          erSerligGrunnAnnetValgt
-          sarligGrunnTyper={sarligGrunnTyper}
-          harMerEnnEnYtelse
-          feilutbetalingBelop={100}
-          erTotalBelopUnder4Rettsgebyr={false}
-        />
-      </MockForm>,
+      <AktsomhetGradFormPanel
+        harGrunnerTilReduksjon
+        readOnly={false}
+        handletUaktsomhetGrad={Aktsomhet.FORSETT}
+        erSerligGrunnAnnetValgt
+        sarligGrunnTyper={sarligGrunnTyper}
+        harMerEnnEnYtelse
+        feilutbetalingBelop={100}
+        erTotalBelopUnder4Rettsgebyr={false}
+      />,
       { messages },
     );
 
@@ -46,18 +41,16 @@ describe('<AktsomhetGradFormPanel>', () => {
 
   it('skal vise panel for å grovt uaktsomt når denne radio-knappen er valgt', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <AktsomhetGradFormPanel
-          harGrunnerTilReduksjon
-          readOnly={false}
-          handletUaktsomhetGrad={Aktsomhet.GROVT_UAKTSOM}
-          erSerligGrunnAnnetValgt
-          sarligGrunnTyper={sarligGrunnTyper}
-          harMerEnnEnYtelse
-          feilutbetalingBelop={100}
-          erTotalBelopUnder4Rettsgebyr={false}
-        />
-      </MockForm>,
+      <AktsomhetGradFormPanel
+        harGrunnerTilReduksjon
+        readOnly={false}
+        handletUaktsomhetGrad={Aktsomhet.GROVT_UAKTSOM}
+        erSerligGrunnAnnetValgt
+        sarligGrunnTyper={sarligGrunnTyper}
+        harMerEnnEnYtelse
+        feilutbetalingBelop={100}
+        erTotalBelopUnder4Rettsgebyr={false}
+      />,
       { messages },
     );
 

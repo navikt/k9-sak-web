@@ -3,7 +3,6 @@ import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import sinon from 'sinon';
 import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
@@ -21,23 +20,19 @@ describe('<KlageVurderingRadioOptionsKaImpl>', () => {
     { kode: 'PROSESSUELL_FEIL', navn: 'Saksbehandlingsfeil', kodeverk: 'KLAGE_MEDHOLD_AARSAK' },
   ];
 
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
   it('skal vise fire options når klage stadfestet', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <KlageVurderingRadioOptionsKa
-          readOnly={false}
-          medholdReasons={medholdReasons}
-          readOnlySubmitButton
-          aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NK}
-          klageVurdering={klageVurdering.STADFESTE_YTELSESVEDTAK}
-          previewCallback={sinon.spy()}
-          intl={intlMock}
-          formProps={{}}
-          sprakkode={sprakkode}
-        />
-      </MockForm>,
+      <KlageVurderingRadioOptionsKa
+        readOnly={false}
+        medholdReasons={medholdReasons}
+        readOnlySubmitButton
+        aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NK}
+        klageVurdering={klageVurdering.STADFESTE_YTELSESVEDTAK}
+        previewCallback={sinon.spy()}
+        intl={intlMock}
+        formProps={{}}
+        sprakkode={sprakkode}
+      />,
       { messages },
     );
 
@@ -49,20 +44,18 @@ describe('<KlageVurderingRadioOptionsKaImpl>', () => {
 
   it('skal vise syv options når aksjonspunkt er NK og klage medhold', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <KlageVurderingRadioOptionsKa
-          readOnly={false}
-          readOnlySubmitButton
-          medholdReasons={medholdReasons}
-          aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NK}
-          klageMedholdArsaker={[]}
-          klageVurdering={klageVurdering.MEDHOLD_I_KLAGE}
-          previewCallback={sinon.spy()}
-          intl={intlMock}
-          formProps={{}}
-          sprakkode={sprakkode}
-        />
-      </MockForm>,
+      <KlageVurderingRadioOptionsKa
+        readOnly={false}
+        readOnlySubmitButton
+        medholdReasons={medholdReasons}
+        aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NK}
+        klageMedholdArsaker={[]}
+        klageVurdering={klageVurdering.MEDHOLD_I_KLAGE}
+        previewCallback={sinon.spy()}
+        intl={intlMock}
+        formProps={{}}
+        sprakkode={sprakkode}
+      />,
       { messages },
     );
     expect(screen.getByRole('radio', { name: 'Stadfest vedtaket' })).toBeInTheDocument();
@@ -76,19 +69,17 @@ describe('<KlageVurderingRadioOptionsKaImpl>', () => {
 
   it('skal vise selectfield når klagevurdering er omgjort vedtak', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <KlageVurderingRadioOptionsKa
-          readOnly={false}
-          readOnlySubmitButton
-          medholdReasons={medholdReasons}
-          aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NK}
-          klageVurdering={klageVurdering.MEDHOLD_I_KLAGE}
-          previewCallback={sinon.spy()}
-          intl={intlMock}
-          formProps={{}}
-          sprakkode={sprakkode}
-        />{' '}
-      </MockForm>,
+      <KlageVurderingRadioOptionsKa
+        readOnly={false}
+        readOnlySubmitButton
+        medholdReasons={medholdReasons}
+        aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NK}
+        klageVurdering={klageVurdering.MEDHOLD_I_KLAGE}
+        previewCallback={sinon.spy()}
+        intl={intlMock}
+        formProps={{}}
+        sprakkode={sprakkode}
+      />,
       { messages },
     );
 
@@ -97,19 +88,17 @@ describe('<KlageVurderingRadioOptionsKaImpl>', () => {
 
   it('skal ikke vise selectfield når klagevurdering er opphev vedtak', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <KlageVurderingRadioOptionsKa
-          readOnly={false}
-          readOnlySubmitButton
-          medholdReasons={medholdReasons}
-          aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NK}
-          klageVurdering={klageVurdering.STADFESTE_YTELSESVEDTAK}
-          previewCallback={sinon.spy()}
-          intl={intlMock}
-          formProps={{}}
-          sprakkode={sprakkode}
-        />
-      </MockForm>,
+      <KlageVurderingRadioOptionsKa
+        readOnly={false}
+        readOnlySubmitButton
+        medholdReasons={medholdReasons}
+        aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NK}
+        klageVurdering={klageVurdering.STADFESTE_YTELSESVEDTAK}
+        previewCallback={sinon.spy()}
+        intl={intlMock}
+        formProps={{}}
+        sprakkode={sprakkode}
+      />,
       { messages },
     );
     expect(screen.queryByRole('combobox', { name: 'Årsak' })).not.toBeInTheDocument();

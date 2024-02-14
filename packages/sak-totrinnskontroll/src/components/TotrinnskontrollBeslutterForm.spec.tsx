@@ -3,11 +3,8 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { Behandling, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import messages from '../../i18n/nb_NO.json';
 import { TotrinnskontrollBeslutterForm } from './TotrinnskontrollBeslutterForm';
-
-const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
 
 const location = {
   pathname: '',
@@ -42,19 +39,17 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
     ] as TotrinnskontrollSkjermlenkeContext[];
 
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <TotrinnskontrollBeslutterForm
-          {...reduxFormPropsMock}
-          behandling={behandling}
-          totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
-          readOnly={false}
-          erTilbakekreving
-          lagLenke={() => location}
-          arbeidsforholdHandlingTyper={[]}
-          skjemalenkeTyper={[]}
-          aksjonspunktGodkjenning={[]}
-        />
-      </MockForm>,
+      <TotrinnskontrollBeslutterForm
+        {...reduxFormPropsMock}
+        behandling={behandling}
+        totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
+        readOnly={false}
+        erTilbakekreving
+        lagLenke={() => location}
+        arbeidsforholdHandlingTyper={[]}
+        skjemalenkeTyper={[]}
+        aksjonspunktGodkjenning={[]}
+      />,
       { messages },
     );
     expect(screen.queryByRole('button', { name: 'Forhåndsvis' })).not.toBeInTheDocument();

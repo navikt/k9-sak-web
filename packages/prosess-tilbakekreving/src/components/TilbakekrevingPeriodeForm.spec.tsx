@@ -3,7 +3,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import sinon from 'sinon';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
@@ -44,40 +43,36 @@ describe('<TilbakekrevingPeriodeForm>', () => {
     },
   ];
 
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
   it('skal vise panel for foreldet periode', () => {
     const periode = {
       erForeldet: true,
       ytelser: [],
     } as DataForPeriode;
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <TilbakekrevingPeriodeFormImpl
-          data={periode}
-          behandlingFormPrefix="behandling_V1"
-          skjulPeriode={() => undefined}
-          readOnly={false}
-          erBelopetIBehold
-          tilbakekrevSelvOmBeloepErUnder4Rettsgebyr
-          oppdaterPeriode={() => undefined}
-          oppdaterSplittedePerioder={() => undefined}
-          setNestePeriode={() => undefined}
-          setForrigePeriode={() => undefined}
-          antallPerioderMedAksjonspunkt={2}
-          vilkarResultatTyper={[]}
-          aktsomhetTyper={aktsomhetTyper}
-          sarligGrunnTyper={sarligGrunnTyper}
-          reduserteBelop={[]}
-          behandlingId={1}
-          behandlingVersjon={1}
-          beregnBelop={() => undefined}
-          intl={intlMock}
-          vilkarsVurdertePerioder={[]}
-          handletUaktsomhetGrad={Aktsomhet.FORSETT}
-          {...reduxFormPropsMock}
-        />
-      </MockForm>,
+      <TilbakekrevingPeriodeFormImpl
+        data={periode}
+        behandlingFormPrefix="behandling_V1"
+        skjulPeriode={() => undefined}
+        readOnly={false}
+        erBelopetIBehold
+        tilbakekrevSelvOmBeloepErUnder4Rettsgebyr
+        oppdaterPeriode={() => undefined}
+        oppdaterSplittedePerioder={() => undefined}
+        setNestePeriode={() => undefined}
+        setForrigePeriode={() => undefined}
+        antallPerioderMedAksjonspunkt={2}
+        vilkarResultatTyper={[]}
+        aktsomhetTyper={aktsomhetTyper}
+        sarligGrunnTyper={sarligGrunnTyper}
+        reduserteBelop={[]}
+        behandlingId={1}
+        behandlingVersjon={1}
+        beregnBelop={() => undefined}
+        intl={intlMock}
+        vilkarsVurdertePerioder={[]}
+        handletUaktsomhetGrad={Aktsomhet.FORSETT}
+        {...reduxFormPropsMock}
+      />,
       { messages },
     );
 
@@ -135,33 +130,31 @@ describe('<TilbakekrevingPeriodeForm>', () => {
 
     const changeValue = sinon.spy();
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <TilbakekrevingPeriodeFormImpl
-          data={periode}
-          behandlingFormPrefix="behandling_V1"
-          skjulPeriode={() => undefined}
-          readOnly={false}
-          erBelopetIBehold
-          tilbakekrevSelvOmBeloepErUnder4Rettsgebyr
-          oppdaterPeriode={() => undefined}
-          oppdaterSplittedePerioder={() => undefined}
-          setNestePeriode={() => undefined}
-          setForrigePeriode={() => undefined}
-          antallPerioderMedAksjonspunkt={2}
-          vilkarResultatTyper={[]}
-          aktsomhetTyper={aktsomhetTyper}
-          sarligGrunnTyper={sarligGrunnTyper}
-          reduserteBelop={[]}
-          behandlingId={1}
-          behandlingVersjon={1}
-          beregnBelop={() => undefined}
-          intl={intlMock}
-          vilkarsVurdertePerioder={vilkårsPerioder}
-          handletUaktsomhetGrad={Aktsomhet.FORSETT}
-          {...reduxFormPropsMock}
-          change={changeValue}
-        />{' '}
-      </MockForm>,
+      <TilbakekrevingPeriodeFormImpl
+        data={periode}
+        behandlingFormPrefix="behandling_V1"
+        skjulPeriode={() => undefined}
+        readOnly={false}
+        erBelopetIBehold
+        tilbakekrevSelvOmBeloepErUnder4Rettsgebyr
+        oppdaterPeriode={() => undefined}
+        oppdaterSplittedePerioder={() => undefined}
+        setNestePeriode={() => undefined}
+        setForrigePeriode={() => undefined}
+        antallPerioderMedAksjonspunkt={2}
+        vilkarResultatTyper={[]}
+        aktsomhetTyper={aktsomhetTyper}
+        sarligGrunnTyper={sarligGrunnTyper}
+        reduserteBelop={[]}
+        behandlingId={1}
+        behandlingVersjon={1}
+        beregnBelop={() => undefined}
+        intl={intlMock}
+        vilkarsVurdertePerioder={vilkårsPerioder}
+        handletUaktsomhetGrad={Aktsomhet.FORSETT}
+        {...reduxFormPropsMock}
+        change={changeValue}
+      />,
       { messages },
     );
 

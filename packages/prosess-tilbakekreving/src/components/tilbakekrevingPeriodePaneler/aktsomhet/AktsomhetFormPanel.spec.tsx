@@ -1,7 +1,6 @@
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/src/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import sinon from 'sinon';
 import messages from '../../../../i18n/nb_NO.json';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
@@ -9,8 +8,6 @@ import SarligGrunn from '../../../kodeverk/sarligGrunn';
 import AktsomhetFormPanel from './AktsomhetFormPanel';
 
 describe('<AktsomhetFormPanel>', () => {
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
   const sarligGrunnTyper = [
     {
       kode: SarligGrunn.GRAD_AV_UAKTSOMHET,
@@ -43,20 +40,18 @@ describe('<AktsomhetFormPanel>', () => {
 
   it('skal vise radioknapp for hver aksomhetstype', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <AktsomhetFormPanel
-          readOnly={false}
-          resetFields={sinon.spy()}
-          handletUaktsomhetGrad={undefined}
-          harGrunnerTilReduksjon
-          erSerligGrunnAnnetValgt={false}
-          aktsomhetTyper={aktsomhetTyper}
-          sarligGrunnTyper={sarligGrunnTyper}
-          antallYtelser={2}
-          feilutbetalingBelop={100}
-          erTotalBelopUnder4Rettsgebyr={false}
-        />
-      </MockForm>,
+      <AktsomhetFormPanel
+        readOnly={false}
+        resetFields={sinon.spy()}
+        handletUaktsomhetGrad={undefined}
+        harGrunnerTilReduksjon
+        erSerligGrunnAnnetValgt={false}
+        aktsomhetTyper={aktsomhetTyper}
+        sarligGrunnTyper={sarligGrunnTyper}
+        antallYtelser={2}
+        feilutbetalingBelop={100}
+        erTotalBelopUnder4Rettsgebyr={false}
+      />,
       { messages },
     );
 
@@ -66,20 +61,18 @@ describe('<AktsomhetFormPanel>', () => {
 
   it('skal vise panel for aktsomhet når dette er valgt', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <AktsomhetFormPanel
-          readOnly={false}
-          resetFields={sinon.spy()}
-          handletUaktsomhetGrad={Aktsomhet.GROVT_UAKTSOM}
-          harGrunnerTilReduksjon
-          erSerligGrunnAnnetValgt={false}
-          aktsomhetTyper={aktsomhetTyper}
-          sarligGrunnTyper={sarligGrunnTyper}
-          antallYtelser={2}
-          feilutbetalingBelop={100}
-          erTotalBelopUnder4Rettsgebyr={false}
-        />
-      </MockForm>,
+      <AktsomhetFormPanel
+        readOnly={false}
+        resetFields={sinon.spy()}
+        handletUaktsomhetGrad={Aktsomhet.GROVT_UAKTSOM}
+        harGrunnerTilReduksjon
+        erSerligGrunnAnnetValgt={false}
+        aktsomhetTyper={aktsomhetTyper}
+        sarligGrunnTyper={sarligGrunnTyper}
+        antallYtelser={2}
+        feilutbetalingBelop={100}
+        erTotalBelopUnder4Rettsgebyr={false}
+      />,
       { messages },
     );
 
@@ -88,20 +81,18 @@ describe('<AktsomhetFormPanel>', () => {
 
   it('skal ikke vise panel for aktsomhet når dette ikke er valgt', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <AktsomhetFormPanel
-          readOnly={false}
-          resetFields={sinon.spy()}
-          handletUaktsomhetGrad={undefined}
-          harGrunnerTilReduksjon
-          erSerligGrunnAnnetValgt={false}
-          aktsomhetTyper={aktsomhetTyper}
-          sarligGrunnTyper={sarligGrunnTyper}
-          antallYtelser={2}
-          feilutbetalingBelop={100}
-          erTotalBelopUnder4Rettsgebyr={false}
-        />
-      </MockForm>,
+      <AktsomhetFormPanel
+        readOnly={false}
+        resetFields={sinon.spy()}
+        handletUaktsomhetGrad={undefined}
+        harGrunnerTilReduksjon
+        erSerligGrunnAnnetValgt={false}
+        aktsomhetTyper={aktsomhetTyper}
+        sarligGrunnTyper={sarligGrunnTyper}
+        antallYtelser={2}
+        feilutbetalingBelop={100}
+        erTotalBelopUnder4Rettsgebyr={false}
+      />,
       { messages },
     );
 
@@ -110,21 +101,19 @@ describe('<AktsomhetFormPanel>', () => {
 
   it('skal vise riktig labels når valg resultattype ikke er Forsto/Burde forstått', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <AktsomhetFormPanel
-          readOnly={false}
-          resetFields={sinon.spy()}
-          handletUaktsomhetGrad={undefined}
-          erValgtResultatTypeForstoBurdeForstaatt={false}
-          harGrunnerTilReduksjon
-          erSerligGrunnAnnetValgt={false}
-          aktsomhetTyper={aktsomhetTyper}
-          sarligGrunnTyper={sarligGrunnTyper}
-          antallYtelser={2}
-          feilutbetalingBelop={100}
-          erTotalBelopUnder4Rettsgebyr={false}
-        />
-      </MockForm>,
+      <AktsomhetFormPanel
+        readOnly={false}
+        resetFields={sinon.spy()}
+        handletUaktsomhetGrad={undefined}
+        erValgtResultatTypeForstoBurdeForstaatt={false}
+        harGrunnerTilReduksjon
+        erSerligGrunnAnnetValgt={false}
+        aktsomhetTyper={aktsomhetTyper}
+        sarligGrunnTyper={sarligGrunnTyper}
+        antallYtelser={2}
+        feilutbetalingBelop={100}
+        erTotalBelopUnder4Rettsgebyr={false}
+      />,
       { messages },
     );
 
@@ -136,21 +125,19 @@ describe('<AktsomhetFormPanel>', () => {
 
   it('skal vise riktig labels når valg resultattype er Forsto/Burde forstått', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <AktsomhetFormPanel
-          readOnly={false}
-          resetFields={sinon.spy()}
-          handletUaktsomhetGrad={undefined}
-          erValgtResultatTypeForstoBurdeForstaatt
-          harGrunnerTilReduksjon
-          erSerligGrunnAnnetValgt={false}
-          aktsomhetTyper={aktsomhetTyper}
-          sarligGrunnTyper={sarligGrunnTyper}
-          antallYtelser={2}
-          feilutbetalingBelop={100}
-          erTotalBelopUnder4Rettsgebyr={false}
-        />
-      </MockForm>,
+      <AktsomhetFormPanel
+        readOnly={false}
+        resetFields={sinon.spy()}
+        handletUaktsomhetGrad={undefined}
+        erValgtResultatTypeForstoBurdeForstaatt
+        harGrunnerTilReduksjon
+        erSerligGrunnAnnetValgt={false}
+        aktsomhetTyper={aktsomhetTyper}
+        sarligGrunnTyper={sarligGrunnTyper}
+        antallYtelser={2}
+        feilutbetalingBelop={100}
+        erTotalBelopUnder4Rettsgebyr={false}
+      />,
       { messages },
     );
     expect(screen.getAllByRole('radio').length).toBe(3);

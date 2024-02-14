@@ -6,13 +6,11 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { screen } from '@testing-library/react';
 import { expect } from 'chai';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import { BehandleUnntakForm } from './BehandleUnntakForm';
 
 describe('<BehandleKlageFormKaImpl>', () => {
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
   const sprakkode = {
     kode: 'NO',
     navn: 'Norsk',
@@ -24,21 +22,19 @@ describe('<BehandleKlageFormKaImpl>', () => {
 
   it('skal vise valgbare skjemelementer når readonly er false', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <BehandleUnntakForm
-          readOnly={false}
-          readOnlySubmitButton
-          aksjonspunktCode={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
-          formValues={formValues1}
-          previewCallback={sinon.spy()}
-          saveUnntak={sinon.spy()}
-          intl={intlMock}
-          formProps={{}}
-          sprakkode={sprakkode}
-          alleKodeverk={{}}
-          {...reduxFormPropsMock}
-        />
-      </MockForm>,
+      <BehandleUnntakForm
+        readOnly={false}
+        readOnlySubmitButton
+        aksjonspunktCode={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
+        formValues={formValues1}
+        previewCallback={sinon.spy()}
+        saveUnntak={sinon.spy()}
+        intl={intlMock}
+        formProps={{}}
+        sprakkode={sprakkode}
+        alleKodeverk={{}}
+        {...reduxFormPropsMock}
+      />,
       { messages },
     );
 
@@ -50,21 +46,19 @@ describe('<BehandleKlageFormKaImpl>', () => {
 
   it('skal ikke vise valgbare skjemelementer når readonly er false', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <BehandleUnntakForm
-          readOnly
-          readOnlySubmitButton
-          aksjonspunktCode={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
-          formValues={formValues1}
-          previewCallback={sinon.spy()}
-          saveUnntak={sinon.spy()}
-          intl={intlMock}
-          formProps={{}}
-          sprakkode={sprakkode}
-          alleKodeverk={{}}
-          {...reduxFormPropsMock}
-        />
-      </MockForm>,
+      <BehandleUnntakForm
+        readOnly
+        readOnlySubmitButton
+        aksjonspunktCode={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
+        formValues={formValues1}
+        previewCallback={sinon.spy()}
+        saveUnntak={sinon.spy()}
+        intl={intlMock}
+        formProps={{}}
+        sprakkode={sprakkode}
+        alleKodeverk={{}}
+        {...reduxFormPropsMock}
+      />,
       { messages },
     );
 

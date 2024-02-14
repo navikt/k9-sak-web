@@ -1,14 +1,11 @@
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import messages from '../../../../i18n/nb_NO.json';
 import SarligGrunn from '../../../kodeverk/sarligGrunn';
 import AktsomhetSarligeGrunnerFormPanel from './AktsomhetSarligeGrunnerFormPanel';
 
 describe('<AktsomhetSarligeGrunnerFormPanel>', () => {
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
   it('skal vise alle særlige grunner', () => {
     const sarligGrunnTyper = [
       {
@@ -23,17 +20,15 @@ describe('<AktsomhetSarligeGrunnerFormPanel>', () => {
       },
     ];
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <AktsomhetSarligeGrunnerFormPanel
-          harGrunnerTilReduksjon
-          readOnly={false}
-          handletUaktsomhetGrad=""
-          erSerligGrunnAnnetValgt={false}
-          sarligGrunnTyper={sarligGrunnTyper}
-          harMerEnnEnYtelse
-          feilutbetalingBelop={10}
-        />{' '}
-      </MockForm>,
+      <AktsomhetSarligeGrunnerFormPanel
+        harGrunnerTilReduksjon
+        readOnly={false}
+        handletUaktsomhetGrad=""
+        erSerligGrunnAnnetValgt={false}
+        sarligGrunnTyper={sarligGrunnTyper}
+        harMerEnnEnYtelse
+        feilutbetalingBelop={10}
+      />,
       { messages },
     );
 
@@ -55,17 +50,15 @@ describe('<AktsomhetSarligeGrunnerFormPanel>', () => {
       },
     ];
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <AktsomhetSarligeGrunnerFormPanel
-          harGrunnerTilReduksjon
-          readOnly={false}
-          handletUaktsomhetGrad=""
-          erSerligGrunnAnnetValgt
-          sarligGrunnTyper={sarligGrunnTyper}
-          harMerEnnEnYtelse
-          feilutbetalingBelop={10}
-        />
-      </MockForm>,
+      <AktsomhetSarligeGrunnerFormPanel
+        harGrunnerTilReduksjon
+        readOnly={false}
+        handletUaktsomhetGrad=""
+        erSerligGrunnAnnetValgt
+        sarligGrunnTyper={sarligGrunnTyper}
+        harMerEnnEnYtelse
+        feilutbetalingBelop={10}
+      />,
       { messages },
     );
 

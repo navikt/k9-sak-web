@@ -1,14 +1,11 @@
 import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
 import { TilbakekrevingVedtakUtdypendeTekstPanel } from './TilbakekrevingVedtakUtdypendeTekstPanel';
 
 describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
   it('skal vise lenke for å skrive inn tekst når felt ikke har verdi og en ikke er i readonly-modus', () => {
     renderWithIntl(
       <TilbakekrevingVedtakUtdypendeTekstPanel
@@ -27,15 +24,13 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
 
   it('skal vise textarea når en har trykket på lenke', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <TilbakekrevingVedtakUtdypendeTekstPanel
-          intl={intlMock}
-          isEmpty={false}
-          type="OPPSUMMERING"
-          readOnly={false}
-          fritekstPakrevet={false}
-        />
-      </MockForm>,
+      <TilbakekrevingVedtakUtdypendeTekstPanel
+        intl={intlMock}
+        isEmpty={false}
+        type="OPPSUMMERING"
+        readOnly={false}
+        fritekstPakrevet={false}
+      />,
       { messages },
     );
 
@@ -45,15 +40,13 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
 
   it('skal vise textarea når fritekst er påkrevet', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <TilbakekrevingVedtakUtdypendeTekstPanel
-          intl={intlMock}
-          isEmpty
-          type="OPPSUMMERING"
-          readOnly={false}
-          fritekstPakrevet
-        />
-      </MockForm>,
+      <TilbakekrevingVedtakUtdypendeTekstPanel
+        intl={intlMock}
+        isEmpty
+        type="OPPSUMMERING"
+        readOnly={false}
+        fritekstPakrevet
+      />,
       { messages },
     );
 

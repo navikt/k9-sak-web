@@ -6,15 +6,12 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import sinon from 'sinon';
 import { intlMock } from '../../i18n/index';
 import messages from '../../i18n/nb_NO.json';
-import { getHenleggArsaker, HenleggBehandlingModalImpl } from './HenleggBehandlingModal';
+import { HenleggBehandlingModalImpl, getHenleggArsaker } from './HenleggBehandlingModal';
 
 describe('<HenleggBehandlingModal>', () => {
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
   const ytelseType = {
     kode: fagsakYtelseType.FORELDREPENGER,
     kodeverk: 'FAGSAK_YTELSE_TYPE',
@@ -55,27 +52,25 @@ describe('<HenleggBehandlingModal>', () => {
 
   it('skal rendre åpen modal', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <HenleggBehandlingModalImpl
-          {...reduxFormPropsMock}
-          handleSubmit={sinon.spy()}
-          cancelEvent={sinon.spy()}
-          previewHenleggBehandling={sinon.spy()}
-          årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
-          begrunnelse="Dette er en begrunnelse"
-          intl={intlMock}
-          showLink={false}
-          ytelseType={ytelseType}
-          behandlingUuid="123"
-          behandlingId={123}
-          behandlingResultatTyper={behandlingResultatTyper}
-          behandlingType={{
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          }}
-          hentMottakere={sinon.spy()}
-        />
-      </MockForm>,
+      <HenleggBehandlingModalImpl
+        {...reduxFormPropsMock}
+        handleSubmit={sinon.spy()}
+        cancelEvent={sinon.spy()}
+        previewHenleggBehandling={sinon.spy()}
+        årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
+        begrunnelse="Dette er en begrunnelse"
+        intl={intlMock}
+        showLink={false}
+        ytelseType={ytelseType}
+        behandlingUuid="123"
+        behandlingId={123}
+        behandlingResultatTyper={behandlingResultatTyper}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+          kodeverk: '',
+        }}
+        hentMottakere={sinon.spy()}
+      />,
       { messages },
     );
 
@@ -87,27 +82,25 @@ describe('<HenleggBehandlingModal>', () => {
 
   it('skal vise nedtrekksliste med behandlingsresultat-typer', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <HenleggBehandlingModalImpl
-          {...reduxFormPropsMock}
-          handleSubmit={sinon.spy()}
-          cancelEvent={sinon.spy()}
-          previewHenleggBehandling={sinon.spy()}
-          årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
-          begrunnelse="Dette er en begrunnelse"
-          intl={intlMock}
-          showLink
-          ytelseType={ytelseType}
-          behandlingUuid="123"
-          behandlingId={123}
-          behandlingResultatTyper={behandlingResultatTyper}
-          behandlingType={{
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          }}
-          hentMottakere={sinon.spy()}
-        />
-      </MockForm>,
+      <HenleggBehandlingModalImpl
+        {...reduxFormPropsMock}
+        handleSubmit={sinon.spy()}
+        cancelEvent={sinon.spy()}
+        previewHenleggBehandling={sinon.spy()}
+        årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
+        begrunnelse="Dette er en begrunnelse"
+        intl={intlMock}
+        showLink
+        ytelseType={ytelseType}
+        behandlingUuid="123"
+        behandlingId={123}
+        behandlingResultatTyper={behandlingResultatTyper}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+          kodeverk: '',
+        }}
+        hentMottakere={sinon.spy()}
+      />,
       { messages },
     );
 
@@ -183,25 +176,23 @@ describe('<HenleggBehandlingModal>', () => {
 
   it('skal disable knapp for lagring når behandlingsresultat-type og begrunnnelse ikke er valgt', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <HenleggBehandlingModalImpl
-          {...reduxFormPropsMock}
-          handleSubmit={sinon.spy()}
-          cancelEvent={sinon.spy()}
-          previewHenleggBehandling={sinon.spy()}
-          intl={intlMock}
-          showLink
-          ytelseType={ytelseType}
-          behandlingUuid="123"
-          behandlingId={123}
-          behandlingResultatTyper={behandlingResultatTyper}
-          behandlingType={{
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          }}
-          hentMottakere={sinon.spy()}
-        />
-      </MockForm>,
+      <HenleggBehandlingModalImpl
+        {...reduxFormPropsMock}
+        handleSubmit={sinon.spy()}
+        cancelEvent={sinon.spy()}
+        previewHenleggBehandling={sinon.spy()}
+        intl={intlMock}
+        showLink
+        ytelseType={ytelseType}
+        behandlingUuid="123"
+        behandlingId={123}
+        behandlingResultatTyper={behandlingResultatTyper}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+          kodeverk: '',
+        }}
+        hentMottakere={sinon.spy()}
+      />,
       { messages },
     );
     expect(screen.getByRole('button', { name: 'Henlegg behandling' })).toBeDisabled();
@@ -209,25 +200,23 @@ describe('<HenleggBehandlingModal>', () => {
 
   it('skal disable knapp for lagring når behandlingsresultat-type, begrunnnelse og fritekst ikke er valgt for tilbakekreving revurdering', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <HenleggBehandlingModalImpl
-          {...reduxFormPropsMock}
-          handleSubmit={sinon.spy()}
-          cancelEvent={sinon.spy()}
-          previewHenleggBehandling={sinon.spy()}
-          intl={intlMock}
-          showLink
-          ytelseType={ytelseType}
-          behandlingUuid="123"
-          behandlingId={123}
-          behandlingResultatTyper={behandlingResultatTyper}
-          behandlingType={{
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          }}
-          hentMottakere={sinon.spy()}
-        />
-      </MockForm>,
+      <HenleggBehandlingModalImpl
+        {...reduxFormPropsMock}
+        handleSubmit={sinon.spy()}
+        cancelEvent={sinon.spy()}
+        previewHenleggBehandling={sinon.spy()}
+        intl={intlMock}
+        showLink
+        ytelseType={ytelseType}
+        behandlingUuid="123"
+        behandlingId={123}
+        behandlingResultatTyper={behandlingResultatTyper}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+          kodeverk: '',
+        }}
+        hentMottakere={sinon.spy()}
+      />,
       { messages },
     );
 
@@ -237,27 +226,25 @@ describe('<HenleggBehandlingModal>', () => {
   it('skal bruke submit-callback når en trykker lagre', async () => {
     const submitEventCallback = sinon.spy();
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <HenleggBehandlingModalImpl
-          {...reduxFormPropsMock}
-          handleSubmit={submitEventCallback}
-          cancelEvent={sinon.spy()}
-          previewHenleggBehandling={sinon.spy()}
-          årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
-          begrunnelse="Dette er en begrunnelse"
-          intl={intlMock}
-          showLink
-          ytelseType={ytelseType}
-          behandlingUuid="123"
-          behandlingId={123}
-          behandlingResultatTyper={behandlingResultatTyper}
-          behandlingType={{
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          }}
-          hentMottakere={sinon.spy()}
-        />
-      </MockForm>,
+      <HenleggBehandlingModalImpl
+        {...reduxFormPropsMock}
+        handleSubmit={submitEventCallback}
+        cancelEvent={sinon.spy()}
+        previewHenleggBehandling={sinon.spy()}
+        årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
+        begrunnelse="Dette er en begrunnelse"
+        intl={intlMock}
+        showLink
+        ytelseType={ytelseType}
+        behandlingUuid="123"
+        behandlingId={123}
+        behandlingResultatTyper={behandlingResultatTyper}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+          kodeverk: '',
+        }}
+        hentMottakere={sinon.spy()}
+      />,
       { messages },
     );
 
@@ -270,27 +257,25 @@ describe('<HenleggBehandlingModal>', () => {
   it('skal avbryte redigering ved trykk på avbryt-knapp', async () => {
     const cancelEventCallback = sinon.spy();
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <HenleggBehandlingModalImpl
-          {...reduxFormPropsMock}
-          handleSubmit={sinon.spy()}
-          cancelEvent={cancelEventCallback}
-          previewHenleggBehandling={sinon.spy()}
-          årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
-          begrunnelse="Dette er en begrunnelse"
-          intl={intlMock}
-          showLink
-          ytelseType={ytelseType}
-          behandlingUuid="123"
-          behandlingId={123}
-          behandlingResultatTyper={behandlingResultatTyper}
-          behandlingType={{
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          }}
-          hentMottakere={sinon.spy()}
-        />
-      </MockForm>,
+      <HenleggBehandlingModalImpl
+        {...reduxFormPropsMock}
+        handleSubmit={sinon.spy()}
+        cancelEvent={cancelEventCallback}
+        previewHenleggBehandling={sinon.spy()}
+        årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
+        begrunnelse="Dette er en begrunnelse"
+        intl={intlMock}
+        showLink
+        ytelseType={ytelseType}
+        behandlingUuid="123"
+        behandlingId={123}
+        behandlingResultatTyper={behandlingResultatTyper}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+          kodeverk: '',
+        }}
+        hentMottakere={sinon.spy()}
+      />,
       { messages },
     );
 
@@ -303,27 +288,25 @@ describe('<HenleggBehandlingModal>', () => {
   it('skal vise forhåndvisningslenke når søknad om henleggelse er trukket', async () => {
     const previewEventCallback = sinon.spy();
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <HenleggBehandlingModalImpl
-          {...reduxFormPropsMock}
-          handleSubmit={sinon.spy()}
-          cancelEvent={sinon.spy()}
-          previewHenleggBehandling={previewEventCallback}
-          årsakKode={behandlingResultatType.HENLAGT_SOKNAD_TRUKKET}
-          begrunnelse="Dette er en begrunnelse"
-          intl={intlMock}
-          showLink
-          ytelseType={ytelseType}
-          behandlingUuid="123"
-          behandlingId={123}
-          behandlingResultatTyper={behandlingResultatTyper}
-          behandlingType={{
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          }}
-          hentMottakere={sinon.spy()}
-        />
-      </MockForm>,
+      <HenleggBehandlingModalImpl
+        {...reduxFormPropsMock}
+        handleSubmit={sinon.spy()}
+        cancelEvent={sinon.spy()}
+        previewHenleggBehandling={previewEventCallback}
+        årsakKode={behandlingResultatType.HENLAGT_SOKNAD_TRUKKET}
+        begrunnelse="Dette er en begrunnelse"
+        intl={intlMock}
+        showLink
+        ytelseType={ytelseType}
+        behandlingUuid="123"
+        behandlingId={123}
+        behandlingResultatTyper={behandlingResultatTyper}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+          kodeverk: '',
+        }}
+        hentMottakere={sinon.spy()}
+      />,
       { messages },
     );
 
@@ -337,28 +320,26 @@ describe('<HenleggBehandlingModal>', () => {
   it('skal vise forhåndvisningslenke når tilbakekreving revurdering henlagt ved feilaktig opprettet med henleggelsesbrev', async () => {
     const previewEventCallback = sinon.spy();
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <HenleggBehandlingModalImpl
-          {...reduxFormPropsMock}
-          handleSubmit={sinon.spy()}
-          cancelEvent={sinon.spy()}
-          previewHenleggBehandling={previewEventCallback}
-          årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET_MED_BREV}
-          begrunnelse="Dette er en begrunnelse"
-          fritekst="Dette er en friteskt"
-          intl={intlMock}
-          showLink
-          ytelseType={ytelseType}
-          behandlingUuid="123"
-          behandlingId={123}
-          behandlingResultatTyper={behandlingResultatTyper}
-          behandlingType={{
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          }}
-          hentMottakere={sinon.spy()}
-        />
-      </MockForm>,
+      <HenleggBehandlingModalImpl
+        {...reduxFormPropsMock}
+        handleSubmit={sinon.spy()}
+        cancelEvent={sinon.spy()}
+        previewHenleggBehandling={previewEventCallback}
+        årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET_MED_BREV}
+        begrunnelse="Dette er en begrunnelse"
+        fritekst="Dette er en friteskt"
+        intl={intlMock}
+        showLink
+        ytelseType={ytelseType}
+        behandlingUuid="123"
+        behandlingId={123}
+        behandlingResultatTyper={behandlingResultatTyper}
+        behandlingType={{
+          kode: behandlingType.FORSTEGANGSSOKNAD,
+          kodeverk: '',
+        }}
+        hentMottakere={sinon.spy()}
+      />,
       { messages },
     );
 

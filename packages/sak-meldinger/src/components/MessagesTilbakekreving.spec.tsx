@@ -4,7 +4,6 @@ import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import sinon from 'sinon';
 import { intlMock } from '../../i18n/index';
 import messages from '../../i18n/nb_NO.json';
@@ -68,25 +67,21 @@ describe('<MessagesTilbakekreving>', () => {
 
   const causes = [{ kode: 'kode', navn: 'Årsak 1', kodeverk: 'kode' }];
 
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
   it('skal støtte brevmaler som array', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <MessagesTilbakekreving
-          {...mockProps}
-          templates={[
-            { kode: 'INNHEN', navn: 'Innhent dokumentasjon', tilgjengelig: true },
-            { kode: 'VARS', navn: 'Varsel om tilbakekreving', tilgjengelig: true },
-          ]}
-          sprakKode={sprakkode}
-          brevmalkode="INNHEN"
-          causes={causes}
-          behandlingId={1}
-          behandlingVersjon={2}
-          revurderingVarslingArsak={[{} as KodeverkMedNavn]}
-        />
-      </MockForm>,
+      <MessagesTilbakekreving
+        {...mockProps}
+        templates={[
+          { kode: 'INNHEN', navn: 'Innhent dokumentasjon', tilgjengelig: true },
+          { kode: 'VARS', navn: 'Varsel om tilbakekreving', tilgjengelig: true },
+        ]}
+        sprakKode={sprakkode}
+        brevmalkode="INNHEN"
+        causes={causes}
+        behandlingId={1}
+        behandlingVersjon={2}
+        revurderingVarslingArsak={[{} as KodeverkMedNavn]}
+      />,
       { messages },
     );
 
@@ -97,18 +92,16 @@ describe('<MessagesTilbakekreving>', () => {
 
   it('skal vise to select-bokser', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <MessagesTilbakekreving
-          {...mockProps}
-          templates={templates}
-          sprakKode={sprakkode}
-          brevmalkode="INNHEN"
-          causes={causes}
-          behandlingId={1}
-          behandlingVersjon={2}
-          revurderingVarslingArsak={[{} as KodeverkMedNavn]}
-        />
-      </MockForm>,
+      <MessagesTilbakekreving
+        {...mockProps}
+        templates={templates}
+        sprakKode={sprakkode}
+        brevmalkode="INNHEN"
+        causes={causes}
+        behandlingId={1}
+        behandlingVersjon={2}
+        revurderingVarslingArsak={[{} as KodeverkMedNavn]}
+      />,
       { messages },
     );
 
@@ -124,21 +117,19 @@ describe('<MessagesTilbakekreving>', () => {
   it('skal vise forhåndvisningslenke når fritekst er gyldig', async () => {
     const previewEventCallback = sinon.spy();
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <MessagesTilbakekreving
-          {...mockProps}
-          templates={templates}
-          sprakKode={sprakkode}
-          brevmalkode="INNHEN"
-          causes={causes}
-          previewCallback={previewEventCallback}
-          fritekst="Dokument"
-          overstyrtMottaker="Bruker"
-          behandlingId={1}
-          behandlingVersjon={2}
-          revurderingVarslingArsak={[{} as KodeverkMedNavn]}
-        />
-      </MockForm>,
+      <MessagesTilbakekreving
+        {...mockProps}
+        templates={templates}
+        sprakKode={sprakkode}
+        brevmalkode="INNHEN"
+        causes={causes}
+        previewCallback={previewEventCallback}
+        fritekst="Dokument"
+        overstyrtMottaker="Bruker"
+        behandlingId={1}
+        behandlingVersjon={2}
+        revurderingVarslingArsak={[{} as KodeverkMedNavn]}
+      />,
       { messages },
     );
     await act(async () => {
@@ -151,20 +142,18 @@ describe('<MessagesTilbakekreving>', () => {
   it('skal vise tre select-bokser når varsel om revurdering', () => {
     const previewEventCallback = sinon.spy();
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <MessagesTilbakekreving
-          {...mockProps}
-          templates={templates}
-          sprakKode={sprakkode}
-          brevmalkode="REVURD"
-          causes={causes}
-          previewCallback={previewEventCallback}
-          fritekst="Dokument"
-          behandlingId={1}
-          behandlingVersjon={2}
-          revurderingVarslingArsak={[{} as KodeverkMedNavn]}
-        />
-      </MockForm>,
+      <MessagesTilbakekreving
+        {...mockProps}
+        templates={templates}
+        sprakKode={sprakkode}
+        brevmalkode="REVURD"
+        causes={causes}
+        previewCallback={previewEventCallback}
+        fritekst="Dokument"
+        behandlingId={1}
+        behandlingVersjon={2}
+        revurderingVarslingArsak={[{} as KodeverkMedNavn]}
+      />,
       { messages },
     );
     expect(screen.getByRole('combobox', { name: 'Mal' })).toBeInTheDocument();

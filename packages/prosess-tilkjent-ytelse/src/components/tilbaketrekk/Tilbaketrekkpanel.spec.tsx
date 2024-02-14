@@ -4,7 +4,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import sinon from 'sinon';
 import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
@@ -22,22 +21,18 @@ const lagAksjonspunktTilbaketrekk = begrunnelse =>
   }) as Aksjonspunkt;
 
 describe('<Tilbaketrekkpanel>', () => {
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
-
   it('skal teste at komponent vises korrekt', () => {
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <UnwrappedForm
-          intl={intlMock}
-          readOnly={false}
-          submitCallback={sinon.spy()}
-          readOnlySubmitButton={false}
-          vurderTilbaketrekkAP={lagAksjonspunktTilbaketrekk(undefined)}
-          behandlingId={1}
-          behandlingVersjon={1}
-          {...reduxFormPropsMock}
-        />
-      </MockForm>,
+      <UnwrappedForm
+        intl={intlMock}
+        readOnly={false}
+        submitCallback={sinon.spy()}
+        readOnlySubmitButton={false}
+        vurderTilbaketrekkAP={lagAksjonspunktTilbaketrekk(undefined)}
+        behandlingId={1}
+        behandlingVersjon={1}
+        {...reduxFormPropsMock}
+      />,
       { messages },
     );
 

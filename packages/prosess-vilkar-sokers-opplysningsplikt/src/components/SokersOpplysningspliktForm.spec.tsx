@@ -6,7 +6,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { Behandling, ManglendeVedleggSoknad, Soknad } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import { reduxForm } from 'redux-form';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import {
@@ -17,7 +16,6 @@ import {
 
 describe('<SokersOpplysningspliktForm>', () => {
   const getKodeverknavn = () => undefined;
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
 
   it('skal vise tabell med manglende vedlegg', () => {
     const manglendeVedlegg = [
@@ -56,30 +54,28 @@ describe('<SokersOpplysningspliktForm>', () => {
     ];
 
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <SokersOpplysningspliktFormImpl
-          {...reduxFormPropsMock}
-          intl={intlMock}
-          readOnly={false}
-          readOnlySubmitButton={false}
-          behandlingsresultat={{} as Behandling['behandlingsresultat']}
-          hasSoknad
-          erVilkarOk={undefined}
-          hasAksjonspunkt
-          manglendeVedlegg={manglendeVedlegg}
-          dokumentTypeIds={dokumentTypeIds}
-          inntektsmeldingerSomIkkeKommer={undefined}
-          getKodeverknavn={getKodeverknavn}
-          behandlingId={1}
-          behandlingVersjon={1}
-          soknad={{} as Soknad}
-          aksjonspunkter={[]}
-          status="test"
-          submitCallback={() => undefined}
-          alleKodeverk={{}}
-          originalErVilkarOk
-        />
-      </MockForm>,
+      <SokersOpplysningspliktFormImpl
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        readOnly={false}
+        readOnlySubmitButton={false}
+        behandlingsresultat={{} as Behandling['behandlingsresultat']}
+        hasSoknad
+        erVilkarOk={undefined}
+        hasAksjonspunkt
+        manglendeVedlegg={manglendeVedlegg}
+        dokumentTypeIds={dokumentTypeIds}
+        inntektsmeldingerSomIkkeKommer={undefined}
+        getKodeverknavn={getKodeverknavn}
+        behandlingId={1}
+        behandlingVersjon={1}
+        soknad={{} as Soknad}
+        aksjonspunkter={[]}
+        status="test"
+        submitCallback={() => undefined}
+        alleKodeverk={{}}
+        originalErVilkarOk
+      />,
       { messages },
     );
 
@@ -95,30 +91,28 @@ describe('<SokersOpplysningspliktForm>', () => {
     const dokumentTypeIds = [];
 
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <SokersOpplysningspliktFormImpl
-          {...reduxFormPropsMock}
-          intl={intlMock}
-          readOnly={false}
-          readOnlySubmitButton={false}
-          behandlingsresultat={{} as Behandling['behandlingsresultat']}
-          hasSoknad
-          erVilkarOk={undefined}
-          hasAksjonspunkt
-          manglendeVedlegg={manglendeVedlegg}
-          dokumentTypeIds={dokumentTypeIds}
-          inntektsmeldingerSomIkkeKommer={undefined}
-          getKodeverknavn={getKodeverknavn}
-          behandlingId={1}
-          behandlingVersjon={1}
-          soknad={{} as Soknad}
-          aksjonspunkter={[]}
-          status="test"
-          submitCallback={() => undefined}
-          alleKodeverk={{}}
-          originalErVilkarOk
-        />{' '}
-      </MockForm>,
+      <SokersOpplysningspliktFormImpl
+        {...reduxFormPropsMock}
+        intl={intlMock}
+        readOnly={false}
+        readOnlySubmitButton={false}
+        behandlingsresultat={{} as Behandling['behandlingsresultat']}
+        hasSoknad
+        erVilkarOk={undefined}
+        hasAksjonspunkt
+        manglendeVedlegg={manglendeVedlegg}
+        dokumentTypeIds={dokumentTypeIds}
+        inntektsmeldingerSomIkkeKommer={undefined}
+        getKodeverknavn={getKodeverknavn}
+        behandlingId={1}
+        behandlingVersjon={1}
+        soknad={{} as Soknad}
+        aksjonspunkter={[]}
+        status="test"
+        submitCallback={() => undefined}
+        alleKodeverk={{}}
+        originalErVilkarOk
+      />,
       { messages },
     );
 

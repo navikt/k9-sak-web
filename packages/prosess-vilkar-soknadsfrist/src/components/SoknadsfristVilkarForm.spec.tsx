@@ -7,7 +7,6 @@ import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi'
 import { DokumentStatus } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { screen } from '@testing-library/react';
-import { reduxForm } from 'redux-form';
 import messages from '../../i18n/nb_NO.json';
 import { SoknadsfristVilkarForm } from './SoknadsfristVilkarForm';
 
@@ -51,32 +50,28 @@ const dokumenter = [
 
 describe('<SoknadsfristVilkarForm>', () => {
   it('skal rendre form med knapp når vilkåret er overstyrt', () => {
-    const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     renderWithIntlAndReduxForm(
-      <MockForm>
-        <SoknadsfristVilkarForm
-          {...reduxFormPropsMock}
-          behandlingId={1}
-          behandlingVersjon={2}
-          erOverstyrt
-          erVilkarOk
-          isReadOnly
-          harAksjonspunkt
-          harÅpentAksjonspunkt={false}
-          overrideReadOnly={false}
-          toggleOverstyring={() => undefined}
-          aksjonspunkter={[]}
-          status={vilkarUtfallType.IKKE_OPPFYLT}
-          submitCallback={() => undefined}
-          dokumenterIAktivPeriode={dokumenter}
-          alleDokumenter={dokumenter}
-          periode={periode}
-          isSolvable
-          saksbehandlere={{}}
-        />
-      </MockForm>,
-
+      <SoknadsfristVilkarForm
+        {...reduxFormPropsMock}
+        behandlingId={1}
+        behandlingVersjon={2}
+        erOverstyrt
+        erVilkarOk
+        isReadOnly
+        harAksjonspunkt
+        harÅpentAksjonspunkt={false}
+        overrideReadOnly={false}
+        toggleOverstyring={() => undefined}
+        aksjonspunkter={[]}
+        status={vilkarUtfallType.IKKE_OPPFYLT}
+        submitCallback={() => undefined}
+        dokumenterIAktivPeriode={dokumenter}
+        alleDokumenter={dokumenter}
+        periode={periode}
+        isSolvable
+        saksbehandlere={{}}
+      />,
       { messages },
     );
 
