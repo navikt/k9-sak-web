@@ -1,6 +1,6 @@
 /* eslint-disable vitest/no-commented-out-tests */
 import HeaderWithErrorPanel from '@fpsak-frontend/sak-dekorator';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 import * as useRestApiError from '@k9-sak-web/rest-api-hooks/src/error/useRestApiError';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 import React from 'react';

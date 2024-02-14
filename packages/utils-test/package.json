@@ -1,6 +1,10 @@
 {
   "name": "@fpsak-frontend/utils-test",
   "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.js"
+  },
   "license": "MIT",
   "private": true,
   "dependencies": {

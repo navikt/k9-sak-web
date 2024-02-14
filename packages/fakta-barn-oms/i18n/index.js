@@ -1,7 +1,7 @@
 import {
   mountWithIntl as globalMountWithIntl,
   shallowWithIntl as globalShallowWithIntl,
-} from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+} from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 
 import messages from './nb_NO.json';
 
