@@ -5,11 +5,11 @@ import { PlusIcon } from '@navikt/ft-plattform-komponenter';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 
 import { erOverstyringInnenforPerioderTilVurdering } from '../../../util/dateUtils';
-import ContainerContext from '../../context/ContainerContext';
-import OverstyringUttakForm from './OverstyringUttakForm';
-import AktivitetRad from './AktivitetRad';
-import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
 import { formaterOverstyringTilFormData } from '../../../util/overstyringUtils';
+import ContainerContext from '../../context/ContainerContext';
+import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
+import AktivitetRad from './AktivitetRad';
+import OverstyringUttakForm from './OverstyringUttakForm';
 
 import styles from './overstyrUttakForm.module.css';
 
