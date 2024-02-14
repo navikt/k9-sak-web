@@ -13,6 +13,7 @@
     "vite": "^5.0.12"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@navikt/ds-css": "5.13.0",
     "@navikt/ds-react": "5.13.0",
     "@navikt/ft-form-hooks": "4.2.21",
@@ -52,6 +53,7 @@
     "react-collapse": "5.1.1",
     "react-dom": "18.2.0",
     "react-hook-form": "7.49.3",
-    "react-popper": "2.3.0"
+    "react-popper": "2.3.0",
+    "yup": "0.32.11"
   }
 }

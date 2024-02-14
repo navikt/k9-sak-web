@@ -1,16 +1,17 @@
-import React, { useContext, useState } from 'react';
-import { FormProvider, useForm, useFieldArray } from 'react-hook-form';
+import React, { useContext, useEffect, useState } from 'react';
+import { FormProvider, useForm, useFieldArray, Resolver } from 'react-hook-form';
 import dayjs from 'dayjs';
+import { yupResolver } from "@hookform/resolvers/yup"
 
 import DatePicker from '@navikt/ds-react/esm/date/datepicker/DatePicker';
 import { useRangeDatepicker } from '@navikt/ds-react/esm/date/hooks/useRangeDatepicker';
-import { Alert, Button, Heading, Loader, TextField, Textarea } from '@navikt/ds-react';
+import { Button, Heading, Loader, TextField, Textarea } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 
 import OverstyrAktivitetListe from './OverstyrAktivitetListe';
 import ContainerContext from '../../context/ContainerContext';
 import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
-import { formaterOverstyring, formaterOverstyringAktiviteter } from '../../../util/overstyringUtils';
+import { formaterOverstyring, formaterOverstyringAktiviteter, overstyrUttakFormValidationSchema } from '../../../util/overstyringUtils';
 import { OverstyrUttakFormFieldName } from '../../../constants/OverstyrUttakFormFieldName';
 import { OverstyrUttakFormData } from '../../../types';
 import { finnSisteSluttDatoFraPerioderTilVurdering, finnTidligsteStartDatoFraPerioderTilVurdering } from '../../../util/dateUtils';
@@ -34,9 +35,9 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
   const { handleOverstyringAksjonspunkt, perioderTilVurdering = [] } = useContext(ContainerContext);
   const { lasterAktiviteter, hentAktuelleAktiviteter } = useOverstyrUttak();
   const [deaktiverLeggTil, setDeaktiverLeggTil] = useState<boolean>(true);
-
+  const resolver: Resolver<OverstyrUttakFormData, any> = yupResolver(overstyrUttakFormValidationSchema) as Resolver<any, any>;
   const formMethods = useForm<OverstyrUttakFormData>({
-    reValidateMode: 'onSubmit',
+    reValidateMode: 'onBlur',
     defaultValues: overstyring || {
       [OverstyrUttakFormFieldName.FOM]: undefined,
       [OverstyrUttakFormFieldName.TOM]: undefined,
@@ -45,10 +46,11 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
       [OverstyrUttakFormFieldName.UTBETALINGSGRADER]: [],
     },
     mode: 'onChange',
+    resolver,
   });
 
   const tidligesteStartDato = finnTidligsteStartDatoFraPerioderTilVurdering(perioderTilVurdering);
-  const { control, setValue, watch, register } = formMethods;
+  const { control, setValue, watch, register, formState: { errors } } = formMethods;
 
   const { fields, replace: replaceAktiviteter } = useFieldArray({
     control,
@@ -69,7 +71,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
   const watchFraDato = watch(OverstyrUttakFormFieldName.FOM, undefined);
   const watchTilDato = watch(OverstyrUttakFormFieldName.TOM, undefined);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleHentAktuelleAktiviteter = async (fom: Date, tom: Date) => {
       const aktiviteter = await hentAktuelleAktiviteter(fom, tom);
       replaceAktiviteter(formaterOverstyringAktiviteter(aktiviteter));
@@ -95,6 +97,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
       lagreEllerOppdater: [{ ...formaterOverstyring(values) }],
       slett: [],
     });
+    setLoading(false);
   };
 
   return (
@@ -119,6 +122,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
               max={100}
               type="number"
               disabled={loading}
+              error={errors[OverstyrUttakFormFieldName.UTTAKSGRAD]?.message}
             />
           </div>
 
@@ -135,7 +139,12 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
           )}
 
           <div className={styles.overstyringBegrunnelse}>
-            <Textarea label="Begrunnelse" {...register(OverstyrUttakFormFieldName.BEGRUNNELSE)} disabled={loading} />
+            <Textarea
+              {...register(OverstyrUttakFormFieldName.BEGRUNNELSE)}
+              label="Begrunnelse"
+              disabled={loading}
+              error={errors[OverstyrUttakFormFieldName.BEGRUNNELSE]?.message}
+            />
           </div>
           <div className={styles.overstyringKnapperad}>
             <Button variant="primary" size="small" disabled={deaktiverLeggTil} loading={loading}>

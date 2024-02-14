@@ -21,7 +21,6 @@ export type BeregningsresultatPeriode = Readonly<{
   fom: string;
   tom: string;
   dagsats: number;
-  inntektGraderingsprosent?: number;
   andeler?: BeregningsresultatPeriodeAndel[];
   totalUtbetalingsgradFraUttak: number;
   totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt?: number;
