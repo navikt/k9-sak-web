@@ -1,19 +1,19 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-
+import { screen } from '@testing-library/react';
+import React from 'react';
+import messages from '../../i18n/nb_NO.json';
 import VilkarResultPicker from './VilkarResultPicker';
 
 describe('<VilkarResultPicker>', () => {
   const avslagsarsaker = [{ kode: 'TEST', navn: 'test', kodeverk: '' }];
 
   it('skal vise komponent med radioknapper', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <VilkarResultPicker
         avslagsarsaker={avslagsarsaker}
         erVilkarOk
@@ -21,13 +21,15 @@ describe('<VilkarResultPicker>', () => {
         customVilkarIkkeOppfyltText="Ikke oppfylt"
         customVilkarOppfyltText="Oppfylt"
       />,
+      { messages },
     );
-    expect(wrapper.find('RadioOption')).toHaveLength(2);
+    expect(screen.getByRole('radio', { name: 'Oppfylt' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Ikke oppfylt' })).toBeInTheDocument();
   });
 
   it('skal kunne overstyre vilkårtekster', () => {
     const textId = 'Test';
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <VilkarResultPicker
         avslagsarsaker={avslagsarsaker}
         erVilkarOk={false}
@@ -35,14 +37,14 @@ describe('<VilkarResultPicker>', () => {
         customVilkarOppfyltText="Oppfylt"
         readOnly={false}
       />,
+      { messages },
     );
 
-    // @ts-ignore fiks
-    expect(wrapper.find('RadioOption').at(1).prop('label')).toBe(textId);
+    expect(screen.getByRole('radio', { name: 'Test' })).toBeInTheDocument();
   });
 
   it('skal ikke vise nedtrekksliste når vilkårsresultat ikke er valgt', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <VilkarResultPicker
         avslagsarsaker={avslagsarsaker}
         erVilkarOk
@@ -50,13 +52,14 @@ describe('<VilkarResultPicker>', () => {
         customVilkarIkkeOppfyltText="Ikke oppfylt"
         customVilkarOppfyltText="Oppfylt"
       />,
+      { messages },
     );
 
-    expect(wrapper.find('SelectField')).toHaveLength(0);
+    expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
   });
 
   it('skal ikke vise nedtrekksliste når vilkårsresultat er OK', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <VilkarResultPicker
         avslagsarsaker={avslagsarsaker}
         erVilkarOk
@@ -64,13 +67,14 @@ describe('<VilkarResultPicker>', () => {
         customVilkarIkkeOppfyltText="Ikke oppfylt"
         customVilkarOppfyltText="Oppfylt"
       />,
+      { messages },
     );
 
-    expect(wrapper.find('SelectField')).toHaveLength(0);
+    expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
   });
 
   it('skal vise nedtrekksliste når vilkårsresultat er valgt', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <VilkarResultPicker
         avslagsarsaker={avslagsarsaker}
         erVilkarOk={false}
@@ -78,13 +82,11 @@ describe('<VilkarResultPicker>', () => {
         customVilkarIkkeOppfyltText="Ikke oppfylt"
         customVilkarOppfyltText="Oppfylt"
       />,
+      { messages },
     );
 
-    const select = wrapper.find('SelectField');
-    expect(select).toHaveLength(1);
-    expect(select.prop('label')).toEqual('Avslagsårsak');
-    expect(select.prop('placeholder')).toEqual('Velg årsak');
-    expect(select.prop('selectValues')).toHaveLength(1);
+    expect(screen.getByRole('combobox', { name: 'Avslagsårsak' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Velg årsak' })).toBeInTheDocument();
   });
 
   it('skal feile validering når en har valgt å avvise vilkår men ikke valgt avslagsårsak', () => {

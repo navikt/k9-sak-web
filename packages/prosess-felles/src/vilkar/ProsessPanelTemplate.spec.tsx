@@ -1,14 +1,13 @@
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
 import sinon from 'sinon';
-
-import { Undertekst } from 'nav-frontend-typografi';
-
+import messages from '../../i18n/nb_NO.json';
 import ProsessPanelTemplate from './ProsessPanelTemplate';
 
 describe('<ProsessPanelTemplate>', () => {
   it('skal ikke vise lovreferanse når dette ikke finnes', () => {
-    const wrapper = shallow(
+    const { container } = renderWithIntlAndReduxForm(
       <ProsessPanelTemplate
         handleSubmit={sinon.spy()}
         title="Fødsel"
@@ -22,13 +21,14 @@ describe('<ProsessPanelTemplate>', () => {
       >
         <div>test</div>
       </ProsessPanelTemplate>,
+      { messages },
     );
 
-    expect(wrapper.find(Undertekst)).toHaveLength(0);
+    expect(container.getElementsByClassName('vilkar').length).toBe(0);
   });
 
   it('skal vise lovreferanse når dette finnes', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <ProsessPanelTemplate
         handleSubmit={sinon.spy()}
         lovReferanse="test lovReferanse"
@@ -43,8 +43,9 @@ describe('<ProsessPanelTemplate>', () => {
       >
         <div>test</div>
       </ProsessPanelTemplate>,
+      { messages },
     );
 
-    expect(wrapper.find(Undertekst)).toHaveLength(1);
+    expect(screen.getByText('test lovReferanse')).toBeInTheDocument();
   });
 });

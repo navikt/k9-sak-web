@@ -1,7 +1,7 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { screen } from '@testing-library/react';
 import React from 'react';
+import { intlMock } from '../../i18n/index';
 import messages from '../../i18n/nb_NO.json';
 import ForeldelseTidslinjeHjelpetekster from './ForeldelseTidslinjeHjelpetekster';
 
