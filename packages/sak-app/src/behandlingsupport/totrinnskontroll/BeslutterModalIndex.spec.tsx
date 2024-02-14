@@ -1,11 +1,11 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import messages from '@fpsak-frontend/sak-totrinnskontroll/i18n/nb_NO.json';
 import { renderWithIntl } from '@fpsak-frontend/utils-test';
 import { Behandling } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import messages from '../../../../sak-totrinnskontroll/i18n/nb_NO.json';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import BeslutterModalIndex from './BeslutterModalIndex';
 

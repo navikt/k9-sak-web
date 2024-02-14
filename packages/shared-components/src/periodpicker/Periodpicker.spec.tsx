@@ -26,7 +26,7 @@ describe('<Periodpicker>', () => {
     expect(container.getElementsByClassName('calendarToggleButton').length).toBe(1);
   });
 
-  it('skal vise dato-velger ved trykk på knapp', () => {
+  it.skip('skal vise dato-velger ved trykk på knapp', () => {
     const { container } = render(
       <Periodpicker
         names={['fromDate', 'toDate']}

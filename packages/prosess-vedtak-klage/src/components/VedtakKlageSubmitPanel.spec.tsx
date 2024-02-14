@@ -18,7 +18,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
 
     const isNotMedhold = isMedholdIKlage({}, klageVurderingResultatNK);
 
-    expect(isNotMedhold).to.eql(false);
+    expect(isNotMedhold).toBe(false);
   });
 
   it('skal rendre submit panel uten medhold i klagevurdering', () => {
