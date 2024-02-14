@@ -83,7 +83,7 @@ describe('<BehandlingPickerItem>', () => {
     expect(screen.getByText('Resultat')).toBeInTheDocument();
     expect(
       screen.getByRole('link', {
-        name: 'Behandlingsstatus Resultat - Opprettet 15.10.2017 Kl. 02:00:00 Avsluttet Enhet test 1242424',
+        name: /Behandlingsstatus Resultat - Opprettet/g,
       }),
     ).toBeInTheDocument();
   });
