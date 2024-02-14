@@ -2,7 +2,6 @@ import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { renderWithIntl } from '@fpsak-frontend/utils-test';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { screen } from '@testing-library/react';
-import { expect } from 'chai';
 import React from 'react';
 import sinon from 'sinon';
 import { intlMock } from '../../i18n';
