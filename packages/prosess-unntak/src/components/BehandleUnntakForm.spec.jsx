@@ -44,7 +44,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
     expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
   });
 
-  it('skal ikke vise valgbare skjemelementer når readonly er false', () => {
+  it('skal ikke vise valgbare skjemelementer når readonly er true', () => {
     renderWithIntlAndReduxForm(
       <BehandleUnntakForm
         readOnly

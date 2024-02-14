@@ -6,7 +6,7 @@ import messages from '../../../i18n/nb_NO.json';
 import TilbakekrevingTimelinePanel from './TilbakekrevingTimelinePanel';
 
 describe('<TilbakekrevingTimelinePanel>', () => {
-  it('skal rendre komponent korrekt og velge periode ved trykk på periode i tidslinje', async () => {
+  it('skal rendre komponent korrekt', async () => {
     const perioder = [
       {
         id: 1,
