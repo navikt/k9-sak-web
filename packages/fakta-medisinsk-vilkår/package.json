@@ -17,7 +17,7 @@
     "eslint-plugin-cypress": "^2.15.1",
     "msw": "1.3.2",
     "start-server-and-test": "^2.0.3",
-    "vite": "^5.0.12"
+    "vite": "^5.1.1"
   },
   "dependencies": {
     "@fpsak-frontend/form": "1.0.0",

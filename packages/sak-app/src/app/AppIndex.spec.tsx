@@ -1,6 +1,5 @@
 /* eslint-disable vitest/no-commented-out-tests */
 import React from 'react';
-import { shallow } from 'enzyme';
 
 import AppIndex from './AppIndex';
 import Home from './components/Home';

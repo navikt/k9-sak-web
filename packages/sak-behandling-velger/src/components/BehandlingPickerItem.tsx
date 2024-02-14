@@ -48,7 +48,12 @@ const renderToggleShowAllButton = (
   showAll: boolean,
   getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
 ): ReactElement => (
-  <button type="button" className={styles.toggleShowAllButton} onClick={toggleShowAll}>
+  <button
+    aria-label={showAll ? 'Skjul andre behandlinger' : 'Vis alle behandlinger'}
+    type="button"
+    className={styles.toggleShowAllButton}
+    onClick={toggleShowAll}
+  >
     {renderItemContent(behandling, getKodeverkFn, !showAll, showAll)}
   </button>
 );

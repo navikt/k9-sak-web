@@ -1,11 +1,9 @@
 /* eslint-disable class-methods-use-this */
-import React, { useEffect } from 'react';
-import { mount } from 'enzyme';
-import sinon from 'sinon';
-import { act } from 'react-dom/test-utils';
-
 import { AbstractRequestApi } from '@k9-sak-web/rest-api';
-
+import { render } from '@testing-library/react';
+import React, { useEffect } from 'react';
+import { act } from 'react-dom/test-utils';
+import sinon from 'sinon';
 import { RestApiErrorProvider } from '../error/RestApiErrorContext';
 import { RestApiProvider } from './RestApiContext';
 import getUseGlobalStateRestApi from './useGlobalStateRestApi';
@@ -23,17 +21,17 @@ class RequestApiTestMock extends AbstractRequestApi {
 
   public hasPath = () => true;
 
-  public injectPaths = () => { };
+  public injectPaths = () => {};
 
-  public resetCache = () => { };
+  public resetCache = () => {};
 
   public isMock = () => false;
 
-  public setAddErrorMessageHandler = () => { };
+  public setAddErrorMessageHandler = () => {};
 
-  public setRequestPendingHandler = () => { };
+  public setRequestPendingHandler = () => {};
 
-  public setLinks = () => { };
+  public setLinks = () => {};
 
   public mock = () => {
     throw new Error('Not Implemented');
@@ -71,7 +69,7 @@ describe('<RestApiContext>', () => {
     const setValue = sinon.spy();
 
     await act(async () => {
-      mount(
+      render(
         <RestApiProvider>
           <RestApiErrorProvider>
             <TestGlobalData setValue={setValue} />

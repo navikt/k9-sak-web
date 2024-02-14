@@ -1,15 +1,12 @@
-import React from 'react';
-import { PersonCard, Gender } from '@navikt/ft-plattform-komponenter';
-
-import { FlexContainer } from '@fpsak-frontend/shared-components';
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import region from '@fpsak-frontend/kodeverk/src/region';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-
-import shallowWithIntl from '../../i18n/index';
+import region from '@fpsak-frontend/kodeverk/src/region';
+import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
+import { renderWithIntl, screen } from '@fpsak-frontend/utils-test';
+import React from 'react';
+import messages from '../../i18n/nb_NO.json';
 import VisittkortPanel from './VisittkortPanel';
 
 describe('<VisittkortPanel>', () => {
@@ -78,25 +75,23 @@ describe('<VisittkortPanel>', () => {
   };
 
   it('skal vise enkelt visittkort når en ikke har personopplysninger', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VisittkortPanel
         fagsakPerson={fagsakPerson}
         alleKodeverk={{}}
         sprakkode={{ kode: 'NN', kodeverk: '' }}
         relaterteFagsaker={null}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(FlexContainer)).toHaveLength(0);
-    const visittkort = wrapper.find(PersonCard);
-    expect(visittkort).toHaveLength(1);
-    expect(visittkort.prop('name')).toEqual(fagsakPerson.navn);
-    expect(visittkort.prop('fodselsnummer')).toEqual(fagsakPerson.personnummer);
-    expect(visittkort.prop('gender')).toEqual(Gender.female);
+    expect(screen.getByText(fagsakPerson.navn)).toBeInTheDocument();
+    expect(screen.getByText(fagsakPerson.personnummer)).toBeInTheDocument();
+    expect(screen.getByText('Kvinne')).toBeInTheDocument();
   });
 
   it('skal vise visittkort når en har harTilbakekrevingVerge', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VisittkortPanel
         fagsakPerson={fagsakPerson}
         alleKodeverk={{}}
@@ -104,18 +99,14 @@ describe('<VisittkortPanel>', () => {
         harTilbakekrevingVerge
         relaterteFagsaker={null}
       />,
+      { messages },
     );
-
-    expect(wrapper.find(FlexContainer)).toHaveLength(0);
-    const visittkort = wrapper.find(PersonCard);
-    expect(visittkort).toHaveLength(1);
-    expect(visittkort.prop('name')).toEqual(fagsakPerson.navn);
-    expect(visittkort.prop('fodselsnummer')).toEqual(fagsakPerson.personnummer);
-    expect(visittkort.prop('gender')).toEqual(Gender.female);
+    expect(screen.getByText('Personen har verge')).toBeInTheDocument();
+    expect(screen.getByText('Verge')).toBeInTheDocument();
   });
 
   it('skal vise visittkort når en har personopplysninger', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VisittkortPanel
         fagsakPerson={fagsakPerson}
         personopplysninger={personopplysningerSoker}
@@ -123,13 +114,12 @@ describe('<VisittkortPanel>', () => {
         sprakkode={{ kode: 'NN', kodeverk: '' }}
         relaterteFagsaker={null}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(FlexContainer)).toHaveLength(1);
-    const visittkort = wrapper.find(PersonCard);
-    expect(visittkort).toHaveLength(1);
-    expect(visittkort.prop('name')).toEqual(personopplysningerSoker.navn);
-    expect(visittkort.prop('fodselsnummer')).toEqual(personopplysningerSoker.fnr);
-    expect(visittkort.prop('gender')).toEqual(Gender.female);
+    expect(screen.getByText(personopplysningerSoker.navn)).toBeInTheDocument();
+    expect(screen.getByText(personopplysningerSoker.fnr)).toBeInTheDocument();
+    expect(screen.getByText('Kvinne')).toBeInTheDocument();
+    expect(screen.getByText(fagsakPerson.navn)).toBeInTheDocument();
   });
 });

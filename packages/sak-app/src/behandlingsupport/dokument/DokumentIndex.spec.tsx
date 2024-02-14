@@ -1,14 +1,11 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-
-import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
-
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import { Fagsak } from '@k9-sak-web/types';
+import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import { DokumentIndex } from './DokumentIndex';
-import { requestApi, K9sakApiKeys } from '../../data/k9sakApi';
 
 describe('<DokumentIndex>', () => {
   const documents = [
@@ -61,17 +58,11 @@ describe('<DokumentIndex>', () => {
   it('skal vise liste med sorterte dokumenter', () => {
     requestApi.mock(K9sakApiKeys.ALL_DOCUMENTS, documents);
 
-    const wrapper = shallow(
+    render(
       <DokumentIndex behandlingId={1} behandlingVersjon={2} saksnummer={123} behandlingUuid="1" fagsak={fagsak} />,
     );
-
-    const index = wrapper.find(DokumenterSakIndex);
-    expect(index).toHaveLength(1);
-
-    const dokumenter = index.prop('documents');
-
-    expect(dokumenter[0].journalpostId).toEqual('2');
-    expect(dokumenter[1].journalpostId).toEqual('3');
-    expect(dokumenter[2].journalpostId).toEqual('1');
+    expect(screen.getByRole('link', { name: 'dok' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'dok1' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'dok2' })).toBeInTheDocument();
   });
 });

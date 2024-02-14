@@ -1,12 +1,15 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { LegendBox } from '@fpsak-frontend/tidslinje';
+import { intlMock } from '../../i18n';
+import messages from '../../i18n/nb_NO.json';
 import TilbakekrevingTidslinjeHjelpetekster from './TilbakekrevingTidslinjeHjelpetekster';
-import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<TilbakekrevingTidslinjeHjelpetekster>', () => {
   it('skal rendre komponent korrekt', () => {
-    const wrapper = shallowWithIntl(<TilbakekrevingTidslinjeHjelpetekster.WrappedComponent intl={intlMock} />);
-
-    expect(wrapper.find(LegendBox)).toHaveLength(1);
+    renderWithIntl(<TilbakekrevingTidslinjeHjelpetekster.WrappedComponent intl={intlMock} />, { messages });
+    expect(screen.getByText('Beløp tilbakekreves')).toBeInTheDocument();
+    expect(screen.getByText('Ingen tilbakekreving')).toBeInTheDocument();
+    expect(screen.getByText('Uavklart periode')).toBeInTheDocument();
   });
 });

@@ -1,10 +1,12 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { mountWithIntl } from '../../../i18n';
+import messages from '../../../i18n/nb_NO.json';
 import Nokkeltall from './Nokkeltall';
 
 describe('<Nokkeltall>', () => {
   it('Viser detaljer dersom den er åpnet', () => {
-    const wrapper = mountWithIntl(
+    renderWithIntl(
       <Nokkeltall
         viserDetaljer
         overskrift={{
@@ -26,14 +28,14 @@ describe('<Nokkeltall>', () => {
         ]}
         visDetaljer={() => undefined}
       />,
+      { messages },
     );
-
-    const detaljer = wrapper.find('div');
-    expect(detaljer).toHaveLength(2);
+    expect(screen.getAllByText('Nøkkeltall for uttak').length).toBe(2);
+    expect(screen.getByText('Vis alle utregninger')).toBeInTheDocument();
   });
 
   it('Viser ikke detaljer dersom den ikke er åpnet', () => {
-    const wrapper = mountWithIntl(
+    renderWithIntl(
       <Nokkeltall
         viserDetaljer={false}
         overskrift={{
@@ -55,9 +57,9 @@ describe('<Nokkeltall>', () => {
         ]}
         visDetaljer={() => undefined}
       />,
+      { messages },
     );
-
-    const detaljer = wrapper.find('div');
-    expect(detaljer).toHaveLength(0);
+    expect(screen.getAllByText('Nøkkeltall for uttak').length).toBe(1);
+    expect(screen.queryByText('Vis alle utregninger')).not.toBeInTheDocument();
   });
 });

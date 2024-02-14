@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react';
 import { render as rtlRender } from '@testing-library/react';
+import React, { ReactElement } from 'react';
 import { IntlProvider } from 'react-intl';
-import { combineReducers, createStore } from 'redux';
-import { Provider } from 'react-redux';
-import { reducer } from 'redux-form';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { Provider } from 'react-redux';
+import { combineReducers, createStore } from 'redux';
+import { reducer, reduxForm } from 'redux-form';
 // eslint-disable-next-line import/no-relative-packages
 import defaultMessages from '../../../public/sprak/nb_NO.json';
 // eslint-disable-next-line import/no-relative-packages
@@ -29,10 +29,11 @@ export function renderWithReduxForm(ui: ReactElement, { ...renderOptions } = {})
 }
 
 export function renderWithIntlAndReduxForm(ui: ReactElement, { locale, messages, ...renderOptions }: any = {}) {
+  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
   const Wrapper = ({ children }) => (
     <Provider store={createStore(combineReducers({ form: reducer }))}>
       <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages} onError={() => null}>
-        {children}
+        <MockForm>{children}</MockForm>
       </IntlProvider>
     </Provider>
   );

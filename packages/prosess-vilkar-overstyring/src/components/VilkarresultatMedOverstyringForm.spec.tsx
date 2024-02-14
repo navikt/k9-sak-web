@@ -1,16 +1,14 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import { FormattedMessage } from 'react-intl';
-
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-
-import VilkarresultatMedBegrunnelse from './VilkarresultatMedBegrunnelse';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import messages from '../../i18n/nb_NO.json';
 import { VilkarresultatMedOverstyringForm } from './VilkarresultatMedOverstyringForm';
 
 describe('<VilkarresultatMedOverstyringForm>', () => {
   it('skal rendre form med knapp når vilkåret er overstyrt', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <VilkarresultatMedOverstyringForm
         {...reduxFormPropsMock}
         erVilkarOk
@@ -43,12 +41,11 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         periodeFom="2019-01-01"
         periodeTom="2020-01-01"
       />,
+      { messages },
     );
 
-    const melding = wrapper.find(FormattedMessage);
-    expect(melding).toHaveLength(3);
-
-    const vilkarResultatMedBegrunnelse = wrapper.find(VilkarresultatMedBegrunnelse);
-    expect(vilkarResultatMedBegrunnelse).toHaveLength(1);
+    expect(screen.getByText('Manuell overstyring av automatisk vurdering')).toBeInTheDocument();
+    expect(screen.getByTestId('overstyringform')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft overstyring' })).toBeInTheDocument();
   });
 });

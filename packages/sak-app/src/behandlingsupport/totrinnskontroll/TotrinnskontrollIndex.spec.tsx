@@ -1,15 +1,13 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-
-import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { Fagsak, BehandlingAppKontekst } from '@k9-sak-web/types';
-
-import { requestApi, K9sakApiKeys } from '../../data/k9sakApi';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import TotrinnskontrollIndex from './TotrinnskontrollIndex';
-import BeslutterModalIndex from './BeslutterModalIndex';
 
 vi.mock('react-router-dom', async () => {
   const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
@@ -74,7 +72,7 @@ describe('<TotrinnskontrollIndex>', () => {
     navn: 'Test',
   };
 
-  it('skal vise modal når beslutter godkjenner', () => {
+  it('skal vise modal når beslutter godkjenner', async () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
     requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, kodeverk);
     requestApi.mock(K9sakApiKeys.KODEVERK_KLAGE, kodeverk);
@@ -82,11 +80,12 @@ describe('<TotrinnskontrollIndex>', () => {
     requestApi.mock(K9sakApiKeys.TOTRINNS_KLAGE_VURDERING, {});
     requestApi.mock(K9sakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT);
     requestApi.mock(K9sakApiKeys.TILGJENGELIGE_VEDTAKSBREV, {});
+    requestApi.mock(K9sakApiKeys.HAR_REVURDERING_SAMME_RESULTAT, {});
 
     const totrinnskontrollAksjonspunkter = [];
     requestApi.mock(K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER, totrinnskontrollAksjonspunkter);
 
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <TotrinnskontrollIndex
         fagsak={fagsak as Fagsak}
         alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
@@ -94,35 +93,14 @@ describe('<TotrinnskontrollIndex>', () => {
         behandlingVersjon={alleBehandlinger[0].versjon}
       />,
     );
-
-    const index = wrapper.find(TotrinnskontrollSakIndex);
-
-    expect(wrapper.find(BeslutterModalIndex)).toHaveLength(0);
-
-    const submit = index.prop('onSubmit') as (params: any) => void;
-    submit({
-      fatterVedtakAksjonspunktDto: {
-        '@type': '5016',
-        aksjonspunktGodkjenningDtos: [],
-        begrunnelse: null,
-      },
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: 'Godkjenn vedtaket' }));
     });
-
-    const reqData = requestApi.getRequestMockData(K9sakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT);
-    expect(reqData).toHaveLength(1);
-    expect(reqData[0].params).toEqual({
-      behandlingId: 1234,
-      saksnummer: '1',
-      behandlingVersjon: 123,
-      bekreftedeAksjonspunktDtoer: [
-        {
-          '@type': '5016',
-          aksjonspunktGodkjenningDtos: [],
-          begrunnelse: null,
-        },
-      ],
-    });
-
-    expect(wrapper.find(BeslutterModalIndex)).toHaveLength(1);
+    expect(
+      screen.getByRole('dialog', {
+        name: 'Omsorgspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.',
+      }),
+    ).toBeInTheDocument();
   });
 });

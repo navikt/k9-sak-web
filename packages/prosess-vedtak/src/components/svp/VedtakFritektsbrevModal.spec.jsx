@@ -1,13 +1,15 @@
-import React from 'react';
-import { expect } from 'chai';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import Modal from 'nav-frontend-modal';
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
+import { expect } from 'chai';
+import React from 'react';
+import { intlMock } from '../../../i18n';
+import messages from '../../../i18n/nb_NO.json';
 import { VedtakFritekstbrevModal } from './VedtakFritekstbrevModal';
-import shallowWithIntl, { intlMock } from '../../../i18n';
 
 describe('<VedtakFritekstbrevModal>', () => {
   it('skal vise modal når behandlingsresultat er AVSLATT', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VedtakFritekstbrevModal
         intl={intlMock}
         readOnly={false}
@@ -18,15 +20,19 @@ describe('<VedtakFritekstbrevModal>', () => {
         }}
         erSVP
       />,
+      { messages },
     );
-    const modal = wrapper.find(Modal);
-    const isOpen = modal.prop('isOpen');
-    expect(modal).to.have.length(1);
-    expect(isOpen).to.eql(true);
+
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "I denne behandlingen er det ikke automatisk vedtaksbrev. Du må velge 'Overstyr automatisk brev' og skrive fritekstbrev.",
+      ),
+    ).toBeInTheDocument();
   });
 
   it('skal vise modal når behandlingsresultat er OPPHOR', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VedtakFritekstbrevModal
         intl={intlMock}
         readOnly={false}
@@ -37,15 +43,18 @@ describe('<VedtakFritekstbrevModal>', () => {
         }}
         erSVP
       />,
+      { messages },
     );
-    const modal = wrapper.find(Modal);
-    const isOpen = modal.prop('isOpen');
-    expect(modal).to.have.length(1);
-    expect(isOpen).to.eql(true);
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "I denne behandlingen er det ikke automatisk vedtaksbrev. Du må velge 'Overstyr automatisk brev' og skrive fritekstbrev.",
+      ),
+    ).toBeInTheDocument();
   });
 
   it('skal ikke vise modal når behandlingsresultat er noe annet en OPPHOR og AVSLATT', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VedtakFritekstbrevModal
         intl={intlMock}
         readOnly={false}
@@ -56,13 +65,13 @@ describe('<VedtakFritekstbrevModal>', () => {
         }}
         erSVP
       />,
+      { messages },
     );
-    const modal = wrapper.find(Modal);
-    expect(modal).to.have.length(0);
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('skal ikke vise modal når readOnly er true', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VedtakFritekstbrevModal
         intl={intlMock}
         readOnly
@@ -73,13 +82,13 @@ describe('<VedtakFritekstbrevModal>', () => {
         }}
         erSVP
       />,
+      { messages },
     );
-    const modal = wrapper.find(Modal);
-    expect(modal).to.have.length(0);
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('skal ikke vise modal når ikke SVP', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VedtakFritekstbrevModal
         intl={intlMock}
         readOnly={false}
@@ -90,8 +99,8 @@ describe('<VedtakFritekstbrevModal>', () => {
         }}
         erSVP={false}
       />,
+      { messages },
     );
-    const modal = wrapper.find(Modal);
-    expect(modal).to.have.length(0);
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 });

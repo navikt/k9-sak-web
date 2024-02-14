@@ -1,19 +1,19 @@
+import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { FormSection } from 'redux-form';
-import { Undertekst } from 'nav-frontend-typografi';
 
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import KodeverkMedNavnTsType from '@k9-sak-web/types/src/kodeverkMedNavnTsType';
 
 import Aktsomhet from '../../../kodeverk/aktsomhet';
+import { AktsomhetInfo } from '../../../types/vilkarsVurdertePerioderTsType';
 import AktsomhetGradFormPanel from './AktsomhetGradFormPanel';
 import { ANDELER, EGENDEFINERT } from './AktsomhetReduksjonAvBelopFormPanel';
-import { AktsomhetInfo } from '../../../types/vilkarsVurdertePerioderTsType';
 
 const uaktsomhetCodes = [Aktsomhet.GROVT_UAKTSOM, Aktsomhet.SIMPEL_UAKTSOM, Aktsomhet.FORSETT];
 

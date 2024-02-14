@@ -1,16 +1,13 @@
-import React, { useRef, useState } from 'react';
-
 import { Alert, BodyShort, Button, Heading, Modal, Table } from '@navikt/ds-react';
 import { PlusIcon } from '@navikt/ft-plattform-komponenter';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-
+import React, { useRef, useState } from 'react';
 import { erOverstyringInnenforPerioderTilVurdering } from '../../../util/dateUtils';
 import { formaterOverstyringTilFormData } from '../../../util/overstyringUtils';
 import ContainerContext from '../../context/ContainerContext';
 import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
 import AktivitetRad from './AktivitetRad';
 import OverstyringUttakForm from './OverstyringUttakForm';
-
 import styles from './overstyrUttakForm.module.css';
 
 interface ownProps {

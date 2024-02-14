@@ -1,11 +1,11 @@
-import React from 'react';
-import { combineReducers, createStore } from 'redux';
-import { Provider } from 'react-redux';
-import { IntlProvider } from 'react-intl';
-import { reducer as formReducer, reduxForm } from 'redux-form';
-import { mount } from 'enzyme';
-import { expect } from 'chai';
 import { messages } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { expect } from 'chai';
+import { mount } from 'enzyme';
+import React from 'react';
+import { IntlProvider } from 'react-intl';
+import { Provider } from 'react-redux';
+import { combineReducers, createStore } from 'redux';
+import { reducer as formReducer, reduxForm } from 'redux-form';
 import SelectField from './SelectField';
 
 const selectValues = [

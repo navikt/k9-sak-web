@@ -1,35 +1,26 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import sinon from 'sinon';
-import Modal from 'nav-frontend-modal';
-
+import { intlMock } from '../../i18n/index';
+import messages from '../../i18n/nb_NO.json';
 import HenlagtBehandlingModal from './HenlagtBehandlingModal';
-import shallowWithIntl, { intlMock } from '../../i18n/index';
 
 describe('<HenlagtBehandlingModal>', () => {
   it('skal rendre åpen modal', () => {
-    const wrapper = shallowWithIntl(
-      <HenlagtBehandlingModal.WrappedComponent showModal closeEvent={sinon.spy()} intl={intlMock} />,
-    );
+    renderWithIntl(<HenlagtBehandlingModal.WrappedComponent showModal closeEvent={sinon.spy()} intl={intlMock} />, {
+      messages,
+    });
 
-    const modal = wrapper.find(Modal);
-    expect(modal).toHaveLength(1);
-    expect(modal.prop('isOpen')).toBe(true);
-    expect(modal.prop('closeButton')).toBe(false);
-    expect(modal.prop('contentLabel')).toEqual('Behandlingen er henlagt');
-
-    const okKnapp = modal.find('Hovedknapp');
-    expect(okKnapp).toHaveLength(1);
-    expect(okKnapp.prop('mini')).toBe(true);
-    expect(okKnapp.childAt(0).text()).toEqual('OK');
+    expect(screen.getByRole('dialog', { name: 'Behandlingen er henlagt' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'OK' })).toBeInTheDocument();
   });
 
   it('skal rendre lukket modal', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <HenlagtBehandlingModal.WrappedComponent showModal={false} closeEvent={sinon.spy()} intl={intlMock} />,
+      { messages },
     );
-
-    const modal = wrapper.find(Modal);
-    expect(modal).toHaveLength(1);
-    expect(modal.prop('isOpen')).toBe(false);
+    expect(screen.queryByRole('dialog', { name: 'Behandlingen er henlagt' })).not.toBeInTheDocument();
   });
 });

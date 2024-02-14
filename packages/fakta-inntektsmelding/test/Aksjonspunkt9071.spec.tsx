@@ -109,8 +109,8 @@ describe('9071 - Mangler inntektsmelding', () => {
     // ACT
     await userEvent.click(screen.getByText(/ja, bruk a-inntekt for sauefabrikk \(2\) og sauefabrikk \(1\)/i));
     await userEvent.type(screen.getByLabelText(/Begrunnelse/i), 'Inntektsmelding? LOL! Nei takk');
-    await act(() => {
-      userEvent.click(screen.getByRole('button', { name: /Fortsett uten inntektsmelding/i }));
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: /Fortsett uten inntektsmelding/i }));
     });
 
     // ASSERT
@@ -138,8 +138,8 @@ describe('9071 - Mangler inntektsmelding', () => {
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
     // ACT
-    await act(() => {
-      userEvent.click(screen.getByRole('button', { name: /Send inn/i }));
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: /Send inn/i }));
     });
 
     // ASSERT
