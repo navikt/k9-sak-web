@@ -1,3 +1,7 @@
+import * as React from 'react';
+import { Collapse } from 'react-collapse';
+import classNames from 'classnames/bind';
+
 import {
   ChevronIconBlack,
   ContentWithTooltip,
@@ -7,10 +11,9 @@ import {
   TwoPersonsWithOneHighlightedIconGray,
 } from '@navikt/ft-plattform-komponenter';
 import { PersonPencilFillIcon } from '@navikt/aksel-icons';
-import classNames from 'classnames/bind';
 import { Normaltekst } from 'nav-frontend-typografi';
-import * as React from 'react';
-import { Collapse } from 'react-collapse';
+import { HelpText } from '@navikt/ds-react';
+
 import AnnenPart from '../../../constants/AnnenPart';
 import Årsaker from '../../../constants/Årsaker';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
@@ -21,8 +24,9 @@ import FullWidthRow from '../table/FullWidthRow';
 import TableColumn from '../table/TableColumn';
 import TableRow from '../table/TableRow';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
-import styles from './uttak.module.css';
 import ContainerContext from '../../context/ContainerContext';
+
+import styles from './uttak.module.css';
 
 const cx = classNames.bind(styles);
 
@@ -54,7 +58,15 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
         <TableColumn className={`${withBorderTop ? styles.borderTop : ''}`}>
           <Normaltekst>
             {periode.prettifyPeriod()}
-            {manueltOverstyrt && <PersonPencilFillIcon className="ml-1 align-middle text-2xl text-border-warning" title="Manuelt overstyrt" />}
+            {manueltOverstyrt && <>
+              <PersonPencilFillIcon className="ml-1 align-middle text-2xl text-border-warning" title="Manuelt overstyrt" />
+              <HelpText
+                wrapperClassName='inline-flex align-middle ml-2'
+                onClick={(e) => { e.stopPropagation() }}
+              >
+                Uttaksgrad og/eller utbetalingsgrad er manuelt overstyrt av saksbehandler.
+              </HelpText>
+            </>}
           </Normaltekst>
         </TableColumn>
         <TableColumn className={`${withBorderTop ? styles.borderTop : ''}`}>

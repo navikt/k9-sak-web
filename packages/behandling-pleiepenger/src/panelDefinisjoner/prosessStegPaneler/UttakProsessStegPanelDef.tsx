@@ -17,7 +17,7 @@ class PanelDef extends ProsessStegPanelDef {
     alleKodeverk,
     submitCallback,
     lagreOverstyringUttak,
-    virkningsDatoUttakNyeRegler,
+    virkningsdatoUttakNyeRegler,
     relevanteAksjonspunkter,
     erOverstyrer,
   }) => (
@@ -32,7 +32,7 @@ class PanelDef extends ProsessStegPanelDef {
       alleKodeverk={alleKodeverk}
       submitCallback={submitCallback}
       lagreOverstyringUttak={lagreOverstyringUttak}
-      virkningsdatoUttakNyeRegler={virkningsDatoUttakNyeRegler}
+      virkningsdatoUttakNyeRegler={virkningsdatoUttakNyeRegler}
       relevanteAksjonspunkter={relevanteAksjonspunkter}
       erOverstyrer={erOverstyrer}
     />

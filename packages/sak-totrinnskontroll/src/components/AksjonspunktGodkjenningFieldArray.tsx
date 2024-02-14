@@ -92,7 +92,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
       };
 
       return (
-        <React.Fragment key={skjermlenkeTypeKodeverk.navn}>
+        <React.Fragment key={`${skjermlenkeTypeKodeverk.navn}-${id}`}>
           <NavLink to={lagLenke(context.skjermlenkeType)} onClick={() => window.scroll(0, 0)} className={styles.lenke}>
             {hentSkjermlenkeTypeKodeverkNavn()}
           </NavLink>

@@ -6,18 +6,6 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
-/**
- * En bug i Chrome gjør at norsk locale ikke blir lastet inn riktig.
- *
- * Se
- * - https://bugs.chromium.org/p/chromium/issues/detail?id=1215606&q=norwegian&can=2
- * - https://github.com/formatjs/formatjs/issues/3066
- */
-import '@formatjs/intl-datetimeformat/locale-data/nb';
-import '@formatjs/intl-datetimeformat/polyfill-force';
-import '@formatjs/intl-numberformat/locale-data/nb';
-import '@formatjs/intl-numberformat/polyfill-force';
-
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
 import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
@@ -74,7 +62,7 @@ const renderFunc = Component => {
   }
 
   const prepare = async (): Promise<void> => {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'test') {
       // eslint-disable-next-line import/no-relative-packages
       const { worker } = await import('../../mocks/browser');
       worker.start({ onUnhandledRequest: 'bypass' });

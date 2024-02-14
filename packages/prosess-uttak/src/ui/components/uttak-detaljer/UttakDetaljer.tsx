@@ -178,9 +178,6 @@ const formatAvkortingMotArbeid = (
               <div>= {prosentFravær}% fravær</div>
               <div className='inline-flex justify-end'>
                 Utbetalingsgrad: {utbetalingsgrad}%
-                {manueltOverstyrt && <HelpText title="Hvor kommer utbetalingsgraden fra?">
-                  Utbetalingsgraden <i>kan</i> være manuelt overstyrt av saksbehandler.
-                </HelpText>}
               </div>
             </div>
           </div>
