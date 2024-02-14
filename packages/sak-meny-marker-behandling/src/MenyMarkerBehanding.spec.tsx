@@ -18,7 +18,7 @@ describe('<MenyMarkerBehandling', () => {
       <MenyMarkerBehandling
         behandlingUuid="123"
         markerBehandling={() => null}
-        lukkModal={jest.fn()}
+        lukkModal={vi.fn()}
         brukHastekøMarkering
         merknaderFraLos={null}
       />,

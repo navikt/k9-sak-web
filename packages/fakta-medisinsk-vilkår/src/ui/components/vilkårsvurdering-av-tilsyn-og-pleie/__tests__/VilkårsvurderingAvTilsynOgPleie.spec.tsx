@@ -111,14 +111,14 @@ describe('VilkårsvurderingAvTilsynOgPleie', () => {
   let navigerTilNesteStegSpy = null;
 
   beforeAll(() => {
-    httpGetSpy = jest.spyOn(httpUtils, 'get');
-    httpPostSpy = jest.spyOn(httpUtils, 'post');
+    httpGetSpy = vi.spyOn(httpUtils, 'get');
+    httpPostSpy = vi.spyOn(httpUtils, 'post');
 
-    sykdomsstegFerdigStatusSpy = jest.spyOn(sykdomsstegFerdigStatusMock, 'fn');
-    sykdomsstegDokumentUferdigStatusSpy = jest.spyOn(sykdomsstegDokumentUferdigStatusMock, 'fn');
-    sykdomsstegKTPUferdigStatusSpy = jest.spyOn(sykdomsstegKTPUferdigStatusMock, 'fn');
+    sykdomsstegFerdigStatusSpy = vi.spyOn(sykdomsstegFerdigStatusMock, 'fn');
+    sykdomsstegDokumentUferdigStatusSpy = vi.spyOn(sykdomsstegDokumentUferdigStatusMock, 'fn');
+    sykdomsstegKTPUferdigStatusSpy = vi.spyOn(sykdomsstegKTPUferdigStatusMock, 'fn');
 
-    navigerTilNesteStegSpy = jest.spyOn(navigerTilNesteStegMock, 'fn');
+    navigerTilNesteStegSpy = vi.spyOn(navigerTilNesteStegMock, 'fn');
   });
 
   const mockResolvedGetApiCallOnce = data => {

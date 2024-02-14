@@ -10,15 +10,18 @@ import userEvent from '@testing-library/user-event';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import MenySettPaVentIndex from './MenySettPaVentIndex';
 
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
-  useHistory: () => ({
-    push: jest.fn(),
-  }),
-}));
+vi.mock('react-router-dom', async () => {
+  const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
+  return {
+    ...actual,
+    useHistory: () => ({
+      push: vi.fn(),
+    }),
+  };
+});
 
-const MockForm = reduxForm({ form: 'mock', onSubmit: jest.fn() })(({ children }) => {
-  const handleSubmit = jest.fn();
+const MockForm = reduxForm({ form: 'mock' })(({ children }) => {
+  const handleSubmit = vi.fn();
   return <form onSubmit={handleSubmit}>{children}</form>;
 });
 
@@ -35,8 +38,8 @@ const testDato = add(new Date(), { months: 2, days: 1 });
 
 describe('<MenySettPaVentIndex>', () => {
   it('skal vise modal og velge å åpne ta behandling av vent', async () => {
-    const lukkModalCallback = jest.fn();
-    const settBehandlingPaVent = jest.fn(() => Promise.resolve());
+    const lukkModalCallback = vi.fn();
+    const settBehandlingPaVent = vi.fn(() => Promise.resolve());
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>

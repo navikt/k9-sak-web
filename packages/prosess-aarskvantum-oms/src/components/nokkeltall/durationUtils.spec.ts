@@ -1,3 +1,4 @@
+/* eslint vitest/expect-expect: ["error", { "assertFunctionNames": ["expect", "expectNoRedirect"] }] */
 import { beregnDagerTimer, DagerTimer, konverterDesimalTilDagerOgTimer, sumTid } from './durationUtils';
 
 const sjekkKonvertering = ({ dager, timer }: DagerTimer, expectedDager, expectedTimer) => {
@@ -6,7 +7,7 @@ const sjekkKonvertering = ({ dager, timer }: DagerTimer, expectedDager, expected
 };
 
 describe('durationUtils', () => {
-  // eslint-disable-next-line jest/expect-expect
+  // eslint-disable-next-line vitest/expect-expect
   it('konverterer desimaltall til hele dager og timer med max 2 desimaler', () => {
     const desimal1 = 9.4;
     sjekkKonvertering(konverterDesimalTilDagerOgTimer(desimal1), 9, 3);
@@ -18,7 +19,7 @@ describe('durationUtils', () => {
     sjekkKonvertering(konverterDesimalTilDagerOgTimer(heltall), 12, null);
   });
 
-  // eslint-disable-next-line jest/expect-expect
+  // eslint-disable-next-line vitest/expect-expect
   it('konverterer duration til dager og timer', () => {
     const duration1 = 'PT6H30M';
     sjekkKonvertering(beregnDagerTimer(duration1), 0, 6.5);
@@ -33,7 +34,7 @@ describe('durationUtils', () => {
     sjekkKonvertering(beregnDagerTimer(duration4), 107, 0);
   });
 
-  // eslint-disable-next-line jest/expect-expect
+  // eslint-disable-next-line vitest/expect-expect
   it('konverterer negativt desimaltall eller duration til dager og timer', () => {
     const desimal = -1.4;
     sjekkKonvertering(konverterDesimalTilDagerOgTimer(desimal), -1, -3);

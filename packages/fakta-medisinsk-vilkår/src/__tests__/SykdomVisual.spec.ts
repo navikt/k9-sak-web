@@ -1,3 +1,4 @@
+/* eslint-disable vitest/no-commented-out-tests */
 // import puppeteer from 'puppeteer';
 
 // Trenger følgende devDeps for å kjøre

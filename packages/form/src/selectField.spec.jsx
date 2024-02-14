@@ -17,7 +17,7 @@ const selectValues = [
   </option>,
 ];
 
-const MockForm = reduxForm({ form: 'mock', onSubmit: jest.fn() })(({ handleSubmit, children }) => (
+const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ handleSubmit, children }) => (
   <form onSubmit={handleSubmit}>{children}</form>
 ));
 const mountFieldInForm = (field, initialValues) =>

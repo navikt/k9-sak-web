@@ -9,7 +9,7 @@ import { messages } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import RadioGroupField from './RadioGroupField';
 import RadioOption from './RadioOption';
 
-const MockForm = reduxForm({ form: 'mock', onSubmit: jest.fn() })(({ handleSubmit, children }) => (
+const MockForm = reduxForm({ form: 'mock' })(({ handleSubmit, children }) => (
   <form onSubmit={handleSubmit}>{children}</form>
 ));
 const mountFieldInForm = (field, initialValues) =>
