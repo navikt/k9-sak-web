@@ -12,7 +12,7 @@ describe('<BehandlingPickerItemContent>', () => {
         withChevronUp
         behandlingTypeKode="BT-002"
         behandlingTypeNavn="Foreldrepenger"
-        opprettetDato="2018-01-01"
+        opprettetDato="2018-01-02"
         behandlingsstatus="Opprettet"
         erGjeldendeVedtak={false}
       />,
@@ -30,7 +30,7 @@ describe('<BehandlingPickerItemContent>', () => {
         withChevronUp
         behandlingTypeKode="BT-002"
         behandlingTypeNavn="Foreldrepenger"
-        opprettetDato="2018-01-01"
+        opprettetDato="2018-01-02"
         avsluttetDato="2018-05-01"
         behandlingsstatus="Opprettet"
         erGjeldendeVedtak={false}
