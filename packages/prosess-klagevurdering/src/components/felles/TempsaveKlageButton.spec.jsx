@@ -1,11 +1,10 @@
-import sinon from 'sinon';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { expect } from 'chai';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme/build';
+import sinon from 'sinon';
+import messages from '../../../i18n/nb_NO.json';
 import TempsaveKlageButton from './TempsaveKlageButton';
-
 
 describe('<TempsaveKlageButton>', () => {
   const formValuesWithEmptyStrings = {
@@ -14,14 +13,17 @@ describe('<TempsaveKlageButton>', () => {
     begrunnelse: '',
   };
 
-
   it('Skal rendre komponent korrekt', () => {
-    const wrapper = shallow(<TempsaveKlageButton
-      formValues={formValuesWithEmptyStrings}
-      saveKlage={sinon.spy()}
-      aksjonspunktCode="123"
-      hasForeslaVedtakAp={false}
-    />);
-    expect(wrapper.find(Hovedknapp)).has.length(1);
+    renderWithIntlAndReduxForm(
+      <TempsaveKlageButton
+        formValues={formValuesWithEmptyStrings}
+        saveKlage={sinon.spy()}
+        aksjonspunktCode="123"
+        hasForeslaVedtakAp={false}
+      />,
+      { messages },
+    );
+
+    expect(screen.getByRole('button', { name: 'Lagre' })).toBeInTheDocument();
   });
 });

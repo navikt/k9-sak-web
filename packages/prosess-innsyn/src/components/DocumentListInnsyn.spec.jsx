@@ -1,18 +1,18 @@
-import React from 'react';
-import { expect } from 'chai';
-import { FormattedMessage } from 'react-intl';
-
-import { DateTimeLabel, Image, Table, TableRow } from '@fpsak-frontend/shared-components';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import { intlMock } from '../../i18n';
+import messages from '../../i18n/nb_NO.json';
 import DocumentListInnsyn from './DocumentListInnsyn';
-import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<DocumentListInnsyn>', () => {
   it('skal vise tekst ved tom dokumentliste', () => {
-    const wrapper = shallowWithIntl(
-      <DocumentListInnsyn.WrappedComponent intl={intlMock} documents={[]} saksNr={123} readOnly={false} />,
-    );
-    expect(wrapper.find(FormattedMessage).prop('id')).is.equal('DocumentListInnsyn.NoDocuments');
+    renderWithIntlAndReduxForm(<DocumentListInnsyn intl={intlMock} documents={[]} saksNr={123} readOnly={false} />, {
+      messages,
+    });
+
+    expect(screen.getByText('Det finnes ingen dokumenter på saken')).toBeInTheDocument();
   });
 
   it('skal inneholde ett document, med tittel Dok1', () => {
@@ -25,12 +25,14 @@ describe('<DocumentListInnsyn>', () => {
         kommunikasjonsretning: kommunikasjonsretning.INN,
       },
     ];
-    const wrapper = shallowWithIntl(
-      <DocumentListInnsyn.WrappedComponent intl={intlMock} documents={documents} saksNr={123} readOnly={false} />,
+    renderWithIntlAndReduxForm(
+      <DocumentListInnsyn intl={intlMock} documents={documents} saksNr={123} readOnly={false} />,
+      { messages },
     );
-    expect(wrapper.find(FormattedMessage).prop('id')).is.equal('DocumentListInnsyn.VelgInnsynsDok');
-    expect(wrapper.find('a').text()).is.equal('Dok1');
-    expect(wrapper.find(Table)).to.have.length(1);
+
+    expect(screen.getByText('Velg innsynsdokumentasjon til søker')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Dok1' })).toBeInTheDocument();
+    expect(screen.getByRole('table')).toBeInTheDocument();
   });
 
   it('skal inneholde to documenter', () => {
@@ -50,10 +52,12 @@ describe('<DocumentListInnsyn>', () => {
         kommunikasjonsretning: kommunikasjonsretning.UT,
       },
     ];
-    const wrapper = shallowWithIntl(
-      <DocumentListInnsyn.WrappedComponent intl={intlMock} documents={documents} saksNr={123} readOnly={false} />,
+    renderWithIntlAndReduxForm(
+      <DocumentListInnsyn intl={intlMock} documents={documents} saksNr={123} readOnly={false} />,
+      { messages },
     );
-    expect(wrapper.find(TableRow)).to.have.length(2);
+    expect(screen.getByRole('link', { name: 'Dok1' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Dok2' })).toBeInTheDocument();
   });
 
   it('skal inneholde document med riktig kommunikasjonsretining: Send -> Ut', () => {
@@ -66,11 +70,13 @@ describe('<DocumentListInnsyn>', () => {
         kommunikasjonsretning: kommunikasjonsretning.UT,
       },
     ];
-    const wrapper = shallowWithIntl(
-      <DocumentListInnsyn.WrappedComponent intl={intlMock} documents={documents} saksNr={123} readOnly={false} />,
+    renderWithIntlAndReduxForm(
+      <DocumentListInnsyn intl={intlMock} documents={documents} saksNr={123} readOnly={false} />,
+      { messages },
     );
 
-    expect(wrapper.find(Image).prop('title')).to.have.length.above(1);
+    expect(screen.getByRole('link', { name: 'Dok1' })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'Ut' }));
   });
 
   it('skal inneholde document med riktig kommunikasjonsretining: Motta -> INN', () => {
@@ -83,10 +89,12 @@ describe('<DocumentListInnsyn>', () => {
         kommunikasjonsretning: kommunikasjonsretning.INN,
       },
     ];
-    const wrapper = shallowWithIntl(
-      <DocumentListInnsyn.WrappedComponent intl={intlMock} documents={documents} saksNr={123} readOnly={false} />,
+    renderWithIntlAndReduxForm(
+      <DocumentListInnsyn intl={intlMock} documents={documents} saksNr={123} readOnly={false} />,
+      { messages },
     );
-    expect(wrapper.find(Image).prop('title')).to.have.length.above(1);
+    expect(screen.getByRole('link', { name: 'Dok1' })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'Inn' }));
   });
 
   it('skal ikke inneholde dato', () => {
@@ -99,10 +107,11 @@ describe('<DocumentListInnsyn>', () => {
         kommunikasjonsretning: kommunikasjonsretning.INN,
       },
     ];
-    const wrapper = shallowWithIntl(
-      <DocumentListInnsyn.WrappedComponent intl={intlMock} documents={documents} saksNr={123} readOnly={false} />,
+    renderWithIntlAndReduxForm(
+      <DocumentListInnsyn intl={intlMock} documents={documents} saksNr={123} readOnly={false} />,
+      { messages },
     );
-    expect(wrapper.find(FormattedMessage).last().prop('id')).is.equal('DocumentListInnsyn.IProduksjon');
+    expect(screen.getByText('I produksjon')).toBeInTheDocument();
   });
 
   it('skal inneholde dato', () => {
@@ -111,13 +120,16 @@ describe('<DocumentListInnsyn>', () => {
         journalpostId: '1',
         dokumentId: '1',
         tittel: 'Dok1',
-        tidspunkt: '22.12.2017 - 09:00',
+        tidspunkt: '2017-12-22T09:00:00.000',
         kommunikasjonsretning: kommunikasjonsretning.INN,
       },
     ];
-    const wrapper = shallowWithIntl(
-      <DocumentListInnsyn.WrappedComponent intl={intlMock} documents={documents} saksNr={123} readOnly={false} />,
+    renderWithIntlAndReduxForm(
+      <DocumentListInnsyn intl={intlMock} documents={documents} saksNr={123} readOnly={false} />,
+      { messages },
     );
-    expect(wrapper.find(DateTimeLabel).prop('dateTimeString')).is.equal('22.12.2017 - 09:00');
+
+    expect(screen.getByText('22.12.2017-')).toBeInTheDocument();
+    expect(screen.getByText('09:00')).toBeInTheDocument();
   });
 });
