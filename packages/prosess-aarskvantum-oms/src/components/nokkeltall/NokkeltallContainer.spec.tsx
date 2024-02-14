@@ -1,30 +1,32 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallowWithIntl } from '../../../i18n';
-import NokkeltallContainer from './NokkeltallContainer';
-import ForbrukteDager from './ForbrukteDager';
+import { MemoryRouter } from 'react-router-dom';
+import messages from '../../../i18n/nb_NO.json';
+import NokkeltallContainer, { Nokkeltalltype } from './NokkeltallContainer';
 
 describe('<NokkeltallContainer>', () => {
   describe('Forbrukte dager', () => {
     const forbrukteDagerPropsForRestTidOgPeriode = (restTid: string, periode: string, smitteverndager?: string) => {
-      const nøkkeltallContainer = shallowWithIntl(
-        <NokkeltallContainer
-          totaltAntallDager={20}
-          antallDagerArbeidsgiverDekker={3}
-          forbrukteDager={4.4}
-          restTid={restTid}
-          benyttetRammemelding
-          antallDagerInfotrygd={0}
-          smitteverndager={smitteverndager}
-          visEllerSkjulNokkeltalldetaljer={() => undefined}
-          migrertData={false}
-          ar="2020"
-        />,
+      renderWithIntl(
+        <MemoryRouter>
+          <NokkeltallContainer
+            totaltAntallDager={20}
+            antallDagerArbeidsgiverDekker={3}
+            forbrukteDager={4.4}
+            restTid={restTid}
+            benyttetRammemelding
+            antallDagerInfotrygd={0}
+            smitteverndager={smitteverndager}
+            visEllerSkjulNokkeltalldetaljer={() => undefined}
+            migrertData={false}
+            ar="2020"
+            apneNokkeltall={[Nokkeltalltype.FORBRUKTE_DAGER]}
+          />
+        </MemoryRouter>,
+
+        { messages },
       );
-
-      const forbrukteDagerBoks = nøkkeltallContainer.find(ForbrukteDager);
-      expect(forbrukteDagerBoks).toHaveLength(1);
-
-      return forbrukteDagerBoks.props();
     };
 
     it('rendrer smittevern dersom smitteverndager finnes', () => {
@@ -32,26 +34,23 @@ describe('<NokkeltallContainer>', () => {
       const smitteverndager = 'PT10H30M';
       const periodeISmittevernstiden = '2020-05-05/2020-05-31';
 
-      const { smittevernDagerTimer, utbetaltForMangeDagerTimer } = forbrukteDagerPropsForRestTidOgPeriode(
-        negativRestTid,
-        periodeISmittevernstiden,
-        smitteverndager,
-      );
+      forbrukteDagerPropsForRestTidOgPeriode(negativRestTid, periodeISmittevernstiden, smitteverndager);
 
-      expect(smittevernDagerTimer).toEqual({ dager: 1, timer: 3 });
-      expect(utbetaltForMangeDagerTimer).toEqual(null);
+      expect(screen.getByText('Smitteverndager')).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          'Dager gitt pga. dokumentert særlige smittevernhensyn i perioden fra og med 20.04.2020 til og med 31.12.2020.',
+        ),
+      ).toBeInTheDocument();
     });
 
     it('rendrer for mange utbetalte dager dersom restdager er negative smitteverndager ikke finnes', () => {
       const negativRestTid = 'PT-10H-30M';
       const periodeUtenomSmittevernstiden = '2020-02-05/2020-02-31';
-      const { smittevernDagerTimer, utbetaltForMangeDagerTimer } = forbrukteDagerPropsForRestTidOgPeriode(
-        negativRestTid,
-        periodeUtenomSmittevernstiden,
-      );
+      forbrukteDagerPropsForRestTidOgPeriode(negativRestTid, periodeUtenomSmittevernstiden);
 
-      expect(utbetaltForMangeDagerTimer).toEqual({ dager: 1, timer: 3 });
-      expect(smittevernDagerTimer).toEqual(null);
+      expect(screen.getByText('Utbetalt for mye.')).toBeInTheDocument();
+      expect(screen.getByText('Det er utbetalt 1 dager og 3 timer mer enn brukeren har rett på.')).toBeInTheDocument();
     });
   });
 });

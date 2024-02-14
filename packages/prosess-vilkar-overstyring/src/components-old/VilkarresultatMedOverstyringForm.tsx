@@ -106,7 +106,7 @@ export const VilkarresultatMedOverstyringForm = ({
   );
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form data-testid="overstyringform" onSubmit={handleSubmit}>
       {(erOverstyrt || hasAksjonspunkt) && (
         <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={erOverstyrt}>
           <Element>

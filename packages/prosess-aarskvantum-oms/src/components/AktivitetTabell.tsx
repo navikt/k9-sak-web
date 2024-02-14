@@ -306,7 +306,13 @@ const AktivitetTabell = ({
                   {skalÅrsakVises && <td>{formaterFraværsårsak(fraværÅrsak)}</td>}
                   <td>{`${utbetalingsgrad}%`}</td>
                   <td>
-                    <button className={styles.utvidelsesknapp} onClick={() => velgPeriode(index)} type="button">
+                    <button
+                      className={styles.utvidelsesknapp}
+                      onClick={() => velgPeriode(index)}
+                      type="button"
+                      aria-expanded={erValgt}
+                      aria-label={`Utvid rad for perioden ${formatereLukketPeriode(periode)}`}
+                    >
                       <NavFrontendChevron type={erValgt ? 'opp' : 'ned'} />
                     </button>
                   </td>

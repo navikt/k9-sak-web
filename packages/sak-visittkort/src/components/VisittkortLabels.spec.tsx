@@ -1,15 +1,12 @@
-import React from 'react';
-import { EtikettInfo, EtikettAdvarsel, EtikettFokus } from 'nav-frontend-etiketter';
-
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import region from '@fpsak-frontend/kodeverk/src/region';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { Tooltip } from '@fpsak-frontend/shared-components';
-
-import shallowWithIntl, { intlMock } from '../../i18n/index';
+import region from '@fpsak-frontend/kodeverk/src/region';
+import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
+import { renderWithIntl, screen } from '@fpsak-frontend/utils-test';
+import React from 'react';
+import messages from '../../i18n/nb_NO.json';
 import VisittkortLabels from './VisittkortLabels';
 
 describe('<VisittkortLabels>', () => {
@@ -66,34 +63,28 @@ describe('<VisittkortLabels>', () => {
   };
 
   it('skal ikke vise noen etiketter', () => {
-    const wrapper = shallowWithIntl(
-      <VisittkortLabels.WrappedComponent intl={intlMock} personopplysninger={personopplysningerSoker} />,
-    );
-
-    expect(wrapper.find(EtikettInfo)).toHaveLength(0);
+    const { container } = renderWithIntl(<VisittkortLabels personopplysninger={personopplysningerSoker} />, {
+      messages,
+    });
+    expect(container.getElementsByClassName('tooltip').length).toBe(0);
   });
 
   it('skal vise etikett for dødsdato', () => {
-    const wrapper = shallowWithIntl(
-      <VisittkortLabels.WrappedComponent
-        intl={intlMock}
+    renderWithIntl(
+      <VisittkortLabels
         personopplysninger={{
           ...personopplysningerSoker,
           dodsdato: '2019-01-01',
         }}
       />,
+      { messages },
     );
-
-    expect(wrapper.find(EtikettInfo)).toHaveLength(1);
-    const tooltip = wrapper.find(Tooltip);
-    expect(tooltip).toHaveLength(1);
-    expect(tooltip.prop('content')).toEqual('Personen er død');
+    expect(screen.getByText('Personen er død')).toBeInTheDocument();
   });
 
   it('skal vise etikett for kode 6', () => {
-    const wrapper = shallowWithIntl(
-      <VisittkortLabels.WrappedComponent
-        intl={intlMock}
+    renderWithIntl(
+      <VisittkortLabels
         personopplysninger={{
           ...personopplysningerSoker,
           diskresjonskode: {
@@ -102,18 +93,15 @@ describe('<VisittkortLabels>', () => {
           },
         }}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(EtikettAdvarsel)).toHaveLength(1);
-    const tooltip = wrapper.find(Tooltip);
-    expect(tooltip).toHaveLength(1);
-    expect(tooltip.prop('content')).toEqual('Personen har diskresjonsmerking kode 6');
+    expect(screen.getByText('Personen har diskresjonsmerking kode 6')).toBeInTheDocument();
   });
 
   it('skal vise etikett for kode 7', () => {
-    const wrapper = shallowWithIntl(
-      <VisittkortLabels.WrappedComponent
-        intl={intlMock}
+    renderWithIntl(
+      <VisittkortLabels
         personopplysninger={{
           ...personopplysningerSoker,
           diskresjonskode: {
@@ -122,45 +110,34 @@ describe('<VisittkortLabels>', () => {
           },
         }}
       />,
+      { messages },
     );
-
-    expect(wrapper.find(EtikettFokus)).toHaveLength(1);
-    const tooltip = wrapper.find(Tooltip);
-    expect(tooltip).toHaveLength(1);
-    expect(tooltip.prop('content')).toEqual('Personen har diskresjonsmerking kode 7');
+    expect(screen.getByText('Personen har diskresjonsmerking kode 7')).toBeInTheDocument();
   });
 
   it('skal vise etikett for verge', () => {
-    const wrapper = shallowWithIntl(
-      <VisittkortLabels.WrappedComponent
-        intl={intlMock}
+    renderWithIntl(
+      <VisittkortLabels
         personopplysninger={{
           ...personopplysningerSoker,
           harVerge: true,
         }}
       />,
+      { messages },
     );
-
-    expect(wrapper.find(EtikettInfo)).toHaveLength(1);
-    const tooltip = wrapper.find(Tooltip);
-    expect(tooltip).toHaveLength(1);
-    expect(tooltip.prop('content')).toEqual('Personen har verge');
+    expect(screen.getByText('Personen har verge')).toBeInTheDocument();
   });
 
   it('skal vise etikett for søker under 18', () => {
-    const wrapper = shallowWithIntl(
-      <VisittkortLabels.WrappedComponent
-        intl={intlMock}
+    renderWithIntl(
+      <VisittkortLabels
         personopplysninger={{
           ...personopplysningerSoker,
           fodselsdato: '2019-01-01',
         }}
       />,
+      { messages },
     );
-
-    expect(wrapper.find(EtikettInfo)).toHaveLength(1);
-    const tooltip = wrapper.find(Tooltip);
-    expect(tooltip).toHaveLength(1);
-    expect(tooltip.prop('content')).toEqual('Personen er under 18 år');
+    expect(screen.getByText('Personen er under 18 år')).toBeInTheDocument();
   });
 });

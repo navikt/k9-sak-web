@@ -1,20 +1,24 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { FatterVedtakTotrinnskontrollModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
+import messages from '@fpsak-frontend/sak-totrinnskontroll/i18n/nb_NO.json';
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
 import { Behandling } from '@k9-sak-web/types';
-
-import { requestApi, K9sakApiKeys } from '../../data/k9sakApi';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import BeslutterModalIndex from './BeslutterModalIndex';
 
 describe('<BeslutterModalIndex>', () => {
   const behandling = {
     id: 1,
     versjon: 2,
-    behandlingsresultat: {},
+    behandlingsresultat: {
+      type: {
+        kode: 'IKKE_FASTSATT',
+        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
+      },
+    },
     type: {
       kode: behandlingType.FORSTEGANGSSOKNAD,
       kodeverk: '',
@@ -30,7 +34,7 @@ describe('<BeslutterModalIndex>', () => {
       harRevurderingSammeResultat: true,
     });
 
-    const wrapper = shallow(
+    renderWithIntl(
       <BeslutterModalIndex
         behandling={behandling}
         fagsakYtelseType={{
@@ -40,33 +44,13 @@ describe('<BeslutterModalIndex>', () => {
         allAksjonspunktApproved={false}
         erKlageWithKA={false}
       />,
+      { messages },
     );
 
-    const modal = wrapper.find(FatterVedtakTotrinnskontrollModalSakIndex);
-    expect(modal).toHaveLength(1);
-    expect(modal.prop('harSammeResultatSomOriginalBehandling')).toBe(true);
-  });
-
-  it('skal vise modal men ikke hente data når en ikke har url', () => {
-    requestApi.mock(K9sakApiKeys.HAR_REVURDERING_SAMME_RESULTAT, {
-      harRevurderingSammeResultat: true,
-    });
-    requestApi.setMissingPath(K9sakApiKeys.HAR_REVURDERING_SAMME_RESULTAT);
-
-    const wrapper = shallow(
-      <BeslutterModalIndex
-        behandling={behandling}
-        fagsakYtelseType={{
-          kode: fagsakYtelseType.FORELDREPENGER,
-          kodeverk: '',
-        }}
-        allAksjonspunktApproved={false}
-        erKlageWithKA={false}
-      />,
-    );
-
-    const modal = wrapper.find(FatterVedtakTotrinnskontrollModalSakIndex);
-    expect(modal).toHaveLength(1);
-    expect(modal.prop('harSammeResultatSomOriginalBehandling')).toBeUndefined();
+    expect(
+      screen.getByRole('dialog', { name: 'Forslag til vedtak er sendt til beslutter. Du kommer nå til forsiden.' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Vedtak returneres til saksbehandler for ny vurdering.')).toBeInTheDocument();
+    expect(screen.getByText('Du kommer nå til forsiden.')).toBeInTheDocument();
   });
 });

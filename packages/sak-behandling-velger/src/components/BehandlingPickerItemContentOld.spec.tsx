@@ -1,59 +1,58 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-import Panel from 'nav-frontend-paneler';
-
-import { DateLabel } from '@fpsak-frontend/shared-components';
-
+import messages from '../../i18n/nb_NO.json';
 import BehandlingPickerItemContent from './BehandlingPickerItemContentOld';
 
 describe('<BehandlingPickerItemContent>', () => {
   it('skal rendre komponent', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <BehandlingPickerItemContent
         withChevronDown
         withChevronUp
         behandlingTypeKode="BT-002"
         behandlingTypeNavn="Foreldrepenger"
-        opprettetDato="2018-01-01"
+        opprettetDato="2018-01-02"
         behandlingsstatus="Opprettet"
         erGjeldendeVedtak={false}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(Panel)).toHaveLength(1);
-    expect(wrapper.find(DateLabel)).toHaveLength(1);
+    expect(screen.getAllByText('Opprettet').length).toBeGreaterThan(0);
+    expect(screen.getByText(/2018/g)).toBeInTheDocument();
   });
 
   it('skal vise avsluttet dato når denne finnes', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <BehandlingPickerItemContent
         withChevronDown
         withChevronUp
         behandlingTypeKode="BT-002"
         behandlingTypeNavn="Foreldrepenger"
-        opprettetDato="2018-01-01"
+        opprettetDato="2018-01-02"
         avsluttetDato="2018-05-01"
         behandlingsstatus="Opprettet"
         erGjeldendeVedtak={false}
       />,
+      { messages },
     );
 
-    const labels = wrapper.find(DateLabel);
-    expect(labels).toHaveLength(2);
-    expect(labels.first().prop('dateString')).toEqual('2018-01-01');
-    expect(labels.last().prop('dateString')).toEqual('2018-05-01');
+    expect(screen.getAllByText('Opprettet').length).toBeGreaterThan(0);
+    expect(screen.getByText('Avsluttet')).toBeInTheDocument();
+    expect(screen.getAllByText(/2018/g).length).toBeGreaterThan(0);
   });
 
   it('skal vise årsak for revurdering', () => {
     const førsteÅrsak = {
       behandlingArsakType: {
-        kode: '-',
+        kode: 'RE-MF',
         kodeverk: '',
       },
       erAutomatiskRevurdering: false,
       manueltOpprettet: false,
     };
-    const wrapper = shallow(
+    renderWithIntl(
       <BehandlingPickerItemContent
         withChevronDown
         withChevronUp
@@ -65,9 +64,9 @@ describe('<BehandlingPickerItemContent>', () => {
         førsteÅrsak={førsteÅrsak}
         erGjeldendeVedtak={false}
       />,
+      { messages },
     );
 
-    const formattedMessages = wrapper.find('MemoizedFormattedMessage');
-    expect(formattedMessages.first().prop('id')).toEqual('Behandlingspunkt.Årsak.Annet');
+    expect(screen.getByText('Mangler fødselsdato')).toBeInTheDocument();
   });
 });

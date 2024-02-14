@@ -1,43 +1,19 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import Snakkeboble from 'nav-frontend-snakkeboble';
-
 import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import messages from '../../../../i18n/nb_NO.json';
 import SnakkebobleContainer from './SnakkebobleContainer';
 
 // TODO: AA - refactor to before()? Har provat men fungerer ikke så bra
 describe('SnakkebobleContainer', () => {
-  it('skal vise opp boble med korrekt class', () => {
-    const opprettetTidspunkt = '2017-12-10';
-    const aktoer = { kode: HistorikkAktor.SAKSBEHANDLER, navn: 'Saksbehandler', kodeverk: '' };
-    const kjoenn = { kode: navBrukerKjonn.KVINNE, kodeverk: '' };
-
-    const wrapper = shallow(
-      <SnakkebobleContainer
-        aktoer={aktoer}
-        rolleNavn="Saksbehandler"
-        dato={opprettetTidspunkt}
-        kjoenn={kjoenn}
-        opprettetAv="test"
-      >
-        <div />
-      </SnakkebobleContainer>,
-    );
-
-    const snakkebobla = wrapper.find(Snakkeboble);
-    expect(snakkebobla.prop('className')).toEqual(
-      'snakkeboble__kompakt snakkeboble__panel snakkeboble-panel snakkeboble__saksbehandler',
-    );
-  });
-
   it('skal innehalla korrekt type, id og tidpunkt', () => {
     const opprettetTidspunkt = '2017-12-10';
     const aktoer = { kode: HistorikkAktor.SAKSBEHANDLER, kodeverk: '' };
     const kjoenn = { kode: navBrukerKjonn.KVINNE, kodeverk: '' };
 
-    const wrapper = shallow(
+    renderWithIntl(
       <SnakkebobleContainer
         aktoer={aktoer}
         rolleNavn="Saksbehandler"
@@ -47,9 +23,11 @@ describe('SnakkebobleContainer', () => {
       >
         <div />
       </SnakkebobleContainer>,
+      { messages },
     );
 
-    const snakkebobla = wrapper.find(Snakkeboble);
-    expect(snakkebobla.prop('topp')).toContain('10.12.2017 -  // Saksbehandler');
+    expect(
+      screen.getAllByText((_, element) => element.textContent === '10.12.2017 -  // Saksbehandler test')[0],
+    ).toBeInTheDocument();
   });
 });

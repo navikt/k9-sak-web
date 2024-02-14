@@ -1,21 +1,26 @@
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/src/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Normaltekst } from 'nav-frontend-typografi';
-
-import { RadioOption } from '@fpsak-frontend/form';
+import messages from '../../../../i18n/nb_NO.json';
 import AktsomhetGradForsettFormPanel from './AktsomhetGradForsettFormPanel';
 
 describe('<AktsomhetGradForsettFormPanel>', () => {
   it('skal vise panel for å forsett når denne radio-knappen er valgt', () => {
-    const wrapper = shallow(<AktsomhetGradForsettFormPanel readOnly={false} />);
+    renderWithIntlAndReduxForm(<AktsomhetGradForsettFormPanel readOnly={false} />, { messages });
 
-    expect(wrapper.find(Normaltekst)).toHaveLength(2);
+    expect(screen.getByText('Andel som skal tilbakekreves')).toBeInTheDocument();
+    expect(screen.getByText('100 %')).toBeInTheDocument();
+    expect(screen.getByText('Det legges til 10 % renter')).toBeInTheDocument();
   });
 
   it('skal vise valg for om det skal tillegges renter når forsett er valgt og det er forsto eller burde forstått', () => {
-    const wrapper = shallow(<AktsomhetGradForsettFormPanel readOnly={false} erValgtResultatTypeForstoBurdeForstaatt />);
+    renderWithIntlAndReduxForm(
+      <AktsomhetGradForsettFormPanel readOnly={false} erValgtResultatTypeForstoBurdeForstaatt />,
+      { messages },
+    );
 
-    expect(wrapper.find(Normaltekst)).toHaveLength(1);
-    expect(wrapper.find(RadioOption)).toHaveLength(2);
+    expect(screen.getByText('Andel som skal tilbakekreves')).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Ja' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Nei' })).toBeInTheDocument();
   });
 });

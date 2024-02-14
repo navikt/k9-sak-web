@@ -11,6 +11,25 @@ import TidslinjeRad from './types/TidslinjeRad';
 
 import styles from './tidslinje.module.css';
 
+const momentDate = dateString => moment(dateString, ISO_DATE_FORMAT);
+
+export const createGroups = (rader: TidslinjeRad<Periode<any>>[]) =>
+  rader.map(rad => ({
+    id: rad.id,
+    content: '',
+  }));
+
+export const createItems = (perioder: Periode<any>[]) =>
+  perioder.map(periode => ({
+    ...periode,
+    start: momentDate(periode.fom).toDate(),
+    end: momentDate(periode.tom)
+      .add(1, 'days') // Timeline sin end har til, men ikke med
+      .toDate(),
+    title: periode.hoverText,
+    content: '',
+  }));
+
 interface EventProps {
   items: string[];
   event: Event;
@@ -27,8 +46,6 @@ interface TidslinjeProps<Periodeinfo> {
   sideContentRader?: ReactNode[];
   withBorder?: boolean;
 }
-
-const momentDate = dateString => moment(dateString, ISO_DATE_FORMAT);
 
 const getOptions = (perioderSortert: Periode<any>[]) => ({
   end: moment(perioderSortert[perioderSortert.length - 1].tom)
@@ -53,23 +70,6 @@ const getOptions = (perioderSortert: Periode<any>[]) => ({
   zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
   zoomMin: 1000 * 60 * 60 * 24 * 30,
 });
-
-const createGroups = (rader: TidslinjeRad<Periode<any>>[]) =>
-  rader.map(rad => ({
-    id: rad.id,
-    content: '',
-  }));
-
-const createItems = (perioder: Periode<any>[]) =>
-  perioder.map(periode => ({
-    ...periode,
-    start: momentDate(periode.fom).toDate(),
-    end: momentDate(periode.tom)
-      .add(1, 'days') // Timeline sin end har til, men ikke med
-      .toDate(),
-    title: periode.hoverText,
-    content: '',
-  }));
 
 const leggPåGroupId = (rad: TidslinjeRad<Periode<any>>) => {
   const groupId = rad.id;

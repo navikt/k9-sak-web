@@ -1,10 +1,9 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import { NavLink } from 'react-router-dom';
-
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
 import { BehandlingAppKontekst } from '@k9-sak-web/types';
-
-import BehandlingPickerItemContent from './BehandlingPickerItemContentOld';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
+import messages from '../../i18n/nb_NO.json';
 import BehandlingPickerItem from './BehandlingPickerItem';
 
 describe('<BehandlingPickerItem>', () => {
@@ -19,7 +18,7 @@ describe('<BehandlingPickerItem>', () => {
       kode: 'FVED',
       kodeverk: '',
     },
-    opprettet: '15.10.2017',
+    opprettet: '2017-10-15',
     behandlendeEnhetId: '1242424',
     behandlendeEnhetNavn: 'test',
     links: [
@@ -47,7 +46,7 @@ describe('<BehandlingPickerItem>', () => {
   });
 
   it('skal vise behandling uten lenke når det kun finnes en behandling og denne er valgt', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <BehandlingPickerItem
         onlyOneBehandling
         behandling={behandlingTemplate as BehandlingAppKontekst}
@@ -57,31 +56,40 @@ describe('<BehandlingPickerItem>', () => {
         toggleShowAll={() => undefined}
         getKodeverkFn={getKodeverkFn}
       />,
+      { messages },
     );
-
-    expect(wrapper.find(BehandlingPickerItemContent)).toHaveLength(1);
-    expect(wrapper.find(NavLink)).toHaveLength(0);
+    expect(screen.getByText('Behandlingsstatus')).toBeInTheDocument();
+    expect(screen.getByText('Resultat')).toBeInTheDocument();
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });
 
   it('skal vise behandling med lenke når det kun finnes en behandling og denne ikke er valgt', () => {
-    const wrapper = shallow(
-      <BehandlingPickerItem
-        onlyOneBehandling
-        behandling={behandlingTemplate as BehandlingAppKontekst}
-        getBehandlingLocation={() => locationMock}
-        isActive={false}
-        showAll
-        toggleShowAll={() => undefined}
-        getKodeverkFn={getKodeverkFn}
-      />,
+    renderWithIntl(
+      <MemoryRouter>
+        <BehandlingPickerItem
+          onlyOneBehandling
+          behandling={behandlingTemplate as BehandlingAppKontekst}
+          getBehandlingLocation={() => locationMock}
+          isActive={false}
+          showAll
+          toggleShowAll={() => undefined}
+          getKodeverkFn={getKodeverkFn}
+        />
+      </MemoryRouter>,
+      { messages },
     );
 
-    expect(wrapper.find(BehandlingPickerItemContent)).toHaveLength(1);
-    expect(wrapper.find(NavLink)).toHaveLength(1);
+    expect(screen.getByText('Behandlingsstatus')).toBeInTheDocument();
+    expect(screen.getByText('Resultat')).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', {
+        name: /Behandlingsstatus Resultat - Opprettet/g,
+      }),
+    ).toBeInTheDocument();
   });
 
   it('skal vise behandling med knapp for visning av alle behandlinger når ingen behandlinger er valgt og innslag er aktivt', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <BehandlingPickerItem
         onlyOneBehandling={false}
         behandling={behandlingTemplate as BehandlingAppKontekst}
@@ -91,9 +99,9 @@ describe('<BehandlingPickerItem>', () => {
         toggleShowAll={() => undefined}
         getKodeverkFn={getKodeverkFn}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(BehandlingPickerItemContent)).toHaveLength(1);
-    expect(wrapper.find('button')).toHaveLength(1);
+    expect(screen.getByRole('button', { name: 'Vis alle behandlinger' })).toBeInTheDocument();
   });
 });

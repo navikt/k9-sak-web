@@ -1,14 +1,15 @@
-import React from 'react';
-import { expect } from 'chai';
-import sinon from 'sinon';
-
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { screen } from '@testing-library/react';
+import { expect } from 'chai';
+import React from 'react';
+import sinon from 'sinon';
+import { intlMock } from '../../../i18n';
+import messages from '../../../i18n/nb_NO.json';
 import { BehandleKlageFormNfpImpl } from './BehandleKlageFormNfp';
-import TempSaveAndPreviewKlageLink from '../felles/TempSaveAndPreviewKlageLink';
-import shallowWithIntl, { intlMock } from '../../../i18n';
 
 describe('<BehandleKlageFormNfpImpl>', () => {
   const sprakkode = {
@@ -21,7 +22,7 @@ describe('<BehandleKlageFormNfpImpl>', () => {
   };
 
   it('skal vise lenke til forhåndsvis brev når fritekst er fylt, og klagevurdering valgt', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <BehandleKlageFormNfpImpl
         fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
         readOnly={false}
@@ -36,15 +37,16 @@ describe('<BehandleKlageFormNfpImpl>', () => {
         alleKodeverk={{}}
         {...reduxFormPropsMock}
       />,
+      { messages },
     );
-    expect(wrapper.find(TempSaveAndPreviewKlageLink)).to.have.length(1);
+    expect(screen.getByRole('link', { name: 'Lagre og forhåndsvis brev' })).toBeInTheDocument();
   });
   const formValues2 = {
     fritekstTilBrev: '123',
   };
 
   it('skal ikke vise lenke til forhåndsvis brev når fritekst fylt, og klagevurdering ikke valgt', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <BehandleKlageFormNfpImpl
         fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
         readOnly={false}
@@ -59,15 +61,16 @@ describe('<BehandleKlageFormNfpImpl>', () => {
         alleKodeverk={{}}
         {...reduxFormPropsMock}
       />,
+      { messages },
     );
-    expect(wrapper.find(TempSaveAndPreviewKlageLink)).to.have.length(0);
+    expect(screen.queryByRole('link', { name: 'Lagre og forhåndsvis brev' })).not.toBeInTheDocument();
   });
   const formValues3 = {
     klageVurdering: klageVurdering.STADFESTE_YTELSESVEDTAK,
   };
 
   it('skal ikke vise lenke til forhåndsvis brev når fritekst ikke fylt, og klagevurdering valgt', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <BehandleKlageFormNfpImpl
         fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
         readOnly={false}
@@ -82,7 +85,8 @@ describe('<BehandleKlageFormNfpImpl>', () => {
         alleKodeverk={{}}
         {...reduxFormPropsMock}
       />,
+      { messages },
     );
-    expect(wrapper.find(TempSaveAndPreviewKlageLink)).to.have.length(0);
+    expect(screen.queryByRole('link', { name: 'Lagre og forhåndsvis brev' })).not.toBeInTheDocument();
   });
 });

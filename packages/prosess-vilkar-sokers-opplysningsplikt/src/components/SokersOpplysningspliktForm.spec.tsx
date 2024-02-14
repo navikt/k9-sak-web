@@ -1,18 +1,18 @@
-import React from 'react';
-
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-
-import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Behandling, ManglendeVedleggSoknad, Soknad } from '@k9-sak-web/types';
+import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Table, TableRow } from '@fpsak-frontend/shared-components';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { Behandling, ManglendeVedleggSoknad, Soknad } from '@k9-sak-web/types';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import { intlMock } from '../../i18n';
+import messages from '../../i18n/nb_NO.json';
 import {
+  SokersOpplysningspliktFormImpl,
   buildInitialValues,
   getSortedManglendeVedlegg,
-  SokersOpplysningspliktFormImpl,
 } from './SokersOpplysningspliktForm';
-import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<SokersOpplysningspliktForm>', () => {
   const getKodeverknavn = () => undefined;
@@ -53,7 +53,7 @@ describe('<SokersOpplysningspliktForm>', () => {
       },
     ];
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <SokersOpplysningspliktFormImpl
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -76,29 +76,21 @@ describe('<SokersOpplysningspliktForm>', () => {
         alleKodeverk={{}}
         originalErVilkarOk
       />,
+      { messages },
     );
 
-    const table = wrapper.find(Table);
-    expect(table).toHaveLength(1);
-    const rows = table.find(TableRow);
-    expect(rows).toHaveLength(2);
-
-    const columnsAtRow1 = rows.first().children();
-    expect(columnsAtRow1).toHaveLength(2);
-    expect(columnsAtRow1.first().childAt(0).text()).toEqual('Inntektsmelding');
-    expect(columnsAtRow1.at(1).childAt(0).text()).toEqual('Statoil Asaavd Statoil Sokkelvirksomhet (973861778)');
-
-    const columnsAtRow2 = rows.last().children();
-    expect(columnsAtRow2).toHaveLength(2);
-    expect(columnsAtRow2.first().childAt(0).text()).toEqual('terminbekreftelse');
-    expect(columnsAtRow2.at(1).childAt(0)).toEqual({});
+    expect(screen.getAllByRole('table').length).toBe(1);
+    expect(screen.getByText('Inntektsmelding')).toBeInTheDocument();
+    expect(screen.getByText('Statoil Asaavd Statoil Sokkelvirksomhet (973861778)')).toBeInTheDocument();
+    expect(screen.getByText('terminbekreftelse')).toBeInTheDocument();
+    expect(screen.getByText('Manglende opplysninger, foreslå avslag')).toBeInTheDocument();
   });
 
   it('skal ikke vise tabell når ingen vedlegg mangler', () => {
     const manglendeVedlegg = [];
     const dokumentTypeIds = [];
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <SokersOpplysningspliktFormImpl
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -121,9 +113,10 @@ describe('<SokersOpplysningspliktForm>', () => {
         alleKodeverk={{}}
         originalErVilkarOk
       />,
+      { messages },
     );
 
-    expect(wrapper.find(Table)).toHaveLength(0);
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
   });
 
   describe('selectors', () => {

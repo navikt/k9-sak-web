@@ -281,6 +281,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     skalBrukeOverstyrendeFritekstBrev || kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST)
       ? fritekstbrev
       : automatiskbrev;
+
   return (
     <div data-testid="brevpanel">
       {harAlternativeMottakere && (

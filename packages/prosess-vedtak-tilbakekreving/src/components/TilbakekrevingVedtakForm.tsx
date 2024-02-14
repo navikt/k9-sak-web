@@ -78,7 +78,7 @@ export const TilbakekrevingVedtakFormImpl = ({
   fritekstOppsummeringPakrevdMenIkkeUtfylt,
   ...formProps
 }: OwnProps & InjectedFormProps & WrappedComponentProps) => (
-  <form aria-label="form" onSubmit={formProps.handleSubmit}>
+  <form aria-label="form" onSubmit={formProps.handleSubmit} data-testid="tilbakekrevingvedtakform">
     <VerticalSpacer twentyPx />
     <TilbakekrevingEditerVedtaksbrevPanel
       vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}

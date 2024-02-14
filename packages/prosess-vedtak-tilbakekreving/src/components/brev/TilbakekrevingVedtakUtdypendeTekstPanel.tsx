@@ -40,7 +40,7 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
       {isTextfieldHidden && !readOnly && (
         <>
           <VerticalSpacer eightPx />
-          <div
+          <button
             onClick={event => {
               event.preventDefault();
               hideTextField(false);
@@ -50,8 +50,7 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
               hideTextField(false);
             }}
             className={styles.addPeriode}
-            role="button"
-            tabIndex={0}
+            type="button"
           >
             <Image
               className={styles.addCircleIcon}
@@ -61,7 +60,7 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
             <Undertekst className={styles.imageText}>
               <FormattedMessage id="TilbakekrevingVedtakUtdypendeTekstPanel.LeggTilUtdypendeTekst" />
             </Undertekst>
-          </div>
+          </button>
         </>
       )}
       {!isTextfieldHidden && (

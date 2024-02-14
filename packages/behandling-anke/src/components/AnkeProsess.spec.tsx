@@ -1,7 +1,3 @@
-import { shallow } from 'enzyme';
-import React from 'react';
-import sinon from 'sinon';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -10,10 +6,13 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
-import { Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
-
+import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+import sinon from 'sinon';
 import AnkeProsess from './AnkeProsess';
 
 describe('<AnkeProsess>', () => {
@@ -74,7 +73,7 @@ describe('<AnkeProsess>', () => {
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    const wrapper = shallow(
+    renderWithIntl(
       <AnkeProsess
         data={{ aksjonspunkter, vilkar, ankeVurdering }}
         fagsak={fagsak}
@@ -90,40 +89,15 @@ describe('<AnkeProsess>', () => {
         setBehandling={sinon.spy()}
       />,
     );
-
-    const meny = wrapper.find(ProsessStegContainer);
-    expect(meny.prop('formaterteProsessStegPaneler')).toEqual([
-      {
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
-        labelId: 'Behandlingspunkt.Ankebehandling',
-        type: 'default',
-        usePartialStatus: false,
-      },
-      {
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
-        labelId: 'Behandlingspunkt.AnkeResultat',
-        type: 'default',
-        usePartialStatus: false,
-      },
-      {
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
-        labelId: 'Behandlingspunkt.AnkeMerknader',
-        type: 'default',
-        usePartialStatus: false,
-      },
-    ]);
+    expect(screen.getByRole('button', { name: 'Ankebehandling' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Resultat' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Merknader' })).toBeInTheDocument();
   });
 
-  it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
+  it('skal sette nytt valgt prosessSteg ved trykk i meny', async () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallow(
+    renderWithIntl(
       <AnkeProsess
         data={{ aksjonspunkter, vilkar, ankeVurdering }}
         fagsak={fagsak}
@@ -139,11 +113,10 @@ describe('<AnkeProsess>', () => {
         setBehandling={sinon.spy()}
       />,
     );
-
-    const meny = wrapper.find(ProsessStegContainer);
-
-    meny.prop('velgProsessStegPanelCallback')(2);
-
+    userEvent.click(screen.getByRole('button', { name: 'Merknader' }));
+    await waitFor(() => {
+      expect(oppdaterProsessStegOgFaktaPanelIUrl.callCount).toBeGreaterThan(0);
+    });
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(opppdaterKall).toHaveLength(1);
     expect(opppdaterKall[0].args).toHaveLength(2);
