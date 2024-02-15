@@ -36,7 +36,8 @@
     "sentry-release": "(SENTRY_RELEASE=$(git rev-parse --short HEAD); node ./scripts/sentry-release)"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "packages/v2/*"
   ],
   "dependencies": {
     "@babel/runtime": "7.23.8",
