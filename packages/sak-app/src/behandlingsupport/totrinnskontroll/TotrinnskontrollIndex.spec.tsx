@@ -1,7 +1,7 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

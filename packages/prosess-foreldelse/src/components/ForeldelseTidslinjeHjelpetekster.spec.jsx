@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 import { Image } from '@fpsak-frontend/shared-components';
 
-import { intlMock, mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, mountWithIntl } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 import ForeldelseTidslinjeHjelpetekster from './ForeldelseTidslinjeHjelpetekster';
 
 describe('<ForeldelseTidslinjeHjelpetekster>', () => {

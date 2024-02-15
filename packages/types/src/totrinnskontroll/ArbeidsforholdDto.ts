@@ -1,10 +1,10 @@
-import { Kodeverk } from '../kodeverk';
+import { KodeverkMedNavn } from '../kodeverk';
 
 export interface ArbeidsforholdDto {
   navn: string;
   organisasjonsnummer: string;
   arbeidsforholdId: string;
-  arbeidsforholdHandlingType: Kodeverk;
+  arbeidsforholdHandlingType: KodeverkMedNavn;
   brukPermisjon: boolean;
 }
 

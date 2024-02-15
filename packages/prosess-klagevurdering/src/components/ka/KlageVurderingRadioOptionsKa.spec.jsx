@@ -1,6 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import sinon from 'sinon';

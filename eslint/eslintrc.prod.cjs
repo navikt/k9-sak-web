@@ -1,5 +1,5 @@
 const { merge } = require('webpack-merge');
-const common = require('./eslintrc.common.js');
+const common = require('./eslintrc.common.cjs');
 
 const ON = 1;
 const ERROR = 2;

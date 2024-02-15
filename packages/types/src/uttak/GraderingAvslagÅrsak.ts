@@ -1,6 +1,6 @@
-import { Kodeverk } from '../kodeverk';
+import { KodeverkMedNavn } from '../kodeverk';
 
-export interface GraderingAvslagÅrsak extends Kodeverk {
+export interface GraderingAvslagÅrsak extends KodeverkMedNavn {
   gyldigFom: string;
   gyldigTom: string;
 }

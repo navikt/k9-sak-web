@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextAreaField } from '@fpsak-frontend/form';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { shallow } from 'enzyme';
 import { PersonArbeidsforholdDetailForm } from './PersonArbeidsforholdDetailForm';
 import shallowWithIntl, { intlMock } from '../../../i18n/intl-enzyme-test-helper-fakta-arbeidsforhold';

@@ -1,10 +1,13 @@
-import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { intlMock } from '../../../../i18n/index';
+import { intlWithMessages } from "@fpsak-frontend/utils-test/intl-enzyme-test-helper";
 import messages from '../../../../i18n/nb_NO.json';
 import BubbleText from './bubbleText';
+
+
+const intlMock = intlWithMessages(messages);
 
 describe('<BubbleText>', () => {
   it('skal kun vise en del av teksten om cutoffpointen vi sender er mindre en tekstens lengde', () => {

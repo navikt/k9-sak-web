@@ -1,12 +1,14 @@
 import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { screen } from '@testing-library/react';
 import { expect } from 'chai';
 import React from 'react';
-import { intlMock } from '../../i18n';
+import { intlWithMessages } from "@fpsak-frontend/utils-test/intl-enzyme-test-helper";
 import messages from '../../i18n/nb_NO.json';
 import { InnsynVedtakFormImpl } from './InnsynVedtakForm';
+
+const intlMock = intlWithMessages(messages);
 
 describe('<InnsynVedtakForm>', () => {
   //  Tester for readOnly betingelse på confirm-vilkår knapp
