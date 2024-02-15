@@ -1,8 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { screen } from '@testing-library/react';
 import { expect } from 'chai';
 import React from 'react';

@@ -51,22 +51,21 @@ export const formaterOverstyringAktiviteter = (aktiviteter: Arbeidsforhold[]): O
     aktivitetUtbetalingsgrad: undefined,
   }));
 
-export const yupValiderProsent = Yup
-  .number()
-  .transform((val, orig) => orig === "" ? undefined : val)
-  .typeError("Må være et tall")
-  .max(100, "Maks 100")
-  .min(0, "Minst 0");
+export const yupValiderProsent = Yup.number()
+  .required('Feltet er påkrevd')
+  .transform((val, orig) => (orig === '' ? undefined : val))
+  .typeError('Må være et tall')
+  .max(100, 'Maks 100')
+  .min(0, 'Minst 0');
 
 export const overstyrUttakFormValidationSchema = Yup.object().shape({
   [OverstyrUttakFormFieldName.UTTAKSGRAD]: yupValiderProsent,
   [OverstyrUttakFormFieldName.FOM]: Yup.string().required('Feltet er påkrevd'),
   [OverstyrUttakFormFieldName.TOM]: Yup.string().required('Feltet er påkrevd'),
-  [OverstyrUttakFormFieldName.BEGRUNNELSE]: Yup
-    .string()
+  [OverstyrUttakFormFieldName.BEGRUNNELSE]: Yup.string()
     .required('Feltet er påkrevd')
-    .min(5, "Du må skirve minst 5 tegn")
-    .max(1500, "Du kan skrive maksimalt 1500 tegn"),
+    .min(5, 'Du må skirve minst 5 tegn')
+    .max(1500, 'Du kan skrive maksimalt 1500 tegn'),
   [OverstyrUttakFormFieldName.UTBETALINGSGRADER]: Yup.array().of(
     Yup.object().shape({
       [OverstyrUttakFormFieldName.AKTIVITET_UTBETALINGSGRAD]: yupValiderProsent,
@@ -76,5 +75,6 @@ export const overstyrUttakFormValidationSchema = Yup.object().shape({
         [OverstyrUttakFormFieldName.AKTØR_ID]: Yup.string().nullable(),
         [OverstyrUttakFormFieldName.ARBEIDSFORHOLD_ID]: Yup.string().nullable(),
       }),
-    })),
+    }),
+  ),
 });

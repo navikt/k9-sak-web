@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
 import { RadioOption } from '@fpsak-frontend/form';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 
 import { ForeldelsePeriodeFormImpl } from './ForeldelsePeriodeForm';

@@ -3,9 +3,9 @@ import sinon from 'sinon';
 
 import userEvent from '@testing-library/user-event';
 
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 
-import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/src/test-utils';
+import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/test-utils';
 
 // import { FlexColumn } from '@fpsak-frontend/shared-components';
 // import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/src/test-utils';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import TilbakekrevingEditerVedtaksbrevPanel from './TilbakekrevingEditerVedtaksbrevPanel';
 
