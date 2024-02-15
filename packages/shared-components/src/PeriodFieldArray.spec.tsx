@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { metaMock, MockFields } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { metaMock, MockFields } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 
 import Image from './Image';
 import PeriodFieldArray from './PeriodFieldArray';

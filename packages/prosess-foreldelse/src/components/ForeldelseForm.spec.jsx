@@ -1,5 +1,5 @@
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import { expect } from 'chai';
 import React from 'react';

@@ -2,7 +2,7 @@ import {
   AxisLabel,
   Etikett,
   InternalSimpleTimeline,
-  Periode,
+  ExpandedPeriode as Periode,
   Pin,
   PositionedPeriod,
   Tidslinjeskala,

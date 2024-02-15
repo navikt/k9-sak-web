@@ -4,7 +4,7 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import region from '@fpsak-frontend/kodeverk/src/region';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import { renderWithIntl, screen } from '@fpsak-frontend/utils-test';
+import { renderWithIntl, screen } from '@fpsak-frontend/utils-test/test-utils';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import VisittkortLabels from './VisittkortLabels';

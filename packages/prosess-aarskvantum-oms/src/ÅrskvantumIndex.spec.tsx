@@ -1,4 +1,4 @@
-import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { ArbeidsforholdV2, Behandling } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
