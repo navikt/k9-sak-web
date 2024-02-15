@@ -144,7 +144,7 @@ describe('<BrevPanel>', () => {
       </Formik>,
       { messages },
     );
-    screen.debug();
+
     expect(screen.getByText('I denne behandlingen er det ikke vedtaksbrev.')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Forhåndsvis brev' })).not.toBeInTheDocument();
   });

@@ -28,12 +28,17 @@ export function renderWithReduxForm(ui: ReactElement, { ...renderOptions } = {})
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
 }
 
-export function renderWithIntlAndReduxForm(ui: ReactElement, { locale, messages, ...renderOptions }: any = {}) {
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
+export function renderWithIntlAndReduxForm(
+  ui: ReactElement,
+  { locale, messages, initialValues, ...renderOptions }: any = {},
+) {
+  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ handleSubmit, children }) => (
+    <form onSubmit={handleSubmit}>{children}</form>
+  ));
   const Wrapper = ({ children }) => (
     <Provider store={createStore(combineReducers({ form: reducer }))}>
       <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages} onError={() => null}>
-        <MockForm>{children}</MockForm>
+        <MockForm initialValues={initialValues}>{children}</MockForm>
       </IntlProvider>
     </Provider>
   );

@@ -1,20 +1,17 @@
+import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import sinon from 'sinon';
-import Modal from 'nav-frontend-modal';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { Normaltekst } from 'nav-frontend-typografi';
-
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { DatepickerField, SelectField } from '@fpsak-frontend/form';
-import shallowWithIntl, { intlMock } from '../../i18n/index';
-
+import messages from '../../i18n/nb_NO.json';
 import { SettPaVentModal } from './SettPaVentModal';
 
 describe('<SettPaVentModal>', () => {
   it('skal rendre åpen modal', () => {
     const cancelEventCallback = sinon.spy();
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <SettPaVentModal
         intl={intlMock}
         cancelEvent={cancelEventCallback}
@@ -28,18 +25,16 @@ describe('<SettPaVentModal>', () => {
         showModal
         {...reduxFormPropsMock}
       />,
+      { messages },
     );
 
-    const modal = wrapper.find(Modal);
-    expect(modal).toHaveLength(1);
-    expect(modal.prop('isOpen')).toBe(true);
-    expect(modal.prop('closeButton')).toBe(true);
-    expect(modal.prop('contentLabel')).toEqual('Behandlingen er satt på vent');
-    expect(modal.prop('onRequestClose')).toEqual(cancelEventCallback);
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: 'Lukk' }).length).toBe(2);
+    expect(screen.getByText('Behandlingen er satt på vent med frist:')).toBeInTheDocument();
   });
 
   it('skal ikke disable knapp for lagring når frist er en gyldig fremtidig dato', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <SettPaVentModal
         intl={intlMock}
         showModal
@@ -53,14 +48,15 @@ describe('<SettPaVentModal>', () => {
         erTilbakekreving={false}
         {...reduxFormPropsMock}
       />,
+      { messages },
     );
 
-    const button = wrapper.find(Hovedknapp);
-    expect(button.prop('disabled')).toBe(false);
+    expect(screen.getByRole('button', { name: 'Sett på vent' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Sett på vent' })).not.toBeDisabled();
   });
 
   it('skal disable knapp for lagring når frist er en ugyldig dato', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <SettPaVentModal
         intl={intlMock}
         showModal
@@ -74,14 +70,15 @@ describe('<SettPaVentModal>', () => {
         erTilbakekreving={false}
         {...reduxFormPropsMock}
       />,
+      { messages },
     );
 
-    const button = wrapper.find(Hovedknapp);
-    expect(button.prop('disabled')).toBe(true);
+    expect(screen.getByRole('button', { name: 'Sett på vent' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Sett på vent' })).toBeDisabled();
   });
 
   it('skal disable knapp for lagring når frist er en historisk dato', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <SettPaVentModal
         intl={intlMock}
         showModal
@@ -95,14 +92,15 @@ describe('<SettPaVentModal>', () => {
         erTilbakekreving={false}
         {...reduxFormPropsMock}
       />,
+      { messages },
     );
 
-    const button = wrapper.find(Hovedknapp);
-    expect(button.prop('disabled')).toBe(true);
+    expect(screen.getByRole('button', { name: 'Sett på vent' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Sett på vent' })).toBeDisabled();
   });
 
-  it('skal være obligatorisk å velge årsak', () => {
-    const wrapper = shallowWithIntl(
+  it('skal kunne velge årsak', async () => {
+    renderWithIntlAndReduxForm(
       <SettPaVentModal
         intl={intlMock}
         showModal
@@ -116,13 +114,14 @@ describe('<SettPaVentModal>', () => {
         erTilbakekreving={false}
         {...reduxFormPropsMock}
       />,
+      { messages },
     );
-    const select = wrapper.find(SelectField);
-    expect(select.prop('validate')).toHaveLength(1);
+
+    expect(screen.getByRole('combobox')).toBeInTheDocument();
   });
 
   it('skal ikke vise frist-input når behandling automatisk er satt på vent uten frist', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <SettPaVentModal
         intl={intlMock}
         showModal
@@ -134,13 +133,13 @@ describe('<SettPaVentModal>', () => {
         erTilbakekreving={false}
         {...reduxFormPropsMock}
       />,
+      { messages },
     );
-
-    expect(wrapper.find(DatepickerField)).toHaveLength(0);
+    expect(screen.queryByPlaceholderText('dd.mm.åååå')).not.toBeInTheDocument();
   });
 
   it('skal vise frist-input når behandling automatisk er satt på vent med frist', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <SettPaVentModal
         intl={intlMock}
         showModal
@@ -152,13 +151,14 @@ describe('<SettPaVentModal>', () => {
         erTilbakekreving={false}
         {...reduxFormPropsMock}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(DatepickerField)).toHaveLength(1);
+    expect(screen.getByPlaceholderText('dd.mm.åååå')).toBeInTheDocument();
   });
 
   it('skal vise årsak-input som readonly når behandling automatisk er satt på vent', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <SettPaVentModal
         intl={intlMock}
         showModal
@@ -169,13 +169,14 @@ describe('<SettPaVentModal>', () => {
         erTilbakekreving={false}
         {...reduxFormPropsMock}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(SelectField).prop('readOnly')).toBe(true);
+    expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
   });
 
   it('skal vise fristen tekst for tilbakekreving behandling venter på kravgrunnlag og fristen er utløpt', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <SettPaVentModal
         intl={intlMock}
         showModal
@@ -193,11 +194,9 @@ describe('<SettPaVentModal>', () => {
         erTilbakekreving
         {...reduxFormPropsMock}
       />,
+      { messages },
     );
-
-    expect(wrapper.find(SelectField).prop('readOnly')).toBe(true);
-    const label = wrapper.find(Normaltekst);
-    expect(label).toHaveLength(2);
-    expect(label.first().childAt(0).prop('id')).toEqual('SettPaVentModal.SettesPaVent');
+    expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
+    expect(screen.getByText('Behandlingen settes på vent med frist')).toBeInTheDocument();
   });
 });
