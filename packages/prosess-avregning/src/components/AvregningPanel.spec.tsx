@@ -10,10 +10,18 @@ import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbake
 import { Undertittel } from 'nav-frontend-typografi';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { Column, Row } from 'nav-frontend-grid';
+import {
+  intlWithMessages,
+  shallowWithIntl as globalShallowWithIntl,
+} from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 import { AvregningPanelImpl, transformValues } from './AvregningPanel';
-import shallowWithIntl, { intlMock } from '../../i18n';
+import messages from '../../i18n/nb_NO.json';
+
+const shallowWithIntl = node => globalShallowWithIntl(node, messages);
+
+const intlMock = intlWithMessages(messages);
 
 const simuleringResultat = {
   simuleringResultat: {
