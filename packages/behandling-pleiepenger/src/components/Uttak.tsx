@@ -42,7 +42,7 @@ export default ({
   erOverstyrer,
 }: UttakProps) => {
   const [featureToggles] = useFeatureToggles();
-  const { versjon, links } = behandling;
+  const { versjon, links, status } = behandling;
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
@@ -88,6 +88,7 @@ export default ({
         versjon,
         featureToggles,
         erOverstyrer,
+        status: status.kode,
       }}
     />
   );
