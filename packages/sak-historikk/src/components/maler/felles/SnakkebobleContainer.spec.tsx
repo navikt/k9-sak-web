@@ -1,6 +1,6 @@
 import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../../../../i18n/nb_NO.json';

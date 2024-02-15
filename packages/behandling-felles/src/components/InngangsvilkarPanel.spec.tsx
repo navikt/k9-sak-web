@@ -3,7 +3,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { Behandling } from '@k9-sak-web/types';
 import { screen, waitFor } from '@testing-library/react';

@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import Modal from 'nav-frontend-modal';
 
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 
 import IverksetterVedtakStatusModal from './IverksetterVedtakStatusModal';

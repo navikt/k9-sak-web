@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import TimeLineSokerEnsamSoker from './TimeLineSokerEnsamSoker';
 
