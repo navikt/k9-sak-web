@@ -1,4 +1,4 @@
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { Behandling } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';

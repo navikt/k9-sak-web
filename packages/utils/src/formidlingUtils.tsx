@@ -19,7 +19,7 @@ export interface TilgjengeligeVedtaksbrevMedMaler {
 export interface TilgjengeligeVedtaksbrev {
   begrunnelse: string;
   alternativeMottakere: Array<Brevmottaker>;
-  vedtaksbrevmaler: Map<string, string>;
+  vedtaksbrevmaler: Record<string, string>;
 }
 
 export type Brevmottaker = Readonly<{

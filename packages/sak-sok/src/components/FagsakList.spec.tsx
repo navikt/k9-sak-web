@@ -1,7 +1,7 @@
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';

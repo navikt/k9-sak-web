@@ -4,7 +4,7 @@ import Modal from 'nav-frontend-modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import shallowWithIntl, { intlMock } from '../../i18n/index';
 

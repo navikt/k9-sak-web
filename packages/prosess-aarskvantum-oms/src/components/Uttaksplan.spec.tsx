@@ -1,4 +1,4 @@
-import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { ArbeidsforholdV2, UtfallEnum, VilkårEnum } from '@k9-sak-web/types';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
 import { screen } from '@testing-library/react';

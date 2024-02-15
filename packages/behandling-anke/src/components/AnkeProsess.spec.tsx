@@ -6,7 +6,7 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 import { screen, waitFor } from '@testing-library/react';
