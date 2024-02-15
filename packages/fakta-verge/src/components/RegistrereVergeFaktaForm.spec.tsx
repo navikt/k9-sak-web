@@ -1,10 +1,12 @@
+import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-
-import { InputField, SelectField } from '@fpsak-frontend/form';
-
-import shallowWithIntl, { intlMock } from '../../i18n';
+import messages from '../../i18n/nb_NO.json';
 import vergeType from '../kodeverk/vergeType';
 import RegistrereVergeFaktaForm from './RegistrereVergeFaktaForm';
+
+const intlMock = intlWithMessages(messages);
 
 const vergetyper = [
   {
@@ -19,7 +21,7 @@ const vergetyper = [
 
 describe('<RegistrereVergeFaktaForm>', () => {
   it('skal vise kun dropdown for vergetype når dette ikke er satt', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <RegistrereVergeFaktaForm
         intl={intlMock}
         readOnly={false}
@@ -28,12 +30,12 @@ describe('<RegistrereVergeFaktaForm>', () => {
       />,
     );
 
-    expect(wrapper.find(SelectField)).to.have.length(1);
-    expect(wrapper.find(InputField)).to.have.length(0);
+    expect(screen.getByRole('combobox', { name: 'Type verge' })).toBeInTheDocument();
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   });
 
   it('skal vise alle felter når dette vergetype er valgt', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <RegistrereVergeFaktaForm
         intl={intlMock}
         readOnly={false}
@@ -43,8 +45,8 @@ describe('<RegistrereVergeFaktaForm>', () => {
       />,
     );
 
-    expect(wrapper.find(SelectField)).to.have.length(1);
-    expect(wrapper.find(InputField)).to.have.length(2);
+    expect(screen.getByRole('combobox', { name: 'Type verge' })).toBeInTheDocument();
+    expect(screen.getAllByRole('textbox').length).toBe(4);
   });
 
   it('skal sette opp initielle verdier fra behandling', () => {
@@ -58,7 +60,7 @@ describe('<RegistrereVergeFaktaForm>', () => {
 
     const initialValues = RegistrereVergeFaktaForm.buildInitialValues(verge);
 
-    expect(initialValues).to.eql({
+    expect(initialValues).toStrictEqual({
       navn: 'Tester',
       gyldigFom: '2017',
       gyldigTom: '2018',

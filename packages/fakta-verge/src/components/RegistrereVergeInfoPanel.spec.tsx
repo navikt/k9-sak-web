@@ -1,18 +1,20 @@
-import React from 'react';
-
-import sinon from 'sinon';
-
+import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-
-import { FaktaBegrunnelseTextField } from '@k9-sak-web/fakta-felles';
-import shallowWithIntl, { intlMock } from '../../i18n';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import sinon from 'sinon';
+import messages from '../../i18n/nb_NO.json';
 import { RegistrereVergeInfoPanelImpl } from './RegistrereVergeInfoPanel';
+
+const intlMock = intlWithMessages(messages);
 
 describe('<RegistrereVergeInfoPanel>', () => {
   it('skal vise faktapanel og form for registrere verge', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <RegistrereVergeInfoPanelImpl
         {...reduxFormPropsMock}
+        submittable
         intl={intlMock}
         openInfoPanels={['verge']}
         toggleInfoPanelCallback={sinon.spy()}
@@ -33,7 +35,6 @@ describe('<RegistrereVergeInfoPanel>', () => {
       />,
     );
 
-    const panel = wrapper.find(FaktaBegrunnelseTextField);
-    expect(panel).to.have.length(1);
+    expect(screen.getByRole('textbox', { name: 'Begrunnelse' })).toBeInTheDocument();
   });
 });

@@ -32,9 +32,7 @@ export function renderWithIntlAndReduxForm(
   ui: ReactElement,
   { locale, messages, initialValues, ...renderOptions }: any = {},
 ) {
-  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ handleSubmit, children }) => (
-    <form onSubmit={handleSubmit}>{children}</form>
-  ));
+  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
   const Wrapper = ({ children }) => (
     <Provider store={createStore(combineReducers({ form: reducer }))}>
       <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages} onError={() => null}>
