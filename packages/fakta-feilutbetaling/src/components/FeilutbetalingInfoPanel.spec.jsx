@@ -1,18 +1,18 @@
 import React from 'react';
-import { expect } from 'chai';
+
 import { Normaltekst } from 'nav-frontend-typografi';
 import sinon from 'sinon';
 
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
+import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 
-import { FeilutbetalingInfoPanelImpl } from './FeilutbetalingInfoPanel';
 import shallowWithIntl, { intlMock } from '../../i18n';
+import { FeilutbetalingInfoPanelImpl } from './FeilutbetalingInfoPanel';
 
 const BEHANDLING_AARSAK_KODEVERK = 'BEHANDLING_AARSAK';
 const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';

@@ -1,11 +1,10 @@
 import React from 'react';
-import { expect } from 'chai';
 
-import { SelectField, InputField } from '@fpsak-frontend/form';
+import { InputField, SelectField } from '@fpsak-frontend/form';
 
-import RegistrereVergeFaktaForm from './RegistrereVergeFaktaForm';
-import vergeType from '../kodeverk/vergeType';
 import shallowWithIntl, { intlMock } from '../../i18n';
+import vergeType from '../kodeverk/vergeType';
+import RegistrereVergeFaktaForm from './RegistrereVergeFaktaForm';
 
 const vergetyper = [
   {

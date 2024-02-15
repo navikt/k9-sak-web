@@ -1,14 +1,14 @@
 import React from 'react';
-import { expect } from 'chai';
-import sinon from 'sinon';
-import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { FormattedMessage } from 'react-intl';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import sinon from 'sinon';
+
 import { PeriodpickerField, RadioGroupField, SelectField, TextAreaField } from '@fpsak-frontend/form';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
-import { ActivityPanel } from './ActivityPanel';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { FormattedMessage } from 'react-intl';
 import shallowWithIntl, { intlMock } from '../../../i18n';
+import { ActivityPanel } from './ActivityPanel';
 
 describe('<ActivityPanel>', () => {
   const opptjeningAktivitetTypes = [

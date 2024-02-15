@@ -1,7 +1,7 @@
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import { expect } from 'chai';
+
 import React from 'react';
 import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';

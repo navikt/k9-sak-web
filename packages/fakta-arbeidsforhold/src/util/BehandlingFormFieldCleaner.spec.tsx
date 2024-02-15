@@ -1,6 +1,6 @@
-import React from 'react';
 import { shallow } from 'enzyme';
-import { expect } from 'chai';
+import React from 'react';
+
 import sinon from 'sinon';
 
 import { InputField } from '@fpsak-frontend/form';

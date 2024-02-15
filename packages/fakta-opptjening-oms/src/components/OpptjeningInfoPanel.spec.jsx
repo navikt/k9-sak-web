@@ -1,10 +1,9 @@
 import React from 'react';
-import { expect } from 'chai';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { buildInitialValues, OpptjeningInfoPanel } from './OpptjeningInfoPanel';
-import OpptjeningFaktaForm from './OpptjeningFaktaForm';
 import shallowWithIntl, { intlMock } from '../../i18n';
+import OpptjeningFaktaForm from './OpptjeningFaktaForm';
+import { buildInitialValues, OpptjeningInfoPanel } from './OpptjeningInfoPanel';
 
 describe('<OpptjeningInfoPanel>', () => {
   it('skal vise opptjeningspanel', () => {

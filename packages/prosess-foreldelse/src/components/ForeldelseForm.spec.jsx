@@ -1,7 +1,7 @@
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import { expect } from 'chai';
+
 import React from 'react';
 import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';

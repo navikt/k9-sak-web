@@ -1,12 +1,12 @@
 import React from 'react';
-import { expect } from 'chai';
-import sinon from 'sinon';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
-import { OppholdInntektOgPerioderForm, transformValues } from './OppholdInntektOgPerioderForm';
+import sinon from 'sinon';
 import shallowWithIntl, { intlMock } from '../../../i18n';
+import { OppholdInntektOgPerioderForm, transformValues } from './OppholdInntektOgPerioderForm';
 
 const perioder = [];
 

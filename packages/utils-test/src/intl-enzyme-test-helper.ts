@@ -6,9 +6,9 @@
  * These helper functions aim to address that.
  */
 
+import { mount, shallow } from 'enzyme';
 import { ReactElement } from 'react';
 import { IntlProvider, createIntl, createIntlCache } from 'react-intl';
-import { mount, shallow } from 'enzyme';
 // You can pass your messages to the IntlProvider. Optional: remove if unneeded.
 // eslint-disable-next-line import/no-relative-packages
 import defaultMessages from '../../../public/sprak/nb_NO.json';

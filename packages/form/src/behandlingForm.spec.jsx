@@ -1,7 +1,9 @@
-import { expect } from 'chai';
-
 import { isRequiredMessage } from '@fpsak-frontend/utils';
-import { getBehandlingFormPrefix, getBehandlingFormRegisteredFields, hasBehandlingFormErrorsOfType } from './behandlingForm';
+import {
+  getBehandlingFormPrefix,
+  getBehandlingFormRegisteredFields,
+  hasBehandlingFormErrorsOfType,
+} from './behandlingForm';
 
 describe('behandlingForm', () => {
   const behandlingId = 1;
@@ -22,8 +24,9 @@ describe('behandlingForm', () => {
       },
     };
 
-    const registeredFields = getBehandlingFormRegisteredFields(formName, behandlingId, behandlingVersjon)
-      .resultFunc(formState);
+    const registeredFields = getBehandlingFormRegisteredFields(formName, behandlingId, behandlingVersjon).resultFunc(
+      formState,
+    );
 
     expect(registeredFields).is.eql('test');
   });
@@ -37,13 +40,19 @@ describe('behandlingForm', () => {
       },
     };
     const errors = {
-      antallBarn: [{
-        id: 'ValidationMessage.NotEmpty',
-      }],
+      antallBarn: [
+        {
+          id: 'ValidationMessage.NotEmpty',
+        },
+      ],
     };
 
-    const hasError = hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())
-      .resultFunc(registeredFields, errors);
+    const hasError = hasBehandlingFormErrorsOfType(
+      formName,
+      behandlingId,
+      behandlingVersjon,
+      isRequiredMessage(),
+    ).resultFunc(registeredFields, errors);
 
     expect(hasError).is.true;
   });
@@ -57,13 +66,19 @@ describe('behandlingForm', () => {
       },
     };
     const errors = {
-      antallBarn: [{
-        id: 'ValidationMessage.AnnenFeil',
-      }],
+      antallBarn: [
+        {
+          id: 'ValidationMessage.AnnenFeil',
+        },
+      ],
     };
 
-    const hasError = hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())
-      .resultFunc(registeredFields, errors);
+    const hasError = hasBehandlingFormErrorsOfType(
+      formName,
+      behandlingId,
+      behandlingVersjon,
+      isRequiredMessage(),
+    ).resultFunc(registeredFields, errors);
 
     expect(hasError).is.false;
   });
@@ -77,13 +92,19 @@ describe('behandlingForm', () => {
       },
     };
     const errors = {
-      antallBarn: [{
-        id: 'ValidationMessage.NotEmpty',
-      }],
+      antallBarn: [
+        {
+          id: 'ValidationMessage.NotEmpty',
+        },
+      ],
     };
 
-    const hasError = hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())
-      .resultFunc(registeredFields, errors);
+    const hasError = hasBehandlingFormErrorsOfType(
+      formName,
+      behandlingId,
+      behandlingVersjon,
+      isRequiredMessage(),
+    ).resultFunc(registeredFields, errors);
 
     expect(hasError).is.false;
   });
@@ -100,13 +121,16 @@ describe('behandlingForm', () => {
 
     const errors = {
       medlemskapManuellVurderingType: {
-        kode: [{ id: 'ValidationMessage.NotEmpty' },
-        ],
+        kode: [{ id: 'ValidationMessage.NotEmpty' }],
       },
     };
 
-    const hasError = hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())
-      .resultFunc(registeredFields, errors);
+    const hasError = hasBehandlingFormErrorsOfType(
+      formName,
+      behandlingId,
+      behandlingVersjon,
+      isRequiredMessage(),
+    ).resultFunc(registeredFields, errors);
 
     expect(hasError).is.true;
   });
@@ -122,14 +146,19 @@ describe('behandlingForm', () => {
     };
 
     const errors = {
-      fordelingTYPeriode0: [{
-        andel: [{ id: 'ValidationMessage.NotEmpty' },
-        ],
-      }],
+      fordelingTYPeriode0: [
+        {
+          andel: [{ id: 'ValidationMessage.NotEmpty' }],
+        },
+      ],
     };
 
-    const hasError = hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())
-      .resultFunc(registeredFields, errors);
+    const hasError = hasBehandlingFormErrorsOfType(
+      formName,
+      behandlingId,
+      behandlingVersjon,
+      isRequiredMessage(),
+    ).resultFunc(registeredFields, errors);
 
     expect(hasError).is.true;
   });

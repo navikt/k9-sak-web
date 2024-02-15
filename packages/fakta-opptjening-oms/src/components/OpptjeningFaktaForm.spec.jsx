@@ -1,11 +1,11 @@
 import React from 'react';
-import { expect } from 'chai';
-import { shallow } from 'enzyme';
-import sinon from 'sinon';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
+import { shallow } from 'enzyme';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import sinon from 'sinon';
+
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { OpptjeningFaktaFormImpl as OpptjeningFaktaForm } from './OpptjeningFaktaForm';
 import ActivityPanel from './activity/ActivityPanel';
 

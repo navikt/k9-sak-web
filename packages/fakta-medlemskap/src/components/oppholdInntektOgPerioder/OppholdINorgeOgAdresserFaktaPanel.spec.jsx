@@ -1,13 +1,12 @@
 import React from 'react';
-import { expect } from 'chai';
 
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { Normaltekst } from 'nav-frontend-typografi';
-import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 import shallowWithIntl, { intlMock } from '../../../i18n';
+import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 
 describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
   const opphold = {

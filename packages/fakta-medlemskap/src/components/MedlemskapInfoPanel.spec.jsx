@@ -1,12 +1,12 @@
 import React from 'react';
-import { expect } from 'chai';
+
 import sinon from 'sinon';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
+import shallowWithIntl, { intlMock } from '../../i18n';
 import MedlemskapInfoPanel from './MedlemskapInfoPanel';
 import OppholdInntektOgPerioderForm from './oppholdInntektOgPerioder/OppholdInntektOgPerioderForm';
-import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<MedlemskapInfoPanel>', () => {
   it('skal vise begge medlemskapsformer når aksjonspunkt for startdato for foreldrepengerperioden er avklart', () => {

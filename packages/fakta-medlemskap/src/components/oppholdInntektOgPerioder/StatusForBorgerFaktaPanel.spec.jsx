@@ -1,9 +1,8 @@
 import React from 'react';
-import { expect } from 'chai';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import StatusForBorgerFaktaPanel from './StatusForBorgerFaktaPanel';
 import shallowWithIntl, { intlMock } from '../../../i18n';
+import StatusForBorgerFaktaPanel from './StatusForBorgerFaktaPanel';
 
 describe('<StatusForBorgerFaktaPanel>', () => {
   it('skal vise radioknapper for vurdering av oppholdsrett', () => {

@@ -1,14 +1,13 @@
 import React from 'react';
-import { expect } from 'chai';
 
+import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import { Normaltekst } from 'nav-frontend-typografi';
-import EtikettBase from 'nav-frontend-etiketter';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
-import { BostedSokerView } from './BostedSokerView';
+import EtikettBase from 'nav-frontend-etiketter';
+import { Normaltekst } from 'nav-frontend-typografi';
 import shallowWithIntl, { intlMock } from '../../i18n';
+import { BostedSokerView } from './BostedSokerView';
 
 import { BostedSokerPersonopplysninger } from '../BostedSokerFaktaIndex';
 

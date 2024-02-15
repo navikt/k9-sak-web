@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 import { lagKonsekvensForYtelsenTekst } from './VedtakInnvilgetRevurderingPanel';
 
 const getKodeverknavn = kodeverk => {

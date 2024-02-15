@@ -1,12 +1,12 @@
 import React from 'react';
-import { expect } from 'chai';
+
 import sinon from 'sinon';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 
 import { FaktaBegrunnelseTextField } from '@k9-sak-web/fakta-felles';
-import { RegistrereVergeInfoPanelImpl } from './RegistrereVergeInfoPanel';
 import shallowWithIntl, { intlMock } from '../../i18n';
+import { RegistrereVergeInfoPanelImpl } from './RegistrereVergeInfoPanel';
 
 describe('<RegistrereVergeInfoPanel>', () => {
   it('skal vise faktapanel og form for registrere verge', () => {

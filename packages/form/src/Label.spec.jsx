@@ -1,7 +1,7 @@
 import React from 'react';
-import { expect } from 'chai';
-import { shallow } from 'enzyme';
+
 import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { shallow } from 'enzyme';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import { Label } from './Label';

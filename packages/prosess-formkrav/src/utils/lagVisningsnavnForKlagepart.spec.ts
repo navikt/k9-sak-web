@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 import { FagsakPerson } from '@k9-sak-web/types';
 import lagVisningsnavnForKlagepart from './lagVisningsnavnForKlagepart';
 
@@ -14,7 +12,7 @@ describe('lagVisningsnavnForKlagepart', () => {
         navn: 'Svendsen Eksos',
         fødselsdato: null,
         erPrivatPerson: false,
-        arbeidsforholdreferanser: []
+        arbeidsforholdreferanser: [],
       },
     };
 
@@ -41,7 +39,7 @@ describe('lagVisningsnavnForKlagepart', () => {
         navn: 'Svendsen Eksos',
         fødselsdato: null,
         erPrivatPerson: false,
-        arbeidsforholdreferanser: []
+        arbeidsforholdreferanser: [],
       },
     };
 
@@ -68,7 +66,7 @@ describe('lagVisningsnavnForKlagepart', () => {
         navn: 'Svendsen Eksos',
         fødselsdato: null,
         erPrivatPerson: false,
-        arbeidsforholdreferanser: []
+        arbeidsforholdreferanser: [],
       },
     };
 

@@ -1,7 +1,8 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-import { expect } from 'chai';
 import sinon from 'sinon';
+import messages from '../../i18n/nb_NO.json';
 import AvregningTable from './AvregningTable';
 
 const simuleringResultat = {
@@ -46,11 +47,10 @@ const mockProps = {
 };
 
 describe('<AvregningTable>', () => {
-  it('skal ikke vise tabele hvis perioderPerMottaker er tømt array', () => {
-    const wrapper = shallow(<AvregningTable {...mockProps} />);
+  it('skal ikke vise tabell hvis perioderPerMottaker er tømt array', () => {
+    renderWithIntl(<AvregningTable {...mockProps} />, { messages });
 
-    const table = wrapper.find('Table');
-    expect(table).to.have.length(0);
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
   });
 
   it('skal vise så mange tabeller som det er mottakere i perioderPerMottaker array', () => {
@@ -61,13 +61,12 @@ describe('<AvregningTable>', () => {
         periode: {},
       },
     };
-    const wrapper = shallow(<AvregningTable {...props} />);
+    renderWithIntl(<AvregningTable {...props} />, { messages });
 
-    const table = wrapper.find('Table');
-    expect(table).to.have.length(2);
+    expect(screen.getAllByRole('table').length).toBe(props.simuleringResultat.perioderPerMottaker.length);
   });
 
-  it('skal vise så mange rader i tabele som det er rader i resultatPerFagområde og resultatOgMotregningRader arrays', () => {
+  it('skal vise så mange rader i tabell som det er rader i resultatPerFagområde og resultatOgMotregningRader arrays', () => {
     const props = {
       ...mockProps,
       simuleringResultat: {
@@ -75,10 +74,18 @@ describe('<AvregningTable>', () => {
         periode: {},
       },
     };
-    const wrapper = shallow(<AvregningTable {...props} />);
+    const { container } = renderWithIntl(<AvregningTable {...props} />, { messages });
 
-    const tableRow = wrapper.find('TableRow');
-    expect(tableRow).to.have.length(3);
+    expect(container.getElementsByClassName('rowContent').length).toBe(
+      props.simuleringResultat.perioderPerMottaker.reduce(
+        (acc, obj) => acc + obj.resultatPerFagområde.reduce((acc2, obj2) => acc2 + obj2.rader.length, 0),
+        0,
+      ) +
+        props.simuleringResultat.perioderPerMottaker.reduce(
+          (acc, obj) => acc + obj.resultatOgMotregningRader.length,
+          0,
+        ),
+    );
   });
 
   it('skal vise mottaker navn og nummer hvis mottaker er arbeidsgiver', () => {
@@ -96,10 +103,8 @@ describe('<AvregningTable>', () => {
         periode: {},
       },
     };
-    const wrapper = shallow(<AvregningTable {...props} />);
+    renderWithIntl(<AvregningTable {...props} />, { messages });
 
-    const normaltekst = wrapper.find('Normaltekst');
-    expect(normaltekst).to.have.length(1);
-    expect(normaltekst.html()).to.equal('<p class="typo-normal tableTitle">Statoil (1234567)</p>');
+    expect(screen.getByText('Statoil (1234567)')).toBeInTheDocument();
   });
 });

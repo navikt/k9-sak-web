@@ -1,15 +1,15 @@
-import React from 'react';
 import { shallow } from 'enzyme';
-import { expect } from 'chai';
+import React from 'react';
+
 import sinon from 'sinon';
 
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/src/AksjonspunktHelpText';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 
-import { ArbeidsforholdInfoPanelImpl } from './ArbeidsforholdInfoPanel';
 import { intlMock } from '../../i18n/intl-enzyme-test-helper-fakta-arbeidsforhold';
-import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
+import { ArbeidsforholdInfoPanelImpl } from './ArbeidsforholdInfoPanel';
 import BekreftOgForsettKnapp from './BekreftOgForsettKnapp';
+import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
 
 const ap5080 = {
   aksjonspunktType: {

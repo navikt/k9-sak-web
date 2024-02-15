@@ -1,8 +1,8 @@
 import React from 'react';
-import { expect } from 'chai';
+
 import { shallow } from 'enzyme';
-import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
+import { FormattedMessage } from 'react-intl';
 
 import { DatepickerField, DecimalField, InputField } from '@fpsak-frontend/form';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';

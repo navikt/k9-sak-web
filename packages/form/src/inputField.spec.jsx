@@ -1,5 +1,5 @@
 import { messages } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
-import { expect } from 'chai';
+
 import { mount } from 'enzyme';
 import React from 'react';
 import { IntlProvider } from 'react-intl';

@@ -1,12 +1,10 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import { expect } from 'chai';
-import sinon from 'sinon';
-
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-
-import AvregningPanel from './components/AvregningPanel';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import sinon from 'sinon';
+import messages from '../i18n/nb_NO.json';
 import AvregningProsessIndex from './AvregningProsessIndex';
 
 describe('<AvregningProsessIndex>', () => {
@@ -38,7 +36,7 @@ describe('<AvregningProsessIndex>', () => {
   ];
 
   it('skal rendre komponent korrekt', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <AvregningProsessIndex
         fagsak={fagsak}
         behandling={behandling}
@@ -50,7 +48,8 @@ describe('<AvregningProsessIndex>', () => {
         previewFptilbakeCallback={sinon.spy()}
         featureToggles={{}}
       />,
+      { messages },
     );
-    expect(wrapper.find(AvregningPanel)).has.length(1);
+    expect(screen.getByRole('heading', { name: 'Simulering' })).toBeInTheDocument();
   });
 });

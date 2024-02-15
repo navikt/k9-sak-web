@@ -1,12 +1,11 @@
 import React from 'react';
-import { expect } from 'chai';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import shallowWithIntl, { intlMock } from '../../../i18n';
 import PerioderMedMedlemskapFaktaPanel, {
   PerioderMedMedlemskapFaktaPanelImpl as UndecoratedForm,
 } from './PerioderMedMedlemskapFaktaPanel';
-import shallowWithIntl, { intlMock } from '../../../i18n';
 
 describe('<PerioderMedMedlemskapFaktaPanel>', () => {
   it('skal vise periode og manuelle-vurderingstyper i form', () => {

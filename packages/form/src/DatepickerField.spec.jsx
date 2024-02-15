@@ -1,10 +1,10 @@
-import React from 'react';
-import { combineReducers, createStore } from 'redux';
-import { Provider } from 'react-redux';
-import { IntlProvider } from 'react-intl';
-import { reducer as formReducer, reduxForm } from 'redux-form';
 import { mount } from 'enzyme';
-import { expect } from 'chai';
+import React from 'react';
+import { IntlProvider } from 'react-intl';
+import { Provider } from 'react-redux';
+import { combineReducers, createStore } from 'redux';
+import { reducer as formReducer, reduxForm } from 'redux-form';
+
 import { messages } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 
 import DatepickerField from './DatepickerField';

@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { submitKnappTekst } from './VedtakRevurderingSubmitPanel';
 
 describe('<VedtakRevurderingSubmitPanel>', () => {

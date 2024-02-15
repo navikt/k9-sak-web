@@ -1,10 +1,10 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import { expect } from 'chai';
+
 import React from 'react';
 import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';

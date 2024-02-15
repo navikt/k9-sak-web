@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import AksjonspunktAvklarArbeidsforholdText from './AksjonspunktAvklarArbeidsforholdText';
