@@ -1,10 +1,10 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { CheckboxField, TextAreaField } from '@fpsak-frontend/form';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 
@@ -55,6 +55,7 @@ const AktsomhetSarligeGrunnerFormPanel = ({
             validate={[required, minLength3, maxLength1500, hasValidText]}
             maxLength={1500}
             readOnly={readOnly}
+            dataId="annetBegrunnelse"
           />
         </Column>
       </Row>

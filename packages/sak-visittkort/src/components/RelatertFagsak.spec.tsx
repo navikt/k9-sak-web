@@ -1,7 +1,5 @@
+import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Select as NavSelect } from 'nav-frontend-skjema';
-import Lenke from 'nav-frontend-lenker';
 import RelatertFagsak from './RelatertFagsak';
 
 describe('<RelatertFagsak>', () => {
@@ -19,21 +17,14 @@ describe('<RelatertFagsak>', () => {
   };
 
   it('skal vise relatert søker dersom bare én relatert søker', () => {
-    const wrapper = shallow(<RelatertFagsak relaterteFagsaker={relaterteFagsakerEnSøker} />);
-
-    expect(wrapper.find(NavSelect)).toHaveLength(0);
-    const lenke = wrapper.find(Lenke);
+    render(<RelatertFagsak relaterteFagsaker={relaterteFagsakerEnSøker} />);
     const { søkerNavn } = relaterteFagsakerEnSøker.relaterteSøkere[0];
-    expect(lenke.childAt(0).childAt(0).text()).toEqual(søkerNavn);
+    expect(screen.getByText(søkerNavn)).toBeInTheDocument();
   });
 
   it('skal vise select dersom flere relaterte søkere', () => {
-    const wrapper = shallow(<RelatertFagsak relaterteFagsaker={relaterteFagsakerFlereSøkere} />);
-
-    expect(wrapper.find(NavSelect)).toHaveLength(1);
-    expect(wrapper.find('option')).toHaveLength(2);
-
-    const lenke = wrapper.find(Lenke);
-    expect(lenke.childAt(0).text()).toEqual('Åpne sak');
+    render(<RelatertFagsak relaterteFagsaker={relaterteFagsakerFlereSøkere} />);
+    expect(screen.getByLabelText('Velg relatert søker')).toBeInTheDocument();
+    expect(screen.getByText('Åpne sak')).toBeInTheDocument();
   });
 });

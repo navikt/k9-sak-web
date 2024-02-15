@@ -1,15 +1,15 @@
-import React from 'react';
-import { expect } from 'chai';
-import { shallow } from 'enzyme';
-
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
+import { expect } from 'chai';
+import React from 'react';
+import messages from '../../i18n/nb_NO.json';
 import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 
 describe('<DocumentListVedtakInnsyn>', () => {
   it('skal vise tekst ved tom dokumentliste', () => {
-    const wrapper = shallow(<DocumentListVedtakInnsyn documents={[]} saksNr={123} readOnly={false} />);
-    expect(wrapper.find('MemoizedFormattedMessage').prop('id')).is.equal('DocumentListVedtakInnsyn.NoDocuments');
+    renderWithIntl(<DocumentListVedtakInnsyn documents={[]} saksNr={123} readOnly={false} />, { messages });
+    expect(screen.getByText('Det finnes ingen dokumenter på saken')).toBeInTheDocument();
   });
 
   it('skal inneholde ett document, med tittel Dok1', () => {
@@ -22,9 +22,10 @@ describe('<DocumentListVedtakInnsyn>', () => {
         kommunikasjonsretning: kommunikasjonsretning.INN,
       },
     ];
-    const wrapper = shallow(<DocumentListVedtakInnsyn saksNr={123} documents={documents} />);
-    expect(wrapper.find('MemoizedFormattedMessage').prop('id')).is.equal('DocumentListVedtakInnsyn.InnsynsDok');
-    expect(wrapper.find('a').text()).is.equal('Dok1');
-    expect(wrapper.find('Table')).to.have.length(1);
+    renderWithIntl(<DocumentListVedtakInnsyn saksNr={123} documents={documents} />, { messages });
+
+    expect(screen.getByText('Innsynsdokumentasjon til søker')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Dok1' })).toBeInTheDocument();
+    expect(screen.getByRole('table')).toBeInTheDocument();
   });
 });

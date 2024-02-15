@@ -37,12 +37,6 @@ test('sistePeriode', () => {
     enPosisjonertPeriode({ horizontalPosition: 33 }),
   ];
 
-  const sortert = [
-    enPosisjonertPeriode({ horizontalPosition: 0 }),
-    enPosisjonertPeriode({ horizontalPosition: 12 }),
-    enPosisjonertPeriode({ horizontalPosition: 33 }),
-    enPosisjonertPeriode({ horizontalPosition: 50 }),
-    enPosisjonertPeriode({ horizontalPosition: 80 }),
-  ];
+  const sortert = [usortert[1], usortert[2], usortert[4], usortert[0], usortert[3]];
   expect(usortert.sort(sistePeriode)).toEqual(sortert);
 });

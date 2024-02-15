@@ -47,6 +47,7 @@ const TabMeny = ({ tabs, onClick }: OwnProps) => {
               ref={el => {
                 tabRef.current[index] = el;
               }}
+              aria-label={tab.tooltip}
             >
               {tab.getSvg(
                 tab.isActive,

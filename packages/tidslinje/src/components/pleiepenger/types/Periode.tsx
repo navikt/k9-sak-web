@@ -4,7 +4,7 @@ interface Periode<Periodeinfo> {
   id: string;
   className?: string;
   hoverText?: string;
-  periodeinfo: Periodeinfo;
+  periodeinfo?: Periodeinfo;
 }
 
 export default Periode;

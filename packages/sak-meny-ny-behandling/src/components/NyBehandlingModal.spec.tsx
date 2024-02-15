@@ -1,21 +1,20 @@
+import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import sinon from 'sinon';
-import Modal from 'nav-frontend-modal';
-import { Knapp } from 'nav-frontend-knapper';
-
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { CheckboxField, SelectField } from '@fpsak-frontend/form';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-
+import { intlMock } from '../../i18n/index';
+import messages from '../../i18n/nb_NO.json';
 import {
   NyBehandlingModal,
   getBehandlingAarsaker,
   getBehandlingTyper,
   getEnabledBehandlingstyper,
 } from './NyBehandlingModal';
-import shallowWithIntl, { intlMock } from '../../i18n/index';
 
 describe('<NyBehandlingModal>', () => {
   const submitEventCallback = sinon.spy();
@@ -30,7 +29,7 @@ describe('<NyBehandlingModal>', () => {
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <NyBehandlingModal
         {...reduxFormPropsMock}
         handleSubmit={submitEventCallback}
@@ -66,21 +65,19 @@ describe('<NyBehandlingModal>', () => {
         valgtBehandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
         erTilbakekreving={false}
       />,
+      { messages },
     );
 
-    const modal = wrapper.find(Modal);
-    expect(modal).toHaveLength(1);
-    expect(modal.prop('isOpen')).toBe(true);
-    expect(modal.prop('contentLabel')).toEqual('Ny behandling');
-    expect(modal.prop('onRequestClose')).toEqual(cancelEventCallback);
-    expect(modal.prop('onAfterOpen')).not.toBeNull();
+    expect(screen.getByRole('dialog', { name: 'Ny behandling' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'OK' })).toBeInTheDocument();
+    expect(screen.getAllByRole('combobox').length).toBe(2);
   });
 
-  it('skal bruke submit-callback når en trykker lagre', () => {
+  it('skal bruke submit-callback når en trykker lagre', async () => {
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <NyBehandlingModal
         {...reduxFormPropsMock}
         handleSubmit={submitEventCallback}
@@ -116,22 +113,20 @@ describe('<NyBehandlingModal>', () => {
         valgtBehandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
         erTilbakekreving={false}
       />,
+      { messages },
     );
 
-    const form = wrapper.find('form');
-    form.simulate('submit', {
-      preventDefault() {
-        return undefined;
-      },
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: 'OK' }));
     });
     expect(submitEventCallback.called).toBe(true);
   });
 
-  it('skal lukke modal ved klikk på avbryt-knapp', () => {
+  it('skal lukke modal ved klikk på avbryt-knapp', async () => {
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <NyBehandlingModal
         {...reduxFormPropsMock}
         handleSubmit={submitEventCallback}
@@ -167,9 +162,12 @@ describe('<NyBehandlingModal>', () => {
         valgtBehandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
         erTilbakekreving={false}
       />,
+      { messages },
     );
 
-    wrapper.find(Knapp).simulate('click');
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: 'Avbryt' }));
+    });
     expect(cancelEventCallback).toHaveProperty('callCount', 1);
   });
 
@@ -177,7 +175,7 @@ describe('<NyBehandlingModal>', () => {
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <NyBehandlingModal
         {...reduxFormPropsMock}
         handleSubmit={submitEventCallback}
@@ -213,16 +211,18 @@ describe('<NyBehandlingModal>', () => {
         valgtBehandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
         erTilbakekreving={false}
       />,
+      { messages },
     );
-
-    expect(wrapper.find(CheckboxField)).toHaveLength(1);
+    expect(
+      screen.getByRole('checkbox', { name: 'Behandlingen opprettes som et resultat av klagebehandling' }),
+    ).toBeInTheDocument();
   });
 
   it('skal ikke vise checkbox for behandling etter klage når dokumentinnsyn er valgt', () => {
     const behandlingstyper = [
       { kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN', kodeverk: 'BEHANDLING_TYPE' },
     ];
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <NyBehandlingModal
         {...reduxFormPropsMock}
         handleSubmit={submitEventCallback}
@@ -258,14 +258,17 @@ describe('<NyBehandlingModal>', () => {
         valgtBehandlingTypeKode={behandlingType.DOKUMENTINNSYN}
         erTilbakekreving={false}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(CheckboxField)).toHaveLength(0);
+    expect(
+      screen.queryByRole('checkbox', { name: 'Behandlingen opprettes som et resultat av klagebehandling' }),
+    ).not.toBeInTheDocument();
   });
 
   it('skal vise dropdown for revuderingsårsaker når revurdering er valgt', () => {
     const behandlingstyper = [{ kode: behandlingType.REVURDERING, navn: 'REVURDERING', kodeverk: 'BEHANDLING_TYPE' }];
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <NyBehandlingModal
         {...reduxFormPropsMock}
         handleSubmit={submitEventCallback}
@@ -301,16 +304,18 @@ describe('<NyBehandlingModal>', () => {
         valgtBehandlingTypeKode={behandlingType.REVURDERING}
         erTilbakekreving={false}
       />,
+      { messages },
     );
-
-    expect(wrapper.find(SelectField)).toHaveLength(2);
+    expect(screen.getAllByRole('combobox').length).toBe(2);
+    expect(screen.getByRole('option', { name: 'Revurderingsbehandling' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'FEIL_I_LOVANDVENDELSE' })).toBeInTheDocument();
   });
 
   it('skal ikke vise dropdown for revuderingsårsaker når dokumentinnsyn er valgt', () => {
     const behandlingstyper = [
       { kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN', kodeverk: 'BEHANDLING_TYPE' },
     ];
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <NyBehandlingModal
         {...reduxFormPropsMock}
         handleSubmit={submitEventCallback}
@@ -344,9 +349,12 @@ describe('<NyBehandlingModal>', () => {
         valgtBehandlingTypeKode={behandlingType.DOKUMENTINNSYN}
         erTilbakekreving={false}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(SelectField)).toHaveLength(1);
+    expect(screen.getAllByRole('combobox').length).toBe(1);
+    expect(screen.getByRole('option', { name: 'DOKUMENTINNSYN' })).toBeInTheDocument();
+    expect(screen.queryByRole('option', { name: 'Revurderingsbehandling' })).not.toBeInTheDocument();
   });
 
   it('skal finne filtrerte behandlingsårsaker når det er valgt behandlingstype TILBAKEKREVING_REVURDERING', () => {

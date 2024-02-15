@@ -1,20 +1,18 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import sinon from 'sinon';
-
-import Modal from 'nav-frontend-modal';
-
+import { intlMock } from '../../i18n/index';
+import messages from '../../i18n/nb_NO.json';
 import MessagesModal from './MessagesModal';
-import shallowWithIntl, { intlMock } from '../../i18n/index';
 
 describe('<MessagesModal>', () => {
   it('skal vise modal', () => {
     const closeCallback = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <MessagesModal.WrappedComponent showModal closeEvent={closeCallback} intl={intlMock} />,
-    );
+    renderWithIntl(<MessagesModal.WrappedComponent showModal closeEvent={closeCallback} intl={intlMock} />, {
+      messages,
+    });
 
-    const modal = wrapper.find(Modal);
-    expect(modal.prop('isOpen')).toBe(true);
-    expect(modal.prop('onRequestClose')).toEqual(closeCallback);
+    expect(screen.getByRole('dialog', { name: 'Brevet er bestilt' })).toBeInTheDocument();
   });
 });

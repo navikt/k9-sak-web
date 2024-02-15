@@ -1,20 +1,21 @@
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-
-import { InputField } from '@fpsak-frontend/form';
-
+import messages from '../../../../i18n/nb_NO.json';
 import BelopetMottattIGodTroFormPanel from './BelopetMottattIGodTroFormPanel';
 
 describe('<BelopetMottattIGodTroFormPanel>', () => {
   it('skal måtte oppgi beløp som skal tilbakekreves når beløpet er i behold', () => {
-    const wrapper = shallow(<BelopetMottattIGodTroFormPanel readOnly={false} erBelopetIBehold />);
+    renderWithIntlAndReduxForm(<BelopetMottattIGodTroFormPanel readOnly={false} erBelopetIBehold />, { messages });
 
-    expect(wrapper.find(InputField)).toHaveLength(1);
+    expect(screen.getByRole('textbox', { name: 'Angi beløp som skal tilbakekreves' })).toBeInTheDocument();
   });
 
   it('skal ikke måtte oppgi beløp som skal tilbakekreves når beløpet ikke er i behold', () => {
-    const wrapper = shallow(<BelopetMottattIGodTroFormPanel readOnly={false} erBelopetIBehold={false} />);
+    renderWithIntlAndReduxForm(<BelopetMottattIGodTroFormPanel readOnly={false} erBelopetIBehold={false} />, {
+      messages,
+    });
 
-    expect(wrapper.find(InputField)).toHaveLength(0);
+    expect(screen.queryByRole('textbox', { name: 'Angi beløp som skal tilbakekreves' })).not.toBeInTheDocument();
   });
 });

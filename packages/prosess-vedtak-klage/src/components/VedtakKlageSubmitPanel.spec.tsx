@@ -1,11 +1,12 @@
-import React from 'react';
-import { expect } from 'chai';
-import sinon from 'sinon';
-
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import sinon from 'sinon';
+import { intlMock } from '../../i18n';
+import messages from '../../i18n/nb_NO.json';
 import { isMedholdIKlage, VedtakKlageSubmitPanelImpl } from './VedtakKlageSubmitPanel';
-import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<VedtakKlageSubmitPanel>', () => {
   const forhandsvisVedtaksbrevFunc = sinon.spy();
@@ -17,7 +18,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
 
     const isNotMedhold = isMedholdIKlage({}, klageVurderingResultatNK);
 
-    expect(isNotMedhold).to.eql(false);
+    expect(isNotMedhold).toBe(false);
   });
 
   it('skal rendre submit panel uten medhold i klagevurdering', () => {
@@ -25,7 +26,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
       klageVurdering: 'TEST',
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VedtakKlageSubmitPanelImpl
         intl={intlMock}
         formProps={reduxFormPropsMock}
@@ -34,14 +35,11 @@ describe('<VedtakKlageSubmitPanel>', () => {
         klageVurderingResultatNK={klageVurderingResultatNK}
         previewVedtakCallback={forhandsvisVedtaksbrevFunc}
       />,
+      { messages },
     );
 
-    const hovedknapp = wrapper.find('Hovedknapp');
-    expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
-    const a = wrapper.find('a');
-    expect(a).to.have.length(1);
-    expect(wrapper.find('MemoizedFormattedMessage').first().prop('id')).to.eql('VedtakKlageForm.ForhandvisBrev');
+    expect(screen.getByRole('button', { name: 'Til godkjenning' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Forhåndsvis vedtaksbrev' })).toBeInTheDocument();
   });
 
   it('skal rendre submit panel med medhold i klagevurdering', () => {
@@ -49,7 +47,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
       klageVurdering: klageVurdering.MEDHOLD_I_KLAGE,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VedtakKlageSubmitPanelImpl
         intl={intlMock}
         formProps={reduxFormPropsMock}
@@ -58,17 +56,15 @@ describe('<VedtakKlageSubmitPanel>', () => {
         klageVurderingResultatNK={klageVurderingResultatNK}
         previewVedtakCallback={forhandsvisVedtaksbrevFunc}
       />,
+      { messages },
     );
 
-    const hovedknapp = wrapper.find('Hovedknapp');
-    expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
-    const a = wrapper.find('a');
-    expect(a).to.have.length(1);
+    expect(screen.getByRole('button', { name: 'Til godkjenning' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Forhåndsvis vedtaksbrev' })).toBeInTheDocument();
   });
 
   it('skal rendre submit panel med behandling på vent', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VedtakKlageSubmitPanelImpl
         intl={intlMock}
         formProps={reduxFormPropsMock}
@@ -76,14 +72,11 @@ describe('<VedtakKlageSubmitPanel>', () => {
         behandlingPaaVent
         previewVedtakCallback={forhandsvisVedtaksbrevFunc}
       />,
+      { messages },
     );
 
-    const hovedknapp = wrapper.find('Hovedknapp');
-    expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
-    expect(hovedknapp.prop('disabled')).is.true;
-
-    const a = wrapper.find('a');
-    expect(a).to.have.length(1);
+    expect(screen.getByRole('button', { name: 'Til godkjenning' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Til godkjenning' })).toBeDisabled();
+    expect(screen.getByRole('link', { name: 'Forhåndsvis vedtaksbrev' })).toBeInTheDocument();
   });
 });

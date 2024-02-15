@@ -44,7 +44,7 @@ describe('MedisinskVilkår', () => {
   let httpGetSpy = null;
 
   beforeAll(() => {
-    httpGetSpy = jest.spyOn(httpUtils, 'get');
+    httpGetSpy = vi.spyOn(httpUtils, 'get');
   });
 
   const mockResolvedGetApiCall = data => {
@@ -138,7 +138,7 @@ describe('MedisinskVilkår', () => {
 
   it('should call the provided onFinished-function when clicking standard Fortsett-button to solve aksjonspunkt', async () => {
     const onFinishedWrapper = { onFinished: () => null };
-    const onFinishedSpy = jest.spyOn(onFinishedWrapper, 'onFinished');
+    const onFinishedSpy = vi.spyOn(onFinishedWrapper, 'onFinished');
 
     mockResolvedGetApiCall({
       kanLøseAksjonspunkt: true,
@@ -162,7 +162,7 @@ describe('MedisinskVilkår', () => {
 
   it('should call the provided onFinished-function when clicking Fortsett-button with warning message to solve aksjonspunkt', async () => {
     const onFinishedWrapper = { onFinished: () => null };
-    const onFinishedSpy = jest.spyOn(onFinishedWrapper, 'onFinished');
+    const onFinishedSpy = vi.spyOn(onFinishedWrapper, 'onFinished');
 
     mockResolvedGetApiCall({
       kanLøseAksjonspunkt: true,

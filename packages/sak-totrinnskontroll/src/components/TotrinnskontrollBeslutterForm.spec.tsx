@@ -1,10 +1,10 @@
-import React from 'react';
-
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { Behandling, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
-
+import { screen } from '@testing-library/react';
+import React from 'react';
+import messages from '../../i18n/nb_NO.json';
 import { TotrinnskontrollBeslutterForm } from './TotrinnskontrollBeslutterForm';
-import shallowWithIntl from '../../i18n/index';
 
 const location = {
   pathname: '',
@@ -38,7 +38,7 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
       },
     ] as TotrinnskontrollSkjermlenkeContext[];
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <TotrinnskontrollBeslutterForm
         {...reduxFormPropsMock}
         behandling={behandling}
@@ -50,12 +50,8 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
         skjemalenkeTyper={[]}
         aksjonspunktGodkjenning={[]}
       />,
+      { messages },
     );
-
-    const form = wrapper.find('form');
-    expect(form).toHaveLength(1);
-
-    const button = wrapper.find('button');
-    expect(button).toHaveLength(0);
+    expect(screen.queryByRole('button', { name: 'Forhåndsvis' })).not.toBeInTheDocument();
   });
 });

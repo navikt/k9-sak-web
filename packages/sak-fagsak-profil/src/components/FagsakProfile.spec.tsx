@@ -1,11 +1,9 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import sinon from 'sinon';
-import { Systemtittel, Normaltekst } from 'nav-frontend-typografi';
-import { EtikettInfo } from 'nav-frontend-etiketter';
-
-import { Tooltip } from '@fpsak-frontend/shared-components';
-
-import shallowWithIntl, { intlMock } from '../../i18n/index';
+import { intlMock } from '../../i18n/index';
+import messages from '../../i18n/nb_NO.json';
 import { FagsakProfile } from './FagsakProfile';
 
 describe('<FagsakProfile>', () => {
@@ -20,7 +18,7 @@ describe('<FagsakProfile>', () => {
       kodeverk: 'FAGSAK_STATUS',
       navn: 'Opprettet',
     };
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <FagsakProfile
         saksnummer="12345"
         fagsakYtelseType={fagsakYtelseType}
@@ -30,15 +28,11 @@ describe('<FagsakProfile>', () => {
         dekningsgrad={100}
         intl={intlMock}
       />,
+      { messages },
     );
 
-    const systemtittel = wrapper.find(Systemtittel);
-    expect(systemtittel).toHaveLength(1);
-    expect(systemtittel.childAt(0).text()).toEqual('Engangsstønad');
-
-    const normaltekst = wrapper.find(Normaltekst);
-    expect(normaltekst).toHaveLength(1);
-    expect(normaltekst.childAt(0).text()).toEqual('12345 - Opprettet');
+    expect(screen.getByRole('heading', { name: 'Engangsstønad' })).toBeInTheDocument();
+    expect(screen.getByText('12345 - Opprettet')).toBeInTheDocument();
   });
 
   it('skal vise dekningsgrad for foreldrepenger om den eksisterer', () => {
@@ -52,7 +46,7 @@ describe('<FagsakProfile>', () => {
       kodeverk: 'FAGSAK_STATUS',
       navn: 'Opprettet',
     };
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <FagsakProfile
         saksnummer="12345"
         fagsakYtelseType={fagsakYtelseType}
@@ -62,20 +56,12 @@ describe('<FagsakProfile>', () => {
         dekningsgrad={100}
         intl={intlMock}
       />,
+      { messages },
     );
 
-    const systemtittel = wrapper.find(Systemtittel);
-    expect(systemtittel).toHaveLength(1);
-    expect(systemtittel.childAt(0).text()).toEqual('Foreldrepenger');
-
-    const normaltekst = wrapper.find(Normaltekst);
-    expect(normaltekst).toHaveLength(1);
-    expect(normaltekst.childAt(0).text()).toEqual('12345 - Opprettet');
-
-    expect(wrapper.find(EtikettInfo)).toHaveLength(1);
-    const tooltip = wrapper.find(Tooltip);
-    expect(tooltip).toHaveLength(1);
-    expect(tooltip.prop('content')).toEqual('Dekningsgraden er 100%');
+    expect(screen.getByRole('heading', { name: 'Foreldrepenger' })).toBeInTheDocument();
+    expect(screen.getByText('12345 - Opprettet')).toBeInTheDocument();
+    expect(screen.getByText('Dekningsgraden er 100%')).toBeInTheDocument();
   });
 
   it('skal ikke vise dekningsgrad for foreldrepenger om den ikke eksisterer', () => {
@@ -89,7 +75,7 @@ describe('<FagsakProfile>', () => {
       kodeverk: 'FAGSAK_STATUS',
       navn: 'Opprettet',
     };
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <FagsakProfile
         saksnummer="12345"
         fagsakYtelseType={fagsakYtelseType}
@@ -98,18 +84,12 @@ describe('<FagsakProfile>', () => {
         renderBehandlingVelger={sinon.spy()}
         intl={intlMock}
       />,
+      { messages },
     );
 
-    const systemtittel = wrapper.find(Systemtittel);
-    expect(systemtittel).toHaveLength(1);
-    expect(systemtittel.childAt(0).text()).toEqual('Foreldrepenger');
-
-    const normaltekst = wrapper.find(Normaltekst);
-    expect(normaltekst).toHaveLength(1);
-    expect(normaltekst.childAt(0).text()).toEqual('12345 - Opprettet');
-
-    const etikettinfo = wrapper.find(EtikettInfo);
-    expect(etikettinfo).toHaveLength(0);
+    expect(screen.getByRole('heading', { name: 'Foreldrepenger' })).toBeInTheDocument();
+    expect(screen.getByText('12345 - Opprettet')).toBeInTheDocument();
+    expect(screen.queryByText(/dekningsgraden/i)).not.toBeInTheDocument();
   });
 
   it('skal ikke vise ugyldig dekningsgrad for foreldrepenger', () => {
@@ -123,7 +103,7 @@ describe('<FagsakProfile>', () => {
       kodeverk: 'FAGSAK_STATUS',
       navn: 'Opprettet',
     };
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <FagsakProfile
         saksnummer="12345"
         fagsakYtelseType={fagsakYtelseType}
@@ -133,17 +113,11 @@ describe('<FagsakProfile>', () => {
         dekningsgrad={73}
         intl={intlMock}
       />,
+      { messages },
     );
 
-    const systemtittel = wrapper.find(Systemtittel);
-    expect(systemtittel).toHaveLength(1);
-    expect(systemtittel.childAt(0).text()).toEqual('Foreldrepenger');
-
-    const normaltekst = wrapper.find(Normaltekst);
-    expect(normaltekst).toHaveLength(1);
-    expect(normaltekst.childAt(0).text()).toEqual('12345 - Opprettet');
-
-    const etikettinfo = wrapper.find(EtikettInfo);
-    expect(etikettinfo).toHaveLength(0);
+    expect(screen.getByRole('heading', { name: 'Foreldrepenger' })).toBeInTheDocument();
+    expect(screen.getByText('12345 - Opprettet')).toBeInTheDocument();
+    expect(screen.queryByText(/dekningsgraden/i)).not.toBeInTheDocument();
   });
 });

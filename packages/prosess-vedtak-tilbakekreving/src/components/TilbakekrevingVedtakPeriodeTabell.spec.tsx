@@ -1,10 +1,9 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-
-import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-
-import TilbakekrevingVedtakPeriodeTabell from './TilbakekrevingVedtakPeriodeTabell';
+import messages from '../../i18n/nb_NO.json';
 import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
+import TilbakekrevingVedtakPeriodeTabell from './TilbakekrevingVedtakPeriodeTabell';
 
 describe('<TilbakekrevingVedtakPeriodeTabell>', () => {
   it('skal lage tabell med to perioder og en sum-rad', () => {
@@ -41,39 +40,28 @@ describe('<TilbakekrevingVedtakPeriodeTabell>', () => {
     ] as BeregningResultatPeriode[];
     const getKodeverknavn = () => 'Simpel uaktsomhet';
 
-    const wrapper = shallow(
-      <TilbakekrevingVedtakPeriodeTabell perioder={perioder} getKodeverknavn={getKodeverknavn} />,
-    );
+    renderWithIntl(<TilbakekrevingVedtakPeriodeTabell perioder={perioder} getKodeverknavn={getKodeverknavn} />, {
+      messages,
+    });
 
-    const rader = wrapper.find(TableRow);
-    expect(rader).toHaveLength(3);
+    expect(screen.getAllByText((_, element) => element.textContent === '10.10.2019-10.12.2019')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('15 430').length).toBe(2);
+    expect(screen.getAllByText('Simpel uaktsomhet').length).toBe(2);
+    expect(screen.getByText('100%')).toBeInTheDocument();
+    expect(screen.getByText('10%')).toBeInTheDocument();
+    expect(screen.getAllByText('15 430').length).toBe(2);
+    expect(screen.getAllByText('14 000').length).toBe(2);
 
-    const kolonnerForPeriode1 = rader.first().find(TableColumn);
-    expect(kolonnerForPeriode1).toHaveLength(7);
-    expect(kolonnerForPeriode1.at(0).childAt(0).childAt(0).prop('dateStringFom')).toEqual('2019-10-10');
-    expect(kolonnerForPeriode1.at(0).childAt(0).childAt(0).prop('dateStringTom')).toEqual('2019-12-10');
-    expect(kolonnerForPeriode1.at(1).childAt(0).childAt(0).text()).toEqual('15 430');
-    expect(kolonnerForPeriode1.at(2).childAt(0).childAt(0).text()).toEqual('Simpel uaktsomhet');
-    expect(kolonnerForPeriode1.at(3).childAt(0).childAt(0).text()).toEqual('100%');
-    expect(kolonnerForPeriode1.at(4).childAt(0).childAt(0).text()).toEqual('10%');
-    expect(kolonnerForPeriode1.at(5).childAt(0).childAt(0).text()).toEqual('15 430');
-    expect(kolonnerForPeriode1.at(6).childAt(0).childAt(0).text()).toEqual('14 000');
+    expect(screen.getAllByText((_, element) => element.textContent === '10.05.2019-10.06.2019')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('14 000').length).toBe(2);
+    expect(screen.getAllByText('Simpel uaktsomhet').length).toBe(2);
+    expect(screen.getByText('50%')).toBeInTheDocument();
+    expect(screen.getByText('7 000')).toBeInTheDocument();
+    expect(screen.getByText('6 000')).toBeInTheDocument();
 
-    const kolonnerForPeriode2 = rader.at(1).find(TableColumn);
-    expect(kolonnerForPeriode2).toHaveLength(7);
-    expect(kolonnerForPeriode2.at(0).childAt(0).childAt(0).prop('dateStringFom')).toEqual('2019-05-10');
-    expect(kolonnerForPeriode2.at(0).childAt(0).childAt(0).prop('dateStringTom')).toEqual('2019-06-10');
-    expect(kolonnerForPeriode2.at(1).childAt(0).childAt(0).text()).toEqual('14 000');
-    expect(kolonnerForPeriode2.at(2).childAt(0).childAt(0).text()).toEqual('Simpel uaktsomhet');
-    expect(kolonnerForPeriode2.at(3).childAt(0).childAt(0).text()).toEqual('50%');
-    expect(kolonnerForPeriode2.at(5).childAt(0).childAt(0).text()).toEqual('7 000');
-    expect(kolonnerForPeriode2.at(6).childAt(0).childAt(0).text()).toEqual('6 000');
-
-    const kolonnerForSum = rader.at(2).find(TableColumn);
-    expect(kolonnerForSum).toHaveLength(7);
-    expect(kolonnerForSum.at(0).childAt(0).childAt(0).prop('id')).toEqual('TilbakekrevingVedtakPeriodeTabell.Sum');
-    expect(kolonnerForSum.at(1).childAt(0).childAt(0).text()).toEqual('29 430');
-    expect(kolonnerForSum.at(5).childAt(0).childAt(0).text()).toEqual('22 430');
-    expect(kolonnerForSum.at(6).childAt(0).childAt(0).text()).toEqual('20 000');
+    expect(screen.getByText('Sum')).toBeInTheDocument();
+    expect(screen.getByText('29 430')).toBeInTheDocument();
+    expect(screen.getByText('22 430')).toBeInTheDocument();
+    expect(screen.getByText('20 000')).toBeInTheDocument();
   });
 });

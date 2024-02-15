@@ -1,5 +1,4 @@
 import { Column, Row } from 'nav-frontend-grid';
-import PropTypes from 'prop-types';
 import React, { ReactNode } from 'react';
 import styles from './timelineDataContainer.module.css';
 
@@ -10,7 +9,5 @@ const TimeLineDataContainer = ({ children }: { children: ReactNode }) => (
     </Column>
   </Row>
 );
-TimeLineDataContainer.propTypes = {
-  children: PropTypes.node,
-};
+
 export default TimeLineDataContainer;

@@ -1,10 +1,12 @@
-import React from 'react';
-import { expect } from 'chai';
-
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
+import { expect } from 'chai';
+import React from 'react';
+import { intlMock } from '../../i18n';
+import messages from '../../i18n/nb_NO.json';
 import { VedtakInnvilgetPanelImpl } from './VedtakInnvilgetPanel';
-import shallowWithIntl, { intlMock } from '../../i18n';
 
 const foreldrepenger = fagsakYtelseType.FORELDREPENGER;
 const behandlingsresultat = {
@@ -15,7 +17,7 @@ const behandlingsresultat = {
 
 describe('<VedtakInnvilgetPanel>', () => {
   it('skal rendre innvilget panel for foreldrepenger', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VedtakInnvilgetPanelImpl
         intl={intlMock}
         behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
@@ -31,12 +33,10 @@ describe('<VedtakInnvilgetPanel>', () => {
         readOnly
         beregningErManueltFastsatt={false}
       />,
+      { messages },
     );
-    const textFields = wrapper.find('ForwardRef');
-    expect(textFields.first().childAt(0).text()).to.eql('Resultat');
-    expect(textFields.at(1).childAt(0).text()).to.eql('Pleiepenger er innvilget');
 
-    const elementFields = wrapper.find('Element');
-    expect(elementFields).to.have.length(0);
+    expect(screen.getByText('Resultat')).toBeInTheDocument();
+    expect(screen.getByText('Pleiepenger er innvilget')).toBeInTheDocument();
   });
 });

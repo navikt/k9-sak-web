@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { axe } from 'vitest-axe';
 import React from 'react';
 import { VilkarKroniskSyktBarnProps } from '../../../../types/VilkarKroniskSyktBarnProps';
 import VilkarKroniskSyktBarn, { AvslagskoderKroniskSyk } from '../../vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
@@ -294,7 +294,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
     const { container } = render(<VilkarKroniskSyktBarn {...props} />);
 
     const a11yResults = await axe(container);
-
+    // @ts-expect-error vitest-axe doesn't work with vitest v1
     expect(a11yResults).toHaveNoViolations();
   });
 });

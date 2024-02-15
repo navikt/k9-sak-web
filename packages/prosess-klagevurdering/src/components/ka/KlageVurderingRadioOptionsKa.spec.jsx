@@ -1,13 +1,12 @@
-import React from 'react';
-import { expect } from 'chai';
-import sinon from 'sinon';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import sinon from 'sinon';
+import { intlMock } from '../../../i18n';
+import messages from '../../../i18n/nb_NO.json';
 import { KlageVurderingRadioOptionsKa } from './KlageVurderingRadioOptionsKa';
-
-import shallowWithIntl, { intlMock } from '../../../i18n';
 
 describe('<KlageVurderingRadioOptionsKaImpl>', () => {
   const sprakkode = {
@@ -22,7 +21,7 @@ describe('<KlageVurderingRadioOptionsKaImpl>', () => {
   ];
 
   it('skal vise fire options når klage stadfestet', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <KlageVurderingRadioOptionsKa
         readOnly={false}
         medholdReasons={medholdReasons}
@@ -34,17 +33,17 @@ describe('<KlageVurderingRadioOptionsKaImpl>', () => {
         formProps={{}}
         sprakkode={sprakkode}
       />,
+      { messages },
     );
-    const radios = wrapper.find('RadioOption');
-    expect(radios).to.have.length(4);
-    expect(radios.at(0).prop('label').id).to.equal('Klage.ResolveKlage.KeepVedtakNk');
-    expect(radios.at(1).prop('label').id).to.equal('Klage.ResolveKlage.ChangeVedtak');
-    expect(radios.at(2).prop('label').id).to.equal('Klage.Behandle.Hjemsendt');
-    expect(radios.at(3).prop('label').id).to.equal('Klage.ResolveKlage.NullifyVedtak');
+
+    expect(screen.getByRole('radio', { name: 'Stadfest vedtaket' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Omgjør vedtaket' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Hjemsend vedtaket' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Opphev og hjemsend vedtaket' })).toBeInTheDocument();
   });
 
   it('skal vise syv options når aksjonspunkt er NK og klage medhold', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <KlageVurderingRadioOptionsKa
         readOnly={false}
         readOnlySubmitButton
@@ -57,20 +56,19 @@ describe('<KlageVurderingRadioOptionsKaImpl>', () => {
         formProps={{}}
         sprakkode={sprakkode}
       />,
+      { messages },
     );
-    const radios = wrapper.find('RadioOption');
-    expect(radios).to.have.length(7);
-    expect(radios.at(0).prop('label').id).to.equal('Klage.ResolveKlage.KeepVedtakNk');
-    expect(radios.at(1).prop('label').id).to.equal('Klage.ResolveKlage.ChangeVedtak');
-    expect(radios.at(2).prop('label').id).to.equal('Klage.Behandle.Hjemsendt');
-    expect(radios.at(3).prop('label').id).to.equal('Klage.ResolveKlage.NullifyVedtak');
-    expect(radios.at(4).prop('label').id).to.equal('Klage.Behandle.Omgjort');
-    expect(radios.at(5).prop('label').id).to.equal('Klage.Behandle.Ugunst');
-    expect(radios.at(6).prop('label').id).to.equal('Klage.Behandle.DelvisOmgjort');
+    expect(screen.getByRole('radio', { name: 'Stadfest vedtaket' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Omgjør vedtaket' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Hjemsend vedtaket' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Opphev og hjemsend vedtaket' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Til gunst' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Til ugunst' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Delvis omgjør, til gunst' })).toBeInTheDocument();
   });
 
   it('skal vise selectfield når klagevurdering er omgjort vedtak', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <KlageVurderingRadioOptionsKa
         readOnly={false}
         readOnlySubmitButton
@@ -82,13 +80,14 @@ describe('<KlageVurderingRadioOptionsKaImpl>', () => {
         formProps={{}}
         sprakkode={sprakkode}
       />,
+      { messages },
     );
-    expect(wrapper.find('SelectField').props().name).to.equal('klageMedholdArsak');
-    expect(wrapper.find('SelectField')).to.have.length(1);
+
+    expect(screen.getByRole('combobox', { name: 'Årsak' })).toBeInTheDocument();
   });
 
   it('skal ikke vise selectfield når klagevurdering er opphev vedtak', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <KlageVurderingRadioOptionsKa
         readOnly={false}
         readOnlySubmitButton
@@ -100,7 +99,8 @@ describe('<KlageVurderingRadioOptionsKaImpl>', () => {
         formProps={{}}
         sprakkode={sprakkode}
       />,
+      { messages },
     );
-    expect(wrapper.find('SelectField')).to.have.length(0);
+    expect(screen.queryByRole('combobox', { name: 'Årsak' })).not.toBeInTheDocument();
   });
 });

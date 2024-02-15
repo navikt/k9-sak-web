@@ -1,13 +1,13 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-
+import messages from '../i18n/nb_NO.json';
 import SupportMenySakIndex from './SupportMenySakIndex';
 import SupportTabs from './supportTabs';
-import TabMeny from './components/TabMeny';
 
 describe('<SupportMenySakIndex>', () => {
   it('skal lage tabs og sette Send melding som valgt', () => {
-    const wrapper = shallow(
+    const { container } = renderWithIntl(
       <SupportMenySakIndex
         tilgjengeligeTabs={[SupportTabs.HISTORIKK, SupportTabs.MELDINGER, SupportTabs.DOKUMENTER]}
         valgbareTabs={[SupportTabs.HISTORIKK, SupportTabs.MELDINGER, SupportTabs.DOKUMENTER]}
@@ -15,42 +15,25 @@ describe('<SupportMenySakIndex>', () => {
         onClick={() => undefined}
         antallUlesteNotater={0}
       />,
+      { messages },
     );
-
-    const tabMeny = wrapper.find(TabMeny);
-    expect(tabMeny).toHaveLength(1);
-
-    const tabs = tabMeny.prop('tabs');
-    expect(tabs[0].isActive).toBe(false);
-    expect(tabs[0].isDisabled).toBe(false);
-    expect(tabs[0].tooltip).toEqual('Historikk');
-    expect(tabs[1].isActive).toBe(true);
-    expect(tabs[1].isDisabled).toBe(false);
-    expect(tabs[1].tooltip).toEqual('Send melding');
-    expect(tabs[2].isActive).toBe(false);
-    expect(tabs[2].isDisabled).toBe(false);
-    expect(tabs[2].tooltip).toEqual('Dokumenter');
+    expect(screen.getByLabelText('Historikk')).toBeInTheDocument();
+    expect(screen.getByLabelText('Send melding')).toBeInTheDocument();
+    expect(screen.getByLabelText('Send melding')).toHaveClass('active');
+    expect(screen.getByLabelText('Dokumenter')).toBeInTheDocument();
   });
 
   it('skal lage tabs og sette Send Melding til disablet', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <SupportMenySakIndex
         tilgjengeligeTabs={[SupportTabs.HISTORIKK, SupportTabs.MELDINGER]}
         valgbareTabs={[SupportTabs.HISTORIKK]}
         onClick={() => undefined}
         antallUlesteNotater={0}
       />,
+      { messages },
     );
-
-    const tabMeny = wrapper.find(TabMeny);
-    expect(tabMeny).toHaveLength(1);
-
-    const tabs = tabMeny.prop('tabs');
-    expect(tabs[0].isActive).toBe(false);
-    expect(tabs[0].isDisabled).toBe(false);
-    expect(tabs[0].tooltip).toEqual('Historikk');
-    expect(tabs[1].isActive).toBe(false);
-    expect(tabs[1].isDisabled).toBe(true);
-    expect(tabs[1].tooltip).toEqual('Send melding');
+    expect(screen.getByLabelText('Send melding')).toBeInTheDocument();
+    expect(screen.getByLabelText('Send melding')).toBeDisabled();
   });
 });

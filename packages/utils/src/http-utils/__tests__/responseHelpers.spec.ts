@@ -40,7 +40,7 @@ describe('responseHelpers', () => {
   describe('handleErrorExternally', () => {
     it('should call the provided function with the expected arguments', () => {
       const errorResponse = { response: { status: 401, headers: { location: 'mockedLocation' } } };
-      const errorHandler = jest.fn();
+      const errorHandler = vi.fn();
       handleErrorExternally(errorResponse as any, errorHandler);
 
       const { calls } = errorHandler.mock;

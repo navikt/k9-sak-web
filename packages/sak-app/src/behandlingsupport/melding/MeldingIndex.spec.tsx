@@ -1,29 +1,30 @@
-import React from 'react';
-import { screen, render, act } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
-import { reducer as formReducer, reduxForm } from 'redux-form';
+import React from 'react';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import { combineReducers, createStore } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import type { BehandlingAppKontekst, Brevmaler, Fagsak, Mottaker } from '@k9-sak-web/types';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import type { BehandlingAppKontekst, Brevmaler, Fagsak, Mottaker } from '@k9-sak-web/types';
 
-import { requestApi, K9sakApiKeys } from '../../data/k9sakApi';
+import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import MeldingIndex, { type BackendApi } from './MeldingIndex';
 
-const mockHistoryPush = jest.fn();
+const mockHistoryPush = vi.fn();
 
-const MockForm = reduxForm({ form: 'mock', onSubmit: jest.fn() })(({ children }) => <div>{children}</div>);
-
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
-}));
+vi.mock('react-router-dom', async () => {
+  const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
+  return {
+    ...actual,
+    useHistory: () => ({
+      push: mockHistoryPush,
+    }),
+  };
+});
 
 interface SendMeldingPayload {
   behandlingId: number;
@@ -87,7 +88,7 @@ describe('<MeldingIndex>', () => {
     [dokumentMalType.FORLENGET_DOK]: { navn: 'Forlenget', mottakere: aktorer, linker: [] },
   } satisfies Brevmaler;
 
-  const assignMock = jest.fn();
+  const assignMock = vi.fn();
   delete (window as Partial<ExtendedWindow>).location;
   // @ts-ignore Dette er kun for å unngå warnings med window.location.reload(). (Denne blir brukt som en temp-fiks, så dette skal derfor fjernes)
   window.location = { reload: assignMock };
@@ -128,17 +129,15 @@ describe('<MeldingIndex>', () => {
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
-        <MockForm>
-          <MemoryRouter>
-            <MeldingIndex
-              fagsak={fagsak as Fagsak}
-              alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
-              behandlingId={1}
-              behandlingVersjon={123}
-              backendApi={meldingBackend}
-            />
-          </MemoryRouter>
-        </MockForm>
+        <MemoryRouter>
+          <MeldingIndex
+            fagsak={fagsak as Fagsak}
+            alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
+            behandlingId={1}
+            behandlingVersjon={123}
+            backendApi={meldingBackend}
+          />
+        </MemoryRouter>
       </Provider>,
     );
 
@@ -160,17 +159,15 @@ describe('<MeldingIndex>', () => {
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
-        <MockForm>
-          <MemoryRouter>
-            <MeldingIndex
-              fagsak={fagsak as Fagsak}
-              alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
-              behandlingId={1}
-              behandlingVersjon={123}
-              backendApi={meldingBackend}
-            />
-          </MemoryRouter>
-        </MockForm>
+        <MemoryRouter>
+          <MeldingIndex
+            fagsak={fagsak as Fagsak}
+            alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
+            behandlingId={1}
+            behandlingVersjon={123}
+            backendApi={meldingBackend}
+          />
+        </MemoryRouter>
       </Provider>,
     );
 
@@ -203,17 +200,15 @@ describe('<MeldingIndex>', () => {
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
-        <MockForm>
-          <MemoryRouter>
-            <MeldingIndex
-              fagsak={fagsak as Fagsak}
-              alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
-              behandlingId={1}
-              behandlingVersjon={123}
-              backendApi={meldingBackend}
-            />
-          </MemoryRouter>
-        </MockForm>
+        <MemoryRouter>
+          <MeldingIndex
+            fagsak={fagsak as Fagsak}
+            alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
+            behandlingId={1}
+            behandlingVersjon={123}
+            backendApi={meldingBackend}
+          />
+        </MemoryRouter>
       </Provider>,
     );
 
@@ -258,17 +253,15 @@ describe('<MeldingIndex>', () => {
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
-        <MockForm>
-          <MemoryRouter>
-            <MeldingIndex
-              fagsak={fagsak as Fagsak}
-              alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
-              behandlingId={1}
-              behandlingVersjon={123}
-              backendApi={meldingBackend}
-            />
-          </MemoryRouter>
-        </MockForm>
+        <MemoryRouter>
+          <MeldingIndex
+            fagsak={fagsak as Fagsak}
+            alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
+            behandlingId={1}
+            behandlingVersjon={123}
+            backendApi={meldingBackend}
+          />
+        </MemoryRouter>
       </Provider>,
     );
 
@@ -305,17 +298,15 @@ describe('<MeldingIndex>', () => {
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
-        <MockForm>
-          <MemoryRouter>
-            <MeldingIndex
-              fagsak={fagsak as Fagsak}
-              alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
-              behandlingId={1}
-              behandlingVersjon={123}
-              backendApi={meldingBackend}
-            />
-          </MemoryRouter>
-        </MockForm>
+        <MemoryRouter>
+          <MeldingIndex
+            fagsak={fagsak as Fagsak}
+            alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
+            behandlingId={1}
+            behandlingVersjon={123}
+            backendApi={meldingBackend}
+          />
+        </MemoryRouter>
       </Provider>,
     );
 
@@ -354,17 +345,15 @@ describe('<MeldingIndex>', () => {
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
-        <MockForm>
-          <MemoryRouter>
-            <MeldingIndex
-              fagsak={fagsak as Fagsak}
-              alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
-              behandlingId={1}
-              behandlingVersjon={123}
-              backendApi={meldingBackend}
-            />
-          </MemoryRouter>
-        </MockForm>
+        <MemoryRouter>
+          <MeldingIndex
+            fagsak={fagsak as Fagsak}
+            alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
+            behandlingId={1}
+            behandlingVersjon={123}
+            backendApi={meldingBackend}
+          />
+        </MemoryRouter>
       </Provider>,
     );
 
