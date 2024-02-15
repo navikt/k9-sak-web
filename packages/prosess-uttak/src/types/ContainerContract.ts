@@ -31,6 +31,7 @@ interface ContainerContract {
   versjon?: number;
   featureToggles: { [key: string]: boolean };
   erOverstyrer?: boolean;
+  status?: string | false;
 }
 
 export default ContainerContract;

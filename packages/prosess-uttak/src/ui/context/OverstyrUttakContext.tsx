@@ -21,7 +21,8 @@ type OverstyrUttakContextType = {
 const OverstyrUttakContext = createContext<OverstyrUttakContextType | null>(null);
 
 export const OverstyrUttakContextProvider = ({ children }) => {
-  const { httpErrorHandler, endpoints, aktivBehandlingUuid, versjon, aksjonspunktkoder } = React.useContext(ContainerContext);
+  const { httpErrorHandler, endpoints, aktivBehandlingUuid, versjon, aksjonspunktkoder } =
+    React.useContext(ContainerContext);
   const [lasterOverstyringer, setLasterOverstyringer] = React.useState<boolean>(false);
   const [lasterAktiviteter, setLasterAktiviteter] = React.useState<boolean | null>(null);
   const [overstyrte, setOverstyrte] = React.useState<OverstyringUttak[] | null>(null);
@@ -84,7 +85,7 @@ export const OverstyrUttakContextProvider = ({ children }) => {
     else if (arbeidsforhold.arbeidsforholdId) navnId = ` (${arbeidsforhold.arbeidsforholdId})`;
     else if (identifikator) navnId = ` (${identifikator})`;
 
-    return (navn && navnId) ? `${navn}${navnId}` : navn;
+    return navn && navnId ? `${navn}${navnId}` : navn;
   };
 
   React.useEffect(() => {
@@ -110,7 +111,7 @@ export const OverstyrUttakContextProvider = ({ children }) => {
       arbeidsgiverOversikt,
       hentOverstyrte,
       utledAktivitetNavn,
-      harAksjonspunktForOverstyringAvUttak
+      harAksjonspunktForOverstyringAvUttak,
     ],
   );
 
