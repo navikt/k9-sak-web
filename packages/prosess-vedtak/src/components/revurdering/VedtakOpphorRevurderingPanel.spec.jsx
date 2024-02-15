@@ -1,7 +1,7 @@
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
 import { screen } from '@testing-library/react';
 import { expect } from 'chai';
 import React from 'react';

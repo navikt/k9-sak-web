@@ -1,12 +1,10 @@
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import sinon from 'sinon';
-import { intlWithMessages } from "@fpsak-frontend/utils-test/intl-enzyme-test-helper";
+import { intlMock } from '../../i18n/index';
 import messages from '../../i18n/nb_NO.json';
 import HenlagtBehandlingModal from './HenlagtBehandlingModal';
-
-const intlMock = intlWithMessages(messages);
 
 describe('<HenlagtBehandlingModal>', () => {
   it('skal rendre åpen modal', () => {

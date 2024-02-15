@@ -8,10 +8,10 @@ import ContainerContext from '../../context/ContainerContext';
 import BehandlingType from '../../../constants/BehandlingType';
 import FagsakYtelseType from '../../../constants/FagsakYtelseType';
 
-type DetailViewVurderingProps = DetailViewProps & {
+interface DetailViewVurderingProps extends DetailViewProps {
   perioder: Period[];
   redigerVurdering?: () => void;
-};
+}
 
 const DetailViewVurdering = (props: DetailViewVurderingProps): JSX.Element => {
   const { children, perioder, redigerVurdering, title } = props;

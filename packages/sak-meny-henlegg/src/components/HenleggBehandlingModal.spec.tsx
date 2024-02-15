@@ -1,17 +1,15 @@
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import sinon from 'sinon';
-import { intlWithMessages } from "@fpsak-frontend/utils-test/intl-enzyme-test-helper";
+import { intlMock } from '../../i18n/index';
 import messages from '../../i18n/nb_NO.json';
 import { HenleggBehandlingModalImpl, getHenleggArsaker } from './HenleggBehandlingModal';
-
-const intlMock = intlWithMessages(messages);
 
 describe('<HenleggBehandlingModal>', () => {
   const ytelseType = {

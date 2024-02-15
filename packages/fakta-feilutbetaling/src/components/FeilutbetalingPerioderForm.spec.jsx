@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import sinon from 'sinon';
 import { FeilutbetalingPerioderFormImpl } from './FeilutbetalingPerioderForm';
 

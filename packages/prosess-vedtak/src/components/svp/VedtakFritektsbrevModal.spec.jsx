@@ -1,5 +1,5 @@
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
 import { screen } from '@testing-library/react';
 import { expect } from 'chai';
 import React from 'react';

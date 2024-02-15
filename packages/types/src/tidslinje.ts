@@ -12,7 +12,7 @@ export interface EnkelPeriode {
   tom: Date;
 }
 
-export interface ExpandedPeriode extends EnkelPeriode {
+export interface Periode extends EnkelPeriode {
   /**
    * Brukes for å style/fargesette periodeknappene og indikerer status for perioden.
    */

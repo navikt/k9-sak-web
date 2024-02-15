@@ -1,4 +1,4 @@
-import { InternalSimpleTimeline, ExpandedPeriode as Periode, PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
+import { InternalSimpleTimeline, Periode, PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
 import dayjs, { Dayjs } from 'dayjs';
 import { useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';

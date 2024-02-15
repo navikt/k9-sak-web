@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FormkravKlageFormNfpImpl } from './FormkravKlageFormNfp';
 import FormkravKlageForm from './FormkravKlageForm';

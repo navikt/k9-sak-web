@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-// eslint-disable-next-line import/no-duplicates
 import PropTypes from 'prop-types';
 
 import { Alert, Button } from '@navikt/ds-react';
 
-// eslint-disable-next-line import/no-duplicates
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';

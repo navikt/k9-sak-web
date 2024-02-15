@@ -1,5 +1,5 @@
 import React from 'react';
-import { mountFieldComponent } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { mountFieldComponent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import sinon from 'sinon';
 
 import { RenderCheckboxField } from './CheckboxField';

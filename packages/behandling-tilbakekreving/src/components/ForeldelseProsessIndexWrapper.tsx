@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
-import { ForeldelseProsessIndex, ForeldelsesresultatActivity } from '@navikt/ft-prosess-tilbakekreving-foreldelse';
+import { ForeldelseProsessIndex } from '@navikt/ft-prosess-tilbakekreving-foreldelse';
+// eslint-disable-next-line max-len, import/no-unresolved
+import ForeldelsesresultatActivity from '@navikt/ft-prosess-tilbakekreving-foreldelse/dist/packages/prosess-tilbakekreving-foreldelse/src/types/foreldelsesresultatActivitytsType';
 import { RelasjonsRolleType } from '@navikt/ft-kodeverk';
 import relasjonsRolleTypeKodeverk from '../kodeverk/relasjonsRolleTypeKodeverk';
 

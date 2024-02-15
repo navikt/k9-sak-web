@@ -6,7 +6,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { DatepickerField } from '@fpsak-frontend/form';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { DelOppPeriodeModalImpl, mapStateToPropsFactory } from './DelOppPeriodeModal';
 import shallowWithIntl, { intlMock } from '../../../i18n';

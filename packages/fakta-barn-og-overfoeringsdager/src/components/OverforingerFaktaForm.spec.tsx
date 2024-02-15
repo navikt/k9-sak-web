@@ -1,5 +1,5 @@
 import React from 'react';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { shallowWithIntl } from '../../i18n';
 import { OverforingerFaktaFormImpl } from './OverforingerFaktaForm';
 import FormValues from '../types/FormValues';

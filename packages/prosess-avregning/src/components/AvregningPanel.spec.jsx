@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
 import sinon from 'sinon';
 
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 
 import { Undertittel } from 'nav-frontend-typografi';

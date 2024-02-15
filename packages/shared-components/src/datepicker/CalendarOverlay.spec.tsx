@@ -3,7 +3,7 @@ import DayPicker from 'react-day-picker';
 import sinon from 'sinon';
 
 import { dateFormat } from '@fpsak-frontend/utils';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import CalendarOverlay from './CalendarOverlay';
 
 describe('<CalendarOverlay>', () => {

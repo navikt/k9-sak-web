@@ -7,7 +7,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
-import { renderWithReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithReactQueryClient } from '@fpsak-frontend/utils-test/src/test-utils';
 import * as useTrackRouteParam from '../app/useTrackRouteParam';
 import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';

@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { screen, waitFor } from '@testing-library/react';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntlAndReduxForm, screen, waitFor } from '@fpsak-frontend/utils-test/src/test-utils';
 import sinon from 'sinon';
 import userEvent from '@testing-library/user-event';
 
@@ -11,16 +10,13 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatuser from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { intlWithMessages } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import { Aksjonspunkt, Personopplysninger } from "@k9-sak-web/types";
-import { TilgjengeligeVedtaksbrev, TilgjengeligeVedtaksbrevMedMaler } from "@fpsak-frontend/utils/src/formidlingUtils";
 import { VedtakForm } from './VedtakForm';
 import messages from '../../i18n/nb_NO.json';
-import { InformasjonsbehovVedtaksbrev } from "./brev/InformasjonsbehovAutomatiskVedtaksbrev";
 
 describe('<VedtakForm>', () => {
   const sprakkode = {
@@ -34,65 +30,17 @@ describe('<VedtakForm>', () => {
     },
   ];
 
-  const ingenTilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler = {
-    begrunnelse: 'begrunnelse',
-    alternativeMottakere: [],
-    vedtaksbrevmaler: {},
-    maler: [],
-  }
-  const alleTilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler = {
-    begrunnelse: 'begrunnelse',
-    alternativeMottakere: [],
+  const ingenTilgjengeligeVedtaksbrev = { vedtaksbrevmaler: [] };
+  const alleTilgjengeligeVedtaksbrev = {
     vedtaksbrevmaler: {
       // [vedtaksbrevtype.MANUELL]: dokumentMalType.REDIGERTBREV,
       [vedtaksbrevtype.AUTOMATISK]: dokumentMalType.INNVILGELSE,
       [vedtaksbrevtype.FRITEKST]: dokumentMalType.FRITKS,
       [vedtaksbrevtype.INGEN]: null,
     },
-    maler: [],
-  }
+  };
 
   const behandlingStatusUtredes = { kode: behandlingStatuser.BEHANDLING_UTREDES };
-
-  // This is an incorrect initialization to satisfy typescript during rewrite from jsx to tsx. Should probably be fixed.
-  const personopplysninger = {} as Personopplysninger
-
-  const informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev = {
-    informasjonsbehov: [],
-    mangler: []
-  }
-  const aksjonspunktBase: Aksjonspunkt = {
-    definisjon: {
-      kodeverk: 'annen ytelse',
-      kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-    },
-    status: {
-      kodeverk: 'Opprettet',
-      kode: aksjonspunktStatus.OPPRETTET,
-    },
-    toTrinnsBehandling: true,
-    kanLoses: true,
-    erAktivt: true,
-  }
-  const vedtakVarselBase = {
-    avslagsarsak: {
-      kode: '1019',
-      navn: 'Søkt for sent',
-    },
-    avslagsarsakFritekst: null,
-    id: 0,
-    overskrift: 'overskrift',
-    fritekstbrev: 'fritekstbrev',
-    skjæringstidspunkt: {
-      dato: '2024-04-01'
-    },
-    redusertUtbetalingÅrsaker: [],
-    vedtaksbrev: {
-      kode: 'FRITEKST',
-      kodeverk: 'FRITEKST',
-    },
-    vedtaksdato: '2024-05-01',
-  };
 
   it('skal vise at vedtak er innvilget, beløp og antall barn når en har et beregningsresultat', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
@@ -105,40 +53,34 @@ describe('<VedtakForm>', () => {
         navn: 'test',
       },
     };
+    const aksjonspunkter = [];
+
+    const vedtakVarsel = {
+      avslagsarsak: null,
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
+    };
 
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={(n) => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
         <VedtakForm
           intl={intlWithMessages(messages)}
-          behandlingStatus={behandlingStatusUtredes}
-          aksjonspunkter={[]}
-          behandlingresultat={behandlingsresultat}
-          behandlingPaaVent={false}
           previewCallback={previewCallback}
-          hentFritekstbrevHtmlCallback={() => undefined}
+          behandlingStatus={behandlingStatusUtredes}
+          behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
           readOnly={false}
+          behandlingPaaVent={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           alleKodeverk={{}}
-          personopplysninger={personopplysninger}
+          personopplysninger={{}}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{videreBehandling: {kode: 'tilbakekrevingskode'}}}
           vilkar={[]}
+          vedtakVarsel={vedtakVarsel}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-          dokumentdata={{}}
-          fritekstdokumenter={[]}
-          vedtakVarsel={vedtakVarselBase}
-          submitCallback={object => undefined}
-          lagreDokumentdata={() => Promise.resolve()}
-          overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
-          simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
-          medlemskapFom="2021-05-02"
-          erRevurdering={false}
-          behandlingArsaker={[]}
         />
       </ProsessStegContainer>,
     );
@@ -159,53 +101,49 @@ describe('<VedtakForm>', () => {
         navn: 'test',
       },
     };
-    const aksjonspunkter: Aksjonspunkt[] = [
+    const aksjonspunkter = [
       {
+        id: 1,
         definisjon: {
-          kodeverk: 'annen ytelse',
+          navn: 'annen ytelse',
           kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
         },
         status: {
-          kodeverk: 'Opprettet',
+          navn: 'Opprettet',
           kode: aksjonspunktStatus.OPPRETTET,
         },
         kanLoses: true,
         erAktivt: true,
       },
     ];
+    const vedtakVarsel = {
+      avslagsarsak: {
+        kode: '1019',
+        navn: 'Søkt for sent',
+      },
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
+    };
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={(n) => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={behandlingStatusUtredes}
-          aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
           behandlingPaaVent={false}
           previewCallback={previewCallback}
-          hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           alleKodeverk={{}}
-          personopplysninger={personopplysninger}
+          personopplysninger={{}}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{videreBehandling: {kode: 'tilbakekrevingskode'}}}
           vilkar={[]}
+          vedtakVarsel={vedtakVarsel}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-          dokumentdata={{}}
-          fritekstdokumenter={[]}
-          vedtakVarsel={vedtakVarselBase}
-          submitCallback={object => undefined}
-          lagreDokumentdata={() => Promise.resolve()}
-          overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
-          simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
-          medlemskapFom="2021-05-02"
-          erRevurdering={false}
-          behandlingArsaker={[]}
         />
       </ProsessStegContainer>,
     );
@@ -225,44 +163,47 @@ describe('<VedtakForm>', () => {
         navn: 'test',
       },
     };
-    const aksjonspunkter: Aksjonspunkt[] = [aksjonspunktBase];
+    const aksjonspunkter = [
+      {
+        id: 1,
+        definisjon: {
+          navn: 'annen ytelse',
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        toTrinnsBehandling: true,
+        kanLoses: true,
+        erAktivt: true,
+      },
+    ];
     const vedtakVarsel = {
-      ...vedtakVarselBase,
       avslagsarsak: null,
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
     };
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={(n) => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={behandlingStatusUtredes}
-          aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
           behandlingPaaVent={false}
           previewCallback={previewCallback}
-          hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
           alleKodeverk={{}}
-          personopplysninger={personopplysninger}
+          personopplysninger={{}}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{videreBehandling: {kode: 'tilbakekrevingskode'}}}
           vilkar={[]}
-          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-          dokumentdata={{}}
-          fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
-          lagreDokumentdata={() => Promise.resolve()}
-          overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
-          simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
-          medlemskapFom="2021-05-02"
-          erRevurdering={false}
-          behandlingArsaker={[]}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
         />
       </ProsessStegContainer>,
     );
@@ -281,44 +222,47 @@ describe('<VedtakForm>', () => {
         navn: 'test',
       },
     };
-    const aksjonspunkter: Aksjonspunkt[] = [aksjonspunktBase];
+    const aksjonspunkter = [
+      {
+        id: 1,
+        definisjon: {
+          navn: 'annen ytelse',
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        toTrinnsBehandling: true,
+        kanLoses: true,
+        erAktivt: true,
+      },
+    ];
     const vedtakVarsel = {
-      ...vedtakVarselBase,
-      avslagsarsak: { kode: '1099', navn: 'xoxo' },
+      avslagsarsak: { kode: '1099' },
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
     };
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={(n) => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={behandlingStatusUtredes}
-          aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
           behandlingPaaVent={false}
           previewCallback={previewCallback}
-          hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           alleKodeverk={{}}
-          personopplysninger={personopplysninger}
+          personopplysninger={{}}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{videreBehandling: {kode: 'tilbakekrevingskode'}}}
           vilkar={[]}
-          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-          dokumentdata={{}}
-          fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
-          lagreDokumentdata={() => Promise.resolve()}
-          overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
-          simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
-          medlemskapFom="2021-05-02"
-          erRevurdering={false}
-          behandlingArsaker={[]}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
         />
       </ProsessStegContainer>,
     );
@@ -339,52 +283,50 @@ describe('<VedtakForm>', () => {
         navn: 'test',
       },
     };
-    const aksjonspunkter: Aksjonspunkt[] = [
+    const aksjonspunkter = [
       {
-        ...aksjonspunktBase,
+        id: 1,
+        definisjon: {
+          navn: 'annen ytelse',
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
         toTrinnsBehandling: false,
+        kanLoses: true,
+        erAktivt: true,
       },
     ];
     const vedtakVarsel = {
-      ...vedtakVarselBase,
       avslagsarsak: {
         kode: '1019',
         navn: 'Manglende dokumentasjon',
       },
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
     };
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={(n) => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={behandlingStatusUtredes}
-          aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
           behandlingPaaVent={false}
           previewCallback={previewCallback}
-          hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           alleKodeverk={{}}
-          personopplysninger={personopplysninger}
+          personopplysninger={{}}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{videreBehandling: {kode: 'tilbakekrevingskode'}}}
           vilkar={[]}
-          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-          dokumentdata={{}}
-          fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
-          lagreDokumentdata={() => Promise.resolve()}
-          overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
-          simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
-          medlemskapFom="2021-05-02"
-          erRevurdering={false}
-          behandlingArsaker={[]}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
         />
       </ProsessStegContainer>,
     );
@@ -405,50 +347,47 @@ describe('<VedtakForm>', () => {
         navn: 'test',
       },
     };
-    const aksjonspunkter: Aksjonspunkt[] = [
+    const aksjonspunkter = [
       {
-        ...aksjonspunktBase,
-        toTrinnsBehandling: undefined
+        id: 1,
+        definisjon: {
+          navn: 'annen ytelse',
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        kanLoses: true,
+        erAktivt: true,
       },
     ];
 
     const vedtakVarsel = {
-      ...vedtakVarselBase,
       avslagsarsak: null,
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
     };
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={(n) => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={{ kode: behandlingStatuser.AVSLUTTET }}
-          aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
           behandlingPaaVent={false}
           previewCallback={previewCallback}
-          hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           alleKodeverk={{}}
-          personopplysninger={personopplysninger}
+          personopplysninger={{}}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{videreBehandling: {kode: 'tilbakekrevingskode'}}}
           vilkar={[]}
-          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-          dokumentdata={{}}
-          fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
-          lagreDokumentdata={() => Promise.resolve()}
-          overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
-          simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
-          medlemskapFom="2021-05-02"
-          erRevurdering={false}
-          behandlingArsaker={[]}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
         />
       </ProsessStegContainer>,
     );
@@ -467,51 +406,48 @@ describe('<VedtakForm>', () => {
         navn: 'test',
       },
     };
-    const aksjonspunkter: Aksjonspunkt[] = [
+    const aksjonspunkter = [
       {
-        ...aksjonspunktBase,
-        toTrinnsBehandling: undefined,
+        id: 1,
+        definisjon: {
+          navn: 'annen ytelse',
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        kanLoses: true,
+        erAktivt: true,
       },
     ];
     const vedtakVarsel = {
-      ...vedtakVarselBase,
       avslagsarsak: null,
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
     };
     const previewCallback = sinon.spy();
 
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={(n) => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={{ kode: behandlingStatuser.IVERKSETTER_VEDTAK }}
-          aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
           behandlingPaaVent={false}
           previewCallback={previewCallback}
-          hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           alleKodeverk={{}}
-          personopplysninger={personopplysninger}
+          personopplysninger={{}}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{videreBehandling: {kode: 'tilbakekrevingskode'}}}
           vilkar={[]}
-          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-          dokumentdata={{}}
-          fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
-          lagreDokumentdata={() => Promise.resolve()}
-          overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
-          simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
-          medlemskapFom="2021-05-02"
-          erRevurdering={false}
-          behandlingArsaker={[]}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
         />
       </ProsessStegContainer>,
     );
@@ -532,49 +468,46 @@ describe('<VedtakForm>', () => {
         navn: 'test',
       },
     };
-    const aksjonspunkter: Aksjonspunkt[] = [
+    const aksjonspunkter = [
       {
-        ...aksjonspunktBase,
-        toTrinnsBehandling: undefined,
+        id: 1,
+        definisjon: {
+          navn: 'annen ytelse',
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          navn: 'Opprettet',
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        kanLoses: true,
+        erAktivt: true,
       },
     ];
     const vedtakVarsel = {
-      ...vedtakVarselBase,
       avslagsarsak: null,
+      avslagsarsakFritekst: null,
+      vedtaksbrev: {
+        kode: 'FRITEKST',
+      },
     };
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={(n) => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={{ kode: behandlingStatuser.FATTER_VEDTAK }}
-          aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
           behandlingPaaVent={false}
           previewCallback={previewCallback}
-          hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           alleKodeverk={{}}
-          personopplysninger={personopplysninger}
+          personopplysninger={{}}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{videreBehandling: {kode: 'tilbakekrevingskode'}}}
           vilkar={[]}
-          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-          dokumentdata={{}}
-          fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
-          lagreDokumentdata={() => Promise.resolve()}
-          overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
-          simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
-          medlemskapFom="2021-05-02"
-          erRevurdering={false}
-          behandlingArsaker={[]}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
         />
       </ProsessStegContainer>,
       { messages },
@@ -592,15 +525,28 @@ describe('<VedtakForm>', () => {
       navn: 'test',
     },
   };
-  const aksjonspunkter: Aksjonspunkt[] = [
+  const aksjonspunkter = [
     {
-      ...aksjonspunktBase,
-      toTrinnsBehandling: undefined,
+      id: 1,
+      definisjon: {
+        navn: 'annen ytelse',
+        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+      },
+      status: {
+        navn: 'Opprettet',
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      kanLoses: true,
+      erAktivt: true,
     },
   ];
   const vedtakVarsel = {
-    ...vedtakVarselBase,
     avslagsarsak: null,
+    avslagsarsakFritekst: null,
+    vedtaksbrev: {
+      kode: 'FRITEKST',
+      kodeverk: 'FRITKST',
+    },
   };
 
   const dokumentdata = {
@@ -620,38 +566,24 @@ describe('<VedtakForm>', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
 
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={(n) => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={behandlingStatusUtredes}
-          aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
           behandlingPaaVent={false}
           previewCallback={previewCallback}
-          hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           alleKodeverk={{}}
-          personopplysninger={personopplysninger}
+          personopplysninger={{}}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{videreBehandling: {kode: 'tilbakekrevingskode'}}}
           vilkar={[]}
-          tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
-          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-          dokumentdata={dokumentdata}
-          fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
-          lagreDokumentdata={() => Promise.resolve()}
-          overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
-          simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
-          medlemskapFom="2021-05-02"
-          erRevurdering={false}
-          behandlingArsaker={[]}
+          dokumentdata={dokumentdata}
+          tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
         />
       </ProsessStegContainer>,
       { messages },
@@ -664,38 +596,24 @@ describe('<VedtakForm>', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
 
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={(n) => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={behandlingStatusUtredes}
-          aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
           behandlingPaaVent={false}
           previewCallback={previewCallback}
-          hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           alleKodeverk={{}}
-          personopplysninger={personopplysninger}
+          personopplysninger={{}}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{videreBehandling: {kode: 'tilbakekrevingskode'}}}
           vilkar={[]}
-          tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
-          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-          dokumentdata={dokumentdata}
-          fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
-          lagreDokumentdata={() => Promise.resolve()}
-          overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
-          simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
-          medlemskapFom="2021-05-02"
-          erRevurdering={false}
-          behandlingArsaker={[]}
+          dokumentdata={dokumentdata}
+          tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
         />
       </ProsessStegContainer>,
       { messages },
@@ -709,38 +627,24 @@ describe('<VedtakForm>', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
 
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={(n) => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={behandlingStatusUtredes}
-          aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
           behandlingPaaVent={false}
           previewCallback={previewCallback}
-          hentFritekstbrevHtmlCallback={() => undefined}
           readOnly
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           alleKodeverk={{}}
-          personopplysninger={personopplysninger}
+          personopplysninger={{}}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{videreBehandling: {kode: 'tilbakekrevingskode'}}}
           vilkar={[]}
-          tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
-          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-          dokumentdata={dokumentdata}
-          fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
-          lagreDokumentdata={() => Promise.resolve()}
-          overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
-          simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
-          medlemskapFom="2021-05-02"
-          erRevurdering={false}
-          behandlingArsaker={[]}
+          dokumentdata={dokumentdata}
+          tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
         />
       </ProsessStegContainer>,
       { messages },
@@ -755,46 +659,30 @@ describe('<VedtakForm>', () => {
   it('skal ikke kunne avhuke checkbox hvis automatisk brev ikke kan sendes', async () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
 
-    const vedtaksbrevmalerUtenAutomatisk: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler = {
-      begrunnelse: null,
-      alternativeMottakere: [],
+    const vedtaksbrevmalerUtenAutomatisk = {
       vedtaksbrevmaler: { [vedtaksbrevtype.FRITEKST]: dokumentMalType.FRITKS, [vedtaksbrevtype.INGEN]: null },
-      maler: []
     };
 
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={(n) => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={behandlingStatusUtredes}
-          aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
           behandlingPaaVent={false}
           previewCallback={previewCallback}
-          hentFritekstbrevHtmlCallback={() => undefined}
-          readOnly={false}
+          aksjonspunktKoder={aksjonspunktKoder}
           sprakkode={sprakkode}
+          readOnly={false}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           alleKodeverk={{}}
-          personopplysninger={personopplysninger}
+          personopplysninger={{}}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{videreBehandling: {kode: 'tilbakekrevingskode'}}}
           vilkar={[]}
-          tilgjengeligeVedtaksbrev={vedtaksbrevmalerUtenAutomatisk}
-          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-          dokumentdata={dokumentdata}
-          fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
-          lagreDokumentdata={() => Promise.resolve()}
-          overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
-          simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
-          medlemskapFom="2021-05-02"
-          erRevurdering={false}
-          behandlingArsaker={[]}
+          dokumentdata={dokumentdata}
+          tilgjengeligeVedtaksbrev={vedtaksbrevmalerUtenAutomatisk}
         />
       </ProsessStegContainer>,
       { messages },

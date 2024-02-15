@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/src/AksjonspunktHelpText';
 
 import { ArbeidsforholdInfoPanelImpl } from './ArbeidsforholdInfoPanel';

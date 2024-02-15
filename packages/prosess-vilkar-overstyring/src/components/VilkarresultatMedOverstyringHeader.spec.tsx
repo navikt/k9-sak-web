@@ -1,4 +1,4 @@
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';

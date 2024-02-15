@@ -5,7 +5,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { FormattedMessage } from 'react-intl';
 import { PeriodpickerField, RadioGroupField, SelectField, TextAreaField } from '@fpsak-frontend/form';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { ActivityPanel } from './ActivityPanel';
 import shallowWithIntl, { intlMock } from '../../../i18n';

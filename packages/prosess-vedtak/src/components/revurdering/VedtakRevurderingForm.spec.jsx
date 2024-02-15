@@ -1,8 +1,8 @@
 import React from 'react';
 import sinon from 'sinon';
 
-import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
-import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/test-utils';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/src/test-utils';
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

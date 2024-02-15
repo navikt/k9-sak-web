@@ -1,6 +1,6 @@
 import React from 'react';
 // eslint-disable-next-line import/extensions
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
 import { KjønnkodeEnum } from '@k9-sak-web/types/src/Kjønnkode';
 import { screen } from '@testing-library/react';
 import TimeLineSoker from './TimeLineSoker';

@@ -1,6 +1,7 @@
 {
   "name": "@fpsak-frontend/kodeverk",
   "version": "1.0.0",
+  "module": "index.js",
   "license": "MIT",
   "private": true,
   "dependencies": {

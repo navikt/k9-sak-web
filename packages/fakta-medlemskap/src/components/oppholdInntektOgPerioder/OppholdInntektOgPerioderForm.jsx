@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// eslint-disable-next-line import/no-duplicates
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -12,7 +11,6 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-// eslint-disable-next-line import/no-duplicates
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { guid } from '@fpsak-frontend/utils';
 import { getBehandlingFormPrefix, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';

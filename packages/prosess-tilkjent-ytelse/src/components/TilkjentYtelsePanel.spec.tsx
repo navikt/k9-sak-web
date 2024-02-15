@@ -1,5 +1,5 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { Aksjonspunkt, FamilieHendelse, Personopplysninger, Soknad } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
