@@ -5,7 +5,7 @@
   "type": "module",
   "version": "1.0.0",
   "exports": {
-    "./sak/meldinger/*": "./src/sak/meldinger/*.js"
+    "./sak/meldinger/*": "./src/sak/meldinger/*"
   },
   "dependencies": {
     "react": "18.2.0"
