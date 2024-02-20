@@ -1,15 +1,10 @@
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
 import sinon from 'sinon';
-
-import { FormattedMessage } from 'react-intl';
-
-import { RadioOption } from '@fpsak-frontend/form';
-
-import SarligGrunn from '../../../kodeverk/sarligGrunn';
+import messages from '../../../../i18n/nb_NO.json';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
-import AktsomhetGradFormPanel from './AktsomhetGradFormPanel';
-
+import SarligGrunn from '../../../kodeverk/sarligGrunn';
 import AktsomhetFormPanel from './AktsomhetFormPanel';
 
 describe('<AktsomhetFormPanel>', () => {
@@ -44,7 +39,7 @@ describe('<AktsomhetFormPanel>', () => {
   ];
 
   it('skal vise radioknapp for hver aksomhetstype', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <AktsomhetFormPanel
         readOnly={false}
         resetFields={sinon.spy()}
@@ -57,14 +52,15 @@ describe('<AktsomhetFormPanel>', () => {
         feilutbetalingBelop={100}
         erTotalBelopUnder4Rettsgebyr={false}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(RadioOption)).toHaveLength(3);
-    expect(wrapper.find(AktsomhetGradFormPanel)).toHaveLength(0);
+    expect(screen.getAllByRole('radio').length).toBe(3);
+    expect(screen.queryByText('Særlige grunner 4. ledd')).not.toBeInTheDocument();
   });
 
   it('skal vise panel for aktsomhet når dette er valgt', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <AktsomhetFormPanel
         readOnly={false}
         resetFields={sinon.spy()}
@@ -77,14 +73,14 @@ describe('<AktsomhetFormPanel>', () => {
         feilutbetalingBelop={100}
         erTotalBelopUnder4Rettsgebyr={false}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(RadioOption)).toHaveLength(3);
-    expect(wrapper.find(AktsomhetGradFormPanel)).toHaveLength(1);
+    expect(screen.getByText('Særlige grunner 4. ledd')).toBeInTheDocument();
   });
 
   it('skal ikke vise panel for aktsomhet når dette ikke er valgt', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <AktsomhetFormPanel
         readOnly={false}
         resetFields={sinon.spy()}
@@ -97,14 +93,14 @@ describe('<AktsomhetFormPanel>', () => {
         feilutbetalingBelop={100}
         erTotalBelopUnder4Rettsgebyr={false}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(RadioOption)).toHaveLength(3);
-    expect(wrapper.find(AktsomhetGradFormPanel)).toHaveLength(0);
+    expect(screen.queryByText('Særlige grunner 4. ledd')).not.toBeInTheDocument();
   });
 
   it('skal vise riktig labels når valg resultattype ikke er Forsto/Burde forstått', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <AktsomhetFormPanel
         readOnly={false}
         resetFields={sinon.spy()}
@@ -118,16 +114,17 @@ describe('<AktsomhetFormPanel>', () => {
         feilutbetalingBelop={100}
         erTotalBelopUnder4Rettsgebyr={false}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(RadioOption)).toHaveLength(3);
-    expect(wrapper.find(RadioOption).find({ value: 'SIMPEL_UAKTSOM' }).prop('label')).toBe('simpel');
-    expect(wrapper.find(RadioOption).find({ value: 'GROVT_UAKTSOM' }).prop('label')).toBe('grovt');
-    expect(wrapper.find(RadioOption).find({ value: 'FORSETT' }).prop('label')).toBe('forsett');
+    expect(screen.getAllByRole('radio').length).toBe(3);
+    expect(screen.getByRole('radio', { name: 'forsett' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'simpel' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'grovt' })).toBeInTheDocument();
   });
 
   it('skal vise riktig labels når valg resultattype er Forsto/Burde forstått', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <AktsomhetFormPanel
         readOnly={false}
         resetFields={sinon.spy()}
@@ -141,21 +138,12 @@ describe('<AktsomhetFormPanel>', () => {
         feilutbetalingBelop={100}
         erTotalBelopUnder4Rettsgebyr={false}
       />,
+      { messages },
     );
-
-    const radioOptions = wrapper.find(RadioOption);
-    expect(radioOptions).toHaveLength(3);
-
-    const simpelUaksomLabel = radioOptions.find({ value: 'SIMPEL_UAKTSOM' }).prop('label');
-    const grovtUaktsomLabel = radioOptions.find({ value: 'GROVT_UAKTSOM' }).prop('label');
-    const forsettLabel = radioOptions.find({ value: 'FORSETT' }).prop('label');
-
-    expect(simpelUaksomLabel.type).toBe(FormattedMessage);
-    expect(simpelUaksomLabel.props.id).toBe('AktsomhetFormPanel.AktsomhetTyperLabel.SimpelUaktsom');
-    expect(grovtUaktsomLabel.type).toBe(FormattedMessage);
-    expect(grovtUaktsomLabel.props.id).toBe('AktsomhetFormPanel.AktsomhetTyperLabel.GrovtUaktsomt');
-    expect(forsettLabel.type).toBe(FormattedMessage);
-    expect(forsettLabel.props.id).toBe('AktsomhetFormPanel.AktsomhetTyperLabel.Forsett');
+    expect(screen.getAllByRole('radio').length).toBe(3);
+    expect(screen.getByText('Må ha forstått')).toBeInTheDocument();
+    expect(screen.getByText('Burde ha forstått')).toBeInTheDocument();
+    expect(screen.getByText('Forsto')).toBeInTheDocument();
   });
 
   it('skal lage form-initialvalues fra struktur når en har aktsomhetsgrad FORSETT', () => {

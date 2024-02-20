@@ -1,3 +1,4 @@
+/* eslint-disable vitest/no-commented-out-tests */
 import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';

@@ -1,7 +1,7 @@
 {
   "name": "@fpsak-frontend/prosess-varsel-om-revurdering",
   "version": "1.0.0",
-  "module": "index.js",
+  "module": "index.ts",
   "license": "MIT",
   "private": true,
   "dependencies": {
@@ -29,7 +29,6 @@
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
     "chai": "4.4.1",
-    "enzyme": "3.11.0",
     "sinon": "15.2.0"
   }
 }

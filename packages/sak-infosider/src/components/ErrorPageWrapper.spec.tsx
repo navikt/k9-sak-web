@@ -1,16 +1,18 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { mount } from 'enzyme';
-import { Innholdstittel } from 'nav-frontend-typografi';
+import messages from '../../i18n/nb_NO.json';
 import ErrorPageWrapper from './ErrorPageWrapper';
 
 describe('<ErrorPageWrapper>', () => {
   it('skal rendre ErrorPageWrapper korrekt', () => {
-    const wrapper = mount(
+    renderWithIntl(
       <ErrorPageWrapper>
         <article>pageContent</article>
       </ErrorPageWrapper>,
+      { messages },
     );
-    expect(wrapper.find('article')).toHaveLength(1);
-    expect(wrapper.find(Innholdstittel)).toHaveLength(1);
+    expect(screen.getByRole('heading', { name: 'Noe gikk galt' })).toBeInTheDocument();
+    expect(screen.getByText('pageContent')).toBeInTheDocument();
   });
 });

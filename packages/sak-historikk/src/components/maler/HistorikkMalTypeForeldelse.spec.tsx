@@ -1,10 +1,9 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import { FormattedMessage } from 'react-intl';
-
-import { omit } from '@fpsak-frontend/utils';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { Historikkinnslag, HistorikkinnslagDel } from '@k9-sak-web/types';
-
+import { screen } from '@testing-library/react';
+import React from 'react';
+import { MemoryRouter } from 'react-router';
+import messages from '../../../i18n/nb_NO.json';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import HistorikkMalTypeForeldelse from './HistorikkMalTypeForeldelse';
 
@@ -66,28 +65,30 @@ describe('HistorikkMalTypeForeldelse', () => {
       key: 'test',
     };
 
-    const wrapper = shallow(
-      <HistorikkMalTypeForeldelse
-        historikkinnslag={{ historikkinnslagDeler } as Historikkinnslag}
-        behandlingLocation={locationMock}
-        getKodeverknavn={getKodeverknavn}
-        createLocationForSkjermlenke={() => locationMock}
-        erTilbakekreving={false}
-        saksnummer="123"
-      />,
+    renderWithIntl(
+      <MemoryRouter>
+        <HistorikkMalTypeForeldelse
+          historikkinnslag={{ historikkinnslagDeler } as Historikkinnslag}
+          behandlingLocation={locationMock}
+          getKodeverknavn={getKodeverknavn}
+          createLocationForSkjermlenke={() => locationMock}
+          erTilbakekreving={false}
+          saksnummer="123"
+        />
+      </MemoryRouter>,
+      { messages },
     );
 
-    const messages = wrapper.find(FormattedMessage);
-    expect(messages).toHaveLength(3);
-    expect(omit(messages.at(1).prop('values'), 'b')).toEqual({
-      navn: 'testing',
-      fraVerdi: 'gammel verdi',
-      tilVerdi: 'ny verdi',
-    });
-    expect(omit(messages.at(2).prop('values'), 'b')).toEqual({
-      navn: 'testing 2',
-      fraVerdi: undefined,
-      tilVerdi: 'ny verdi 2',
-    });
+    expect(
+      screen.getAllByText((_, element) => element.textContent === 'Manuell vurdering av perioden 10.10.2018-.')[0],
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getAllByText((_, element) => element.textContent === 'testing endret fra gammel verdi til ny verdi')[0],
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getAllByText((_, element) => element.textContent === 'testing 2 er satt til ny verdi 2.')[0],
+    ).toBeInTheDocument();
   });
 });

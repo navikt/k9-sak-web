@@ -61,7 +61,6 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
             {manueltOverstyrt && <>
               <PersonPencilFillIcon className="ml-1 align-middle text-2xl text-border-warning" title="Manuelt overstyrt" />
               <HelpText
-                title="Hvor kommer utbetalingsgraden fra?"
                 wrapperClassName='inline-flex align-middle ml-2'
                 onClick={(e) => { e.stopPropagation() }}
               >

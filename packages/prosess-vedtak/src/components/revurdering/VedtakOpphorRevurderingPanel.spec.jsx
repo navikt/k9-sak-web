@@ -1,10 +1,13 @@
-import React from 'react';
-import { expect } from 'chai';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import { expect } from 'chai';
+import React from 'react';
+import { intlMock } from '../../../i18n';
+import messages from '../../../i18n/nb_NO.json';
 import { VedtakOpphorRevurderingPanelImpl } from './VedtakOpphorRevurderingPanel';
-import shallowWithIntl, { intlMock } from '../../../i18n';
 
 describe('<VedtakOpphorRevurderingPanel>', () => {
   it('skal rendre opphørpanel med avslagsårsak', () => {
@@ -33,7 +36,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
       },
       avslagsarsakFritekst: null,
     };
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VedtakOpphorRevurderingPanelImpl
         intl={intlMock}
         vilkar={vilkar}
@@ -44,10 +47,11 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
         revurderingsAarsakString="Test"
         beregningErManueltFastsatt={false}
       />,
+      { messages },
     );
 
-    const textFields = wrapper.find('ForwardRef');
-    expect(textFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(screen.getByText('Resultat')).toBeInTheDocument();
+    expect(screen.getByText('Ytelsen opphører')).toBeInTheDocument();
   });
   it('skal rendre opphørpanel med avslagsårsak før svangerskapspenger', () => {
     const vilkar = [
@@ -75,7 +79,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
       },
       avslagsarsakFritekst: null,
     };
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VedtakOpphorRevurderingPanelImpl
         intl={intlMock}
         vilkar={vilkar}
@@ -86,9 +90,10 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
         revurderingsAarsakString="Test"
         beregningErManueltFastsatt={false}
       />,
+      { messages },
     );
 
-    const textFields = wrapper.find('ForwardRef');
-    expect(textFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(screen.getByText('Resultat')).toBeInTheDocument();
+    expect(screen.getByText('Ytelsen opphører')).toBeInTheDocument();
   });
 });

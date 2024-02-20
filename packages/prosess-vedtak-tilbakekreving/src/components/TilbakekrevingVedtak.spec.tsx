@@ -1,12 +1,10 @@
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import { Systemtittel } from 'nav-frontend-typografi';
-
-import TilbakekrevingVedtak from './TilbakekrevingVedtak';
-import TilbakekrevingVedtakPeriodeTabell from './TilbakekrevingVedtakPeriodeTabell';
-import TilbakekrevingVedtakForm from './TilbakekrevingVedtakForm';
+import messages from '../../i18n/nb_NO.json';
 import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
+import TilbakekrevingVedtak from './TilbakekrevingVedtak';
 
 describe('<TilbakekrevingVedtak>', () => {
   const perioder = [
@@ -22,7 +20,7 @@ describe('<TilbakekrevingVedtak>', () => {
       tilbakekrevingBeløp: 15430,
     },
     {
-      periode: ['2019-05-10', '2019-06-10'],
+      periode: { fom: '2019-05-10', tom: '2019-06-10' },
       feilutbetaltBeløp: 14000,
       vurdering: {
         kode: 'SIMP',
@@ -34,7 +32,7 @@ describe('<TilbakekrevingVedtak>', () => {
   ];
 
   it('skal vise vedtakspanel for tilbakekreving', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <TilbakekrevingVedtak
         submitCallback={sinon.spy()}
         readOnly={false}
@@ -48,10 +46,10 @@ describe('<TilbakekrevingVedtak>', () => {
         fetchPreviewVedtaksbrev={sinon.spy()}
         aksjonspunktKodeForeslaVedtak="1234"
       />,
+      { messages },
     );
 
-    expect(wrapper.find(TilbakekrevingVedtakPeriodeTabell)).toHaveLength(1);
-    expect(wrapper.find(TilbakekrevingVedtakForm)).toHaveLength(1);
-    expect(wrapper.find(Systemtittel)).toHaveLength(0);
+    expect(screen.getByRole('table')).toBeInTheDocument();
+    expect(screen.getByTestId('tilbakekrevingvedtakform')).toBeInTheDocument();
   });
 });

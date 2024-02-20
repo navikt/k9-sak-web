@@ -1,8 +1,7 @@
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-
-import { CheckboxField, TextAreaField } from '@fpsak-frontend/form';
-
+import messages from '../../../../i18n/nb_NO.json';
 import SarligGrunn from '../../../kodeverk/sarligGrunn';
 import AktsomhetSarligeGrunnerFormPanel from './AktsomhetSarligeGrunnerFormPanel';
 
@@ -20,7 +19,7 @@ describe('<AktsomhetSarligeGrunnerFormPanel>', () => {
         kodeverk: '',
       },
     ];
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <AktsomhetSarligeGrunnerFormPanel
         harGrunnerTilReduksjon
         readOnly={false}
@@ -30,9 +29,11 @@ describe('<AktsomhetSarligeGrunnerFormPanel>', () => {
         harMerEnnEnYtelse
         feilutbetalingBelop={10}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(CheckboxField)).toHaveLength(2);
+    expect(screen.getByRole('checkbox', { name: 'grad av uaktsomhet' })).toBeInTheDocument();
+    expect(screen.getByRole('checkbox', { name: 'navs feil' })).toBeInTheDocument();
   });
 
   it('skal vise tekstfelt for annet-begrunnelse når annet er valgt som særlig grunn', () => {
@@ -48,7 +49,7 @@ describe('<AktsomhetSarligeGrunnerFormPanel>', () => {
         kodeverk: '',
       },
     ];
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <AktsomhetSarligeGrunnerFormPanel
         harGrunnerTilReduksjon
         readOnly={false}
@@ -58,8 +59,9 @@ describe('<AktsomhetSarligeGrunnerFormPanel>', () => {
         harMerEnnEnYtelse
         feilutbetalingBelop={10}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(TextAreaField)).toHaveLength(1);
+    expect(screen.getByTestId('annetBegrunnelse')).toBeInTheDocument();
   });
 });

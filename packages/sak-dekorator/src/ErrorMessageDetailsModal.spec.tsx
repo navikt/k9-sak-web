@@ -1,9 +1,9 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import sinon from 'sinon';
-
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import messages from '../i18n/nb_NO.json';
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
-import shallowWithIntl, { intlMock } from '../i18n/index';
 
 describe('<ErrorMessageDetailsModal>', () => {
   it('skal vise feildetaljer', () => {
@@ -11,23 +11,13 @@ describe('<ErrorMessageDetailsModal>', () => {
       feilmelding: 'Dette er feil',
       url: 'test',
     };
-    const wrapper = shallowWithIntl(
-      <ErrorMessageDetailsModal.WrappedComponent
-        intl={intlMock}
-        showModal={false}
-        closeModalFn={sinon.spy()}
-        errorDetails={errorDetails}
-      />,
-    );
+    renderWithIntl(<ErrorMessageDetailsModal showModal closeModalFn={sinon.spy()} errorDetails={errorDetails} />, {
+      messages,
+    });
 
-    const undertekst = wrapper.find(Undertekst);
-    expect(undertekst).toHaveLength(2);
-    expect(undertekst.first().childAt(0).text()).toEqual('Feilmelding:');
-    expect(undertekst.last().childAt(0).text()).toEqual('Url:');
-
-    const normaltekst = wrapper.find(Normaltekst);
-    expect(normaltekst).toHaveLength(2);
-    expect(normaltekst.first().childAt(0).text()).toEqual('Dette er feil');
-    expect(normaltekst.last().childAt(0).text()).toEqual('test');
+    expect(screen.getByText('Feilmelding:')).toBeInTheDocument();
+    expect(screen.getByText('Url:')).toBeInTheDocument();
+    expect(screen.getByText('Dette er feil')).toBeInTheDocument();
+    expect(screen.getByText('test')).toBeInTheDocument();
   });
 });

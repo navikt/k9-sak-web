@@ -1,16 +1,14 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-
-import { TimeLineControl } from '@fpsak-frontend/tidslinje';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { BeregningsresultatPeriodeAndel } from '@k9-sak-web/types';
-
-import { PeriodeMedId, TilkjentYtelse } from './TilkjentYtelse';
-
+import { screen } from '@testing-library/react';
+import React from 'react';
 import { intlMock } from '../../i18n';
+import messages from '../../i18n/nb_NO.json';
+import { PeriodeMedId, TilkjentYtelse } from './TilkjentYtelse';
 
 describe('<TilkjentYtelse>', () => {
   it('skall innehålla korrekt antal felter', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <TilkjentYtelse
         items={
           [
@@ -60,7 +58,10 @@ describe('<TilkjentYtelse>', () => {
         alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
       />,
+      { messages },
     );
-    expect(wrapper.find(TimeLineControl)).toHaveLength(1);
+
+    expect(screen.getByText('Forrige periode')).toBeInTheDocument();
+    expect(screen.getByText('Neste periode')).toBeInTheDocument();
   });
 });

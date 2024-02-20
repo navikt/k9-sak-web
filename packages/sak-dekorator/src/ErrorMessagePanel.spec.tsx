@@ -1,14 +1,14 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
-import { Undertekst } from 'nav-frontend-typografi';
-
-import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
+import { intlMock } from '../i18n/index';
+import messages from '../i18n/nb_NO.json';
 import { ErrorMessagePanel } from './ErrorMessagePanel';
-import shallowWithIntl, { intlMock } from '../i18n/index';
 
 describe('<ErrorMessagePanel>', () => {
-  it('skal vise feilmelding med ikke lenke for å vise detaljert info', () => {
-    const wrapper = shallowWithIntl(
+  it('skal vise feilmelding uten lenke for å vise detaljert info', () => {
+    renderWithIntl(
       <ErrorMessagePanel
         intl={intlMock}
         errorMessages={[
@@ -19,17 +19,15 @@ describe('<ErrorMessagePanel>', () => {
         ]}
         removeErrorMessage={() => undefined}
       />,
+      { messages },
     );
 
-    const div = wrapper.find(Undertekst);
-    expect(div).toHaveLength(1);
-    expect(div.childAt(0).text()).toEqual('Error! ');
-
-    expect(wrapper.find('a')).toHaveLength(0);
+    expect(screen.getByText('Error!')).toBeInTheDocument();
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });
 
   it('skal erstatte spesialtegn i feilmelding', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <ErrorMessagePanel
         intl={intlMock}
         errorMessages={[
@@ -40,15 +38,14 @@ describe('<ErrorMessagePanel>', () => {
         ]}
         removeErrorMessage={() => undefined}
       />,
+      { messages },
     );
 
-    const div = wrapper.find(Undertekst);
-    expect(div).toHaveLength(1);
-    expect(div.childAt(0).text()).toEqual('Høna & egget og "test1" og \'test2\' ');
+    expect(screen.getByText('Høna & egget og "test1" og \'test2\'')).toBeInTheDocument();
   });
 
   it('skal vise lenke for å se feildetaljer når dette er konfigurert og en har info', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <ErrorMessagePanel
         intl={intlMock}
         errorMessages={[
@@ -62,14 +59,14 @@ describe('<ErrorMessagePanel>', () => {
         ]}
         removeErrorMessage={() => undefined}
       />,
+      { messages },
     );
 
-    expect(wrapper.find('a')).toHaveLength(1);
-    expect(wrapper.find(ErrorMessageDetailsModal)).toHaveLength(0);
+    expect(screen.getByRole('link', { name: 'Detaljert informasjon' })).toBeInTheDocument();
   });
 
-  it('skal åpne, og så lukke, modal for visning av feildetaljer ved klikk på lenke', () => {
-    const wrapper = shallowWithIntl(
+  it('skal åpne, og så lukke, modal for visning av feildetaljer ved klikk på lenke', async () => {
+    renderWithIntl(
       <ErrorMessagePanel
         intl={intlMock}
         errorMessages={[
@@ -83,21 +80,24 @@ describe('<ErrorMessagePanel>', () => {
         ]}
         removeErrorMessage={() => undefined}
       />,
+      { messages },
     );
 
-    const link = wrapper.find('a');
-    link.simulate('click', { preventDefault: sinon.spy() });
-
-    const modal = wrapper.find(ErrorMessageDetailsModal);
-    expect(modal).toHaveLength(1);
-    expect(modal.prop('showModal')).toBe(true);
-    expect(modal.prop('errorDetails')).toEqual({
-      feilmelding: 'Dette er ein feilmelding',
-      url: 'www.test.no',
+    expect(screen.getByRole('link', { name: 'Detaljert informasjon' })).toBeInTheDocument();
+    expect(screen.queryByText('Dette er ein feilmelding')).not.toBeInTheDocument();
+    expect(screen.queryByText('Url')).not.toBeInTheDocument();
+    expect(screen.queryByText('www.test.no')).not.toBeInTheDocument();
+    await act(async () => {
+      await userEvent.click(screen.getByRole('link', { name: 'Detaljert informasjon' }));
     });
-
-    modal.prop('closeModalFn')();
-
-    expect(wrapper.find(ErrorMessageDetailsModal)).toHaveLength(0);
+    expect(screen.getByText('Dette er ein feilmelding')).toBeInTheDocument();
+    expect(screen.getByText('Url:')).toBeInTheDocument();
+    expect(screen.getByText('www.test.no')).toBeInTheDocument();
+    await act(async () => {
+      await userEvent.click(screen.getAllByRole('button', { name: 'Lukk' })[1]);
+    });
+    expect(screen.queryByText('Dette er ein feilmelding')).not.toBeInTheDocument();
+    expect(screen.queryByText('Url')).not.toBeInTheDocument();
+    expect(screen.queryByText('www.test.no')).not.toBeInTheDocument();
   });
 });

@@ -1,18 +1,19 @@
 import React from 'react';
-import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import Image from '@fpsak-frontend/shared-components/src/Image';
 // eslint-disable-next-line import/extensions
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { KjønnkodeEnum } from '@k9-sak-web/types/src/Kjønnkode';
+import { screen } from '@testing-library/react';
 import TimeLineSoker from './TimeLineSoker';
 
 describe('<TimeLineSoker>', () => {
   it('skal teste at TimeLineSoker viser korrekte bilder för korrekte soker', () => {
-    const wrapper = mountWithIntl(
+    renderWithIntl(
       <TimeLineSoker hovedsokerKjonnKode={KjønnkodeEnum.KVINNE} medsokerKjonnKode={KjønnkodeEnum.MANN} />,
+      { 'Person.ImageText': 'Personinformasjon' },
     );
-    const rows = wrapper.find('Row');
-    expect(rows).toHaveLength(2);
-    expect(rows.find(Image).at(0).props().tooltip).toEqual('Kvinne');
-    expect(rows.find(Image).at(1).props().tooltip).toEqual('Mann');
+    const images = screen.getAllByAltText('Personinformasjon');
+    expect(images.length).toBe(2);
+    expect(screen.getByText('Kvinne')).toBeInTheDocument();
+    expect(screen.getByText('Mann')).toBeInTheDocument();
   });
 });

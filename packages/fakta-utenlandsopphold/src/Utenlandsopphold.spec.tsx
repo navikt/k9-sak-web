@@ -1,9 +1,8 @@
-/* eslint-disable jest/expect-expect */
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 // eslint-disable-next-line import/no-relative-packages
 import utenlandsoppholdMock, { utenlandsoppholdÅrsakMock } from '../../mocks/mockdata/utenlandsoppholdMock';
 
@@ -12,7 +11,7 @@ import Utenlandsopphold from './Utenlandsopphold';
 describe('Utenlandsopphold', () => {
   test('har utenlandsopphold som tittel', () => {
     renderWithIntl(<Utenlandsopphold utenlandsopphold={utenlandsoppholdMock} kodeverk={utenlandsoppholdÅrsakMock} />);
-    screen.getByText('Utenlandsopphold');
+    expect(screen.getByText('Utenlandsopphold')).toBeVisible();
   });
 
   test('kan kan toggle på hjelpetekst', async () => {

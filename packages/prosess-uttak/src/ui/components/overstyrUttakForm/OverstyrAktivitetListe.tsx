@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormContext, FieldArrayWithId } from 'react-hook-form';
 
-import { Label, TextField } from '@navikt/ds-react';
+import { ErrorMessage, Label, TextField } from '@navikt/ds-react';
 import { OverstyrUttakFormFieldName, arbeidstypeTilVisning } from '../../../constants';
 
 import styles from './overstyrAktivitetListe.module.css';
@@ -14,7 +14,10 @@ type ownProps = {
 };
 
 const OverstyrAktivitetListe: React.FC<ownProps> = ({ fields, loading }) => {
-  const { register } = useFormContext();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
   const { utledAktivitetNavn } = useOverstyrUttak();
 
   return (
@@ -22,18 +25,25 @@ const OverstyrAktivitetListe: React.FC<ownProps> = ({ fields, loading }) => {
       <Label size="small">Ny utbetalingsgrad per aktivitet</Label>
       <div className={styles.overstyringSkjemaAktiviteter}>
         {fields.map((field, index) => {
-          const arbeidstype = arbeidstypeTilVisning[field.arbeidsforhold?.type];
+          const arbeidstype =
+            field.arbeidsforhold?.type !== 'BA' ? arbeidstypeTilVisning[field.arbeidsforhold?.type] : false;
+          const harFeil =
+            !!errors[OverstyrUttakFormFieldName.UTBETALINGSGRADER]?.[index]?.[
+              OverstyrUttakFormFieldName.AKTIVITET_UTBETALINGSGRAD
+            ];
+
           return (
             <div key={field.id} className={styles.overstyringSkjemaAktivitet}>
               <div>
                 {utledAktivitetNavn(field.arbeidsforhold)}
                 {arbeidstype && <span>, {arbeidstype}</span>}
               </div>
-              <div>
+              <div className={harFeil ? 'navds-error-message navds-label' : ''}>
                 <TextField
                   {...register(
                     `${OverstyrUttakFormFieldName.UTBETALINGSGRADER}.${index}.${OverstyrUttakFormFieldName.AKTIVITET_UTBETALINGSGRAD}`,
                   )}
+                  className={harFeil ? 'navds-text-field--error' : ''}
                   label="Ny utbetalingsgrad (%)"
                   hideLabel
                   size="small"
@@ -45,11 +55,19 @@ const OverstyrAktivitetListe: React.FC<ownProps> = ({ fields, loading }) => {
                   disabled={loading}
                 />
                 %
+                {harFeil && (
+                  <ErrorMessage className="inline ml-4">
+                    {
+                      errors[OverstyrUttakFormFieldName.UTBETALINGSGRADER][index][
+                        OverstyrUttakFormFieldName.AKTIVITET_UTBETALINGSGRAD
+                      ]?.message
+                    }
+                  </ErrorMessage>
+                )}
               </div>
             </div>
-          )
-        }
-        )}
+          );
+        })}
       </div>
     </>
   );

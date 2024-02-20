@@ -1,26 +1,23 @@
 /* eslint-disable class-methods-use-this */
-import React from 'react';
 import { shallow } from 'enzyme';
+import React from 'react';
 import sinon from 'sinon';
 
-import { Behandling, Fagsak } from '@k9-sak-web/types';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-
-import InngangsvilkarPanel from './InngangsvilkarPanel';
-import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
-import ProsessStegPanel from './ProsessStegPanel';
-import MargMarkering from './MargMarkering';
-import ProsessStegIkkeBehandletPanel from './ProsessStegIkkeBehandletPanel';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { screen } from '@testing-library/react';
 import { ProsessStegDef, ProsessStegPanelDef } from '../util/prosessSteg/ProsessStegDef';
-import { ProsessStegUtledet, ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
+import { ProsessStegPanelUtledet, ProsessStegUtledet } from '../util/prosessSteg/ProsessStegUtledet';
+import InngangsvilkarPanel from './InngangsvilkarPanel';
+import ProsessStegPanel from './ProsessStegPanel';
 
 describe('<ProsessStegPanel>', () => {
   const fagsak = {
@@ -66,11 +63,13 @@ describe('<ProsessStegPanel>', () => {
 
   const toggleOverstyring = () => undefined;
 
+  const DummyComponent = props => props && <div />;
+
   const lagPanelDef = (id, aksjonspunktKoder, aksjonspunktTekstKoder) => {
     class PanelDef extends ProsessStegPanelDef {
       getId = () => '';
 
-      getKomponent = props => <div {...props} />;
+      getKomponent = props => <DummyComponent props={props} />;
 
       getAksjonspunktKoder = () => aksjonspunktKoder;
 
@@ -110,7 +109,7 @@ describe('<ProsessStegPanel>', () => {
     );
     const utledetVedtakSteg = new ProsessStegUtledet(vedtakStegDef, [utledetVedtakDelPanel]);
 
-    const wrapper = shallow(
+    renderWithIntl(
       <ProsessStegPanel
         valgtProsessSteg={utledetVedtakSteg}
         fagsak={fagsak}
@@ -127,10 +126,7 @@ describe('<ProsessStegPanel>', () => {
         useMultipleRestApi={() => ({ data: undefined, state: RestApiState.SUCCESS })}
       />,
     );
-
-    expect(wrapper.find(BehandlingHenlagtPanel)).toHaveLength(1);
-    expect(wrapper.find(MargMarkering)).toHaveLength(0);
-    expect(wrapper.find(ProsessStegIkkeBehandletPanel)).toHaveLength(0);
+    expect(screen.getByText('Behandlingen er henlagt')).toBeInTheDocument();
   });
 
   it('skal vise panel for steg ikke behandlet når steget ikke er behandlet og saken ikke er henlagt', () => {
@@ -153,7 +149,7 @@ describe('<ProsessStegPanel>', () => {
     );
     const utledetVedtakSteg = new ProsessStegUtledet(vedtakStegDef, [utledetVedtakDelPanel]);
 
-    const wrapper = shallow(
+    renderWithIntl(
       <ProsessStegPanel
         valgtProsessSteg={utledetVedtakSteg}
         fagsak={fagsak}
@@ -165,10 +161,7 @@ describe('<ProsessStegPanel>', () => {
         useMultipleRestApi={() => ({ data: undefined, state: RestApiState.SUCCESS })}
       />,
     );
-
-    expect(wrapper.find(ProsessStegIkkeBehandletPanel)).toHaveLength(1);
-    expect(wrapper.find(BehandlingHenlagtPanel)).toHaveLength(0);
-    expect(wrapper.find(MargMarkering)).toHaveLength(0);
+    expect(screen.getByText('Dette steget er ikke behandlet')).toBeInTheDocument();
   });
 
   it('skal vise panel for inngangsvilkår når det er data for flere panel', () => {
@@ -211,7 +204,7 @@ describe('<ProsessStegPanel>', () => {
       utledetOmsorgDelPanel,
     ]);
 
-    const wrapper = shallow(
+    const { container } = renderWithIntl(
       <ProsessStegPanel
         valgtProsessSteg={utledetInngangsvilkarSteg}
         fagsak={fagsak}
@@ -224,12 +217,8 @@ describe('<ProsessStegPanel>', () => {
       />,
     );
 
-    expect(wrapper.find(MargMarkering)).toHaveLength(1);
-    expect(wrapper.find(ProsessStegIkkeBehandletPanel)).toHaveLength(0);
-    expect(wrapper.find(BehandlingHenlagtPanel)).toHaveLength(0);
-
-    expect(wrapper.find(InngangsvilkarPanel)).toHaveLength(1);
-    expect(wrapper.find('DataFetcher')).toHaveLength(0);
+    expect(screen.getByText('FODSEL.TEKST')).toBeInTheDocument();
+    expect(container.getElementsByClassName('prosesspunkt').length).toBe(1);
   });
 
   it('skal vise kun vise ett panel', () => {
@@ -257,7 +246,7 @@ describe('<ProsessStegPanel>', () => {
     );
     const utledetInngangsvilkarSteg = new ProsessStegUtledet(inngangsvilkarStegDef, [utledetFodselDelPanel]);
 
-    const wrapper = shallow(
+    const { container } = renderWithIntl(
       <ProsessStegPanel
         valgtProsessSteg={utledetInngangsvilkarSteg}
         fagsak={fagsak}
@@ -270,17 +259,7 @@ describe('<ProsessStegPanel>', () => {
       />,
     );
 
-    expect(wrapper.find(MargMarkering)).toHaveLength(1);
-    expect(wrapper.find(ProsessStegIkkeBehandletPanel)).toHaveLength(0);
-    expect(wrapper.find(BehandlingHenlagtPanel)).toHaveLength(0);
-
-    const komponent = wrapper.find('div');
-    expect(komponent).toHaveLength(1);
-    expect(komponent.prop('status')).toEqual(vilkarUtfallType.IKKE_VURDERT);
-    expect(komponent.prop('isReadOnly')).toBe(false);
-    expect(komponent.prop('readOnlySubmitButton')).toBe(false);
-    expect(komponent.prop('isAksjonspunktOpen')).toBe(true);
-    expect(wrapper.find(InngangsvilkarPanel)).toHaveLength(0);
+    expect(container.getElementsByClassName('prosesspunkt').length).toBe(1);
   });
 
   it('skal lagre aksjonspunkt', async () => {

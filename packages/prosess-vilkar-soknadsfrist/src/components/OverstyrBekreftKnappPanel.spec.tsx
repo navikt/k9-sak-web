@@ -1,22 +1,22 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-
+import messages from '../../i18n/nb_NO.json';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 
 describe('<OverstyrBekreftKnappPanel>', () => {
   it('skal rendre submit-knapp når en ikke er i readonly-modus', () => {
-    const wrapper = shallow(<OverstyrBekreftKnappPanel submitting={false} pristine={false} overrideReadOnly={false} />);
+    renderWithIntl(<OverstyrBekreftKnappPanel submitting={false} pristine={false} overrideReadOnly={false} />, {
+      messages,
+    });
 
-    const button = wrapper.find('Hovedknapp');
-    expect(button).toHaveLength(1);
-    expect(button.prop('spinner')).toBe(false);
-    expect(button.prop('disabled')).toBe(false);
+    expect(screen.getByRole('button', { name: 'Bekreft overstyring' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft overstyring' })).not.toBeDisabled();
   });
 
   it('skal ikke vise submit-knapp når en er i readonly-modus', () => {
-    const wrapper = shallow(<OverstyrBekreftKnappPanel submitting={false} pristine={false} overrideReadOnly />);
+    renderWithIntl(<OverstyrBekreftKnappPanel submitting={false} pristine={false} overrideReadOnly />, { messages });
 
-    const button = wrapper.find('Hovedknapp');
-    expect(button).toHaveLength(0);
+    expect(screen.queryByRole('button', { name: 'Bekreft overstyring' })).not.toBeInTheDocument();
   });
 });

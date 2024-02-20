@@ -5,7 +5,7 @@ export interface AleneOmOmsorgenProps {
   behandlingsID: string;
   lesemodus?: boolean;
   aksjonspunktLost: boolean;
-  fraDatoFraSoknad: string;
+  fraDatoFraVilkar: string;
   tomDato: string;
   informasjonTilLesemodus?: AleneOmOmsorgenAksjonspunktObjekt;
   vedtakFattetVilkarOppfylt: boolean;

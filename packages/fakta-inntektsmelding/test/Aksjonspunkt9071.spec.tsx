@@ -68,7 +68,7 @@ describe('9071 - Mangler inntektsmelding', () => {
   test('Kan sende purring med varsel om avslag', async () => {
     server.use(rest.get('/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding))));
     // ARRANGE
-    const onClickSpy = jest.fn();
+    const onClickSpy = vi.fn();
     const data = { onFinished: onClickSpy };
     render(<Mangler9071 {...data} />);
 
@@ -100,7 +100,7 @@ describe('9071 - Mangler inntektsmelding', () => {
   test('Kan submitte begrunnelse når man har valgt A-inntekt', async () => {
     server.use(rest.get('/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding))));
     // ARRANGE
-    const onClickSpy = jest.fn();
+    const onClickSpy = vi.fn();
     const data = { onFinished: onClickSpy };
     render(<Mangler9071 {...data} />);
 
@@ -109,8 +109,8 @@ describe('9071 - Mangler inntektsmelding', () => {
     // ACT
     await userEvent.click(screen.getByText(/ja, bruk a-inntekt for sauefabrikk \(2\) og sauefabrikk \(1\)/i));
     await userEvent.type(screen.getByLabelText(/Begrunnelse/i), 'Inntektsmelding? LOL! Nei takk');
-    await act(() => {
-      userEvent.click(screen.getByRole('button', { name: /Fortsett uten inntektsmelding/i }));
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: /Fortsett uten inntektsmelding/i }));
     });
 
     // ASSERT
@@ -131,15 +131,15 @@ describe('9071 - Mangler inntektsmelding', () => {
   test('Hvis det tidligere er blitt gjort en vurdering og behandlingen har hoppet tilbake må man kunne løse aksjonspunktet', async () => {
     server.use(rest.get('/tilstand', (req, res, ctx) => res(ctx.json(alleErMottatt))));
     // ARRANGE
-    const onClickSpy = jest.fn();
+    const onClickSpy = vi.fn();
     const data = { onFinished: onClickSpy };
     render(<AlleInntektsmeldingerMottatt {...data} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
     // ACT
-    await act(() => {
-      userEvent.click(screen.getByRole('button', { name: /Send inn/i }));
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: /Send inn/i }));
     });
 
     // ASSERT

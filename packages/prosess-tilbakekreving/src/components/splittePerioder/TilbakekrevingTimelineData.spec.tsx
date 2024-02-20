@@ -1,16 +1,14 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import sinon from 'sinon';
-import { shallow } from 'enzyme';
-
-import PeriodeController from './PeriodeController';
-import PeriodeInformasjon from './PeriodeInformasjon';
-
-import TilbakekrevingTimelineData from './TilbakekrevingTimelineData';
+import messages from '../../../i18n/nb_NO.json';
 import DataForPeriode from '../../types/dataForPeriodeTsType';
+import TilbakekrevingTimelineData from './TilbakekrevingTimelineData';
 
 describe('<TilbakekrevingTimelineData>', () => {
   it('skal rendre komponent korrekt', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <TilbakekrevingTimelineData
         periode={
           {
@@ -27,9 +25,10 @@ describe('<TilbakekrevingTimelineData>', () => {
         behandlingVersjon={1}
         beregnBelop={() => undefined}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(PeriodeController)).toHaveLength(1);
-    expect(wrapper.find(PeriodeInformasjon)).toHaveLength(1);
+    expect(screen.getByText('Detaljer for valgt periode')).toBeInTheDocument();
+    expect(screen.getByText('10.10.2019 - 10.11.2019')).toBeInTheDocument();
   });
 });

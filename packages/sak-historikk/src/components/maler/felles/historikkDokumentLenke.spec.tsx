@@ -1,7 +1,8 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-
+import messages from '../../../../i18n/nb_NO.json';
 import HistorikkDokumentLenke from './HistorikkDokumentLenke';
-import shallowWithIntl from '../../../../i18n/index';
 
 const saksnummer = '123';
 const dokumentLenke = {
@@ -13,8 +14,7 @@ const dokumentLenke = {
 
 describe('HistorikkDokumentLenke', () => {
   it('skal vise at dokument er utgått', () => {
-    const wrapper = shallowWithIntl(<HistorikkDokumentLenke dokumentLenke={dokumentLenke} saksnummer={saksnummer} />);
-
-    expect(wrapper.find('MemoizedFormattedMessage').at(0).prop('id')).toEqual('Historikk.Utgått');
+    renderWithIntl(<HistorikkDokumentLenke dokumentLenke={dokumentLenke} saksnummer={saksnummer} />, { messages });
+    expect(screen.getByText('Inntektsmelding (utgått)')).toBeInTheDocument();
   });
 });

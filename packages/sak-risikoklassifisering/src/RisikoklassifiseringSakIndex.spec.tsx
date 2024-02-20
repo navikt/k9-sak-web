@@ -1,12 +1,10 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
 import sinon from 'sinon';
-
-import kontrollresultatKode from './kodeverk/kontrollresultatKode';
+import messages from '../i18n/nb_NO.json';
 import RisikoklassifiseringSakIndex from './RisikoklassifiseringSakIndex';
-import ManglendeKlassifiseringPanel from './components/ManglendeKlassifiseringPanel';
-import IngenRisikoPanel from './components/IngenRisikoPanel';
-import HoyRisikoTittel from './components/HoyRisikoTittel';
+import kontrollresultatKode from './kodeverk/kontrollresultatKode';
 
 const lagRisikoklassifisering = kode => ({
   kontrollresultat: {
@@ -19,7 +17,7 @@ const lagRisikoklassifisering = kode => ({
 
 describe('<RisikoklassifiseringSakIndex>', () => {
   it('skal rendere korrekt komponent når det mangler klassifisering', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <RisikoklassifiseringSakIndex
         behandlingId={1}
         behandlingVersjon={1}
@@ -29,14 +27,13 @@ describe('<RisikoklassifiseringSakIndex>', () => {
         submitAksjonspunkt={sinon.spy()}
         toggleRiskPanel={sinon.spy()}
       />,
+      { messages },
     );
-    expect(wrapper.find(ManglendeKlassifiseringPanel)).toHaveLength(1);
-    expect(wrapper.find(IngenRisikoPanel)).toHaveLength(0);
-    expect(wrapper.find(HoyRisikoTittel)).toHaveLength(0);
+    expect(screen.getAllByText('Faresignaler').length).toBe(2);
   });
 
   it('skal rendere korrekt komponent når det ikke er utfør klassifisering', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <RisikoklassifiseringSakIndex
         behandlingId={1}
         behandlingVersjon={1}
@@ -46,14 +43,13 @@ describe('<RisikoklassifiseringSakIndex>', () => {
         submitAksjonspunkt={sinon.spy()}
         toggleRiskPanel={sinon.spy()}
       />,
+      { messages },
     );
-    expect(wrapper.find(ManglendeKlassifiseringPanel)).toHaveLength(1);
-    expect(wrapper.find(IngenRisikoPanel)).toHaveLength(0);
-    expect(wrapper.find(HoyRisikoTittel)).toHaveLength(0);
+    expect(screen.getAllByText('Faresignaler').length).toBe(2);
   });
 
   it('skal rendere korrekt komponent når det er ikke_hoy resultat', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <RisikoklassifiseringSakIndex
         behandlingId={1}
         behandlingVersjon={1}
@@ -63,14 +59,13 @@ describe('<RisikoklassifiseringSakIndex>', () => {
         submitAksjonspunkt={sinon.spy()}
         toggleRiskPanel={sinon.spy()}
       />,
+      { messages },
     );
-    expect(wrapper.find(ManglendeKlassifiseringPanel)).toHaveLength(0);
-    expect(wrapper.find(IngenRisikoPanel)).toHaveLength(1);
-    expect(wrapper.find(HoyRisikoTittel)).toHaveLength(0);
+    expect(screen.getByText('Ingen faresignaler oppdaget')).toBeInTheDocument();
   });
 
   it('skal rendere korrekt komponent når det er hoy resultat', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <RisikoklassifiseringSakIndex
         behandlingId={1}
         behandlingVersjon={1}
@@ -80,9 +75,8 @@ describe('<RisikoklassifiseringSakIndex>', () => {
         submitAksjonspunkt={sinon.spy()}
         toggleRiskPanel={sinon.spy()}
       />,
+      { messages },
     );
-    expect(wrapper.find(ManglendeKlassifiseringPanel)).toHaveLength(0);
-    expect(wrapper.find(IngenRisikoPanel)).toHaveLength(0);
-    expect(wrapper.find(HoyRisikoTittel)).toHaveLength(1);
+    expect(screen.getByText('Faresignaler oppdaget')).toBeInTheDocument();
   });
 });

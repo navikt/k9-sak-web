@@ -1,12 +1,11 @@
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { Aksjonspunkt, FamilieHendelse, Personopplysninger, Soknad } from '@k9-sak-web/types';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import sinon from 'sinon';
-import { Aksjonspunkt, FamilieHendelse, Personopplysninger, Soknad } from '@k9-sak-web/types';
-import { Undertittel } from 'nav-frontend-typografi';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-
+import messages from '../../i18n/nb_NO.json';
 import { TilkjentYtelsePanelImpl } from './TilkjentYtelsePanel';
-import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
-import shallowWithIntl from '../../i18n';
 
 const tilbaketrekkAP = {
   definisjon: {
@@ -20,7 +19,7 @@ const tilbaketrekkAP = {
 
 describe('<TilkjentYtelsePanelImpl>', () => {
   it('skall innehålla rätt undertekst', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <TilkjentYtelsePanelImpl
         readOnly
         beregningresultat={null}
@@ -36,15 +35,14 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         fagsakYtelseTypeKode=""
         arbeidsgiverOpplysningerPerId={{}}
       />,
+      { messages },
     );
-    expect(wrapper.find(Undertittel)).toHaveLength(1);
-    // @ts-ignore fiks
-    expect(wrapper.find(Undertittel).props().children.props.id).toBe('TilkjentYtelse.Title');
-    expect(wrapper.find(Tilbaketrekkpanel)).toHaveLength(0);
+
+    expect(screen.getByRole('heading', { name: 'Tilkjent ytelse' })).toBeInTheDocument();
   });
 
   it('Skal vise tilbaketrekkpanel gitt tilbaketrekkaksjonspunkt', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <TilkjentYtelsePanelImpl
         readOnly
         aksjonspunkter={[]}
@@ -61,7 +59,13 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         fagsakYtelseTypeKode=""
         arbeidsgiverOpplysningerPerId={{}}
       />,
+      { messages },
     );
-    expect(wrapper.find(Tilbaketrekkpanel)).toHaveLength(1);
+    expect(screen.getByRole('heading', { name: 'Tilkjent ytelse' })).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'Pleiepengene er utbetalt til søker, arbeidsgiver krever nå refusjon fra startdato av pleiepengene. Vurder om beløpet som er feilutbetalt skal tilbakekreves fra søker eller om dette er en sak mellom arbeidstaker og arbeidsgiver.',
+      ),
+    ).toBeInTheDocument();
   });
 });

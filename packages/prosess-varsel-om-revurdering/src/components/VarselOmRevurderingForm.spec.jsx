@@ -1,12 +1,13 @@
-import React from 'react';
-import { expect } from 'chai';
-import sinon from 'sinon';
-
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { screen } from '@testing-library/react';
+import { expect } from 'chai';
+import React from 'react';
+import sinon from 'sinon';
+import { intlMock } from '../../i18n';
+import messages from '../../i18n/nb_NO.json';
 import { VarselOmRevurderingFormImpl as UnwrappedForm } from './VarselOmRevurderingForm';
-import shallowWithIntl, { intlMock } from '../../i18n';
 
 const soknad = {
   fodselsdatoer: { 1: '2019-01-10' },
@@ -27,7 +28,7 @@ const originalBehandling = {
 
 describe('<VarselOmRevurderingFormImpl>', () => {
   it('skal vise fritekst og forhåndsvis av brev når varsel skal sendes', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <UnwrappedForm
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -48,16 +49,15 @@ describe('<VarselOmRevurderingFormImpl>', () => {
         familiehendelseOriginalBehandling={originalBehandling.familiehendelse}
         vedtaksDatoSomSvangerskapsuke="2019-01-01"
       />,
+      { messages },
     );
 
-    const textarea = wrapper.find('TextAreaField');
-    const forhandsvis = wrapper.find('a');
-    expect(textarea).to.have.length(2);
-    expect(forhandsvis).to.have.length(1);
+    expect(screen.getByRole('textbox', { name: 'Begrunnelse' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Forhåndsvis' })).toBeInTheDocument();
   });
 
   it('skal ikke vise fritekst og forhåndsvis av brev når varsel ikke skal sendes', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <UnwrappedForm
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -78,17 +78,16 @@ describe('<VarselOmRevurderingFormImpl>', () => {
         familiehendelseOriginalBehandling={originalBehandling.familiehendelse}
         vedtaksDatoSomSvangerskapsuke="2019-01-01"
       />,
+      { messages },
     );
 
-    const textarea = wrapper.find('TextAreaField');
-    const forhandsvis = wrapper.find('a');
-    expect(textarea).to.have.length(1);
-    expect(forhandsvis).to.have.length(0);
+    expect(screen.getByRole('textbox', { name: 'Begrunnelse' })).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'Forhåndsvis' })).not.toBeInTheDocument();
   });
 
   it('skal vises i readonly visning', () => {
     const begrunnelse = 'Begrunnelse';
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <UnwrappedForm
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -109,10 +108,10 @@ describe('<VarselOmRevurderingFormImpl>', () => {
         familiehendelseOriginalBehandling={originalBehandling.familiehendelse}
         vedtaksDatoSomSvangerskapsuke="2019-01-01"
       />,
+      { messages },
     );
 
-    expect(wrapper.find('Undertekst')).to.have.length(1);
-    expect(wrapper.find('Normaltekst')).to.have.length(1);
-    expect(wrapper.find('Normaltekst').children().text()).to.equal(begrunnelse);
+    expect(screen.getByRole('heading', { name: 'Varsel om revurdering' })).toBeInTheDocument();
+    expect(screen.getAllByText('Begrunnelse').length).toBe(2);
   });
 });

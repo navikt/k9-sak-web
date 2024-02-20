@@ -131,7 +131,7 @@ describe('access', () => {
     forEachFagsakAndBehandlingStatus((fagsakStatus, behandlingStatus) => {
       const expected = validFagsakStatuser.includes(fagsakStatus) && validBehandlingStatuser.includes(behandlingStatus);
 
-      // eslint-disable-next-line jest/valid-title
+      // eslint-disable-next-line vitest/valid-title
       it(getTestName('tilgang til å overstyre', expected, fagsakStatus, behandlingStatus), () => {
         const access = kanOverstyreAccess(
           saksbehandlerOgOverstyrerAnsatt,

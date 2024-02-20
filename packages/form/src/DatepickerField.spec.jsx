@@ -5,11 +5,11 @@ import { IntlProvider } from 'react-intl';
 import { reducer as formReducer, reduxForm } from 'redux-form';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
-import { messages } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { messages } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 
 import DatepickerField from './DatepickerField';
 
-const MockForm = reduxForm({ form: 'mock', onSubmit: jest.fn() })(({ handleSubmit, children }) => (
+const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ handleSubmit, children }) => (
   <form onSubmit={handleSubmit}>{children}</form>
 ));
 const mountFieldInForm = (field, initialValues) =>

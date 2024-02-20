@@ -1,10 +1,9 @@
-import { shallow } from 'enzyme';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { Behandling } from '@k9-sak-web/types';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import sinon from 'sinon';
-import { SideMenu } from '@navikt/ft-plattform-komponenter';
-
-import { Behandling } from '@k9-sak-web/types';
-
+import messages from '../i18n/nb_NO.json';
 import SoknadsfristVilkarProsessIndex from './SoknadsfristVilkarProsessIndex';
 
 const soknadsfristStatus = {
@@ -13,7 +12,7 @@ const soknadsfristStatus = {
 
 describe('<SoknadsfristVilkarForm>', () => {
   it('skal rendre tabs dersom bare en periode', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <SoknadsfristVilkarProsessIndex
         behandling={
           {
@@ -27,7 +26,7 @@ describe('<SoknadsfristVilkarForm>', () => {
         toggleOverstyring={sinon.spy()}
         submitCallback={sinon.spy()}
         aksjonspunkter={[]}
-        panelTittelKode="tittel"
+        panelTittelKode="Inngangsvilkar.Soknadsfrist"
         erOverstyrt={false}
         overrideReadOnly={false}
         vilkar={[
@@ -59,77 +58,9 @@ describe('<SoknadsfristVilkarForm>', () => {
         soknadsfristStatus={soknadsfristStatus}
         visAllePerioder={false}
       />,
+      { messages },
     );
-
-    const tabs = wrapper.find(SideMenu);
-    expect(tabs).toHaveLength(1);
-  });
-
-  it('skal rendre tabs dersom mer enn en periode', () => {
-    const wrapper = shallow(
-      <SoknadsfristVilkarProsessIndex
-        behandling={
-          {
-            id: 1,
-            versjon: 1,
-          } as Behandling
-        }
-        aksjonspunkter={[]}
-        kanOverstyreAccess={{
-          isEnabled: true,
-        }}
-        toggleOverstyring={sinon.spy()}
-        submitCallback={sinon.spy()}
-        panelTittelKode="tittel"
-        erOverstyrt={false}
-        overrideReadOnly={false}
-        vilkar={[
-          {
-            perioder: [
-              {
-                periode: {
-                  fom: '2020-03-01',
-                  tom: '2020-04-01',
-                },
-                vilkarStatus: {
-                  kode: 'test',
-                  kodeverk: 'test',
-                },
-                avslagKode: 'test',
-                vurderesIBehandlingen: true,
-                merknadParametere: {
-                  test: 'test',
-                },
-              },
-              {
-                periode: {
-                  fom: '2020-03-01',
-                  tom: '2020-04-01',
-                },
-                vilkarStatus: {
-                  kode: 'test',
-                  kodeverk: 'test',
-                },
-                avslagKode: 'test',
-                vurderesIBehandlingen: false,
-                merknadParametere: {
-                  test: 'test',
-                },
-              },
-            ],
-            overstyrbar: true,
-            vilkarType: {
-              kode: 'test',
-              kodeverk: 'test',
-            },
-          },
-        ]}
-        soknadsfristStatus={soknadsfristStatus}
-        visAllePerioder={false}
-      />,
-    );
-
-    const tabs = wrapper.find(SideMenu);
-    expect(tabs).toHaveLength(1);
+    expect(screen.getByText('Perioder')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '01.03.2020 - 01.04.2020' })).toBeInTheDocument();
   });
 });

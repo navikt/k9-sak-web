@@ -214,7 +214,7 @@ const AksjonspunktFormImpl = ({
   isAksjonspunktOpen,
   fosterbarn,
 }: AksjonspunktFormImplProps & InjectedFormProps) => (
-  <form onSubmit={handleSubmit}>
+  <form data-testid="aksjonspunktform" onSubmit={handleSubmit}>
     <div className={styles.graBoks}>
       <FormContent
         handleSubmit={handleSubmit}

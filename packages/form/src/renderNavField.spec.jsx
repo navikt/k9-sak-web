@@ -1,8 +1,8 @@
-import { inputMock, metaMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { inputMock, metaMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { screen } from '@testing-library/react';
 import React from 'react';
 
-import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { Input } from 'nav-frontend-skjema';
 import renderNavField from './renderNavField';
 

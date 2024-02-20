@@ -1,10 +1,11 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import sinon from 'sinon';
-import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData';
-import { createVisningsnavnForAndel } from './TilkjentYteleseUtils';
-import { PeriodeMedId } from './TilkjentYtelse';
 import messages from '../../i18n/nb_NO.json';
+import createVisningsnavnForAndel from './TilkjentYteleseUtils';
+import { PeriodeMedId } from './TilkjentYtelse';
+import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData';
 
 const selectedItemDataFL = {
   andeler: [
@@ -66,7 +67,7 @@ const getKodeverknavn = kodeverk => {
 
 describe('<TilkjentYtelseTimeLineData>', () => {
   it('Skal vise riktig aktivitetsStatus', () => {
-    const wrapper = mountWithIntl(
+    renderWithIntl(
       <TilkjentYtelseTimeLineData
         callbackForward={callbackForward}
         callbackBackward={callbackBackward}
@@ -76,12 +77,10 @@ describe('<TilkjentYtelseTimeLineData>', () => {
         alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
       />,
-      messages,
+      { messages },
     );
 
-    expect(wrapper.find('FormattedMessage')).toHaveLength(8);
-    expect(wrapper.find('FormattedMessage').at(7).props().id).toBe('TilkjentYtelse.PeriodeData.Aktivitetsstatus');
-
+    expect(screen.getByText('Aktivitetsstatus:')).toBeInTheDocument();
     expect(createVisningsnavnForAndel(selectedItemDataFL.andeler[0], getKodeverknavn, {})).toBe('Frilans');
   });
 });

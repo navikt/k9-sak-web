@@ -1,25 +1,22 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import sinon from 'sinon';
-
-import { OkAvbrytModal } from '@fpsak-frontend/shared-components';
-
-import shallowWithIntl from '../i18n/index';
+import messages from '../i18n/nb_NO.json';
 import MenyVergeIndex from './MenyVergeIndex';
 
 describe('<MenyVergeIndex>', () => {
-  it('skal vise modal for opprett og så velge å opprette verge', () => {
+  it('skal vise modal for opprett og så velge å opprette verge', async () => {
     const opprettVergeCallback = sinon.spy();
     const lukkModalCallback = sinon.spy();
 
-    const wrapper = shallowWithIntl(
-      <MenyVergeIndex opprettVerge={opprettVergeCallback} lukkModal={lukkModalCallback} />,
-    );
+    renderWithIntl(<MenyVergeIndex opprettVerge={opprettVergeCallback} lukkModal={lukkModalCallback} />, { messages });
+    expect(screen.getByText('Opprett verge/fullmektig?')).toBeInTheDocument();
 
-    const modal = wrapper.find(OkAvbrytModal);
-    expect(modal).toHaveLength(1);
-    expect(modal.prop('text')).toEqual('Opprett verge/fullmektig?');
-
-    modal.prop('submit')();
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: 'OK' }));
+    });
 
     const kall = opprettVergeCallback.getCalls();
     expect(kall).toHaveLength(1);
@@ -28,17 +25,16 @@ describe('<MenyVergeIndex>', () => {
     expect(lukkKall).toHaveLength(1);
   });
 
-  it('skal vise modal for fjerne og så velge å fjerne verge', () => {
+  it('skal vise modal for fjerne og så velge å fjerne verge', async () => {
     const fjernVergeCallback = sinon.spy();
     const lukkModalCallback = sinon.spy();
 
-    const wrapper = shallowWithIntl(<MenyVergeIndex fjernVerge={fjernVergeCallback} lukkModal={lukkModalCallback} />);
+    renderWithIntl(<MenyVergeIndex fjernVerge={fjernVergeCallback} lukkModal={lukkModalCallback} />, { messages });
+    expect(screen.getByText('Fjern verge/fullmektig?')).toBeInTheDocument();
 
-    const modal = wrapper.find(OkAvbrytModal);
-    expect(modal).toHaveLength(1);
-    expect(modal.prop('text')).toEqual('Fjern verge/fullmektig?');
-
-    modal.prop('submit')();
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: 'OK' }));
+    });
 
     const kall = fjernVergeCallback.getCalls();
     expect(kall).toHaveLength(1);

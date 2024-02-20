@@ -9,15 +9,6 @@ import { Aksjonspunkt } from '@k9-sak-web/types';
 
 import VilkarResultPicker from './VilkarResultPicker';
 
-jest.mock('react-intl', () => {
-  const reactIntl = jest.requireActual('react-intl');
-  const mockIntl = jest.requireMock('../../i18n/index');
-  return {
-    ...reactIntl,
-    useIntl: () => mockIntl.intlMock,
-  };
-});
-
 describe('<VilkarResultPicker>', () => {
   const avslagsarsaker = [{ kode: 'TEST', navn: 'test', kodeverk: '' }];
 

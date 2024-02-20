@@ -1,10 +1,12 @@
-import React from 'react';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { screen } from '@testing-library/react';
 import { expect } from 'chai';
+import React from 'react';
 import sinon from 'sinon';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { getAvvisningsAarsaker, getIsAvvist, getKlageresultat, VedtakKlageFormImpl } from './VedtakKlageForm';
-import { mountWithIntl, intlMock } from '../../i18n';
+import { intlMock } from '../../i18n';
+import messages from '../../i18n/nb_NO.json';
+import { VedtakKlageFormImpl, getAvvisningsAarsaker, getIsAvvist, getKlageresultat } from './VedtakKlageForm';
 
 const KLAGE_OMGJORT_TEKST = 'VedtakKlageForm.KlageOmgjortGunst';
 
@@ -19,7 +21,7 @@ describe('<VedtakKlageForm>', () => {
       klageVurdertAv: 'NAY',
       klageVurdering: 'AVVIS_KLAGE',
     };
-    const wrapper = mountWithIntl(
+    renderWithIntl(
       <VedtakKlageFormImpl
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -55,10 +57,11 @@ describe('<VedtakKlageForm>', () => {
           ],
         }}
       />,
+      { messages },
     );
-    expect(wrapper.find(Undertekst).at(1).childAt(0).text()).equal('Årsak til avvisning');
-    expect(wrapper.find(Normaltekst).at(1).childAt(0).text()).equal('Bruker har klaget for sent');
-    expect(wrapper.find(Normaltekst).at(2).childAt(0).text()).equal('Klager er ikke part');
+    expect(screen.getByText('Årsak til avvisning')).toBeInTheDocument();
+    expect(screen.getByText('Bruker har klaget for sent')).toBeInTheDocument();
+    expect(screen.getByText('Klager er ikke part')).toBeInTheDocument();
   });
 
   describe('Klage vedtak Selectors', () => {

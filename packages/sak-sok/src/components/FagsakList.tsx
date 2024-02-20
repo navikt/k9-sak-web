@@ -14,20 +14,8 @@ const lagFagsakSortObj = (fagsak: Fagsak) => ({
   endret: fagsak.endret ? fagsak.endret : fagsak.opprettet,
 });
 
-interface OwnProps {
-  fagsaker: Fagsak[];
-  selectFagsakCallback: (e: React.SyntheticEvent, saksnummer: string) => void;
-  alleKodeverk: { [key: string]: [KodeverkMedNavn] };
-}
-
-/**
- * FagsakList
- *
- * Presentasjonskomponent. Formaterer fagsak-søkeresultatet for visning i tabell. Sortering av fagsakene blir håndtert her.
- */
-const FagsakList = ({ fagsaker, selectFagsakCallback, alleKodeverk }: OwnProps) => {
-  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-  const sortedFagsaker = fagsaker.sort((fagsak1, fagsak2) => {
+export const sortFagsaker = (fagsaker: Fagsak[]) =>
+  [...fagsaker].sort((fagsak1, fagsak2) => {
     const a = lagFagsakSortObj(fagsak1);
     const b = lagFagsakSortObj(fagsak2);
     if (a.avsluttet && !b.avsluttet) {
@@ -45,9 +33,23 @@ const FagsakList = ({ fagsaker, selectFagsakCallback, alleKodeverk }: OwnProps) 
     return 0;
   });
 
+interface OwnProps {
+  fagsaker: Fagsak[];
+  selectFagsakCallback: (e: React.SyntheticEvent, saksnummer: string) => void;
+  alleKodeverk: { [key: string]: [KodeverkMedNavn] };
+}
+
+/**
+ * FagsakList
+ *
+ * Presentasjonskomponent. Formaterer fagsak-søkeresultatet for visning i tabell. Sortering av fagsakene blir håndtert her.
+ */
+const FagsakList = ({ fagsaker, selectFagsakCallback, alleKodeverk }: OwnProps) => {
+  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+
   return (
     <Table headerTextCodes={headerTextCodes} classNameTable={styles.table}>
-      {sortedFagsaker.map(fagsak => (
+      {sortFagsaker(fagsaker).map(fagsak => (
         <TableRow
           key={fagsak.saksnummer}
           id={fagsak.saksnummer}

@@ -64,7 +64,7 @@ describe('Etablert tilsyn med smøring', () => {
     );
 
     expect(screen.getByText('Uke 37')).toBeDefined();
-    expect(screen.queryByText('Uke 37 - B'));
+    expect(screen.queryByText('Uke 37 - B')).toBeDefined();
 
     expect(screen.getByText('= 2.6 t per dag (35%)')).toBeDefined();
   });

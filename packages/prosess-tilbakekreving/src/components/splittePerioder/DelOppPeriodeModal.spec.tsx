@@ -1,14 +1,12 @@
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import sinon from 'sinon';
-import Modal from 'nav-frontend-modal';
-import { Knapp } from 'nav-frontend-knapper';
-import { Normaltekst } from 'nav-frontend-typografi';
-
-import { DatepickerField } from '@fpsak-frontend/form';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-
+import { intlMock } from '../../../i18n';
+import messages from '../../../i18n/nb_NO.json';
 import { DelOppPeriodeModalImpl, mapStateToPropsFactory } from './DelOppPeriodeModal';
-import shallowWithIntl, { intlMock } from '../../../i18n';
 
 describe('<DelOppPeriodeModal>', () => {
   const periodeData = {
@@ -18,7 +16,7 @@ describe('<DelOppPeriodeModal>', () => {
   const cancelEvent = sinon.spy();
 
   it('skal rendre modal for del opp periode', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <DelOppPeriodeModalImpl
         {...reduxFormPropsMock}
         periodeData={periodeData}
@@ -27,23 +25,16 @@ describe('<DelOppPeriodeModal>', () => {
         cancelEvent={cancelEvent}
         finnesBelopMed0Verdi={false}
       />,
+      { messages },
     );
 
-    const modal = wrapper.find(Modal);
-    expect(modal).toHaveLength(1);
-    expect(modal.prop('isOpen')).toBe(true);
-    expect(modal.prop('closeButton')).toBe(false);
-    expect(modal.prop('contentLabel')).toEqual('Periode er splittet');
-    expect(modal.prop('onRequestClose')).toEqual(cancelEvent);
-
-    const datepicker = wrapper.find(DatepickerField);
-    expect(datepicker).toHaveLength(1);
-
-    expect(wrapper.find(Normaltekst).childAt(0).text()).toEqual('01.01.2018 - 01.03.2018');
+    expect(screen.getByRole('dialog', { name: 'Periode er splittet' })).toBeInTheDocument();
+    expect(screen.getByText('Angi t.o.m. dato for første periode')).toBeInTheDocument();
+    expect(screen.getByText('01.01.2018 - 01.03.2018')).toBeInTheDocument();
   });
 
-  it('skal lukke modal ved klikk på avbryt-knapp', () => {
-    const wrapper = shallowWithIntl(
+  it('skal lukke modal ved klikk på avbryt-knapp', async () => {
+    renderWithIntlAndReduxForm(
       <DelOppPeriodeModalImpl
         {...reduxFormPropsMock}
         periodeData={periodeData}
@@ -52,8 +43,11 @@ describe('<DelOppPeriodeModal>', () => {
         cancelEvent={cancelEvent}
         finnesBelopMed0Verdi={false}
       />,
+      { messages },
     );
-    wrapper.find(Knapp).simulate('click');
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: 'Avbryt' }));
+    });
     expect(cancelEvent).toHaveProperty('callCount', 1);
   });
 

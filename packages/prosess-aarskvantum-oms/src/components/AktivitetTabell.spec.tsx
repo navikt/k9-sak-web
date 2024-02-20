@@ -1,14 +1,13 @@
-import { TableRow } from '@fpsak-frontend/shared-components';
-import React from 'react';
-import { shallow } from 'enzyme';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
-import NavFrontendChevron from 'nav-frontend-chevron';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { ArbeidsforholdV2, UtfallEnum, VilkårEnum } from '@k9-sak-web/types';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+import { act } from 'react-dom/test-utils';
+import messages from '../../i18n/nb_NO.json';
 import Aktivitet from '../dto/Aktivitet';
 import AktivitetTabell from './AktivitetTabell';
-import Utfall from './Utfall';
 
 describe('<AktivitetTabell />', () => {
   const aktivitet: Aktivitet = {
@@ -46,7 +45,7 @@ describe('<AktivitetTabell />', () => {
   } as ArbeidsforholdV2;
 
   it('rendrer tabellrad med rett info', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <AktivitetTabell
         behandlingUuid="abc"
         uttaksperioder={aktivitet.uttaksperioder}
@@ -55,25 +54,20 @@ describe('<AktivitetTabell />', () => {
         aktivitetsstatuser={[]}
         arbeidsgiverOpplysningerPerId={{}}
       />,
+      { messages },
     );
-    const kolonner = wrapper.find('td');
 
-    expect(kolonner).toHaveLength(6);
-
-    const kolonnerMedTekst = tekst => kolonner.findWhere(kolonne => kolonne.text() === tekst);
-    const kolonnerMedFormatterTekstId = tekstId =>
-      kolonner.find(FormattedMessage).findWhere(formatert => formatert.prop('id') === tekstId);
-
-    expect(kolonnerMedTekst('01.03.2020 - 31.03.2020')).toHaveLength(1);
-    const uttak = kolonner.find(Utfall);
-    expect(uttak.prop('utfall')).toBe('AVSLÅTT');
-    expect(kolonnerMedTekst('0%')).toHaveLength(2);
-    expect(kolonnerMedFormatterTekstId('Uttaksplan.FulltFravær')).toHaveLength(1);
-    expect(kolonner.find(NavFrontendChevron)).toHaveLength(1);
+    expect(screen.getByText('01.03.2020 - 31.03.2020')).toBeInTheDocument();
+    expect(screen.getByText('Avslått')).toBeInTheDocument();
+    expect(screen.getByText('0%')).toBeInTheDocument();
+    expect(screen.getByText('Fullt fravær (31d)')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Utvid rad for perioden 01.03.2020 - 31.03.2020', expanded: false }),
+    ).toBeInTheDocument();
   });
 
-  it('Klikk expandknapp rendrer detaljer og viser vilkår om arbeidsforhold sist', () => {
-    const wrapper = shallow(
+  it('Klikk expandknapp rendrer detaljer og viser vilkår om arbeidsforhold sist', async () => {
+    renderWithIntl(
       <AktivitetTabell
         behandlingUuid="abc"
         uttaksperioder={aktivitet.uttaksperioder}
@@ -82,18 +76,12 @@ describe('<AktivitetTabell />', () => {
         aktivitetsstatuser={[]}
         arbeidsgiverOpplysningerPerId={{}}
       />,
+      { messages },
     );
-
-    expect(wrapper.find(TableRow)).toHaveLength(aktivitet.uttaksperioder.length);
-    wrapper.find('button').simulate('click');
-
-    const expandedContent = wrapper.find(TableRow);
-
-    expect(expandedContent).toHaveLength(aktivitet.uttaksperioder.length * 3);
-
-    const vilkår = expandedContent.at(2).find(Normaltekst);
-
-    expect(vilkår).toHaveLength(3);
-    expect(vilkår.last().find(FormattedMessage).prop('id')).toBe('Uttaksplan.Vilkår.ARBEIDSFORHOLD_AVSLÅTT');
+    expect(screen.queryByText('Permittert, permisjon eller opphørt arbeidsforhold')).not.toBeInTheDocument();
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: 'Utvid rad for perioden 01.03.2020 - 31.03.2020' }));
+    });
+    expect(screen.getByText('Permittert, permisjon eller opphørt arbeidsforhold')).toBeInTheDocument();
   });
 });

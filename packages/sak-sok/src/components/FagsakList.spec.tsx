@@ -1,14 +1,13 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import sinon from 'sinon';
-
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { Table } from '@fpsak-frontend/shared-components';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
-
-import FagsakList from './FagsakList';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import sinon from 'sinon';
+import messages from '../../i18n/nb_NO.json';
+import FagsakList, { sortFagsaker } from './FagsakList';
 
 const FAGSAK_STATUS_KODEVERK = 'FAGSAK_STATUS';
 const FAGSAK_YTELSE_KODEVERK = 'FAGSAK_YTELSE';
@@ -59,38 +58,31 @@ describe('<FagsakList>', () => {
     dekningsgrad: 100,
   } as Fagsak;
 
-  const headerTextCodes = ['FagsakList.Saksnummer', 'FagsakList.Sakstype', 'FagsakList.Status'];
-
   it('skal vise en tabell med en rad og tilhørende kolonnedata', () => {
     const clickFunction = sinon.spy();
-    const wrapper = shallow(
+    renderWithIntl(
       <FagsakList
         fagsaker={[fagsak]}
         selectFagsakCallback={clickFunction}
         alleKodeverk={alleKodeverk as { [key: string]: [KodeverkMedNavn] }}
       />,
+      { messages },
     );
-
-    const table = wrapper.find(Table);
-    expect(table).toHaveLength(1);
-
-    expect(table.prop('headerTextCodes')).toEqual(headerTextCodes);
-
-    const tableRows = table.children();
-    expect(tableRows).toHaveLength(1);
-    const tableColumns = tableRows.children();
-    expect(tableColumns).toHaveLength(3);
-    expect(tableColumns.first().childAt(0).text()).toEqual('12345');
-    expect(tableColumns.at(1).childAt(0).text()).toEqual('Engangsstønad');
-    expect(tableColumns.at(2).childAt(0).text()).toEqual('Under behandling');
+    expect(screen.getByText('12345')).toBeInTheDocument();
+    expect(screen.getByText('Engangsstønad')).toBeInTheDocument();
+    expect(screen.getByText('Under behandling')).toBeInTheDocument();
   });
 
   it('skal sortere søkeresultat der avsluttede skal vises sist, mens sist endrede skal vises først', () => {
     const fagsak2 = {
-      saksnummer: 23456,
+      saksnummer: '23456',
       sakstype: {
         kode: 'ES',
         kodeverk: FAGSAK_YTELSE_KODEVERK,
+      },
+      relasjonsRolleType: {
+        kode: 'TEST',
+        kodeverk: '',
       },
       status: {
         kode: 'UBEH',
@@ -100,9 +92,10 @@ describe('<FagsakList>', () => {
       opprettet: '2019-02-18T13:49:18.645',
       endret: '2019-02-18T13:49:18.645',
       dekningsgrad: 100,
-    };
+    } as Fagsak;
+
     const fagsak3 = {
-      saksnummer: 34567,
+      saksnummer: '34567',
       sakstype: {
         kode: 'ES',
         kodeverk: FAGSAK_YTELSE_KODEVERK,
@@ -115,38 +108,12 @@ describe('<FagsakList>', () => {
       opprettet: '2019-02-18T13:49:18.645',
       endret: '2019-02-18T13:49:18.645',
       dekningsgrad: 100,
-    };
+    } as Fagsak;
 
     const fagsaker = [fagsak, fagsak2, fagsak3];
-    const wrapper = shallow(
-      <FagsakList
-        fagsaker={fagsaker as Fagsak[]}
-        selectFagsakCallback={() => true}
-        alleKodeverk={alleKodeverk as { [key: string]: [KodeverkMedNavn] }}
-      />,
-    );
-
-    const table = wrapper.find(Table);
-    const tableRows = table.children();
-    expect(tableRows).toHaveLength(3);
-
-    const tableColumnsRow1 = tableRows.first().children();
-    expect(tableColumnsRow1).toHaveLength(3);
-    expect(tableColumnsRow1.first().childAt(0).text()).toEqual('23456');
-    expect(tableColumnsRow1.at(1).childAt(0).text()).toEqual('Engangsstønad');
-    expect(tableColumnsRow1.at(2).childAt(0).text()).toEqual('Under behandling');
-
-    const tableColumnsRow2 = tableRows.at(1).children();
-    expect(tableColumnsRow2).toHaveLength(3);
-    expect(tableColumnsRow2.first().childAt(0).text()).toEqual('12345');
-    expect(tableColumnsRow2.at(1).childAt(0).text()).toEqual('Engangsstønad');
-    expect(tableColumnsRow2.at(2).childAt(0).text()).toEqual('Under behandling');
-
-    const tableColumnsRow3 = tableRows.last().children();
-    expect(tableColumnsRow3).toHaveLength(3);
-    expect(tableColumnsRow3.first().childAt(0).text()).toEqual('34567');
-    expect(tableColumnsRow3.at(1).childAt(0).text()).toEqual('Engangsstønad');
-    expect(tableColumnsRow3.at(2).childAt(0).text()).toEqual('Avsluttet');
+    const sorterteFagsaker = sortFagsaker(fagsaker);
+    expect(sorterteFagsaker[0]).toEqual(fagsaker[1]);
+    expect(sorterteFagsaker[1]).toEqual(fagsaker[0]);
+    expect(sorterteFagsaker[2]).toEqual(fagsaker[2]);
   });
-
 });

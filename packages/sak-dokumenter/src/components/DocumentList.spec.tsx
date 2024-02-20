@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { cleanup, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';

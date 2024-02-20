@@ -1,10 +1,9 @@
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
 import sinon from 'sinon';
-
+import messages from '../../i18n/nb_NO.json';
 import FagsakSearch from './FagsakSearch';
-import FagsakList from './FagsakList';
-import SearchForm from './SearchForm';
 
 describe('<FagsakSearch>', () => {
   const fagsak = {
@@ -40,10 +39,11 @@ describe('<FagsakSearch>', () => {
     },
     dekningsgrad: 100,
   };
+  const fagsak1 = { ...fagsak, saksnummer: '12346' };
 
   it('skal kun vise søkefelt før søk er startet', () => {
     const searchFagsakFunction = sinon.spy();
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <FagsakSearch
         fagsaker={[]}
         searchFagsakCallback={searchFagsakFunction}
@@ -52,16 +52,14 @@ describe('<FagsakSearch>', () => {
         searchStarted
         alleKodeverk={{}}
       />,
+      { messages },
     );
-
-    const searchComp = wrapper.find(SearchForm);
-    expect(searchComp).toHaveLength(1);
-    expect(wrapper.find('Label')).toHaveLength(0);
-    expect(wrapper.find(FagsakList)).toHaveLength(0);
+    expect(screen.getByLabelText('Saksnummer eller fødselsnummer/D-nummer')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Laster' })).toBeInTheDocument();
   });
 
   it('skal vise søkefelt og label for ingen søketreff når ingen fagsaker blir hentet', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <FagsakSearch
         fagsaker={[]}
         searchFagsakCallback={sinon.spy()}
@@ -70,34 +68,28 @@ describe('<FagsakSearch>', () => {
         searchStarted
         alleKodeverk={{}}
       />,
+      { messages },
     );
-
-    expect(wrapper.find(SearchForm)).toHaveLength(1);
-    const labelComp = wrapper.find('Normaltekst');
-    expect(labelComp).toHaveLength(1);
-    expect(labelComp.find('MemoizedFormattedMessage').prop('id')).toEqual('FagsakSearch.ZeroSearchResults');
+    expect(screen.getByLabelText('Saksnummer eller fødselsnummer/D-nummer')).toBeInTheDocument();
+    expect(screen.getByText('Søket ga ingen treff')).toBeInTheDocument();
   });
 
   it('skal vise søkefelt og søketreff der to fagsaker blir vist', () => {
     const searchFagsakFunction = sinon.spy();
     const selectFagsakFunction = sinon.spy();
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <FagsakSearch
-        fagsaker={[fagsak, fagsak]}
+        fagsaker={[fagsak, fagsak1]}
         searchFagsakCallback={searchFagsakFunction}
         searchResultReceived
         selectFagsakCallback={selectFagsakFunction}
         searchStarted
         alleKodeverk={{}}
       />,
+      { messages },
     );
-
-    expect(wrapper.find(SearchForm)).toHaveLength(1);
-    expect(wrapper.find('Label')).toHaveLength(0);
-
-    const fagsakListComp = wrapper.find(FagsakList);
-    expect(fagsakListComp).toHaveLength(1);
-    expect(fagsakListComp.prop('fagsaker')).toEqual([fagsak, fagsak]);
-    expect(fagsakListComp.prop('selectFagsakCallback')).toEqual(selectFagsakFunction);
+    expect(screen.getByLabelText('Saksnummer eller fødselsnummer/D-nummer')).toBeInTheDocument();
+    expect(screen.getByText('12345')).toBeInTheDocument();
+    expect(screen.getByText('12346')).toBeInTheDocument();
   });
 });

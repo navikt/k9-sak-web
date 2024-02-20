@@ -1,13 +1,13 @@
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { Aksjonspunkt } from '@k9-sak-web/types';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import sinon from 'sinon';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import { Element } from 'nav-frontend-typografi';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { Aksjonspunkt } from '@k9-sak-web/types';
-import { buildInitialValues, Tilbaketrekkpanel as UnwrappedForm, transformValues } from './Tilbaketrekkpanel';
-import shallowWithIntl, { intlMock } from '../../../i18n';
+import { intlMock } from '../../../i18n';
+import messages from '../../../i18n/nb_NO.json';
+import { Tilbaketrekkpanel as UnwrappedForm, buildInitialValues, transformValues } from './Tilbaketrekkpanel';
 
 const lagAksjonspunktTilbaketrekk = begrunnelse =>
   ({
@@ -18,11 +18,11 @@ const lagAksjonspunktTilbaketrekk = begrunnelse =>
       kode: 'OPPR',
     },
     begrunnelse,
-  } as Aksjonspunkt);
+  }) as Aksjonspunkt;
 
 describe('<Tilbaketrekkpanel>', () => {
   it('skal teste at komponent vises korrekt', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <UnwrappedForm
         intl={intlMock}
         readOnly={false}
@@ -33,16 +33,17 @@ describe('<Tilbaketrekkpanel>', () => {
         behandlingVersjon={1}
         {...reduxFormPropsMock}
       />,
+      { messages },
     );
 
-    const radioOption = wrapper.find(RadioOption);
-    expect(radioOption).toHaveLength(2);
-    const textfield = wrapper.find(TextAreaField);
-    expect(textfield).toHaveLength(1);
-    const button = wrapper.find(ProsessStegSubmitButton);
-    expect(button).toHaveLength(1);
-    const element = wrapper.find(Element);
-    expect(element).toHaveLength(1);
+    expect(screen.getAllByRole('radio').length).toBe(2);
+    expect(screen.getByRole('textbox', { name: 'Vurdering' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'Pleiepengene er utbetalt til søker, arbeidsgiver krever nå refusjon fra startdato av pleiepengene. Vurder om beløpet som er feilutbetalt skal tilbakekreves fra søker eller om dette er en sak mellom arbeidstaker og arbeidsgiver.',
+      ),
+    ).toBeInTheDocument();
   });
 
   it('skal teste at komponent bygger korrekte initial values dersom alle data mangler', () => {

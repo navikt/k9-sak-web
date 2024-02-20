@@ -1,15 +1,15 @@
-import React from 'react';
-import sinon from 'sinon';
-
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-
-import shallowWithIntl from '../i18n/index';
-import NyBehandlingModal from './components/NyBehandlingModal';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+import sinon from 'sinon';
+import messages from '../i18n/nb_NO.json';
 import MenyNyBehandlingIndex from './MenyNyBehandlingIndex';
 
 describe('<MenyNyBehandlingIndex>', () => {
-  it('skal vise modal og så henlegge behandling', () => {
+  it('skal vise modal og så lage ny behandling', async () => {
     const lagNyBehandlingCallback = sinon.stub().resolves();
     const lukkModalCallback = sinon.spy();
 
@@ -30,7 +30,7 @@ describe('<MenyNyBehandlingIndex>', () => {
       },
     ];
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <MenyNyBehandlingIndex
         ytelseType={{
           kode: fagsakYtelseType.FORELDREPENGER,
@@ -45,7 +45,13 @@ describe('<MenyNyBehandlingIndex>', () => {
         }}
         lagNyBehandling={lagNyBehandlingCallback}
         behandlingOppretting={behandlingOppretting}
-        behandlingstyper={[]}
+        behandlingstyper={[
+          {
+            kode: behandlingType.FORSTEGANGSSOKNAD,
+            kodeverk: 'BEHANDLING_TYPE',
+            navn: 'Førstegangssøknad',
+          },
+        ]}
         tilbakekrevingRevurderingArsaker={[]}
         revurderingArsaker={[]}
         kanTilbakekrevingOpprettes={{
@@ -58,16 +64,11 @@ describe('<MenyNyBehandlingIndex>', () => {
         sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
         lukkModal={lukkModalCallback}
       />,
+      { messages },
     );
-
-    const modal = wrapper.find(NyBehandlingModal);
-    expect(modal).toHaveLength(1);
-    modal.prop('submitCallback')({
-      behandlingType: behandlingType.FORSTEGANGSSOKNAD,
-      fagsakYtelseType: {
-        kode: fagsakYtelseType.FORELDREPENGER,
-        kodeverk: '',
-      },
+    await act(async () => {
+      await userEvent.selectOptions(screen.getByRole('combobox'), 'BT-002');
+      await userEvent.click(screen.getByRole('button', { name: 'OK' }));
     });
 
     const kall = lagNyBehandlingCallback.getCalls();
@@ -75,11 +76,12 @@ describe('<MenyNyBehandlingIndex>', () => {
     expect(kall[0].args).toHaveLength(2);
     expect(kall[0].args[0]).toBe('BT-002');
     expect(kall[0].args[1]).toEqual({
+      eksternUuid: '2323',
       saksnummer: '123',
       behandlingType: behandlingType.FORSTEGANGSSOKNAD,
       fagsakYtelseType: {
         kode: fagsakYtelseType.FORELDREPENGER,
-        kodeverk: '',
+        kodeverk: 'FAGSAK_YTELSE_TYPE',
       },
     });
 

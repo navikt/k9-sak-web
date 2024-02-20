@@ -9,7 +9,7 @@ import * as stories from '../src/stories/MainComponent.stories';
 import MainComponent from '../src/ui/MainComponent';
 
 const server = setupServer(
-  rest.get('http://localhost/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding))),
+  rest.get('http://localhost:3000/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding))),
 );
 
 describe('9069 - Mangler inntektsmelding', () => {
@@ -65,7 +65,7 @@ describe('9069 - Mangler inntektsmelding', () => {
 
   test('Kan sende purring med varsel om avslag', async () => {
     // ARRANGE
-    const onClickSpy = jest.fn();
+    const onClickSpy = vi.fn();
     const data = { onFinished: onClickSpy };
     // eslint-disable-next-line react/jsx-props-no-spreading
     render(<Mangler9069 {...data} />);
@@ -96,7 +96,7 @@ describe('9069 - Mangler inntektsmelding', () => {
 
   test('Kan submitte begrunnelse når man har valgt A-inntekt', async () => {
     // ARRANGE
-    const onClickSpy = jest.fn();
+    const onClickSpy = vi.fn();
     const data = { onFinished: onClickSpy };
     // eslint-disable-next-line react/jsx-props-no-spreading
 

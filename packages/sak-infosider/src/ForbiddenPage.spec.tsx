@@ -1,13 +1,21 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-import { FormattedMessage } from 'react-intl';
+import { MemoryRouter } from 'react-router';
+import messages from '../i18n/nb_NO.json';
 import ForbiddenPage from './ForbiddenPage';
-import ErrorPageWrapper from './components/ErrorPageWrapper';
 
 describe('<ForbiddenPage>', () => {
   it('skal rendre ForbiddenPage korrekt', () => {
-    const wrapper = shallow(<ForbiddenPage />);
-    expect(wrapper.find(ErrorPageWrapper)).toHaveLength(1);
-    expect(wrapper.find(FormattedMessage)).toHaveLength(1);
+    renderWithIntl(
+      <MemoryRouter>
+        <ForbiddenPage />
+      </MemoryRouter>,
+      { messages },
+    );
+    expect(
+      screen.getByRole('heading', { name: 'Du har ikke tilgang til å slå opp denne personen' }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Gå til forsiden' })).toBeInTheDocument();
   });
 });

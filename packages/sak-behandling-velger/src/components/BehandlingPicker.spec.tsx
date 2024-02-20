@@ -1,22 +1,16 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
-import { BehandlingAppKontekst } from '@k9-sak-web/types';
-import { screen, waitFor } from '@testing-library/react';
-import axios from 'axios';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
-import BehandlingPicker from './BehandlingPicker';
+import BehandlingVelgerSakIndex from '../BehandlingVelgerSakIndex';
 import { sortBehandlinger } from './behandlingVelgerUtils';
-
-jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
-
-const queryClient = new QueryClient();
-
-const ReactQueryWrapper = ({ children }) => <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 
 describe('<BehandlingPicker>', () => {
   const behandlingTemplate = {
@@ -48,6 +42,29 @@ describe('<BehandlingPicker>', () => {
     behandlingÅrsaker: [],
   };
 
+  const fagsak = {
+    saksnummer: '35425245',
+    sakstype: {
+      kode: fagsakYtelseType.PLEIEPENGER,
+      kodeverk: '',
+    },
+    relasjonsRolleType: {
+      kode: relasjonsRolleType.MOR,
+      kodeverk: '',
+    },
+    status: {
+      kode: fagsakStatus.UNDER_BEHANDLING,
+      kodeverk: '',
+    },
+    barnFodt: '2020-01-01',
+    opprettet: '2020-01-01',
+    endret: '2020-01-01',
+    antallBarn: 1,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 100,
+  } as Fagsak;
+
   const locationMock = {
     pathname: 'test',
     search: 'test',
@@ -57,38 +74,25 @@ describe('<BehandlingPicker>', () => {
   };
 
   it('skal vise forklarende tekst når det ikke finnes behandlinger', async () => {
-    await waitFor(() => {
-      mockedAxios.get.mockResolvedValue({
-        data: {
-          perioderTilVurdering: [{ fom: '2022-01-01', tom: '2022-01-18' }],
-          perioderMedÅrsak: [
-            {
-              årsaker: ['RE_ANNEN_SAK'],
-            },
-          ],
-        },
-      });
-      renderWithIntl(
-        <BrowserRouter>
-          <ReactQueryWrapper>
-            <BehandlingPicker
-              noExistingBehandlinger
-              behandlinger={[]}
-              getBehandlingLocation={() => locationMock}
-              getKodeverkFn={sinon.spy()}
-              createLocationForSkjermlenke={() => locationMock}
-              sakstypeKode="PSB"
-            />
-          </ReactQueryWrapper>
-        </BrowserRouter>,
-        {
-          locale: 'nb-NO',
-          messages,
-        },
-      );
-
-      expect(screen.getByTestId('ingenBehandlinger')).toBeInTheDocument();
-    });
+    renderWithIntl(
+      <MemoryRouter>
+        <BehandlingVelgerSakIndex
+          noExistingBehandlinger
+          behandlinger={[]}
+          getBehandlingLocation={() => locationMock}
+          getKodeverkFn={sinon.spy()}
+          createLocationForSkjermlenke={() => locationMock}
+          fagsak={fagsak}
+          showAll={false}
+          toggleShowAll={vi.fn()}
+        />
+      </MemoryRouter>,
+      {
+        locale: 'nb-NO',
+        messages,
+      },
+    );
+    expect(screen.getByTestId('ingenBehandlinger')).toBeInTheDocument();
   });
 
   it('skal vise alle behandlinger', async () => {
@@ -110,36 +114,25 @@ describe('<BehandlingPicker>', () => {
       },
     ];
 
-    await waitFor(() => {
-      mockedAxios.get.mockResolvedValue({
-        data: {
-          perioderTilVurdering: [{ fom: '2022-01-01', tom: '2022-01-18' }],
-          perioderMedÅrsak: [
-            {
-              årsaker: ['RE_ANNEN_SAK'],
-            },
-          ],
-        },
-      });
-      renderWithIntl(
-        <BrowserRouter>
-          <ReactQueryWrapper>
-            <BehandlingPicker
-              noExistingBehandlinger={false}
-              behandlinger={behandlinger as BehandlingAppKontekst[]}
-              getBehandlingLocation={() => locationMock}
-              getKodeverkFn={sinon.spy()}
-              createLocationForSkjermlenke={() => locationMock}
-              sakstypeKode="PSB"
-            />
-          </ReactQueryWrapper>
-        </BrowserRouter>,
-        {
-          locale: 'nb-NO',
-          messages,
-        },
-      );
-    });
+    renderWithIntl(
+      <MemoryRouter>
+        <BehandlingVelgerSakIndex
+          noExistingBehandlinger={false}
+          behandlinger={behandlinger as BehandlingAppKontekst[]}
+          getBehandlingLocation={() => locationMock}
+          getKodeverkFn={sinon.spy()}
+          createLocationForSkjermlenke={() => locationMock}
+          fagsak={fagsak}
+          showAll={false}
+          toggleShowAll={vi.fn()}
+        />
+      </MemoryRouter>,
+      {
+        locale: 'nb-NO',
+        messages,
+      },
+    );
+    // });
     const item = await screen.findAllByTestId('BehandlingPickerItem');
     expect(item).toHaveLength(3);
   });
@@ -211,37 +204,25 @@ describe('<BehandlingPicker>', () => {
       },
     ];
 
-    await waitFor(() => {
-      mockedAxios.get.mockResolvedValue({
-        data: {
-          perioderTilVurdering: [{ fom: '2022-01-01', tom: '2022-01-18' }],
-          perioderMedÅrsak: [
-            {
-              årsaker: ['RE_ANNEN_SAK'],
-            },
-          ],
-        },
-      });
-      renderWithIntl(
-        <BrowserRouter>
-          <ReactQueryWrapper>
-            <BehandlingPicker
-              noExistingBehandlinger={false}
-              behandlinger={behandlinger as BehandlingAppKontekst[]}
-              getBehandlingLocation={() => locationMock}
-              getKodeverkFn={() => ({ navn: 'test', kode: 'test', kodeverk: 'test' })}
-              behandlingId={1}
-              createLocationForSkjermlenke={() => locationMock}
-              sakstypeKode="PSB"
-            />
-          </ReactQueryWrapper>
-        </BrowserRouter>,
-        {
-          locale: 'nb-NO',
-          messages,
-        },
-      );
-    });
+    renderWithIntl(
+      <MemoryRouter>
+        <BehandlingVelgerSakIndex
+          noExistingBehandlinger={false}
+          behandlinger={behandlinger as BehandlingAppKontekst[]}
+          getBehandlingLocation={() => locationMock}
+          getKodeverkFn={() => ({ navn: 'test', kode: 'test', kodeverk: 'test' })}
+          behandlingId={1}
+          createLocationForSkjermlenke={() => locationMock}
+          fagsak={fagsak}
+          showAll={false}
+          toggleShowAll={vi.fn()}
+        />
+      </MemoryRouter>,
+      {
+        locale: 'nb-NO',
+        messages,
+      },
+    );
     expect(screen.getByTestId('behandlingSelected')).toBeInTheDocument();
   });
 });

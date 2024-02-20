@@ -36,12 +36,12 @@ describe('convertListOfDaysToPeriods', () => {
     const result = convertListOfDaysToPeriods(days);
     expect(result.length).toBe(3);
 
-    expect(result[0].includesDate('2032-01-01'));
-    expect(result[0].includesDate('2032-01-02'));
-    expect(result[0].includesDate('2032-01-03'));
+    expect(result[0].includesDate('2032-01-01')).toBe(true);
+    expect(result[0].includesDate('2032-01-02')).toBe(true);
+    expect(result[0].includesDate('2032-01-03')).toBe(true);
 
-    expect(result[1].includesDate('2032-01-05'));
-    expect(result[2].includesDate('2032-01-07'));
+    expect(result[1].includesDate('2032-01-05')).toBe(true);
+    expect(result[2].includesDate('2032-01-07')).toBe(true);
   });
 });
 
