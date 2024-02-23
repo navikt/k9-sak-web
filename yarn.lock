@@ -5188,6 +5188,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/lib@1.0.0, @k9-sak-web/lib@workspace:packages/v2/lib":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/lib@workspace:packages/v2/lib"
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/modal-sett-pa-vent@1.0.0, @k9-sak-web/modal-sett-pa-vent@workspace:packages/modal-sett-pa-vent":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/modal-sett-pa-vent@workspace:packages/modal-sett-pa-vent"
@@ -5513,6 +5519,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/rest-api@workspace:packages/rest-api"
   dependencies:
+    "@k9-sak-web/lib": 1.0.0
     "@sentry/browser": 7.93.0
     axios: 1.6.5
     node-cache: 5.1.2
