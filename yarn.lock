@@ -5174,6 +5174,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/gui@1.0.0, @k9-sak-web/gui@workspace:packages/v2/gui":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/gui@workspace:packages/v2/gui"
+  dependencies:
+    react: 18.2.0
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/konstanter@1.0.0, @k9-sak-web/konstanter@workspace:packages/konstanter":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/konstanter@workspace:packages/konstanter"
@@ -5569,6 +5577,7 @@ __metadata:
     "@k9-sak-web/fakta-medisinsk-vilkar": 1.0.0
     "@k9-sak-web/fakta-om-barnet": 1.0.0
     "@k9-sak-web/fakta-omsorgen-for": 1.0.0
+    "@k9-sak-web/gui": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/modal-sett-pa-vent": 1.0.0
     "@k9-sak-web/prosess-omsorgsdager": 1.0.0

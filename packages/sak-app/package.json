@@ -40,6 +40,7 @@
     "@k9-sak-web/fakta-medisinsk-vilkar": "1.0.0",
     "@k9-sak-web/fakta-om-barnet": "1.0.0",
     "@k9-sak-web/fakta-omsorgen-for": "1.0.0",
+    "@k9-sak-web/gui": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
     "@k9-sak-web/modal-sett-pa-vent": "1.0.0",
     "@k9-sak-web/prosess-omsorgsdager": "1.0.0",
