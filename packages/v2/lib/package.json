@@ -1,0 +1,10 @@
+{
+  "name": "@k9-sak-web/lib",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "version": "1.0.0",
+  "exports": {
+    "./kodeverk/*": "./src/kodeverk/*"
+  }
+}
