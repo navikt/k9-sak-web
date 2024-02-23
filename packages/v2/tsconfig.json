@@ -1,0 +1,33 @@
+{
+  // Basert på https://github.com/tsconfig/bases/blob/main/bases/vite-react.json og
+  // https://github.com/tsconfig/bases/blob/main/bases/strictest.json.
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "es2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "moduleResolution": "bundler",
+    "allowJs": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "jsx": "react",
+    "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
+    "baseUrl": "packages/v2/",
+    "skipLibCheck": true
+  },
+  "include": ["./**/*"],
+}

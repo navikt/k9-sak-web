@@ -16,7 +16,7 @@
     "test:watch:all": "vitest --watchAll",
     "test:coverage": "vitest --coverage --selectProjects test",
     "test:e2e": "lerna run test:e2e --stream",
-    "ts-check": "tsc  --pretty",
+    "ts-check": "tsc  --pretty && tsc --pretty --project packages/v2/tsconfig.json",
     "lint": "eslint --cache packages --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "eslint --fix --cache packages --ext .ts,.tsx,.js,.jsx",
     "css:lint": "stylelint \"packages/**/*.css\"",
@@ -36,7 +36,8 @@
     "sentry-release": "(SENTRY_RELEASE=$(git rev-parse --short HEAD); node ./scripts/sentry-release)"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "packages/v2/*"
   ],
   "dependencies": {
     "@babel/runtime": "7.23.8",
