@@ -1,15 +1,19 @@
-import React from 'react';
-
+import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import shallowWithIntl, { intlMock } from '../../i18n';
-import OpptjeningFaktaForm from './OpptjeningFaktaForm';
-import { buildInitialValues, OpptjeningInfoPanel } from './OpptjeningInfoPanel';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import messages from '../../i18n/nb_NO.json';
+import OpptjeningInfoPanel, { buildInitialValues } from './OpptjeningInfoPanel';
 
 describe('<OpptjeningInfoPanel>', () => {
   it('skal vise opptjeningspanel', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <OpptjeningInfoPanel
         {...reduxFormPropsMock}
+        aksjonspunkter={[{ definisjon: { kode: '5058' }, erAktivt: true, toTrinnsBehandling: false }]}
+        behandlingId={1}
+        behandlingVersjon={1}
         intl={intlMock}
         harApneAksjonspunkter
         readOnly={false}
@@ -19,12 +23,12 @@ describe('<OpptjeningInfoPanel>', () => {
         }}
         alleMerknaderFraBeslutter={{}}
         alleKodeverk={{}}
+        // initialValues={{ opptjeningList: [] }}
       />,
+      { messages },
     );
 
-    const opptjeningForm = wrapper.find(OpptjeningFaktaForm);
-    expect(opptjeningForm).to.have.length(1);
-    expect(opptjeningForm.prop('readOnly')).is.false;
+    expect(screen.getByText('Fant ingen opptjeningsaktiviteter')).toBeInTheDocument();
   });
 
   it('skal ikke bruke aktiviteter som er utenfor opptjeningperioden', () => {
@@ -63,7 +67,7 @@ describe('<OpptjeningInfoPanel>', () => {
     const opptjeningList = [{ opptjeningAktivitetList, fastsattOpptjening }];
 
     const initialValues = buildInitialValues.resultFunc(opptjeningList, aksjonspunkter);
-    expect(initialValues).is.eql({
+    expect(initialValues).toStrictEqual({
       aksjonspunkter: [],
       opptjeningList: [
         {
@@ -140,7 +144,7 @@ describe('<OpptjeningInfoPanel>', () => {
     const opptjeningList = [{ opptjeningAktivitetList, fastsattOpptjening }];
 
     const initialValues = buildInitialValues.resultFunc(opptjeningList, aksjonspunkter);
-    expect(initialValues).is.eql({
+    expect(initialValues).toStrictEqual({
       aksjonspunkter: [
         {
           definisjon: {

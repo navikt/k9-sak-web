@@ -325,6 +325,8 @@ const validateForm = (values, props) => {
     );
   }
 
+  // console.log('errors', errors);
+  // console.log('values', values);
   return errors;
 };
 

@@ -1,12 +1,14 @@
-import React from 'react';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import shallowWithIntl, { intlMock } from '../../../i18n';
+import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import messages from '../../../i18n/nb_NO.json';
 import StatusForBorgerFaktaPanel from './StatusForBorgerFaktaPanel';
 
 describe('<StatusForBorgerFaktaPanel>', () => {
   it('skal vise radioknapper for vurdering av oppholdsrett', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <StatusForBorgerFaktaPanel.WrappedComponent
         apKode={aksjonspunktCodes.AVKLAR_OPPHOLDSRETT}
         intl={intlMock}
@@ -15,22 +17,18 @@ describe('<StatusForBorgerFaktaPanel>', () => {
         isBorgerAksjonspunktClosed={false}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
-    const groups = wrapper.find('RadioGroupField');
-    expect(groups).to.have.length(2);
 
-    const radioFieldsGroup1 = groups.first().find('RadioOption');
-    expect(radioFieldsGroup1).to.have.length(2);
-    expect(radioFieldsGroup1.first().prop('label').id).to.eql('StatusForBorgerFaktaPanel.CitizenEEA');
-    expect(radioFieldsGroup1.last().prop('label').id).to.eql('StatusForBorgerFaktaPanel.CitizenOutsideEEA');
-    const radioFieldsGroup2 = groups.last().find('RadioOption');
-    expect(radioFieldsGroup2).to.have.length(2);
-    expect(radioFieldsGroup2.first().prop('label').id).to.eql('StatusForBorgerFaktaPanel.HarOppholdsrett');
-    expect(radioFieldsGroup2.last().prop('label').props.id).to.eql('StatusForBorgerFaktaPanel.HarIkkeOppholdsrett');
+    expect(screen.getAllByRole('radio').length).toBe(4);
+    expect(screen.getByRole('radio', { name: 'EØS borger' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Utenlandsk borger utenfor EØS' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Søker har oppholdsrett' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Søker har ikke oppholdsrett' })).toBeInTheDocument();
   });
 
   it('skal vise radioknapper for vurdering av lovlig opphold', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <StatusForBorgerFaktaPanel.WrappedComponent
         apKode={aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD}
         intl={intlMock}
@@ -39,17 +37,14 @@ describe('<StatusForBorgerFaktaPanel>', () => {
         isBorgerAksjonspunktClosed={false}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
 
-    const groups = wrapper.find('RadioGroupField');
-    expect(groups).to.have.length(2);
-    const radioFieldsGroup1 = groups.first().find('RadioOption');
-    expect(radioFieldsGroup1).to.have.length(2);
-    expect(radioFieldsGroup1.first().prop('label').id).to.eql('StatusForBorgerFaktaPanel.CitizenEEA');
-    expect(radioFieldsGroup1.last().prop('label').id).to.eql('StatusForBorgerFaktaPanel.CitizenOutsideEEA');
-    const radioFieldsGroup2 = groups.last().find('RadioOption');
-    expect(radioFieldsGroup2).to.have.length(2);
-    expect(radioFieldsGroup2.first().prop('label').id).to.eql('StatusForBorgerFaktaPanel.HarLovligOpphold');
+    expect(screen.getAllByRole('radio').length).toBe(4);
+    expect(screen.getByRole('radio', { name: 'EØS borger' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Utenlandsk borger utenfor EØS' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Søker har lovlig opphold' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Søker har ikke lovlig opphold' })).toBeInTheDocument();
   });
 
   it('skal sette initielle verdi når det er EØS borger og ingen vurdering er lagret', () => {
@@ -68,7 +63,7 @@ describe('<StatusForBorgerFaktaPanel>', () => {
     ];
     const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(periode, aksjonspunkter);
 
-    expect(initialValues).to.eql({
+    expect(initialValues).toStrictEqual({
       apKode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
       erEosBorger: true,
       oppholdsrettVurdering: undefined,
@@ -88,7 +83,7 @@ describe('<StatusForBorgerFaktaPanel>', () => {
 
     const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(periode, aksjonspunkter);
 
-    expect(initialValues).to.eql({
+    expect(initialValues).toStrictEqual({
       apKode: undefined,
       erEosBorger: true,
       oppholdsrettVurdering: true,
@@ -114,7 +109,7 @@ describe('<StatusForBorgerFaktaPanel>', () => {
 
     const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(periode, aksjonspunkter);
 
-    expect(initialValues).to.eql({
+    expect(initialValues).toStrictEqual({
       apKode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
       erEosBorger: true,
       oppholdsrettVurdering: undefined,
@@ -133,7 +128,7 @@ describe('<StatusForBorgerFaktaPanel>', () => {
 
     const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(periode, aksjonspunkter);
 
-    expect(initialValues).to.eql({
+    expect(initialValues).toStrictEqual({
       apKode: undefined,
       erEosBorger: false,
       oppholdsrettVurdering: undefined,

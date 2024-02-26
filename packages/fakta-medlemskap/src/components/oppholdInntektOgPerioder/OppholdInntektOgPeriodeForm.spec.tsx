@@ -1,25 +1,41 @@
-import React from 'react';
-
-import sinon from 'sinon';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { FaktaBegrunnelseTextField } from '@k9-sak-web/fakta-felles';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import shallowWithIntl, { intlMock } from '../../../i18n';
-import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import sinon from 'sinon';
+import messages from '../../../i18n/nb_NO.json';
 import { OppholdInntektOgPeriodeForm } from './OppholdInntektOgPeriodeForm';
-import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
-import StatusForBorgerFaktaPanel from './StatusForBorgerFaktaPanel';
 
 const valgtPeriode = {
   aksjonspunkter: [],
   id: '123',
 };
 
+const alleKodeverk = {
+  MedlemskapManuellVurderingType: [
+    {
+      kode: 'IKKE_RELEVANT',
+      navn: 'Ikke relevant periode',
+      kodeverk: 'MEDLEMSKAP_MANUELL_VURD',
+    },
+    {
+      kode: 'MEDLEM',
+      navn: 'Periode med medlemskap',
+      kodeverk: 'MEDLEMSKAP_MANUELL_VURD',
+    },
+    {
+      kode: 'UNNTAK',
+      navn: 'Periode med unntak fra medlemskap',
+      kodeverk: 'MEDLEMSKAP_MANUELL_VURD',
+    },
+  ],
+};
+
 describe('<OppholdInntektOgPeriodeForm>', () => {
   it('skal vise informasjon uten editeringsmuligheter når det ikke finnes aksjonspunkter', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <OppholdInntektOgPeriodeForm
         {...reduxFormPropsMock}
         initialValues={{}}
@@ -32,18 +48,19 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
         submittable
         readOnly
         isRevurdering={false}
-        alleKodeverk={{}}
+        alleKodeverk={alleKodeverk}
         alleMerknaderFraBeslutter={{}}
         behandlingId={1}
         behandlingVersjon={1}
         saksbehandlere={{ saksbeh: 'Sara Saksbehandler' }}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(OppholdINorgeOgAdresserFaktaPanel)).has.length(1);
-    expect(wrapper.find(PerioderMedMedlemskapFaktaPanel)).has.length(1);
-    expect(wrapper.find(FaktaBegrunnelseTextField)).has.length(0);
-    expect(wrapper.find(Hovedknapp).prop('disabled')).is.false;
+    expect(screen.getByText('Opplysninger oppgitt i søknaden')).toBeInTheDocument();
+    expect(screen.getByText('Perioder med medlemskap')).toBeInTheDocument();
+    expect(screen.queryByText('textbox')).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Oppdater' })).not.toBeDisabled();
   });
 
   it('skal avklare bosatt data når en har dette aksjonspunktet', () => {
@@ -68,7 +85,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
       id: '123',
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <OppholdInntektOgPeriodeForm
         {...reduxFormPropsMock}
         initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT}`]: 'test', begrunnelse: 'test' }}
@@ -81,16 +98,17 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
         readOnly={false}
         valgtPeriode={valgtPeriodeMedBosattAksjonspunkt}
         isRevurdering={false}
-        alleKodeverk={{}}
+        alleKodeverk={alleKodeverk}
         alleMerknaderFraBeslutter={{}}
         behandlingId={1}
         behandlingVersjon={1}
         saksbehandlere={{ saksbeh: 'Sara Saksbehandler' }}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(FaktaBegrunnelseTextField)).has.length(1);
-    expect(wrapper.find(Hovedknapp).prop('disabled')).is.false;
+    expect(screen.getByRole('textbox', { name: 'Begrunn endringene' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Oppdater' })).not.toBeDisabled();
   });
 
   it('skal avklare perioder når en har dette aksjonspunktet', () => {
@@ -115,7 +133,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
       id: '123',
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <OppholdInntektOgPeriodeForm
         {...reduxFormPropsMock}
         initialValues={{
@@ -131,17 +149,18 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
         readOnly={false}
         valgtPeriode={valgtPeriodeMedAksjonspunkt}
         isRevurdering={false}
-        alleKodeverk={{}}
+        alleKodeverk={alleKodeverk}
         alleMerknaderFraBeslutter={{}}
         behandlingId={1}
         behandlingVersjon={1}
         saksbehandlere={{ saksbeh: 'Sara Saksbehandler' }}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(PerioderMedMedlemskapFaktaPanel)).has.length(1);
-    expect(wrapper.find(FaktaBegrunnelseTextField)).has.length(1);
-    expect(wrapper.find(Hovedknapp).prop('disabled')).is.false;
+    expect(screen.getByText('Perioder med medlemskap')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Begrunn endringene' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Oppdater' })).not.toBeDisabled();
   });
 
   it('skal avklare oppholdsrett når en har dette aksjonspunktet', () => {
@@ -166,7 +185,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
       id: '123',
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <OppholdInntektOgPeriodeForm
         {...reduxFormPropsMock}
         initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OPPHOLDSRETT}`]: 'test', begrunnelse: 'test' }}
@@ -179,17 +198,18 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
         readOnly={false}
         valgtPeriode={valgtPeriodeMedOppholdsrettAksjonspunkt}
         isRevurdering={false}
-        alleKodeverk={{}}
+        alleKodeverk={alleKodeverk}
         alleMerknaderFraBeslutter={{}}
         behandlingId={1}
         behandlingVersjon={1}
         saksbehandlere={{ saksbeh: 'Sara Saksbehandler' }}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(StatusForBorgerFaktaPanel)).has.length(1);
-    expect(wrapper.find(FaktaBegrunnelseTextField)).has.length(1);
-    expect(wrapper.find(Hovedknapp).prop('disabled')).is.false;
+    expect(screen.getByText('Status for søker')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Begrunn endringene' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Oppdater' })).not.toBeDisabled();
   });
 
   it('skal avklare lovlig opphold når en har dette aksjonspunktet', () => {
@@ -214,7 +234,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
       id: '123',
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <OppholdInntektOgPeriodeForm
         {...reduxFormPropsMock}
         initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD}`]: 'test', begrunnelse: 'test' }}
@@ -227,16 +247,17 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
         readOnly={false}
         valgtPeriode={valgtPeriodeMedLovligoppholdAksjonspunkt}
         isRevurdering={false}
-        alleKodeverk={{}}
+        alleKodeverk={alleKodeverk}
         alleMerknaderFraBeslutter={{}}
         behandlingId={1}
         behandlingVersjon={1}
         saksbehandlere={{ saksbeh: 'Sara Saksbehandler' }}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(StatusForBorgerFaktaPanel)).has.length(1);
-    expect(wrapper.find(FaktaBegrunnelseTextField)).has.length(1);
-    expect(wrapper.find(Hovedknapp).prop('disabled')).is.false;
+    expect(screen.getByText('Status for søker')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Begrunn endringene' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Oppdater' })).not.toBeDisabled();
   });
 });

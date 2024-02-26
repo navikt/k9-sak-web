@@ -1,18 +1,19 @@
-import React from 'react';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import React from 'react';
 import sinon from 'sinon';
-import shallowWithIntl, { intlMock } from '../../../i18n';
-import { OppholdInntektOgPerioderForm, transformValues } from './OppholdInntektOgPerioderForm';
+import messages from '../../../i18n/nb_NO.json';
+import OppholdInntektOgPerioderForm, { transformValues } from './OppholdInntektOgPerioderForm';
 
 const perioder = [];
 
 describe('<OppholdInntektOgPerioderForm>', () => {
   it('skal vise informasjon uten editeringsmuligheter når det ikke finnes aksjonspunkter', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <OppholdInntektOgPerioderForm
         {...reduxFormPropsMock}
         initialValues={{}}
@@ -26,12 +27,16 @@ describe('<OppholdInntektOgPerioderForm>', () => {
         perioder={perioder}
         readOnly
         alleMerknaderFraBeslutter={{}}
+        behandlingId={1}
+        behandlingVersjon={1}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
       />,
+      { messages },
     );
 
-    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
-    expect(helpText).has.length(1);
-    expect(wrapper.find(Hovedknapp).prop('disabled')).is.true;
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeDisabled();
   });
 
   it('skal avklare bosatt data når en har dette aksjonspunktet', () => {
@@ -51,7 +56,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <OppholdInntektOgPerioderForm
         {...reduxFormPropsMock}
         initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT}`]: 'test', begrunnelse: 'test' }}
@@ -64,15 +69,16 @@ describe('<OppholdInntektOgPerioderForm>', () => {
         readOnly={false}
         isRevurdering={false}
         alleMerknaderFraBeslutter={{}}
+        behandlingId={1}
+        behandlingVersjon={1}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
       />,
+      { messages },
     );
 
-    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
-    expect(helpText).has.length(1);
-    expect(helpText.children()).has.length(1);
-    expect(helpText.childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.ErSokerBosattINorge');
-
-    expect(wrapper.find(Hovedknapp)).has.length(1);
+    expect(screen.getByText('Vurder om søker er bosatt i Norge')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).not.toBeDisabled();
   });
 
   it('skal avklare perioder når en har dette aksjonspunktet', () => {
@@ -92,7 +98,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <OppholdInntektOgPerioderForm
         {...reduxFormPropsMock}
         initialValues={{
@@ -108,14 +114,16 @@ describe('<OppholdInntektOgPerioderForm>', () => {
         readOnly={false}
         isRevurdering={false}
         alleMerknaderFraBeslutter={{}}
+        behandlingId={1}
+        behandlingVersjon={1}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(AksjonspunktHelpTextTemp).childAt(0).prop('id')).is.eql(
-      'MedlemskapInfoPanel.GyldigMedlemFolketrygden',
-    );
-
-    expect(wrapper.find(Hovedknapp)).has.length(1);
+    expect(screen.getByText('Vurder om søker har gyldig medlemskap i perioden')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).not.toBeDisabled();
   });
 
   it('skal avklare oppholdsrett når en har dette aksjonspunktet', () => {
@@ -135,7 +143,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <OppholdInntektOgPerioderForm
         {...reduxFormPropsMock}
         initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OPPHOLDSRETT}`]: 'test', begrunnelse: 'test' }}
@@ -148,14 +156,16 @@ describe('<OppholdInntektOgPerioderForm>', () => {
         readOnly={false}
         isRevurdering={false}
         alleMerknaderFraBeslutter={{}}
+        behandlingId={1}
+        behandlingVersjon={1}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(AksjonspunktHelpTextTemp).childAt(0).prop('id')).is.eql(
-      'MedlemskapInfoPanel.EOSBorgerMedOppholdsrett',
-    );
-
-    expect(wrapper.find(Hovedknapp)).has.length(1);
+    expect(screen.getByText('Vurder om søker er EØS-borger med oppholdsrett')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).not.toBeDisabled();
   });
 
   it('skal avklare lovlig opphold når en har dette aksjonspunktet', () => {
@@ -175,7 +185,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <OppholdInntektOgPerioderForm
         {...reduxFormPropsMock}
         initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD}`]: 'test', begrunnelse: 'test' }}
@@ -188,14 +198,16 @@ describe('<OppholdInntektOgPerioderForm>', () => {
         readOnly={false}
         isRevurdering={false}
         alleMerknaderFraBeslutter={{}}
+        behandlingId={1}
+        behandlingVersjon={1}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(AksjonspunktHelpTextTemp).childAt(0).prop('id')).is.eql(
-      'MedlemskapInfoPanel.IkkeEOSBorgerMedLovligOpphold',
-    );
-
-    expect(wrapper.find(Hovedknapp)).has.length(1);
+    expect(screen.getByText('Avklar om søker har lovlig opphold')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).not.toBeDisabled();
   });
 
   it('skal avklare fortsatt medlemskap når en har dette aksjonspunktet', () => {
@@ -215,7 +227,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <OppholdInntektOgPerioderForm
         {...reduxFormPropsMock}
         initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP}`]: 'test', begrunnelse: 'test' }}
@@ -228,14 +240,15 @@ describe('<OppholdInntektOgPerioderForm>', () => {
         readOnly={false}
         isRevurdering={false}
         alleMerknaderFraBeslutter={{}}
+        behandlingId={1}
+        behandlingVersjon={1}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(AksjonspunktHelpTextTemp).childAt(0).prop('id')).is.eql(
-      'MedlemskapInfoPanel.HarFortsattMedlemskap',
-    );
-
-    expect(wrapper.find(Hovedknapp)).has.length(1);
+    expect(screen.getByText('Vurder om søker fortsatt har gyldig medlemskap i perioden')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
   });
 
   it('skal kun avklare aksjonspunkt som er aktive', () => {
@@ -289,7 +302,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
 
     const transformed = transformValues(values, [lovligOppholdAksjonspunkt, fortsattMedlemskapAksjonspunkt]);
 
-    expect(transformed).has.length(1);
-    expect(transformed[0].kode).is.eql(aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP);
+    expect(transformed.length).toBe(1);
+    expect(transformed[0].kode).toBe(aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP);
   });
 });

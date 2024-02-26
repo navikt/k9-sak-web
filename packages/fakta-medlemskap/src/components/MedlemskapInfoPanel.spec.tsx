@@ -1,16 +1,15 @@
-import React from 'react';
-
-import sinon from 'sinon';
-
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-
-import shallowWithIntl, { intlMock } from '../../i18n';
+import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import sinon from 'sinon';
+import messages from '../../i18n/nb_NO.json';
 import MedlemskapInfoPanel from './MedlemskapInfoPanel';
-import OppholdInntektOgPerioderForm from './oppholdInntektOgPerioder/OppholdInntektOgPerioderForm';
 
 describe('<MedlemskapInfoPanel>', () => {
   it('skal vise begge medlemskapsformer når aksjonspunkt for startdato for foreldrepengerperioden er avklart', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <MedlemskapInfoPanel
         intl={intlMock}
         aksjonspunkter={[]}
@@ -35,13 +34,14 @@ describe('<MedlemskapInfoPanel>', () => {
         fagsakPerson={{}}
         behandlingPaaVent={false}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(OppholdInntektOgPerioderForm)).has.length(1);
+    expect(screen.getByTestId('OppholdInntektOgPerioderForm')).toBeInTheDocument();
   });
 
   it('skal vise panel for avklaring av startdato for foreldrepengerperioden, for å tilate manuell korrigering selvom aksjonspunktet ikke finnes', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <MedlemskapInfoPanel
         intl={intlMock}
         aksjonspunkter={[]}
@@ -66,8 +66,9 @@ describe('<MedlemskapInfoPanel>', () => {
         fagsakPerson={{}}
         behandlingPaaVent={false}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(OppholdInntektOgPerioderForm)).has.length(1);
+    expect(screen.getByTestId('OppholdInntektOgPerioderForm')).toBeInTheDocument();
   });
 });

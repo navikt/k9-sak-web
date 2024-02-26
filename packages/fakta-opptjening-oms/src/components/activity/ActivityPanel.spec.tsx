@@ -1,13 +1,11 @@
-import React from 'react';
-
-import { Hovedknapp } from 'nav-frontend-knapper';
-import sinon from 'sinon';
-
-import { PeriodpickerField, RadioGroupField, SelectField, TextAreaField } from '@fpsak-frontend/form';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
+import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { FormattedMessage } from 'react-intl';
-import shallowWithIntl, { intlMock } from '../../../i18n';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import sinon from 'sinon';
+import messages from '../../../i18n/nb_NO.json';
 import { ActivityPanel } from './ActivityPanel';
 
 describe('<ActivityPanel>', () => {
@@ -29,7 +27,7 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -44,11 +42,10 @@ describe('<ActivityPanel>', () => {
         activityId={1}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
 
-    const periodevelger = wrapper.find(PeriodpickerField);
-    expect(periodevelger).to.have.length(1);
-    expect(periodevelger.prop('readOnly')).is.false;
+    expect(screen.getByPlaceholderText('dd.mm.åååå - dd.mm.åååå')).toBeInTheDocument();
   });
 
   it('skal vise periodevelger som aktiv når aktivitet er manuelt lagt til', () => {
@@ -58,7 +55,7 @@ describe('<ActivityPanel>', () => {
       begrunnelse: 'en begrunnelse',
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -73,11 +70,10 @@ describe('<ActivityPanel>', () => {
         activityId={1}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
 
-    const periodevelger = wrapper.find(PeriodpickerField);
-    expect(periodevelger).to.have.length(1);
-    expect(periodevelger.prop('readOnly')).is.false;
+    expect(screen.getByPlaceholderText('dd.mm.åååå - dd.mm.åååå')).toBeInTheDocument();
   });
 
   it('skal vise periodevelger som aktiv når aktivitet er markert med erEndret', () => {
@@ -87,7 +83,7 @@ describe('<ActivityPanel>', () => {
       erEndret: true,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -102,11 +98,10 @@ describe('<ActivityPanel>', () => {
         activityId={1}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
 
-    const periodevelger = wrapper.find(PeriodpickerField);
-    expect(periodevelger).to.have.length(1);
-    expect(periodevelger.prop('readOnly')).is.false;
+    expect(screen.getByPlaceholderText('dd.mm.åååå - dd.mm.åååå')).toBeInTheDocument();
   });
 
   it('skal vise periodevelger som disablet når aktivitet er godkjent automatisk og en ikke har aksjonspunkt', () => {
@@ -116,7 +111,7 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -131,11 +126,10 @@ describe('<ActivityPanel>', () => {
         activityId={1}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
 
-    const periodevelger = wrapper.find(PeriodpickerField);
-    expect(periodevelger).to.have.length(1);
-    expect(periodevelger.prop('readOnly')).is.true;
+    expect(screen.queryByPlaceholderText('dd.mm.åååå - dd.mm.åååå')).not.toBeInTheDocument();
   });
 
   it('skal vise antall månder og dager i valgt periode', () => {
@@ -145,7 +139,7 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -160,14 +154,10 @@ describe('<ActivityPanel>', () => {
         activityId={1}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
 
-    const daysInPeriodLabel = wrapper.find(FormattedMessage);
-    expect(daysInPeriodLabel).to.have.length(2);
-    expect(daysInPeriodLabel.at(1).prop('values')).is.eql({
-      days: 17,
-      months: 4,
-    });
+    expect(screen.getByText('(4 mndr. 17 dager)')).toBeInTheDocument();
   });
 
   it('skal vise nedtrekksliste med opptjeningsaktiviteter når saksbehandler manuelt har lagt til aktivitet', () => {
@@ -177,7 +167,7 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -192,12 +182,12 @@ describe('<ActivityPanel>', () => {
         activityId={1}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
 
-    const select = wrapper.find(SelectField);
-    expect(select).to.have.length(1);
-    expect(select.prop('selectValues').map(sv => sv.key)).is.eql([OAType.ARBEID, OAType.NARING]);
-    expect(select.prop('readOnly')).is.false;
+    expect(screen.getByRole('combobox', { name: 'ActivityPanel.Activity' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Arbeid' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Næring' })).toBeInTheDocument();
   });
 
   it('skal kun vise valgt opptjeningsaktivitet når aktivitet ikke manuelt er lagt til', () => {
@@ -207,7 +197,7 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -222,11 +212,10 @@ describe('<ActivityPanel>', () => {
         activityId={1}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
 
-    const select = wrapper.find(SelectField);
-    expect(select).to.have.length(1);
-    expect(select.prop('readOnly')).is.true;
+    expect(screen.getByText('Arbeidsgiver')).toBeInTheDocument();
   });
 
   it('skal kunne oppdatere aktivitet når den er del av aksjonspunktet', () => {
@@ -236,7 +225,7 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -251,10 +240,11 @@ describe('<ActivityPanel>', () => {
         activityId={1}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(Hovedknapp)).to.have.length(1);
-    expect(wrapper.find(RadioGroupField)).to.have.length(1);
+    expect(screen.getByRole('button', { name: 'Oppdater' })).toBeInTheDocument();
+    expect(screen.getAllByRole('radio').length).toBeGreaterThan(0);
   });
 
   it('skal ikke kunne oppdatere aktivitet når den ikke er manuelt lagt til eller del av aksjonspunkt', () => {
@@ -264,7 +254,7 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -279,9 +269,9 @@ describe('<ActivityPanel>', () => {
         activityId={1}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
-
-    expect(wrapper.find(Hovedknapp)).to.have.length(0);
+    expect(screen.queryByRole('button', { name: 'Oppdater' })).not.toBeInTheDocument();
   });
 
   it('skal ikke kunne godkjenne eller avvise aksjonspunkt når aktivitet manuelt er lagt til', () => {
@@ -291,7 +281,7 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -306,10 +296,11 @@ describe('<ActivityPanel>', () => {
         activityId={1}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(Hovedknapp)).to.have.length(1);
-    expect(wrapper.find(RadioGroupField)).to.have.length(0);
+    expect(screen.getByRole('button', { name: 'Oppdater' })).toBeInTheDocument();
+    expect(screen.queryByRole('radio')).not.toBeInTheDocument();
   });
 
   it('skal vise uredigerbar begrunnelse hvis readOnly er true', () => {
@@ -320,7 +311,7 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -335,11 +326,10 @@ describe('<ActivityPanel>', () => {
         activityId={1}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
-    const tekstFelt = wrapper.find(TextAreaField);
-    expect(tekstFelt).to.have.length(1);
-    expect(tekstFelt.props().readOnly).to.eql(true);
-    expect(tekstFelt.props().label.props.id).to.eql('ActivityPanel.Begrunnelse');
+
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   });
 
   it('skal vise uredigerbar begrunnelse hvis man skal disable perioder picker', () => {
@@ -350,7 +340,7 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -365,11 +355,9 @@ describe('<ActivityPanel>', () => {
         activityId={1}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
-    const tekstFelt = wrapper.find(TextAreaField);
-    expect(tekstFelt).to.have.length(1);
-    expect(tekstFelt.props().readOnly).to.eql(true);
-    expect(tekstFelt.props().label.props.id).to.eql('ActivityPanel.Begrunnelse');
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   });
 
   it('skal vise redigerbar begrunnelse hvis man ikke skal disable perioder picker og ikke readOnly', () => {
@@ -380,7 +368,7 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -395,10 +383,9 @@ describe('<ActivityPanel>', () => {
         activityId={1}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
-    const tekstFelt = wrapper.find(TextAreaField);
-    expect(tekstFelt).to.have.length(1);
-    expect(tekstFelt.props().readOnly).to.eql(false);
-    expect(tekstFelt.props().label.props.id).to.eql('ActivityPanel.BegrunnEndringene');
+
+    expect(screen.getByRole('textbox', { name: 'Begrunn endringene' })).toBeInTheDocument();
   });
 });

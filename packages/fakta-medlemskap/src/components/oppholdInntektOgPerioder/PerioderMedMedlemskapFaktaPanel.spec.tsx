@@ -1,8 +1,10 @@
-import React from 'react';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import shallowWithIntl, { intlMock } from '../../../i18n';
+import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import messages from '../../../i18n/nb_NO.json';
 import PerioderMedMedlemskapFaktaPanel, {
   PerioderMedMedlemskapFaktaPanelImpl as UndecoratedForm,
 } from './PerioderMedMedlemskapFaktaPanel';
@@ -29,7 +31,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     ];
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <UndecoratedForm
         intl={intlMock}
         hasPeriodeAksjonspunkt
@@ -39,23 +41,13 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         vurderingTypes={manuelleVurderingstyper}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
 
-    const table = wrapper.find('Table');
-    expect(table).to.have.length(1);
-    const tableRows = table.find('TableRow');
-    expect(tableRows).to.have.length(1);
-    const tableColumns = table.find('TableColumn');
-    expect(tableColumns).to.have.length(4);
-    expect(tableColumns.at(1).html()).to.eql('<td class="columnStyle">testdekning</td>');
-    expect(tableColumns.at(2).html()).to.eql('<td class="columnStyle">testStatus</td>');
-
-    const radiofields = wrapper.find('RadioOption');
-    expect(radiofields).to.have.length(2);
-    expect(radiofields.first().prop('value')).to.eql('test1');
-    expect(radiofields.first().prop('label')).to.eql('navn1');
-    expect(radiofields.last().prop('value')).to.eql('test2');
-    expect(radiofields.last().prop('label')).to.eql('navn2');
+    expect(screen.getByText('testdekning')).toBeInTheDocument();
+    expect(screen.getByText('testStatus')).toBeInTheDocument();
+    expect(screen.getByText('15.01.2016-15.10.2016')).toBeInTheDocument();
+    expect(screen.getAllByRole('radio', { name: /navn/i }).length).toBe(2);
   });
 
   it('skal vise fødselsdato når en har dette', () => {
@@ -69,7 +61,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     ];
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <UndecoratedForm
         intl={intlMock}
         hasPeriodeAksjonspunkt
@@ -80,12 +72,10 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         vurderingTypes={[]}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
 
-    const message = wrapper.find('MemoizedFormattedMessage');
-    expect(message).to.have.length(1);
-    expect(message.prop('id')).to.eql('PerioderMedMedlemskapFaktaPanel.Fodselsdato');
-    expect(message.prop('values')).to.eql({ dato: '16.10.2016' });
+    expect(screen.getByText('Fødselsdato: 16.10.2016')).toBeInTheDocument();
   });
 
   it('skal vise tabell med medlemskapsperioder', () => {
@@ -99,7 +89,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     ];
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <UndecoratedForm
         intl={intlMock}
         hasPeriodeAksjonspunkt
@@ -109,17 +99,17 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         vurderingTypes={[]}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
 
-    const table = wrapper.find('Table');
-    expect(table).to.have.length(1);
-    expect(table.find('TableRow')).to.length(1);
+    screen.debug();
+    expect(screen.getByRole('table')).toBeInTheDocument();
   });
 
   it('skal ikke vise tabell når det ikke finnes medlemskapsperioder', () => {
     const medlemskapPerioder = [];
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <UndecoratedForm
         intl={intlMock}
         hasPeriodeAksjonspunkt
@@ -129,10 +119,10 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         vurderingTypes={[]}
         alleMerknaderFraBeslutter={{}}
       />,
+      { messages },
     );
 
-    const table = wrapper.find('Table');
-    expect(table).to.have.length(0);
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
   });
 
   it('skal sette opp initielle verdier og sorterte perioder etter periodestart', () => {
@@ -228,7 +218,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       getKodeverknavn,
     );
 
-    expect(initialValues).to.eql({
+    expect(initialValues).toStrictEqual({
       fixedMedlemskapPerioder: [
         {
           fom: '2016-01-15',
