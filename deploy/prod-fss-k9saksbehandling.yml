@@ -98,3 +98,5 @@ spec:
       value: "false"
     - name: "OVERSTYRING_UTTAK"
       value: "false"
+    - name: USE_NEW_BACKEND_CLIENT
+      value: "false"
