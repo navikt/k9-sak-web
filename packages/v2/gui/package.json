@@ -5,9 +5,11 @@
   "type": "module",
   "version": "1.0.0",
   "exports": {
+    "./app/*": "./src/app/*",
     "./sak/meldinger/*": "./src/sak/meldinger/*"
   },
   "dependencies": {
+    "@k9-sak-web/backend": "workspace:^",
     "react": "18.2.0"
   }
 }

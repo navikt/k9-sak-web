@@ -1,4 +1,4 @@
-import type { EregOrganizationLookupResponse } from '@k9-sak-web/types';
+import { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
 import { BackendApi } from './MeldingIndex';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 

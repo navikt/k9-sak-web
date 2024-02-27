@@ -16,7 +16,6 @@ import {
   ArbeidsgiverOpplysningerPerId,
   Brevmal,
   Brevmaler,
-  EregOrganizationLookupResponse,
   Kodeverk,
   KodeverkMedNavn,
   Mottaker,
@@ -31,6 +30,7 @@ import React, { useEffect, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
+import { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 import styles from './messages.module.css';
 
