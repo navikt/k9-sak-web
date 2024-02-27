@@ -22,7 +22,7 @@ const createProxy = (target, pathRewrite) => ({
 });
 
 export default ({ mode }) => {
-  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+  process.env = { ...process.env, ...loadEnv(mode, `${process.cwd()}/envDir`) };
   return defineConfig({
     server: {
       port: 9000,
