@@ -1,15 +1,11 @@
-import { shallow } from 'enzyme';
-import React from 'react';
-
-import sinon from 'sinon';
-
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components/src/AksjonspunktHelpText';
+import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-
-import { intlMock } from '../../i18n/intl-enzyme-test-helper-fakta-arbeidsforhold';
-import { ArbeidsforholdInfoPanelImpl } from './ArbeidsforholdInfoPanel';
-import BekreftOgForsettKnapp from './BekreftOgForsettKnapp';
-import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import sinon from 'sinon';
+import messages from '../../i18n/nb_NO.json';
+import ArbeidsforholdInfoPanel from './ArbeidsforholdInfoPanel';
 
 const ap5080 = {
   aksjonspunktType: {
@@ -43,8 +39,8 @@ const submitCallback = sinon.spy();
 
 describe('<ArbeidsforholdInfoPanel>', () => {
   it('Skal vise komponenten korrekt med aksjonspunkt hvor man ikke kan legge til nye arbeidsforhold', () => {
-    const wrapper = shallow(
-      <ArbeidsforholdInfoPanelImpl
+    renderWithIntlAndReduxForm(
+      <ArbeidsforholdInfoPanel
         intl={intlMock}
         aksjonspunkter={[ap5080]}
         readOnly={false}
@@ -58,17 +54,17 @@ describe('<ArbeidsforholdInfoPanel>', () => {
         alleMerknaderFraBeslutter={{}}
         {...reduxFormPropsMock}
       />,
+      { messages },
     );
-    const apMsg = wrapper.find('MemoizedFormattedMessage');
-    expect(apMsg).has.length(2);
-    expect(apMsg.at(0).prop('id')).is.eql('ArbeidsforholdInfoPanel.AvklarArbeidsforhold');
-    expect(wrapper.find(PersonArbeidsforholdPanel)).has.length(1);
-    expect(wrapper.find(BekreftOgForsettKnapp)).has.length(1);
+
+    expect(screen.getByText('Aktive arbeidsforhold')).toBeInTheDocument();
+    expect(screen.getByText('Avklar om arbeidsforholdene skal benyttes i behandlingen')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
   });
 
   it('Skal vise komponenten korrekt uten aksjonspunkt hvor man kan legge til nye arbeidsforhold', () => {
-    const wrapper = shallow(
-      <ArbeidsforholdInfoPanelImpl
+    renderWithIntlAndReduxForm(
+      <ArbeidsforholdInfoPanel
         intl={intlMock}
         aksjonspunkter={[]}
         submitCallback={submitCallback}
@@ -82,9 +78,10 @@ describe('<ArbeidsforholdInfoPanel>', () => {
         alleMerknaderFraBeslutter={{}}
         {...reduxFormPropsMock}
       />,
+      { messages },
     );
-    expect(wrapper.find(PersonArbeidsforholdPanel)).has.length(1);
-    expect(wrapper.find(BekreftOgForsettKnapp)).has.length(0);
-    expect(wrapper.find(AksjonspunktHelpText)).has.length(0);
+    expect(screen.getByText('Aktive arbeidsforhold')).toBeInTheDocument();
+    expect(screen.queryByText('Avklar om arbeidsforholdene skal benyttes i behandlingen')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });
 });

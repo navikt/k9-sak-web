@@ -1,18 +1,22 @@
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
+import messages from '../../../i18n/nb_NO.json';
 import CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
+import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 
 describe('<LeggTilArbeidsforholdFelter>', () => {
   it('Skal sjekke at LeggTilArbeidsforholdFelter rendrer korrekt', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <LeggTilArbeidsforholdFelter readOnly={false} formName="" behandlingId={1} behandlingVersjon={1} />,
+      { messages },
     );
-    expect(wrapper.find("[name='navn']")).toHaveLength(1);
-    expect(wrapper.find("[name='fomDato']")).toHaveLength(1);
-    expect(wrapper.find("[name='tomDato']")).toHaveLength(1);
-    expect(wrapper.find("[name='stillingsprosent']")).toHaveLength(1);
-    expect(wrapper.find("[name='yrkestittel']")).toHaveLength(1);
+
+    expect(screen.getByRole('textbox', { name: 'Navn på arbeidsgiver' })).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Startdato' })).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Sluttdato' })).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Stillingsprosent' })).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Yrkestittel' })).toBeInTheDocument();
   });
   it('Skal sjekke at LeggTilArbeidsforholdFelter validerer med fom og tom lik', () => {
     const values = {

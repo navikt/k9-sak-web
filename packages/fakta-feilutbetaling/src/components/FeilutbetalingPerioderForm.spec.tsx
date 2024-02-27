@@ -1,8 +1,9 @@
-import React from 'react';
-
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { shallow } from 'enzyme';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import React from 'react';
 import sinon from 'sinon';
+import messages from '../../i18n/nb_NO.json';
 import { FeilutbetalingPerioderFormImpl } from './FeilutbetalingPerioderForm';
 
 const periode = {
@@ -23,14 +24,10 @@ const mockProps = {
 
 describe('<FeilutbetalingPerioderFormImpl>', () => {
   it('skal rendre FeilutbetalingInfoPanel', () => {
-    const wrapper = shallow(<FeilutbetalingPerioderFormImpl {...mockProps} />);
+    renderWithIntlAndReduxForm(<FeilutbetalingPerioderFormImpl {...mockProps} />, { messages });
 
-    const tableRow = wrapper.find('TableRow');
-    expect(tableRow).has.length(1);
-    const tableColumn = wrapper.find('TableColumn');
-    expect(tableColumn).has.length(3);
-    const selectField = wrapper.find('SelectField');
-    expect(selectField).has.length(1);
+    expect(screen.getByText('16.03.2016 - 26.05.2016')).toBeInTheDocument();
+    expect(screen.getByRole('combobox')).toBeInTheDocument();
   });
 
   it('skal rendre underÅrsak selectfield hvis årsak har underÅrsaker', () => {
@@ -56,13 +53,8 @@ describe('<FeilutbetalingPerioderFormImpl>', () => {
       årsak,
       årsaker,
     };
-    const wrapper = shallow(<FeilutbetalingPerioderFormImpl {...props} />);
+    renderWithIntlAndReduxForm(<FeilutbetalingPerioderFormImpl {...props} />, { messages });
 
-    const tableRow = wrapper.find('TableRow');
-    expect(tableRow).has.length(1);
-    const tableColumn = wrapper.find('TableColumn');
-    expect(tableColumn).has.length(3);
-    const selectField = wrapper.find('SelectField');
-    expect(selectField).has.length(2);
+    expect(screen.getAllByRole('combobox').length).toBe(2);
   });
 });

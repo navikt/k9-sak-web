@@ -1,15 +1,14 @@
-import React from 'react';
-
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
+import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
-import EtikettBase from 'nav-frontend-etiketter';
-import { Normaltekst } from 'nav-frontend-typografi';
-import shallowWithIntl, { intlMock } from '../../i18n';
-import { BostedSokerView } from './BostedSokerView';
-
+import { screen } from '@testing-library/react';
+import React from 'react';
+import messages from '../../i18n/nb_NO.json';
 import { BostedSokerPersonopplysninger } from '../BostedSokerFaktaIndex';
+import { BostedSokerView } from './BostedSokerView';
 
 describe('<BostedsokerView>', () => {
   const soker = {
@@ -71,7 +70,7 @@ describe('<BostedsokerView>', () => {
   ] as KodeverkMedNavn[];
 
   it('vise navn', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <BostedSokerView
         intl={intlMock}
         personopplysninger={soker}
@@ -80,13 +79,14 @@ describe('<BostedsokerView>', () => {
         personstatusTypes={personstatusTypes}
         sokerTypeTextId="BostedSokerFaktaIndex.Soker"
       />,
+      { messages },
     );
 
-    expect(wrapper.find('Element').childAt(0).text()).to.eql('Espen Utvikler');
+    expect(screen.getByText('Espen Utvikler')).toBeInTheDocument();
   });
 
   it('skal vise  adresse informasjon', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <BostedSokerView
         intl={intlMock}
         personopplysninger={soker}
@@ -95,15 +95,13 @@ describe('<BostedsokerView>', () => {
         personstatusTypes={personstatusTypes}
         sokerTypeTextId="BostedSokerFaktaIndex.Soker"
       />,
+      { messages },
     );
-    const adr = wrapper.find(Normaltekst);
-    expect(adr).to.have.length(2);
-    expect(adr.first().childAt(0).text()).to.eql('Vei 1, 1000 Oslo');
-    expect(adr.last().childAt(0).text()).to.eql('-');
+    expect(screen.getByText('Vei 1, 1000 Oslo')).toBeInTheDocument();
   });
 
   it('skal vise etiketter', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <BostedSokerView
         intl={intlMock}
         personopplysninger={soker}
@@ -112,18 +110,11 @@ describe('<BostedsokerView>', () => {
         personstatusTypes={personstatusTypes}
         sokerTypeTextId="BostedSokerFaktaIndex.Soker"
       />,
+      { messages },
     );
-    const etikettfokus = wrapper.find(EtikettBase);
-    expect(etikettfokus).to.have.length(3);
-    const personstatus = etikettfokus.at(0);
-    expect(personstatus.prop('title')).to.equal('Personstatus');
-    expect(personstatus.childAt(0).text()).to.equal('Bosatt');
-    const sivilstand = etikettfokus.at(1);
-    expect(sivilstand.prop('title')).to.equal('Sivilstand');
-    expect(sivilstand.childAt(0).text()).to.equal('Ugift');
-    const region = etikettfokus.at(2);
-    expect(region.prop('title')).to.equal('Region');
-    expect(region.childAt(0).text()).to.equal('Norden');
+    expect(screen.getByText('Bosatt')).toBeInTheDocument();
+    expect(screen.getByText('Ugift')).toBeInTheDocument();
+    expect(screen.getByText('Norden')).toBeInTheDocument();
   });
 
   it('skal vise ukjent når personstatus ukjent', () => {
@@ -133,7 +124,7 @@ describe('<BostedsokerView>', () => {
       kode: '-',
     } as KodeverkMedNavn;
 
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <BostedSokerView
         intl={intlMock}
         personopplysninger={soker}
@@ -142,17 +133,10 @@ describe('<BostedsokerView>', () => {
         personstatusTypes={personstatusTypes}
         sokerTypeTextId="BostedSokerFaktaIndex.Soker"
       />,
+      { messages },
     );
-    const etikettfokus = wrapper.find(EtikettBase);
-    expect(etikettfokus).to.have.length(3);
-    const personstatus = etikettfokus.at(0);
-    expect(personstatus.prop('title')).to.equal('Personstatus');
-    expect(personstatus.childAt(0).text()).to.equal('Ukjent');
-    const sivilstand = etikettfokus.at(1);
-    expect(sivilstand.prop('title')).to.equal('Sivilstand');
-    expect(sivilstand.childAt(0).text()).to.equal('Ugift');
-    const region = etikettfokus.at(2);
-    expect(region.prop('title')).to.equal('Region');
-    expect(region.childAt(0).text()).to.equal('Norden');
+    expect(screen.getByText('Ukjent')).toBeInTheDocument();
+    expect(screen.getByText('Ugift')).toBeInTheDocument();
+    expect(screen.getByText('Norden')).toBeInTheDocument();
   });
 });

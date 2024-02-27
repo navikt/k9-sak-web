@@ -1,7 +1,8 @@
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-
-import { shallow } from 'enzyme';
 import sinon from 'sinon';
+import messages from '../../i18n/nb_NO.json';
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
 
 const perioder = [
@@ -34,10 +35,10 @@ const mockProps = {
 
 describe('<FeilutbetalingPerioderTable>', () => {
   it('skal rendre FeilutbetalingInfoPanel', () => {
-    const wrapper = shallow(<FeilutbetalingPerioderTable {...mockProps} />);
+    renderWithIntlAndReduxForm(<FeilutbetalingPerioderTable {...mockProps} />, { messages });
 
-    const table = wrapper.find('Table');
-    expect(table).has.length(1);
-    expect(table.prop('headerTextCodes')).to.eql(headerTextCodes);
+    expect(screen.getByRole('cell', { name: 'Period' })).toBeInTheDocument();
+    expect(screen.getByRole('cell', { name: 'Hendelse' })).toBeInTheDocument();
+    expect(screen.getByRole('cell', { name: 'Feilutbetalt beløp' })).toBeInTheDocument();
   });
 });

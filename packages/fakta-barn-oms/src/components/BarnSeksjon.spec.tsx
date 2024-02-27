@@ -1,9 +1,10 @@
-import React from 'react';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
-import { FormattedMessage } from 'react-intl';
-import { shallowWithIntl } from '../../i18n';
-import BarnSeksjon from './BarnSeksjon';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import messages from '../../i18n/nb_NO.json';
 import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
+import BarnSeksjon from './BarnSeksjon';
 
 describe('<BarnSeksjon>', () => {
   it('Rendrer hvert barn', () => {
@@ -29,12 +30,14 @@ describe('<BarnSeksjon>', () => {
         },
       },
     ];
-    const wrapper = shallowWithIntl(<BarnSeksjon barn={barn} startIndex={0} tekstId="FaktaBarn.Behandlingsdato" />);
+    renderWithIntl(<BarnSeksjon barn={barn} startIndex={0} tekstId="FaktaBarn.Behandlingsdato" />, { messages });
 
-    const elementerMedFormatterTekstId = tekstId =>
-      wrapper.find(FormattedMessage).filterWhere(formatert => formatert.prop('id') === tekstId);
-
-    const tekstBarnBehandling = elementerMedFormatterTekstId('FaktaBarn.Behandlingsdato');
-    expect(tekstBarnBehandling).toHaveLength(1);
+    expect(
+      screen.getByText(
+        'Disse barna er søkerens folkeregistrerte barn slik det var ved tidspunktet for beregning av dager',
+      ),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Barn #1')).toBeInTheDocument();
+    expect(screen.getByText('Barn #2')).toBeInTheDocument();
   });
 });

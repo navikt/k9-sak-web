@@ -1,13 +1,13 @@
-import React from 'react';
-
-import { shallow } from 'enzyme';
-
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import messages from '../../../i18n/nb_NO.json';
 import PermisjonPeriode from './PermisjonPeriode';
 
 describe('<PermisjonPeriode>', () => {
   it('skal ikke vise permisjon når arbeidsforholdet har undefined permisjoner', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <PermisjonPeriode
         arbeidsforhold={
           {
@@ -15,12 +15,14 @@ describe('<PermisjonPeriode>', () => {
           } as ArbeidsforholdV2
         }
       />,
+      { messages },
     );
-    expect(wrapper.find('MemoizedFormattedMessage')).to.have.length(0);
-    expect(wrapper.find('PeriodLabel')).to.have.length(0);
+
+    expect(screen.queryByText('Permisjon')).not.toBeInTheDocument();
+    expect(screen.queryByText('Permisjoner')).not.toBeInTheDocument();
   });
   it('skal ikke vise permisjon når arbeidsforholdet en tom liste med permisjoner', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <PermisjonPeriode
         arbeidsforhold={
           {
@@ -28,12 +30,13 @@ describe('<PermisjonPeriode>', () => {
           } as ArbeidsforholdV2
         }
       />,
+      { messages },
     );
-    expect(wrapper.find('MemoizedFormattedMessage')).to.have.length(0);
-    expect(wrapper.find('PeriodLabel')).to.have.length(0);
+    expect(screen.queryByText('Permisjon')).not.toBeInTheDocument();
+    expect(screen.queryByText('Permisjoner')).not.toBeInTheDocument();
   });
   it('skal vise permisjon når arbeidsforholdet har kun en permisjon', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <PermisjonPeriode
         arbeidsforhold={
           {
@@ -47,19 +50,13 @@ describe('<PermisjonPeriode>', () => {
           } as ArbeidsforholdV2
         }
       />,
+      { messages },
     );
-    const msg = wrapper.find('MemoizedFormattedMessage');
-    expect(msg).to.have.length(1);
-    expect(msg.props().id).to.eql('PersonArbeidsforholdDetailForm.Permisjon');
-    const periode = wrapper.find('PeriodLabel');
-    expect(periode).to.have.length(1);
-    // @ts-ignore
-    expect(periode.props().dateStringFom).to.eql('2018-10-10');
-    // @ts-ignore
-    expect(periode.props().dateStringTom).to.eql('');
+    expect(screen.getByText('Permisjon')).toBeInTheDocument();
+    expect(screen.getByText('10.10.2018-')).toBeInTheDocument();
   });
   it('skal vise permisjoner når arbeidsforholdet har flere permisjoner', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <PermisjonPeriode
         arbeidsforhold={
           {
@@ -78,14 +75,10 @@ describe('<PermisjonPeriode>', () => {
           } as ArbeidsforholdV2
         }
       />,
+      { messages },
     );
-    const msg = wrapper.find('MemoizedFormattedMessage');
-    expect(msg).to.have.length(1);
-    expect(msg.prop('id')).to.eql('PersonArbeidsforholdDetailForm.Permisjoner');
-    const perioder = wrapper.find('PeriodLabel');
-    expect(perioder.get(0).props.dateStringFom).to.eql('2015-01-01');
-    expect(perioder.get(0).props.dateStringTom).to.eql('');
-    expect(perioder.get(1).props.dateStringFom).to.eql('2017-01-01');
-    expect(perioder.get(1).props.dateStringTom).to.eql('2019-01-01');
+    expect(screen.getByText('Permisjoner')).toBeInTheDocument();
+    expect(screen.getByText('01.01.2015-')).toBeInTheDocument();
+    expect(screen.getByText('01.01.2017-01.01.2019')).toBeInTheDocument();
   });
 });

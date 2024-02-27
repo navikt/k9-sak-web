@@ -1,8 +1,5 @@
 import React from 'react';
 
-import { Normaltekst } from 'nav-frontend-typografi';
-import sinon from 'sinon';
-
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -10,8 +7,12 @@ import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtel
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import sinon from 'sinon';
 
-import shallowWithIntl, { intlMock } from '../../i18n';
+import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import messages from '../../i18n/nb_NO.json';
 import { FeilutbetalingInfoPanelImpl } from './FeilutbetalingInfoPanel';
 
 const BEHANDLING_AARSAK_KODEVERK = 'BEHANDLING_AARSAK';
@@ -117,7 +118,7 @@ const fpsakKodeverk = {
 
 describe('<FeilutbetalingInfoPanel>', () => {
   it('skal rendre komponent korrekt', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <FeilutbetalingInfoPanelImpl
         {...reduxFormPropsMock}
         feilutbetaling={feilutbetalingFakta}
@@ -136,18 +137,16 @@ describe('<FeilutbetalingInfoPanel>', () => {
         alleKodeverk={alleKodeverk}
         fpsakKodeverk={fpsakKodeverk}
       />,
+      { messages },
     );
 
-    const normaltekstfelter = wrapper.find(Normaltekst);
-    expect(normaltekstfelter).length(8);
-
-    expect(normaltekstfelter.first().childAt(0).text()).is.eql('01.01.2019 - 02.01.2019');
-    expect(normaltekstfelter.at(1).childAt(0).text()).is.eql('10000');
-    expect(normaltekstfelter.at(2).childAt(0).text()).is.eql('5000');
-    expect(normaltekstfelter.at(3).childAt(0).text()).is.eql('Feil i lovanvendelse');
-    expect(normaltekstfelter.at(4).childAt(0).text()).is.eql('01.01.2019');
-    expect(normaltekstfelter.at(5).childAt(0).text()).is.eql('Innvilget');
-    expect(normaltekstfelter.at(6).childAt(0).text()).is.eql('Foreldrepenger opphører, Endring i beregning');
-    expect(normaltekstfelter.at(7).childAt(0).text()).is.eql('Tilbakekreving inntrekk');
+    expect(screen.getByText('01.01.2019 - 02.01.2019')).toBeInTheDocument();
+    expect(screen.getByText('10000')).toBeInTheDocument();
+    expect(screen.getByText('5000')).toBeInTheDocument();
+    expect(screen.getByText('Feil i lovanvendelse')).toBeInTheDocument();
+    expect(screen.getByText('01.01.2019')).toBeInTheDocument();
+    expect(screen.getByText('Innvilget')).toBeInTheDocument();
+    expect(screen.getByText('Foreldrepenger opphører, Endring i beregning')).toBeInTheDocument();
+    expect(screen.getByText('Tilbakekreving inntrekk')).toBeInTheDocument();
   });
 });
