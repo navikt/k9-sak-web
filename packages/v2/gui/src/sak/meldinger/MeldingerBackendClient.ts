@@ -1,6 +1,5 @@
-import { K9SakClient, OrganisasjonsEnhet } from '@navikt/k9-sak-typescript-client';
 import { type YtelsesType } from '@k9-sak-web/backend/k9sak/extra/ytelseTyper.js';
-import { ApiError } from '@k9-sak-web/backend/k9sak/generated';
+import { ApiError, K9SakClient, OrganisasjonsEnhet } from '@k9-sak-web/backend/k9sak/generated';
 import { EregOrganizationLookupResponse } from './EregOrganizationLookupResponse';
 
 export default class MeldingerBackendClient {

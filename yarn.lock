@@ -5776,8 +5776,6 @@ __metadata:
 "@k9-sak-web/types@*, @k9-sak-web/types@1.0.0, @k9-sak-web/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/types@workspace:packages/types"
-  dependencies:
-    "@k9-sak-web/gui": "workspace:^"
   languageName: unknown
   linkType: soft
 
