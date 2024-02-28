@@ -29,7 +29,6 @@
   },
   "devDependencies": {
     "axios-mock-adapter": "1.22.0",
-    "enzyme": "3.11.0",
     "redux-mock-store": "1.5.4",
     "sinon": "15.2.0"
   }

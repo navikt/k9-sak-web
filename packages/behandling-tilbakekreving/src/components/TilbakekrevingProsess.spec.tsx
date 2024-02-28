@@ -1,7 +1,3 @@
-import { shallow } from 'enzyme';
-import React from 'react';
-import sinon from 'sinon';
-
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -11,10 +7,14 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
-import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
-import { Behandling, Fagsak, FeilutbetalingPerioderWrapper } from '@k9-sak-web/types';
-
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { Behandling, Fagsak, FeilutbetalingPerioderWrapper } from '@k9-sak-web/types';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+import sinon from 'sinon';
+import { TilbakekrevingBehandlingApiKeys, requestTilbakekrevingApi } from '../data/tilbakekrevingBehandlingApi';
 import vedtakResultatType from '../kodeverk/vedtakResultatType';
 import TilbakekrevingProsess from './TilbakekrevingProsess';
 
@@ -117,7 +117,11 @@ describe('<TilbakekrevingProsess>', () => {
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    const wrapper = shallow(
+    requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VILKARVURDERINGSPERIODER, {
+      perioder: [{ vilkarResultat: undefined, begrunnelse: '', vilkarResultatInfo: undefined, ytelser: [] }],
+    });
+    requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VILKARVURDERING, { vilkarsVurdertePerioder: [] });
+    renderWithIntlAndReduxForm(
       <TilbakekrevingProsess.WrappedComponent
         intl={intlMock}
         data={{
@@ -141,40 +145,20 @@ describe('<TilbakekrevingProsess>', () => {
       />,
     );
 
-    const meny = wrapper.find(ProsessStegContainer);
-    expect(meny.prop('formaterteProsessStegPaneler')).toEqual([
-      {
-        isActive: false,
-        isDisabled: false,
-        isFinished: true,
-        labelId: 'Behandlingspunkt.Foreldelse',
-        type: 'success',
-        usePartialStatus: false,
-      },
-      {
-        isActive: true,
-        isDisabled: false,
-        isFinished: false,
-        labelId: 'Behandlingspunkt.Tilbakekreving',
-        type: 'warning',
-        usePartialStatus: false,
-      },
-      {
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
-        labelId: 'Behandlingspunkt.Vedtak',
-        type: 'danger',
-        usePartialStatus: false,
-      },
-    ]);
+    expect(screen.getByRole('button', { name: /Foreldelse/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Tilbakekreving/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Vedtak/i })).toBeInTheDocument();
   });
 
-  it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
+  it('skal sette nytt valgt prosessSteg ved trykk i meny', async () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
+    requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VILKARVURDERINGSPERIODER, {
+      perioder: [{ vilkarResultat: undefined, begrunnelse: '', vilkarResultatInfo: undefined, ytelser: [] }],
+    });
+    requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VILKARVURDERING, { vilkarsVurdertePerioder: [] });
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
 
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <TilbakekrevingProsess.WrappedComponent
         intl={intlMock}
         data={{
@@ -198,9 +182,9 @@ describe('<TilbakekrevingProsess>', () => {
       />,
     );
 
-    const meny = wrapper.find(ProsessStegContainer);
-
-    meny.prop('velgProsessStegPanelCallback')(0);
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: /Foreldelse/i }));
+    });
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(opppdaterKall).toHaveLength(1);
