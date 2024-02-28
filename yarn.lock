@@ -3895,7 +3895,7 @@ __metadata:
     "@navikt/ds-react": 5.18.1
     "@navikt/fnrvalidator": 1.3.3
     "@navikt/ft-plattform-komponenter": 2.3.19
-    axios: 1.6.5
+    axios: 1.6.7
     classnames: 2.5.1
     date-fns: 2.30.0
     date-fns-tz: 2.0.0
@@ -4480,7 +4480,7 @@ __metadata:
     "@navikt/ft-fakta-beregning-redesign": 1.0.30
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.27
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.26
-    axios: 1.6.5
+    axios: 1.6.7
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
     nav-frontend-alertstriper: 4.0.2
@@ -4532,7 +4532,7 @@ __metadata:
     "@navikt/ft-fakta-beregning-redesign": 1.0.30
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.27
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.26
-    axios: 1.6.5
+    axios: 1.6.7
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
     nav-frontend-alertstriper: 4.0.2
@@ -4590,7 +4590,7 @@ __metadata:
     "@navikt/ft-fakta-beregning-redesign": 1.0.30
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.27
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.26
-    axios: 1.6.5
+    axios: 1.6.7
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
     nav-frontend-alertstriper: 4.0.2
@@ -4801,9 +4801,9 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.3.19
     "@popperjs/core": 2.11.8
     "@testing-library/cypress": ^10.0.1
-    axios: 1.6.5
+    axios: 1.6.7
     classnames: 2.5.1
-    cypress: ^13.5.1
+    cypress: ^13.6.6
     dayjs: 1.11.10
     eslint-plugin-cypress: ^2.15.1
     lodash: 4.17.21
@@ -4879,7 +4879,7 @@ __metadata:
     "@navikt/ft-form-hooks": 4.2.23
     "@navikt/ft-plattform-komponenter": 2.3.19
     "@popperjs/core": 2.11.8
-    axios: 1.6.2
+    axios: 1.6.7
     classnames: 2.3.2
     date-fns: 2.30.0
     dayjs: 1.11.10
@@ -4943,9 +4943,9 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.3.19
     "@popperjs/core": 2.11.8
     "@testing-library/cypress": ^10.0.1
-    axios: 1.6.5
+    axios: 1.6.7
     classnames: 2.5.1
-    cypress: ^13.5.1
+    cypress: ^13.6.6
     dayjs: 1.11.10
     eslint-plugin-cypress: ^2.15.1
     lodash: 4.17.21
@@ -4972,7 +4972,7 @@ __metadata:
     "@navikt/fnrvalidator": 1.3.3
     "@navikt/ft-plattform-komponenter": 2.3.19
     "@popperjs/core": 2.11.8
-    axios: 1.6.5
+    axios: 1.6.7
     classnames: 2.5.1
     dayjs: 1.11.10
     lodash: 4.17.21
@@ -4997,7 +4997,7 @@ __metadata:
     "@navikt/fnrvalidator": 1.3.3
     "@navikt/ft-plattform-komponenter": 2.3.19
     "@popperjs/core": 2.11.8
-    axios: 1.6.5
+    axios: 1.6.7
     classnames: 2.5.1
     dayjs: 1.11.10
     lodash: 4.17.21
@@ -5432,7 +5432,7 @@ __metadata:
   resolution: "@k9-sak-web/rest-api@workspace:packages/rest-api"
   dependencies:
     "@sentry/browser": 7.93.0
-    axios: 1.6.5
+    axios: 1.6.7
     node-cache: 5.1.2
   languageName: unknown
   linkType: soft
@@ -5517,7 +5517,7 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.26
     "@navikt/ft-ui-komponenter": 2.1.22
     "@sentry/browser": 7.93.0
-    axios: 1.6.5
+    axios: 1.6.7
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
@@ -11076,29 +11076,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.6.2":
-  version: 1.6.2
-  resolution: "axios@npm:1.6.2"
-  dependencies:
-    follow-redirects: ^1.15.0
-    form-data: ^4.0.0
-    proxy-from-env: ^1.1.0
-  checksum: 4a7429e2b784be0f2902ca2680964391eae7236faa3967715f30ea45464b98ae3f1c6f631303b13dfe721b17126b01f486c7644b9ef276bfc63112db9fd379f8
-  languageName: node
-  linkType: hard
-
-"axios@npm:1.6.5":
-  version: 1.6.5
-  resolution: "axios@npm:1.6.5"
-  dependencies:
-    follow-redirects: ^1.15.4
-    form-data: ^4.0.0
-    proxy-from-env: ^1.1.0
-  checksum: e28d67b2d9134cb4608c44d8068b0678cfdccc652742e619006f27264a30c7aba13b2cd19c6f1f52ae195b5232734925928fb192d5c85feea7edd2f273df206d
-  languageName: node
-  linkType: hard
-
-"axios@npm:^1.0.0, axios@npm:^1.6.1":
+"axios@npm:1.6.7, axios@npm:^1.0.0, axios@npm:^1.6.1":
   version: 1.6.7
   resolution: "axios@npm:1.6.7"
   dependencies:
@@ -11464,7 +11442,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"buffer@npm:^5.5.0, buffer@npm:^5.6.0":
+"buffer@npm:^5.5.0, buffer@npm:^5.7.1":
   version: 5.7.1
   resolution: "buffer@npm:5.7.1"
   dependencies:
@@ -12706,9 +12684,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^13.5.1, cypress@npm:^13.6.2":
-  version: 13.6.4
-  resolution: "cypress@npm:13.6.4"
+"cypress@npm:^13.6.6":
+  version: 13.6.6
+  resolution: "cypress@npm:13.6.6"
   dependencies:
     "@cypress/request": ^3.0.0
     "@cypress/xvfb": ^1.2.4
@@ -12717,7 +12695,7 @@ __metadata:
     arch: ^2.2.0
     blob-util: ^2.0.2
     bluebird: ^3.7.2
-    buffer: ^5.6.0
+    buffer: ^5.7.1
     cachedir: ^2.3.0
     chalk: ^4.1.0
     check-more-types: ^2.24.0
@@ -12735,7 +12713,7 @@ __metadata:
     figures: ^3.2.0
     fs-extra: ^9.1.0
     getos: ^3.2.1
-    is-ci: ^3.0.0
+    is-ci: ^3.0.1
     is-installed-globally: ~0.4.0
     lazy-ass: ^1.6.0
     listr2: ^3.8.3
@@ -12754,7 +12732,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 39daef291ccd18d7d724d7f8c1f5a2ed2b3d24c5c1eab1e00642c5db232fcc4dbd3fd30db3a2dce4e8b737d510355d135eb43034d800198d2867ecde4cdd696a
+  checksum: 8a7db7d2941ea9fd698b9311b4f23fb6491038fe57e4c19b29a1ee58a25f9d98646674f876c1068a97428c2e81548bb0dd8701cd08e84c6b17ed75f9c2266908
   languageName: node
   linkType: hard
 
@@ -14947,7 +14925,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.15.0, follow-redirects@npm:^1.15.4":
+"follow-redirects@npm:^1.15.4":
   version: 1.15.5
   resolution: "follow-redirects@npm:1.15.5"
   peerDependenciesMeta:
@@ -16419,7 +16397,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-ci@npm:3.0.1, is-ci@npm:^3.0.0":
+"is-ci@npm:3.0.1, is-ci@npm:^3.0.1":
   version: 3.0.1
   resolution: "is-ci@npm:3.0.1"
   dependencies:
@@ -17400,7 +17378,7 @@ __metadata:
     "@vitejs/plugin-react": ^4.2.1
     "@wojtekmaj/enzyme-adapter-react-17": 0.8.0
     autoprefixer: ^10.4.16
-    axios: 1.6.5
+    axios: 1.6.7
     axios-mock-adapter: 1.22.0
     babel-loader: 9.1.3
     body-parser: 1.20.2
@@ -17410,7 +17388,7 @@ __metadata:
     core-js: 3.35.0
     cross-env: 7.0.3
     css-loader: 6.9.0
-    cypress: ^13.6.2
+    cypress: ^13.6.6
     date-fns: 2.30.0
     date-fns-tz: 2.0.0
     dotenv: 16.3.1
