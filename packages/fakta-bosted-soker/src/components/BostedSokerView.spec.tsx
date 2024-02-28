@@ -1,7 +1,7 @@
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';

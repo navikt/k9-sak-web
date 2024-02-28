@@ -1,7 +1,7 @@
 import React from 'react';
 import sinon from 'sinon';
 
-import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import FatterVedtakStatusModal from './FatterVedtakStatusModal';

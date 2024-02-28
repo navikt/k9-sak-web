@@ -1,7 +1,7 @@
 import React from 'react';
-import sinon from 'sinon';
 import { FieldArrayFieldsProps } from 'redux-form';
-import { intlMock, mountWithIntl } from './intl-enzyme-test-helper';
+import sinon from 'sinon';
+import { intlMock, mountWithIntl } from './intl-test-helper';
 
 function noop() {
   return undefined;

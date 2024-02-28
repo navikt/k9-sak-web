@@ -1,4 +1,4 @@
-import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { Label } from './Label';

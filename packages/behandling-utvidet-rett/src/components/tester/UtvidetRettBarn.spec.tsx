@@ -1,7 +1,7 @@
-import React from 'react';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { shallowWithIntl } from '@fpsak-frontend/utils-test/intl-test-helper';
 import FaktaBarnIndex from '@k9-sak-web/fakta-barn-oms';
+import React from 'react';
 import UtvidetRettBarnFakta from '../UtvidetRettBarnFakta/UtvidetRettBarnFakta';
 
 describe('<UtvidetRettBarnFakta>', () => {

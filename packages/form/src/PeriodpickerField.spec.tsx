@@ -1,4 +1,4 @@
-import { messages } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { messages } from '@fpsak-frontend/utils-test/intl-test-helper';
 
 import React from 'react';
 

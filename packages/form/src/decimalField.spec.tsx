@@ -1,4 +1,4 @@
-import { messages } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { messages } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

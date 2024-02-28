@@ -3,7 +3,7 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-h
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 
-import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import { InnsynVedtakFormImpl } from './InnsynVedtakForm';

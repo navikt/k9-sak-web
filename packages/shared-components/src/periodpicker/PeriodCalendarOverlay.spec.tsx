@@ -1,9 +1,9 @@
-import React from 'react';
 import moment from 'moment';
+import React from 'react';
 import DayPicker from 'react-day-picker';
 import sinon from 'sinon';
 
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { shallowWithIntl } from '@fpsak-frontend/utils-test/intl-test-helper';
 import PeriodCalendarOverlay from './PeriodCalendarOverlay';
 
 describe('<PeriodCalendarOverlay>', () => {
