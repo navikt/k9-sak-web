@@ -1,17 +1,15 @@
 import React from 'react';
 import sinon from 'sinon';
-import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
-import { Image } from '@fpsak-frontend/shared-components';
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
-
+import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import SideMenuWrapper from './SideMenuWrapper';
 
 describe('<SideMenuWrapper>', () => {
   it('skal rendre komponent med sidemeny med ett menyinnslag med aktivt aksjonspunkt', () => {
     const velgPanelCallback = sinon.spy();
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <SideMenuWrapper.WrappedComponent
         intl={intlMock}
         paneler={[
@@ -27,21 +25,14 @@ describe('<SideMenuWrapper>', () => {
       </SideMenuWrapper.WrappedComponent>,
     );
 
-    const meny = wrapper.find(SideMenu);
-    expect(meny).toHaveLength(1);
-    expect(meny.prop('heading')).toEqual('Saksopplysninger');
-    expect(meny.prop('links')).toEqual([
-      {
-        label: 'Omsorg',
-        active: true,
-        icon: <Image src={advarselIkonUrl} alt="Aksjonspunkt" />,
-      },
-    ]);
+    expect(screen.getByRole('button', { name: /Omsorg/i })).toBeInTheDocument();
+    expect(screen.getByText('Saksopplysninger')).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'Aksjonspunkt' })).toBeInTheDocument();
   });
 
   it('skal rendre komponent med sidemeny med ett menyinnslag med inaktivt aksjonspunkt', () => {
     const velgPanelCallback = sinon.spy();
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <SideMenuWrapper.WrappedComponent
         intl={intlMock}
         paneler={[
@@ -57,14 +48,7 @@ describe('<SideMenuWrapper>', () => {
       </SideMenuWrapper.WrappedComponent>,
     );
 
-    const meny = wrapper.find(SideMenu);
-    expect(meny.prop('links')).toEqual([
-      {
-        label: 'Omsorg',
-        active: true,
-        iconSrc: undefined,
-        iconAltText: undefined,
-      },
-    ]);
+    expect(screen.getByRole('button', { name: /Omsorg/i })).toBeInTheDocument();
+    expect(screen.queryByRole('img', { name: 'Aksjonspunkt' })).not.toBeInTheDocument();
   });
 });

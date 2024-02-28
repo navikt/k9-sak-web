@@ -1,17 +1,17 @@
 import React from 'react';
 import sinon from 'sinon';
-import Modal from 'nav-frontend-modal';
 
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 
+import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import IverksetterVedtakStatusModal from './IverksetterVedtakStatusModal';
 
 describe('<IverksetterVedtakStatusModal>', () => {
   it('skal rendre modal', () => {
     const closeEventCallback = sinon.spy();
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <IverksetterVedtakStatusModal.WrappedComponent
         intl={intlMock}
         visModal
@@ -25,12 +25,7 @@ describe('<IverksetterVedtakStatusModal>', () => {
       />,
     );
 
-    const modal = wrapper.find(Modal);
-    expect(modal).toHaveLength(1);
-    expect(modal.prop('isOpen')).toBe(true);
-    expect(modal.prop('contentLabel')).toEqual('Avslått');
-
-    const button = wrapper.find(Hovedknapp);
-    expect(button).toHaveLength(1);
+    expect(screen.getByRole('dialog', { name: 'Avslått' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'OK' })).toBeInTheDocument();
   });
 });

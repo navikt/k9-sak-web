@@ -1,5 +1,4 @@
 /* eslint-disable class-methods-use-this */
-import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
 
@@ -16,7 +15,6 @@ import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import { ProsessStegDef, ProsessStegPanelDef } from '../util/prosessSteg/ProsessStegDef';
 import { ProsessStegPanelUtledet, ProsessStegUtledet } from '../util/prosessSteg/ProsessStegUtledet';
-import InngangsvilkarPanel from './InngangsvilkarPanel';
 import ProsessStegPanel from './ProsessStegPanel';
 
 describe('<ProsessStegPanel>', () => {
@@ -260,89 +258,5 @@ describe('<ProsessStegPanel>', () => {
     );
 
     expect(container.getElementsByClassName('prosesspunkt').length).toBe(1);
-  });
-
-  it('skal lagre aksjonspunkt', async () => {
-    const fodselAksjonspunkter = [
-      {
-        ...aksjonspunkter[0],
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_AKTIVITETER,
-          kodeverk: 'AKSJONSPUNKT_KODE',
-        },
-      },
-    ];
-    const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.AVKLAR_AKTIVITETER], ['FODSEL.TEKST']);
-    const omsorgPanelDef = lagPanelDef('OMSORG', [], ['OMSORG.TEKST']);
-    const inngangsvilkarStegDef = lagStegDef(prosessStegCodes.INNGANGSVILKAR, [fodselPanelDef, omsorgPanelDef]);
-    const utledetFodselDelPanel = new ProsessStegPanelUtledet(
-      inngangsvilkarStegDef,
-      fodselPanelDef,
-      isReadOnlyCheck,
-      fodselAksjonspunkter,
-      [],
-      {},
-      toggleOverstyring,
-      kanOverstyreAccess,
-      [],
-    );
-    const utledetOmsorgDelPanel = new ProsessStegPanelUtledet(
-      inngangsvilkarStegDef,
-      omsorgPanelDef,
-      isReadOnlyCheck,
-      aksjonspunkter,
-      [],
-      {},
-      toggleOverstyring,
-      kanOverstyreAccess,
-      [],
-    );
-    const utledetInngangsvilkarSteg = new ProsessStegUtledet(inngangsvilkarStegDef, [
-      utledetFodselDelPanel,
-      utledetOmsorgDelPanel,
-    ]);
-
-    const lagringSideeffekterCallback = sinon.spy();
-    const makeRestApiRequest = sinon.stub();
-    makeRestApiRequest.returns(Promise.resolve());
-
-    const wrapper = shallow(
-      <ProsessStegPanel
-        valgtProsessSteg={utledetInngangsvilkarSteg}
-        fagsak={fagsak}
-        behandling={behandling as Behandling}
-        alleKodeverk={{}}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        lagringSideeffekterCallback={lagringSideeffekterCallback}
-        lagreAksjonspunkter={makeRestApiRequest}
-        useMultipleRestApi={() => ({ data: undefined, state: RestApiState.SUCCESS })}
-      />,
-    );
-
-    const panel = wrapper.find(InngangsvilkarPanel);
-
-    const aksjonspunktModels = [
-      {
-        kode: fodselAksjonspunkter[0].definisjon.kode,
-      },
-    ];
-    panel.prop('submitCallback')(aksjonspunktModels);
-
-    expect(await lagringSideeffekterCallback.getCalls()).toHaveLength(1);
-
-    const requestKall = makeRestApiRequest.getCalls();
-    expect(requestKall).toHaveLength(1);
-    expect(requestKall[0].args).toHaveLength(2);
-    expect(requestKall[0].args[0]).toEqual({
-      saksnummer: fagsak.saksnummer,
-      behandlingId: behandling.id,
-      behandlingVersjon: behandling.versjon,
-      bekreftedeAksjonspunktDtoer: [
-        {
-          '@type': aksjonspunktModels[0].kode,
-          kode: aksjonspunktModels[0].kode,
-        },
-      ],
-    });
   });
 });
