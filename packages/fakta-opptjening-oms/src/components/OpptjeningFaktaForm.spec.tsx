@@ -15,12 +15,21 @@ describe('<OpptjeningFaktaForm>', () => {
       opptjeningFom: '2017-06-01',
       opptjeningTom: '2017-07-10',
       arbeidsgiver: 'Andersen Transport AS',
-      oppdragsgiverOrg: 583948180,
+      oppdragsgiverOrg: '583948180',
       stillingsandel: 100,
       erGodkjent: true,
       begrunnelse: null,
       erManueltOpprettet: false,
       erEndret: false,
+      originalFom: null,
+      originalTom: null,
+      arbeidsgiverNavn: null,
+      arbeidsgiverIdentifikator: '973861778',
+      privatpersonNavn: null,
+      privatpersonFødselsdato: null,
+      arbeidsforholdRef: null,
+      naringRegistreringsdato: '1995-09-14',
+      omsorgsovertakelseDato: '',
     },
     {
       id: 2,
@@ -28,13 +37,22 @@ describe('<OpptjeningFaktaForm>', () => {
       opptjeningFom: '2017-07-15',
       opptjeningTom: '2017-08-15',
       arbeidsgiver: 'Andersen Transport AS',
-      oppdragsgiverOrg: 583948180,
+      oppdragsgiverOrg: '583948180',
       stillingsandel: 100,
       registreringsdato: '2018-02-20',
       erGodkjent: null,
       begrunnelse: null,
       erManueltOpprettet: false,
       erEndret: false,
+      originalFom: null,
+      originalTom: null,
+      arbeidsgiverNavn: null,
+      arbeidsgiverIdentifikator: '973861778',
+      privatpersonNavn: null,
+      privatpersonFødselsdato: null,
+      arbeidsforholdRef: null,
+      naringRegistreringsdato: '1995-09-14',
+      omsorgsovertakelseDato: '',
     },
   ];
 
@@ -42,16 +60,23 @@ describe('<OpptjeningFaktaForm>', () => {
     {
       kode: OAType.ARBEID,
       navn: 'Arbeid',
+      kodeverk: '',
     },
     {
       kode: OAType.NARING,
       navn: 'Næring',
+      kodeverk: '',
     },
   ];
   const opptjeningList = [
     {
       opptjeningAktivitetList: opptjeningActivities,
-      fastsattOpptjening: { opptjeningFomDato: '2017-08-15', opptjeningTomDato: '2017-08-31' },
+      fastsattOpptjening: {
+        opptjeningFom: '2017-08-15',
+        opptjeningTom: '2017-08-31',
+        opptjeningperiode: { dager: 16, måneder: 0 },
+        fastsattOpptjeningAktivitetList: [],
+      },
     },
   ];
   it('skal vise aksjonspunktinformasjon og knapper når aksjonspunkt finnes', () => {
@@ -59,7 +84,6 @@ describe('<OpptjeningFaktaForm>', () => {
       <OpptjeningFaktaForm
         hasAksjonspunkt
         readOnly={false}
-        opptjeningActivities={opptjeningActivities}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         formName="test"
         behandlingFormPrefix="test"
@@ -81,6 +105,8 @@ describe('<OpptjeningFaktaForm>', () => {
           ],
         }}
         opptjeningList={opptjeningList}
+        arbeidsgiverOpplysningerPerId={undefined}
+        dokStatus="test"
       />,
       { messages },
     );
@@ -95,10 +121,7 @@ describe('<OpptjeningFaktaForm>', () => {
     renderWithIntlAndReduxForm(
       <OpptjeningFaktaForm
         hasAksjonspunkt={false}
-        opptjeningFomDato="2017-08-15"
-        opptjeningTomDato="2017-08-31"
         readOnly={false}
-        opptjeningActivities={opptjeningActivities}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         formName="test"
         behandlingFormPrefix="test"
@@ -112,6 +135,8 @@ describe('<OpptjeningFaktaForm>', () => {
         alleMerknaderFraBeslutter={{}}
         alleKodeverk={{}}
         opptjeningList={opptjeningList}
+        arbeidsgiverOpplysningerPerId={undefined}
+        dokStatus="test"
       />,
       { messages },
     );
@@ -125,10 +150,7 @@ describe('<OpptjeningFaktaForm>', () => {
     renderWithIntlAndReduxForm(
       <OpptjeningFaktaForm
         hasAksjonspunkt
-        opptjeningFomDato="2017-08-15"
-        opptjeningTomDato="2017-08-31"
         readOnly={false}
-        opptjeningActivities={opptjeningActivities}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         formName="test"
         behandlingFormPrefix="test"
@@ -142,6 +164,8 @@ describe('<OpptjeningFaktaForm>', () => {
         alleMerknaderFraBeslutter={{}}
         alleKodeverk={{}}
         opptjeningList={opptjeningList}
+        arbeidsgiverOpplysningerPerId={undefined}
+        dokStatus="test"
       />,
       { messages },
     );
@@ -167,8 +191,6 @@ describe('<OpptjeningFaktaForm>', () => {
     renderWithIntlAndReduxForm(
       <OpptjeningFaktaForm
         hasAksjonspunkt
-        opptjeningFomDato="2017-08-15"
-        opptjeningTomDato="2017-08-31"
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         formName="test"
@@ -183,6 +205,8 @@ describe('<OpptjeningFaktaForm>', () => {
         alleMerknaderFraBeslutter={{}}
         alleKodeverk={{}}
         opptjeningList={updatedOpptjeningList}
+        arbeidsgiverOpplysningerPerId={undefined}
+        dokStatus="test"
       />,
       { messages },
     );
@@ -198,10 +222,7 @@ describe('<OpptjeningFaktaForm>', () => {
     renderWithIntlAndReduxForm(
       <OpptjeningFaktaForm
         hasAksjonspunkt
-        opptjeningFomDato="2017-08-15"
-        opptjeningTomDato="2017-08-31"
         readOnly={false}
-        opptjeningActivities={opptjeningActivities}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         behandlingFormPrefix="Behandling_123"
         formName="OpptjeningFaktaForm"
@@ -215,6 +236,8 @@ describe('<OpptjeningFaktaForm>', () => {
         alleMerknaderFraBeslutter={{}}
         alleKodeverk={{}}
         opptjeningList={opptjeningList}
+        arbeidsgiverOpplysningerPerId={undefined}
+        dokStatus="test"
       />,
       { messages },
     );
@@ -229,10 +252,7 @@ describe('<OpptjeningFaktaForm>', () => {
     renderWithIntlAndReduxForm(
       <OpptjeningFaktaForm
         hasAksjonspunkt
-        opptjeningFomDato="2017-08-15"
-        opptjeningTomDato="2017-08-31"
         readOnly={false}
-        opptjeningActivities={opptjeningActivities}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         behandlingFormPrefix="Behandling_123"
         formName="OpptjeningFaktaForm"
@@ -246,6 +266,8 @@ describe('<OpptjeningFaktaForm>', () => {
         alleMerknaderFraBeslutter={{}}
         alleKodeverk={{}}
         opptjeningList={opptjeningList}
+        arbeidsgiverOpplysningerPerId={undefined}
+        dokStatus="test"
       />,
       { messages },
     );
@@ -296,10 +318,7 @@ describe('<OpptjeningFaktaForm>', () => {
     renderWithIntlAndReduxForm(
       <OpptjeningFaktaForm
         hasAksjonspunkt
-        opptjeningFomDato="2017-08-15"
-        opptjeningTomDato="2017-08-31"
         readOnly={false}
-        opptjeningActivities={opptjeningActivities}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         behandlingFormPrefix="Behandling_123"
         formName="OpptjeningFaktaForm"
@@ -321,6 +340,8 @@ describe('<OpptjeningFaktaForm>', () => {
           ],
         }}
         opptjeningList={opptjeningList}
+        arbeidsgiverOpplysningerPerId={undefined}
+        dokStatus="test"
       />,
       { messages },
     );
@@ -339,10 +360,7 @@ describe('<OpptjeningFaktaForm>', () => {
     renderWithIntlAndReduxForm(
       <OpptjeningFaktaForm
         hasAksjonspunkt
-        opptjeningFomDato="2017-08-15"
-        opptjeningTomDato="2017-08-31"
         readOnly={false}
-        opptjeningActivities={opptjeningActivities}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         behandlingFormPrefix="Behandling_123"
         formName="OpptjeningFaktaForm"
@@ -356,6 +374,8 @@ describe('<OpptjeningFaktaForm>', () => {
         alleMerknaderFraBeslutter={{}}
         alleKodeverk={{}}
         opptjeningList={opptjeningList}
+        arbeidsgiverOpplysningerPerId={undefined}
+        dokStatus="test"
       />,
       { messages },
     );

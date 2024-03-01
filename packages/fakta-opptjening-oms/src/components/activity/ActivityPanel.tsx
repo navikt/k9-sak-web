@@ -25,8 +25,7 @@ import {
   required,
   requiredIfCustomFunctionIsTrue,
 } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, Kodeverk } from '@k9-sak-web/types';
-import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
+import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
 import moment from 'moment';
@@ -106,7 +105,7 @@ export const activityPanelNameFormName = 'ActivityPanelForm';
 
 interface ActivityPanelProps {
   activity: Partial<OpptjeningAktivitet>;
-  alleKodeverk: AlleKodeverk;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   alleMerknaderFraBeslutter: any;
   behandlingId: number;

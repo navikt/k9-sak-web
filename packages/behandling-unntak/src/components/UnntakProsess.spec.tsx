@@ -95,13 +95,6 @@ describe('<UnntakProsess>', () => {
   };
 
   const alleKodeverk = {
-    VilkårType: [
-      {
-        kode: 'FP_VK_2',
-        navn: 'Medlemskapsvilkåret',
-        kodeverk: 'VILKAR_TYPE',
-      },
-    ],
     Avslagsårsak: {
       FP_VK_2: [
         {
@@ -142,7 +135,7 @@ describe('<UnntakProsess>', () => {
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
-        alleKodeverk={alleKodeverk}
+        alleKodeverk={alleKodeverk as any}
         rettigheter={rettigheter}
         valgtProsessSteg="inngangsvilkar"
         valgtFaktaSteg="arbeidsforhold"
@@ -173,7 +166,7 @@ describe('<UnntakProsess>', () => {
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
-        alleKodeverk={alleKodeverk}
+        alleKodeverk={alleKodeverk as any}
         rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"

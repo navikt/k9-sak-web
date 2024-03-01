@@ -5,9 +5,7 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../../../i18n/nb_NO.json';
-import PerioderMedMedlemskapFaktaPanel, {
-  PerioderMedMedlemskapFaktaPanelImpl as UndecoratedForm,
-} from './PerioderMedMedlemskapFaktaPanel';
+import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
 
 describe('<PerioderMedMedlemskapFaktaPanel>', () => {
   it('skal vise periode og manuelle-vurderingstyper i form', () => {
@@ -32,7 +30,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
     ];
 
     renderWithIntlAndReduxForm(
-      <UndecoratedForm
+      <PerioderMedMedlemskapFaktaPanel.WrappedComponent
         intl={intlMock}
         hasPeriodeAksjonspunkt
         isPeriodAksjonspunktClosed={false}
@@ -62,7 +60,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
     ];
 
     renderWithIntlAndReduxForm(
-      <UndecoratedForm
+      <PerioderMedMedlemskapFaktaPanel.WrappedComponent
         intl={intlMock}
         hasPeriodeAksjonspunkt
         isPeriodAksjonspunktClosed={false}
@@ -90,7 +88,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
     ];
 
     renderWithIntlAndReduxForm(
-      <UndecoratedForm
+      <PerioderMedMedlemskapFaktaPanel.WrappedComponent
         intl={intlMock}
         hasPeriodeAksjonspunkt
         isPeriodAksjonspunktClosed={false}
@@ -110,7 +108,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
     const medlemskapPerioder = [];
 
     renderWithIntlAndReduxForm(
-      <UndecoratedForm
+      <PerioderMedMedlemskapFaktaPanel.WrappedComponent
         intl={intlMock}
         hasPeriodeAksjonspunkt
         isPeriodAksjonspunktClosed={false}

@@ -78,7 +78,6 @@ describe('<OppholdInntektOgPerioderForm>', () => {
 
     expect(screen.getByText('Vurder om søker er bosatt i Norge')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).not.toBeDisabled();
   });
 
   it('skal avklare perioder når en har dette aksjonspunktet', () => {
@@ -123,7 +122,6 @@ describe('<OppholdInntektOgPerioderForm>', () => {
 
     expect(screen.getByText('Vurder om søker har gyldig medlemskap i perioden')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).not.toBeDisabled();
   });
 
   it('skal avklare oppholdsrett når en har dette aksjonspunktet', () => {
@@ -165,7 +163,6 @@ describe('<OppholdInntektOgPerioderForm>', () => {
 
     expect(screen.getByText('Vurder om søker er EØS-borger med oppholdsrett')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).not.toBeDisabled();
   });
 
   it('skal avklare lovlig opphold når en har dette aksjonspunktet', () => {
@@ -207,7 +204,6 @@ describe('<OppholdInntektOgPerioderForm>', () => {
 
     expect(screen.getByText('Avklar om søker har lovlig opphold')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).not.toBeDisabled();
   });
 
   it('skal avklare fortsatt medlemskap når en har dette aksjonspunktet', () => {

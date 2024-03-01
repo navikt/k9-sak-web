@@ -1,10 +1,10 @@
+import OverstyrBeregningFaktaIndex from '@fpsak-frontend/fakta-overstyr-beregning';
+import { messages } from '@fpsak-frontend/fakta-overstyr-beregning/i18n';
+import { OverstyrInputBeregningDto } from '@fpsak-frontend/fakta-overstyr-beregning/src/types/OverstyrInputBeregningDto';
+import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { action } from '@storybook/addon-actions';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import messages from '@fpsak-frontend/fakta-overstyr-beregning/i18n';
-import OverstyrBeregningFaktaIndex from '@fpsak-frontend/fakta-overstyr-beregning';
-import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { OverstyrInputBeregningDto } from '@fpsak-frontend/fakta-overstyr-beregning/src/types/OverstyrInputBeregningDto';
-import { action } from '@storybook/addon-actions';
 
 const intl = createIntl(
   {
@@ -21,7 +21,7 @@ const arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId = {
     navn: 'BEDRIFT AS',
     fødselsdato: null,
     erPrivatPerson: false,
-    arbeidsforholdreferanser: []
+    arbeidsforholdreferanser: [],
   },
   '910909081': {
     identifikator: '910909081',
@@ -29,8 +29,7 @@ const arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId = {
     navn: 'ANNEN BEDRIFT AS',
     fødselsdato: null,
     erPrivatPerson: false,
-    arbeidsforholdreferanser: []
-
+    arbeidsforholdreferanser: [],
   },
 };
 
@@ -56,7 +55,7 @@ const overstyrInputBeregningEnPeriodeNæringOgArbeid: OverstyrInputBeregningDto[
         refusjonPrAar: null,
         startdatoRefusjon: null,
         opphørRefusjon: null,
-        skalKunneEndreRefusjon: false
+        skalKunneEndreRefusjon: false,
       },
     ],
   },
@@ -82,7 +81,7 @@ const overstyrInputBeregningToPerioder: OverstyrInputBeregningDto[] = [
         refusjonPrAar: null,
         startdatoRefusjon: null,
         opphørRefusjon: null,
-        skalKunneEndreRefusjon: true
+        skalKunneEndreRefusjon: true,
       },
     ],
   },
@@ -96,7 +95,7 @@ const overstyrInputBeregningToPerioder: OverstyrInputBeregningDto[] = [
         refusjonPrAar: null,
         startdatoRefusjon: null,
         opphørRefusjon: null,
-        skalKunneEndreRefusjon: false
+        skalKunneEndreRefusjon: false,
       },
     ],
   },

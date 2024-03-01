@@ -13,10 +13,12 @@ describe('<ActivityPanel>', () => {
     {
       kode: OAType.ARBEID,
       navn: 'Arbeid',
+      kodeverk: '',
     },
     {
       kode: OAType.NARING,
       navn: 'Næring',
+      kodeverk: '',
     },
   ];
 
@@ -35,7 +37,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={sinon.spy()}
-        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -63,7 +65,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={sinon.spy()}
-        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -91,7 +93,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={sinon.spy()}
-        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -119,7 +121,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={sinon.spy()}
-        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt={false}
@@ -147,7 +149,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={sinon.spy()}
-        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt={false}
@@ -175,7 +177,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={sinon.spy()}
-        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -205,7 +207,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={sinon.spy()}
-        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -233,7 +235,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={sinon.spy()}
-        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -262,7 +264,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={sinon.spy()}
-        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt={false}
@@ -289,7 +291,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={sinon.spy()}
-        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -319,7 +321,7 @@ describe('<ActivityPanel>', () => {
         readOnly
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={sinon.spy()}
-        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -348,7 +350,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={sinon.spy()}
-        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -376,7 +378,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={sinon.spy()}
-        selectedActivityType={{ kode: OAType.ARBEID, navn: 'ARBEID' }}
+        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt

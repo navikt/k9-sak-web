@@ -1,7 +1,8 @@
 import React from 'react';
 import { FieldArrayFieldsProps } from 'redux-form';
 import sinon from 'sinon';
-import { intlMock, mountWithIntl } from './intl-test-helper';
+import { intlMock } from './intl-test-helper';
+import { renderWithIntl } from './test-utils';
 
 function noop() {
   return undefined;
@@ -36,8 +37,8 @@ export const metaMock = {
   warning: null,
 };
 
-export function mountFieldComponent(node, input = {}, meta = {}, label = 'field') {
-  return mountWithIntl(
+export function renderFieldComponent(node, input = {}, meta = {}, label = 'field') {
+  return renderWithIntl(
     React.cloneElement(node, {
       input: { ...inputMock, ...input },
       meta: { ...metaMock, ...meta },

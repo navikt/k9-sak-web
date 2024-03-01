@@ -1,27 +1,48 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { Undertekst } from 'nav-frontend-typografi';
-
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { ArrowBox, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { ArrowBox, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
+import { Undertekst } from 'nav-frontend-typografi';
+import React, { FunctionComponent } from 'react';
+import { FormattedMessage, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
+
+export type FormValues = {
+  erEosBorger: boolean;
+  isBorgerAksjonspunktClosed: boolean;
+  oppholdsrettVurdering: boolean;
+  lovligOppholdVurdering: boolean;
+  apKode: string;
+};
+
+interface TransformedValues {
+  kode: string;
+  oppholdsrettVurdering: boolean;
+  lovligOppholdVurdering: boolean;
+  erEosBorger: boolean;
+}
+
+interface StatusForBorgerFaktaPanelProps {
+  readOnly: boolean;
+  isBorgerAksjonspunktClosed: boolean;
+  apKode: string;
+  alleMerknaderFraBeslutter: { notAccepted: boolean };
+  erEosBorger?: boolean;
+}
+
+interface StaticFunctions {
+  buildInitialValues: (periode, aksjonspunkter) => FormValues;
+  transformValues: (values: FormValues, name?: string) => TransformedValues;
+}
 
 /**
  * StatusForBorgerFaktaPanel
  *
  * Presentasjonskomponent. Setter opp aksjonspunktet for avklaring av borgerstatus (Medlemskapsvilkåret).
  */
-const StatusForBorgerFaktaPanelImpl = ({
-  readOnly,
-  erEosBorger,
-  isBorgerAksjonspunktClosed,
-  apKode,
-  alleMerknaderFraBeslutter,
-}) => (
+const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProps & WrappedComponentProps> &
+  StaticFunctions = ({ readOnly, erEosBorger, isBorgerAksjonspunktClosed, apKode, alleMerknaderFraBeslutter }) => (
   <FaktaGruppe
     titleCode="StatusForBorgerFaktaPanel.ApplicationInformation"
     merknaderFraBeslutter={alleMerknaderFraBeslutter[apKode]}
@@ -88,20 +109,6 @@ const StatusForBorgerFaktaPanelImpl = ({
   </FaktaGruppe>
 );
 
-StatusForBorgerFaktaPanelImpl.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
-  erEosBorger: PropTypes.bool,
-  isBorgerAksjonspunktClosed: PropTypes.bool.isRequired,
-  apKode: PropTypes.string.isRequired,
-  alleMerknaderFraBeslutter: PropTypes.shape({
-    notAccepted: PropTypes.bool,
-  }).isRequired,
-};
-
-StatusForBorgerFaktaPanelImpl.defaultProps = {
-  erEosBorger: undefined,
-};
-
 const mapStateToProps = (state, ownProps) => ({
   ...behandlingFormValueSelector(
     `OppholdInntektOgPeriodeForm-${ownProps.id}`,
@@ -109,8 +116,6 @@ const mapStateToProps = (state, ownProps) => ({
     ownProps.behandlingVersjon,
   )(state, 'erEosBorger', 'isBorgerAksjonspunktClosed', 'apKode'),
 });
-
-const StatusForBorgerFaktaPanel = connect(mapStateToProps)(StatusForBorgerFaktaPanelImpl);
 
 const getApKode = aksjonspunkter =>
   aksjonspunkter
@@ -163,4 +168,4 @@ StatusForBorgerFaktaPanel.transformValues = (values, aksjonspunkter) => ({
   erEosBorger: values.erEosBorger,
 });
 
-export default StatusForBorgerFaktaPanel;
+export default connect(mapStateToProps)(StatusForBorgerFaktaPanel);

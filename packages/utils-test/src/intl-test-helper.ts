@@ -6,38 +6,12 @@
  * These helper functions aim to address that.
  */
 
-import { mount, shallow } from 'enzyme';
-import { ReactElement } from 'react';
-import { IntlProvider, createIntl, createIntlCache } from 'react-intl';
+import { createIntl, createIntlCache } from 'react-intl';
 // You can pass your messages to the IntlProvider. Optional: remove if unneeded.
 // eslint-disable-next-line import/no-relative-packages
 import defaultMessages from '../../../public/sprak/nb_NO.json';
 // eslint-disable-next-line import/no-relative-packages
 export { default as messages } from '../../../public/sprak/nb_NO.json';
-
-export function shallowWithIntl(node: ReactElement, messages: any = defaultMessages) {
-  // @ts-ignore
-  return shallow(node, {
-    wrappingComponent: IntlProvider,
-    wrappingComponentProps: {
-      locale: 'nb-NO',
-      defaultLocale: 'nb-NO',
-      messages,
-    },
-  });
-}
-
-export function mountWithIntl(node: ReactElement, messages: any = defaultMessages) {
-  // @ts-ignore
-  return mount(node, {
-    wrappingComponent: IntlProvider,
-    wrappingComponentProps: {
-      locale: 'nb-NO',
-      defaultLocale: 'nb-NO',
-      messages,
-    },
-  });
-}
 
 // Create the IntlProvider to retrieve context for wrapping around.
 const cache = createIntlCache();

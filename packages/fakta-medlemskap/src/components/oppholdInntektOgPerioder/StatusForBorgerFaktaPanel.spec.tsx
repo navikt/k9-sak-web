@@ -15,7 +15,7 @@ describe('<StatusForBorgerFaktaPanel>', () => {
         erEosBorger
         readOnly={false}
         isBorgerAksjonspunktClosed={false}
-        alleMerknaderFraBeslutter={{}}
+        alleMerknaderFraBeslutter={{ notAccepted: false }}
       />,
       { messages },
     );
@@ -35,7 +35,7 @@ describe('<StatusForBorgerFaktaPanel>', () => {
         erEosBorger={false}
         readOnly={false}
         isBorgerAksjonspunktClosed={false}
-        alleMerknaderFraBeslutter={{}}
+        alleMerknaderFraBeslutter={{ notAccepted: false }}
       />,
       { messages },
     );

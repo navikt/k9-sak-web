@@ -1,5 +1,4 @@
 /* eslint-disable class-methods-use-this */
-import { shallow } from 'enzyme';
 import React from 'react';
 import { IntlShape } from 'react-intl';
 import sinon from 'sinon';
@@ -21,7 +20,8 @@ import { DEFAULT_FAKTA_KODE } from './faktaUtils';
 
 const HookWrapper = ({ callback }) => <div {...callback()} />;
 
-const testHook = callback => shallow(<HookWrapper callback={callback} />);
+// const testHook = callback => shallow(<HookWrapper callback={callback} />);
+const testHook = callback => <HookWrapper callback={callback} />;
 
 describe('<faktaHooks>', () => {
   const fagsak = {

@@ -11,7 +11,7 @@ describe('<TextAreaField>', () => {
     expect(screen.getByRole('textbox', { name: 'name' })).toBeInTheDocument();
   });
   it('Skal rendre TextAreaField som ren tekst hvis readonly', () => {
-    renderWithIntlAndReduxForm(<TextAreaField name="text" label="name" readOnly value="text" />, {
+    renderWithIntlAndReduxForm(<TextAreaField name="text" label="name" readOnly />, {
       messages,
       initialValues: {
         text: 'tekst',

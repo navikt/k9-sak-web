@@ -1,6 +1,7 @@
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { Aksjonspunkt, Opptjening } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';
@@ -66,7 +67,10 @@ describe('<OpptjeningInfoPanel>', () => {
     const aksjonspunkter = [{ definisjon: { kode: '5058' }, erAktivt: true, toTrinnsBehandling: false }];
     const opptjeningList = [{ opptjeningAktivitetList, fastsattOpptjening }];
 
-    const initialValues = buildInitialValues.resultFunc(opptjeningList, aksjonspunkter);
+    const initialValues = buildInitialValues.resultFunc(
+      opptjeningList as Partial<Opptjening[]>,
+      aksjonspunkter as Partial<Aksjonspunkt[]>,
+    );
     expect(initialValues).toStrictEqual({
       aksjonspunkter: [],
       opptjeningList: [
@@ -143,7 +147,10 @@ describe('<OpptjeningInfoPanel>', () => {
     ];
     const opptjeningList = [{ opptjeningAktivitetList, fastsattOpptjening }];
 
-    const initialValues = buildInitialValues.resultFunc(opptjeningList, aksjonspunkter);
+    const initialValues = buildInitialValues.resultFunc(
+      opptjeningList as Partial<Opptjening[]>,
+      aksjonspunkter as Partial<Aksjonspunkt[]>,
+    );
     expect(initialValues).toStrictEqual({
       aksjonspunkter: [
         {

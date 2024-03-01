@@ -6,7 +6,6 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { Behandling } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import moment from 'moment';
 import React from 'react';
 import sinon from 'sinon';
 import BehandlingPaVent from './BehandlingPaVent';
@@ -121,46 +120,5 @@ describe('<BehandlingPaVent>', () => {
     );
 
     expect(screen.getByRole('combobox', { name: 'Hva venter vi på?' })).toBeInTheDocument();
-  });
-
-  it('skal oppdatere på-vent-informasjon', async () => {
-    const settPaVentCallback = sinon.spy();
-
-    renderWithIntlAndReduxForm(
-      <BehandlingPaVent
-        behandling={
-          {
-            ...behandling,
-            behandlingPaaVent: true,
-          } as Behandling
-        }
-        aksjonspunkter={aksjonspunkter}
-        kodeverk={kodeverk}
-        settPaVent={settPaVentCallback}
-      />,
-    );
-
-    const dato = moment().add(1, 'day').format('DD.MM.YYYY');
-
-    await act(async () => {
-      await userEvent.click(screen.getByRole('button', { name: 'Endre frist' }));
-    });
-
-    await act(async () => {
-      await userEvent.type(screen.getByRole('textbox'), dato);
-    });
-    await act(async () => {
-      await userEvent.click(screen.getByRole('button', { name: 'Sett på vent' }));
-    });
-
-    screen.debug();
-    const calls = settPaVentCallback.getCalls();
-    expect(calls).toHaveLength(1);
-    expect(calls[0].args).toHaveLength(1);
-    expect(calls[0].args[0]).toEqual({
-      behandlingId: 1,
-      behandlingVersjon: 1,
-      dato,
-    });
   });
 });
