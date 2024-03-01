@@ -60,8 +60,6 @@ server {
 
   location  "/k9/sak/" {
     proxy_set_header Host	$http_host;
-    proxy_ssl_server_name on;
-    proxy_http_version 1.1;
     proxy_pass "${APP_URL}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
