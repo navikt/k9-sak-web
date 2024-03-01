@@ -1,10 +1,6 @@
 name: Deploy Docker image
 on:
   push:
-    paths-ignore:
-      - '**.md'
-      - '.gitignore'
-      - 'CODEOWNERS'
     branches:
       - GCP-migrering
 
