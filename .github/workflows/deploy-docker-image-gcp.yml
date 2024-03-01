@@ -1,0 +1,79 @@
+name: Deploy Docker image
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+      - 'CODEOWNERS'
+    branches:
+      - GCP-migrering
+
+jobs:
+  deploy-docker-image:
+    name: Deploy Docker image
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+      id-token: write
+    # needs: [test, lint-tscheck-build]
+    outputs:
+      image: ${{ steps.docker-push.outputs.image }}
+    steps:
+      - name: Hente kode
+        uses: actions/checkout@v4
+
+      - name: Setup .yarnrc.yml
+        run: |
+          yarn config set npmScopes.navikt.npmRegistryServer "https://npm.pkg.github.com"
+          yarn config set npmScopes.navikt.npmAlwaysAuth true
+          yarn config set npmScopes.navikt.npmAuthToken $NPM_AUTH_TOKEN
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+
+      - name: Sette opp Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'yarn'
+
+      - name: Set timestamp
+        run: echo "TIMESTAMP=$(expr $(date +%Y%m%d%H%M%S))" >> $GITHUB_ENV
+
+      - name: Installere dependencies
+        run: HUSKY=0 yarn install --immutable
+
+      - name: Bygge dist
+        run: yarn build
+
+      - uses: nais/docker-build-push@v0
+        id: docker-push
+        with:
+          tag: 'latest'
+          team: k9saksbehandling
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+
+      - name: Sett image for nais deploy
+        run: |
+          echo "IMAGE=${{steps.docker-push.outputs.image}}" >> $GITHUB_OUTPUT
+
+      - name: Promoter til cluster og namespace
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          PRINT_PAYLOAD: true
+          CLUSTER: dev-gcp
+          RESOURCE: deploy/dev-gcp.yml
+
+  trivy:
+    needs: [deploy-docker-image]
+    uses: navikt/sif-gha-workflows/.github/workflows/trivy.yml@main
+    permissions:
+      contents: write
+      id-token: write
+      security-events: write
+      actions: read
+    secrets: inherit
+    with:
+      image: ${{ needs.deploy-docker-image.outputs.image }}
+      team: k9saksbehandling
