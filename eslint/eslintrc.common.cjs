@@ -45,7 +45,10 @@ const config = {
     // import/no-cycle rule apparently started working when import/resolver was changed to typescript. It found lots of
     // existing problems, so disabled it for now.
     'import/no-cycle': OFF,
-    'import/extensions': ['error', 'ignorePackages', { js: 'never', jsx: 'never', ts: 'never', tsx: 'never' }],
+    // Disabled since we want to start using .js extensions when importing. Because that makes importing from packages
+    // using a simple wildcard (/*) "exports" clause possible, and gives a better dx. Especially in VS Code, path lookup
+    // from such packages works well then.
+    'import/extensions': OFF,
     'linebreak-style': OFF,
     'import/no-named-as-default': OFF,
     'max-len': [1, 160],
