@@ -16,7 +16,6 @@ jobs:
       issues: write
       contents: read
       id-token: write
-    # needs: [test, lint-tscheck-build]
     outputs:
       image: ${{ steps.docker-push.outputs.image }}
     steps:
