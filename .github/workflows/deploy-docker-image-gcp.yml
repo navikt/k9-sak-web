@@ -56,7 +56,7 @@ jobs:
 
       - name: Sett image for nais deploy
         run: |
-          echo "IMAGE=${{steps.docker-push.outputs.image}}" >> $GITHUB_OUTPUT
+          echo "IMAGE=${{steps.docker-push.outputs.image}}" >> $GITHUB_ENV
 
       - name: Promoter til cluster og namespace
         uses: nais/deploy/actions/deploy@v2
