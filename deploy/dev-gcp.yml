@@ -51,11 +51,11 @@ spec:
     - name: APP_URL_K9OPPDRAG
       value: "https://k9-oppdrag.dev-fss-pub.nais.io"
     - name: APP_URL_KLAGE
-      value: "http://k9-klage.k9saksbehandling"
+      value: "https://k9-klage.dev-fss-pub.nais.io"
     - name: APP_URL_K9TILBAKE
-      value: "http://k9-tilbake.default"
+      value: "https://k9-tilbake.dev-fss-pub.nais.io"
     - name: APP_URL_K9FORDEL
-      value: "http://k9-fordel.k9saksbehandling"
+      value: "https://k9-fordel.dev-fss-pub.nais.io"
     - name: ENDRINGSLOGG_URL
       value: "https://familie-endringslogg.intern.dev.nav.no/"
 
