@@ -58,7 +58,10 @@ export const VedtakSjekkTilbakekreving: React.FC<Props> = ({
         <>
           <VerticalSpacer twentyPx />
           <Alert className={styles.aksjonspunktAlert} variant="error" size="small">
-            <BodyLong>Sett behandlingen på vent og behandle tilbakekrevingssaken først</BodyLong>
+            <BodyLong>
+              Denne behandlingen har hatt aksjonspunkt om tilbakekrevingssaken skal behandles før ytelsessaken. Det er
+              mulig å endre valget.
+            </BodyLong>
           </Alert>
         </>
       )}
