@@ -113,7 +113,7 @@ describe('<AvslagårsakListe>', () => {
 
     expect(
       screen.queryByText(
-        'Saken har en åpen ytelsesbehandling og en tilbakekrevingssak. Ytelsesbehandlingen kan påvirke resultatet avden åpne tilbakekrevingssaken.',
+        'Saken har en åpen ytelsesbehandling og en tilbakekrevingssak. Ytelsesbehandlingen kan påvirke resultatet av den åpne tilbakekrevingssaken.',
       ),
     ).toBeInTheDocument();
     expect(screen.queryByText('Vurder om tilbakekrevingssaken skal behandles først.')).toBeInTheDocument();
