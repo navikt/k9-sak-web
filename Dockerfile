@@ -6,8 +6,6 @@ RUN apt-get update && \
   apt-get install -y curl && \
   rm -rf /var/lib/apt/lists/*
 
-USER root
-
 ADD proxy.nginx /etc/nginx/conf.d/app.conf.template
 ADD feature-toggles.json /etc/nginx/conf.d/feature-toggles.json
 ADD start-server.sh /start-server.sh
