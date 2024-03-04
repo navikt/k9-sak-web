@@ -45,7 +45,7 @@ spec:
     - name: APP_NAME
       value: k9-sak-web
     - name: APP_URL
-      value: "https://k9-sak.dev-fss-pub.nais.io"
+      value: "https://k9-sak.dev-fss-pub.nais.io/"
     - name: APP_PORT
       value: "9000"
     - name: APP_URL_K9FORMIDLING
