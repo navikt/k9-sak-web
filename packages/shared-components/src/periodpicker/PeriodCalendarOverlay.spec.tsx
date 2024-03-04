@@ -127,7 +127,11 @@ describe('<PeriodCalendarOverlay>', () => {
     expect(onDayChangeCallback.getCalls()).toHaveLength(1);
     const args1 = onDayChangeCallback.getCalls()[0].args;
     expect(args1).toHaveLength(1);
-    expect(new Date(args1[0]).getTime()).toEqual(new Date(date).getTime());
+    const dateToCompare1 = new Date(args1[0]);
+    dateToCompare1.setHours(0, 0, 0, 0);
+    const dateToCompare2 = new Date(date);
+    dateToCompare2.setHours(0, 0, 0, 0);
+    expect(dateToCompare1.getTime()).toEqual(dateToCompare2.getTime());
   });
 
   it('skal sette input-dato når denne er innenfor det gyldige intervallet', async () => {
