@@ -108,7 +108,7 @@ jobs:
               title: 'Deploy av ${{ env.DOCKER_METADATA_OUTPUT_VERSION }}'})
             .then(response => {
                     core.setOutput('number', response.data.number);
-             });
+            });
 
       - name: Trigger verdikjede test
         shell: bash

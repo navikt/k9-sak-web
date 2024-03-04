@@ -39,7 +39,7 @@ interface NotaterProps {
   hasGetNotaterError: boolean;
   notater: NotatResponse[];
   postNotatMutationError: boolean;
-  formMethods: UseFormReturn<Inputs, any, undefined>;
+  formMethods: UseFormReturn<Inputs>;
   fagsakHarPleietrengende: boolean;
 }
 
