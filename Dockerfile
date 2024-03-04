@@ -1,10 +1,6 @@
-FROM nginx:latest
+FROM nginxinc/nginx-unprivileged:stable-alpine-slim
 
 LABEL org.opencontainers.image.source=https://github.com/navikt/k9-sak-web
-# Install curl
-RUN apt-get update && \
-  apt-get install -y curl && \
-  rm -rf /var/lib/apt/lists/*
 
 ADD proxy.nginx /etc/nginx/conf.d/app.conf.template
 ADD feature-toggles.json /etc/nginx/conf.d/feature-toggles.json
