@@ -71,7 +71,7 @@ export enum K9sakApiKeys {
 }
 
 const endpoints = new RestApiConfigBuilder()
-  .withGet('https://k9-sak.dev-fss-pub.nais.io/k9/sak/api/init-fetch', K9sakApiKeys.INIT_FETCH)
+  .withGet('/k9/sak/api/init-fetch', K9sakApiKeys.INIT_FETCH)
   .withGet('/k9/tilbake/api/init-fetch', K9sakApiKeys.INIT_FETCH_TILBAKE)
   .withGet('/k9/klage/api/init-fetch', K9sakApiKeys.INIT_FETCH_KLAGE)
 
