@@ -1,4 +1,4 @@
-import { Alert, BodyShort, Button, Heading, Modal, Table } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Heading, HelpText, Modal, Table } from '@navikt/ds-react';
 import { PlusIcon } from '@navikt/ft-plattform-komponenter';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import React, { useRef, useState } from 'react';
@@ -39,7 +39,14 @@ const OverstyrUttakForm: React.FC<ownProps> = ({ overstyringAktiv }) => {
         <Table.HeaderCell />
         <Table.HeaderCell scope="col">Fra og med</Table.HeaderCell>
         <Table.HeaderCell scope="col">Til og med</Table.HeaderCell>
-        <Table.HeaderCell scope="col">Ny uttaksgrad</Table.HeaderCell>
+        <Table.HeaderCell scope="col">
+          Ny uttaksgrad
+          <HelpText title="Uttaksgrad">
+            Uttaksgraden viser til hvor mye av den totale pleiepengekvoten som tas ut. Eksempel: Settes uttaksgraden til
+            70% er det 30% igjen til en annen part ved behov for én omsorgsperson. I de aller fleste tilfeller vil det
+            være riktig å sette uttaksgraden lik gjennomsnittet av utbetalingsgradene for alle aktivitetene samlet.
+          </HelpText>
+        </Table.HeaderCell>
         {!leseModus && <Table.HeaderCell scope="col">Valg for overstyring</Table.HeaderCell>}
       </Table.Row>
     </Table.Header>
