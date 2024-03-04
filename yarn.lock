@@ -17731,6 +17731,7 @@ __metadata:
     "@navikt/ds-tailwind": ^5.13.0
     "@navikt/familie-endringslogg": 11.0.0
     "@navikt/ft-plattform-komponenter": 2.3.18
+    "@navikt/k9-sak-typescript-client": 0.0.1-alpha
     "@popperjs/core": 2.11.8
     "@sentry/browser": 7.93.0
     "@sentry/cli": 2.24.1
