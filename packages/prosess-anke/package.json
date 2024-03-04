@@ -28,7 +28,6 @@
     "reselect": "4.1.8"
   },
   "devDependencies": {
-    "chai": "4.4.1",
     "sinon": "15.2.0"
   }
 }

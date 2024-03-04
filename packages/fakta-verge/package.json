@@ -25,7 +25,6 @@
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
-    "chai": "4.4.1",
     "sinon": "15.2.0"
   }
 }

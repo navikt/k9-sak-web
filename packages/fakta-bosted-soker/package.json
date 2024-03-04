@@ -21,7 +21,6 @@
     "react-intl": "6.6.2"
   },
   "devDependencies": {
-    "@fpsak-frontend/utils-test": "1.0.0",
-    "chai": "4.4.1"
+    "@fpsak-frontend/utils-test": "1.0.0"
   }
 }

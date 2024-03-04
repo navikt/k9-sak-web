@@ -54,6 +54,7 @@ class CalendarToggleButton extends Component<OwnProps, StateProps> {
         style={generateStyleObject(inputOffsetTop, inputOffsetWidth, buttonWidth)}
         disabled={disabled}
         onClick={toggleShowCalendar}
+        data-testid="calendarToggleButton"
       />
     );
   }

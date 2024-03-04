@@ -34,7 +34,7 @@ describe('<OpptjeningFaktaForm>', () => {
     {
       id: 2,
       aktivitetType: { kode: OAType.NARING, navn: 'NARING' },
-      opptjeningFom: '2017-07-15',
+      opptjeningFom: '2017-08-15',
       opptjeningTom: '2017-08-15',
       arbeidsgiver: 'Andersen Transport AS',
       oppdragsgiverOrg: '583948180',
@@ -245,7 +245,7 @@ describe('<OpptjeningFaktaForm>', () => {
     expect(screen.getByText('Vurder om aktivitetene kan godkjennes')).toBeInTheDocument();
   });
 
-  it.skip('skal oppdatere aktivitet etter editering', async () => {
+  it('skal oppdatere aktivitet etter editering', async () => {
     const formChangeCallback = sinon.spy();
     const formInitCallback = sinon.spy();
 
@@ -272,44 +272,30 @@ describe('<OpptjeningFaktaForm>', () => {
       { messages },
     );
 
-    await act(async () => {
-      await userEvent.click(screen.getByRole('radio', { name: 'Aktiviteten godkjennes' }));
-      await userEvent.type(screen.getByRole('textbox', { name: 'Begrunn endringene' }), 'En begrunnelse');
-      await userEvent.clear(screen.getByPlaceholderText('dd.mm.åååå - dd.mm.åååå'));
-      // await userEvent.type(screen.getByPlaceholderText('dd.mm.åååå - dd.mm.åååå'), '16.08.2017 - 17.08.2017');
-    });
-    await act(async () => {
-      await userEvent.type(screen.getByPlaceholderText('dd.mm.åååå - dd.mm.åååå'), '16.08.2017');
-    });
-    screen.debug(undefined, 30000);
-    await act(async () => {
-      await userEvent.click(screen.getByRole('button', { name: 'Oppdater' }));
-    });
-    await act(async () => {
-      await userEvent.click(screen.getByRole('button', { name: 'Bekreft og fortsett' }));
-    });
-
-    // const activityPanel = wrapper.find(ActivityPanel);
-    // expect(activityPanel).to.have.length(1);
+    await userEvent.click(screen.getByRole('radio', { name: 'Aktiviteten godkjennes' }));
+    await userEvent.click(screen.getByTestId('calendarToggleButton'));
+    await userEvent.click(screen.getByRole('gridcell', { name: 'Sun Aug 13 2017' }));
+    await userEvent.click(screen.getByTestId('calendarToggleButton'));
+    await userEvent.click(screen.getByTestId('calendarToggleButton'));
+    await userEvent.click(screen.getByRole('gridcell', { name: 'Mon Aug 14 2017' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Oppdater' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Bekreft og fortsett' }));
 
     const editedActivity = {
       ...opptjeningActivities[1],
       erEndret: true,
       erGodkjent: true,
     };
-    // activityPanel.prop('updateActivity')(editedActivity);
 
     const calls = formChangeCallback.getCalls();
-    expect(calls).toBe(1);
+    expect(calls).toHaveLength(1);
     const { args } = calls[0];
-    expect(args).toBe(3);
+    expect(args).toHaveLength(3);
     expect(args[0]).toBe('Behandling_123.OpptjeningFaktaForm');
     expect(args[1]).toBe('opptjeningList[0].opptjeningAktivitetList');
-    expect(args[2]).toBe([opptjeningActivities[0], editedActivity]);
+    expect(args[2]).toStrictEqual([opptjeningActivities[0], editedActivity]);
 
-    // expect(wrapper.state().selectedOpptjeningActivity).is.undefined;
-
-    expect(formInitCallback.getCalls()).toBe(1);
+    expect(formInitCallback.getCalls()).toHaveLength(1);
   });
 
   it('skal legge til aktivitet', async () => {
