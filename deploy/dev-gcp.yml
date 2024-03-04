@@ -37,10 +37,10 @@ spec:
       memory: 32Mi
   ingresses:
     - "https://k9.intern.dev.nav.no"
-  accessPolicy:
-    outbound:
-      external:
-        - host: "k9-sak.dev-fss-pub.nais.io"
+#  accessPolicy:
+#    outbound:
+#      external:
+#        - host: "k9-sak.dev-fss-pub.nais.io"
   env:
     - name: APP_NAME
       value: k9-sak-web
