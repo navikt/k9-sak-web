@@ -46,7 +46,7 @@ describe('<DelOppPeriodeModal>', () => {
     await act(async () => {
       await userEvent.click(screen.getByRole('button', { name: 'Avbryt' }));
     });
-    expect(cancelEvent).to.have.property('callCount', 1);
+    expect(cancelEvent.callCount).toBe(1);
   });
 
   it('skal validere ok når valgt dato er innenfor periode', () => {
@@ -64,7 +64,7 @@ describe('<DelOppPeriodeModal>', () => {
       ForstePeriodeTomDato: '2019-10-20',
     };
     const result = validateAndOnSubmit.validate(values);
-    expect(result).to.eql(null);
+    expect(result).toEqual(null);
   });
 
   it('skal gi feilmelding når valgt dato er før periode', () => {
@@ -82,7 +82,7 @@ describe('<DelOppPeriodeModal>', () => {
       ForstePeriodeTomDato: '2019-10-09',
     };
     const result = validateAndOnSubmit.validate(values);
-    expect(result).to.eql({
+    expect(result).toEqual({
       ForstePeriodeTomDato: [{ id: 'DelOppPeriodeModalImpl.DatoUtenforPeriode' }],
     });
   });
@@ -102,7 +102,7 @@ describe('<DelOppPeriodeModal>', () => {
       ForstePeriodeTomDato: '2019-11-11',
     };
     const result = validateAndOnSubmit.validate(values);
-    expect(result).to.eql({
+    expect(result).toEqual({
       ForstePeriodeTomDato: [{ id: 'DelOppPeriodeModalImpl.DatoUtenforPeriode' }],
     });
   });
@@ -123,7 +123,7 @@ describe('<DelOppPeriodeModal>', () => {
       ForstePeriodeTomDato: '2019-10-20',
     };
     const result = validateAndOnSubmit.onSubmit(values);
-    expect(result).to.eql({
+    expect(result).toEqual({
       forstePeriode: {
         fom: '2019-10-10',
         tom: '2019-10-20',

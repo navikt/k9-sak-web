@@ -7,7 +7,7 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       { kode: '5027', erAktivt: true, toTrinnsBehandling: true },
     ];
     const tekstId = submitKnappTekst(aksjonspunkter);
-    expect(tekstId).to.equal('VedtakForm.SendTilBeslutter');
+    expect(tekstId).toBe('VedtakForm.SendTilBeslutter');
   });
 
   it('knapp skal vise fatt vedtak tekst når det finnes inaktive aksjonspunkter som skal til totrinn', () => {
@@ -16,7 +16,7 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       { kode: '5027', erAktivt: false, toTrinnsBehandling: true },
     ];
     const tekstId = submitKnappTekst(aksjonspunkter);
-    expect(tekstId).to.equal('VedtakForm.FattVedtak');
+    expect(tekstId).toBe('VedtakForm.FattVedtak');
   });
 
   it('knapp skal vise fatt vedtak tekst når det ikkje finnes aksjonspunkter som skal til totrinn', () => {
@@ -25,6 +25,6 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       { kode: '5027', erAktivt: true, toTrinnsBehandling: false },
     ];
     const tekstId = submitKnappTekst(aksjonspunkter);
-    expect(tekstId).to.equal('VedtakForm.FattVedtak');
+    expect(tekstId).toBe('VedtakForm.FattVedtak');
   });
 });

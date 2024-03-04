@@ -21,6 +21,6 @@ describe('<VedtakInnvilgetRevurderingPanel>', () => {
       },
     ];
     const selectorData = lagKonsekvensForYtelsenTekst(konsekvenser, getKodeverknavn);
-    expect(selectorData).to.eql('Endring i beregning og Endring i uttak');
+    expect(selectorData).toBe('Endring i beregning og Endring i uttak');
   });
 });

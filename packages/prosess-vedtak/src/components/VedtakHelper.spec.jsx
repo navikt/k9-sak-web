@@ -31,7 +31,7 @@ describe('<VedtakHelper>', () => {
 
     const hasIkkeOppfylt = hasIkkeOppfyltSoknadsfristvilkar(vilkarListe);
 
-    expect(hasIkkeOppfylt).to.eql(true);
+    expect(hasIkkeOppfylt).toBe(true);
   });
 
   it('hasKlageVurderingSomIkkeErAvvist skal returnere true når klage ikke er avvist', () => {
@@ -40,7 +40,7 @@ describe('<VedtakHelper>', () => {
 
     const hasIkkeAvvist = hasKlageVurderingSomIkkeErAvvist(klageVurderingResultatNFP, klageVurderingResultatNK);
 
-    expect(hasIkkeAvvist).to.eql(true);
+    expect(hasIkkeAvvist).toBe(true);
   });
 
   it('skal skrive fritekst om manuelt fastsatt andel', () => {
@@ -90,6 +90,6 @@ describe('<VedtakHelper>', () => {
 
     const skalSkriveFritekst = skalSkriveFritekstGrunnetFastsettingAvBeregning(beregningsgrunnlagListe, aksjonspunkt);
 
-    expect(skalSkriveFritekst).to.eql(true);
+    expect(skalSkriveFritekst).toBe(true);
   });
 });

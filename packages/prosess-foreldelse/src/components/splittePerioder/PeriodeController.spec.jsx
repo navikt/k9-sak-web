@@ -90,10 +90,10 @@ describe('<PeriodeController>', () => {
       await userEvent.click(screen.getByRole('button', { name: 'Ok' }));
     });
 
-    expect(oppdaterSplittedePerioder.called).is.true;
+    expect(oppdaterSplittedePerioder.called).toBe(true);
     const { args } = oppdaterSplittedePerioder.getCalls()[0];
-    expect(args).has.length(1);
-    expect(args[0]).is.eql([
+    expect(args).toHaveLength(1);
+    expect(args[0]).toEqual([
       {
         feilutbetaling: 400,
         fom: '2019-10-10',

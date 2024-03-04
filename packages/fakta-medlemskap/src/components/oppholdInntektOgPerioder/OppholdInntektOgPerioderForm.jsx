@@ -1,6 +1,6 @@
+import { Hovedknapp } from 'nav-frontend-knapper';
 import React, { Component } from 'react';
 // eslint-disable-next-line import/no-duplicates
-import { Hovedknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -8,12 +8,12 @@ import { bindActionCreators } from 'redux';
 import { formPropTypes, change as reduxFormChange, reset as reduxFormReset } from 'redux-form';
 import { createSelector } from 'reselect';
 
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 // eslint-disable-next-line import/no-duplicates
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { guid } from '@fpsak-frontend/utils';
 

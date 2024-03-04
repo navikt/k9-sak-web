@@ -172,7 +172,7 @@ describe('<CheckPersonStatusForm>', () => {
       alleKodeverk,
     );
 
-    expect(initialValues).to.eql({
+    expect(initialValues).toEqual({
       originalPersonstatusName: 'Ukjent',
       fortsettBehandling: false,
       personstatus: personstatusType.BOSATT,
@@ -217,7 +217,7 @@ describe('<CheckPersonStatusForm>', () => {
       alleKodeverk,
     );
 
-    expect(initialValues).to.eql({
+    expect(initialValues).toEqual({
       originalPersonstatusName: 'Ukjent',
       fortsettBehandling: true,
       personstatus: personstatusType.BOSATT,
@@ -252,7 +252,7 @@ describe('<CheckPersonStatusForm>', () => {
       alleKodeverk,
     );
 
-    expect(initialValues).to.eql({
+    expect(initialValues).toEqual({
       originalPersonstatusName: 'Ukjent',
       fortsettBehandling: undefined,
       personstatus: undefined,

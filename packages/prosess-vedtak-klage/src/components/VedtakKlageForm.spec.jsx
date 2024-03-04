@@ -80,7 +80,7 @@ describe('<VedtakKlageForm>', () => {
           klageVurderingResultatNFP: { klageAvvistArsakNavn: 'Klager er ikke part' },
         };
         const selected = getAvvisningsAarsaker.resultFunc(klageVurdering);
-        expect(selected).to.have.length(2);
+        expect(selected).toHaveLength(2);
       });
     });
 
