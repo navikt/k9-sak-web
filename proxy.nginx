@@ -41,12 +41,12 @@ server {
 
   add_header              Cache-Control $custom_cache_control;
 
-  # Health check for NAIS
   location = /k9/feature-toggle/toggles.json {
     add_header Content-Type application/json;
     root /tmp/;
   }
 
+  # Health check for NAIS
   location = /isAlive {
     return 200 "Application:UP";
     add_header Content-Type text/plain;

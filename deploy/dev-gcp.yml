@@ -40,7 +40,7 @@ spec:
   accessPolicy:
     outbound:
       external:
-        - host: k9-sak.dev-fss-pub.nais.io
+        - host: "k9-sak.dev-fss-pub.nais.io"
   env:
     - name: APP_NAME
       value: k9-sak-web
