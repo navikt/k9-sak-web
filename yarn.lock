@@ -4211,6 +4211,14 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@k9-sak-web/backend@workspace:^, @k9-sak-web/backend@workspace:packages/v2/backend":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/backend@workspace:packages/v2/backend"
+  dependencies:
+    "@navikt/k9-sak-typescript-client": 0.0.1-alpha
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/behandling-anke@1.0.0, @k9-sak-web/behandling-anke@workspace:packages/behandling-anke":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/behandling-anke@workspace:packages/behandling-anke"
@@ -5092,10 +5100,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/gui@1.0.0, @k9-sak-web/gui@workspace:packages/v2/gui":
+"@k9-sak-web/gui@workspace:^, @k9-sak-web/gui@workspace:packages/v2/gui":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/gui@workspace:packages/v2/gui"
   dependencies:
+    "@k9-sak-web/backend": "workspace:^"
     react: 18.2.0
   languageName: unknown
   linkType: soft
@@ -5495,7 +5504,7 @@ __metadata:
     "@k9-sak-web/fakta-medisinsk-vilkar": 1.0.0
     "@k9-sak-web/fakta-om-barnet": 1.0.0
     "@k9-sak-web/fakta-omsorgen-for": 1.0.0
-    "@k9-sak-web/gui": 1.0.0
+    "@k9-sak-web/gui": "workspace:^"
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/modal-sett-pa-vent": 1.0.0
     "@k9-sak-web/prosess-omsorgsdager": 1.0.0
@@ -5604,6 +5613,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/gui": "workspace:^"
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
     nav-frontend-core: 6.0.1
@@ -6192,6 +6202,13 @@ __metadata:
     dayjs: 1.11.7
     react-intl: 6.3.2
   checksum: b6c9f0ef3174b433b78ee667e119fe6fe580449e19dbedbe37a5c403acf7f53360f5798fcabac5c4acce0a12cec8f941629dfa8e74dd5fb8dcb93e16d87d9c79
+  languageName: node
+  linkType: hard
+
+"@navikt/k9-sak-typescript-client@npm:0.0.1-alpha":
+  version: 0.0.1-alpha
+  resolution: "@navikt/k9-sak-typescript-client@npm:0.0.1-alpha::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F0.0.1-alpha%2F89173d79200bc4b56c974eff0e44abee3a26b065"
+  checksum: 02544859ef9ded922c53a2bd276e3a74169ef52546c26a6b879f3015866003dad7d894a930a45383e98cabd8ed82b009ab6afca89e7e015fda32d5dbcc71e095
   languageName: node
   linkType: hard
 
