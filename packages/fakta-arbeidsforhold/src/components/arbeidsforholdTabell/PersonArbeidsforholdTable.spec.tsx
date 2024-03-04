@@ -104,7 +104,7 @@ describe('<PersonArbeidsforholdTable>', () => {
       ...arbeidsforhold,
       inntektsmeldinger: [
         {
-          mottattTidspunkt: '2018-05-05',
+          mottattTidspunkt: new Date('2018-05-05T10:00:00.000Z').toISOString(),
         },
       ],
     };
