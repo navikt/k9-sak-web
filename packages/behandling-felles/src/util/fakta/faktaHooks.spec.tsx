@@ -1,8 +1,4 @@
 /* eslint-disable class-methods-use-this */
-import React from 'react';
-import { IntlShape } from 'react-intl';
-import sinon from 'sinon';
-
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -12,16 +8,13 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
-
-import faktaHooks from './faktaHooks';
+import { renderHook } from '@testing-library/react';
+import React from 'react';
+import sinon from 'sinon';
 import FaktaPanelDef from './FaktaPanelDef';
 import FaktaPanelUtledet from './FaktaPanelUtledet';
+import faktaHooks from './faktaHooks';
 import { DEFAULT_FAKTA_KODE } from './faktaUtils';
-
-const HookWrapper = ({ callback }) => <div {...callback()} />;
-
-// const testHook = callback => shallow(<HookWrapper callback={callback} />);
-const testHook = callback => <HookWrapper callback={callback} />;
 
 describe('<faktaHooks>', () => {
   const fagsak = {
@@ -81,9 +74,8 @@ describe('<faktaHooks>', () => {
       },
     ];
     const valgtFaktaSteg = 'default';
-    const intl = { formatMessage: data => data.id } as IntlShape;
 
-    const wrapper = testHook(() =>
+    const { result } = renderHook(() =>
       faktaHooks.useFaktaPaneler(
         [panelDef],
         ekstraPanelData,
@@ -93,14 +85,13 @@ describe('<faktaHooks>', () => {
         valgtFaktaSteg,
       ),
     );
-    const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = Object.values(wrapper.find('div').props()).reduce(
-      (acc, value) => [...acc, value],
-      [],
-    );
+    const faktaPanel = result.current[0][0];
+    const valgtPanel = result.current[1];
+    const formaterteFaktaPaneler = result.current[2];
 
-    expect(faktaPaneler[0].getPanelDef()).toEqual(panelDef);
-    expect(faktaPaneler[0].getHarApneAksjonspunkter()).toBe(true);
-    expect(faktaPaneler[0].getKomponentData(rettigheter, ekstraPanelData, false)).toEqual({
+    expect(faktaPanel.faktaPanelDef).toEqual(panelDef);
+    expect(faktaPanel.getHarApneAksjonspunkter()).toBe(true);
+    expect(faktaPanel.getKomponentData(rettigheter, ekstraPanelData, false)).toEqual({
       aksjonspunkter: [aksjonspunkter[0]],
       readOnly: false,
       submittable: true,
@@ -112,7 +103,7 @@ describe('<faktaHooks>', () => {
       arbeidsforhold: ekstraPanelData.arbeidsforhold,
     });
 
-    expect(valgtPanel.getUrlKode()).toEqual(faktaPaneler[0].getUrlKode());
+    expect(valgtPanel.getUrlKode()).toEqual(faktaPanel.getUrlKode());
     expect(formaterteFaktaPaneler).toEqual([
       {
         erAktiv: true,
@@ -142,7 +133,7 @@ describe('<faktaHooks>', () => {
     const overstyringApCodes = [];
     const valgtProsessSteg = 'default';
 
-    const wrapper = testHook(() =>
+    const { result } = renderHook(() =>
       faktaHooks.useCallbacks(
         [panelUtledet],
         fagsak,
@@ -153,10 +144,8 @@ describe('<faktaHooks>', () => {
         lagreAksjonspunkter,
       ),
     );
-    const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = Object.values(wrapper.find('div').props()).reduce(
-      (acc, value) => [...acc, value],
-      [],
-    );
+    const velgFaktaPanelCallback = result.current[0];
+    const bekreftAksjonspunktCallback = result.current[1];
 
     velgFaktaPanelCallback(0);
 

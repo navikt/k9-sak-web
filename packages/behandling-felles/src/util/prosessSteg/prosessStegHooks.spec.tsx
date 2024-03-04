@@ -1,8 +1,4 @@
 /* eslint-disable class-methods-use-this */
-import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
-import sinon from 'sinon';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -12,20 +8,17 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
-
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import { renderHook } from '@testing-library/react';
+import React from 'react';
+import sinon from 'sinon';
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 import { ProsessStegPanelUtledet, ProsessStegUtledet } from './ProsessStegUtledet';
 import prosessStegHooks from './prosessStegHooks';
 
-const HookWrapper = ({ callback }) => <div data-values={callback()} />;
-
-// const testHook = callback => shallow(<HookWrapper callback={callback} />);
-
-const testHook = callback => <HookWrapper callback={callback} />;
-
-describe.skip('<prosessStegHooks>', () => {
+describe('<prosessStegHooks>', () => {
   const fagsak = {
     saksnummer: '123456',
     sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
@@ -120,7 +113,7 @@ describe.skip('<prosessStegHooks>', () => {
     const valgtProsessSteg = 'default';
 
     // ACT
-    const wrapper = testHook(() =>
+    const { result } = renderHook(() =>
       prosessStegHooks.useProsessStegPaneler(
         [new OpplysningspliktProsessStegPanelDef()],
         ekstraPanelData,
@@ -134,13 +127,10 @@ describe.skip('<prosessStegHooks>', () => {
         apentFaktaPanelInfo,
       ),
     );
-    const dataValues: any[] = wrapper.find('div').prop('data-values');
 
-    // @ts-ignore
-    const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = Object.values({
-      ...dataValues,
-      // @ts-ignore
-    }).reduce((acc, value) => [...acc, value], []);
+    const prosessStegPaneler = result.current[0];
+    const valgtPanel = result.current[1];
+    const formaterteProsessStegPaneler = result.current[2];
 
     expect(prosessStegPaneler).toHaveLength(1);
     const panel = prosessStegPaneler[0];
@@ -179,7 +169,7 @@ describe.skip('<prosessStegHooks>', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const valgtProsessSteg = 'default';
 
-    const wrapper = testHook(() =>
+    const { result } = renderHook(() =>
       prosessStegHooks.useProsessStegVelger(
         [utledetPanel],
         valgtFaktaSteg,
@@ -188,7 +178,8 @@ describe.skip('<prosessStegHooks>', () => {
         valgtProsessSteg,
       ),
     );
-    const prosessStegVelger = wrapper.find('div').prop('data-values') as (number) => void;
+
+    const prosessStegVelger = result.current;
 
     prosessStegVelger(0);
 
@@ -221,7 +212,7 @@ describe.skip('<prosessStegHooks>', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const valgtProsessSteg = 'opplysningsplikt';
 
-    const wrapper = testHook(() =>
+    const { result } = renderHook(() =>
       prosessStegHooks.useProsessStegVelger(
         [utledetPanel],
         valgtFaktaSteg,
@@ -230,7 +221,7 @@ describe.skip('<prosessStegHooks>', () => {
         valgtProsessSteg,
       ),
     );
-    const prosessStegVelger = wrapper.find('div').prop('data-values') as (number) => void;
+    const prosessStegVelger = result.current;
 
     prosessStegVelger(0);
 
@@ -263,7 +254,7 @@ describe.skip('<prosessStegHooks>', () => {
     lagreAksjonspunkter.returns(Promise.resolve());
     const lagringSideEffectsCallback = () => () => {};
 
-    const wrapper = testHook(() =>
+    const { result } = renderHook(() =>
       prosessStegHooks.useBekreftAksjonspunkt(
         fagsak,
         behandling as Behandling,
@@ -273,7 +264,8 @@ describe.skip('<prosessStegHooks>', () => {
         utledetPanel,
       ),
     );
-    const bekreftAksjonspunkt = wrapper.find('div').prop('data-values') as (number) => void;
+
+    const bekreftAksjonspunkt = result.current;
 
     await bekreftAksjonspunkt([{ kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU }]);
 
