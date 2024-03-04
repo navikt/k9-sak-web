@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-
+[ -d /tmp/k9/feature-toggle ] && echo "Feature toggle-directory finnes fra før, tilbakestiller" && rm -r /tmp/k9/feature-toggle/* || mkdir -p  /tmp/k9/feature-toggle
 envsubst < /etc/nginx/conf.d/feature-toggles.json > /tmp/k9/feature-toggle/toggles.json
 
 export APP_HOSTNAME="${HOSTNAME:-localhost}"
