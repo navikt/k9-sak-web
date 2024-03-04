@@ -5,10 +5,11 @@ charset utf-8;
 
 client_body_buffer_size 20M; # Default er satt veldig lavt. Får problemer med enkelte dokument queries.
 
-log_format debug '$remote_addr - $remote_user [$time_local] "$request" '
+    log_format debug '$remote_addr - $remote_user [$time_local] "$request" '
                      '$status $body_bytes_sent "$http_referer" '
                      '"$http_user_agent" "$http_x_forwarded_for" '
-                     'Request URI: "$request_uri"';
+                     'Request URI: "$request_uri" '
+                     'Upstream Address: "$upstream_addr"';
 # Expires map
 map $sent_http_content_type $expires {
     default                    off;
