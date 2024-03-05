@@ -1,4 +1,4 @@
-import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { BehandlingAppKontekst } from '@k9-sak-web/types';
 import { Location } from 'history';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactElement } from 'react';

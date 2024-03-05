@@ -1,5 +1,5 @@
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { BehandlingAppKontekst, Fagsak, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { Location } from 'history';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';

@@ -19,7 +19,7 @@ import {
   Tooltip,
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { BehandlingAppKontekst, Kodeverk } from '@k9-sak-web/types';
+import { BehandlingAppKontekst } from '@k9-sak-web/types';
 
 import styles from './behandlingPickerItemContent.module.css';
 
