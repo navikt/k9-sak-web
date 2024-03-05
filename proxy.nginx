@@ -140,7 +140,7 @@ server {
 
   location @401_json {
     default_type application/json;
-    add_header Location k9.intern.dev.nav.no/k9/sak/resource/login?original=k9.intern.dev.nav.no$request_uri always;
+    add_header Location /k9/sak/resource/login?original=$request_uri always;
     return 401 '{"feilmelding":"Bruker ikke innlogget","type":"MANGLER_TILGANG_FEIL"}';
   }
 
