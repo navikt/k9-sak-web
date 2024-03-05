@@ -1,13 +1,13 @@
 import Kodeverk from './kodeverkTsType';
 
 export type Behandlingsresultat = Readonly<{
-  type: Kodeverk;
+  type: string;
   fritekstbrev?: string;
   overskrift?: string;
-  vedtaksbrev?: Kodeverk;
-  avslagsarsak?: Kodeverk;
+  vedtaksbrev?: string;
+  avslagsarsak?: string;
   avslagsarsakFritekst?: string;
-  konsekvenserForYtelsen?: Kodeverk[];
+  konsekvenserForYtelsen?: string[];
 }>;
 
 export default Behandlingsresultat;

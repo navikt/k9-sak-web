@@ -5,8 +5,8 @@ export type BehandlingAppKontekst = Readonly<{
   id: number;
   versjon: number;
   uuid?: string;
-  status: Kodeverk;
-  type: Kodeverk;
+  status: string;
+  type: string;
   fristBehandlingPaaVent?: string;
   venteArsakKode?: string;
   behandlingPaaVent: boolean;
@@ -21,7 +21,7 @@ export type BehandlingAppKontekst = Readonly<{
   opprettet: string;
   avsluttet?: string;
   gjeldendeVedtak: boolean;
-  sprakkode: Kodeverk;
+  sprakkode: string;
   behandlendeEnhetId: string;
   stegTilstand?: {
     stegType: {
@@ -32,7 +32,7 @@ export type BehandlingAppKontekst = Readonly<{
   behandlingKoet: boolean;
   toTrinnsBehandling: boolean;
   behandlingÅrsaker: {
-    behandlingArsakType: Kodeverk;
+    behandlingArsakType: string; // #Kodeverk: skal denne skrives om? Usikker på om det var denne som hadde fler attributter
     manueltOpprettet: boolean;
     erAutomatiskRevurdering: boolean;
   }[];
@@ -40,7 +40,7 @@ export type BehandlingAppKontekst = Readonly<{
   kanHenleggeBehandling?: boolean;
   harVerge?: boolean;
   førsteÅrsak?: {
-    behandlingArsakType: Kodeverk;
+    behandlingArsakType: string; // #Kodeverk: skal denne skrives om? Usikker på om det var denne som hadde fler attributter
     manueltOpprettet: boolean;
     erAutomatiskRevurdering?: boolean;
   };
