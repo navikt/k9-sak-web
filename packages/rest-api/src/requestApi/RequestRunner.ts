@@ -136,7 +136,8 @@ class RequestRunner {
       if (popupWindow === null) {
         const location = `${response.headers.location}`;
         const queryParamAddition = location.includes('?') ? '&' : '?';
-        const redirectLocation = `${location}${queryParamAddition}redirectTo=/k9/web/close`;
+        const redirectLocation = `${location}${queryParamAddition}redirectTo=/k9/web/close`
+        console.log('redirectLocation', redirectLocation);
         popupWindow = window.open(redirectLocation, undefined, 'height=600,width=800');
       }
       const timer = setInterval(async () => {
