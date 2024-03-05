@@ -3,10 +3,12 @@ import eksternLinkImageUrl from '@fpsak-frontend/assets/images/ekstern_link_pil_
 import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg';
 import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
 import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import { DateTimeLabel, Image, Table, TableColumn, TableRow, Tooltip } from '@fpsak-frontend/shared-components';
+import { DateTimeLabel, Image, Tooltip } from '@fpsak-frontend/shared-components';
 import { Dokument, FagsakPerson } from '@k9-sak-web/types';
 import { StarFillIcon } from '@navikt/aksel-icons';
+import { Table } from '@navikt/ds-react';
 import axios from 'axios';
 import Lenke from 'nav-frontend-lenker';
 import { Select } from 'nav-frontend-skjema';
@@ -14,7 +16,6 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { useQuery } from 'react-query';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { Kompletthet } from '../types/Kompletthetsperioder';
 import styles from './documentList.module.css';
 
@@ -176,99 +177,108 @@ const DocumentList = ({
         )}
         {getModiaLenke()}
       </div>
-      <Table headerTextCodes={headerTextCodes}>
-        {documents
-          .filter(document =>
-            `${behandlingId}` === selectedFilter
-              ? document.behandlinger.some(behandling => behandling === behandlingId)
-              : true,
-          )
-          .map(document => {
-            const directionImage = getDirectionImage(document);
-            const directionTextCode = getDirectionText(document);
-            return (
-              <TableRow
-                key={document.dokumentId}
-                id={document.dokumentId}
-                model={document}
-                notFocusable
-                className={isVedtaksdokument(document) ? styles.borderTop : ''}
-              >
-                <TableColumn>
-                  <a
-                    className={styles.documentAnchorPlain}
-                    href={makeDocumentURL(document)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    tabIndex={-1}
-                  >
-                    <Image
-                      className={styles.image}
-                      src={directionImage}
-                      alt={intl.formatMessage({ id: directionTextCode })}
-                      tooltip={intl.formatMessage({ id: directionTextCode })}
-                    />
-                  </a>
-                </TableColumn>
-                <TableColumn>
-                  <a
-                    onClick={event => {
-                      event.stopPropagation();
-                    }}
-                    href={makeDocumentURL(document)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.documentAnchor}
-                  >
-                    {isVedtaksdokument(document) ? (
-                      <Element tag="span">{document.tittel}</Element>
-                    ) : (
-                      <Normaltekst tag="span">{document.tittel}</Normaltekst>
-                    )}
-                    {erInntektsmeldingOgBruktIDenneBehandlingen(document) && (
-                      <StarFillIcon
-                        className={styles.starIcon}
-                        title={intl.formatMessage({ id: 'DocumentList.IBruk' })}
+      <Table>
+        <Table.Header>
+          <Table.Row>
+            {headerTextCodes.map(textCode => (
+              <Table.HeaderCell key={textCode} scope="col">
+                <FormattedMessage id={textCode} />
+              </Table.HeaderCell>
+            ))}
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {documents
+            .filter(document =>
+              `${behandlingId}` === selectedFilter
+                ? document.behandlinger.some(behandling => behandling === behandlingId)
+                : true,
+            )
+            .map(document => {
+              const directionImage = getDirectionImage(document);
+              const directionTextCode = getDirectionText(document);
+              return (
+                <Table.Row
+                  key={document.dokumentId}
+                  id={document.dokumentId}
+                  className={isVedtaksdokument(document) ? styles.borderTop : ''}
+                >
+                  <Table.DataCell>
+                    <a
+                      className={styles.documentAnchorPlain}
+                      href={makeDocumentURL(document)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      tabIndex={-1}
+                    >
+                      <Image
+                        className={styles.image}
+                        src={directionImage}
+                        alt={intl.formatMessage({ id: directionTextCode })}
+                        tooltip={intl.formatMessage({ id: directionTextCode })}
                       />
-                    )}
-                  </a>
-                </TableColumn>
-                <TableColumn>
-                  <a
-                    className={styles.documentAnchorPlain}
-                    href={makeDocumentURL(document)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    tabIndex={-1}
-                  >
-                    {isTextMoreThan25char(document.gjelderFor) && (
-                      <Tooltip content={<Normaltekst>{document.gjelderFor}</Normaltekst>} alignLeft>
-                        {trimText(document.gjelderFor)}
-                      </Tooltip>
-                    )}
-                    {!isTextMoreThan25char(document.gjelderFor) && document.gjelderFor}
-                  </a>
-                </TableColumn>
-                <TableColumn>
-                  <a
-                    className={styles.documentAnchorPlain}
-                    href={makeDocumentURL(document)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    tabIndex={-1}
-                  >
-                    {document.tidspunkt ? (
-                      <DateTimeLabel dateTimeString={document.tidspunkt} />
-                    ) : (
-                      <Normaltekst data-testid="missing-timestamp">
-                        <FormattedMessage id="DocumentList.IProduksjon" />
-                      </Normaltekst>
-                    )}
-                  </a>
-                </TableColumn>
-              </TableRow>
-            );
-          })}
+                    </a>
+                  </Table.DataCell>
+                  <Table.DataCell>
+                    <a
+                      onClick={event => {
+                        event.stopPropagation();
+                      }}
+                      href={makeDocumentURL(document)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.documentAnchor}
+                    >
+                      {isVedtaksdokument(document) ? (
+                        <Element tag="span">{document.tittel}</Element>
+                      ) : (
+                        <Normaltekst tag="span">{document.tittel}</Normaltekst>
+                      )}
+                      {erInntektsmeldingOgBruktIDenneBehandlingen(document) && (
+                        <StarFillIcon
+                          className={styles.starIcon}
+                          title={intl.formatMessage({ id: 'DocumentList.IBruk' })}
+                        />
+                      )}
+                    </a>
+                  </Table.DataCell>
+                  <Table.DataCell>
+                    <a
+                      className={styles.documentAnchorPlain}
+                      href={makeDocumentURL(document)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      tabIndex={-1}
+                    >
+                      {isTextMoreThan25char(document.gjelderFor) && (
+                        <Tooltip content={<Normaltekst>{document.gjelderFor}</Normaltekst>} alignLeft>
+                          {trimText(document.gjelderFor)}
+                        </Tooltip>
+                      )}
+                      {!isTextMoreThan25char(document.gjelderFor) && document.gjelderFor}
+                    </a>
+                  </Table.DataCell>
+                  <Table.DataCell>
+                    <a
+                      className={styles.documentAnchorPlain}
+                      href={makeDocumentURL(document)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      tabIndex={-1}
+                    >
+                      {document.tidspunkt ? (
+                        <DateTimeLabel dateTimeString={document.tidspunkt} />
+                      ) : (
+                        <Normaltekst data-testid="missing-timestamp">
+                          <FormattedMessage id="DocumentList.IProduksjon" />
+                        </Normaltekst>
+                      )}
+                    </a>
+                  </Table.DataCell>
+                </Table.Row>
+              );
+            })}
+        </Table.Body>
       </Table>
     </>
   );
