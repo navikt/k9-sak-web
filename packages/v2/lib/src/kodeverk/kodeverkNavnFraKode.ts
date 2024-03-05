@@ -1,11 +1,16 @@
-import { KodeverkMedNavn } from '@k9-sak-web/types';
-import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { KodeverkType, AlleKodeverk } from '@k9-sak-web/gui/kodeverk/index.js';
+
+export const kodeverkNavnFrakode = (kode: string, kodeverkType: KodeverkType, alleKodeverk: AlleKodeverk): string => {
+  console.log(`konverterer ${kode} til navn fra kodeverk ${kodeverkType}`);
+  //   const kodeverkForType = kodeverk[];
+  return 'kodeverknavnFraKode';
+};
 
 /*
  * Funksjon for å slå opp et navnet/verdien til en gitt kode i et kodeverk / en gitt kodeverktype.
  * Må få alle kodeverk sendt inn som input, samt hvilket kodeverktype det gjelder og koden som skal
  * det skal gjøres oppslag på.
- */
+ *
 export const getKodeverknavnFraKode = (
   alleKodeverk: { [key: string]: KodeverkMedNavn[] },
   kodeverkType: KodeverkType, // foreløpig usikker på om vi trenger undertype, beholder inntill videre
@@ -26,7 +31,7 @@ export const getKodeverknavnFraKode = (
 
 /*
  * Hjelpefunksjon for hente funksjon for å gjøre oppslag i kodeverk.
- */
+ *
 export const getKodeverknavnFn =
   (alleKodeverk: { [key: string]: KodeverkMedNavn[] }) => (kode: string, kodeverk: KodeverkType, undertype?: string) =>
     getKodeverknavnFraKode(alleKodeverk, kodeverk, kode, undertype);
@@ -54,3 +59,4 @@ export const konverterKodeverkTilKode = (data: any, erTilbakekreving = false) =>
     }
   });
 };
+*/

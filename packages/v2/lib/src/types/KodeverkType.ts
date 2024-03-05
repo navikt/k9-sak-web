@@ -1,5 +1,10 @@
-/* eslint-disable @typescript-eslint/no-duplicate-enum-values */
-enum kodeverkTyper {
+/*
+ * Overføring av kodeverkTyper fra tidligere, usikker på hvorfor det skal være duplikater
+ * i denne listen. Antar at jeg skriver vekk duplikatene ifm refaktorering av kodeverk
+ * eslint-disable @typescript-eslint/no-duplicate-enum-values *
+ */
+
+export enum KodeverkType {
   ARBEID_TYPE = 'ArbeidType',
   AVSLAGSARSAK = 'Avslagsårsak',
   INNVILGET_AARSAK = 'InnvilgetÅrsak',
@@ -26,13 +31,13 @@ enum kodeverkTyper {
   OPPHOLD_ARSAK = 'OppholdÅrsak',
   UTSETTELSE_AARSAK_TYPE = 'UtsettelseÅrsak',
   UTSETTELSE_GRADERING_KVOTE = 'UttakPeriodeType',
+  //   UTTAK_PERIODE_TYPE = 'UttakPeriodeType',
   OPPTJENING_AKTIVITET_TYPE = 'OpptjeningAktivitetType',
-  UTTAK_PERIODE_TYPE = 'UttakPeriodeType',
   REVURDERING_VARSLING_ÅRSAK = 'RevurderingVarslingÅrsak',
   MANUELL_BEHANDLING_AARSAK = 'ManuellBehandlingÅrsak',
   UTTAK_PERIODE_VURDERING_TYPE = 'UttakPeriodeVurderingType',
   IKKE_OPPFYLT_AARSAK = 'IkkeOppfyltÅrsak',
-  UTTAK_AVSLAG_ARSAK = 'IkkeOppfyltÅrsak',
+  //   UTTAK_AVSLAG_ARSAK = 'IkkeOppfyltÅrsak',
   INNTEKTSKATEGORI = 'Inntektskategori',
   BEREGNINGSGRUNNLAG_ANDELTYPER = 'BeregningsgrunnlagAndeltype',
   AKTIVITET_STATUS = 'AktivitetStatus',
@@ -75,4 +80,52 @@ enum kodeverkTyper {
   ÅRSAK_TIL_VURDERING = 'ÅrsakTilVurdering',
 }
 
-export default kodeverkTyper;
+/*
+AktivitetStatus: KodeverkMedNavn[];
+  ArbeidType: KodeverkMedNavn[];
+  ArbeidsforholdHandlingType: KodeverkMedNavn[];
+  Arbeidskategori: KodeverkMedNavn[];
+  Avslagsårsak: KodeverkMedNavn[];
+  BehandlingResultatType: KodeverkMedNavn[];
+  BehandlingStatus: KodeverkMedNavn[];
+  BehandlingType: KodeverkMedNavn[];
+  BehandlingÅrsakType: KodeverkMedNavn[];
+  DokumentTypeId: KodeverkMedNavn[];
+  FagsakStatus: KodeverkMedNavn[];
+  FagsakYtelseType: KodeverkMedNavn[];
+  Fagsystem: KodeverkMedNavn[];
+  FaktaOmBeregningTilfelle: KodeverkMedNavn[];
+  HistorikkAktør: KodeverkMedNavn[];
+  HistorikkAvklartSoeknadsperiodeType: KodeverkMedNavn[];
+  HistorikkBegrunnelseType: KodeverkMedNavn[];
+  HistorikkEndretFeltType: KodeverkMedNavn[];
+  HistorikkEndretFeltVerdiType: KodeverkMedNavn[];
+  HistorikkOpplysningType: KodeverkMedNavn[];
+  HistorikkResultatType: KodeverkMedNavn[];
+  HistorikkinnslagType: KodeverkMedNavn[];
+  Inntektskategori: KodeverkMedNavn[];
+  KonsekvensForYtelsen: KodeverkMedNavn[];
+  Landkoder: KodeverkMedNavn[];
+  MedlemskapDekningType: KodeverkMedNavn[];
+  MedlemskapManuellVurderingType: KodeverkMedNavn[];
+  MedlemskapType: KodeverkMedNavn[];
+  OppgaveÅrsak: KodeverkMedNavn[];
+  OpptjeningAktivitetType: KodeverkMedNavn[];
+  PermisjonsbeskrivelseType: KodeverkMedNavn[];
+  PersonstatusType: KodeverkMedNavn[];
+  Region: KodeverkMedNavn[];
+  RelatertYtelseTilstand: KodeverkMedNavn[];
+  RevurderingVarslingÅrsak: KodeverkMedNavn[];
+  SivilstandType: KodeverkMedNavn[];
+  SkjermlenkeType: KodeverkMedNavn[];
+  Språkkode: KodeverkMedNavn[];
+  TilbakekrevingVidereBehandling: KodeverkMedNavn[];
+  UtenlandsoppholdÅrsak: KodeverkMedNavn[];
+  VedtakResultatType: KodeverkMedNavn[];
+  Venteårsak: KodeverkMedNavn[];
+  VilkårType: KodeverkMedNavn[];
+  VirksomhetType: KodeverkMedNavn[];
+  VurderArbeidsforholdHistorikkinnslag: KodeverkMedNavn[];
+  VurderÅrsak: KodeverkMedNavn[];
+  ÅrsakTilVurdering: KodeverkMedNavn[];
+  */

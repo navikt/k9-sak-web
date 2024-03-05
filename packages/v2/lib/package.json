@@ -5,6 +5,7 @@
   "type": "module",
   "version": "1.0.0",
   "exports": {
-    "./kodeverk/*": "./src/kodeverk/*"
+    "./kodeverk/*": "./src/kodeverk/*",
+    "./types/*": "./src/types/*"
   }
 }
