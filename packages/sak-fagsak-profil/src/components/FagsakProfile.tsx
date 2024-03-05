@@ -3,9 +3,10 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 
+import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer, Tooltip } from '@fpsak-frontend/shared-components';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
 
 const visSakDekningsgrad = (saksKode: string, dekningsgrad?: number): boolean => {
   const erForeldrepenger = saksKode === FagsakYtelseType.FORELDREPENGER;
@@ -16,8 +17,8 @@ const visSakDekningsgrad = (saksKode: string, dekningsgrad?: number): boolean =>
 
 interface OwnProps {
   saksnummer: string;
-  fagsakYtelseType: KodeverkMedNavn;
-  fagsakStatus: KodeverkMedNavn;
+  fagsakYtelseType: string;
+  fagsakStatus: string;
   renderBehandlingMeny: () => ReactNode;
   renderBehandlingVelger: () => ReactNode;
   dekningsgrad?: number;
@@ -26,7 +27,9 @@ interface OwnProps {
 /**
  * FagsakProfile
  *
- * Presentasjonskomponent. Viser fagsakinformasjon og knapper for å endre status eller lukke sak.
+ * Presentasjonskomponent
+ *
+ *  Viser fagsakinformasjon og knapper for å endre status eller lukke sak.
  */
 export const FagsakProfile = ({
   saksnummer,
@@ -36,38 +39,43 @@ export const FagsakProfile = ({
   renderBehandlingVelger,
   dekningsgrad,
   intl,
-}: OwnProps & WrappedComponentProps) => (
-  <>
-    <FlexContainer>
-      <FlexRow spaceBetween alignItemsToBaseline>
-        <FlexColumn>
-          <FlexRow wrap>
-            <FlexColumn>
-              <Systemtittel>{fagsakYtelseType.navn}</Systemtittel>
-            </FlexColumn>
-            {visSakDekningsgrad(fagsakYtelseType.kode, dekningsgrad) && (
+}: OwnProps & WrappedComponentProps) => {
+  const { kodeverkNavnFraKode } = useKodeverkV2();
+
+  return (
+    <>
+      <FlexContainer>
+        fagsak profile
+        <FlexRow spaceBetween alignItemsToBaseline>
+          <FlexColumn>
+            <FlexRow wrap>
               <FlexColumn>
-                <Tooltip
-                  content={intl.formatMessage({ id: 'FagsakProfile.Dekningsgrad' }, { dekningsgrad })}
-                  alignBottom
-                >
-                  <EtikettInfo>{`${dekningsgrad}%`}</EtikettInfo>
-                </Tooltip>
+                <Systemtittel>{kodeverkNavnFraKode(fagsakYtelseType, KodeverkType.FAGSAK_YTELSE)}</Systemtittel>
               </FlexColumn>
-            )}
-          </FlexRow>
-        </FlexColumn>
-        <FlexColumn>{renderBehandlingMeny()}</FlexColumn>
-      </FlexRow>
-      <VerticalSpacer eightPx />
-      <FlexRow>
-        <FlexColumn>
-          <Normaltekst>{`${saksnummer} - ${fagsakStatus.navn}`}</Normaltekst>
-        </FlexColumn>
-      </FlexRow>
-    </FlexContainer>
-    {renderBehandlingVelger()}
-  </>
-);
+              {visSakDekningsgrad(fagsakYtelseType, dekningsgrad) && (
+                <FlexColumn>
+                  <Tooltip
+                    content={intl.formatMessage({ id: 'FagsakProfile.Dekningsgrad' }, { dekningsgrad })}
+                    alignBottom
+                  >
+                    <EtikettInfo>{`${dekningsgrad}%`}</EtikettInfo>
+                  </Tooltip>
+                </FlexColumn>
+              )}
+            </FlexRow>
+          </FlexColumn>
+          <FlexColumn>{renderBehandlingMeny()}</FlexColumn>
+        </FlexRow>
+        <VerticalSpacer eightPx />
+        <FlexRow>
+          <FlexColumn>
+            <Normaltekst>{`${saksnummer} - ${kodeverkNavnFraKode(fagsakStatus, KodeverkType.FAGSAK_STATUS)}`}</Normaltekst>
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+      {renderBehandlingVelger()}
+    </>
+  );
+};
 
 export default injectIntl(FagsakProfile);
