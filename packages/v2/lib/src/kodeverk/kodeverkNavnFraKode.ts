@@ -1,9 +1,16 @@
-import { KodeverkType, AlleKodeverk } from '@k9-sak-web/gui/kodeverk/index.js';
+// import { KodeverkType, AlleKodeverk } from '@k9-sak-web/lib/kodeverk/';
+
+import { AlleKodeverk, KodeverkType, KodeverkV2 } from '../types';
 
 export const kodeverkNavnFrakode = (kode: string, kodeverkType: KodeverkType, alleKodeverk: AlleKodeverk): string => {
   console.log(`konverterer ${kode} til navn fra kodeverk ${kodeverkType}`);
-  //   const kodeverkForType = kodeverk[];
-  return 'kodeverknavnFraKode';
+  const kodeverkForType = alleKodeverk[kodeverkType];
+  if (!kodeverkForType || kodeverkForType.length === 0) {
+    return '';
+  }
+
+  const kodeverk = kodeverkForType.find((k: KodeverkV2) => k.kode === kode);
+  return kodeverk ? kodeverk.navn : '';
 };
 
 /*

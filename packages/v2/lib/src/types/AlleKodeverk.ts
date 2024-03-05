@@ -1,6 +1,5 @@
-import { KodeverkType } from '@k9-sak-web/gui/kodeverk/index.js';
-import { Kodeverk } from './Kodeverk';
+import { KodeverkType, KodeverkV2 } from '.';
 
 export type AlleKodeverk = {
-  [key in KodeverkType]: Kodeverk[];
+  [key in KodeverkType]: KodeverkV2[];
 };
