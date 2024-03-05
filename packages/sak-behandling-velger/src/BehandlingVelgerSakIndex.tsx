@@ -25,7 +25,6 @@ interface OwnProps {
   getBehandlingLocation: (behandlingId: number) => Location;
   noExistingBehandlinger: boolean;
   behandlingId?: number;
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
   showAll: boolean;
   toggleShowAll: () => void;
   fagsak: Fagsak;
@@ -36,7 +35,6 @@ const BehandlingVelgerSakIndex = ({
   behandlinger,
   getBehandlingLocation,
   noExistingBehandlinger,
-  getKodeverkFn,
   behandlingId,
   showAll,
   toggleShowAll,
@@ -44,10 +42,10 @@ const BehandlingVelgerSakIndex = ({
   createLocationForSkjermlenke,
 }: OwnProps) => {
   const skalViseGammelBehandlingsvelger =
-    fagsak.sakstype.kode === fagsakYtelseType.FRISINN ||
-    fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN ||
-    fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-    fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE;
+    fagsak.sakstype === fagsakYtelseType.FRISINN ||
+    fagsak.sakstype === fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN ||
+    fagsak.sakstype === fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
+    fagsak.sakstype === fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE;
   return (
     <RawIntlProvider value={intl}>
       {skalViseGammelBehandlingsvelger ? (
@@ -58,7 +56,6 @@ const BehandlingVelgerSakIndex = ({
           behandlingId={behandlingId}
           showAll={showAll}
           toggleShowAll={toggleShowAll}
-          getKodeverkFn={getKodeverkFn}
         />
       ) : (
         <QueryClientProvider client={queryClient}>
@@ -66,10 +63,9 @@ const BehandlingVelgerSakIndex = ({
             behandlinger={behandlinger}
             getBehandlingLocation={getBehandlingLocation}
             noExistingBehandlinger={noExistingBehandlinger}
-            getKodeverkFn={getKodeverkFn}
             behandlingId={behandlingId}
             createLocationForSkjermlenke={createLocationForSkjermlenke}
-            sakstypeKode={fagsak.sakstype.kode}
+            sakstypeKode={fagsak.sakstype}
           />
         </QueryClientProvider>
       )}

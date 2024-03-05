@@ -26,7 +26,7 @@ import styles from './behandlingPickerItemContent.module.css';
 // TODO (TOR) Kva er dette for noko? Desse tekstane burde vel komma fra kodeverket? Ein skal uansett ikkje hardkoda kodane her!
 // TODO hente de forksjellige kodeverkene man trenger
 const getÅrsak = (årsak: BehandlingAppKontekst['førsteÅrsak']) => {
-  switch (årsak.behandlingArsakType.kode) {
+  switch (årsak.behandlingArsakType) {
     case 'RE-MF':
     case 'RE-MFIP':
       return 'Behandlingspunkt.Årsak.ManglerFødselsdato';
@@ -91,8 +91,7 @@ const getÅrsak = (årsak: BehandlingAppKontekst['førsteÅrsak']) => {
 
 const tilbakekrevingÅrsakTyperKlage = [behandlingArsakType.RE_KLAGE_KA, behandlingArsakType.RE_KLAGE_NFP];
 
-const erTilbakekrevingÅrsakKlage = (årsak?: Kodeverk): boolean =>
-  årsak && tilbakekrevingÅrsakTyperKlage.includes(årsak.kode);
+const erTilbakekrevingÅrsakKlage = (årsak?: string): boolean => årsak && tilbakekrevingÅrsakTyperKlage.includes(årsak);
 
 const renderChevron = (chevron: string, messageId: string): ReactElement => (
   <FormattedMessage id={messageId}>{altText => <Image src={chevron} alt={`${altText}`} />}</FormattedMessage>
