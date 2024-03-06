@@ -541,7 +541,7 @@ export const VedtakForm: React.FC<Props> = ({
                     />
                   )}
 
-                  {isAvslag(behandlingresultat.type.kode) && (
+                  {isAvslag(behandlingresultat.type) && (
                     <VedtakAvslagPanel
                       aksjonspunkter={aksjonspunkter}
                       behandlingsresultat={behandlingresultat}
