@@ -74,7 +74,7 @@ const getPreviewCallback =
   (
     behandlingTypeKode: string,
     behandlingUuid: string,
-    fagsakYtelseType: Kodeverk,
+    fagsakYtelseType: string,
     fetchPreview: (erHenleggelse: boolean, data: any) => void,
   ) =>
   (overstyrtMottaker: Mottaker, dokumentMal: string, fritekst: string, fritekstbrev?: Fritekstbrev) => {
@@ -147,7 +147,7 @@ const MeldingIndex = ({
   const submitCallback = useCallback(
     getSubmitCallback(
       setShowMessageModal,
-      behandling.type.kode,
+      behandling.type,
       behandlingId,
       behandling.uuid,
       submitMessage,
@@ -180,7 +180,7 @@ const MeldingIndex = ({
   const fetchPreview = useVisForhandsvisningAvMelding(behandling, fagsak);
 
   const previewCallback = useCallback(
-    getPreviewCallback(behandling.type.kode, behandling.uuid, fagsak.sakstype, fetchPreview),
+    getPreviewCallback(behandling.type, behandling.uuid, fagsak.sakstype, fetchPreview),
     [behandlingId, behandlingVersjon],
   );
 
@@ -234,8 +234,8 @@ const MeldingIndex = ({
         personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
         erTilbakekreving={
-          behandling.type.kode === BehandlingType.TILBAKEKREVING ||
-          behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
+          behandling.type === BehandlingType.TILBAKEKREVING ||
+          behandling.type === BehandlingType.TILBAKEKREVING_REVURDERING
         }
         backendApi={backendApi}
       />
@@ -249,8 +249,8 @@ const MeldingIndex = ({
           ventearsaker={ventearsaker}
           hasManualPaVent={false}
           erTilbakekreving={
-            behandling.type.kode === BehandlingType.TILBAKEKREVING ||
-            behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
+            behandling.type === BehandlingType.TILBAKEKREVING ||
+            behandling.type === BehandlingType.TILBAKEKREVING_REVURDERING
           }
         />
       )}

@@ -151,7 +151,7 @@ const BehandlingIndex = ({
 
   const query = parseQueryString(location.search);
 
-  const behandlingTypeKode = behandling?.type ? behandling.type.kode : undefined;
+  const behandlingTypeKode = behandling?.type ? behandling.type : undefined;
 
   const defaultProps = {
     key: behandlingId,
@@ -250,7 +250,7 @@ const BehandlingIndex = ({
           <BehandlingTilbakekrevingIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             harApenRevurdering={fagsakBehandlingerInfo.some(
-              b => b.type.kode === BehandlingType.REVURDERING && b.status.kode !== BehandlingStatus.AVSLUTTET,
+              b => b.type === BehandlingType.REVURDERING && b.status !== BehandlingStatus.AVSLUTTET,
             )}
             valgtFaktaSteg={query.fakta}
             {...defaultProps}
@@ -260,7 +260,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype.kode === FagsakYtelseType.OMSORGSPENGER) {
+  if (fagsak.sakstype === FagsakYtelseType.OMSORGSPENGER) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -274,7 +274,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+  if (fagsak.sakstype === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -288,7 +288,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (erFagytelseTypeUtvidetRett(fagsak.sakstype.kode)) {
+  if (erFagytelseTypeUtvidetRett(fagsak.sakstype)) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -302,7 +302,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype.kode === FagsakYtelseType.FRISINN) {
+  if (fagsak.sakstype === FagsakYtelseType.FRISINN) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -316,7 +316,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype.kode === FagsakYtelseType.OPPLAERINGSPENGER) {
+  if (fagsak.sakstype === FagsakYtelseType.OPPLAERINGSPENGER) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>

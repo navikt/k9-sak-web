@@ -15,7 +15,6 @@ import {
   Fagsak,
   FagsakPerson,
   FeatureToggles,
-  Kodeverk,
   KodeverkMedNavn,
   MerknadFraLos,
   NavAnsatt,
@@ -46,21 +45,19 @@ import FagsakGrid from './components/FagsakGrid';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
 
-const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
+const erTilbakekreving = (behandlingType: string): boolean =>
   behandlingType &&
-  (BehandlingType.TILBAKEKREVING === behandlingType.kode ||
-    BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
+  (BehandlingType.TILBAKEKREVING === behandlingType || BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType);
 
-const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER;
-const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) =>
-  fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
+const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelseType.PLEIEPENGER;
+const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
 const erOmsorgspenger = (fagsak: Fagsak) =>
   [
     fagsakYtelseType.OMSORGSPENGER,
     fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN,
     fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN,
     fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE,
-  ].includes(fagsak?.sakstype?.kode);
+  ].includes(fagsak?.sakstype);
 
 const queryClient = new QueryClient();
 
@@ -247,13 +244,14 @@ const FagsakIndex = () => {
             <Route
               path={behandlingerRoutePath}
               element={
-                <BehandlingerIndex
-                  fagsak={fagsak}
-                  alleBehandlinger={alleBehandlinger}
-                  arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-                  setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
-                  setRequestPendingMessage={setRequestPendingMessage}
-                />
+                <>Behandlinger index</>
+                // <BehandlingerIndex
+                //   fagsak={fagsak}
+                //   alleBehandlinger={alleBehandlinger}
+                //   arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+                //   setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
+                //   setRequestPendingMessage={setRequestPendingMessage}
+                // />
               }
             />
           </Routes>
@@ -323,7 +321,7 @@ const FagsakIndex = () => {
                     <AndreSakerPåSøkerStripe
                       søkerIdent={fagsakPerson.personnummer}
                       saksnummer={fagsak.saksnummer}
-                      fagsakYtelseType={fagsak.sakstype.kode}
+                      fagsakYtelseType={fagsak.sakstype}
                     />
                   )}
                 </>
