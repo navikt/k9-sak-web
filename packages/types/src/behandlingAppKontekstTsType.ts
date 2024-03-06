@@ -1,4 +1,3 @@
-import Kodeverk from './kodeverkTsType';
 import Behandlingsresultat from './behandlingsresultatTsType';
 
 export type BehandlingAppKontekst = Readonly<{

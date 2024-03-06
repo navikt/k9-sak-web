@@ -1,15 +1,13 @@
-import Kodeverk from './kodeverkTsType';
-
 export type Aksjonspunkt = Readonly<{
-  definisjon: Kodeverk;
-  status: Kodeverk;
+  definisjon: string;
+  status: string;
   begrunnelse?: string;
-  vilkarType?: Kodeverk;
+  vilkarType?: string;
   toTrinnsBehandling?: boolean;
   toTrinnsBehandlingGodkjent?: boolean;
-  vurderPaNyttArsaker?: Kodeverk[];
+  vurderPaNyttArsaker?: string[];
   besluttersBegrunnelse?: string;
-  aksjonspunktType?: Kodeverk;
+  aksjonspunktType?: string;
   kanLoses: boolean;
   erAktivt: boolean;
   venteårsakVariant?: string;

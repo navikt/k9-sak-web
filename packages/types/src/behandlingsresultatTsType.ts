@@ -1,5 +1,3 @@
-import Kodeverk from './kodeverkTsType';
-
 export type Behandlingsresultat = Readonly<{
   type: string;
   fritekstbrev?: string;

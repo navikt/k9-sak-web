@@ -14,22 +14,22 @@ export type PersonopplysningAdresse = Readonly<{
 
 export type PersonopplysningerBasic = Readonly<{
   nummer?: number;
-  navBrukerKjonn: Kodeverk;
+  navBrukerKjonn: string;
   statsborgerskap: KodeverkMedNavnTsType;
   avklartPersonstatus: {
-    orginalPersonstatus: Kodeverk;
-    overstyrtPersonstatus: Kodeverk;
+    orginalPersonstatus: string;
+    overstyrtPersonstatus: string;
   };
-  personstatus: Kodeverk;
-  diskresjonskode: Kodeverk;
-  sivilstand: Kodeverk;
+  personstatus: string;
+  diskresjonskode: string;
+  sivilstand: string;
   aktoerId?: string;
   navn: string;
   dodsdato?: string;
   fodselsdato?: string;
   adresser: PersonopplysningAdresse[];
   fnr?: string;
-  region: Kodeverk;
+  region: string;
   harVerge?: boolean;
   ektefelle?: PersonopplysningerBasic;
 }>;
