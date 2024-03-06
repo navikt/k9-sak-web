@@ -20,14 +20,8 @@ describe('<MenyHenleggIndex>', () => {
         behandlingVersjon={1}
         henleggBehandling={henleggBehandlingCallback}
         forhandsvisHenleggBehandling={sinon.spy()}
-        ytelseType={{
-          kode: fagsakYtelseType.FORELDREPENGER,
-          kodeverk: 'FAGSAK_YTELSE_TYPE',
-        }}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: 'BEHANDLING_TYPE',
-        }}
+        ytelseType={fagsakYtelseType.FORELDREPENGER}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
         behandlingUuid="2323"
         behandlingResultatTyper={[
           {
