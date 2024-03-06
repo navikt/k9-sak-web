@@ -1,13 +1,14 @@
-import React from 'react';
-import { expect } from 'chai';
-import sinon from 'sinon';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { KlageVurderingRadioOptionsNfp } from './KlageVurderingRadioOptionsNfp';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 
-import shallowWithIntl, { intlMock } from '../../../i18n';
+import React from 'react';
+import sinon from 'sinon';
+import { intlMock } from '../../../i18n';
+import messages from '../../../i18n/nb_NO.json';
+import { KlageVurderingRadioOptionsNfp } from './KlageVurderingRadioOptionsNfp';
 
 describe('<KlageVurderingRadioOptionsNfp>', () => {
   const sprakkode = {
@@ -22,7 +23,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   ];
 
   it('skal vise to options når klage opprettholdt', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <KlageVurderingRadioOptionsNfp
         fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
         readOnly={false}
@@ -35,15 +36,14 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
         formProps={{}}
         sprakkode={sprakkode}
       />,
+      { messages },
     );
-    const radios = wrapper.find('RadioOption');
-    expect(radios).to.have.length(2);
-    expect(radios.at(0).prop('label').id).to.equal('Klage.ResolveKlage.ChangeVedtak');
-    expect(radios.at(1).prop('label').id).to.equal('Klage.ResolveKlage.KeepVedtakNfp');
+    expect(screen.getByRole('radio', { name: 'Omgjør vedtaket' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Oppretthold vedtaket' })).toBeInTheDocument();
   });
 
   it('skal vise fem options når klage medhold', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <KlageVurderingRadioOptionsNfp
         fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
         readOnly={false}
@@ -56,18 +56,18 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
         formProps={{}}
         sprakkode={sprakkode}
       />,
+      { messages },
     );
-    const radios = wrapper.find('RadioOption');
-    expect(radios).to.have.length(5);
-    expect(radios.at(0).prop('label').id).to.equal('Klage.ResolveKlage.ChangeVedtak');
-    expect(radios.at(1).prop('label').id).to.equal('Klage.ResolveKlage.KeepVedtakNfp');
-    expect(radios.at(2).prop('label').id).to.equal('Klage.Behandle.Omgjort');
-    expect(radios.at(3).prop('label').id).to.equal('Klage.Behandle.Ugunst');
-    expect(radios.at(4).prop('label').id).to.equal('Klage.Behandle.DelvisOmgjort');
+
+    expect(screen.getByRole('radio', { name: 'Omgjør vedtaket' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Oppretthold vedtaket' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Til gunst' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Til ugunst' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Delvis omgjør, til gunst' })).toBeInTheDocument();
   });
 
   it('skal vise hjemler når klagevurdering er opprettholdt', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <KlageVurderingRadioOptionsNfp
         fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
         readOnly={false}
@@ -80,13 +80,13 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
         formProps={{}}
         sprakkode={sprakkode}
       />,
+      { messages },
     );
-    expect(wrapper.find('SelectField').props().name).to.equal('klageHjemmel');
-    expect(wrapper.find('SelectField')).to.have.length(1);
+    expect(screen.getByRole('combobox', { name: 'Hjemmel' })).toBeInTheDocument();
   });
 
   it('skal ikke vise hjemler når klagevurdering er opprettholdt og behandling er frisinn', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <KlageVurderingRadioOptionsNfp
         fagsak={{ sakstype: { kode: fagsakYtelseType.FRISINN } }}
         readOnly={false}
@@ -99,7 +99,8 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
         formProps={{}}
         sprakkode={sprakkode}
       />,
+      { messages },
     );
-    expect(wrapper.find('SelectField')).to.have.length(0);
+    expect(screen.queryByRole('combobox', { name: 'Hjemmel' })).not.toBeInTheDocument();
   });
 });

@@ -1,13 +1,7 @@
-import { shallow } from 'enzyme';
-import moment from 'moment';
-import { Input } from 'nav-frontend-skjema';
-import React from 'react';
-import sinon from 'sinon';
-
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import PeriodCalendarOverlay from './PeriodCalendarOverlay';
+import React from 'react';
+import sinon from 'sinon';
 import Periodpicker from './Periodpicker';
 
 describe('<Periodpicker>', () => {
@@ -26,7 +20,7 @@ describe('<Periodpicker>', () => {
     expect(container.getElementsByClassName('calendarToggleButton').length).toBe(1);
   });
 
-  it.skip('skal vise dato-velger ved trykk på knapp', () => {
+  it('skal vise dato-velger ved trykk på knapp', async () => {
     const { container } = render(
       <Periodpicker
         names={['fromDate', 'toDate']}
@@ -36,42 +30,14 @@ describe('<Periodpicker>', () => {
       />,
     );
 
-    userEvent.click(screen.getByRole('button'));
-
-    // const button = wrapper.find(CalendarToggleButton);
-    // button.prop('toggleShowCalendar')();
-    // wrapper.update();
-
-    // const overlay = wrapper.find(PeriodCalendarOverlay);
-    // expect(overlay).toHaveLength(1);
-    // expect(overlay.prop('startDate')).toEqual(moment('30.08.2017', DDMMYYYY_DATE_FORMAT).toDate());
-    // expect(overlay.prop('endDate')).toEqual(moment('31.10.2017', DDMMYYYY_DATE_FORMAT).toDate());
+    await userEvent.click(screen.getByRole('button'));
+    expect(container.getElementsByClassName('calendarRoot').length).toBe(1);
+    expect(screen.getByDisplayValue('30.08.2017 - 31.10.2017')).toBeInTheDocument();
   });
 
-  it('skal lage periode med lik start- og sluttdato når en velger dato og det ikke finnes noe fra før', () => {
+  it('skal lage periode med ny startdato når en velger dato etter nåværende periode', async () => {
     const onChangeCallback = sinon.spy();
-    const wrapper = shallow(
-      <Periodpicker
-        names={['fromDate', 'toDate']}
-        // @ts-ignore
-        fromDate={{ input: { value: '', onChange: onChangeCallback } }}
-        toDate={{ input: { value: '', onChange: onChangeCallback } }}
-      />,
-    );
-
-    wrapper.setState({ showCalendar: true });
-
-    const overlay = wrapper.find(PeriodCalendarOverlay);
-    overlay.prop('onDayChange')(moment('30.08.2017', DDMMYYYY_DATE_FORMAT).toDate());
-    wrapper.update();
-
-    const inputField = wrapper.find(Input);
-    expect(inputField.prop('value')).toEqual('30.08.2017 - 30.08.2017');
-  });
-
-  it('skal lage periode med ny startdato når en velger dato etter nåværende periode', () => {
-    const onChangeCallback = sinon.spy();
-    const wrapper = shallow(
+    render(
       <Periodpicker
         names={['fromDate', 'toDate']}
         // @ts-ignore
@@ -80,24 +46,17 @@ describe('<Periodpicker>', () => {
       />,
     );
 
-    const inputField = wrapper.find(Input);
-    const ref = inputField.prop('inputRef') as (params: any) => void;
-    ref({ focus: sinon.spy() });
-    wrapper.update();
-
-    wrapper.setState({ showCalendar: true });
-
-    const overlay = wrapper.find(PeriodCalendarOverlay);
-    overlay.prop('onDayChange')(moment('30.07.2017', DDMMYYYY_DATE_FORMAT).toDate());
-    wrapper.update();
-
-    const updatedInputField = wrapper.find(Input);
-    expect(updatedInputField.prop('value')).toEqual('30.07.2017 - 30.10.2017');
+    await userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button', { name: 'Previous Month' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Previous Month' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Previous Month' }));
+    await userEvent.click(screen.getByRole('gridcell', { name: 'Sun Jul 30 2017' }));
+    expect(screen.getByDisplayValue('30.07.2017 - 30.10.2017')).toBeInTheDocument();
   });
 
-  it('skal lage periode med ny sluttdato når en velger dato etter nåværende periode', () => {
+  it('skal lage periode med ny sluttdato når en velger dato etter nåværende periode', async () => {
     const onChangeCallback = sinon.spy();
-    const wrapper = shallow(
+    render(
       <Periodpicker
         names={['fromDate', 'toDate']}
         // @ts-ignore
@@ -106,18 +65,8 @@ describe('<Periodpicker>', () => {
       />,
     );
 
-    const inputField = wrapper.find(Input);
-    const ref = inputField.prop('inputRef') as (params: any) => void;
-    ref({ focus: sinon.spy() });
-    wrapper.update();
-
-    wrapper.setState({ showCalendar: true });
-
-    const overlay = wrapper.find(PeriodCalendarOverlay);
-    overlay.prop('onDayChange')(moment('30.11.2017', DDMMYYYY_DATE_FORMAT).toDate());
-    wrapper.update();
-
-    const updatedInputField = wrapper.find(Input);
-    expect(updatedInputField.prop('value')).toEqual('30.08.2017 - 30.11.2017');
+    await userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('gridcell', { name: 'Thu Nov 30 2017' }));
+    expect(screen.getByDisplayValue('30.08.2017 - 30.11.2017')).toBeInTheDocument();
   });
 });

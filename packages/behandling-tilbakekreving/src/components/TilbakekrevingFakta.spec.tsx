@@ -1,20 +1,20 @@
-import React from 'react';
-import sinon from 'sinon';
-import { shallow } from 'enzyme';
-
-import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
-import { SideMenuWrapper } from '@k9-sak-web/behandling-felles';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-
-import { requestTilbakekrevingApi, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
-import TilbakekrevingFakta from './TilbakekrevingFakta';
+import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+import sinon from 'sinon';
+import { TilbakekrevingBehandlingApiKeys, requestTilbakekrevingApi } from '../data/tilbakekrevingBehandlingApi';
 import vedtakResultatType from '../kodeverk/vedtakResultatType';
+import TilbakekrevingFakta from './TilbakekrevingFakta';
 
 describe('<TilbakekrevingFakta>', () => {
   const fagsak = {
@@ -106,60 +106,57 @@ describe('<TilbakekrevingFakta>', () => {
 
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK, []);
-    const wrapper = shallow(
-      <TilbakekrevingFakta
-        data={{
-          aksjonspunkter,
-          perioderForeldelse,
-          beregningsresultat,
-          feilutbetalingFakta,
-        }}
-        behandling={behandling as Behandling}
-        fagsak={fagsak}
-        rettigheter={rettigheter}
-        alleKodeverk={{}}
-        fpsakKodeverk={{}}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        hasFetchError={false}
-        setBehandling={sinon.spy()}
-      />,
+    renderWithIntlAndReduxForm(
+      <RestApiErrorProvider>
+        <TilbakekrevingFakta
+          data={{
+            aksjonspunkter,
+            perioderForeldelse,
+            beregningsresultat,
+            feilutbetalingFakta,
+          }}
+          behandling={behandling as Behandling}
+          fagsak={fagsak}
+          rettigheter={rettigheter}
+          alleKodeverk={{}}
+          fpsakKodeverk={{}}
+          oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
+          hasFetchError={false}
+          setBehandling={sinon.spy()}
+        />
+      </RestApiErrorProvider>,
     );
 
-    const panel = wrapper.find(SideMenuWrapper);
-    expect(panel.prop('paneler')).toEqual([
-      {
-        erAktiv: true,
-        harAksjonspunkt: true,
-        tekstKode: 'TilbakekrevingFakta.FaktaFeilutbetaling',
-      },
-    ]);
+    expect(screen.getByRole('button', { name: /Feilutbetaling/i })).toBeInTheDocument();
   });
 
-  it('skal oppdatere url ved valg av faktapanel', () => {
+  it('skal oppdatere url ved valg av faktapanel', async () => {
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallow(
-      <TilbakekrevingFakta
-        data={{
-          aksjonspunkter,
-          perioderForeldelse,
-          beregningsresultat,
-          feilutbetalingFakta,
-        }}
-        behandling={behandling as Behandling}
-        fagsak={fagsak}
-        rettigheter={rettigheter}
-        alleKodeverk={{}}
-        fpsakKodeverk={{}}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        hasFetchError={false}
-        setBehandling={sinon.spy()}
-      />,
+    renderWithIntlAndReduxForm(
+      <RestApiErrorProvider>
+        <TilbakekrevingFakta
+          data={{
+            aksjonspunkter,
+            perioderForeldelse,
+            beregningsresultat,
+            feilutbetalingFakta,
+          }}
+          behandling={behandling as Behandling}
+          fagsak={fagsak}
+          rettigheter={rettigheter}
+          alleKodeverk={{}}
+          fpsakKodeverk={{}}
+          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+          hasFetchError={false}
+          setBehandling={sinon.spy()}
+        />
+      </RestApiErrorProvider>,
     );
 
-    const panel = wrapper.find(SideMenuWrapper);
-
-    panel.prop('onClick')(0);
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: /Feilutbetaling/i }));
+    });
 
     const calls = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(calls).toHaveLength(1);

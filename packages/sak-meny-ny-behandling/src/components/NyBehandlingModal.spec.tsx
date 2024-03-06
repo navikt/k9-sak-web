@@ -1,13 +1,13 @@
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import sinon from 'sinon';
-import { intlWithMessages } from "@fpsak-frontend/utils-test/intl-enzyme-test-helper";
 import messages from '../../i18n/nb_NO.json';
 import {
   NyBehandlingModal,

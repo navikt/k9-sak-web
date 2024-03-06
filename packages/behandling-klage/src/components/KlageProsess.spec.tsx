@@ -1,5 +1,4 @@
 /* eslint-disable vitest/no-commented-out-tests */
-import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
 
@@ -10,10 +9,12 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak, KlageVurdering } from '@k9-sak-web/types';
 
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import KlageProsess from './KlageProsess';
 
 describe('<KlageProsess>', () => {
@@ -79,58 +80,35 @@ describe('<KlageProsess>', () => {
     },
   } as KlageVurdering;
 
-  // it('skal vise alle aktuelle prosessSteg i meny', () => {
-  //   const wrapper = shallow(
-  //     <KlageProsess
-  //       data={{ aksjonspunkter, klageVurdering }}
-  //       fagsak={fagsak}
-  //       fagsakPerson={fagsakPerson}
-  //       behandling={behandling as Behandling}
-  //       alleKodeverk={{}}
-  //       arbeidsgiverOpplysningerPerId={{}}
-  //       alleBehandlinger={[]}
-  //       rettigheter={rettigheter}
-  //       valgtProsessSteg="default"
-  //       oppdaterBehandlingVersjon={sinon.spy()}
-  //       oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-  //       opneSokeside={sinon.spy()}
-  //       setBehandling={sinon.spy()}
-  //       featureToggles={{}}
-  //     />,
-  //   );
+  it('skal vise alle aktuelle prosessSteg i meny', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
+    renderWithIntl(
+      <KlageProsess
+        data={{ aksjonspunkter, klageVurdering }}
+        fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
+        behandling={behandling as Behandling}
+        alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={{}}
+        alleBehandlinger={[]}
+        rettigheter={rettigheter}
+        valgtProsessSteg="default"
+        oppdaterBehandlingVersjon={sinon.spy()}
+        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
+        opneSokeside={sinon.spy()}
+        setBehandling={sinon.spy()}
+        featureToggles={{}}
+      />,
+    );
 
-  //   const meny = wrapper.find(ProsessStegContainer);
-  //   expect(meny.prop('formaterteProsessStegPaneler')).toEqual([
-  //     {
-  //       isActive: false,
-  //       isDisabled: false,
-  //       isFinished: false,
-  //       labelId: 'Behandlingspunkt.FormkravKlageNFP',
-  //       type: 'default',
-  //       usePartialStatus: false,
-  //     },
-  //     {
-  //       isActive: false,
-  //       isDisabled: false,
-  //       isFinished: false,
-  //       labelId: 'Behandlingspunkt.CheckKlageNFP',
-  //       type: 'default',
-  //       usePartialStatus: false,
-  //     },
-  //     {
-  //       isActive: false,
-  //       isDisabled: false,
-  //       isFinished: false,
-  //       labelId: 'Behandlingspunkt.ResultatKlage',
-  //       type: 'default',
-  //       usePartialStatus: false,
-  //     },
-  //   ]);
-  // });
+    expect(screen.getByRole('button', { name: /Formkrav Vedtaksinstans/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Behandling Vedtaksinstans/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Resultat/i })).toBeInTheDocument();
+  });
 
   it('skal vise alle aktuelle prosessSteg i meny (frisinn)', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    const wrapper = shallow(
+    renderWithIntl(
       <KlageProsess
         data={{ aksjonspunkter, klageVurdering }}
         fagsak={{ ...fagsak, sakstype: { kode: fagsakYtelseType.FRISINN, kodeverk: 'test' } }}
@@ -149,55 +127,17 @@ describe('<KlageProsess>', () => {
       />,
     );
 
-    const meny = wrapper.find(ProsessStegContainer);
-    expect(meny.prop('formaterteProsessStegPaneler')).toEqual([
-      {
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
-        labelId: 'Behandlingspunkt.FormkravKlageNFP',
-        type: 'default',
-        usePartialStatus: false,
-      },
-      {
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
-        labelId: 'Behandlingspunkt.CheckKlageNFP',
-        type: 'default',
-        usePartialStatus: false,
-      },
-      {
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
-        labelId: 'Behandlingspunkt.FormkravKlageKA',
-        type: 'default',
-        usePartialStatus: false,
-      },
-      {
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
-        labelId: 'Behandlingspunkt.CheckKlageNK',
-        type: 'default',
-        usePartialStatus: false,
-      },
-      {
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
-        labelId: 'Behandlingspunkt.ResultatKlage',
-        type: 'default',
-        usePartialStatus: false,
-      },
-    ]);
+    expect(screen.getByRole('button', { name: /Formkrav Vedtaksinstans/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Behandling Vedtaksinstans/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Formkrav Klageinstans/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Behandling Klageinstans/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Resultat/i })).toBeInTheDocument();
   });
 
-  it('skal sette nytt valgt prosessSteg ved trykk i meny (frisinn)', () => {
+  it('skal sette nytt valgt prosessSteg ved trykk i meny (frisinn)', async () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallow(
+    renderWithIntl(
       <KlageProsess
         data={{ aksjonspunkter, klageVurdering }}
         fagsak={{ ...fagsak, sakstype: { kode: fagsakYtelseType.FRISINN, kodeverk: 'test' } }}
@@ -216,9 +156,9 @@ describe('<KlageProsess>', () => {
       />,
     );
 
-    const meny = wrapper.find(ProsessStegContainer);
-
-    meny.prop('velgProsessStegPanelCallback')(2);
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: /Formkrav Klageinstans/i }));
+    });
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(opppdaterKall).toHaveLength(1);
@@ -226,34 +166,35 @@ describe('<KlageProsess>', () => {
     expect(opppdaterKall[0].args[0]).toEqual('formkrav_klage_nav_klageinstans');
   });
 
-  // it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
-  //   const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-  //   const wrapper = shallow(
-  //     <KlageProsess
-  //       data={{ aksjonspunkter, klageVurdering }}
-  //       fagsak={fagsak}
-  //       fagsakPerson={fagsakPerson}
-  //       behandling={behandling as Behandling}
-  //       alleKodeverk={{}}
-  //       arbeidsgiverOpplysningerPerId={{}}
-  //       alleBehandlinger={[]}
-  //       rettigheter={rettigheter}
-  //       valgtProsessSteg="default"
-  //       oppdaterBehandlingVersjon={sinon.spy()}
-  //       oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-  //       opneSokeside={sinon.spy()}
-  //       setBehandling={sinon.spy()}
-  //       featureToggles={{}}
-  //     />,
-  //   );
+  it('skal sette nytt valgt prosessSteg ved trykk i meny', async () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
+    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+    renderWithIntl(
+      <KlageProsess
+        data={{ aksjonspunkter, klageVurdering }}
+        fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
+        behandling={behandling as Behandling}
+        alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={{}}
+        alleBehandlinger={[]}
+        rettigheter={rettigheter}
+        valgtProsessSteg="default"
+        oppdaterBehandlingVersjon={sinon.spy()}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+        opneSokeside={sinon.spy()}
+        setBehandling={sinon.spy()}
+        featureToggles={{}}
+      />,
+    );
 
-  //   const meny = wrapper.find(ProsessStegContainer);
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: /Resultat/i }));
+    });
 
-  //   meny.prop('velgProsessStegPanelCallback')(2);
-
-  //   const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
-  //   expect(opppdaterKall).toHaveLength(1);
-  //   expect(opppdaterKall[0].args).toHaveLength(2);
-  //   expect(opppdaterKall[0].args[0]).toEqual('resultat');
-  // });
+    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    expect(opppdaterKall).toHaveLength(1);
+    expect(opppdaterKall[0].args).toHaveLength(2);
+    expect(opppdaterKall[0].args[0]).toEqual('resultat');
+  });
 });

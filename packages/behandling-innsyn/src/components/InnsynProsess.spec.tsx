@@ -1,7 +1,3 @@
-import { shallow } from 'enzyme';
-import React from 'react';
-import sinon from 'sinon';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -11,10 +7,13 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
-import { Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
-
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+import sinon from 'sinon';
 import InnsynProsess from './InnsynProsess';
 
 describe('<InnsynProsess>', () => {
@@ -88,7 +87,7 @@ describe('<InnsynProsess>', () => {
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    const wrapper = shallow(
+    renderWithIntl(
       <InnsynProsess
         data={{
           aksjonspunkter,
@@ -110,31 +109,14 @@ describe('<InnsynProsess>', () => {
       />,
     );
 
-    const meny = wrapper.find(ProsessStegContainer);
-    expect(meny.prop('formaterteProsessStegPaneler')).toEqual([
-      {
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
-        labelId: 'Behandlingspunkt.Innsyn',
-        type: 'default',
-        usePartialStatus: false,
-      },
-      {
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
-        labelId: 'Behandlingspunkt.Vedtak',
-        type: 'default',
-        usePartialStatus: false,
-      },
-    ]);
+    expect(screen.getByRole('button', { name: 'Behandle innsyn' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Vedtak/i })).toBeInTheDocument();
   });
 
-  it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
+  it('skal sette nytt valgt prosessSteg ved trykk i meny', async () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallow(
+    renderWithIntl(
       <InnsynProsess
         data={{
           aksjonspunkter,
@@ -156,9 +138,9 @@ describe('<InnsynProsess>', () => {
       />,
     );
 
-    const meny = wrapper.find(ProsessStegContainer);
-
-    meny.prop('velgProsessStegPanelCallback')(1);
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: /Vedtak/i }));
+    });
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(opppdaterKall).toHaveLength(1);

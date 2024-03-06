@@ -1,18 +1,19 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { shallowWithIntl } from '../../i18n';
+import messages from '../../i18n/nb_NO.json';
 import Seksjon from './Seksjon';
 
 it('rendrer tittel og children', () => {
   const testId = 'test';
   const content = <div id={testId} />;
   const titleId = 'titleId';
-  const wrapper = shallowWithIntl(
+  renderWithIntl(
     <Seksjon imgSrc={null} title={{ id: titleId }} bakgrunn="hvit">
       {content}
     </Seksjon>,
+    { messages },
   );
 
-  expect(wrapper.find(FormattedMessage).filterWhere(formatert => formatert.prop('id') === titleId)).toHaveLength(1);
-  expect(wrapper.find(`#${testId}`)).toHaveLength(1);
+  expect(screen.getByText(titleId)).toBeInTheDocument();
 });

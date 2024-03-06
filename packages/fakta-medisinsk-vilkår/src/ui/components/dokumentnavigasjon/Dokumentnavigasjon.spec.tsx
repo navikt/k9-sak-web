@@ -1,8 +1,8 @@
-import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Dokumentnavigasjon from './Dokumentnavigasjon';
+import React from 'react';
 import mockedDokumentoversikt from '../../../../mock/mocked-data/mockedDokumentoversikt';
+import Dokumentnavigasjon from './Dokumentnavigasjon';
 
 describe('Dokumentnavigasjon', () => {
   const { dokumenter } = mockedDokumentoversikt;
@@ -37,8 +37,8 @@ describe('Dokumentnavigasjon', () => {
     expect(screen.getByText(/ikke med. oppl./i)).toBeInTheDocument();
   });
 
-  it.skip('should show no documents when not expanded by default', async () => {
-    render(
+  it('should show no documents when not expanded by default', async () => {
+    const { container } = render(
       <Dokumentnavigasjon
         tittel="something"
         valgtDokument={dokumenter[0]}
@@ -46,10 +46,7 @@ describe('Dokumentnavigasjon', () => {
         onDokumentValgt={() => null}
       />,
     );
-
-    expect(screen.queryByText(/ikke klassifisert/i)).not.toBeVisible();
-    expect(screen.queryByText(/andre med. oppl./i)).not.toBeVisible();
-    expect(screen.queryByText(/ikke med. oppl./i)).not.toBeVisible();
+    expect(container.getElementsByClassName('navds-accordion__content--closed')).toHaveLength(1);
   });
 
   test('documents are filtered correctly', async () => {

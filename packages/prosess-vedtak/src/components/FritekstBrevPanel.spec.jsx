@@ -3,7 +3,7 @@ import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { act, screen } from '@testing-library/react';
-import { expect } from 'chai';
+
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import sinon from 'sinon';

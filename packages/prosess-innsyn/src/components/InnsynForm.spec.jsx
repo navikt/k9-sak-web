@@ -1,15 +1,15 @@
-import React from 'react';
-import { expect } from 'chai';
-
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-
 import innsynResultatTyperKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import { intlMock } from '../../i18n';
+import messages from '../../i18n/nb_NO.json';
 import { InnsynFormImpl } from './InnsynForm';
-import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<InnsynForm>', () => {
   it('skal vise radioknapper for valg av sett på vent når innvilget', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <InnsynFormImpl
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -23,14 +23,15 @@ describe('<InnsynForm>', () => {
         vedtaksdokumenter={[]}
         isApOpen
       />,
+      { messages },
     );
 
-    const settPaVentRadio = wrapper.find('[name="sattPaVent"]');
-    expect(settPaVentRadio).to.have.length(1);
+    expect(screen.getByRole('radio', { name: 'Sett behandling på vent i påvente av skanning' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Foreslå og fatte vedtak' })).toBeInTheDocument();
   });
 
   it('skal ikke vise radioknapper for valg av sett på vent når innvilget', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <InnsynFormImpl
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -44,9 +45,11 @@ describe('<InnsynForm>', () => {
         vedtaksdokumenter={[]}
         isApOpen
       />,
+      { messages },
     );
-
-    const settPaVentRadio = wrapper.find('[name="sattPaVent"]');
-    expect(settPaVentRadio).to.have.length(0);
+    expect(
+      screen.queryByRole('radio', { name: 'Sett behandling på vent i påvente av skanning' }),
+    ).not.toBeInTheDocument();
+    expect(screen.queryByRole('radio', { name: 'Foreslå og fatte vedtak' })).not.toBeInTheDocument();
   });
 });

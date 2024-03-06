@@ -1,11 +1,12 @@
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-import TextAreaField from '@fpsak-frontend/form/src/TextAreaField';
+import messages from '../../../i18n/nb_NO.json';
 import { ArbeidsforholdBegrunnelse } from './ArbeidsforholdBegrunnelse';
 
 describe('<ArbeidsforholdBegrunnelse>', () => {
   it('skal ikke vise begrunnelsesfelt når ikke dirty, uten begrunnelse, og ikke avslå ytelse', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <ArbeidsforholdBegrunnelse
         readOnly={false}
         formName=""
@@ -15,11 +16,13 @@ describe('<ArbeidsforholdBegrunnelse>', () => {
         behandlingId={1}
         behandlingVersjon={1}
       />,
+      { messages },
     );
-    expect(wrapper.find(TextAreaField)).toHaveLength(0);
+
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   });
   it('skal ikke vise begrunnelsesfelt når ikke dirty, uten begrunnelse, og avslå ytelse', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <ArbeidsforholdBegrunnelse
         readOnly={false}
         formName=""
@@ -29,11 +32,12 @@ describe('<ArbeidsforholdBegrunnelse>', () => {
         behandlingId={1}
         behandlingVersjon={1}
       />,
+      { messages },
     );
-    expect(wrapper.find(TextAreaField)).toHaveLength(0);
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   });
   it('skal ikke vise begrunnelsesfelt når dirty, uten begrunnelse, og avslå ytelse', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <ArbeidsforholdBegrunnelse
         readOnly={false}
         formName=""
@@ -43,11 +47,12 @@ describe('<ArbeidsforholdBegrunnelse>', () => {
         behandlingId={1}
         behandlingVersjon={1}
       />,
+      { messages },
     );
-    expect(wrapper.find(TextAreaField)).toHaveLength(0);
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   });
   it('skal ikke vise begrunnelsesfelt når dirty, med begrunnelse, og avslå ytelse', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <ArbeidsforholdBegrunnelse
         readOnly={false}
         formName=""
@@ -57,11 +62,13 @@ describe('<ArbeidsforholdBegrunnelse>', () => {
         behandlingId={1}
         behandlingVersjon={1}
       />,
+      { messages },
     );
-    expect(wrapper.find(TextAreaField)).toHaveLength(0);
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   });
+
   it('skal vise begrunnelsesfelt når dirty, med begrunnelse, og ikke avslå ytelse', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <ArbeidsforholdBegrunnelse
         readOnly={false}
         formName=""
@@ -71,11 +78,13 @@ describe('<ArbeidsforholdBegrunnelse>', () => {
         behandlingId={1}
         behandlingVersjon={1}
       />,
+      { messages },
     );
-    expect(wrapper.find(TextAreaField)).toHaveLength(1);
+
+    expect(screen.getByRole('textbox', { name: 'Begrunn endringene' })).toBeInTheDocument();
   });
   it('skal vise begrunnelsesfelt når dirty, uten begrunnelse, og ikke avslå ytelse', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <ArbeidsforholdBegrunnelse
         readOnly={false}
         formName=""
@@ -85,11 +94,12 @@ describe('<ArbeidsforholdBegrunnelse>', () => {
         behandlingId={1}
         behandlingVersjon={1}
       />,
+      { messages },
     );
-    expect(wrapper.find(TextAreaField)).toHaveLength(1);
+    expect(screen.getByRole('textbox', { name: 'Begrunn endringene' })).toBeInTheDocument();
   });
   it('skal vise begrunnelsesfelt når ikke dirty, med begrunnelse, og ikke avslå ytelse', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <ArbeidsforholdBegrunnelse
         readOnly={false}
         formName=""
@@ -99,7 +109,8 @@ describe('<ArbeidsforholdBegrunnelse>', () => {
         behandlingId={1}
         behandlingVersjon={1}
       />,
+      { messages },
     );
-    expect(wrapper.find(TextAreaField)).toHaveLength(1);
+    expect(screen.getByRole('textbox', { name: 'Begrunn endringene' })).toBeInTheDocument();
   });
 });

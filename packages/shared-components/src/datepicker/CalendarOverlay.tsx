@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
 import moment from 'moment';
+import React, { Component } from 'react';
 import DayPicker, { Modifier } from 'react-day-picker';
 
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
@@ -53,8 +53,8 @@ class CalendarOverlay extends Component<OwnProps> {
     });
   }
 
-  onKeyDown({ keyCode }: React.KeyboardEvent): void {
-    if (keyCode === 27) {
+  onKeyDown(event: React.KeyboardEvent): void {
+    if (event.key === 'Escape') {
       const { onClose } = this.props;
       onClose();
     }
