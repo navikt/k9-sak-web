@@ -3,13 +3,14 @@
 import { AlleKodeverk, KodeverkType, KodeverkV2 } from '../types';
 
 export const kodeverkNavnFrakode = (kode: string, kodeverkType: KodeverkType, alleKodeverk: AlleKodeverk): string => {
-  console.log(`konverterer ${kode} til navn fra kodeverk ${kodeverkType}`);
+  console.log(`kodeverkNavnFrakode ${kode} (${kodeverkType})`);
   const kodeverkForType = alleKodeverk[kodeverkType];
   if (!kodeverkForType || kodeverkForType.length === 0) {
     return '';
   }
 
   const kodeverk = kodeverkForType.find((k: KodeverkV2) => k.kode === kode);
+  console.log(`${kode} => ${kodeverk ? kodeverk.navn : 'Ukjent'} (${kodeverkType})`);
   return kodeverk ? kodeverk.navn : '';
 };
 

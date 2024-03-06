@@ -1,5 +1,3 @@
-import { Kodeverk } from '@k9-sak-web/types';
-
 import getPackageIntl from '../i18n/getPackageIntl';
 
 const intl = getPackageIntl();
@@ -16,7 +14,7 @@ export const getLanguageCodeFromSprakkode = sprakkode => {
     return 'Malform.Bokmal';
   }
 
-  switch (sprakkode.kode) {
+  switch (sprakkode) {
     case 'NN':
       return 'Malform.Nynorsk';
     case 'EN':
