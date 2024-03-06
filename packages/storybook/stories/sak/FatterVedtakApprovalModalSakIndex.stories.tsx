@@ -31,9 +31,7 @@ export const visModalEtterGodkjenning = () => (
           kodeverk: '',
         },
         behandlingsresultat: {
-          type: {
-            kode: text('behandlingResultatType', behandlingResultatType.OPPHOR),
-          },
+          type: behandlingResultatType.OPPHOR,
         },
       } as Behandling
     }
@@ -62,9 +60,7 @@ export const visModalEtterGodkjenningAvKlage = () => (
           kodeverk: '',
         },
         behandlingsresultat: {
-          type: {
-            kode: text('behandlingResultatType', behandlingResultatType.OPPHOR),
-          },
+          type: behandlingResultatType.OPPHOR),
         },
       } as Behandling
     }
@@ -93,9 +89,7 @@ export const visModalEtterTilbakesendingTilSaksbehandler = () => (
           kodeverk: '',
         },
         behandlingsresultat: {
-          type: {
-            kode: text('behandlingResultatType', behandlingResultatType.OPPHOR),
-          },
+          type: behandlingResultatType.OPPHOR),
         },
       } as Behandling
     }

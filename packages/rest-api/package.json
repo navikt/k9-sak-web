@@ -5,6 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@k9-sak-web/lib": "1.0.0",
     "@sentry/browser": "7.93.0",
     "axios": "1.6.7",
     "node-cache": "5.1.2"

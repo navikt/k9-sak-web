@@ -15,34 +15,22 @@ describe('<MenyNyBehandlingIndex>', () => {
 
     const behandlingOppretting = [
       {
-        behandlingType: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.FORSTEGANGSSOKNAD,
         kanOppretteBehandling: true,
       },
       {
-        behandlingType: {
-          kode: behandlingType.REVURDERING,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.REVURDERING,
         kanOppretteBehandling: true,
       },
     ];
 
     renderWithIntlAndReduxForm(
       <MenyNyBehandlingIndex
-        ytelseType={{
-          kode: fagsakYtelseType.FORELDREPENGER,
-          kodeverk: 'FAGSAK_YTELSE_TYPE',
-        }}
+        ytelseType={fagsakYtelseType.FORELDREPENGER}
         saksnummer="123"
         behandlingId={3}
         behandlingVersjon={1}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: 'BEHANDLING_TYPE',
-        }}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
         lagNyBehandling={lagNyBehandlingCallback}
         behandlingOppretting={behandlingOppretting}
         behandlingstyper={[
@@ -79,10 +67,7 @@ describe('<MenyNyBehandlingIndex>', () => {
       eksternUuid: '2323',
       saksnummer: '123',
       behandlingType: behandlingType.FORSTEGANGSSOKNAD,
-      fagsakYtelseType: {
-        kode: fagsakYtelseType.FORELDREPENGER,
-        kodeverk: 'FAGSAK_YTELSE_TYPE',
-      },
+      fagsakYtelseType: fagsakYtelseType.FORELDREPENGER,
     });
 
     expect(lukkModalCallback.getCalls()).toHaveLength(1);

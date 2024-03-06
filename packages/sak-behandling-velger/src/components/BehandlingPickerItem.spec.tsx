@@ -10,14 +10,8 @@ describe('<BehandlingPickerItem>', () => {
   const behandlingTemplate = {
     id: 1,
     versjon: 123,
-    type: {
-      kode: '',
-      kodeverk: '',
-    },
-    status: {
-      kode: 'FVED',
-      kodeverk: '',
-    },
+    type: '',
+    status: 'FVED',
     opprettet: '2017-10-15',
     behandlendeEnhetId: '1242424',
     behandlendeEnhetNavn: 'test',
@@ -39,12 +33,6 @@ describe('<BehandlingPickerItem>', () => {
     key: 'test',
   };
 
-  const getKodeverkFn = () => ({
-    kode: '',
-    kodeverk: '',
-    navn: '',
-  });
-
   it('skal vise behandling uten lenke når det kun finnes en behandling og denne er valgt', () => {
     renderWithIntl(
       <BehandlingPickerItem
@@ -54,7 +42,6 @@ describe('<BehandlingPickerItem>', () => {
         isActive
         showAll
         toggleShowAll={() => undefined}
-        getKodeverkFn={getKodeverkFn}
       />,
       { messages },
     );
@@ -73,7 +60,6 @@ describe('<BehandlingPickerItem>', () => {
           isActive={false}
           showAll
           toggleShowAll={() => undefined}
-          getKodeverkFn={getKodeverkFn}
         />
       </MemoryRouter>,
       { messages },
@@ -97,7 +83,6 @@ describe('<BehandlingPickerItem>', () => {
         isActive
         showAll={false}
         toggleShowAll={() => undefined}
-        getKodeverkFn={getKodeverkFn}
       />,
       { messages },
     );

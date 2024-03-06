@@ -13,12 +13,7 @@ describe('<BeslutterModalIndex>', () => {
   const behandling = {
     id: 1,
     versjon: 2,
-    behandlingsresultat: {
-      type: {
-        kode: 'IKKE_FASTSATT',
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      },
-    },
+    behandlingsresultat: { type: 'IKKE_FASTSATT' },
     type: {
       kode: behandlingType.FORSTEGANGSSOKNAD,
       kodeverk: '',

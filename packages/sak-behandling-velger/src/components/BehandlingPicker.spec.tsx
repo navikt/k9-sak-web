@@ -1,3 +1,6 @@
+import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
+
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -5,9 +8,8 @@ import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType'
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
-import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
-import sinon from 'sinon';
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+
 import messages from '../../i18n/nb_NO.json';
 import BehandlingVelgerSakIndex from '../BehandlingVelgerSakIndex';
 import { sortBehandlinger } from './behandlingVelgerUtils';
@@ -15,14 +17,8 @@ import { sortBehandlinger } from './behandlingVelgerUtils';
 describe('<BehandlingPicker>', () => {
   const behandlingTemplate = {
     versjon: 123,
-    type: {
-      kode: '',
-      kodeverk: '',
-    },
-    status: {
-      kode: behandlingStatus.AVSLUTTET,
-      kodeverk: 'BEHANDLING_STATUS',
-    },
+    type: '',
+    status: behandlingStatus.AVSLUTTET,
     opprettet: '15.10.2017',
     behandlendeEnhetId: '1242424',
     behandlendeEnhetNavn: 'test',
@@ -44,18 +40,9 @@ describe('<BehandlingPicker>', () => {
 
   const fagsak = {
     saksnummer: '35425245',
-    sakstype: {
-      kode: fagsakYtelseType.PLEIEPENGER,
-      kodeverk: '',
-    },
-    relasjonsRolleType: {
-      kode: relasjonsRolleType.MOR,
-      kodeverk: '',
-    },
-    status: {
-      kode: fagsakStatus.UNDER_BEHANDLING,
-      kodeverk: '',
-    },
+    sakstype: fagsakYtelseType.PLEIEPENGER,
+    relasjonsRolleType: relasjonsRolleType.MOR,
+    status: fagsakStatus.UNDER_BEHANDLING,
     barnFodt: '2020-01-01',
     opprettet: '2020-01-01',
     endret: '2020-01-01',
@@ -74,13 +61,13 @@ describe('<BehandlingPicker>', () => {
   };
 
   it('skal vise forklarende tekst når det ikke finnes behandlinger', async () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, []);
     renderWithIntl(
       <MemoryRouter>
         <BehandlingVelgerSakIndex
           noExistingBehandlinger
           behandlinger={[]}
           getBehandlingLocation={() => locationMock}
-          getKodeverkFn={sinon.spy()}
           createLocationForSkjermlenke={() => locationMock}
           fagsak={fagsak}
           showAll={false}
@@ -96,6 +83,7 @@ describe('<BehandlingPicker>', () => {
   });
 
   it('skal vise alle behandlinger', async () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, []);
     const behandlinger = [
       {
         ...behandlingTemplate,
@@ -120,7 +108,6 @@ describe('<BehandlingPicker>', () => {
           noExistingBehandlinger={false}
           behandlinger={behandlinger as BehandlingAppKontekst[]}
           getBehandlingLocation={() => locationMock}
-          getKodeverkFn={sinon.spy()}
           createLocationForSkjermlenke={() => locationMock}
           fagsak={fagsak}
           showAll={false}
@@ -138,6 +125,7 @@ describe('<BehandlingPicker>', () => {
   });
 
   it('skal sortere behandlingene gitt avsluttet og opprettet datoer', () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, []);
     const behandlinger = [
       {
         opprettet: '2019-08-13T13:32:57',
@@ -176,6 +164,7 @@ describe('<BehandlingPicker>', () => {
   });
 
   it('skal vise BehandlingSelected dersom en behandling er valgt', async () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, []);
     const behandlinger = [
       {
         ...behandlingTemplate,
@@ -210,7 +199,6 @@ describe('<BehandlingPicker>', () => {
           noExistingBehandlinger={false}
           behandlinger={behandlinger as BehandlingAppKontekst[]}
           getBehandlingLocation={() => locationMock}
-          getKodeverkFn={() => ({ navn: 'test', kode: 'test', kodeverk: 'test' })}
           behandlingId={1}
           createLocationForSkjermlenke={() => locationMock}
           fagsak={fagsak}

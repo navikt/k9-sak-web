@@ -1,23 +1,22 @@
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
 import React from 'react';
 import sinon from 'sinon';
+import { screen } from '@testing-library/react';
+
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import alleKodeverk from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+
 import { intlMock } from '../../i18n/index';
 import messages from '../../i18n/nb_NO.json';
 import { FagsakProfile } from './FagsakProfile';
 
 describe('<FagsakProfile>', () => {
   it('skal vise en fagsak med tilhørende informasjon', () => {
-    const fagsakYtelseType = {
-      kode: 'ES',
-      kodeverk: 'FAGSAK_YTELSE',
-      navn: 'Engangsstønad',
-    };
-    const status = {
-      kode: 'OPPR',
-      kodeverk: 'FAGSAK_STATUS',
-      navn: 'Opprettet',
-    };
+    const fagsakYtelseType = 'ES';
+    const status = 'OPPR';
+
+    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
+
     renderWithIntl(
       <FagsakProfile
         saksnummer="12345"
@@ -36,16 +35,11 @@ describe('<FagsakProfile>', () => {
   });
 
   it('skal vise dekningsgrad for foreldrepenger om den eksisterer', () => {
-    const fagsakYtelseType = {
-      kode: 'FP',
-      kodeverk: 'FAGSAK_YTELSE',
-      navn: 'Foreldrepenger',
-    };
-    const status = {
-      kode: 'OPPR',
-      kodeverk: 'FAGSAK_STATUS',
-      navn: 'Opprettet',
-    };
+    const fagsakYtelseType = 'FP';
+    const status = 'OPPR';
+
+    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
+
     renderWithIntl(
       <FagsakProfile
         saksnummer="12345"
@@ -65,16 +59,11 @@ describe('<FagsakProfile>', () => {
   });
 
   it('skal ikke vise dekningsgrad for foreldrepenger om den ikke eksisterer', () => {
-    const fagsakYtelseType = {
-      kode: 'FP',
-      kodeverk: 'FAGSAK_YTELSE',
-      navn: 'Foreldrepenger',
-    };
-    const status = {
-      kode: 'OPPR',
-      kodeverk: 'FAGSAK_STATUS',
-      navn: 'Opprettet',
-    };
+    const fagsakYtelseType = 'FP';
+    const status = 'OPPR';
+
+    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
+
     renderWithIntl(
       <FagsakProfile
         saksnummer="12345"
@@ -93,16 +82,11 @@ describe('<FagsakProfile>', () => {
   });
 
   it('skal ikke vise ugyldig dekningsgrad for foreldrepenger', () => {
-    const fagsakYtelseType = {
-      kode: 'FP',
-      kodeverk: 'FAGSAK_YTELSE',
-      navn: 'Foreldrepenger',
-    };
-    const status = {
-      kode: 'OPPR',
-      kodeverk: 'FAGSAK_STATUS',
-      navn: 'Opprettet',
-    };
+    const fagsakYtelseType = 'FP';
+    const status = 'OPPR';
+
+    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
+
     renderWithIntl(
       <FagsakProfile
         saksnummer="12345"

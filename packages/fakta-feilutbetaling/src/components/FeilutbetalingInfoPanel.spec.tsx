@@ -53,10 +53,7 @@ const feilutbetalingFakta = {
     },
   ],
   behandlingsresultat: {
-    type: {
-      kode: behandlingResultatType.INNVILGET,
-      kodeverk: BEHANDLING_RESULTAT_TYPE_KODEVERK,
-    },
+    type: behandlingResultatType.INNVILGET,
     konsekvenserForYtelsen: [
       {
         kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,

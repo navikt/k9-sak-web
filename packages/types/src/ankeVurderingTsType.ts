@@ -1,13 +1,11 @@
-import Kodeverk from './kodeverkTsType';
-
 export type AnkeVurdering = Readonly<{
   ankeVurderingResultat?: {
-    ankeVurdering?: Kodeverk;
-    ankeVurderingOmgjoer?: Kodeverk;
-    ankeOmgjoerArsak?: Kodeverk;
-    trygderettVurdering?: Kodeverk;
-    trygderettVurderingOmgjoer?: Kodeverk;
-    trygderettOmgjoerArsak?: Kodeverk;
+    ankeVurdering?: string;
+    ankeVurderingOmgjoer?: string;
+    ankeOmgjoerArsak?: string;
+    trygderettVurdering?: string;
+    trygderettVurderingOmgjoer?: string;
+    trygderettOmgjoerArsak?: string;
     begrunnelse: string;
     paAnketBehandlingId?: number;
     erAnkerIkkePart: boolean;

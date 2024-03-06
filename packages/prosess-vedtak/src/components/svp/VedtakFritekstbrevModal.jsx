@@ -16,8 +16,8 @@ const isFritekstbrevRequired = (readOnly, behandlingsresultat, erSVP) => {
   if (readOnly || !erSVP) {
     return false;
   }
-  const erAvslag = behandlingsresultat && isAvslag(behandlingsresultat.type.kode);
-  const erOpphor = behandlingsresultat && isOpphor(behandlingsresultat.type.kode);
+  const erAvslag = behandlingsresultat && isAvslag(behandlingsresultat.type);
+  const erOpphor = behandlingsresultat && isOpphor(behandlingsresultat.type);
   return erAvslag || erOpphor;
 };
 

@@ -26,9 +26,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         visPeriodisering={false}
         erOverstyrt
         aksjonspunkter={[]}
-        behandlingsresultat={{
-          type: { kode: 'test', kodeverk: 'test' },
-        }}
+        behandlingsresultat={{ type: 'test' }}
         behandlingId={1}
         behandlingVersjon={2}
         behandlingType={{

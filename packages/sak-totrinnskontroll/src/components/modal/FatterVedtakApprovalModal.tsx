@@ -43,7 +43,7 @@ const getInfoTextCode = (
     return 'FatterVedtakApprovalModal.UendretUtfall';
   }
   // HVIS AVSLÅTT
-  if (behandlingsresultat?.type.kode === behandlingResultatType.AVSLATT) {
+  if (behandlingsresultat?.type === behandlingResultatType.AVSLATT) {
     if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
       return 'FatterVedtakApprovalModal.IkkeInnvilgetPleiepenger';
     }
@@ -203,8 +203,7 @@ const FatterVedtakApprovalModal = ({
   fagsakYtelseType,
   erKlageWithKA,
 }: OwnProps & WrappedComponentProps) => {
-  const isBehandlingsresultatOpphor =
-    behandlingsresultat && behandlingsresultat.type.kode === behandlingResultatType.OPPHOR;
+  const isBehandlingsresultatOpphor = behandlingsresultat && behandlingsresultat.type === behandlingResultatType.OPPHOR;
   const infoTextCode = utledInfoTextCode(
     allAksjonspunktApproved,
     behandlingStatusKode,
