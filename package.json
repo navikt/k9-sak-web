@@ -145,7 +145,7 @@
     "source-map-loader": "5.0.0",
     "storybook": "7.6.17",
     "storybook-react-router": "1.0.8",
-    "stylelint": "16.2.1",
+    "stylelint": "15.11.0",
     "stylelint-order": "6.0.4",
     "tailwindcss": "^3.4.1",
     "typescript": "5.3.3",
