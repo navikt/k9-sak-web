@@ -1,12 +1,11 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import Panel from 'nav-frontend-paneler';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import { screen } from '@testing-library/react';
 import moment from 'moment';
-import BarnVisning from './BarnVisning';
+import React from 'react';
+import messages from '../../i18n/nb_NO.json';
 import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
-import BarnRammevedtakVisning from './BarnRammevedtakVisning';
-import BarnInformasjonVisning from './BarnInformasjonVisning';
+import BarnVisning from './BarnVisning';
 
 it('<BarnVisning>', () => {
   const barn: KombinertBarnOgRammevedtak = {
@@ -40,11 +39,8 @@ it('<BarnVisning>', () => {
 
   const barnetsAlderIdag = moment().diff(barn.barnRelevantIBehandling.fødselsdato, 'years').toString();
 
-  const wrapper = shallow(<BarnVisning barnet={barn} index={0} />);
-  expect(wrapper.find('span').text().includes(barn.barnRelevantIBehandling.personIdent)).toBe(true);
-  expect(wrapper.find('span').text().includes(barnetsAlderIdag)).toBe(true);
-
-  expect(wrapper.find(Panel)).toHaveLength(1);
-  expect(wrapper.find(BarnInformasjonVisning)).toHaveLength(1);
-  expect(wrapper.find(BarnRammevedtakVisning)).toHaveLength(1);
+  renderWithIntl(<BarnVisning barnet={barn} index={0} />, { messages });
+  expect(screen.getByText('Barn #1')).toBeInTheDocument();
+  expect(screen.getByText(barnetsAlderIdag, { exact: false })).toBeInTheDocument();
+  expect(screen.getByText('Rammevedtak')).toBeInTheDocument();
 });

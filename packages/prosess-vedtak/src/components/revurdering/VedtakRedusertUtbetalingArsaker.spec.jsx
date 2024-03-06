@@ -1,7 +1,7 @@
+import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 import { screen } from '@testing-library/react';
-import { expect } from 'chai';
+
 import { Formik } from 'formik';
 import React from 'react';
 import messages from '../../../i18n/nb_NO.json';

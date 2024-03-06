@@ -1,24 +1,24 @@
+import { Hovedknapp } from 'nav-frontend-knapper';
 import React, { Component } from 'react';
 // eslint-disable-next-line import/no-duplicates
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
-import { change as reduxFormChange, formPropTypes, reset as reduxFormReset } from 'redux-form';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { formPropTypes, change as reduxFormChange, reset as reduxFormReset } from 'redux-form';
+import { createSelector } from 'reselect';
 
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
+import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 // eslint-disable-next-line import/no-duplicates
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { guid } from '@fpsak-frontend/utils';
-import { getBehandlingFormPrefix, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
-import OppholdInntektOgPeriodeForm from './OppholdInntektOgPeriodeForm';
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';
+import OppholdInntektOgPeriodeForm from './OppholdInntektOgPeriodeForm';
 
 const {
   AVKLAR_OM_BRUKER_ER_BOSATT,
@@ -174,7 +174,7 @@ export class OppholdInntektOgPerioderForm extends Component {
     const isApOpen = hasOpenAksjonspunkter || !submittable;
 
     return (
-      <form onSubmit={formProps.handleSubmit}>
+      <form onSubmit={formProps.handleSubmit} data-testid="OppholdInntektOgPerioderForm">
         <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
           {getHelpTexts(aksjonspunkter)}
         </AksjonspunktHelpTextTemp>

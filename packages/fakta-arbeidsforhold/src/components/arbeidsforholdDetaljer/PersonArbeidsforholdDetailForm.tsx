@@ -50,7 +50,7 @@ export const PersonArbeidsforholdDetailForm = ({
   behandlingVersjon,
   ...formProps
 }: Props) => (
-  <div className={styles.container}>
+  <div data-testid="PersonArbeidsforholdDetailForm" className={styles.container}>
     <VerticalSpacer eightPx />
     <AksjonspunktAvklarArbeidsforholdText arbeidsforhold={arbeidsforhold} />
     <VerticalSpacer eightPx />

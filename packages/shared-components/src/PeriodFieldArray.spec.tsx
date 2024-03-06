@@ -1,36 +1,31 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { metaMock, MockFields } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-
-import Image from './Image';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
 import PeriodFieldArray from './PeriodFieldArray';
-
-import shallowWithIntl, { intlMock } from '../i18n/index';
 
 const readOnly = false;
 
 describe('<PeriodFieldArray>', () => {
   it('skal vise en rad og knapp for å legge til periode', () => {
     const fields = new MockFields('perioder', 1);
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <PeriodFieldArray.WrappedComponent intl={intlMock} fields={fields} meta={metaMock} readOnly={readOnly}>
         {periodeElementFieldId => <span key={periodeElementFieldId}>test</span>}
       </PeriodFieldArray.WrappedComponent>,
     );
 
-    const span = wrapper.find('span');
-    expect(span).toHaveLength(1);
-
-    const div = wrapper.find('div');
-    expect(div).toHaveLength(1);
-    expect(div.find(Image)).toHaveLength(1);
-    expect(div.find(FormattedMessage)).toHaveLength(1);
+    expect(screen.getByText('test')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Legg til periode/i })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'Legg til periode' })).toBeInTheDocument();
   });
 
   it('skal vise to rader der kun rad nummer to har sletteknapp', () => {
     const fields = new MockFields('perioder', 2);
 
-    const wrapper = shallowWithIntl(
+    const { container } = renderWithIntl(
       <PeriodFieldArray.WrappedComponent intl={intlMock} fields={fields} meta={metaMock} readOnly={readOnly}>
         {(_periodeElementFieldId, index, getRemoveButton: () => React.ReactNode) => (
           <div key={index} id={`id_${index}`}>
@@ -40,38 +35,31 @@ describe('<PeriodFieldArray>', () => {
         )}
       </PeriodFieldArray.WrappedComponent>,
     );
-    const row1 = wrapper.find('#id_0');
-    expect(row1).toHaveLength(1);
-    expect(row1.childAt(0).text()).toEqual('test');
 
-    const row2 = wrapper.find('#id_1');
-    expect(row2).toHaveLength(1);
-    expect(row2.find('button')).toHaveLength(1);
-
-    expect(wrapper.find('#id_2')).toHaveLength(0);
+    expect(screen.getAllByText('test')).toHaveLength(2);
+    expect(container.getElementsByClassName('buttonRemove')).toHaveLength(1);
   });
 
-  it('skal legge til periode ved klikk på legg til periode', () => {
+  it('skal legge til periode ved klikk på legg til periode', async () => {
     const fields = new MockFields('perioder', 1);
 
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <PeriodFieldArray.WrappedComponent intl={intlMock} fields={fields} meta={metaMock} readOnly={readOnly}>
         {periodeElementFieldId => <span key={periodeElementFieldId}>test</span>}
       </PeriodFieldArray.WrappedComponent>,
     );
 
-    const addDiv = wrapper.find('div');
-    expect(addDiv).toHaveLength(1);
-
-    addDiv.simulate('click');
-
-    expect(fields).toHaveLength(2);
+    expect(fields.length).toBe(1);
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: /Legg til periode/i }));
+    });
+    expect(fields.length).toBe(2);
   });
 
-  it('skal slette periode ved klikk på sletteknapp', () => {
+  it('skal slette periode ved klikk på sletteknapp', async () => {
     const fields = new MockFields('perioder', 2);
 
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <PeriodFieldArray.WrappedComponent intl={intlMock} fields={fields} meta={metaMock} readOnly={readOnly}>
         {(_periodeElementFieldId, index, getRemoveButton: () => React.ReactNode) => (
           <div key={index} id={`id_${index}`}>
@@ -82,18 +70,17 @@ describe('<PeriodFieldArray>', () => {
       </PeriodFieldArray.WrappedComponent>,
     );
 
-    const btn = wrapper.find('button');
-    expect(btn).toHaveLength(1);
-
-    btn.simulate('click');
-
-    expect(fields).toHaveLength(1);
+    expect(fields.length).toBe(2);
+    await act(async () => {
+      await userEvent.click(screen.getByTestId('removeButton'));
+    });
+    expect(fields.length).toBe(1);
   });
 
   it('skal ikke vise knapp for å legge til rad', () => {
     const fields = new MockFields('perioder', 1);
 
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <PeriodFieldArray.WrappedComponent
         intl={intlMock}
         fields={fields}
@@ -104,14 +91,13 @@ describe('<PeriodFieldArray>', () => {
       </PeriodFieldArray.WrappedComponent>,
     );
 
-    expect(wrapper.find(Image)).toHaveLength(0);
-    expect(wrapper.find('button')).toHaveLength(0);
+    expect(screen.queryByTestId('removeButton')).not.toBeInTheDocument();
   });
 
   it('skal vise knapp for å legge til i steden for bildelenke', () => {
     const fields = new MockFields('perioder', 1);
 
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <PeriodFieldArray.WrappedComponent
         intl={intlMock}
         fields={fields}
@@ -122,7 +108,7 @@ describe('<PeriodFieldArray>', () => {
       </PeriodFieldArray.WrappedComponent>,
     );
 
-    expect(wrapper.find(Image)).toHaveLength(0);
-    expect(wrapper.find('button')).toHaveLength(1);
+    expect(screen.getByRole('button', { name: /Legg til periode/i })).toBeInTheDocument();
+    expect(screen.queryByRole('img')).not.toBeInTheDocument();
   });
 });

@@ -1,6 +1,6 @@
 import moment from 'moment';
-import { fodselsnummerPattern, isValidFodselsnummer } from '../fodselsnummerUtils';
 import { removeSpacesFromNumber } from '../currencyUtils';
+import { fodselsnummerPattern, isValidFodselsnummer } from '../fodselsnummerUtils';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '../formats';
 import {
   arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage,
@@ -66,13 +66,11 @@ export const minLength = length => text =>
 export const maxLength = length => text =>
   isEmpty(text) || text.toString().trim().length <= length ? null : maxLengthMessage(length);
 
-export const minValue = length => number => number >= length ? null : minValueMessage(length);
-export const maxValue = length => number => number <= length ? null : maxValueMessage(length);
+export const minValue = length => number => (number >= length ? null : minValueMessage(length));
+export const maxValue = length => number => (number <= length ? null : maxValueMessage(length));
 
-export const minValueFormatted = (min) => (number) => (removeSpacesFromNumber(number) >= min
-  ? null : minValueMessage(min));
-export const maxValueFormatted = (max) => (number) => (removeSpacesFromNumber(number) <= max
-  ? null : maxValueMessage(max));
+export const minValueFormatted = min => number => (removeSpacesFromNumber(number) >= min ? null : minValueMessage(min));
+export const maxValueFormatted = max => number => (removeSpacesFromNumber(number) <= max ? null : maxValueMessage(max));
 
 export const hasValidOrgNumber = number => (number.toString().trim().length === 9 ? null : invalidOrgNumberMessage());
 export const hasValidOrgNumberOrFodselsnr = number =>
@@ -150,8 +148,9 @@ export const hasValidName = text => {
   return null;
 };
 
-export const hasValidValue = value => invalidValue => value !== invalidValue ? invalidValueMessage(value) : null;
-export const arrayMinLength = length => value => value && value.length >= length ? null : arrayMinLengthMessage(length);
+export const hasValidValue = value => invalidValue => (value !== invalidValue ? invalidValueMessage(value) : null);
+export const arrayMinLength = length => value =>
+  value && value.length >= length ? null : arrayMinLengthMessage(length);
 
 export const dateIsAfter = (date, checkAgainsDate) => moment(date).isAfter(checkAgainsDate);
 export const isDatesEqual = (date1, date2) =>

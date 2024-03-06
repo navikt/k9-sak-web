@@ -1,22 +1,22 @@
-import React from 'react';
-import sinon from 'sinon';
-import { shallow } from 'enzyme';
-
-import { SideMenuWrapper } from '@k9-sak-web/behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
-
-import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import FrisinnFakta from './FrisinnFakta';
-import FetchedData from '../types/fetchedDataTsType';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+import sinon from 'sinon';
 import { FrisinnBehandlingApiKeys, requestFrisinnApi } from '../data/frisinnBehandlingApi';
+import FetchedData from '../types/fetchedDataTsType';
+import FrisinnFakta from './FrisinnFakta';
 
 describe('<FrisinnFakta>', () => {
   const fagsak = {
@@ -132,41 +132,32 @@ describe('<FrisinnFakta>', () => {
       vilkar,
       personopplysninger: soker,
     };
-    const wrapper = shallow(
-      <FrisinnFakta
-        data={fetchedData as FetchedData}
-        behandling={behandling as Behandling}
-        fagsak={fagsak}
-        fagsakPerson={fagsakPerson}
-        rettigheter={rettigheter}
-        alleKodeverk={{}}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        valgtFaktaSteg="default"
-        valgtProsessSteg="default"
-        hasFetchError={false}
-        setApentFaktaPanel={sinon.spy()}
-        setBehandling={sinon.spy()}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={{ FAKTA_BEREGNING_REDESIGN: true }}
-      />,
+    renderWithIntl(
+      <RestApiErrorProvider>
+        <FrisinnFakta
+          data={fetchedData as FetchedData}
+          behandling={behandling as Behandling}
+          fagsak={fagsak}
+          fagsakPerson={fagsakPerson}
+          rettigheter={rettigheter}
+          alleKodeverk={{}}
+          oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
+          valgtFaktaSteg="default"
+          valgtProsessSteg="default"
+          hasFetchError={false}
+          setApentFaktaPanel={sinon.spy()}
+          setBehandling={sinon.spy()}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          featureToggles={{ FAKTA_BEREGNING_REDESIGN: true }}
+        />
+      </RestApiErrorProvider>,
     );
 
-    const panel = wrapper.find(SideMenuWrapper);
-    expect(panel.prop('paneler')).toEqual([
-      {
-        erAktiv: true,
-        harAksjonspunkt: false,
-        tekstKode: 'InntektOgYtelser.Title',
-      },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekstKode: 'OpplysningerFraSoknaden.Title',
-      },
-    ]);
+    expect(screen.getByRole('button', { name: 'Inntekt og ytelser' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Søknaden' })).toBeInTheDocument();
   });
 
-  it('skal oppdatere url ved valg av faktapanel', () => {
+  it('skal oppdatere url ved valg av faktapanel', async () => {
     requestFrisinnApi.mock(FrisinnBehandlingApiKeys.OPPGITT_OPPTJENING, undefined);
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const fetchedData: Partial<FetchedData> = {
@@ -174,27 +165,30 @@ describe('<FrisinnFakta>', () => {
       vilkar,
     };
 
-    const wrapper = shallow(
-      <FrisinnFakta
-        data={fetchedData as FetchedData}
-        behandling={behandling as Behandling}
-        fagsak={fagsak}
-        fagsakPerson={fagsakPerson}
-        rettigheter={rettigheter}
-        alleKodeverk={{}}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        valgtFaktaSteg="default"
-        valgtProsessSteg="default"
-        hasFetchError={false}
-        setApentFaktaPanel={sinon.spy()}
-        setBehandling={sinon.spy()}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        featureToggles={{ FAKTA_BEREGNING_REDESIGN: true }}
-      />,
+    renderWithIntl(
+      <RestApiErrorProvider>
+        <FrisinnFakta
+          data={fetchedData as FetchedData}
+          behandling={behandling as Behandling}
+          fagsak={fagsak}
+          fagsakPerson={fagsakPerson}
+          rettigheter={rettigheter}
+          alleKodeverk={{}}
+          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+          valgtFaktaSteg="default"
+          valgtProsessSteg="default"
+          hasFetchError={false}
+          setApentFaktaPanel={sinon.spy()}
+          setBehandling={sinon.spy()}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          featureToggles={{ FAKTA_BEREGNING_REDESIGN: true }}
+        />
+      </RestApiErrorProvider>,
     );
 
-    const panel = wrapper.find(SideMenuWrapper);
-    panel.prop('onClick')(0);
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: 'Søknaden' }));
+    });
 
     const calls = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(calls).toHaveLength(1);

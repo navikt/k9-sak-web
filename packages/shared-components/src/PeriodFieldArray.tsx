@@ -30,6 +30,7 @@ const getRemoveButton = (index: number, fields: FieldArrayFieldsProps<any>) => c
         onClick={() => {
           fields.remove(index);
         }}
+        data-testid="removeButton"
       />
     );
   }

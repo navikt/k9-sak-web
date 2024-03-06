@@ -1,5 +1,5 @@
+import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { intlMock } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router';

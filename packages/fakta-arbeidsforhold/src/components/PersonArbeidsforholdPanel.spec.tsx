@@ -1,8 +1,11 @@
+import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import sinon from 'sinon';
-import PersonArbeidsforholdTable from './arbeidsforholdTabell/PersonArbeidsforholdTable';
+import messages from '../../i18n/nb_NO.json';
 import { PersonArbeidsforholdPanelImpl } from './PersonArbeidsforholdPanel';
-import shallowWithIntl, { intlMock } from '../../i18n/intl-enzyme-test-helper-fakta-arbeidsforhold';
 
 const arbeidsgiverOpplysningerPerId = {
   1234567: {
@@ -15,8 +18,8 @@ const arbeidsgiverOpplysningerPerId = {
       {
         eksternArbeidsforholdId: '1231-2345',
         internArbeidsforholdId: '1231-2345',
-      }
-    ]
+      },
+    ],
   },
   2345678: {
     identifikator: '2345678',
@@ -24,7 +27,7 @@ const arbeidsgiverOpplysningerPerId = {
     navn: 'Nav',
     fødselsdato: null,
     erPrivatPerson: true,
-    arbeidsforholdreferanser: []
+    arbeidsforholdreferanser: [],
   },
 };
 
@@ -64,13 +67,13 @@ describe('<PersonArbeidsforholdPanel>', () => {
     inntektsmeldinger: [],
   };
 
-  it('skal rendre komponent', () => {
+  it('skal rendre komponent', async () => {
     const arbeidsgiver = {
       arbeidsgiverOrgnr: '1234567',
       arbeidsgiverAktørId: null,
     };
 
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <PersonArbeidsforholdPanelImpl
         intl={intlMock}
         readOnly={false}
@@ -85,9 +88,13 @@ describe('<PersonArbeidsforholdPanel>', () => {
         alleMerknaderFraBeslutter={{}}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
+      { messages },
     );
 
-    wrapper.setState({ selectedArbeidsgiver: arbeidsgiver.arbeidsgiverOrgnr });
-    expect(wrapper.find(PersonArbeidsforholdTable)).toHaveLength(1);
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: 'PersonArbeidsforholdPanel.VisArbeidsforhold' }));
+    });
+    expect(screen.getByRole('table')).toBeInTheDocument();
   });
 });

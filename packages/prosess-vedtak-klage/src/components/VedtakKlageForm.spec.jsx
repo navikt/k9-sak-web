@@ -1,7 +1,7 @@
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import { expect } from 'chai';
+
 import React from 'react';
 import sinon from 'sinon';
 import { intlMock } from '../../i18n';
@@ -80,7 +80,7 @@ describe('<VedtakKlageForm>', () => {
           klageVurderingResultatNFP: { klageAvvistArsakNavn: 'Klager er ikke part' },
         };
         const selected = getAvvisningsAarsaker.resultFunc(klageVurdering);
-        expect(selected).to.have.length(2);
+        expect(selected).toHaveLength(2);
       });
     });
 

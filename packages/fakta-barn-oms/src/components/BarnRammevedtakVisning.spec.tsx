@@ -1,8 +1,9 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-import { FormattedMessage } from 'react-intl';
-import BarnRammevedtakVisning from './BarnRammevedtakVisning';
+import messages from '../../i18n/nb_NO.json';
 import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
+import BarnRammevedtakVisning from './BarnRammevedtakVisning';
 
 it('rendrer panel om barnet med rett info', () => {
   const periode = {
@@ -18,16 +19,10 @@ it('rendrer panel om barnet med rett info', () => {
     },
   };
 
-  const wrapper = shallow(<BarnRammevedtakVisning barnet={barn} />);
+  renderWithIntl(<BarnRammevedtakVisning barnet={barn} />, { messages });
 
-  const elementerMedFormatterTekstId = tekstId =>
-    wrapper.find(FormattedMessage).filterWhere(formatert => formatert.prop('id') === tekstId);
-
-  const kroniskSykdomVisning = elementerMedFormatterTekstId('FaktaRammevedtak.Barn.UtvidetRett');
-  const aleneomsorgvisning = elementerMedFormatterTekstId('FaktaRammevedtak.Barn.Aleneomsorg');
-  const fosterbarn = elementerMedFormatterTekstId('FaktaRammevedtak.Barn.Fosterbarn');
-
-  expect(kroniskSykdomVisning).toHaveLength(1);
-  expect(aleneomsorgvisning).toHaveLength(0);
-  expect(fosterbarn).toHaveLength(1);
+  expect(screen.getByText('Rammevedtak')).toBeInTheDocument();
+  expect(screen.getByText('Utvidet rett')).toBeInTheDocument();
+  expect(screen.getByText('Fosterbarn')).toBeInTheDocument();
+  expect(screen.queryByText('Alene om omsorgen')).not.toBeInTheDocument();
 });

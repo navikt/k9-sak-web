@@ -1,21 +1,22 @@
 import React from 'react';
 import sinon from 'sinon';
-import { shallow } from 'enzyme';
 
-import { SideMenuWrapper } from '@k9-sak-web/behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
-
-import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import UnntakFakta from './UnntakFakta';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { UnntakBehandlingApiKeys, requestUnntakApi } from '../data/unntakBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
+import UnntakFakta from './UnntakFakta';
 
 describe('<UnntakFakta>', () => {
   const fagsak = {
@@ -124,13 +125,14 @@ describe('<UnntakFakta>', () => {
     },
   };
 
-  it.skip('skal rendre faktapaneler og sidemeny korrekt', () => {
+  it('skal rendre faktapaneler og sidemeny korrekt', () => {
+    requestUnntakApi.mock(UnntakBehandlingApiKeys.ARBEIDSFORHOLD, []);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
       personopplysninger: soker,
     };
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <UnntakFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
@@ -148,29 +150,20 @@ describe('<UnntakFakta>', () => {
       />,
     );
 
-    const panel = wrapper.find(SideMenuWrapper);
-    expect(panel.prop('paneler')).toEqual([
-      {
-        erAktiv: true,
-        harAksjonspunkt: false,
-        tekst: 'Inntekt og ytelser',
-      },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekst: 'Søknaden',
-      },
-    ]);
+    expect(screen.getByRole('button', { name: 'Arbeidsforhold Aksjonspunkt' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Inntekt og ytelser' })).toBeInTheDocument();
+    expect(screen.getByText('Avklar om arbeidsforholdene skal benyttes i behandlingen')).toBeInTheDocument();
   });
 
-  it.skip('skal oppdatere url ved valg av faktapanel', () => {
+  it('skal oppdatere url ved valg av faktapanel', async () => {
+    requestUnntakApi.mock(UnntakBehandlingApiKeys.ARBEIDSFORHOLD, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
     };
 
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <UnntakFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
@@ -188,14 +181,15 @@ describe('<UnntakFakta>', () => {
       />,
     );
 
-    const panel = wrapper.find(SideMenuWrapper);
-    panel.prop('onClick')(0);
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: 'Arbeidsforhold Aksjonspunkt' }));
+    });
 
     const calls = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(calls).toHaveLength(1);
     const { args } = calls[0];
     expect(args).toHaveLength(2);
     expect(args[0]).toEqual('default');
-    expect(args[1]).toEqual('opplysninger-fra-soknaden');
+    expect(args[1]).toEqual('arbeidsforhold');
   });
 });

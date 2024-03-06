@@ -1,8 +1,9 @@
-import sinon from 'sinon';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { expect } from 'chai';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme/build';
+import sinon from 'sinon';
+import messages from '../../../i18n/nb_NO.json';
 import { TempSaveAndPreviewKlageLink } from './TempSaveAndPreviewKlageLink';
 
 describe('<TempSaveAndPreviewKlageLink>', () => {
@@ -13,14 +14,16 @@ describe('<TempSaveAndPreviewKlageLink>', () => {
   };
 
   it('Skal rendre komponent korrekt', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <TempSaveAndPreviewKlageLink
         formValues={formValuesWithEmptyStrings}
         saveKlage={sinon.spy()}
         aksjonspunktCode="123"
         previewCallback={sinon.spy()}
       />,
+      { messages },
     );
-    expect(wrapper.find('a')).has.length(1);
+
+    expect(screen.getByRole('link', { name: 'Lagre og forhåndsvis brev' })).toBeInTheDocument();
   });
 });

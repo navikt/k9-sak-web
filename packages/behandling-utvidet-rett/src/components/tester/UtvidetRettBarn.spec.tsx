@@ -1,7 +1,7 @@
-import React from 'react';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import FaktaBarnIndex from '@k9-sak-web/fakta-barn-oms';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import React from 'react';
 import UtvidetRettBarnFakta from '../UtvidetRettBarnFakta/UtvidetRettBarnFakta';
 
 describe('<UtvidetRettBarnFakta>', () => {
@@ -15,9 +15,8 @@ describe('<UtvidetRettBarnFakta>', () => {
       rammevedtak: [],
     };
 
-    const wrapper = shallowWithIntl(<UtvidetRettBarnFakta {...objektTilKomponent} />);
+    renderWithIntl(<UtvidetRettBarnFakta {...objektTilKomponent} />);
 
-    const faktaBarnIndex = wrapper.find(FaktaBarnIndex);
-    expect(faktaBarnIndex).toHaveLength(1);
+    expect(screen.getByRole('heading', { name: 'Barn' })).toBeInTheDocument();
   });
 });
