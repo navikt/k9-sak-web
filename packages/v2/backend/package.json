@@ -9,6 +9,6 @@
     "./k9sak/extra/*": "./src/k9sak/extra/*"
   },
   "dependencies": {
-    "@navikt/k9-sak-typescript-client": "0.0.1-alpha"
+    "@navikt/k9-sak-typescript-client": "0.0.3-alpha"
   }
 }
