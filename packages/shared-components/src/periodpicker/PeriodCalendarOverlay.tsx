@@ -1,6 +1,6 @@
+import moment from 'moment';
 import React, { Component } from 'react';
 import DayPicker, { AfterModifier, BeforeModifier, Modifier } from 'react-day-picker';
-import moment from 'moment';
 
 import getPackageIntl from '../../i18n/getPackageIntl';
 
@@ -50,8 +50,8 @@ class PeriodCalendarOverlay extends Component<OwnProps> {
     });
   }
 
-  onKeyDown({ keyCode }: React.KeyboardEvent): void {
-    if (keyCode === 27) {
+  onKeyDown(event: React.KeyboardEvent): void {
+    if (event.key === 'Escape') {
       const { onClose } = this.props;
       onClose();
     }

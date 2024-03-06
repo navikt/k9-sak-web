@@ -1,28 +1,15 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import sinon from 'sinon';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import Modal from 'nav-frontend-modal';
-
-import shallowWithIntl from '../i18n/index';
-import Image from './Image';
-
 import AdvarselModal from './AdvarselModal';
 
 describe('<AdvarselModal>', () => {
   it('skal rendre modal', () => {
-    const wrapper = shallowWithIntl(<AdvarselModal bodyText="Åpne behandling" showModal submit={sinon.spy()} />);
+    renderWithIntl(<AdvarselModal bodyText="Åpne behandling" showModal submit={sinon.spy()} />);
 
-    const modal = wrapper.find(Modal);
-    expect(modal).toHaveLength(1);
-    expect(modal.prop('isOpen')).toBe(true);
-    expect(modal.prop('contentLabel')).toEqual('Åpne behandling');
-
-    const image = wrapper.find(Image);
-    expect(image).toHaveLength(1);
-    expect(image.prop('alt').length).toBeGreaterThan(3);
-
-    const knapp = wrapper.find(Hovedknapp);
-    expect(knapp).toHaveLength(1);
-    expect(knapp.childAt(0).text()).toEqual('OK');
+    expect(screen.getByRole('dialog', { name: 'Åpne behandling' })).toBeInTheDocument();
+    expect(screen.getAllByRole('img')).toHaveLength(1);
+    expect(screen.getByRole('button', { name: 'OK' })).toBeInTheDocument();
   });
 });

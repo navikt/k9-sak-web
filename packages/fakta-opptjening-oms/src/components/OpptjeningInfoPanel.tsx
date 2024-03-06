@@ -1,21 +1,21 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
-import moment from 'moment';
 import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { addDaysToDate, omit } from '@fpsak-frontend/utils';
 import {
   Aksjonspunkt,
+  ArbeidsgiverOpplysningerPerId,
   FastsattOpptjening,
+  KodeverkMedNavn,
   Opptjening,
   SubmitCallback,
   UtlandDokStatus,
-  ArbeidsgiverOpplysningerPerId,
 } from '@k9-sak-web/types';
-import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
+import moment from 'moment';
+import React from 'react';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
 import OpptjeningFaktaForm from './OpptjeningFaktaForm';
 
 export const formName = 'OpptjeningInfoPanelForm';
@@ -28,7 +28,9 @@ interface OpptjeningInfoPanelProps {
   aksjonspunkter: Aksjonspunkt[];
   alleMerknaderFraBeslutter: any;
   utlandDokStatus: UtlandDokStatus;
-  alleKodeverk: AlleKodeverk;
+  alleKodeverk: {
+    [key: string]: KodeverkMedNavn[];
+  };
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   submitCallback: (props: SubmitCallback[]) => void;
   readOnly: boolean;

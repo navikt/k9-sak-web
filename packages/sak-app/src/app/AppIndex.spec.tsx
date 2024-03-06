@@ -1,10 +1,6 @@
 /* eslint-disable vitest/no-commented-out-tests */
-import React from 'react';
 
-import AppIndex from './AppIndex';
-import Home from './components/Home';
 // import Dekorator from './components/Dekorator';
-import { requestApi, K9sakApiKeys } from '../data/k9sakApi';
 
 const mockUseLocationValue = {
   pathname: '',

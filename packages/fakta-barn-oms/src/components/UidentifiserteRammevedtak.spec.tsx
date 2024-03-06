@@ -1,6 +1,8 @@
-import React from 'react';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
-import { shallowWithIntl } from '../../i18n';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import messages from '../../i18n/nb_NO.json';
 import UidentifiserteRammevedtak from './UidentifiserteRammevedtak';
 
 describe('<UidentifiserteRammevedtak>', () => {
@@ -25,29 +27,31 @@ describe('<UidentifiserteRammevedtak>', () => {
     fritekst: '@9-6 2 L FOST/',
   };
 
-  it('rendrer uidentifiserte vedtak for gitte kriterier', () => {
-    const rammevedtak: Rammevedtak[] = [
-      utvidetRettManglendeFnr,
-      utvidetRettManglendeFnr,
-      utvidetRettManglendeFnr,
-      aleneOmOmsorgenManglendeFnr,
-      aleneOmOmsorgenManglendeFnr,
-      fosterbarnManglendeFnr,
-    ];
+  const rammevedtak: Rammevedtak[] = [
+    utvidetRettManglendeFnr,
+    utvidetRettManglendeFnr,
+    utvidetRettManglendeFnr,
+    aleneOmOmsorgenManglendeFnr,
+    aleneOmOmsorgenManglendeFnr,
+    fosterbarnManglendeFnr,
+  ];
 
-    const utvidetRett = shallowWithIntl(
-      <UidentifiserteRammevedtak rammevedtak={rammevedtak} type={RammevedtakEnum.UTVIDET_RETT} />,
-    );
-    expect(utvidetRett.find('li')).toHaveLength(3);
-
-    const aleneomsorg = shallowWithIntl(
-      <UidentifiserteRammevedtak rammevedtak={rammevedtak} type={RammevedtakEnum.ALENEOMSORG} />,
-    );
-    expect(aleneomsorg.find('li')).toHaveLength(2);
-
-    const fosterbarn = shallowWithIntl(
-      <UidentifiserteRammevedtak rammevedtak={rammevedtak} type={RammevedtakEnum.FOSTERBARN} />,
-    );
-    expect(fosterbarn.find('li')).toHaveLength(1);
+  it('rendrer uidentifiserte vedtak for gitte kriterier 1', () => {
+    renderWithIntl(<UidentifiserteRammevedtak rammevedtak={rammevedtak} type={RammevedtakEnum.UTVIDET_RETT} />, {
+      messages,
+    });
+    expect(screen.getAllByRole('listitem').length).toBe(3);
+  });
+  it('rendrer uidentifiserte vedtak for gitte kriterier 2', () => {
+    renderWithIntl(<UidentifiserteRammevedtak rammevedtak={rammevedtak} type={RammevedtakEnum.ALENEOMSORG} />, {
+      messages,
+    });
+    expect(screen.getAllByRole('listitem').length).toBe(2);
+  });
+  it('rendrer uidentifiserte vedtak for gitte kriterier 3', () => {
+    renderWithIntl(<UidentifiserteRammevedtak rammevedtak={rammevedtak} type={RammevedtakEnum.FOSTERBARN} />, {
+      messages,
+    });
+    expect(screen.getAllByRole('listitem').length).toBe(1);
   });
 });

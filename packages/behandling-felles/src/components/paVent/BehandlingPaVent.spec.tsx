@@ -1,14 +1,13 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import sinon from 'sinon';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { Behandling } from '@k9-sak-web/types';
-import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
-
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+import sinon from 'sinon';
 import BehandlingPaVent from './BehandlingPaVent';
 
 describe('<BehandlingPaVent>', () => {
@@ -28,10 +27,18 @@ describe('<BehandlingPaVent>', () => {
     links: [],
   };
   const aksjonspunkter = [];
-  const kodeverk = {};
+  const kodeverk = {
+    Venteårsak: [
+      {
+        kode: 'FOR_TIDLIG_SOKNAD',
+        navn: 'Venter pga for tidlig søknad',
+        kodeverk: 'VENT_AARSAK',
+      },
+    ],
+  };
 
   it('skal ikke vise modal når behandling ikke er på vent', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <BehandlingPaVent
         behandling={behandling as Behandling}
         aksjonspunkter={aksjonspunkter}
@@ -40,11 +47,11 @@ describe('<BehandlingPaVent>', () => {
       />,
     );
 
-    expect(wrapper.find(SettPaVentModalIndex)).toHaveLength(0);
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('skal vise modal når behandling er på vent', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <BehandlingPaVent
         behandling={
           {
@@ -58,13 +65,11 @@ describe('<BehandlingPaVent>', () => {
       />,
     );
 
-    const modal = wrapper.find(SettPaVentModalIndex);
-    expect(modal).toHaveLength(1);
-    expect(modal.prop('hasManualPaVent')).toBe(false);
+    expect(screen.getByRole('dialog', { name: 'Behandlingen settes på vent med frist' })).toBeInTheDocument();
   });
 
-  it('skal vise modal og så skjule den ved trykk på knapp', () => {
-    const wrapper = shallow(
+  it('skal vise modal og så skjule den ved trykk på knapp', async () => {
+    renderWithIntlAndReduxForm(
       <BehandlingPaVent
         behandling={
           {
@@ -78,16 +83,16 @@ describe('<BehandlingPaVent>', () => {
       />,
     );
 
-    const modal = wrapper.find(SettPaVentModalIndex);
-    expect(modal).toHaveLength(1);
+    expect(screen.getByRole('dialog', { name: 'Behandlingen settes på vent med frist' })).toBeInTheDocument();
 
-    modal.prop('cancelEvent')();
-
-    expect(wrapper.find(SettPaVentModalIndex)).toHaveLength(0);
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: 'Lukk' }));
+    });
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('skal markeres som automatisk satt på vent når en har åpent aksjonspunkt for auto-manuelt satt på vent', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <BehandlingPaVent
         behandling={
           {
@@ -114,40 +119,6 @@ describe('<BehandlingPaVent>', () => {
       />,
     );
 
-    const modal = wrapper.find(SettPaVentModalIndex);
-    expect(modal).toHaveLength(1);
-    expect(modal.prop('hasManualPaVent')).toBe(true);
-  });
-
-  it('skal oppdatere på-vent-informasjon', async () => {
-    const settPaVentCallback = sinon.stub();
-    settPaVentCallback.returns(Promise.resolve());
-
-    const wrapper = shallow(
-      <BehandlingPaVent
-        behandling={
-          {
-            ...behandling,
-            behandlingPaaVent: true,
-          } as Behandling
-        }
-        aksjonspunkter={aksjonspunkter}
-        kodeverk={kodeverk}
-        settPaVent={settPaVentCallback}
-      />,
-    );
-
-    const modal = wrapper.find(SettPaVentModalIndex);
-
-    await modal.prop('submitCallback')({ dato: '10.10.2019' });
-
-    const calls = settPaVentCallback.getCalls();
-    expect(calls).toHaveLength(1);
-    expect(calls[0].args).toHaveLength(1);
-    expect(calls[0].args[0]).toEqual({
-      behandlingId: 1,
-      behandlingVersjon: 1,
-      dato: '10.10.2019',
-    });
+    expect(screen.getByRole('combobox', { name: 'Hva venter vi på?' })).toBeInTheDocument();
   });
 });

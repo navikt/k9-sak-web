@@ -1,13 +1,17 @@
-import React from 'react';
+import moment from 'moment';
+import { Normaltekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Normaltekst } from 'nav-frontend-typografi';
-import moment from 'moment';
 
 import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   DateLabel,
+  FaktaGruppe,
   FlexColumn,
   FlexContainer,
   FlexRow,
@@ -16,12 +20,8 @@ import {
   TableColumn,
   TableRow,
   VerticalSpacer,
-  FaktaGruppe,
 } from '@fpsak-frontend/shared-components';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { createSelector } from 'reselect';
 
 const headerTextCodes = [
@@ -36,7 +36,7 @@ const headerTextCodes = [
  *
  * Presentasjonskomponent. Setter opp aksjonspunktet for avklaring av perioder (Medlemskapsvilkåret).
  */
-export const PerioderMedMedlemskapFaktaPanelImpl = ({
+export const PerioderMedMedlemskapFaktaPanel = ({
   readOnly,
   hasPeriodeAksjonspunkt,
   isPeriodAksjonspunktClosed,
@@ -111,7 +111,7 @@ export const PerioderMedMedlemskapFaktaPanelImpl = ({
   );
 };
 
-PerioderMedMedlemskapFaktaPanelImpl.propTypes = {
+PerioderMedMedlemskapFaktaPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   fixedMedlemskapPerioder: PropTypes.arrayOf(PropTypes.shape()),
   fodselsdato: PropTypes.string,
@@ -123,7 +123,7 @@ PerioderMedMedlemskapFaktaPanelImpl.propTypes = {
   }).isRequired,
 };
 
-PerioderMedMedlemskapFaktaPanelImpl.defaultProps = {
+PerioderMedMedlemskapFaktaPanel.defaultProps = {
   fodselsdato: undefined,
   fixedMedlemskapPerioder: [],
 };
@@ -152,8 +152,6 @@ const mapStateToProps = (state, ownProps) => ({
   )(state, 'fixedMedlemskapPerioder', 'fodselsdato', 'hasPeriodeAksjonspunkt', 'isPeriodAksjonspunktClosed'),
   vurderingTypes: getAksjonspunkter(ownProps),
 });
-
-const PerioderMedMedlemskapFaktaPanel = connect(mapStateToProps)(PerioderMedMedlemskapFaktaPanelImpl);
 
 PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
   periode,
@@ -199,4 +197,4 @@ PerioderMedMedlemskapFaktaPanel.transformValues = (values, manuellVurderingTyper
   ),
 });
 
-export default PerioderMedMedlemskapFaktaPanel;
+export default connect(mapStateToProps)(PerioderMedMedlemskapFaktaPanel);

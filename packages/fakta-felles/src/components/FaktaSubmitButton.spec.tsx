@@ -1,12 +1,12 @@
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-
-import { Hovedknapp } from 'nav-frontend-knapper';
+import messages from '../../i18n/nb_NO.json';
 import { FaktaSubmitButton } from './FaktaSubmitButton';
 
 describe('<FaktaSubmitButton>', () => {
   it('skal ikke vise knapp når readonly', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <FaktaSubmitButton
         isReadOnly
         isSubmittable
@@ -17,13 +17,14 @@ describe('<FaktaSubmitButton>', () => {
         behandlingId={1}
         behandlingVersjon={2}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(Hovedknapp)).toHaveLength(0);
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });
 
   it('skal vise knapp som trykkbar når en kan avklare aksjonspunkt og en har gjort endringer', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <FaktaSubmitButton
         isReadOnly={false}
         isSubmittable
@@ -34,15 +35,14 @@ describe('<FaktaSubmitButton>', () => {
         behandlingId={1}
         behandlingVersjon={2}
       />,
+      { messages },
     );
 
-    const button = wrapper.find(Hovedknapp);
-    expect(button).toHaveLength(1);
-    expect(button.prop('disabled')).toBe(false);
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).not.toBeDisabled();
   });
 
   it('skal vise knapp som utgrået når en ikke kan avklare aksjonspunkt', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <FaktaSubmitButton
         isReadOnly={false}
         isSubmittable={false}
@@ -53,15 +53,14 @@ describe('<FaktaSubmitButton>', () => {
         behandlingId={1}
         behandlingVersjon={2}
       />,
+      { messages },
     );
 
-    const button = wrapper.find(Hovedknapp);
-    expect(button).toHaveLength(1);
-    expect(button.prop('disabled')).toBe(true);
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeDisabled();
   });
 
   it('skal vise knapp som utgrået når en har trykket på knapp', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <FaktaSubmitButton
         isReadOnly={false}
         isSubmittable
@@ -72,15 +71,14 @@ describe('<FaktaSubmitButton>', () => {
         behandlingId={1}
         behandlingVersjon={2}
       />,
+      { messages },
     );
 
-    const button = wrapper.find(Hovedknapp);
-    expect(button).toHaveLength(1);
-    expect(button.prop('disabled')).toBe(true);
+    expect(screen.getByRole('button', { name: 'Laster' })).toBeDisabled();
   });
 
   it('skal vise knapp som utgrået når en ikke har gjort endringer og det er tomme obligatoriske felter', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <FaktaSubmitButton
         isReadOnly={false}
         isSubmittable
@@ -91,15 +89,14 @@ describe('<FaktaSubmitButton>', () => {
         behandlingId={1}
         behandlingVersjon={2}
       />,
+      { messages },
     );
 
-    const button = wrapper.find(Hovedknapp);
-    expect(button).toHaveLength(1);
-    expect(button.prop('disabled')).toBe(true);
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeDisabled();
   });
 
   it('skal vise knapp som trykkbar når en ikke har gjort endringer men alle obligatoriske felter er utfylte', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <FaktaSubmitButton
         isReadOnly={false}
         isSubmittable
@@ -110,15 +107,14 @@ describe('<FaktaSubmitButton>', () => {
         behandlingId={1}
         behandlingVersjon={2}
       />,
+      { messages },
     );
 
-    const button = wrapper.find(Hovedknapp);
-    expect(button).toHaveLength(1);
-    expect(button.prop('disabled')).toBe(false);
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).not.toBeDisabled();
   });
 
   it('skal vise knapp som utgrået når en ikke har gjort endringer og aksjonspunktet er løst tidligere', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <FaktaSubmitButton
         isReadOnly={false}
         isSubmittable
@@ -129,10 +125,9 @@ describe('<FaktaSubmitButton>', () => {
         behandlingId={1}
         behandlingVersjon={2}
       />,
+      { messages },
     );
 
-    const button = wrapper.find(Hovedknapp);
-    expect(button).toHaveLength(1);
-    expect(button.prop('disabled')).toBe(true);
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeDisabled();
   });
 });

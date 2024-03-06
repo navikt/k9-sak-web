@@ -1,11 +1,10 @@
+import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { intlWithMessages } from "@fpsak-frontend/utils-test/intl-enzyme-test-helper";
 import messages from '../../../../i18n/nb_NO.json';
 import BubbleText from './bubbleText';
-
 
 const intlMock = intlWithMessages(messages);
 

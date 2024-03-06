@@ -10,8 +10,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { TimeLineNavigation } from '@fpsak-frontend/tidslinje';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, Opptjening } from '@k9-sak-web/types';
-import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
+import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Opptjening } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
 import moment from 'moment';
@@ -72,7 +71,7 @@ interface OpptjeningFaktaFormImplProps {
   behandlingId: number;
   behandlingVersjon: number;
   alleMerknaderFraBeslutter: any;
-  alleKodeverk: AlleKodeverk;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   readOnly: boolean;
   harApneAksjonspunkter: boolean;

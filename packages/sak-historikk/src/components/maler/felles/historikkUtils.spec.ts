@@ -1,9 +1,9 @@
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { intlWithMessages } from "@fpsak-frontend/utils-test/intl-enzyme-test-helper";
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
 
+import messages from '../../../../i18n/nb_NO.json';
 import { findResultatText } from './historikkUtils';
-import messages from "../../../../i18n/nb_NO.json";
 
 const intlMock = intlWithMessages(messages);
 

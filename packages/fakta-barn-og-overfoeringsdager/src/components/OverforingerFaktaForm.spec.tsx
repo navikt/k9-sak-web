@@ -1,9 +1,10 @@
-import React from 'react';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { shallowWithIntl } from '../../i18n';
-import { OverforingerFaktaFormImpl } from './OverforingerFaktaForm';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import messages from '../../i18n/nb_NO.json';
 import FormValues from '../types/FormValues';
-import Seksjon from './Seksjon';
+import { OverforingerFaktaFormImpl } from './OverforingerFaktaForm';
 
 describe('<OverforingerFaktaFormImpl>', () => {
   const formValues: FormValues = {
@@ -16,7 +17,7 @@ describe('<OverforingerFaktaFormImpl>', () => {
   };
 
   it('rendrer overføringer seksjon', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <OverforingerFaktaFormImpl
         {...reduxFormPropsMock}
         formValues={formValues}
@@ -24,8 +25,9 @@ describe('<OverforingerFaktaFormImpl>', () => {
         behandlingId={1}
         behandlingVersjon={2}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(Seksjon)).toHaveLength(1);
+    expect(screen.getByText('Overføringer og fordelinger')).toBeInTheDocument();
   });
 });

@@ -10,7 +10,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
 import styles from './oppholdINorgeOgAdresserFaktaPanel.module.css';
@@ -54,7 +54,7 @@ const lagOppholdIUtland = utlandsOpphold =>
  * Presentasjonskomponent. Er tilknyttet faktapanelet for medlemskap.
  * Viser opphold i innland og utland som er relevante for søker. ReadOnly.
  */
-const OppholdINorgeOgAdresserFaktaPanelImpl = ({
+const OppholdINorgeOgAdresserFaktaPanel = ({
   readOnly,
   hasBosattAksjonspunkt,
   isBosattAksjonspunktClosed,
@@ -120,7 +120,7 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
   </FaktaGruppe>
 );
 
-OppholdINorgeOgAdresserFaktaPanelImpl.propTypes = {
+OppholdINorgeOgAdresserFaktaPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasBosattAksjonspunkt: PropTypes.bool.isRequired,
   isBosattAksjonspunktClosed: PropTypes.bool.isRequired,
@@ -132,7 +132,7 @@ OppholdINorgeOgAdresserFaktaPanelImpl.propTypes = {
   }).isRequired,
 };
 
-OppholdINorgeOgAdresserFaktaPanelImpl.defaultProps = {
+OppholdINorgeOgAdresserFaktaPanel.defaultProps = {
   opphold: {},
   foreldre: [],
 };
@@ -155,8 +155,6 @@ const mapStateToProps = (state, ownProps) => {
     )(state, 'isBosattAksjonspunktClosed'),
   };
 };
-
-const OppholdINorgeOgAdresserFaktaPanel = connect(mapStateToProps)(injectIntl(OppholdINorgeOgAdresserFaktaPanelImpl));
 
 const createParent = (isApplicant, personopplysning) => ({
   isApplicant,
@@ -201,4 +199,4 @@ OppholdINorgeOgAdresserFaktaPanel.transformValues = values => ({
   bosattVurdering: values.bosattVurdering,
 });
 
-export default OppholdINorgeOgAdresserFaktaPanel;
+export default connect(mapStateToProps)(OppholdINorgeOgAdresserFaktaPanel);

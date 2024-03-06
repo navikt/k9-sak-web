@@ -1,10 +1,10 @@
 import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import { expect } from 'chai';
+
+import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
 import React from 'react';
-import { intlWithMessages } from "@fpsak-frontend/utils-test/intl-enzyme-test-helper";
 import messages from '../../i18n/nb_NO.json';
 import { InnsynVedtakFormImpl } from './InnsynVedtakForm';
 
