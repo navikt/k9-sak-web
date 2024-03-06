@@ -1,11 +1,10 @@
-import React from 'react';
-import { DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
-import { Normaltekst } from 'nav-frontend-typografi';
-import mountWithIntl, { intlMock } from '../../../i18n/intl-enzyme-test-helper-fakta-arbeidsforhold';
+import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import messages from '../../../i18n/nb_NO.json';
 import PersonArbeidsforholdTable from './PersonArbeidsforholdTable';
-import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
-import PersonArbeidsforholdDetailForm from '../arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
 
 describe('<PersonArbeidsforholdTable>', () => {
   const arbeidsforhold = {
@@ -81,7 +80,7 @@ describe('<PersonArbeidsforholdTable>', () => {
   };
 
   it('skal vise tabell med to arbeidsforhold der den ene raden er markert som valgt', () => {
-    const wrapper = mountWithIntl(
+    const { container } = renderWithIntlAndReduxForm(
       <PersonArbeidsforholdTable
         harAksjonspunktAvklarArbeidsforhold
         intl={intlMock}
@@ -92,45 +91,12 @@ describe('<PersonArbeidsforholdTable>', () => {
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
       />,
+      { messages },
     );
 
-    const table = wrapper.find(Table);
-    expect(table).toHaveLength(1);
-
-    const rows = table.find(TableRow);
-    expect(rows).toHaveLength(2);
-    const row1 = rows.at(0);
-    expect(row1.prop('isSelected')).toBe(true);
-    const colsRow1 = row1.find(TableColumn);
-    expect(colsRow1).toHaveLength(7);
-    expect(colsRow1.first().childAt(0).childAt(0).text()).toEqual(
-      arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId,
-    );
-    expect(colsRow1.at(1).find(PeriodLabel)).toHaveLength(1);
-    expect(colsRow1.at(3).childAt(0).childAt(0).text()).toEqual('80.00 %');
-
-    const row2 = rows.last();
-    expect(row2.prop('isSelected')).toBe(false);
-  });
-
-  it('skal ikke vise mottatt dato for inntektsmelding når denne ikke finnes', () => {
-    const wrapper = mountWithIntl(
-      <PersonArbeidsforholdTable
-        harAksjonspunktAvklarArbeidsforhold
-        intl={intlMock}
-        alleArbeidsforhold={[arbeidsforhold]}
-        selectedId={arbeidsforhold.id}
-        alleKodeverk={{}}
-        behandlingId={1}
-        behandlingVersjon={2}
-        updateArbeidsforhold={() => undefined}
-      />,
-    );
-
-    const cols = wrapper.find(TableColumn);
-
-    expect(cols).toHaveLength(7);
-    expect(cols.at(4).children()).toHaveLength(0);
+    expect(container.getElementsByClassName('selected').length).toBe(1);
+    expect(screen.getByText(arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId)).toBeInTheDocument();
+    expect(screen.getByText('80.00 %')).toBeInTheDocument();
   });
 
   it('skal vise mottatt dato for inntektsmelding når denne finnes', () => {
@@ -138,11 +104,11 @@ describe('<PersonArbeidsforholdTable>', () => {
       ...arbeidsforhold,
       inntektsmeldinger: [
         {
-          mottattTidspunkt: '2018-05-05',
+          mottattTidspunkt: new Date('2018-05-05T10:00:00.000Z').toISOString(),
         },
       ],
     };
-    const wrapper = mountWithIntl(
+    renderWithIntlAndReduxForm(
       <PersonArbeidsforholdTable
         harAksjonspunktAvklarArbeidsforhold
         intl={intlMock}
@@ -153,10 +119,9 @@ describe('<PersonArbeidsforholdTable>', () => {
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
       />,
+      { messages },
     );
-    const cols = wrapper.find(TableColumn);
-    expect(cols).toHaveLength(7);
-    expect(wrapper.find(DateLabel).prop('dateString')).toEqual('2018-05-05');
+    expect(screen.getByText('05.05.2018')).toBeInTheDocument();
   });
 
   it('skal ikke vise ikon for at arbeidsforholdet er i bruk', () => {
@@ -168,7 +133,7 @@ describe('<PersonArbeidsforholdTable>', () => {
       },
       aksjonspunktÅrsaker: [],
     };
-    const wrapper = mountWithIntl(
+    renderWithIntlAndReduxForm(
       <PersonArbeidsforholdTable
         harAksjonspunktAvklarArbeidsforhold
         intl={intlMock}
@@ -179,11 +144,10 @@ describe('<PersonArbeidsforholdTable>', () => {
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
       />,
+      { messages },
     );
 
-    const cols = wrapper.find(TableColumn);
-    expect(cols).toHaveLength(7);
-    expect(cols.last().children()).toHaveLength(0);
+    expect(screen.queryByAltText('PersonArbeidsforholdTable.ErIBruk')).not.toBeInTheDocument();
   });
 
   it('skal vise ikon for at arbeidsforholdet er i bruk', () => {
@@ -196,7 +160,7 @@ describe('<PersonArbeidsforholdTable>', () => {
       aksjonspunktÅrsaker: [],
     };
 
-    const wrapper = mountWithIntl(
+    renderWithIntlAndReduxForm(
       <PersonArbeidsforholdTable
         harAksjonspunktAvklarArbeidsforhold={false}
         intl={intlMock}
@@ -207,15 +171,14 @@ describe('<PersonArbeidsforholdTable>', () => {
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
       />,
+      { messages },
     );
 
-    const cols = wrapper.find(TableColumn);
-    expect(cols).toHaveLength(7);
-    expect(cols.last().find(Image)).toHaveLength(1);
+    expect(screen.getByAltText('PersonArbeidsforholdTable.ErIBruk')).toBeInTheDocument();
   });
 
   it('skal vise IngenArbeidsforholdRegistrert komponent når ingen arbeidsforhold', () => {
-    const wrapper = mountWithIntl(
+    renderWithIntlAndReduxForm(
       <PersonArbeidsforholdTable
         harAksjonspunktAvklarArbeidsforhold
         intl={intlMock}
@@ -226,9 +189,10 @@ describe('<PersonArbeidsforholdTable>', () => {
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
       />,
+      { messages },
     );
-    const element = wrapper.find(IngenArbeidsforholdRegistrert);
-    expect(element).toHaveLength(1);
+
+    expect(screen.getByText('Ingen arbeidsforhold registrert')).toBeInTheDocument();
   });
 
   it('skal vise stillingsprosent selv når den er 0', () => {
@@ -236,7 +200,7 @@ describe('<PersonArbeidsforholdTable>', () => {
       ...arbeidsforhold,
       stillingsprosent: 0,
     };
-    const wrapper = mountWithIntl(
+    renderWithIntlAndReduxForm(
       <PersonArbeidsforholdTable
         harAksjonspunktAvklarArbeidsforhold
         intl={intlMock}
@@ -247,9 +211,10 @@ describe('<PersonArbeidsforholdTable>', () => {
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
       />,
+      { messages },
     );
-    const tableRow = wrapper.find(TableRow).at(0);
-    expect(tableRow.props().model.stillingsprosent).toEqual(0);
+
+    expect(screen.getByText('0.00 %')).toBeInTheDocument();
   });
 
   it('skal vise arbeidsforholdId når lagt til av saksbehandler', () => {
@@ -261,7 +226,7 @@ describe('<PersonArbeidsforholdTable>', () => {
       },
       yrkestittel: 'Lærer',
     };
-    const wrapper = mountWithIntl(
+    renderWithIntlAndReduxForm(
       <PersonArbeidsforholdTable
         harAksjonspunktAvklarArbeidsforhold
         intl={intlMock}
@@ -272,17 +237,17 @@ describe('<PersonArbeidsforholdTable>', () => {
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
       />,
+      { messages },
     );
-    const tableRow = wrapper.find(TableRow).at(0);
-    const tekst = tableRow.find(Normaltekst).at(0);
-    expect(tekst.childAt(0).text()).toEqual(endretArbeidsforhold.arbeidsforhold.eksternArbeidsforholdId);
+
+    expect(screen.getByText(endretArbeidsforhold.arbeidsforhold.eksternArbeidsforholdId)).toBeInTheDocument();
   });
 
   it('skal vise tom dato', () => {
     const endretArbeidsforhold = {
       ...arbeidsforhold,
     };
-    const wrapper = mountWithIntl(
+    renderWithIntlAndReduxForm(
       <PersonArbeidsforholdTable
         harAksjonspunktAvklarArbeidsforhold
         intl={intlMock}
@@ -293,9 +258,10 @@ describe('<PersonArbeidsforholdTable>', () => {
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
       />,
+      { messages },
     );
-    const periodeLabel = wrapper.find(PeriodLabel);
-    expect(periodeLabel.props().dateStringTom).toEqual('2018-10-10');
+
+    expect(screen.getByText('01.01.2018-10.10.2018')).toBeInTheDocument();
   });
 
   it('arbeidsforhold en med arbeidsforholdId og en uten, skal få ulik nøkkel', () => {
@@ -310,8 +276,8 @@ describe('<PersonArbeidsforholdTable>', () => {
     expect(arbfor1.id).not.toEqual(arbfor2.id);
   });
 
-  it('skal vise arbeidsforhold-detaljer på alle arbeidsforhold som har er aksjonspunkt', () => {
-    const wrapper = mountWithIntl(
+  it('skal vise arbeidsforholddetaljer på alle arbeidsforhold som har et aksjonspunkt', () => {
+    renderWithIntlAndReduxForm(
       <PersonArbeidsforholdTable
         harAksjonspunktAvklarArbeidsforhold
         intl={intlMock}
@@ -322,12 +288,14 @@ describe('<PersonArbeidsforholdTable>', () => {
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
       />,
+      { messages },
     );
-    expect(wrapper.find(PersonArbeidsforholdDetailForm)).toHaveLength(1);
+    expect(screen.getByText(/Arbeidsforholdet Vaktmester/i)).toBeInTheDocument();
+    expect(screen.getByText(/finnes ikke i Aa-Registeret./i)).toBeInTheDocument();
   });
 
   it('skal ikke vise arbeidsforhold automatisk når det ikke er aksjonspunkt på det', () => {
-    const wrapper = mountWithIntl(
+    renderWithIntlAndReduxForm(
       <PersonArbeidsforholdTable
         harAksjonspunktAvklarArbeidsforhold={false}
         intl={intlMock}
@@ -343,8 +311,9 @@ describe('<PersonArbeidsforholdTable>', () => {
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(PersonArbeidsforholdDetailForm)).toHaveLength(0);
+    expect(screen.queryByTestId('PersonArbeidsforholdDetailForm')).not.toBeInTheDocument();
   });
 });

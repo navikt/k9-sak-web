@@ -1,103 +1,128 @@
-import React from 'react';
-import { expect } from 'chai';
-import { shallow } from 'enzyme';
-import { FormattedMessage } from 'react-intl';
-import sinon from 'sinon';
-
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 
+import React from 'react';
+import sinon from 'sinon';
+import messages from '../../i18n/nb_NO.json';
 import { ForeldelseForm } from './ForeldelseForm';
-import TilbakekrevingTimelinePanel from './timeline/TilbakekrevingTimelinePanel';
-import ForeldelsePeriodeForm from './ForeldelsePeriodeForm';
+
+const alleKodeverk = {
+  ForeldelseVurderingType: [
+    {
+      kode: foreldelseVurderingType.IKKE_FORELDET,
+      navn: 'Ikke foreldet',
+      kodeverk: 'FORELDELSE_VURDERING',
+    },
+    {
+      kode: foreldelseVurderingType.FORELDET,
+      navn: 'Foreldet',
+      kodeverk: 'FORELDELSE_VURDERING',
+    },
+  ],
+};
 
 describe('<ForeldelseForm>', () => {
   it('skal vise informasjon om foreldelsesloven og ikke vise tidslinje når en ikke har aksjonspunkt', () => {
-    const perioder = [{
-      fom: '2019-10-10',
-      tom: '2019-11-10',
-      foreldelseVurderingType: {
-        kode: foreldelseVurderingType.UDEFINERT,
+    const perioder = [
+      {
+        fom: '2019-10-10',
+        tom: '2019-11-10',
+        foreldelseVurderingType: {
+          kode: foreldelseVurderingType.UDEFINERT,
+        },
       },
-    }];
-    const wrapper = shallow(<ForeldelseForm
-      foreldelsesresultatActivity={perioder}
-      behandlingFormPrefix="form"
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      navBrukerKjonn="MANN"
-      readOnly={false}
-      readOnlySubmitButton={false}
-      merknaderFraBeslutter={{
-        notAccepted: false,
-      }}
-      alleKodeverk={{}}
-      beregnBelop={sinon.spy()}
-      behandlingId={1}
-      behandlingVersjon={1}
-    />);
+    ];
+    renderWithIntlAndReduxForm(
+      <ForeldelseForm
+        foreldelsesresultatActivity={perioder}
+        behandlingFormPrefix="form"
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        navBrukerKjonn="MANN"
+        readOnly={false}
+        readOnlySubmitButton={false}
+        merknaderFraBeslutter={{
+          notAccepted: false,
+        }}
+        alleKodeverk={{}}
+        beregnBelop={sinon.spy()}
+        behandlingId={1}
+        behandlingVersjon={1}
+      />,
+      { messages },
+    );
 
-    expect(wrapper.find(TilbakekrevingTimelinePanel)).has.length(0);
-    const messages = wrapper.find(FormattedMessage);
-    expect(messages).has.length(3);
-    expect(messages.at(1).prop('id')).is.eql('ForeldelseForm.Foreldelsesloven');
+    expect(screen.queryByText('Forrige periode')).not.toBeInTheDocument();
+    expect(screen.getByText('Foreldelsesloven §§ 2 og 3')).toBeInTheDocument();
   });
 
   it('skal ikke vise informasjon om foreldelsesloven og vise tidslinje når en har aksjonspunkt', () => {
-    const perioder = [{
-      fom: '2019-10-10',
-      tom: '2019-11-10',
-      foreldelseVurderingType: {
-        kode: foreldelseVurderingType.UDEFINERT,
+    const perioder = [
+      {
+        fom: '2019-10-10',
+        tom: '2019-11-10',
+        foreldelseVurderingType: {
+          kode: foreldelseVurderingType.UDEFINERT,
+        },
       },
-    }];
-    const wrapper = shallow(<ForeldelseForm
-      foreldelsesresultatActivity={perioder}
-      behandlingFormPrefix="form"
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      navBrukerKjonn="MANN"
-      readOnly={false}
-      readOnlySubmitButton={false}
-      merknaderFraBeslutter={{
-        notAccepted: false,
-      }}
-      apCodes={['5003']}
-      alleKodeverk={{}}
-      beregnBelop={sinon.spy()}
-      behandlingId={1}
-      behandlingVersjon={1}
-    />);
+    ];
+    renderWithIntlAndReduxForm(
+      <ForeldelseForm
+        foreldelsesresultatActivity={perioder}
+        behandlingFormPrefix="form"
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        navBrukerKjonn="MANN"
+        readOnly={false}
+        readOnlySubmitButton={false}
+        merknaderFraBeslutter={{
+          notAccepted: false,
+        }}
+        apCodes={['5003']}
+        alleKodeverk={alleKodeverk}
+        beregnBelop={sinon.spy()}
+        behandlingId={1}
+        behandlingVersjon={1}
+      />,
+      { messages },
+    );
 
-    expect(wrapper.find(TilbakekrevingTimelinePanel)).has.length(1);
-    expect(wrapper.find(FormattedMessage)).has.length(2);
+    expect(screen.getAllByText('Forrige periode').length).toBeGreaterThan(0);
+    expect(screen.queryByText('Foreldelsesloven §§ 2 og 3')).not.toBeInTheDocument();
   });
 
   it('skal ikke vise default periode når periode er foreldet', () => {
-    const perioder = [{
-      fom: '2019-10-10',
-      tom: '2019-11-10',
-      foreldelseVurderingType: {
-        kode: foreldelseVurderingType.FORELDET,
+    const perioder = [
+      {
+        fom: '2019-10-10',
+        tom: '2019-11-10',
+        foreldelseVurderingType: {
+          kode: foreldelseVurderingType.FORELDET,
+        },
       },
-    }];
-    const wrapper = shallow(<ForeldelseForm
-      foreldelsesresultatActivity={perioder}
-      behandlingFormPrefix="form"
-      reduxFormChange={sinon.spy()}
-      reduxFormInitialize={sinon.spy()}
-      navBrukerKjonn="MANN"
-      readOnly={false}
-      readOnlySubmitButton={false}
-      merknaderFraBeslutter={{
-        notAccepted: false,
-      }}
-      apCodes={['5003']}
-      alleKodeverk={{}}
-      beregnBelop={sinon.spy()}
-      behandlingId={1}
-      behandlingVersjon={1}
-    />);
+    ];
+    renderWithIntlAndReduxForm(
+      <ForeldelseForm
+        foreldelsesresultatActivity={perioder}
+        behandlingFormPrefix="form"
+        reduxFormChange={sinon.spy()}
+        reduxFormInitialize={sinon.spy()}
+        navBrukerKjonn="MANN"
+        readOnly={false}
+        readOnlySubmitButton={false}
+        merknaderFraBeslutter={{
+          notAccepted: false,
+        }}
+        apCodes={['5003']}
+        alleKodeverk={{}}
+        beregnBelop={sinon.spy()}
+        behandlingId={1}
+        behandlingVersjon={1}
+      />,
+      { messages },
+    );
 
-    expect(wrapper.find(ForeldelsePeriodeForm)).has.length(0);
+    expect(screen.queryByTestId('foreldelseperiodeform')).not.toBeInTheDocument();
   });
 });

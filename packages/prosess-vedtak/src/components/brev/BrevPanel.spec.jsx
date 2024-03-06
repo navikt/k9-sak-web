@@ -3,7 +3,7 @@ import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { screen } from '@testing-library/react';
-import { expect } from 'chai';
+
 import { Formik } from 'formik';
 import React from 'react';
 import sinon from 'sinon';
@@ -144,7 +144,7 @@ describe('<BrevPanel>', () => {
       </Formik>,
       { messages },
     );
-    screen.debug();
+
     expect(screen.getByText('I denne behandlingen er det ikke vedtaksbrev.')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Forhåndsvis brev' })).not.toBeInTheDocument();
   });

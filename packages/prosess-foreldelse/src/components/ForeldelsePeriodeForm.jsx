@@ -54,7 +54,7 @@ export class ForeldelsePeriodeFormImpl extends Component {
     } = this.props;
 
     return (
-      <div className={styles.container}>
+      <div data-testid="foreldelseperiodeform" className={styles.container}>
         <TilbakekrevingTimelineData
           periode={periode}
           callbackForward={setNestePeriode}

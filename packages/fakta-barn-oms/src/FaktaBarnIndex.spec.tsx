@@ -1,21 +1,20 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { shallowWithIntl } from '../i18n';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import messages from '../i18n/nb_NO.json';
 import FaktaBarnIndex from './FaktaBarnIndex';
-import BarnSeksjon from './components/BarnSeksjon';
-import MidlertidigAlene from './components/MidlertidigAlene';
 
 describe('<FaktaBarnIndex>', () => {
   it('hvis ingen barn, rendres info om dette', () => {
-    const wrapper = shallowWithIntl(<FaktaBarnIndex barn={[]} rammevedtak={[]} />);
+    renderWithIntl(<FaktaBarnIndex barn={[]} rammevedtak={[]} />, { messages });
 
-    expect(wrapper.find(FormattedMessage).prop('id')).toEqual('FaktaBarn.IngenBarn');
+    expect(screen.getByText('Det er ikke registrert noen barn på søkeren')).toBeInTheDocument();
   });
 
   it('viser vanlige barn og rammevedtaksbarn', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <FaktaBarnIndex
         barn={[
           {
@@ -48,15 +47,19 @@ describe('<FaktaBarnIndex>', () => {
           },
         ]}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(BarnSeksjon)).toHaveLength(1);
-    expect(wrapper.find(BarnSeksjon).prop('tekstId')).toBe('FaktaBarn.Behandlingsdato');
-    expect(wrapper.find(MidlertidigAlene)).toHaveLength(1);
+    expect(
+      screen.getByText(
+        'Disse barna er søkerens folkeregistrerte barn slik det var ved tidspunktet for beregning av dager',
+      ),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Det er ikke registrert midlertidig aleneomsorg')).toBeInTheDocument();
   });
 
   it('viser barn fra fagsak kronisk syk', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <FaktaBarnIndex
         barn={[
           {
@@ -90,15 +93,15 @@ describe('<FaktaBarnIndex>', () => {
         ]}
         fagsaksType={FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(BarnSeksjon)).toHaveLength(1);
-    expect(wrapper.find(MidlertidigAlene)).toHaveLength(1);
-    expect(wrapper.find(BarnSeksjon).prop('tekstId')).toBe('FaktaBarn.UtvidetRettKroniskSyk');
+    expect(screen.getByText('Barnet søknaden gjelder for')).toBeInTheDocument();
+    expect(screen.getByText('Det er ikke registrert midlertidig aleneomsorg')).toBeInTheDocument();
   });
 
   it('viser barn fra fagsak midlertidig alene', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <FaktaBarnIndex
         barn={[
           {
@@ -132,10 +135,10 @@ describe('<FaktaBarnIndex>', () => {
         ]}
         fagsaksType={FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(BarnSeksjon)).toHaveLength(1);
-    expect(wrapper.find(MidlertidigAlene)).toHaveLength(1);
-    expect(wrapper.find(BarnSeksjon).prop('tekstId')).toBe('FaktaBarn.UtvidetRettMidlertidigAlene');
+    expect(screen.getByText('Disse barna er søkerens folkeregistrerte barn')).toBeInTheDocument();
+    expect(screen.getByText('Det er ikke registrert midlertidig aleneomsorg')).toBeInTheDocument();
   });
 });

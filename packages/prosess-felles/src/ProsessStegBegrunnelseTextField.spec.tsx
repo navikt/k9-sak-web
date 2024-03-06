@@ -1,40 +1,33 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-
-import { TextAreaField } from '@fpsak-frontend/form';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-
+import { screen } from '@testing-library/react';
+import React from 'react';
+import messages from '../i18n/nb_NO.json';
 import ProsessStegBegrunnelseTextField from './ProsessStegBegrunnelseTextField';
 
 describe('<ProsessStegBegrunnelseTextField>', () => {
   it('skal vise tekstfelt som ikke readOnly', () => {
-    const wrapper = shallow(<ProsessStegBegrunnelseTextField readOnly={false} />);
+    renderWithIntlAndReduxForm(<ProsessStegBegrunnelseTextField readOnly={false} />, { messages });
 
-    const textField = wrapper.find(TextAreaField);
-    expect(textField).toHaveLength(1);
-    expect(textField.prop('readOnly')).toBe(false);
+    expect(screen.getByRole('textbox', { name: 'Vurdering' })).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Vurdering' })).not.toBeDisabled();
   });
 
-  it('skal vise tekstfelt som readOnly', () => {
-    const wrapper = shallow(<ProsessStegBegrunnelseTextField readOnly />);
+  it('skal ikke vise tekstfelt ved readOnly', () => {
+    renderWithIntlAndReduxForm(<ProsessStegBegrunnelseTextField readOnly />, { messages });
 
-    const textField = wrapper.find(TextAreaField);
-    expect(textField).toHaveLength(1);
-    expect(textField.prop('readOnly')).toBe(true);
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   });
 
   it('skal vise default tekstkode', () => {
-    const wrapper = shallow(<ProsessStegBegrunnelseTextField readOnly={false} />);
-
-    const textField = wrapper.find(TextAreaField);
-    expect(textField.prop('label')).toEqual('Vurdering');
+    renderWithIntlAndReduxForm(<ProsessStegBegrunnelseTextField readOnly={false} />, { messages });
+    expect(screen.getByRole('textbox', { name: 'Vurdering' })).toBeInTheDocument();
   });
 
   it('skal vise gitt tekstkode', () => {
-    const wrapper = shallow(<ProsessStegBegrunnelseTextField readOnly={false} text="Beskrivelse" />);
+    renderWithIntlAndReduxForm(<ProsessStegBegrunnelseTextField readOnly={false} text="Beskrivelse" />, { messages });
 
-    const textField = wrapper.find(TextAreaField);
-    expect(textField.prop('label')).toEqual('Beskrivelse');
+    expect(screen.getByRole('textbox', { name: 'Beskrivelse' })).toBeInTheDocument();
   });
 
   it('skal hente begrunnelse fra første aksjonspunkt', () => {

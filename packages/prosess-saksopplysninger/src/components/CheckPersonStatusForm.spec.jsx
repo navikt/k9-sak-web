@@ -1,10 +1,10 @@
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import { expect } from 'chai';
+
 import React from 'react';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
@@ -172,7 +172,7 @@ describe('<CheckPersonStatusForm>', () => {
       alleKodeverk,
     );
 
-    expect(initialValues).to.eql({
+    expect(initialValues).toEqual({
       originalPersonstatusName: 'Ukjent',
       fortsettBehandling: false,
       personstatus: personstatusType.BOSATT,
@@ -217,7 +217,7 @@ describe('<CheckPersonStatusForm>', () => {
       alleKodeverk,
     );
 
-    expect(initialValues).to.eql({
+    expect(initialValues).toEqual({
       originalPersonstatusName: 'Ukjent',
       fortsettBehandling: true,
       personstatus: personstatusType.BOSATT,
@@ -252,7 +252,7 @@ describe('<CheckPersonStatusForm>', () => {
       alleKodeverk,
     );
 
-    expect(initialValues).to.eql({
+    expect(initialValues).toEqual({
       originalPersonstatusName: 'Ukjent',
       fortsettBehandling: undefined,
       personstatus: undefined,

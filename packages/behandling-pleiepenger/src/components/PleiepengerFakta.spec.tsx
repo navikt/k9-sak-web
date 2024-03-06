@@ -1,23 +1,22 @@
-import React from 'react';
-import sinon from 'sinon';
-import { shallow } from 'enzyme';
-
-import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
-import { SideMenuWrapper } from '@k9-sak-web/behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
-
-import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import ForeldrepengerFakta from './PleiepengerFakta';
-import FetchedData from '../types/FetchedData';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+import sinon from 'sinon';
 import { PleiepengerBehandlingApiKeys, requestPleiepengerApi } from '../data/pleiepengerBehandlingApi';
+import FetchedData from '../types/FetchedData';
+import ForeldrepengerFakta from './PleiepengerFakta';
 
 describe('<PleiepengerFakta>', () => {
   const fagsak = {
@@ -144,73 +143,40 @@ describe('<PleiepengerFakta>', () => {
       personopplysninger: soker,
     };
 
-    const wrapper = shallow(
-      <ForeldrepengerFakta
-        data={fetchedData as FetchedData}
-        behandling={behandling as Behandling}
-        fagsak={fagsak}
-        fagsakPerson={fagsakPerson}
-        rettigheter={rettigheter}
-        alleKodeverk={{}}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        valgtFaktaSteg="default"
-        valgtProsessSteg="default"
-        hasFetchError={false}
-        setApentFaktaPanel={sinon.spy()}
-        setBehandling={sinon.spy()}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        dokumenter={[]}
-        featureToggles={{}}
-      />,
+    renderWithIntlAndReduxForm(
+      <RestApiErrorProvider>
+        <ForeldrepengerFakta
+          data={fetchedData as FetchedData}
+          behandling={behandling as Behandling}
+          fagsak={fagsak}
+          fagsakPerson={fagsakPerson}
+          rettigheter={rettigheter}
+          alleKodeverk={{}}
+          oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
+          valgtFaktaSteg="default"
+          valgtProsessSteg="default"
+          hasFetchError={false}
+          setApentFaktaPanel={sinon.spy()}
+          setBehandling={sinon.spy()}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          dokumenter={[]}
+          featureToggles={{}}
+        />
+      </RestApiErrorProvider>,
     );
 
-    const panel = wrapper.find(SideMenuWrapper);
-    expect(panel.prop('paneler')).toEqual([
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekstKode: 'OmBarnetInfoPanel.Title',
-      },
-      {
-        erAktiv: true,
-        harAksjonspunkt: true,
-        tekstKode: 'ArbeidsforholdInfoPanel.Title',
-      },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekstKode: 'OmsorgenForInfoPanel.Title',
-      },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekstKode: 'MedisinskVilkarPanel.MedisinskVilkar',
-      },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekstKode: 'EtablertTilsynInfoPanel.Title',
-      },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekstKode: 'InntektsmeldingInfoPanel.Title',
-      },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekstKode: 'InntektOgYtelser.Title',
-      },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekstKode: 'UtenlandsoppholdInfoPanel.Title',
-      },
-      { erAktiv: false, harAksjonspunkt: false, tekstKode: 'SoknadsperioderPanel.Soknadsperioder' },
-    ]);
+    expect(screen.getByRole('button', { name: /Om barnet/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Arbeidsforhold/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Omsorgen For/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Sykdom/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Etablert Tilsyn/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Inntektsmelding/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Inntekt og ytelser/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Utenlandsopphold/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Søknadsperioder/i })).toBeInTheDocument();
   });
 
-  it('skal oppdatere url ved valg av faktapanel', () => {
+  it('skal oppdatere url ved valg av faktapanel', async () => {
     requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD, arbeidsforhold);
 
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
@@ -219,29 +185,31 @@ describe('<PleiepengerFakta>', () => {
       vilkar,
     };
 
-    const wrapper = shallow(
-      <ForeldrepengerFakta
-        data={fetchedData as FetchedData}
-        behandling={behandling as Behandling}
-        fagsak={fagsak}
-        fagsakPerson={fagsakPerson}
-        rettigheter={rettigheter}
-        alleKodeverk={{}}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        valgtFaktaSteg="default"
-        valgtProsessSteg="default"
-        hasFetchError={false}
-        setApentFaktaPanel={sinon.spy()}
-        setBehandling={sinon.spy()}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        dokumenter={[]}
-        featureToggles={{}}
-      />,
+    renderWithIntlAndReduxForm(
+      <RestApiErrorProvider>
+        <ForeldrepengerFakta
+          data={fetchedData as FetchedData}
+          behandling={behandling as Behandling}
+          fagsak={fagsak}
+          fagsakPerson={fagsakPerson}
+          rettigheter={rettigheter}
+          alleKodeverk={{}}
+          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+          valgtFaktaSteg="default"
+          valgtProsessSteg="default"
+          hasFetchError={false}
+          setApentFaktaPanel={sinon.spy()}
+          setBehandling={sinon.spy()}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          dokumenter={[]}
+          featureToggles={{}}
+        />
+      </RestApiErrorProvider>,
     );
 
-    const panel = wrapper.find(SideMenuWrapper);
-
-    panel.prop('onClick')(0);
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: /Om barnet/i }));
+    });
 
     const calls = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(calls).toHaveLength(1);
@@ -249,37 +217,5 @@ describe('<PleiepengerFakta>', () => {
     expect(args).toHaveLength(2);
     expect(args[0]).toEqual('default');
     expect(args[1]).toEqual('om-barnet');
-  });
-
-  it('skal rendre faktapanel korrekt', () => {
-    requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD, arbeidsforhold);
-    const fetchedData: Partial<FetchedData> = {
-      aksjonspunkter,
-      vilkar,
-    };
-    const wrapper = shallow(
-      <ForeldrepengerFakta
-        data={fetchedData as FetchedData}
-        behandling={behandling as Behandling}
-        fagsak={fagsak}
-        fagsakPerson={fagsakPerson}
-        rettigheter={rettigheter}
-        alleKodeverk={{}}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        valgtFaktaSteg="default"
-        valgtProsessSteg="default"
-        hasFetchError={false}
-        setApentFaktaPanel={sinon.spy()}
-        setBehandling={sinon.spy()}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        dokumenter={[]}
-        featureToggles={{}}
-      />,
-    );
-
-    const arbeidsforholdPanel = wrapper.find(ArbeidsforholdFaktaIndex);
-    expect(arbeidsforholdPanel.prop('readOnly')).toBe(false);
-    expect(arbeidsforholdPanel.prop('submittable')).toBe(true);
-    expect(arbeidsforholdPanel.prop('harApneAksjonspunkter')).toBe(true);
   });
 });

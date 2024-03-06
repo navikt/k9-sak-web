@@ -1,12 +1,12 @@
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Hovedknapp } from 'nav-frontend-knapper';
-
+import messages from '../i18n/nb_NO.json';
 import { ProsessStegSubmitButton } from './ProsessStegSubmitButton';
 
 describe('<ProsessStegSubmitButton>', () => {
   it('skal ikke vise submit-knapp når behandlingspunkt er readonly', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <ProsessStegSubmitButton
         behandlingId={1}
         behandlingVersjon={2}
@@ -20,13 +20,13 @@ describe('<ProsessStegSubmitButton>', () => {
         isDirty={false}
         hasEmptyRequiredFields={false}
       />,
+      { messages },
     );
-
-    expect(wrapper.find(Hovedknapp)).toHaveLength(0);
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });
 
   it('skal vise submit-knapp med standard tekst når behandlingspunkt ikke er readonly', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <ProsessStegSubmitButton
         behandlingId={1}
         behandlingVersjon={2}
@@ -40,16 +40,13 @@ describe('<ProsessStegSubmitButton>', () => {
         isDirty={false}
         hasEmptyRequiredFields={false}
       />,
+      { messages },
     );
-
-    const knapp = wrapper.find(Hovedknapp);
-    expect(knapp).toHaveLength(1);
-
-    expect(knapp.childAt(0).text()).toEqual('Bekreft og fortsett');
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
   });
 
   it('skal vise submit-knapp med spesifikk tekst når behandlingspunkt ikke er readonly', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <ProsessStegSubmitButton
         behandlingId={1}
         behandlingVersjon={2}
@@ -64,16 +61,14 @@ describe('<ProsessStegSubmitButton>', () => {
         hasEmptyRequiredFields={false}
         text="Bekreft"
       />,
+      { messages },
     );
 
-    const knapp = wrapper.find(Hovedknapp);
-    expect(knapp).toHaveLength(1);
-
-    expect(knapp.childAt(0).text()).toEqual('Bekreft');
+    expect(screen.getByRole('button', { name: 'Bekreft' })).toBeInTheDocument();
   });
 
   it('skal vise knapp som enabled når behandlingspunkt er dirty og submittable', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <ProsessStegSubmitButton
         behandlingId={1}
         behandlingVersjon={2}
@@ -87,15 +82,15 @@ describe('<ProsessStegSubmitButton>', () => {
         isDirty
         hasEmptyRequiredFields={false}
       />,
+      { messages },
     );
 
-    const button = wrapper.find(Hovedknapp);
-    expect(button).toHaveLength(1);
-    expect(button.prop('disabled')).toBe(false);
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).not.toBeDisabled();
   });
 
   it('skal vise knapp som disabled når behandlingspunkt ikke er dirty eller submittable', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <ProsessStegSubmitButton
         behandlingId={1}
         behandlingVersjon={2}
@@ -109,15 +104,15 @@ describe('<ProsessStegSubmitButton>', () => {
         isDirty={false}
         hasEmptyRequiredFields={false}
       />,
+      { messages },
     );
 
-    const button = wrapper.find(Hovedknapp);
-    expect(button).toHaveLength(1);
-    expect(button.prop('disabled')).toBe(true);
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeDisabled();
   });
 
   it('skal vise knapp som disabled når innsending av behandlingspunkt-data pågår', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <ProsessStegSubmitButton
         behandlingId={1}
         behandlingVersjon={2}
@@ -131,15 +126,15 @@ describe('<ProsessStegSubmitButton>', () => {
         isDirty
         hasEmptyRequiredFields={false}
       />,
+      { messages },
     );
 
-    const button = wrapper.find(Hovedknapp);
-    expect(button).toHaveLength(1);
-    expect(button.prop('disabled')).toBe(true);
+    expect(screen.getByRole('button', { name: 'Laster' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Laster' })).toBeDisabled();
   });
 
   it('skal vise knapp som disabled en ikke har fylt ut alle obligatoriske felter', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <ProsessStegSubmitButton
         behandlingId={1}
         behandlingVersjon={2}
@@ -153,15 +148,15 @@ describe('<ProsessStegSubmitButton>', () => {
         isDirty
         hasEmptyRequiredFields
       />,
+      { messages },
     );
 
-    const button = wrapper.find(Hovedknapp);
-    expect(button).toHaveLength(1);
-    expect(button.prop('disabled')).toBe(true);
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeDisabled();
   });
 
   it('skal vise knapp som disabled når behandlingspunkt ikke er dirty og en ikke har fylt ut alle obligatoriske felter', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <ProsessStegSubmitButton
         behandlingId={1}
         behandlingVersjon={2}
@@ -175,10 +170,10 @@ describe('<ProsessStegSubmitButton>', () => {
         isDirty={false}
         hasEmptyRequiredFields
       />,
+      { messages },
     );
 
-    const button = wrapper.find(Hovedknapp);
-    expect(button).toHaveLength(1);
-    expect(button.prop('disabled')).toBe(true);
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeDisabled();
   });
 });

@@ -1,11 +1,12 @@
-import React from 'react';
-import { expect } from 'chai';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import { intlMock } from '../../i18n';
+import messages from '../../i18n/nb_NO.json';
 import { FormkravKlageForm } from './FormkravKlageForm';
-import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<FormkravKlageForm>', () => {
   const behandlinger = [
@@ -39,7 +40,7 @@ describe('<FormkravKlageForm>', () => {
   ];
 
   it('skal vise tre options når to mulige klagbare vedtak', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <FormkravKlageForm
         behandlingId={1}
         behandlingVersjon={1}
@@ -48,7 +49,7 @@ describe('<FormkravKlageForm>', () => {
         aksjonspunktCode={aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP}
         avsluttedeBehandlinger={behandlinger}
         intl={intlMock}
-        formProps={{}}
+        formProps={{ form: 'lol' }}
         alleKodeverk={{
           [kodeverkTyper.BEHANDLING_TYPE]: [
             {
@@ -72,13 +73,13 @@ describe('<FormkravKlageForm>', () => {
         arbeidsgiverOpplysningerPerId={{}}
         parterMedKlagerett={[]}
       />,
+      { messages },
     );
-    const vedtakSelect = wrapper.find('SelectField');
-    expect(vedtakSelect).to.have.length(1);
-    expect(vedtakSelect.prop('selectValues')).to.have.length(4);
-    expect(vedtakSelect.prop('selectValues')[0].props.children).to.equal('Ikke påklagd et vedtak');
-    expect(vedtakSelect.prop('selectValues')[1].props.children).to.equal('Førstegangssøknad 25.10.2018');
-    expect(vedtakSelect.prop('selectValues')[2].props.children).to.equal('Revurdering 25.10.2018');
-    expect(vedtakSelect.prop('selectValues')[3].props.children).to.equal('Tilbakekreving 06.02.2020');
+
+    expect(screen.getByRole('combobox', { name: 'Vedtaket som er påklagd' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Ikke påklagd et vedtak' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Førstegangssøknad 25.10.2018' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Revurdering 25.10.2018' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Tilbakekreving 06.02.2020' })).toBeInTheDocument();
   });
 });

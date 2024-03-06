@@ -1,14 +1,13 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { act, fireEvent, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
-import DayPicker from 'react-day-picker';
 import sinon from 'sinon';
-
-import { dateFormat } from '@fpsak-frontend/utils';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/intl-enzyme-test-helper';
 import CalendarOverlay from './CalendarOverlay';
 
 describe('<CalendarOverlay>', () => {
   it('skal ikke vise overlay når disabled', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <CalendarOverlay
         onDayChange={sinon.spy()}
         className="test"
@@ -20,11 +19,11 @@ describe('<CalendarOverlay>', () => {
       />,
     );
 
-    expect(wrapper.find(DayPicker)).toHaveLength(0);
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   });
 
   it('skal vise overlay', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <CalendarOverlay
         onDayChange={sinon.spy()}
         className="test"
@@ -35,40 +34,16 @@ describe('<CalendarOverlay>', () => {
       />,
     );
 
-    const daypicker = wrapper.find(DayPicker);
-    expect(daypicker).toHaveLength(1);
-    expect(daypicker.prop('months')).toEqual([
-      'Januar',
-      'Februar',
-      'Mars',
-      'April',
-      'Mai',
-      'Juni',
-      'Juli',
-      'August',
-      'September',
-      'Oktober',
-      'November',
-      'Desember',
-    ]);
-    expect(daypicker.prop('weekdaysLong')).toEqual([
-      'søndag',
-      'mandag',
-      'tirsdag',
-      'onsdag',
-      'torsdag',
-      'fredag',
-      'lørdag',
-    ]);
-    expect(daypicker.prop('weekdaysShort')).toEqual(['søn', 'man', 'tir', 'ons', 'tor', 'fre', 'lør']);
-    expect(daypicker.prop('firstDayOfWeek')).toEqual(1);
-    expect(dateFormat(daypicker.prop('selectedDays') as Date)).toEqual('21.08.2017');
+    expect(screen.getByText('man')).toBeInTheDocument();
+    expect(screen.getByText('tor')).toBeInTheDocument();
+    expect(screen.getByText('søn')).toBeInTheDocument();
+    expect(screen.getByText('August 2017')).toBeInTheDocument();
   });
 
   it('skal ikke sette dato når denne ikke er korrekt', () => {
     const onDayChangeCallback = sinon.spy();
     const date = '21.sd.2017';
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <CalendarOverlay
         onDayChange={onDayChangeCallback}
         className="test"
@@ -80,16 +55,13 @@ describe('<CalendarOverlay>', () => {
       />,
     );
 
-    const daypicker = wrapper.find(DayPicker);
-    expect(daypicker.prop('selectedDays')).toBeNull();
+    expect(screen.queryByText(/2017/i)).not.toBeInTheDocument();
   });
 
-  it('skal kjøre callback når overlay blir lukket og target er noe annet enn kalender eller kalenderknapp', () => {
-    const onCloseCallback = () => {
-      expect(true).toBe(true);
-    };
+  it('skal kjøre callback når overlay blir lukket og target er noe annet enn kalender eller kalenderknapp', async () => {
+    const onCloseCallback = sinon.spy();
     const elementIsCalendarButton = () => false;
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <CalendarOverlay
         onDayChange={sinon.spy()}
         className="test"
@@ -100,13 +72,17 @@ describe('<CalendarOverlay>', () => {
         onClose={onCloseCallback}
       />,
     );
+    expect(screen.getByText('August 2017')).toBeInTheDocument();
 
-    wrapper.find('div').prop('onBlur')({} as React.FocusEvent);
+    await act(async () => {
+      fireEvent.blur(screen.getByRole('link'));
+    });
+    expect(onCloseCallback.called).toBe(true);
   });
 
-  it('skal kjøre callback når en trykker escape-knappen', () => {
+  it('skal kjøre callback når en trykker escape-knappen', async () => {
     const onCloseCallback = sinon.spy();
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <CalendarOverlay
         onDayChange={sinon.spy()}
         className="test"
@@ -118,14 +94,14 @@ describe('<CalendarOverlay>', () => {
       />,
     );
 
-    wrapper.find('div').prop('onKeyDown')({ keyCode: 27 } as any);
+    await userEvent.keyboard('{Escape}');
 
     expect(onCloseCallback.called).toBe(true);
   });
 
-  it('skal ikke kjøre callback når en trykker noe annet enn escape-knappen', () => {
+  it('skal ikke kjøre callback når en trykker noe annet enn escape-knappen', async () => {
     const onCloseCallback = sinon.spy();
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <CalendarOverlay
         onDayChange={sinon.spy()}
         className="test"
@@ -137,7 +113,7 @@ describe('<CalendarOverlay>', () => {
       />,
     );
 
-    wrapper.find('div').prop('onKeyDown')({ keyCode: 20 } as any);
+    await userEvent.keyboard('{Enter}');
 
     expect(onCloseCallback.called).toBe(false);
   });
