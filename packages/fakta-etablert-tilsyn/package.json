@@ -16,7 +16,7 @@
     "cypress": "^13.6.6",
     "eslint-plugin-cypress": "^2.15.1",
     "start-server-and-test": "^2.0.3",
-    "vite": "^5.1.1"
+    "vite": "^5.1.5"
   },
   "dependencies": {
     "@navikt/ds-css": "5.18.1",
