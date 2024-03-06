@@ -98,7 +98,7 @@ export const buildInitialValues = createSelector(
     periode: vilkårsresultat ? vilkårsresultat[0].periode : null,
     avslagsårsak: vilkårsresultat ? vilkårsresultat[0].avslagsårsak : null,
     utfall: vilkårsresultat ? vilkårsresultat[0].utfall : null,
-    behandlingsresultat: behandlingsresultat ? behandlingsresultat?.type?.kode : null,
+    behandlingsresultat: behandlingsresultat ? behandlingsresultat?.type : null,
     begrunnelse: vilkar ? vilkar[0].perioder[0].begrunnelse : null,
   }),
 );

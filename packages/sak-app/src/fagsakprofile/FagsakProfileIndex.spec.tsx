@@ -133,10 +133,7 @@ describe('<FagsakProfileIndex>', () => {
     id: 1,
     uuid: 'uuid-1',
     behandlingsresultat: {
-      type: {
-        kode: behandlingResultatType.AVSLATT,
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      },
+      type: behandlingResultatType.AVSLATT,
     },
   };
 
@@ -148,10 +145,7 @@ describe('<FagsakProfileIndex>', () => {
       kodeverk: 'BEHANDLING_TYPE',
     },
     behandlingsresultat: {
-      type: {
-        kode: behandlingResultatType.INNVILGET,
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      },
+      type: behandlingResultatType.INNVILGET,
     },
     uuid: 'uuid-2',
     opprettet: '2021-02-01T00:54:25.455',

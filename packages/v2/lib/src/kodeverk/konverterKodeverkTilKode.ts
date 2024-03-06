@@ -51,7 +51,9 @@ export const konverterKodeverkTilKode = (data: any, erTilbakekreving: boolean, d
       const antallAttr = Object.keys(data[key]).length;
       if (
         !ignorerKodeverkKonvertering.includes(data[key]?.kodeverk) &&
-        ((data[key]?.kodeverk && antallAttr === lengdeKodeverkObjekt) || antallAttr === 1)
+        ((data[key]?.kodeverk && antallAttr === lengdeKodeverkObjekt) ||
+          antallAttr === 1 ||
+          data[key]?.kodeverk === 'BEHANDLING_RESULTAT_TYPE') // Skrive om denne foreløpig, de ekstra attributtene skal fjernes i backend
       ) {
         data[key] = data[key].kode; // eslint-disable-line no-param-reassign
         debugLogKodeverkData(data[key], key, data);

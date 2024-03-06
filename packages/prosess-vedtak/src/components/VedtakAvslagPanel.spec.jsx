@@ -29,10 +29,7 @@ describe('<VedtakAvslagPanel>', () => {
     },
     behandlingsresultat: {
       id: 1,
-      type: {
-        kode: 'test',
-        navn: 'test',
-      },
+      type: 'test',
       avslagsarsak: {
         kode: '1019',
         navn: 'Manglende dokumentasjon',
@@ -92,10 +89,7 @@ describe('<VedtakAvslagPanel>', () => {
 
   const behandlingsresultat = {
     id: 1,
-    type: {
-      kode: 'test',
-      navn: 'test',
-    },
+    type: 'test',
   };
 
   it('skal rendre avslagspanel for pleiepenger', () => {

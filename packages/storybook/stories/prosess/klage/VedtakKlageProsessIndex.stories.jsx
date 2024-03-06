@@ -16,9 +16,7 @@ const behandling = {
   id: 1,
   versjon: 1,
   behandlingsresultat: {
-    type: {
-      kode: behandlingResultatType.KLAGE_AVVIST,
-    },
+    type: behandlingResultatType.KLAGE_AVVIST,
   },
   behandlingPaaVent: false,
 };

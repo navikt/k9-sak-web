@@ -14,9 +14,7 @@ describe('<VedtakFritekstbrevModal>', () => {
         intl={intlMock}
         readOnly={false}
         behandlingsresultat={{
-          type: {
-            kode: behandlingResultatType.AVSLATT,
-          },
+          type: behandlingResultatType.AVSLATT,
         }}
         erSVP
       />,
@@ -37,9 +35,7 @@ describe('<VedtakFritekstbrevModal>', () => {
         intl={intlMock}
         readOnly={false}
         behandlingsresultat={{
-          type: {
-            kode: behandlingResultatType.OPPHOR,
-          },
+          type: behandlingResultatType.OPPHOR,
         }}
         erSVP
       />,
@@ -59,9 +55,7 @@ describe('<VedtakFritekstbrevModal>', () => {
         intl={intlMock}
         readOnly={false}
         behandlingsresultat={{
-          type: {
-            kode: behandlingResultatType.INNVILGET,
-          },
+          type: behandlingResultatType.INNVILGET,
         }}
         erSVP
       />,
@@ -76,9 +70,7 @@ describe('<VedtakFritekstbrevModal>', () => {
         intl={intlMock}
         readOnly
         behandlingsresultat={{
-          type: {
-            kode: behandlingResultatType.AVSLATT,
-          },
+          type: behandlingResultatType.AVSLATT,
         }}
         erSVP
       />,
@@ -93,9 +85,7 @@ describe('<VedtakFritekstbrevModal>', () => {
         intl={intlMock}
         readOnly={false}
         behandlingsresultat={{
-          type: {
-            kode: behandlingResultatType.AVSLATT,
-          },
+          type: behandlingResultatType.AVSLATT,
         }}
         erSVP={false}
       />,

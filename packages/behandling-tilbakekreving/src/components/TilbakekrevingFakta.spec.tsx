@@ -87,10 +87,7 @@ describe('<TilbakekrevingFakta>', () => {
         },
       ],
       behandlingsresultat: {
-        type: {
-          kode: 'TEST',
-          kodeverk: 'BEHANDLINGSRESULTAT',
-        },
+        type: 'TEST',
         konsekvenserForYtelsen: [],
       },
       behandlingÅrsaker: [

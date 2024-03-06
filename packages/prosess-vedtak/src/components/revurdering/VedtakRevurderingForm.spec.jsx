@@ -25,10 +25,7 @@ const createBehandling = (behandlingResultatType, behandlingHenlagt) => ({
   },
   behandlingsresultat: {
     id: 1,
-    type: {
-      kode: behandlingResultatType,
-      navn: 'test',
-    },
+    type: behandlingResultatType,
     avslagsarsak:
       behandlingResultatType === BehandlingResultatType.AVSLATT
         ? {
@@ -122,10 +119,7 @@ describe('<VedtakRevurderingForm>', () => {
 
     revurdering.behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'Innvilget',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
     revurdering.aksjonspunkter.push({
       id: 0,
@@ -180,10 +174,7 @@ describe('<VedtakRevurderingForm>', () => {
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'Innvilget',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
 
     renderWithIntlAndReduxForm(
@@ -222,10 +213,7 @@ describe('<VedtakRevurderingForm>', () => {
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'Innvilget',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
 
     renderWithIntlAndReduxForm(

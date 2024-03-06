@@ -38,11 +38,11 @@ interface VilkarresultatMedOverstyringFormProps {
   aksjonspunkter: Aksjonspunkt[];
   avslagsarsaker: KodeverkMedNavn[];
   behandlingsresultat: {
-    type: Kodeverk;
+    type: string;
   };
   behandlingId: number;
   behandlingVersjon: number;
-  behandlingType: Kodeverk;
+  behandlingType: string;
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
   erMedlemskapsPanel: boolean;

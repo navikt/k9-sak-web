@@ -24,7 +24,7 @@ export const VedtakAvslagPanelImpl = ({
         {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
       </Label>
       <BodyShort size="small">
-        {intl.formatMessage({ id: findAvslagResultatText(behandlingsresultat.type.kode, ytelseTypeKode) })}
+        {intl.formatMessage({ id: findAvslagResultatText(behandlingsresultat.type, ytelseTypeKode) })}
         {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
       </BodyShort>
       <VerticalSpacer sixteenPx />
