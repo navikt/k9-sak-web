@@ -5,7 +5,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import OpplysningerFraSoknadenIndex from '@fpsak-frontend/fakta-opplysninger-fra-soknaden';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import { Aksjonspunkt, BehandlingAppKontekst } from '@k9-sak-web/types';
+import { BehandlingAppKontekst } from '@k9-sak-web/types';
 
 import { FrisinnBehandlingApiKeys } from '../../data/frisinnBehandlingApi';
 
