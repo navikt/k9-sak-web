@@ -14,11 +14,11 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
-    "@navikt/ds-css": "5.18.1",
-    "@navikt/ds-react": "5.18.1",
-    "@navikt/ft-form-hooks": "4.2.23",
-    "@navikt/ft-form-validators": "2.1.15",
-    "@navikt/ft-plattform-komponenter": "2.3.19",
+    "@navikt/ds-css": "6.1.1",
+    "@navikt/ds-react": "6.1.1",
+    "@navikt/ft-form-hooks": "4.4.0",
+    "@navikt/ft-form-validators": "2.3.0",
+    "@navikt/ft-plattform-komponenter": "2.5.0",
     "@popperjs/core": "2.11.8",
     "classnames": "2.5.1",
     "cors": "2.8.5",
@@ -52,7 +52,7 @@
     "react": "18.2.0",
     "react-collapse": "5.1.1",
     "react-dom": "18.2.0",
-    "react-hook-form": "7.50.1",
+    "react-hook-form": "7.51.0",
     "react-popper": "2.3.0",
     "yup": "0.32.11"
   }

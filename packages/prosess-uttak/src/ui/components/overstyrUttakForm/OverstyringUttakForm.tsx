@@ -1,20 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { FormProvider, useForm, useFieldArray, Resolver } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import dayjs from 'dayjs';
-import { yupResolver } from "@hookform/resolvers/yup"
+import React, { useContext, useEffect, useState } from 'react';
+import { FormProvider, Resolver, useFieldArray, useForm } from 'react-hook-form';
 
-import DatePicker from '@navikt/ds-react/esm/date/datepicker/DatePicker';
-import { useRangeDatepicker } from '@navikt/ds-react/esm/date/hooks/useRangeDatepicker';
-import { Button, Heading, Loader, TextField, Textarea } from '@navikt/ds-react';
+import { Button, DatePicker, Heading, Loader, TextField, Textarea, useRangeDatepicker } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 
-import OverstyrAktivitetListe from './OverstyrAktivitetListe';
-import ContainerContext from '../../context/ContainerContext';
-import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
-import { formaterOverstyring, formaterOverstyringAktiviteter, overstyrUttakFormValidationSchema } from '../../../util/overstyringUtils';
 import { OverstyrUttakFormFieldName } from '../../../constants/OverstyrUttakFormFieldName';
 import { OverstyrUttakFormData } from '../../../types';
-import { finnSisteSluttDatoFraPerioderTilVurdering, finnTidligsteStartDatoFraPerioderTilVurdering } from '../../../util/dateUtils';
+import {
+  finnSisteSluttDatoFraPerioderTilVurdering,
+  finnTidligsteStartDatoFraPerioderTilVurdering,
+} from '../../../util/dateUtils';
+import {
+  formaterOverstyring,
+  formaterOverstyringAktiviteter,
+  overstyrUttakFormValidationSchema,
+} from '../../../util/overstyringUtils';
+import ContainerContext from '../../context/ContainerContext';
+import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
+import OverstyrAktivitetListe from './OverstyrAktivitetListe';
 
 import styles from './overstyringUttakForm.module.css';
 
@@ -35,7 +40,10 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
   const { handleOverstyringAksjonspunkt, perioderTilVurdering = [] } = useContext(ContainerContext);
   const { lasterAktiviteter, hentAktuelleAktiviteter } = useOverstyrUttak();
   const [deaktiverLeggTil, setDeaktiverLeggTil] = useState<boolean>(true);
-  const resolver: Resolver<OverstyrUttakFormData, any> = yupResolver(overstyrUttakFormValidationSchema) as Resolver<any, any>;
+  const resolver: Resolver<OverstyrUttakFormData, any> = yupResolver(overstyrUttakFormValidationSchema) as Resolver<
+    any,
+    any
+  >;
   const formMethods = useForm<OverstyrUttakFormData>({
     reValidateMode: 'onBlur',
     defaultValues: overstyring || {
@@ -50,7 +58,13 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
   });
 
   const tidligesteStartDato = finnTidligsteStartDatoFraPerioderTilVurdering(perioderTilVurdering);
-  const { control, setValue, watch, register, formState: { errors } } = formMethods;
+  const {
+    control,
+    setValue,
+    watch,
+    register,
+    formState: { errors },
+  } = formMethods;
 
   const { fields, replace: replaceAktiviteter } = useFieldArray({
     control,
