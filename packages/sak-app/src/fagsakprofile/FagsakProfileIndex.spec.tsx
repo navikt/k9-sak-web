@@ -21,9 +21,7 @@ const lagRisikoklassifisering = kode => ({
   kontrollresultat: kode,
   medlFaresignaler: undefined,
   iayFaresignaler: undefined,
-  status: {
-    kode: aksjonspunktStatus.UTFORT,
-  },
+  status: aksjonspunktStatus.UTFORT,
 });
 
 vi.mock('react-router-dom', async () => {

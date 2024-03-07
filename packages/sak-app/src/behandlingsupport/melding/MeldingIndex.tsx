@@ -17,7 +17,6 @@ import {
   BehandlingAppKontekst,
   Brevmaler,
   Fagsak,
-  Kodeverk,
   Mottaker,
   Personopplysninger,
 } from '@k9-sak-web/types';
