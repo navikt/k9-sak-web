@@ -4349,6 +4349,7 @@ __metadata:
     "@k9-sak-web/fakta-inntektsmelding": 1.0.0
     "@k9-sak-web/fakta-omsorgen-for": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/lib": 1.0.0
     "@k9-sak-web/prosess-aarskvantum-oms": 1.0.0
     "@k9-sak-web/prosess-vilkar-soknadsfrist": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
@@ -5018,6 +5019,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/gui@workspace:packages/v2/gui"
   dependencies:
+    "@k9-sak-web/lib": 1.0.0
     react: 18.2.0
   languageName: unknown
   linkType: soft

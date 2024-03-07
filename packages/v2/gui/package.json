@@ -9,6 +9,7 @@
     "./kodeverk/*": "./src/kodeverk/*"
   },
   "dependencies": {
+    "@k9-sak-web/lib": "1.0.0",
     "react": "18.2.0"
   }
 }
