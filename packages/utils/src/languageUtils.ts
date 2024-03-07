@@ -9,7 +9,7 @@ export const replaceNorwegianCharacters = str => {
 };
 
 // TODO Fjern bruk av denne
-export const getLanguageCodeFromSprakkode = sprakkode => {
+export const getLanguageCodeFromSprakkode = (sprakkode: string) => {
   if (!sprakkode) {
     return 'Malform.Bokmal';
   }
