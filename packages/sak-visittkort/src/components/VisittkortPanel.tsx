@@ -1,7 +1,7 @@
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
+import { dateToday, initializeDate, prettifyDateString } from '@fpsak-frontend/utils';
 import {
   FagsakPerson,
   Kodeverk,
@@ -11,7 +11,6 @@ import {
 } from '@k9-sak-web/types';
 import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
 import { Gender, PersonCard } from '@navikt/ft-plattform-komponenter';
-import moment from 'moment';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import RelatertFagsak from './RelatertFagsak';
@@ -82,6 +81,15 @@ const VisittkortPanel = ({
   const erDirekteOvergangFraInfotrygd = direkteOvergangFraInfotrygd?.skjæringstidspunkter?.length > 0;
   const erUtenlandssak = personopplysninger?.pleietrengendePart?.personstatus?.kode === personstatusType.AKTIVT;
 
+  const beregnAlderPåBarn = (fødselsdato: string) => {
+    const iDag = dateToday();
+    const formatertFødselsdato = initializeDate(fødselsdato);
+    if (iDag.diff(formatertFødselsdato, 'year') > 0) {
+      return `${iDag.diff(formatertFødselsdato, 'year')} år`;
+    }
+    return `${iDag.diff(formatertFødselsdato, 'months')} mnd`;
+  };
+
   return (
     <div className={styles.container}>
       <FlexContainer>
@@ -130,14 +138,14 @@ const VisittkortPanel = ({
                       childAge={
                         <FormattedMessage
                           id="VisittkortBarnInfoFodselPanel.Fodt"
-                          values={{ dato: moment(barn.fodselsdato).format(DDMMYYYY_DATE_FORMAT) }}
+                          values={{
+                            dato: `${prettifyDateString(barn.fodselsdato)}, ${beregnAlderPåBarn(barn.fodselsdato)}`,
+                          }}
                         />
                       }
                     />
                     {barn.dodsdato && (
-                      <p className={styles.dødsdatoLabel}>
-                        {`Død ${moment(barn.dodsdato).format(DDMMYYYY_DATE_FORMAT)}`}
-                      </p>
+                      <p className={styles.dødsdatoLabel}>{`Død ${prettifyDateString(barn.dodsdato)}`}</p>
                     )}
                   </div>
                 </FlexColumn>

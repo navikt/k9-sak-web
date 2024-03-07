@@ -10,3 +10,5 @@ const supportedFormats = ['YYYY-MM-DD', 'DD.MM.YYYY'];
 export default function initializeDate(dateString: string) {
   return dayjs(dateString, supportedFormats).utc(true).startOf('day');
 }
+
+export const dateToday = () => dayjs().utc(true).startOf('day');
