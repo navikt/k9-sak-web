@@ -31,18 +31,13 @@ export const VedtakSjekkTilbakekreving: React.FC<Props> = ({
     <>
       <Alert className={styles.aksjonspunktAlert} variant="warning" size="medium">
         <Heading spacing size="small" level="3">
-          Saken har en åpen ytelsesbehandling og en tilbakekrevingssak. Ytelsesbehandlingen kan påvirke resultatet av
-          den åpne tilbakekrevingssaken.
+          Har åpen tilbakekrevingssak som kan bli påvirket
         </Heading>
         <BodyLong>Vurder om tilbakekrevingssaken skal behandles først.</BodyLong>
         <VerticalSpacer twentyPx />
-        <RadioGroup
-          legend="Ønsker du å behandle tilbakekrevingssaken først?"
-          onChange={handleChange}
-          disabled={readOnly}
-        >
-          <Radio value="ja">Ja, sett denne behandlingen på vent (må gjøres via behandlingsmenyen)</Radio>
-          <Radio value="nei">Nei, behandle denne behandlingen videre</Radio>
+        <RadioGroup legend="Behandle tilbakekrevingssaken først?" onChange={handleChange} disabled={readOnly}>
+          <Radio value="ja">Ja</Radio>
+          <Radio value="nei">Nei</Radio>
         </RadioGroup>
         <VerticalSpacer twentyPx />
         <Button variant="primary" onClick={handleSubmit} type="button" disabled={deaktiverBekreftKnapp}>
@@ -58,10 +53,7 @@ export const VedtakSjekkTilbakekreving: React.FC<Props> = ({
         <>
           <VerticalSpacer twentyPx />
           <Alert className={styles.aksjonspunktAlert} variant="error" size="small">
-            <BodyLong>
-              Denne behandlingen har hatt aksjonspunkt om tilbakekrevingssaken skal behandles før ytelsessaken. Det er
-              mulig å endre valget.
-            </BodyLong>
+            <BodyLong>Sett behandlingen på vent og behandle tilbakekrevingssaken først</BodyLong>
           </Alert>
         </>
       )}
