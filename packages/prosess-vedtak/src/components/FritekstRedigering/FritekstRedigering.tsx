@@ -172,7 +172,7 @@ const FritekstRedigering = ({
       >
         <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
       </Button>
-      <Modal open={visRedigering} onClose={() => setVisRedigering(false)} width="53.75rem">
+      <Modal open={visRedigering} onClose={() => setVisRedigering(false)} width="53.75rem" aria-label="Rediger brev">
         <Modal.Header>
           <Heading level="3" size="small">
             <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />

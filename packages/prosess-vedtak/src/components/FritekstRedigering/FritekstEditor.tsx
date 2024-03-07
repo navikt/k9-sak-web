@@ -115,7 +115,7 @@ const FritekstEditor = ({
 
   return (
     <>
-      <Modal open={visAdvarsel} onClose={() => setVisAdvarsel(false)}>
+      <Modal open={visAdvarsel} onClose={() => setVisAdvarsel(false)} aria-label="Tilbakestill brev">
         <Modal.Header>
           <Heading as="h3" size="medium">
             <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestillTittel" />

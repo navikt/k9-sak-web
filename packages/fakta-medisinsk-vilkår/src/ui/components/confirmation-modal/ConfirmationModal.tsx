@@ -1,5 +1,5 @@
-import React from 'react';
 import { Button, Modal } from '@navikt/ds-react';
+import React from 'react';
 import styles from './confirmationModal.module.css';
 
 interface ConfirmationModalProps {
@@ -18,7 +18,7 @@ const ConfirmationModal = ({
   isSubmitting,
 }: ConfirmationModalProps): JSX.Element =>
   isOpen ? (
-    <Modal open={isOpen} onClose={onCancel} className={styles.confirmationModal}>
+    <Modal open={isOpen} onClose={onCancel} className={styles.confirmationModal} aria-label="Bekreft">
       <Modal.Body>
         {children}
         <div className={styles.confirmationModal__buttonSection}>

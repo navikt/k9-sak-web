@@ -5,8 +5,8 @@ import { DatePicker, useDatepicker } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import React from 'react';
-import styles from './datepicker.module.css';
 import { DatepickerLimitations } from './DatepickerLimitations';
+import styles from './datepicker.module.css';
 
 dayjs.extend(customParseFormat);
 
@@ -78,7 +78,6 @@ const PureDatepicker = ({
     onValidate: date => {
       setUgyldigDatoError(date.isBefore || date.isAfter);
     },
-    openOnFocus: false,
   });
 
   return (
