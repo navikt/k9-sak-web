@@ -37,7 +37,7 @@ const accessSelector =
     validFagsakStatuses: string[],
     validBehandlingStatuses: string[],
   ) =>
-  (navAnsatt: NavAnsatt, fagsakStatus: string, behandlingStatus: stirng, behandlingType: string): Aksess => {
+  (navAnsatt: NavAnsatt, fagsakStatus: string, behandlingStatus: string, behandlingType: string): Aksess => {
     if (kanVeilede(navAnsatt)) {
       return {
         employeeHasAccess: true,
