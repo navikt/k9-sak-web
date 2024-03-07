@@ -18,15 +18,9 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
   const behandling = {
     id: 1234,
     versjon: 123,
-    type: {
-      kode: 'BT-001',
-      kodeverk: '',
-    },
+    type: 'BT-001',
     opprettet: '‎29.08.‎2017‎ ‎09‎:‎54‎:‎22',
-    status: {
-      kode: 'FVED',
-      kodeverk: '',
-    },
+    status: 'FVED',
     toTrinnsBehandling: true,
   } as Behandling;
 

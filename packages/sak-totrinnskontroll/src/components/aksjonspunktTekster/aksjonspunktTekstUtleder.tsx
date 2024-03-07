@@ -10,7 +10,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import {
   KlageVurdering,
-  Kodeverk,
   KodeverkMedNavn,
   TotrinnsBeregningDto,
   TotrinnskontrollAksjonspunkt,
@@ -65,7 +64,6 @@ export const getFaktaOmArbeidsforholdMessages = (
   arbeidsforholdHandlingTyper: KodeverkMedNavn[],
 ) => {
   const formattedMessages = [];
-  const { kode } = arbeidforholdDto.arbeidsforholdHandlingType;
   if (arbeidforholdDto.brukPermisjon === true) {
     formattedMessages.push(
       <FormattedMessage
@@ -86,11 +84,11 @@ export const getFaktaOmArbeidsforholdMessages = (
         }}
       />,
     );
-    if (kode === arbeidsforholdHandlingType.BRUK) {
+    if (arbeidforholdDto.arbeidsforholdHandlingType === arbeidsforholdHandlingType.BRUK) {
       return formattedMessages;
     }
   }
-  const type = arbeidsforholdHandlingTyper.find(t => t.kode === kode);
+  const type = arbeidsforholdHandlingTyper.find(t => t.kode === arbeidforholdDto.arbeidsforholdHandlingType);
   const melding = type !== undefined && type !== null ? type.navn : '';
   formattedMessages.push(
     <FormattedMessage
@@ -141,7 +139,7 @@ const getTextFromTilbakekrevingAksjonspunktkode = (aksjonspunkt: Totrinnskontrol
 };
 
 const lagBgTilfelleTekst = (bg: TotrinnsBeregningDto): ReactNode => {
-  const aksjonspunktTextIds = bg.faktaOmBeregningTilfeller.map(({ kode }) => vurderFaktaOmBeregningTotrinnText[kode]);
+  const aksjonspunktTextIds = bg.faktaOmBeregningTilfeller.map(kode => vurderFaktaOmBeregningTotrinnText[kode]);
   return (
     <>
       <Element>
@@ -206,8 +204,8 @@ const getTextForKlageHelper = (
   return <FormattedMessage id={aksjonspunktTextId} />;
 };
 
-const getTextForKlage = (klagebehandlingVurdering: KlageVurdering, behandlingStaus: Kodeverk) => {
-  if (behandlingStaus.kode === behandlingStatusCode.FATTER_VEDTAK) {
+const getTextForKlage = (klagebehandlingVurdering: KlageVurdering, behandlingStaus: string) => {
+  if (behandlingStaus === behandlingStatusCode.FATTER_VEDTAK) {
     if (klagebehandlingVurdering.klageVurderingResultatNK) {
       return getTextForKlageHelper(klagebehandlingVurdering.klageVurderingResultatNK);
     }
@@ -226,7 +224,7 @@ const erKlageAksjonspunkt = (aksjonspunkt: TotrinnskontrollAksjonspunkt) =>
 
 const getAksjonspunkttekst = (
   klagebehandlingVurdering: KlageVurdering,
-  behandlingStatus: Kodeverk,
+  behandlingStatus: string,
   arbeidsforholdHandlingTyper: KodeverkMedNavn[],
   erTilbakekreving: boolean,
   aksjonspunkt: TotrinnskontrollAksjonspunkt,

@@ -11,7 +11,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { Image } from '@fpsak-frontend/shared-components';
-import { Behandling, Kodeverk } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
 
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import styles from './fatterVedtakApprovalModal.module.css';
@@ -20,7 +20,7 @@ const getInfoTextCode = (
   behandlingtypeKode: string,
   behandlingsresultat: Behandling['behandlingsresultat'],
   harSammeResultatSomOriginalBehandling: boolean,
-  ytelseType: Kodeverk,
+  ytelseType: string,
   erKlageWithKA: boolean,
   isOpphor: boolean,
 ) => {
@@ -44,48 +44,48 @@ const getInfoTextCode = (
   }
   // HVIS AVSLÅTT
   if (behandlingsresultat?.type === behandlingResultatType.AVSLATT) {
-    if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
+    if (ytelseType === FagsakYtelseType.PLEIEPENGER) {
       return 'FatterVedtakApprovalModal.IkkeInnvilgetPleiepenger';
     }
-    if (ytelseType.kode === FagsakYtelseType.FRISINN) {
+    if (ytelseType === FagsakYtelseType.FRISINN) {
       return 'FatterVedtakApprovalModal.IkkeInnvilgetFRISINN';
     }
-    if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
+    if (erFagytelseTypeUtvidetRett(ytelseType)) {
       return 'FatterVedtakApprovalModal.IkkeInnvilgetUtvidetRett';
     }
-    if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+    if (ytelseType === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
       return 'FatterVedtakApprovalModal.IkkeInnvilgetLivetsSluttfase';
     }
     return 'FatterVedtakApprovalModal.IkkeInnvilgetOmsorgspenger';
   }
   // HVIS OPPHØRT
   if (isOpphor) {
-    if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
+    if (ytelseType === FagsakYtelseType.PLEIEPENGER) {
       return 'FatterVedtakApprovalModal.OpphortPleiepenger';
     }
-    if (ytelseType.kode === FagsakYtelseType.FRISINN) {
+    if (ytelseType === FagsakYtelseType.FRISINN) {
       return 'FatterVedtakApprovalModal.OpphortFRISINN';
     }
-    if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
+    if (erFagytelseTypeUtvidetRett(ytelseType)) {
       return 'FatterVedtakApprovalModal.OpphortUtvidetRett';
     }
-    if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+    if (ytelseType === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
       return 'FatterVedtakApprovalModal.OpphortLivetsSluttfase';
     }
     return 'FatterVedtakApprovalModal.OpphortOmsorgpenger';
   }
 
   // HVIS INNVILGET
-  if (ytelseType.kode === FagsakYtelseType.FRISINN) {
+  if (ytelseType === FagsakYtelseType.FRISINN) {
     return 'FatterVedtakApprovalModal.InnvilgetFRISINN';
   }
-  if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
+  if (ytelseType === FagsakYtelseType.PLEIEPENGER) {
     return 'FatterVedtakApprovalModal.InnvilgetPleiepenger';
   }
-  if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
+  if (erFagytelseTypeUtvidetRett(ytelseType)) {
     return 'FatterVedtakApprovalModal.InnvilgetUtvidetRett';
   }
-  if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+  if (ytelseType === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
     return 'FatterVedtakApprovalModal.InnvilgetLivetsSluttfase';
   }
   return 'FatterVedtakApprovalModal.InnvilgetOmsorgspenger';
@@ -93,7 +93,7 @@ const getInfoTextCode = (
 
 const getModalDescriptionTextCode = (
   isOpphor: boolean,
-  ytelseType: Kodeverk,
+  ytelseType: string,
   erKlageWithKA: boolean,
   behandlingTypeKode: string,
 ) => {
@@ -106,16 +106,16 @@ const getModalDescriptionTextCode = (
   if (isOpphor) {
     return 'FatterVedtakApprovalModal.ModalDescriptionOpphort';
   }
-  if (ytelseType.kode === FagsakYtelseType.FRISINN) {
+  if (ytelseType === FagsakYtelseType.FRISINN) {
     return 'FatterVedtakApprovalModal.ModalDescriptionFRISINNApproval';
   }
-  if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
+  if (ytelseType === FagsakYtelseType.PLEIEPENGER) {
     return 'FatterVedtakApprovalModal.ModalDescriptionPleiePengerApproval';
   }
-  if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
+  if (erFagytelseTypeUtvidetRett(ytelseType)) {
     return 'FatterVedtakApprovalModal.ModalDescriptionUtvidetRettApproval';
   }
-  if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+  if (ytelseType === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
     return 'FatterVedtakApprovalModal.ModalDescriptionLivetsSluttfase';
   }
   return 'FatterVedtakApprovalModal.ModalDescriptionOMSApproval';
@@ -129,7 +129,7 @@ const utledInfoTextCode = (
   behandlingTypeKode: string,
   behandlingsresultat: Behandling['behandlingsresultat'],
   harSammeResultatSomOriginalBehandling: boolean,
-  fagsakYtelseType: Kodeverk,
+  fagsakYtelseType: string,
   erKlageWithKA: boolean,
   isBehandlingsresultatOpphor: boolean,
 ) => {
@@ -148,8 +148,8 @@ const utledInfoTextCode = (
   return 'FatterVedtakApprovalModal.VedtakReturneresTilSaksbehandler';
 };
 
-const getAltImgTextCode = (ytelseType: Kodeverk) => {
-  switch (ytelseType.kode) {
+const getAltImgTextCode = (ytelseType: string) => {
+  switch (ytelseType) {
     case FagsakYtelseType.FRISINN:
       return 'FatterVedtakApprovalModal.InnvilgetFRISINN';
     case FagsakYtelseType.PLEIEPENGER:
@@ -161,12 +161,12 @@ const getAltImgTextCode = (ytelseType: Kodeverk) => {
   }
 };
 
-const utledAltImgTextCode = (behandlingStatusKode: string, fagsakYtelseType: Kodeverk) =>
+const utledAltImgTextCode = (behandlingStatusKode: string, fagsakYtelseType: string) =>
   isStatusFatterVedtak(behandlingStatusKode) ? getAltImgTextCode(fagsakYtelseType) : '';
 
 const utledModalDescriptionTextCode = (
   behandlingStatusKode: string,
-  fagsakYtelseType: Kodeverk,
+  fagsakYtelseType: string,
   erKlageWithKA: boolean,
   behandlingTypeKode: string,
   isBehandlingsresultatOpphor: boolean,
@@ -178,7 +178,7 @@ const utledModalDescriptionTextCode = (
 interface OwnProps {
   closeEvent: () => void;
   allAksjonspunktApproved: boolean;
-  fagsakYtelseType: Kodeverk;
+  fagsakYtelseType: string;
   erKlageWithKA?: boolean;
   behandlingsresultat?: Behandling['behandlingsresultat'];
   behandlingStatusKode: string;
