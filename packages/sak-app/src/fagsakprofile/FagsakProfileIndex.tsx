@@ -7,13 +7,11 @@ import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   Aksjonspunkt,
   ArbeidsgiverOpplysningerPerId,
   BehandlingAppKontekst,
   Fagsak,
-  KodeverkMedNavn,
   Personopplysninger,
   Risikoklassifisering,
 } from '@k9-sak-web/types';
@@ -27,7 +25,6 @@ import {
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import BehandlingMenuIndex, { BehandlendeEnheter } from '../behandlingmenu/BehandlingMenuIndex';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../data/k9sakApi';
-import { useFpSakKodeverkMedNavn, useGetKodeverkFn } from '../data/useKodeverk';
 import SakRettigheter from '../fagsak/sakRettigheterTsType';
 import styles from './fagsakProfileIndex.module.css';
 import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';

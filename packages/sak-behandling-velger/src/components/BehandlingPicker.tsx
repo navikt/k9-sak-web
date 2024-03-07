@@ -22,11 +22,13 @@ import BehandlingSelected from './BehandlingSelected';
 import styles from './behandlingPicker.module.css';
 import { sortBehandlinger } from './behandlingVelgerUtils';
 
-const getBehandlingNavn = (behandlingTypeNavn, intl: IntlShape) => {
+const getBehandlingNavn = (behandlingTypeKode, intl: IntlShape) => {
+  const { kodeverkNavnFraKode } = useKodeverkV2();
+
   if (
-    [behandlingType.FORSTEGANGSSOKNAD, behandlingType.KLAGE, behandlingType.TILBAKEKREVING].includes(behandlingTypeNavn)
+    [behandlingType.FORSTEGANGSSOKNAD, behandlingType.KLAGE, behandlingType.TILBAKEKREVING].includes(behandlingTypeKode)
   ) {
-    return behandlingTypeNavn;
+    return kodeverkNavnFraKode(behandlingTypeKode, KodeverkType.BEHANDLING_TYPE);
   }
 
   return intl.formatMessage({ id: 'BehandlingPickerItemContent.BehandlingTypeNavn.Viderebehandling' });
@@ -69,10 +71,7 @@ const renderListItems = ({
         to={getBehandlingLocation(behandling.id)}
       >
         <BehandlingPickerItemContent
-          behandlingTypeNavn={getBehandlingNavn(
-            kodeverkNavnFraKode(behandling.type, KodeverkType.BEHANDLING_TYPE),
-            intl,
-          )}
+          behandlingTypeNavn={getBehandlingNavn(behandling.type, intl)}
           behandlingsresultatTypeNavn={
             behandling.behandlingsresultat
               ? kodeverkNavnFraKode(behandling.behandlingsresultat.type, KodeverkType.BEHANDLING_RESULTAT_TYPE)
@@ -209,7 +208,7 @@ const BehandlingPicker = ({
       if (!filterListe.some(filter => filter.value === behandling.type)) {
         filterListe.push({
           value: behandling.type,
-          label: getBehandlingNavn(kodeverkNavnFraKode(behandling.type, KodeverkType.BEHANDLING_TYPE), intl),
+          label: getBehandlingNavn(behandling.type, intl),
         });
       }
       if (erAutomatiskBehandlet(behandling) && !filterListe.some(filter => filter.value === automatiskBehandling)) {
@@ -247,7 +246,7 @@ const BehandlingPicker = ({
     <div className={styles.behandlingPicker} data-testid="BehandlingPicker">
       {valgtBehandlingId && (
         <Tilbakeknapp className={styles.backButton} onClick={() => setValgtBehandlingId(undefined)}>
-          <FormattedMessage id="Behandlingspunkt.Behandling.SeAlle" />
+          <FormattedMessage id="Behandlingspunkt.Behandling.SeAlle" /> asdf
         </Tilbakeknapp>
       )}
 
@@ -298,10 +297,7 @@ const BehandlingPicker = ({
             valgtBehandling.behandlingsresultat ? valgtBehandling.behandlingsresultat.type : undefined
           }
           behandlingsårsaker={getÅrsaksliste()}
-          behandlingTypeNavn={getBehandlingNavn(
-            kodeverkNavnFraKode(valgtBehandling.type, KodeverkType.BEHANDLING_TYPE),
-            intl,
-          )}
+          behandlingTypeNavn={getBehandlingNavn(valgtBehandling.type, intl)}
           behandlingTypeKode={valgtBehandling.type}
           søknadsperioder={søknadsperioder.find(periode => periode.data?.id === valgtBehandling.id)?.data?.perioder}
           createLocationForSkjermlenke={createLocationForSkjermlenke}
