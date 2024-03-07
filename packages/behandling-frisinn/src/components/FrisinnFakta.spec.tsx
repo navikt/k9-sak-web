@@ -1,3 +1,7 @@
+import React from 'react';
+import sinon from 'sinon';
+import userEvent from '@testing-library/user-event';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -11,9 +15,7 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React from 'react';
-import sinon from 'sinon';
+
 import { FrisinnBehandlingApiKeys, requestFrisinnApi } from '../data/frisinnBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
 import FrisinnFakta from './FrisinnFakta';
@@ -21,12 +23,12 @@ import FrisinnFakta from './FrisinnFakta';
 describe('<FrisinnFakta>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+    sakstype: fagsakYtelseType.FORELDREPENGER,
+    status: fagsakStatus.UNDER_BEHANDLING,
   } as Fagsak;
   const fagsakPerson = {
     alder: 30,
-    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    personstatusType: personstatusType.BOSATT,
     erDod: false,
     erKvinne: true,
     navn: 'Espen Utvikler',
@@ -35,8 +37,8 @@ describe('<FrisinnFakta>', () => {
   const behandling = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -56,8 +58,8 @@ describe('<FrisinnFakta>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+      definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
@@ -67,50 +69,22 @@ describe('<FrisinnFakta>', () => {
   const soker = {
     navn: 'Espen Utvikler',
     aktoerId: '1',
-    personstatus: {
-      kode: 'BOSA',
-      kodeverk: 'Bosatt',
-    },
+    personstatus: 'BOSA',
     avklartPersonstatus: {
-      overstyrtPersonstatus: {
-        kode: personstatusType.BOSATT,
-        kodeverk: 'Bosatt',
-      },
-      orginalPersonstatus: {
-        kode: personstatusType.DOD,
-        kodeverk: 'Bosatt',
-      },
+      overstyrtPersonstatus: personstatusType.BOSATT,
+      orginalPersonstatus: personstatusType.DOD,
     },
-    navBrukerKjonn: {
-      kode: '',
-      kodeverk: '',
-    },
-    statsborgerskap: {
-      kode: '',
-      kodeverk: '',
-      navn: '',
-    },
-    diskresjonskode: {
-      kode: '',
-      kodeverk: '',
-    },
-    sivilstand: {
-      kode: sivilstandType.UGIFT,
-      kodeverk: 'Ugift',
-    },
-    region: {
-      kode: 'NORDEN',
-      kodeverk: 'Norden',
-    },
+    navBrukerKjonn: '',
+    statsborgerskap: '',
+    diskresjonskode: '',
+    sivilstand: sivilstandType.UGIFT,
+    region: 'NORDEN',
     adresser: [
       {
         adresselinje1: 'Vei 1',
         postNummer: '1000',
         poststed: 'Oslo',
-        adresseType: {
-          kode: opplysningAdresseType.POSTADRESSE,
-          kodeverk: 'Bostedsadresse',
-        },
+        adresseType: opplysningAdresseType.POSTADRESSE,
       },
     ],
     barn: [],
