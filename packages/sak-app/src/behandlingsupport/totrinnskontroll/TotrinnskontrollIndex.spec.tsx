@@ -84,6 +84,9 @@ describe('<TotrinnskontrollIndex>', () => {
         behandlingVersjon={alleBehandlinger[0].versjon}
       />,
     );
+
+    screen.debug();
+
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     await act(async () => {
       await userEvent.click(screen.getByRole('button', { name: 'Godkjenn vedtaket' }));

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { Kodeverk, BehandlingAppKontekst } from '@k9-sak-web/types';
+import { BehandlingAppKontekst } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { FatterVedtakTotrinnskontrollModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
 
@@ -10,7 +10,7 @@ import { getPathToFplos } from '../../app/paths';
 
 interface OwnProps {
   behandling: BehandlingAppKontekst;
-  fagsakYtelseType: Kodeverk;
+  fagsakYtelseType: string;
   allAksjonspunktApproved: boolean;
   erKlageWithKA: boolean;
 }
