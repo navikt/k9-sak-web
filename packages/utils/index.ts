@@ -146,7 +146,7 @@ export { default as getHumanReadablePeriodString } from './src/period-utils/getH
 export { default as sortPeriodsByFomDate } from './src/period-utils/sortPeriodsByFomDate';
 export { default as prettifyPeriodList } from './src/period-utils/prettifyPeriodList';
 export { default as findHolesInPeriods } from './src/period-utils/findHolesInPeriods';
-export { default as initializeDate } from './src/date-utils/initialize';
+export { default as initializeDate, dateToday } from './src/date-utils/initialize';
 export { prettifyDateString, prettifyDate } from './src/date-utils/format';
 export { default as dateConstants } from './src/date-utils/dateConstants';
 export { default as addYearsToDate } from './src/date-utils/addYearsToDate';
