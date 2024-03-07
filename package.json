@@ -39,7 +39,7 @@
     "packages/v2/*"
   ],
   "dependencies": {
-    "@babel/runtime": "7.23.8",
+    "@babel/runtime": "7.24.0",
     "@hookform/error-message": "^2.0.1",
     "@navikt/aksel-icons": "5.18.1",
     "@navikt/ds-css": "5.18.1",
@@ -69,9 +69,9 @@
     "vite-plugin-svgr": "4.2.0"
   },
   "devDependencies": {
-    "@babel/core": "7.23.7",
+    "@babel/core": "7.24.0",
     "@babel/helper-regex": "7.10.5",
-    "@babel/preset-env": "7.23.8",
+    "@babel/preset-env": "7.24.0",
     "@babel/preset-react": "7.23.3",
     "@babel/preset-typescript": "7.23.3",
     "@babel/register": "7.23.7",
