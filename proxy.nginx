@@ -3,7 +3,6 @@ access_log off;
 error_log /dev/stdout info;
 charset utf-8;
 
-
 client_body_buffer_size 20M; # Default er satt veldig lavt. Får problemer med enkelte dokument queries.
 
 # Expires map
@@ -23,6 +22,7 @@ map $upstream_http_cache_control $custom_cache_control {
 server {
   listen       "${APP_PORT}";
   server_name  "${APP_HOSTNAME}";
+
   # Proxy headers. Will be overwritten if you set them in blocks.
   proxy_buffers 16 32k;
   proxy_buffer_size 32k;
@@ -41,12 +41,12 @@ server {
 
   add_header              Cache-Control $custom_cache_control;
 
+  # Health check for NAIS
   location = /k9/feature-toggle/toggles.json {
     add_header Content-Type application/json;
     root /tmp/;
   }
 
-  # Health check for NAIS
   location = /isAlive {
     return 200 "Application:UP";
     add_header Content-Type text/plain;
@@ -58,8 +58,8 @@ server {
     add_header Content-Type text/plain;
   }
 
-
   location  "/k9/sak/" {
+    proxy_set_header Host	$http_host;
     proxy_pass "${APP_URL}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
@@ -69,6 +69,7 @@ server {
   }
 
   location  "/k9/formidling/" {
+    proxy_set_header Host	$http_host;
     proxy_pass "${APP_URL_K9FORMIDLING}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
@@ -78,6 +79,7 @@ server {
   }
 
     location  "/k9/formidling/dokumentdata" {
+    proxy_set_header Host	$http_host;
     proxy_pass "${APP_URL_K9FORMIDLING_DD}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
@@ -87,6 +89,7 @@ server {
   }
 
   location "/k9/oppdrag/" {
+    proxy_set_header Host	$http_host;
     proxy_pass "${APP_URL_K9OPPDRAG}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
@@ -96,6 +99,7 @@ server {
   }
 
   location "/k9/klage/" {
+    proxy_set_header Host	$http_host;
     proxy_pass "${APP_URL_KLAGE}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
@@ -105,6 +109,7 @@ server {
   }
 
   location "/k9/tilbake/" {
+    proxy_set_header Host	$http_host;
     proxy_pass "${APP_URL_K9TILBAKE}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
@@ -114,6 +119,7 @@ server {
   }
 
   location  "/k9/fordel/" {
+    proxy_set_header Host  $http_host;
     proxy_pass "${APP_URL_K9FORDEL}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
