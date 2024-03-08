@@ -5,7 +5,6 @@ export interface Inntekt {
   tom: string;
   utbetaler: string;
   inntektspostType: Kodeverk;
-  ytelseType: Kodeverk;
   belop: number;
   ytelse: boolean;
   navn: string;
