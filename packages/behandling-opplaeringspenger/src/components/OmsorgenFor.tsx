@@ -1,8 +1,9 @@
+import React from 'react';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { findAksjonspunkt, findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Aksjonspunkt, BehandlingAppKontekst } from '@k9-sak-web/types';
-import React from 'react';
 import { OmsorgenFor } from '@k9-sak-web/fakta-omsorgen-for';
 
 interface OmsorgenForProps {
@@ -29,7 +30,7 @@ export default ({
     httpErrorHandler(status, addErrorMessage, locationHeader);
 
   const omsorgenForAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.AVKLAR_OMSORGEN_FOR);
-  const omsorgenForAksjonspunktkode = omsorgenForAksjonspunkt?.definisjon.kode;
+  const omsorgenForAksjonspunktkode = omsorgenForAksjonspunkt?.definisjon;
   const harAksjonspunkt = !!omsorgenForAksjonspunktkode;
 
   const løsAksjonspunkt = omsorgsperioder =>
