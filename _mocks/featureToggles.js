@@ -1,5 +1,9 @@
 export default [
   {
+    key: 'USE_NEW_BACKEND_CLIENT',
+    value: process.env.VITE_USE_NEW_BACKEND_CLIENT,
+  },
+  {
     key: 'KLAGE_KABAL',
     value: process.env.VITE_KLAGE_KABAL,
   },
