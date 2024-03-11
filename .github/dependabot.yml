@@ -6,7 +6,7 @@ registries:
     token: ${{secrets.READER_TOKEN}}
 updates:
   - package-ecosystem: npm
-    directory: "/"
+    directory: '/'
     schedule:
       interval: daily
     open-pull-requests-limit: 30
@@ -15,40 +15,36 @@ updates:
     groups:
       patch:
         patterns:
-          - "*"
+          - '*'
         update-types:
-          - "patch"
+          - 'patch'
         exclude-patterns:
-          - "@storybook/*"
-          - "@typescript-eslint*"
-          - "@babel*"
-          - "react*"
-          - "@types/react"
-          - "@navikt*"
+          - '@storybook/*'
+          - '@typescript-eslint*'
+          - 'react*'
+          - '@types/react'
+          - '@navikt*'
       react:
         patterns:
-          - "react"
-          - "react-dom"
-          - "@types/react"
-      babel:
-        patterns:
-          - "@babel*"
+          - 'react'
+          - 'react-dom'
+          - '@types/react'
       typescript-eslint:
         patterns:
-          - "@typescript-eslint*"
+          - '@typescript-eslint*'
       storybook:
         patterns:
-          - "@storybook/*"
+          - '@storybook/*'
         exclude-patterns:
-          - "@storybook/storybook-deployer"
-          - "@storybook/testing-react"
-          - "@storybook/testing-library"
+          - '@storybook/storybook-deployer'
+          - '@storybook/testing-react'
+          - '@storybook/testing-library'
 
   - package-ecosystem: github-actions
-    directory: "/"
+    directory: '/'
     schedule:
       interval: daily
     groups:
       github:
         patterns:
-          - "*"
+          - '*'
