@@ -1,5 +1,9 @@
 [
   {
+    "key": "USE_NEW_BACKEND_CLIENT",
+    "value": "${USE_NEW_BACKEND_CLIENT}"
+  },
+  {
     "key": "KLAGE_KABAL",
     "value": "${KLAGE_KABAL}"
   },

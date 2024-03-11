@@ -79,7 +79,10 @@ export default ({ mode }) => {
       sourcemap: true,
     },
     test: {
-      deps: { interopDefault: true },
+      deps: {
+        inline: ['@navikt/k9-sak-typescript-client'], // Without this, tests using k9-sak-typescript-client through backend project failed.
+        interopDefault: true
+      },
       environment: 'jsdom',
       css: {
         modules: {

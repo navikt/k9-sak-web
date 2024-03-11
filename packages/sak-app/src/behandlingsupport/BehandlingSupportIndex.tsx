@@ -12,9 +12,11 @@ import {
   Personopplysninger,
 } from '@k9-sak-web/types';
 import axios from 'axios';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
+import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
 import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
@@ -84,6 +86,13 @@ const BehandlingSupportIndex = ({
 }: OwnProps) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
+
+  const meldingerBackendClientFactory = useCallback(() => {
+    if (featureToggles.USE_NEW_BACKEND_CLIENT === true) {
+      return new MeldingerBackendClient(useContext(K9SakClientContext));
+    }
+    return new MeldingBackendClient();
+  }, [K9SakClientContext, featureToggles]);
 
   const getNotater = (signal: AbortSignal) =>
     axios
@@ -181,7 +190,7 @@ const BehandlingSupportIndex = ({
             behandlingVersjon={behandlingVersjon}
             personopplysninger={personopplysninger}
             arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-            backendApi={new MeldingBackendClient()}
+            backendApi={meldingerBackendClientFactory()}
           />
         )}
         {aktivtSupportPanel === SupportTabs.DOKUMENTER && (
