@@ -11094,15 +11094,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"circular-dependency-plugin@npm:5.2.2":
-  version: 5.2.2
-  resolution: "circular-dependency-plugin@npm:5.2.2"
-  peerDependencies:
-    webpack: ">=4.0.1"
-  checksum: d1a51e7f86e72d9e7a08c47234511cc7a5c3050781c2d6dcc77c0b22214f94f272702488c952e59b2af589c67944160ad1c9c0b7b3e0d4f89222f2a27ebf085e
-  languageName: node
-  linkType: hard
-
 "citty@npm:^0.1.5":
   version: 0.1.6
   resolution: "citty@npm:0.1.6"
@@ -16382,8 +16373,6 @@ __metadata:
     autoprefixer: ^10.4.18
     axios: 1.6.7
     axios-mock-adapter: 1.22.0
-    body-parser: 1.20.2
-    circular-dependency-plugin: 5.2.2
     core-js: 3.36.0
     cross-env: 7.0.3
     cypress: ^13.6.6
