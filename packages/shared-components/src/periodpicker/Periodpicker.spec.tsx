@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import Periodpicker from './Periodpicker';
 
 describe('<Periodpicker>', () => {
@@ -36,7 +35,7 @@ describe('<Periodpicker>', () => {
   });
 
   it('skal lage periode med ny startdato når en velger dato etter nåværende periode', async () => {
-    const onChangeCallback = sinon.spy();
+    const onChangeCallback = vi.fn();
     render(
       <Periodpicker
         names={['fromDate', 'toDate']}
@@ -55,7 +54,7 @@ describe('<Periodpicker>', () => {
   });
 
   it('skal lage periode med ny sluttdato når en velger dato etter nåværende periode', async () => {
-    const onChangeCallback = sinon.spy();
+    const onChangeCallback = vi.fn();
     render(
       <Periodpicker
         names={['fromDate', 'toDate']}

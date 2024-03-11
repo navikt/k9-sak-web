@@ -13,7 +13,6 @@ import { Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import InnsynProsess from './InnsynProsess';
 
 describe('<InnsynProsess>', () => {
@@ -101,10 +100,10 @@ describe('<InnsynProsess>', () => {
         alleKodeverk={{}}
         rettigheter={rettigheter}
         valgtProsessSteg="default"
-        oppdaterBehandlingVersjon={sinon.spy()}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        opneSokeside={sinon.spy()}
-        setBehandling={sinon.spy()}
+        oppdaterBehandlingVersjon={vi.fn()}
+        oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
+        opneSokeside={vi.fn()}
+        setBehandling={vi.fn()}
         featureToggles={{}}
       />,
     );
@@ -115,7 +114,7 @@ describe('<InnsynProsess>', () => {
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', async () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+    const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     renderWithIntl(
       <InnsynProsess
         data={{
@@ -130,10 +129,10 @@ describe('<InnsynProsess>', () => {
         alleKodeverk={{}}
         rettigheter={rettigheter}
         valgtProsessSteg="default"
-        oppdaterBehandlingVersjon={sinon.spy()}
+        oppdaterBehandlingVersjon={vi.fn()}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        opneSokeside={sinon.spy()}
-        setBehandling={sinon.spy()}
+        opneSokeside={vi.fn()}
+        setBehandling={vi.fn()}
         featureToggles={{}}
       />,
     );
@@ -142,9 +141,9 @@ describe('<InnsynProsess>', () => {
       await userEvent.click(screen.getByRole('button', { name: /Vedtak/i }));
     });
 
-    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.mock.calls;
     expect(opppdaterKall).toHaveLength(1);
-    expect(opppdaterKall[0].args).toHaveLength(2);
-    expect(opppdaterKall[0].args[0]).toEqual('vedtak');
+    expect(opppdaterKall[0]).toHaveLength(2);
+    expect(opppdaterKall[0][0]).toEqual('vedtak');
   });
 });

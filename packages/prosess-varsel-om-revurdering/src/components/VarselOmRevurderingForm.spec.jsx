@@ -4,7 +4,6 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { screen } from '@testing-library/react';
 
 import React from 'react';
-import sinon from 'sinon';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VarselOmRevurderingFormImpl as UnwrappedForm } from './VarselOmRevurderingForm';
@@ -32,8 +31,8 @@ describe('<VarselOmRevurderingFormImpl>', () => {
       <UnwrappedForm
         {...reduxFormPropsMock}
         intl={intlMock}
-        previewCallback={sinon.spy()}
-        dispatchSubmitFailed={sinon.spy()}
+        previewCallback={vi.fn()}
+        dispatchSubmitFailed={vi.fn()}
         erAutomatiskRevurdering={false}
         languageCode="NN"
         readOnly={false}
@@ -61,8 +60,8 @@ describe('<VarselOmRevurderingFormImpl>', () => {
       <UnwrappedForm
         {...reduxFormPropsMock}
         intl={intlMock}
-        previewCallback={sinon.spy()}
-        dispatchSubmitFailed={sinon.spy()}
+        previewCallback={vi.fn()}
+        dispatchSubmitFailed={vi.fn()}
         erAutomatiskRevurdering={false}
         languageCode="NN"
         readOnly={false}
@@ -91,8 +90,8 @@ describe('<VarselOmRevurderingFormImpl>', () => {
       <UnwrappedForm
         {...reduxFormPropsMock}
         intl={intlMock}
-        previewCallback={sinon.spy()}
-        dispatchSubmitFailed={sinon.spy()}
+        previewCallback={vi.fn()}
+        dispatchSubmitFailed={vi.fn()}
         erAutomatiskRevurdering={false}
         languageCode="NN"
         readOnly={false}

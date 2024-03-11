@@ -6,7 +6,6 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { screen } from '@testing-library/react';
 
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import { BehandleUnntakForm } from './BehandleUnntakForm';
 
@@ -27,8 +26,8 @@ describe('<BehandleKlageFormKaImpl>', () => {
         readOnlySubmitButton
         aksjonspunktCode={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
         formValues={formValues1}
-        previewCallback={sinon.spy()}
-        saveUnntak={sinon.spy()}
+        previewCallback={vi.fn()}
+        saveUnntak={vi.fn()}
         intl={intlMock}
         formProps={{}}
         sprakkode={sprakkode}
@@ -51,8 +50,8 @@ describe('<BehandleKlageFormKaImpl>', () => {
         readOnlySubmitButton
         aksjonspunktCode={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
         formValues={formValues1}
-        previewCallback={sinon.spy()}
-        saveUnntak={sinon.spy()}
+        previewCallback={vi.fn()}
+        saveUnntak={vi.fn()}
         intl={intlMock}
         formProps={{}}
         sprakkode={sprakkode}

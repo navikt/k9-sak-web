@@ -5,7 +5,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-h
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../../i18n/nb_NO.json';
 import OppholdInntektOgPerioderForm, { transformValues } from './OppholdInntektOgPerioderForm';
 
@@ -20,7 +19,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
         intl={intlMock}
         aksjonspunkter={[]}
         openInfoPanels={['medlemskapsvilkaret']}
-        toggleInfoPanelCallback={sinon.spy()}
+        toggleInfoPanelCallback={vi.fn()}
         hasOpenAksjonspunkter={false}
         submittable
         isRevurdering={false}
@@ -63,7 +62,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
         intl={intlMock}
         aksjonspunkter={[bosattAksjonspunkt]}
         openInfoPanels={['omsorgsvilkaaret']}
-        toggleInfoPanelCallback={sinon.spy()}
+        toggleInfoPanelCallback={vi.fn()}
         hasOpenAksjonspunkter
         submittable
         readOnly={false}
@@ -107,7 +106,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
         intl={intlMock}
         aksjonspunkter={[periodeAksjonspunkt]}
         openInfoPanels={['omsorgsvilkaaret']}
-        toggleInfoPanelCallback={sinon.spy()}
+        toggleInfoPanelCallback={vi.fn()}
         hasOpenAksjonspunkter
         submittable
         readOnly={false}
@@ -148,7 +147,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
         intl={intlMock}
         aksjonspunkter={[oppholdsrettAksjonspunkt]}
         openInfoPanels={['omsorgsvilkaaret']}
-        toggleInfoPanelCallback={sinon.spy()}
+        toggleInfoPanelCallback={vi.fn()}
         hasOpenAksjonspunkter
         submittable
         readOnly={false}
@@ -189,7 +188,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
         intl={intlMock}
         aksjonspunkter={[lovligOppholdAksjonspunkt]}
         openInfoPanels={['omsorgsvilkaaret']}
-        toggleInfoPanelCallback={sinon.spy()}
+        toggleInfoPanelCallback={vi.fn()}
         hasOpenAksjonspunkter
         submittable
         readOnly={false}
@@ -230,7 +229,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
         intl={intlMock}
         aksjonspunkter={[fortsattMedlemskapAksjonspunkt]}
         openInfoPanels={['omsorgsvilkaaret']}
-        toggleInfoPanelCallback={sinon.spy()}
+        toggleInfoPanelCallback={vi.fn()}
         hasOpenAksjonspunkter
         submittable
         readOnly={false}

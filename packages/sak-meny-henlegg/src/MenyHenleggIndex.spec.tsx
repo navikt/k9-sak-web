@@ -5,21 +5,20 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../i18n/nb_NO.json';
 import MenyHenleggIndex from './MenyHenleggIndex';
 
 describe('<MenyHenleggIndex>', () => {
   it('skal vise modal og så henlegge behandling', async () => {
-    const henleggBehandlingCallback = sinon.stub().resolves();
-    const lukkModalCallback = sinon.spy();
+    const henleggBehandlingCallback = vi.fn().mockImplementation(() => Promise.resolve());
+    const lukkModalCallback = vi.fn();
 
     renderWithIntlAndReduxForm(
       <MenyHenleggIndex
         behandlingId={3}
         behandlingVersjon={1}
         henleggBehandling={henleggBehandlingCallback}
-        forhandsvisHenleggBehandling={sinon.spy()}
+        forhandsvisHenleggBehandling={vi.fn()}
         ytelseType={{
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: 'FAGSAK_YTELSE_TYPE',
@@ -41,9 +40,9 @@ describe('<MenyHenleggIndex>', () => {
             navn: 'test',
           },
         ]}
-        gaaTilSokeside={sinon.spy()}
+        gaaTilSokeside={vi.fn()}
         lukkModal={lukkModalCallback}
-        hentMottakere={sinon.spy()}
+        hentMottakere={vi.fn()}
       />,
       { messages },
     );
@@ -55,10 +54,10 @@ describe('<MenyHenleggIndex>', () => {
       await userEvent.click(screen.getByRole('button', { name: 'Henlegg behandling' }));
     });
 
-    const kall = henleggBehandlingCallback.getCalls();
+    const kall = henleggBehandlingCallback.mock.calls;
     expect(kall).toHaveLength(1);
-    expect(kall[0].args).toHaveLength(1);
-    expect(kall[0].args[0]).toEqual({
+    expect(kall[0]).toHaveLength(1);
+    expect(kall[0][0]).toEqual({
       behandlingId: 3,
       behandlingVersjon: 1,
       årsakKode: 'HENLAGT_SØKNAD_TRUKKET',

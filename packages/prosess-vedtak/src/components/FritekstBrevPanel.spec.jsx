@@ -6,13 +6,12 @@ import { act, screen } from '@testing-library/react';
 
 import React from 'react';
 import { MemoryRouter } from 'react-router';
-import sinon from 'sinon';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import FritekstBrevPanel from './FritekstBrevPanel';
 
 describe('<FritekstBrevPanel>', () => {
-  const eventCallback = sinon.spy();
+  const eventCallback = vi.fn();
 
   it('skal vise manuelt fritekstbrev i read only', async () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: false }]);

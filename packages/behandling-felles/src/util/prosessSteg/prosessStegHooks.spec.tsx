@@ -13,7 +13,6 @@ import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { renderHook } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 import { ProsessStegPanelUtledet, ProsessStegUtledet } from './ProsessStegUtledet';
 import prosessStegHooks from './prosessStegHooks';
@@ -166,7 +165,7 @@ describe('<prosessStegHooks>', () => {
     const utledetPanel = new ProsessStegUtledet(stegDef, [utledetDelPanel]);
 
     const valgtFaktaSteg = 'default';
-    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+    const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     const valgtProsessSteg = 'default';
 
     const { result } = renderHook(() =>
@@ -183,11 +182,11 @@ describe('<prosessStegHooks>', () => {
 
     prosessStegVelger(0);
 
-    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.mock.calls;
     expect(opppdaterKall).toHaveLength(1);
-    expect(opppdaterKall[0].args).toHaveLength(2);
-    expect(opppdaterKall[0].args[0]).toEqual('opplysningsplikt');
-    expect(opppdaterKall[0].args[1]).toEqual('default');
+    expect(opppdaterKall[0]).toHaveLength(2);
+    expect(opppdaterKall[0][0]).toEqual('opplysningsplikt');
+    expect(opppdaterKall[0][1]).toEqual('default');
   });
 
   it('skal skjule prosess-steg når en velger steg som allerede vises', () => {
@@ -209,7 +208,7 @@ describe('<prosessStegHooks>', () => {
     const utledetPanel = new ProsessStegUtledet(stegDef, [utledetDelPanel]);
 
     const valgtFaktaSteg = 'default';
-    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+    const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     const valgtProsessSteg = 'opplysningsplikt';
 
     const { result } = renderHook(() =>
@@ -225,11 +224,11 @@ describe('<prosessStegHooks>', () => {
 
     prosessStegVelger(0);
 
-    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.mock.calls;
     expect(opppdaterKall).toHaveLength(1);
-    expect(opppdaterKall[0].args).toHaveLength(2);
-    expect(opppdaterKall[0].args[0]).toBeUndefined();
-    expect(opppdaterKall[0].args[1]).toEqual('default');
+    expect(opppdaterKall[0]).toHaveLength(2);
+    expect(opppdaterKall[0][0]).toBeUndefined();
+    expect(opppdaterKall[0][1]).toEqual('default');
   });
 
   it('skal bekrefte aksjonspunkt', async () => {
@@ -250,8 +249,8 @@ describe('<prosessStegHooks>', () => {
     );
     const utledetPanel = new ProsessStegUtledet(stegDef, [utledetDelPanel]);
 
-    const lagreAksjonspunkter = sinon.stub();
-    lagreAksjonspunkter.returns(Promise.resolve());
+    const lagreAksjonspunkter = vi.fn().mockImplementation(() => Promise.resolve());
+
     const lagringSideEffectsCallback = () => () => {};
 
     const { result } = renderHook(() =>
@@ -269,10 +268,10 @@ describe('<prosessStegHooks>', () => {
 
     await bekreftAksjonspunkt([{ kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU }]);
 
-    const requestKall = lagreAksjonspunkter.getCalls();
+    const requestKall = lagreAksjonspunkter.mock.calls;
     expect(requestKall).toHaveLength(1);
-    expect(requestKall[0].args).toHaveLength(2);
-    expect(requestKall[0].args[0]).toEqual({
+    expect(requestKall[0]).toHaveLength(2);
+    expect(requestKall[0][0]).toEqual({
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,

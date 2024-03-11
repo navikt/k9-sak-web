@@ -1,5 +1,4 @@
 import React from 'react';
-import sinon from 'sinon';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -140,12 +139,12 @@ describe('<UnntakFakta>', () => {
         fagsakPerson={fagsakPerson}
         rettigheter={rettigheter}
         alleKodeverk={{}}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
+        oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
         valgtFaktaSteg="default"
         valgtProsessSteg="default"
         hasFetchError={false}
-        setApentFaktaPanel={sinon.spy()}
-        setBehandling={sinon.spy()}
+        setApentFaktaPanel={vi.fn()}
+        setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
@@ -157,7 +156,7 @@ describe('<UnntakFakta>', () => {
 
   it('skal oppdatere url ved valg av faktapanel', async () => {
     requestUnntakApi.mock(UnntakBehandlingApiKeys.ARBEIDSFORHOLD, []);
-    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+    const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
@@ -175,8 +174,8 @@ describe('<UnntakFakta>', () => {
         valgtFaktaSteg="default"
         valgtProsessSteg="default"
         hasFetchError={false}
-        setApentFaktaPanel={sinon.spy()}
-        setBehandling={sinon.spy()}
+        setApentFaktaPanel={vi.fn()}
+        setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,
     );
@@ -185,9 +184,9 @@ describe('<UnntakFakta>', () => {
       await userEvent.click(screen.getByRole('button', { name: 'Arbeidsforhold Aksjonspunkt' }));
     });
 
-    const calls = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    const { calls } = oppdaterProsessStegOgFaktaPanelIUrl.mock;
     expect(calls).toHaveLength(1);
-    const { args } = calls[0];
+    const args = calls[0];
     expect(args).toHaveLength(2);
     expect(args[0]).toEqual('default');
     expect(args[1]).toEqual('arbeidsforhold');

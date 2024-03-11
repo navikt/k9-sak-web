@@ -3,7 +3,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-h
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import { RegistrereVergeInfoPanelImpl } from './RegistrereVergeInfoPanel';
 
@@ -17,7 +16,7 @@ describe('<RegistrereVergeInfoPanel>', () => {
         submittable
         intl={intlMock}
         openInfoPanels={['verge']}
-        toggleInfoPanelCallback={sinon.spy()}
+        toggleInfoPanelCallback={vi.fn()}
         hasOpenAksjonspunkter
         readOnly={false}
         aksjonspunkt={{

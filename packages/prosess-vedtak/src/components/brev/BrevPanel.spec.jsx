@@ -6,7 +6,6 @@ import { screen } from '@testing-library/react';
 
 import { Formik } from 'formik';
 import React from 'react';
-import sinon from 'sinon';
 import { intlMock } from '../../../i18n/index';
 import messages from '../../../i18n/nb_NO.json';
 import { BrevPanel } from './BrevPanel';
@@ -39,7 +38,7 @@ describe('<BrevPanel>', () => {
           informasjonsbehovValues={[]}
           skalBrukeOverstyrendeFritekstBrev={false}
           begrunnelse=""
-          previewCallback={sinon.spy()}
+          previewCallback={vi.fn()}
           redusertUtbetalingÅrsaker={[]}
           brødtekst={null}
           overskrift={null}
@@ -69,7 +68,7 @@ describe('<BrevPanel>', () => {
           informasjonsbehovValues={[]}
           skalBrukeOverstyrendeFritekstBrev
           begrunnelse=""
-          previewCallback={sinon.spy()}
+          previewCallback={vi.fn()}
           redusertUtbetalingÅrsaker={[]}
           brødtekst={null}
           overskrift={null}
@@ -99,7 +98,7 @@ describe('<BrevPanel>', () => {
           informasjonsbehovValues={[]}
           skalBrukeOverstyrendeFritekstBrev={false}
           begrunnelse=""
-          previewCallback={sinon.spy()}
+          previewCallback={vi.fn()}
           redusertUtbetalingÅrsaker={[]}
           brødtekst={null}
           overskrift={null}
@@ -132,7 +131,7 @@ describe('<BrevPanel>', () => {
           informasjonsbehovValues={[]}
           skalBrukeOverstyrendeFritekstBrev={false}
           begrunnelse=""
-          previewCallback={sinon.spy()}
+          previewCallback={vi.fn()}
           redusertUtbetalingÅrsaker={[]}
           brødtekst={null}
           overskrift={null}
@@ -176,7 +175,7 @@ describe('<BrevPanel>', () => {
           informasjonsbehovValues={[]}
           skalBrukeOverstyrendeFritekstBrev={false}
           begrunnelse=""
-          previewCallback={sinon.spy()}
+          previewCallback={vi.fn()}
           redusertUtbetalingÅrsaker={[]}
           brødtekst={null}
           overskrift={null}

@@ -37,7 +37,6 @@
     "xss": "1.0.15"
   },
   "devDependencies": {
-    "@fpsak-frontend/utils-test": "1.0.0",
-    "sinon": "15.2.0"
+    "@fpsak-frontend/utils-test": "1.0.0"
   }
 }

@@ -1,7 +1,6 @@
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import ProsessPanelTemplate from './ProsessPanelTemplate';
 
@@ -9,7 +8,7 @@ describe('<ProsessPanelTemplate>', () => {
   it('skal ikke vise lovreferanse når dette ikke finnes', () => {
     const { container } = renderWithIntlAndReduxForm(
       <ProsessPanelTemplate
-        handleSubmit={sinon.spy()}
+        handleSubmit={vi.fn()}
         title="Fødsel"
         isAksjonspunktOpen
         formName="testnavn"
@@ -30,7 +29,7 @@ describe('<ProsessPanelTemplate>', () => {
   it('skal vise lovreferanse når dette finnes', () => {
     renderWithIntlAndReduxForm(
       <ProsessPanelTemplate
-        handleSubmit={sinon.spy()}
+        handleSubmit={vi.fn()}
         lovReferanse="test lovReferanse"
         title="Fødsel"
         isAksjonspunktOpen

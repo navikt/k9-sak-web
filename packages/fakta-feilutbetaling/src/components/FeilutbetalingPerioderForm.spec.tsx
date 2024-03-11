@@ -2,7 +2,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-h
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import { FeilutbetalingPerioderFormImpl } from './FeilutbetalingPerioderForm';
 
@@ -18,8 +17,8 @@ const mockProps = {
   elementId: 0,
   årsaker: [],
   readOnly: false,
-  onChangeÅrsak: sinon.spy(),
-  onChangeUnderÅrsak: sinon.spy(),
+  onChangeÅrsak: vi.fn(),
+  onChangeUnderÅrsak: vi.fn(),
 };
 
 describe('<FeilutbetalingPerioderFormImpl>', () => {

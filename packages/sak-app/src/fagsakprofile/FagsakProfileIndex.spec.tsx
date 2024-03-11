@@ -1,20 +1,19 @@
-import React from 'react';
-import sinon from 'sinon';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import React from 'react';
 import { IntlProvider } from 'react-intl';
+import { MemoryRouter } from 'react-router-dom';
 
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
+import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
-import { requestApi, K9sakApiKeys } from '../data/k9sakApi';
+import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
 
 const lagRisikoklassifisering = kode => ({
@@ -183,7 +182,7 @@ describe('<FagsakProfileIndex>', () => {
             fagsak={fagsak as Fagsak}
             alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
             harHentetBehandlinger
-            oppfriskBehandlinger={sinon.spy()}
+            oppfriskBehandlinger={vi.fn()}
             fagsakRettigheter={fagsakRettigheter}
           />
         </IntlProvider>
@@ -219,7 +218,7 @@ describe('<FagsakProfileIndex>', () => {
             fagsak={fagsak as Fagsak}
             alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
             harHentetBehandlinger
-            oppfriskBehandlinger={sinon.spy()}
+            oppfriskBehandlinger={vi.fn()}
             behandlingId={1}
             fagsakRettigheter={fagsakRettigheter}
           />

@@ -35,8 +35,5 @@
     "react-redux": "8.1.3",
     "redux-form": "8.3.10",
     "reselect": "4.1.8"
-  },
-  "devDependencies": {
-    "sinon": "15.2.0"
   }
 }

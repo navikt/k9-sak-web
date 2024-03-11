@@ -7,7 +7,6 @@ import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import BehandlingVelgerSakIndex from '../BehandlingVelgerSakIndex';
 import { sortBehandlinger } from './behandlingVelgerUtils';
@@ -80,7 +79,7 @@ describe('<BehandlingPicker>', () => {
           noExistingBehandlinger
           behandlinger={[]}
           getBehandlingLocation={() => locationMock}
-          getKodeverkFn={sinon.spy()}
+          getKodeverkFn={vi.fn()}
           createLocationForSkjermlenke={() => locationMock}
           fagsak={fagsak}
           showAll={false}
@@ -120,7 +119,7 @@ describe('<BehandlingPicker>', () => {
           noExistingBehandlinger={false}
           behandlinger={behandlinger as BehandlingAppKontekst[]}
           getBehandlingLocation={() => locationMock}
-          getKodeverkFn={sinon.spy()}
+          getKodeverkFn={vi.fn()}
           createLocationForSkjermlenke={() => locationMock}
           fagsak={fagsak}
           showAll={false}

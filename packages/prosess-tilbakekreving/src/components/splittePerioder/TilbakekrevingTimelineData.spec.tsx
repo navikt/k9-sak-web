@@ -1,7 +1,6 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../../i18n/nb_NO.json';
 import DataForPeriode from '../../types/dataForPeriodeTsType';
 import TilbakekrevingTimelineData from './TilbakekrevingTimelineData';
@@ -17,10 +16,10 @@ describe('<TilbakekrevingTimelineData>', () => {
             feilutbetaling: 12,
           } as DataForPeriode
         }
-        callbackForward={sinon.spy()}
-        callbackBackward={sinon.spy()}
+        callbackForward={vi.fn()}
+        callbackBackward={vi.fn()}
         readOnly={false}
-        oppdaterSplittedePerioder={sinon.spy()}
+        oppdaterSplittedePerioder={vi.fn()}
         behandlingId={1}
         behandlingVersjon={1}
         beregnBelop={() => undefined}

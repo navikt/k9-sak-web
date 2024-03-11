@@ -1,7 +1,6 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import { intlMock } from '../../i18n/index';
 import messages from '../../i18n/nb_NO.json';
 import { FagsakProfile } from './FagsakProfile';
@@ -23,8 +22,8 @@ describe('<FagsakProfile>', () => {
         saksnummer="12345"
         fagsakYtelseType={fagsakYtelseType}
         fagsakStatus={status}
-        renderBehandlingMeny={sinon.spy()}
-        renderBehandlingVelger={sinon.spy()}
+        renderBehandlingMeny={vi.fn()}
+        renderBehandlingVelger={vi.fn()}
         dekningsgrad={100}
         intl={intlMock}
       />,
@@ -51,8 +50,8 @@ describe('<FagsakProfile>', () => {
         saksnummer="12345"
         fagsakYtelseType={fagsakYtelseType}
         fagsakStatus={status}
-        renderBehandlingMeny={sinon.spy()}
-        renderBehandlingVelger={sinon.spy()}
+        renderBehandlingMeny={vi.fn()}
+        renderBehandlingVelger={vi.fn()}
         dekningsgrad={100}
         intl={intlMock}
       />,
@@ -80,8 +79,8 @@ describe('<FagsakProfile>', () => {
         saksnummer="12345"
         fagsakYtelseType={fagsakYtelseType}
         fagsakStatus={status}
-        renderBehandlingMeny={sinon.spy()}
-        renderBehandlingVelger={sinon.spy()}
+        renderBehandlingMeny={vi.fn()}
+        renderBehandlingVelger={vi.fn()}
         intl={intlMock}
       />,
       { messages },
@@ -108,8 +107,8 @@ describe('<FagsakProfile>', () => {
         saksnummer="12345"
         fagsakYtelseType={fagsakYtelseType}
         fagsakStatus={status}
-        renderBehandlingMeny={sinon.spy()}
-        renderBehandlingVelger={sinon.spy()}
+        renderBehandlingMeny={vi.fn()}
+        renderBehandlingVelger={vi.fn()}
         dekningsgrad={73}
         intl={intlMock}
       />,

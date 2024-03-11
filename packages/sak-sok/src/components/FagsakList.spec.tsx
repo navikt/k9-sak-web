@@ -5,7 +5,6 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import FagsakList, { sortFagsaker } from './FagsakList';
 
@@ -59,7 +58,7 @@ describe('<FagsakList>', () => {
   } as Fagsak;
 
   it('skal vise en tabell med en rad og tilhørende kolonnedata', () => {
-    const clickFunction = sinon.spy();
+    const clickFunction = vi.fn();
     renderWithIntl(
       <FagsakList
         fagsaker={[fagsak]}

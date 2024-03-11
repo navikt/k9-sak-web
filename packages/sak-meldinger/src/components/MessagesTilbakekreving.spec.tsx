@@ -1,10 +1,9 @@
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import { intlMock } from '../../i18n/index';
 import messages from '../../i18n/nb_NO.json';
 import { MessagesTilbakekrevingImpl as MessagesTilbakekreving } from './MessagesTilbakekreving';
@@ -115,7 +114,7 @@ describe('<MessagesTilbakekreving>', () => {
   });
 
   it('skal vise forhåndvisningslenke når fritekst er gyldig', async () => {
-    const previewEventCallback = sinon.spy();
+    const previewEventCallback = vi.fn();
     renderWithIntlAndReduxForm(
       <MessagesTilbakekreving
         {...mockProps}
@@ -136,11 +135,11 @@ describe('<MessagesTilbakekreving>', () => {
       await userEvent.click(screen.getByRole('link', { name: 'Forhåndsvis' }));
     });
 
-    expect(previewEventCallback.called).toBe(true);
+    expect(previewEventCallback.mock.calls.length).toBeGreaterThan(0);
   });
 
   it('skal vise tre select-bokser når varsel om revurdering', () => {
-    const previewEventCallback = sinon.spy();
+    const previewEventCallback = vi.fn();
     renderWithIntlAndReduxForm(
       <MessagesTilbakekreving
         {...mockProps}

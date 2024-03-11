@@ -3,22 +3,23 @@
 Monorepo for Frontend kode for k9-sak.
 
 [![](https://github.com/navikt/k9-sak-web/workflows/Deploy%20Docker%20image/badge.svg)](https://github.com/navikt/k9-sak-web/actions?query=workflow%3A%22Deploy+Docker+image%22)
-[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=navikt_k9-sak-frontend&metric=alert_status)](https://sonarcloud.io/dashboard?id=navikt_k9-sak-frontend)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 ## Mikrofrontends i bruk per behandling
 
 ### Pleiepenger sykt barn
- [Omsorgen for](https://github.com/navikt/omsorgen-for-frontend)
- [Uttak](https://github.com/navikt/psb-uttak-frontend)
- [Inntektsmelding](https://github.com/navikt/psb-inntektsmelding-frontend)
- [Etablert tilsyn](https://github.com/navikt/psb-etablert-tilsyn-frontend)
- [Medisinsk vilkår](https://github.com/navikt/medisinsk-vilkar-frontend)
- [Om barnet](https://github.com/navikt/psb-om-barnet-frontend)
+
+[Omsorgen for](https://github.com/navikt/omsorgen-for-frontend)
+[Uttak](https://github.com/navikt/psb-uttak-frontend)
+[Inntektsmelding](https://github.com/navikt/psb-inntektsmelding-frontend)
+[Etablert tilsyn](https://github.com/navikt/psb-etablert-tilsyn-frontend)
+[Medisinsk vilkår](https://github.com/navikt/medisinsk-vilkar-frontend)
+[Om barnet](https://github.com/navikt/psb-om-barnet-frontend)
 
 ### Omsorgsdager (Utvidet rett)
- [Omsorgsdager](https://github.com/navikt/omsorgsdager-frontend)
+
+[Omsorgsdager](https://github.com/navikt/omsorgsdager-frontend)
 
 ## Komme i gang
 

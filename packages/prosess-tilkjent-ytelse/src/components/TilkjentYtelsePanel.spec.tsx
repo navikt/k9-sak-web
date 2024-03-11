@@ -3,7 +3,6 @@ import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/util
 import { Aksjonspunkt, FamilieHendelse, Personopplysninger, Soknad } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import { TilkjentYtelsePanelImpl } from './TilkjentYtelsePanel';
 
@@ -23,7 +22,7 @@ describe('<TilkjentYtelsePanelImpl>', () => {
       <TilkjentYtelsePanelImpl
         readOnly
         beregningresultat={null}
-        submitCallback={sinon.spy()}
+        submitCallback={vi.fn()}
         readOnlySubmitButton
         behandlingId={1}
         alleKodeverk={{}}
@@ -47,7 +46,7 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         readOnly
         aksjonspunkter={[]}
         beregningresultat={null}
-        submitCallback={sinon.spy()}
+        submitCallback={vi.fn()}
         readOnlySubmitButton
         vurderTilbaketrekkAP={tilbaketrekkAP}
         behandlingId={1}

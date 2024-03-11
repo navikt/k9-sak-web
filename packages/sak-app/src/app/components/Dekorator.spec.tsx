@@ -27,7 +27,7 @@ describe.skip('<Dekorator>', () => {
   //     <Dekorator.WrappedComponent
   //       intl={intlMock}
   //       queryStrings={{}}
-  //       setSiteHeight={sinon.spy()}
+  //       setSiteHeight={vi.fn()}
   //       pathname="/fagsak/ABC39/"
   //     />,
   //   );
@@ -43,7 +43,7 @@ describe.skip('<Dekorator>', () => {
   //     },
   //   ]);
   //   const wrapper = shallowWithIntl(
-  //     <Dekorator.WrappedComponent intl={intlMock} queryStrings={{}} setSiteHeight={sinon.spy()} pathname="test" />,
+  //     <Dekorator.WrappedComponent intl={intlMock} queryStrings={{}} setSiteHeight={vi.fn()} pathname="test" />,
   //   );
   //   const header = wrapper.find(HeaderWithErrorPanel);
   //   expect(header.prop('errorMessages')).toEqual([

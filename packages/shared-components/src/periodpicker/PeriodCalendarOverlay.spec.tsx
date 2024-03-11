@@ -3,17 +3,16 @@ import { act, fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import moment from 'moment';
 import React from 'react';
-import sinon from 'sinon';
 import PeriodCalendarOverlay from './PeriodCalendarOverlay';
 
 describe('<PeriodCalendarOverlay>', () => {
   it('skal ikke vise overlay når disabled', () => {
     renderWithIntl(
       <PeriodCalendarOverlay
-        onDayChange={sinon.spy()}
+        onDayChange={vi.fn()}
         className="test"
         dayPickerClassName="test"
-        elementIsCalendarButton={sinon.spy()}
+        elementIsCalendarButton={vi.fn()}
         startDate={moment().toDate()}
         endDate={moment().toDate()}
         disabled
@@ -28,10 +27,10 @@ describe('<PeriodCalendarOverlay>', () => {
     const endDate = moment('2018-08-31').toDate();
     renderWithIntl(
       <PeriodCalendarOverlay
-        onDayChange={sinon.spy()}
+        onDayChange={vi.fn()}
         className="test"
         dayPickerClassName="test"
-        elementIsCalendarButton={sinon.spy()}
+        elementIsCalendarButton={vi.fn()}
         startDate={startDate}
         endDate={endDate}
       />,
@@ -44,11 +43,11 @@ describe('<PeriodCalendarOverlay>', () => {
   });
 
   it('skal kjøre callback når overlay blir lukket og target er noe annet enn kalender eller kalenderknapp', async () => {
-    const onCloseCallback = sinon.spy();
+    const onCloseCallback = vi.fn();
     const elementIsCalendarButton = () => false;
     renderWithIntl(
       <PeriodCalendarOverlay
-        onDayChange={sinon.spy()}
+        onDayChange={vi.fn()}
         className="test"
         dayPickerClassName="test"
         elementIsCalendarButton={elementIsCalendarButton}
@@ -63,17 +62,17 @@ describe('<PeriodCalendarOverlay>', () => {
     await act(async () => {
       fireEvent.blur(screen.getByRole('link'));
     });
-    expect(onCloseCallback.called).toBe(true);
+    expect(onCloseCallback.mock.calls.length).toBeGreaterThan(0);
   });
 
   it('skal kjøre callback når en trykker escape-knappen', async () => {
-    const onCloseCallback = sinon.spy();
+    const onCloseCallback = vi.fn();
     renderWithIntl(
       <PeriodCalendarOverlay
-        onDayChange={sinon.spy()}
+        onDayChange={vi.fn()}
         className="test"
         dayPickerClassName="test"
-        elementIsCalendarButton={sinon.spy()}
+        elementIsCalendarButton={vi.fn()}
         startDate={moment('2017-08-31').toDate()}
         endDate={moment('2018-08-31').toDate()}
         onClose={onCloseCallback}
@@ -82,17 +81,17 @@ describe('<PeriodCalendarOverlay>', () => {
 
     await userEvent.keyboard('{Escape}');
 
-    expect(onCloseCallback.called).toBe(true);
+    expect(onCloseCallback.mock.calls.length).toBeGreaterThan(0);
   });
 
   it('skal ikke kjøre callback når en trykker noe annet enn escape-knappen', async () => {
-    const onCloseCallback = sinon.spy();
+    const onCloseCallback = vi.fn();
     renderWithIntl(
       <PeriodCalendarOverlay
-        onDayChange={sinon.spy()}
+        onDayChange={vi.fn()}
         className="test"
         dayPickerClassName="test"
-        elementIsCalendarButton={sinon.spy()}
+        elementIsCalendarButton={vi.fn()}
         startDate={moment('2017-08-31').toDate()}
         endDate={moment('2018-08-31').toDate()}
         onClose={onCloseCallback}
@@ -101,20 +100,20 @@ describe('<PeriodCalendarOverlay>', () => {
 
     await userEvent.keyboard('{Enter}');
 
-    expect(onCloseCallback.called).toBe(false);
+    expect(onCloseCallback.mock.calls.length).toBe(0);
   });
 
   it('skal sette input-dato når ingen dager er disabled', async () => {
-    const onDayChangeCallback = sinon.spy();
+    const onDayChangeCallback = vi.fn();
     renderWithIntl(
       <PeriodCalendarOverlay
         onDayChange={onDayChangeCallback}
         className="test"
         dayPickerClassName="test"
-        elementIsCalendarButton={sinon.spy()}
+        elementIsCalendarButton={vi.fn()}
         startDate={moment('2017-08-31').toDate()}
         endDate={moment('2018-08-31').toDate()}
-        onClose={sinon.spy()}
+        onClose={vi.fn()}
       />,
     );
 
@@ -123,9 +122,9 @@ describe('<PeriodCalendarOverlay>', () => {
     await act(async () => {
       await userEvent.click(screen.getByRole('gridcell', { name: 'Wed Aug 01 2018' }));
     });
-    expect(onDayChangeCallback.called).toBe(true);
-    expect(onDayChangeCallback.getCalls()).toHaveLength(1);
-    const args1 = onDayChangeCallback.getCalls()[0].args;
+    expect(onDayChangeCallback.mock.calls.length).toBeGreaterThan(0);
+    expect(onDayChangeCallback.mock.calls).toHaveLength(1);
+    const args1 = onDayChangeCallback.mock.calls[0];
     expect(args1).toHaveLength(1);
     const dateToCompare1 = new Date(args1[0]);
     dateToCompare1.setHours(0, 0, 0, 0);
@@ -135,7 +134,7 @@ describe('<PeriodCalendarOverlay>', () => {
   });
 
   it('skal sette input-dato når denne er innenfor det gyldige intervallet', async () => {
-    const onDayChangeCallback = sinon.spy();
+    const onDayChangeCallback = vi.fn();
     const disabledDays = {
       before: new Date('2018-01-05'),
       after: new Date('2018-08-31'),
@@ -145,11 +144,11 @@ describe('<PeriodCalendarOverlay>', () => {
         onDayChange={onDayChangeCallback}
         className="test"
         dayPickerClassName="test"
-        elementIsCalendarButton={sinon.spy()}
+        elementIsCalendarButton={vi.fn()}
         startDate={moment('2017-08-31').toDate()}
         endDate={moment('2018-08-31').toDate()}
         disabledDays={disabledDays}
-        onClose={sinon.spy()}
+        onClose={vi.fn()}
       />,
     );
 
@@ -162,9 +161,9 @@ describe('<PeriodCalendarOverlay>', () => {
       await userEvent.click(screen.getByRole('gridcell', { name: 'Wed Aug 01 2018' }));
     });
 
-    expect(onDayChangeCallback.called).toBe(true);
-    expect(onDayChangeCallback.getCalls()).toHaveLength(1);
-    const args1 = onDayChangeCallback.getCalls()[0].args;
+    expect(onDayChangeCallback.mock.calls.length).toBeGreaterThan(0);
+    expect(onDayChangeCallback.mock.calls).toHaveLength(1);
+    const args1 = onDayChangeCallback.mock.calls[0];
     expect(args1).toHaveLength(1);
     const dateToCompare1 = new Date(args1[0]);
     dateToCompare1.setHours(0, 0, 0, 0);
@@ -174,7 +173,7 @@ describe('<PeriodCalendarOverlay>', () => {
   });
 
   it('skal ikke sette input-dato når denne er utenfor startdato i intervallet', async () => {
-    const onDayChangeCallback = sinon.spy();
+    const onDayChangeCallback = vi.fn();
     const disabledDays = {
       before: new Date('2018-01-05'),
       after: new Date('2018-01-10'),
@@ -184,11 +183,11 @@ describe('<PeriodCalendarOverlay>', () => {
         onDayChange={onDayChangeCallback}
         className="test"
         dayPickerClassName="test"
-        elementIsCalendarButton={sinon.spy()}
+        elementIsCalendarButton={vi.fn()}
         startDate={moment('2018-08-01').toDate()}
         endDate={moment('2018-08-31').toDate()}
         disabledDays={disabledDays}
-        onClose={sinon.spy()}
+        onClose={vi.fn()}
       />,
     );
 
@@ -200,11 +199,11 @@ describe('<PeriodCalendarOverlay>', () => {
       await userEvent.click(screen.getByRole('gridcell', { name: 'Tue Jul 31 2018' }));
     });
 
-    expect(onDayChangeCallback.called).toBe(false);
+    expect(onDayChangeCallback.mock.calls.length).toBe(0);
   });
 
   it('skal ikke sette input-dato når denne er utenfor sluttdato i intervallet', async () => {
-    const onDayChangeCallback = sinon.spy();
+    const onDayChangeCallback = vi.fn();
     const disabledDays = {
       before: new Date('2018-01-05'),
       after: new Date('2018-01-10'),
@@ -214,11 +213,11 @@ describe('<PeriodCalendarOverlay>', () => {
         onDayChange={onDayChangeCallback}
         className="test"
         dayPickerClassName="test"
-        elementIsCalendarButton={sinon.spy()}
+        elementIsCalendarButton={vi.fn()}
         startDate={moment('2017-08-31').toDate()}
         endDate={moment('2018-08-31').toDate()}
         disabledDays={disabledDays}
-        onClose={sinon.spy()}
+        onClose={vi.fn()}
       />,
     );
 
@@ -230,6 +229,6 @@ describe('<PeriodCalendarOverlay>', () => {
       await userEvent.click(screen.getByRole('gridcell', { name: 'Sat Sep 01 2018' }));
     });
 
-    expect(onDayChangeCallback.called).toBe(false);
+    expect(onDayChangeCallback.mock.calls.length).toBe(0);
   });
 });

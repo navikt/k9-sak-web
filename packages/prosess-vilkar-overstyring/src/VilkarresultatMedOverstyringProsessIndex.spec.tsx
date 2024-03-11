@@ -3,7 +3,6 @@ import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi'
 import { Behandling } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../i18n/nb_NO.json';
 import VilkarresultatMedOverstyringProsessIndex from './VilkarresultatMedOverstyringProsessIndex';
 
@@ -28,8 +27,8 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         kanOverstyreAccess={{
           isEnabled: true,
         }}
-        toggleOverstyring={sinon.spy()}
-        submitCallback={sinon.spy()}
+        toggleOverstyring={vi.fn()}
+        submitCallback={vi.fn()}
         aksjonspunkter={[]}
         avslagsarsaker={[]}
         panelTittelKode="tittel"

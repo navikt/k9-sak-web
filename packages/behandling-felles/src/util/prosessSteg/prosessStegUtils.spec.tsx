@@ -1,27 +1,26 @@
 /* eslint-disable class-methods-use-this */
 import React from 'react';
-import sinon from 'sinon';
 
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 
-import { ProsessStegUtledet, ProsessStegPanelUtledet } from './ProsessStegUtledet';
-import {
-  utledProsessStegPaneler,
-  getBekreftAksjonspunktCallback,
-  formaterPanelerForProsessmeny,
-  finnValgtPanel,
-} from './prosessStegUtils';
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
+import { ProsessStegPanelUtledet, ProsessStegUtledet } from './ProsessStegUtledet';
+import {
+  finnValgtPanel,
+  formaterPanelerForProsessmeny,
+  getBekreftAksjonspunktCallback,
+  utledProsessStegPaneler,
+} from './prosessStegUtils';
 
 describe('<prosessStegUtils>', () => {
   const fagsak = {
@@ -291,9 +290,9 @@ describe('<prosessStegUtils>', () => {
   });
 
   it('skal lagre aksjonspunkt', async () => {
-    const lagreAksjonspunkter = sinon.stub();
-    lagreAksjonspunkter.returns(Promise.resolve());
-    const lagringSideEffectsCallback = sinon.spy();
+    const lagreAksjonspunkter = vi.fn().mockImplementation(() => Promise.resolve());
+
+    const lagringSideEffectsCallback = vi.fn();
 
     const callback = getBekreftAksjonspunktCallback(
       lagringSideEffectsCallback,
@@ -311,10 +310,10 @@ describe('<prosessStegUtils>', () => {
 
     await callback(aksjonspunktModeller);
 
-    const requestKall = lagreAksjonspunkter.getCalls();
+    const requestKall = lagreAksjonspunkter.mock.calls;
     expect(requestKall).toHaveLength(1);
-    expect(requestKall[0].args).toHaveLength(2);
-    expect(requestKall[0].args[0]).toEqual({
+    expect(requestKall[0]).toHaveLength(2);
+    expect(requestKall[0][0]).toEqual({
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,
@@ -328,10 +327,9 @@ describe('<prosessStegUtils>', () => {
   });
 
   it('skal lagre overstyrt aksjonspunkt', async () => {
-    const lagreAksjonspunkter = sinon.spy();
-    const lagreOverstyrteAksjonspunkter = sinon.stub();
-    lagreOverstyrteAksjonspunkter.returns(Promise.resolve());
-    const lagringSideEffectsCallback = sinon.spy();
+    const lagreAksjonspunkter = vi.fn();
+    const lagreOverstyrteAksjonspunkter = vi.fn().mockImplementation(() => Promise.resolve());
+    const lagringSideEffectsCallback = vi.fn();
 
     const callback = getBekreftAksjonspunktCallback(
       lagringSideEffectsCallback,
@@ -350,10 +348,10 @@ describe('<prosessStegUtils>', () => {
 
     await callback(aksjonspunktModeller);
 
-    const requestKall = lagreOverstyrteAksjonspunkter.getCalls();
+    const requestKall = lagreOverstyrteAksjonspunkter.mock.calls;
     expect(requestKall).toHaveLength(1);
-    expect(requestKall[0].args).toHaveLength(2);
-    expect(requestKall[0].args[0]).toEqual({
+    expect(requestKall[0]).toHaveLength(2);
+    expect(requestKall[0][0]).toEqual({
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,

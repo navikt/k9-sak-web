@@ -2,14 +2,13 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../i18n/nb_NO.json';
 import MenyEndreBehandlendeEnhetIndex from './MenyEndreBehandlendeEnhetIndex';
 
 describe('<MenyEndreBehandlendeEnhetIndex>', () => {
   it('skal vise modal og så lagre ny enhet', async () => {
-    const nyBehandlendeEnhetCallback = sinon.spy();
-    const lukkModalCallback = sinon.spy();
+    const nyBehandlendeEnhetCallback = vi.fn();
+    const lukkModalCallback = vi.fn();
 
     renderWithIntlAndReduxForm(
       <MenyEndreBehandlendeEnhetIndex
@@ -41,10 +40,10 @@ describe('<MenyEndreBehandlendeEnhetIndex>', () => {
       await userEvent.click(screen.getByRole('button', { name: 'OK' }));
     });
 
-    const kall = nyBehandlendeEnhetCallback.getCalls();
+    const kall = nyBehandlendeEnhetCallback.mock.calls;
     expect(kall).toHaveLength(1);
-    expect(kall[0].args).toHaveLength(1);
-    expect(kall[0].args[0]).toEqual({
+    expect(kall[0]).toHaveLength(1);
+    expect(kall[0][0]).toEqual({
       behandlingId: 3,
       behandlingVersjon: 1,
       enhetNavn: 'TEST ENHET',
@@ -52,7 +51,7 @@ describe('<MenyEndreBehandlendeEnhetIndex>', () => {
       begrunnelse: 'Dette er en begrunnelse',
     });
 
-    const lukkKall = lukkModalCallback.getCalls();
+    const lukkKall = lukkModalCallback.mock.calls;
     expect(lukkKall).toHaveLength(1);
   });
 });

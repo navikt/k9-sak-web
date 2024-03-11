@@ -1,6 +1,5 @@
-import React from 'react';
-import sinon from 'sinon';
 import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/test-utils';
+import React from 'react';
 import AvslagsårsakListe from './AvslagsårsakListe';
 
 describe('<AvslagårsakListe>', () => {
@@ -49,7 +48,7 @@ describe('<AvslagårsakListe>', () => {
       },
     ];
 
-    renderWithIntlAndReduxForm(<AvslagsårsakListe vilkar={vilkar} getKodeverknavn={sinon.spy()} />);
+    renderWithIntlAndReduxForm(<AvslagsårsakListe vilkar={vilkar} getKodeverknavn={vi.fn()} />);
     expect(screen.getAllByText(':')).toHaveLength(2);
   });
 });
