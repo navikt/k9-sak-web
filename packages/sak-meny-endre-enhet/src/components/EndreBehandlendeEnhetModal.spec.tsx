@@ -20,7 +20,7 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
     renderWithIntlAndReduxForm(
       <EndreBehandlendeEnhetModal
         {...reduxFormPropsMock}
-        handleSubmit={vi.fn()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
         lukkModal={vi.fn()}
         behandlendeEnheter={behandlendeEnheter}
         gjeldendeBehandlendeEnhetId="002"
@@ -41,7 +41,7 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
     renderWithIntlAndReduxForm(
       <EndreBehandlendeEnhetModal
         {...reduxFormPropsMock}
-        handleSubmit={vi.fn()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
         lukkModal={vi.fn()}
         behandlendeEnheter={behandlendeEnheter}
         gjeldendeBehandlendeEnhetId="002"
@@ -62,7 +62,7 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
     renderWithIntlAndReduxForm(
       <EndreBehandlendeEnhetModal
         {...reduxFormPropsMock}
-        handleSubmit={vi.fn()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
         lukkModal={vi.fn()}
         behandlendeEnheter={behandlendeEnheter}
         gjeldendeBehandlendeEnhetId="002"
@@ -104,7 +104,7 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
     renderWithIntlAndReduxForm(
       <EndreBehandlendeEnhetModal
         {...reduxFormPropsMock}
-        handleSubmit={vi.fn()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
         lukkModal={cancelEventCallback}
         behandlendeEnheter={behandlendeEnheter}
         gjeldendeBehandlendeEnhetId="002"

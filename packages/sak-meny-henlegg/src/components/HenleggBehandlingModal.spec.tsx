@@ -55,7 +55,7 @@ describe('<HenleggBehandlingModal>', () => {
     renderWithIntlAndReduxForm(
       <HenleggBehandlingModalImpl
         {...reduxFormPropsMock}
-        handleSubmit={vi.fn()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
         cancelEvent={vi.fn()}
         previewHenleggBehandling={vi.fn()}
         årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
@@ -85,7 +85,7 @@ describe('<HenleggBehandlingModal>', () => {
     renderWithIntlAndReduxForm(
       <HenleggBehandlingModalImpl
         {...reduxFormPropsMock}
-        handleSubmit={vi.fn()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
         cancelEvent={vi.fn()}
         previewHenleggBehandling={vi.fn()}
         årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
@@ -179,7 +179,7 @@ describe('<HenleggBehandlingModal>', () => {
     renderWithIntlAndReduxForm(
       <HenleggBehandlingModalImpl
         {...reduxFormPropsMock}
-        handleSubmit={vi.fn()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
         cancelEvent={vi.fn()}
         previewHenleggBehandling={vi.fn()}
         intl={intlMock}
@@ -203,7 +203,7 @@ describe('<HenleggBehandlingModal>', () => {
     renderWithIntlAndReduxForm(
       <HenleggBehandlingModalImpl
         {...reduxFormPropsMock}
-        handleSubmit={vi.fn()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
         cancelEvent={vi.fn()}
         previewHenleggBehandling={vi.fn()}
         intl={intlMock}
@@ -260,7 +260,7 @@ describe('<HenleggBehandlingModal>', () => {
     renderWithIntlAndReduxForm(
       <HenleggBehandlingModalImpl
         {...reduxFormPropsMock}
-        handleSubmit={vi.fn()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
         cancelEvent={cancelEventCallback}
         previewHenleggBehandling={vi.fn()}
         årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
@@ -291,7 +291,7 @@ describe('<HenleggBehandlingModal>', () => {
     renderWithIntlAndReduxForm(
       <HenleggBehandlingModalImpl
         {...reduxFormPropsMock}
-        handleSubmit={vi.fn()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
         cancelEvent={vi.fn()}
         previewHenleggBehandling={previewEventCallback}
         årsakKode={behandlingResultatType.HENLAGT_SOKNAD_TRUKKET}
@@ -323,7 +323,7 @@ describe('<HenleggBehandlingModal>', () => {
     renderWithIntlAndReduxForm(
       <HenleggBehandlingModalImpl
         {...reduxFormPropsMock}
-        handleSubmit={vi.fn()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
         cancelEvent={vi.fn()}
         previewHenleggBehandling={previewEventCallback}
         årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET_MED_BREV}
