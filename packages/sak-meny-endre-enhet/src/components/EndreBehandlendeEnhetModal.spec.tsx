@@ -1,9 +1,8 @@
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import { intlMock } from '../../i18n/index';
 import messages from '../../i18n/nb_NO.json';
 import { EndreBehandlendeEnhetModal } from './EndreBehandlendeEnhetModal';
@@ -21,8 +20,8 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
     renderWithIntlAndReduxForm(
       <EndreBehandlendeEnhetModal
         {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        lukkModal={sinon.spy()}
+        handleSubmit={vi.fn()}
+        lukkModal={vi.fn()}
         behandlendeEnheter={behandlendeEnheter}
         gjeldendeBehandlendeEnhetId="002"
         gjeldendeBehandlendeEnhetNavn="Oslo"
@@ -42,8 +41,8 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
     renderWithIntlAndReduxForm(
       <EndreBehandlendeEnhetModal
         {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        lukkModal={sinon.spy()}
+        handleSubmit={vi.fn()}
+        lukkModal={vi.fn()}
         behandlendeEnheter={behandlendeEnheter}
         gjeldendeBehandlendeEnhetId="002"
         gjeldendeBehandlendeEnhetNavn="Oslo"
@@ -63,8 +62,8 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
     renderWithIntlAndReduxForm(
       <EndreBehandlendeEnhetModal
         {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        lukkModal={sinon.spy()}
+        handleSubmit={vi.fn()}
+        lukkModal={vi.fn()}
         behandlendeEnheter={behandlendeEnheter}
         gjeldendeBehandlendeEnhetId="002"
         gjeldendeBehandlendeEnhetNavn="Oslo"
@@ -78,12 +77,12 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
   });
 
   it('skal bruke submit-callback når en trykker ok', async () => {
-    const submitEventCallback = sinon.spy();
+    const submitEventCallback = vi.fn();
     renderWithIntlAndReduxForm(
       <EndreBehandlendeEnhetModal
         {...reduxFormPropsMock}
         handleSubmit={submitEventCallback}
-        lukkModal={sinon.spy()}
+        lukkModal={vi.fn()}
         behandlendeEnheter={behandlendeEnheter}
         gjeldendeBehandlendeEnhetId="002"
         gjeldendeBehandlendeEnhetNavn="Oslo"
@@ -97,15 +96,15 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
     await act(async () => {
       await userEvent.click(screen.getByRole('button', { name: 'OK' }));
     });
-    expect(submitEventCallback.called).toBe(true);
+    expect(submitEventCallback.mock.calls.length).toBeGreaterThan(0);
   });
 
   it('skal avbryte redigering ved trykk på avbryt-knapp', async () => {
-    const cancelEventCallback = sinon.spy();
+    const cancelEventCallback = vi.fn();
     renderWithIntlAndReduxForm(
       <EndreBehandlendeEnhetModal
         {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
+        handleSubmit={vi.fn()}
         lukkModal={cancelEventCallback}
         behandlendeEnheter={behandlendeEnheter}
         gjeldendeBehandlendeEnhetId="002"
@@ -120,6 +119,6 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
     await act(async () => {
       await userEvent.click(screen.getByRole('button', { name: 'Avbryt' }));
     });
-    expect(cancelEventCallback.called).toBe(true);
+    expect(cancelEventCallback.mock.calls.length).toBeGreaterThan(0);
   });
 });

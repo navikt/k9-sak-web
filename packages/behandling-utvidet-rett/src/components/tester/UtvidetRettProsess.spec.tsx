@@ -3,7 +3,6 @@ import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi'
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import FetchedData from '../../types/fetchedDataTsType';
 import UtvidetRettProsess from '../UtvidetRettProsess';
 import utvidetRettTestData from './utvidetRettTestData';
@@ -31,12 +30,12 @@ describe('<UtvidetRettProsess>', () => {
         rettigheter={rettigheter}
         valgtProsessSteg="inngangsvilkar"
         valgtFaktaSteg="uttak"
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        oppdaterBehandlingVersjon={sinon.spy()}
-        opneSokeside={sinon.spy()}
+        oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
+        oppdaterBehandlingVersjon={vi.fn()}
+        opneSokeside={vi.fn()}
         hasFetchError={false}
         apentFaktaPanelInfo={{ urlCode: 'default', textCode: 'default' }}
-        setBehandling={sinon.spy()}
+        setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
@@ -49,7 +48,7 @@ describe('<UtvidetRettProsess>', () => {
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', async () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+    const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     renderWithIntl(
       <UtvidetRettProsess
         data={fetchedData as FetchedData}
@@ -61,11 +60,11 @@ describe('<UtvidetRettProsess>', () => {
         valgtProsessSteg="inngangsvilkar"
         valgtFaktaSteg="default"
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        oppdaterBehandlingVersjon={sinon.spy()}
-        opneSokeside={sinon.spy()}
+        oppdaterBehandlingVersjon={vi.fn()}
+        opneSokeside={vi.fn()}
         hasFetchError={false}
         apentFaktaPanelInfo={{ urlCode: 'default', textCode: 'default' }}
-        setBehandling={sinon.spy()}
+        setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
       />,
@@ -75,8 +74,8 @@ describe('<UtvidetRettProsess>', () => {
       await userEvent.click(screen.getByRole('button', { name: 'Utvidet Rett' }));
     });
 
-    const oppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    const oppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.mock.calls;
     expect(oppdaterKall).toHaveLength(1);
-    expect(oppdaterKall[0].args[0]).toEqual('utvidet_rett');
+    expect(oppdaterKall[0][0]).toEqual('utvidet_rett');
   });
 });

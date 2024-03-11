@@ -1,10 +1,9 @@
+import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
-import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
 import { DelOppPeriodeModalImpl, mapStateToPropsFactory } from './DelOppPeriodeModal';
 
@@ -13,7 +12,7 @@ describe('<DelOppPeriodeModal>', () => {
     fom: '2018-01-01',
     tom: '2018-03-01',
   };
-  const cancelEvent = sinon.spy();
+  const cancelEvent = vi.fn();
 
   it('skal rendre modal for del opp periode', () => {
     renderWithIntlAndReduxForm(
@@ -46,7 +45,7 @@ describe('<DelOppPeriodeModal>', () => {
     await act(async () => {
       await userEvent.click(screen.getByRole('button', { name: 'Avbryt' }));
     });
-    expect(cancelEvent.callCount).toBe(1);
+    expect(cancelEvent.mock.calls.length).toBe(1);
   });
 
   it('skal validere ok når valgt dato er innenfor periode', () => {

@@ -5,7 +5,6 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import { AvregningPanelImpl, transformValues } from './AvregningPanel';
 
@@ -155,7 +154,7 @@ const mockProps = {
   readOnly: false,
   erTilbakekrevingVilkårOppfylt: false,
   grunnerTilReduksjon: false,
-  previewCallback: sinon.spy(),
+  previewCallback: vi.fn(),
   hasOpenTilbakekrevingsbehandling: false,
 };
 

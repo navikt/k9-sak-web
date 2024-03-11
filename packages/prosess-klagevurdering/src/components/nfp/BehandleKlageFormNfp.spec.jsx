@@ -6,7 +6,6 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { screen } from '@testing-library/react';
 
 import React from 'react';
-import sinon from 'sinon';
 import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
 import { BehandleKlageFormNfpImpl } from './BehandleKlageFormNfp';
@@ -29,8 +28,8 @@ describe('<BehandleKlageFormNfpImpl>', () => {
         readOnlySubmitButton
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
         formValues={formValues1}
-        previewCallback={sinon.spy()}
-        saveKlage={sinon.spy()}
+        previewCallback={vi.fn()}
+        saveKlage={vi.fn()}
         intl={intlMock}
         formProps={{}}
         sprakkode={sprakkode}
@@ -53,8 +52,8 @@ describe('<BehandleKlageFormNfpImpl>', () => {
         readOnlySubmitButton
         formValues={formValues2}
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
-        previewCallback={sinon.spy()}
-        saveKlage={sinon.spy()}
+        previewCallback={vi.fn()}
+        saveKlage={vi.fn()}
         intl={intlMock}
         formProps={{}}
         sprakkode={sprakkode}
@@ -77,8 +76,8 @@ describe('<BehandleKlageFormNfpImpl>', () => {
         readOnlySubmitButton
         formValues={formValues3}
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
-        previewCallback={sinon.spy()}
-        saveKlage={sinon.spy()}
+        previewCallback={vi.fn()}
+        saveKlage={vi.fn()}
         intl={intlMock}
         formProps={{}}
         sprakkode={sprakkode}

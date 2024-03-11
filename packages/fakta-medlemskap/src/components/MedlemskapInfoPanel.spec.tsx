@@ -3,7 +3,6 @@ import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import MedlemskapInfoPanel from './MedlemskapInfoPanel';
 
@@ -17,7 +16,7 @@ describe('<MedlemskapInfoPanel>', () => {
         hasOpenAksjonspunkter={false}
         submittable
         readOnly
-        submitCallback={sinon.spy()}
+        submitCallback={vi.fn()}
         alleMerknaderFraBeslutter={{}}
         behandlingId={1}
         behandlingVersjon={1}
@@ -49,7 +48,7 @@ describe('<MedlemskapInfoPanel>', () => {
         hasOpenAksjonspunkter={false}
         submittable
         readOnly
-        submitCallback={sinon.spy()}
+        submitCallback={vi.fn()}
         alleMerknaderFraBeslutter={{}}
         behandlingId={1}
         behandlingVersjon={1}

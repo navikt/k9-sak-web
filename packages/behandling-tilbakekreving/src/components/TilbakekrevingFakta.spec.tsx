@@ -11,7 +11,6 @@ import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import { TilbakekrevingBehandlingApiKeys, requestTilbakekrevingApi } from '../data/tilbakekrevingBehandlingApi';
 import vedtakResultatType from '../kodeverk/vedtakResultatType';
 import TilbakekrevingFakta from './TilbakekrevingFakta';
@@ -120,9 +119,9 @@ describe('<TilbakekrevingFakta>', () => {
           rettigheter={rettigheter}
           alleKodeverk={{}}
           fpsakKodeverk={{}}
-          oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
+          oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
           hasFetchError={false}
-          setBehandling={sinon.spy()}
+          setBehandling={vi.fn()}
         />
       </RestApiErrorProvider>,
     );
@@ -132,7 +131,7 @@ describe('<TilbakekrevingFakta>', () => {
 
   it('skal oppdatere url ved valg av faktapanel', async () => {
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK, []);
-    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+    const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     renderWithIntlAndReduxForm(
       <RestApiErrorProvider>
         <TilbakekrevingFakta
@@ -149,7 +148,7 @@ describe('<TilbakekrevingFakta>', () => {
           fpsakKodeverk={{}}
           oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
           hasFetchError={false}
-          setBehandling={sinon.spy()}
+          setBehandling={vi.fn()}
         />
       </RestApiErrorProvider>,
     );
@@ -158,9 +157,9 @@ describe('<TilbakekrevingFakta>', () => {
       await userEvent.click(screen.getByRole('button', { name: /Feilutbetaling/i }));
     });
 
-    const calls = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    const { calls } = oppdaterProsessStegOgFaktaPanelIUrl.mock;
     expect(calls).toHaveLength(1);
-    const { args } = calls[0];
+    const args = calls[0];
     expect(args).toHaveLength(2);
     expect(args[0]).toEqual('default');
     expect(args[1]).toEqual('feilutbetaling');

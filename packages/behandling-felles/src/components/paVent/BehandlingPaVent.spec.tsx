@@ -7,7 +7,6 @@ import { Behandling } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import BehandlingPaVent from './BehandlingPaVent';
 
 describe('<BehandlingPaVent>', () => {
@@ -43,7 +42,7 @@ describe('<BehandlingPaVent>', () => {
         behandling={behandling as Behandling}
         aksjonspunkter={aksjonspunkter}
         kodeverk={kodeverk}
-        settPaVent={sinon.spy()}
+        settPaVent={vi.fn()}
       />,
     );
 
@@ -61,7 +60,7 @@ describe('<BehandlingPaVent>', () => {
         }
         aksjonspunkter={aksjonspunkter}
         kodeverk={kodeverk}
-        settPaVent={sinon.spy()}
+        settPaVent={vi.fn()}
       />,
     );
 
@@ -79,7 +78,7 @@ describe('<BehandlingPaVent>', () => {
         }
         aksjonspunkter={aksjonspunkter}
         kodeverk={kodeverk}
-        settPaVent={sinon.spy()}
+        settPaVent={vi.fn()}
       />,
     );
 
@@ -115,7 +114,7 @@ describe('<BehandlingPaVent>', () => {
           },
         ]}
         kodeverk={kodeverk}
-        settPaVent={sinon.spy()}
+        settPaVent={vi.fn()}
       />,
     );
 

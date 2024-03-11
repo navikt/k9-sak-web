@@ -3,7 +3,6 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { screen } from '@testing-library/react';
 
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import { ForeldelseForm } from './ForeldelseForm';
 
@@ -37,8 +36,8 @@ describe('<ForeldelseForm>', () => {
       <ForeldelseForm
         foreldelsesresultatActivity={perioder}
         behandlingFormPrefix="form"
-        reduxFormChange={sinon.spy()}
-        reduxFormInitialize={sinon.spy()}
+        reduxFormChange={vi.fn()}
+        reduxFormInitialize={vi.fn()}
         navBrukerKjonn="MANN"
         readOnly={false}
         readOnlySubmitButton={false}
@@ -46,7 +45,7 @@ describe('<ForeldelseForm>', () => {
           notAccepted: false,
         }}
         alleKodeverk={{}}
-        beregnBelop={sinon.spy()}
+        beregnBelop={vi.fn()}
         behandlingId={1}
         behandlingVersjon={1}
       />,
@@ -71,8 +70,8 @@ describe('<ForeldelseForm>', () => {
       <ForeldelseForm
         foreldelsesresultatActivity={perioder}
         behandlingFormPrefix="form"
-        reduxFormChange={sinon.spy()}
-        reduxFormInitialize={sinon.spy()}
+        reduxFormChange={vi.fn()}
+        reduxFormInitialize={vi.fn()}
         navBrukerKjonn="MANN"
         readOnly={false}
         readOnlySubmitButton={false}
@@ -81,7 +80,7 @@ describe('<ForeldelseForm>', () => {
         }}
         apCodes={['5003']}
         alleKodeverk={alleKodeverk}
-        beregnBelop={sinon.spy()}
+        beregnBelop={vi.fn()}
         behandlingId={1}
         behandlingVersjon={1}
       />,
@@ -106,8 +105,8 @@ describe('<ForeldelseForm>', () => {
       <ForeldelseForm
         foreldelsesresultatActivity={perioder}
         behandlingFormPrefix="form"
-        reduxFormChange={sinon.spy()}
-        reduxFormInitialize={sinon.spy()}
+        reduxFormChange={vi.fn()}
+        reduxFormInitialize={vi.fn()}
         navBrukerKjonn="MANN"
         readOnly={false}
         readOnlySubmitButton={false}
@@ -116,7 +115,7 @@ describe('<ForeldelseForm>', () => {
         }}
         apCodes={['5003']}
         alleKodeverk={{}}
-        beregnBelop={sinon.spy()}
+        beregnBelop={vi.fn()}
         behandlingId={1}
         behandlingVersjon={1}
       />,

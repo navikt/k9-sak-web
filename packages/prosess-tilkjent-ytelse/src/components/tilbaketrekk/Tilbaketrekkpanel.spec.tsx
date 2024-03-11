@@ -1,10 +1,9 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
 import { Tilbaketrekkpanel as UnwrappedForm, buildInitialValues, transformValues } from './Tilbaketrekkpanel';
@@ -26,7 +25,7 @@ describe('<Tilbaketrekkpanel>', () => {
       <UnwrappedForm
         intl={intlMock}
         readOnly={false}
-        submitCallback={sinon.spy()}
+        submitCallback={vi.fn()}
         readOnlySubmitButton={false}
         vurderTilbaketrekkAP={lagAksjonspunktTilbaketrekk(undefined)}
         behandlingId={1}

@@ -3,7 +3,6 @@ import { Behandling } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import FetchedData from '../../types/fetchedDataTsType';
 import UtvidetRettFakta from '../UtvidetRettFakta';
 import utvidetRettTestData from './utvidetRettTestData';
@@ -26,12 +25,12 @@ describe('<UtvidetRettFakta>', () => {
         fagsakPerson={fagsakPerson}
         rettigheter={rettigheter}
         alleKodeverk={{}}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
+        oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
         valgtFaktaSteg="default"
         valgtProsessSteg="default"
         hasFetchError={false}
-        setApentFaktaPanel={sinon.spy()}
-        setBehandling={sinon.spy()}
+        setApentFaktaPanel={vi.fn()}
+        setBehandling={vi.fn()}
         featureToggles={{}}
         arbeidsgiverOpplysningerPerId={{}}
       />,
@@ -41,7 +40,7 @@ describe('<UtvidetRettFakta>', () => {
   });
 
   it('skal oppdatere url ved valg av faktapanel', async () => {
-    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+    const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
@@ -60,8 +59,8 @@ describe('<UtvidetRettFakta>', () => {
         valgtFaktaSteg="default"
         valgtProsessSteg="default"
         hasFetchError={false}
-        setApentFaktaPanel={sinon.spy()}
-        setBehandling={sinon.spy()}
+        setApentFaktaPanel={vi.fn()}
+        setBehandling={vi.fn()}
         featureToggles={{}}
         arbeidsgiverOpplysningerPerId={{}}
       />,
@@ -70,9 +69,9 @@ describe('<UtvidetRettFakta>', () => {
     await act(async () => {
       await userEvent.click(screen.getByRole('button', { name: 'Barn' }));
     });
-    const calls = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    const { calls } = oppdaterProsessStegOgFaktaPanelIUrl.mock;
     expect(calls).toHaveLength(1);
-    const { args } = calls[0];
+    const args = calls[0];
     expect(args).toHaveLength(2);
     expect(args[0]).toEqual('default');
     expect(args[1]).toEqual('barn');

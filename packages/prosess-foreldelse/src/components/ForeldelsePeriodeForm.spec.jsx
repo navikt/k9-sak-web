@@ -3,7 +3,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-h
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import { ForeldelsePeriodeFormImpl } from './ForeldelsePeriodeForm';
 
@@ -14,7 +13,7 @@ describe('<ForeldelsePeriodeForm>', () => {
       <ForeldelsePeriodeFormImpl
         periode={periode}
         behandlingFormPrefix="form"
-        skjulPeriode={sinon.spy()}
+        skjulPeriode={vi.fn()}
         readOnly={false}
         foreldelseVurderingTyper={[
           {
@@ -38,12 +37,12 @@ describe('<ForeldelsePeriodeForm>', () => {
             kodeverk: '',
           },
         ]}
-        setNestePeriode={sinon.spy()}
-        setForrigePeriode={sinon.spy()}
-        oppdaterSplittedePerioder={sinon.spy()}
+        setNestePeriode={vi.fn()}
+        setForrigePeriode={vi.fn()}
+        oppdaterSplittedePerioder={vi.fn()}
         behandlingId={1}
         behandlingVersjon={2}
-        beregnBelop={sinon.spy()}
+        beregnBelop={vi.fn()}
         {...reduxFormPropsMock}
       />,
       { messages },

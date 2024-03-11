@@ -1,7 +1,6 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
+import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import sinon from 'sinon';
 
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
@@ -23,13 +22,13 @@ describe('BehandlingerIndex', () => {
         <BehandlingerIndex
           fagsak={fagsak as Fagsak}
           alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
-          setBehandlingIdOgVersjon={sinon.spy()}
-          setRequestPendingMessage={sinon.spy()}
+          setBehandlingIdOgVersjon={vi.fn()}
+          setRequestPendingMessage={vi.fn()}
         />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
-    expect(await screen.queryByTestId("IngenBehandlingValgtPanel")).toBeInTheDocument();
+    expect(await screen.queryByTestId('IngenBehandlingValgtPanel')).toBeInTheDocument();
     expect(screen.queryByText('Velg behandling')).toBeInTheDocument();
   });
 });

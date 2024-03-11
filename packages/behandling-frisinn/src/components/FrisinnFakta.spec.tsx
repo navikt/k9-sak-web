@@ -13,7 +13,6 @@ import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import { FrisinnBehandlingApiKeys, requestFrisinnApi } from '../data/frisinnBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
 import FrisinnFakta from './FrisinnFakta';
@@ -141,12 +140,12 @@ describe('<FrisinnFakta>', () => {
           fagsakPerson={fagsakPerson}
           rettigheter={rettigheter}
           alleKodeverk={{}}
-          oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
+          oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
           valgtFaktaSteg="default"
           valgtProsessSteg="default"
           hasFetchError={false}
-          setApentFaktaPanel={sinon.spy()}
-          setBehandling={sinon.spy()}
+          setApentFaktaPanel={vi.fn()}
+          setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           featureToggles={{ FAKTA_BEREGNING_REDESIGN: true }}
         />
@@ -159,7 +158,7 @@ describe('<FrisinnFakta>', () => {
 
   it('skal oppdatere url ved valg av faktapanel', async () => {
     requestFrisinnApi.mock(FrisinnBehandlingApiKeys.OPPGITT_OPPTJENING, undefined);
-    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+    const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
@@ -178,8 +177,8 @@ describe('<FrisinnFakta>', () => {
           valgtFaktaSteg="default"
           valgtProsessSteg="default"
           hasFetchError={false}
-          setApentFaktaPanel={sinon.spy()}
-          setBehandling={sinon.spy()}
+          setApentFaktaPanel={vi.fn()}
+          setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           featureToggles={{ FAKTA_BEREGNING_REDESIGN: true }}
         />
@@ -190,9 +189,9 @@ describe('<FrisinnFakta>', () => {
       await userEvent.click(screen.getByRole('button', { name: 'Søknaden' }));
     });
 
-    const calls = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    const { calls } = oppdaterProsessStegOgFaktaPanelIUrl.mock;
     expect(calls).toHaveLength(1);
-    const { args } = calls[0];
+    const args = calls[0];
     expect(args).toHaveLength(2);
     expect(args[0]).toEqual('default');
     expect(args[1]).toEqual('opplysninger-fra-soknaden');

@@ -7,7 +7,6 @@ import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtel
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import sinon from 'sinon';
 
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
@@ -123,11 +122,11 @@ describe('<FeilutbetalingInfoPanel>', () => {
         {...reduxFormPropsMock}
         feilutbetaling={feilutbetalingFakta}
         intl={intlMock}
-        toggleInfoPanelCallback={sinon.spy()}
+        toggleInfoPanelCallback={vi.fn()}
         hasOpenAksjonspunkter
         readOnly={false}
         openInfoPanels={['feilutbetaling']}
-        submitCallback={sinon.spy()}
+        submitCallback={vi.fn()}
         årsaker={[]}
         merknaderFraBeslutter={{
           notAccepted: false,

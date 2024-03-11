@@ -1,6 +1,5 @@
 /* eslint-disable class-methods-use-this */
 import React from 'react';
-import sinon from 'sinon';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -118,9 +117,9 @@ describe('<ProsessStegPanel>', () => {
           } as Behandling
         }
         alleKodeverk={{}}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        lagringSideeffekterCallback={sinon.spy()}
-        lagreAksjonspunkter={sinon.spy()}
+        oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
+        lagringSideeffekterCallback={vi.fn()}
+        lagreAksjonspunkter={vi.fn()}
         useMultipleRestApi={() => ({ data: undefined, state: RestApiState.SUCCESS })}
       />,
     );
@@ -153,9 +152,9 @@ describe('<ProsessStegPanel>', () => {
         fagsak={fagsak}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        lagringSideeffekterCallback={sinon.spy()}
-        lagreAksjonspunkter={sinon.spy()}
+        oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
+        lagringSideeffekterCallback={vi.fn()}
+        lagreAksjonspunkter={vi.fn()}
         useMultipleRestApi={() => ({ data: undefined, state: RestApiState.SUCCESS })}
       />,
     );
@@ -208,9 +207,9 @@ describe('<ProsessStegPanel>', () => {
         fagsak={fagsak}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        lagringSideeffekterCallback={sinon.spy()}
-        lagreAksjonspunkter={sinon.spy()}
+        oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
+        lagringSideeffekterCallback={vi.fn()}
+        lagreAksjonspunkter={vi.fn()}
         useMultipleRestApi={() => ({ data: undefined, state: RestApiState.SUCCESS })}
       />,
     );
@@ -250,9 +249,9 @@ describe('<ProsessStegPanel>', () => {
         fagsak={fagsak}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        lagringSideeffekterCallback={sinon.spy()}
-        lagreAksjonspunkter={sinon.spy()}
+        oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
+        lagringSideeffekterCallback={vi.fn()}
+        lagreAksjonspunkter={vi.fn()}
         useMultipleRestApi={() => ({ data: undefined, state: RestApiState.SUCCESS })}
       />,
     );
