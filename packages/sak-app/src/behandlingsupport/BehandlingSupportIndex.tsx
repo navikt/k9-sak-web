@@ -88,8 +88,9 @@ const BehandlingSupportIndex = ({
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
 
   const meldingerBackendClientFactory = useCallback(() => {
+    const k9SakClient = useContext(K9SakClientContext);
     if (featureToggles.USE_NEW_BACKEND_CLIENT === true) {
-      return new MeldingerBackendClient(useContext(K9SakClientContext));
+      return new MeldingerBackendClient(k9SakClient);
     }
     return new MeldingBackendClient();
   }, [K9SakClientContext, featureToggles]);
