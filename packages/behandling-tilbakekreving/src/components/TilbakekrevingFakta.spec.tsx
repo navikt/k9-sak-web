@@ -19,15 +19,15 @@ import TilbakekrevingFakta from './TilbakekrevingFakta';
 describe('<TilbakekrevingFakta>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+    sakstype: fagsakYtelseType.FORELDREPENGER,
+    status: fagsakStatus.UNDER_BEHANDLING,
   } as Fagsak;
 
   const behandling: Partial<Behandling> = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -47,8 +47,8 @@ describe('<TilbakekrevingFakta>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+      definisjon: aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
@@ -59,19 +59,13 @@ describe('<TilbakekrevingFakta>', () => {
         fom: '2019-01-01',
         tom: '2019-04-01',
         belop: 1212,
-        foreldelseVurderingType: {
-          kode: foreldelseVurderingType.FORELDET,
-          kodeverk: 'FORELDRE_VURDERING_TYPE',
-        },
+        foreldelseVurderingType: foreldelseVurderingType.FORELDET,
       },
     ],
   };
   const beregningsresultat = {
     beregningResultatPerioder: [],
-    vedtakResultatType: {
-      kode: vedtakResultatType.INGEN_TILBAKEBETALING,
-      kodeverk: 'VEDTAK_RESULTAT_TYPE',
-    },
+    vedtakResultatType: vedtakResultatType.INGEN_TILBAKEBETALING,
   };
   const feilutbetalingFakta = {
     behandlingFakta: {
@@ -90,14 +84,7 @@ describe('<TilbakekrevingFakta>', () => {
         type: 'TEST',
         konsekvenserForYtelsen: [],
       },
-      behandlingÅrsaker: [
-        {
-          behandlingArsakType: {
-            kode: 'test',
-            kodeverk: 'test',
-          },
-        },
-      ],
+      behandlingÅrsaker: [{ behandlingArsakType: 'test' }],
     },
   };
 
