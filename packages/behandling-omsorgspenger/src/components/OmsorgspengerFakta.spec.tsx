@@ -96,12 +96,12 @@ describe('<OmsorgspengerFakta>', () => {
     },
   ];
   const vilkar = [];
-  const arbeidsforhold = [
-    {
-      arbeidsgiverReferanse: '12345678',
-      kilde: '-',
-    },
-  ];
+  // const arbeidsforhold = [
+  //   {
+  //     arbeidsgiverReferanse: '12345678',
+  //     kilde: '-',
+  //   },
+  // ];
 
   const soker = {
     navn: 'Espen Utvikler',

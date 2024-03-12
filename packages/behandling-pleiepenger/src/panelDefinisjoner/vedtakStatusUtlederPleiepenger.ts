@@ -2,7 +2,7 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Aksjonspunkt, Behandling, FeatureToggles, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 
 // TODO (TOR) Kan denne skrivast om? For høg kompleksitet.
 
