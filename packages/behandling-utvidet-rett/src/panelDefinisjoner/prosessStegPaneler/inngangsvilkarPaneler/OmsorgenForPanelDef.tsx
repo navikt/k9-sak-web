@@ -4,7 +4,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { Fagsak, Personopplysninger, Rammevedtak, Soknad } from '@k9-sak-web/types';
+import { Fagsak, Personopplysninger, Rammevedtak } from '@k9-sak-web/types';
 
 import OmsorgenForMikrofrontend from './omsorgenForMikrofrontend/OmsorgenForMikrofrontend';
 import { harBarnSoktForRammevedtakOmKroniskSyk } from '../../../utils/utvidetRettHjelpfunksjoner';
