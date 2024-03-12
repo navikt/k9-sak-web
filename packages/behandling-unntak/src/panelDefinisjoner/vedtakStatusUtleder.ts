@@ -18,7 +18,7 @@ const isAksjonspunktOpenAndOfType = (ap: Aksjonspunkt) => hasAksjonspunkt(ap) &&
 const harVilkårSomIkkeErOppfylt = (vilkar: Vilkar[]) =>
   vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_OPPFYLT));
 
-const harVilkårSomIkkeErVurdert = (vilkar: Vilkar) =>
+const harVilkårSomIkkeErVurdert = (vilkar: Vilkar[]) =>
   vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_VURDERT));
 
 const findStatusForVedtak = (

@@ -5,7 +5,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import OpplysningerFraSoknadenIndex from '@fpsak-frontend/fakta-opplysninger-fra-soknaden';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
 
 class OpplysningerFraSoknadFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.OPPLYSNINGER_FRA_SØKNADEN;
