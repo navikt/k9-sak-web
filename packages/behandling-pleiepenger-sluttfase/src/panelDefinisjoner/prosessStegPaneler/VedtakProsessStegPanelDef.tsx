@@ -4,6 +4,7 @@ import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { Aksjonspunkt, Fagsak, Vilkar } from '@k9-sak-web/types';
 
 import findStatusForVedtak from '../vedtakStatusUtlederPleiepengerSluttfase';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
@@ -51,6 +52,21 @@ class PanelDef extends ProsessStegPanelDef {
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,
     fagsak,
+  }: {
+    previewCallback: () => void;
+    hentFritekstbrevHtmlCallback: () => void;
+    rettigheter: {
+      kanOverstyreAccess: {
+        isEnabled: boolean;
+      };
+    };
+    aksjonspunkter: Aksjonspunkt[];
+    vilkar: Vilkar[];
+    simuleringResultat: any;
+    beregningsgrunnlag: any;
+    arbeidsgiverOpplysningerPerId: any;
+    lagreDokumentdata: () => void;
+    fagsak: Fagsak;
   }) => ({
     previewCallback,
     hentFritekstbrevHtmlCallback,
@@ -58,7 +74,7 @@ class PanelDef extends ProsessStegPanelDef {
     vilkar,
     simuleringResultat,
     beregningsgrunnlag,
-    ytelseTypeKode: fagsak.sakstype.kode,
+    ytelseTypeKode: fagsak.sakstype,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,
