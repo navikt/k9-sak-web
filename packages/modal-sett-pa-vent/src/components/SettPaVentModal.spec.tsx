@@ -3,13 +3,12 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-h
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import { SettPaVentModal } from './SettPaVentModal';
 
 describe('<SettPaVentModal>', () => {
   it('skal rendre åpen modal', () => {
-    const cancelEventCallback = sinon.spy();
+    const cancelEventCallback = vi.fn();
 
     renderWithIntlAndReduxForm(
       <SettPaVentModal
@@ -38,7 +37,7 @@ describe('<SettPaVentModal>', () => {
       <SettPaVentModal
         intl={intlMock}
         showModal
-        cancelEvent={sinon.spy()}
+        cancelEvent={vi.fn()}
         frist="2099-10-10"
         originalFrist="frist"
         ventearsak="ventearsak"
@@ -60,7 +59,7 @@ describe('<SettPaVentModal>', () => {
       <SettPaVentModal
         intl={intlMock}
         showModal
-        cancelEvent={sinon.spy()}
+        cancelEvent={vi.fn()}
         frist="20-10-10"
         originalFrist="frist"
         ventearsak="ventearsak"
@@ -82,7 +81,7 @@ describe('<SettPaVentModal>', () => {
       <SettPaVentModal
         intl={intlMock}
         showModal
-        cancelEvent={sinon.spy()}
+        cancelEvent={vi.fn()}
         frist="2015-10-10"
         originalFrist="frist"
         ventearsak="ventearsak"
@@ -104,7 +103,7 @@ describe('<SettPaVentModal>', () => {
       <SettPaVentModal
         intl={intlMock}
         showModal
-        cancelEvent={sinon.spy()}
+        cancelEvent={vi.fn()}
         frist="2099-10-10"
         originalFrist="frist"
         ventearsak="ventearsak"
@@ -125,7 +124,7 @@ describe('<SettPaVentModal>', () => {
       <SettPaVentModal
         intl={intlMock}
         showModal
-        cancelEvent={sinon.spy()}
+        cancelEvent={vi.fn()}
         ventearsak="ventearsak"
         originalVentearsak="ventearsak"
         hasManualPaVent={false}
@@ -143,7 +142,7 @@ describe('<SettPaVentModal>', () => {
       <SettPaVentModal
         intl={intlMock}
         showModal
-        cancelEvent={sinon.spy()}
+        cancelEvent={vi.fn()}
         frist="2015-10-10"
         originalFrist="2015-10-10"
         ventearsaker={[]}
@@ -162,7 +161,7 @@ describe('<SettPaVentModal>', () => {
       <SettPaVentModal
         intl={intlMock}
         showModal
-        cancelEvent={sinon.spy()}
+        cancelEvent={vi.fn()}
         frist="2015-10-10"
         ventearsaker={[]}
         hasManualPaVent={false}
@@ -180,7 +179,7 @@ describe('<SettPaVentModal>', () => {
       <SettPaVentModal
         intl={intlMock}
         showModal
-        cancelEvent={sinon.spy()}
+        cancelEvent={vi.fn()}
         frist="2015-10-10"
         ventearsaker={[
           {

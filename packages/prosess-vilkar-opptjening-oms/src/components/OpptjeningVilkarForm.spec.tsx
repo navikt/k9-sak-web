@@ -4,7 +4,6 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import OpptjeningVilkarForm from './OpptjeningVilkarForm';
 
@@ -27,7 +26,7 @@ describe('<OpptjeningVilkarForm>', () => {
         readOnlySubmitButton
         readOnly
         isAksjonspunktOpen
-        submitCallback={sinon.spy()}
+        submitCallback={vi.fn()}
         behandlingId={1}
         behandlingVersjon={2}
         aksjonspunkter={

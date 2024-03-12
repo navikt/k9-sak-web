@@ -1,7 +1,6 @@
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import FagsakSearch from './FagsakSearch';
 
@@ -42,13 +41,13 @@ describe('<FagsakSearch>', () => {
   const fagsak1 = { ...fagsak, saksnummer: '12346' };
 
   it('skal kun vise søkefelt før søk er startet', () => {
-    const searchFagsakFunction = sinon.spy();
+    const searchFagsakFunction = vi.fn();
     renderWithIntlAndReduxForm(
       <FagsakSearch
         fagsaker={[]}
         searchFagsakCallback={searchFagsakFunction}
         searchResultReceived={false}
-        selectFagsakCallback={sinon.spy()}
+        selectFagsakCallback={vi.fn()}
         searchStarted
         alleKodeverk={{}}
       />,
@@ -62,9 +61,9 @@ describe('<FagsakSearch>', () => {
     renderWithIntlAndReduxForm(
       <FagsakSearch
         fagsaker={[]}
-        searchFagsakCallback={sinon.spy()}
+        searchFagsakCallback={vi.fn()}
         searchResultReceived
-        selectFagsakCallback={sinon.spy()}
+        selectFagsakCallback={vi.fn()}
         searchStarted
         alleKodeverk={{}}
       />,
@@ -75,8 +74,8 @@ describe('<FagsakSearch>', () => {
   });
 
   it('skal vise søkefelt og søketreff der to fagsaker blir vist', () => {
-    const searchFagsakFunction = sinon.spy();
-    const selectFagsakFunction = sinon.spy();
+    const searchFagsakFunction = vi.fn();
+    const selectFagsakFunction = vi.fn();
     renderWithIntlAndReduxForm(
       <FagsakSearch
         fagsaker={[fagsak, fagsak1]}

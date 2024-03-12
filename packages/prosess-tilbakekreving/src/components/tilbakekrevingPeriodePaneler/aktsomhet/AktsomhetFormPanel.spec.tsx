@@ -1,7 +1,6 @@
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../../../i18n/nb_NO.json';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 import SarligGrunn from '../../../kodeverk/sarligGrunn';
@@ -42,7 +41,7 @@ describe('<AktsomhetFormPanel>', () => {
     renderWithIntlAndReduxForm(
       <AktsomhetFormPanel
         readOnly={false}
-        resetFields={sinon.spy()}
+        resetFields={vi.fn()}
         handletUaktsomhetGrad={undefined}
         harGrunnerTilReduksjon
         erSerligGrunnAnnetValgt={false}
@@ -63,7 +62,7 @@ describe('<AktsomhetFormPanel>', () => {
     renderWithIntlAndReduxForm(
       <AktsomhetFormPanel
         readOnly={false}
-        resetFields={sinon.spy()}
+        resetFields={vi.fn()}
         handletUaktsomhetGrad={Aktsomhet.GROVT_UAKTSOM}
         harGrunnerTilReduksjon
         erSerligGrunnAnnetValgt={false}
@@ -83,7 +82,7 @@ describe('<AktsomhetFormPanel>', () => {
     renderWithIntlAndReduxForm(
       <AktsomhetFormPanel
         readOnly={false}
-        resetFields={sinon.spy()}
+        resetFields={vi.fn()}
         handletUaktsomhetGrad={undefined}
         harGrunnerTilReduksjon
         erSerligGrunnAnnetValgt={false}
@@ -103,7 +102,7 @@ describe('<AktsomhetFormPanel>', () => {
     renderWithIntlAndReduxForm(
       <AktsomhetFormPanel
         readOnly={false}
-        resetFields={sinon.spy()}
+        resetFields={vi.fn()}
         handletUaktsomhetGrad={undefined}
         erValgtResultatTypeForstoBurdeForstaatt={false}
         harGrunnerTilReduksjon
@@ -127,7 +126,7 @@ describe('<AktsomhetFormPanel>', () => {
     renderWithIntlAndReduxForm(
       <AktsomhetFormPanel
         readOnly={false}
-        resetFields={sinon.spy()}
+        resetFields={vi.fn()}
         handletUaktsomhetGrad={undefined}
         erValgtResultatTypeForstoBurdeForstaatt
         harGrunnerTilReduksjon

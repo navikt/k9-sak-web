@@ -3,7 +3,6 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 
 import React from 'react';
-import sinon from 'sinon';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakKlageFormImpl, getAvvisningsAarsaker, getIsAvvist, getKlageresultat } from './VedtakKlageForm';
@@ -16,7 +15,7 @@ describe('<VedtakKlageForm>', () => {
       { kode: 'KLAGET_FOR_SENT', kodeverk: 'KLAGE_AVVIST_AARSAK' },
       { kode: 'KLAGER_IKKE_PART', kodeverk: 'KLAGE_AVVIST_AARSAK' },
     ];
-    const forhandsvisVedtaksbrevFunc = sinon.spy();
+    const forhandsvisVedtaksbrevFunc = vi.fn();
     const klageVurderingResultatNFP = {
       klageVurdertAv: 'NAY',
       klageVurdering: 'AVVIS_KLAGE',

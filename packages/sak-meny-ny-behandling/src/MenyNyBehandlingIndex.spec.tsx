@@ -4,14 +4,13 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../i18n/nb_NO.json';
 import MenyNyBehandlingIndex from './MenyNyBehandlingIndex';
 
 describe('<MenyNyBehandlingIndex>', () => {
   it('skal vise modal og så lage ny behandling', async () => {
-    const lagNyBehandlingCallback = sinon.stub().resolves();
-    const lukkModalCallback = sinon.spy();
+    const lagNyBehandlingCallback = vi.fn().mockImplementation(() => Promise.resolve());
+    const lukkModalCallback = vi.fn();
 
     const behandlingOppretting = [
       {
@@ -60,8 +59,8 @@ describe('<MenyNyBehandlingIndex>', () => {
         }}
         uuidForSistLukkede="2323"
         erTilbakekrevingAktivert
-        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
         lukkModal={lukkModalCallback}
       />,
       { messages },
@@ -71,11 +70,11 @@ describe('<MenyNyBehandlingIndex>', () => {
       await userEvent.click(screen.getByRole('button', { name: 'OK' }));
     });
 
-    const kall = lagNyBehandlingCallback.getCalls();
+    const kall = lagNyBehandlingCallback.mock.calls;
     expect(kall).toHaveLength(1);
-    expect(kall[0].args).toHaveLength(2);
-    expect(kall[0].args[0]).toBe('BT-002');
-    expect(kall[0].args[1]).toEqual({
+    expect(kall[0]).toHaveLength(2);
+    expect(kall[0][0]).toBe('BT-002');
+    expect(kall[0][1]).toEqual({
       eksternUuid: '2323',
       saksnummer: '123',
       behandlingType: behandlingType.FORSTEGANGSSOKNAD,
@@ -85,6 +84,6 @@ describe('<MenyNyBehandlingIndex>', () => {
       },
     });
 
-    expect(lukkModalCallback.getCalls()).toHaveLength(1);
+    expect(lukkModalCallback.mock.calls).toHaveLength(1);
   });
 });

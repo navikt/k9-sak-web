@@ -1,7 +1,6 @@
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
 
@@ -27,8 +26,8 @@ const mockProps = {
   årsaker: [],
   formName: 'FaktaFeilutbetalingForm',
   readOnly: false,
-  onChangeÅrsak: sinon.spy(),
-  onChangeUnderÅrsak: sinon.spy(),
+  onChangeÅrsak: vi.fn(),
+  onChangeUnderÅrsak: vi.fn(),
   behandlingId: 1,
   behandlingVersjon: 1,
 };

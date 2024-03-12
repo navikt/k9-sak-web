@@ -1,5 +1,4 @@
 import React from 'react';
-import sinon from 'sinon';
 
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 
@@ -10,7 +9,7 @@ import IverksetterVedtakStatusModal from './IverksetterVedtakStatusModal';
 
 describe('<IverksetterVedtakStatusModal>', () => {
   it('skal rendre modal', () => {
-    const closeEventCallback = sinon.spy();
+    const closeEventCallback = vi.fn();
     renderWithIntl(
       <IverksetterVedtakStatusModal.WrappedComponent
         intl={intlMock}

@@ -1,6 +1,5 @@
 /* eslint-disable class-methods-use-this */
 import React from 'react';
-import sinon from 'sinon';
 
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -195,9 +194,8 @@ describe('<faktaUtils>', () => {
   });
 
   it('skal lagre aksjonspunkt', async () => {
-    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const lagreAksjonspunkter = sinon.stub();
-    lagreAksjonspunkter.returns(Promise.resolve());
+    const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
+    const lagreAksjonspunkter = vi.fn().mockImplementation(() => Promise.resolve());
 
     const overstyringApCodes = [];
 
@@ -217,10 +215,10 @@ describe('<faktaUtils>', () => {
 
     await callback(aksjonspunkter);
 
-    const requestKall = lagreAksjonspunkter.getCalls();
+    const requestKall = lagreAksjonspunkter.mock.calls;
     expect(requestKall).toHaveLength(1);
-    expect(requestKall[0].args).toHaveLength(2);
-    expect(requestKall[0].args[0]).toEqual({
+    expect(requestKall[0]).toHaveLength(2);
+    expect(requestKall[0][0]).toEqual({
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,
@@ -232,18 +230,17 @@ describe('<faktaUtils>', () => {
       ],
     });
 
-    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.mock.calls;
     expect(opppdaterKall).toHaveLength(1);
-    expect(opppdaterKall[0].args).toHaveLength(2);
-    expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_FAKTA_KODE);
-    expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_PROSESS_STEG_KODE);
+    expect(opppdaterKall[0]).toHaveLength(2);
+    expect(opppdaterKall[0][0]).toEqual(DEFAULT_FAKTA_KODE);
+    expect(opppdaterKall[0][0]).toEqual(DEFAULT_PROSESS_STEG_KODE);
   });
 
   it('skal lagre overstyrt aksjonspunkt', async () => {
-    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const lagreAksjonspunkter = sinon.spy();
-    const lagreOverstyrteAksjonspunkter = sinon.stub();
-    lagreOverstyrteAksjonspunkter.returns(Promise.resolve());
+    const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
+    const lagreAksjonspunkter = vi.fn();
+    const lagreOverstyrteAksjonspunkter = vi.fn().mockImplementation(() => Promise.resolve());
     const overstyringApCodes = [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
 
     const callback = getBekreftAksjonspunktCallback(
@@ -263,10 +260,10 @@ describe('<faktaUtils>', () => {
 
     await callback(aksjonspunkter);
 
-    const requestKall = lagreOverstyrteAksjonspunkter.getCalls();
+    const requestKall = lagreOverstyrteAksjonspunkter.mock.calls;
     expect(requestKall).toHaveLength(1);
-    expect(requestKall[0].args).toHaveLength(2);
-    expect(requestKall[0].args[0]).toEqual({
+    expect(requestKall[0]).toHaveLength(2);
+    expect(requestKall[0][0]).toEqual({
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,
@@ -279,18 +276,17 @@ describe('<faktaUtils>', () => {
       ],
     });
 
-    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.mock.calls;
     expect(opppdaterKall).toHaveLength(1);
-    expect(opppdaterKall[0].args).toHaveLength(2);
-    expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_FAKTA_KODE);
-    expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_PROSESS_STEG_KODE);
+    expect(opppdaterKall[0]).toHaveLength(2);
+    expect(opppdaterKall[0][0]).toEqual(DEFAULT_FAKTA_KODE);
+    expect(opppdaterKall[0][0]).toEqual(DEFAULT_PROSESS_STEG_KODE);
   });
 
   it('skal lagre både overstyrt og vanlig aksjonspunkt', async () => {
-    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const lagreAksjonspunkter = sinon.spy();
-    const lagreOverstyrteAksjonspunkter = sinon.stub();
-    lagreOverstyrteAksjonspunkter.returns(Promise.resolve());
+    const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
+    const lagreAksjonspunkter = vi.fn();
+    const lagreOverstyrteAksjonspunkter = vi.fn().mockImplementation(() => Promise.resolve());
     const overstyringApCodes = [aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 
     const callback = getBekreftAksjonspunktCallback(
@@ -313,10 +309,10 @@ describe('<faktaUtils>', () => {
 
     await callback(aksjonspunkter);
 
-    const requestKall = lagreOverstyrteAksjonspunkter.getCalls();
+    const requestKall = lagreOverstyrteAksjonspunkter.mock.calls;
     expect(requestKall).toHaveLength(1);
-    expect(requestKall[0].args).toHaveLength(2);
-    expect(requestKall[0].args[0]).toEqual({
+    expect(requestKall[0]).toHaveLength(2);
+    expect(requestKall[0][0]).toEqual({
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,
@@ -334,10 +330,10 @@ describe('<faktaUtils>', () => {
       ],
     });
 
-    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.mock.calls;
     expect(opppdaterKall).toHaveLength(1);
-    expect(opppdaterKall[0].args).toHaveLength(2);
-    expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_FAKTA_KODE);
-    expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_PROSESS_STEG_KODE);
+    expect(opppdaterKall[0]).toHaveLength(2);
+    expect(opppdaterKall[0][0]).toEqual(DEFAULT_FAKTA_KODE);
+    expect(opppdaterKall[0][0]).toEqual(DEFAULT_PROSESS_STEG_KODE);
   });
 });

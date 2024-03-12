@@ -1,10 +1,9 @@
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
-import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import Aktsomhet from '../kodeverk/aktsomhet';
 import SarligGrunn from '../kodeverk/sarligGrunn';
@@ -128,7 +127,7 @@ describe('<TilbakekrevingPeriodeForm>', () => {
       },
     ] as CustomVilkarsVurdertePeriode[];
 
-    const changeValue = sinon.spy();
+    const changeValue = vi.fn();
     renderWithIntlAndReduxForm(
       <TilbakekrevingPeriodeFormImpl
         data={periode}
@@ -162,12 +161,12 @@ describe('<TilbakekrevingPeriodeForm>', () => {
       await userEvent.selectOptions(screen.getByRole('combobox'), '15.03.2020 - 31.03.2020');
     });
 
-    const changeValueCalls = changeValue.getCalls();
+    const changeValueCalls = changeValue.mock.calls;
     expect(changeValueCalls).toHaveLength(4);
-    expect(changeValueCalls[0].args[1]).toEqual(vilkårsPerioder[1].valgtVilkarResultatType);
-    expect(changeValueCalls[1].args[1]).toEqual(vilkårsPerioder[1].begrunnelse);
-    expect(changeValueCalls[2].args[1]).toEqual(vilkårsPerioder[1].vurderingBegrunnelse);
-    expect(changeValueCalls[3].args[1]).toEqual(vilkårsPerioder[1][vilkarResultat.FORSTO_BURDE_FORSTAATT]);
+    expect(changeValueCalls[0][1]).toEqual(vilkårsPerioder[1].valgtVilkarResultatType);
+    expect(changeValueCalls[1][1]).toEqual(vilkårsPerioder[1].begrunnelse);
+    expect(changeValueCalls[2][1]).toEqual(vilkårsPerioder[1].vurderingBegrunnelse);
+    expect(changeValueCalls[3][1]).toEqual(vilkårsPerioder[1][vilkarResultat.FORSTO_BURDE_FORSTAATT]);
   });
 
   // TODO (TOR) Skriv fleire testar

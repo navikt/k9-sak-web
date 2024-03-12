@@ -1,9 +1,8 @@
+import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
-import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
 import DataForPeriode from '../../types/dataForPeriodeTsType';
 import { PeriodeController } from './PeriodeController';
@@ -15,10 +14,10 @@ describe('<PeriodeController>', () => {
         intl={intlMock}
         behandlingId={1}
         behandlingVersjon={1}
-        beregnBelop={sinon.spy()}
-        oppdaterSplittedePerioder={sinon.spy()}
-        callbackForward={sinon.spy()}
-        callbackBackward={sinon.spy()}
+        beregnBelop={vi.fn()}
+        oppdaterSplittedePerioder={vi.fn()}
+        callbackForward={vi.fn()}
+        callbackBackward={vi.fn()}
         periode={{} as DataForPeriode}
         readOnly={false}
       />,
@@ -36,10 +35,10 @@ describe('<PeriodeController>', () => {
         intl={intlMock}
         behandlingId={1}
         behandlingVersjon={1}
-        beregnBelop={sinon.spy()}
-        oppdaterSplittedePerioder={sinon.spy()}
-        callbackForward={sinon.spy()}
-        callbackBackward={sinon.spy()}
+        beregnBelop={vi.fn()}
+        oppdaterSplittedePerioder={vi.fn()}
+        callbackForward={vi.fn()}
+        callbackBackward={vi.fn()}
         periode={{} as DataForPeriode}
         readOnly
       />,
@@ -63,7 +62,7 @@ describe('<PeriodeController>', () => {
       ],
     };
     const beregnBelop = () => Promise.resolve(response);
-    const oppdaterSplittedePerioder = sinon.spy();
+    const oppdaterSplittedePerioder = vi.fn();
     const periode = {
       feilutbetaling: 1000,
       fom: '2019-10-10',
@@ -76,8 +75,8 @@ describe('<PeriodeController>', () => {
         behandlingVersjon={1}
         beregnBelop={beregnBelop}
         oppdaterSplittedePerioder={oppdaterSplittedePerioder}
-        callbackForward={sinon.spy()}
-        callbackBackward={sinon.spy()}
+        callbackForward={vi.fn()}
+        callbackBackward={vi.fn()}
         periode={periode as DataForPeriode}
         readOnly={false}
       />,
@@ -92,8 +91,8 @@ describe('<PeriodeController>', () => {
       await userEvent.click(screen.getByRole('button', { name: 'Ok' }));
     });
 
-    expect(oppdaterSplittedePerioder.called).toBe(true);
-    const { args } = oppdaterSplittedePerioder.getCalls()[0];
+    expect(oppdaterSplittedePerioder.mock.calls.length).toBeGreaterThan(0);
+    const args = oppdaterSplittedePerioder.mock.calls[0];
     expect(args).toHaveLength(1);
     expect(args[0]).toEqual([
       {

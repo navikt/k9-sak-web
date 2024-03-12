@@ -13,7 +13,6 @@ import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import {
   PleiepengerSluttfaseBehandlingApiKeys,
@@ -157,12 +156,12 @@ describe('<PleiepengerSluttfaseFakta>', () => {
           fagsakPerson={fagsakPerson}
           rettigheter={rettigheter}
           alleKodeverk={{}}
-          oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
+          oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
           valgtFaktaSteg="default"
           valgtProsessSteg="default"
           hasFetchError={false}
-          setApentFaktaPanel={sinon.spy()}
-          setBehandling={sinon.spy()}
+          setApentFaktaPanel={vi.fn()}
+          setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           dokumenter={[]}
           featureToggles={{}}
@@ -181,7 +180,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
   });
 
   it('skal oppdatere url ved valg av faktapanel', async () => {
-    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+    const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
@@ -200,8 +199,8 @@ describe('<PleiepengerSluttfaseFakta>', () => {
           valgtFaktaSteg="default"
           valgtProsessSteg="default"
           hasFetchError={false}
-          setApentFaktaPanel={sinon.spy()}
-          setBehandling={sinon.spy()}
+          setApentFaktaPanel={vi.fn()}
+          setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           dokumenter={[]}
           featureToggles={{}}
@@ -214,9 +213,9 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       await userEvent.click(screen.getByRole('button', { name: /Om pleietrengende/i }));
     });
 
-    const calls = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    const { calls } = oppdaterProsessStegOgFaktaPanelIUrl.mock;
     expect(calls).toHaveLength(1);
-    const { args } = calls[0];
+    const args = calls[0];
     expect(args).toHaveLength(2);
     expect(args[0]).toEqual('default');
     expect(args[1]).toEqual('om-pleietrengende');

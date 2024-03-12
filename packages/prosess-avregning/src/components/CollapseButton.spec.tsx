@@ -1,13 +1,12 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import CollapseButton from './CollapseButton';
 
 describe('<CollapseButton>', () => {
   const mockProps = {
-    toggleDetails: sinon.spy(),
+    toggleDetails: vi.fn(),
     mottakerIndex: 1,
   };
   it('skal vise CollapseButton med OppChevron og tilsvarende tekst når showDetails er true', () => {

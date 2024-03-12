@@ -2,7 +2,6 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import TempsaveButton from './TempsaveButton';
 
@@ -16,7 +15,7 @@ describe('<TempsaveButton>', () => {
     renderWithIntl(
       <TempsaveButton
         formValues={formValuesWithEmptyStrings}
-        saveUnntak={sinon.spy()}
+        saveUnntak={vi.fn()}
         aksjonspunktCode="123"
         hasForeslaVedtakAp={false}
       />,

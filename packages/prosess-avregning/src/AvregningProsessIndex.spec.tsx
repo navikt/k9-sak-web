@@ -3,7 +3,6 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../i18n/nb_NO.json';
 import AvregningProsessIndex from './AvregningProsessIndex';
 
@@ -41,11 +40,11 @@ describe('<AvregningProsessIndex>', () => {
         fagsak={fagsak}
         behandling={behandling}
         aksjonspunkter={aksjonspunkter}
-        submitCallback={sinon.spy()}
+        submitCallback={vi.fn()}
         isReadOnly={false}
         readOnlySubmitButton={false}
         isAksjonspunktOpen
-        previewFptilbakeCallback={sinon.spy()}
+        previewFptilbakeCallback={vi.fn()}
         featureToggles={{}}
       />,
       { messages },

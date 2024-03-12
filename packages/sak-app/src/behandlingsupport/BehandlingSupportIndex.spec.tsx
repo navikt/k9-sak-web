@@ -1,7 +1,6 @@
 import { screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import sinon, { SinonStub } from 'sinon';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -44,16 +43,12 @@ describe('<BehandlingSupportIndex>', () => {
 
   const location = { pathname: '', search: '', state: {}, hash: '', key: '' };
 
-  let contextStub: SinonStub;
+  let contextStub;
   beforeEach(() => {
-    contextStub = sinon.stub(useTrackRouteParam, 'default').callsFake(() => ({
+    contextStub = vi.spyOn(useTrackRouteParam, 'default').mockImplementation(() => ({
       selected: 123456,
       location,
     }));
-  });
-
-  afterEach(() => {
-    contextStub.restore();
   });
 
   it('skal vise godkjennings-panelet', () => {

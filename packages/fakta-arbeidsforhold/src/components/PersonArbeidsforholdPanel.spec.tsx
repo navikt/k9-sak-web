@@ -3,7 +3,6 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import { PersonArbeidsforholdPanelImpl } from './PersonArbeidsforholdPanel';
 
@@ -80,8 +79,8 @@ describe('<PersonArbeidsforholdPanel>', () => {
         harAksjonspunktAvklarArbeidsforhold
         arbeidsforhold={[arbeidsforhold]}
         behandlingFormPrefix="panel"
-        reduxFormChange={sinon.spy()}
-        reduxFormInitialize={sinon.spy()}
+        reduxFormChange={vi.fn()}
+        reduxFormInitialize={vi.fn()}
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}

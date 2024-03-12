@@ -1,7 +1,6 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../i18n/nb_NO.json';
 import RisikoklassifiseringSakIndex from './RisikoklassifiseringSakIndex';
 import kontrollresultatKode from './kodeverk/kontrollresultatKode';
@@ -24,8 +23,8 @@ describe('<RisikoklassifiseringSakIndex>', () => {
         risikoklassifisering={undefined}
         isPanelOpen={false}
         readOnly={false}
-        submitAksjonspunkt={sinon.spy()}
-        toggleRiskPanel={sinon.spy()}
+        submitAksjonspunkt={vi.fn()}
+        toggleRiskPanel={vi.fn()}
       />,
       { messages },
     );
@@ -40,8 +39,8 @@ describe('<RisikoklassifiseringSakIndex>', () => {
         risikoklassifisering={lagRisikoklassifisering(kontrollresultatKode.IKKE_KLASSIFISERT)}
         isPanelOpen={false}
         readOnly={false}
-        submitAksjonspunkt={sinon.spy()}
-        toggleRiskPanel={sinon.spy()}
+        submitAksjonspunkt={vi.fn()}
+        toggleRiskPanel={vi.fn()}
       />,
       { messages },
     );
@@ -56,8 +55,8 @@ describe('<RisikoklassifiseringSakIndex>', () => {
         risikoklassifisering={lagRisikoklassifisering(kontrollresultatKode.IKKE_HOY)}
         isPanelOpen={false}
         readOnly={false}
-        submitAksjonspunkt={sinon.spy()}
-        toggleRiskPanel={sinon.spy()}
+        submitAksjonspunkt={vi.fn()}
+        toggleRiskPanel={vi.fn()}
       />,
       { messages },
     );
@@ -72,8 +71,8 @@ describe('<RisikoklassifiseringSakIndex>', () => {
         risikoklassifisering={lagRisikoklassifisering(kontrollresultatKode.HOY)}
         isPanelOpen={false}
         readOnly={false}
-        submitAksjonspunkt={sinon.spy()}
-        toggleRiskPanel={sinon.spy()}
+        submitAksjonspunkt={vi.fn()}
+        toggleRiskPanel={vi.fn()}
       />,
       { messages },
     );

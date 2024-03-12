@@ -7,7 +7,6 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import {
   NyBehandlingModal,
@@ -19,8 +18,8 @@ import {
 const intlMock = intlWithMessages(messages);
 
 describe('<NyBehandlingModal>', () => {
-  const submitEventCallback = sinon.spy();
-  const cancelEventCallback = sinon.spy();
+  const submitEventCallback = vi.fn();
+  const cancelEventCallback = vi.fn();
 
   const ytelseType = {
     kode: fagsakYtelseType.FORELDREPENGER,
@@ -45,10 +44,10 @@ describe('<NyBehandlingModal>', () => {
         enabledBehandlingstyper={behandlingstyper}
         erTilbakekrevingAktivert={false}
         saksnummer={123}
-        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
         ytelseType={ytelseType}
-        submitCallback={sinon.spy()}
+        submitCallback={vi.fn()}
         behandlingOppretting={[
           {
             behandlingType: {
@@ -83,7 +82,7 @@ describe('<NyBehandlingModal>', () => {
       <NyBehandlingModal
         {...reduxFormPropsMock}
         handleSubmit={submitEventCallback}
-        cancelEvent={sinon.spy()}
+        cancelEvent={vi.fn()}
         intl={intlMock}
         behandlingTyper={behandlingstyper}
         behandlingstyper={behandlingstyper}
@@ -91,12 +90,12 @@ describe('<NyBehandlingModal>', () => {
           { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
         ]}
         enabledBehandlingstyper={behandlingstyper}
-        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
         erTilbakekrevingAktivert={false}
         saksnummer={123}
         ytelseType={ytelseType}
-        submitCallback={sinon.spy()}
+        submitCallback={vi.fn()}
         behandlingOppretting={[
           {
             behandlingType: {
@@ -121,7 +120,7 @@ describe('<NyBehandlingModal>', () => {
     await act(async () => {
       await userEvent.click(screen.getByRole('button', { name: 'OK' }));
     });
-    expect(submitEventCallback.called).toBe(true);
+    expect(submitEventCallback.mock.calls.length).toBeGreaterThan(0);
   });
 
   it('skal lukke modal ved klikk på avbryt-knapp', async () => {
@@ -141,11 +140,11 @@ describe('<NyBehandlingModal>', () => {
         ]}
         enabledBehandlingstyper={behandlingstyper}
         erTilbakekrevingAktivert={false}
-        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
         saksnummer={123}
         ytelseType={ytelseType}
-        submitCallback={sinon.spy()}
+        submitCallback={vi.fn()}
         behandlingOppretting={[
           {
             behandlingType: {
@@ -170,7 +169,7 @@ describe('<NyBehandlingModal>', () => {
     await act(async () => {
       await userEvent.click(screen.getByRole('button', { name: 'Avbryt' }));
     });
-    expect(cancelEventCallback).toHaveProperty('callCount', 1);
+    expect(cancelEventCallback.mock.calls.length).toBe(1);
   });
 
   it('skal vise checkbox for behandling etter klage når førstegangsbehandling er valgt', () => {
@@ -189,12 +188,12 @@ describe('<NyBehandlingModal>', () => {
           { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
         ]}
         enabledBehandlingstyper={behandlingstyper}
-        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
         erTilbakekrevingAktivert={false}
         saksnummer={123}
         ytelseType={ytelseType}
-        submitCallback={sinon.spy()}
+        submitCallback={vi.fn()}
         behandlingOppretting={[
           {
             behandlingType: {
@@ -236,12 +235,12 @@ describe('<NyBehandlingModal>', () => {
           { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
         ]}
         enabledBehandlingstyper={behandlingstyper}
-        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
         erTilbakekrevingAktivert={false}
         saksnummer={123}
         ytelseType={ytelseType}
-        submitCallback={sinon.spy()}
+        submitCallback={vi.fn()}
         behandlingOppretting={[
           {
             behandlingType: {
@@ -282,12 +281,12 @@ describe('<NyBehandlingModal>', () => {
           { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
         ]}
         enabledBehandlingstyper={behandlingstyper}
-        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
         erTilbakekrevingAktivert={false}
         saksnummer={123}
         ytelseType={ytelseType}
-        submitCallback={sinon.spy()}
+        submitCallback={vi.fn()}
         behandlingOppretting={[
           {
             behandlingType: {
@@ -327,12 +326,12 @@ describe('<NyBehandlingModal>', () => {
         behandlingstyper={behandlingstyper}
         behandlingArsakTyper={[]}
         enabledBehandlingstyper={behandlingstyper}
-        sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
-        sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+        sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
         erTilbakekrevingAktivert={false}
         saksnummer={123}
         ytelseType={ytelseType}
-        submitCallback={sinon.spy()}
+        submitCallback={vi.fn()}
         behandlingOppretting={[
           {
             behandlingType: {

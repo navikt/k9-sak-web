@@ -1,15 +1,14 @@
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { isMedholdIKlage, VedtakKlageSubmitPanelImpl } from './VedtakKlageSubmitPanel';
 
 describe('<VedtakKlageSubmitPanel>', () => {
-  const forhandsvisVedtaksbrevFunc = sinon.spy();
+  const forhandsvisVedtaksbrevFunc = vi.fn();
 
   it('skal returnere false om behandling ikke har medhold i klage', () => {
     const klageVurderingResultatNK = {

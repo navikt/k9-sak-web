@@ -1,7 +1,6 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../../i18n/nb_NO.json';
 import TilbakekrevingTimelinePanel from './TilbakekrevingTimelinePanel';
 
@@ -31,13 +30,13 @@ describe('<TilbakekrevingTimelinePanel>', () => {
       isGodkjent: true,
     };
 
-    const setPeriode = sinon.spy();
+    const setPeriode = vi.fn();
     renderWithIntl(
       <TilbakekrevingTimelinePanel
         perioder={perioder}
         valgtPeriode={valgtPeriode}
         setPeriode={setPeriode}
-        toggleDetaljevindu={sinon.spy()}
+        toggleDetaljevindu={vi.fn()}
         kjonn="MANN"
         hjelpetekstKomponent={<div>test</div>}
       />,

@@ -13,7 +13,6 @@ import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import { OmsorgspengerBehandlingApiKeys, requestOmsorgApi } from '../data/omsorgspengerBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
 import OmsorgspengerFakta from './OmsorgspengerFakta';
@@ -184,12 +183,12 @@ describe('<OmsorgspengerFakta>', () => {
           fagsakPerson={fagsakPerson}
           rettigheter={rettigheter}
           alleKodeverk={{}}
-          oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
+          oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
           valgtFaktaSteg="default"
           valgtProsessSteg="default"
           hasFetchError={false}
-          setApentFaktaPanel={sinon.spy()}
-          setBehandling={sinon.spy()}
+          setApentFaktaPanel={vi.fn()}
+          setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           featureToggles={{}}
           dokumenter={[]}
@@ -220,12 +219,12 @@ describe('<OmsorgspengerFakta>', () => {
           fagsakPerson={fagsakPerson}
           rettigheter={rettigheter}
           alleKodeverk={{}}
-          oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
+          oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
           valgtFaktaSteg="default"
           valgtProsessSteg="default"
           hasFetchError={false}
-          setApentFaktaPanel={sinon.spy()}
-          setBehandling={sinon.spy()}
+          setApentFaktaPanel={vi.fn()}
+          setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           featureToggles={{}}
           dokumenter={[]}
@@ -240,7 +239,7 @@ describe('<OmsorgspengerFakta>', () => {
 
   it('skal oppdatere url ved valg av faktapanel', async () => {
     requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, undefined);
-    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+    const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
@@ -259,8 +258,8 @@ describe('<OmsorgspengerFakta>', () => {
           valgtFaktaSteg="default"
           valgtProsessSteg="default"
           hasFetchError={false}
-          setApentFaktaPanel={sinon.spy()}
-          setBehandling={sinon.spy()}
+          setApentFaktaPanel={vi.fn()}
+          setBehandling={vi.fn()}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           featureToggles={{}}
           dokumenter={[]}
@@ -272,9 +271,9 @@ describe('<OmsorgspengerFakta>', () => {
       await userEvent.click(screen.getByRole('button', { name: /Arbeidsforhold/i }));
     });
 
-    const calls = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    const { calls } = oppdaterProsessStegOgFaktaPanelIUrl.mock;
     expect(calls).toHaveLength(1);
-    const { args } = calls[0];
+    const args = calls[0];
     expect(args).toHaveLength(2);
     expect(args[0]).toEqual('default');
     expect(args[1]).toEqual('arbeidsforhold');

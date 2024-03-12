@@ -3,7 +3,6 @@ import React from 'react';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import sinon from 'sinon';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -97,7 +96,7 @@ describe('<VedtakForm>', () => {
   it('skal vise at vedtak er innvilget, beløp og antall barn når en har et beregningsresultat', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
 
-    const previewCallback = sinon.spy();
+    const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
       type: {
@@ -150,7 +149,7 @@ describe('<VedtakForm>', () => {
   it('skal vise avslagsgrunn for søknadsfristvilkåret', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
 
-    const previewCallback = sinon.spy();
+    const previewCallback = vi.fn();
 
     const behandlingsresultat = {
       id: 1,
@@ -217,7 +216,7 @@ describe('<VedtakForm>', () => {
   it('skal vise knapper for å avslutt behandling då behandlingen er innvilget', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
 
-    const previewCallback = sinon.spy();
+    const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
       type: {
@@ -273,7 +272,7 @@ describe('<VedtakForm>', () => {
   it('skal ikke vise knapper for å avslutt behandling når behandlingen er avvist med årsakkode 1099', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
 
-    const previewCallback = sinon.spy();
+    const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
       type: {
@@ -330,7 +329,7 @@ describe('<VedtakForm>', () => {
   it('skal vise knapper for å fatte vedtak når foreslå avslag', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
 
-    const previewCallback = sinon.spy();
+    const previewCallback = vi.fn();
 
     const behandlingsresultat = {
       id: 1,
@@ -396,7 +395,7 @@ describe('<VedtakForm>', () => {
   it('skal ikke vise knapper når status er avsluttet', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
 
-    const previewCallback = sinon.spy();
+    const previewCallback = vi.fn();
 
     const behandlingsresultat = {
       id: 1,
@@ -477,7 +476,7 @@ describe('<VedtakForm>', () => {
       ...vedtakVarselBase,
       avslagsarsak: null,
     };
-    const previewCallback = sinon.spy();
+    const previewCallback = vi.fn();
 
     renderWithIntlAndReduxForm(
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={n => null}>
@@ -523,7 +522,7 @@ describe('<VedtakForm>', () => {
   it('skal ikke vise knapper når status er fatter vedtak', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
 
-    const previewCallback = sinon.spy();
+    const previewCallback = vi.fn();
 
     const behandlingsresultat = {
       id: 1,
@@ -584,7 +583,7 @@ describe('<VedtakForm>', () => {
     expect(hovedknapp).toBeNull();
   });
 
-  const previewCallback = sinon.spy();
+  const previewCallback = vi.fn();
   const behandlingsresultat = {
     id: 1,
     type: {

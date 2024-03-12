@@ -10,7 +10,6 @@ import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { renderHook } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import FaktaPanelDef from './FaktaPanelDef';
 import FaktaPanelUtledet from './FaktaPanelUtledet';
 import faktaHooks from './faktaHooks';
@@ -127,9 +126,9 @@ describe('<faktaHooks>', () => {
 
     const panelUtledet = new FaktaPanelUtledet(panelDef, aksjonspunkter, behandling);
 
-    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const lagreAksjonspunkter = sinon.stub();
-    lagreAksjonspunkter.returns(Promise.resolve());
+    const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
+    const lagreAksjonspunkter = vi.fn().mockImplementation(() => Promise.resolve());
+
     const overstyringApCodes = [];
     const valgtProsessSteg = 'default';
 
@@ -149,11 +148,11 @@ describe('<faktaHooks>', () => {
 
     velgFaktaPanelCallback(0);
 
-    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.mock.calls;
     expect(opppdaterKall).toHaveLength(1);
-    expect(opppdaterKall[0].args).toHaveLength(2);
-    expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_FAKTA_KODE);
-    expect(opppdaterKall[0].args[1]).toEqual('arbeidsforhold');
+    expect(opppdaterKall[0]).toHaveLength(2);
+    expect(opppdaterKall[0][0]).toEqual(DEFAULT_FAKTA_KODE);
+    expect(opppdaterKall[0][1]).toEqual('arbeidsforhold');
 
     const aksjonspunkterSomSkalLagres = [
       {
@@ -162,10 +161,10 @@ describe('<faktaHooks>', () => {
     ];
     bekreftAksjonspunktCallback(aksjonspunkterSomSkalLagres);
 
-    const requestKall = lagreAksjonspunkter.getCalls();
+    const requestKall = lagreAksjonspunkter.mock.calls;
     expect(requestKall).toHaveLength(1);
-    expect(requestKall[0].args).toHaveLength(2);
-    expect(requestKall[0].args[0]).toEqual({
+    expect(requestKall[0]).toHaveLength(2);
+    expect(requestKall[0][0]).toEqual({
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,

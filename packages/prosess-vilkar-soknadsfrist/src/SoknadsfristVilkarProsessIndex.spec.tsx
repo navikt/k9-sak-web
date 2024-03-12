@@ -2,7 +2,6 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { Behandling } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../i18n/nb_NO.json';
 import SoknadsfristVilkarProsessIndex from './SoknadsfristVilkarProsessIndex';
 
@@ -23,8 +22,8 @@ describe('<SoknadsfristVilkarForm>', () => {
         kanOverstyreAccess={{
           isEnabled: true,
         }}
-        toggleOverstyring={sinon.spy()}
-        submitCallback={sinon.spy()}
+        toggleOverstyring={vi.fn()}
+        submitCallback={vi.fn()}
         aksjonspunkter={[]}
         panelTittelKode="Inngangsvilkar.Soknadsfrist"
         erOverstyrt={false}

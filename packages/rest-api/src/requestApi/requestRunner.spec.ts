@@ -1,25 +1,23 @@
-import sinon from 'sinon';
-
-import AsyncPollingStatus from './asyncPollingStatus';
-import RequestRunner, { REQUEST_POLLING_CANCELLED } from './RequestRunner';
 import NotificationMapper from './NotificationMapper';
+import RequestRunner, { REQUEST_POLLING_CANCELLED } from './RequestRunner';
+import AsyncPollingStatus from './asyncPollingStatus';
 
 class NotificationHelper {
   mapper: NotificationMapper;
 
-  requestStartedCallback = sinon.spy();
+  requestStartedCallback = vi.fn();
 
-  requestFinishedCallback = sinon.spy();
+  requestFinishedCallback = vi.fn();
 
-  requestErrorCallback = sinon.spy();
+  requestErrorCallback = vi.fn();
 
-  statusRequestStartedCallback = sinon.spy();
+  statusRequestStartedCallback = vi.fn();
 
-  statusRequestFinishedCallback = sinon.spy();
+  statusRequestFinishedCallback = vi.fn();
 
-  updatePollingMessageCallback = sinon.spy();
+  updatePollingMessageCallback = vi.fn();
 
-  addPollingTimeoutEventHandler = sinon.spy();
+  addPollingTimeoutEventHandler = vi.fn();
 
   constructor() {
     const mapper = new NotificationMapper();
@@ -74,10 +72,10 @@ describe('RequestRunner', () => {
     const result = await process.start(params);
 
     expect(result).toStrictEqual({ payload: 'data' });
-    expect(notificationHelper.requestStartedCallback.calledOnce).toBe(true);
-    expect(notificationHelper.requestFinishedCallback.calledOnce).toBe(true);
-    expect(notificationHelper.requestFinishedCallback.getCalls()[0].args[0]).toBe('data');
-    expect(notificationHelper.requestErrorCallback.called).toBe(false);
+    expect(notificationHelper.requestStartedCallback.mock.calls.length).toBe(1);
+    expect(notificationHelper.requestFinishedCallback.mock.calls.length).toBe(1);
+    expect(notificationHelper.requestFinishedCallback.mock.calls[0][0]).toBe('data');
+    expect(notificationHelper.requestErrorCallback.mock.calls.length).toBe(0);
   });
 
   it('skal utføre long-polling request som når maks polling-forsøk', async () => {
@@ -138,11 +136,11 @@ describe('RequestRunner', () => {
       message: 'Maximum polling attempts exceeded',
     });
 
-    expect(notificationHelper.requestStartedCallback.calledOnce).toBe(true);
-    expect(notificationHelper.statusRequestStartedCallback.calledOnce).toBe(true);
-    expect(notificationHelper.statusRequestFinishedCallback.calledOnce).toBe(true);
-    expect(notificationHelper.updatePollingMessageCallback.calledOnce).toBe(true);
-    expect(notificationHelper.updatePollingMessageCallback.getCalls()[0].args[0]).toBe('Polling continues');
+    expect(notificationHelper.requestStartedCallback.mock.calls.length).toBe(1);
+    expect(notificationHelper.statusRequestStartedCallback.mock.calls.length).toBe(1);
+    expect(notificationHelper.statusRequestFinishedCallback.mock.calls.length).toBe(1);
+    expect(notificationHelper.updatePollingMessageCallback.mock.calls.length).toBe(1);
+    expect(notificationHelper.updatePollingMessageCallback.mock.calls[0][0]).toBe('Polling continues');
   });
 
   it('skal utføre long-polling request som en så avbryter manuelt', async () => {
@@ -217,6 +215,6 @@ describe('RequestRunner', () => {
     const result = await process.start(params);
 
     expect(result).toStrictEqual({ payload: undefined });
-    expect(notificationHelper.requestFinishedCallback.getCalls()[0].args[0]).toBe(null);
+    expect(notificationHelper.requestFinishedCallback.mock.calls[0][0]).toBe(null);
   });
 });
