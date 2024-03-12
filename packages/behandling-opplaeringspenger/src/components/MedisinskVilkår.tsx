@@ -1,9 +1,10 @@
+import React from 'react';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { findAksjonspunkt, findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { MedisinskVilkår } from '@k9-sak-web/fakta-medisinsk-vilkar';
-import React from 'react';
 
 export default ({
   behandling: { links, uuid },

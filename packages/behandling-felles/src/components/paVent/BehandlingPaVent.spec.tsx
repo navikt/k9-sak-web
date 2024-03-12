@@ -14,14 +14,8 @@ describe('<BehandlingPaVent>', () => {
   const behandling = {
     id: 1,
     versjon: 1,
-    status: {
-      kode: behandlingStatus.BEHANDLING_UTREDES,
-      kodeverk: 'BEHANDLING_STATUS',
-    },
-    type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: 'BEHANDLING_TYPE',
-    },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     behandlingHenlagt: false,
     links: [],
@@ -102,14 +96,8 @@ describe('<BehandlingPaVent>', () => {
         }
         aksjonspunkter={[
           {
-            status: {
-              kode: aksjonspunktStatus.OPPRETTET,
-              kodeverk: 'AKSJONSPUNKT_STATUS',
-            },
-            definisjon: {
-              kode: aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT,
-              kodeverk: 'AKSJONSPUNKT_KODE',
-            },
+            status: aksjonspunktStatus.OPPRETTET,
+            definisjon: aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT,
             kanLoses: true,
             erAktivt: true,
           },

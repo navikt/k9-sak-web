@@ -1,3 +1,11 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Normaltekst } from 'nav-frontend-typografi';
+import { WrappedComponentProps } from 'react-intl';
+import { Dispatch, bindActionCreators } from 'redux';
+import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
+import { FormAction } from 'redux-form/lib/actions';
+
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
 import briefcaseImg from '@fpsak-frontend/assets/images/briefcase.svg';
 import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
@@ -16,25 +24,19 @@ import { arbeidsforholdHarAksjonspunktÅrsak } from '@fpsak-frontend/utils/src/a
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import Arbeidsgiver from '@k9-sak-web/types/src/arbeidsgiverTsType';
-import { Normaltekst } from 'nav-frontend-typografi';
-import React, { Component } from 'react';
-import { WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
-import { Dispatch, bindActionCreators } from 'redux';
-import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
-import { FormAction } from 'redux-form/lib/actions';
+
 import arbeidsforholdKilder from '../kodeverk/arbeidsforholdKilder';
 import { PERSON_ARBEIDSFORHOLD_DETAIL_FORM } from './arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
 import PersonArbeidsforholdTable from './arbeidsforholdTabell/PersonArbeidsforholdTable';
-
 import styles from './personArbeidsforholdPanel.module.css';
+import CustomArbeidsforhold from '../typer/CustomArbeidsforholdTsType';
 
 // -------------------------------------------------------------------------------------------------------------
 // Methods
 // -------------------------------------------------------------------------------------------------------------
 
-const cleanUpArbeidsforhold = (newValues, originalValues) => {
-  if (newValues.handlingType.kode !== arbeidsforholdHandlingType.BRUK) {
+const cleanUpArbeidsforhold = (newValues: CustomArbeidsforhold, originalValues) => {
+  if (newValues.handlingType !== arbeidsforholdHandlingType.BRUK) {
     return {
       ...newValues,
       tomDato: originalValues.tomDato,
@@ -162,7 +164,7 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
     }
   }
 
-  updateArbeidsforhold(values) {
+  updateArbeidsforhold(values: CustomArbeidsforhold) {
     const { selectedArbeidsforhold } = this.state;
     const { arbeidsforhold } = this.props;
 
@@ -170,8 +172,8 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
     const lagtTilAvSaksbehandler = handlingType === arbeidsforholdHandlingType.BASERT_PÅ_INNTEKTSMELDING;
 
     if (lagtTilAvSaksbehandler) {
-      if (!values.kilde.map(k => k.kode).includes(arbeidsforholdKilder.SAKSBEHANDLER)) {
-        values.kilde.push({ kode: arbeidsforholdKilder.SAKSBEHANDLER });
+      if (!values.kilde.map(k => k).includes(arbeidsforholdKilder.SAKSBEHANDLER)) {
+        values.kilde.push(arbeidsforholdKilder.SAKSBEHANDLER);
       }
     }
 

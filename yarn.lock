@@ -4195,6 +4195,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/lib": 1.0.0
     "@k9-sak-web/modal-sett-pa-vent": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0

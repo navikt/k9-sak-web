@@ -82,13 +82,13 @@ export const PersonArbeidsforholdDetailForm = ({
   </div>
 );
 
-const validateForm = values => ({
+const validateForm = (values: CustomArbeidsforhold) => ({
   ...LeggTilArbeidsforholdFelter.validate(values),
 });
 
 const mapStateToPropsFactory = (_initialState: any, initialOwnProps: PureOwnProps) => (state, ownProps) => {
   const { arbeidsforhold, readOnly, behandlingId, behandlingVersjon, skjulArbeidsforhold } = ownProps;
-  const onSubmit = values => {
+  const onSubmit = (values: CustomArbeidsforhold) => {
     initialOwnProps.updateArbeidsforhold(values);
     skjulArbeidsforhold();
   };
