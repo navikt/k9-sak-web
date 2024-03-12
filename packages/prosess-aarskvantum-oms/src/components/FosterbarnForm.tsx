@@ -51,8 +51,7 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue, aksjonspu
                     <InputField
                       name={field}
                       type="text"
-                      size={11}
-                      bredde="S"
+                      htmlSize={14}
                       validate={[required, minLength(11), maxLength(11), hasValidFodselsnummer]}
                       maxLength={11}
                       readOnly={!isAksjonspunktOpen}

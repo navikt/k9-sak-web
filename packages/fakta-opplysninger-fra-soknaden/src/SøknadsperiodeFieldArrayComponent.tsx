@@ -207,7 +207,7 @@ const SøknadsperiodeFieldArrayComponent = (
             <div className={styles.fieldContainer}>
               <InputField
                 name={`${field}.${SøknadFormValue.INNTEKT_SOM_ARBEIDSTAKER}`}
-                bredde="S"
+                htmlSize={14}
                 label={{ id: 'OpplysningerFraSoknaden.inntektSomArbeidstaker' }}
                 readOnly={formIsEditable}
               />

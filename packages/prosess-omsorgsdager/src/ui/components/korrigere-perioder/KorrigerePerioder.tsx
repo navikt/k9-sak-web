@@ -214,7 +214,6 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
             <div className={styles.antallDagerDelvisInnvilgetContainer}>
               <InputField
                 label="Hvor mange dager har søker rett på?"
-                isMini={false}
                 name="antallDagerDelvisInnvilget"
                 valideringsFunksjoner={erAntallDagerDelvisInnvilgetFyltUt}
                 feil={errors.antallDagerDelvisInnvilget !== undefined ? tekst.feilManglerDager : ''}

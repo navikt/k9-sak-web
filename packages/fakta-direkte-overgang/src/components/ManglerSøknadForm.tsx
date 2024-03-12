@@ -7,9 +7,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
+import { Textarea } from '@navikt/ds-react';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Knapp } from 'nav-frontend-knapper';
-import { Textarea } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 import styles from './ManglerSøknadForm.module.css';
 
@@ -127,6 +127,7 @@ const ManglerSøknadForm = ({
                   placeholder={intl.formatMessage({ id: 'ManglerSøknadForm.Begrunnelse' })}
                   value={field.value}
                   disabled={readOnly}
+                  size="small"
                   {...field}
                 />
               )}

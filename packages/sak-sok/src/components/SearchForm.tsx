@@ -48,7 +48,6 @@ export const SearchForm = ({
           name="searchString"
           parse={(s = '') => s.trim()}
           label={intl.formatMessage({ id: 'Search.SaksnummerOrPersonId' })}
-          bredde="L"
         />
       </Column>
       <Column xs="5">

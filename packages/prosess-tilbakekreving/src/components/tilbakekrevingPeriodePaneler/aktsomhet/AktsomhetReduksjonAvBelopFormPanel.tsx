@@ -94,7 +94,7 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
                       validate={[required, minValue1, maxValue100]}
                       // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
                       normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
-                      bredde="S"
+                      htmlSize={14}
                     />
                   </FlexColumn>
                   <FlexColumn
@@ -115,7 +115,7 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
                 readOnly={readOnly}
                 format={formatCurrencyNoKr}
                 parse={parseCurrencyInput}
-                bredde="S"
+                htmlSize={14}
               />
             )}
           </Column>

@@ -7,11 +7,11 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { AksjonspunktHelpTextTemp, BorderBox, Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Textarea } from '@navikt/ds-react';
 import { isDate } from 'date-fns';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { EtikettFokus, EtikettInfo } from 'nav-frontend-etiketter';
 import { Knapp } from 'nav-frontend-knapper';
-import { Textarea } from 'nav-frontend-skjema';
 import { OverstyrInputBeregningDto } from '../types/OverstyrInputBeregningDto';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
 import OverstyrBeregningAktivitetForm from './OverstyrBeregningAktivitetForm';
@@ -236,6 +236,7 @@ const OverstyrBeregningFaktaForm = ({
                   feil={meta.touched && meta.error ? meta.error : false}
                   value={field.value}
                   disabled={readOnly}
+                  size="small"
                   {...field}
                 />
               )}
