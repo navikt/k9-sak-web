@@ -1,5 +1,6 @@
-import SupportMenySakIndex, { SupportTabs } from '@fpsak-frontend/sak-support-meny';
 import { httpErrorHandler } from '@fpsak-frontend/utils';
+import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
+import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
 import { apiPaths } from '@k9-sak-web/rest-api';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
@@ -11,27 +12,32 @@ import {
   NotatResponse,
   Personopplysninger,
 } from '@k9-sak-web/types';
+import {
+  ArrowUndoIcon,
+  ClockDashedIcon,
+  FolderIcon,
+  PaperplaneIcon,
+  PencilWritingIcon,
+  PersonGavelIcon,
+} from '@navikt/aksel-icons';
+import { Tabs } from '@navikt/ds-react';
 import axios from 'axios';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
-import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
 import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
 import HistorikkIndex from './historikk/HistorikkIndex';
+import MeldingBackendClient from './melding/MeldingBackendClient';
 import MeldingIndex from './melding/MeldingIndex';
 import NotaterIndex from './notater/NotaterIndex';
+import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
-import MeldingBackendClient from './melding/MeldingBackendClient';
 
-export const hentSynligePaneler = (
-  behandlingRettigheter?: BehandlingRettigheter,
-  featureToggles?: FeatureToggles,
-): string[] =>
+export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
     switch (supportPanel) {
       case SupportTabs.TIL_BESLUTTER:
@@ -54,6 +60,51 @@ export const hentValgbarePaneler = (
     }
     return true;
   });
+
+interface GetSvgProps {
+  tooltip: string;
+  antallUlesteNotater: number;
+}
+
+const TABS = {
+  [SupportTabs.TIL_BESLUTTER]: {
+    getSvg: ({ tooltip }: GetSvgProps) => <PersonGavelIcon title={tooltip} fontSize="1.625rem" />,
+    tooltipTextCode: 'SupportMenySakIndex.Godkjenning',
+    tabKey: SupportTabs.TIL_BESLUTTER,
+  },
+  [SupportTabs.FRA_BESLUTTER]: {
+    getSvg: ({ tooltip }: GetSvgProps) => (
+      <ArrowUndoIcon title={tooltip} fontSize="1.625rem" style={{ transform: 'rotateX(180deg)' }} />
+    ),
+    tooltipTextCode: 'SupportMenySakIndex.FraBeslutter',
+    tabKey: SupportTabs.FRA_BESLUTTER,
+  },
+  [SupportTabs.HISTORIKK]: {
+    getSvg: ({ tooltip }: GetSvgProps) => <ClockDashedIcon title={tooltip} fontSize="1.625rem" />,
+    tooltipTextCode: 'Historikk',
+    tabKey: SupportTabs.HISTORIKK,
+  },
+  [SupportTabs.MELDINGER]: {
+    getSvg: ({ tooltip }: GetSvgProps) => <PaperplaneIcon title={tooltip} fontSize="1.625rem" />,
+    tooltipTextCode: 'Send melding',
+    tabKey: SupportTabs.MELDINGER,
+  },
+  [SupportTabs.DOKUMENTER]: {
+    getSvg: ({ tooltip }: GetSvgProps) => <FolderIcon title={tooltip} fontSize="1.625rem" />,
+    tooltipTextCode: 'Dokumenter',
+    tabKey: SupportTabs.DOKUMENTER,
+  },
+  [SupportTabs.NOTATER]: {
+    getSvg: ({ antallUlesteNotater }: GetSvgProps) => (
+      <div className={styles.pencilSvgContainer}>
+        {antallUlesteNotater > 0 && <div className={styles.ulesteNotater}>{antallUlesteNotater}</div>}
+        <PencilWritingIcon title="Notater" fontSize="1.625rem" className={styles.pencilSvg} />
+      </div>
+    ),
+    tooltipTextCode: 'Notater',
+    tabKey: SupportTabs.NOTATER,
+  },
+};
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -116,6 +167,18 @@ const BehandlingSupportIndex = ({
     refetchOnWindowFocus: false,
   });
 
+  const lagTabs = (tilgjengeligeTabs: string[], valgbareTabs: string[], valgtIndex?: number) =>
+    Object.keys(TABS)
+      .filter(key => tilgjengeligeTabs.includes(key))
+      .filter(key => valgbareTabs.includes(key))
+      .map((key, index) => ({
+        getSvg: TABS[key].getSvg,
+        tooltip: TABS[key].tooltipTextCode,
+        isActive: index === valgtIndex,
+        antallUlesteNotater,
+        tabKey: TABS[key].tabKey,
+      }));
+
   useEffect(() => {
     const ulesteNotater = (notater || []).filter(notat => !notat.skjult);
     setAntallUlesteNotater(ulesteNotater?.length);
@@ -133,10 +196,7 @@ const BehandlingSupportIndex = ({
   const erPaVent = behandling ? behandling.behandlingPaaVent : false;
   const erSendMeldingRelevant = fagsak && !erPaVent;
 
-  const synligeSupportPaneler = useMemo(
-    () => hentSynligePaneler(behandlingRettigheter, featureToggles),
-    [behandlingRettigheter, featureToggles],
-  );
+  const synligeSupportPaneler = useMemo(() => hentSynligePaneler(behandlingRettigheter), [behandlingRettigheter]);
   const valgbareSupportPaneler = useMemo(
     () => hentValgbarePaneler(synligeSupportPaneler, erSendMeldingRelevant, behandlingRettigheter),
     [synligeSupportPaneler, erSendMeldingRelevant, behandlingRettigheter],
@@ -156,34 +216,58 @@ const BehandlingSupportIndex = ({
     [location, synligeSupportPaneler],
   );
 
+  const valgtIndex = synligeSupportPaneler.findIndex(p => p === aktivtSupportPanel);
+
+  const tabs = useMemo(
+    () => lagTabs(synligeSupportPaneler, valgbareSupportPaneler, valgtIndex),
+    [synligeSupportPaneler, valgbareSupportPaneler, valgtIndex],
+  );
+
   return (
-    <>
+    <Tabs defaultValue={valgtSupportPanel} className={styles.tablistWrapper}>
       <div className={styles.meny}>
-        <SupportMenySakIndex
-          tilgjengeligeTabs={synligeSupportPaneler}
-          valgbareTabs={valgbareSupportPaneler}
-          valgtIndex={synligeSupportPaneler.findIndex(p => p === aktivtSupportPanel)}
-          onClick={changeRouteCallback}
-          antallUlesteNotater={antallUlesteNotater}
-        />
+        <Tabs.List className={styles.tablist}>
+          {tabs.map((tab, index) => (
+            <Tabs.Tab
+              key={tab.tooltip}
+              value={tab.tabKey}
+              icon={tab.getSvg({
+                tooltip: tab.tooltip,
+                antallUlesteNotater: tab.antallUlesteNotater,
+              })}
+              onClick={() => {
+                changeRouteCallback(index);
+              }}
+              className={styles.tabButton}
+            />
+          ))}
+        </Tabs.List>
       </div>
       <div className={aktivtSupportPanel === SupportTabs.HISTORIKK ? styles.containerHistorikk : styles.container}>
-        {(aktivtSupportPanel === SupportTabs.TIL_BESLUTTER || aktivtSupportPanel === SupportTabs.FRA_BESLUTTER) && (
+        <Tabs.Panel value={SupportTabs.TIL_BESLUTTER}>
           <TotrinnskontrollIndex
             fagsak={fagsak}
             alleBehandlinger={alleBehandlinger}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
           />
-        )}
-        {aktivtSupportPanel === SupportTabs.HISTORIKK && (
+        </Tabs.Panel>
+        <Tabs.Panel value={SupportTabs.FRA_BESLUTTER}>
+          <TotrinnskontrollIndex
+            fagsak={fagsak}
+            alleBehandlinger={alleBehandlinger}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+          />
+        </Tabs.Panel>
+        <Tabs.Panel value={SupportTabs.HISTORIKK}>
           <HistorikkIndex
             saksnummer={fagsak.saksnummer}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
           />
-        )}
-        {aktivtSupportPanel === SupportTabs.MELDINGER && (
+        </Tabs.Panel>
+        <Tabs.Panel value={SupportTabs.MELDINGER}>
           <MeldingIndex
             fagsak={fagsak}
             alleBehandlinger={alleBehandlinger}
@@ -193,8 +277,8 @@ const BehandlingSupportIndex = ({
             arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
             backendApi={meldingerBackendClientFactory()}
           />
-        )}
-        {aktivtSupportPanel === SupportTabs.DOKUMENTER && (
+        </Tabs.Panel>
+        <Tabs.Panel value={SupportTabs.DOKUMENTER}>
           <DokumentIndex
             saksnummer={fagsak.saksnummer}
             behandlingId={behandlingId}
@@ -202,10 +286,12 @@ const BehandlingSupportIndex = ({
             fagsak={fagsak}
             behandlingUuid={behandling?.uuid}
           />
-        )}
-        {aktivtSupportPanel === SupportTabs.NOTATER && <NotaterIndex navAnsatt={navAnsatt} fagsak={fagsak} />}
+        </Tabs.Panel>
+        <Tabs.Panel value={SupportTabs.NOTATER}>
+          <NotaterIndex navAnsatt={navAnsatt} fagsak={fagsak} />
+        </Tabs.Panel>
       </div>
-    </>
+    </Tabs>
   );
 };
 

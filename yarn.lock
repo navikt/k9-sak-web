@@ -3493,18 +3493,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fpsak-frontend/sak-support-meny@1.0.0, @fpsak-frontend/sak-support-meny@workspace:packages/sak-support-meny":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-support-meny@workspace:packages/sak-support-meny"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    classnames: 2.5.1
-    react: 18.2.0
-    react-intl: 6.6.2
-  languageName: unknown
-  linkType: soft
-
 "@fpsak-frontend/sak-totrinnskontroll@1.0.0, @fpsak-frontend/sak-totrinnskontroll@workspace:packages/sak-totrinnskontroll":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/sak-totrinnskontroll@workspace:packages/sak-totrinnskontroll"
@@ -5115,7 +5103,6 @@ __metadata:
     "@fpsak-frontend/sak-meny-verge": 1.0.0
     "@fpsak-frontend/sak-risikoklassifisering": 1.0.0
     "@fpsak-frontend/sak-sok": 1.0.0
-    "@fpsak-frontend/sak-support-meny": 1.0.0
     "@fpsak-frontend/sak-totrinnskontroll": 1.0.0
     "@fpsak-frontend/sak-visittkort": 1.0.0
     "@fpsak-frontend/shared-components": 1.0.0
