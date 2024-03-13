@@ -40,7 +40,7 @@ const FrilanserForm = ({
       <div className={styles.fieldContainer}>
         <InputField
           name={`${fieldArrayId}.${SøknadFormValue.FRILANSER_INNTEKT_I_SØKNADSPERIODEN}`}
-          bredde="S"
+          htmlSize={14}
           label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenFrilanser' }}
           readOnly={readOnly}
         />
@@ -49,7 +49,7 @@ const FrilanserForm = ({
         <div className={styles.fieldContainer}>
           <InputField
             name={`${fieldArrayId}.${SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS}`}
-            bredde="S"
+            htmlSize={14}
             label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenSelvstendig' }}
             readOnly={readOnly}
           />

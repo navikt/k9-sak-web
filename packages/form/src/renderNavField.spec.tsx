@@ -1,12 +1,11 @@
 import { inputMock, metaMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { TextField } from '@navikt/ds-react';
 import { screen } from '@testing-library/react';
 import React from 'react';
-
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { Input } from 'nav-frontend-skjema';
 import renderNavField from './renderNavField';
 
-const RenderedMockField = renderNavField(Input);
+const RenderedMockField = renderNavField(TextField);
 
 const FORMATTED_MESSAGE = 'En formatert melding';
 

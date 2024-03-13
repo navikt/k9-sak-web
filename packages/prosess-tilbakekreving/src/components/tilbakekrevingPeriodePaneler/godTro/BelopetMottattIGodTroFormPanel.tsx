@@ -46,7 +46,7 @@ const BelopetMottattIGodTroFormPanel = ({ readOnly, erBelopetIBehold }: OwnProps
             readOnly={readOnly}
             format={formatCurrencyNoKr}
             parse={parseCurrencyInput}
-            bredde="S"
+            htmlSize={14}
           />
         </ArrowBox>
       )}

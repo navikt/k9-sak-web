@@ -1,11 +1,11 @@
-import { Input as NavInput, InputProps as NavFrontendInputProps } from 'nav-frontend-skjema';
+import { TextField, TextFieldProps } from '@navikt/ds-react';
 import React from 'react';
 import { Field } from 'redux-form';
 import LabelType from './LabelType';
 import ReadOnlyField, { ReadOnlyFieldProps } from './ReadOnlyField';
 import renderNavField from './renderNavField';
 
-const renderNavInput = renderNavField(NavInput);
+const renderNavInput = renderNavField(TextField);
 
 interface InputFieldProps {
   name: string;
@@ -22,6 +22,7 @@ interface InputFieldProps {
   renderReadOnlyValue?: (value: any) => any;
   parse?: (value: string) => string | number;
   format?: (value: string) => string | number;
+  size?: 'medium' | 'small';
 }
 
 const InputField = ({
@@ -32,7 +33,7 @@ const InputField = ({
   readOnly,
   isEdited,
   ...otherProps
-}: InputFieldProps & (NavFrontendInputProps | ReadOnlyFieldProps)) => (
+}: InputFieldProps & (TextFieldProps | ReadOnlyFieldProps)) => (
   <Field
     name={name}
     validate={validate}
@@ -54,6 +55,7 @@ InputField.defaultProps = {
   readOnly: false,
   label: '',
   isEdited: false,
+  size: 'small',
 };
 
 export default InputField;

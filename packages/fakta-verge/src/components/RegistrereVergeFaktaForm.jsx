@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import { hasValidDate, hasValidFodselsnummer, hasValidName, required } from '@fpsak-frontend/utils';
 import { DatepickerField, InputField, SelectField } from '@fpsak-frontend/form';
-import { VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { hasValidDate, hasValidFodselsnummer, hasValidName, required } from '@fpsak-frontend/utils';
 
 import vergeType from '../kodeverk/vergeType';
 
@@ -48,7 +48,7 @@ export const RegistrereVergeFaktaForm = ({ intl, readOnly, vergetyper, alleMerkn
             <Column xs="3">
               {valgtVergeType !== vergeType.ADVOKAT && (
                 <InputField
-                  bredde="S"
+                  htmlSize={14}
                   name="fnr"
                   label={{ id: 'Verge.FodselsNummer' }}
                   validate={[required, hasValidFodselsnummer]}
@@ -57,7 +57,7 @@ export const RegistrereVergeFaktaForm = ({ intl, readOnly, vergetyper, alleMerkn
               )}
               {valgtVergeType === vergeType.ADVOKAT && (
                 <InputField
-                  bredde="S"
+                  htmlSize={14}
                   name="organisasjonsnummer"
                   label={{ id: 'Verge.Organisasjonsnummer' }}
                   validate={[required]}

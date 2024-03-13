@@ -1,8 +1,8 @@
-import { Input as NavInput } from 'nav-frontend-skjema';
 import React, { Component, ReactNode } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { Field as reduxFormField } from 'redux-form';
 
+import { TextField } from '@navikt/ds-react';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import renderNavField from './renderNavField';
@@ -20,7 +20,7 @@ interface DecimalFieldProps {
   isEdited?: boolean;
   normalizeOnBlur: (value) => string;
   onChange?: (elmt: ReactNode, value: number) => void;
-  bredde?: string;
+  htmlSize?: number;
   format?: (value: string) => string | number;
 }
 
@@ -73,7 +73,7 @@ const createNormalizeOnBlurField = WrappedNavFieldComponent => {
   return FieldComponentWithIntl;
 };
 
-const renderNavInput = renderNavField(NavInput);
+const renderNavInput = renderNavField(TextField);
 const NormalizeOnBlurField = createNormalizeOnBlurField(reduxFormField);
 
 const DecimalField = ({
