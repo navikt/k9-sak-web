@@ -131,6 +131,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
                 hideLabel
                 label="Har du noen tilbakemeldinger?"
                 className={styles.nyttNotatTekst}
+                maxLength={2000}
               />
               <div className={styles.nyttNotatKnappContainer}>
                 <Button type="submit" size="small" variant="primary">

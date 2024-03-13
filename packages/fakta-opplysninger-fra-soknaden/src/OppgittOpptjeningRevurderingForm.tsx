@@ -205,6 +205,7 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
             aria-label={intl.formatMessage({
               id: 'OpplysningerFraSoknaden.Begrunnelse',
             })}
+            maxLength={2000}
           />
         </div>
       )}

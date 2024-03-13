@@ -160,6 +160,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
                     label={<FormattedMessage id="AksjonspunktGodkjenningArsakPanel.Begrunnelse" />}
                     validate={[required, minLength3, maxLength2000, hasValidText]}
                     readOnly={readOnly}
+                    maxLength={2000}
                   />
                 </ArrowBox>
               )}
