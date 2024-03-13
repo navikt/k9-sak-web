@@ -1,11 +1,14 @@
+import React from 'react';
+import sinon from 'sinon';
+
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
-import sinon from 'sinon';
-import messages from '../../i18n/nb_NO.json';
+
 import { PersonArbeidsforholdPanelImpl } from './PersonArbeidsforholdPanel';
+
+import messages from '../../i18n/nb_NO.json';
 
 const arbeidsgiverOpplysningerPerId = {
   1234567: {
@@ -48,31 +51,13 @@ describe('<PersonArbeidsforholdPanel>', () => {
         tom: '2018-10-10',
       },
     ],
-    kilde: [
-      {
-        kode: 'INNTEKT',
-        kodeverk: '',
-      },
-    ],
-    handlingType: {
-      kode: 'BRUK',
-      kodeverk: 'ARBEIDSFORHOLD_HANDLING_TYPE',
-    },
-    aksjonspunktÅrsaker: [
-      {
-        kode: 'INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD',
-        kodeverk: 'ARBEIDSFORHOLD_AKSJONSPUNKT_ÅRSAKER',
-      },
-    ],
+    kilde: ['INNTEKT'],
+    handlingType: 'BRUK',
+    aksjonspunktÅrsaker: ['INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD'],
     inntektsmeldinger: [],
   };
 
   it('skal rendre komponent', async () => {
-    const arbeidsgiver = {
-      arbeidsgiverOrgnr: '1234567',
-      arbeidsgiverAktørId: null,
-    };
-
     renderWithIntlAndReduxForm(
       <PersonArbeidsforholdPanelImpl
         intl={intlMock}
@@ -84,7 +69,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
         reduxFormInitialize={sinon.spy()}
         behandlingId={1}
         behandlingVersjon={1}
-        alleKodeverk={{}}
         alleMerknaderFraBeslutter={{}}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />,

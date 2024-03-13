@@ -9,7 +9,6 @@ import { DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow } from '@fp
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { arbeidsforholdHarAksjonspunktÅrsak } from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
@@ -30,7 +29,6 @@ const headerColumnContent = [
 interface OwnProps {
   alleArbeidsforhold: ArbeidsforholdV2[];
   updateArbeidsforhold: (values: any) => void;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   selectedId?: string;
   behandlingId: number;
   behandlingVersjon: number;
@@ -41,7 +39,6 @@ interface OwnProps {
 const PersonArbeidsforholdTable = ({
   alleArbeidsforhold,
   selectedId,
-  alleKodeverk,
   behandlingId,
   behandlingVersjon,
   updateArbeidsforhold,
@@ -160,7 +157,6 @@ const PersonArbeidsforholdTable = ({
                   skjulArbeidsforhold={() => setVisAksjonspunktInfo(false)}
                   behandlingId={behandlingId}
                   behandlingVersjon={behandlingVersjon}
-                  alleKodeverk={alleKodeverk}
                 />
               )}
               {erValgt && visPermisjon(a) && (

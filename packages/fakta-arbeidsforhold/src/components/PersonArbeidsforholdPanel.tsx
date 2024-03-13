@@ -21,7 +21,7 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { arbeidsforholdHarAksjonspunktÅrsak } from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
-import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import Arbeidsgiver from '@k9-sak-web/types/src/arbeidsgiverTsType';
 
@@ -51,7 +51,6 @@ interface PureOwnProps {
   readOnly: boolean;
   harAksjonspunktAvklarArbeidsforhold: boolean;
   alleMerknaderFraBeslutter: { [key: string]: { notAccepted?: boolean } };
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
@@ -197,7 +196,7 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
       newValues = {
         ...values,
         handlingType,
-        arbeidsgiverNavn,
+        navn: arbeidsgiverNavn,
         stillingsprosent,
         perioder,
       };
@@ -227,7 +226,6 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
       arbeidsgiverOpplysningerPerId,
       arbeidsforhold,
       alleMerknaderFraBeslutter,
-      alleKodeverk,
       behandlingId,
       behandlingVersjon,
       harAksjonspunktAvklarArbeidsforhold,
@@ -293,7 +291,6 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
                     harAksjonspunktAvklarArbeidsforhold={harAksjonspunktAvklarArbeidsforhold}
                     selectedId={selectedArbeidsforhold ? selectedArbeidsforhold.id : undefined}
                     alleArbeidsforhold={arbeidsforholdPerArbeidsgiver}
-                    alleKodeverk={alleKodeverk}
                     behandlingId={behandlingId}
                     behandlingVersjon={behandlingVersjon}
                     updateArbeidsforhold={this.updateArbeidsforhold}

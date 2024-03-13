@@ -9,7 +9,7 @@ import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 
 import { BekreftOgForsettKnapp } from './BekreftOgForsettKnapp';
@@ -49,7 +49,6 @@ interface PureOwnProps {
   submitCallback: (...args: any[]) => any;
   readOnly: boolean;
   hasOpenAksjonspunkter: boolean;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   alleMerknaderFraBeslutter: { [key: string]: { notAccepted?: boolean } };
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
@@ -65,7 +64,6 @@ export const ArbeidsforholdInfoPanelImpl = ({
   alleMerknaderFraBeslutter,
   arbeidsgiverOpplysningerPerId,
   hasOpenAksjonspunkter,
-  alleKodeverk,
   behandlingId,
   behandlingVersjon,
   intl,
@@ -98,7 +96,6 @@ export const ArbeidsforholdInfoPanelImpl = ({
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           harAksjonspunktAvklarArbeidsforhold={harAksjonspunktAvklarArbeidsforhold}
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-          alleKodeverk={alleKodeverk}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
         />
