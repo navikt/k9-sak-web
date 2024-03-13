@@ -1,12 +1,15 @@
+import React from 'react';
+import sinon from 'sinon';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
-import React from 'react';
-import sinon from 'sinon';
-import messages from '../../i18n/nb_NO.json';
+
 import OpptjeningVilkarForm from './OpptjeningVilkarForm';
+
+import messages from '../../i18n/nb_NO.json';
 
 const periode = {
   avslagKode: '1035',
@@ -16,7 +19,7 @@ const periode = {
     antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<2020-03-27, 2020-04-04 [1]> = [[2020-03-27, 2020-04-04]]',
   },
   periode: { fom: '2020-04-24', tom: '2020-04-24' },
-  vilkarStatus: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+  vilkarStatus: 'IKKE_OPPFYLT',
   vurderesIBehandlingen: true,
 };
 
@@ -33,12 +36,8 @@ describe('<OpptjeningVilkarForm>', () => {
         aksjonspunkter={
           [
             {
-              definisjon: {
-                kode: aksjonspunktCodes.SVANGERSKAPSVILKARET,
-              },
-              status: {
-                kode: aksjonspunktStatus.OPPRETTET,
-              },
+              definisjon: aksjonspunktCodes.SVANGERSKAPSVILKARET,
+              status: aksjonspunktStatus.OPPRETTET,
               begrunnelse: undefined,
             },
           ] as Aksjonspunkt[]

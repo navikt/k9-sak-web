@@ -1,3 +1,8 @@
+import React, { useCallback, useMemo, useState } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { QueryClient, QueryClientProvider } from 'react-query';
+
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
@@ -22,11 +27,8 @@ import {
 } from '@k9-sak-web/types';
 import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
 import RelatertFagsak from '@k9-sak-web/types/src/relatertFagsak';
-import React, { useCallback, useMemo, useState } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
+
 import {
   behandlingerRoutePath,
   erBehandlingValgt,
@@ -244,14 +246,13 @@ const FagsakIndex = () => {
             <Route
               path={behandlingerRoutePath}
               element={
-                <>Behandlinger index</>
-                // <BehandlingerIndex
-                //   fagsak={fagsak}
-                //   alleBehandlinger={alleBehandlinger}
-                //   arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-                //   setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
-                //   setRequestPendingMessage={setRequestPendingMessage}
-                // />
+                <BehandlingerIndex
+                  fagsak={fagsak}
+                  alleBehandlinger={alleBehandlinger}
+                  arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+                  setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
+                  setRequestPendingMessage={setRequestPendingMessage}
+                />
               }
             />
           </Routes>
@@ -304,7 +305,6 @@ const FagsakIndex = () => {
             <div style={{ overflow: 'hidden' }}>
               <VisittkortSakIndex
                 personopplysninger={behandlingPersonopplysninger}
-                alleKodeverk={alleKodeverk}
                 sprakkode={behandling?.sprakkode}
                 fagsakPerson={fagsakPerson || fagsak.person}
                 harTilbakekrevingVerge={erTilbakekreving(behandling?.type) && harVerge}

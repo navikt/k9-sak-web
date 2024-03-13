@@ -1,11 +1,14 @@
+import React from 'react';
+import sinon from 'sinon';
+
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { Behandling } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
-import React from 'react';
-import sinon from 'sinon';
-import messages from '../i18n/nb_NO.json';
+
 import VilkarresultatMedOverstyringProsessIndex from './VilkarresultatMedOverstyringProsessIndex';
+
+import messages from '../i18n/nb_NO.json';
 
 describe('<VilkarresultatMedOverstyringForm>', () => {
   requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
@@ -17,9 +20,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
           {
             id: 1,
             versjon: 1,
-            type: {
-              kode: '',
-            },
+            type: '',
           } as Behandling
         }
         medlemskap={{
@@ -46,10 +47,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
                   fom: '2020-03-01',
                   tom: '2020-04-01',
                 },
-                vilkarStatus: {
-                  kode: 'test',
-                  kodeverk: 'test',
-                },
+                vilkarStatus: 'test',
                 avslagKode: 'test',
                 vurderesIBehandlingen: true,
                 merknadParametere: {
@@ -58,10 +56,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
               },
             ],
             overstyrbar: true,
-            vilkarType: {
-              kode: 'test',
-              kodeverk: 'test',
-            },
+            vilkarType: 'test',
           },
         ]}
         visAllePerioder={false}

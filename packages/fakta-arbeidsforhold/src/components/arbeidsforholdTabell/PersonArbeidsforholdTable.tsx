@@ -1,3 +1,7 @@
+import React, { Fragment, useState } from 'react';
+import { FormattedMessage, IntlShape } from 'react-intl';
+import { Normaltekst } from 'nav-frontend-typografi';
+
 import erIBrukImageUrl from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
@@ -7,11 +11,8 @@ import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { arbeidsforholdHarAksjonspunktÅrsak } from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
-import { Normaltekst } from 'nav-frontend-typografi';
-import React, { Fragment, useState } from 'react';
-import { FormattedMessage, IntlShape } from 'react-intl';
-import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 
+import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 import PermisjonerInfo from '../arbeidsforholdDetaljer/PermisjonerInfo';
 import PersonArbeidsforholdDetailForm from '../arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
 import styles from './personArbeidsforholdTable.module.css';
@@ -81,8 +82,7 @@ const PersonArbeidsforholdTable = ({
           const stillingsprosent =
             a.stillingsprosent !== undefined && a.stillingsprosent !== null ? `${a.stillingsprosent.toFixed(2)} %` : '';
           const arbeidsforholdId = a.arbeidsforhold.eksternArbeidsforholdId;
-          const kilde =
-            Array.isArray(a.kilde) && (a.kilde.length > 1 ? a.kilde.map(k => k.kode).join(', ') : a.kilde[0].kode);
+          const kilde = Array.isArray(a.kilde) && (a.kilde.length > 1 ? a.kilde.map(k => k).join(', ') : a.kilde[0]);
           const erValgt = selectedArbeidsforhold === a;
           const harPermisjoner = Array.isArray(a.permisjoner) && a.permisjoner.length > 0;
           const harPerioder = Array.isArray(a.perioder) && a.perioder.length > 0;
@@ -141,7 +141,7 @@ const PersonArbeidsforholdTable = ({
                   )}
                 </TableColumn>
                 <TableColumn>
-                  {a.handlingType && a.handlingType.kode === arbeidsforholdHandlingType.BRUK && !harAksjonspunkt && (
+                  {a.handlingType && a.handlingType === arbeidsforholdHandlingType.BRUK && !harAksjonspunkt && (
                     <Image
                       src={erIBrukImageUrl}
                       alt={intl.formatMessage({ id: 'PersonArbeidsforholdTable.ErIBruk' })}
@@ -165,7 +165,7 @@ const PersonArbeidsforholdTable = ({
               )}
               {erValgt && visPermisjon(a) && (
                 <FlexRow>
-                  <PermisjonerInfo arbeidsforhold={a} alleKodeverk={alleKodeverk} />
+                  <PermisjonerInfo arbeidsforhold={a} />
                 </FlexRow>
               )}
             </Fragment>

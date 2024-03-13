@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -7,7 +8,6 @@ import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsa
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
-import { Normaltekst } from 'nav-frontend-typografi';
 
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
@@ -140,9 +140,9 @@ VilkarFields.buildInitialValues = (
     ? vilkårPerioder.map(periode => ({
         begrunnelse: periode.begrunnelse,
         vurderesIBehandlingen: periode.vurderesIBehandlingen,
-        erVilkarOk: Object.values(midlertidigInaktiv).includes(periode.merknad?.kode)
-          ? periode.merknad.kode
-          : periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
+        erVilkarOk: Object.values(midlertidigInaktiv).includes(periode.merknad)
+          ? periode.merknad
+          : periode.vilkarStatus === vilkarUtfallType.OPPFYLT,
       }))
     : [],
 });
