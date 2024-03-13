@@ -111,7 +111,7 @@ const ActivityDataSubPanel = ({
               label={{ id: 'ActivityPanel.Organisasjonsnr' }}
               validate={[required]}
               readOnly={readOnly}
-              bredde="S"
+              htmlSize={14}
             />
           )}
           {isManuallyAddedAndUtenlandskArbeidsforhold(isManuallyAdded, selectedActivityType) && (
@@ -120,7 +120,7 @@ const ActivityDataSubPanel = ({
               label={{ id: 'ActivityPanel.Arbeidsgiver' }}
               validate={[required]}
               readOnly={readOnly}
-              bredde="XL"
+              htmlSize={40}
             />
           )}
         </Column>
@@ -131,7 +131,7 @@ const ActivityDataSubPanel = ({
               label={{ id: 'ActivityPanel.Stillingsandel' }}
               validate={[required, minValue0, maxValue200, hasValidDecimal]}
               readOnly={readOnly || !isManuallyAdded}
-              bredde="S"
+              htmlSize={14}
               format={value => (readOnly || !isManuallyAdded ? `${value} %` : value)}
               // @ts-ignore TODO Fiks denne!
               normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}

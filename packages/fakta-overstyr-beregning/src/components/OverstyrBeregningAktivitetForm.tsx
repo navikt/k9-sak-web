@@ -5,7 +5,8 @@ import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { parseCurrencyInput } from '@fpsak-frontend/utils';
 import { Field, useFormikContext } from 'formik';
 import { Datepicker } from 'nav-datovelger';
-import { Input } from 'nav-frontend-skjema';
+
+import { TextField } from '@navikt/ds-react';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
 import styles from './OverstyrBeregningFaktaForm.module.css';
 
@@ -36,7 +37,8 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
       <TableColumn>
         <Field name={`perioder.${periodeIndex}.aktivitetliste.${aktivitetIndex}.inntektPrAar`}>
           {({ field, meta }) => (
-            <Input
+            <TextField
+              size="small"
               {...field}
               id={`perioder-${periodeIndex}-aktivitetliste-${aktivitetIndex}-inntekt`}
               type="text"
@@ -47,7 +49,7 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
               }}
               maxLength={10}
               value={parseCurrencyInput(field.value)}
-              feil={meta.touched && meta.error ? meta.error : false}
+              error={meta.touched && meta.error ? meta.error : false}
               disabled={readOnly}
             />
           )}
@@ -56,7 +58,8 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
       <TableColumn>
         <Field name={`perioder.${periodeIndex}.aktivitetliste.${aktivitetIndex}.refusjonPrAar`}>
           {({ field, meta }) => (
-            <Input
+            <TextField
+              size="small"
               {...field}
               id={`perioder-${periodeIndex}-aktivitetliste-${aktivitetIndex}-refusjon`}
               type="text"
@@ -72,7 +75,7 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
               }}
               maxLength={10}
               value={parseCurrencyInput(field.value)}
-              feil={meta.touched && meta.error ? meta.error : false}
+              error={meta.touched && meta.error ? meta.error : false}
               disabled={readOnly || !skalKunneEndreRefusjon}
             />
           )}

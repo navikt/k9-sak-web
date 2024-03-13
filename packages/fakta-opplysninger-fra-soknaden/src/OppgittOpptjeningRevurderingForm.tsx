@@ -173,7 +173,7 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
           <div className={styles.fieldContainer}>
             <InputField
               name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019}
-              bredde="S"
+              htmlSize={14}
               label={{ id: 'OpplysningerFraSoknaden.Inntekt2019' }}
               readOnly={formIsEditable}
             />
@@ -181,7 +181,7 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
           <div className={styles.fieldContainer}>
             <InputField
               name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020}
-              bredde="S"
+              htmlSize={14}
               label={{ id: 'OpplysningerFraSoknaden.Inntekt2020' }}
               readOnly={formIsEditable}
             />
@@ -205,6 +205,7 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
             aria-label={intl.formatMessage({
               id: 'OpplysningerFraSoknaden.Begrunnelse',
             })}
+            maxLength={2000}
           />
         </div>
       )}

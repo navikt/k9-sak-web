@@ -48,7 +48,7 @@ const LeggTilArbeidsforholdFelter = ({ readOnly, formName, behandlingId, behandl
             name="navn"
             label={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsgiverNavn' }}
             validate={[required]}
-            bredde="XL"
+            htmlSize={40}
             readOnly={readOnly}
           />
         </FlexColumn>
@@ -76,7 +76,7 @@ const LeggTilArbeidsforholdFelter = ({ readOnly, formName, behandlingId, behandl
             label={{ id: 'PersonArbeidsforholdDetailForm.Stillingsprosent' }}
             validate={[required, minValue(0), maxValue(100), hasValidInteger]}
             readOnly={readOnly}
-            bredde="S"
+            htmlSize={14}
             parse={value => {
               const parsedValue = parseInt(value, 10);
               return Number.isNaN(parsedValue) ? value : parsedValue;
@@ -91,7 +91,7 @@ const LeggTilArbeidsforholdFelter = ({ readOnly, formName, behandlingId, behandl
             name="yrkestittel"
             label={{ id: 'PersonArbeidsforholdDetailForm.Yrkestittel' }}
             validate={[required]}
-            bredde="L"
+            htmlSize={21}
             readOnly={readOnly}
           />
         </FlexColumn>

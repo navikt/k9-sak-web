@@ -1,5 +1,5 @@
+import { Textarea, TextareaProps } from '@navikt/ds-react';
 import EtikettFokus from 'nav-frontend-etiketter';
-import { Textarea as NavTextarea, TextareaProps } from 'nav-frontend-skjema';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { Field } from 'redux-form';
@@ -54,7 +54,7 @@ const TextAreaWithBadge = ({
         ))}
       </div>
     )}
-    <NavTextarea data-testid={dataId} {...otherProps} />
+    <Textarea size="small" data-testid={dataId} {...otherProps} />
   </div>
 );
 

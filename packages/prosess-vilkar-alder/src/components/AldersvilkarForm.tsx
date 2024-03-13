@@ -79,6 +79,7 @@ const AldersvilkarForm = ({
           label={intl.formatMessage({ id: 'AlderVilkar.Lese.KroniskSyk' })}
           name="begrunnelse"
           validate={[required, minLength3, maxLength2000]}
+          maxLength={2000}
         />
       </Row>
       <VerticalSpacer sixteenPx />

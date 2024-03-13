@@ -40,7 +40,7 @@ const SelvstendigNæringsdrivendeForm = ({
       <div className={styles.fieldContainer}>
         <InputField
           name={`${fieldArrayId}.${SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_I_SØKNADSPERIODEN}`}
-          bredde="S"
+          htmlSize={14}
           label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenSelvstendig' }}
           readOnly={readOnly}
         />
@@ -49,7 +49,7 @@ const SelvstendigNæringsdrivendeForm = ({
         <div className={styles.fieldContainer}>
           <InputField
             name={`${fieldArrayId}.${SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN}`}
-            bredde="S"
+            htmlSize={14}
             label={{ id: 'OpplysningerFraSoknaden.InntektISoknadsperiodenFrilanser' }}
             readOnly={readOnly}
           />
