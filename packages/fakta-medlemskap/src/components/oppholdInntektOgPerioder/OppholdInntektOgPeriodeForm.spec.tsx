@@ -1,12 +1,15 @@
+import React from 'react';
+import sinon from 'sinon';
+import { screen } from '@testing-library/react';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
-import React from 'react';
-import sinon from 'sinon';
-import messages from '../../../i18n/nb_NO.json';
+
 import { OppholdInntektOgPeriodeForm } from './OppholdInntektOgPeriodeForm';
+
+import messages from '../../../i18n/nb_NO.json';
 
 const valgtPeriode = {
   aksjonspunkter: [],
@@ -66,14 +69,8 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
   it('skal avklare bosatt data når en har dette aksjonspunktet', () => {
     const bosattAksjonspunkt = {
       id: 1,
-      definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
-        navn: 'ap1',
-      },
-      status: {
-        kode: 's1',
-        navn: 's1',
-      },
+      definisjon: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
+      status: 's1',
       toTrinnsBehandling: true,
       toTrinnsBehandlingGodkjent: false,
       kanLoses: true,
@@ -114,14 +111,8 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
   it('skal avklare perioder når en har dette aksjonspunktet', () => {
     const periodeAksjonspunkt = {
       id: 1,
-      definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-        navn: 'ap1',
-      },
-      status: {
-        kode: 's1',
-        navn: 's1',
-      },
+      definisjon: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
+      status: 's1',
       toTrinnsBehandling: true,
       toTrinnsBehandlingGodkjent: false,
       kanLoses: true,
@@ -166,14 +157,8 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
   it('skal avklare oppholdsrett når en har dette aksjonspunktet', () => {
     const oppholdsrettAksjonspunkt = {
       id: 1,
-      definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
-        navn: 'ap1',
-      },
-      status: {
-        kode: 's1',
-        navn: 's1',
-      },
+      definisjon: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
+      status: 's1',
       toTrinnsBehandling: true,
       toTrinnsBehandlingGodkjent: false,
       kanLoses: true,
@@ -215,14 +200,8 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
   it('skal avklare lovlig opphold når en har dette aksjonspunktet', () => {
     const lovligOppholdAksjonspunkt = {
       id: 1,
-      definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD,
-        navn: 'ap1',
-      },
-      status: {
-        kode: 's1',
-        navn: 's1',
-      },
+      definisjon: aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD,
+      status: 's1',
       toTrinnsBehandling: true,
       toTrinnsBehandlingGodkjent: false,
       kanLoses: true,

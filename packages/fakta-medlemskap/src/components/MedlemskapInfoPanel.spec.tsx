@@ -1,11 +1,14 @@
+import React from 'react';
+import sinon from 'sinon';
+import { screen } from '@testing-library/react';
+
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
-import React from 'react';
-import sinon from 'sinon';
-import messages from '../../i18n/nb_NO.json';
+
 import MedlemskapInfoPanel from './MedlemskapInfoPanel';
+
+import messages from '../../i18n/nb_NO.json';
 
 describe('<MedlemskapInfoPanel>', () => {
   it('skal vise begge medlemskapsformer når aksjonspunkt for startdato for foreldrepengerperioden er avklart', () => {
@@ -21,13 +24,8 @@ describe('<MedlemskapInfoPanel>', () => {
         alleMerknaderFraBeslutter={{}}
         behandlingId={1}
         behandlingVersjon={1}
-        behandlingType={{
-          kode: 'Test',
-          kodeverk: 'test',
-        }}
-        behandlingStatus={{
-          kode: behandlingStatus.BEHANDLING_UTREDES,
-        }}
+        behandlingType="Test"
+        behandlingStatus={behandlingStatus.BEHANDLING_UTREDES}
         soknad={{}}
         alleKodeverk={{}}
         medlemskap={{}}
@@ -53,13 +51,8 @@ describe('<MedlemskapInfoPanel>', () => {
         alleMerknaderFraBeslutter={{}}
         behandlingId={1}
         behandlingVersjon={1}
-        behandlingType={{
-          kode: 'test',
-          kodeverk: 'test',
-        }}
-        behandlingStatus={{
-          kode: behandlingStatus.BEHANDLING_UTREDES,
-        }}
+        behandlingType="test"
+        behandlingStatus={behandlingStatus.BEHANDLING_UTREDES}
         soknad={{}}
         alleKodeverk={{}}
         medlemskap={{}}

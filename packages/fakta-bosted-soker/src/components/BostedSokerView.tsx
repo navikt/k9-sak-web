@@ -1,10 +1,10 @@
-import { KodeverkMedNavn } from '@k9-sak-web/types';
+import React from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import Etikettfokus from 'nav-frontend-etiketter';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import React from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import Region from '@fpsak-frontend/kodeverk/src/region';
@@ -73,21 +73,21 @@ export const BostedSokerView = ({
             >
               {getPersonstatus(personopplysninger).kode === personstatusType.UDEFINERT
                 ? intl.formatMessage({ id: 'Personstatus.Ukjent' })
-                : personstatusTypes.find(s => s.kode === getPersonstatus(personopplysninger).kode).navn}
+                : personstatusTypes.find(s => s.kode === getPersonstatus(personopplysninger)).navn}
             </Etikettfokus>
           </div>
         )}
         {personopplysninger.sivilstand && (
           <div className={styles.etikettMargin}>
             <Etikettfokus type="fokus" typo="undertekst" title={intl.formatMessage({ id: 'Sivilstand.Hjelpetekst' })}>
-              {sivilstandTypes.find(s => s.kode === personopplysninger.sivilstand.kode).navn}
+              {sivilstandTypes.find(s => s.kode === personopplysninger.sivilstand).navn}
             </Etikettfokus>
           </div>
         )}
-        {personopplysninger.region && personopplysninger.region.kode !== Region.UDEFINERT && (
+        {personopplysninger.region && personopplysninger.region !== Region.UDEFINERT && (
           <div className={styles.etikettMargin}>
             <Etikettfokus type="fokus" typo="undertekst" title={intl.formatMessage({ id: 'BostedSokerView.Region' })}>
-              {regionTypes.find(r => r.kode === personopplysninger.region.kode).navn}
+              {regionTypes.find(r => r.kode === personopplysninger.region).navn}
             </Etikettfokus>
           </div>
         )}
