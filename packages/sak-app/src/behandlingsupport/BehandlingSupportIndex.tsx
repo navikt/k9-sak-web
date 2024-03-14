@@ -140,7 +140,7 @@ const BehandlingSupportIndex = ({
 
   const meldingerBackendClientFactory = useCallback(() => {
     const k9SakClient = useContext(K9SakClientContext);
-    if (featureToggles.USE_NEW_BACKEND_CLIENT === true) {
+    if (featureToggles?.USE_NEW_BACKEND_CLIENT === true) {
       return new MeldingerBackendClient(k9SakClient);
     }
     return new MeldingBackendClient();
