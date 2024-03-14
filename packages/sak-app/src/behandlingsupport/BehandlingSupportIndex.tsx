@@ -20,7 +20,7 @@ import {
   PencilWritingIcon,
   PersonGavelIcon,
 } from '@navikt/aksel-icons';
-import { Tabs } from '@navikt/ds-react';
+import { BodyShort, Tabs } from '@navikt/ds-react';
 import axios from 'axios';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
@@ -167,10 +167,9 @@ const BehandlingSupportIndex = ({
     refetchOnWindowFocus: false,
   });
 
-  const lagTabs = (tilgjengeligeTabs: string[], valgbareTabs: string[], valgtIndex?: number) =>
+  const lagTabs = (tilgjengeligeTabs: string[], valgtIndex?: number) =>
     Object.keys(TABS)
       .filter(key => tilgjengeligeTabs.includes(key))
-      .filter(key => valgbareTabs.includes(key))
       .map((key, index) => ({
         getSvg: TABS[key].getSvg,
         tooltip: TABS[key].tooltipTextCode,
@@ -218,13 +217,12 @@ const BehandlingSupportIndex = ({
 
   const valgtIndex = synligeSupportPaneler.findIndex(p => p === aktivtSupportPanel);
 
-  const tabs = useMemo(
-    () => lagTabs(synligeSupportPaneler, valgbareSupportPaneler, valgtIndex),
-    [synligeSupportPaneler, valgbareSupportPaneler, valgtIndex],
-  );
+  const tabs = useMemo(() => lagTabs(synligeSupportPaneler, valgtIndex), [synligeSupportPaneler, valgtIndex]);
+
+  const isPanelDisabled = () => (valgtSupportPanel ? !valgbareSupportPaneler.includes(valgtSupportPanel) : false);
 
   return (
-    <Tabs defaultValue={valgtSupportPanel} className={styles.tablistWrapper}>
+    <Tabs defaultValue={defaultSupportPanel} className={styles.tablistWrapper}>
       <div className={styles.meny}>
         <Tabs.List className={styles.tablist}>
           {tabs.map((tab, index) => (
@@ -244,52 +242,55 @@ const BehandlingSupportIndex = ({
         </Tabs.List>
       </div>
       <div className={aktivtSupportPanel === SupportTabs.HISTORIKK ? styles.containerHistorikk : styles.container}>
-        <Tabs.Panel value={SupportTabs.TIL_BESLUTTER}>
-          <TotrinnskontrollIndex
-            fagsak={fagsak}
-            alleBehandlinger={alleBehandlinger}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-          />
-        </Tabs.Panel>
-        <Tabs.Panel value={SupportTabs.FRA_BESLUTTER}>
-          <TotrinnskontrollIndex
-            fagsak={fagsak}
-            alleBehandlinger={alleBehandlinger}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-          />
-        </Tabs.Panel>
-        <Tabs.Panel value={SupportTabs.HISTORIKK}>
-          <HistorikkIndex
-            saksnummer={fagsak.saksnummer}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-          />
-        </Tabs.Panel>
-        <Tabs.Panel value={SupportTabs.MELDINGER}>
-          <MeldingIndex
-            fagsak={fagsak}
-            alleBehandlinger={alleBehandlinger}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            personopplysninger={personopplysninger}
-            arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-            backendApi={meldingerBackendClientFactory()}
-          />
-        </Tabs.Panel>
-        <Tabs.Panel value={SupportTabs.DOKUMENTER}>
-          <DokumentIndex
-            saksnummer={fagsak.saksnummer}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            fagsak={fagsak}
-            behandlingUuid={behandling?.uuid}
-          />
-        </Tabs.Panel>
-        <Tabs.Panel value={SupportTabs.NOTATER}>
-          <NotaterIndex navAnsatt={navAnsatt} fagsak={fagsak} />
-        </Tabs.Panel>
+        {isPanelDisabled() && <BodyShort>Dette panelet er ikke tilgjengelig</BodyShort>}
+        <div hidden={isPanelDisabled()}>
+          <Tabs.Panel value={SupportTabs.TIL_BESLUTTER}>
+            <TotrinnskontrollIndex
+              fagsak={fagsak}
+              alleBehandlinger={alleBehandlinger}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+            />
+          </Tabs.Panel>
+          <Tabs.Panel value={SupportTabs.FRA_BESLUTTER}>
+            <TotrinnskontrollIndex
+              fagsak={fagsak}
+              alleBehandlinger={alleBehandlinger}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+            />
+          </Tabs.Panel>
+          <Tabs.Panel value={SupportTabs.HISTORIKK}>
+            <HistorikkIndex
+              saksnummer={fagsak.saksnummer}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+            />
+          </Tabs.Panel>
+          <Tabs.Panel value={SupportTabs.MELDINGER}>
+            <MeldingIndex
+              fagsak={fagsak}
+              alleBehandlinger={alleBehandlinger}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              personopplysninger={personopplysninger}
+              arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+              backendApi={meldingerBackendClientFactory()}
+            />
+          </Tabs.Panel>
+          <Tabs.Panel value={SupportTabs.DOKUMENTER}>
+            <DokumentIndex
+              saksnummer={fagsak.saksnummer}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              fagsak={fagsak}
+              behandlingUuid={behandling?.uuid}
+            />
+          </Tabs.Panel>
+          <Tabs.Panel value={SupportTabs.NOTATER}>
+            <NotaterIndex navAnsatt={navAnsatt} fagsak={fagsak} />
+          </Tabs.Panel>
+        </div>
       </div>
     </Tabs>
   );
