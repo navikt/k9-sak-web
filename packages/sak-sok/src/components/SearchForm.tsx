@@ -1,5 +1,5 @@
+import { Button } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -43,22 +43,23 @@ export const SearchForm = ({
     <Undertittel>{intl.formatMessage({ id: 'Search.SearchFagsakOrPerson' })}</Undertittel>
     <VerticalSpacer eightPx />
     <Row>
-      <Column xs="7">
+      <Column xs="6">
         <InputField
           name="searchString"
           parse={(s = '') => s.trim()}
           label={intl.formatMessage({ id: 'Search.SaksnummerOrPersonId' })}
+          htmlSize={28}
+          size="medium"
         />
       </Column>
-      <Column xs="5">
-        <Hovedknapp
-          mini
+      <Column xs="6">
+        <Button
           className={styles.button}
-          spinner={searchStarted}
+          loading={searchStarted}
           disabled={isButtonDisabled(searchStarted, searchString)}
         >
           <FormattedMessage id="Search.Search" />
-        </Hovedknapp>
+        </Button>
       </Column>
     </Row>
     {searchResultAccessDenied && (
