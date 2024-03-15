@@ -17,6 +17,7 @@ import { hasValidText, maxLength, required, safeJSONParse } from '@fpsak-fronten
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import Brevmottakere from './Brevmottakere';
 import styles from './henleggBehandlingModal.module.css';
@@ -197,6 +198,7 @@ export const HenleggBehandlingModalImpl = ({
                   validate={[required, maxLength1500, hasValidText]}
                   maxLength={1500}
                 />
+                <VerticalSpacer sixteenPx />
               </Column>
             </Row>
             {showHenleggelseFritekst(behandlingType.kode, årsakKode) && (
@@ -210,6 +212,7 @@ export const HenleggBehandlingModalImpl = ({
                       maxLength={2000}
                     />
                   </div>
+                  <VerticalSpacer sixteenPx />
                 </Column>
               </Row>
             )}
