@@ -31,7 +31,7 @@ const Home = ({ headerHeight }: OwnProps) => (
       <Route path="/" element={<DashboardResolver />} />
       <Route path={fagsakRoutePath} element={<FagsakIndex />} />
       <Route path={aktoerRoutePath} element={<AktoerIndex />} />
-      <Route path="/close" element={<CloseWindow />} />
+      {/* <Route path="/close" element={<CloseWindow />} /> */}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   </div>

@@ -68,6 +68,7 @@ jobs:
           team: k9saksbehandling
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+
       - name: Sett image for nais deploy
         run: |
           echo "IMAGE=${{steps.docker-push.outputs.image}}" >> $GITHUB_OUTPUT
