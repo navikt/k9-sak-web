@@ -24,8 +24,7 @@ import {
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, DokumentStatus, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
-import { Button } from '@navikt/ds-react';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort, Button, Label } from '@navikt/ds-react';
 
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import SoknadsfristVilkarDokument, { DELVIS_OPPFYLT } from './SoknadsfristVilkarDokument';
@@ -127,9 +126,9 @@ export const SoknadsfristVilkarForm = ({
                 {[<FormattedMessage key={1} id="SoknadsfristVilkarForm.AvklarVurdering" />]}
               </AksjonspunktHelpTextTemp>
             ) : (
-              <Element>
+              <Label size="small" as="p">
                 <FormattedMessage id="SoknadsfristVilkarForm.AutomatiskVurdering" />
-              </Element>
+              </Label>
             ))}
           <VerticalSpacer eightPx />
           {Array.isArray(alleDokumenter) && alleDokumenter.length > 0 ? (
@@ -160,9 +159,9 @@ export const SoknadsfristVilkarForm = ({
                   <EditedIcon />
                 </FlexColumn>
                 <FlexColumn>
-                  <Normaltekst>
+                  <BodyShort size="small">
                     <FormattedMessage id="SoknadsfristVilkarForm.Endret" />
-                  </Normaltekst>
+                  </BodyShort>
                 </FlexColumn>
               </FlexRow>
             </>
@@ -174,9 +173,9 @@ export const SoknadsfristVilkarForm = ({
                   <Image src={advarselIkonUrl} />
                 </FlexColumn>
                 <FlexColumn>
-                  <Element>
+                  <Label size="small" as="p">
                     <FormattedMessage id="SoknadsfristVilkarForm.Unntakstilfeller" />
-                  </Element>
+                  </Label>
                 </FlexColumn>
               </FlexRow>
               <VerticalSpacer sixteenPx />

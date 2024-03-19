@@ -3,7 +3,7 @@
   width: 1.25rem;
 }
 
-.vilkar {
+.vilkar:global(.navds-detail) {
   margin-top: 0.1875rem;
 }
 

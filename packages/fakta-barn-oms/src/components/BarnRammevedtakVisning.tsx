@@ -1,5 +1,5 @@
 import KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort, Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,67 +15,69 @@ const BarnRammevedtakVisning = ({ barnet }: BarnInputProps) => {
   return (
     <div className={styles.rammevedtak}>
       <div>
-        <Element>
+        <Label size="small" as="p">
           <FormattedMessage id="FaktaRammevedtak.Barn.Rammevedtak" />
-        </Element>
+        </Label>
         {kroniskSykdom &&
           kroniskSykdom.map(() => (
             <div key={uuidv4()}>
-              <Normaltekst>
+              <BodyShort size="small">
                 <FormattedMessage id="FaktaRammevedtak.Barn.UtvidetRett" />
-              </Normaltekst>
+              </BodyShort>
             </div>
           ))}
         {aleneomsorg && (
-          <Normaltekst>
+          <BodyShort size="small">
             <FormattedMessage id="FaktaRammevedtak.Barn.Aleneomsorg" />
-          </Normaltekst>
+          </BodyShort>
         )}
         {fosterbarn && (
-          <Normaltekst>
+          <BodyShort size="small">
             <FormattedMessage id="FaktaRammevedtak.Barn.Fosterbarn" />
-          </Normaltekst>
+          </BodyShort>
         )}
         {utenlandskBarn && (
-          <Normaltekst>
+          <BodyShort size="small">
             <FormattedMessage id="FaktaRammevedtak.Barn.UtenlandskBarn" />
-          </Normaltekst>
+          </BodyShort>
         )}
         {deltBosted && (
-          <Normaltekst>
+          <BodyShort size="small">
             <FormattedMessage id="FaktaRammevedtak.Barn.DeltBosted" />
-          </Normaltekst>
+          </BodyShort>
         )}
       </div>
       <div>
-        <Element>
+        <Label size="small" as="p">
           <FormattedMessage id="FaktaRammevedtak.Barn.FOM" />
-        </Element>
+        </Label>
         {kroniskSykdom &&
           kroniskSykdom.map(ks => (
             <div key={uuidv4()}>
-              <Normaltekst>{formaterDato(ks.fom)}</Normaltekst>
+              <BodyShort size="small">{formaterDato(ks.fom)}</BodyShort>
             </div>
           ))}
-        {aleneomsorg && <Normaltekst>{formaterDato(aleneomsorg.fom)}</Normaltekst>}
-        {fosterbarn && <Normaltekst>{formaterDato(fosterbarn.fom)}</Normaltekst>}
-        {utenlandskBarn && <Normaltekst>{formaterDato(utenlandskBarn.fom)}</Normaltekst>}
-        {deltBosted && <Normaltekst>{formaterDato(deltBosted.fom)}</Normaltekst>}
+        {aleneomsorg && <BodyShort size="small">{formaterDato(aleneomsorg.fom)}</BodyShort>}
+        {fosterbarn && <BodyShort size="small">{formaterDato(fosterbarn.fom)}</BodyShort>}
+        {utenlandskBarn && <BodyShort size="small">{formaterDato(utenlandskBarn.fom)}</BodyShort>}
+        {deltBosted && <BodyShort size="small">{formaterDato(deltBosted.fom)}</BodyShort>}
       </div>
       <div>
-        <Element>
+        <Label size="small" as="p">
           <FormattedMessage id="FaktaRammevedtak.Barn.TOM" />
-        </Element>
+        </Label>
         {kroniskSykdom &&
           kroniskSykdom.map(ks => (
             <div key={uuidv4()}>
-              <Normaltekst>{formaterDato(ks.tom)}</Normaltekst>
+              <BodyShort size="small">{formaterDato(ks.tom)}</BodyShort>
             </div>
           ))}
-        {aleneomsorg && !aleneomsorg.tom.includes('9999') && <Normaltekst>{formaterDato(aleneomsorg.tom)}</Normaltekst>}
-        {fosterbarn && <Normaltekst>{formaterDato(fosterbarn.tom)}</Normaltekst>}
-        {utenlandskBarn && <Normaltekst>{formaterDato(utenlandskBarn.tom)}</Normaltekst>}
-        {deltBosted && <Normaltekst>{formaterDato(deltBosted.tom)}</Normaltekst>}
+        {aleneomsorg && !aleneomsorg.tom.includes('9999') && (
+          <BodyShort size="small">{formaterDato(aleneomsorg.tom)}</BodyShort>
+        )}
+        {fosterbarn && <BodyShort size="small">{formaterDato(fosterbarn.tom)}</BodyShort>}
+        {utenlandskBarn && <BodyShort size="small">{formaterDato(utenlandskBarn.tom)}</BodyShort>}
+        {deltBosted && <BodyShort size="small">{formaterDato(deltBosted.tom)}</BodyShort>}
       </div>
     </div>
   );

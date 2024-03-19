@@ -1,11 +1,10 @@
+import { PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { ISO_DATE_FORMAT, formatCurrencyWithKr } from '@fpsak-frontend/utils';
+import { BodyShort } from '@navikt/ds-react';
 import moment from 'moment';
 import Panel from 'nav-frontend-paneler';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-
-import { PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { formatCurrencyWithKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Inntekt } from '../InntektType';
 
 const headerTextCodes = [
@@ -25,9 +24,9 @@ const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({
   if (!inntekter || inntekter.length === 0) {
     return (
       <Panel border>
-        <Normaltekst>
+        <BodyShort size="small">
           <FormattedMessage id="InntektOgYtelserFaktaPanel.NoInformation" />
-        </Normaltekst>
+        </BodyShort>
       </Panel>
     );
   }

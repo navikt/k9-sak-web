@@ -1,13 +1,10 @@
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-
-import { Heading } from '@navikt/ds-react';
+import { BodyShort, Detail, Heading } from '@navikt/ds-react';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
 import VedtaksbrevAvsnitt from '../types/vedtaksbrevAvsnittTsType';
 import TilbakekrevingVedtakForm from './TilbakekrevingVedtakForm';
@@ -51,10 +48,10 @@ const TilbakekrevingVedtak = ({
         <FormattedMessage id="TilbakekrevingVedtak.Vedtak" />
       </Heading>
       <VerticalSpacer twentyPx />
-      <Undertekst>
+      <Detail>
         <FormattedMessage id="TilbakekrevingVedtak.Resultat" />
-      </Undertekst>
-      <Normaltekst>{getKodeverknavn(resultat)}</Normaltekst>
+      </Detail>
+      <BodyShort size="small">{getKodeverknavn(resultat)}</BodyShort>
       <VerticalSpacer sixteenPx />
       <TilbakekrevingVedtakPeriodeTabell perioder={perioder} getKodeverknavn={getKodeverknavn} />
       <VerticalSpacer sixteenPx />

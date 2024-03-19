@@ -2,10 +2,9 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn, PerioderMedBehandlingsId } from '@k9-sak-web/types';
 import { AddCircle } from '@navikt/ds-icons';
-import { Button, Heading } from '@navikt/ds-react';
+import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import axios from 'axios';
 import { Location } from 'history';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { UseQueryResult, useQueries } from 'react-query';
@@ -279,9 +278,9 @@ const BehandlingPicker = ({
           </div>
           <ul className={styles.behandlingList}>
             {noExistingBehandlinger && (
-              <Normaltekst data-testid="ingenBehandlinger">
+              <BodyShort size="small" data-testid="ingenBehandlinger">
                 <FormattedMessage id="BehandlingList.ZeroBehandlinger" />
-              </Normaltekst>
+              </BodyShort>
             )}
             {!noExistingBehandlinger &&
               renderListItems({

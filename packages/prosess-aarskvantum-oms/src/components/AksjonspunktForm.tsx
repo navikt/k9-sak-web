@@ -19,8 +19,7 @@ import {
 } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
 import { Delete } from '@navikt/ds-icons';
-import { Button } from '@navikt/ds-react';
-import { Element } from 'nav-frontend-typografi';
+import { Button, Label } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -171,9 +170,9 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
           name="valg"
           validate={[required]}
           label={
-            <Element>
+            <Label size="small" as="p">
               <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Valg" />
-            </Element>
+            </Label>
           }
         >
           <RadioOption value={valgValues.reBehandling} label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling' }} />

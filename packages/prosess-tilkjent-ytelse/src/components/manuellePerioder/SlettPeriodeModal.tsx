@@ -1,12 +1,10 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { BodyShort, Button, Modal } from '@navikt/ds-react';
 import moment from 'moment';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-
-import { Button, Modal } from '@navikt/ds-react';
 import styles from './periode.module.css';
 
 interface OwnProps {
@@ -35,9 +33,9 @@ export const SlettPeriodeModal = ({ showModal, periode, closeEvent, cancelEvent 
               />
             </FlexColumn>
             <FlexColumn className={styles.fullWidth}>
-              <Normaltekst className={styles.modalLabel}>
+              <BodyShort size="small" className={styles.modalLabel}>
                 <FormattedMessage id="TilkjentYtelse.PeriodenSlettes" values={{ fom, tom }} />
-              </Normaltekst>
+              </BodyShort>
             </FlexColumn>
           </FlexRow>
 

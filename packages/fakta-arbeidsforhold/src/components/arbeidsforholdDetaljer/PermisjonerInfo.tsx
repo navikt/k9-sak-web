@@ -1,12 +1,11 @@
-import { Normaltekst } from 'nav-frontend-typografi';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
+import { BodyShort } from '@navikt/ds-react';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import styles from './permisjonPeriode.module.css';
 
@@ -29,25 +28,27 @@ const PermisjonerInfo = ({ arbeidsforhold, alleKodeverk }: OwnProps) => {
             <div>
               <VerticalSpacer sixteenPx />
               <div key={utledPeriodeLabelKey(arbeidsforhold.id, index)}>
-                <Normaltekst>
+                <BodyShort size="small">
                   <FormattedMessage id="PersonArbeidsforholdDetailForm.PermisjonPeriode" />
-                </Normaltekst>
+                </BodyShort>
                 <div className={styles.type}>
                   <PeriodLabel
                     dateStringFom={permisjon.permisjonFom}
                     dateStringTom={permisjon.permisjonTom ? permisjon.permisjonTom : ''}
                   />
                 </div>
-                <Normaltekst>
+                <BodyShort size="small">
                   <FormattedMessage id="PersonArbeidsforholdDetailForm.Permisjonype" />
-                </Normaltekst>
-                <Normaltekst className={styles.type}>
+                </BodyShort>
+                <BodyShort size="small" className={styles.type}>
                   {permisjon.type.kode === '-' ? 'Ukjent' : getKodeverknavn(permisjon.type)}
-                </Normaltekst>
-                <Normaltekst>
+                </BodyShort>
+                <BodyShort size="small">
                   <FormattedMessage id="PersonArbeidsforholdDetailForm.Prosent" />
-                </Normaltekst>
-                <Normaltekst className={styles.type}>{permisjon.permisjonsprosent}</Normaltekst>
+                </BodyShort>
+                <BodyShort size="small" className={styles.type}>
+                  {permisjon.permisjonsprosent}
+                </BodyShort>
               </div>
             </div>
           ))}

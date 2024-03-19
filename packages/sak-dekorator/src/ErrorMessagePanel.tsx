@@ -1,10 +1,9 @@
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { Detail } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
 import Lukknapp from 'nav-frontend-lukknapp';
-import { Undertekst } from 'nav-frontend-typografi';
 import React, { Component } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
 import Feilmelding from './feilmeldingTsType';
@@ -70,9 +69,9 @@ export class ErrorMessagePanel extends Component<OwnProps & WrappedComponentProp
         {errorMessages.map((message, index) => (
           <Row key={message.message}>
             <Column xs="11">
-              <Undertekst className={styles.wordWrap}>{`${decodeHtmlEntity(message.message)} `}</Undertekst>
+              <Detail className={styles.wordWrap}>{`${decodeHtmlEntity(message.message)} `}</Detail>
               {message.additionalInfo && (
-                <Undertekst>
+                <Detail>
                   <a
                     href=""
                     onClick={event => this.toggleModalOnClick(event, index)}
@@ -81,7 +80,7 @@ export class ErrorMessagePanel extends Component<OwnProps & WrappedComponentProp
                   >
                     <FormattedMessage id="ErrorMessagePanel.ErrorDetails" />
                   </a>
-                </Undertekst>
+                </Detail>
               )}
             </Column>
           </Row>

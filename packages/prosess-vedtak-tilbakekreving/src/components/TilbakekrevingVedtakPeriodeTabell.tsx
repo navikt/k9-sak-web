@@ -1,10 +1,9 @@
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-
 import { PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { Kodeverk } from '@k9-sak-web/types';
+import { BodyShort, Label } from '@navikt/ds-react';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
 
@@ -30,56 +29,56 @@ const TilbakekrevingVedtakPeriodeTabell = ({ perioder, getKodeverknavn }: OwnPro
     .map(periode => (
       <TableRow key={periode.periode.fom}>
         <TableColumn>
-          <Normaltekst>
+          <BodyShort size="small">
             <PeriodLabel dateStringFom={periode.periode.fom} dateStringTom={periode.periode.tom} />
-          </Normaltekst>
+          </BodyShort>
         </TableColumn>
         <TableColumn>
-          <Normaltekst>{formatCurrencyNoKr(periode.feilutbetaltBeløp)}</Normaltekst>
+          <BodyShort size="small">{formatCurrencyNoKr(periode.feilutbetaltBeløp)}</BodyShort>
         </TableColumn>
         <TableColumn>
-          <Normaltekst>{getKodeverknavn(periode.vurdering)}</Normaltekst>
+          <BodyShort size="small">{getKodeverknavn(periode.vurdering)}</BodyShort>
         </TableColumn>
         <TableColumn>
-          <Normaltekst>
+          <BodyShort size="small">
             {periode.andelAvBeløp !== undefined && periode.andelAvBeløp !== null ? `${periode.andelAvBeløp}%` : ''}
-          </Normaltekst>
+          </BodyShort>
         </TableColumn>
         <TableColumn>
-          <Normaltekst>{periode.renterProsent ? `${periode.renterProsent}%` : ''}</Normaltekst>
+          <BodyShort size="small">{periode.renterProsent ? `${periode.renterProsent}%` : ''}</BodyShort>
         </TableColumn>
         <TableColumn>
-          <Normaltekst>{formatCurrencyNoKr(periode.tilbakekrevingBeløp)}</Normaltekst>
+          <BodyShort size="small">{formatCurrencyNoKr(periode.tilbakekrevingBeløp)}</BodyShort>
         </TableColumn>
         <TableColumn>
-          <Normaltekst>{formatCurrencyNoKr(periode.tilbakekrevingBeløpEtterSkatt)}</Normaltekst>
+          <BodyShort size="small">{formatCurrencyNoKr(periode.tilbakekrevingBeløpEtterSkatt)}</BodyShort>
         </TableColumn>
       </TableRow>
     ))
     .concat(
       <TableRow key="sum">
         <TableColumn>
-          <Normaltekst>
+          <BodyShort size="small">
             <FormattedMessage id="TilbakekrevingVedtakPeriodeTabell.Sum" />
-          </Normaltekst>
+          </BodyShort>
         </TableColumn>
         <TableColumn>
-          <Normaltekst>
+          <BodyShort size="small">
             {formatCurrencyNoKr(perioder.reduce((sum, periode) => sum + periode.feilutbetaltBeløp, 0))}
-          </Normaltekst>
+          </BodyShort>
         </TableColumn>
         <TableColumn />
         <TableColumn />
         <TableColumn />
         <TableColumn>
-          <Element>
+          <Label size="small" as="p">
             {formatCurrencyNoKr(perioder.reduce((sum, periode) => sum + periode.tilbakekrevingBeløp, 0))}
-          </Element>
+          </Label>
         </TableColumn>
         <TableColumn>
-          <Element>
+          <Label size="small" as="p">
             {formatCurrencyNoKr(perioder.reduce((sum, periode) => sum + periode.tilbakekrevingBeløpEtterSkatt, 0))}
-          </Element>
+          </Label>
         </TableColumn>
       </TableRow>,
     );

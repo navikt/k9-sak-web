@@ -4,10 +4,10 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { FaktaGruppe, PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
+import { BodyShort, Detail } from '@navikt/ds-react';
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
 import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -35,18 +35,18 @@ const lagOppholdIUtland = utlandsOpphold =>
       <div key={`${u.landNavn}${u.fom}${u.tom}`}>
         <Row>
           <Column xs="4">
-            <Normaltekst>{capitalizeFirstLetter(formatLandNavn(u.landNavn))}</Normaltekst>
+            <BodyShort size="small">{capitalizeFirstLetter(formatLandNavn(u.landNavn))}</BodyShort>
           </Column>
           <Column xs="8">
-            <Normaltekst>
+            <BodyShort size="small">
               <PeriodLabel showTodayString dateStringFom={u.fom} dateStringTom={u.tom} />
-            </Normaltekst>
+            </BodyShort>
           </Column>
         </Row>
       </div>
     ))
   ) : (
-    <Normaltekst>-</Normaltekst>
+    <BodyShort size="small">-</BodyShort>
   );
 /**
  * OppholdINorgeOgAdresserFaktaPanel
@@ -67,9 +67,9 @@ const OppholdINorgeOgAdresserFaktaPanel = ({
     <Row>
       <Column xs="6">
         <FaktaGruppe withoutBorder titleCode="OppholdINorgeOgAdresserFaktaPanel.OppholdINorge">
-          <Undertekst>
+          <Detail>
             <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.StayingOutsideOfNorway" />
-          </Undertekst>
+          </Detail>
           <VerticalSpacer fourPx />
           {lagOppholdIUtland(opphold.utlandsopphold)}
         </FaktaGruppe>

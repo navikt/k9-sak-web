@@ -1,11 +1,8 @@
-import { ExpansionCard, Heading } from '@navikt/ds-react';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { BodyShort, ExpansionCard, Heading, Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import underavsnittType from '../../kodeverk/avsnittType';
 import VedtaksbrevAvsnitt from '../../types/vedtaksbrevAvsnittTsType';
 import TilbakekrevingVedtakUtdypendeTekstPanel from './TilbakekrevingVedtakUtdypendeTekstPanel';
@@ -65,8 +62,12 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
             <ExpansionCard.Content>
               {underavsnitter.map((underavsnitt: any) => (
                 <React.Fragment key={underavsnitt.underavsnittstype + underavsnitt.overskrift + underavsnitt.brødtekst}>
-                  {underavsnitt.overskrift && <Element>{underavsnitt.overskrift}</Element>}
-                  {underavsnitt.brødtekst && <Normaltekst>{underavsnitt.brødtekst}</Normaltekst>}
+                  {underavsnitt.overskrift && (
+                    <Label size="small" as="p">
+                      {underavsnitt.overskrift}
+                    </Label>
+                  )}
+                  {underavsnitt.brødtekst && <BodyShort size="small">{underavsnitt.brødtekst}</BodyShort>}
                   {underavsnitt.fritekstTillatt && (
                     <>
                       <VerticalSpacer eightPx />

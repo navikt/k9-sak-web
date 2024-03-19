@@ -1,12 +1,3 @@
-import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import React, { Component } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { FormSection, InjectedFormProps, change, clearFields } from 'redux-form';
-
 import {
   RadioGroupField,
   RadioOption,
@@ -27,14 +18,22 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import ForeldelsePerioderWrapper from '../types/foreldelsePerioderTsType';
-
+import { BodyShort, Button, Detail, Label } from '@navikt/ds-react';
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import React, { Component } from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { FormSection, InjectedFormProps, change, clearFields } from 'redux-form';
 import Aktsomhet, { AKTSOMHET_REKKEFØLGE } from '../kodeverk/aktsomhet';
 import SarligGrunn from '../kodeverk/sarligGrunn';
 import VilkarResultat from '../kodeverk/vilkarResultat';
 import DataForPeriode from '../types/dataForPeriodeTsType';
 import { DetaljertFeilutbetalingPeriode } from '../types/detaljerteFeilutbetalingsperioderTsType';
+import ForeldelsePerioderWrapper from '../types/foreldelsePerioderTsType';
 import TilbakekrevingTimelineData from './splittePerioder/TilbakekrevingTimelineData';
+import styles from './tilbakekrevingPeriodeForm.module.css';
 import ForeldetFormPanel from './tilbakekrevingPeriodePaneler/ForeldetFormPanel';
 import TilbakekrevingAktivitetTabell from './tilbakekrevingPeriodePaneler/TilbakekrevingAktivitetTabell';
 import AktsomhetFormPanel, {
@@ -43,9 +42,6 @@ import AktsomhetFormPanel, {
 import BelopetMottattIGodTroFormPanel, {
   InitialValuesGodTroForm,
 } from './tilbakekrevingPeriodePaneler/godTro/BelopetMottattIGodTroFormPanel';
-
-import { Button } from '@navikt/ds-react';
-import styles from './tilbakekrevingPeriodeForm.module.css';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
@@ -259,7 +255,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
         <VerticalSpacer twentyPx />
         {reduserteBelop.map(belop => (
           <React.Fragment key={belop.belop}>
-            <Normaltekst>
+            <BodyShort size="small">
               <FormattedMessage
                 id={
                   belop.erTrekk
@@ -268,7 +264,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                 }
                 values={{ belop: formatCurrencyNoKr(belop.belop), b: (chunks: any) => <b>{chunks}</b> }}
               />
-            </Normaltekst>
+            </BodyShort>
             <VerticalSpacer eightPx />
           </React.Fragment>
         ))}
@@ -278,9 +274,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
           <>
             <Row>
               <Column md="10">
-                <Element>
+                <Label size="small" as="p">
                   <FormattedMessage id="TilbakekrevingPeriodeForm.KopierVilkårsvurdering" />
-                </Element>
+                </Label>
                 <SelectField
                   name="perioderForKopi"
                   selectValues={vurdertePerioder.map(per => {
@@ -313,9 +309,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
               )}
               {!data.erForeldet && (
                 <Column md="10">
-                  <Element>
+                  <Label size="small" as="p">
                     <FormattedMessage id="TilbakekrevingPeriodeForm.VilkarForTilbakekreving" />
-                  </Element>
+                  </Label>
                   <VerticalSpacer eightPx />
                   <TextAreaField
                     name="begrunnelse"
@@ -327,9 +323,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                     placeholder={intl.formatMessage({ id: 'TilbakekrevingPeriodeForm.Vurdering.Hjelpetekst' })}
                   />
                   <VerticalSpacer twentyPx />
-                  <Undertekst>
+                  <Detail>
                     <FormattedMessage id="TilbakekrevingPeriodeForm.oppfylt" />
-                  </Undertekst>
+                  </Detail>
                   <VerticalSpacer eightPx />
                   <RadioGroupField
                     validate={[required]}
@@ -352,7 +348,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
               <Column md="10">
                 {valgtVilkarResultatType && (
                   <>
-                    <Element>
+                    <Label size="small" as="p">
                       <FormattedMessage
                         id={
                           valgtVilkarResultatType === VilkarResultat.GOD_TRO
@@ -360,7 +356,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                             : 'TilbakekrevingPeriodeForm.Aktsomhet'
                         }
                       />
-                    </Element>
+                    </Label>
                     <VerticalSpacer eightPx />
                     <TextAreaField
                       name="vurderingBegrunnelse"

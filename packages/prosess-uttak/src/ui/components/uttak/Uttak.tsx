@@ -1,7 +1,5 @@
-import * as React from 'react';
-import { Collapse } from 'react-collapse';
-import classNames from 'classnames/bind';
-
+import { PersonPencilFillIcon } from '@navikt/aksel-icons';
+import { BodyShort, HelpText } from '@navikt/ds-react';
 import {
   ChevronIconBlack,
   ContentWithTooltip,
@@ -10,21 +8,21 @@ import {
   RedCrossIconFilled,
   TwoPersonsWithOneHighlightedIconGray,
 } from '@navikt/ft-plattform-komponenter';
-import { PersonPencilFillIcon } from '@navikt/aksel-icons';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { HelpText } from '@navikt/ds-react';
+import classNames from 'classnames/bind';
+import * as React from 'react';
+import { Collapse } from 'react-collapse';
 
 import AnnenPart from '../../../constants/AnnenPart';
 import Årsaker from '../../../constants/Årsaker';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { harÅrsak } from '../../../util/årsakUtils';
 import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
+import ContainerContext from '../../context/ContainerContext';
 import Endringsstatus from '../icons/Endringsstatus';
 import FullWidthRow from '../table/FullWidthRow';
 import TableColumn from '../table/TableColumn';
 import TableRow from '../table/TableRow';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
-import ContainerContext from '../../context/ContainerContext';
 
 import styles from './uttak.module.css';
 
@@ -56,18 +54,25 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
     <>
       <TableRow className={`${erValgt ? styles.uttak__expandedRow : ''}`} onClick={velgPeriode}>
         <TableColumn className={`${withBorderTop ? styles.borderTop : ''}`}>
-          <Normaltekst>
+          <BodyShort size="small">
             {periode.prettifyPeriod()}
-            {manueltOverstyrt && <>
-              <PersonPencilFillIcon className="ml-1 align-middle text-2xl text-border-warning" title="Manuelt overstyrt" />
-              <HelpText
-                wrapperClassName='inline-flex align-middle ml-2'
-                onClick={(e) => { e.stopPropagation() }}
-              >
-                Uttaksgrad og/eller utbetalingsgrad er manuelt overstyrt av saksbehandler.
-              </HelpText>
-            </>}
-          </Normaltekst>
+            {manueltOverstyrt && (
+              <>
+                <PersonPencilFillIcon
+                  className="ml-1 align-middle text-2xl text-border-warning"
+                  title="Manuelt overstyrt"
+                />
+                <HelpText
+                  wrapperClassName="inline-flex align-middle ml-2"
+                  onClick={e => {
+                    e.stopPropagation();
+                  }}
+                >
+                  Uttaksgrad og/eller utbetalingsgrad er manuelt overstyrt av saksbehandler.
+                </HelpText>
+              </>
+            )}
+          </BodyShort>
         </TableColumn>
         <TableColumn className={`${withBorderTop ? styles.borderTop : ''}`}>
           {harOppfyltAlleInngangsvilkår ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
@@ -95,9 +100,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
         </TableColumn>
 
         <TableColumn className={`${styles.uttak__uttaksgrad} ${withBorderTop ? styles.borderTop : ''}`}>
-          <p className={styles.uttak__uttaksgrad__tekst}>
-            {`${uttaksgrad} %`}
-          </p>
+          <p className={styles.uttak__uttaksgrad__tekst}>{`${uttaksgrad} %`}</p>
           <div className={uttakGradIndikatorCls} />
         </TableColumn>
         <TableColumn className={`${withBorderTop ? styles.borderTop : ''}`}>

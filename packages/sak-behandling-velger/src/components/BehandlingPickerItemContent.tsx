@@ -4,7 +4,6 @@ import { DateLabel, Image } from '@fpsak-frontend/shared-components';
 import { Periode } from '@k9-sak-web/types';
 import { BodyShort, Heading } from '@navikt/ds-react';
 import Panel from 'nav-frontend-paneler';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './behandlingPickerItemContent.module.css';
@@ -67,11 +66,13 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
             tooltip={<FormattedMessage id="BehandlingPickerItemContent.Kalender" />}
             alignTooltipLeft
           />
-          {søknadsperioder?.length > 0 && <Normaltekst>{getFormattedSøknadserioder(søknadsperioder)}</Normaltekst>}
+          {søknadsperioder?.length > 0 && (
+            <BodyShort size="small">{getFormattedSøknadserioder(søknadsperioder)}</BodyShort>
+          )}
         </div>
         <div className={styles.resultContainer}>
           {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage, erFerdigstilt)}
-          <Normaltekst>
+          <BodyShort size="small">
             <FormattedMessage id="BehandlingPickerItemContent.Resultat" />
             {`: `}
             {getStatusText(behandlingsresultatTypeKode, behandlingsresultatTypeNavn, erFerdigstilt)}
@@ -80,7 +81,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
                 <DateLabel dateString={avsluttet} />
               </BodyShort>
             )}
-          </Normaltekst>
+          </BodyShort>
         </div>
         {opprettet && (
           <div className={styles.opprettetDatoContainer}>
@@ -94,9 +95,9 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
         )}
       </div>
       <div className={styles.åpneText}>
-        <Normaltekst>
+        <BodyShort size="small">
           <FormattedMessage id="BehandlingPickerItemContent.Behandling.Aapne" />
-        </Normaltekst>
+        </BodyShort>
         <Image
           className={styles.åpneChevron}
           src={chevronBlueRightImg}

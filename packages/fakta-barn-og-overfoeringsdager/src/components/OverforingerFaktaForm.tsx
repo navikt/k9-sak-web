@@ -1,25 +1,25 @@
-import React from 'react';
-import { InjectedFormProps } from 'redux-form';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import isEmpty from 'just-is-empty';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import transferIcon from '@fpsak-frontend/assets/images/data-transfer-horizontal.svg';
 import {
   behandlingForm,
   getBehandlingFormPrefix,
   getBehandlingFormValues,
 } from '@fpsak-frontend/form/src/behandlingForm';
 import { FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
-import transferIcon from '@fpsak-frontend/assets/images/data-transfer-horizontal.svg';
-import { Element } from 'nav-frontend-typografi';
 import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
+import { Label } from '@navikt/ds-react';
+import isEmpty from 'just-is-empty';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
 import mapDtoTilFormValues from '../dto/mapping';
 import FormValues from '../types/FormValues';
 import { OverføringsretningEnum } from '../types/Overføring';
-import { rammevedtakFormName } from './formNames';
+import FastBreddeAligner from './FastBreddeAligner';
 import OverføringsdagerPanelgruppe from './OverføringsdagerPanelgruppe';
 import Seksjon from './Seksjon';
-import FastBreddeAligner from './FastBreddeAligner';
+import { rammevedtakFormName } from './formNames';
 
 interface OverforingerFaktaFormProps {
   rammevedtak: Rammevedtak[];
@@ -65,18 +65,18 @@ export const OverforingerFaktaFormImpl = ({
                   width: '225px',
                   id: 'overføring.tittel.totalt',
                   content: (
-                    <Element>
+                    <Label size="small" as="p">
                       <FormattedMessage id="FaktaRammevedtak.Overføringer.Totalt" />
-                    </Element>
+                    </Label>
                   ),
                 },
                 {
                   width: '150px',
                   id: 'overføring.tittel.type',
                   content: (
-                    <Element>
+                    <Label size="small" as="p">
                       <FormattedMessage id="FaktaRammevedtak.Overføringer.Type" />
-                    </Element>
+                    </Label>
                   ),
                 },
               ]}

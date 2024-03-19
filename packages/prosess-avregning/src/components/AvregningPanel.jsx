@@ -1,14 +1,3 @@
-import { Button, Heading } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { clearFields, formPropTypes } from 'redux-form';
-import { createSelector } from 'reselect';
-
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import {
@@ -25,6 +14,15 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { AksjonspunktHelpTextTemp, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { BodyShort, Button, Detail, Heading, Label } from '@navikt/ds-react';
+import { Column, Row } from 'nav-frontend-grid';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { clearFields, formPropTypes } from 'redux-form';
+import { createSelector } from 'reselect';
 
 import avregningSimuleringResultatPropType from '../propTypes/avregningSimuleringResultatPropType';
 import AvregningSummary from './AvregningSummary';
@@ -145,9 +143,9 @@ export class AvregningPanelImpl extends Component {
                 />
                 <VerticalSpacer twentyPx />
                 {hasOpenTilbakekrevingsbehandling && (
-                  <Element>
+                  <Label size="small" as="p">
                     <FormattedMessage id="Avregning.ApenTilbakekrevingsbehandling" />
-                  </Element>
+                  </Label>
                 )}
               </Column>
             </Row>
@@ -172,9 +170,9 @@ export class AvregningPanelImpl extends Component {
                     </Column>
                     {apCodes[0] === aksjonspunktCodes.VURDER_FEILUTBETALING && (
                       <Column sm="6">
-                        <Undertekst>
+                        <Detail>
                           <FormattedMessage id="Avregning.videreBehandling" />
-                        </Undertekst>
+                        </Detail>
                         <VerticalSpacer eightPx />
                         <RadioGroupField
                           name="videreBehandling"
@@ -191,9 +189,9 @@ export class AvregningPanelImpl extends Component {
                                 <ArrowBox alignOffset={20}>
                                   <Row>
                                     <Column sm="10">
-                                      <Normaltekst className={styles.bold}>
+                                      <BodyShort size="small" className={styles.bold}>
                                         <FormattedMessage id="Avregning.varseltekst" />
-                                      </Normaltekst>
+                                      </BodyShort>
                                     </Column>
                                     <Column sm="2">
                                       <Image

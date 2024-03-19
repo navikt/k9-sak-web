@@ -1,4 +1,7 @@
+import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
+import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 import { DatepickerField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   dateAfterOrEqual,
   dateBeforeOrEqual,
@@ -9,17 +12,12 @@ import {
   required,
   requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
+import { DokumentStatus } from '@k9-sak-web/types';
+import { BodyShort } from '@navikt/ds-react';
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import moment from 'moment';
 import React, { useCallback, useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
-import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DokumentStatus } from '@k9-sak-web/types';
-import { AssessedBy } from '@navikt/ft-plattform-komponenter';
-
-import { Normaltekst } from 'nav-frontend-typografi';
 
 import { formatDate } from '../utils';
 
@@ -105,17 +103,17 @@ export const SoknadsfristVilkarDokument = ({
             </FlexColumn>
             <FlexColumn>
               {erVilkarOk && (
-                <Normaltekst>
+                <BodyShort size="small">
                   <FormattedMessage id="SoknadsfristVilkarForm.ErOppfylt" values={{ b: chunks => <b>{chunks}</b> }} />
-                </Normaltekst>
+                </BodyShort>
               )}
               {!erVilkarOk && (
-                <Normaltekst>
+                <BodyShort size="small">
                   <FormattedMessage
                     id="SoknadsfristVilkarForm.VilkarIkkeOppfylt"
                     values={{ b: chunks => <b>{chunks}</b> }}
                   />
-                </Normaltekst>
+                </BodyShort>
               )}
             </FlexColumn>
           </FlexRow>

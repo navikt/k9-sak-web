@@ -12,11 +12,10 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, dateBeforeOrEqualToToday, hasValidDate, required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { Heading } from '@navikt/ds-react';
+import { BodyShort, Detail, Heading, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
 import Panel from 'nav-frontend-paneler';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -69,9 +68,9 @@ export const VurderSoknadsfristPleiepengerFormImpl = ({
     <Row>
       <Column xs="6">
         <Panel className={styles.panel}>
-          <Element>
+          <Label size="small" as="p">
             <FormattedMessage id="VurderSoknadsfristPleiepengerForm.Vurder" />
-          </Element>
+          </Label>
           <ul className={styles.hyphen}>
             <li>
               <FormattedMessage id="VurderSoknadsfristPleiepengerForm.Punkt1" />
@@ -88,20 +87,20 @@ export const VurderSoknadsfristPleiepengerFormImpl = ({
       <Column xs="6">
         <Row className={styles.marginBottom}>
           <Column xs="6">
-            <Undertekst>
+            <Detail>
               <FormattedMessage id="VurderSoknadsfristPleiepengerForm.SoknadMottatt" />
-            </Undertekst>
-            {mottattDato && <Normaltekst>{moment(mottattDato).format(DDMMYYYY_DATE_FORMAT)}</Normaltekst>}
+            </Detail>
+            {mottattDato && <BodyShort size="small">{moment(mottattDato).format(DDMMYYYY_DATE_FORMAT)}</BodyShort>}
           </Column>
           <Column xs="6">
-            <Undertekst>
+            <Detail>
               <FormattedMessage id="VurderSoknadsfristPleiepengerForm.SoknadPeriode" />
-            </Undertekst>
-            <Normaltekst>
+            </Detail>
+            <BodyShort size="small">
               {`${moment(soknadsperiodeStart).format(DDMMYYYY_DATE_FORMAT)} - ${moment(soknadsperiodeSlutt).format(
                 DDMMYYYY_DATE_FORMAT,
               )}`}
-            </Normaltekst>
+            </BodyShort>
           </Column>
         </Row>
       </Column>

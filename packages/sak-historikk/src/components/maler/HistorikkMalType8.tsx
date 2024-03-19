@@ -1,9 +1,10 @@
+import { HistorikkinnslagEndretFelt, Kodeverk } from '@k9-sak-web/types';
+import { BodyShort, Label } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-
-import { HistorikkinnslagEndretFelt, Kodeverk } from '@k9-sak-web/types';
-
+import HistorikkMal from '../HistorikkMalTsType';
+import BubbleText from './felles/bubbleText';
+import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
 import {
   findEndretFeltNavn,
   findEndretFeltVerdi,
@@ -11,9 +12,6 @@ import {
   findIdForOpplysningCode,
   findResultatText,
 } from './felles/historikkUtils';
-import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
-import BubbleText from './felles/bubbleText';
-import HistorikkMal from '../HistorikkMalTsType';
 import Skjermlenke from './felles/Skjermlenke';
 
 const formatChangedField = (
@@ -78,11 +76,15 @@ const HistorikkMalType8 = ({
           )}
 
           {historikkinnslagDel.hendelse && (
-            <Element>{findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}</Element>
+            <Label size="small" as="p">
+              {findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}
+            </Label>
           )}
 
           {historikkinnslagDel.resultat && (
-            <Element>{findResultatText(historikkinnslagDel.resultat, intl, getKodeverknavn)}</Element>
+            <Label size="small" as="p">
+              {findResultatText(historikkinnslagDel.resultat, intl, getKodeverknavn)}
+            </Label>
           )}
 
           {historikkinnslagDel.endredeFelter &&
@@ -98,13 +100,13 @@ const HistorikkMalType8 = ({
               />
             ))}
 
-          {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
+          {historikkinnslagDel.aarsak && (
+            <BodyShort size="small">{getKodeverknavn(historikkinnslagDel.aarsak)}</BodyShort>
+          )}
           {historikkinnslagDel.begrunnelse && (
             <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse)} />
           )}
-          {historikkinnslagDel.begrunnelseFritekst && (
-            <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />
-          )}
+          {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />}
           {dokumentLinks &&
             dokumentLinks.map(dokumentLenke => (
               <HistorikkDokumentLenke

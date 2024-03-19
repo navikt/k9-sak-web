@@ -1,20 +1,16 @@
-import { Normaltekst } from 'nav-frontend-typografi';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
-
 import { RadioGroupField, RadioOption, TextAreaField, behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ariaCheck, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Risikoklassifisering } from '@k9-sak-web/types';
-
+import { BodyShort, Button } from '@navikt/ds-react';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
 import faresignalVurdering from '../kodeverk/faresignalVurdering';
-
-import { Button } from '@navikt/ds-react';
 import styles from './avklarFaresignalerForm.module.css';
 
 const maxLength1500 = maxLength(1500);
@@ -59,9 +55,9 @@ export const AvklarFaresignalerForm = ({ readOnly, aksjonspunkt, ...formProps }:
       <VerticalSpacer sixteenPx />
       <FlexRow>
         <FlexColumn>
-          <Normaltekst>
+          <BodyShort size="small">
             <FormattedMessage id="Risikopanel.Form.Resultat" />
-          </Normaltekst>
+          </BodyShort>
         </FlexColumn>
       </FlexRow>
       <VerticalSpacer eightPx />

@@ -1,6 +1,5 @@
-import { Heading } from '@navikt/ds-react';
+import { Heading, Label } from '@navikt/ds-react';
 import { Box, InteractiveList, Margin } from '@navikt/ft-plattform-komponenter';
-import { Element } from 'nav-frontend-typografi';
 import React, { useEffect } from 'react';
 import Vurderingsperiode from '../../../types/Vurderingsperiode';
 import { usePrevious } from '../../../util/hooks';
@@ -54,10 +53,16 @@ const Periodenavigasjon = ({
       {antallPerioder > 0 && (
         <div className={styles.vurderingsvelgerContainer}>
           <div className={styles.vurderingsvelgerContainer__columnHeadings}>
-            <Element className={styles['vurderingsvelgerContainer__columnHeading--first']}>Status</Element>
-            <Element className={styles['vurderingsvelgerContainer__columnHeading--second']}>Periode</Element>
+            <Label size="small" as="p" className={styles['vurderingsvelgerContainer__columnHeading--first']}>
+              Status
+            </Label>
+            <Label size="small" as="p" className={styles['vurderingsvelgerContainer__columnHeading--second']}>
+              Periode
+            </Label>
 
-            <Element className={styles['vurderingsvelgerContainer__columnHeading--third']}>Kilde</Element>
+            <Label size="small" as="p" className={styles['vurderingsvelgerContainer__columnHeading--third']}>
+              Kilde
+            </Label>
           </div>
           <InteractiveList
             elements={elements.map((element, currentIndex) => ({

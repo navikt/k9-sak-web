@@ -1,10 +1,10 @@
+import { Label } from '@navikt/ds-react';
 import * as React from 'react';
-import { Element } from 'nav-frontend-typografi';
-import VilkårslisteItem from './VilkårslisteItem';
-import styles from './vilkårsliste.module.css';
+import Utfall from '../constants/Utfall';
 import Inngangsvilkår from '../types/Inngangsvilkår';
 import vilkår from './Vilkår';
-import Utfall from '../constants/Utfall';
+import VilkårslisteItem from './VilkårslisteItem';
+import styles from './vilkårsliste.module.css';
 
 interface VilkårslisteProps {
   inngangsvilkår: Inngangsvilkår;
@@ -15,7 +15,9 @@ const erVilkårOppfylt = (vilkårkode: string, inngangsvilkår: Inngangsvilkår)
 
 const Vilkårsliste = ({ inngangsvilkår }: VilkårslisteProps): JSX.Element => (
   <div className={styles.vilkårsliste}>
-    <Element>Vilkår</Element>
+    <Label size="small" as="p">
+      Vilkår
+    </Label>
     <ul>
       {vilkår.map(
         v =>

@@ -1,12 +1,10 @@
-import { Element, Undertekst } from 'nav-frontend-typografi';
-import React from 'react';
-import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
-
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-
 import { KodeverkMedNavn } from '@k9-sak-web/types';
+import { Detail, Label } from '@navikt/ds-react';
+import React from 'react';
+import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 
 import styles from './aktsomhetGradUaktsomhetFormPanel.module.css';
@@ -17,9 +15,9 @@ const maxLength1500 = maxLength(1500);
 
 const sarligGrunnerBegrunnelseDiv = (readOnly: boolean, intl: IntlShape) => (
   <div>
-    <Element>
+    <Label size="small" as="p">
       <FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.SærligGrunner" />
-    </Element>
+    </Label>
     <VerticalSpacer eightPx />
     <TextAreaField
       name="sarligGrunnerBegrunnelse"
@@ -65,9 +63,9 @@ const AktsomhetGradUaktsomhetFormPanel = ({
     <ArrowBox alignOffset={handletUaktsomhetGrad === Aktsomhet.GROVT_UAKTSOM ? grovUaktsomOffset : 28}>
       {handletUaktsomhetGrad === Aktsomhet.SIMPEL_UAKTSOM && erTotalBelopUnder4Rettsgebyr && (
         <>
-          <Undertekst>
+          <Detail>
             <FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.Tilbakekrev" />
-          </Undertekst>
+          </Detail>
           <VerticalSpacer eightPx />
           <RadioGroupField validate={[required]} name="tilbakekrevSelvOmBeloepErUnder4Rettsgebyr" readOnly={readOnly}>
             <RadioOption label={<FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.Ja" />} value>

@@ -1,17 +1,16 @@
-import { Normaltekst } from 'nav-frontend-typografi';
+import { FadingPanel } from '@fpsak-frontend/shared-components';
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-
-import { FadingPanel } from '@fpsak-frontend/shared-components';
 
 import styles from './behandlingHenlagtPanel.module.css';
 
 const BehandlingHenlagtPanel = () => (
   <div className={styles.container}>
     <FadingPanel>
-      <Normaltekst>
+      <BodyShort size="small">
         <FormattedMessage id="BehandlingHenlagtPanel.Henlagt" />
-      </Normaltekst>
+      </BodyShort>
     </FadingPanel>
   </div>
 );

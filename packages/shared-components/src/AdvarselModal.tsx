@@ -1,7 +1,6 @@
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
-import { Button, Heading, Modal } from '@navikt/ds-react';
+import { BodyShort, Button, Heading, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import getPackageIntl from '../i18n/getPackageIntl';
 import Image from './Image';
@@ -35,7 +34,7 @@ const AdvarselModal = ({ bodyText, headerText, showModal, submit }: OwnProps) =>
                 {headerText}
               </Heading>
             )}
-            <Normaltekst>{bodyText}</Normaltekst>
+            <BodyShort size="small">{bodyText}</BodyShort>
           </Column>
           <Column xs="2">
             <Button

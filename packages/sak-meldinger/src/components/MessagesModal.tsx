@@ -1,8 +1,7 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Image } from '@fpsak-frontend/shared-components';
-import { Button, Modal } from '@navikt/ds-react';
+import { Button, Label, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './MessagesModal.module.css';
@@ -38,9 +37,9 @@ const MessagesModal = ({ showModal, closeEvent, intl }: OwnProps & WrappedCompon
           <div className={styles.divider} />
         </Column>
         <Column xs="9">
-          <Element className={styles.text}>
+          <Label size="small" as="p" className={styles.text}>
             <FormattedMessage id="MessagesModal.text" />
-          </Element>
+          </Label>
         </Column>
         <Column xs="2">
           <Button variant="primary" className={styles.button} size="small" onClick={closeEvent} autoFocus>

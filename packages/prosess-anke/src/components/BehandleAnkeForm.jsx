@@ -18,10 +18,9 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktHelpTextTemp, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { Heading } from '@navikt/ds-react';
+import { BodyShort, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -185,9 +184,9 @@ const BehandleAnkeFormImpl = ({
         </Column>
       </Row>
 
-      <Normaltekst>
+      <BodyShort size="small">
         <FormattedMessage id="Ankebehandling.Resultat" />
-      </Normaltekst>
+      </BodyShort>
       <Row>
         <Column xs="4">
           <RadioGroupField name="ankeVurdering" validate={[required]} direction="vertical" readOnly={readOnly}>
@@ -218,9 +217,9 @@ const BehandleAnkeFormImpl = ({
         <Row>
           <Column xs="7">
             <ArrowBox>
-              <Normaltekst>
+              <BodyShort size="small">
                 <FormattedMessage id="Ankebehandling.Avvisning" />
-              </Normaltekst>
+              </BodyShort>
               <CheckboxField
                 name="erAnkerIkkePart"
                 label={<FormattedMessage id="Ankebehandling.Avvisning.IkkePart" />}
@@ -237,9 +236,9 @@ const BehandleAnkeFormImpl = ({
                 name="erIkkeSignert"
                 label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeSignert" />}
               />
-              <Normaltekst>
+              <BodyShort size="small">
                 <FormattedMessage id="Ankebehandling.Realitetsbehandles" />
-              </Normaltekst>
+              </BodyShort>
               <RadioGroupField
                 name="erSubsidiartRealitetsbehandles"
                 validate={[required]}

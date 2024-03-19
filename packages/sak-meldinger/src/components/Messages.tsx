@@ -23,10 +23,9 @@ import {
   Personopplysninger,
 } from '@k9-sak-web/types';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
-import { Button } from '@navikt/ds-react';
+import { BodyShort, Button } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { Checkbox } from 'nav-frontend-skjema';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
@@ -341,7 +340,7 @@ export const MessagesImpl = ({
                 </div>
                 <div className={styles.orgnameField}>
                   <Label input={intl.formatMessage({ id: 'Messages.Name' })} readOnly />
-                  <Normaltekst>{tredjepartsmottakerInfo.name || ''}</Normaltekst>
+                  <BodyShort size="small">{tredjepartsmottakerInfo.name || ''}</BodyShort>
                 </div>
               </div>
             </>

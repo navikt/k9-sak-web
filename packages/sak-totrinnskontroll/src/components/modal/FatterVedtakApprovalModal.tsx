@@ -6,9 +6,8 @@ import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { Image } from '@fpsak-frontend/shared-components';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import { Behandling, Kodeverk } from '@k9-sak-web/types';
-import { Button, Modal } from '@navikt/ds-react';
+import { BodyShort, Button, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './fatterVedtakApprovalModal.module.css';
@@ -242,12 +241,12 @@ const FatterVedtakApprovalModal = ({
             <div className={styles.divider} />
           </Column>
           <Column xs="9">
-            <Normaltekst>
+            <BodyShort size="small">
               <FormattedMessage id={infoTextCode} />
-            </Normaltekst>
-            <Normaltekst>
+            </BodyShort>
+            <BodyShort size="small">
               <FormattedMessage id="FatterVedtakApprovalModal.GoToSearchPage" />
-            </Normaltekst>
+            </BodyShort>
           </Column>
           <Column xs="2">
             <Button variant="primary" size="small" className={styles.button} onClick={closeEvent} autoFocus>

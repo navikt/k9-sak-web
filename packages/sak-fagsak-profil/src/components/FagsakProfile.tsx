@@ -1,12 +1,10 @@
-import { EtikettInfo } from 'nav-frontend-etiketter';
-import { Normaltekst } from 'nav-frontend-typografi';
-import React, { ReactNode } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { FlexColumn, FlexContainer, FlexRow, Tooltip, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
-import { Heading } from '@navikt/ds-react';
+import { BodyShort, Heading } from '@navikt/ds-react';
+import { EtikettInfo } from 'nav-frontend-etiketter';
+import React, { ReactNode } from 'react';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 
 const visSakDekningsgrad = (saksKode: string, dekningsgrad?: number): boolean => {
   const erForeldrepenger = saksKode === FagsakYtelseType.FORELDREPENGER;
@@ -44,7 +42,7 @@ export const FagsakProfile = ({
         <FlexColumn>
           <FlexRow wrap>
             <FlexColumn>
-              <Heading level="2" size="medium">
+              <Heading level="2" size="medium" className="-ml-2">
                 {fagsakYtelseType.navn}
               </Heading>
             </FlexColumn>
@@ -65,7 +63,7 @@ export const FagsakProfile = ({
       <VerticalSpacer eightPx />
       <FlexRow>
         <FlexColumn>
-          <Normaltekst>{`${saksnummer} - ${fagsakStatus.navn}`}</Normaltekst>
+          <BodyShort size="small">{`${saksnummer} - ${fagsakStatus.navn}`}</BodyShort>
         </FlexColumn>
       </FlexRow>
     </FlexContainer>

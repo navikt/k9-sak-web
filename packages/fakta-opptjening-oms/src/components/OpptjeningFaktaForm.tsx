@@ -13,11 +13,10 @@ import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Opptjening } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
-import { Button, Heading } from '@navikt/ds-react';
+import { BodyShort, Button, Detail, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { TabsPure } from 'nav-frontend-tabs';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React, { Component, KeyboardEvent, MouseEvent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -284,7 +283,7 @@ export class OpptjeningFaktaFormImpl extends Component<
       arbeidsgiverOpplysningerPerId,
     } = this.props;
     if (!opptjeningList || opptjeningList.length === 0) {
-      return <Normaltekst>Fant ingen opptjeningsaktiviteter</Normaltekst>;
+      return <BodyShort size="small">Fant ingen opptjeningsaktiviteter</BodyShort>;
     }
 
     const { selectedOpptjeningActivity, activeTab } = this.state;
@@ -334,12 +333,12 @@ export class OpptjeningFaktaFormImpl extends Component<
               <VerticalSpacer twentyPx />
             </>
           )}
-          <Undertekst>
+          <Detail>
             <FormattedMessage id="OpptjeningFaktaForm.Skjaringstidspunkt" />
-          </Undertekst>
-          <Normaltekst>
+          </Detail>
+          <BodyShort size="small">
             <DateLabel dateString={findSkjaringstidspunkt(opptjeningTom)} />
-          </Normaltekst>
+          </BodyShort>
           <VerticalSpacer twentyPx />
           <OpptjeningTimeLine
             opptjeningPeriods={opptjeningAktivitetList}
