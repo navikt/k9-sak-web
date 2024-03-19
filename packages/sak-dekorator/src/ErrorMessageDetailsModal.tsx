@@ -1,8 +1,8 @@
 import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Button, Modal } from '@navikt/ds-react';
+import { Button, Heading, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './errorMessageDetailsModal.module.css';
@@ -40,9 +40,9 @@ const ErrorMessageDetailsModal = ({
           <div className={styles.divider} />
         </Column>
         <Column xs="10" className={styles.text}>
-          <Undertittel>
+          <Heading size="small" level="2">
             <FormattedMessage id="ErrorMessageDetailsModal.ErrorDetails" />
-          </Undertittel>
+          </Heading>
         </Column>
       </Row>
     </Modal.Header>

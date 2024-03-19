@@ -1,10 +1,3 @@
-import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
-import { Undertekst, Undertittel } from 'nav-frontend-typografi';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-
 import {
   RadioGroupField,
   RadioOption,
@@ -18,6 +11,13 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { Heading } from '@navikt/ds-react';
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import { Undertekst } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import lagVisningsnavnForKlagepart from '../utils/lagVisningsnavnForKlagepart';
 
 import styles from './formkravKlageForm.module.css';
@@ -74,7 +74,9 @@ export const FormkravKlageForm = ({
 
   return (
     <FadingPanel>
-      <Undertittel>{intl.formatMessage({ id: 'Klage.Formkrav.Title' })}</Undertittel>
+      <Heading size="small" level="2">
+        {intl.formatMessage({ id: 'Klage.Formkrav.Title' })}
+      </Heading>
       <VerticalSpacer fourPx />
       <Undertekst>{intl.formatMessage({ id: getLovHjemmeler(aksjonspunktCode) })}</Undertekst>
       <VerticalSpacer fourPx />

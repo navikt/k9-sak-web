@@ -1,7 +1,7 @@
-import { Button } from '@navikt/ds-react';
+import { Button, Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
 import moment from 'moment';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -111,7 +111,9 @@ export class VarselOmRevurderingFormImpl extends React.Component {
 
     return (
       <form>
-        <Undertittel>{intl.formatMessage({ id: 'VarselOmRevurderingForm.VarselOmRevurdering' })}</Undertittel>
+        <Heading size="small" level="2">
+          {intl.formatMessage({ id: 'VarselOmRevurderingForm.VarselOmRevurdering' })}
+        </Heading>
         <VerticalSpacer eightPx />
         {!readOnly && isAksjonspunktOpen(aksjonspunktStatus) && (
           <div>

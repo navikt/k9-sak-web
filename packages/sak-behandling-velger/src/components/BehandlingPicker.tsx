@@ -2,10 +2,10 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn, PerioderMedBehandlingsId } from '@k9-sak-web/types';
 import { AddCircle } from '@navikt/ds-icons';
-import { Button } from '@navikt/ds-react';
+import { Button, Heading } from '@navikt/ds-react';
 import axios from 'axios';
 import { Location } from 'history';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { UseQueryResult, useQueries } from 'react-query';
@@ -264,12 +264,12 @@ const BehandlingPicker = ({
       {!valgtBehandlingId && (
         <>
           <div className={styles.headerContainer}>
-            <Undertittel>
+            <Heading size="small" level="2">
               <FormattedMessage
                 id="Behandlingspunkt.VelgBehandling"
                 values={{ antallBehandlinger: behandlinger.length }}
               />
-            </Undertittel>
+            </Heading>
             <BehandlingFilter
               filters={getFilterListe()}
               activeFilters={activeFilters}

@@ -5,7 +5,8 @@ import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
+import { Element, Undertekst } from 'nav-frontend-typografi';
 import React, { SetStateAction } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -70,9 +71,9 @@ const VilkarresultatMedOverstyringHeader = ({
             </FlexColumn>
           )}
           <FlexColumn>
-            <Undertittel>
+            <Heading size="small" level="2">
               <FormattedMessage id={panelTittelKode} />
-            </Undertittel>
+            </Heading>
           </FlexColumn>
           {lovReferanse && (
             <FlexColumn>

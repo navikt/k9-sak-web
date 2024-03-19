@@ -1,13 +1,3 @@
-import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { formPropTypes } from 'redux-form';
-import { createSelector } from 'reselect';
-
 import {
   CheckboxField,
   RadioGroupField,
@@ -28,6 +18,16 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktHelpTextTemp, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { Heading } from '@navikt/ds-react';
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import { Normaltekst } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { formPropTypes } from 'redux-form';
+import { createSelector } from 'reselect';
 
 import ankeOmgjorArsak from '../kodeverk/ankeOmgjorArsak';
 import FritekstBrevTextField from './FritekstAnkeBrevTextField';
@@ -163,9 +163,9 @@ const BehandleAnkeFormImpl = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <FadingPanel>
-      <Undertittel>
+      <Heading size="small" level="2">
         <FormattedMessage id="Ankebehandling.Title" />
-      </Undertittel>
+      </Heading>
       <VerticalSpacer fourPx />
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Ankebehandling.HelpText" key={aksjonspunktCode} />]}

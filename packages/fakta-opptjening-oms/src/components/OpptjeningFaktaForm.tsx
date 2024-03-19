@@ -13,11 +13,11 @@ import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Opptjening } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
-import { Button } from '@navikt/ds-react';
+import { Button, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { TabsPure } from 'nav-frontend-tabs';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React, { Component, KeyboardEvent, MouseEvent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -297,9 +297,9 @@ export class OpptjeningFaktaFormImpl extends Component<
       <div className={styles.container}>
         {opptjeningList.length > 1 && (
           <>
-            <Undertittel>
+            <Heading size="small" level="2">
               <FormattedMessage id="OpptjeningFaktaForm.Opptjeningsperioder" />
-            </Undertittel>
+            </Heading>
             <VerticalSpacer sixteenPx />
             <TabsPure
               tabs={opptjeningList.map((currentOpptjening, currentOpptjeningIndex) => ({

@@ -1,14 +1,3 @@
-import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
-import Panel from 'nav-frontend-paneler';
-import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { formPropTypes } from 'redux-form';
-import { createSelector } from 'reselect';
-
 import {
   DatepickerField,
   RadioGroupField,
@@ -23,6 +12,17 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, dateBeforeOrEqualToToday, hasValidDate, required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { Heading } from '@navikt/ds-react';
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import Panel from 'nav-frontend-paneler';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { formPropTypes } from 'redux-form';
+import { createSelector } from 'reselect';
 
 import styles from './vurderSoknadsfristPleiepengerForm.module.css';
 
@@ -49,9 +49,9 @@ export const VurderSoknadsfristPleiepengerFormImpl = ({
   ...formProps
 }) => (
   <>
-    <Undertittel>
+    <Heading size="small" level="2">
       <FormattedMessage id="VurderSoknadsfristPleiepengerForm.Soknadsfrist" />
-    </Undertittel>
+    </Heading>
     <VerticalSpacer twentyPx />
     <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
       {[

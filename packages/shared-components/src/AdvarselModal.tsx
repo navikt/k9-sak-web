@@ -1,7 +1,7 @@
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
-import { Button, Modal } from '@navikt/ds-react';
+import { Button, Heading, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import getPackageIntl from '../i18n/getPackageIntl';
 import Image from './Image';
@@ -30,7 +30,11 @@ const AdvarselModal = ({ bodyText, headerText, showModal, submit }: OwnProps) =>
             <div className={styles.divider} />
           </Column>
           <Column xs="8" className={styles.text}>
-            {headerText && <Undertittel>{headerText}</Undertittel>}
+            {headerText && (
+              <Heading size="small" level="2">
+                {headerText}
+              </Heading>
+            )}
             <Normaltekst>{bodyText}</Normaltekst>
           </Column>
           <Column xs="2">

@@ -1,5 +1,5 @@
-import { ExpansionCard } from '@navikt/ds-react';
-import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { ExpansionCard, Heading } from '@navikt/ds-react';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
@@ -35,9 +35,9 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
 }: OwnProps) => (
   <div className={styles.container}>
     <VerticalSpacer twentyPx />
-    <Undertittel>
+    <Heading size="small" level="2">
       <FormattedMessage id="TilbakekrevingVedtak.Vedtaksbrev" />
-    </Undertittel>
+    </Heading>
     <VerticalSpacer eightPx />
     {vedtaksbrevAvsnitt.map((avsnitt: VedtaksbrevAvsnitt) => {
       const underavsnitter = avsnitt.underavsnittsliste;

@@ -1,4 +1,4 @@
-import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React, { ReactNode } from 'react';
 
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
@@ -16,6 +16,7 @@ import {
 import getPackageIntl from '../../i18n/getPackageIntl';
 import ProsessStegSubmitButton from '../ProsessStegSubmitButton';
 
+import { Heading } from '@navikt/ds-react';
 import styles from './prosessPanelTemplate.module.css';
 
 interface OwnProps {
@@ -67,7 +68,9 @@ const ProsessPanelTemplate = ({
             </FlexColumn>
           )}
           <FlexColumn>
-            <Undertittel>{title}</Undertittel>
+            <Heading size="small" level="2">
+              {title}
+            </Heading>
           </FlexColumn>
           {lovReferanse && (
             <FlexColumn>

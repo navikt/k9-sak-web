@@ -1,6 +1,7 @@
+import { Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -44,7 +45,9 @@ export const CheckPersonStatusFormImpl = ({
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
-    <Undertittel>{intl.formatMessage({ id: 'CheckPersonStatusForm.CheckInformation' })}</Undertittel>
+    <Heading size="small" level="2">
+      {intl.formatMessage({ id: 'CheckPersonStatusForm.CheckInformation' })}
+    </Heading>
     <VerticalSpacer twentyPx />
     <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton && !readOnly}>
       {[intl.formatMessage({ id: 'CheckPersonStatusForm.PersonStatus' }, { status: originalPersonstatusName })]}

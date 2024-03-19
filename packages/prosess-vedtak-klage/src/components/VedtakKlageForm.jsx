@@ -1,23 +1,24 @@
-import React from 'react';
+import { Heading } from '@navikt/ds-react';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import VedtakKlageKaSubmitPanel from './VedtakKlageKaSubmitPanel';
 import VedtakKlageNkkSubmitPanel from './VedtakKlageNkkSubmitPanel';
 import VedtakKlageSubmitPanel from './VedtakKlageSubmitPanel';
-import VedtakKlageKaSubmitPanel from './VedtakKlageKaSubmitPanel';
 
 export const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
 
@@ -52,7 +53,9 @@ export const VedtakKlageFormImpl = ({
 
   return (
     <FadingPanel>
-      <Undertittel>{intl.formatMessage({ id: 'VedtakKlageForm.Header' })}</Undertittel>
+      <Heading size="small" level="2">
+        {intl.formatMessage({ id: 'VedtakKlageForm.Header' })}
+      </Heading>
       <VerticalSpacer twentyPx />
       {!readOnly && åpneAksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_DOKUMENT) ? (
         <>

@@ -1,6 +1,6 @@
-import { Button } from '@navikt/ds-react';
+import { Button, Heading } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -117,9 +117,9 @@ export class AvregningPanelImpl extends Component {
 
     return (
       <>
-        <Undertittel>
+        <Heading size="small" level="2">
           <FormattedMessage id="Avregning.Title" />
-        </Undertittel>
+        </Heading>
         <VerticalSpacer twentyPx />
         {simuleringResultatOption && (
           <div>

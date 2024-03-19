@@ -1,5 +1,6 @@
-import { Box, Margin, InteractiveList } from '@navikt/ft-plattform-komponenter';
-import { Element, Undertittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
+import { Box, InteractiveList, Margin } from '@navikt/ft-plattform-komponenter';
+import { Element } from 'nav-frontend-typografi';
 import React, { useEffect } from 'react';
 import Vurderingsperiode from '../../../types/Vurderingsperiode';
 import { usePrevious } from '../../../util/hooks';
@@ -45,7 +46,9 @@ const Periodenavigasjon = ({
   return (
     <div className={styles.vurderingsnavigasjon}>
       <Box marginBottom={Margin.large}>
-        <Undertittel className={styles.vurderingsnavigasjon__heading}>Alle perioder</Undertittel>
+        <Heading size="small" level="2" className={styles.vurderingsnavigasjon__heading}>
+          Alle perioder
+        </Heading>
       </Box>
       {antallPerioder === 0 && <p className={styles.vurderingsnavigasjon__emptyText}>Ingen vurderinger å vise</p>}
       {antallPerioder > 0 && (

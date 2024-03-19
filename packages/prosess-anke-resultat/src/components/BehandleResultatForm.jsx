@@ -1,11 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { formPropTypes } from 'redux-form';
-import { createSelector } from 'reselect';
-import { connect } from 'react-redux';
-import { injectIntl, FormattedMessage } from 'react-intl';
-import { Undertekst, Undertittel } from 'nav-frontend-typografi';
-import { Column, Row } from 'nav-frontend-grid';
 import {
   behandlingForm,
   behandlingFormValueSelector,
@@ -13,11 +5,20 @@ import {
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
-import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
+import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { Heading } from '@navikt/ds-react';
+import { Column, Row } from 'nav-frontend-grid';
+import { Undertekst } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { formPropTypes } from 'redux-form';
+import { createSelector } from 'reselect';
 
 import PreviewAnkeLink from './PreviewAnkeLink';
 
@@ -197,9 +198,9 @@ const AnkeResultatForm = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <FadingPanel>
-      <Undertittel>
+      <Heading size="small" level="2">
         <FormattedMessage id="Ankebehandling.Resultat.Title" />
-      </Undertittel>
+      </Heading>
       <VerticalSpacer fourPx />
       <Row>
         <Column xs="12">

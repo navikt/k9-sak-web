@@ -5,9 +5,10 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { DateLabel, Image } from '@fpsak-frontend/shared-components';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
 import { Periode } from '@k9-sak-web/types';
+import { Heading } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import { Location } from 'history';
-import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { NavLink, useLocation } from 'react-router-dom';
@@ -65,9 +66,9 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
     });
     return (
       <div className={styles.årsakerContainer}>
-        <Undertittel tag="h3" className={styles.font18}>
+        <Heading size="small" level="3" className={styles.font18}>
           <FormattedMessage id="Behandlingspunkt.ÅrsakerForVurdering" />
-        </Undertittel>
+        </Heading>
         <ul className={styles.årsakerList}>
           {unikeÅrsaker.map((årsak, index) => (
             // eslint-disable-next-line react/no-array-index-key
@@ -86,7 +87,9 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
 
   return (
     <div data-testid="behandlingSelected" className={containerCls}>
-      <Undertittel>{behandlingTypeNavn}</Undertittel>
+      <Heading size="small" level="2">
+        {behandlingTypeNavn}
+      </Heading>
       <div className={styles.infoContainer}>
         <div>
           <div className={styles.dateContainer}>
