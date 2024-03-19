@@ -1,6 +1,5 @@
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React, { Component } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -45,6 +44,7 @@ import BelopetMottattIGodTroFormPanel, {
   InitialValuesGodTroForm,
 } from './tilbakekrevingPeriodePaneler/godTro/BelopetMottattIGodTroFormPanel';
 
+import { Button } from '@navikt/ds-react';
 import styles from './tilbakekrevingPeriodeForm.module.css';
 
 const minLength3 = minLength(3);
@@ -407,19 +407,20 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
         <VerticalSpacer twentyPx />
         <FlexRow>
           <FlexColumn>
-            <Hovedknapp
-              mini
-              htmlType="button"
+            <Button
+              variant="primary"
+              size="small"
+              type="button"
               onClick={this.saveOrToggleModal}
               disabled={formProps.pristine || readOnly}
             >
               <FormattedMessage id="TilbakekrevingPeriodeForm.Oppdater" />
-            </Hovedknapp>
+            </Button>
           </FlexColumn>
           <FlexColumn>
-            <Knapp mini htmlType="button" onClick={skjulPeriode}>
+            <Button variant="secondary" size="small" type="button" onClick={skjulPeriode}>
               <FormattedMessage id="TilbakekrevingPeriodeForm.Avbryt" />
-            </Knapp>
+            </Button>
           </FlexColumn>
         </FlexRow>
         {showModal && (

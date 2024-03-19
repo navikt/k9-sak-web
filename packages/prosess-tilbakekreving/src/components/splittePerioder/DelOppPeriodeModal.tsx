@@ -7,11 +7,10 @@ import {
   hasValidDate,
   required,
 } from '@fpsak-frontend/utils';
-import { Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import moment from 'moment/moment';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -79,18 +78,19 @@ export const DelOppPeriodeModalImpl = ({
       )}
       <Row className={styles.marginTop}>
         <Column>
-          <Hovedknapp
-            mini
-            htmlType="button"
+          <Button
+            variant="primary"
+            size="small"
+            type="button"
             className={styles.button}
             onClick={formProps.handleSubmit}
             disabled={formProps.pristine}
           >
             <FormattedMessage id="DelOppPeriodeModalImpl.Ok" />
-          </Hovedknapp>
-          <Knapp htmlType="button" mini onClick={cancelEvent} className={styles.cancelButton}>
+          </Button>
+          <Button variant="secondary" type="button" size="small" onClick={cancelEvent} className={styles.cancelButton}>
             <FormattedMessage id="DelOppPeriodeModalImpl.Avbryt" />
-          </Knapp>
+          </Button>
         </Column>
       </Row>
     </Modal.Body>

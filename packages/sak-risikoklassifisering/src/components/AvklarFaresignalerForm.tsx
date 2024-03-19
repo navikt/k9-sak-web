@@ -1,4 +1,3 @@
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -15,6 +14,7 @@ import { Aksjonspunkt, Risikoklassifisering } from '@k9-sak-web/types';
 
 import faresignalVurdering from '../kodeverk/faresignalVurdering';
 
+import { Button } from '@navikt/ds-react';
 import styles from './avklarFaresignalerForm.module.css';
 
 const maxLength1500 = maxLength(1500);
@@ -81,14 +81,15 @@ export const AvklarFaresignalerForm = ({ readOnly, aksjonspunkt, ...formProps }:
       </FlexRow>
       <FlexRow>
         <FlexColumn>
-          <Hovedknapp
-            mini
-            spinner={formProps.submitting}
+          <Button
+            variant="primary"
+            size="small"
+            loading={formProps.submitting}
             disabled={!formProps.dirty || readOnly || formProps.submitting}
             onClick={ariaCheck}
           >
             <FormattedMessage id="Risikopanel.Form.Bekreft" />
-          </Hovedknapp>
+          </Button>
         </FlexColumn>
       </FlexRow>
     </form>

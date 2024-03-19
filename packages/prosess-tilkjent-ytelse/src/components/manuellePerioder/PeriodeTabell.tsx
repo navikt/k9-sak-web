@@ -1,17 +1,17 @@
-import React, { useState, useCallback } from 'react';
-import { connect } from 'react-redux';
-import { change as reduxFormChange, FieldArray, getFormInitialValues, reset as reduxFormReset } from 'redux-form';
-import { FormattedMessage } from 'react-intl';
-import { bindActionCreators } from 'redux';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { ariaCheck } from '@fpsak-frontend/utils';
+import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ariaCheck } from '@fpsak-frontend/utils';
+import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import React, { useCallback, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { FieldArray, getFormInitialValues, change as reduxFormChange, reset as reduxFormReset } from 'redux-form';
 
+import { Button } from '@navikt/ds-react';
+import NyPeriode from './NyPeriode';
 import PeriodeRad from './PeriodeRad';
 import SlettPeriodeModal from './SlettPeriodeModal';
-import NyPeriode from './NyPeriode';
 
 const FORM_NAME = 'TilkjentYtelseForm';
 
@@ -239,14 +239,20 @@ export const PeriodeTabell = ({
       <FlexContainer wrap>
         <FlexRow>
           <FlexColumn>
-            <Hovedknapp mini disabled={disableButtons} onClick={ariaCheck} spinner={submitting}>
+            <Button variant="primary" size="small" disabled={disableButtons} onClick={ariaCheck} loading={submitting}>
               <FormattedMessage id="TilkjentYtelse.BekreftOgFortsett" />
-            </Hovedknapp>
+            </Button>
           </FlexColumn>
           <FlexColumn>
-            <Knapp mini htmlType="button" onClick={newPeriodeResetCallback} disabled={disableButtons}>
+            <Button
+              variant="secondary"
+              size="small"
+              type="button"
+              onClick={newPeriodeResetCallback}
+              disabled={disableButtons}
+            >
               <FormattedMessage id="TilkjentYtelse.LeggTilPeriode" />
-            </Knapp>
+            </Button>
           </FlexColumn>
         </FlexRow>
       </FlexContainer>

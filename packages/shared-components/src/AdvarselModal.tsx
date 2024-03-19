@@ -1,7 +1,6 @@
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
-import { Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import getPackageIntl from '../i18n/getPackageIntl';
@@ -35,9 +34,16 @@ const AdvarselModal = ({ bodyText, headerText, showModal, submit }: OwnProps) =>
             <Normaltekst>{bodyText}</Normaltekst>
           </Column>
           <Column xs="2">
-            <Hovedknapp className={styles.submitButton} mini htmlType="submit" onClick={submit} autoFocus>
+            <Button
+              variant="primary"
+              className={styles.submitButton}
+              size="small"
+              type="submit"
+              onClick={submit}
+              autoFocus
+            >
               {intl.formatMessage({ id: 'AdvarselModal.Ok' })}
-            </Hovedknapp>
+            </Button>
           </Column>
         </Row>
       </Modal.Body>

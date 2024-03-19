@@ -2,9 +2,8 @@ import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
-import { Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -107,12 +106,12 @@ export const EndreBehandlendeEnhetModal = ({
             <Column xs="8">
               <VerticalSpacer sixteenPx />
               <div className={styles.floatButtons}>
-                <Hovedknapp mini className={styles.button} disabled={!(nyEnhet && begrunnelse)}>
+                <Button variant="primary" size="small" className={styles.button} disabled={!(nyEnhet && begrunnelse)}>
                   {intl.formatMessage({ id: 'EndreBehandlendeEnhetModal.Ok' })}
-                </Hovedknapp>
-                <Knapp htmlType="button" mini onClick={lukkModal}>
+                </Button>
+                <Button variant="secondary" type="button" size="small" onClick={lukkModal}>
                   {intl.formatMessage({ id: 'EndreBehandlendeEnhetModal.Avbryt' })}
-                </Knapp>
+                </Button>
               </div>
             </Column>
           </Row>

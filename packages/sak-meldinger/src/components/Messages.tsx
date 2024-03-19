@@ -11,6 +11,7 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
   ArbeidsgiverOpplysningerPerId,
@@ -22,15 +23,14 @@ import {
   Personopplysninger,
 } from '@k9-sak-web/types';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
+import { Button } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
-import { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 import styles from './messages.module.css';
 
@@ -383,9 +383,15 @@ export const MessagesImpl = ({
           )}
           <VerticalSpacer eightPx />
           <div className={styles.buttonRow}>
-            <Hovedknapp mini spinner={formProps.submitting} disabled={formProps.submitting} onClick={ariaCheck}>
+            <Button
+              variant="primary"
+              size="small"
+              loading={formProps.submitting}
+              disabled={formProps.submitting}
+              onClick={ariaCheck}
+            >
               {intl.formatMessage({ id: 'Messages.Submit' })}
-            </Hovedknapp>
+            </Button>
             {brevmalkode && (
               <a
                 href=""

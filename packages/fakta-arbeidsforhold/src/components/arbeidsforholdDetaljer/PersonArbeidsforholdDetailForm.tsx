@@ -3,7 +3,6 @@ import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-front
 import AksjonspunktAvklarArbeidsforholdText from '@fpsak-frontend/shared-components/src/AksjonspunktAvklarArbeidsforholdText';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { Row } from 'nav-frontend-grid';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -12,6 +11,7 @@ import ArbeidsforholdBegrunnelse from './ArbeidsforholdBegrunnelse';
 import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 
+import { Button } from '@navikt/ds-react';
 import aksjonspunktÅrsaker from '../../kodeverk/aksjonspunktÅrsaker';
 import CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
 import styles from './personArbeidsforholdDetailForm.module.css';
@@ -71,9 +71,15 @@ export const PersonArbeidsforholdDetailForm = ({
         <FlexContainer>
           <FlexRow>
             <FlexColumn>
-              <Hovedknapp mini spinner={false} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
+              <Button
+                variant="primary"
+                size="small"
+                loading={false}
+                onClick={formProps.handleSubmit}
+                disabled={formProps.pristine}
+              >
                 <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
-              </Hovedknapp>
+              </Button>
             </FlexColumn>
           </FlexRow>
         </FlexContainer>

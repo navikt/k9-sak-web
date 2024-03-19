@@ -1,5 +1,4 @@
 import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Element } from 'nav-frontend-typografi';
 import React, { ReactElement, useEffect } from 'react';
 import { FormattedMessage, IntlShape, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -15,7 +14,7 @@ import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 
-import { Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import styles from './nyBehandlingModal.module.css';
 
 const createOptions = (
@@ -162,13 +161,20 @@ export const NyBehandlingModal = ({
                   ))}
                 />
               )}
-              <div>
-                <Hovedknapp mini className={styles.button}>
+              <VerticalSpacer sixteenPx />
+              <div className={styles.buttonContainer}>
+                <Button variant="primary" size="small" className={styles.button}>
                   <FormattedMessage id="MenyNyBehandlingIndex.Ok" />
-                </Hovedknapp>
-                <Knapp htmlType="button" mini onClick={cancelEvent} className={styles.cancelButton}>
+                </Button>
+                <Button
+                  variant="secondary"
+                  type="button"
+                  size="small"
+                  onClick={cancelEvent}
+                  className={styles.cancelButton}
+                >
                   <FormattedMessage id="MenyNyBehandlingIndex.Avbryt" />
-                </Knapp>
+                </Button>
               </div>
             </Column>
           </Row>

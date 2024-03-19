@@ -1,5 +1,4 @@
 import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
@@ -10,7 +9,7 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import { Image } from '@fpsak-frontend/shared-components';
 import { Kodeverk } from '@k9-sak-web/types';
 
-import { Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import styles from './iverksetterVedtakStatusModal.module.css';
 
 interface OwnProps {
@@ -61,9 +60,9 @@ const IverksetterVedtakStatusModal = ({
             </Normaltekst>
           </Column>
           <Column xs="2">
-            <Hovedknapp mini className={styles.button} onClick={lukkModal} autoFocus>
+            <Button variant="primary" size="small" className={styles.button} onClick={lukkModal} autoFocus>
               {intl.formatMessage({ id: 'IverksetterVedtakStatusModal.Ok' })}
-            </Hovedknapp>
+            </Button>
           </Column>
         </Row>
       </Modal.Body>

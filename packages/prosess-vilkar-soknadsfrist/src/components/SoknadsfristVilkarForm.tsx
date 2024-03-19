@@ -24,7 +24,7 @@ import {
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, DokumentStatus, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Button } from '@navikt/ds-react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
@@ -190,17 +190,23 @@ export const SoknadsfristVilkarForm = ({
                   />
                 </FlexColumn>
                 <FlexColumn>
-                  <Knapp htmlType="button" spinner={submitting} disabled={submitting} onClick={toggleAv}>
+                  <Button
+                    variant="secondary"
+                    type="button"
+                    loading={submitting}
+                    disabled={submitting}
+                    onClick={toggleAv}
+                  >
                     <FormattedMessage id="SoknadsfristVilkarForm.Avbryt" />
-                  </Knapp>
+                  </Button>
                 </FlexColumn>
               </FlexRow>
             </FlexContainer>
           )}
           {harÅpentAksjonspunkt && !erOverstyrt && (
-            <Hovedknapp mini spinner={submitting} disabled={invalid || submitting}>
+            <Button variant="primary" size="small" loading={submitting} disabled={invalid || submitting}>
               <FormattedMessage id="SoknadsfristVilkarForm.ConfirmInformation" />
-            </Hovedknapp>
+            </Button>
           )}
         </AksjonspunktBox>
       )}
