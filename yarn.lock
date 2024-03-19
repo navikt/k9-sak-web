@@ -2552,8 +2552,6 @@ __metadata:
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -3105,8 +3103,6 @@ __metadata:
     nav-frontend-js-utils: 1.0.20
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-tabs: 2.0.3
     nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -3141,8 +3137,6 @@ __metadata:
     moment: 2.30.1
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3200,8 +3194,6 @@ __metadata:
     nav-frontend-modal: 2.0.2
     nav-frontend-modal-style: 2.0.2
     nav-frontend-paneler-style: 2.0.2
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3432,8 +3424,6 @@ __metadata:
     nav-frontend-ikonknapper: 2.1.3
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     react: 18.2.0
     react-intl: 6.6.2
   languageName: unknown
@@ -3559,8 +3549,6 @@ __metadata:
     nav-frontend-ikonknapper: 2.1.3
     nav-frontend-lenker: 2.0.2
     nav-frontend-skjema: 4.0.6
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3602,8 +3590,6 @@ __metadata:
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3949,8 +3935,6 @@ __metadata:
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-modal: 2.0.2
     nav-frontend-modal-style: 2.0.2
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-tabs: 2.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -4476,8 +4460,6 @@ __metadata:
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-tabs: 2.0.3
     nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -4553,8 +4535,6 @@ __metadata:
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4667,8 +4647,6 @@ __metadata:
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     object-hash: 3.0.0
@@ -4876,8 +4854,6 @@ __metadata:
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4966,8 +4942,6 @@ __metadata:
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-popover: 2.0.4
     nav-frontend-popover-style: 2.0.2
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-tabs: 2.0.3
     nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -5023,8 +4997,6 @@ __metadata:
     moment: 2.30.1
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     object-hash: 3.0.0
@@ -5050,8 +5022,6 @@ __metadata:
     classnames: 2.5.1
     lodash: 4.17.21
     nav-frontend-core: 6.0.1
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     react: 18.2.0
     react-intl: 6.6.2
@@ -16556,39 +16526,6 @@ __metadata:
     prop-types: ^15.5.10
     react: ^16.8.0 || ^17.0.0
   checksum: cd8cce32645f4b6d91aa35391786f9c63216a476adee157f10ab4cd03710186e9ce32a3d41eb2386385d68f6c6749a19a98de944099701d83043ba7a02e132ca
-  languageName: node
-  linkType: hard
-
-"nav-frontend-spinner-style@npm:1.0.2":
-  version: 1.0.2
-  resolution: "nav-frontend-spinner-style@npm:1.0.2"
-  checksum: 28e376811be644987470012a513d4c4a22231263631e8911355cc15080301a54334ac8163a45503146706bf76483b3243a3495b1272b1321b4535a0e5103977f
-  languageName: node
-  linkType: hard
-
-"nav-frontend-spinner@npm:3.0.1":
-  version: 3.0.1
-  resolution: "nav-frontend-spinner@npm:3.0.1"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-ikoner-assets: ^3.0.0
-    nav-frontend-spinner-style: ^1.0.2
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 16b52e8de4077c0d01957f914f668ee4f21671f788d3d171ad0cbd02947f8d77ce90d8c8b1566e7d1dc77cafcdcfcfb87a55cddeb0be2c5d25d67340da27736a
-  languageName: node
-  linkType: hard
-
-"nav-frontend-spinner@patch:nav-frontend-spinner@npm%3A3.0.1#./.yarn/patches/nav-frontend-spinner-npm-3.0.1-e8209cee75.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 3.0.1
-  resolution: "nav-frontend-spinner@patch:nav-frontend-spinner@npm%3A3.0.1#./.yarn/patches/nav-frontend-spinner-npm-3.0.1-e8209cee75.patch::version=3.0.1&hash=1c222e&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-ikoner-assets: ^3.0.0
-    nav-frontend-spinner-style: ^1.0.2
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 3da7b766a10424ce9ed66eedfe76909fd2728a2da8a1fdd755737ebef32a5fa3c7755478d8a24b5cfaad29e63ceaf8fb99057677bdc88ed1a834e335fed802b3
   languageName: node
   linkType: hard
 
