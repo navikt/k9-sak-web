@@ -9,7 +9,7 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-types": "2.4.0",
+    "@navikt/ft-types": "2.4.1",
     "moment": "2.30.1",
     "react": "18.2.0",
     "react-intl": "6.6.2"
