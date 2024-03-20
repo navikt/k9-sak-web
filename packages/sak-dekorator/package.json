@@ -20,6 +20,8 @@
     "nav-frontend-lukknapp": "2.0.2",
     "nav-frontend-lukknapp-style": "2.0.2",
     "nav-frontend-paneler-style": "2.0.2",
+    "nav-frontend-spinner": "3.0.1",
+    "nav-frontend-spinner-style": "1.0.2",
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
     "react": "18.2.0",

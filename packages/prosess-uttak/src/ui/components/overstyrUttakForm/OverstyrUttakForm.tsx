@@ -1,5 +1,6 @@
-import { Alert, BodyShort, Button, Heading, HelpText, Loader, Modal, Table } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Heading, HelpText, Modal, Table } from '@navikt/ds-react';
 import { PlusIcon } from '@navikt/ft-plattform-komponenter';
+import NavFrontendSpinner from 'nav-frontend-spinner';
 import React, { useRef, useState } from 'react';
 import { erOverstyringInnenforPerioderTilVurdering } from '../../../util/dateUtils';
 import { formaterOverstyringTilFormData } from '../../../util/overstyringUtils';
@@ -97,7 +98,7 @@ const OverstyrUttakForm: React.FC<ownProps> = ({ overstyringAktiv }) => {
             </BodyShort>
           </Alert>
         )}
-        {lasterOverstyringer && <Loader size="large" title="Venter..." />}
+        {lasterOverstyringer && <NavFrontendSpinner />}
         {!lasterOverstyringer && (
           <>
             {overstyrte?.length === 0 && !visOverstyringSkjema && (
