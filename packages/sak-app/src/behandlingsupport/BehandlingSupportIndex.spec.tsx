@@ -74,7 +74,7 @@ describe('<BehandlingSupportIndex>', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.queryAllByTestId('TabMenyKnapp').length).toBe(4);
+    expect(screen.getAllByRole('tab').length).toBe(4);
   });
 
   describe('hentSynligePaneler', () => {
