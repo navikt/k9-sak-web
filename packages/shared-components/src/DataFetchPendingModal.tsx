@@ -1,10 +1,8 @@
+import { Loader, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import Modal from 'nav-frontend-modal';
 import { Element } from 'nav-frontend-typografi';
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
-
-import { Loader } from '@navikt/ds-react';
 import styles from './dataFetchPendingModal.module.css';
 
 // Skal ikke være mulig å lukke modal
@@ -57,25 +55,20 @@ export class DataFetchPendingModal extends Component<OwnProps, OwnState> {
     const { pendingMessage } = this.props;
 
     return (
-      <Modal
-        className={styles.modal}
-        isOpen
-        closeButton={false}
-        contentLabel={pendingMessage}
-        onRequestClose={doNothing}
-        shouldCloseOnOverlayClick={false}
-      >
-        <Row>
-          <Column xs="2">
-            <Loader className="loader" variant="neutral" size="xlarge" title="venter..." />
-            <div className={styles.divider} />
-          </Column>
-          <Column xs="10">
-            <Element className={styles.modalText}>
-              <FormattedMessage id="DataFetchPendingModal.LosningenJobberMedBehandlingen" />
-            </Element>
-          </Column>
-        </Row>
+      <Modal className={styles.modal} open aria-label={pendingMessage} onClose={doNothing}>
+        <Modal.Body>
+          <Row>
+            <Column xs="2">
+              <Loader className="loader" variant="neutral" size="xlarge" title="venter..." />
+              <div className={styles.divider} />
+            </Column>
+            <Column xs="10">
+              <Element className={styles.modalText}>
+                <FormattedMessage id="DataFetchPendingModal.LosningenJobberMedBehandlingen" />
+              </Element>
+            </Column>
+          </Row>
+        </Modal.Body>
       </Modal>
     );
   }

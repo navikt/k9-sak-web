@@ -14,8 +14,6 @@
 
 .modal.settPaVentModal {
   overflow: visible;
-  width: 40.25rem;
-  padding: 1.625rem 2.5rem 2.625rem 1.25rem;
 }
 
 .modal.settPaVentModal :global(.lukknapp) {
@@ -67,7 +65,7 @@
 }
 
 .contentContainer {
-  margin: 24px 1.625rem 0 4.125rem;
+  margin: 0 1.625rem 0 4.125rem;
 }
 
 .buttonContainer {

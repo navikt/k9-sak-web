@@ -1,14 +1,11 @@
+import { Modal } from '@navikt/ds-react';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import Modal from 'nav-frontend-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import FlexColumn from './flexGrid/FlexColumn';
 import FlexContainer from './flexGrid/FlexContainer';
 import FlexRow from './flexGrid/FlexRow';
-import VerticalSpacer from './VerticalSpacer';
-
 import styles from './okAvbrytModal.module.css';
 
 interface OwnProps {
@@ -36,28 +33,30 @@ const OkAvbrytModal = ({
 }: OwnProps & WrappedComponentProps) => (
   <Modal
     className={styles.modal}
-    isOpen={showModal}
-    closeButton
-    contentLabel={text || intl.formatMessage({ id: textCode })}
-    onRequestClose={cancel}
-    shouldCloseOnOverlayClick={false}
+    open={showModal}
+    aria-label={text || intl.formatMessage({ id: textCode })}
+    onClose={cancel}
   >
-    <Normaltekst>{text || <FormattedMessage id={textCode} />}</Normaltekst>
-    <VerticalSpacer fourtyPx />
-    <FlexContainer>
-      <FlexRow>
-        <FlexColumn>
-          <Hovedknapp mini htmlType="submit" onClick={submit} autoFocus>
-            {intl.formatMessage({ id: okButtonTextCode })}
-          </Hovedknapp>
-        </FlexColumn>
-        <FlexColumn>
-          <Knapp mini htmlType="reset" onClick={cancel}>
-            {intl.formatMessage({ id: 'OkAvbrytModal.Avbryt' })}
-          </Knapp>
-        </FlexColumn>
-      </FlexRow>
-    </FlexContainer>
+    <Modal.Header>
+      <Normaltekst>{text || <FormattedMessage id={textCode} />}</Normaltekst>
+    </Modal.Header>
+    {/* <VerticalSpacer fourtyPx /> */}
+    <Modal.Body>
+      <FlexContainer>
+        <FlexRow>
+          <FlexColumn>
+            <Hovedknapp mini htmlType="submit" onClick={submit} autoFocus>
+              {intl.formatMessage({ id: okButtonTextCode })}
+            </Hovedknapp>
+          </FlexColumn>
+          <FlexColumn>
+            <Knapp mini htmlType="reset" onClick={cancel}>
+              {intl.formatMessage({ id: 'OkAvbrytModal.Avbryt' })}
+            </Knapp>
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+    </Modal.Body>
   </Modal>
 );
 

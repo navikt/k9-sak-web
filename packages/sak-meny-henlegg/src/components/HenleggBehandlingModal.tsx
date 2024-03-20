@@ -1,6 +1,15 @@
+import { SelectField, TextAreaField } from '@fpsak-frontend/form';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { hasValidText, maxLength, required, safeJSONParse } from '@fpsak-frontend/utils';
+import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
+import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
+import { Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import Modal from 'nav-frontend-modal';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Undertekst } from 'nav-frontend-typografi';
 import React, { useMemo } from 'react';
@@ -8,17 +17,6 @@ import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
 import { createSelector } from 'reselect';
-
-import { SelectField, TextAreaField } from '@fpsak-frontend/form';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { hasValidText, maxLength, required, safeJSONParse } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
-
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import Brevmottakere from './Brevmottakere';
 import styles from './henleggBehandlingModal.module.css';
 
@@ -166,114 +164,119 @@ export const HenleggBehandlingModalImpl = ({
   return (
     <Modal
       className={styles.modal}
-      isOpen
-      closeButton={false}
-      contentLabel={intl.formatMessage({ id: 'HenleggBehandlingModal.ModalDescription' })}
-      onRequestClose={cancelEvent}
-      shouldCloseOnOverlayClick={false}
+      open
+      // closeButton={false}
+      aria-label={intl.formatMessage({ id: 'HenleggBehandlingModal.ModalDescription' })}
+      onClose={cancelEvent}
+      header={{
+        heading: intl.formatMessage({ id: 'HenleggBehandlingModal.HenleggBehandling' }),
+        closeButton: false,
+        size: 'small',
+      }}
     >
-      <form onSubmit={handleSubmit}>
-        <div>
-          <SkjemaGruppe legend={intl.formatMessage({ id: 'HenleggBehandlingModal.HenleggBehandling' })}>
-            <Row>
-              <Column xs="5">
-                <SelectField
-                  name="årsakKode"
-                  label={intl.formatMessage({ id: 'HenleggBehandlingModal.ArsakField' })}
-                  validate={[required]}
-                  placeholder={intl.formatMessage({ id: 'HenleggBehandlingModal.ArsakFieldDefaultValue' })}
-                  selectValues={henleggArsaker.map(arsak => (
-                    <option value={arsak.kode} key={arsak.kode}>
-                      {intl.formatMessage({ id: arsak.kode })}
-                    </option>
-                  ))}
-                />
-              </Column>
-            </Row>
-            <Row>
-              <Column xs="8">
-                <TextAreaField
-                  name="begrunnelse"
-                  label={intl.formatMessage({ id: 'HenleggBehandlingModal.BegrunnelseField' })}
-                  validate={[required, maxLength1500, hasValidText]}
-                  maxLength={1500}
-                />
-                <VerticalSpacer sixteenPx />
-              </Column>
-            </Row>
-            {showHenleggelseFritekst(behandlingType.kode, årsakKode) && (
+      <Modal.Body>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <SkjemaGruppe legend={intl.formatMessage({ id: 'HenleggBehandlingModal.HenleggBehandling' })}>
               <Row>
-                <Column xs="8">
-                  <div className={styles.fritekstTilBrevTextArea}>
-                    <TextAreaField
-                      name="fritekst"
-                      label={intl.formatMessage({ id: 'HenleggBehandlingModal.Fritekst' })}
-                      validate={[required, hasValidText]}
-                      maxLength={2000}
-                    />
-                  </div>
-                  <VerticalSpacer sixteenPx />
+                <Column xs="5">
+                  <SelectField
+                    name="årsakKode"
+                    label={intl.formatMessage({ id: 'HenleggBehandlingModal.ArsakField' })}
+                    validate={[required]}
+                    placeholder={intl.formatMessage({ id: 'HenleggBehandlingModal.ArsakFieldDefaultValue' })}
+                    selectValues={henleggArsaker.map(arsak => (
+                      <option value={arsak.kode} key={arsak.kode}>
+                        {intl.formatMessage({ id: arsak.kode })}
+                      </option>
+                    ))}
+                  />
                 </Column>
               </Row>
-            )}
-            <Row>
-              <Column xs="6">
-                <div>
-                  <Hovedknapp
-                    mini
-                    className={styles.button}
-                    disabled={disableHovedKnapp(behandlingType.kode, årsakKode, begrunnelse, fritekst)}
-                  >
-                    {intl.formatMessage({ id: 'HenleggBehandlingModal.HenleggBehandlingSubmit' })}
-                  </Hovedknapp>
-                  <Knapp htmlType="button" mini onClick={cancelEvent}>
-                    {intl.formatMessage({ id: 'HenleggBehandlingModal.Avbryt' })}
-                  </Knapp>
-                </div>
-              </Column>
-              <Column xs="4">
-                {showLink && (
-                  <div className={styles.forhandsvis}>
-                    {behandlingType.kode === BehandlingType.KLAGE && (
-                      <Brevmottakere
-                        hentMottakere={hentMottakere}
-                        personopplysninger={personopplysninger}
-                        arbeidsgiverOpplysninger={arbeidsgiverOpplysningerPerId}
-                        intl={intl}
+              <Row>
+                <Column xs="8">
+                  <TextAreaField
+                    name="begrunnelse"
+                    label={intl.formatMessage({ id: 'HenleggBehandlingModal.BegrunnelseField' })}
+                    validate={[required, maxLength1500, hasValidText]}
+                    maxLength={1500}
+                  />
+                </Column>
+              </Row>
+              {showHenleggelseFritekst(behandlingType.kode, årsakKode) && (
+                <Row>
+                  <Column xs="8">
+                    <div className={styles.fritekstTilBrevTextArea}>
+                      <TextAreaField
+                        name="fritekst"
+                        label={intl.formatMessage({ id: 'HenleggBehandlingModal.Fritekst' })}
+                        validate={[required, hasValidText]}
+                        maxLength={2000}
                       />
-                    )}
-                    <Undertekst>{intl.formatMessage({ id: 'HenleggBehandlingModal.SokerInformeres' })}</Undertekst>
-                    <a
-                      href=""
-                      onClick={previewHenleggBehandlingDoc(
-                        previewHenleggBehandling,
-                        ytelseType,
-                        fritekst,
-                        behandlingId,
-                        behandlingUuid,
-                        behandlingType,
-                        valgtMottaker,
-                      )}
-                      onKeyDown={previewHenleggBehandlingDoc(
-                        previewHenleggBehandling,
-                        ytelseType,
-                        fritekst,
-                        behandlingId,
-                        behandlingUuid,
-                        behandlingType,
-                        valgtMottaker,
-                      )}
-                      className="lenke lenke--frittstaende"
+                    </div>
+                  </Column>
+                </Row>
+              )}
+              <VerticalSpacer sixteenPx />
+              <Row>
+                <Column xs="7">
+                  <div>
+                    <Hovedknapp
+                      mini
+                      className={styles.button}
+                      disabled={disableHovedKnapp(behandlingType.kode, årsakKode, begrunnelse, fritekst)}
                     >
-                      {intl.formatMessage({ id: 'HenleggBehandlingModal.ForhandsvisBrev' })}
-                    </a>
+                      {intl.formatMessage({ id: 'HenleggBehandlingModal.HenleggBehandlingSubmit' })}
+                    </Hovedknapp>
+                    <Knapp htmlType="button" mini onClick={cancelEvent}>
+                      {intl.formatMessage({ id: 'HenleggBehandlingModal.Avbryt' })}
+                    </Knapp>
                   </div>
-                )}
-              </Column>
-            </Row>
-          </SkjemaGruppe>
-        </div>
-      </form>
+                </Column>
+                <Column xs="4">
+                  {showLink && (
+                    <div className={styles.forhandsvis}>
+                      {behandlingType.kode === BehandlingType.KLAGE && (
+                        <Brevmottakere
+                          hentMottakere={hentMottakere}
+                          personopplysninger={personopplysninger}
+                          arbeidsgiverOpplysninger={arbeidsgiverOpplysningerPerId}
+                          intl={intl}
+                        />
+                      )}
+                      <Undertekst>{intl.formatMessage({ id: 'HenleggBehandlingModal.SokerInformeres' })}</Undertekst>
+                      <a
+                        href=""
+                        onClick={previewHenleggBehandlingDoc(
+                          previewHenleggBehandling,
+                          ytelseType,
+                          fritekst,
+                          behandlingId,
+                          behandlingUuid,
+                          behandlingType,
+                          valgtMottaker,
+                        )}
+                        onKeyDown={previewHenleggBehandlingDoc(
+                          previewHenleggBehandling,
+                          ytelseType,
+                          fritekst,
+                          behandlingId,
+                          behandlingUuid,
+                          behandlingType,
+                          valgtMottaker,
+                        )}
+                        className="lenke lenke--frittstaende"
+                      >
+                        {intl.formatMessage({ id: 'HenleggBehandlingModal.ForhandsvisBrev' })}
+                      </a>
+                    </div>
+                  )}
+                </Column>
+              </Row>
+            </SkjemaGruppe>
+          </div>
+        </form>
+      </Modal.Body>
     </Modal>
   );
 };

@@ -1,17 +1,15 @@
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import { SelectField, TextAreaField } from '@fpsak-frontend/form';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
+import { Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import Modal from 'nav-frontend-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
-
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import { SelectField, TextAreaField } from '@fpsak-frontend/form';
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
-
 import styles from './endreBehandlendeEnhetModal.module.css';
 
 const maxLength400 = maxLength(400);
@@ -56,15 +54,13 @@ export const EndreBehandlendeEnhetModal = ({
   return (
     <Modal
       className={styles.modal}
-      isOpen
-      closeButton={false}
-      contentLabel={intl.formatMessage({ id: 'EndreBehandlendeEnhetModal.ModalDescription' })}
-      onRequestClose={lukkModal}
-      shouldCloseOnOverlayClick={false}
+      open
+      aria-label={intl.formatMessage({ id: 'EndreBehandlendeEnhetModal.ModalDescription' })}
+      onClose={lukkModal}
     >
       <form onSubmit={handleSubmit}>
-        <div>
-          <Row className={styles.infotekst}>
+        <Modal.Header closeButton={false}>
+          <Row>
             <Column xs="1">
               <Image
                 className={styles.image}
@@ -79,6 +75,8 @@ export const EndreBehandlendeEnhetModal = ({
               </Normaltekst>
             </Column>
           </Row>
+        </Modal.Header>
+        <Modal.Body>
           <Row>
             <Column xs="1" />
             <Column xs="5">
@@ -118,7 +116,7 @@ export const EndreBehandlendeEnhetModal = ({
               </div>
             </Column>
           </Row>
-        </div>
+        </Modal.Body>
       </form>
     </Modal>
   );

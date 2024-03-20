@@ -14,10 +14,9 @@ import {
 } from '@fpsak-frontend/utils';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
+import { Modal } from '@navikt/ds-react';
 import moment from 'moment';
-import { Container } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import Modal from 'nav-frontend-modal';
 import { Select as NavSelect } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
@@ -194,16 +193,15 @@ export const SettPaVentModal = ({
   return (
     <Modal
       className={`${styles.modal} ${styles.settPaVentModal}`}
-      isOpen={showModal}
-      closeButton
-      contentLabel={intl.formatMessage({
+      open={showModal}
+      aria-label={intl.formatMessage({
         id: originalVentearsak ? 'SettPaVentModal.ModalDescriptionErPaVent' : 'SettPaVentModal.ModalDescription',
       })}
-      onRequestClose={cancelEvent}
-      shouldCloseOnOverlayClick={false}
+      onClose={cancelEvent}
+      data-testid="SettPaVentModal"
     >
-      <Container fluid data-testid="SettPaVentModal">
-        <form onSubmit={handleSubmit} name="ventModalForm" data-testid="ventModalForm">
+      <form onSubmit={handleSubmit} name="ventModalForm" data-testid="ventModalForm">
+        <Modal.Header>
           <div className={styles.topContainer}>
             <Image
               className={styles.image}
@@ -226,7 +224,8 @@ export const SettPaVentModal = ({
               )}
             </div>
           </div>
-
+        </Modal.Header>
+        <Modal.Body>
           <div className={styles.contentContainer}>
             {showSelect && (
               <div className={styles.selectContainer}>
@@ -318,8 +317,8 @@ export const SettPaVentModal = ({
               )}
             </div>
           </div>
-        </form>
-      </Container>
+        </Modal.Body>
+      </form>
     </Modal>
   );
 };
