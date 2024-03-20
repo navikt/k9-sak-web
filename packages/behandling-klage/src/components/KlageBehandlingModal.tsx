@@ -1,12 +1,10 @@
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import { Image } from '@fpsak-frontend/shared-components';
+import { Button, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import { Image } from '@fpsak-frontend/shared-components';
-
-import { Button, Modal } from '@navikt/ds-react';
 import styles from './klageBehandlingModal.module.css';
 
 interface OwnProps {
