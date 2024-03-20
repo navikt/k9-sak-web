@@ -1,10 +1,3 @@
-import { Location } from 'history';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { FieldArray, InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
-
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -17,10 +10,14 @@ import {
   TotrinnskontrollAksjonspunkt,
   TotrinnskontrollSkjermlenkeContext,
 } from '@k9-sak-web/types';
-
-import AksjonspunktGodkjenningFieldArray, { AksjonspunktGodkjenningData } from './AksjonspunktGodkjenningFieldArray';
-
 import { Button } from '@navikt/ds-react';
+import { Location } from 'history';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { FieldArray, InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
+import AksjonspunktGodkjenningFieldArray, { AksjonspunktGodkjenningData } from './AksjonspunktGodkjenningFieldArray';
 import styles from './totrinnskontrollBeslutterForm.module.css';
 
 const erAlleGodkjent = (formState: TotrinnskontrollAksjonspunkt[] = []) =>
