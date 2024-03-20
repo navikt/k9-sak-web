@@ -2266,6 +2266,8 @@ __metadata:
     moment: 2.30.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-paneler: 3.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -2316,6 +2318,7 @@ __metadata:
     nav-frontend-etiketter: 3.0.3
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
     nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -2343,6 +2346,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2394,6 +2399,8 @@ __metadata:
     nav-frontend-ekspanderbartpanel-style: 2.0.2
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2419,6 +2426,8 @@ __metadata:
     classnames: 2.5.1
     moment: 2.30.1
     nav-frontend-core: 6.0.1
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-tabs: 2.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -2448,6 +2457,7 @@ __metadata:
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-js-utils: 1.0.20
+    nav-frontend-knapper: 3.1.3
     nav-frontend-tabs: 2.0.3
     nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -2480,8 +2490,7 @@ __metadata:
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-etiketter: 3.0.3
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
     nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     react: 18.2.0
@@ -2633,6 +2642,8 @@ __metadata:
     moment: 2.30.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2663,6 +2674,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2693,6 +2706,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2776,6 +2791,8 @@ __metadata:
     classnames: 2.5.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2861,6 +2878,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -2892,6 +2911,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-tabs: 2.0.3
     nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -2922,6 +2943,8 @@ __metadata:
     classnames: 2.5.1
     moment: 2.30.1
     nav-frontend-core: 6.0.1
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2969,6 +2992,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     classnames: 2.5.1
     nav-frontend-grid: 2.0.2
+    nav-frontend-knapper: 3.1.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -3034,6 +3058,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-lenker: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
@@ -3104,6 +3130,8 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.5.0
     classnames: 2.5.1
     moment: 2.30.1
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-spinner: 3.0.1
     nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
@@ -3154,7 +3182,10 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-ikonknapper: 2.1.3
     nav-frontend-js-utils: 1.0.20
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-lukknapp: 2.0.2
     nav-frontend-lukknapp-style: 2.0.2
     nav-frontend-paneler-style: 2.0.2
@@ -3203,6 +3234,8 @@ __metadata:
     nav-frontend-etiketter-style: 2.0.3
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3251,6 +3284,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3276,6 +3311,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
@@ -3303,6 +3340,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3328,6 +3367,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3369,6 +3410,9 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.5.0
+    nav-frontend-ikonknapper: 2.1.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-spinner: 3.0.1
     nav-frontend-spinner-style: 1.0.2
     react: 18.2.0
@@ -3390,6 +3434,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-ekspanderbartpanel: 4.0.4
     nav-frontend-ekspanderbartpanel-style: 2.0.2
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-paneler: 3.0.2
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -3417,6 +3463,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3458,6 +3506,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -3486,6 +3536,7 @@ __metadata:
     moment: 2.30.1
     nav-frontend-etiketter: 3.0.3
     nav-frontend-etiketter-style: 2.0.3
+    nav-frontend-ikonknapper: 2.1.3
     nav-frontend-lenker: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-spinner: 3.0.1
@@ -3521,6 +3572,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-lukknapp: 2.0.2
     nav-frontend-lukknapp-style: 2.0.2
     nav-frontend-paneler: 3.0.2
@@ -3834,6 +3887,8 @@ __metadata:
     axios-mock-adapter: 1.22.0
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3865,6 +3920,9 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-ikonknapper: 2.1.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-spinner: 3.0.1
     nav-frontend-spinner-style: 1.0.2
     nav-frontend-tabs: 2.0.3
@@ -3960,6 +4018,8 @@ __metadata:
     axios-mock-adapter: 1.22.0
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4244,6 +4304,8 @@ __metadata:
     axios-mock-adapter: 1.22.0
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4307,6 +4369,8 @@ __metadata:
     nav-frontend-hjelpetekst-style: 3.0.2
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-paneler: 3.0.2
     nav-frontend-popover: 2.0.4
     nav-frontend-popover-style: 2.0.2
@@ -4336,6 +4400,8 @@ __metadata:
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-ekspanderbartpanel: 4.0.4
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-paneler: 3.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -4370,7 +4436,10 @@ __metadata:
     nav-frontend-etiketter: 3.0.3
     nav-frontend-etiketter-style: 2.0.3
     nav-frontend-ikoner-assets: 3.0.1
+    nav-frontend-ikonknapper: 2.1.3
     nav-frontend-js-utils: 1.0.20
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-lenkepanel: 2.0.2
     nav-frontend-lenkepanel-style: 2.0.2
     nav-frontend-paneler: 3.0.2
@@ -4406,6 +4475,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-etiketter: 3.0.3
     nav-frontend-etiketter-style: 2.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4442,7 +4513,10 @@ __metadata:
     nav-frontend-ekspanderbartpanel: 4.0.4
     nav-frontend-ekspanderbartpanel-style: 2.0.2
     nav-frontend-ikoner-assets: 3.0.1
+    nav-frontend-ikonknapper: 2.1.3
     nav-frontend-js-utils: 1.0.20
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
     nav-frontend-paneler: 3.0.2
@@ -4553,7 +4627,10 @@ __metadata:
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
+    nav-frontend-ikonknapper: 2.1.3
     nav-frontend-js-utils: 1.0.20
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
     nav-frontend-paneler: 3.0.2
@@ -4604,6 +4681,8 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     nav-frontend-core: 6.0.1
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4661,6 +4740,8 @@ __metadata:
     moment: 2.30.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4697,6 +4778,7 @@ __metadata:
     nav-frontend-hjelpetekst-style: 3.0.2
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
+    nav-frontend-knapper: 3.1.3
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
     nav-frontend-paneler: 3.0.2
@@ -4727,6 +4809,8 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4753,6 +4837,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
     nav-frontend-paneler-style: 2.0.2
@@ -4786,6 +4872,8 @@ __metadata:
     classnames: 2.5.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -4838,7 +4926,10 @@ __metadata:
     nav-frontend-hjelpetekst: 3.1.3
     nav-frontend-hjelpetekst-style: 3.0.2
     nav-frontend-ikoner-assets: 3.0.1
+    nav-frontend-ikonknapper: 2.1.3
     nav-frontend-js-utils: 1.0.20
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-paneler: 3.0.2
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-popover: 2.0.4
@@ -4872,6 +4963,7 @@ __metadata:
     "@navikt/ft-form-validators": 2.3.0
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
+    nav-frontend-knapper: 3.1.3
     react: 18.2.0
     react-dom: 18.2.0
     react-hook-form: 7.51.0
@@ -4897,6 +4989,8 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.5.0
     classnames: 2.5.1
     moment: 2.30.1
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-spinner: 3.0.1
     nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
@@ -5039,6 +5133,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-lenkepanel: 2.0.2
     nav-frontend-lenkepanel-style: 2.0.2
     nav-frontend-paneler: 3.0.2
@@ -5119,6 +5215,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -5141,6 +5239,8 @@ __metadata:
     "@navikt/ds-react": 6.1.1
     formik: 2.4.5
     nav-frontend-core: 6.0.1
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -16094,6 +16194,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nav-frontend-ikonknapper@npm:2.1.3":
+  version: 2.1.3
+  resolution: "nav-frontend-ikonknapper@npm:2.1.3"
+  peerDependencies:
+    nav-frontend-chevron: ^1.0.29
+    nav-frontend-ikoner-assets: ^3.0.0
+    nav-frontend-knapper: ^3.0.0
+    react: ^16.8.0 || ^17.0.0
+  checksum: f51fddf774fcebf3349769a95a03476f08eaf82892272664bfd59a471b817858d8317bf2c675324dfba82618136bdf9beed1e34c42f3179ff6d1519237c0794b
+  languageName: node
+  linkType: hard
+
 "nav-frontend-js-utils@npm:1.0.20":
   version: 1.0.20
   resolution: "nav-frontend-js-utils@npm:1.0.20"
@@ -16104,6 +16216,42 @@ __metadata:
     prop-types: ^15.5.10
     react: ^16.8.0 || ^17.0.0
   checksum: c572c63794715c27eed790911fcb4f0ac71934184813d4b9d3ad33827a5f05164f4563c22aac8d577bbbb7cf9c95e0da2383f247f539da1d4032d831193f915a
+  languageName: node
+  linkType: hard
+
+"nav-frontend-knapper-style@npm:2.1.2":
+  version: 2.1.2
+  resolution: "nav-frontend-knapper-style@npm:2.1.2"
+  peerDependencies:
+    nav-frontend-core: ^6.0.0
+    nav-frontend-typografi-style: ^2.0.0
+  checksum: b2801d4fdeb74c21dd8dad3e686bb243213ef6c56df1ea7b36212d8e819a2c69836ecb2d62e6ed45d8fc36ca10c5921b3552abd95562743414be7ae9613a53c3
+  languageName: node
+  linkType: hard
+
+"nav-frontend-knapper@npm:3.1.3":
+  version: 3.1.3
+  resolution: "nav-frontend-knapper@npm:3.1.3"
+  peerDependencies:
+    classnames: ^2.2.5
+    nav-frontend-js-utils: ^1.0.19
+    nav-frontend-knapper-style: ^2.0.0
+    prop-types: ^15.5.10
+    react: ^16.8.0 || ^17.0.0
+  checksum: 7f76b51730f550379c8d2a6add956060e76af05ff70574c6f743653330e82b05f443bd763322cef1b6cfc5d59d2e8a3a3f23cc391a938c5bf63ff61b0ed2af61
+  languageName: node
+  linkType: hard
+
+"nav-frontend-knapper@patch:nav-frontend-knapper@npm%3A3.1.3#./.yarn/patches/nav-frontend-knapper-npm-3.1.3-f1d93117df.patch::locator=k9-sak-web%40workspace%3A.":
+  version: 3.1.3
+  resolution: "nav-frontend-knapper@patch:nav-frontend-knapper@npm%3A3.1.3#./.yarn/patches/nav-frontend-knapper-npm-3.1.3-f1d93117df.patch::version=3.1.3&hash=c26b6e&locator=k9-sak-web%40workspace%3A."
+  peerDependencies:
+    classnames: ^2.2.5
+    nav-frontend-js-utils: ^1.0.19
+    nav-frontend-knapper-style: ^2.0.0
+    prop-types: ^15.5.10
+    react: ^16.8.0 || ^17.0.0
+  checksum: 5b3d4df73665eb0adfe849247c26aa16aebfc9e29e3cb27d22f99e908052076ace5b1713db58947b84a0fefe0b6b2ba5b2f93aa1ba6c680b27428c8d06d66b28
   languageName: node
   linkType: hard
 

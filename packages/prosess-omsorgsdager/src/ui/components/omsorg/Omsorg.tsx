@@ -1,4 +1,4 @@
-import { Button } from '@navikt/ds-react';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { RadioGruppe } from 'nav-frontend-skjema';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -10,9 +10,9 @@ import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeT
 import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
 import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
 import TextArea from '../react-hook-form-wrappers/TextArea';
-import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
-import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styles from './omsorg.module.css';
+import VilkarStatus from '../vilkar-status/VilkarStatus';
+import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 
 type FormData = {
   harOmsorgen: string;
@@ -181,9 +181,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
                 {errors.harOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
               </div>
 
-              <Button variant="primary" type="submit">
-                Bekreft og fortsett
-              </Button>
+              <Hovedknapp htmlType="submit">Bekreft og fortsett</Hovedknapp>
             </form>
           </FormProvider>
         </>

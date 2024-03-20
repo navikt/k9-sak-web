@@ -1,8 +1,8 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Button } from '@navikt/ds-react';
 
 interface PureOwnProps {
   readOnly: boolean;
@@ -16,9 +16,9 @@ interface PureOwnProps {
 export const BekreftOgForsettKnapp = ({ readOnly, isSubmitting }: PureOwnProps) => (
   <>
     <VerticalSpacer twentyPx />
-    <Button variant="primary" size="small" loading={isSubmitting} disabled={readOnly || isSubmitting}>
+    <Hovedknapp mini spinner={isSubmitting} disabled={readOnly || isSubmitting}>
       <FormattedMessage id="FullPersonInfo.Confirm" />
-    </Button>
+    </Hovedknapp>
   </>
 );
 

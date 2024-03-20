@@ -1,12 +1,16 @@
+import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp } from 'nav-frontend-knapper';
+
+import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { Image } from '@fpsak-frontend/shared-components';
 import { Kodeverk } from '@k9-sak-web/types';
-import { Button, Modal } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst } from 'nav-frontend-typografi';
-import React from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+
+import { Modal } from '@navikt/ds-react';
 import styles from './iverksetterVedtakStatusModal.module.css';
 
 interface OwnProps {
@@ -57,9 +61,9 @@ const IverksetterVedtakStatusModal = ({
             </Normaltekst>
           </Column>
           <Column xs="2">
-            <Button variant="primary" size="small" className={styles.button} onClick={lukkModal} autoFocus>
+            <Hovedknapp mini className={styles.button} onClick={lukkModal} autoFocus>
               {intl.formatMessage({ id: 'IverksetterVedtakStatusModal.Ok' })}
-            </Button>
+            </Hovedknapp>
           </Column>
         </Row>
       </Modal.Body>

@@ -4,10 +4,15 @@
 }
 
 .behandlingPicker .backButton {
+  /* stylelint-disable-next-line declaration-no-important */
+  border: none !important;
+  margin-bottom: 0.25rem;
   margin-left: -0.25rem;
-  margin-top: -0.5rem;
   padding-left: 0;
   padding-right: 0;
+  padding-top: 0;
+  text-decoration: underline;
+  text-transform: none;
 }
 
 .behandlingList {

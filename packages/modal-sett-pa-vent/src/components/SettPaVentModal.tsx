@@ -14,8 +14,9 @@ import {
 } from '@fpsak-frontend/utils';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
-import { Button, Modal } from '@navikt/ds-react';
+import { Modal } from '@navikt/ds-react';
 import moment from 'moment';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Select as NavSelect } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
@@ -281,10 +282,9 @@ export const SettPaVentModal = ({
               )}
             </div>
             <div className={showSelect ? styles.buttonContainer : ''}>
-              <Button
-                variant="primary"
-                size="small"
-                type={
+              <Hovedknapp
+                mini
+                htmlType={
                   hovedKnappenType(venteArsakHasChanged, fristHasChanged, ventearsakVariantHasChanged)
                     ? 'submit'
                     : 'button'
@@ -300,20 +300,20 @@ export const SettPaVentModal = ({
                 )}
               >
                 {getHovedknappTekst()}
-              </Button>
+              </Hovedknapp>
               {(!hasManualPaVent || showAvbryt || !visBrevErBestilt) && (
-                <Button
-                  variant="secondary"
-                  type="button"
-                  size="small"
+                <Knapp
+                  htmlType="button"
+                  mini
                   onClick={!showEndreFrist ? toggleEndreFrist : cancelEvent}
+                  className={styles.cancelButton}
                 >
                   {showEndreFrist ? (
                     <FormattedMessage id="SettPaVentModal.Lukk" />
                   ) : (
                     <FormattedMessage id="SettPaVentModal.EndreFrist" />
                   )}
-                </Button>
+                </Knapp>
               )}
             </div>
           </div>

@@ -1,8 +1,8 @@
 import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 
-import { Button } from '@navikt/ds-react';
 import styles from './vedtakKlageSubmitPanel.module.css';
 
 interface Props {
@@ -37,15 +37,14 @@ const VedtakKlageNkkSubmitPanel = ({
   <Row>
     <Column xs="8">
       {!readOnly && (
-        <Button
-          variant="primary"
-          size="small"
+        <Hovedknapp
+          mini
           className={styles.mainButton}
           onClick={formProps.handleSubmit}
           disabled={behandlingPaaVent || klageResultat.godkjentAvMedunderskriver}
         >
           {intl.formatMessage({ id: 'VedtakKlageForm.FattVedtak' })}
-        </Button>
+        </Hovedknapp>
       )}
     </Column>
   </Row>

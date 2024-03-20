@@ -13,9 +13,9 @@ import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Opptjening } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
-import { Button } from '@navikt/ds-react';
 import moment from 'moment';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { TabsPure } from 'nav-frontend-tabs';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React, { Component, KeyboardEvent, MouseEvent } from 'react';
@@ -379,20 +379,19 @@ export class OpptjeningFaktaFormImpl extends Component<
             <FlexContainer>
               <FlexRow>
                 <FlexColumn>
-                  <Button variant="primary" size="small" disabled={this.isConfirmButtonDisabled()} loading={submitting}>
+                  <Hovedknapp mini disabled={this.isConfirmButtonDisabled()} spinner={submitting}>
                     <FormattedMessage id="OpptjeningFaktaForm.Confirm" />
-                  </Button>
+                  </Hovedknapp>
                 </FlexColumn>
                 <FlexColumn>
-                  <Button
-                    variant="secondary"
-                    size="small"
-                    type="button"
+                  <Knapp
+                    mini
+                    htmlType="button"
                     onClick={this.addOpptjeningActivity}
                     disabled={this.isAddButtonDisabled()}
                   >
                     <FormattedMessage id="OpptjeningFaktaForm.AddActivity" />
-                  </Button>
+                  </Knapp>
                 </FlexColumn>
               </FlexRow>
             </FlexContainer>

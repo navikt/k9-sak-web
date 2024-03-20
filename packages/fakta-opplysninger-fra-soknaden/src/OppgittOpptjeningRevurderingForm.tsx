@@ -17,8 +17,8 @@ import {
 } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Behandling, SubmitCallback } from '@k9-sak-web/types';
 import OpplysningerFraSøknaden, { Måned } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
-import { Button } from '@navikt/ds-react';
 import moment from 'moment';
+import { Knapp } from 'nav-frontend-knapper';
 import { TabsPure } from 'nav-frontend-tabs';
 import React from 'react';
 import { useIntl } from 'react-intl';
@@ -132,14 +132,14 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
   return (
     <form onSubmit={handleSubmit}>
       {kanEndrePåSøknadsopplysninger && (
-        <Button
+        <Knapp
           className={styles.formUnlockButton}
-          variant="primary"
-          type="button"
+          type="hoved"
+          htmlType="button"
           onClick={() => setFormIsEditable(!formIsEditable)}
         >
           {formIsEditable ? 'Lås opp skjema' : 'Lås skjema'}
-        </Button>
+        </Knapp>
       )}
       <div className={styles.tabsContainer}>
         <TabsPure
@@ -211,19 +211,19 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
       )}
       {kanEndrePåSøknadsopplysninger && !formIsEditable && (
         <>
-          <Button type="submit" variant="primary">
+          <Knapp htmlType="submit" type="hoved">
             Bekreft og fortsett
-          </Button>
-          <Button
+          </Knapp>
+          <Knapp
             onClick={() => {
               // eslint-disable-next-line no-self-assign
               window.location = window.location;
             }}
-            type="button"
+            htmlType="button"
             style={{ marginLeft: '8px', marginTop: '2px' }}
           >
             Tilbakestill skjema (OBS! Relaster siden)
-          </Button>
+          </Knapp>
         </>
       )}
     </form>

@@ -1,6 +1,6 @@
-import { Button } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -64,28 +64,26 @@ export const VedtakKlageKaSubmitPanelImpl = ({
     <Row>
       <Column xs="8">
         {!readOnly && (
-          <Button
-            variant="primary"
-            size="small"
+          <Hovedknapp
+            mini
             className={styles.mainButton}
             onClick={formProps.handleSubmit}
             disabled={behandlingPaaVent || formProps.submitting || klageResultat.godkjentAvMedunderskriver}
-            loading={formProps.submitting}
+            spinner={formProps.submitting}
           >
             {intl.formatMessage({ id: 'VedtakKlageForm.TilGodkjenningKa' })}
-          </Button>
+          </Hovedknapp>
         )}
         {!readOnly && (
-          <Button
-            variant="primary"
-            size="small"
+          <Hovedknapp
+            mini
             className={styles.mainButton}
             onClick={formProps.handleSubmit}
             disabled={behandlingPaaVent || formProps.submitting || !klageResultat.godkjentAvMedunderskriver}
-            loading={formProps.submitting}
+            spinner={formProps.submitting}
           >
             {intl.formatMessage({ id: 'VedtakKlageForm.FerdigstillKlageKa' })}
-          </Button>
+          </Hovedknapp>
         )}
         <a
           href=""

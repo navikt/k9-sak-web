@@ -1,6 +1,6 @@
-import { Button } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Hovedknapp } from 'nav-frontend-knapper';
 
 interface OwnProps {
   submitting: boolean;
@@ -13,9 +13,9 @@ const OverstyrBekreftKnappPanel = ({ submitting, pristine, overrideReadOnly }: O
     return null;
   }
   return (
-    <Button variant="primary" size="small" loading={submitting} disabled={submitting || pristine}>
+    <Hovedknapp mini spinner={submitting} disabled={submitting || pristine}>
       <FormattedMessage id="OverstyrBekreftKnappPanel.ConfirmInformation" />
-    </Button>
+    </Hovedknapp>
   );
 };
 

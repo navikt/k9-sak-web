@@ -2,9 +2,11 @@
   margin-bottom: 2.25rem;
 }
 
+.submitButton:global(.navds-button) {
+  margin-right: 1.5rem;
+}
+
 .buttonContainer {
-  display: flex;
-  gap: 0.625rem;
   margin-top: 2.125rem;
 }
 

@@ -1,6 +1,6 @@
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import Image from '@fpsak-frontend/shared-components/src/Image';
-import { Button } from '@navikt/ds-react';
+import { Flatknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -13,12 +13,12 @@ interface LeggTilKnappProps {
 }
 
 const LeggTilKnapp = ({ onClick, tekstId, disabled = false }: LeggTilKnappProps) => (
-  <Button variant="tertiary" size="small" onClick={onClick} type="button" disabled={disabled}>
+  <Flatknapp mini kompakt onClick={onClick} htmlType="button" disabled={disabled}>
     <Image className={styles.image} src={addCircleIcon} />
     <Normaltekst>
       <FormattedMessage id={tekstId} />
     </Normaltekst>
-  </Button>
+  </Flatknapp>
 );
 
 export default LeggTilKnapp;

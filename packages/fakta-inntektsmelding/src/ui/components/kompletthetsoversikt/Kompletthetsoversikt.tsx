@@ -1,23 +1,23 @@
-import { Period } from '@fpsak-frontend/utils';
-import { Button } from '@navikt/ds-react';
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import React, { useState } from 'react';
+import { Period } from '@fpsak-frontend/utils';
+import { Box, Margin } from '@navikt/ft-plattform-komponenter';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { useForm } from 'react-hook-form';
 import ContainerContext from '../../../context/ContainerContext';
-import AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
-import FieldName from '../../../types/FieldName';
 import { Kode, Kompletthet, Tilstand } from '../../../types/KompletthetData';
+import InntektsmeldingListeHeading from '../inntektsmelding-liste-heading/InntektsmeldingListeHeading';
+import InntektsmeldingListe from '../inntektsmelding-liste/InntektsmeldingListe';
+import PeriodList from '../period-list/PeriodList';
+import styles from './kompletthetsoversikt.module.css';
 import {
   finnAktivtAksjonspunkt,
   finnTilstanderSomRedigeres,
   finnTilstanderSomVurderes,
   ingenTilstanderHarMangler,
 } from '../../../util/utils';
-import InntektsmeldingListeHeading from '../inntektsmelding-liste-heading/InntektsmeldingListeHeading';
-import InntektsmeldingListe from '../inntektsmelding-liste/InntektsmeldingListe';
-import PeriodList from '../period-list/PeriodList';
+import FieldName from '../../../types/FieldName';
 import InntektsmeldingManglerInfo from './InntektsmeldingManglerInfo';
-import styles from './kompletthetsoversikt.module.css';
+import AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
 
 interface KompletthetsoversiktProps {
   kompletthetsoversikt: Kompletthet;
@@ -116,9 +116,7 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
               });
             })}
           >
-            <Button variant="primary" size="small">
-              Send inn
-            </Button>
+            <Hovedknapp mini>Send inn</Hovedknapp>
           </form>
         </Box>
       )}

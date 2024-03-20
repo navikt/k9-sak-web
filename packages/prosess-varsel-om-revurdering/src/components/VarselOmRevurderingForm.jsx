@@ -1,6 +1,6 @@
-import { Button } from '@navikt/ds-react';
 import classNames from 'classnames';
 import moment from 'moment';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -151,16 +151,15 @@ export class VarselOmRevurderingFormImpl extends React.Component {
               />
             </div>
             <VerticalSpacer sixteenPx />
-            <Button
-              variant="primary"
-              size="small"
-              type="button"
+            <Hovedknapp
+              mini
+              htmlType="button"
               onClick={this.bekreftOgFortsettClicked}
-              loading={formProps.submitting}
+              spinner={formProps.submitting}
               disabled={formProps.submitting}
             >
               <FormattedMessage id="VarselOmRevurderingForm.Bekreft" />
-            </Button>
+            </Hovedknapp>
           </div>
         )}
         {(readOnly || !isAksjonspunktOpen(aksjonspunktStatus)) && (

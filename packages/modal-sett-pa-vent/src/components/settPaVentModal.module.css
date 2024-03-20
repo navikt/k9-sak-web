@@ -29,6 +29,10 @@
   padding-right: 2.25rem;
 }
 
+.cancelButton {
+  margin: 0 0.625rem 0 1.125rem;
+}
+
 .marginTop20 {
   margin-top: 1.25rem;
 }
@@ -65,8 +69,6 @@
 }
 
 .buttonContainer {
-  display: flex;
-  gap: 0.625rem;
   margin-top: 2.875rem;
 }
 

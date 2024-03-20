@@ -1,11 +1,13 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { Button, Modal } from '@navikt/ds-react';
 import moment from 'moment';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+
+import { Modal } from '@navikt/ds-react';
 import styles from './periode.module.css';
 
 interface OwnProps {
@@ -43,12 +45,12 @@ export const SlettPeriodeModal = ({ showModal, periode, closeEvent, cancelEvent 
           <FlexRow>
             <FlexColumn className={styles.right}>
               <VerticalSpacer eightPx />
-              <Button variant="primary" size="small" className={styles.button} onClick={closeEvent}>
+              <Hovedknapp mini className={styles.button} onClick={closeEvent}>
                 {intl.formatMessage({ id: 'TilkjentYtelse.Ok' })}
-              </Button>
-              <Button variant="secondary" size="small" onClick={cancelEvent}>
+              </Hovedknapp>
+              <Knapp mini onClick={cancelEvent}>
                 {intl.formatMessage({ id: 'TilkjentYtelse.Avbryt' })}
-              </Button>
+              </Knapp>
             </FlexColumn>
           </FlexRow>
         </FlexContainer>

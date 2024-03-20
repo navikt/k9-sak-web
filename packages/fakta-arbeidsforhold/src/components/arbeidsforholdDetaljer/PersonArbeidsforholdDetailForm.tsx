@@ -2,17 +2,18 @@ import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/for
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import AksjonspunktAvklarArbeidsforholdText from '@fpsak-frontend/shared-components/src/AksjonspunktAvklarArbeidsforholdText';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
-import { Button } from '@navikt/ds-react';
 import { Row } from 'nav-frontend-grid';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
-import aksjonspunktÅrsaker from '../../kodeverk/aksjonspunktÅrsaker';
-import CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
 import ArbeidsforholdBegrunnelse from './ArbeidsforholdBegrunnelse';
 import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
+
+import aksjonspunktÅrsaker from '../../kodeverk/aksjonspunktÅrsaker';
+import CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
 import styles from './personArbeidsforholdDetailForm.module.css';
 
 export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM = 'PersonArbeidsforholdDetailForm';
@@ -70,15 +71,9 @@ export const PersonArbeidsforholdDetailForm = ({
         <FlexContainer>
           <FlexRow>
             <FlexColumn>
-              <Button
-                variant="primary"
-                size="small"
-                loading={false}
-                onClick={formProps.handleSubmit}
-                disabled={formProps.pristine}
-              >
+              <Hovedknapp mini spinner={false} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
                 <FormattedMessage id="PersonArbeidsforholdDetailForm.Oppdater" />
-              </Button>
+              </Hovedknapp>
             </FlexColumn>
           </FlexRow>
         </FlexContainer>

@@ -1,6 +1,6 @@
-import { Button } from '@navikt/ds-react';
-import PropTypes from 'prop-types';
 import React from 'react';
+import { Knapp } from 'nav-frontend-knapper';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 const transformValues = (values, aksjonspunktCode) => ({
@@ -17,9 +17,9 @@ const TempsaveButton = ({ formValues, saveUnntak, spinner, aksjonspunktCode, rea
   return (
     <div>
       {!readOnly && (
-        <Button variant="secondary" size="small" type="button" loading={spinner} onClick={event => tempSave(event)}>
+        <Knapp mini htmlType="button" spinner={spinner} onClick={event => tempSave(event)}>
           <FormattedMessage id="Unntak.TempSaveButton" />
-        </Button>
+        </Knapp>
       )}
     </div>
   );

@@ -15,8 +15,8 @@ import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
-import { Button } from '@navikt/ds-react';
 import moment from 'moment';
+import { Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { SetStateAction, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -160,15 +160,9 @@ export const VilkarresultatMedOverstyringForm = ({
                   />
                 </FlexColumn>
                 <FlexColumn>
-                  <Button
-                    variant="secondary"
-                    type="button"
-                    loading={submitting}
-                    disabled={submitting}
-                    onClick={toggleAv}
-                  >
+                  <Knapp htmlType="button" spinner={submitting} disabled={submitting} onClick={toggleAv}>
                     <FormattedMessage id="VilkarresultatMedOverstyringForm.Avbryt" />
-                  </Button>
+                  </Knapp>
                 </FlexColumn>
               </FlexRow>
             </FlexContainer>

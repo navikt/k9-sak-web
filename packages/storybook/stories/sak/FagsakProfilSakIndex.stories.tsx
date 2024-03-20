@@ -1,11 +1,11 @@
-import { withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
+import { withKnobs } from '@storybook/addon-knobs';
+import { Knapp } from 'nav-frontend-knapper';
 
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 
-import { Button } from '@navikt/ds-react';
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 
 export default {
@@ -27,7 +27,7 @@ export const visPanelForValgAvBehandlinger = () => (
         navn: 'Foreldrepenger',
       }}
       fagsakStatus={{ kode: fagsakStatus.OPPRETTET, kodeverk: FAGSAK_STATUS_KODEVERK, navn: 'Opprettet' }}
-      renderBehandlingMeny={() => <Button>Meny (Placeholder)</Button>}
+      renderBehandlingMeny={() => <Knapp>Meny (Placeholder)</Knapp>}
       renderBehandlingVelger={() => <div>Liste (placeholder)</div>}
       dekningsgrad={100}
     />

@@ -19,7 +19,7 @@ import {
 } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
 import { Delete } from '@navikt/ds-icons';
-import { Button } from '@navikt/ds-react';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Element } from 'nav-frontend-typografi';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -95,14 +95,14 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
                     />
                   </TableColumn>
                   <TableColumn className={`${styles.sentrert} ${styles.vertikaltSentrert}`}>
-                    <Button
-                      variant="tertiary"
-                      type="button"
+                    <Knapp
+                      type="flat"
+                      htmlType="button"
                       onClick={() => fields.remove(index)}
                       disabled={!isAksjonspunktOpen}
                     >
                       <Delete />
-                    </Button>
+                    </Knapp>
                   </TableColumn>
                 </TableRow>
               );
@@ -111,9 +111,9 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
           <VerticalSpacer eightPx />
         </>
       )}
-      <Button variant="tertiary" type="button" onClick={() => fields.push('')} size="small">
+      <Knapp type="flat" htmlType="button" onClick={() => fields.push('')} mini>
         Legg til fosterbarn
-      </Button>
+      </Knapp>
     </>
   );
 
@@ -150,9 +150,9 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
                     : 'Årskvantum.Aksjonspunkt.Uavklart.BekreftInfotrygd',
                 }}
               />
-              <Button variant="primary" onClick={handleSubmit} type="submit">
+              <Hovedknapp onClick={handleSubmit} htmlType="submit">
                 <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.KjørPåNytt" />
-              </Button>
+              </Hovedknapp>
             </div>
           </>
         )}
@@ -198,9 +198,9 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
 
       {isAksjonspunktOpen && (
         <div className={styles.spaceBetween}>
-          <Button variant="primary" onClick={handleSubmit} type="submit">
+          <Hovedknapp onClick={handleSubmit} htmlType="submit">
             <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Bekreft" />
-          </Button>
+          </Hovedknapp>
         </div>
       )}
     </>

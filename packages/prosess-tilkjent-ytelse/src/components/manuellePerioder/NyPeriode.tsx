@@ -2,13 +2,14 @@ import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@f
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Periode } from '@k9-sak-web/types';
-import { Button } from '@navikt/ds-react';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps } from 'redux-form';
 import NyAndel from './NyAndel';
+
 import styles from './periode.module.css';
 
 interface OwnProps {
@@ -96,19 +97,18 @@ export const TilkjentYtelseNyPeriode = ({
         </FlexContainer>
         <VerticalSpacer twentyPx />
 
-        <Button
-          variant="primary"
+        <Hovedknapp
           className={styles.oppdaterMargin}
-          type="button"
-          size="small"
+          htmlType="button"
+          mini
           onClick={formProps.handleSubmit}
-          loading={formProps.submitting}
+          spinner={formProps.submitting}
         >
           <FormattedMessage id="TilkjentYtelse.LeggTilPeriode" />
-        </Button>
-        <Button variant="secondary" type="button" size="small" onClick={newPeriodeResetCallback}>
+        </Hovedknapp>
+        <Knapp htmlType="button" mini onClick={newPeriodeResetCallback}>
           <FormattedMessage id="TilkjentYtelse.Avbryt" />
-        </Button>
+        </Knapp>
       </div>
     </div>
   );

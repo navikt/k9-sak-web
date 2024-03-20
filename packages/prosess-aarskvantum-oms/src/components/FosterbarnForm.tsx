@@ -2,11 +2,13 @@ import { InputField } from '@fpsak-frontend/form/index';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidFodselsnummer, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import { Delete } from '@navikt/ds-icons';
-import { Button } from '@navikt/ds-react';
+import { Knapp } from 'nav-frontend-knapper';
 import React, { useEffect } from 'react';
+
+import { Delete } from '@navikt/ds-icons';
 import { FormattedMessage } from 'react-intl';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
+
 import styles from './aksjonspunktForm.module.css';
 import { valgValues } from './utils';
 
@@ -56,9 +58,9 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue, aksjonspu
                     />
                   </TableColumn>
                   <TableColumn className={`${styles.sentrert} ${styles.vertikaltSentrert}`}>
-                    <Button
-                      variant="tertiary"
-                      type="button"
+                    <Knapp
+                      type="flat"
+                      htmlType="button"
                       onClick={() => fields.remove(index)}
                       disabled={
                         !isAksjonspunktOpen ||
@@ -68,7 +70,7 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue, aksjonspu
                       }
                     >
                       <Delete />
-                    </Button>
+                    </Knapp>
                   </TableColumn>
                 </TableRow>
               );
@@ -77,9 +79,9 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue, aksjonspu
           <VerticalSpacer eightPx />
         </>
       )}
-      <Button variant="tertiary" type="button" onClick={() => fields.push('')} size="small">
+      <Knapp type="flat" htmlType="button" onClick={() => fields.push('')} mini>
         <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.LeggTil" />
-      </Button>
+      </Knapp>
     </>
   );
 };

@@ -1,5 +1,6 @@
-import { Button, Modal } from '@navikt/ds-react';
+import { Modal } from '@navikt/ds-react';
 import Alertstripe from 'nav-frontend-alertstriper';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import React from 'react';
 import styles from './aksjonspunktUtenLøsningModal.module.css';
 
@@ -14,14 +15,14 @@ const AksjonspunktUtenLøsningModal = ({ melding }: AksjonspunktUtenLøsningModa
       <Modal.Body>
         <div className={styles.aksjonspunktUtenLøsningModal}>
           <Alertstripe type="advarsel">{melding}</Alertstripe>
-          <Button
-            variant="primary"
+          <Hovedknapp
             className={styles.aksjonspunktUtenLøsningModal__knapp}
             onClick={() => setIsOpen(false)}
-            size="small"
+            mini
+            htmlType="button"
           >
             Lukk melding
-          </Button>
+          </Hovedknapp>
         </div>
       </Modal.Body>
     </Modal>

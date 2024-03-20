@@ -1,5 +1,5 @@
-import { Button } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -253,16 +253,16 @@ export class AvregningPanelImpl extends Component {
                   </Row>
                   <Row>
                     <Column xs="6">
-                      <Button
-                        variant="primary"
-                        size="small"
-                        type="button"
+                      <Hovedknapp
+                        mini
+                        htmlType="button"
                         onClick={formProps.handleSubmit}
                         disabled={formProps.invalid || formProps.pristine || formProps.submitting}
-                        loading={formProps.submitting}
+                        readOnly={readOnly}
+                        spinner={formProps.submitting}
                       >
                         <FormattedMessage id="SubmitButton.ConfirmInformation" />
-                      </Button>
+                      </Hovedknapp>
                     </Column>
                   </Row>
                 </form>

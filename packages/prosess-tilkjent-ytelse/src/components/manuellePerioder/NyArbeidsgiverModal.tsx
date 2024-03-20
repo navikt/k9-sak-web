@@ -1,7 +1,8 @@
 import { behandlingForm, InputField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidOrgNumber, required } from '@fpsak-frontend/utils';
-import { Button, Modal } from '@navikt/ds-react';
+import { Modal } from '@navikt/ds-react';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
@@ -49,25 +50,18 @@ export const NyArbeidsgiverModal = ({
         <FlexRow>
           <FlexColumn className={styles.right}>
             <VerticalSpacer eightPx />
-            <Button
-              variant="primary"
-              size="small"
-              className={styles.button}
-              onClick={formProps.handleSubmit}
-              disabled={formProps.pristine}
-            >
+            <Hovedknapp mini className={styles.button} onClick={formProps.handleSubmit} disabled={formProps.pristine}>
               {intl.formatMessage({ id: 'TilkjentYtelse.Ok' })}
-            </Button>
-            <Button
-              variant="secondary"
-              size="small"
+            </Hovedknapp>
+            <Knapp
+              mini
               onClick={() => {
                 cancelEvent();
                 formProps.destroy();
               }}
             >
               {intl.formatMessage({ id: 'TilkjentYtelse.Avbryt' })}
-            </Button>
+            </Knapp>
           </FlexColumn>
         </FlexRow>
       </FlexContainer>

@@ -1,3 +1,13 @@
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import React, { Component } from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { FormSection, InjectedFormProps, change, clearFields } from 'redux-form';
+
 import {
   RadioGroupField,
   RadioOption,
@@ -18,23 +28,14 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import { Button } from '@navikt/ds-react';
-import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import React, { Component } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { FormSection, InjectedFormProps, change, clearFields } from 'redux-form';
+import ForeldelsePerioderWrapper from '../types/foreldelsePerioderTsType';
+
 import Aktsomhet, { AKTSOMHET_REKKEFØLGE } from '../kodeverk/aktsomhet';
 import SarligGrunn from '../kodeverk/sarligGrunn';
 import VilkarResultat from '../kodeverk/vilkarResultat';
 import DataForPeriode from '../types/dataForPeriodeTsType';
 import { DetaljertFeilutbetalingPeriode } from '../types/detaljerteFeilutbetalingsperioderTsType';
-import ForeldelsePerioderWrapper from '../types/foreldelsePerioderTsType';
 import TilbakekrevingTimelineData from './splittePerioder/TilbakekrevingTimelineData';
-import styles from './tilbakekrevingPeriodeForm.module.css';
 import ForeldetFormPanel from './tilbakekrevingPeriodePaneler/ForeldetFormPanel';
 import TilbakekrevingAktivitetTabell from './tilbakekrevingPeriodePaneler/TilbakekrevingAktivitetTabell';
 import AktsomhetFormPanel, {
@@ -43,6 +44,8 @@ import AktsomhetFormPanel, {
 import BelopetMottattIGodTroFormPanel, {
   InitialValuesGodTroForm,
 } from './tilbakekrevingPeriodePaneler/godTro/BelopetMottattIGodTroFormPanel';
+
+import styles from './tilbakekrevingPeriodeForm.module.css';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
@@ -404,20 +407,19 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
         <VerticalSpacer twentyPx />
         <FlexRow>
           <FlexColumn>
-            <Button
-              variant="primary"
-              size="small"
-              type="button"
+            <Hovedknapp
+              mini
+              htmlType="button"
               onClick={this.saveOrToggleModal}
               disabled={formProps.pristine || readOnly}
             >
               <FormattedMessage id="TilbakekrevingPeriodeForm.Oppdater" />
-            </Button>
+            </Hovedknapp>
           </FlexColumn>
           <FlexColumn>
-            <Button variant="secondary" size="small" type="button" onClick={skjulPeriode}>
+            <Knapp mini htmlType="button" onClick={skjulPeriode}>
               <FormattedMessage id="TilbakekrevingPeriodeForm.Avbryt" />
-            </Button>
+            </Knapp>
           </FlexColumn>
         </FlexRow>
         {showModal && (

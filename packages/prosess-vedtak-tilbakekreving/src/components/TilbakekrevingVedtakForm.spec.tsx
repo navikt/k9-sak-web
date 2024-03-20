@@ -126,7 +126,7 @@ test('<TilbakekrevingVedtakForm> skal ikke vise trykkbar godkjenningsknapp og fo
     { messages },
   );
 
-  expect(screen.getByRole('button', { name: 'Til godkjenning' })).toBeDisabled();
+  expect(screen.getByText('Til godkjenning')).toBeDisabled();
   expect(screen.queryByText('Forhåndsvis brev')).not.toBeInTheDocument();
 });
 
@@ -169,7 +169,7 @@ test(`<TilbakekrevingVedtakForm> skal ikke vise trykkbar godkjenningsknapp og fo
     { messages },
   );
 
-  expect(screen.getByRole('button', { name: 'Til godkjenning' })).toBeDisabled();
+  expect(screen.getByText('Til godkjenning')).toBeDisabled();
   expect(screen.getByText('Forhåndsvis brev')).toBeInTheDocument();
 
   const form = screen.getByRole('form');

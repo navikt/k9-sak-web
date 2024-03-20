@@ -1,7 +1,8 @@
 import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Button, Modal } from '@navikt/ds-react';
+import { Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
+import { Knapp } from 'nav-frontend-knapper';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -63,9 +64,9 @@ const ErrorMessageDetailsModal = ({
       </Row>
       <Row>
         <Column xs="12">
-          <Button variant="secondary" className={styles.cancelButton} size="small" type="reset" onClick={closeModalFn}>
+          <Knapp className={styles.cancelButton} mini htmlType="reset" onClick={closeModalFn}>
             <FormattedMessage id="ErrorMessageDetailsModal.Close" />
-          </Button>
+          </Knapp>
         </Column>
       </Row>
     </Modal.Body>

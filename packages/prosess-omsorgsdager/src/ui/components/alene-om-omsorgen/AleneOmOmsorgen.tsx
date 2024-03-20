@@ -1,19 +1,12 @@
-import classNames from 'classnames';
-import dayjs from 'dayjs';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import classNames from 'classnames';
+import dayjs from 'dayjs';
 
+import { Label } from '@navikt/ds-react';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { RadioGruppe, Select, SkjemaGruppe } from 'nav-frontend-skjema';
 
-import { Button } from '@navikt/ds-react';
-import { AleneOmOmsorgenProps } from '../../../types/AleneOmOmsorgenProps';
-import {
-  booleanTilTekst,
-  formatereDato,
-  formatereDatoTilLesemodus,
-  tekstTilBoolean,
-  utledTilgjengeligeÅr,
-} from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import { valideringsFunksjoner } from '../../../util/validationReactHookFormUtils';
 import AleneOmOmsorgenLesemodus from '../alene-om-omsorgen-lesemodus/AleneOmOmsorgenLesemodus';
@@ -23,10 +16,19 @@ import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSok
 import DatePicker from '../react-hook-form-wrappers/DatePicker';
 import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
 import TextArea from '../react-hook-form-wrappers/TextArea';
-import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
-import styles from '../vilkar-midlertidig-alene/vilkarMidlertidigAlene.module.css';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import tekst from './alene-om-omsorgen-tekst';
+import {
+  booleanTilTekst,
+  formatereDato,
+  formatereDatoTilLesemodus,
+  tekstTilBoolean,
+  utledTilgjengeligeÅr,
+} from '../../../util/stringUtils';
+import { AleneOmOmsorgenProps } from '../../../types/AleneOmOmsorgenProps';
+
+import styles from '../vilkar-midlertidig-alene/vilkarMidlertidigAlene.module.css';
+import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 
 type FormData = {
   begrunnelse: string;
@@ -204,6 +206,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                       }
                     >
                       {utledTilgjengeligeÅr(fraDatoFraVilkar).map(år => (
+
                         <option key={år.value} value={år.value} disabled={år.disabled}>
                           {år.title}
                         </option>
@@ -212,10 +215,10 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                   )}
                 </SkjemaGruppe>
               )}
-              <Button variant="primary" className={styles.bekreftKnapp} type="submit">
+              <Hovedknapp className={styles.bekreftKnapp} htmlType="submit">
                 {' '}
                 {tekst.bekreftFortsettKnapp}
-              </Button>
+              </Hovedknapp>
             </form>
           </FormProvider>
         </>

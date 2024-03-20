@@ -6,6 +6,10 @@
   padding-top: 12px;
 }
 
+.button {
+  margin-right: 10px;
+}
+
 .image {
   height: 25px;
   margin-top: 10px;
@@ -24,6 +28,5 @@
 }
 
 .floatButtons {
-  display: flex;
-  gap: 0.625rem;
+  float: right;
 }

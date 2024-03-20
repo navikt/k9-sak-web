@@ -1,18 +1,18 @@
-import { Button } from '@navikt/ds-react';
-import { AssessedBy } from '@navikt/ft-plattform-komponenter';
-import moment from 'moment';
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
+import { createSelector } from 'reselect';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
+import moment from 'moment';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { FaktaBegrunnelseTextField } from '@k9-sak-web/fakta-felles';
+import { getKodeverknavnFn, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { BorderBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { ISO_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { FaktaBegrunnelseTextField } from '@k9-sak-web/fakta-felles';
 
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
@@ -84,20 +84,14 @@ export const OppholdInntektOgPeriodeForm = ({
     <FlexContainer fluid>
       <FlexRow>
         <FlexColumn>
-          <Button
-            variant="primary"
-            size="small"
-            type="button"
-            onClick={formProps.handleSubmit}
-            disabled={formProps.pristine}
-          >
+          <Hovedknapp mini htmlType="button" onClick={formProps.handleSubmit} disabled={formProps.pristine}>
             <FormattedMessage id="OppholdInntektOgPeriode.Oppdater" />
-          </Button>
+          </Hovedknapp>
         </FlexColumn>
         <FlexColumn>
-          <Button variant="secondary" type="button" size="small" onClick={periodeResetCallback}>
+          <Knapp htmlType="button" mini onClick={periodeResetCallback}>
             <FormattedMessage id="OppholdInntektOgPeriode.Avbryt" />
-          </Button>
+          </Knapp>
         </FlexColumn>
       </FlexRow>
     </FlexContainer>

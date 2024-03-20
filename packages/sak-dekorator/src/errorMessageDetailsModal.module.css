@@ -27,7 +27,7 @@
   overflow-y: auto;
 }
 
-button.cancelButton {
+.cancelButton {
   float: right;
   margin-right: 30px;
   margin-top: 20px;

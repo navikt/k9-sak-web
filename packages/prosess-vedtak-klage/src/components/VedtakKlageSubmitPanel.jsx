@@ -1,6 +1,6 @@
-import { Button } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -32,16 +32,15 @@ export const VedtakKlageSubmitPanelImpl = ({ intl, behandlingPaaVent, previewVed
     <Row>
       <Column xs="6">
         {!readOnly && (
-          <Button
-            variant="primary"
-            size="small"
+          <Hovedknapp
+            mini
             className={styles.mainButton}
             onClick={formProps.handleSubmit}
             disabled={behandlingPaaVent || formProps.submitting}
-            loading={formProps.submitting}
+            spinner={formProps.submitting}
           >
             {intl.formatMessage({ id: 'VedtakKlageForm.TilGodkjenning' })}
-          </Button>
+          </Hovedknapp>
         )}
         <a
           href=""

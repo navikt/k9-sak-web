@@ -129,8 +129,8 @@ describe('<ProsessStegSubmitButton>', () => {
       { messages },
     );
 
-    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Laster' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Laster' })).toBeDisabled();
   });
 
   it('skal vise knapp som disabled en ikke har fylt ut alle obligatoriske felter', () => {

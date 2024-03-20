@@ -14,7 +14,7 @@
   top: 0;
 }
 
-button.oppdaterMargin {
+.oppdaterMargin {
   margin-right: 10px;
 }
 
@@ -85,7 +85,7 @@ button.oppdaterMargin {
   width: 100%;
 }
 
-button.button {
+.button {
   margin-right: 10px;
   padding-left: 36px;
   padding-right: 36px;

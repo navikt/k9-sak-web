@@ -7,8 +7,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { Button, Textarea } from '@navikt/ds-react';
+import { Textarea } from '@navikt/ds-react';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import styles from './ManglerSøknadForm.module.css';
 
@@ -133,15 +134,16 @@ const ManglerSøknadForm = ({
             </Field>
             <VerticalSpacer sixteenPx />
             <div className={styles.buttonBar}>
-              <Button
+              <Knapp
                 className={styles.button}
-                loading={isSubmitting}
+                spinner={isSubmitting}
                 disabled={readOnly || !submittable || !isValid}
-                variant="primary"
-                type="submit"
+                autoDisableVedSpinner
+                type="hoved"
+                htmlType="submit"
               >
                 <FormattedMessage id="ManglerSøknadForm.LagreAksjonspunkt" />
-              </Button>
+              </Knapp>
             </div>
           </Form>
         )}

@@ -11,7 +11,8 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { hasValidText, hasValidValue, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
-import { Button } from '@navikt/ds-react';
+import { Modal } from '@navikt/ds-react';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { Element } from 'nav-frontend-typografi';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -117,9 +118,9 @@ export const FormContent = ({
                     : 'Årskvantum.Aksjonspunkt.Uavklart.BekreftInfotrygd',
                 }}
               />
-              <Button variant="primary" onClick={handleSubmit} type="submit">
+              <Hovedknapp onClick={handleSubmit} htmlType="submit">
                 <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.KjørPåNytt" />
-              </Button>
+              </Hovedknapp>
             </div>
           </>
         )}
@@ -218,9 +219,9 @@ export const FormContent = ({
 
       {isAksjonspunktOpen && (
         <div className={styles.spaceBetween}>
-          <Button variant="primary" onClick={handleSubmit} type="submit">
+          <Hovedknapp onClick={handleSubmit} htmlType="submit">
             <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Bekreft" />
-          </Button>
+          </Hovedknapp>
         </div>
       )}
     </>

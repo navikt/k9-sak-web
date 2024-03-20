@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
 
-import { Button } from '@navikt/ds-react';
 import getPackageIntl from '../i18n/getPackageIntl';
 
 const isDisabled = (
@@ -68,15 +68,14 @@ export const ProsessStegSubmitButton = ({
   // eslint-disable-next-line react/jsx-no-useless-fragment
   <>
     {!isReadOnly && (
-      <Button
-        variant="primary"
-        size="small"
-        loading={isSubmitting}
+      <Hovedknapp
+        mini
+        spinner={isSubmitting}
         disabled={isDisabled(isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields, isPeriodisertFormComplete)}
         onClick={ariaCheck}
       >
         {text || getPackageIntl().formatMessage({ id: 'SubmitButton.ConfirmInformation' })}
-      </Button>
+      </Hovedknapp>
     )}
   </>
 );

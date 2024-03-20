@@ -41,8 +41,3 @@
 .cancelButton {
   margin: 10px 10px 0 10px;
 }
-
-.buttonContainer {
-  display: flex;
-  gap: 0.625rem;
-}

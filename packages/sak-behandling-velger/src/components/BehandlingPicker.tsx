@@ -5,6 +5,7 @@ import { AddCircle } from '@navikt/ds-icons';
 import { Button } from '@navikt/ds-react';
 import axios from 'axios';
 import { Location } from 'history';
+import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
@@ -12,7 +13,6 @@ import { UseQueryResult, useQueries } from 'react-query';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
@@ -250,15 +250,9 @@ const BehandlingPicker = ({
   return (
     <div className={styles.behandlingPicker} data-testid="BehandlingPicker">
       {valgtBehandlingId && (
-        <Button
-          variant="tertiary"
-          icon={<ChevronLeftIcon fontSize="1.5rem" />}
-          iconPosition="left"
-          className={styles.backButton}
-          onClick={() => setValgtBehandlingId(undefined)}
-        >
+        <Tilbakeknapp className={styles.backButton} onClick={() => setValgtBehandlingId(undefined)}>
           <FormattedMessage id="Behandlingspunkt.Behandling.SeAlle" />
-        </Button>
+        </Tilbakeknapp>
       )}
 
       {!valgtBehandlingId && (

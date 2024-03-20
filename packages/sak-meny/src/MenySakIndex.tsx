@@ -1,12 +1,15 @@
-import closedImage from '@fpsak-frontend/assets/images/pil_ned.svg';
-import openImage from '@fpsak-frontend/assets/images/pil_opp.svg';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { FormattedMessage, createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { Popover, BoxedListWithSelection } from '@navikt/ft-plattform-komponenter';
+import { Knapp } from 'nav-frontend-knapper';
+
 import { Image } from '@fpsak-frontend/shared-components';
-import { Button } from '@navikt/ds-react';
-import { BoxedListWithSelection, Popover } from '@navikt/ft-plattform-komponenter';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
-import messages from '../i18n/nb_NO.json';
+import openImage from '@fpsak-frontend/assets/images/pil_opp.svg';
+import closedImage from '@fpsak-frontend/assets/images/pil_ned.svg';
+
 import MenyData from './MenyData';
+
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
@@ -70,12 +73,12 @@ const MenySakIndex = ({ data }: OwnProps) => {
           referenceProps={{
             children: ({ ref }) => (
               <div ref={ref}>
-                <Button variant="secondary" size="small" onClick={toggleMenyVisning}>
+                <Knapp mini kompakt onClick={toggleMenyVisning}>
                   <FormattedMessage id="MenySakIndex.Behandlingsmeny" />
                   <span style={{ marginLeft: '5px' }}>
                     <Image src={visMenySomApen ? openImage : closedImage} />
                   </span>
-                </Button>
+                </Knapp>
               </div>
             ),
           }}

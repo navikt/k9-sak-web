@@ -1,10 +1,13 @@
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import { Image } from '@fpsak-frontend/shared-components';
-import { Button, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import { Image } from '@fpsak-frontend/shared-components';
+
+import { Modal } from '@navikt/ds-react';
 import styles from './fatterVedtakStatusModal.module.css';
 
 interface OwnProps {
@@ -46,9 +49,9 @@ const FatterVedtakStatusModal = ({
           </Normaltekst>
         </Column>
         <Column xs="2">
-          <Button variant="primary" size="small" className={styles.button} onClick={lukkModal} autoFocus>
+          <Hovedknapp mini className={styles.button} onClick={lukkModal} autoFocus>
             {intl.formatMessage({ id: 'FatterVedtakStatusModal.Ok' })}
-          </Button>
+          </Hovedknapp>
         </Column>
       </Row>
     </Modal.Body>

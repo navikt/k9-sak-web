@@ -1,11 +1,11 @@
 import React from 'react';
-import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
+import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting } from '@fpsak-frontend/form';
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
+import { isBehandlingFormDirty, isBehandlingFormSubmitting, hasBehandlingFormErrorsOfType } from '@fpsak-frontend/form';
 
-import { Button } from '@navikt/ds-react';
 import messages from '../../i18n/nb_NO.json';
 
 const cache = createIntlCache();
@@ -71,18 +71,17 @@ export const FaktaSubmitButton = ({
 }: Partial<PureOwnProps> & MappedOwnProps) => (
   <RawIntlProvider value={intl}>
     {!isReadOnly && (
-      <Button
-        variant="primary"
-        size="small"
-        loading={isSubmitting}
+      <Hovedknapp
+        mini
+        spinner={isSubmitting}
         disabled={isDisabled(isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields, hasOpenAksjonspunkter)}
         onClick={onClick || ariaCheck}
-        type={onClick ? 'button' : 'submit'}
+        htmlType={onClick ? 'button' : 'submit'}
         data-id={dataId}
       >
         {!!buttonText && buttonText}
         {!buttonText && <FormattedMessage id="SubmitButton.ConfirmInformation" />}
-      </Button>
+      </Hovedknapp>
     )}
   </RawIntlProvider>
 );
@@ -99,9 +98,9 @@ const mapStateToProps = (state: any, ownProps: PureOwnProps): MappedOwnProps => 
     hasEmptyRequiredFields: ownProps.doNotCheckForRequiredFields
       ? false
       : formNames.some(formName =>
-          // @ts-ignore Fiks denne (reselect)
-          hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())(state),
-        ),
+        // @ts-ignore Fiks denne (reselect)
+        hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())(state),
+      ),
   };
 };
 

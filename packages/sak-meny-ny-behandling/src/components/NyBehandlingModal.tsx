@@ -1,3 +1,12 @@
+import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Element } from 'nav-frontend-typografi';
+import React, { ReactElement, useEffect } from 'react';
+import { FormattedMessage, IntlShape, WrappedComponentProps, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
+import { createSelector } from 'reselect';
+
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { CheckboxField, SelectField } from '@fpsak-frontend/form';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
@@ -5,14 +14,8 @@ import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import { Button, Modal } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
-import { Element } from 'nav-frontend-typografi';
-import React, { ReactElement, useEffect } from 'react';
-import { FormattedMessage, IntlShape, WrappedComponentProps, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
-import { createSelector } from 'reselect';
+
+import { Modal } from '@navikt/ds-react';
 import styles from './nyBehandlingModal.module.css';
 
 const createOptions = (
@@ -159,20 +162,13 @@ export const NyBehandlingModal = ({
                   ))}
                 />
               )}
-              <VerticalSpacer sixteenPx />
-              <div className={styles.buttonContainer}>
-                <Button variant="primary" size="small" className={styles.button}>
+              <div>
+                <Hovedknapp mini className={styles.button}>
                   <FormattedMessage id="MenyNyBehandlingIndex.Ok" />
-                </Button>
-                <Button
-                  variant="secondary"
-                  type="button"
-                  size="small"
-                  onClick={cancelEvent}
-                  className={styles.cancelButton}
-                >
+                </Hovedknapp>
+                <Knapp htmlType="button" mini onClick={cancelEvent} className={styles.cancelButton}>
                   <FormattedMessage id="MenyNyBehandlingIndex.Avbryt" />
-                </Button>
+                </Knapp>
               </div>
             </Column>
           </Row>
