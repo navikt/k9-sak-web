@@ -39,7 +39,7 @@
   margin: 0;
 }
 
-.formUnlockButton {
+button.formUnlockButton {
   margin-bottom: 16px;
 }
 

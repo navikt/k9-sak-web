@@ -1,5 +1,5 @@
+import { Button } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { RadioGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -13,9 +13,9 @@ import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
 import DatePicker from '../react-hook-form-wrappers/DatePicker';
 import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
 import TextArea from '../react-hook-form-wrappers/TextArea';
-import styles from './vilkarKronisSyktBarn.module.css';
-import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
+import VilkarStatus from '../vilkar-status/VilkarStatus';
+import styles from './vilkarKronisSyktBarn.module.css';
 
 type FormData = {
   harDokumentasjonOgFravaerRisiko: string;
@@ -267,7 +267,9 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                 </div>
               )}
 
-              <Hovedknapp htmlType="submit">Bekreft og fortsett</Hovedknapp>
+              <Button variant="primary" type="submit">
+                Bekreft og fortsett
+              </Button>
             </form>
           </FormProvider>
         </>

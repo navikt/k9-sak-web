@@ -7,9 +7,8 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, required, safeJSONParse } from '@fpsak-frontend/utils';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
-import { Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Undertekst } from 'nav-frontend-typografi';
 import React, { useMemo } from 'react';
@@ -221,16 +220,17 @@ export const HenleggBehandlingModalImpl = ({
               <Row>
                 <Column xs="7">
                   <div>
-                    <Hovedknapp
-                      mini
+                    <Button
+                      variant="primary"
+                      size="small"
                       className={styles.button}
                       disabled={disableHovedKnapp(behandlingType.kode, årsakKode, begrunnelse, fritekst)}
                     >
                       {intl.formatMessage({ id: 'HenleggBehandlingModal.HenleggBehandlingSubmit' })}
-                    </Hovedknapp>
-                    <Knapp htmlType="button" mini onClick={cancelEvent}>
+                    </Button>
+                    <Button variant="secondary" type="button" size="small" onClick={cancelEvent}>
                       {intl.formatMessage({ id: 'HenleggBehandlingModal.Avbryt' })}
-                    </Knapp>
+                    </Button>
                   </div>
                 </Column>
                 <Column xs="4">

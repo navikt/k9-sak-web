@@ -6,6 +6,6 @@
   display: flex;
 }
 
-.button {
+button.button {
   margin-right: 1rem;
 }

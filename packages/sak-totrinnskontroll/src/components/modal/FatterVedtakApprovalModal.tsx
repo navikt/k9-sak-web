@@ -6,9 +6,8 @@ import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { Image } from '@fpsak-frontend/shared-components';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import { Behandling, Kodeverk } from '@k9-sak-web/types';
-import { Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -251,9 +250,9 @@ const FatterVedtakApprovalModal = ({
             </Normaltekst>
           </Column>
           <Column xs="2">
-            <Hovedknapp mini className={styles.button} onClick={closeEvent} autoFocus>
+            <Button variant="primary" size="small" className={styles.button} onClick={closeEvent} autoFocus>
               <FormattedMessage id="FatterVedtakApprovalModal.Ok" />
-            </Hovedknapp>
+            </Button>
           </Column>
         </Row>
       </Modal.Body>

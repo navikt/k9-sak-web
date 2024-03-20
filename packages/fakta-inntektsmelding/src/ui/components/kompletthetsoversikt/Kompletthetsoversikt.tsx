@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
 import { Period } from '@fpsak-frontend/utils';
+import { Button } from '@navikt/ds-react';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ContainerContext from '../../../context/ContainerContext';
+import AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
+import FieldName from '../../../types/FieldName';
 import { Kode, Kompletthet, Tilstand } from '../../../types/KompletthetData';
-import InntektsmeldingListeHeading from '../inntektsmelding-liste-heading/InntektsmeldingListeHeading';
-import InntektsmeldingListe from '../inntektsmelding-liste/InntektsmeldingListe';
-import PeriodList from '../period-list/PeriodList';
-import styles from './kompletthetsoversikt.module.css';
 import {
   finnAktivtAksjonspunkt,
   finnTilstanderSomRedigeres,
   finnTilstanderSomVurderes,
   ingenTilstanderHarMangler,
 } from '../../../util/utils';
-import FieldName from '../../../types/FieldName';
+import InntektsmeldingListeHeading from '../inntektsmelding-liste-heading/InntektsmeldingListeHeading';
+import InntektsmeldingListe from '../inntektsmelding-liste/InntektsmeldingListe';
+import PeriodList from '../period-list/PeriodList';
 import InntektsmeldingManglerInfo from './InntektsmeldingManglerInfo';
-import AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
+import styles from './kompletthetsoversikt.module.css';
 
 interface KompletthetsoversiktProps {
   kompletthetsoversikt: Kompletthet;
@@ -116,7 +116,9 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
               });
             })}
           >
-            <Hovedknapp mini>Send inn</Hovedknapp>
+            <Button variant="primary" size="small">
+              Send inn
+            </Button>
           </form>
         </Box>
       )}

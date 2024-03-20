@@ -1,8 +1,7 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Image } from '@fpsak-frontend/shared-components';
-import { Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -46,9 +45,9 @@ const HenlagtBehandlingModal = ({ intl, showModal, closeEvent }: OwnProps & Wrap
           </Normaltekst>
         </Column>
         <Column xs="2">
-          <Hovedknapp mini className={styles.button} onClick={closeEvent} autoFocus>
+          <Button variant="primary" size="small" className={styles.button} onClick={closeEvent} autoFocus>
             {intl.formatMessage({ id: 'HenlagtBehandlingModal.Ok' })}
-          </Hovedknapp>
+          </Button>
         </Column>
       </Row>
     </Modal.Body>

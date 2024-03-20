@@ -1,8 +1,7 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { HelpText } from '@navikt/ds-react';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Button, HelpText } from '@navikt/ds-react';
 import { RadioGruppe } from 'nav-frontend-skjema';
 
 import { KorrigerePerioderProps } from '../../../types/KorrigerePerioderProps';
@@ -220,12 +219,12 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
               />
             </div>
           )}
-          <Hovedknapp className={styles.knapp} htmlType="submit">
+          <Button variant="primary" className={styles.knapp} type="submit">
             Bekreft og fortsett
-          </Hovedknapp>
-          <Knapp className={styles.knapp} htmlType="button" onClick={avbrytRedigereInformasjon}>
+          </Button>
+          <Button variant="secondary" className={styles.knapp} type="button" onClick={avbrytRedigereInformasjon}>
             Avbryt
-          </Knapp>
+          </Button>
         </form>
       </FormProvider>
     </div>

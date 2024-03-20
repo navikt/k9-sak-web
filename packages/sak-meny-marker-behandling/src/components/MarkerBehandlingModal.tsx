@@ -96,7 +96,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   return (
     <Modal open onClose={lukkModal} aria-label="Modal for markering av behandling" portal width="38.375rem">
       <Modal.Header>
-        <Heading as="h3" size="medium">
+        <Heading as="h3" size="small">
           Marker behandling og send til egen kø
         </Heading>
       </Modal.Header>

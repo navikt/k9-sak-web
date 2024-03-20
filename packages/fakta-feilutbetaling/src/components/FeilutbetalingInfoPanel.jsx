@@ -1,6 +1,6 @@
+import { Button } from '@navikt/ds-react';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -281,16 +281,16 @@ export class FeilutbetalingInfoPanelImpl extends Component {
           <VerticalSpacer eightPx />
           <Row>
             <Column md="6">
-              <Hovedknapp
-                mini
-                htmlType="button"
+              <Button
+                variant="primary"
+                size="small"
+                type="button"
                 onClick={formProps.handleSubmit}
                 disabled={formProps.pristine || formProps.submitting}
-                readOnly={readOnly}
-                spinner={formProps.submitting}
+                loading={formProps.submitting}
               >
                 <FormattedMessage id="FeilutbetalingInfoPanel.Confirm" />
-              </Hovedknapp>
+              </Button>
             </Column>
           </Row>
         </form>

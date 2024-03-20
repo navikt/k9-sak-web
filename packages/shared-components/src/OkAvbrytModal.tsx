@@ -1,5 +1,4 @@
-import { Modal } from '@navikt/ds-react';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Button, Modal } from '@navikt/ds-react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -45,14 +44,14 @@ const OkAvbrytModal = ({
       <FlexContainer>
         <FlexRow>
           <FlexColumn>
-            <Hovedknapp mini htmlType="submit" onClick={submit} autoFocus>
+            <Button variant="primary" size="small" type="submit" onClick={submit} autoFocus>
               {intl.formatMessage({ id: okButtonTextCode })}
-            </Hovedknapp>
+            </Button>
           </FlexColumn>
           <FlexColumn>
-            <Knapp mini htmlType="reset" onClick={cancel}>
+            <Button variant="secondary" size="small" type="reset" onClick={cancel}>
               {intl.formatMessage({ id: 'OkAvbrytModal.Avbryt' })}
-            </Knapp>
+            </Button>
           </FlexColumn>
         </FlexRow>
       </FlexContainer>
