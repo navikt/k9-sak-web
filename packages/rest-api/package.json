@@ -6,7 +6,7 @@
   "private": true,
   "dependencies": {
     "@sentry/browser": "7.105.0",
-    "axios": "1.6.7",
+    "axios": "1.6.8",
     "node-cache": "5.1.2"
   }
 }
