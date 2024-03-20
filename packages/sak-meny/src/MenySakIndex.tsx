@@ -1,15 +1,12 @@
-import { BoxedListWithSelection, Popover } from '@navikt/ft-plattform-komponenter';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
-
 import closedImage from '@fpsak-frontend/assets/images/pil_ned.svg';
 import openImage from '@fpsak-frontend/assets/images/pil_opp.svg';
 import { Image } from '@fpsak-frontend/shared-components';
-
-import MenyData from './MenyData';
-
 import { Button } from '@navikt/ds-react';
+import { BoxedListWithSelection, Popover } from '@navikt/ft-plattform-komponenter';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
+import MenyData from './MenyData';
 
 const cache = createIntlCache();
 

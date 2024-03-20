@@ -2,13 +2,11 @@ import { InputField } from '@fpsak-frontend/form/index';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidFodselsnummer, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import React, { useEffect } from 'react';
-
 import { Delete } from '@navikt/ds-icons';
+import { Button } from '@navikt/ds-react';
+import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
-
-import { Button } from '@navikt/ds-react';
 import styles from './aksjonspunktForm.module.css';
 import { valgValues } from './utils';
 

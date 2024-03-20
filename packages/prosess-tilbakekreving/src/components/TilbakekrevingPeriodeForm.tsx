@@ -1,12 +1,3 @@
-import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import React, { Component } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { FormSection, InjectedFormProps, change, clearFields } from 'redux-form';
-
 import {
   RadioGroupField,
   RadioOption,
@@ -27,14 +18,23 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import ForeldelsePerioderWrapper from '../types/foreldelsePerioderTsType';
-
+import { Button } from '@navikt/ds-react';
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import React, { Component } from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { FormSection, InjectedFormProps, change, clearFields } from 'redux-form';
 import Aktsomhet, { AKTSOMHET_REKKEFØLGE } from '../kodeverk/aktsomhet';
 import SarligGrunn from '../kodeverk/sarligGrunn';
 import VilkarResultat from '../kodeverk/vilkarResultat';
 import DataForPeriode from '../types/dataForPeriodeTsType';
 import { DetaljertFeilutbetalingPeriode } from '../types/detaljerteFeilutbetalingsperioderTsType';
+import ForeldelsePerioderWrapper from '../types/foreldelsePerioderTsType';
 import TilbakekrevingTimelineData from './splittePerioder/TilbakekrevingTimelineData';
+import styles from './tilbakekrevingPeriodeForm.module.css';
 import ForeldetFormPanel from './tilbakekrevingPeriodePaneler/ForeldetFormPanel';
 import TilbakekrevingAktivitetTabell from './tilbakekrevingPeriodePaneler/TilbakekrevingAktivitetTabell';
 import AktsomhetFormPanel, {
@@ -43,9 +43,6 @@ import AktsomhetFormPanel, {
 import BelopetMottattIGodTroFormPanel, {
   InitialValuesGodTroForm,
 } from './tilbakekrevingPeriodePaneler/godTro/BelopetMottattIGodTroFormPanel';
-
-import { Button } from '@navikt/ds-react';
-import styles from './tilbakekrevingPeriodeForm.module.css';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
