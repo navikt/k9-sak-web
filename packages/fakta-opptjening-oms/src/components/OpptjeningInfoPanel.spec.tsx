@@ -1,18 +1,18 @@
+import React from 'react';
+import { screen } from '@testing-library/react';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { Aksjonspunkt, Opptjening } from '@k9-sak-web/types';
-import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../../i18n/nb_NO.json';
 import OpptjeningInfoPanel, { buildInitialValues } from './OpptjeningInfoPanel';
+import messages from '../../i18n/nb_NO.json';
 
 describe('<OpptjeningInfoPanel>', () => {
   it('skal vise opptjeningspanel', () => {
     renderWithIntlAndReduxForm(
       <OpptjeningInfoPanel
         {...reduxFormPropsMock}
-        aksjonspunkter={[{ definisjon: { kode: '5058' }, erAktivt: true, toTrinnsBehandling: false }]}
+        aksjonspunkter={[{ definisjon: '5058', erAktivt: true, toTrinnsBehandling: false }]}
         behandlingId={1}
         behandlingVersjon={1}
         intl={intlMock}
@@ -64,7 +64,7 @@ describe('<OpptjeningInfoPanel>', () => {
       opptjeningFom: '2018-01-01',
       opptjeningTom: '2018-10-01',
     };
-    const aksjonspunkter = [{ definisjon: { kode: '5058' }, erAktivt: true, toTrinnsBehandling: false }];
+    const aksjonspunkter = [{ definisjon: '5058', erAktivt: true, toTrinnsBehandling: false }];
     const opptjeningList = [{ opptjeningAktivitetList, fastsattOpptjening }];
 
     const initialValues = buildInitialValues.resultFunc(
@@ -142,8 +142,8 @@ describe('<OpptjeningInfoPanel>', () => {
       opptjeningTom: '2018-10-01',
     };
     const aksjonspunkter = [
-      { definisjon: { kode: '5051' }, erAktivt: true, toTrinnsBehandling: false },
-      { definisjon: { kode: '5080' }, erAktivt: true, toTrinnsBehandling: false },
+      { definisjon: '5051', erAktivt: true, toTrinnsBehandling: false },
+      { definisjon: '5080', erAktivt: true, toTrinnsBehandling: false },
     ];
     const opptjeningList = [{ opptjeningAktivitetList, fastsattOpptjening }];
 
@@ -154,9 +154,7 @@ describe('<OpptjeningInfoPanel>', () => {
     expect(initialValues).toStrictEqual({
       aksjonspunkter: [
         {
-          definisjon: {
-            kode: '5051',
-          },
+          definisjon: '5051',
           erAktivt: true,
           toTrinnsBehandling: false,
         },

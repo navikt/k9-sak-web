@@ -1,11 +1,13 @@
+import React, { Component } from 'react';
+import moment from 'moment';
+import hash from 'object-hash';
+import { Column, Row } from 'nav-frontend-grid';
 import { Timeline } from '@fpsak-frontend/tidslinje';
 import { DDMMYYYY_DATE_FORMAT, isEqual } from '@fpsak-frontend/utils';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
-import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
-import hash from 'object-hash';
-import React, { Component } from 'react';
+import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import DateContainer from './DateContainer';
 import styles from './opptjeningTimeLine.module.css';
 
@@ -58,7 +60,7 @@ const createItems = (
     end: moment(`${ap.opptjeningTom} 23:59`),
     group: groups.find(
       g =>
-        g.aktivitetTypeKode === ap.aktivitetType.kode &&
+        g.aktivitetTypeKode === ap.aktivitetType &&
         g.arbeidsforholdRef === ap.arbeidsforholdRef &&
         g.oppdragsgiverOrg === ap.oppdragsgiverOrg,
     ).id,
@@ -69,11 +71,12 @@ const createItems = (
   return items.concat(standardItems(opptjeningFomDato, opptjeningTomDato));
 };
 
-const createGroups = (opptjeningPeriods: OpptjeningAktivitet[], opptjeningAktivitetTypes) => {
+const createGroups = (opptjeningPeriods: OpptjeningAktivitet[]) => {
+  const { kodeverkNavnFraKode } = useKodeverkV2();
   const duplicatesRemoved = opptjeningPeriods.reduce((accPeriods: OpptjeningAktivitet[], period) => {
     const hasPeriod = accPeriods.some(
       p =>
-        p.aktivitetType.kode === period.aktivitetType.kode &&
+        p.aktivitetType === period.aktivitetType &&
         p.arbeidsforholdRef === period.arbeidsforholdRef &&
         p.oppdragsgiverOrg === period.oppdragsgiverOrg,
     );
@@ -82,8 +85,8 @@ const createGroups = (opptjeningPeriods: OpptjeningAktivitet[], opptjeningAktivi
   }, []);
   return duplicatesRemoved.map((activity, index) => ({
     id: index + 1,
-    content: opptjeningAktivitetTypes.find(oat => oat.kode === activity.aktivitetType.kode).navn,
-    aktivitetTypeKode: activity.aktivitetType.kode,
+    content: kodeverkNavnFraKode(activity.aktivitetType, KodeverkType.OPPTJENING_AKTIVITET_TYPE),
+    aktivitetTypeKode: activity.aktivitetType,
     arbeidsforholdRef: activity.arbeidsforholdRef,
     oppdragsgiverOrg: activity.oppdragsgiverOrg,
   }));
@@ -143,9 +146,8 @@ class OpptjeningTimeLine extends Component<OpptjeningTimeLineProps, OpptjeningTi
 
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
-    const { opptjeningAktivitetTypes, opptjeningPeriods, opptjeningFomDato, opptjeningTomDato, harApneAksjonspunkter } =
-      this.props;
-    const groups = createGroups(opptjeningPeriods, opptjeningAktivitetTypes);
+    const { opptjeningPeriods, opptjeningFomDato, opptjeningTomDato, harApneAksjonspunkter } = this.props;
+    const groups = createGroups(opptjeningPeriods);
     const items = createItems(opptjeningPeriods, groups, opptjeningFomDato, opptjeningTomDato, harApneAksjonspunkter);
     this.setState({
       groups,
@@ -157,7 +159,7 @@ class OpptjeningTimeLine extends Component<OpptjeningTimeLineProps, OpptjeningTi
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { opptjeningPeriods, harApneAksjonspunkter } = this.props;
     if (!isEqual(opptjeningPeriods, nextProps.opptjeningPeriods)) {
-      const groups = createGroups(nextProps.opptjeningPeriods, nextProps.opptjeningAktivitetTypes);
+      const groups = createGroups(nextProps.opptjeningPeriods);
       const items = createItems(
         nextProps.opptjeningPeriods,
         groups,
