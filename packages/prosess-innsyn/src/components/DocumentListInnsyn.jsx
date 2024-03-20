@@ -1,14 +1,16 @@
-import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg';
-import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
-import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
-import { CheckboxField } from '@fpsak-frontend/form';
-import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import { DateTimeLabel, Image, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { BodyShort, Detail } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
+
+import { CheckboxField } from '@fpsak-frontend/form';
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
+import { DateTimeLabel, Image, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+
+import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg';
+import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
+import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
 
 import styles from './documentListInnsyn.module.css';
 
@@ -60,9 +62,9 @@ const noLabelHack = () => <span className={styles.hidden}>-</span>;
 const DocumentListInnsyn = ({ intl, documents, saksNr, readOnly }) => {
   if (documents.length === 0) {
     return (
-      <BodyShort size="small" className={styles.noDocuments}>
+      <Normaltekst className={styles.noDocuments}>
         <FormattedMessage id="DocumentListInnsyn.NoDocuments" />
-      </BodyShort>
+      </Normaltekst>
     );
   }
   const headerTextCodes = readOnly
@@ -76,9 +78,9 @@ const DocumentListInnsyn = ({ intl, documents, saksNr, readOnly }) => {
 
   return (
     <>
-      <Detail className={styles.noDocuments}>
+      <Undertekst className={styles.noDocuments}>
         <FormattedMessage id="DocumentListInnsyn.VelgInnsynsDok" />
-      </Detail>
+      </Undertekst>
       <Row>
         <Column xs={readOnly ? '6' : '10'}>
           <Table headerTextCodes={headerTextCodes}>
@@ -105,9 +107,9 @@ const DocumentListInnsyn = ({ intl, documents, saksNr, readOnly }) => {
                     {document.tidspunkt ? (
                       <DateTimeLabel dateTimeString={document.tidspunkt} />
                     ) : (
-                      <BodyShort size="small">
+                      <Normaltekst>
                         <FormattedMessage id="DocumentListInnsyn.IProduksjon" />
-                      </BodyShort>
+                      </Normaltekst>
                     )}
                   </TableColumn>
                 </TableRow>

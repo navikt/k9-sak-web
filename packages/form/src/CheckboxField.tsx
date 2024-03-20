@@ -1,9 +1,9 @@
-import { BodyShort } from '@navikt/ds-react';
 import { Checkbox as NavCheckbox } from 'nav-frontend-skjema';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { Field } from 'redux-form';
-import LabelType from './LabelType';
 import renderNavField from './renderNavField';
+import LabelType from './LabelType';
 
 interface CheckboxFieldProps {
   name: string;
@@ -26,7 +26,7 @@ export const RenderCheckboxField = renderNavField(({ onChange, label, ...otherPr
     <NavCheckbox
       onChange={event => onChange(event.target.checked)}
       checked={!!otherProps.value}
-      label={React.cloneElement(label, { typographyElement: BodyShort })}
+      label={React.cloneElement(label, { typographyElement: Normaltekst })}
       {...otherProps}
     />
   );

@@ -1,11 +1,12 @@
+import { Undertekst } from 'nav-frontend-typografi';
+import React, { useState } from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
+
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { behandlingFormValueSelector, TextAreaField } from '@fpsak-frontend/form';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import { Detail } from '@navikt/ds-react';
-import React, { useState } from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
 
 import styles from './tilbakekrevingVedtakUtdypendeTekstPanel.module.css';
 
@@ -56,9 +57,9 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
               src={addCircleIcon}
               alt={intl.formatMessage({ id: 'TilbakekrevingVedtakUtdypendeTekstPanel.LeggTilUtdypendeTekst' })}
             />
-            <Detail className={styles.imageText}>
+            <Undertekst className={styles.imageText}>
               <FormattedMessage id="TilbakekrevingVedtakUtdypendeTekstPanel.LeggTilUtdypendeTekst" />
-            </Detail>
+            </Undertekst>
           </button>
         </>
       )}

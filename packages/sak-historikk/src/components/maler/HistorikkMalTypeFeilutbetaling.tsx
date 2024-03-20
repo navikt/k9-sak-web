@@ -1,15 +1,16 @@
 import React, { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Normaltekst } from 'nav-frontend-typografi';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { HistorikkinnslagDel, Kodeverk } from '@k9-sak-web/types';
-import { BodyShort } from '@navikt/ds-react';
-import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
-import HistorikkMal from '../HistorikkMalTsType';
-import Skjermlenke from './felles/Skjermlenke';
+import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
 import BubbleText from './felles/bubbleText';
+import Skjermlenke from './felles/Skjermlenke';
+import HistorikkMal from '../HistorikkMalTsType';
 
 const finnFomOpplysning = (opplysninger: HistorikkinnslagDel['opplysninger']): string => {
   const found = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_FOM.kode);
@@ -89,9 +90,7 @@ const HistorikkMalTypeFeilutbetaling = ({
                 b: chunks => <b>{chunks}</b>,
               }}
             />
-            <BodyShort size="small">
-              {buildEndretFeltText(historikkinnslagDel.endredeFelter, getKodeverknavn)}
-            </BodyShort>
+            <Normaltekst>{buildEndretFeltText(historikkinnslagDel.endredeFelter, getKodeverknavn)}</Normaltekst>
             <VerticalSpacer eightPx />
           </div>
         ) : null,

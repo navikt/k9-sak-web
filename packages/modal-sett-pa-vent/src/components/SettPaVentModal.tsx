@@ -14,9 +14,10 @@ import {
 } from '@fpsak-frontend/utils';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
-import { BodyShort, Button, Label, Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import moment from 'moment';
 import { Select as NavSelect } from 'nav-frontend-skjema';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -208,9 +209,9 @@ export const SettPaVentModal = ({
             />
             <div className={styles.divider} />
             <div className={styles.calendarContainer}>
-              <BodyShort size="small" className={styles.label}>
+              <Normaltekst className={styles.label}>
                 {getPaVentText(originalVentearsak, hasManualPaVent, frist, originalFrist, showEndreFrist)}
-              </BodyShort>
+              </Normaltekst>
               {showEndreFrist && (
                 <div className={styles.datePicker}>
                   <DatepickerField
@@ -234,11 +235,7 @@ export const SettPaVentModal = ({
                 ) : (
                   <SelectField
                     name="ventearsak"
-                    label={
-                      <Label size="small" as="p">
-                        {intl.formatMessage({ id: 'SettPaVentModal.HvaVenterViPa' })}
-                      </Label>
-                    }
+                    label={<Element>{intl.formatMessage({ id: 'SettPaVentModal.HvaVenterViPa' })}</Element>}
                     placeholder={intl.formatMessage({ id: 'SettPaVentModal.SelectPlaceholder' })}
                     validate={[required]}
                     selectValues={ventearsaker
@@ -263,26 +260,24 @@ export const SettPaVentModal = ({
                 validate={[hasValidText, maxLength200]}
                 label={
                   <div className={styles.commentInputLabel}>
-                    <Label size="small" as="p">
-                      {intl.formatMessage({ id: 'SettPaVentModal.Kommentar' })}
-                    </Label>
+                    <Element>{intl.formatMessage({ id: 'SettPaVentModal.Kommentar' })}</Element>
                     <span>({intl.formatMessage({ id: 'SettPaVentModal.Valgfritt' })})</span>
                   </div>
                 }
               />
             )}
             {visBrevErBestilt && (
-              <BodyShort size="small">
+              <Normaltekst>
                 <FormattedMessage id="SettPaVentModal.BrevBlirBestilt" />
-              </BodyShort>
+              </Normaltekst>
             )}
             <div className={styles.flexContainer}>
               {!hasManualPaVent && showFristenTekst && (
-                <BodyShort size="small">
+                <Normaltekst>
                   <FormattedMessage id="SettPaVentModal.UtløptFrist" />
                   <VerticalSpacer eightPx />
                   <FormattedMessage id="SettPaVentModal.HenleggeSaken" />
-                </BodyShort>
+                </Normaltekst>
               )}
             </div>
             <div className={showSelect ? styles.buttonContainer : ''}>

@@ -3,9 +3,10 @@ import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
 import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { goToLos, goToSearch } from '@k9-sak-web/sak-app/src/app/paths';
 import { MerknadFraLos } from '@k9-sak-web/types';
-import { Alert, BodyShort, Button, ErrorMessage, Heading, Label, Modal, VStack } from '@navikt/ds-react';
+import { Alert, Button, ErrorMessage, Heading, Modal, VStack } from '@navikt/ds-react';
 import { Form, Formik, FormikProps } from 'formik';
 import { CheckboxGruppe } from 'nav-frontend-skjema';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import * as Yup from 'yup';
@@ -172,10 +173,8 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
               )}
               {formikProps.values.markerSomVanskelig && (
                 <>
-                  <Label size="small" as="p" className={styles.aksjonspunktHeading}>
-                    Aksjonspunkt:
-                  </Label>
-                  <BodyShort size="small">Beregning</BodyShort>
+                  <Element className={styles.aksjonspunktHeading}>Aksjonspunkt:</Element>
+                  <Normaltekst>Beregning</Normaltekst>
                 </>
               )}
               {(formikProps.values.markerSomVanskelig || formikProps.values.markerSomHastesak) && (

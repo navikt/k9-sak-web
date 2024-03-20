@@ -1,9 +1,10 @@
-import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { BodyShort, Detail } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 
 import styles from './documentListVedtakInnsyn.module.css';
 
@@ -23,17 +24,17 @@ const headerTextCodes = ['DocumentListVedtakInnsyn.Dokument'];
 const DocumentListVedtakInnsyn = ({ documents, saksNr }) => {
   if (documents.length === 0) {
     return (
-      <BodyShort size="small" className={styles.noDocuments}>
+      <Normaltekst className={styles.noDocuments}>
         <FormattedMessage id="DocumentListVedtakInnsyn.NoDocuments" />
-      </BodyShort>
+      </Normaltekst>
     );
   }
 
   return (
     <>
-      <Detail className={styles.noDocuments}>
+      <Undertekst className={styles.noDocuments}>
         <FormattedMessage id="DocumentListVedtakInnsyn.InnsynsDok" />
-      </Detail>
+      </Undertekst>
       <Row>
         <Column xs="6">
           <Table noHover headerTextCodes={headerTextCodes}>

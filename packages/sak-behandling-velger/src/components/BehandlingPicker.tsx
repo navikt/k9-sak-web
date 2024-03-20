@@ -1,16 +1,18 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn, PerioderMedBehandlingsId } from '@k9-sak-web/types';
-import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { AddCircle } from '@navikt/ds-icons';
-import { BodyShort, Button, Heading } from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
 import axios from 'axios';
 import { Location } from 'history';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { UseQueryResult, useQueries } from 'react-query';
 import { NavLink, useNavigate } from 'react-router-dom';
+
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
@@ -262,12 +264,12 @@ const BehandlingPicker = ({
       {!valgtBehandlingId && (
         <>
           <div className={styles.headerContainer}>
-            <Heading size="small" level="2">
+            <Undertittel>
               <FormattedMessage
                 id="Behandlingspunkt.VelgBehandling"
                 values={{ antallBehandlinger: behandlinger.length }}
               />
-            </Heading>
+            </Undertittel>
             <BehandlingFilter
               filters={getFilterListe()}
               activeFilters={activeFilters}
@@ -277,9 +279,9 @@ const BehandlingPicker = ({
           </div>
           <ul className={styles.behandlingList}>
             {noExistingBehandlinger && (
-              <BodyShort size="small" data-testid="ingenBehandlinger">
+              <Normaltekst data-testid="ingenBehandlinger">
                 <FormattedMessage id="BehandlingList.ZeroBehandlinger" />
-              </BodyShort>
+              </Normaltekst>
             )}
             {!noExistingBehandlinger &&
               renderListItems({

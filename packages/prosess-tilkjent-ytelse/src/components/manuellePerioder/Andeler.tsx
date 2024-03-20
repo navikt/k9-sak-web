@@ -1,12 +1,12 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { Table, TableColumn } from '@fpsak-frontend/shared-components';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort } from '@navikt/ds-react';
-import AlertStripe from 'nav-frontend-alertstriper';
 import React from 'react';
 import { WrappedComponentProps } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
+import AlertStripe from 'nav-frontend-alertstriper';
+import { Normaltekst } from 'nav-frontend-typografi';
+import { Kodeverk, KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Table, TableColumn } from '@fpsak-frontend/shared-components';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { createVisningsnavnForAndel, getInntektskategori } from '../TilkjentYteleseUtils';
 
 interface OwnProps {
@@ -51,19 +51,19 @@ const Andeler = ({ fields, meta, alleKodeverk, arbeidsgivere }: Partial<OwnProps
           return (
             <tr>
               <TableColumn>
-                <BodyShort size="small">{inntektskategori}</BodyShort>
+                <Normaltekst>{inntektskategori}</Normaltekst>
               </TableColumn>
               <TableColumn>
-                <BodyShort size="small">{arbeidsgiver}</BodyShort>
+                <Normaltekst>{arbeidsgiver}</Normaltekst>
               </TableColumn>
               <TableColumn>
-                <BodyShort size="small">{andel.tilSoker}</BodyShort>
+                <Normaltekst>{andel.tilSoker}</Normaltekst>
               </TableColumn>
               <TableColumn>
-                <BodyShort size="small">{andel.refusjon}</BodyShort>
+                <Normaltekst>{andel.refusjon}</Normaltekst>
               </TableColumn>
               <TableColumn>
-                <BodyShort size="small">{andel.utbetalingsgrad}</BodyShort>
+                <Normaltekst>{andel.utbetalingsgrad}</Normaltekst>
               </TableColumn>
             </tr>
           );

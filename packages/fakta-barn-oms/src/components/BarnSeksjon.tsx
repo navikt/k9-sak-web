@@ -1,9 +1,9 @@
-import { Label } from '@navikt/ds-react';
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Element } from 'nav-frontend-typografi';
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
 import BarnVisning from './BarnVisning';
+import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
 
 interface BarnSeksjonProps {
   barn: KombinertBarnOgRammevedtak[];
@@ -18,9 +18,9 @@ const BarnSeksjon = ({ barn, startIndex, tekstId }: BarnSeksjonProps) => {
 
   return (
     <div style={{ marginTop: '1.5rem' }}>
-      <Label size="small" as="p">
+      <Element>
         <FormattedMessage id={tekstId} />
-      </Label>
+      </Element>
       {barn.map((barnet, index) => (
         <BarnVisning barnet={barnet} index={index + startIndex} key={uuidv4()} />
       ))}

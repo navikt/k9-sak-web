@@ -1,22 +1,23 @@
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { BodyShort, Detail, Heading } from '@navikt/ds-react';
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
+import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import VedtakKlageKaSubmitPanel from './VedtakKlageKaSubmitPanel';
 import VedtakKlageNkkSubmitPanel from './VedtakKlageNkkSubmitPanel';
 import VedtakKlageSubmitPanel from './VedtakKlageSubmitPanel';
+import VedtakKlageKaSubmitPanel from './VedtakKlageKaSubmitPanel';
 
 export const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
 
@@ -51,9 +52,7 @@ export const VedtakKlageFormImpl = ({
 
   return (
     <FadingPanel>
-      <Heading size="small" level="2">
-        {intl.formatMessage({ id: 'VedtakKlageForm.Header' })}
-      </Heading>
+      <Undertittel>{intl.formatMessage({ id: 'VedtakKlageForm.Header' })}</Undertittel>
       <VerticalSpacer twentyPx />
       {!readOnly && åpneAksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_DOKUMENT) ? (
         <>
@@ -65,33 +64,29 @@ export const VedtakKlageFormImpl = ({
       ) : null}
       <>
         <div>
-          <Detail>{intl.formatMessage({ id: 'VedtakKlageForm.Resultat' })}</Detail>
+          <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.Resultat' })}</Undertekst>
         </div>
-        {behandlingsResultatTekst && (
-          <BodyShort size="small">{intl.formatMessage({ id: behandlingsResultatTekst })}</BodyShort>
-        )}
+        {behandlingsResultatTekst && <Normaltekst>{intl.formatMessage({ id: behandlingsResultatTekst })}</Normaltekst>}
         <VerticalSpacer sixteenPx />
         {isAvvist && Array.isArray(avvistArsaker) && avvistArsaker.length > 0 && (
           <div>
-            <Detail>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilAvvisning' })}</Detail>
+            <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilAvvisning' })}</Undertekst>
             {avvistArsaker.map(arsak => (
-              <BodyShort size="small" key={arsak.kode}>
-                {kodeverknavn(arsak)}
-              </BodyShort>
+              <Normaltekst key={arsak.kode}>{kodeverknavn(arsak)}</Normaltekst>
             ))}
             <VerticalSpacer sixteenPx />
           </div>
         )}
         {isOmgjort && omgjortAarsak && (
           <div>
-            <Detail>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilOmgjoring' })}</Detail>
+            <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilOmgjoring' })}</Undertekst>
             {omgjortAarsak}
             <VerticalSpacer sixteenPx />
           </div>
         )}
         {isOpphevOgHjemsend && omgjortAarsak && (
           <div>
-            <Detail>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilOppheving' })}</Detail>
+            <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilOppheving' })}</Undertekst>
             {omgjortAarsak}
             <VerticalSpacer sixteenPx />
           </div>

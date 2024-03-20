@@ -1,16 +1,18 @@
-import classNames from 'classnames/bind';
 import * as React from 'react';
+import classNames from 'classnames/bind';
 
-import { Label } from '@navikt/ds-react';
 import { ContentWithTooltip, GreenCheckIcon, OnePersonIconBlue } from '@navikt/ft-plattform-komponenter';
 import { EtikettAdvarsel, EtikettSuksess } from 'nav-frontend-etiketter';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
+import { Element } from 'nav-frontend-typografi';
+import { PersonPencilFillIcon } from '@navikt/aksel-icons';
+import { HelpText } from '@navikt/ds-react';
+
 import { arbeidstypeTilVisning } from '../../../constants/Arbeidstype';
 import BarnetsDødsfallÅrsakerMedTekst from '../../../constants/BarnetsDødsfallÅrsakerMedTekst';
 import IkkeOppfylteÅrsakerMedTekst from '../../../constants/IkkeOppfylteÅrsakerMedTekst';
 import OverseEtablertTilsynÅrsak from '../../../constants/OverseEtablertTilsynÅrsak';
-import Utfall from '../../../constants/Utfall';
 import Årsaker from '../../../constants/Årsaker';
 import ArbeidsgiverOpplysninger from '../../../types/ArbeidsgiverOpplysninger';
 import GraderingMotTilsyn from '../../../types/GraderingMotTilsyn';
@@ -19,8 +21,9 @@ import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { beregnDagerTimer } from '../../../util/dateUtils';
 import { harÅrsak } from '../../../util/årsakUtils';
 import ContainerContext from '../../context/ContainerContext';
-import UttakUtregning from './UttakUtregning';
 import styles from './uttakDetaljer.module.css';
+import UttakUtregning from './UttakUtregning';
+import Utfall from '../../../constants/Utfall';
 
 const cx = classNames.bind(styles);
 
@@ -127,7 +130,7 @@ const formatAvkortingMotArbeid = (
   utbetalingsgrader: Utbetalingsgrad[],
   søkersTapteArbeidstid: number,
   alleArbeidsforhold: Record<string, ArbeidsgiverOpplysninger>,
-  manueltOverstyrt?: boolean,
+  manueltOverstyrt?: boolean
 ) => (
   <>
     <div className={styles.uttakDetaljer__avkortingMotArbeid}>
@@ -143,17 +146,15 @@ const formatAvkortingMotArbeid = (
         const beregnetNormalArbeidstid = beregnDagerTimer(normalArbeidstid);
         const beregnetFaktiskArbeidstid = beregnDagerTimer(faktiskArbeidstid);
         const faktiskOverstigerNormal = beregnetNormalArbeidstid < beregnetFaktiskArbeidstid;
-        const prosentFravær = Math.round(
-          (Math.max(beregnetNormalArbeidstid - beregnetFaktiskArbeidstid, 0) / beregnetNormalArbeidstid) * 100,
-        );
+        const prosentFravær = Math.round(Math.max(beregnetNormalArbeidstid - beregnetFaktiskArbeidstid, 0) / beregnetNormalArbeidstid * 100);
 
         return (
           // eslint-disable-next-line react/no-array-index-key
           <div key={index}>
-            <Label size="small" as="p" className={styles.uttakDetaljer__avkortingMotArbeid__heading}>
+            <Element className={styles.uttakDetaljer__avkortingMotArbeid__heading}>
               <span>{arbeidstype}</span>
               <span>{arbeidsgiverInfo || orgnr || arbeidsgiverFnr}</span>
-            </Label>
+            </Element>
             <p className={styles.uttakDetaljer__data}>{`Normal arbeidstid: ${beregnetNormalArbeidstid} timer`}</p>
             <span className={styles.uttakDetaljer__data}>
               <span>Faktisk arbeidstid:</span>
@@ -175,13 +176,17 @@ const formatAvkortingMotArbeid = (
             <hr />
             <div className="inline-flex justify-between w-full mb-6">
               <div>= {prosentFravær}% fravær</div>
-              <div className="inline-flex justify-end">Utbetalingsgrad: {utbetalingsgrad}%</div>
+              <div className='inline-flex justify-end'>
+                Utbetalingsgrad: {utbetalingsgrad}%
+              </div>
             </div>
           </div>
         );
       })}
     </div>
-    <div className="border-4">{`= ${søkersTapteArbeidstid} % totalt inntektstap`}</div>
+    <div className="border-4">
+      {`= ${søkersTapteArbeidstid} % totalt inntektstap`}
+    </div>
   </>
 );
 
@@ -227,7 +232,7 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
     pleiebehov,
     utenlandsopphold,
     utfall,
-    manueltOverstyrt,
+    manueltOverstyrt
   } = uttak;
   return (
     <div className={styles.uttakDetaljer}>

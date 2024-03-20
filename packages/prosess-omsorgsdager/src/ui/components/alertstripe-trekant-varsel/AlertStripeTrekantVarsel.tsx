@@ -1,5 +1,5 @@
-import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
+import { Normaltekst } from 'nav-frontend-typografi';
 import WarningIcon from '../../icons/WarningIcon';
 import styles from './alertStripeTrekantVarsel.module.css';
 
@@ -12,9 +12,9 @@ const AlertStripeTrekantVarsel = ({ text }: IconWithTextProps) => (
     <div className={styles.alertstripe_ikon}>
       <WarningIcon />
     </div>
-    <BodyShort size="small" className={styles.alertstripe_tekst} as="div">
+    <Normaltekst className={styles.alertstripe_tekst} tag="div">
       {text}
-    </BodyShort>
+    </Normaltekst>
   </div>
 );
 export default AlertStripeTrekantVarsel;

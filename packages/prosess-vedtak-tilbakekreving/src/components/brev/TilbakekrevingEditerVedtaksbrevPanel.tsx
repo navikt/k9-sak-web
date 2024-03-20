@@ -1,8 +1,11 @@
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { BodyShort, ExpansionCard, Heading, Label } from '@navikt/ds-react';
+import { ExpansionCard } from '@navikt/ds-react';
+import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import underavsnittType from '../../kodeverk/avsnittType';
 import VedtaksbrevAvsnitt from '../../types/vedtaksbrevAvsnittTsType';
 import TilbakekrevingVedtakUtdypendeTekstPanel from './TilbakekrevingVedtakUtdypendeTekstPanel';
@@ -32,9 +35,9 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
 }: OwnProps) => (
   <div className={styles.container}>
     <VerticalSpacer twentyPx />
-    <Heading size="small" level="2">
+    <Undertittel>
       <FormattedMessage id="TilbakekrevingVedtak.Vedtaksbrev" />
-    </Heading>
+    </Undertittel>
     <VerticalSpacer eightPx />
     {vedtaksbrevAvsnitt.map((avsnitt: VedtaksbrevAvsnitt) => {
       const underavsnitter = avsnitt.underavsnittsliste;
@@ -62,12 +65,8 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
             <ExpansionCard.Content>
               {underavsnitter.map((underavsnitt: any) => (
                 <React.Fragment key={underavsnitt.underavsnittstype + underavsnitt.overskrift + underavsnitt.brødtekst}>
-                  {underavsnitt.overskrift && (
-                    <Label size="small" as="p">
-                      {underavsnitt.overskrift}
-                    </Label>
-                  )}
-                  {underavsnitt.brødtekst && <BodyShort size="small">{underavsnitt.brødtekst}</BodyShort>}
+                  {underavsnitt.overskrift && <Element>{underavsnitt.overskrift}</Element>}
+                  {underavsnitt.brødtekst && <Normaltekst>{underavsnitt.brødtekst}</Normaltekst>}
                   {underavsnitt.fritekstTillatt && (
                     <>
                       <VerticalSpacer eightPx />

@@ -1,14 +1,15 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
-import behandlingStatusCodes from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
-import { KlageVurdering, TotrinnskontrollAksjonspunkt, TotrinnskontrollArbeidsforhold } from '@k9-sak-web/types';
-import { Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
+import behandlingStatusCodes from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
+import { KlageVurdering, TotrinnskontrollAksjonspunkt, TotrinnskontrollArbeidsforhold } from '@k9-sak-web/types';
+
+import { Element } from 'nav-frontend-typografi';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import getAksjonspunkttekst, { getFaktaOmArbeidsforholdMessages } from './aksjonspunktTekstUtleder';
 
@@ -333,14 +334,14 @@ describe('aksjonspunktTekstUtleder', () => {
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
     expect(message[0]).toEqual(
       <>
-        <Label size="small" as="p">
+        <Element>
           <FormattedMessage
             id="ToTrinnsForm.Beregning.Tittel"
             values={{
               dato: '2022-01-01',
             }}
           />
-        </Label>
+        </Element>
         <VerticalSpacer eightPx />
         {[<FormattedMessage id="ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold" />]}
       </>,
@@ -360,14 +361,14 @@ describe('aksjonspunktTekstUtleder', () => {
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
     expect(message[0]).toEqual(
       <>
-        <Label size="small" as="p">
+        <Element>
           <FormattedMessage
             id="ToTrinnsForm.Beregning.Tittel"
             values={{
               dato: '2022-01-01',
             }}
           />
-        </Label>
+        </Element>
         <VerticalSpacer eightPx />
         {[<FormattedMessage id="ToTrinnsForm.Beregning.VurderATFLISammeOrg" />]}
       </>,
@@ -389,14 +390,14 @@ describe('aksjonspunktTekstUtleder', () => {
 
     expect(message[0]).toEqual(
       <>
-        <Label size="small" as="p">
+        <Element>
           <FormattedMessage
             id="ToTrinnsForm.Beregning.Tittel"
             values={{
               dato: '2022-01-01',
             }}
           />
-        </Label>
+        </Element>
         <VerticalSpacer eightPx />
         {[<FormattedMessage id="ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold" />]}
       </>,

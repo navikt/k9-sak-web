@@ -7,9 +7,9 @@ import {
   PositionedPeriod,
   Tidslinjeskala,
 } from '@k9-sak-web/types/src/tidslinje';
-import { BodyShort } from '@navikt/ds-react';
 import classNames from 'classnames';
 import dayjs, { Dayjs } from 'dayjs';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactNode, useCallback } from 'react';
 import { AxisLabels } from './AxisLabels';
 import Pins from './Pins';
@@ -105,14 +105,10 @@ const Timeline = ({
           <div key={tidslinje.id} className={`${styles.radContainer} ${tidslinje.radClassname || ''}`}>
             {tidslinje.onClick ? (
               <button onClick={tidslinje.onClick} type="button" className={`${styles.radLabel} radLabel`}>
-                <BodyShort size="small" as="span">
-                  {tidslinje.radLabel}
-                </BodyShort>
+                <Normaltekst tag="span">{tidslinje.radLabel}</Normaltekst>
               </button>
             ) : (
-              <BodyShort size="small" className={`${styles.radLabel} radLabel`}>
-                {tidslinje.radLabel}
-              </BodyShort>
+              <Normaltekst className={`${styles.radLabel} radLabel`}>{tidslinje.radLabel}</Normaltekst>
             )}
             <TimelineRow {...tidslinje} onSelectPeriod={onSelectPeriodeWrapper} active={i === activeRow} />
           </div>

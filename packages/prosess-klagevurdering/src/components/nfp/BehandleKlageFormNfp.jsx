@@ -1,5 +1,5 @@
-import { Heading } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
+import { Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -53,9 +53,7 @@ export const BehandleKlageFormNfpImpl = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <FadingPanel>
-      <Heading size="small" level="2">
-        {intl.formatMessage({ id: 'Klage.ResolveKlage.Title' })}
-      </Heading>
+      <Undertittel>{intl.formatMessage({ id: 'Klage.ResolveKlage.Title' })}</Undertittel>
       <VerticalSpacer fourPx />
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Klage.ResolveKlage.HelpText" key={aksjonspunktCodes.BEHANDLE_KLAGE_NFP} />]}

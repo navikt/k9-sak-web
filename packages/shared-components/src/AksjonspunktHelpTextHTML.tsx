@@ -1,8 +1,9 @@
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
-import { isObject } from '@fpsak-frontend/utils';
-import { BodyShort } from '@navikt/ds-react';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactNode } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
+
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
+import { isObject } from '@fpsak-frontend/utils';
 
 import { FlexColumn, FlexContainer, FlexRow } from './flexGrid';
 import Image from './Image';
@@ -40,9 +41,7 @@ const AksjonspunktHelpTextHTML = ({ children, intl }: OwnProps & WrappedComponen
             {React.Children.map(children, child => (
               // @ts-ignore (Denne komponenten skal fjernast)
               <div key={isObject(child) ? child.key : child} className={elementStyle}>
-                <BodyShort size="small" className={styles.wordwrap}>
-                  {child}
-                </BodyShort>
+                <Normaltekst className={styles.wordwrap}>{child}</Normaltekst>
               </div>
             ))}
           </FlexColumn>

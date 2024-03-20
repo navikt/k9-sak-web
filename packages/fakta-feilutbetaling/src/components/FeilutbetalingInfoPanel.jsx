@@ -1,3 +1,15 @@
+import { Button } from '@navikt/ds-react';
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { change, clearFields, formPropTypes, getFormValues } from 'redux-form';
+import { createSelector } from 'reselect';
+
 import {
   CheckboxField,
   TextAreaField,
@@ -18,17 +30,9 @@ import {
   minLength,
   required,
 } from '@fpsak-frontend/utils';
-import { BodyShort, Button, Detail, Label } from '@navikt/ds-react';
-import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { change, clearFields, formPropTypes, getFormValues } from 'redux-form';
-import { createSelector } from 'reselect';
+
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
+
 import styles from './feilutbetalingInfoPanel.module.css';
 
 const formName = 'FaktaFeilutbetalingForm';
@@ -118,51 +122,49 @@ export class FeilutbetalingInfoPanelImpl extends Component {
             <Column xs="12" md="6">
               <Row className={styles.smallMarginBottom}>
                 <Column xs="12">
-                  <Label size="small" as="p">
+                  <Element>
                     <FormattedMessage id="FeilutbetalingInfoPanel.Feilutbetaling" />
-                  </Label>
+                  </Element>
                 </Column>
               </Row>
               <Row>
                 <Column xs="12" md="4">
                   <Row>
                     <Column xs="12">
-                      <Detail className={styles.undertekstMarginBottom}>
+                      <Undertekst className={styles.undertekstMarginBottom}>
                         <FormattedMessage id="FeilutbetalingInfoPanel.PeriodeMedFeilutbetaling" />
-                      </Detail>
-                      <BodyShort size="small" className={styles.smallPaddingRight}>
+                      </Undertekst>
+                      <Normaltekst className={styles.smallPaddingRight}>
                         {`${moment(feilutbetaling.totalPeriodeFom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(
                           feilutbetaling.totalPeriodeTom,
                         ).format(DDMMYYYY_DATE_FORMAT)}`}
-                      </BodyShort>
+                      </Normaltekst>
                     </Column>
                   </Row>
                 </Column>
                 <Column xs="12" md="4">
                   <Row>
                     <Column xs="12">
-                      <Detail className={styles.undertekstMarginBottom}>
+                      <Undertekst className={styles.undertekstMarginBottom}>
                         <FormattedMessage id="FeilutbetalingInfoPanel.FeilutbetaltBeløp" />
-                      </Detail>
-                      <BodyShort size="small" className={styles.redText}>
-                        {feilutbetaling.aktuellFeilUtbetaltBeløp}
-                      </BodyShort>
+                      </Undertekst>
+                      <Normaltekst className={styles.redText}>{feilutbetaling.aktuellFeilUtbetaltBeløp}</Normaltekst>
                     </Column>
                   </Row>
                 </Column>
                 <Column xs="12" md="4">
                   <Row>
                     <Column xs="12">
-                      <Detail className={styles.undertekstMarginBottom}>
+                      <Undertekst className={styles.undertekstMarginBottom}>
                         <FormattedMessage id="FeilutbetalingInfoPanel.TidligereVarseltBeløp" />
-                      </Detail>
-                      <BodyShort size="small" className={styles.smallPaddingRight}>
+                      </Undertekst>
+                      <Normaltekst className={styles.smallPaddingRight}>
                         {feilutbetaling.tidligereVarseltBeløp ? (
                           feilutbetaling.tidligereVarseltBeløp
                         ) : (
                           <FormattedMessage id="FeilutbetalingInfoPanel.IkkeVarslet" />
                         )}
-                      </BodyShort>
+                      </Normaltekst>
                     </Column>
                   </Row>
                 </Column>
@@ -196,69 +198,69 @@ export class FeilutbetalingInfoPanelImpl extends Component {
             <Column xs="12" md="6">
               <Row className={styles.smallMarginBottom}>
                 <Column xs="12">
-                  <Label size="small" as="p">
+                  <Element>
                     <FormattedMessage id="FeilutbetalingInfoPanel.Revurdering" />
-                  </Label>
+                  </Element>
                 </Column>
               </Row>
               <Row>
                 <Column xs="6">
-                  <Detail className={styles.undertekstMarginBottom}>
+                  <Undertekst className={styles.undertekstMarginBottom}>
                     <FormattedMessage id="FeilutbetalingInfoPanel.Årsaker" />
-                  </Detail>
+                  </Undertekst>
                   {feilutbetaling.behandlingÅrsaker && (
-                    <BodyShort size="small" className={styles.smallPaddingRight}>
+                    <Normaltekst className={styles.smallPaddingRight}>
                       {feilutbetaling.behandlingÅrsaker
                         .map(ba => getFpsakKodeverknavn(ba.behandlingArsakType))
                         .join(', ')}
-                    </BodyShort>
+                    </Normaltekst>
                   )}
                 </Column>
                 {feilutbetaling.datoForRevurderingsvedtak && (
                   <Column xs="6">
-                    <Detail className={styles.undertekstMarginBottom}>
+                    <Undertekst className={styles.undertekstMarginBottom}>
                       <FormattedMessage id="FeilutbetalingInfoPanel.DatoForRevurdering" />
-                    </Detail>
-                    <BodyShort size="small" className={styles.smallPaddingRight}>
+                    </Undertekst>
+                    <Normaltekst className={styles.smallPaddingRight}>
                       {moment(feilutbetaling.datoForRevurderingsvedtak).format(DDMMYYYY_DATE_FORMAT)}
-                    </BodyShort>
+                    </Normaltekst>
                   </Column>
                 )}
               </Row>
               <Row className={styles.smallMarginTop}>
                 <Column xs="6">
-                  <Detail className={styles.undertekstMarginBottom}>
+                  <Undertekst className={styles.undertekstMarginBottom}>
                     <FormattedMessage id="FeilutbetalingInfoPanel.Resultat" />
-                  </Detail>
+                  </Undertekst>
                   {feilutbetaling.behandlingsresultat && (
-                    <BodyShort size="small" className={styles.smallPaddingRight}>
+                    <Normaltekst className={styles.smallPaddingRight}>
                       {getFpsakKodeverknavn(feilutbetaling.behandlingsresultat.type)}
-                    </BodyShort>
+                    </Normaltekst>
                   )}
                 </Column>
                 <Column xs="6">
-                  <Detail className={styles.undertekstMarginBottom}>
+                  <Undertekst className={styles.undertekstMarginBottom}>
                     <FormattedMessage id="FeilutbetalingInfoPanel.Konsekvens" />
-                  </Detail>
+                  </Undertekst>
                   {feilutbetaling.behandlingsresultat && (
-                    <BodyShort size="small" className={styles.smallPaddingRight}>
+                    <Normaltekst className={styles.smallPaddingRight}>
                       {feilutbetaling.behandlingsresultat.konsekvenserForYtelsen &&
                         feilutbetaling.behandlingsresultat.konsekvenserForYtelsen
                           .map(ba => getFpsakKodeverknavn(ba))
                           .join(', ')}
-                    </BodyShort>
+                    </Normaltekst>
                   )}
                 </Column>
               </Row>
               <Row className={styles.smallMarginTop}>
                 <Column xs="6">
-                  <Detail className={styles.undertekstMarginBottom}>
+                  <Undertekst className={styles.undertekstMarginBottom}>
                     <FormattedMessage id="FeilutbetalingInfoPanel.Tilbakekrevingsvalg" />
-                  </Detail>
+                  </Undertekst>
                   {feilutbetaling.tilbakekrevingValg && (
-                    <BodyShort size="small" className={styles.smallPaddingRight}>
+                    <Normaltekst className={styles.smallPaddingRight}>
                       {getKodeverknavn(feilutbetaling.tilbakekrevingValg.videreBehandling)}
-                    </BodyShort>
+                    </Normaltekst>
                   )}
                 </Column>
               </Row>

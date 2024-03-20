@@ -1,3 +1,10 @@
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import { Undertekst, Undertittel } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+
 import {
   RadioGroupField,
   RadioOption,
@@ -11,12 +18,6 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { Detail, Heading } from '@navikt/ds-react';
-import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
 import lagVisningsnavnForKlagepart from '../utils/lagVisningsnavnForKlagepart';
 
 import styles from './formkravKlageForm.module.css';
@@ -73,11 +74,9 @@ export const FormkravKlageForm = ({
 
   return (
     <FadingPanel>
-      <Heading size="small" level="2">
-        {intl.formatMessage({ id: 'Klage.Formkrav.Title' })}
-      </Heading>
+      <Undertittel>{intl.formatMessage({ id: 'Klage.Formkrav.Title' })}</Undertittel>
       <VerticalSpacer fourPx />
-      <Detail>{intl.formatMessage({ id: getLovHjemmeler(aksjonspunktCode) })}</Detail>
+      <Undertekst>{intl.formatMessage({ id: getLovHjemmeler(aksjonspunktCode) })}</Undertekst>
       <VerticalSpacer fourPx />
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Klage.Formkrav.HelpText" key={aksjonspunktCode} />]}
@@ -122,7 +121,7 @@ export const FormkravKlageForm = ({
           <VerticalSpacer sixteenPx />
           <Row>
             <Column xs="4">
-              <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErKlagerPart' })}</Detail>
+              <Undertekst>{intl.formatMessage({ id: 'Klage.Formkrav.ErKlagerPart' })}</Undertekst>
               <VerticalSpacer sixteenPx />
               <RadioGroupField name="erKlagerPart" validate={[required]} readOnly={readOnly}>
                 <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
@@ -130,7 +129,7 @@ export const FormkravKlageForm = ({
               </RadioGroupField>
             </Column>
             <Column xs="8">
-              <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErKonkret' })}</Detail>
+              <Undertekst>{intl.formatMessage({ id: 'Klage.Formkrav.ErKonkret' })}</Undertekst>
               <VerticalSpacer sixteenPx />
               <RadioGroupField name="erKonkret" validate={[required]} readOnly={readOnly}>
                 <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
@@ -140,7 +139,7 @@ export const FormkravKlageForm = ({
           </Row>
           <Row>
             <Column xs="4">
-              <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErFristOverholdt' })}</Detail>
+              <Undertekst>{intl.formatMessage({ id: 'Klage.Formkrav.ErFristOverholdt' })}</Undertekst>
               <VerticalSpacer sixteenPx />
               <RadioGroupField name="erFristOverholdt" validate={[required]} readOnly={readOnly}>
                 <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
@@ -148,7 +147,7 @@ export const FormkravKlageForm = ({
               </RadioGroupField>
             </Column>
             <Column xs="8">
-              <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErSignert' })}</Detail>
+              <Undertekst>{intl.formatMessage({ id: 'Klage.Formkrav.ErSignert' })}</Undertekst>
               <VerticalSpacer sixteenPx />
               <RadioGroupField name="erSignert" validate={[required]} readOnly={readOnly}>
                 <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />

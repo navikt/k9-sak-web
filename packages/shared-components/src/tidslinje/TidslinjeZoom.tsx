@@ -1,4 +1,4 @@
-import { BodyShort } from '@navikt/ds-react';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import ZoomInIcon from './icons/ZoomInIcon';
@@ -11,11 +11,11 @@ const TidslinjeZoom = ({ handleZoomIn, handleZoomOut, disabledZoomIn, disabledZo
     <div className={styles.skalavelgerContainer}>
       <button onClick={handleZoomIn} type="button" className={styles.zoomButton} disabled={disabledZoomIn}>
         <ZoomInIcon />
-        <BodyShort size="small">{intl.formatMessage({ id: 'TidslinjeZoom.Forstørre' })}</BodyShort>
+        <Normaltekst>{intl.formatMessage({ id: 'TidslinjeZoom.Forstørre' })}</Normaltekst>
       </button>
       <button onClick={handleZoomOut} type="button" className={styles.zoomButton} disabled={disabledZoomOut}>
         <ZoomOutIcon />
-        <BodyShort size="small">{intl.formatMessage({ id: 'TidslinjeZoom.Forminske' })}</BodyShort>
+        <Normaltekst>{intl.formatMessage({ id: 'TidslinjeZoom.Forminske' })}</Normaltekst>
       </button>
     </div>
   );

@@ -1,13 +1,15 @@
+import { Field, Form, Formik } from 'formik';
+import React from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import * as Yup from 'yup';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { BodyShort, Button, Textarea } from '@navikt/ds-react';
-import { Field, Form, Formik } from 'formik';
+import { Button, Textarea } from '@navikt/ds-react';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import React from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-import * as Yup from 'yup';
+import { Normaltekst } from 'nav-frontend-typografi';
 import styles from './ManglerSøknadForm.module.css';
 
 interface Props {
@@ -86,10 +88,10 @@ const ManglerSøknadForm = ({
       )}
 
       <VerticalSpacer thirtyTwoPx />
-      <BodyShort size="small">
+      <Normaltekst>
         {' '}
         <FormattedMessage id="ManglerSøknadForm.OppgiBegrunnelse" key="aksjonspunktText" />{' '}
-      </BodyShort>
+      </Normaltekst>
 
       <Formik
         initialValues={initialValues}

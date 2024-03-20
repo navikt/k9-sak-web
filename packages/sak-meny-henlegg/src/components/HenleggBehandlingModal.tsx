@@ -7,9 +7,10 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, required, safeJSONParse } from '@fpsak-frontend/utils';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
-import { Button, Detail, Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
+import { Undertekst } from 'nav-frontend-typografi';
 import React, { useMemo } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -243,7 +244,7 @@ export const HenleggBehandlingModalImpl = ({
                           intl={intl}
                         />
                       )}
-                      <Detail>{intl.formatMessage({ id: 'HenleggBehandlingModal.SokerInformeres' })}</Detail>
+                      <Undertekst>{intl.formatMessage({ id: 'HenleggBehandlingModal.SokerInformeres' })}</Undertekst>
                       <a
                         href=""
                         onClick={previewHenleggBehandlingDoc(

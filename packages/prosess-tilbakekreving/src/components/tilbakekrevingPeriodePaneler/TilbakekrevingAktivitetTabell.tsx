@@ -1,7 +1,8 @@
+import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+
 import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { BodyShort } from '@navikt/ds-react';
-import React from 'react';
 
 import styles from './tilbakekrevingAktivitetTabell.module.css';
 
@@ -26,10 +27,10 @@ const TilbakekrevingAktivitetTabell = ({ ytelser }: OwnProps) => {
         return (
           <TableRow key={y.aktivitet + y.belop + counter}>
             <TableColumn>
-              <BodyShort size="small">{y.aktivitet}</BodyShort>
+              <Normaltekst>{y.aktivitet}</Normaltekst>
             </TableColumn>
             <TableColumn>
-              <BodyShort size="small">{formatCurrencyNoKr(y.belop)}</BodyShort>
+              <Normaltekst>{formatCurrencyNoKr(y.belop)}</Normaltekst>
             </TableColumn>
           </TableRow>
         );

@@ -1,3 +1,13 @@
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { formPropTypes } from 'redux-form';
+import { createSelector } from 'reselect';
+
 import {
   RadioGroupField,
   RadioOption,
@@ -13,15 +23,6 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { BodyShort, Detail, Heading } from '@navikt/ds-react';
-import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { formPropTypes } from 'redux-form';
-import { createSelector } from 'reselect';
 
 import styles from './checkPersonStatusForm.module.css';
 
@@ -43,21 +44,19 @@ export const CheckPersonStatusFormImpl = ({
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
-    <Heading size="small" level="2">
-      {intl.formatMessage({ id: 'CheckPersonStatusForm.CheckInformation' })}
-    </Heading>
+    <Undertittel>{intl.formatMessage({ id: 'CheckPersonStatusForm.CheckInformation' })}</Undertittel>
     <VerticalSpacer twentyPx />
     <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton && !readOnly}>
       {[intl.formatMessage({ id: 'CheckPersonStatusForm.PersonStatus' }, { status: originalPersonstatusName })]}
     </AksjonspunktHelpTextTemp>
     <VerticalSpacer twentyPx />
     {gjeldeneFom && (
-      <BodyShort size="small">
+      <Normaltekst>
         <FormattedMessage
           id="CheckPersonStatusForm.GjeldendeFom"
           values={{ dato: moment(gjeldeneFom).format(DDMMYYYY_DATE_FORMAT) }}
         />
-      </BodyShort>
+      </Normaltekst>
     )}
     <VerticalSpacer twentyPx />
     <div className={styles.radioGroup}>
@@ -71,7 +70,7 @@ export const CheckPersonStatusFormImpl = ({
       </Row>
       {fortsettBehandling === true && (
         <ArrowBox alignOffset={readOnly ? 0 : 198}>
-          <Detail>{intl.formatMessage({ id: 'CheckPersonStatusForm.SetPersonStatus' })}</Detail>
+          <Undertekst>{intl.formatMessage({ id: 'CheckPersonStatusForm.SetPersonStatus' })}</Undertekst>
           <VerticalSpacer eightPx />
           <RadioGroupField name="personstatus" validate={[required]} readOnly={readOnly}>
             {personStatuser.map(d => (

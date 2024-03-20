@@ -1,14 +1,15 @@
+import { Location } from 'history';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { NavLink } from 'react-router-dom';
+import { FieldArrayFieldsProps } from 'redux-form';
+
 import { CheckboxField, NavFieldGroup, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
-import { BodyShort, Detail } from '@navikt/ds-react';
-import { Location } from 'history';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { NavLink } from 'react-router-dom';
-import { FieldArrayFieldsProps } from 'redux-form';
 
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 
@@ -103,7 +104,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
                   key={aksjonspunktKode.concat('_'.concat(i.toString()))}
                   className={styles.aksjonspunktTextContainer}
                 >
-                  <BodyShort size="small">{formattedMessage}</BodyShort>
+                  <Normaltekst>{formattedMessage}</Normaltekst>
                 </div>
               ))}
             <NavFieldGroup>
@@ -117,9 +118,9 @@ export const AksjonspunktGodkjenningFieldArray = ({
                     <FlexContainer wrap>
                       <FlexRow>
                         <FlexColumn>
-                          <Detail className="blokk-xs">
+                          <Undertekst className="blokk-xs">
                             <FormattedMessage id="AksjonspunktGodkjenningArsakPanel.Arsak" />
-                          </Detail>
+                          </Undertekst>
                         </FlexColumn>
                       </FlexRow>
                       <FlexRow>

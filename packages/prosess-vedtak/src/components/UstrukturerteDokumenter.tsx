@@ -1,7 +1,7 @@
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { BodyShort, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import Lenke from 'nav-frontend-lenker';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import styles from './ustrukturerteDokumenter.module.css';
 
@@ -50,13 +50,11 @@ interface UstrukturerteDokumenterProps {
 
 const UstrukturerteDokumenter = ({ fritekstdokumenter }: UstrukturerteDokumenterProps) => (
   <div className={styles.ustrukturerteDokumenter}>
-    <Heading size="small" level="2">
-      Uregistrerte opplysninger
-    </Heading>
-    <BodyShort size="small" className={styles.ustrukturerteDokumenter__text}>
+    <Undertittel>Uregistrerte opplysninger</Undertittel>
+    <Normaltekst className={styles.ustrukturerteDokumenter__text}>
       Noen av dokumentene i saken inneholder opplysninger som ikke kan punsjes. <br />
       Se gjennom følgende dokumenter for å se om det finnes opplysninger som vil påvirke saken:
-    </BodyShort>
+    </Normaltekst>
     <ul className={styles.ustrukturerteDokumenter__linkList}>{getLinks(fritekstdokumenter)}</ul>
   </div>
 );

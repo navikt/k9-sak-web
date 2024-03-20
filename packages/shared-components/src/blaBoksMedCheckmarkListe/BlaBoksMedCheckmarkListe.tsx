@@ -1,5 +1,5 @@
 import checkBlaIkonUrl from '@fpsak-frontend/assets/images/check_blue.svg';
-import { BodyShort } from '@navikt/ds-react';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Image } from '../../index';
@@ -14,9 +14,9 @@ const BlaBoksMedCheckmarkListe = ({ textIds }: OwnProps) => (
     {textIds.map(id => (
       <div className={styles.rad}>
         <Image src={checkBlaIkonUrl} className={styles.checkBlaIkon} />
-        <BodyShort size="small">
+        <Normaltekst>
           <FormattedMessage id={id} />
-        </BodyShort>
+        </Normaltekst>
       </div>
     ))}
   </div>

@@ -1,7 +1,7 @@
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import NavFieldGroup from '@fpsak-frontend/form/src/NavFieldGroup';
-import { Detail } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
+import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
@@ -103,9 +103,9 @@ const PeriodFieldArray = ({
               tabIndex={0}
             >
               <Image className={styles.addCircleIcon} src={addCircleIcon} alt={intl.formatMessage({ id: textCode })} />
-              <Detail className={styles.imageText}>
+              <Undertekst className={styles.imageText}>
                 <FormattedMessage id={textCode} />
-              </Detail>
+              </Undertekst>
             </div>
           )}
           {createAddButtonInsteadOfImageLink && !readOnly && (

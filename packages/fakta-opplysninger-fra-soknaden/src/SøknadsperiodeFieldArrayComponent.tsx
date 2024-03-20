@@ -4,9 +4,9 @@ import { Label } from '@fpsak-frontend/form/src/Label';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { OpplysningerFraSøknaden, SubmitCallback } from '@k9-sak-web/types';
 import { Måned, Periode } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
-import { Label as DSLabel } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import moment from 'moment';
+import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -145,16 +145,16 @@ const SøknadsperiodeFieldArrayComponent = (
           })}
         >
           {harSøktSomSSN && formIsEditable && (
-            <DSLabel size="small" as="p">
+            <Element>
               <FormattedMessage id="OpplysningerFraSoknaden.selvstendigNæringsdrivende" />
-            </DSLabel>
+            </Element>
           )}
           {!formIsEditable && (
             <CheckboxField
               label={
                 <Label
                   input={{ id: 'OpplysningerFraSoknaden.selvstendigNæringsdrivende', args: {} }}
-                  typographyElement={DSLabel}
+                  typographyElement={Element}
                   intl={intl}
                 />
               }
@@ -177,16 +177,16 @@ const SøknadsperiodeFieldArrayComponent = (
           })}
         >
           {harSøktSomFrilanser && formIsEditable && (
-            <DSLabel size="small" as="p">
+            <Element>
               <FormattedMessage id="OpplysningerFraSoknaden.frilanser" />
-            </DSLabel>
+            </Element>
           )}
           {!formIsEditable && (
             <CheckboxField
               label={
                 <Label
                   input={{ id: 'OpplysningerFraSoknaden.frilanser', args: {} }}
-                  typographyElement={DSLabel}
+                  typographyElement={Element}
                   intl={intl}
                 />
               }

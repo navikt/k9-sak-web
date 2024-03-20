@@ -1,13 +1,14 @@
+import { Location } from 'history';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React, { ReactNode } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { NavLink } from 'react-router-dom';
+
 import avslattImg from '@fpsak-frontend/assets/images/avslaatt.svg';
 import checkImg from '@fpsak-frontend/assets/images/check.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
-import { BodyShort } from '@navikt/ds-react';
-import { Location } from 'history';
-import React, { ReactNode } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { NavLink } from 'react-router-dom';
 
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 
@@ -75,7 +76,7 @@ const TotrinnskontrollSaksbehandlerPanel = ({
                       key={aksjonspunkt.aksjonspunktKode.concat('_'.concat(index.toString()))}
                       className={styles.aksjonspunktTextContainer}
                     >
-                      <BodyShort size="small">{formattedMessage}</BodyShort>
+                      <Normaltekst>{formattedMessage}</Normaltekst>
                     </div>
                   ))}
                   <div className={styles.approvalItem}>

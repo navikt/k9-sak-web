@@ -1,3 +1,13 @@
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { formPropTypes } from 'redux-form';
+import { createSelector } from 'reselect';
+
 import {
   CheckboxField,
   RadioGroupField,
@@ -18,15 +28,6 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktHelpTextTemp, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { BodyShort, Heading } from '@navikt/ds-react';
-import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { formPropTypes } from 'redux-form';
-import { createSelector } from 'reselect';
 
 import ankeOmgjorArsak from '../kodeverk/ankeOmgjorArsak';
 import FritekstBrevTextField from './FritekstAnkeBrevTextField';
@@ -162,9 +163,9 @@ const BehandleAnkeFormImpl = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <FadingPanel>
-      <Heading size="small" level="2">
+      <Undertittel>
         <FormattedMessage id="Ankebehandling.Title" />
-      </Heading>
+      </Undertittel>
       <VerticalSpacer fourPx />
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Ankebehandling.HelpText" key={aksjonspunktCode} />]}
@@ -184,9 +185,9 @@ const BehandleAnkeFormImpl = ({
         </Column>
       </Row>
 
-      <BodyShort size="small">
+      <Normaltekst>
         <FormattedMessage id="Ankebehandling.Resultat" />
-      </BodyShort>
+      </Normaltekst>
       <Row>
         <Column xs="4">
           <RadioGroupField name="ankeVurdering" validate={[required]} direction="vertical" readOnly={readOnly}>
@@ -217,9 +218,9 @@ const BehandleAnkeFormImpl = ({
         <Row>
           <Column xs="7">
             <ArrowBox>
-              <BodyShort size="small">
+              <Normaltekst>
                 <FormattedMessage id="Ankebehandling.Avvisning" />
-              </BodyShort>
+              </Normaltekst>
               <CheckboxField
                 name="erAnkerIkkePart"
                 label={<FormattedMessage id="Ankebehandling.Avvisning.IkkePart" />}
@@ -236,9 +237,9 @@ const BehandleAnkeFormImpl = ({
                 name="erIkkeSignert"
                 label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeSignert" />}
               />
-              <BodyShort size="small">
+              <Normaltekst>
                 <FormattedMessage id="Ankebehandling.Realitetsbehandles" />
-              </BodyShort>
+              </Normaltekst>
               <RadioGroupField
                 name="erSubsidiartRealitetsbehandles"
                 validate={[required]}

@@ -1,3 +1,14 @@
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import Panel from 'nav-frontend-paneler';
+import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { formPropTypes } from 'redux-form';
+import { createSelector } from 'reselect';
+
 import {
   DatepickerField,
   RadioGroupField,
@@ -12,16 +23,6 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, dateBeforeOrEqualToToday, hasValidDate, required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { BodyShort, Detail, Heading, Label } from '@navikt/ds-react';
-import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
-import Panel from 'nav-frontend-paneler';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { formPropTypes } from 'redux-form';
-import { createSelector } from 'reselect';
 
 import styles from './vurderSoknadsfristPleiepengerForm.module.css';
 
@@ -48,9 +49,9 @@ export const VurderSoknadsfristPleiepengerFormImpl = ({
   ...formProps
 }) => (
   <>
-    <Heading size="small" level="2">
+    <Undertittel>
       <FormattedMessage id="VurderSoknadsfristPleiepengerForm.Soknadsfrist" />
-    </Heading>
+    </Undertittel>
     <VerticalSpacer twentyPx />
     <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
       {[
@@ -68,9 +69,9 @@ export const VurderSoknadsfristPleiepengerFormImpl = ({
     <Row>
       <Column xs="6">
         <Panel className={styles.panel}>
-          <Label size="small" as="p">
+          <Element>
             <FormattedMessage id="VurderSoknadsfristPleiepengerForm.Vurder" />
-          </Label>
+          </Element>
           <ul className={styles.hyphen}>
             <li>
               <FormattedMessage id="VurderSoknadsfristPleiepengerForm.Punkt1" />
@@ -87,20 +88,20 @@ export const VurderSoknadsfristPleiepengerFormImpl = ({
       <Column xs="6">
         <Row className={styles.marginBottom}>
           <Column xs="6">
-            <Detail>
+            <Undertekst>
               <FormattedMessage id="VurderSoknadsfristPleiepengerForm.SoknadMottatt" />
-            </Detail>
-            {mottattDato && <BodyShort size="small">{moment(mottattDato).format(DDMMYYYY_DATE_FORMAT)}</BodyShort>}
+            </Undertekst>
+            {mottattDato && <Normaltekst>{moment(mottattDato).format(DDMMYYYY_DATE_FORMAT)}</Normaltekst>}
           </Column>
           <Column xs="6">
-            <Detail>
+            <Undertekst>
               <FormattedMessage id="VurderSoknadsfristPleiepengerForm.SoknadPeriode" />
-            </Detail>
-            <BodyShort size="small">
+            </Undertekst>
+            <Normaltekst>
               {`${moment(soknadsperiodeStart).format(DDMMYYYY_DATE_FORMAT)} - ${moment(soknadsperiodeSlutt).format(
                 DDMMYYYY_DATE_FORMAT,
               )}`}
-            </BodyShort>
+            </Normaltekst>
           </Column>
         </Row>
       </Column>

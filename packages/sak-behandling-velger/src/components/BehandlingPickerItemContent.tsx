@@ -2,10 +2,11 @@ import calendarImg from '@fpsak-frontend/assets/images/calendar-2.svg';
 import chevronBlueRightImg from '@fpsak-frontend/assets/images/chevron_blue_right.svg';
 import { DateLabel, Image } from '@fpsak-frontend/shared-components';
 import { Periode } from '@k9-sak-web/types';
-import { BodyShort, Heading } from '@navikt/ds-react';
 import Panel from 'nav-frontend-paneler';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { BodyShort } from '@navikt/ds-react';
 import styles from './behandlingPickerItemContent.module.css';
 import { getFormattedSøknadserioder, getStatusIcon, getStatusText } from './behandlingVelgerUtils';
 
@@ -53,12 +54,12 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   <Panel className={erAutomatiskRevurdering ? styles.indent : ''} border>
     <div className={styles.behandlingPicker}>
       <div>
-        <Heading size="small" level="2">
+        <Undertittel>
           {`${index}. `}
           {behandlingTypeNavn}
           {erAutomatiskRevurdering ? getAutomatiskRevurderingText() : ''}
           {erUnntaksløype ? getUnntaksløypeText() : ''}
-        </Heading>
+        </Undertittel>
         <div className={styles.dateContainer}>
           <Image
             className={styles.kalenderIcon}
@@ -66,13 +67,11 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
             tooltip={<FormattedMessage id="BehandlingPickerItemContent.Kalender" />}
             alignTooltipLeft
           />
-          {søknadsperioder?.length > 0 && (
-            <BodyShort size="small">{getFormattedSøknadserioder(søknadsperioder)}</BodyShort>
-          )}
+          {søknadsperioder?.length > 0 && <Normaltekst>{getFormattedSøknadserioder(søknadsperioder)}</Normaltekst>}
         </div>
         <div className={styles.resultContainer}>
           {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage, erFerdigstilt)}
-          <BodyShort size="small">
+          <Normaltekst>
             <FormattedMessage id="BehandlingPickerItemContent.Resultat" />
             {`: `}
             {getStatusText(behandlingsresultatTypeKode, behandlingsresultatTypeNavn, erFerdigstilt)}
@@ -81,7 +80,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
                 <DateLabel dateString={avsluttet} />
               </BodyShort>
             )}
-          </BodyShort>
+          </Normaltekst>
         </div>
         {opprettet && (
           <div className={styles.opprettetDatoContainer}>
@@ -95,9 +94,9 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
         )}
       </div>
       <div className={styles.åpneText}>
-        <BodyShort size="small">
+        <Normaltekst>
           <FormattedMessage id="BehandlingPickerItemContent.Behandling.Aapne" />
-        </BodyShort>
+        </Normaltekst>
         <Image
           className={styles.åpneChevron}
           src={chevronBlueRightImg}

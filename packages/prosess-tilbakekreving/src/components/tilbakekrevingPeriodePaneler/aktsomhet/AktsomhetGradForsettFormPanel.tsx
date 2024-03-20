@@ -1,10 +1,11 @@
+import { Column, Row } from 'nav-frontend-grid';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
-import { BodyShort, Detail } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import styles from './aktsomhetReduksjonAvBelopFormPanel.module.css';
 
 interface OwnProps {
@@ -18,12 +19,10 @@ const AktsomhetGradForsettFormPanel = ({ readOnly, erValgtResultatTypeForstoBurd
       {erValgtResultatTypeForstoBurdeForstaatt && (
         <Row>
           <Column md="6">
-            <Detail>
+            <Undertekst>
               <FormattedMessage id="AktsomhetGradForsettFormPanel.Andel" />
-            </Detail>
-            <BodyShort size="small" className={styles.labelPadding}>
-              100 %
-            </BodyShort>
+            </Undertekst>
+            <Normaltekst className={styles.labelPadding}>100 %</Normaltekst>
           </Column>
           <Column md="6">
             <RadioGroupField
@@ -40,14 +39,14 @@ const AktsomhetGradForsettFormPanel = ({ readOnly, erValgtResultatTypeForstoBurd
       )}
       {!erValgtResultatTypeForstoBurdeForstaatt && (
         <>
-          <Detail>
+          <Undertekst>
             <FormattedMessage id="AktsomhetGradForsettFormPanel.Andel" />
-          </Detail>
-          <BodyShort size="small">100 %</BodyShort>
+          </Undertekst>
+          <Normaltekst>100 %</Normaltekst>
           <VerticalSpacer eightPx />
-          <BodyShort size="small">
+          <Normaltekst>
             <FormattedMessage id="AktsomhetGradForsettFormPanel.Renter" />
-          </BodyShort>
+          </Normaltekst>
         </>
       )}
     </ArrowBox>

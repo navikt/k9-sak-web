@@ -1,5 +1,5 @@
-import { BodyShortProps, Label as DSLabel, LabelProps, OverridableComponent } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
+import { TypografiProps, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 import LabelType from './LabelType';
@@ -7,13 +7,13 @@ import styles from './label.module.css';
 
 const classNames = classnames.bind(styles);
 
-interface Props {
+interface LabelProps {
   input?: LabelType;
-  typographyElement?: OverridableComponent<LabelProps | BodyShortProps, HTMLLabelElement | HTMLParagraphElement>;
+  typographyElement?: React.ComponentType<TypografiProps>;
   readOnly?: boolean;
 }
 
-export const Label = (props: Props & WrappedComponentProps) => {
+export const Label = (props: LabelProps & WrappedComponentProps) => {
   const format = label => {
     if (label && label.id) {
       const { intl } = props;
@@ -28,7 +28,7 @@ export const Label = (props: Props & WrappedComponentProps) => {
   }
   return (
     <span className={classNames('labelWrapper', { readOnly })}>
-      <TypoElem as="span" className={styles.label} size="small">
+      <TypoElem tag="span" className={styles.label}>
         {format(input)}
       </TypoElem>
     </span>
@@ -37,7 +37,7 @@ export const Label = (props: Props & WrappedComponentProps) => {
 
 Label.defaultProps = {
   input: null,
-  typographyElement: DSLabel,
+  typographyElement: Undertekst,
   readOnly: false,
 };
 

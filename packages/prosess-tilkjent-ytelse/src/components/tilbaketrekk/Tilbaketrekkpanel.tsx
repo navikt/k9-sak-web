@@ -1,12 +1,20 @@
+import { Column, Row } from 'nav-frontend-grid';
+import { Element } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
+
 import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
 import {
-  RadioGroupField,
-  RadioOption,
-  TextAreaField,
   behandlingForm,
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
+  RadioGroupField,
+  RadioOption,
+  TextAreaField,
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -14,13 +22,6 @@ import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsa
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, BeregningsresultatFp, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
-import { Label } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
-import React from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
 
 import styles from './tilbaketrekkpanel.module.css';
 
@@ -76,9 +77,9 @@ export const Tilbaketrekkpanel = ({
           </FlexColumn>
           <FlexColumn className={styles.aksjonspunktText}>
             <div className={styles.oneElement}>
-              <Label size="small" as="p" className={styles.wordwrap}>
+              <Element className={styles.wordwrap}>
                 <FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Aksjonspunkttekst" />
-              </Label>
+              </Element>
             </div>
           </FlexColumn>
         </FlexRow>

@@ -1,7 +1,8 @@
 import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { BodyShort, Button, Detail, Heading, Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
+import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './errorMessageDetailsModal.module.css';
@@ -39,9 +40,9 @@ const ErrorMessageDetailsModal = ({
           <div className={styles.divider} />
         </Column>
         <Column xs="10" className={styles.text}>
-          <Heading size="small" level="2">
+          <Undertittel>
             <FormattedMessage id="ErrorMessageDetailsModal.ErrorDetails" />
-          </Heading>
+          </Undertittel>
         </Column>
       </Row>
     </Modal.Header>
@@ -51,9 +52,9 @@ const ErrorMessageDetailsModal = ({
         <Column xs="11">
           {Object.keys(errorDetails).map(edKey => (
             <React.Fragment key={edKey}>
-              <Detail>{`${capitalizeFirstLetters(edKey)}:`}</Detail>
+              <Undertekst>{`${capitalizeFirstLetters(edKey)}:`}</Undertekst>
               <div className={styles.detail}>
-                <BodyShort size="small">{errorDetails[edKey]}</BodyShort>
+                <Normaltekst>{errorDetails[edKey]}</Normaltekst>
               </div>
               <VerticalSpacer eightPx />
             </React.Fragment>

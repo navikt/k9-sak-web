@@ -1,6 +1,8 @@
-import { HistorikkInnslagOpplysning, Kodeverk } from '@k9-sak-web/types';
-import { BodyShort, Label } from '@navikt/ds-react';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
+
+import { HistorikkInnslagOpplysning, Kodeverk } from '@k9-sak-web/types';
+
 import HistorikkMal from '../HistorikkMalTsType';
 import { findHendelseText } from './felles/historikkUtils';
 
@@ -12,13 +14,9 @@ const formaterOpplysning = (
   getKodeverknavn: (kodeverk: Kodeverk) => string,
 ) => (
   <div key={`opplysning${index}`}>
-    <BodyShort size="small" className={styles.keyValuePair}>
-      {getKodeverknavn(opplysning.opplysningType)}:
-    </BodyShort>
+    <Normaltekst className={styles.keyValuePair}>{getKodeverknavn(opplysning.opplysningType)}:</Normaltekst>
     &ensp;
-    <Label size="small" as="p" className={styles.keyValuePair}>
-      {opplysning.tilVerdi}
-    </Label>
+    <Element className={styles.keyValuePair}>{opplysning.tilVerdi}</Element>
   </div>
 );
 
@@ -26,9 +24,7 @@ const HistorikkMalType6 = ({ historikkinnslag, getKodeverknavn }: HistorikkMal) 
   <>
     {historikkinnslag.historikkinnslagDeler.map(del => (
       <div key={del.hendelse?.navn?.kode}>
-        <Label size="small" as="p" className="snakkeboble-panel__tekst">
-          {findHendelseText(del.hendelse, getKodeverknavn)}
-        </Label>
+        <Element className="snakkeboble-panel__tekst">{findHendelseText(del.hendelse, getKodeverknavn)}</Element>
         {del.opplysninger.map((opplysning, index) => formaterOpplysning(opplysning, index, getKodeverknavn))}
       </div>
     ))}

@@ -1,5 +1,5 @@
-import { Heading } from '@navikt/ds-react';
 import moment from 'moment';
+import { Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -184,9 +184,9 @@ export class ForeldelseForm extends Component {
       <form onSubmit={formProps.handleSubmit}>
         <FadingPanel>
           <FaktaGruppe merknaderFraBeslutter={merknaderFraBeslutter} withoutBorder>
-            <Heading size="small" level="2">
+            <Undertittel>
               <FormattedMessage id="ForeldelseForm.Foreldelse" />
-            </Heading>
+            </Undertittel>
             <VerticalSpacer twentyPx />
             {!apCodes[0] && (
               <div className={styles.bold}>

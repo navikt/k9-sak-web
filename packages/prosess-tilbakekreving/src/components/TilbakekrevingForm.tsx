@@ -1,47 +1,47 @@
-import moment from 'moment';
-import AlertStripe from 'nav-frontend-alertstriper';
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { InjectedFormProps, change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
+import moment from 'moment';
 import { createSelector } from 'reselect';
+import { change as reduxFormChange, initialize as reduxFormInitialize, InjectedFormProps } from 'redux-form';
+import { bindActionCreators } from 'redux';
+import { FormattedMessage } from 'react-intl';
+import { Undertittel } from 'nav-frontend-typografi';
+import AlertStripe from 'nav-frontend-alertstriper';
 
+import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
+import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import {
   behandlingForm,
+  getBehandlingFormValues,
   behandlingFormValueSelector,
   getBehandlingFormPrefix,
-  getBehandlingFormValues,
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
-import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
-import { AksjonspunktHelpTextTemp, FadingPanel, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
-import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 
-import { Heading } from '@navikt/ds-react';
-import DataForPeriode from '../types/dataForPeriodeTsType';
-import DetaljerteFeilutbetalingsperioder, {
-  DetaljertFeilutbetalingPeriode,
-} from '../types/detaljerteFeilutbetalingsperioderTsType';
-import FeilutbetalingPerioderWrapper from '../types/feilutbetalingPerioderTsType';
-import TidslinjePeriode from '../types/tidslinjePeriodeTsType';
-import VilkarsVurdertePerioderWrapper, { VilkarsVurdertPeriode } from '../types/vilkarsVurdertePerioderTsType';
+import TilbakekrevingTimelinePanel from './timeline/TilbakekrevingTimelinePanel';
 import TilbakekrevingPeriodeForm, {
   CustomPeriode,
   CustomPerioder,
-  CustomVilkarsVurdertePeriode,
   TILBAKEKREVING_PERIODE_FORM_NAME,
   periodeFormBuildInitialValues,
   periodeFormTransformValues,
+  CustomVilkarsVurdertePeriode,
 } from './TilbakekrevingPeriodeForm';
 import TilbakekrevingTidslinjeHjelpetekster from './TilbakekrevingTidslinjeHjelpetekster';
-import TilbakekrevingTimelinePanel from './timeline/TilbakekrevingTimelinePanel';
+import FeilutbetalingPerioderWrapper from '../types/feilutbetalingPerioderTsType';
+import VilkarsVurdertePerioderWrapper, { VilkarsVurdertPeriode } from '../types/vilkarsVurdertePerioderTsType';
+import DetaljerteFeilutbetalingsperioder, {
+  DetaljertFeilutbetalingPeriode,
+} from '../types/detaljerteFeilutbetalingsperioderTsType';
+import TidslinjePeriode from '../types/tidslinjePeriodeTsType';
+import DataForPeriode from '../types/dataForPeriodeTsType';
 
 const TILBAKEKREVING_FORM_NAME = 'TilbakekrevingForm';
 
@@ -253,9 +253,9 @@ export class TilbakekrevingFormImpl extends Component<OwnProps & DispatchProps &
       <form onSubmit={formProps.handleSubmit}>
         <FadingPanel>
           <FaktaGruppe merknaderFraBeslutter={merknaderFraBeslutter} withoutBorder>
-            <Heading size="small" level="2">
+            <Undertittel>
               <FormattedMessage id="Behandlingspunkt.Tilbakekreving" />
-            </Heading>
+            </Undertittel>
             <VerticalSpacer twentyPx />
             <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
               {[<FormattedMessage key="AksjonspunktHjelpetekst" id="TilbakekrevingForm.AksjonspunktHjelpetekst" />]}

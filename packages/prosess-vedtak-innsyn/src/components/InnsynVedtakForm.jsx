@@ -1,3 +1,12 @@
+import { Column, Row } from 'nav-frontend-grid';
+import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { formPropTypes } from 'redux-form';
+import { createSelector } from 'reselect';
+
 import {
   TextAreaField,
   behandlingForm,
@@ -19,14 +28,6 @@ import {
   requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { BodyShort, Detail, Heading } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { formPropTypes } from 'redux-form';
-import { createSelector } from 'reselect';
 
 import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 
@@ -83,23 +84,21 @@ export const InnsynVedtakFormImpl = ({
   return (
     <FadingPanel>
       <form onSubmit={formProps.handleSubmit}>
-        <Heading size="small" level="2">
+        <Undertittel>
           <FormattedMessage id={readOnly ? 'InnsynVedtakForm.Vedtak' : 'InnsynVedtakForm.ForslagVedtak'} />
-        </Heading>
+        </Undertittel>
         <VerticalSpacer eightPx />
-        <Detail>
+        <Undertekst>
           <FormattedMessage id="InnsynVedtakForm.Resultat" />
-        </Detail>
-        <BodyShort size="small">
+        </Undertekst>
+        <Normaltekst>
           <FormattedMessage id={findResultTypeMessage(resultat)} />
-        </BodyShort>
+        </Normaltekst>
         <VerticalSpacer eightPx />
-        <Detail>
+        <Undertekst>
           <FormattedMessage id="InnsynVedtakForm.Vurdering" />
-        </Detail>
-        <BodyShort size="small" className={styles.wordwrap}>
-          {decodeHtmlEntity(apBegrunnelse)}
-        </BodyShort>
+        </Undertekst>
+        <Normaltekst className={styles.wordwrap}>{decodeHtmlEntity(apBegrunnelse)}</Normaltekst>
         <VerticalSpacer twentyPx />
         {resultat !== innsynResultatType.INNVILGET && (
           <Row>

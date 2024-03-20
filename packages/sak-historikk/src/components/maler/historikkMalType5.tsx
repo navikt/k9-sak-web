@@ -1,14 +1,12 @@
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { HistorikkinnslagDel, HistorikkinnslagEndretFelt, Kodeverk } from '@k9-sak-web/types';
-import { BodyShort, Label } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
+
+import { HistorikkinnslagDel, HistorikkinnslagEndretFelt, Kodeverk } from '@k9-sak-web/types';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
 import historikkEndretFeltTypeHeadingCodes from '../../kodeverk/historikkEndretFeltTypeHeadingCodes';
-import HistorikkMal from '../HistorikkMalTsType';
-import BubbleText from './felles/bubbleText';
-import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
 import {
   findEndretFeltNavn,
   findEndretFeltVerdi,
@@ -16,6 +14,9 @@ import {
   findIdForOpplysningCode,
   findResultatText,
 } from './felles/historikkUtils';
+import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
+import BubbleText from './felles/bubbleText';
+import HistorikkMal from '../HistorikkMalTsType';
 import Skjermlenke from './felles/Skjermlenke';
 
 function isGjeldendeFraUtenEndredeFelter(historikkinnslagDel: HistorikkinnslagDel): boolean {
@@ -170,9 +171,7 @@ const HistorikkMalType5 = ({
 
         {lageElementInnhold(historikkinnslagDel, intl, getKodeverknavn).map(tekst => (
           <div key={tekst}>
-            <Label size="small" as="p">
-              {tekst}
-            </Label>
+            <Element>{tekst}</Element>
           </div>
         ))}
 
@@ -197,9 +196,7 @@ const HistorikkMalType5 = ({
             />
           ))}
 
-        {historikkinnslagDel.aarsak && (
-          <BodyShort size="small">{getKodeverknavn(historikkinnslagDel.aarsak)}</BodyShort>
-        )}
+        {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
         {historikkinnslagDel.begrunnelse && <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse)} />}
         {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />}
         {historikkinnslag.dokumentLinks &&

@@ -1,30 +1,30 @@
-import {
-  RadioGroupField,
-  RadioOption,
-  behandlingForm,
-  behandlingFormValueSelector,
-  hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
-} from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import {
-  AksjonspunktHelpTextTemp,
-  FlexColumn,
-  FlexContainer,
-  FlexRow,
-  VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
-import { required } from '@fpsak-frontend/utils';
-import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { Kodeverk } from '@k9-sak-web/types';
-import { Heading } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
+import { Undertittel } from 'nav-frontend-typografi';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import {
+  behandlingForm,
+  RadioGroupField,
+  RadioOption,
+  behandlingFormValueSelector,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
+import { required } from '@fpsak-frontend/utils';
+import {
+  VerticalSpacer,
+  FlexContainer,
+  FlexRow,
+  AksjonspunktHelpTextTemp,
+  FlexColumn,
+} from '@fpsak-frontend/shared-components';
+import { Kodeverk } from '@k9-sak-web/types';
 import FritekstTextField from './FritekstTextField';
 
 const FORM_NAME = 'BehandleUnntakForm';
@@ -50,9 +50,9 @@ export const BehandleUnntakForm = ({
   <form onSubmit={handleSubmit}>
     <FlexContainer>
       <FlexRow>
-        <Heading size="small" level="2">
+        <Undertittel>
           <FormattedMessage id="Unntak.Title" />
-        </Heading>
+        </Undertittel>
       </FlexRow>
       <VerticalSpacer twentyPx />
 

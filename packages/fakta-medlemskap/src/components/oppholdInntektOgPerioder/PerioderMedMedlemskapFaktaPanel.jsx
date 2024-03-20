@@ -1,3 +1,10 @@
+import moment from 'moment';
+import { Normaltekst } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+
 import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -15,12 +22,6 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import { BodyShort } from '@navikt/ds-react';
-import moment from 'moment';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 const headerTextCodes = [
@@ -47,9 +48,9 @@ export const PerioderMedMedlemskapFaktaPanel = ({
   if (!fixedMedlemskapPerioder || fixedMedlemskapPerioder.length === 0) {
     return (
       <FaktaGruppe titleCode="PerioderMedMedlemskapFaktaPanel.ApplicationInformation">
-        <BodyShort size="small">
+        <Normaltekst>
           <FormattedMessage id="PerioderMedMedlemskapFaktaPanel.NoInformation" />
-        </BodyShort>
+        </Normaltekst>
       </FaktaGruppe>
     );
   }

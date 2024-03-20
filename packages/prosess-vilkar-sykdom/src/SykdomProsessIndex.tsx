@@ -7,10 +7,10 @@ import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import { dateFormat } from '@fpsak-frontend/utils';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
-import { Detail, Heading, Label } from '@navikt/ds-react';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import isEqual from 'lodash/isEqual';
+import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
@@ -37,9 +37,9 @@ const getVilkarOkMessage = originalErVilkarOk => {
   }
 
   return (
-    <Label size="small" as="p">
+    <Element>
       <FormattedMessage id={messageId} />
-    </Label>
+    </Element>
   );
 };
 
@@ -100,12 +100,12 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomP
                 </FlexColumn>
               )}
               <FlexColumn>
-                <Heading size="small" level="2">
+                <Undertittel>
                   <FormattedMessage id={panelTittelKode} />
-                </Heading>
+                </Undertittel>
               </FlexColumn>
               <FlexColumn>
-                <Detail className={styles.vilkar}>{lovReferanseTekst}</Detail>
+                <Undertekst className={styles.vilkar}>{lovReferanseTekst}</Undertekst>
               </FlexColumn>
             </FlexRow>
             <FlexRow>

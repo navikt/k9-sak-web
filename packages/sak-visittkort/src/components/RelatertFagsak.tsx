@@ -1,10 +1,10 @@
 import { pathToFagsak } from '@k9-sak-web/sak-app/src/app/paths';
 import { RelatertFagsak as RelatertFagsakType } from '@k9-sak-web/types';
 import { LockedFilled, UnlockedFilled } from '@navikt/ds-icons';
-import { BodyShort } from '@navikt/ds-react';
 import classNames from 'classnames';
 import Lenke from 'nav-frontend-lenker';
 import { Select as NavSelect } from 'nav-frontend-skjema';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import RelatertSøkerIcon from './RelatertSøkerIcon';
 import styles from './relatertFagsak.module.css';
@@ -34,9 +34,9 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
           href={`/k9/web${pathToFagsak(saksnummer)}`}
           target="_blank"
         >
-          <BodyShort size="small" as="span" className={styles.relatertFagsak__name}>
+          <Normaltekst tag="span" className={styles.relatertFagsak__name}>
             {søkerNavn}
-          </BodyShort>
+          </Normaltekst>
         </Lenke>
       );
     }
@@ -66,16 +66,12 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
     <div className={styles.relatertFagsak}>
       <div className={styles.relatertFagsak__nameGenderContainer}>
         <RelatertSøkerIcon classname={styles.relatertFagsak__icon} />
-        <BodyShort size="small" className={styles.relatertFagsak__description}>
-          {andreParterTekst()}
-        </BodyShort>
+        <Normaltekst className={styles.relatertFagsak__description}>{andreParterTekst()}</Normaltekst>
         {visRelaterteSøkere()}
       </div>
-      <BodyShort size="small" as="span">
-        /
-      </BodyShort>
+      <Normaltekst tag="span">/</Normaltekst>
       <div className={styles.relatertFagsak__centeredFlex}>
-        <BodyShort size="small">{søkerIdent}</BodyShort>
+        <Normaltekst>{søkerIdent}</Normaltekst>
         {!harMerEnnEnRelatertSøker && åpenBehandling ? (
           <UnlockedFilled className={styles.relatertFagsak__lock} width="1.25em" height="1.25em" />
         ) : (

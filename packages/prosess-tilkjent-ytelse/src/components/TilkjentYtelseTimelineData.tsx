@@ -3,9 +3,10 @@ import { FloatRight, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
 import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort, Label, Tabs, Tag } from '@navikt/ds-react';
+import { BodyShort, Tabs, Tag } from '@navikt/ds-react';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
+import { Element } from 'nav-frontend-typografi';
 import React, { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -77,9 +78,9 @@ const TilkjentYtelseTimeLineData = ({
     <TimeLineDataContainer>
       <Row>
         <Column xs="10">
-          <Label size="small" as="p">
+          <Element>
             <FormattedMessage id="TilkjentYtelse.PeriodeData.Detaljer" />
-          </Label>
+          </Element>
         </Column>
         <Column xs="2">
           <FloatRight>

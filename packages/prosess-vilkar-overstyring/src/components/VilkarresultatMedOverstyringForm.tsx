@@ -15,8 +15,9 @@ import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
-import { BodyShort, Button, Label } from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
 import moment from 'moment';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { SetStateAction, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -110,9 +111,9 @@ export const VilkarresultatMedOverstyringForm = ({
     <form data-testid="overstyringform" onSubmit={handleSubmit}>
       {(erOverstyrt || hasAksjonspunkt) && (
         <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={erOverstyrt}>
-          <Label size="small" as="p">
+          <Element>
             <FormattedMessage id="VilkarresultatMedOverstyringForm.AutomatiskVurdering" />
-          </Label>
+          </Element>
           <VerticalSpacer eightPx />
           <VilkarresultatMedBegrunnelse
             skalViseBegrunnelse={erOverstyrt || hasAksjonspunkt}
@@ -133,9 +134,9 @@ export const VilkarresultatMedOverstyringForm = ({
                   <EditedIcon />
                 </FlexColumn>
                 <FlexColumn>
-                  <BodyShort size="small">
+                  <Normaltekst>
                     <FormattedMessage id="VilkarresultatMedOverstyringForm.Endret" />
-                  </BodyShort>
+                  </Normaltekst>
                 </FlexColumn>
               </FlexRow>
             </>
@@ -147,9 +148,9 @@ export const VilkarresultatMedOverstyringForm = ({
                   <Image src={advarselIkonUrl} />
                 </FlexColumn>
                 <FlexColumn>
-                  <Label size="small" as="p">
+                  <Element>
                     <FormattedMessage id="VilkarresultatMedOverstyringForm.Unntakstilfeller" />
-                  </Label>
+                  </Element>
                 </FlexColumn>
               </FlexRow>
               <VerticalSpacer sixteenPx />

@@ -1,12 +1,13 @@
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
-import { BodyShort } from '@navikt/ds-react';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
@@ -75,10 +76,10 @@ export const VilkarFields = ({
             </FlexColumn>
             <FlexColumn>
               {typeof erVilkarOk === 'string' && Object.values(midlertidigInaktiv).includes(erVilkarOk) === true && (
-                <BodyShort size="small">{hent847Text()}</BodyShort>
+                <Normaltekst>{hent847Text()}</Normaltekst>
               )}
-              {erVilkarOk === true && <BodyShort size="small">{erOppfyltText}</BodyShort>}
-              {!erVilkarOk && <BodyShort size="small">{erIkkeOppfyltText}</BodyShort>}
+              {erVilkarOk === true && <Normaltekst>{erOppfyltText}</Normaltekst>}
+              {!erVilkarOk && <Normaltekst>{erIkkeOppfyltText}</Normaltekst>}
             </FlexColumn>
           </FlexRow>
           <VerticalSpacer eightPx />

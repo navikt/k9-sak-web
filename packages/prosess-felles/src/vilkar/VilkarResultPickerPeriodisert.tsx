@@ -8,7 +8,8 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, KodeverkMedNavn, Vilkarperiode, vilkarUtfallPeriodisert } from '@k9-sak-web/types';
-import { BodyShort } from '@navikt/ds-react';
+import { Normaltekst } from 'nav-frontend-typografi';
+
 import { parse } from 'date-fns';
 import getPackageIntl from '../../i18n/getPackageIntl';
 
@@ -84,11 +85,9 @@ const VilkarResultPicker = ({
               />
             </FlexColumn>
             <FlexColumn>
-              {erVilkarOk === vilkarUtfallPeriodisert.OPPFYLT && (
-                <BodyShort size="small">{customVilkarOppfyltText}</BodyShort>
-              )}
+              {erVilkarOk === vilkarUtfallPeriodisert.OPPFYLT && <Normaltekst>{customVilkarOppfyltText}</Normaltekst>}
               {erVilkarOk === vilkarUtfallPeriodisert.IKKE_OPPFYLT && (
-                <BodyShort size="small">{customVilkarIkkeOppfyltText}</BodyShort>
+                <Normaltekst>{customVilkarIkkeOppfyltText}</Normaltekst>
               )}
             </FlexColumn>
           </FlexRow>

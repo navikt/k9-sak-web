@@ -8,10 +8,11 @@ import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsre
 import { DateTimeLabel, Image, Tooltip } from '@fpsak-frontend/shared-components';
 import { Dokument, FagsakPerson } from '@k9-sak-web/types';
 import { StarFillIcon } from '@navikt/aksel-icons';
-import { BodyShort, Label, Table } from '@navikt/ds-react';
+import { Table } from '@navikt/ds-react';
 import axios from 'axios';
 import Lenke from 'nav-frontend-lenker';
 import { Select } from 'nav-frontend-skjema';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { useQuery } from 'react-query';
@@ -149,9 +150,9 @@ const DocumentList = ({
     return (
       <>
         <div className={styles.controlsContainer}>{getModiaLenke()}</div>
-        <BodyShort size="small" className={styles.noDocuments} data-testid="no-documents">
+        <Normaltekst className={styles.noDocuments} data-testid="no-documents">
           <FormattedMessage id="DocumentList.NoDocuments" />
-        </BodyShort>
+        </Normaltekst>
       </>
     );
   }
@@ -229,13 +230,9 @@ const DocumentList = ({
                       className={styles.documentAnchor}
                     >
                       {isVedtaksdokument(document) ? (
-                        <Label size="small" as="span">
-                          {document.tittel}
-                        </Label>
+                        <Element tag="span">{document.tittel}</Element>
                       ) : (
-                        <BodyShort size="small" as="span">
-                          {document.tittel}
-                        </BodyShort>
+                        <Normaltekst tag="span">{document.tittel}</Normaltekst>
                       )}
                       {erInntektsmeldingOgBruktIDenneBehandlingen(document) && (
                         <StarFillIcon
@@ -254,7 +251,7 @@ const DocumentList = ({
                       tabIndex={-1}
                     >
                       {isTextMoreThan25char(document.gjelderFor) && (
-                        <Tooltip content={<BodyShort size="small">{document.gjelderFor}</BodyShort>} alignLeft>
+                        <Tooltip content={<Normaltekst>{document.gjelderFor}</Normaltekst>} alignLeft>
                           {trimText(document.gjelderFor)}
                         </Tooltip>
                       )}
@@ -272,9 +269,9 @@ const DocumentList = ({
                       {document.tidspunkt ? (
                         <DateTimeLabel dateTimeString={document.tidspunkt} />
                       ) : (
-                        <BodyShort size="small" data-testid="missing-timestamp">
+                        <Normaltekst data-testid="missing-timestamp">
                           <FormattedMessage id="DocumentList.IProduksjon" />
-                        </BodyShort>
+                        </Normaltekst>
                       )}
                     </a>
                   </Table.DataCell>

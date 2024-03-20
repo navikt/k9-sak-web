@@ -1,3 +1,6 @@
+import { Normaltekst } from 'nav-frontend-typografi';
+import React, { ReactNode } from 'react';
+
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 import { DatepickerField, RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
@@ -6,8 +9,6 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort } from '@navikt/ds-react';
-import React, { ReactNode } from 'react';
 
 import getPackageIntl from '../../i18n/getPackageIntl';
 
@@ -54,8 +55,8 @@ const VilkarResultPicker = ({
               <Image className={styles.image} src={erVilkarOk ? innvilgetImage : avslattImage} />
             </FlexColumn>
             <FlexColumn>
-              {erVilkarOk && <BodyShort size="small">{customVilkarOppfyltText}</BodyShort>}
-              {!erVilkarOk && <BodyShort size="small">{customVilkarIkkeOppfyltText}</BodyShort>}
+              {erVilkarOk && <Normaltekst>{customVilkarOppfyltText}</Normaltekst>}
+              {!erVilkarOk && <Normaltekst>{customVilkarIkkeOppfyltText}</Normaltekst>}
             </FlexColumn>
           </FlexRow>
           <VerticalSpacer eightPx />

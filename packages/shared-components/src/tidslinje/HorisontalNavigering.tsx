@@ -1,5 +1,5 @@
-import { BodyShort } from '@navikt/ds-react';
 import dayjs, { Dayjs } from 'dayjs';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import Rad from './Rad';
 import styles from './horisontalNavigering.module.css';
@@ -65,9 +65,7 @@ const HorisontalNavigering: React.FC<HorisontalNavigeringProps> = ({
       >
         <NavigateArrowIcon />
       </button>
-      <BodyShort size="small" className={styles.navigasjonDatoContainer}>
-        {formatNavigasjonsdato()}
-      </BodyShort>
+      <Normaltekst className={styles.navigasjonDatoContainer}>{formatNavigasjonsdato()}</Normaltekst>
     </div>
   );
 };

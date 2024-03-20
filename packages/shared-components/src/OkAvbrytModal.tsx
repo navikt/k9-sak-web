@@ -1,4 +1,5 @@
-import { BodyShort, Button, Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import FlexColumn from './flexGrid/FlexColumn';
@@ -36,7 +37,7 @@ const OkAvbrytModal = ({
     onClose={cancel}
   >
     <Modal.Header>
-      <BodyShort size="small">{text || <FormattedMessage id={textCode} />}</BodyShort>
+      <Normaltekst>{text || <FormattedMessage id={textCode} />}</Normaltekst>
     </Modal.Header>
     {/* <VerticalSpacer fourtyPx /> */}
     <Modal.Body>

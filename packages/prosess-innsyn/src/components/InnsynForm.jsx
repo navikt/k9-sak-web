@@ -1,3 +1,15 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { formPropTypes } from 'redux-form';
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import moment from 'moment';
+import { Undertittel } from 'nav-frontend-typografi';
+import { Row } from 'nav-frontend-grid';
+
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   DatepickerField,
   RadioGroupField,
@@ -8,23 +20,12 @@ import {
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
+import { AksjonspunktHelpTextTemp, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { hasValidDate, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+import { ProsessStegSubmitButton, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import innsynResultatTyperKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import { AksjonspunktHelpTextTemp, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { ISO_DATE_FORMAT, hasValidDate, required } from '@fpsak-frontend/utils';
-import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { Heading } from '@navikt/ds-react';
-import moment from 'moment';
-import { Row } from 'nav-frontend-grid';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { formPropTypes } from 'redux-form';
-import { createSelector } from 'reselect';
 
 import DocumentListInnsyn from './DocumentListInnsyn';
 import VedtakDocuments from './VedtakDocuments';
@@ -52,9 +53,9 @@ export const InnsynFormImpl = ({
 }) => (
   <FadingPanel>
     <form onSubmit={formProps.handleSubmit}>
-      <Heading size="small" level="2">
+      <Undertittel>
         <FormattedMessage id="InnsynForm.Innsynsbehandling" />
-      </Heading>
+      </Undertittel>
       <VerticalSpacer twentyPx />
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
         {[<FormattedMessage id="InnsynForm.VurderKravetOmInnsyn" key="1" />]}

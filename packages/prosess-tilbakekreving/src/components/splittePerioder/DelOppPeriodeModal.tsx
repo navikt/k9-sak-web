@@ -7,10 +7,11 @@ import {
   hasValidDate,
   required,
 } from '@fpsak-frontend/utils';
-import { BodyShort, Button, Detail, Label, Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import moment from 'moment/moment';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Column, Row } from 'nav-frontend-grid';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -44,23 +45,23 @@ export const DelOppPeriodeModalImpl = ({
     className={styles.modal}
   >
     <Modal.Header closeButton={false}>
-      <Label size="small" as="p">
+      <Element>
         <FormattedMessage id="DelOppPeriodeModalImpl.DelOppPerioden" />
-      </Label>
+      </Element>
     </Modal.Header>
     <Modal.Body>
-      <Detail>
+      <Undertekst>
         <FormattedMessage id="DelOppPeriodeModalImpl.Periode" />
-      </Detail>
-      <BodyShort size="small">
+      </Undertekst>
+      <Normaltekst>
         {`${moment(periodeData.fom.toString()).format(DDMMYYYY_DATE_FORMAT)} - ${moment(
           periodeData.tom.toString(),
         ).format(DDMMYYYY_DATE_FORMAT)}`}
-      </BodyShort>
+      </Normaltekst>
       <div className={styles.marginTop}>
-        <Detail>
+        <Undertekst>
           <FormattedMessage id="DelOppPeriodeModalImpl.AngiTomDato" />
-        </Detail>
+        </Undertekst>
         <DatepickerField
           name="ForstePeriodeTomDato"
           // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript

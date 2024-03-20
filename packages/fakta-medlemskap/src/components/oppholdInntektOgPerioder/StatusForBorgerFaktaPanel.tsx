@@ -3,7 +3,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { ArrowBox, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
-import { Detail } from '@navikt/ds-react';
+import { Undertekst } from 'nav-frontend-typografi';
 import React, { FunctionComponent } from 'react';
 import { FormattedMessage, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
@@ -54,9 +54,9 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
 
     {erEosBorger && (
       <ArrowBox>
-        <Detail>
+        <Undertekst>
           <FormattedMessage id="StatusForBorgerFaktaPanel.Oppholdsrett" />
-        </Detail>
+        </Undertekst>
         <VerticalSpacer fourPx />
         <RadioGroupField
           name="oppholdsrettVurdering"
@@ -81,9 +81,9 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
     )}
     {erEosBorger === false && (
       <ArrowBox alignOffset={130}>
-        <Detail>
+        <Undertekst>
           <FormattedMessage id="StatusForBorgerFaktaPanel.LovligOpphold" />
-        </Detail>
+        </Undertekst>
         <VerticalSpacer fourPx />
         <RadioGroupField
           name="lovligOppholdVurdering"

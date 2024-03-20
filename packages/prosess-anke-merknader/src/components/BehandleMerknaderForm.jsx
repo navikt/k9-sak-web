@@ -1,12 +1,13 @@
-import { Heading } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
-import PropTypes from 'prop-types';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
+import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
+import { Undertittel } from 'nav-frontend-typografi';
+import { Column, Row } from 'nav-frontend-grid';
 
+import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   RadioGroupField,
   RadioOption,
@@ -17,7 +18,6 @@ import {
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
-import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 
@@ -36,9 +36,9 @@ const AnkeMerknader = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <FadingPanel>
-      <Heading size="small" level="2">
+      <Undertittel>
         <FormattedMessage id="Ankebehandling.Merknad.Title" />
-      </Heading>
+      </Undertittel>
       <VerticalSpacer fourPx />
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Ankebehandling.Merknad.HelpText" key={aksjonspunktCode} />]}

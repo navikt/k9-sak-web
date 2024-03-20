@@ -13,10 +13,11 @@ import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Opptjening } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
-import { BodyShort, Button, Detail, Heading } from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
 import moment from 'moment';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { TabsPure } from 'nav-frontend-tabs';
+import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React, { Component, KeyboardEvent, MouseEvent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -283,7 +284,7 @@ export class OpptjeningFaktaFormImpl extends Component<
       arbeidsgiverOpplysningerPerId,
     } = this.props;
     if (!opptjeningList || opptjeningList.length === 0) {
-      return <BodyShort size="small">Fant ingen opptjeningsaktiviteter</BodyShort>;
+      return <Normaltekst>Fant ingen opptjeningsaktiviteter</Normaltekst>;
     }
 
     const { selectedOpptjeningActivity, activeTab } = this.state;
@@ -296,9 +297,9 @@ export class OpptjeningFaktaFormImpl extends Component<
       <div className={styles.container}>
         {opptjeningList.length > 1 && (
           <>
-            <Heading size="small" level="2">
+            <Undertittel>
               <FormattedMessage id="OpptjeningFaktaForm.Opptjeningsperioder" />
-            </Heading>
+            </Undertittel>
             <VerticalSpacer sixteenPx />
             <TabsPure
               tabs={opptjeningList.map((currentOpptjening, currentOpptjeningIndex) => ({
@@ -333,12 +334,12 @@ export class OpptjeningFaktaFormImpl extends Component<
               <VerticalSpacer twentyPx />
             </>
           )}
-          <Detail>
+          <Undertekst>
             <FormattedMessage id="OpptjeningFaktaForm.Skjaringstidspunkt" />
-          </Detail>
-          <BodyShort size="small">
+          </Undertekst>
+          <Normaltekst>
             <DateLabel dateString={findSkjaringstidspunkt(opptjeningTom)} />
-          </BodyShort>
+          </Normaltekst>
           <VerticalSpacer twentyPx />
           <OpptjeningTimeLine
             opptjeningPeriods={opptjeningAktivitetList}

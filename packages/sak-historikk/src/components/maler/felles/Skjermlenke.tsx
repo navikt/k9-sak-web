@@ -1,8 +1,8 @@
-import { Kodeverk } from '@k9-sak-web/types';
-import { Label } from '@navikt/ds-react';
-import { Location } from 'history';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { Location } from 'history';
+import { Element } from 'nav-frontend-typografi';
+import { Kodeverk } from '@k9-sak-web/types';
 import { scrollUp } from './historikkUtils';
 
 interface SkjermlenkeProps {
@@ -24,14 +24,14 @@ const Skjermlenke = ({
     return null;
   }
   return (
-    <Label size="small" as="p">
+    <Element>
       <NavLink
         to={createLocationForSkjermlenke(behandlingLocation, skjermlenke.kode)}
         onClick={scrollUpOnClick && scrollUp}
       >
         {getKodeverknavn(skjermlenke)}
       </NavLink>
-    </Label>
+    </Element>
   );
 };
 

@@ -5,9 +5,9 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { DateLabel, Image } from '@fpsak-frontend/shared-components';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
 import { Periode } from '@k9-sak-web/types';
-import { BodyShort, Heading, Label } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import { Location } from 'history';
+import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { NavLink, useLocation } from 'react-router-dom';
@@ -65,14 +65,14 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
     });
     return (
       <div className={styles.årsakerContainer}>
-        <Heading size="small" level="3" className={styles.font18}>
+        <Undertittel tag="h3" className={styles.font18}>
           <FormattedMessage id="Behandlingspunkt.ÅrsakerForVurdering" />
-        </Heading>
+        </Undertittel>
         <ul className={styles.årsakerList}>
           {unikeÅrsaker.map((årsak, index) => (
             // eslint-disable-next-line react/no-array-index-key
             <li key={`${årsak}_${index}`}>
-              <BodyShort size="small">{årsak}</BodyShort>
+              <Normaltekst>{årsak}</Normaltekst>
             </li>
           ))}
         </ul>
@@ -86,9 +86,7 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
 
   return (
     <div data-testid="behandlingSelected" className={containerCls}>
-      <Heading size="small" level="2">
-        {behandlingTypeNavn}
-      </Heading>
+      <Undertittel>{behandlingTypeNavn}</Undertittel>
       <div className={styles.infoContainer}>
         <div>
           <div className={styles.dateContainer}>
@@ -98,34 +96,28 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
               tooltip={<FormattedMessage id="BehandlingPickerItemContent.Kalender" />}
               alignTooltipLeft
             />
-            {søknadsperioder?.length > 0 && (
-              <BodyShort size="small">{getFormattedSøknadserioder(søknadsperioder)}</BodyShort>
-            )}
+            {søknadsperioder?.length > 0 && <Normaltekst>{getFormattedSøknadserioder(søknadsperioder)}</Normaltekst>}
           </div>
           <div className={`${styles.resultContainer} ${styles.marginTop8}`}>
             {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage, erFerdigstilt)}
-            <BodyShort size="small">
+            <Normaltekst>
               {getStatusText(behandlingsresultatTypeKode, behandlingsresultatTypeNavn, erFerdigstilt)}
-            </BodyShort>
+            </Normaltekst>
           </div>
         </div>
         <div className={styles.marginTop2}>
           <div className={styles.flexContainer}>
-            <Label size="small" as="p" className={styles.marginRight4}>
-              Opprettet:
-            </Label>
-            <BodyShort size="small">
+            <Element className={styles.marginRight4}>Opprettet:</Element>
+            <Normaltekst>
               <DateLabel dateString={opprettetDato} />
-            </BodyShort>
+            </Normaltekst>
           </div>
           {avsluttetDato && (
             <div className={`${styles.flexContainer} ${styles.marginTop8}`}>
-              <Label size="small" as="p" className={styles.marginRight4}>
-                Avsluttet:
-              </Label>
-              <BodyShort size="small">
+              <Element className={styles.marginRight4}>Avsluttet:</Element>
+              <Normaltekst>
                 <DateLabel dateString={avsluttetDato} />
-              </BodyShort>
+              </Normaltekst>
             </div>
           )}
         </div>
@@ -137,9 +129,9 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
           onClick={() => window.scroll(0, 0)}
           className={styles.faktapanelLenke}
         >
-          <BodyShort size="small">
+          <Normaltekst>
             <FormattedMessage id="Behandlingspunkt.BehandlingSelected.SøknadsperioderMedÅrsakerForBehandling" />
-          </BodyShort>
+          </Normaltekst>
         </NavLink>
       )}
     </div>

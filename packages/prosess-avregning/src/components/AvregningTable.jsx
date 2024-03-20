@@ -1,12 +1,13 @@
-import mottakerTyper from '@fpsak-frontend/kodeverk/src/mottakerTyper';
-import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { formatCurrencyNoKr, getRangeOfMonths } from '@fpsak-frontend/utils';
-import { BodyShort } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import moment from 'moment/moment';
+import { Normaltekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+
+import mottakerTyper from '@fpsak-frontend/kodeverk/src/mottakerTyper';
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { formatCurrencyNoKr, getRangeOfMonths } from '@fpsak-frontend/utils';
 
 import CollapseButton from './CollapseButton';
 
@@ -83,10 +84,7 @@ const createColumns = (perioder, rangeOfMonths, nextPeriod) => {
 
 const tableTitle = mottaker =>
   mottaker.mottakerType.kode === mottakerTyper.ARBG ? (
-    <BodyShort
-      size="small"
-      className={styles.tableTitle}
-    >{`${mottaker.mottakerNavn} (${mottaker.mottakerNummer})`}</BodyShort>
+    <Normaltekst className={styles.tableTitle}>{`${mottaker.mottakerNavn} (${mottaker.mottakerNummer})`}</Normaltekst>
   ) : null;
 
 const getResultatRadene = (ingenPerioderMedAvvik, resultatPerFagområde, resultatOgMotregningRader) => {

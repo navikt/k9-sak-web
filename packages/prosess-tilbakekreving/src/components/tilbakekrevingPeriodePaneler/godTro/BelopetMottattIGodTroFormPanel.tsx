@@ -1,9 +1,11 @@
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import { InputField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr, minValue, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
-import { BodyShort, Detail } from '@navikt/ds-react';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+
 import styles from './belopetMottattIGodTroFormPanel.module.css';
 
 const minValue1 = minValue(1);
@@ -26,9 +28,9 @@ interface OwnProps {
 
 const BelopetMottattIGodTroFormPanel = ({ readOnly, erBelopetIBehold }: OwnProps) => (
   <>
-    <Detail>
+    <Undertekst>
       <FormattedMessage id="BelopetMottattIGodTroFormPanel.BelopetIBehold" />
-    </Detail>
+    </Undertekst>
     <VerticalSpacer eightPx />
     <RadioGroupField validate={[required]} name="erBelopetIBehold" readOnly={readOnly}>
       <RadioOption label={<FormattedMessage id="BelopetMottattIGodTroFormPanel.Ja" />} value />
@@ -50,9 +52,9 @@ const BelopetMottattIGodTroFormPanel = ({ readOnly, erBelopetIBehold }: OwnProps
       )}
       {erBelopetIBehold === false && (
         <ArrowBox alignOffset={90}>
-          <BodyShort size="small">
+          <Normaltekst>
             <FormattedMessage id="BelopetMottattIGodTroFormPanel.IngenTilbakekreving" />
-          </BodyShort>
+          </Normaltekst>
         </ArrowBox>
       )}
     </div>

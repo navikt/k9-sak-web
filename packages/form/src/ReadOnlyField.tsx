@@ -1,5 +1,5 @@
 import { EditedIcon } from '@fpsak-frontend/shared-components';
-import { BodyShort } from '@navikt/ds-react';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import Label from './Label';
 import LabelType from './LabelType';
@@ -33,10 +33,10 @@ export const ReadOnlyField = ({
     <div className={styles.readOnlyContainer}>
       <Label input={label} readOnly />
       <div className={type === 'textarea' ? styles.textarea : ''}>
-        <BodyShort size="small" className={styles.readOnlyContent}>
+        <Normaltekst className={styles.readOnlyContent}>
           {renderReadOnlyValue ? renderReadOnlyValue(value) : value}
           {isEdited && <EditedIcon />}
-        </BodyShort>
+        </Normaltekst>
       </div>
     </div>
   );

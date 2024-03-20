@@ -1,5 +1,6 @@
-import { Button, Heading } from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
+import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -39,9 +40,7 @@ export const SearchForm = ({
   ...formProps
 }: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => (
   <form className={styles.container} onSubmit={formProps.handleSubmit}>
-    <Heading size="small" level="2">
-      {intl.formatMessage({ id: 'Search.SearchFagsakOrPerson' })}
-    </Heading>
+    <Undertittel>{intl.formatMessage({ id: 'Search.SearchFagsakOrPerson' })}</Undertittel>
     <VerticalSpacer eightPx />
     <Row>
       <Column xs="6">

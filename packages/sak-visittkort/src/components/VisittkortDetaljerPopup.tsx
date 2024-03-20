@@ -1,12 +1,13 @@
+import { EtikettInfo } from 'nav-frontend-etiketter';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
+import React, { useMemo } from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { FlexColumn, FlexContainer, FlexRow, Tooltip, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Adresser, getAddresses, getKodeverknavnFn, getLanguageFromSprakkode } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
-import { BodyShort, Label } from '@navikt/ds-react';
-import { EtikettInfo } from 'nav-frontend-etiketter';
-import React, { useMemo } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
 import styles from './visittkortDetaljerPopup.module.css';
 
@@ -101,53 +102,45 @@ const VisittkortDetaljerPopup = ({
         <VerticalSpacer sixteenPx />
         <FlexRow>
           <FlexColumn className={styles.labels}>
-            <BodyShort size="small">
+            <Normaltekst>
               <FormattedMessage id="VisittkortDetaljerPopup.AdressePanel.bostedsadresse" />
-            </BodyShort>
+            </Normaltekst>
           </FlexColumn>
           <FlexColumn>
-            <Label size="small" as="p">
-              {adresser[opplysningAdresseType.BOSTEDSADRESSE] || '-'}
-            </Label>
+            <Element>{adresser[opplysningAdresseType.BOSTEDSADRESSE] || '-'}</Element>
           </FlexColumn>
         </FlexRow>
         <VerticalSpacer eightPx />
         <FlexRow>
           <FlexColumn className={styles.labels}>
-            <BodyShort size="small">
+            <Normaltekst>
               <FormattedMessage id="VisittkortDetaljerPopup.AdressePanel.postadresseNorge" />
-            </BodyShort>
+            </Normaltekst>
           </FlexColumn>
           <FlexColumn>
-            <Label size="small" as="p">
-              {adresser[opplysningAdresseType.POSTADRESSE] || '-'}
-            </Label>
+            <Element>{adresser[opplysningAdresseType.POSTADRESSE] || '-'}</Element>
           </FlexColumn>
         </FlexRow>
         <VerticalSpacer eightPx />
         <FlexRow>
           <FlexColumn className={styles.labels}>
-            <BodyShort size="small">
+            <Normaltekst>
               <FormattedMessage id="VisittkortDetaljerPopup.AdressePanel.midlertidigAdresse" />
-            </BodyShort>
+            </Normaltekst>
           </FlexColumn>
           <FlexColumn>
-            <Label size="small" as="p">
-              {midlertidigAdresse || '-'}
-            </Label>
+            <Element>{midlertidigAdresse || '-'}</Element>
           </FlexColumn>
         </FlexRow>
         <VerticalSpacer eightPx />
         <FlexRow>
           <FlexColumn className={styles.labels}>
-            <BodyShort size="small">
+            <Normaltekst>
               <FormattedMessage id="VisittkortDetaljerPopup.AdressePanel.postadresseUtland" />
-            </BodyShort>
+            </Normaltekst>
           </FlexColumn>
           <FlexColumn>
-            <Label size="small" as="p">
-              {adresser[opplysningAdresseType.UTENLANDSK_POSTADRESSE] || '-'}
-            </Label>
+            <Element>{adresser[opplysningAdresseType.UTENLANDSK_POSTADRESSE] || '-'}</Element>
           </FlexColumn>
         </FlexRow>
       </FlexContainer>

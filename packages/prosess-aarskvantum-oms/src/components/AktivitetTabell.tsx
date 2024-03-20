@@ -13,12 +13,12 @@ import {
   VilkårEnum,
 } from '@k9-sak-web/types';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
-import { BodyShort, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import Panel from 'nav-frontend-paneler';
 import Tabs from 'nav-frontend-tabs';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactNode, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Utfall from './Utfall';
@@ -159,9 +159,7 @@ const AktivitetTabell = ({
   return (
     <Panel border className={styles.aktivitetTabell}>
       <div className={styles.header}>
-        <Label size="small" as="p">
-          {beskrivelse}
-        </Label>
+        <Element>{beskrivelse}</Element>
       </div>
       <Table
         suppliedHeaders={
@@ -252,7 +250,7 @@ const AktivitetTabell = ({
                     <>
                       <td>
                         {sorterteVilkår.map(([vilkår, vilkårsutfall]) => (
-                          <BodyShort size="small" key={`${periode}--${vilkår}`}>
+                          <Normaltekst key={`${periode}--${vilkår}`}>
                             <FormattedMessage
                               id={
                                 vilkår === VilkårEnum.ARBEIDSFORHOLD
@@ -260,7 +258,7 @@ const AktivitetTabell = ({
                                   : `Uttaksplan.Vilkår.${vilkår}`
                               }
                             />
-                          </BodyShort>
+                          </Normaltekst>
                         ))}
                       </td>
                       <td>
@@ -283,8 +281,7 @@ const AktivitetTabell = ({
               <tbody key={periode}>
                 <TableRow notFocusable>
                   <td>
-                    <BodyShort
-                      size="small"
+                    <Normaltekst
                       className={classNames({
                         [styles.ikkeGjeldendeBehandling]: behandlingUuid !== opprinneligBehandlingUuid,
                       })}
@@ -297,7 +294,7 @@ const AktivitetTabell = ({
                         />
                       )}
                       {formatereLukketPeriode(periode)}
-                    </BodyShort>
+                    </Normaltekst>
                   </td>
                   <td>
                     <Utfall

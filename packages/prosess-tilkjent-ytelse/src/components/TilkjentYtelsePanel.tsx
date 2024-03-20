@@ -1,24 +1,24 @@
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import React from 'react';
+import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import { Undertittel } from 'nav-frontend-typografi';
+import moment from 'moment';
 import {
   Aksjonspunkt,
-  ArbeidsgiverOpplysningerPerId,
-  BeregningsresultatPeriode,
   BeregningsresultatUtbetalt,
+  BeregningsresultatPeriode,
   FamilieHendelse,
   KodeverkMedNavn,
   Personopplysninger,
+  ArbeidsgiverOpplysningerPerId,
   Soknad,
 } from '@k9-sak-web/types';
-import moment from 'moment';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Heading } from '@navikt/ds-react';
-import TilkjentYtelse, { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
+import TilkjentYtelse, { PeriodeMedId } from './TilkjentYtelse';
 
 const perioderMedClassName = [];
 
@@ -74,9 +74,9 @@ export const TilkjentYtelsePanelImpl = ({
   const opphoersdato = beregningresultat?.opphoersdato;
   return (
     <>
-      <Heading size="small" level="2">
+      <Undertittel>
         <FormattedMessage id="TilkjentYtelse.Title" />
-      </Heading>
+      </Undertittel>
       {opphoersdato && (
         <FormattedMessage
           id="TilkjentYtelse.Opphoersdato"

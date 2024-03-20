@@ -1,3 +1,6 @@
+import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import React, { ReactNode } from 'react';
+
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import { hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting } from '@fpsak-frontend/form';
@@ -9,10 +12,10 @@ import {
   Image,
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { BodyShort, Detail, Heading, Label } from '@navikt/ds-react';
-import React, { ReactNode } from 'react';
+
 import getPackageIntl from '../../i18n/getPackageIntl';
 import ProsessStegSubmitButton from '../ProsessStegSubmitButton';
+
 import styles from './prosessPanelTemplate.module.css';
 
 interface OwnProps {
@@ -64,13 +67,11 @@ const ProsessPanelTemplate = ({
             </FlexColumn>
           )}
           <FlexColumn>
-            <Heading size="small" level="2">
-              {title}
-            </Heading>
+            <Undertittel>{title}</Undertittel>
           </FlexColumn>
           {lovReferanse && (
             <FlexColumn>
-              <Detail className={styles.vilkar}>{lovReferanse}</Detail>
+              <Undertekst className={styles.vilkar}>{lovReferanse}</Undertekst>
             </FlexColumn>
           )}
         </FlexRow>
@@ -80,23 +81,19 @@ const ProsessPanelTemplate = ({
             {originalErVilkarOk && (
               <>
                 <VerticalSpacer eightPx />
-                <Label size="small" as="p">
-                  {intl.formatMessage({ id: 'ProsessPanelTemplate.ErOppfylt' })}
-                </Label>
+                <Element>{intl.formatMessage({ id: 'ProsessPanelTemplate.ErOppfylt' })}</Element>
               </>
             )}
             {originalErVilkarOk === false && (
               <>
                 <VerticalSpacer eightPx />
-                <Label size="small" as="p">
-                  {intl.formatMessage({ id: 'ProsessPanelTemplate.ErIkkeOppfylt' })}
-                </Label>
+                <Element>{intl.formatMessage({ id: 'ProsessPanelTemplate.ErIkkeOppfylt' })}</Element>
               </>
             )}
             {!isAksjonspunktOpen && originalErVilkarOk === undefined && (
               <>
                 <VerticalSpacer eightPx />
-                <BodyShort size="small">{intl.formatMessage({ id: 'ProsessPanelTemplate.IkkeBehandlet' })}</BodyShort>
+                <Normaltekst>{intl.formatMessage({ id: 'ProsessPanelTemplate.IkkeBehandlet' })}</Normaltekst>
               </>
             )}
           </FlexColumn>

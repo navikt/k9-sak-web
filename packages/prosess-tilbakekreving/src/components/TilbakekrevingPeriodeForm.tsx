@@ -18,9 +18,10 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort, Button, Detail, Label } from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React, { Component } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -255,7 +256,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
         <VerticalSpacer twentyPx />
         {reduserteBelop.map(belop => (
           <React.Fragment key={belop.belop}>
-            <BodyShort size="small">
+            <Normaltekst>
               <FormattedMessage
                 id={
                   belop.erTrekk
@@ -264,7 +265,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                 }
                 values={{ belop: formatCurrencyNoKr(belop.belop), b: (chunks: any) => <b>{chunks}</b> }}
               />
-            </BodyShort>
+            </Normaltekst>
             <VerticalSpacer eightPx />
           </React.Fragment>
         ))}
@@ -274,9 +275,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
           <>
             <Row>
               <Column md="10">
-                <Label size="small" as="p">
+                <Element>
                   <FormattedMessage id="TilbakekrevingPeriodeForm.KopierVilkårsvurdering" />
-                </Label>
+                </Element>
                 <SelectField
                   name="perioderForKopi"
                   selectValues={vurdertePerioder.map(per => {
@@ -309,9 +310,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
               )}
               {!data.erForeldet && (
                 <Column md="10">
-                  <Label size="small" as="p">
+                  <Element>
                     <FormattedMessage id="TilbakekrevingPeriodeForm.VilkarForTilbakekreving" />
-                  </Label>
+                  </Element>
                   <VerticalSpacer eightPx />
                   <TextAreaField
                     name="begrunnelse"
@@ -323,9 +324,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                     placeholder={intl.formatMessage({ id: 'TilbakekrevingPeriodeForm.Vurdering.Hjelpetekst' })}
                   />
                   <VerticalSpacer twentyPx />
-                  <Detail>
+                  <Undertekst>
                     <FormattedMessage id="TilbakekrevingPeriodeForm.oppfylt" />
-                  </Detail>
+                  </Undertekst>
                   <VerticalSpacer eightPx />
                   <RadioGroupField
                     validate={[required]}
@@ -348,7 +349,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
               <Column md="10">
                 {valgtVilkarResultatType && (
                   <>
-                    <Label size="small" as="p">
+                    <Element>
                       <FormattedMessage
                         id={
                           valgtVilkarResultatType === VilkarResultat.GOD_TRO
@@ -356,7 +357,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                             : 'TilbakekrevingPeriodeForm.Aktsomhet'
                         }
                       />
-                    </Label>
+                    </Element>
                     <VerticalSpacer eightPx />
                     <TextAreaField
                       name="vurderingBegrunnelse"

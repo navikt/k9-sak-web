@@ -1,11 +1,11 @@
 import React from 'react';
-import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
+import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
 
+import { Normaltekst } from 'nav-frontend-typografi';
 import { Aktor, KodeverkMedNavn } from '@k9-sak-web/types';
 
-import { BodyShort } from '@navikt/ds-react';
-import messages from '../i18n/nb_NO.json';
 import AktoerGrid from './components/AktoerGrid';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
@@ -28,9 +28,9 @@ const AktorSakIndex = ({ valgtAktorId, aktorInfo, alleKodeverk, finnPathToFagsak
   <RawIntlProvider value={intl}>
     {aktorInfo && <AktoerGrid aktorInfo={aktorInfo} alleKodeverk={alleKodeverk} finnPathToFagsak={finnPathToFagsak} />}
     {!aktorInfo && (
-      <BodyShort size="small">
+      <Normaltekst>
         <FormattedMessage id="AktorSakIndex.UgyldigAktorId" values={{ id: valgtAktorId }} />
-      </BodyShort>
+      </Normaltekst>
     )}
   </RawIntlProvider>
 );

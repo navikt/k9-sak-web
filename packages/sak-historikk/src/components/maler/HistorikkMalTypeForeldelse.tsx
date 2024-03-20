@@ -1,11 +1,12 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { BodyShort } from '@navikt/ds-react';
+
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
-import HistorikkMal from '../HistorikkMalTsType';
 import Skjermlenke from './felles/Skjermlenke';
+import HistorikkMal from '../HistorikkMalTsType';
 
 export const HistorikkMalTypeForeldelse = ({
   historikkinnslag,
@@ -37,19 +38,19 @@ export const HistorikkMalTypeForeldelse = ({
 
         return (
           <div key={periodeFom + periodeTom}>
-            <BodyShort size="small">
+            <Normaltekst>
               <FormattedMessage
                 id="Historikk.Template.Foreldelse.VurderingAvPerioden"
                 values={{ periodeFom, periodeTom, b: chunks => <b>{chunks}</b> }}
               />
-            </BodyShort>
+            </Normaltekst>
             {endredeFelter &&
               endredeFelter.map(felt => {
                 const { endretFeltNavn, fraVerdi, tilVerdi } = felt;
 
                 return (
                   <React.Fragment key={endretFeltNavn.kode}>
-                    <BodyShort size="small">
+                    <Normaltekst>
                       <FormattedMessage
                         id={
                           felt.fraVerdi
@@ -63,13 +64,13 @@ export const HistorikkMalTypeForeldelse = ({
                           b: chunks => <b>{chunks}</b>,
                         }}
                       />
-                    </BodyShort>
+                    </Normaltekst>
                     <VerticalSpacer eightPx />
                   </React.Fragment>
                 );
               })}
             <VerticalSpacer eightPx />
-            {begrunnelseFritekst && <BodyShort size="small">{begrunnelseFritekst}</BodyShort>}
+            {begrunnelseFritekst && <Normaltekst>{begrunnelseFritekst}</Normaltekst>}
             <VerticalSpacer eightPx />
           </div>
         );

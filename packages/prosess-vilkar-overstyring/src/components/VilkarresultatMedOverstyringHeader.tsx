@@ -5,7 +5,7 @@ import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { Detail, Heading, Label } from '@navikt/ds-react';
+import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React, { SetStateAction } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -25,9 +25,9 @@ const getVilkarOkMessage = originalErVilkarOk => {
   }
 
   return (
-    <Label size="small" as="p">
+    <Element>
       <FormattedMessage id={messageId} />
-    </Label>
+    </Element>
   );
 };
 
@@ -70,13 +70,13 @@ const VilkarresultatMedOverstyringHeader = ({
             </FlexColumn>
           )}
           <FlexColumn>
-            <Heading size="small" level="2">
+            <Undertittel>
               <FormattedMessage id={panelTittelKode} />
-            </Heading>
+            </Undertittel>
           </FlexColumn>
           {lovReferanse && (
             <FlexColumn>
-              <Detail className={styles.vilkar}>{lovReferanse}</Detail>
+              <Undertekst className={styles.vilkar}>{lovReferanse}</Undertekst>
             </FlexColumn>
           )}
         </FlexRow>

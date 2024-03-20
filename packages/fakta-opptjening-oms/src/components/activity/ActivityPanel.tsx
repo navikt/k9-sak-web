@@ -28,9 +28,10 @@ import {
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
-import { BodyShort, Button, Label } from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { KeyboardEvent, MouseEvent } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -159,9 +160,9 @@ export const ActivityPanel = ({
   >
     <Row>
       <Column xs="10">
-        <Label size="small" as="p">
+        <Element>
           <FormattedMessage id={initialValues.id ? 'ActivityPanel.Details' : 'ActivityPanel.NewActivity'} />
-        </Label>
+        </Element>
       </Column>
       <Column xs="2">
         <TimeLineButton
@@ -190,9 +191,9 @@ export const ActivityPanel = ({
               />
             </FlexColumn>
             <FlexColumn>
-              <BodyShort size="small" className={styles.period}>
+              <Normaltekst className={styles.period}>
                 {findInYearsMonthsAndDays(opptjeningFom, opptjeningTom)}
-              </BodyShort>
+              </Normaltekst>
             </FlexColumn>
           </FlexRow>
         </FlexContainer>

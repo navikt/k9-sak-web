@@ -11,7 +11,8 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { hasValidText, hasValidValue, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
-import { Button, Label } from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
+import { Element } from 'nav-frontend-typografi';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -142,9 +143,9 @@ export const FormContent = ({
           name="valg"
           validate={[required]}
           label={
-            <Label size="small" as="p">
+            <Element>
               <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Valg" />
-            </Label>
+            </Element>
           }
         >
           <RadioOption

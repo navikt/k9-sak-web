@@ -5,8 +5,9 @@ import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import { Button, Label, Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
+import { Element } from 'nav-frontend-typografi';
 import React, { ReactElement, useEffect } from 'react';
 import { FormattedMessage, IntlShape, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -124,9 +125,9 @@ export const NyBehandlingModal = ({
             </Column>
             <Column xs="11">
               <div className={styles.label}>
-                <Label size="small" as="p">
+                <Element>
                   <FormattedMessage id="MenyNyBehandlingIndex.OpprettNyForstegangsbehandling" />
-                </Label>
+                </Element>
               </div>
               <VerticalSpacer sixteenPx />
               <VerticalSpacer sixteenPx />

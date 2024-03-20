@@ -1,7 +1,8 @@
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
-import { BodyShort } from '@navikt/ds-react';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 
 import aksjonspunktÅrsaker from '@fpsak-frontend/fakta-arbeidsforhold/src/kodeverk/aksjonspunktÅrsaker';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
@@ -56,16 +57,16 @@ const AksjonspunktAvklarArbeidsforholdText = ({ intl, arbeidsforhold }: OwnProps
             alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
             src={advarselIkonUrl}
           />
-          <BodyShort size="small" className={styles.info}>
+          <Normaltekst className={styles.info}>
             {utledAksjonspunktText(arbeidsforhold, imUtenArbeidsforhold)}
-          </BodyShort>
+          </Normaltekst>
         </FlexColumn>
       </FlexRow>
 
       {imUtenArbeidsforhold && (
         <>
           <FlexRow>
-            <BodyShort size="small" className={styles.info}>
+            <Normaltekst className={styles.info}>
               <FormattedMessage id="HelpText.TaKontakt" values={{ li: <li />, br: <br /> }} />
               <VerticalSpacer eightPx />
               <li>
@@ -80,7 +81,7 @@ const AksjonspunktAvklarArbeidsforholdText = ({ intl, arbeidsforhold }: OwnProps
                 {' '}
                 <FormattedMessage id="HelpText.Option3" />
               </li>
-            </BodyShort>
+            </Normaltekst>
           </FlexRow>
           <FlexRow>
             {' '}
@@ -91,22 +92,22 @@ const AksjonspunktAvklarArbeidsforholdText = ({ intl, arbeidsforhold }: OwnProps
           </FlexRow>
           <VerticalSpacer eightPx />
           <FlexRow>
-            <BodyShort size="small">
+            <Normaltekst>
               <FormattedMessage id="HelpText.DersomIkkeKanRapporteres" />
-            </BodyShort>
+            </Normaltekst>
           </FlexRow>
           <VerticalSpacer eightPx />
           <FlexRow>
-            <BodyShort size="small" className={styles.spørsmål}>
+            <Normaltekst className={styles.spørsmål}>
               <FormattedMessage id="PersonAksjonspunktText.SkalLeggesTil" />
-            </BodyShort>
+            </Normaltekst>
           </FlexRow>
         </>
       )}
       {overgangArbeidsforholdsId && (
-        <BodyShort size="small" className={styles.info}>
+        <Normaltekst className={styles.info}>
           <FormattedMessage id="HelpText.TaKontaktOvergangArbeidsforholdId" />
-        </BodyShort>
+        </Normaltekst>
       )}
     </FlexContainer>
   );

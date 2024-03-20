@@ -16,7 +16,7 @@ import { arbeidsforholdHarAksjonspunktÅrsak } from '@fpsak-frontend/utils/src/a
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import Arbeidsgiver from '@k9-sak-web/types/src/arbeidsgiverTsType';
-import { BodyShort } from '@navikt/ds-react';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React, { Component } from 'react';
 import { WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
@@ -260,7 +260,7 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
                   <FlexColumn className={styles.arbeidsgiverColumn}>
                     <div className={styles.overskrift}>
                       <Image src={briefcaseImg} />
-                      <BodyShort size="small">{navn}</BodyShort>
+                      <Normaltekst>{navn}</Normaltekst>
                     </div>
                   </FlexColumn>
                   <FlexColumn className={styles.aksjonspunktColumn}>
@@ -270,7 +270,7 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
                       type="button"
                       onClick={() => this.setSelectedArbeidsgiver(a)}
                     >
-                      <BodyShort size="small" className={styles.visLukkArbeidsforhold}>
+                      <Normaltekst className={styles.visLukkArbeidsforhold}>
                         {intl.formatMessage(
                           erValgt
                             ? {
@@ -280,7 +280,7 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
                                 id: 'PersonArbeidsforholdPanel.VisArbeidsforhold',
                               },
                         )}
-                      </BodyShort>
+                      </Normaltekst>
                       <Image className={erValgt ? styles.chevronOpp : styles.chevronNed} src={chevronIkonUrl} alt="" />
                     </button>
                   </FlexColumn>

@@ -1,7 +1,8 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Image } from '@fpsak-frontend/shared-components';
-import { BodyShort, Button, Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './fatterVedtakStatusModal.module.css';
@@ -37,12 +38,12 @@ const FatterVedtakStatusModal = ({
           <div className={styles.divider} />
         </Column>
         <Column xs="9">
-          <BodyShort size="small">
+          <Normaltekst>
             <FormattedMessage id={tekstkode} />
-          </BodyShort>
-          <BodyShort size="small">
+          </Normaltekst>
+          <Normaltekst>
             <FormattedMessage id="FatterVedtakStatusModal.GoToSearchPage" />
-          </BodyShort>
+          </Normaltekst>
         </Column>
         <Column xs="2">
           <Button variant="primary" size="small" className={styles.button} onClick={lukkModal} autoFocus>
