@@ -1,16 +1,15 @@
-import { Field, Form, Formik } from 'formik';
 import React from 'react';
+import { Field, Form, Formik } from 'formik';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import * as Yup from 'yup';
-
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Knapp } from 'nav-frontend-knapper';
+import { Normaltekst } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Textarea } from '@navikt/ds-react';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { Knapp } from 'nav-frontend-knapper';
-import { Normaltekst } from 'nav-frontend-typografi';
 import styles from './ManglerSøknadForm.module.css';
 
 interface Props {
@@ -45,23 +44,23 @@ const ManglerSøknadForm = ({
   const utledBegrunnelse = () =>
     aksjonspunkter.find(
       ap =>
-        ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD ||
-        ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART,
+        ap.definisjon === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD ||
+        ap.definisjon === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART,
     ).begrunnelse || '';
 
   const erAksjonspunktÅpent = () =>
     isAksjonspunktOpen(
       aksjonspunkter.find(
         ap =>
-          ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD ||
-          ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART,
-      ).status.kode,
+          ap.definisjon === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD ||
+          ap.definisjon === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART,
+      ).status,
     );
 
   const manglerSøknadForPeriode = () =>
-    aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD);
+    aksjonspunkter.some(ap => ap.definisjon === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD);
   const manglerSøknadAnnenPart = () =>
-    aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART);
+    aksjonspunkter.some(ap => ap.definisjon === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART);
 
   const initialValues: ManglerSøknadDto = {
     begrunnelse: utledBegrunnelse(),
@@ -102,11 +101,11 @@ const ManglerSøknadForm = ({
               aksjonspunkter
                 .filter(
                   ap =>
-                    ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD ||
-                    ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART,
+                    ap.definisjon === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD ||
+                    ap.definisjon === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART,
                 )
                 .map(ap => ({
-                  kode: ap.definisjon.kode,
+                  kode: ap.definisjon,
                   begrunnelse: values.begrunnelse,
                 })),
             );
