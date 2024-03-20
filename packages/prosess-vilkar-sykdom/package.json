@@ -13,8 +13,6 @@
     "classnames": "2.5.1",
     "lodash": "4.17.21",
     "nav-frontend-core": "6.0.1",
-    "nav-frontend-spinner": "3.0.1",
-    "nav-frontend-spinner-style": "1.0.2",
     "nav-frontend-typografi": "4.0.2",
     "react": "18.2.0",
     "react-intl": "6.6.2"
