@@ -36,7 +36,7 @@
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ft-fakta-beregning-redesign": "1.2.0",
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "7.5.0",
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "7.5.1",
     "@navikt/ft-prosess-beregningsgrunnlag": "6.5.0",
     "axios": "1.6.7",
     "nav-frontend-alertstriper": "4.0.2",
