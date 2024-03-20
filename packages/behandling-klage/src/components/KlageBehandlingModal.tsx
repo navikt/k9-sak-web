@@ -1,5 +1,6 @@
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import Modal from 'nav-frontend-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -7,7 +8,6 @@ import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl'
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 
-import { Modal } from '@navikt/ds-react';
 import styles from './klageBehandlingModal.module.css';
 
 interface OwnProps {
@@ -25,9 +25,11 @@ interface OwnProps {
 const KlageVurderingModal = ({ visModal = false, lukkModal, intl }: OwnProps & WrappedComponentProps) => (
   <Modal
     className={styles.modal}
-    open={visModal}
-    aria-label={intl.formatMessage({ id: 'KlageVurderingModal.ModalDescription' })}
-    onClose={lukkModal}
+    isOpen={visModal}
+    contentLabel={intl.formatMessage({ id: 'KlageVurderingModal.ModalDescription' })}
+    onRequestClose={lukkModal}
+    closeButton={false}
+    shouldCloseOnOverlayClick={false}
   >
     <Row className="">
       <Column xs="1">

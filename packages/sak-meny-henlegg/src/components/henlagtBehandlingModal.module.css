@@ -1,5 +1,6 @@
 .button {
-  margin-top: 0.25rem;
+  float: right;
+  margin-top: 10px;
 }
 
 .divider {
