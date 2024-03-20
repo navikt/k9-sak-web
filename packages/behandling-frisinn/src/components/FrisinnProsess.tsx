@@ -45,76 +45,78 @@ interface OwnProps {
   featureToggles: FeatureToggles;
 }
 
-const getForhandsvisFptilbakeCallback = (
-  forhandsvisTilbakekrevingMelding: (data: any) => Promise<any>,
-  fagsak: Fagsak,
-  behandling: Behandling,
-) => (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => {
-  const data = {
-    behandlingUuid: behandling.uuid,
-    fagsakYtelseType: fagsak.sakstype,
-    varseltekst: fritekst || '',
-    mottaker,
-    brevmalkode,
-    saksnummer,
+const getForhandsvisFptilbakeCallback =
+  (forhandsvisTilbakekrevingMelding: (data: any) => Promise<any>, fagsak: Fagsak, behandling: Behandling) =>
+  (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => {
+    const data = {
+      behandlingUuid: behandling.uuid,
+      fagsakYtelseType: fagsak.sakstype,
+      varseltekst: fritekst || '',
+      mottaker,
+      brevmalkode,
+      saksnummer,
+    };
+    return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
   };
-  return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
-};
 
-const getHentFritekstbrevHtmlCallback = (
-  hentFriteksbrevHtml: (data: any) => Promise<any>,
-  behandling: Behandling,
-  fagsak: Fagsak,
-  fagsakPerson: FagsakPerson,
-) => (parameters: any) =>
-  hentFriteksbrevHtml({
-    ...parameters,
-    eksternReferanse: behandling.uuid,
-    ytelseType: fagsak.sakstype,
-    saksnummer: fagsak.saksnummer,
-    aktørId: fagsakPerson.aktørId,
-    avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
-  });
+const getHentFritekstbrevHtmlCallback =
+  (
+    hentFriteksbrevHtml: (data: any) => Promise<any>,
+    behandling: Behandling,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+  ) =>
+  (parameters: any) =>
+    hentFriteksbrevHtml({
+      ...parameters,
+      eksternReferanse: behandling.uuid,
+      ytelseType: fagsak.sakstype,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsakPerson.aktørId,
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type),
+    });
 
-const getLagringSideeffekter = (
-  toggleIverksetterVedtakModal,
-  toggleFatterVedtakModal,
-  toggleOppdatereFagsakContext,
-  oppdaterProsessStegOgFaktaPanelIUrl,
-  opneSokeside,
-) => async aksjonspunktModels => {
-  const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
-    apModel =>
-      (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
-        apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) &&
-      apModel.sendVarsel,
-  );
-  const visIverksetterVedtakModal =
-    aksjonspunktModels[0].isVedtakSubmission &&
-    [aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL, aksjonspunktCodes.FATTER_VEDTAK].includes(
-      aksjonspunktModels[0].kode,
+const getLagringSideeffekter =
+  (
+    toggleIverksetterVedtakModal,
+    toggleFatterVedtakModal,
+    toggleOppdatereFagsakContext,
+    oppdaterProsessStegOgFaktaPanelIUrl,
+    opneSokeside,
+  ) =>
+  async aksjonspunktModels => {
+    const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
+      apModel =>
+        (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
+          apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) &&
+        apModel.sendVarsel,
     );
-  const visFatterVedtakModal =
-    aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
-  const isVedtakAp = aksjonspunktModels.some(a => a.isVedtakSubmission);
+    const visIverksetterVedtakModal =
+      aksjonspunktModels[0].isVedtakSubmission &&
+      [aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL, aksjonspunktCodes.FATTER_VEDTAK].includes(
+        aksjonspunktModels[0].kode,
+      );
+    const visFatterVedtakModal =
+      aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
+    const isVedtakAp = aksjonspunktModels.some(a => a.isVedtakSubmission);
 
-  if (visIverksetterVedtakModal || visFatterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
-    toggleOppdatereFagsakContext(false);
-  }
-
-  // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
-  return () => {
-    if (visFatterVedtakModal) {
-      toggleFatterVedtakModal(true);
-    } else if (visIverksetterVedtakModal) {
-      toggleIverksetterVedtakModal(true);
-    } else if (erRevurderingsaksjonspunkt) {
-      opneSokeside();
-    } else {
-      oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+    if (visIverksetterVedtakModal || visFatterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
+      toggleOppdatereFagsakContext(false);
     }
+
+    // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+    return () => {
+      if (visFatterVedtakModal) {
+        toggleFatterVedtakModal(true);
+      } else if (visIverksetterVedtakModal) {
+        toggleIverksetterVedtakModal(true);
+      } else if (erRevurderingsaksjonspunkt) {
+        opneSokeside();
+      } else {
+        oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+      }
+    };
   };
-};
 
 const FrisinnProsess = ({
   data,
@@ -142,10 +144,8 @@ const FrisinnProsess = ({
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } = restApiFrisinnHooks.useRestApiRunner<Behandling>(
     FrisinnBehandlingApiKeys.SAVE_AKSJONSPUNKT,
   );
-  const {
-    startRequest: lagreOverstyrteAksjonspunkter,
-    data: apOverstyrtBehandlingRes,
-  } = restApiFrisinnHooks.useRestApiRunner<Behandling>(FrisinnBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
+  const { startRequest: lagreOverstyrteAksjonspunkter, data: apOverstyrtBehandlingRes } =
+    restApiFrisinnHooks.useRestApiRunner<Behandling>(FrisinnBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
   const { startRequest: forhandsvisMelding } = restApiFrisinnHooks.useRestApiRunner(
     FrisinnBehandlingApiKeys.PREVIEW_MESSAGE,
   );
@@ -228,7 +228,7 @@ const FrisinnProsess = ({
         behandlingsresultat={behandling.behandlingsresultat}
       />
       <FatterVedtakStatusModal
-        visModal={visFatterVedtakModal && behandling.status.kode === behandlingStatus.FATTER_VEDTAK}
+        visModal={visFatterVedtakModal && behandling.status === behandlingStatus.FATTER_VEDTAK}
         lukkModal={useCallback(() => {
           toggleFatterVedtakModal(false);
           opneSokeside();

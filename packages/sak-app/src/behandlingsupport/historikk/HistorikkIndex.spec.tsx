@@ -29,38 +29,30 @@ describe('<HistorikkIndex>', () => {
       {
         opprettetTidspunkt: '2019-01-01',
         historikkinnslagDeler: [{ skjermlenke: '123' }],
-        type: {
-          kode: 'FORSLAG_VEDTAK',
-        },
-        aktoer: { kode: HistorikkAktor.VEDTAKSLOSNINGEN },
+        type: 'FORSLAG_VEDTAK',
+        aktoer: HistorikkAktor.VEDTAKSLOSNINGEN,
       },
       {
         opprettetTidspunkt: '2019-01-06',
         historikkinnslagDeler: [{ skjermlenke: '123' }],
-        type: {
-          kode: 'FORSLAG_VEDTAK',
-        },
-        aktoer: { kode: HistorikkAktor.VEDTAKSLOSNINGEN },
+        type: 'FORSLAG_VEDTAK',
+        aktoer: HistorikkAktor.VEDTAKSLOSNINGEN,
       },
     ]);
     requestApi.mock(K9sakApiKeys.HISTORY_TILBAKE, [
       {
         opprettetTidspunkt: '2019-01-04',
         historikkinnslagDeler: [{ skjermlenke: '123' }],
-        type: {
-          kode: 'FORSLAG_VEDTAK',
-        },
-        aktoer: { kode: HistorikkAktor.VEDTAKSLOSNINGEN },
+        type: 'FORSLAG_VEDTAK',
+        aktoer: HistorikkAktor.VEDTAKSLOSNINGEN,
       },
     ]);
     requestApi.mock(K9sakApiKeys.HISTORY_KLAGE, [
       {
         opprettetTidspunkt: '2018-01-04',
         historikkinnslagDeler: [{ skjermlenke: '123' }],
-        type: {
-          kode: 'FORSLAG_VEDTAK',
-        },
-        aktoer: { kode: HistorikkAktor.VEDTAKSLOSNINGEN },
+        type: 'FORSLAG_VEDTAK',
+        aktoer: HistorikkAktor.VEDTAKSLOSNINGEN,
       },
     ]);
 

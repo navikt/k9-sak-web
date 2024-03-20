@@ -17,15 +17,10 @@ import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
 
 const lagRisikoklassifisering = kode => ({
-  kontrollresultat: {
-    kode,
-    kodeverk: 'Kontrollresultat',
-  },
+  kontrollresultat: kode,
   medlFaresignaler: undefined,
   iayFaresignaler: undefined,
-  status: {
-    kode: aksjonspunktStatus.UTFORT,
-  },
+  status: aksjonspunktStatus.UTFORT,
 });
 
 vi.mock('react-router-dom', async () => {
@@ -46,14 +41,8 @@ vi.mock('react-router-dom', async () => {
 describe('<FagsakProfileIndex>', () => {
   const fagsak = {
     saksnummer: '123',
-    sakstype: {
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: 'FAGSAK_YTELSE',
-    },
-    status: {
-      kode: fagsakStatus.OPPRETTET,
-      kodeverk: 'FAGSAK_STATUS',
-    },
+    sakstype: fagsakYtelseType.FORELDREPENGER,
+    status: fagsakStatus.OPPRETTET,
   };
 
   const alleKodeverk = {
@@ -105,14 +94,8 @@ describe('<FagsakProfileIndex>', () => {
   };
 
   const behandling = {
-    type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: 'BEHANDLING_TYPE',
-    },
-    status: {
-      kode: behandlingStatus.AVSLUTTET,
-      kodeverk: 'BEHANDLING_STATUS',
-    },
+    type: behandlingType.FORSTEGANGSSOKNAD,
+    status: behandlingStatus.AVSLUTTET,
     links: [],
     behandlendeEnhetId: 'test',
     behandlendeEnhetNavn: 'NAV Viken',
@@ -132,25 +115,16 @@ describe('<FagsakProfileIndex>', () => {
     id: 1,
     uuid: 'uuid-1',
     behandlingsresultat: {
-      type: {
-        kode: behandlingResultatType.AVSLATT,
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      },
+      type: behandlingResultatType.AVSLATT,
     },
   };
 
   const revurdering: BehandlingAppKontekst = {
     ...behandling,
     id: 2,
-    type: {
-      kode: behandlingType.REVURDERING,
-      kodeverk: 'BEHANDLING_TYPE',
-    },
+    type: behandlingType.REVURDERING,
     behandlingsresultat: {
-      type: {
-        kode: behandlingResultatType.INNVILGET,
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      },
+      type: behandlingResultatType.INNVILGET,
     },
     uuid: 'uuid-2',
     opprettet: '2021-02-01T00:54:25.455',

@@ -1,5 +1,3 @@
-import Kodeverk from './kodeverkTsType';
-
 enum TypeEndring {
   AVKLART = 'AVKLART',
   ENDRET = 'ENDRET',
@@ -11,7 +9,7 @@ export type TotrinnskontrollArbeidsforhold = Readonly<{
   navn: string;
   organisasjonsnummer: string;
   arbeidsforholdId: string;
-  arbeidsforholdHandlingType: Kodeverk;
+  arbeidsforholdHandlingType: string;
   brukPermisjon: boolean;
 }>;
 
@@ -25,7 +23,7 @@ export type OpptjeningAktiviteter = Readonly<{
 }>;
 
 export type TotrinnsBeregningDto = Readonly<{
-  faktaOmBeregningTilfeller: Kodeverk[];
+  faktaOmBeregningTilfeller: string[];
   fastsattVarigEndringNaering: boolean;
   fastsattVarigEndring?: boolean;
   skjæringstidspunkt: string;
@@ -36,7 +34,7 @@ export type TotrinnskontrollAksjonspunkt = Readonly<{
   opptjeningAktiviteter?: OpptjeningAktiviteter[];
   besluttersBegrunnelse?: string;
   totrinnskontrollGodkjent?: boolean;
-  vurderPaNyttArsaker?: Kodeverk[];
+  vurderPaNyttArsaker?: string[];
   arbeidsforholdDtos?: TotrinnskontrollArbeidsforhold[];
   beregningDtoer?: TotrinnsBeregningDto[];
 }>;

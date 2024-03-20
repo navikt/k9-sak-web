@@ -13,7 +13,6 @@ import { ariaCheck, decodeHtmlEntity, isRequiredMessage } from '@fpsak-frontend/
 import {
   Behandling,
   KlageVurdering,
-  Kodeverk,
   KodeverkMedNavn,
   TotrinnskontrollAksjonspunkt,
   TotrinnskontrollSkjermlenkeContext,
@@ -141,18 +140,18 @@ const validate = (values: FormValues) => {
   };
 };
 
-const finnArsaker = (vurderPaNyttArsaker: Kodeverk[]) =>
+const finnArsaker = (vurderPaNyttArsaker: string[]) =>
   vurderPaNyttArsaker.reduce((acc, arsak) => {
-    if (arsak.kode === vurderPaNyttArsakType.FEIL_FAKTA) {
+    if (arsak === vurderPaNyttArsakType.FEIL_FAKTA) {
       return { ...acc, feilFakta: true };
     }
-    if (arsak.kode === vurderPaNyttArsakType.FEIL_LOV) {
+    if (arsak === vurderPaNyttArsakType.FEIL_LOV) {
       return { ...acc, feilLov: true };
     }
-    if (arsak.kode === vurderPaNyttArsakType.FEIL_REGEL) {
+    if (arsak === vurderPaNyttArsakType.FEIL_REGEL) {
       return { ...acc, feilRegel: true };
     }
-    if (arsak.kode === vurderPaNyttArsakType.ANNET) {
+    if (arsak === vurderPaNyttArsakType.ANNET) {
       return { ...acc, annet: true };
     }
     return {};

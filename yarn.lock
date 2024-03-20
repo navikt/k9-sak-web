@@ -3153,6 +3153,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/gui": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
     nav-frontend-core: 6.0.1
@@ -3228,6 +3229,8 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/gui": 1.0.0
+    "@k9-sak-web/lib": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
     nav-frontend-etiketter: 3.0.3
@@ -3912,6 +3915,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/lib": 1.0.0
     "@k9-sak-web/modal-sett-pa-vent": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
@@ -4058,6 +4062,7 @@ __metadata:
     "@k9-sak-web/fakta-inntektsmelding": 1.0.0
     "@k9-sak-web/fakta-omsorgen-for": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/lib": 1.0.0
     "@k9-sak-web/prosess-aarskvantum-oms": 1.0.0
     "@k9-sak-web/prosess-vilkar-soknadsfrist": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
@@ -4109,6 +4114,7 @@ __metadata:
     "@k9-sak-web/fakta-om-barnet": 1.0.0
     "@k9-sak-web/fakta-omsorgen-for": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/lib": 1.0.0
     "@k9-sak-web/prosess-uttak": 1.0.0
     "@k9-sak-web/prosess-vilkar-soknadsfrist": 1.0.0
     "@k9-sak-web/prosess-vilkar-sykdom": 1.0.0
@@ -4711,11 +4717,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/gui@workspace:^, @k9-sak-web/gui@workspace:packages/v2/gui":
+"@k9-sak-web/gui@1.0.0, @k9-sak-web/gui@workspace:^, @k9-sak-web/gui@workspace:packages/v2/gui":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/gui@workspace:packages/v2/gui"
   dependencies:
     "@k9-sak-web/backend": "workspace:^"
+    "@k9-sak-web/lib": 1.0.0
     react: 18.2.0
   languageName: unknown
   linkType: soft
@@ -4723,6 +4730,12 @@ __metadata:
 "@k9-sak-web/konstanter@1.0.0, @k9-sak-web/konstanter@workspace:packages/konstanter":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/konstanter@workspace:packages/konstanter"
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/lib@1.0.0, @k9-sak-web/lib@workspace:packages/v2/lib":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/lib@workspace:packages/v2/lib"
   languageName: unknown
   linkType: soft
 
@@ -5039,6 +5052,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/rest-api@workspace:packages/rest-api"
   dependencies:
+    "@k9-sak-web/lib": 1.0.0
     "@sentry/browser": 7.105.0
     axios: 1.6.7
     node-cache: 5.1.2
@@ -5165,7 +5179,9 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/gui": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/lib": 1.0.0
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
     history: 5.3.0

@@ -12,12 +12,12 @@ export type SimuleringResultatRad = Readonly<{
 }>;
 
 export type SimuleringResultatPerFagområde = Readonly<{
-  fagOmrådeKode: Kodeverk;
+  fagOmrådeKode: string;
   rader: SimuleringResultatRad[];
 }>;
 
 export type Mottaker = Readonly<{
-  mottakerType: Kodeverk;
+  mottakerType: string;
   mottakerNummer: string;
   mottakerNavn: string;
   mottakerIdentifikator: string;

@@ -1,7 +1,5 @@
-import { Kodeverk } from "./kodeverkTsType";
-
 export interface OverlappendePeriode {
-    ytelseType: Kodeverk;
-    kilde: Kodeverk;
-    overlappendePerioder: { fom: string; tom: string }[];
+  ytelseType: string;
+  kilde: string;
+  overlappendePerioder: { fom: string; tom: string }[];
 }

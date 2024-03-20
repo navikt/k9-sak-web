@@ -1,25 +1,27 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { Row } from 'nav-frontend-grid';
+import { Hovedknapp } from 'nav-frontend-knapper';
+
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import AksjonspunktAvklarArbeidsforholdText from '@fpsak-frontend/shared-components/src/AksjonspunktAvklarArbeidsforholdText';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
-import { Row } from 'nav-frontend-grid';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import React from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
+
 import ArbeidsforholdBegrunnelse from './ArbeidsforholdBegrunnelse';
 import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
 import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
-
 import aksjonspunktÅrsaker from '../../kodeverk/aksjonspunktÅrsaker';
 import CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
+
 import styles from './personArbeidsforholdDetailForm.module.css';
 
 export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM = 'PersonArbeidsforholdDetailForm';
 
-const IMutenArbeidsforhold = arbeidsforhold =>
-  arbeidsforhold.aksjonspunktÅrsaker.some(a => a.kode === aksjonspunktÅrsaker.INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD);
+const IMutenArbeidsforhold = (arbeidsforhold: ArbeidsforholdV2) =>
+  arbeidsforhold.aksjonspunktÅrsaker.some(a => a === aksjonspunktÅrsaker.INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD);
 
 interface PureOwnProps {
   arbeidsforhold: ArbeidsforholdV2;
@@ -82,13 +84,13 @@ export const PersonArbeidsforholdDetailForm = ({
   </div>
 );
 
-const validateForm = values => ({
+const validateForm = (values: CustomArbeidsforhold) => ({
   ...LeggTilArbeidsforholdFelter.validate(values),
 });
 
 const mapStateToPropsFactory = (_initialState: any, initialOwnProps: PureOwnProps) => (state, ownProps) => {
   const { arbeidsforhold, readOnly, behandlingId, behandlingVersjon, skjulArbeidsforhold } = ownProps;
-  const onSubmit = values => {
+  const onSubmit = (values: CustomArbeidsforhold) => {
     initialOwnProps.updateArbeidsforhold(values);
     skjulArbeidsforhold();
   };

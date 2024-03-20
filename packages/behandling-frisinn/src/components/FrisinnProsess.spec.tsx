@@ -1,3 +1,7 @@
+import React from 'react';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -10,22 +14,19 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
-import { act, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React from 'react';
 import FetchedData from '../types/fetchedDataTsType';
 import FrisinnProsess from './FrisinnProsess';
 
 describe('<FrisinnProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+    sakstype: fagsakYtelseType.FORELDREPENGER,
+    status: fagsakStatus.UNDER_BEHANDLING,
   } as Fagsak;
 
   const fagsakPerson = {
     alder: 30,
-    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    personstatusType: personstatusType.BOSATT,
     erDod: false,
     erKvinne: true,
     navn: 'Espen Utvikler',
@@ -34,8 +35,8 @@ describe('<FrisinnProsess>', () => {
   const behandling = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -55,19 +56,19 @@ describe('<FrisinnProsess>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+      definisjon: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
   ];
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.MEDLEMSKAPSVILKARET, kodeverk: 'test' },
+      vilkarType: vilkarType.MEDLEMSKAPSVILKARET,
       overstyrbar: true,
       perioder: [
         {
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           merknadParametere: {
             antattGodkjentArbeid: 'P0D',
             antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',

@@ -1,35 +1,28 @@
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import { dateToday, initializeDate, prettifyDateString } from '@fpsak-frontend/utils';
-import {
-  FagsakPerson,
-  Kodeverk,
-  KodeverkMedNavn,
-  Personopplysninger,
-  RelatertFagsak as RelatertFagsakType,
-} from '@k9-sak-web/types';
+import { FagsakPerson, Personopplysninger, RelatertFagsak as RelatertFagsakType } from '@k9-sak-web/types';
 import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
 import { Gender, PersonCard } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { dateToday, initializeDate, prettifyDateString } from '@fpsak-frontend/utils';
 import RelatertFagsak from './RelatertFagsak';
 import TagContainer from './TagContainer';
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 import VisittkortLabels from './VisittkortLabels';
 import styles from './visittkortPanel.module.css';
 
-const utledKjonn = (kjonn: Kodeverk): Gender => {
-  if (kjonn.kode === navBrukerKjonn.KVINNE) {
+const utledKjonn = (kjonn: string): Gender => {
+  if (kjonn === navBrukerKjonn.KVINNE) {
     return Gender.female;
   }
-  return kjonn.kode === navBrukerKjonn.MANN ? Gender.male : Gender.unknown;
+  return kjonn === navBrukerKjonn.MANN ? Gender.male : Gender.unknown;
 };
 
 interface OwnProps {
   fagsakPerson: FagsakPerson;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  sprakkode?: Kodeverk;
+  sprakkode?: string;
   personopplysninger?: Personopplysninger;
   harTilbakekrevingVerge?: boolean;
   relaterteFagsaker: RelatertFagsakType;
@@ -41,7 +34,6 @@ interface OwnProps {
 const VisittkortPanel = ({
   fagsakPerson,
   personopplysninger,
-  alleKodeverk,
   sprakkode,
   harTilbakekrevingVerge,
   relaterteFagsaker,
@@ -79,7 +71,7 @@ const VisittkortPanel = ({
   const annenPart = typeof personopplysninger.annenPart !== 'undefined' ? personopplysninger.annenPart : null;
   const barnSoktFor = personopplysninger.barnSoktFor?.length > 0 ? personopplysninger.barnSoktFor : null;
   const erDirekteOvergangFraInfotrygd = direkteOvergangFraInfotrygd?.skjæringstidspunkter?.length > 0;
-  const erUtenlandssak = personopplysninger?.pleietrengendePart?.personstatus?.kode === personstatusType.AKTIVT;
+  const erUtenlandssak = personopplysninger?.pleietrengendePart?.personstatus === personstatusType.AKTIVT;
 
   const beregnAlderPåBarn = (fødselsdato: string) => {
     const iDag = dateToday();
@@ -100,7 +92,7 @@ const VisittkortPanel = ({
               fodselsnummer={soker.fnr}
               gender={utledKjonn(soker.navBrukerKjonn)}
               renderMenuContent={(): JSX.Element => (
-                <VisittkortDetaljerPopup personopplysninger={soker} alleKodeverk={alleKodeverk} sprakkode={sprakkode} />
+                <VisittkortDetaljerPopup personopplysninger={soker} sprakkode={sprakkode} />
               )}
               renderLabelContent={(): JSX.Element => <VisittkortLabels personopplysninger={soker} />}
             />
@@ -112,11 +104,7 @@ const VisittkortPanel = ({
                 fodselsnummer={annenPart.fnr}
                 gender={utledKjonn(annenPart.navBrukerKjonn)}
                 renderMenuContent={(): JSX.Element => (
-                  <VisittkortDetaljerPopup
-                    personopplysninger={annenPart}
-                    alleKodeverk={alleKodeverk}
-                    sprakkode={sprakkode}
-                  />
+                  <VisittkortDetaljerPopup personopplysninger={annenPart} sprakkode={sprakkode} />
                 )}
                 isActive={false}
               />

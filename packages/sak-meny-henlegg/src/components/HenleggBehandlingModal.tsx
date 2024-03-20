@@ -1,3 +1,12 @@
+import React, { useMemo } from 'react';
+import { connect } from 'react-redux';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
+import { createSelector } from 'reselect';
+import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
+import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
+import { Undertekst } from 'nav-frontend-typografi';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -6,17 +15,8 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, required, safeJSONParse } from '@fpsak-frontend/utils';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
-import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 import { Modal } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
-import { Undertekst } from 'nav-frontend-typografi';
-import React, { useMemo } from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
-import { createSelector } from 'reselect';
 import Brevmottakere from './Brevmottakere';
 import styles from './henleggBehandlingModal.module.css';
 
@@ -27,11 +27,11 @@ const maxLength1500 = maxLength(1500);
 const previewHenleggBehandlingDoc =
   (
     previewHenleggBehandling: (erHenleggelse: boolean, data: any) => void,
-    ytelseType: Kodeverk,
+    ytelseType: string,
     fritekst: string,
     behandlingId: number,
     behandlingUuid?: string,
-    behandlingType?: Kodeverk,
+    behandlingType?: string,
     valgtMottaker?: KlagePart,
   ) =>
   (e: React.MouseEvent | React.KeyboardEvent): void => {
@@ -97,16 +97,15 @@ const henleggArsakerPerBehandlingType = {
 
 export const getHenleggArsaker = (
   behandlingResultatTyper: KodeverkMedNavn[],
-  behandlingType: Kodeverk,
-  ytelseType: Kodeverk,
+  behandlingType: string,
+  ytelseType: string,
 ): KodeverkMedNavn[] => {
-  const typerForBehandlingType = henleggArsakerPerBehandlingType[behandlingType.kode];
+  const typerForBehandlingType = henleggArsakerPerBehandlingType[behandlingType];
   return typerForBehandlingType
     .filter(
       type =>
-        ytelseType.kode !== fagsakYtelseType.ENGANGSSTONAD ||
-        (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD &&
-          type !== behandlingResultatType.MANGLER_BEREGNINGSREGLER),
+        ytelseType !== fagsakYtelseType.ENGANGSSTONAD ||
+        (ytelseType === fagsakYtelseType.ENGANGSSTONAD && type !== behandlingResultatType.MANGLER_BEREGNINGSREGLER),
     )
     .map(type => behandlingResultatTyper.find(brt => brt.kode === type));
 };
@@ -115,10 +114,10 @@ interface PureOwnProps {
   cancelEvent: () => void;
   previewHenleggBehandling: (erHenleggelse: boolean, data: any) => void;
   behandlingUuid?: string;
-  ytelseType: Kodeverk;
+  ytelseType: string;
   behandlingId?: number;
   behandlingResultatTyper: KodeverkMedNavn[];
-  behandlingType: Kodeverk;
+  behandlingType: string;
   hentMottakere: () => Promise<KlagePart[]>;
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
@@ -203,7 +202,7 @@ export const HenleggBehandlingModalImpl = ({
                   />
                 </Column>
               </Row>
-              {showHenleggelseFritekst(behandlingType.kode, årsakKode) && (
+              {showHenleggelseFritekst(behandlingType, årsakKode) && (
                 <Row>
                   <Column xs="8">
                     <div className={styles.fritekstTilBrevTextArea}>
@@ -224,7 +223,7 @@ export const HenleggBehandlingModalImpl = ({
                     <Hovedknapp
                       mini
                       className={styles.button}
-                      disabled={disableHovedKnapp(behandlingType.kode, årsakKode, begrunnelse, fritekst)}
+                      disabled={disableHovedKnapp(behandlingType, årsakKode, begrunnelse, fritekst)}
                     >
                       {intl.formatMessage({ id: 'HenleggBehandlingModal.HenleggBehandlingSubmit' })}
                     </Hovedknapp>
@@ -236,7 +235,7 @@ export const HenleggBehandlingModalImpl = ({
                 <Column xs="4">
                   {showLink && (
                     <div className={styles.forhandsvis}>
-                      {behandlingType.kode === BehandlingType.KLAGE && (
+                      {behandlingType === BehandlingType.KLAGE && (
                         <Brevmottakere
                           hentMottakere={hentMottakere}
                           personopplysninger={personopplysninger}
@@ -288,10 +287,10 @@ const getShowLink = createSelector(
     (_state, ownProps: PureOwnProps) => ownProps.behandlingType,
   ],
   (arsakKode: string, fritekst: string, type): boolean => {
-    if (type.kode === BehandlingType.TILBAKEKREVING) {
+    if (type === BehandlingType.TILBAKEKREVING) {
       return behandlingResultatType.HENLAGT_FEILOPPRETTET === arsakKode;
     }
-    if (type.kode === BehandlingType.TILBAKEKREVING_REVURDERING) {
+    if (type === BehandlingType.TILBAKEKREVING_REVURDERING) {
       return behandlingResultatType.HENLAGT_FEILOPPRETTET_MED_BREV === arsakKode && !!fritekst;
     }
 

@@ -4,7 +4,6 @@ import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/beh
 import {
   Fagsak,
   Behandling,
-  Kodeverk,
   KodeverkMedNavn,
   FagsakPerson,
   ArbeidsgiverOpplysningerPerId,
@@ -29,8 +28,8 @@ interface OwnProps {
   alleBehandlinger: {
     id: number;
     uuid: string;
-    type: Kodeverk;
-    status: Kodeverk;
+    type: string;
+    status: string;
     opprettet: string;
     avsluttet?: string;
   }[];

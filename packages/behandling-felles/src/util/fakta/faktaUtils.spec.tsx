@@ -25,14 +25,14 @@ import {
 describe('<faktaUtils>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+    sakstype: fagsakYtelseType.FORELDREPENGER,
+    status: fagsakStatus.UNDER_BEHANDLING,
   } as Fagsak;
   const behandling = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -79,8 +79,8 @@ describe('<faktaUtils>', () => {
     };
     const aksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'BEHANDLING_DEF' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
+        definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -118,8 +118,8 @@ describe('<faktaUtils>', () => {
 
     const aksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'BEHANDLING_DEF' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
+        definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -165,8 +165,8 @@ describe('<faktaUtils>', () => {
     const panelDef2 = new TestFaktaPanelDef();
     const aksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'BEHANDLING_DEF' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
+        definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -224,8 +224,8 @@ describe('<faktaUtils>', () => {
       behandlingVersjon: behandling.versjon,
       bekreftedeAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[0].kode,
-          kode: aksjonspunkter[0].kode,
+          '@type': aksjonspunkter[0],
+          kode: aksjonspunkter[0],
         },
       ],
     });
@@ -270,8 +270,8 @@ describe('<faktaUtils>', () => {
       bekreftedeAksjonspunktDtoer: [],
       overstyrteAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[0].kode,
-          kode: aksjonspunkter[0].kode,
+          '@type': aksjonspunkter[0],
+          kode: aksjonspunkter[0],
         },
       ],
     });
@@ -318,14 +318,14 @@ describe('<faktaUtils>', () => {
       behandlingVersjon: behandling.versjon,
       overstyrteAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[0].kode,
-          kode: aksjonspunkter[0].kode,
+          '@type': aksjonspunkter[0],
+          kode: aksjonspunkter[0],
         },
       ],
       bekreftedeAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[1].kode,
-          kode: aksjonspunkter[1].kode,
+          '@type': aksjonspunkter[1],
+          kode: aksjonspunkter[1],
         },
       ],
     });

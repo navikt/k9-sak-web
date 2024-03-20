@@ -4,7 +4,6 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import {
   ArbeidsgiverOpplysningerPerId,
   Brevmaler,
-  Kodeverk,
   KodeverkMedNavn,
   Mottaker,
   Personopplysninger,
@@ -30,7 +29,7 @@ export interface BackendApi extends MessagesBackendApi {}
 interface OwnProps {
   submitCallback: (values: FormValues) => void;
   templates?: Brevmaler;
-  sprakKode: Kodeverk;
+  sprakKode: string;
   previewCallback: (
     mottaker: string | Mottaker,
     brevmalkode: string,

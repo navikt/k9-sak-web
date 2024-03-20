@@ -1,15 +1,17 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import Panel from 'nav-frontend-paneler';
+
 import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
-import Panel from 'nav-frontend-paneler';
-import React from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
+
 import { BekreftOgForsettKnapp } from './BekreftOgForsettKnapp';
 import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
 
@@ -36,8 +38,8 @@ export const fjernIdFraArbeidsforholdLagtTilAvSaksbehandler = arbeidsforhold =>
     return a;
   });
 
-const harAksjonspunkt = (aksjonspunktCode, aksjonspunkter) =>
-  aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
+const harAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: Aksjonspunkt[]) =>
+  aksjonspunkter.some(ap => ap.definisjon === aksjonspunktCode);
 
 interface PureOwnProps {
   behandlingId: number;
@@ -47,7 +49,6 @@ interface PureOwnProps {
   submitCallback: (...args: any[]) => any;
   readOnly: boolean;
   hasOpenAksjonspunkter: boolean;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   alleMerknaderFraBeslutter: { [key: string]: { notAccepted?: boolean } };
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
@@ -63,7 +64,6 @@ export const ArbeidsforholdInfoPanelImpl = ({
   alleMerknaderFraBeslutter,
   arbeidsgiverOpplysningerPerId,
   hasOpenAksjonspunkter,
-  alleKodeverk,
   behandlingId,
   behandlingVersjon,
   intl,
@@ -96,7 +96,6 @@ export const ArbeidsforholdInfoPanelImpl = ({
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           harAksjonspunktAvklarArbeidsforhold={harAksjonspunktAvklarArbeidsforhold}
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-          alleKodeverk={alleKodeverk}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
         />

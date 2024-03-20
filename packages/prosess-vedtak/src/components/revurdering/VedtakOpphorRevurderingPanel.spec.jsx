@@ -26,10 +26,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
     ];
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: 'test',
-        navn: 'test',
-      },
+      type: 'test',
       avslagsarsak: {
         kode: '1019',
         navn: 'Manglende dokumentasjon',
@@ -69,10 +66,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
     ];
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: 'test',
-        navn: 'test',
-      },
+      type: 'test',
       avslagsarsak: {
         kode: '1019',
         navn: 'Manglende dokumentasjon',

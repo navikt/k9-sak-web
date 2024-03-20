@@ -1,3 +1,8 @@
+import React, { SetStateAction } from 'react';
+import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg';
@@ -5,10 +10,7 @@ import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
-import React, { SetStateAction } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
+
 import styles from './vilkarresultatMedOverstyringForm.module.css';
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
@@ -110,7 +112,7 @@ const VilkarresultatMedOverstyringHeader = ({
 };
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMedOverstyringHeaderProps) => {
-  const aksjonspunktCodes = initialOwnProps.aksjonspunkter.map(a => a.definisjon.kode);
+  const aksjonspunktCodes = initialOwnProps.aksjonspunkter.map(a => a.definisjon);
 
   return (state, ownProps) => {
     const erOppfylt = vilkarUtfallType.OPPFYLT === ownProps.status;

@@ -17,7 +17,7 @@ import styles from './totrinnskontrollSaksbehandlerPanel.module.css';
 interface OwnProps {
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
   behandlingKlageVurdering?: KlageVurdering;
-  behandlingStatus: Kodeverk;
+  behandlingStatus: string;
   erTilbakekreving: boolean;
   arbeidsforholdHandlingTyper: KodeverkMedNavn[];
   skjemalenkeTyper: KodeverkMedNavn[];
@@ -92,11 +92,11 @@ const TotrinnskontrollSaksbehandlerPanel = ({
                     ) : (
                       <div className={styles.approvalItem}>
                         {aksjonspunkt.vurderPaNyttArsaker.map(item => (
-                          <div key={`${item.kode}${aksjonspunkt.aksjonspunktKode}`}>
+                          <div key={`${item}${aksjonspunkt.aksjonspunktKode}`}>
                             <span>
                               <Image src={avslattImg} className={styles.image} />
                             </span>
-                            <span>{vurderArsaker.find(arsak => item.kode === arsak.kode).navn}</span>
+                            <span>{vurderArsaker.find(arsak => item === arsak.kode).navn}</span>
                           </div>
                         ))}
                       </div>

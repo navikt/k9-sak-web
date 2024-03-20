@@ -1,4 +1,4 @@
-import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { BehandlingAppKontekst } from '@k9-sak-web/types';
 import { Location } from 'history';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactElement } from 'react';
@@ -12,7 +12,6 @@ const renderListItems = (
   getBehandlingLocation: (behandlingId: number) => Location,
   showAll: boolean,
   toggleShowAll: () => void,
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
   behandlingId?: number,
 ): ReactElement[] =>
   sortBehandlinger(behandlinger)
@@ -26,7 +25,6 @@ const renderListItems = (
           isActive={behandling.id === behandlingId}
           showAll={showAll}
           toggleShowAll={toggleShowAll}
-          getKodeverkFn={getKodeverkFn}
         />
       </li>
     ));
@@ -38,7 +36,6 @@ interface OwnProps {
   behandlingId?: number;
   showAll: boolean;
   toggleShowAll: () => void;
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
 }
 
 /**
@@ -53,7 +50,6 @@ const BehandlingPicker = ({
   behandlingId,
   showAll,
   toggleShowAll,
-  getKodeverkFn,
 }: OwnProps) => (
   <ul className={styles.behandlingList}>
     {noExistingBehandlinger && (
@@ -62,7 +58,7 @@ const BehandlingPicker = ({
       </Normaltekst>
     )}
     {!noExistingBehandlinger &&
-      renderListItems(behandlinger, getBehandlingLocation, showAll, toggleShowAll, getKodeverkFn, behandlingId)}
+      renderListItems(behandlinger, getBehandlingLocation, showAll, toggleShowAll, behandlingId)}
   </ul>
 );
 
