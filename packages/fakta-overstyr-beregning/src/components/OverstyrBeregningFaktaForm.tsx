@@ -7,11 +7,10 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { AksjonspunktHelpTextTemp, BorderBox, Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { Textarea } from '@navikt/ds-react';
+import { Button, Textarea } from '@navikt/ds-react';
 import { isDate } from 'date-fns';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { EtikettFokus, EtikettInfo } from 'nav-frontend-etiketter';
-import { Knapp } from 'nav-frontend-knapper';
 import { OverstyrInputBeregningDto } from '../types/OverstyrInputBeregningDto';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
 import OverstyrBeregningAktivitetForm from './OverstyrBeregningAktivitetForm';
@@ -251,19 +250,18 @@ const OverstyrBeregningFaktaForm = ({
             )}
             <VerticalSpacer sixteenPx />
             <div className={styles.buttonBar}>
-              <Knapp
+              <Button
                 className={styles.button}
-                spinner={isSubmitting}
+                loading={isSubmitting}
                 disabled={readOnly || !submittable || !isValid}
-                autoDisableVedSpinner
-                type="hoved"
-                htmlType="submit"
+                variant="primary"
+                type="submit"
               >
                 <FormattedMessage id="OverstyrInputForm.LagreAksjonspunkt" />
-              </Knapp>
-              <Knapp className={styles.button} disabled={isValid} type="flat" htmlType="submit">
+              </Button>
+              <Button className={styles.button} disabled={isValid} variant="tertiary" type="submit">
                 <FormattedMessage id="OverstyrInputForm.KontrollerSkjema" />
-              </Knapp>
+              </Button>
             </div>
           </Form>
         )}

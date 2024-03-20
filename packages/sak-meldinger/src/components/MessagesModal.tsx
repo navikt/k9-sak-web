@@ -1,13 +1,10 @@
-import { Column, Container, Row } from 'nav-frontend-grid';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import Modal from 'nav-frontend-modal';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import { Image } from '@fpsak-frontend/shared-components';
+import { Button, Modal } from '@navikt/ds-react';
+import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import { Image } from '@fpsak-frontend/shared-components';
-
 import styles from './MessagesModal.module.css';
 
 interface OwnProps {
@@ -24,13 +21,13 @@ interface OwnProps {
 const MessagesModal = ({ showModal, closeEvent, intl }: OwnProps & WrappedComponentProps) => (
   <Modal
     className={styles.modal}
-    isOpen={showModal}
-    closeButton={false}
-    contentLabel={intl.formatMessage({ id: 'MessagesModal.description' })}
-    onRequestClose={closeEvent}
-    shouldCloseOnOverlayClick={false}
+    open={showModal}
+    aria-label={intl.formatMessage({ id: 'MessagesModal.description' })}
+    onClose={closeEvent}
+    data-testid="MessagesModal"
+    width="small"
   >
-    <Container className={styles.container} data-testid="MessagesModal">
+    <Modal.Body>
       <Row>
         <Column xs="1">
           <Image
@@ -46,12 +43,12 @@ const MessagesModal = ({ showModal, closeEvent, intl }: OwnProps & WrappedCompon
           </Element>
         </Column>
         <Column xs="2">
-          <Hovedknapp className={styles.button} mini onClick={closeEvent} autoFocus>
+          <Button variant="primary" className={styles.button} size="small" onClick={closeEvent} autoFocus>
             {intl.formatMessage({ id: 'MessagesModal.OK' })}
-          </Hovedknapp>
+          </Button>
         </Column>
       </Row>
-    </Container>
+    </Modal.Body>
   </Modal>
 );
 

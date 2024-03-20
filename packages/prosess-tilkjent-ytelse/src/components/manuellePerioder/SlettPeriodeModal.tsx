@@ -1,13 +1,11 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { Button, Modal } from '@navikt/ds-react';
 import moment from 'moment';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import Modal from 'nav-frontend-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-
 import styles from './periode.module.css';
 
 interface OwnProps {
@@ -24,42 +22,37 @@ export const SlettPeriodeModal = ({ showModal, periode, closeEvent, cancelEvent 
   const tom = moment(periode.tom).format(DDMMYYYY_DATE_FORMAT);
 
   return (
-    <Modal
-      className={styles.modal}
-      isOpen={showModal}
-      contentLabel="Perioden slettes"
-      onRequestClose={closeEvent}
-      closeButton={false}
-      shouldCloseOnOverlayClick={false}
-    >
-      <FlexContainer wrap>
-        <FlexRow>
-          <FlexColumn className={styles.iconContainer}>
-            <Image
-              className={styles.icon}
-              src={innvilgetImageUrl}
-              alt={intl.formatMessage({ id: 'TilkjentYtelse.Ok' })}
-            />
-          </FlexColumn>
-          <FlexColumn className={styles.fullWidth}>
-            <Normaltekst className={styles.modalLabel}>
-              <FormattedMessage id="TilkjentYtelse.PeriodenSlettes" values={{ fom, tom }} />
-            </Normaltekst>
-          </FlexColumn>
-        </FlexRow>
+    <Modal className={styles.modal} open={showModal} aria-label="Perioden slettes" onClose={closeEvent}>
+      <Modal.Body>
+        <FlexContainer wrap>
+          <FlexRow>
+            <FlexColumn className={styles.iconContainer}>
+              <Image
+                className={styles.icon}
+                src={innvilgetImageUrl}
+                alt={intl.formatMessage({ id: 'TilkjentYtelse.Ok' })}
+              />
+            </FlexColumn>
+            <FlexColumn className={styles.fullWidth}>
+              <Normaltekst className={styles.modalLabel}>
+                <FormattedMessage id="TilkjentYtelse.PeriodenSlettes" values={{ fom, tom }} />
+              </Normaltekst>
+            </FlexColumn>
+          </FlexRow>
 
-        <FlexRow>
-          <FlexColumn className={styles.right}>
-            <VerticalSpacer eightPx />
-            <Hovedknapp mini className={styles.button} onClick={closeEvent}>
-              {intl.formatMessage({ id: 'TilkjentYtelse.Ok' })}
-            </Hovedknapp>
-            <Knapp mini onClick={cancelEvent}>
-              {intl.formatMessage({ id: 'TilkjentYtelse.Avbryt' })}
-            </Knapp>
-          </FlexColumn>
-        </FlexRow>
-      </FlexContainer>
+          <FlexRow>
+            <FlexColumn className={styles.right}>
+              <VerticalSpacer eightPx />
+              <Button variant="primary" size="small" className={styles.button} onClick={closeEvent}>
+                {intl.formatMessage({ id: 'TilkjentYtelse.Ok' })}
+              </Button>
+              <Button variant="secondary" size="small" onClick={cancelEvent}>
+                {intl.formatMessage({ id: 'TilkjentYtelse.Avbryt' })}
+              </Button>
+            </FlexColumn>
+          </FlexRow>
+        </FlexContainer>
+      </Modal.Body>
     </Modal>
   );
 };

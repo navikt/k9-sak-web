@@ -1,24 +1,24 @@
+import { Button } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { RadioGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { VilkarMidlertidigAleneProps } from '../../../types/VilkarMidlertidigAleneProps';
 import { hanteringAvDatoForDatoVelger } from '../../../util/dateUtils';
 import { booleanTilTekst, tekstTilBoolean } from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import { valideringsFunksjoner } from '../../../util/validationReactHookFormUtils';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
+import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
 import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
 import DatePicker from '../react-hook-form-wrappers/DatePicker';
 import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
 import TextArea from '../react-hook-form-wrappers/TextArea';
-import styles from './vilkarMidlertidigAlene.module.css';
-import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
-import tekst from './vilkar-midlertidig-alene-tekst';
-import { VilkarMidlertidigAleneProps } from '../../../types/VilkarMidlertidigAleneProps';
+import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 import VilkarMidlertidigAleneLesemodus from '../vilkar-midlertidig-alene-lesemodus/VilkarMidlertidigAleneLesemodus';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
-import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
+import tekst from './vilkar-midlertidig-alene-tekst';
+import styles from './vilkarMidlertidigAlene.module.css';
 
 type FormData = {
   begrunnelse: string;
@@ -213,10 +213,10 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                 </SkjemaGruppe>
               )}
 
-              <Hovedknapp className={styles.bekreftKnapp} htmlType="submit">
+              <Button variant="primary" className={styles.bekreftKnapp} type="submit">
                 {' '}
                 {tekst.bekreftFortsettKnapp}
-              </Hovedknapp>
+              </Button>
             </form>
           </FormProvider>
         </>

@@ -1,19 +1,16 @@
-import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import Modal from 'nav-frontend-modal';
-import { Normaltekst } from 'nav-frontend-typografi';
-import React from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { Image } from '@fpsak-frontend/shared-components';
-import { Behandling, Kodeverk } from '@k9-sak-web/types';
-
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
+import { Behandling, Kodeverk } from '@k9-sak-web/types';
+import { Button, Modal } from '@navikt/ds-react';
+import { Column, Row } from 'nav-frontend-grid';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './fatterVedtakApprovalModal.module.css';
 
 const getInfoTextCode = (
@@ -229,35 +226,36 @@ const FatterVedtakApprovalModal = ({
   return (
     <Modal
       className={styles.modal}
-      isOpen
-      closeButton={false}
-      contentLabel={intl.formatMessage({ id: modalDescriptionTextCode })}
-      onRequestClose={closeEvent}
-      shouldCloseOnOverlayClick={false}
+      open
+      aria-label={intl.formatMessage({ id: modalDescriptionTextCode })}
+      onClose={closeEvent}
+      width="small"
     >
-      <Row>
-        <Column xs="1">
-          <Image
-            className={styles.image}
-            alt={altImgTextCode ? intl.formatMessage({ id: altImgTextCode }) : ''}
-            src={innvilgetImageUrl}
-          />
-          <div className={styles.divider} />
-        </Column>
-        <Column xs="9">
-          <Normaltekst>
-            <FormattedMessage id={infoTextCode} />
-          </Normaltekst>
-          <Normaltekst>
-            <FormattedMessage id="FatterVedtakApprovalModal.GoToSearchPage" />
-          </Normaltekst>
-        </Column>
-        <Column xs="2">
-          <Hovedknapp mini className={styles.button} onClick={closeEvent} autoFocus>
-            <FormattedMessage id="FatterVedtakApprovalModal.Ok" />
-          </Hovedknapp>
-        </Column>
-      </Row>
+      <Modal.Body>
+        <Row>
+          <Column xs="1">
+            <Image
+              className={styles.image}
+              alt={altImgTextCode ? intl.formatMessage({ id: altImgTextCode }) : ''}
+              src={innvilgetImageUrl}
+            />
+            <div className={styles.divider} />
+          </Column>
+          <Column xs="9">
+            <Normaltekst>
+              <FormattedMessage id={infoTextCode} />
+            </Normaltekst>
+            <Normaltekst>
+              <FormattedMessage id="FatterVedtakApprovalModal.GoToSearchPage" />
+            </Normaltekst>
+          </Column>
+          <Column xs="2">
+            <Button variant="primary" size="small" className={styles.button} onClick={closeEvent} autoFocus>
+              <FormattedMessage id="FatterVedtakApprovalModal.Ok" />
+            </Button>
+          </Column>
+        </Row>
+      </Modal.Body>
     </Modal>
   );
 };

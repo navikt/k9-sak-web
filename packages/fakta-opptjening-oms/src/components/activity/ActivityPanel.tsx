@@ -28,9 +28,9 @@ import {
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
+import { Button } from '@navikt/ds-react';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { KeyboardEvent, MouseEvent } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -254,14 +254,14 @@ export const ActivityPanel = ({
       <FlexContainer>
         <FlexRow className={styles.buttonContainer}>
           <FlexColumn>
-            <Hovedknapp mini htmlType="button" onClick={handleSubmit} disabled={pristine}>
+            <Button variant="primary" size="small" type="button" onClick={handleSubmit} disabled={pristine}>
               <FormattedMessage id="ActivityPanel.Oppdater" />
-            </Hovedknapp>
+            </Button>
           </FlexColumn>
           <FlexColumn>
-            <Knapp mini htmlType="button" onClick={cancelSelectedOpptjeningActivity}>
+            <Button variant="secondary" size="small" type="button" onClick={cancelSelectedOpptjeningActivity}>
               <FormattedMessage id="ActivityPanel.Avbryt" />
-            </Knapp>
+            </Button>
           </FlexColumn>
         </FlexRow>
       </FlexContainer>

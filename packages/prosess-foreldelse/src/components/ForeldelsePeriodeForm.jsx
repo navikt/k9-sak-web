@@ -1,5 +1,5 @@
+import { Button } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertekst } from 'nav-frontend-typografi';
 // eslint-disable-next-line import/no-duplicates
 import PropTypes from 'prop-types';
@@ -98,21 +98,21 @@ export class ForeldelsePeriodeFormImpl extends Component {
         <VerticalSpacer twentyPx />
         <FlexRow>
           <FlexColumn>
-            <Hovedknapp
-              mini
-              htmlType="button"
+            <Button
+              variant="primary"
+              size="small"
+              type="button"
               onClick={formProps.handleSubmit || formProps.submitting}
               disabled={formProps.pristine}
-              readOnly={readOnly}
-              spinner={formProps.submitting}
+              loading={formProps.submitting}
             >
               <FormattedMessage id="ForeldelsePeriodeForm.Oppdater" />
-            </Hovedknapp>
+            </Button>
           </FlexColumn>
           <FlexColumn>
-            <Knapp mini htmlType="button" onClick={skjulPeriode}>
+            <Button variant="secondary" size="small" type="button" onClick={skjulPeriode}>
               <FormattedMessage id="ForeldelsePeriodeForm.Avbryt" />
-            </Knapp>
+            </Button>
           </FlexColumn>
         </FlexRow>
       </div>
