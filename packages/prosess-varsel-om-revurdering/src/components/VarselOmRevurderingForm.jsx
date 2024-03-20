@@ -27,10 +27,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { formPropTypes, setSubmitFailed } from 'redux-form';
 import { createSelector } from 'reselect';
-
 import revurderingFamilieHendelsePropType from '../propTypes/revurderingFamilieHendelsePropType';
 import revurderingSoknadPropType from '../propTypes/revurderingSoknadPropType';
-
 import styles from './varselOmRevurderingForm.module.css';
 
 const minLength3 = minLength(3);

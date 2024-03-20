@@ -14,10 +14,8 @@ import { clearFields, formPropTypes } from 'redux-form';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-
-import TilbakekrevingTimelineData from './splittePerioder/TilbakekrevingTimelineData';
-
 import styles from './foreldelsePeriodeForm.module.css';
+import TilbakekrevingTimelineData from './splittePerioder/TilbakekrevingTimelineData';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);

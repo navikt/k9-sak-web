@@ -28,9 +28,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change, clearFields, formPropTypes, getFormValues } from 'redux-form';
 import { createSelector } from 'reselect';
-
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
-
 import styles from './feilutbetalingInfoPanel.module.css';
 
 const formName = 'FaktaFeilutbetalingForm';

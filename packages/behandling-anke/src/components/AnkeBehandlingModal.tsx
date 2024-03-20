@@ -1,10 +1,9 @@
-import { Column, Row } from 'nav-frontend-grid';
-import React from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import { BodyShort, Button, Modal } from '@navikt/ds-react';
+import { Column, Row } from 'nav-frontend-grid';
+import React from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './ankeBehandlingModal.module.css';
 
 interface OwnProps {
