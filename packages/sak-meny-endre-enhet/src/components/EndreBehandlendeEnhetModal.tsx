@@ -2,9 +2,8 @@ import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
-import { Button, Modal } from '@navikt/ds-react';
+import { BodyShort, Button, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -69,9 +68,9 @@ export const EndreBehandlendeEnhetModal = ({
               <div className={styles.divider} />
             </Column>
             <Column xs="11">
-              <Normaltekst className={styles.infotekstBeskrivelse}>
+              <BodyShort size="small" className={styles.infotekstBeskrivelse}>
                 <FormattedMessage id="EndreBehandlendeEnhetModal.EndreEnhet" />
-              </Normaltekst>
+              </BodyShort>
             </Column>
           </Row>
         </Modal.Header>

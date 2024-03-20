@@ -1,10 +1,9 @@
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { BodyShort, Label } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
-
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import styles from './vedtakForm.module.css';
 
@@ -41,19 +40,19 @@ export const VedtakHelpTextPanelImpl = ({ intl, readOnly, aksjonspunktKoder, vis
         <VerticalSpacer eightPx />
         {aksjonspunktKoder &&
           aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) && (
-            <Element className={styles.inline}>
+            <Label size="small" as="p" className={styles.inline}>
               <FormattedMessage id="VedtakForm.HelpText0" />
-            </Element>
+            </Label>
           )}
-        <Normaltekst className={styles.inline}>
+        <BodyShort size="small" className={styles.inline}>
           <FormattedMessage id="VedtakForm.HelpText1" />
-        </Normaltekst>
-        <Element className={styles.inline}>
+        </BodyShort>
+        <Label size="small" as="p" className={styles.inline}>
           <FormattedMessage id="VedtakForm.TilGodkjenning" />
-        </Element>
-        <Normaltekst className={styles.inline}>
+        </Label>
+        <BodyShort size="small" className={styles.inline}>
           <FormattedMessage id="VedtakForm.HelpText2" />
-        </Normaltekst>
+        </BodyShort>
         <VerticalSpacer twentyPx />
       </>
     );

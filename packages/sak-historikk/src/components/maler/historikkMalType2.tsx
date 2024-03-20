@@ -1,9 +1,9 @@
+import { Label } from '@navikt/ds-react';
 import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { Element } from 'nav-frontend-typografi';
 
-import { findHendelseText, findResultatText } from './felles/historikkUtils';
 import HistorikkMal from '../HistorikkMalTsType';
+import { findHendelseText, findResultatText } from './felles/historikkUtils';
 import Skjermlenke from './felles/Skjermlenke';
 
 const HistorikkMalType2 = ({
@@ -26,15 +26,15 @@ const HistorikkMalType2 = ({
         />
       )}
       {historikkinnslagDeler[0].resultat && historikkinnslagDeler[0].hendelse && (
-        <Element className="snakkeboble-panel__tekst">
+        <Label size="small" as="p" className="snakkeboble-panel__tekst">
           {`${findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}:` +
             ` ${findResultatText(historikkinnslagDeler[0].resultat, intl, getKodeverknavn)}`}
-        </Element>
+        </Label>
       )}
       {!historikkinnslagDeler[0].resultat && historikkinnslagDeler[0].hendelse && (
-        <Element className="snakkeboble-panel__tekst">
+        <Label size="small" as="p" className="snakkeboble-panel__tekst">
           {findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}
-        </Element>
+        </Label>
       )}
     </>
   );

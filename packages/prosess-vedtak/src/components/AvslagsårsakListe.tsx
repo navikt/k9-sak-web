@@ -1,9 +1,9 @@
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Kodeverk, Vilkar } from '@k9-sak-web/types';
-import { Normaltekst } from 'nav-frontend-typografi';
+import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 
 const finnUnikeAvslagskoder = (avslåttePerioder: Vilkarperiode[]) => {
   const funnedeAvslagskoder = new Set();
@@ -25,10 +25,10 @@ const visAvslåtteVilkårsperioder = (
   const avslåttePerioderMedUnikeAvslagskoder = finnUnikeAvslagskoder(avslåttePerioder);
 
   return avslåttePerioderMedUnikeAvslagskoder.map(avslåttPeriode => (
-    <Normaltekst key={avslåttPeriode.avslagKode}>
+    <BodyShort size="small" key={avslåttPeriode.avslagKode}>
       {getKodeverknavn(avslåttVilkår.vilkarType)}:{' '}
       {getKodeverknavn({ kode: avslåttPeriode.avslagKode, kodeverk: 'AVSLAGSARSAK' }, avslåttVilkår.vilkarType.kode)}
-    </Normaltekst>
+    </BodyShort>
   ));
 };
 

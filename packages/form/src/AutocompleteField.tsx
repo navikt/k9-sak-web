@@ -1,4 +1,4 @@
-import { Element } from 'nav-frontend-typografi';
+import { Label } from '@navikt/ds-react';
 import React from 'react';
 import { Field, WrappedFieldInputProps } from 'redux-form';
 // eslint-disable-next-line import/no-named-default
@@ -39,7 +39,9 @@ const Autocomplete = (
   }: AutocompleteFieldProps & Partial<AutocompleteProps>, // eslint-disable-next-line jsx-a11y/label-has-associated-control
 ) => (
   <label htmlFor={id} className={styles.autocompleteLabel} data-id={dataId}>
-    <Element className={styles.typoElement}>{label}</Element>
+    <Label size="small" as="p" className={styles.typoElement}>
+      {label}
+    </Label>
     <NAPAutocomplete
       id={id}
       suggestions={suggestions}

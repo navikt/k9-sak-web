@@ -1,6 +1,5 @@
-import { Loader, Modal } from '@navikt/ds-react';
+import { Label, Loader, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Element } from 'nav-frontend-typografi';
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './dataFetchPendingModal.module.css';
@@ -63,9 +62,9 @@ export class DataFetchPendingModal extends Component<OwnProps, OwnState> {
               <div className={styles.divider} />
             </Column>
             <Column xs="10">
-              <Element className={styles.modalText}>
+              <Label size="small" as="p" className={styles.modalText}>
                 <FormattedMessage id="DataFetchPendingModal.LosningenJobberMedBehandlingen" />
-              </Element>
+              </Label>
             </Column>
           </Row>
         </Modal.Body>

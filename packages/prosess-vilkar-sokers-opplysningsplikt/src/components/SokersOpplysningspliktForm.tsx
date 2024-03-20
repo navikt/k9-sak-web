@@ -1,22 +1,22 @@
+import { BodyShort } from '@navikt/ds-react';
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import moment from 'moment';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst } from 'nav-frontend-typografi';
 
-import { ProsessStegBegrunnelseTextField, ProsessPanelTemplate } from '@k9-sak-web/prosess-felles';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, isObject, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { RadioGroupField, RadioOption, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { behandlingForm, behandlingFormValueSelector, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, isObject, required } from '@fpsak-frontend/utils';
+import { ProsessPanelTemplate, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Behandling, Kodeverk, KodeverkMedNavn, ManglendeVedleggSoknad, Soknad } from '@k9-sak-web/types';
 
 const formName = 'SokersOpplysningspliktForm';
@@ -135,9 +135,9 @@ export const SokersOpplysningspliktFormImpl = ({
     {manglendeVedlegg.length > 0 && (
       <>
         <VerticalSpacer twentyPx />
-        <Normaltekst>
+        <BodyShort size="small">
           <FormattedMessage id="SokersOpplysningspliktForm.ManglendeDokumentasjon" />
-        </Normaltekst>
+        </BodyShort>
         <VerticalSpacer eightPx />
         <Row>
           <Column xs="11">
@@ -183,9 +183,9 @@ export const SokersOpplysningspliktFormImpl = ({
         {originalErVilkarOk === false && behandlingsresultat?.avslagsarsak && (
           <>
             <VerticalSpacer sixteenPx />
-            <Normaltekst>
+            <BodyShort size="small">
               {getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKERSOPPLYSNINGSPLIKT)}
-            </Normaltekst>
+            </BodyShort>
           </>
         )}
       </div>

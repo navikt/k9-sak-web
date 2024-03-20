@@ -1,15 +1,3 @@
-import { Button } from '@navikt/ds-react';
-import classNames from 'classnames';
-import moment from 'moment';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { formPropTypes, setSubmitFailed } from 'redux-form';
-import { createSelector } from 'reselect';
-
 import {
   RadioGroupField,
   RadioOption,
@@ -29,10 +17,18 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
-
+import { BodyShort, Button, Detail, Heading } from '@navikt/ds-react';
+import classNames from 'classnames';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { formPropTypes, setSubmitFailed } from 'redux-form';
+import { createSelector } from 'reselect';
 import revurderingFamilieHendelsePropType from '../propTypes/revurderingFamilieHendelsePropType';
 import revurderingSoknadPropType from '../propTypes/revurderingSoknadPropType';
-
 import styles from './varselOmRevurderingForm.module.css';
 
 const minLength3 = minLength(3);
@@ -111,7 +107,9 @@ export class VarselOmRevurderingFormImpl extends React.Component {
 
     return (
       <form>
-        <Undertittel>{intl.formatMessage({ id: 'VarselOmRevurderingForm.VarselOmRevurdering' })}</Undertittel>
+        <Heading size="small" level="2">
+          {intl.formatMessage({ id: 'VarselOmRevurderingForm.VarselOmRevurdering' })}
+        </Heading>
         <VerticalSpacer eightPx />
         {!readOnly && isAksjonspunktOpen(aksjonspunktStatus) && (
           <div>
@@ -165,8 +163,8 @@ export class VarselOmRevurderingFormImpl extends React.Component {
         )}
         {(readOnly || !isAksjonspunktOpen(aksjonspunktStatus)) && (
           <div>
-            <Undertekst>{intl.formatMessage({ id: 'VarselOmRevurderingForm.Begrunnelse' })}</Undertekst>
-            <Normaltekst>{begrunnelse}</Normaltekst>
+            <Detail>{intl.formatMessage({ id: 'VarselOmRevurderingForm.Begrunnelse' })}</Detail>
+            <BodyShort size="small">{begrunnelse}</BodyShort>
           </div>
         )}
         <SettPaVentModalIndex

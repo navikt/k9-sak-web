@@ -7,13 +7,12 @@ import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { arbeidsforholdHarAksjonspunktÅrsak } from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import React, { Fragment, useState } from 'react';
 import { FormattedMessage, IntlShape } from 'react-intl';
-import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
-
 import PermisjonerInfo from '../arbeidsforholdDetaljer/PermisjonerInfo';
 import PersonArbeidsforholdDetailForm from '../arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
+import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 import styles from './personArbeidsforholdTable.module.css';
 
 const headerColumnContent = [
@@ -99,41 +98,41 @@ const PersonArbeidsforholdTable = ({
                 isApLeftBorder={harAksjonspunkt}
               >
                 <TableColumn>
-                  <Normaltekst>{decodeHtmlEntity(arbeidsforholdId)}</Normaltekst>
+                  <BodyShort size="small">{decodeHtmlEntity(arbeidsforholdId)}</BodyShort>
                 </TableColumn>
                 <TableColumn>
-                  <Normaltekst>
+                  <BodyShort size="small">
                     {harPerioder ? (
                       <PeriodLabel dateStringFom={a.perioder[0].fom} dateStringTom={a.perioder[0].tom} />
                     ) : (
                       '-'
                     )}
-                  </Normaltekst>
+                  </BodyShort>
                 </TableColumn>
                 <TableColumn>
-                  <Normaltekst>{kilde}</Normaltekst>
+                  <BodyShort size="small">{kilde}</BodyShort>
                 </TableColumn>
                 <TableColumn>
-                  <Normaltekst>{stillingsprosent}</Normaltekst>
+                  <BodyShort size="small">{stillingsprosent}</BodyShort>
                 </TableColumn>
                 <TableColumn>
                   {harInntektsmeldinger && a.inntektsmeldinger[0].mottattTidspunkt && (
-                    <Normaltekst>
+                    <BodyShort size="small">
                       <DateLabel dateString={a.inntektsmeldinger[0].mottattTidspunkt} />
-                    </Normaltekst>
+                    </BodyShort>
                   )}
                 </TableColumn>
 
                 <TableColumn className={styles.aksjonspunktColumn}>
                   {!harAksjonspunkt && harPermisjoner ? (
                     <button className={styles.knappContainer} type="button" onClick={() => setValgtArbeidsforhold(a)}>
-                      <Normaltekst className={styles.visLukkPermisjon}>
+                      <BodyShort size="small" className={styles.visLukkPermisjon}>
                         {intl.formatMessage(
                           erValgt && visAksjonspunktInfo
                             ? { id: 'PersonArbeidsforholdTable.LukkPermisjon' }
                             : { id: 'PersonArbeidsforholdTable.VisPermisjon' },
                         )}
-                      </Normaltekst>
+                      </BodyShort>
                       <Image className={erValgt ? styles.chevronOpp : styles.chevronNed} src={chevronIkonUrl} alt="" />
                     </button>
                   ) : (

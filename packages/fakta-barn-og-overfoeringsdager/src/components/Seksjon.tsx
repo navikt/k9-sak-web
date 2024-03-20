@@ -1,6 +1,6 @@
 import { Image } from '@fpsak-frontend/shared-components/index';
+import { Heading } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
-import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './seksjon.module.css';
@@ -20,10 +20,10 @@ interface SeksjonProps {
 
 const Seksjon = ({ imgSrc, title, bakgrunn, children, medMarg }: SeksjonProps) => (
   <section className={classNames('seksjon', { grå: bakgrunn === 'grå', medMarg })}>
-    <Undertittel tag="h3" className={styles.tittel}>
+    <Heading size="small" level="3" className={styles.tittel}>
       <Image src={imgSrc} />
       <FormattedMessage id={title.id} values={title.values} />
-    </Undertittel>
+    </Heading>
     {children}
   </section>
 );

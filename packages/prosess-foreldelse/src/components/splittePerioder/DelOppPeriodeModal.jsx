@@ -7,11 +7,10 @@ import {
   hasValidDate,
   required,
 } from '@fpsak-frontend/utils';
-import { Button, Modal } from '@navikt/ds-react';
+import { BodyShort, Button, Detail, Label, Modal } from '@navikt/ds-react';
 import moment from 'moment/moment';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Column, Row } from 'nav-frontend-grid';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -34,23 +33,23 @@ export const DelOppPeriodeModalImpl = ({
     className={styles.modal}
   >
     <Modal.Header closeButton={false}>
-      <Element>
+      <Label size="small" as="p">
         <FormattedMessage id="DelOppPeriodeModalImpl.DelOppPerioden" />
-      </Element>
+      </Label>
     </Modal.Header>
     <Modal.Body>
-      <Undertekst>
+      <Detail>
         <FormattedMessage id="DelOppPeriodeModalImpl.Periode" />
-      </Undertekst>
-      <Normaltekst>
+      </Detail>
+      <BodyShort size="small">
         {`${moment(periodeData.fom.toString()).format(DDMMYYYY_DATE_FORMAT)} - ${moment(
           periodeData.tom.toString(),
         ).format(DDMMYYYY_DATE_FORMAT)}`}
-      </Normaltekst>
+      </BodyShort>
       <div className={styles.marginTop}>
-        <Undertekst>
+        <Detail>
           <FormattedMessage id="DelOppPeriodeModalImpl.AngiTomDato" />
-        </Undertekst>
+        </Detail>
         <DatepickerField
           name="ForstePeriodeTomDato"
           className={styles.datePicker}

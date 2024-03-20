@@ -1,12 +1,3 @@
-import { Column, Row } from 'nav-frontend-grid';
-import { Undertittel } from 'nav-frontend-typografi';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { formPropTypes } from 'redux-form';
-import { createSelector } from 'reselect';
-
 import {
   behandlingForm,
   behandlingFormValueSelector,
@@ -19,6 +10,14 @@ import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { Heading } from '@navikt/ds-react';
+import { Column, Row } from 'nav-frontend-grid';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { formPropTypes } from 'redux-form';
+import { createSelector } from 'reselect';
 
 import FritekstBrevTextField from '../felles/FritekstKlageBrevTextField';
 import TempSaveAndPreviewKlageLink from '../felles/TempSaveAndPreviewKlageLink';
@@ -49,7 +48,9 @@ export const BehandleKlageFormKaImpl = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <FadingPanel>
-      <Undertittel>{intl.formatMessage({ id: 'Klage.ResolveKlage.Title' })}</Undertittel>
+      <Heading size="small" level="2">
+        {intl.formatMessage({ id: 'Klage.ResolveKlage.Title' })}
+      </Heading>
       <VerticalSpacer fourPx />
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Klage.ResolveKlage.HelpText" key={aksjonspunktCodes.BEHANDLE_KLAGE_NK} />]}

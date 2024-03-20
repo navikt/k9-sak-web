@@ -2,8 +2,7 @@ import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@f
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Periode } from '@k9-sak-web/types';
-import { Button } from '@navikt/ds-react';
-import { Element } from 'nav-frontend-typografi';
+import { Button, Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -41,9 +40,9 @@ export const TilkjentYtelseNyPeriode = ({
     <div className={styles.periodeContainer}>
       <div className={styles.periodeType}>
         <div className={styles.headerWrapper}>
-          <Element>
+          <Label size="small" as="p">
             <FormattedMessage id="TilkjentYtelse.NyPeriode" />
-          </Element>
+          </Label>
         </div>
       </div>
       <div className={styles.periodeInnhold}>

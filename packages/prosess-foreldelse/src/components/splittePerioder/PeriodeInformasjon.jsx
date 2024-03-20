@@ -1,11 +1,10 @@
+import { DDMMYYYY_DATE_FORMAT, calcDaysAndWeeks, formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { BodyShort, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-
-import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 
 import styles from './periodeInformasjon.module.css';
 
@@ -24,12 +23,12 @@ const PeriodeInformasjon = ({ fom, tom, feilutbetaling, arsak }) => {
         <div className={styles.infoSummary}>
           <Row>
             <Column xs="6">
-              <Element>
+              <Label size="small" as="p">
                 {`${moment(fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(tom).format(DDMMYYYY_DATE_FORMAT)}`}
-              </Element>
+              </Label>
             </Column>
             <Column xs="6">
-              <Normaltekst>
+              <BodyShort size="small">
                 <FormattedMessage
                   id={daysAndWeeks.id}
                   values={{
@@ -37,20 +36,26 @@ const PeriodeInformasjon = ({ fom, tom, feilutbetaling, arsak }) => {
                     days: daysAndWeeks.days,
                   }}
                 />
-              </Normaltekst>
+              </BodyShort>
             </Column>
           </Row>
           <div className={styles.resultSum}>
             <Row className={styles.redNumbers}>
               <Column xs="6">
-                <Normaltekst className={styles.resultName}>
+                <BodyShort size="small" className={styles.resultName}>
                   <FormattedMessage id="PeriodeInformasjon.Feilutbetaling" />:
                   <span className={feilutbetaling ? styles.redNumber : styles.positivNumber}>
                     {formatCurrencyNoKr(feilutbetaling)}
                   </span>
-                </Normaltekst>
+                </BodyShort>
               </Column>
-              <Column xs="6">{arsak && <Normaltekst className={styles.resultName}>{arsak.årsak}</Normaltekst>}</Column>
+              <Column xs="6">
+                {arsak && (
+                  <BodyShort size="small" className={styles.resultName}>
+                    {arsak.årsak}
+                  </BodyShort>
+                )}
+              </Column>
             </Row>
           </div>
         </div>

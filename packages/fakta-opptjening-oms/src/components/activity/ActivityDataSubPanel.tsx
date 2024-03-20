@@ -11,9 +11,9 @@ import {
 } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
+import { BodyShort, Detail } from '@navikt/ds-react';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './activityDataSubPanel.module.css';
@@ -97,11 +97,11 @@ const ActivityDataSubPanel = ({
         <Column xs="7">
           {!isManuallyAdded && (
             <>
-              <Undertekst>
+              <Detail>
                 <FormattedMessage id={getOppdragsgiverMessageId(selectedActivityType)} />
-              </Undertekst>
+              </Detail>
               <div className={styles.arbeidsgiver}>
-                <Normaltekst>{getArbeidsgiverText(initialValues, arbeidsgiverOpplysningerPerId)}</Normaltekst>
+                <BodyShort size="small">{getArbeidsgiverText(initialValues, arbeidsgiverOpplysningerPerId)}</BodyShort>
               </div>
             </>
           )}

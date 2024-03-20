@@ -1,12 +1,3 @@
-import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { formPropTypes } from 'redux-form';
-import { createSelector } from 'reselect';
-
 import {
   TextAreaField,
   behandlingForm,
@@ -28,6 +19,14 @@ import {
   requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { BodyShort, Detail, Heading } from '@navikt/ds-react';
+import { Column, Row } from 'nav-frontend-grid';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { formPropTypes } from 'redux-form';
+import { createSelector } from 'reselect';
 
 import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 
@@ -84,21 +83,23 @@ export const InnsynVedtakFormImpl = ({
   return (
     <FadingPanel>
       <form onSubmit={formProps.handleSubmit}>
-        <Undertittel>
+        <Heading size="small" level="2">
           <FormattedMessage id={readOnly ? 'InnsynVedtakForm.Vedtak' : 'InnsynVedtakForm.ForslagVedtak'} />
-        </Undertittel>
+        </Heading>
         <VerticalSpacer eightPx />
-        <Undertekst>
+        <Detail>
           <FormattedMessage id="InnsynVedtakForm.Resultat" />
-        </Undertekst>
-        <Normaltekst>
+        </Detail>
+        <BodyShort size="small">
           <FormattedMessage id={findResultTypeMessage(resultat)} />
-        </Normaltekst>
+        </BodyShort>
         <VerticalSpacer eightPx />
-        <Undertekst>
+        <Detail>
           <FormattedMessage id="InnsynVedtakForm.Vurdering" />
-        </Undertekst>
-        <Normaltekst className={styles.wordwrap}>{decodeHtmlEntity(apBegrunnelse)}</Normaltekst>
+        </Detail>
+        <BodyShort size="small" className={styles.wordwrap}>
+          {decodeHtmlEntity(apBegrunnelse)}
+        </BodyShort>
         <VerticalSpacer twentyPx />
         {resultat !== innsynResultatType.INNVILGET && (
           <Row>

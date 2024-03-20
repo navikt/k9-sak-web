@@ -1,5 +1,5 @@
+import { Label } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Element } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -119,10 +119,10 @@ export class PeriodeController extends Component {
     return (
       <Row>
         <Column xs="3">
-          <Element>
+          <Label size="small" as="p">
             <FormattedMessage id="PeriodeController.Detaljer" />
             {isEdited && <EditedIcon />}
-          </Element>
+          </Label>
         </Column>
         <Column xs="7">
           {!readOnly && (

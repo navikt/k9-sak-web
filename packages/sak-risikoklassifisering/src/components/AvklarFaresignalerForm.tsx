@@ -4,8 +4,7 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ariaCheck, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Risikoklassifisering } from '@k9-sak-web/types';
-import { Button } from '@navikt/ds-react';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort, Button } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -56,9 +55,9 @@ export const AvklarFaresignalerForm = ({ readOnly, aksjonspunkt, ...formProps }:
       <VerticalSpacer sixteenPx />
       <FlexRow>
         <FlexColumn>
-          <Normaltekst>
+          <BodyShort size="small">
             <FormattedMessage id="Risikopanel.Form.Resultat" />
-          </Normaltekst>
+          </BodyShort>
         </FlexColumn>
       </FlexRow>
       <VerticalSpacer eightPx />
