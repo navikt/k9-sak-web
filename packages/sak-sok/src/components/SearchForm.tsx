@@ -43,26 +43,21 @@ export const SearchForm = ({
       {intl.formatMessage({ id: 'Search.SearchFagsakOrPerson' })}
     </Heading>
     <VerticalSpacer eightPx />
-    <Row>
-      <Column xs="6">
-        <InputField
-          name="searchString"
-          parse={(s = '') => s.trim()}
-          label={intl.formatMessage({ id: 'Search.SaksnummerOrPersonId' })}
-          htmlSize={28}
-          size="medium"
-        />
-      </Column>
-      <Column xs="6">
-        <Button
-          className={styles.button}
-          loading={searchStarted}
-          disabled={isButtonDisabled(searchStarted, searchString)}
-        >
-          <FormattedMessage id="Search.Search" />
-        </Button>
-      </Column>
-    </Row>
+    <div className="flex gap-3">
+      <InputField
+        name="searchString"
+        parse={(s = '') => s.trim()}
+        label={intl.formatMessage({ id: 'Search.SaksnummerOrPersonId' })}
+        size="medium"
+      />
+      <Button
+        className={styles.button}
+        loading={searchStarted}
+        disabled={isButtonDisabled(searchStarted, searchString)}
+      >
+        <FormattedMessage id="Search.Search" />
+      </Button>
+    </div>
     {searchResultAccessDenied && (
       <Row>
         <Column xs="12">
