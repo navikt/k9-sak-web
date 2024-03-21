@@ -2311,7 +2311,6 @@ __metadata:
     date-fns: 2.30.0
     dayjs: 1.11.10
     formik: 2.4.5
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-etiketter: 3.0.3
     nav-frontend-grid: 2.0.2
@@ -2338,8 +2337,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -2443,7 +2440,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -2477,7 +2473,6 @@ __metadata:
     date-fns: 2.30.0
     formik: 2.4.5
     nav-datovelger: 12.6.0
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-etiketter: 3.0.3
     nav-frontend-grid: 2.0.2
@@ -2687,7 +2682,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -2855,7 +2849,6 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -2886,7 +2879,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -3028,7 +3020,6 @@ __metadata:
     editorjs-html: 3.4.3
     formik: 2.4.5
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -3443,8 +3434,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     history: 5.3.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -3505,7 +3494,6 @@ __metadata:
     date-fns: 2.30.0
     date-fns-tz: 2.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -4045,7 +4033,6 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.0
     axios: 1.6.7
     axios-mock-adapter: 1.22.0
-    nav-frontend-alertstriper: 4.0.2
     react: 18.2.0
     react-intl: 6.6.2
     react-redux: 8.1.3
@@ -4095,7 +4082,6 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.0
     axios: 1.6.7
     axios-mock-adapter: 1.22.0
-    nav-frontend-alertstriper: 4.0.2
     react: 18.2.0
     react-intl: 6.6.2
     react-redux: 8.1.3
@@ -4151,7 +4137,6 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.0
     axios: 1.6.7
     axios-mock-adapter: 1.22.0
-    nav-frontend-alertstriper: 4.0.2
     react: 18.2.0
     react-intl: 6.6.2
     react-redux: 8.1.3
@@ -4283,8 +4268,6 @@ __metadata:
     classnames: 2.5.1
     just-is-empty: 3.4.1
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-ekspanderbartpanel: 4.0.4
     nav-frontend-hjelpetekst: 3.1.3
@@ -4317,8 +4300,6 @@ __metadata:
     "@k9-sak-web/prosess-aarskvantum-oms": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-ekspanderbartpanel: 4.0.4
     nav-frontend-paneler: 3.0.2
     nav-frontend-typografi: 4.0.2
@@ -4346,8 +4327,6 @@ __metadata:
     dayjs: 1.11.10
     eslint-plugin-cypress: ^2.15.1
     lodash: 4.17.21
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
@@ -4416,8 +4395,6 @@ __metadata:
     lodash: 4.17.21
     msw: 1.3.2
     msw-storybook-addon: 1.10.0
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
@@ -4527,8 +4504,6 @@ __metadata:
     dayjs: 1.11.10
     lodash: 4.17.21
     msw: 1.3.2
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
@@ -4666,8 +4641,6 @@ __metadata:
     classnames: 2.5.1
     lodash: 4.17.21
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
@@ -4726,8 +4699,6 @@ __metadata:
     dayjs: 1.11.10
     lodash: 4.17.21
     nav-datovelger: 12.6.0
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
@@ -4804,8 +4775,6 @@ __metadata:
     dayjs: 1.11.10
     express: 4.18.3
     lodash: 4.17.21
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
@@ -5005,7 +4974,6 @@ __metadata:
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -5064,7 +5032,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-infosider@workspace:packages/sak-infosider"
   dependencies:
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -15826,46 +15793,6 @@ __metadata:
     react: 17
     react-day-picker: ^7.4.x
   checksum: a4c5227a892992107d238e769292cd9a4d0bfa6d1885d915da1e3340ffa2e948a41735d4365ab528e1b6f3416e3457f581ef987f8b61b93b399be80460b7c6e2
-  languageName: node
-  linkType: hard
-
-"nav-frontend-alertstriper-style@npm:3.0.2":
-  version: 3.0.2
-  resolution: "nav-frontend-alertstriper-style@npm:3.0.2"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-    nav-frontend-ikoner-assets: ^3.0.0
-    nav-frontend-paneler-style: ^2.0.0
-    nav-frontend-typografi-style: ^2.0.0
-  checksum: 5632fe0c54cca67183e1aa615ea059c8bbaf9e0edd78ac24bc8513bb3194d2cce80544acd2f14c16512af935477287d7eeeb006d1f70ba1bd3c997a84fe8f9bb
-  languageName: node
-  linkType: hard
-
-"nav-frontend-alertstriper@npm:4.0.2":
-  version: 4.0.2
-  resolution: "nav-frontend-alertstriper@npm:4.0.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-alertstriper-style: ^3.0.0
-    nav-frontend-ikoner-assets: ^3.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 37eb283685186cf5e19948f22efa8e148dbf1f1815cf17858c2e4fe4289cda388844636631c968d9652ccd93966b0854da4260b928943107495db7816bd8344b
-  languageName: node
-  linkType: hard
-
-"nav-frontend-alertstriper@patch:nav-frontend-alertstriper@npm%3A4.0.2#./.yarn/patches/nav-frontend-alertstriper-npm-4.0.2-b212c92a4c.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 4.0.2
-  resolution: "nav-frontend-alertstriper@patch:nav-frontend-alertstriper@npm%3A4.0.2#./.yarn/patches/nav-frontend-alertstriper-npm-4.0.2-b212c92a4c.patch::version=4.0.2&hash=ff89da&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-alertstriper-style: ^3.0.0
-    nav-frontend-ikoner-assets: ^3.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: fd4d12110448ed97b5ac3f84d24b47df23b0907cd7ef3c0576ace3a2088871fabf88d46c3f2553e7c3eb6aa9619788d2b363fe6f68adab25710657f250b706b4
   languageName: node
   linkType: hard
 

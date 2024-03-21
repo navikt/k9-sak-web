@@ -1,7 +1,6 @@
-import { Period } from '@fpsak-frontend/utils';
-import { Box, Margin, DetailView, LabelledContent, Form } from '@navikt/ft-plattform-komponenter';
 import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Period } from '@fpsak-frontend/utils';
+import { Box, DetailView, Form, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Beskrivelse from '../../../../types/Beskrivelse';
@@ -10,6 +9,7 @@ import Vurderingsresultat from '../../../../types/Vurderingsresultat';
 import { finnResterendePerioder } from '../../../../util/periodUtils';
 import ContainerContext from '../../../context/ContainerContext';
 
+import { Alert } from '@navikt/ds-react';
 import AddButton from '../../add-button/AddButton';
 import BeskrivelserForPerioden from '../../beskrivelser-for-perioden/BeskrivelserForPerioden';
 import DeleteButton from '../../delete-button/DeleteButton';
@@ -175,7 +175,7 @@ const VurderingAvNattevåksperioderForm = ({
           )}
           {perioderUtenBehovForNattevåk.length > 0 && (
             <Box marginTop={Margin.xLarge}>
-              <AlertStripeInfo>
+              <Alert size="small" variant="info">
                 <LabelledContent
                   label="Resterende perioder har søkeren ikke behov for nattevåk:"
                   content={perioderUtenBehovForNattevåk.map(periode => (
@@ -184,7 +184,7 @@ const VurderingAvNattevåksperioderForm = ({
                     </p>
                   ))}
                 />
-              </AlertStripeInfo>
+              </Alert>
             </Box>
           )}
         </Form>
