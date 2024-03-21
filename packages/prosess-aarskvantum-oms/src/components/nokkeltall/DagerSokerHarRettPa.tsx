@@ -1,6 +1,6 @@
 import { formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import Lenke from 'nav-frontend-lenker';
+import { Link } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useLocation } from 'react-router-dom';
@@ -47,7 +47,7 @@ const DagerSokerHarRettPa = ({
                 id="Nøkkeltall.Rammemelding"
                 values={{
                   a: (...lenketekst) => (
-                    <Lenke href={`/k9/web${pathname}${formatQueryString(faktapanelUttak)}`}>{lenketekst}</Lenke>
+                    <Link href={`/k9/web${pathname}${formatQueryString(faktapanelUttak)}`}>{lenketekst}</Link>
                   ),
                 }}
               />

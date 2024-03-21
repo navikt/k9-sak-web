@@ -1,7 +1,6 @@
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { BodyShort, Heading } from '@navikt/ds-react';
+import { BodyShort, Heading, Link } from '@navikt/ds-react';
 import moment from 'moment';
-import Lenke from 'nav-frontend-lenker';
 import React from 'react';
 import styles from './ustrukturerteDokumenter.module.css';
 
@@ -37,9 +36,9 @@ const getLinks = (dokumenter: UstrukturerteDokumenterType[]) =>
     return (
       <li key={navn} className={styles.ustrukturerteDokumenter__listItem}>
         {linkIcon}
-        <Lenke href={getLink.href} target="_blank">
+        <Link href={getLink.href} target="_blank">
           {navn}
-        </Lenke>
+        </Link>
       </li>
     );
   });
