@@ -1,23 +1,22 @@
 import { Brevmaler } from '@k9-sak-web/types';
+import { Template } from "@k9-sak-web/backend/k9formidling/models/Template.js";
 
-const brevmaler = {
-  INNHEN: {
+// mock data av type Template som brukast i ny Messages komponent.
+export const templates = [
+  {
     navn: 'Innhent dokumentasjon',
     mottakere: [
       {
         id: '2821629142423',
         type: 'AKTØRID',
-        harVarsel: false,
       },
       {
         id: '123456789',
         type: 'ORGNR',
-        harVarsel: false,
       },
       {
         id: '987654321',
         type: 'ORGNR',
-        harVarsel: false,
       },
     ],
     støtterTredjepartsmottaker: true,
@@ -26,23 +25,20 @@ const brevmaler = {
     støtterTittelOgFritekst: false,
     kode: 'INNHEN',
   },
-  GENERELT_FRITEKSTBREV: {
+  {
     navn: 'Fritekst generelt brev',
     mottakere: [
       {
         id: '2821629142423',
         type: 'AKTØRID',
-        harVarsel: false,
       },
       {
         id: '123456789',
         type: 'ORGNR',
-        harVarsel: false,
       },
       {
         id: '987654321',
         type: 'ORGNR',
-        harVarsel: false,
       },
     ],
     støtterTredjepartsmottaker: true,
@@ -51,13 +47,12 @@ const brevmaler = {
     støtterTittelOgFritekst: true,
     kode: 'GENERELT_FRITEKSTBREV',
   },
-  INNHENT_MEDISINSKE_OPPLYSNINGER: {
+  {
     navn: 'Innhent medisinske opplysninger fritekstbrev',
     mottakere: [
       {
         id: '2821629142423',
         type: 'AKTØRID',
-        harVarsel: false,
       },
     ],
     støtterTredjepartsmottaker: true,
@@ -66,20 +61,26 @@ const brevmaler = {
     støtterTittelOgFritekst: false,
     kode: 'INNHENT_MEDISINSKE_OPPLYSNINGER',
   },
-  VARSEL_FRITEKST: {
+  {
     navn: 'Varselsbrev fritekst',
     mottakere: [
       {
         id: '2821629142423',
         type: 'AKTØRID',
-        harVarsel: false,
       },
     ],
     linker: [],
     støtterFritekst: true,
     støtterTittelOgFritekst: false,
     kode: 'VARSEL_FRITEKST',
+    støtterTredjepartsmottaker: false,
   },
-} satisfies Brevmaler;
+] satisfies Template[]
+
+// Dette er den gamle typen brukt i gamle stories.
+const brevmaler: Brevmaler = {}
+for(const mal of templates) {
+  brevmaler[mal.kode] = mal
+}
 
 export default brevmaler;

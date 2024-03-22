@@ -6,7 +6,8 @@
   "version": "1.0.0",
   "exports": {
     "./k9sak/generated": "./src/k9sak/generated/index.js",
-    "./k9sak/extra/*": "./src/k9sak/extra/*"
+    "./k9sak/extra/*": "./src/k9sak/extra/*",
+    "./k9formidling/*": "./src/k9formidling/*"
   },
   "dependencies": {
     "@navikt/k9-sak-typescript-client": "0.0.3-alpha"

@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 0.5rem;
+}
+
+.orgnumField {
+  width: 12ex;
+}
+
+.orgnameField {
+  flex-grow: 3;
+}

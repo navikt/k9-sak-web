@@ -5,6 +5,7 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import { lagVisningsnavnForMottaker as v2LagvisningsnavnForMottaker} from "@k9-sak-web/gui/utils/formidling.js";
 
 export interface VedtaksbrevMal {
   dokumentMalType: string;
@@ -36,19 +37,7 @@ export function lagVisningsnavnForMottaker(
   personopplysninger?: Personopplysninger,
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId,
 ): string {
-  if (
-    arbeidsgiverOpplysningerPerId &&
-    arbeidsgiverOpplysningerPerId[mottakerId] &&
-    arbeidsgiverOpplysningerPerId[mottakerId].navn
-  ) {
-    return `${arbeidsgiverOpplysningerPerId[mottakerId].navn} (${mottakerId})`;
-  }
-
-  if (personopplysninger && personopplysninger.aktoerId === mottakerId && personopplysninger.navn) {
-    return `${personopplysninger.navn} (${personopplysninger.fnr || personopplysninger.nummer || mottakerId})`;
-  }
-
-  return mottakerId;
+  return v2LagvisningsnavnForMottaker(mottakerId, personopplysninger, arbeidsgiverOpplysningerPerId)
 }
 
 function vedtaksbrevmaler(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev) {
