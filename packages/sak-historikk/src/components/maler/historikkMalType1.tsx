@@ -15,10 +15,10 @@ const HistorikkMalType1 = ({ historikkinnslag, getKodeverknavn, saksnummer }: Hi
           {findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}
         </Label>
       )}
-      {historikkinnslagDeler[0].begrunnelse && (
+      {historikkinnslagDeler[0]?.begrunnelse && (
         <BubbleText bodyText={getKodeverknavn(historikkinnslagDeler[0].begrunnelse)} />
       )}
-      {historikkinnslagDeler[0].begrunnelseFritekst && (
+      {historikkinnslagDeler[0]?.begrunnelseFritekst && (
         <BubbleText bodyText={historikkinnslagDeler[0].begrunnelseFritekst} />
       )}
       {dokumentLinks &&
