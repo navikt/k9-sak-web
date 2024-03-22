@@ -3,7 +3,7 @@ import Tidslinje from '@fpsak-frontend/tidslinje/src/components/pleiepenger/Tids
 import Periode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
 import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
 import { KodeverkMedNavn, OverlappendePeriode } from '@k9-sak-web/types';
-import { Accordion, Alert, BodyLong, Checkbox, CheckboxGroup, Heading } from '@navikt/ds-react';
+import { Accordion, Alert, BodyLong, Checkbox, CheckboxGroup, Heading, Tag } from '@navikt/ds-react';
 import { useFormikContext } from 'formik';
 import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
