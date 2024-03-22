@@ -1,3 +1,8 @@
+import React, { useCallback, useMemo, useState } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { QueryClient, QueryClientProvider } from 'react-query';
+
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
@@ -15,7 +20,6 @@ import {
   Fagsak,
   FagsakPerson,
   FeatureToggles,
-  Kodeverk,
   KodeverkMedNavn,
   MerknadFraLos,
   NavAnsatt,
@@ -23,11 +27,8 @@ import {
 } from '@k9-sak-web/types';
 import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
 import RelatertFagsak from '@k9-sak-web/types/src/relatertFagsak';
-import React, { useCallback, useMemo, useState } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
+
 import {
   behandlingerRoutePath,
   erBehandlingValgt,
@@ -46,21 +47,19 @@ import FagsakGrid from './components/FagsakGrid';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
 
-const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
+const erTilbakekreving = (behandlingType: string): boolean =>
   behandlingType &&
-  (BehandlingType.TILBAKEKREVING === behandlingType.kode ||
-    BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
+  (BehandlingType.TILBAKEKREVING === behandlingType || BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType);
 
-const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER;
-const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) =>
-  fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
+const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelseType.PLEIEPENGER;
+const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
 const erOmsorgspenger = (fagsak: Fagsak) =>
   [
     fagsakYtelseType.OMSORGSPENGER,
     fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN,
     fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN,
     fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE,
-  ].includes(fagsak?.sakstype?.kode);
+  ].includes(fagsak?.sakstype);
 
 const queryClient = new QueryClient();
 
@@ -306,7 +305,6 @@ const FagsakIndex = () => {
             <div style={{ overflow: 'hidden' }}>
               <VisittkortSakIndex
                 personopplysninger={behandlingPersonopplysninger}
-                alleKodeverk={alleKodeverk}
                 sprakkode={behandling?.sprakkode}
                 fagsakPerson={fagsakPerson || fagsak.person}
                 harTilbakekrevingVerge={erTilbakekreving(behandling?.type) && harVerge}
@@ -323,7 +321,7 @@ const FagsakIndex = () => {
                     <AndreSakerPåSøkerStripe
                       søkerIdent={fagsakPerson.personnummer}
                       saksnummer={fagsak.saksnummer}
-                      fagsakYtelseType={fagsak.sakstype.kode}
+                      fagsakYtelseType={fagsak.sakstype}
                     />
                   )}
                 </>

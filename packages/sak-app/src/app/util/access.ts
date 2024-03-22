@@ -16,48 +16,49 @@ export type AksessRettigheter = {
 const kanVeilede = (navAnsatt: NavAnsatt): boolean => navAnsatt && navAnsatt.kanVeilede;
 const kanSaksbehandle = (navAnsatt: NavAnsatt): boolean => navAnsatt && navAnsatt.kanSaksbehandle;
 const kanOverstyre = (navAnsatt: NavAnsatt): boolean => kanSaksbehandle(navAnsatt) && navAnsatt.kanOverstyre;
-const isBehandlingAvTilbakekreving = (type: Kodeverk): boolean =>
-  type ? type.kode === BehandlingType.TILBAKEKREVING || type.kode === BehandlingType.TILBAKEKREVING_REVURDERING : false;
+const isBehandlingAvTilbakekreving = (type: string): boolean =>
+  type ? type === BehandlingType.TILBAKEKREVING || type === BehandlingType.TILBAKEKREVING_REVURDERING : false;
 
-const accessibleFor = (validNavAnsattPredicates: ((navAnsatt: NavAnsatt) => boolean)[]) => (
-  navAnsatt: NavAnsatt,
-): boolean => validNavAnsattPredicates.some(predicate => predicate(navAnsatt));
+const accessibleFor =
+  (validNavAnsattPredicates: ((navAnsatt: NavAnsatt) => boolean)[]) =>
+  (navAnsatt: NavAnsatt): boolean =>
+    validNavAnsattPredicates.some(predicate => predicate(navAnsatt));
 
-const enabledFor = (validFagsakStauses: string[], validBehandlingStatuses: string[]) => (
-  fagsakStatus: Kodeverk,
-  behandlingStatus: Kodeverk,
-  isTilbakekrevingBehandling: boolean,
-): boolean =>
-  (isTilbakekrevingBehandling || (fagsakStatus && validFagsakStauses.includes(fagsakStatus.kode))) &&
-  behandlingStatus &&
-  validBehandlingStatuses.includes(behandlingStatus.kode);
+const enabledFor =
+  (validFagsakStauses: string[], validBehandlingStatuses: string[]) =>
+  (fagsakStatus: string, behandlingStatus: string, isTilbakekrevingBehandling: boolean): boolean =>
+    (isTilbakekrevingBehandling || (fagsakStatus && validFagsakStauses.includes(fagsakStatus))) &&
+    behandlingStatus &&
+    validBehandlingStatuses.includes(behandlingStatus);
 
-const accessSelector = (
-  validNavAnsattPredicates: ((navAnsatt: NavAnsatt) => boolean)[],
-  validFagsakStatuses: string[],
-  validBehandlingStatuses: string[],
-) => (navAnsatt: NavAnsatt, fagsakStatus: Kodeverk, behandlingStatus: Kodeverk, behandlingType: Kodeverk): Aksess => {
-  if (kanVeilede(navAnsatt)) {
-    return {
-      employeeHasAccess: true,
-      isEnabled: false,
-    };
-  }
-  const employeeHasAccess = accessibleFor(validNavAnsattPredicates)(navAnsatt);
-  const isEnabled =
-    employeeHasAccess &&
-    enabledFor(validFagsakStatuses, validBehandlingStatuses)(
-      fagsakStatus,
-      behandlingStatus,
-      isBehandlingAvTilbakekreving(behandlingType),
-    );
-  return { employeeHasAccess, isEnabled };
-};
+const accessSelector =
+  (
+    validNavAnsattPredicates: ((navAnsatt: NavAnsatt) => boolean)[],
+    validFagsakStatuses: string[],
+    validBehandlingStatuses: string[],
+  ) =>
+  (navAnsatt: NavAnsatt, fagsakStatus: string, behandlingStatus: string, behandlingType: string): Aksess => {
+    if (kanVeilede(navAnsatt)) {
+      return {
+        employeeHasAccess: true,
+        isEnabled: false,
+      };
+    }
+    const employeeHasAccess = accessibleFor(validNavAnsattPredicates)(navAnsatt);
+    const isEnabled =
+      employeeHasAccess &&
+      enabledFor(validFagsakStatuses, validBehandlingStatuses)(
+        fagsakStatus,
+        behandlingStatus,
+        isBehandlingAvTilbakekreving(behandlingType),
+      );
+    return { employeeHasAccess, isEnabled };
+  };
 
 export const writeAccess = behandlingType =>
   accessSelector(
     [kanSaksbehandle],
-    behandlingType && behandlingType.kode === BehandlingType.KLAGE
+    behandlingType && behandlingType === BehandlingType.KLAGE
       ? [
           fagsakStatusCode.OPPRETTET,
           fagsakStatusCode.UNDER_BEHANDLING,
@@ -76,9 +77,9 @@ export const kanOverstyreAccess = accessSelector(
 
 const getAccessRights = (
   navAnsatt: NavAnsatt,
-  fagsakStatus: Kodeverk,
-  behandlingStatus: Kodeverk,
-  behandlingType: Kodeverk,
+  fagsakStatus: string,
+  behandlingStatus: string,
+  behandlingType: string,
 ): AksessRettigheter => ({
   writeAccess: writeAccess(behandlingType)(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
   kanOverstyreAccess: kanOverstyreAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),

@@ -4,7 +4,7 @@ import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakTyp
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
-import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Button, Label, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
 import React, { ReactElement, useEffect } from 'react';
@@ -28,7 +28,7 @@ const createOptions = (
 };
 
 export type BehandlingOppretting = Readonly<{
-  behandlingType: Kodeverk;
+  behandlingType: string;
   kanOppretteBehandling: boolean;
 }>;
 
@@ -39,13 +39,13 @@ export type FormValues = {
 };
 
 interface PureOwnProps {
-  ytelseType: Kodeverk;
+  ytelseType: string;
   saksnummer: number;
   cancelEvent: () => void;
   submitCallback: (
     data: {
       eksternUuid?: string;
-      fagsakYtelseType: Kodeverk;
+      fagsakYtelseType: string;
     } & FormValues,
   ) => void;
   behandlingOppretting: BehandlingOppretting[];
@@ -56,7 +56,7 @@ interface PureOwnProps {
     kanBehandlingOpprettes: boolean;
     kanRevurderingOpprettes: boolean;
   };
-  behandlingType?: Kodeverk;
+  behandlingType?: string;
   behandlingId?: number;
   behandlingUuid?: string;
   uuidForSistLukkede?: string;
@@ -251,8 +251,7 @@ export const getBehandlingTyper = createSelector(
 const kanOppretteBehandlingstype = (
   behandlingOppretting: BehandlingOppretting[],
   behandlingTypeKode: string,
-): boolean =>
-  behandlingOppretting.some(bo => bo.behandlingType.kode === behandlingTypeKode && bo.kanOppretteBehandling);
+): boolean => behandlingOppretting.some(bo => bo.behandlingType === behandlingTypeKode && bo.kanOppretteBehandling);
 
 export const getEnabledBehandlingstyper = createSelector(
   [
@@ -306,8 +305,8 @@ const mapStateToPropsFactory = (initialState, initialOwnProps: PureOwnProps) => 
     valgtBehandlingTypeKode: formValueSelector(formName)(state, 'behandlingType'),
     erTilbakekreving:
       ownProps.behandlingType &&
-      (ownProps.behandlingType.kode === bType.TILBAKEKREVING ||
-        ownProps.behandlingType.kode === bType.TILBAKEKREVING_REVURDERING),
+      (ownProps.behandlingType === bType.TILBAKEKREVING ||
+        ownProps.behandlingType === bType.TILBAKEKREVING_REVURDERING),
   });
 };
 

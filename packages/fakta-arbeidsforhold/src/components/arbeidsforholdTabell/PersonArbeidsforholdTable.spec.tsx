@@ -1,10 +1,13 @@
+import React from 'react';
+import { screen } from '@testing-library/react';
+
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../../../i18n/nb_NO.json';
+
 import PersonArbeidsforholdTable from './PersonArbeidsforholdTable';
+
+import messages from '../../../i18n/nb_NO.json';
 
 describe('<PersonArbeidsforholdTable>', () => {
   const arbeidsforhold = {
@@ -23,22 +26,9 @@ describe('<PersonArbeidsforholdTable>', () => {
         tom: '2018-10-10',
       },
     ],
-    kilde: [
-      {
-        kode: 'INNTEKT',
-        kodeverk: '',
-      },
-    ],
-    handlingType: {
-      kode: 'BRUK',
-      kodeverk: 'ARBEIDSFORHOLD_HANDLING_TYPE',
-    },
-    aksjonspunktÅrsaker: [
-      {
-        kode: 'INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD',
-        kodeverk: 'ARBEIDSFORHOLD_AKSJONSPUNKT_ÅRSAKER',
-      },
-    ],
+    kilde: ['INNTEKT'],
+    handlingType: 'BRUK',
+    aksjonspunktÅrsaker: ['INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD'],
     inntektsmeldinger: [],
     yrkestittel: 'Vaktmester',
     stillingsprosent: 80,
@@ -60,22 +50,9 @@ describe('<PersonArbeidsforholdTable>', () => {
         tom: '2018-10-10',
       },
     ],
-    kilde: [
-      {
-        kode: 'INNTEKT',
-        kodeverk: '',
-      },
-    ],
-    handlingType: {
-      kode: 'BRUK',
-      kodeverk: 'ARBEIDSFORHOLD_HANDLING_TYPE',
-    },
-    aksjonspunktÅrsaker: [
-      {
-        kode: 'INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD',
-        kodeverk: 'ARBEIDSFORHOLD_AKSJONSPUNKT_ÅRSAKER',
-      },
-    ],
+    kilde: ['INNTEKT'],
+    handlingType: 'BRUK',
+    aksjonspunktÅrsaker: ['INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD'],
     inntektsmeldinger: [],
   };
 
@@ -86,7 +63,6 @@ describe('<PersonArbeidsforholdTable>', () => {
         intl={intlMock}
         alleArbeidsforhold={[arbeidsforhold, arbeidsforhold2]}
         selectedId={arbeidsforhold.id}
-        alleKodeverk={{}}
         behandlingId={1}
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
@@ -114,7 +90,6 @@ describe('<PersonArbeidsforholdTable>', () => {
         intl={intlMock}
         alleArbeidsforhold={[newArbeidsforhold]}
         selectedId={newArbeidsforhold.id}
-        alleKodeverk={{}}
         behandlingId={1}
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
@@ -127,10 +102,7 @@ describe('<PersonArbeidsforholdTable>', () => {
   it('skal ikke vise ikon for at arbeidsforholdet er i bruk', () => {
     const newArbeidsforhold = {
       ...arbeidsforhold,
-      handlingType: {
-        kode: arbeidsforholdHandlingType.IKKE_BRUK,
-        kodeverk: '',
-      },
+      handlingType: arbeidsforholdHandlingType.IKKE_BRUK,
       aksjonspunktÅrsaker: [],
     };
     renderWithIntlAndReduxForm(
@@ -139,7 +111,6 @@ describe('<PersonArbeidsforholdTable>', () => {
         intl={intlMock}
         alleArbeidsforhold={[newArbeidsforhold]}
         selectedId={arbeidsforhold.id}
-        alleKodeverk={{}}
         behandlingId={1}
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
@@ -153,10 +124,7 @@ describe('<PersonArbeidsforholdTable>', () => {
   it('skal vise ikon for at arbeidsforholdet er i bruk', () => {
     const newArbeidsforhold = {
       ...arbeidsforhold,
-      handlingType: {
-        kode: arbeidsforholdHandlingType.BRUK,
-        kodeverk: '',
-      },
+      handlingType: arbeidsforholdHandlingType.BRUK,
       aksjonspunktÅrsaker: [],
     };
 
@@ -166,7 +134,6 @@ describe('<PersonArbeidsforholdTable>', () => {
         intl={intlMock}
         alleArbeidsforhold={[newArbeidsforhold]}
         selectedId={newArbeidsforhold.id}
-        alleKodeverk={{}}
         behandlingId={1}
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
@@ -184,7 +151,6 @@ describe('<PersonArbeidsforholdTable>', () => {
         intl={intlMock}
         alleArbeidsforhold={[]}
         selectedId={undefined}
-        alleKodeverk={{}}
         behandlingId={1}
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
@@ -206,7 +172,6 @@ describe('<PersonArbeidsforholdTable>', () => {
         intl={intlMock}
         alleArbeidsforhold={[endretArbeidsforhold]}
         selectedId={undefined}
-        alleKodeverk={{}}
         behandlingId={1}
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
@@ -220,10 +185,7 @@ describe('<PersonArbeidsforholdTable>', () => {
   it('skal vise arbeidsforholdId når lagt til av saksbehandler', () => {
     const endretArbeidsforhold = {
       ...arbeidsforhold,
-      handlingType: {
-        kode: arbeidsforholdHandlingType.BASERT_PÅ_INNTEKTSMELDING,
-        kodeverk: '',
-      },
+      handlingType: arbeidsforholdHandlingType.BASERT_PÅ_INNTEKTSMELDING,
       yrkestittel: 'Lærer',
     };
     renderWithIntlAndReduxForm(
@@ -232,7 +194,6 @@ describe('<PersonArbeidsforholdTable>', () => {
         intl={intlMock}
         alleArbeidsforhold={[endretArbeidsforhold]}
         selectedId={undefined}
-        alleKodeverk={{}}
         behandlingId={1}
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
@@ -253,7 +214,6 @@ describe('<PersonArbeidsforholdTable>', () => {
         intl={intlMock}
         alleArbeidsforhold={[endretArbeidsforhold]}
         selectedId={undefined}
-        alleKodeverk={{}}
         behandlingId={1}
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
@@ -283,7 +243,6 @@ describe('<PersonArbeidsforholdTable>', () => {
         intl={intlMock}
         alleArbeidsforhold={[arbeidsforhold]}
         selectedId="1"
-        alleKodeverk={{}}
         behandlingId={1}
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}
@@ -306,7 +265,6 @@ describe('<PersonArbeidsforholdTable>', () => {
           },
         ]}
         selectedId={undefined}
-        alleKodeverk={{}}
         behandlingId={1}
         behandlingVersjon={2}
         updateArbeidsforhold={() => undefined}

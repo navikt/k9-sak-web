@@ -5,7 +5,6 @@ import {
   Behandling,
   Fagsak,
   FagsakPerson,
-  Kodeverk,
   KodeverkMedNavn,
   ArbeidsgiverOpplysningerWrapper,
   FeatureToggles,
@@ -41,8 +40,8 @@ interface OwnProps {
   alleBehandlinger: {
     id: number;
     uuid: string;
-    type: Kodeverk;
-    status: Kodeverk;
+    type: string;
+    status: string;
     opprettet: string;
     avsluttet?: string;
   }[];

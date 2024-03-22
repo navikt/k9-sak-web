@@ -2,43 +2,43 @@ import { Location } from 'history';
 import React, { ReactElement } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { BehandlingAppKontekst } from '@k9-sak-web/types';
+import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
 
 import BehandlingPickerItemContentOld from './BehandlingPickerItemContentOld';
 
 import styles from './behandlingPickerItem.module.css';
 
-const getContentProps = (
-  behandling: BehandlingAppKontekst,
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
-) => ({
-  behandlingId: behandling.id,
-  behandlingTypeNavn: getKodeverkFn(behandling.type, behandling.type).navn,
-  behandlingTypeKode: behandling.type.kode,
-  førsteÅrsak: behandling.førsteÅrsak,
-  behandlendeEnhetId: behandling.behandlendeEnhetId,
-  behandlendeEnhetNavn: behandling.behandlendeEnhetNavn,
-  opprettetDato: behandling.opprettet,
-  avsluttetDato: behandling.avsluttet,
-  behandlingsstatus: getKodeverkFn(behandling.status, { kode: BehandlingType.FORSTEGANGSSOKNAD, kodeverk: '' }).navn,
-  erGjeldendeVedtak: behandling.gjeldendeVedtak,
-  behandlingsresultatTypeNavn: behandling.behandlingsresultat
-    ? getKodeverkFn(behandling.behandlingsresultat.type, behandling.type).navn
-    : undefined,
-  behandlingsresultatTypeKode: behandling.behandlingsresultat ? behandling.behandlingsresultat.type.kode : undefined,
-});
+const getContentProps = (behandling: BehandlingAppKontekst) => {
+  const { kodeverkNavnFraKode } = useKodeverkV2();
+  return {
+    behandlingId: behandling.id,
+    behandlingTypeNavn: kodeverkNavnFraKode(behandling.type, KodeverkType.BEHANDLING_TYPE),
+    behandlingTypeKode: behandling.type,
+    førsteÅrsak: behandling.førsteÅrsak,
+    behandlendeEnhetId: behandling.behandlendeEnhetId,
+    behandlendeEnhetNavn: behandling.behandlendeEnhetNavn,
+    opprettetDato: behandling.opprettet,
+    avsluttetDato: behandling.avsluttet,
+    behandlingsstatus: kodeverkNavnFraKode(behandling.status, KodeverkType.BEHANDLING_STATUS),
+    erGjeldendeVedtak: behandling.gjeldendeVedtak,
+    behandlingsresultatTypeNavn: behandling.behandlingsresultat
+      ? kodeverkNavnFraKode(behandling.behandlingsresultat.type, KodeverkType.BEHANDLING_RESULTAT_TYPE)
+      : undefined,
+    behandlingsresultatTypeKode: behandling.behandlingsresultat ? behandling.behandlingsresultat.type : undefined,
+  };
+};
 
 const renderItemContent = (
   behandling: BehandlingAppKontekst,
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
   withChevronDown = false,
   withChevronUp = false,
 ): ReactElement => (
   <BehandlingPickerItemContentOld
     withChevronDown={withChevronDown}
     withChevronUp={withChevronUp}
-    {...getContentProps(behandling, getKodeverkFn)}
+    {...getContentProps(behandling)}
   />
 );
 
@@ -46,7 +46,6 @@ const renderToggleShowAllButton = (
   toggleShowAll: () => void,
   behandling: BehandlingAppKontekst,
   showAll: boolean,
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
 ): ReactElement => (
   <button
     aria-label={showAll ? 'Skjul andre behandlinger' : 'Vis alle behandlinger'}
@@ -54,7 +53,7 @@ const renderToggleShowAllButton = (
     className={styles.toggleShowAllButton}
     onClick={toggleShowAll}
   >
-    {renderItemContent(behandling, getKodeverkFn, !showAll, showAll)}
+    {renderItemContent(behandling, !showAll, showAll)}
   </button>
 );
 
@@ -64,10 +63,9 @@ const renderLinkToBehandling = (
   isActive: boolean,
   toggleShowAll: () => void,
   showAll: boolean,
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
 ): ReactElement => (
   <NavLink className={styles.linkToBehandling} to={getBehandlingLocation(behandling.id)} onClick={toggleShowAll}>
-    {renderItemContent(behandling, getKodeverkFn, false, showAll && isActive)}
+    {renderItemContent(behandling, false, showAll && isActive)}
   </NavLink>
 );
 
@@ -78,7 +76,6 @@ interface OwnProps {
   isActive: boolean;
   showAll: boolean;
   toggleShowAll: () => void;
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
 }
 
 const BehandlingPickerItem = ({
@@ -88,16 +85,15 @@ const BehandlingPickerItem = ({
   isActive,
   showAll,
   toggleShowAll,
-  getKodeverkFn,
 }: OwnProps) => {
   if (onlyOneBehandling && isActive) {
-    return renderItemContent(behandling, getKodeverkFn);
+    return renderItemContent(behandling);
   }
   if (onlyOneBehandling || showAll) {
-    return renderLinkToBehandling(getBehandlingLocation, behandling, isActive, toggleShowAll, showAll, getKodeverkFn);
+    return renderLinkToBehandling(getBehandlingLocation, behandling, isActive, toggleShowAll, showAll);
   }
   if (isActive) {
-    return renderToggleShowAllButton(toggleShowAll, behandling, showAll, getKodeverkFn);
+    return renderToggleShowAllButton(toggleShowAll, behandling, showAll);
   }
   return null;
 };

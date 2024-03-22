@@ -1,9 +1,5 @@
-interface Type {
-  kode: string;
-}
-
 export interface Behandlingsresultat {
-  type: Type;
+  type: string;
 }
 
 export default Behandlingsresultat;

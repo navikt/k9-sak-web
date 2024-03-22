@@ -1,10 +1,11 @@
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { FlexColumn, FlexContainer, FlexRow, Tooltip, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort, Heading } from '@navikt/ds-react';
-import { EtikettInfo } from 'nav-frontend-etiketter';
 import React, { ReactNode } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
+import { EtikettInfo } from 'nav-frontend-etiketter';
+import { BodyShort, Heading } from '@navikt/ds-react';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { FlexColumn, FlexContainer, FlexRow, Tooltip, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
 
 const visSakDekningsgrad = (saksKode: string, dekningsgrad?: number): boolean => {
   const erForeldrepenger = saksKode === FagsakYtelseType.FORELDREPENGER;
@@ -15,8 +16,8 @@ const visSakDekningsgrad = (saksKode: string, dekningsgrad?: number): boolean =>
 
 interface OwnProps {
   saksnummer: string;
-  fagsakYtelseType: KodeverkMedNavn;
-  fagsakStatus: KodeverkMedNavn;
+  fagsakYtelseType: string;
+  fagsakStatus: string;
   renderBehandlingMeny: () => ReactNode;
   renderBehandlingVelger: () => ReactNode;
   dekningsgrad?: number;
@@ -35,40 +36,43 @@ export const FagsakProfile = ({
   renderBehandlingVelger,
   dekningsgrad,
   intl,
-}: OwnProps & WrappedComponentProps) => (
-  <>
-    <FlexContainer>
-      <FlexRow spaceBetween alignItemsToBaseline>
-        <FlexColumn>
-          <FlexRow wrap>
-            <FlexColumn>
-              <Heading level="2" size="medium" className="-ml-2">
-                {fagsakYtelseType.navn}
-              </Heading>
-            </FlexColumn>
-            {visSakDekningsgrad(fagsakYtelseType.kode, dekningsgrad) && (
+}: OwnProps & WrappedComponentProps) => {
+  const { kodeverkNavnFraKode } = useKodeverkV2();
+  return (
+    <>
+      <FlexContainer>
+        <FlexRow spaceBetween alignItemsToBaseline>
+          <FlexColumn>
+            <FlexRow wrap>
               <FlexColumn>
-                <Tooltip
-                  content={intl.formatMessage({ id: 'FagsakProfile.Dekningsgrad' }, { dekningsgrad })}
-                  alignBottom
-                >
-                  <EtikettInfo>{`${dekningsgrad}%`}</EtikettInfo>
-                </Tooltip>
+                <Heading level="2" size="medium" className="-ml-2">
+                  {kodeverkNavnFraKode(fagsakYtelseType, KodeverkType.FAGSAK_YTELSE)}
+                </Heading>
               </FlexColumn>
-            )}
-          </FlexRow>
-        </FlexColumn>
-        <FlexColumn>{renderBehandlingMeny()}</FlexColumn>
-      </FlexRow>
-      <VerticalSpacer eightPx />
-      <FlexRow>
-        <FlexColumn>
-          <BodyShort size="small">{`${saksnummer} - ${fagsakStatus.navn}`}</BodyShort>
-        </FlexColumn>
-      </FlexRow>
-    </FlexContainer>
-    {renderBehandlingVelger()}
-  </>
-);
+              {visSakDekningsgrad(fagsakYtelseType, dekningsgrad) && (
+                <FlexColumn>
+                  <Tooltip
+                    content={intl.formatMessage({ id: 'FagsakProfile.Dekningsgrad' }, { dekningsgrad })}
+                    alignBottom
+                  >
+                    <EtikettInfo>{`${dekningsgrad}%`}</EtikettInfo>
+                  </Tooltip>
+                </FlexColumn>
+              )}
+            </FlexRow>
+          </FlexColumn>
+          <FlexColumn>{renderBehandlingMeny()}</FlexColumn>
+        </FlexRow>
+        <VerticalSpacer eightPx />
+        <FlexRow>
+          <FlexColumn>
+            <BodyShort size="small">{`${saksnummer} - ${kodeverkNavnFraKode(fagsakStatus, KodeverkType.FAGSAK_STATUS)}`}</BodyShort>
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+      {renderBehandlingVelger()}
+    </>
+  );
+};
 
 export default injectIntl(FagsakProfile);

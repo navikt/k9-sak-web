@@ -7,6 +7,8 @@ import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtel
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+// import alleKodeverk from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
@@ -52,10 +54,7 @@ const feilutbetalingFakta = {
     },
   ],
   behandlingsresultat: {
-    type: {
-      kode: behandlingResultatType.INNVILGET,
-      kodeverk: BEHANDLING_RESULTAT_TYPE_KODEVERK,
-    },
+    type: behandlingResultatType.INNVILGET,
     konsekvenserForYtelsen: [
       {
         kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
@@ -117,6 +116,7 @@ const fpsakKodeverk = {
 
 describe('<FeilutbetalingInfoPanel>', () => {
   it('skal rendre komponent korrekt', () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
     renderWithIntlAndReduxForm(
       <FeilutbetalingInfoPanelImpl
         {...reduxFormPropsMock}

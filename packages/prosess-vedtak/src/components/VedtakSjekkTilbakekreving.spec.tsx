@@ -33,10 +33,7 @@ const behandling = {
       kode: 'FRITEKST',
       kodeverk: '',
     },
-    type: {
-      kode: behandlingResultatType.IKKE_FASTSATT,
-      kodeverk: '',
-    },
+    type: behandlingResultatType.IKKE_FASTSATT,
   },
   behandlingHenlagt: false,
   behandlingPaaVent: false,

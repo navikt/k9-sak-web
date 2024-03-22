@@ -17,6 +17,7 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { TilgjengeligeVedtaksbrev, TilgjengeligeVedtaksbrevMedMaler } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { Aksjonspunkt, Personopplysninger } from '@k9-sak-web/types';
+
 import messages from '../../i18n/nb_NO.json';
 import { VedtakForm } from './VedtakForm';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
@@ -99,10 +100,7 @@ describe('<VedtakForm>', () => {
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
 
     renderWithIntlAndReduxForm(
@@ -153,10 +151,7 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.AVSLATT,
-        navn: 'test',
-      },
+      type: BehandlingResultatType.AVSLATT,
     };
     const aksjonspunkter: Aksjonspunkt[] = [
       {
@@ -219,10 +214,7 @@ describe('<VedtakForm>', () => {
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter: Aksjonspunkt[] = [aksjonspunktBase];
     const vedtakVarsel = {
@@ -275,10 +267,7 @@ describe('<VedtakForm>', () => {
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter: Aksjonspunkt[] = [aksjonspunktBase];
     const vedtakVarsel = {
@@ -333,10 +322,7 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.AVSLATT,
-        navn: 'test',
-      },
+      type: BehandlingResultatType.AVSLATT,
     };
     const aksjonspunkter: Aksjonspunkt[] = [
       {
@@ -399,10 +385,7 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter: Aksjonspunkt[] = [
       {
@@ -461,10 +444,7 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter: Aksjonspunkt[] = [
       {
@@ -526,10 +506,7 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter: Aksjonspunkt[] = [
       {
@@ -586,10 +563,7 @@ describe('<VedtakForm>', () => {
   const previewCallback = vi.fn();
   const behandlingsresultat = {
     id: 1,
-    type: {
-      kode: BehandlingResultatType.INNVILGET,
-      navn: 'test',
-    },
+    type: BehandlingResultatType.INNVILGET,
   };
   const aksjonspunkter: Aksjonspunkt[] = [
     {

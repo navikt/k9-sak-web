@@ -1,8 +1,7 @@
-import Kodeverk from './kodeverkTsType';
 import KodeverkMedNavnTsType from './kodeverkMedNavnTsType';
 
 export type PersonopplysningAdresse = Readonly<{
-  adresseType?: Kodeverk;
+  adresseType?: string;
   adresselinje1?: string;
   adresselinje2?: string;
   adresselinje3?: string;
@@ -14,22 +13,22 @@ export type PersonopplysningAdresse = Readonly<{
 
 export type PersonopplysningerBasic = Readonly<{
   nummer?: number;
-  navBrukerKjonn: Kodeverk;
-  statsborgerskap: KodeverkMedNavnTsType;
+  navBrukerKjonn: string;
+  statsborgerskap: string;
   avklartPersonstatus: {
-    orginalPersonstatus: Kodeverk;
-    overstyrtPersonstatus: Kodeverk;
+    orginalPersonstatus: string;
+    overstyrtPersonstatus: string;
   };
-  personstatus: Kodeverk;
-  diskresjonskode: Kodeverk;
-  sivilstand: Kodeverk;
+  personstatus: string;
+  diskresjonskode: string;
+  sivilstand: string;
   aktoerId?: string;
   navn: string;
   dodsdato?: string;
   fodselsdato?: string;
   adresser: PersonopplysningAdresse[];
   fnr?: string;
-  region: Kodeverk;
+  region: string;
   harVerge?: boolean;
   ektefelle?: PersonopplysningerBasic;
 }>;

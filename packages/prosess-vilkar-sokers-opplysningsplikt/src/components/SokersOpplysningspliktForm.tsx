@@ -6,18 +6,18 @@ import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-
 import { behandlingForm, behandlingFormValueSelector, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { ProsessStegBegrunnelseTextField, ProsessPanelTemplate } from '@k9-sak-web/prosess-felles';
 import { Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, isObject, required } from '@fpsak-frontend/utils';
-import { ProsessPanelTemplate, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
+import { DDMMYYYY_DATE_FORMAT, isObject, required } from '@fpsak-frontend/utils';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { Aksjonspunkt, Behandling, Kodeverk, KodeverkMedNavn, ManglendeVedleggSoknad, Soknad } from '@k9-sak-web/types';
+import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 
 const formName = 'SokersOpplysningspliktForm';
 
@@ -83,7 +83,7 @@ interface PureOwnProps {
   submitCallback: (aksjonspunktData: { kode: string }[]) => Promise<any>;
   readOnly: boolean;
   readOnlySubmitButton: boolean;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  dokumentTypeIds: KodeverkMedNavn[];
 }
 
 interface MappedOwnProps {
@@ -115,89 +115,93 @@ export const SokersOpplysningspliktFormImpl = ({
   manglendeVedlegg,
   dokumentTypeIds,
   inntektsmeldingerSomIkkeKommer,
-  getKodeverknavn,
   behandlingId,
   behandlingVersjon,
   ...formProps
-}: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => (
-  <ProsessPanelTemplate
-    title={intl.formatMessage({ id: 'SokersOpplysningspliktForm.SokersOpplysningsplikt' })}
-    isAksjonspunktOpen={!readOnlySubmitButton}
-    formName={formProps.form}
-    handleSubmit={formProps.handleSubmit}
-    isDirty={hasAksjonspunkt ? formProps.dirty : erVilkarOk !== formProps.initialValues.erVilkarOk}
-    readOnlySubmitButton={hasSoknad ? readOnlySubmitButton : !formProps.dirty || readOnlySubmitButton}
-    readOnly={readOnly}
-    behandlingId={behandlingId}
-    behandlingVersjon={behandlingVersjon}
-    originalErVilkarOk={originalErVilkarOk}
-  >
-    {manglendeVedlegg.length > 0 && (
-      <>
-        <VerticalSpacer twentyPx />
-        <BodyShort size="small">
-          <FormattedMessage id="SokersOpplysningspliktForm.ManglendeDokumentasjon" />
-        </BodyShort>
-        <VerticalSpacer eightPx />
-        <Row>
-          <Column xs="11">
-            <Table noHover>
-              {manglendeVedlegg.map(vedlegg => (
-                <TableRow
-                  key={
-                    vedlegg.dokumentType.kode + (vedlegg.arbeidsgiver ? vedlegg.arbeidsgiver.organisasjonsnummer : '')
-                  }
-                >
-                  <TableColumn>{dokumentTypeIds.find(dti => dti.kode === vedlegg.dokumentType.kode).navn}</TableColumn>
-                  <TableColumn>
-                    {vedlegg.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING &&
-                      formatArbeidsgiver(vedlegg.arbeidsgiver)}
-                  </TableColumn>
-                </TableRow>
-              ))}
-            </Table>
-          </Column>
-        </Row>
-      </>
-    )}
-    <ProsessStegBegrunnelseTextField readOnly={readOnly} />
-    {!readOnly && (
-      <>
-        <VerticalSpacer sixteenPx />
-        <Row>
-          <Column xs="6">
-            <RadioGroupField name="erVilkarOk" validate={[required]}>
-              <RadioOption
-                label={<FormattedMessage id={findRadioButtonTextCode(true)} />}
-                value
-                disabled={isVilkarOppfyltDisabled(hasSoknad, inntektsmeldingerSomIkkeKommer)}
-              />
-              <RadioOption label={getLabel(intl)} value={false} />
-            </RadioGroupField>
-          </Column>
-        </Row>
-      </>
-    )}
-    {readOnly && (
-      <div>
-        {originalErVilkarOk === false && behandlingsresultat?.avslagsarsak && (
-          <>
-            <VerticalSpacer sixteenPx />
-            <BodyShort size="small">
-              {getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKERSOPPLYSNINGSPLIKT)}
-            </BodyShort>
-          </>
-        )}
-      </div>
-    )}
-  </ProsessPanelTemplate>
-);
+}: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
+  const { kodeverkNavnFraKode } = useKodeverkV2();
+  return (
+    <ProsessPanelTemplate
+      title={intl.formatMessage({ id: 'SokersOpplysningspliktForm.SokersOpplysningsplikt' })}
+      isAksjonspunktOpen={!readOnlySubmitButton}
+      formName={formProps.form}
+      handleSubmit={formProps.handleSubmit}
+      isDirty={hasAksjonspunkt ? formProps.dirty : erVilkarOk !== formProps.initialValues.erVilkarOk}
+      readOnlySubmitButton={hasSoknad ? readOnlySubmitButton : !formProps.dirty || readOnlySubmitButton}
+      readOnly={readOnly}
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
+      originalErVilkarOk={originalErVilkarOk}
+    >
+      {manglendeVedlegg.length > 0 && (
+        <>
+          <VerticalSpacer twentyPx />
+          <BodyShort size="small">
+            <FormattedMessage id="SokersOpplysningspliktForm.ManglendeDokumentasjon" />
+          </BodyShort>
+          <VerticalSpacer eightPx />
+          <Row>
+            <Column xs="11">
+              <Table noHover>
+                {manglendeVedlegg.map(vedlegg => (
+                  <TableRow
+                    key={vedlegg.dokumentType + (vedlegg.arbeidsgiver ? vedlegg.arbeidsgiver.organisasjonsnummer : '')}
+                  >
+                    <TableColumn>{dokumentTypeIds.find(dti => dti.kode === vedlegg.dokumentType).navn}</TableColumn>
+                    <TableColumn>
+                      {vedlegg.dokumentType === dokumentTypeId.INNTEKTSMELDING &&
+                        formatArbeidsgiver(vedlegg.arbeidsgiver)}
+                    </TableColumn>
+                  </TableRow>
+                ))}
+              </Table>
+            </Column>
+          </Row>
+        </>
+      )}
+      <ProsessStegBegrunnelseTextField readOnly={readOnly} />
+      {!readOnly && (
+        <>
+          <VerticalSpacer sixteenPx />
+          <Row>
+            <Column xs="6">
+              <RadioGroupField name="erVilkarOk" validate={[required]}>
+                <RadioOption
+                  label={<FormattedMessage id={findRadioButtonTextCode(true)} />}
+                  value
+                  disabled={isVilkarOppfyltDisabled(hasSoknad, inntektsmeldingerSomIkkeKommer)}
+                />
+                <RadioOption label={getLabel(intl)} value={false} />
+              </RadioGroupField>
+            </Column>
+          </Row>
+        </>
+      )}
+      {readOnly && (
+        <div>
+          {originalErVilkarOk === false && behandlingsresultat?.avslagsarsak && (
+            <>
+              <VerticalSpacer sixteenPx />
+              <BodyShort size="small">
+                {kodeverkNavnFraKode(
+                  behandlingsresultat.avslagsarsak,
+                  KodeverkType.AVSLAGSARSAK,
+                  vilkarType.SOKERSOPPLYSNINGSPLIKT,
+                )}
+              </BodyShort>
+            </>
+          )}
+        </div>
+      )}
+    </ProsessPanelTemplate>
+  );
+};
 
 export const getSortedManglendeVedlegg = createSelector([(ownProps: PureOwnProps) => ownProps.soknad], soknad =>
   soknad && soknad.manglendeVedlegg
     ? soknad.manglendeVedlegg
         .slice()
-        .sort(mv1 => (mv1.dokumentType.kode === dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL ? 1 : -1))
+        .sort(mv1 => (mv1.dokumentType === dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL ? 1 : -1))
     : [],
 );
 
@@ -222,11 +226,11 @@ export const buildInitialValues = createSelector(
   ],
   (manglendeVedlegg, soknadExists, status, aksjonspunkter): FormValues => {
     const aksjonspunkt = aksjonspunkter.length > 0 ? aksjonspunkter[0] : undefined;
-    const isOpenAksjonspunkt = aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status.kode);
+    const isOpenAksjonspunkt = aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status);
     const isVilkarGodkjent = soknadExists && vilkarUtfallType.OPPFYLT === status;
 
     const inntektsmeldingerSomIkkeKommer = manglendeVedlegg
-      .filter(mv => mv.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING)
+      .filter(mv => mv.dokumentType === dokumentTypeId.INNTEKTSMELDING)
       .reduce(
         (acc, mv) => ({
           ...acc,
@@ -238,7 +242,7 @@ export const buildInitialValues = createSelector(
     return {
       inntektsmeldingerSomIkkeKommer,
       erVilkarOk: isOpenAksjonspunkt && soknadExists ? undefined : isVilkarGodkjent,
-      aksjonspunktKode: aksjonspunkt ? aksjonspunkt.definisjon.kode : aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_OVST,
+      aksjonspunktKode: aksjonspunkt ? aksjonspunkt.definisjon : aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_OVST,
       hasAksjonspunkt: aksjonspunkt !== undefined,
       ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
     };
@@ -247,7 +251,7 @@ export const buildInitialValues = createSelector(
 
 const transformValues = (values: FormValues, manglendeVedlegg: ManglendeVedleggSoknad[]) => {
   const arbeidsgivere = manglendeVedlegg
-    .filter(mv => mv.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING)
+    .filter(mv => mv.dokumentType === dokumentTypeId.INNTEKTSMELDING)
     .map(mv => mv.arbeidsgiver);
   return {
     kode: values.aksjonspunktKode,
@@ -270,18 +274,16 @@ const submitSelector = createSelector(
 );
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) => {
-  const getKodeverknavn = getKodeverknavnFn(initialOwnProps.alleKodeverk, kodeverkTyper);
-  const isOpenAksjonspunkt = initialOwnProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const isOpenAksjonspunkt = initialOwnProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status));
   const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === initialOwnProps.status;
 
   return (state, ownProps: PureOwnProps): MappedOwnProps => {
-    const { behandlingId, behandlingVersjon, alleKodeverk } = ownProps;
+    const { behandlingId, behandlingVersjon, dokumentTypeIds } = ownProps;
     return {
-      getKodeverknavn,
       onSubmit: submitSelector(ownProps),
       hasSoknad: harSoknad(ownProps),
       originalErVilkarOk: erVilkarOk,
-      dokumentTypeIds: alleKodeverk[kodeverkTyper.DOKUMENT_TYPE_ID],
+      dokumentTypeIds,
       manglendeVedlegg: getSortedManglendeVedlegg(ownProps),
       initialValues: buildInitialValues(ownProps),
       ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(

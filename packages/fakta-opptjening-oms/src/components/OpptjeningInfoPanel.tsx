@@ -1,3 +1,8 @@
+import React from 'react';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
+import { connect } from 'react-redux';
+import moment from 'moment';
 import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { addDaysToDate, omit } from '@fpsak-frontend/utils';
@@ -11,11 +16,6 @@ import {
   UtlandDokStatus,
 } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
-import moment from 'moment';
-import React from 'react';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
 import OpptjeningFaktaForm from './OpptjeningFaktaForm';
 
 export const formName = 'OpptjeningInfoPanelForm';
@@ -129,7 +129,7 @@ export const buildInitialValues = createSelector(
     return {
       opptjeningList: filteredOpptjeningList,
       aksjonspunkter:
-        aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) || null,
+        aksjonspunkter.filter(ap => ap.definisjon === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) || null,
     };
   },
 );
@@ -183,7 +183,7 @@ const transformValues = (values: Values) => {
   }
   return {
     opptjeningListe: opptjeninger,
-    kode: values.aksjonspunkter[0].definisjon.kode,
+    kode: values.aksjonspunkter[0].definisjon,
   };
 };
 
