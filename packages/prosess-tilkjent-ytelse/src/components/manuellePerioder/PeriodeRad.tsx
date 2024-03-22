@@ -3,12 +3,11 @@ import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.
 import { DatepickerField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexRow, Image, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Alert } from '@navikt/ds-react';
 import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { FieldArray, FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import Andeler from './Andeler';
-
-import { Alert } from '@navikt/ds-react';
 import styles from './periode.module.css';
 
 interface OwnProps {

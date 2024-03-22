@@ -1,5 +1,6 @@
 import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
+import { Alert } from '@navikt/ds-react';
 import { Box, DetailView, Form, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
@@ -8,8 +9,6 @@ import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import Vurderingsresultat from '../../../../types/Vurderingsresultat';
 import { finnResterendePerioder } from '../../../../util/periodUtils';
 import ContainerContext from '../../../context/ContainerContext';
-
-import { Alert } from '@navikt/ds-react';
 import AddButton from '../../add-button/AddButton';
 import BeskrivelserForPerioden from '../../beskrivelser-for-perioden/BeskrivelserForPerioden';
 import DeleteButton from '../../delete-button/DeleteButton';
