@@ -8,9 +8,8 @@ import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsre
 import { DateTimeLabel, Image, Tooltip } from '@fpsak-frontend/shared-components';
 import { Dokument, FagsakPerson } from '@k9-sak-web/types';
 import { StarFillIcon } from '@navikt/aksel-icons';
-import { BodyShort, Label, Table } from '@navikt/ds-react';
+import { BodyShort, Label, Link, Table } from '@navikt/ds-react';
 import axios from 'axios';
-import Lenke from 'nav-frontend-lenker';
 import { Select } from 'nav-frontend-skjema';
 import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -137,12 +136,12 @@ const DocumentList = ({
   };
 
   const getModiaLenke = () => (
-    <Lenke target="_blank" className={styles.modiaLink} href={getModiaPath(fagsakPerson?.personnummer)}>
+    <Link target="_blank" className={styles.modiaLink} href={getModiaPath(fagsakPerson?.personnummer)}>
       <span>
         <FormattedMessage id="DocumentList.ModiaLink" />
       </span>
       <Image className={styles.externalIcon} src={eksternLinkImageUrl} />
-    </Lenke>
+    </Link>
   );
 
   if (documents.length === 0) {

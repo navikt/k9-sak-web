@@ -1,17 +1,17 @@
+import moment from 'moment';
 import React, { useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import moment from 'moment';
 
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
-import { KodeverkMedNavn, Historikkinnslag } from '@k9-sak-web/types';
 import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
+import { Historikkinnslag, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
+import ApplicationContextPath from '../../app/ApplicationContextPath';
+import { createLocationForSkjermlenke, pathToBehandling } from '../../app/paths';
+import useGetEnabledApplikasjonContext from '../../app/useGetEnabledApplikasjonContext';
 import useBehandlingEndret from '../../behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
-import { pathToBehandling, createLocationForSkjermlenke } from '../../app/paths';
-import ApplicationContextPath from '../../app/ApplicationContextPath';
-import useGetEnabledApplikasjonContext from '../../app/useGetEnabledApplikasjonContext';
 
 type HistorikkMedTilbakekrevingIndikator = Historikkinnslag & {
   erTilbakekreving?: boolean;
@@ -117,7 +117,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
   }
 
   return (
-    <>
+    <div className="grid gap-5">
       {historikkInnslag.map(innslag => {
         let alleKodeverk = alleKodeverkK9Sak;
         if (innslag.erTilbakekreving) {
@@ -138,7 +138,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
           />
         );
       })}
-    </>
+    </div>
   );
 };
 
