@@ -1,12 +1,12 @@
+import { Link } from '@navikt/ds-react';
 import { GreenCheckIconFilled } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
-import Lenke from 'nav-frontend-lenker';
-import { Status } from '../../../types/KompletthetData';
-import ListItem from '../list-item/ListItem';
-import styles from './inntektsmeldingMottattItem.module.css';
-import ArbeidsgiverTekst from '../arbeidsgiver-tekst/ArbeidsgiverTekst';
 import ContainerContext from '../../../context/ContainerContext';
 import { DokumentOpplysninger } from '../../../types/ContainerContract';
+import { Status } from '../../../types/KompletthetData';
+import ArbeidsgiverTekst from '../arbeidsgiver-tekst/ArbeidsgiverTekst';
+import ListItem from '../list-item/ListItem';
+import styles from './inntektsmeldingMottattItem.module.css';
 
 interface MottattContentProps {
   dokumentLink: string;
@@ -17,9 +17,9 @@ const MottattContent = ({ dokumentLink }: MottattContentProps) => (
     <GreenCheckIconFilled />
     <div>
       <span className={styles.mottattLabel__text}>Mottatt</span>
-      <Lenke className={styles.mottattLabel__link} href={dokumentLink} target="_blank">
+      <Link className={styles.mottattLabel__link} href={dokumentLink} target="_blank">
         Vis inntektsmelding
-      </Lenke>
+      </Link>
     </div>
   </div>
 );

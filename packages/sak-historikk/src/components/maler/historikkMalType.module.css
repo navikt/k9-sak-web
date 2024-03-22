@@ -9,16 +9,3 @@
 .tilbakekrevingTekst {
   margin: 5px 0;
 }
-
-.dokumentLenke .dokumentIkon {
-  background-image: url('@fpsak-frontend/assets/images/dokument_filled.svg');
-  display: inline-block;
-  height: 24px;
-  margin-right: 6px;
-  vertical-align: middle;
-  width: 24px;
-}
-
-.dokumentLenke:hover .dokumentIkon {
-  background-image: url('@fpsak-frontend/assets/images/dokument_outline.svg');
-}

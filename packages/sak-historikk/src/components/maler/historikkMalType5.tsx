@@ -116,10 +116,12 @@ const lagTemaHeadingId = (historikkinnslagDel: HistorikkinnslagDel): ReactNode =
     const heading = historikkEndretFeltTypeHeadingCodes[tema.endretFeltNavn.kode];
     if (heading && tema.navnVerdi) {
       return (
-        <FormattedMessage
-          id={heading.feltId}
-          values={{ value: tema.navnVerdi, b: chunks => <b>{chunks}</b>, br: <br /> }}
-        />
+        <BodyShort size="small">
+          <FormattedMessage
+            id={heading.feltId}
+            values={{ value: tema.navnVerdi, b: chunks => <b>{chunks}</b>, br: <br /> }}
+          />
+        </BodyShort>
       );
     }
   }
@@ -185,16 +187,20 @@ const HistorikkMalType5 = ({
 
         {historikkinnslagDel.endredeFelter &&
           historikkinnslagDel.endredeFelter.map((endretFelt, i) => (
-            <div key={`endredeFelter${i + 1}`}>{formatChangedField(endretFelt, intl, getKodeverknavn)}</div>
+            <BodyShort size="small" key={`endredeFelter${i + 1}`}>
+              {formatChangedField(endretFelt, intl, getKodeverknavn)}
+            </BodyShort>
           ))}
 
         {historikkinnslagDel.opplysninger &&
           historikkinnslagDel.opplysninger.map(opplysning => (
-            <FormattedMessage
-              id={findIdForOpplysningCode(opplysning)}
-              values={{ antallBarn: opplysning.tilVerdi, b: chunks => <b>{chunks}</b>, br: <br /> }}
-              key={`${getKodeverknavn(opplysning.opplysningType)}@${opplysning.tilVerdi}`}
-            />
+            <BodyShort size="small">
+              <FormattedMessage
+                id={findIdForOpplysningCode(opplysning)}
+                values={{ antallBarn: opplysning.tilVerdi, b: chunks => <b>{chunks}</b>, br: <br /> }}
+                key={`${getKodeverknavn(opplysning.opplysningType)}@${opplysning.tilVerdi}`}
+              />
+            </BodyShort>
           ))}
 
         {historikkinnslagDel.aarsak && (

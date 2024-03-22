@@ -1,4 +1,4 @@
-import Lenke from 'nav-frontend-lenker';
+import { Link } from '@navikt/ds-react';
 import React from 'react';
 import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
 
@@ -26,14 +26,14 @@ const AksjonspunktLesemodus = ({
       </p>
       {harAksjonspunktBlivitLostTidligare && (
         <div className={styleLesemodus.redigerVurderingTekst}>
-          <Lenke
+          <Link
             href="#"
             onClick={e => {
               håndtereKlikk(e);
             }}
           >
             Rediger vurdering
-          </Lenke>
+          </Link>
         </div>
       )}
     </div>

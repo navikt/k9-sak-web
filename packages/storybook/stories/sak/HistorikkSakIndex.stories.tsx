@@ -160,17 +160,19 @@ export const visHistorikk = () => (
     }}
   >
     <Router>
-      {history.map(h => (
-        <HistorikkSakIndex
-          key={h.behandlingId}
-          historikkinnslag={h}
-          saksnummer="2"
-          getBehandlingLocation={() => locationMock}
-          alleKodeverk={alleKodeverk as any}
-          createLocationForSkjermlenke={() => locationMock}
-          erTilbakekreving={false}
-        />
-      ))}
+      <div className="grid gap-5">
+        {history.map(h => (
+          <HistorikkSakIndex
+            key={h.behandlingId}
+            historikkinnslag={h}
+            saksnummer="2"
+            getBehandlingLocation={() => locationMock}
+            alleKodeverk={alleKodeverk as any}
+            createLocationForSkjermlenke={() => locationMock}
+            erTilbakekreving={false}
+          />
+        ))}
+      </div>
     </Router>
   </div>
 );
