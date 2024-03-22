@@ -38,30 +38,15 @@ const feilutbetalingFakta = {
     tidligereVarseltBeløp: 5000,
     behandlingÅrsaker: [
       {
-        behandlingArsakType: {
-          kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
-          kodeverk: BEHANDLING_AARSAK_KODEVERK,
-        },
+        behandlingArsakType: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
       },
     ],
     behandlingsresultat: {
       type: behandlingResultatType.INNVILGET,
-      konsekvenserForYtelsen: [
-        {
-          kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
-          kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
-        },
-        {
-          kode: konsekvensForYtelsen.ENDRING_I_BEREGNING,
-          kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
-        },
-      ],
+      konsekvenserForYtelsen: [konsekvensForYtelsen.FORELDREPENGER_OPPHØRER, konsekvensForYtelsen.ENDRING_I_BEREGNING],
     },
     tilbakekrevingValg: {
-      videreBehandling: {
-        kode: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
-        kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
-      },
+      videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
     },
     datoForRevurderingsvedtak: '2019-01-01',
   },
@@ -155,12 +140,8 @@ export const visAksjonspunktForFeilutbetaling = () => (
     feilutbetalingAarsak={object('feilutbetalingAarsak', feilutbetalingAarsak)}
     aksjonspunkter={[
       {
-        definisjon: {
-          kode: aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING,
+        status: aksjonspunktStatus.OPPRETTET,
         begrunnelse: undefined,
         kanLoses: true,
         erAktivt: true,
@@ -179,3 +160,35 @@ export const visAksjonspunktForFeilutbetaling = () => (
     hasOpenAksjonspunkter={boolean('hasOpenAksjonspunkter', true)}
   />
 );
+
+export const faktaFeilutbetalingTS = () => {
+  const test = 'test';
+  return (
+    <FeilutbetalingFaktaIndex
+      behandling={behandling}
+      feilutbetalingFakta={object('feilutbetalingFakta', feilutbetalingFakta)}
+      feilutbetalingAarsak={object('feilutbetalingAarsak', feilutbetalingAarsak)}
+      aksjonspunkter={[
+        {
+          definisjon: aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING,
+          status: aksjonspunktStatus.OPPRETTET,
+          begrunnelse: undefined,
+          kanLoses: true,
+          erAktivt: true,
+        },
+      ]}
+      alleKodeverk={alleKodeverk}
+      fpsakKodeverk={alleKodeverk}
+      alleMerknaderFraBeslutter={{
+        [aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING]: object(
+          'merknaderFraBeslutter',
+          merknaderFraBeslutter,
+        ),
+      }}
+      submitCallback={action('button-click')}
+      readOnly={boolean('readOnly', false)}
+      hasOpenAksjonspunkter={boolean('hasOpenAksjonspunkter', true)}
+      v2
+    />
+  );
+};

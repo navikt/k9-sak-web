@@ -22,14 +22,8 @@ export const visModalEtterGodkjenning = () => (
     behandling={
       {
         id: 1,
-        status: {
-          kode: behandlingStatus.FATTER_VEDTAK,
-          kodeverk: '',
-        },
-        type: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        },
+        status: behandlingStatus.FATTER_VEDTAK,
+        type: behandlingType.FORSTEGANGSSOKNAD,
         behandlingsresultat: {
           type: behandlingResultatType.OPPHOR,
         },
@@ -37,10 +31,7 @@ export const visModalEtterGodkjenning = () => (
     }
     closeEvent={action('button-click')}
     allAksjonspunktApproved
-    fagsakYtelseType={{
-      kode: text('Fagsakytelsetype', fagsakYtelseType.FORELDREPENGER),
-      kodeverk: '',
-    }}
+    fagsakYtelseType={fagsakYtelseType.FORELDREPENGER}
     erKlageWithKA={false}
     harSammeResultatSomOriginalBehandling={boolean('Har samme resultat som original behandling', false)}
   />
@@ -51,25 +42,14 @@ export const visModalEtterGodkjenningAvKlage = () => (
     behandling={
       {
         id: 1,
-        status: {
-          kode: behandlingStatus.FATTER_VEDTAK,
-          kodeverk: '',
-        },
-        type: {
-          kode: behandlingType.KLAGE,
-          kodeverk: '',
-        },
-        behandlingsresultat: {
-          type: behandlingResultatType.OPPHOR),
-        },
+        status: behandlingStatus.FATTER_VEDTAK,
+        type: behandlingType.KLAGE,
+        behandlingsresultat: { type: behandlingResultatType.OPPHOR },
       } as Behandling
     }
     closeEvent={action('button-click')}
     allAksjonspunktApproved
-    fagsakYtelseType={{
-      kode: text('Fagsakytelsetype', fagsakYtelseType.FORELDREPENGER),
-      kodeverk: '',
-    }}
+    fagsakYtelseType={fagsakYtelseType.FORELDREPENGER}
     erKlageWithKA={boolean('erKlageWithKA', false)}
     harSammeResultatSomOriginalBehandling={boolean('Har samme resultat som original behandling', false)}
   />
@@ -80,25 +60,14 @@ export const visModalEtterTilbakesendingTilSaksbehandler = () => (
     behandling={
       {
         id: 1,
-        status: {
-          kode: behandlingStatus.FATTER_VEDTAK,
-          kodeverk: '',
-        },
-        type: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        },
-        behandlingsresultat: {
-          type: behandlingResultatType.OPPHOR),
-        },
+        status: behandlingStatus.FATTER_VEDTAK,
+        type: behandlingType.FORSTEGANGSSOKNAD,
+        behandlingsresultat: { type: behandlingResultatType.OPPHOR },
       } as Behandling
     }
     closeEvent={action('button-click')}
     allAksjonspunktApproved={false}
-    fagsakYtelseType={{
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: '',
-    }}
+    fagsakYtelseType={fagsakYtelseType.FORELDREPENGER}
     erKlageWithKA={false}
     harSammeResultatSomOriginalBehandling={boolean('Har samme resultat som original behandling', false)}
   />
