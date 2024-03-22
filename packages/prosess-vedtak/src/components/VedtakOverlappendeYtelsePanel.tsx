@@ -5,7 +5,6 @@ import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/t
 import { KodeverkMedNavn, OverlappendePeriode } from '@k9-sak-web/types';
 import { Accordion, Alert, BodyLong, Checkbox, CheckboxGroup, Heading } from '@navikt/ds-react';
 import { useFormikContext } from 'formik';
-import { EtikettFokus, EtikettInfo } from 'nav-frontend-etiketter';
 import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { sorterOverlappendeRader } from '../utils/periodeUtils';
@@ -110,18 +109,18 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
             <BorderBox>
               <header>Detaljer om periode</header>
               <div className={styles.periodeDetaljer}>
-                <EtikettFokus className={styles.periodeDetalj}>
+                <Tag variant="warning" className={styles.periodeDetalj}>
                   <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserKilde' })}</strong>
                   {utledFagSystem(valgtPeriode.periodeinfo.kilde.kode)}
-                </EtikettFokus>
-                <EtikettInfo className={styles.periodeDetalj}>
+                </Tag>
+                <Tag variant="info" className={styles.periodeDetalj}>
                   <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserYtelse' })}</strong>
                   {utledYtelseType(valgtPeriode.periodeinfo.ytelseType.kode)}
-                </EtikettInfo>
-                <EtikettInfo className={styles.periodeDetalj}>
+                </Tag>
+                <Tag variant="info" className={styles.periodeDetalj}>
                   <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserPeriode' })}</strong>
                   {valgtPeriode.fom} - {valgtPeriode.tom}
-                </EtikettInfo>
+                </Tag>
               </div>
             </BorderBox>
             <VerticalSpacer sixteenPx />

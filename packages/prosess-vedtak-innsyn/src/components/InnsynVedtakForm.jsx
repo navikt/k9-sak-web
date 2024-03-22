@@ -112,7 +112,7 @@ export const InnsynVedtakFormImpl = ({
                 readOnly={readOnly}
                 badges={[
                   {
-                    type: 'fokus',
+                    type: 'warning',
                     textId: getLanguageCodeFromSprakkode(sprakkode),
                     title: 'Malform.Beskrivelse',
                   },

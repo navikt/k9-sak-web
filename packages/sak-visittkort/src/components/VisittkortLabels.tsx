@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { EtikettAdvarsel, EtikettFokus, EtikettInfo } from 'nav-frontend-etiketter';
 import React, { useMemo } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
@@ -31,41 +30,41 @@ const VisittkortLabels = ({
     <>
       {personopplysninger && personopplysninger.dodsdato && (
         <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.DodTittel' })} alignBottom>
-          <EtikettInfo className={styles.etikett}>
+          <Tag variant="info" className={styles.etikett}>
             <FormattedMessage id="VisittkortLabels.Dod" values={{ dato: dateFormat(personopplysninger.dodsdato) }} />
-          </EtikettInfo>
+          </Tag>
         </Tooltip>
       )}
       {personopplysninger &&
         personopplysninger.diskresjonskode?.kode === diskresjonskodeType.KODE6 &&
         !personopplysninger.dodsdato && (
           <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.Diskresjon6Tittel' })} alignBottom>
-            <EtikettAdvarsel className={styles.etikett}>
+            <Tag variant="error" className={styles.etikett}>
               <FormattedMessage id="VisittkortLabels.Diskresjon6" />
-            </EtikettAdvarsel>
+            </Tag>
           </Tooltip>
         )}
       {personopplysninger &&
         personopplysninger.diskresjonskode?.kode === diskresjonskodeType.KODE7 &&
         !personopplysninger.dodsdato && (
           <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.Diskresjon7Tittel' })} alignBottom>
-            <EtikettFokus className={styles.etikett}>
+            <Tag variant="warning" className={styles.etikett}>
               <FormattedMessage id="VisittkortLabels.Diskresjon7" />
-            </EtikettFokus>
+            </Tag>
           </Tooltip>
         )}
       {harVerge && (
         <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.VergeTittel' })} alignBottom>
-          <EtikettInfo className={styles.etikett}>
+          <Tag variant="info" className={styles.etikett}>
             <FormattedMessage id="VisittkortLabels.Verge" />
-          </EtikettInfo>
+          </Tag>
         </Tooltip>
       )}
       {personopplysninger && erSokerUnder18 && (
         <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.Under18Tittel' })} alignBottom>
-          <EtikettInfo className={styles.etikett}>
+          <Tag variant="info" className={styles.etikett}>
             <FormattedMessage id="VisittkortLabels.Under18" />
-          </EtikettInfo>
+          </Tag>
         </Tooltip>
       )}
     </>
