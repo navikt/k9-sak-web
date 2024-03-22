@@ -33,7 +33,6 @@ import 'nav-frontend-lukknapp-style/dist/main.css';
 import 'nav-frontend-paneler-style/dist/main.css';
 import 'nav-frontend-popover-style/dist/main.css';
 import 'nav-frontend-skjema-style/dist/main.css';
-import 'nav-frontend-snakkeboble-style/dist/main.css';
 import 'nav-frontend-tabs-style/dist/main.css';
 import 'nav-frontend-typografi-style/dist/main.css';
 
