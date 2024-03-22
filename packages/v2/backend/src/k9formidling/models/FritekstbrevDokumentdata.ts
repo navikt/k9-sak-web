@@ -1,6 +1,6 @@
-import { isObject } from "../../typecheck/isObject.ts";
-import { isString } from "../../typecheck/isString.ts";
-import { isArray } from "../../typecheck/isArray.ts";
+import { isObject } from "../../typecheck/isObject.js";
+import { isString } from "../../typecheck/isString.js";
+import { isArray } from "../../typecheck/isArray.js";
 
 export interface FritekstbrevDokumentdata {
   readonly tittel: string;

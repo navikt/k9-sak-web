@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Select, TextField, VStack } from "@navikt/ds-react"
+import { Select, VStack } from "@navikt/ds-react"
 import { Template } from "@k9-sak-web/backend/k9formidling/models/Template.ts";
 import { FritekstbrevDokumentdata } from "@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.ts";
 import { YtelsesType } from "@k9-sak-web/backend/k9sak/extra/ytelseTyper.ts";
 import { ArbeidsgiverOpplysningerPerId, Personopplysninger } from "@k9-sak-web/types";
-import { lagVisningsnavnForMottaker } from "../../utils/formidling.ts";
-import { MottakerDto } from "@navikt/k9-sak-typescript-client";
+import { lagVisningsnavnForMottaker } from "../../utils/formidling.js";
 
 export interface BackendApi {
   hentInnholdBrevmal(sakstype: string, eksternReferanse: string, maltype: string): Promise<FritekstbrevDokumentdata[]>;

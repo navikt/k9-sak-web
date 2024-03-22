@@ -1,6 +1,6 @@
 import type { FritekstbrevinnholdDto, MottakerDto } from "@navikt/k9-sak-typescript-client";
 import { YtelsesType } from "../../k9sak/extra/ytelseTyper.js";
-import { AvsenderApplikasjon } from "./AvsenderApplikasjon.ts";
+import { AvsenderApplikasjon } from "./AvsenderApplikasjon.js";
 
 
 /**

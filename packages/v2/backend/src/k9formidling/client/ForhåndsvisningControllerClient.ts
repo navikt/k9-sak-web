@@ -1,4 +1,4 @@
-import { ForhåndsvisDto } from "../models/ForhåndsvisDto.ts";
+import { ForhåndsvisDto } from "../models/ForhåndsvisDto.js";
 
 /**
  * Dette er ein klient for server service endepunkt definert i Forhåndsvis.kt i k9-formidling.

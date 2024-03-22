@@ -1,9 +1,9 @@
 import { MottakerDto } from "@navikt/k9-sak-typescript-client";
 import { Linker } from "./Linker.js";
-import { isString } from "../../typecheck/isString.ts";
-import { isArray } from "../../typecheck/isArray.ts";
-import { isBoolean } from "../../typecheck/isBoolean.ts";
-import { isObject } from "../../typecheck/isObject.ts";
+import { isString } from "../../typecheck/isString.js";
+import { isArray } from "../../typecheck/isArray.js";
+import { isBoolean } from "../../typecheck/isBoolean.js";
+import { isObject } from "../../typecheck/isObject.js";
 
 /**
  * Matcher k9-formidling Template data class i MalController.kt
