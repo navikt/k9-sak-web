@@ -26,7 +26,6 @@ import 'nav-datovelger/lib/styles/main.css';
 import 'nav-frontend-alertstriper-style/dist/main.css';
 import 'nav-frontend-chevron-style/dist/main.css';
 import 'nav-frontend-core/dist/main.css';
-import 'nav-frontend-ekspanderbartpanel-style/dist/main.css';
 import 'nav-frontend-etiketter-style/dist/main.css';
 import 'nav-frontend-grid-style/dist/main.css';
 import 'nav-frontend-hjelpetekst-style/dist/main.css';

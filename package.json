@@ -127,7 +127,6 @@
     "@types/react": "17",
     "nav-frontend-alertstriper@4.0.2": "patch:nav-frontend-alertstriper@npm%3A4.0.2#./.yarn/patches/nav-frontend-alertstriper-npm-4.0.2-b212c92a4c.patch",
     "nav-frontend-chevron@1.0.30": "patch:nav-frontend-chevron@npm%3A1.0.30#./.yarn/patches/nav-frontend-chevron-npm-1.0.30-1fbba039a5.patch",
-    "nav-frontend-ekspanderbartpanel@4.0.4": "patch:nav-frontend-ekspanderbartpanel@npm%3A4.0.4#./.yarn/patches/nav-frontend-ekspanderbartpanel-npm-4.0.4-343a9004ea.patch",
     "nav-frontend-etiketter@3.0.3": "patch:nav-frontend-etiketter@npm%3A3.0.3#./.yarn/patches/nav-frontend-etiketter-npm-3.0.3-509c94aa5d.patch",
     "nav-frontend-grid@2.0.2": "patch:nav-frontend-grid@npm%3A2.0.2#./.yarn/patches/nav-frontend-grid-npm-2.0.2-a14357d0a8.patch",
     "nav-frontend-hjelpetekst@3.1.3": "patch:nav-frontend-hjelpetekst@npm%3A3.1.3#./.yarn/patches/nav-frontend-hjelpetekst-npm-3.1.3-f2edad701c.patch",
