@@ -3,12 +3,11 @@ import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.
 import { DatepickerField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexRow, Image, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import AlertStripe from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { FieldArray, FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import Andeler from './Andeler';
-
 import styles from './periode.module.css';
 
 interface OwnProps {
@@ -45,8 +44,16 @@ const PeriodeRad = ({
   const isAnyFormOrNyPeriodeOpen = isAnyFormOpen() || isNyPeriodeFormOpen;
   return (
     <div>
-      {meta.error && <AlertStripe type="feil">{meta.error}</AlertStripe>}
-      {meta.warning && <AlertStripe type="info">{meta.warning}</AlertStripe>}
+      {meta.error && (
+        <Alert size="small" variant="error">
+          {meta.error}
+        </Alert>
+      )}
+      {meta.warning && (
+        <Alert size="small" variant="info">
+          {meta.warning}
+        </Alert>
+      )}
 
       <Table headerTextCodes={headerTextCodes}>
         {fields.map((fieldId: string, index: number, field: FieldArrayFieldsProps<any>) => {

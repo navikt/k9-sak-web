@@ -1,14 +1,13 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Button, HelpText } from '@navikt/ds-react';
+import { Alert, Button, HelpText } from '@navikt/ds-react';
 import { RadioGruppe } from 'nav-frontend-skjema';
 
 import { KorrigerePerioderProps } from '../../../types/KorrigerePerioderProps';
 import { booleanTilTekst } from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
-import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
 import InputField from '../react-hook-form-wrappers/InputField';
 import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
@@ -159,9 +158,9 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
   return (
     <div className={styles.korrigerePerioder}>
       <div className={styles.korrigerePerioderAlertStripe}>
-        <AlertStripeTrekantVarsel
-          text={konfliktMedArbeidsgiver ? tekstKonfliktMedArbeidsgiver.instruksjon : tekst.instruksjon}
-        />
+        <Alert size="small" variant="warning">
+          {konfliktMedArbeidsgiver ? tekstKonfliktMedArbeidsgiver.instruksjon : tekst.instruksjon}
+        </Alert>
         {!konfliktMedArbeidsgiver && (
           <HelpText className={styles.korrigerePerioderHelpText} placement="right">
             Disse situasjonene kan gi rett til at det skal utbetales dager:

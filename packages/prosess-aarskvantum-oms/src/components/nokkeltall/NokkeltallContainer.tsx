@@ -1,5 +1,5 @@
 import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import DagerNavKanUtbetale from './DagerNavKanUtbetale';
@@ -74,9 +74,9 @@ const NokkeltallContainer = ({
   return (
     <section className={styles.nokkeltall}>
       {migrertData && (
-        <AlertStripeAdvarsel className={styles.varselOmMigrertData}>
+        <Alert size="small" variant="warning" className={styles.varselOmMigrertData}>
           <FormattedMessage id="Nøkkeltall.ErMigrert" />
-        </AlertStripeAdvarsel>
+        </Alert>
       )}
       <DagerSokerHarRettPa
         dagerRettPå={dagerRettPå}

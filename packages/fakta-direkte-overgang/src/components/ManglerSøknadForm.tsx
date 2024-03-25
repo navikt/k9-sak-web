@@ -2,9 +2,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { BodyShort, Button, Textarea } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Textarea } from '@navikt/ds-react';
 import { Field, Form, Formik } from 'formik';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import * as Yup from 'yup';
@@ -72,17 +71,17 @@ const ManglerSøknadForm = ({
       </AksjonspunktHelpTextTemp>
       <VerticalSpacer thirtyTwoPx />
       {manglerSøknadForPeriode() && (
-        <AlertStripeAdvarsel>
+        <Alert size="small" variant="warning">
           {' '}
           <FormattedMessage id="ManglerSøknadForm.ManglerKomplettSøknad" key="aksjonspunktText" />{' '}
-        </AlertStripeAdvarsel>
+        </Alert>
       )}
       <VerticalSpacer thirtyTwoPx />
       {manglerSøknadAnnenPart() && (
-        <AlertStripeAdvarsel>
+        <Alert size="small" variant="warning">
           {' '}
           <FormattedMessage id="ManglerSøknadForm.ManglerKomplettSøknadAnnenPart" key="aksjonspunktText" />{' '}
-        </AlertStripeAdvarsel>
+        </Alert>
       )}
 
       <VerticalSpacer thirtyTwoPx />

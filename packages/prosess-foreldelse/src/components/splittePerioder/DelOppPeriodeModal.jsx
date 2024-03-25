@@ -7,9 +7,8 @@ import {
   hasValidDate,
   required,
 } from '@fpsak-frontend/utils';
-import { BodyShort, Button, Detail, Label, Modal } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Detail, Label, Modal } from '@navikt/ds-react';
 import moment from 'moment/moment';
-import AlertStripe from 'nav-frontend-alertstriper';
 import { Column, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -59,9 +58,9 @@ export const DelOppPeriodeModalImpl = ({
         />
       </div>
       {finnesBelopMed0Verdi && (
-        <AlertStripe type="feil">
+        <Alert size="small" variant="error">
           <FormattedMessage id="DelOppPeriodeModalImpl.BelopEr0" />
-        </AlertStripe>
+        </Alert>
       )}
       <Row className={styles.marginTop}>
         <Column>

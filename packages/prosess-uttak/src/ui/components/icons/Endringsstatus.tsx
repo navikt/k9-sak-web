@@ -1,7 +1,7 @@
-import React from 'react';
 import { ContentWithTooltip } from '@navikt/ft-plattform-komponenter';
-import PillIcon from './PillIcon';
+import React from 'react';
 import EndringsstatusType from '../../../types/Endringsstatus';
+import PillIcon from './PillIcon';
 
 const Endringsstatus = ({ status }: { status: EndringsstatusType }): JSX.Element | null => {
   if (status === 'NY') {

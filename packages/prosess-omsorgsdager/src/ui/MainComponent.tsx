@@ -1,11 +1,11 @@
+import { Alert } from '@navikt/ds-react';
 import React from 'react';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import ContainerContract from '../types/ContainerContract';
 import Komponenter from '../types/Komponenter';
+import AleneOmOmsorgen from './components/alene-om-omsorgen/AleneOmOmsorgen';
 import KorrigerePerioder from './components/korrigere-perioder/KorrigerePerioder';
 import Omsorg from './components/omsorg/Omsorg';
 import VilkarKroniskSyktBarn from './components/vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
-import AleneOmOmsorgen from './components/alene-om-omsorgen/AleneOmOmsorgen';
 import VilkarMidlertidigAlene from './components/vilkar-midlertidig-alene/VilkarMidlertidigAlene';
 import ContainerContext from './context/ContainerContext';
 import styles from './global.module.css';
@@ -33,7 +33,11 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
       innhold = <AleneOmOmsorgen {...containerData.props} />;
       break;
     default:
-      innhold = <AlertStripeFeil>Noe gikk galt, vennligst prøv igjen senere</AlertStripeFeil>;
+      innhold = (
+        <Alert size="small" variant="error">
+          Noe gikk galt, vennligst prøv igjen senere
+        </Alert>
+      );
   }
 
   return (
