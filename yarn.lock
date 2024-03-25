@@ -2392,8 +2392,6 @@ __metadata:
     i18n-iso-countries: 7.10.1
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-ekspanderbartpanel: 4.0.4
-    nav-frontend-ekspanderbartpanel-style: 2.0.2
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
@@ -2998,8 +2996,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
     nav-frontend-core: 6.0.1
-    nav-frontend-ekspanderbartpanel: 4.0.4
-    nav-frontend-ekspanderbartpanel-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3383,8 +3379,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-ekspanderbartpanel: 4.0.4
-    nav-frontend-ekspanderbartpanel-style: 2.0.2
     nav-frontend-paneler: 3.0.2
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -4294,7 +4288,6 @@ __metadata:
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-core: 6.0.1
-    nav-frontend-ekspanderbartpanel: 4.0.4
     nav-frontend-hjelpetekst: 3.1.3
     nav-frontend-hjelpetekst-style: 3.0.2
     nav-frontend-ikoner-assets: 3.0.1
@@ -4327,7 +4320,6 @@ __metadata:
     moment: 2.30.1
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-alertstriper-style: 3.0.2
-    nav-frontend-ekspanderbartpanel: 4.0.4
     nav-frontend-paneler: 3.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -4431,8 +4423,6 @@ __metadata:
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
-    nav-frontend-ekspanderbartpanel: 4.0.4
-    nav-frontend-ekspanderbartpanel-style: 2.0.2
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
     nav-frontend-lenker: 2.0.2
@@ -15914,46 +15904,6 @@ __metadata:
   version: 6.0.1
   resolution: "nav-frontend-core@npm:6.0.1"
   checksum: 7673f42a2a93a08fa6952d2c32d8e5d424de437910b76d84363d7cb86a7c0691e5f475a3623c8964366b3bbd33a6defb8e3907bc61b41c3434b4619aab7567d2
-  languageName: node
-  linkType: hard
-
-"nav-frontend-ekspanderbartpanel-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-ekspanderbartpanel-style@npm:2.0.2"
-  peerDependencies:
-    nav-frontend-chevron-style: ^1.0.4
-    nav-frontend-core: ^6.0.0
-    nav-frontend-paneler-style: ^2.0.0
-    nav-frontend-typografi-style: ^2.0.0
-  checksum: 116827e6f3ece2aeeca442dbad8b7772a202640852778a39f2c9a390651e49b461cb18ef113bccd48c34ec9f6adb83845b7f8763dd321ad845b756fcd5562402
-  languageName: node
-  linkType: hard
-
-"nav-frontend-ekspanderbartpanel@npm:4.0.4":
-  version: 4.0.4
-  resolution: "nav-frontend-ekspanderbartpanel@npm:4.0.4"
-  peerDependencies:
-    "@types/react-collapse": ^5.0.0
-    classnames: ^2.2.5
-    nav-frontend-ekspanderbartpanel-style: ^2.0.0
-    nav-frontend-js-utils: ^1.0.19
-    react: ^16.8.0 || ^17.0.0
-    react-collapse: ^5.0.0
-  checksum: b694fe56582a7363d2f9f25ec614389f57bce48d9ce5e9dd6922870d39ca0c347ed020f8371430b0bea2f6685a8fa2276e7d8123dbeafc830e78a3bde96dfb77
-  languageName: node
-  linkType: hard
-
-"nav-frontend-ekspanderbartpanel@patch:nav-frontend-ekspanderbartpanel@npm%3A4.0.4#./.yarn/patches/nav-frontend-ekspanderbartpanel-npm-4.0.4-343a9004ea.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 4.0.4
-  resolution: "nav-frontend-ekspanderbartpanel@patch:nav-frontend-ekspanderbartpanel@npm%3A4.0.4#./.yarn/patches/nav-frontend-ekspanderbartpanel-npm-4.0.4-343a9004ea.patch::version=4.0.4&hash=affa99&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    "@types/react-collapse": ^5.0.0
-    classnames: ^2.2.5
-    nav-frontend-ekspanderbartpanel-style: ^2.0.0
-    nav-frontend-js-utils: ^1.0.19
-    react: ^16.8.0 || ^17.0.0
-    react-collapse: ^5.0.0
-  checksum: 22ea01f67b6659bdca0e19bbb073408302a6c3ca0a96c9793ce0708ebf3723c5f72d0aa981c31937f352cbe3eca7919d1d684a1882fc25aa751e6eba992424d6
   languageName: node
   linkType: hard
 

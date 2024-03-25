@@ -1,5 +1,5 @@
+import { ReadMore } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
-import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Overføring, {
@@ -80,7 +80,7 @@ const OverføringsdagerPanel = ({
   return (
     <div className={styles.panelContainer}>
       <div className={classNames('panel', { koronapanel: type === OverføringstypeEnum.KORONAOVERFØRING })}>
-        <EkspanderbartPanel tittel={renderTittel(type, retning, totaltAntallDager)}>
+        <ReadMore header={renderTittel(type, retning, totaltAntallDager)} size="small">
           <OverføringsraderForm
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
@@ -88,7 +88,7 @@ const OverføringsdagerPanel = ({
             type={type}
             initialValues={overføringer}
           />
-        </EkspanderbartPanel>
+        </ReadMore>
       </div>
     </div>
   );

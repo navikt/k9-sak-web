@@ -7,19 +7,6 @@
   border: none !important;
 }
 
-.utenlandsopphold__info :global .ekspanderbartPanel__tittel {
-  font-size: 16px;
-}
-
-.utenlandsopphold__info :global .ekspanderbartPanel__hode {
-  padding: 0.25rem;
-}
-
-.utenlandsopphold__info :global .ekspanderbartPanel__flex-wrapper {
-  gap: 10px;
-  justify-content: normal;
-}
-
 .utenlandsopphold__info:hover {
   border: none !important;
   box-shadow: none !important;

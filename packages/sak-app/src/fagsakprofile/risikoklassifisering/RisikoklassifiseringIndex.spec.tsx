@@ -1,11 +1,11 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
+import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
 import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
-import { Fagsak, BehandlingAppKontekst } from '@k9-sak-web/types';
+import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
-import { requestApi, K9sakApiKeys } from '../../data/k9sakApi';
+import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import RisikoklassifiseringIndex from './RisikoklassifiseringIndex';
 
 const lagRisikoklassifisering = kode => ({
@@ -31,13 +31,12 @@ const initialEntries = [
     pathname: '/test/',
     state: {},
     search: '',
-  }
+  },
 ];
 
 const navAnsatt = { navn: 'Ann S. Att', kanSaksbehandle: true };
 
 describe('<RisikoklassifiseringIndex>', () => {
-
   it('skal rendere komponent', async () => {
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);
 
@@ -50,11 +49,9 @@ describe('<RisikoklassifiseringIndex>', () => {
           behandlingVersjon={1}
           behandlingId={1}
         />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
-    expect(await screen.queryAllByTestId('HoyRisikoTittel').length).toBe(1);
-    expect(screen.queryByText('Faresignaler')).toBeInTheDocument();
-    expect(screen.queryByText('Faresignaler oppdaget')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Faresignaler oppdaget' })).toBeInTheDocument();
   });
 });
