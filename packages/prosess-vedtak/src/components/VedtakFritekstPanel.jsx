@@ -25,7 +25,7 @@ const VedtakFritekstPanelImpl = ({ begrunnelse, begrunnelseFieldName, sprakkode,
             readOnly={readOnly}
             badges={[
               {
-                type: 'fokus',
+                type: 'warning',
                 text: getLanguageFromSprakkode(sprakkode),
                 title: intl.formatMessage({ id: 'Malform.Beskrivelse' }),
               },

@@ -1,9 +1,8 @@
 import classNames from 'classnames/bind';
 import * as React from 'react';
 
-import { Label } from '@navikt/ds-react';
+import { Label, Tag } from '@navikt/ds-react';
 import { ContentWithTooltip, GreenCheckIcon, OnePersonIconBlue } from '@navikt/ft-plattform-komponenter';
-import { EtikettAdvarsel, EtikettSuksess } from 'nav-frontend-etiketter';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import { arbeidstypeTilVisning } from '../../../constants/Arbeidstype';
@@ -27,9 +26,9 @@ const cx = classNames.bind(styles);
 const getÅrsaksetiketter = (årsaker: Årsaker[]) => {
   const funnedeÅrsaker = IkkeOppfylteÅrsakerMedTekst.filter(årsak => harÅrsak(årsaker, årsak.årsak));
   return funnedeÅrsaker.map(årsak => (
-    <EtikettAdvarsel key={årsak.årsak} className={styles.uttakDetaljer__etikett}>
+    <Tag variant="error" key={årsak.årsak} className={styles.uttakDetaljer__etikett}>
       {årsak.tekst}
-    </EtikettAdvarsel>
+    </Tag>
   ));
 };
 
@@ -62,9 +61,9 @@ const utenlandsoppholdInfo = (utfall: Utfall, utenlandsopphold: { landkode: stri
   }
 
   return (
-    <EtikettSuksess className={styles.uttakDetaljer__etikett}>
+    <Tag variant="success" className={styles.uttakDetaljer__etikett}>
       {utenlandsoppholdTekst(utenlandsopphold, kodeverkUtenlandsoppholdÅrsak)}
-    </EtikettSuksess>
+    </Tag>
   );
 };
 

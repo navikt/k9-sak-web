@@ -18,7 +18,7 @@ const FritekstTextField = ({ sprakkode, readOnly, intl }) => (
       maxLength={100000}
       badges={[
         {
-          type: 'fokus',
+          type: 'warning',
           textId: getLanguageCodeFromSprakkode(sprakkode),
           title: 'Malform.Beskrivelse',
         },

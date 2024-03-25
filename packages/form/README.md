@@ -7,23 +7,22 @@ yarn add @fpsak-frontend/form
 ### CheckboxField
 
 | navn     | type   | påkrevd | default |
-|----------|--------|---------|---------|
+| -------- | ------ | ------- | ------- |
 | name     | string | x       |         |
 | label    | label  | x       |         |
 | validate | func   |         | null    |
 | readOnly | bool   |         | false   |
 
 ##### Example
+
 ```js
-<CheckboxField
-  name="flerbarnsdager"
-  label={<FormattedMessage id="UttakInfoPanel.Flerbarnsdager" />}
-/>
+<CheckboxField name="flerbarnsdager" label={<FormattedMessage id="UttakInfoPanel.Flerbarnsdager" />} />
 ```
+
 ### DatepickerField
 
 | navn     | type   | påkrevd | default        |
-|----------|--------|---------|----------------|
+| -------- | ------ | ------- | -------------- |
 | name     | string | x       |                |
 | label    | label  |         | ''             |
 | parse    | func   |         | value => value |
@@ -32,6 +31,7 @@ yarn add @fpsak-frontend/form
 | isEdited | bool   |         | false          |
 
 ###### Example
+
 ```js
 <DatepickerField
   name={`${barn}.fodselsdato`}
@@ -43,8 +43,9 @@ yarn add @fpsak-frontend/form
 ```
 
 ### DecimalField
+
 | navn            | type   | påkrevd | default  |
-|-----------------|--------|---------|----------|
+| --------------- | ------ | ------- | -------- |
 | name            | string | x       |          |
 | label           | label  |         | ''       |
 | type            | string |         | 'number' |
@@ -54,6 +55,7 @@ yarn add @fpsak-frontend/form
 | normalizeOnBlur | func   | x       |          |
 
 ##### Example
+
 ```js
 <DecimalField
   className={styles.fieldHorizontal}
@@ -67,16 +69,18 @@ yarn add @fpsak-frontend/form
 ```
 
 ### InputField
-| navn            | type   | påkrevd | default  |
-|-----------------|--------|---------|----------|
-| name            | string | x       |          |
-| label           | label  |         | ''       |
-| type            | string |         | 'number' |
-| validate        | func   |         | null     |
-| readOnly        | bool   |         | false    |
-| isEdited        | bool   |         | false    |
+
+| navn     | type   | påkrevd | default  |
+| -------- | ------ | ------- | -------- |
+| name     | string | x       |          |
+| label    | label  |         | ''       |
+| type     | string |         | 'number' |
+| validate | func   |         | null     |
+| readOnly | bool   |         | false    |
+| isEdited | bool   |         | false    |
 
 ##### Example
+
 ```js
 <InputField
   className={styles.fieldHorizontal}
@@ -89,8 +93,9 @@ yarn add @fpsak-frontend/form
 ```
 
 ### NavFieldGroup
+
 | navn             | type   | påkrevd | default |
-|------------------|--------|---------|---------|
+| ---------------- | ------ | ------- | ------- |
 | errorMessageName | string |         | null    |
 | errorMessage     | string |         | null    |
 | title            | string |         | ''      |
@@ -98,6 +103,7 @@ yarn add @fpsak-frontend/form
 | className        | string |         | ''      |
 
 ##### Example
+
 ```js
 <NavFieldGroup
     title={titleTextCode ? intl.formatMessage({ id: titleTextCode }) : undefined}
@@ -110,17 +116,18 @@ yarn add @fpsak-frontend/form
 
 ### PeriodpickerField
 
-| navn     | type   | påkrevd | default        |
-|----------|--------|---------|----------------|
-| names     | arrayOf(string) | x       |                |
-| label    | label  |         | ''             |
-| parse    | func   |         | value => value |
-| format   | func   |         | value => value |
-| readOnly | bool   |         | false          |
-| isEdited | bool   |         | false          |
-| renderIfMissingDateOnReadOnly | bool   |         | false          |
+| navn                          | type            | påkrevd | default        |
+| ----------------------------- | --------------- | ------- | -------------- |
+| names                         | arrayOf(string) | x       |                |
+| label                         | label           |         | ''             |
+| parse                         | func            |         | value => value |
+| format                        | func            |         | value => value |
+| readOnly                      | bool            |         | false          |
+| isEdited                      | bool            |         | false          |
+| renderIfMissingDateOnReadOnly | bool            |         | false          |
 
 ###### Example
+
 ```js
 <PeriodpickerField
   names={['fom', 'tom']}
@@ -130,10 +137,10 @@ yarn add @fpsak-frontend/form
 />
 ```
 
-
 ### RadioGroupField
+
 | navn         | type             | påkrevd | default      | beskrivelse                                   |
-|--------------|------------------|---------|--------------|-----------------------------------------------|
+| ------------ | ---------------- | ------- | ------------ | --------------------------------------------- |
 | name         | string           | x       |              |                                               |
 | label        | node             |         | ''           |                                               |
 | columns      | number           |         | 0            | Antall kolonner som valgene skal fordeles på. |
@@ -144,10 +151,16 @@ yarn add @fpsak-frontend/form
 | direction    | string           |         | 'horizontal' |                                               |
 | DOMName      | string           |         | undefined    |                                               |
 
-
 ##### Example
+
 ```js
-<RadioGroupField name="ektefellesBarn" validate={[required]} bredde="XL" readOnly={readOnly} isEdited={ektefellesBarnIsEdited}>
+<RadioGroupField
+  name="ektefellesBarn"
+  validate={[required]}
+  bredde="XL"
+  readOnly={readOnly}
+  isEdited={ektefellesBarnIsEdited}
+>
   ...
 </RadioGroupField>
 ```
@@ -155,7 +168,7 @@ yarn add @fpsak-frontend/form
 ### RadioOption
 
 | navn               | type   | påkrevd | default         |
-|--------------------|--------|---------|-----------------|
+| ------------------ | ------ | ------- | --------------- |
 | name               | string |         | ''              |
 | label              | label  | x       |                 |
 | value              | any    | x       |                 |
@@ -169,13 +182,15 @@ yarn add @fpsak-frontend/form
 | manualHideChildren | bool   |         | false           |
 
 ##### Example
+
 ```js
-<RadioOption label={"bacon"} value={false} />
+<RadioOption label={'bacon'} value={false} />
 ```
 
 ### SelectField
+
 | navn               | type            | påkrevd | default |
-|--------------------|-----------------|---------|---------|
+| ------------------ | --------------- | ------- | ------- |
 | name               | string          | x       |         |
 | label              | label           | x       |         |
 | selectValues       | arrayOf(object) | x       |         |
@@ -185,13 +200,18 @@ yarn add @fpsak-frontend/form
 | hideValueOnDisable | bool            |         | false   |
 
 ##### Example
+
 ```js
 <SelectField
   name="aktivitetType.kode"
-  label={"bacon"}
+  label={'bacon'}
   validate={[required]}
-  placeholder={"bacon"}
-  selectValues={opptjeningAktivitetTypes.map(oat => <option key={oat.kode} value={oat.kode}>{oat.navn}</option>)}
+  placeholder={'bacon'}
+  selectValues={opptjeningAktivitetTypes.map(oat => (
+    <option key={oat.kode} value={oat.kode}>
+      {oat.navn}
+    </option>
+  ))}
   readOnly={readOnly}
 />
 ```
@@ -199,7 +219,7 @@ yarn add @fpsak-frontend/form
 ### TextAreaField
 
 | navn     | type            | påkrevd | default |
-|----------|-----------------|---------|---------|
+| -------- | --------------- | ------- | ------- |
 | name     | string          | x       |         |
 | label    | label           | x       |         |
 | validate | func            |         | null    |
@@ -210,6 +230,7 @@ yarn add @fpsak-frontend/form
 | badges   | arrayOf(object) |         | null    |
 
 ##### Example
+
 ```js
 <TextAreaField
   name="overskrift"
@@ -219,11 +240,12 @@ yarn add @fpsak-frontend/form
   rows={1}
   readOnly={readOnly}
   className={styles.smallTextArea}
-  badges={[{
-    type: 'fokus',
-    textId: getLanguageCodeFromSprakkode(sprakkode),
-    title: 'Malform.Beskrivelse',
-  }]}
+  badges={[
+    {
+      type: 'warning',
+      textId: getLanguageCodeFromSprakkode(sprakkode),
+      title: 'Malform.Beskrivelse',
+    },
+  ]}
 />
 ```
-

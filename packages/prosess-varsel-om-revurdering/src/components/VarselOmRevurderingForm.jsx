@@ -124,7 +124,7 @@ export class VarselOmRevurderingFormImpl extends React.Component {
             {sendVarsel && (
               <ArrowBox>
                 <TextAreaField
-                  badges={[{ textId: languageCode, type: 'fokus', title: 'Malform.Beskrivelse' }]}
+                  badges={[{ textId: languageCode, type: 'warning', title: 'Malform.Beskrivelse' }]}
                   name="fritekst"
                   label={intl.formatMessage({ id: 'VarselOmRevurderingForm.FritekstIBrev' })}
                   validate={[required, minLength3, hasValidText]}

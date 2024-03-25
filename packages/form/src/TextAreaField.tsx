@@ -1,5 +1,4 @@
-import { Textarea, TextareaProps } from '@navikt/ds-react';
-import EtikettFokus from 'nav-frontend-etiketter';
+import { Tag, Textarea, TextareaProps } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { Field } from 'redux-form';
@@ -8,7 +7,7 @@ import ReadOnlyField from './ReadOnlyField';
 import renderNavField from './renderNavField';
 import styles from './textAreaField.module.css';
 
-type BadgesType = 'suksess' | 'info' | 'advarsel' | 'fokus';
+type BadgesType = 'success' | 'info' | 'warning' | 'error';
 
 interface Badges {
   textId: string;
@@ -48,9 +47,9 @@ const TextAreaWithBadge = ({
     {badges && (
       <div className={styles.etikettWrapper}>
         {badges.map(({ textId, type, title }) => (
-          <EtikettFokus key={textId} type={type} title={intl.formatMessage({ id: title })}>
+          <Tag variant={type || 'warning'} key={textId} title={intl.formatMessage({ id: title })}>
             <FormattedMessage id={textId} />
-          </EtikettFokus>
+          </Tag>
         ))}
       </div>
     )}
