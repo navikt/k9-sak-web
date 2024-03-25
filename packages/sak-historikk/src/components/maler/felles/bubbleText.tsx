@@ -2,6 +2,7 @@ import { NedChevron, OppChevron } from 'nav-frontend-chevron';
 import React, { useCallback, useState } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 
+import { BodyShort } from '@navikt/ds-react';
 import styles from './bubbleText.module.css';
 
 const truncateText = (tekst: string, cutOffLength: number): string =>
@@ -32,13 +33,17 @@ const BubbleText = ({ intl, cutOffLength = 83, bodyText = '' }: OwnProps & Wrapp
   }, []);
 
   if (bodyText.length < cutOffLength + 1) {
-    return <div>{bodyText}</div>;
+    return <BodyShort size="small">{bodyText}</BodyShort>;
   }
 
   return (
     <>
-      {expanded && <div>{bodyText}</div>}
-      {!expanded && <div className={styles.breakWord}>{truncateText(bodyText, cutOffLength)}</div>}
+      {expanded && <BodyShort size="small">{bodyText}</BodyShort>}
+      {!expanded && (
+        <BodyShort size="small" className={styles.breakWord}>
+          {truncateText(bodyText, cutOffLength)}
+        </BodyShort>
+      )}
       <button
         type="button"
         onClick={handleOnClick}

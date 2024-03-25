@@ -2,8 +2,8 @@ import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { pathToFagsak } from '@k9-sak-web/sak-app/src/app/paths';
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { Fagsak } from '@k9-sak-web/types';
+import { Link } from '@navikt/ds-react';
 import { AlertStripeFeil, AlertStripeInfo } from 'nav-frontend-alertstriper';
-import Lenke from 'nav-frontend-lenker';
 import React, { useEffect } from 'react';
 import styles from './andreSakerPåSøkerStripe.module.css';
 
@@ -51,7 +51,7 @@ const AndreSakerPåSøkerStripe: React.FC<Props> = ({ søkerIdent, saksnummer, f
       const harMerEnnEnFagsak = fagsakerPåSøker.length > 1;
       const fagsakErSisteILista = index === fagsakerPåSøker.length - 1;
       return (
-        <Lenke
+        <Link
           key={fagsak.saksnummer}
           className={styles.fagsakLenke}
           href={`/k9/web${pathToFagsak(fagsak.saksnummer)}`}
@@ -59,7 +59,7 @@ const AndreSakerPåSøkerStripe: React.FC<Props> = ({ søkerIdent, saksnummer, f
         >
           {fagsak.saksnummer}
           {harMerEnnEnFagsak && !fagsakErSisteILista ? ',' : ''}
-        </Lenke>
+        </Link>
       );
     });
 
