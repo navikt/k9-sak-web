@@ -8,7 +8,7 @@
  *
  * Dette sidan vi ønsker å bruke nye openapi genererte typer så mykje som mulig når vi kjem lenger i omskriving.
  */
-interface Personopplysninger {
+export interface Personopplysninger {
   readonly aktoerId?: string;
   readonly navn?: string;
   readonly fnr?: string;
@@ -19,7 +19,7 @@ interface ArbeidsgiverOpplysninger {
   readonly navn: string;
 }
 
-type ArbeidsgiverOpplysningerPerId = Record<string, ArbeidsgiverOpplysninger>
+export type ArbeidsgiverOpplysningerPerId = Record<string, ArbeidsgiverOpplysninger>;
 
 export const lagVisningsnavnForMottaker = (
   mottakerId: string,
@@ -39,4 +39,4 @@ export const lagVisningsnavnForMottaker = (
   }
 
   return mottakerId;
-}
+};
