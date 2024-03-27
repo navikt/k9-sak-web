@@ -1,6 +1,5 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
 
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -15,15 +14,15 @@ const withWidthProvider = story => <div style={{ width: '600px' }}>{story()}</di
 export default {
   title: 'sak/sak-risikoklassifisering',
   component: RisikoklassifiseringSakIndex,
-  decorators: [withKnobs, withReduxProvider, withWidthProvider],
+  decorators: [withReduxProvider, withWidthProvider],
 };
 
 export const visPanelUtenInformasjon = () => (
   <RisikoklassifiseringSakIndex
     behandlingId={1}
     behandlingVersjon={1}
-    isPanelOpen={boolean('isPanelOpen', false)}
-    readOnly={boolean('readOnly', false)}
+    isPanelOpen={false}
+    readOnly={false}
     submitAksjonspunkt={action('button-click') as () => Promise<any>}
     toggleRiskPanel={action('button-click')}
   />
@@ -39,8 +38,8 @@ export const visPanelForLavRisikoklassifisering = () => (
         kodeverk: '',
       },
     }}
-    isPanelOpen={boolean('isPanelOpen', false)}
-    readOnly={boolean('readOnly', false)}
+    isPanelOpen={false}
+    readOnly={false}
     submitAksjonspunkt={action('button-click') as () => Promise<any>}
     toggleRiskPanel={action('button-click')}
   />
@@ -79,7 +78,7 @@ export const visPanelForHøyRisikoklassifisering = () => (
         ],
       },
     }}
-    readOnly={boolean('readOnly', false)}
+    readOnly={false}
     submitAksjonspunkt={action('button-click') as () => Promise<any>}
     isPanelOpen
     toggleRiskPanel={action('button-click')}
