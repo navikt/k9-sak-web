@@ -2,6 +2,7 @@
   "name": "k9-sak-web",
   "description": "Klient for K9",
   "main": "./dist/index.js",
+  "type": "module",
   "author": "NAV",
   "private": true,
   "license": "SEE LICENSE IN LICENSE",
