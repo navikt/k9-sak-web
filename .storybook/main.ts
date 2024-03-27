@@ -5,6 +5,7 @@ const config: StorybookConfig = {
   addons: [
     '@storybook/addon-actions',
     '@storybook/addon-interactions',
+    '@storybook/addon-controls',
     {
       name: '@storybook/addon-docs',
       options: {
