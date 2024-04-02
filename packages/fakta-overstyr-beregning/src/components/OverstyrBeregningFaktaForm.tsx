@@ -7,9 +7,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { AksjonspunktHelpTextTemp, BorderBox, Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { Button, Textarea } from '@navikt/ds-react';
+import { Alert, Button, Textarea } from '@navikt/ds-react';
 import { isDate } from 'date-fns';
-import AlertStripe from 'nav-frontend-alertstriper';
 import { EtikettFokus, EtikettInfo } from 'nav-frontend-etiketter';
 import { OverstyrInputBeregningDto } from '../types/OverstyrInputBeregningDto';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
@@ -243,9 +242,9 @@ const OverstyrBeregningFaktaForm = ({
             {(readOnly || !submittable) && (
               <>
                 <VerticalSpacer sixteenPx />
-                <AlertStripe type="advarsel">
+                <Alert size="small" variant="warning">
                   <FormattedMessage id="OverstyrInputForm.KanIkkeBekreftes" />
-                </AlertStripe>
+                </Alert>
               </>
             )}
             <VerticalSpacer sixteenPx />

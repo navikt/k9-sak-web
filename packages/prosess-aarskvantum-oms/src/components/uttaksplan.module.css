@@ -1,11 +1,5 @@
 .alertstripe {
   margin-bottom: 1em;
-  padding-bottom: 0.5em;
-  padding-top: 0.5em;
-}
-
-.alertstripe > *:not(:first-child) {
-  max-width: 100%;
 }
 
 .uttaksboks {
