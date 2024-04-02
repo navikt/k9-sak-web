@@ -1,15 +1,12 @@
 import mottakerTyper from '@fpsak-frontend/kodeverk/src/mottakerTyper';
-import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr, getRangeOfMonths } from '@fpsak-frontend/utils';
-import { BodyShort } from '@navikt/ds-react';
+import { Kodeverk, Periode } from '@k9-sak-web/types';
+import { BodyShort, Table } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import moment from 'moment/moment';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-
 import CollapseButton from './CollapseButton';
-
 import styles from './avregningTable.module.css';
 
 const classNames = classnames.bind(styles);
@@ -67,7 +64,7 @@ const createColumns = (perioder, rangeOfMonths, nextPeriod) => {
   });
 
   return perioderData.map((måned, månedIndex) => (
-    <TableColumn
+    <Table.DataCell
       key={`columnIndex${månedIndex + 1}`}
       className={classNames({
         rodTekst: måned.beløp < 0,
@@ -77,7 +74,7 @@ const createColumns = (perioder, rangeOfMonths, nextPeriod) => {
       })}
     >
       {formatCurrencyNoKr(måned.beløp)}
-    </TableColumn>
+    </Table.DataCell>
   ));
 };
 
@@ -109,7 +106,28 @@ const getPeriod = (ingenPerioderMedAvvik, periodeFom, mottaker) =>
     mottaker.nesteUtbPeriode.tom,
   );
 
-const AvregningTable = ({ simuleringResultat, toggleDetails, showDetails, ingenPerioderMedAvvik }) =>
+interface AvregningTableProps {
+  toggleDetails: (id: number) => void;
+  showDetails: [{ id: number; show: boolean }];
+  simuleringResultat: {
+    periode: Periode;
+    perioderPerMottaker: [
+      {
+        resultatOgMotregningRader: object[];
+        nesteUtbPeriode: Periode;
+        resultatPerFagområde: [{ fagOmrådeKode: Kodeverk; rader: [{ feltnavn: string; resultaterPerMåned: Periode }] }];
+      },
+    ];
+  };
+  ingenPerioderMedAvvik: boolean;
+}
+
+const AvregningTable = ({
+  simuleringResultat,
+  toggleDetails,
+  showDetails,
+  ingenPerioderMedAvvik,
+}: AvregningTableProps) =>
   simuleringResultat.perioderPerMottaker.map((mottaker, mottakerIndex) => {
     const rangeOfMonths = getPeriod(ingenPerioderMedAvvik, simuleringResultat.periode?.fom, mottaker);
     const nesteMåned = mottaker.nesteUtbPeriode.tom;
@@ -117,72 +135,69 @@ const AvregningTable = ({ simuleringResultat, toggleDetails, showDetails, ingenP
     return (
       <div className={styles.tableWrapper} key={`tableIndex${mottakerIndex + 1}`}>
         {tableTitle(mottaker)}
-        <Table
-          headerColumnContent={getHeaderCodes(
-            showCollapseButton(mottaker.resultatPerFagområde),
-            { toggleDetails, showDetails: visDetaljer ? visDetaljer.show : false, mottakerIndex },
-            rangeOfMonths,
-            nesteMåned,
-          )}
-          key={`tableIndex${mottakerIndex + 1}`}
-          classNameTable={styles.simuleringTable}
-        >
-          {[]
-            .concat(
-              ...mottaker.resultatPerFagområde.map((fagOmråde, fagIndex) =>
-                fagOmråde.rader
-                  .filter(rad => {
-                    const isFeilUtbetalt = rad.feltnavn === avregningCodes.DIFFERANSE;
-                    const isRowToggable = rowToggable(fagOmråde, isFeilUtbetalt);
-                    return !rowIsHidden(isRowToggable, visDetaljer ? visDetaljer.show : false);
-                  })
-                  .map((rad, rowIndex) => {
-                    const isFeilUtbetalt = rad.feltnavn === avregningCodes.DIFFERANSE;
-                    const isRowToggable = rowToggable(fagOmråde, isFeilUtbetalt);
-                    return (
-                      <TableRow
-                        isBold={isFeilUtbetalt || ingenPerioderMedAvvik}
-                        isDashedBottomBorder={isRowToggable}
-                        isSolidBottomBorder={!isRowToggable}
-                        key={`rowIndex${fagIndex + 1}${rowIndex + 1}`}
-                      >
-                        <TableColumn>
-                          <FormattedMessage id={`Avregning.${fagOmråde.fagOmrådeKode.kode}.${rad.feltnavn}`} />
-                        </TableColumn>
-                        {createColumns(rad.resultaterPerMåned, rangeOfMonths, nesteMåned)}
-                      </TableRow>
-                    );
-                  }),
-              ),
-            )
-            .concat(
-              getResultatRadene(
-                ingenPerioderMedAvvik,
-                mottaker.resultatPerFagområde,
-                mottaker.resultatOgMotregningRader,
-              ).map((resultat, resultatIndex) => (
-                <TableRow
-                  isBold={resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED}
-                  isSolidBottomBorder
-                  key={`rowIndex${resultatIndex + 1}`}
-                >
-                  <TableColumn>
-                    <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
-                  </TableColumn>
-                  {createColumns(resultat.resultaterPerMåned, rangeOfMonths, nesteMåned)}
-                </TableRow>
-              )),
-            )}
+        <Table key={`tableIndex${mottakerIndex + 1}`} className={styles.simuleringTable}>
+          <Table.Header>
+            <Table.Row>
+              {getHeaderCodes(
+                showCollapseButton(mottaker.resultatPerFagområde),
+                { toggleDetails, showDetails: visDetaljer ? visDetaljer.show : false, mottakerIndex },
+                rangeOfMonths,
+                nesteMåned,
+              ).map(heading => (
+                <Table.HeaderCell key={heading} scope="col">
+                  {heading}
+                </Table.HeaderCell>
+              ))}
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {[]
+              .concat(
+                ...mottaker.resultatPerFagområde.map((fagOmråde, fagIndex) =>
+                  fagOmråde.rader
+                    .filter(rad => {
+                      const isFeilUtbetalt = rad.feltnavn === avregningCodes.DIFFERANSE;
+                      const isRowToggable = rowToggable(fagOmråde, isFeilUtbetalt);
+                      return !rowIsHidden(isRowToggable, visDetaljer ? visDetaljer.show : false);
+                    })
+                    .map((rad, rowIndex) => {
+                      const isFeilUtbetalt = rad.feltnavn === avregningCodes.DIFFERANSE;
+                      const isRowToggable = rowToggable(fagOmråde, isFeilUtbetalt);
+                      return (
+                        <Table.Row
+                          key={`rowIndex${fagIndex + 1}${rowIndex + 1}`}
+                          className={isFeilUtbetalt || ingenPerioderMedAvvik ? 'font-bold' : ''}
+                        >
+                          <Table.DataCell>
+                            <FormattedMessage id={`Avregning.${fagOmråde.fagOmrådeKode.kode}.${rad.feltnavn}`} />
+                          </Table.DataCell>
+                          {createColumns(rad.resultaterPerMåned, rangeOfMonths, nesteMåned)}
+                        </Table.Row>
+                      );
+                    }),
+                ),
+              )
+              .concat(
+                getResultatRadene(
+                  ingenPerioderMedAvvik,
+                  mottaker.resultatPerFagområde,
+                  mottaker.resultatOgMotregningRader,
+                ).map((resultat, resultatIndex) => (
+                  <Table.Row
+                    key={`rowIndex${resultatIndex + 1}`}
+                    className={resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED ? 'font-bold' : ''}
+                  >
+                    <Table.DataCell>
+                      <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
+                    </Table.DataCell>
+                    {createColumns(resultat.resultaterPerMåned, rangeOfMonths, nesteMåned)}
+                  </Table.Row>
+                )),
+              )}
+          </Table.Body>
         </Table>
       </div>
     );
   });
-
-AvregningTable.propTypes = {
-  toggleDetails: PropTypes.func.isRequired,
-  showDetails: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  simuleringResultat: PropTypes.shape().isRequired,
-  ingenPerioderMedAvvik: PropTypes.bool.isRequired,
-};
 
 export default AvregningTable;

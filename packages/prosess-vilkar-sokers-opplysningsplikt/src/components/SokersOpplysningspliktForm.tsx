@@ -1,23 +1,22 @@
-import { BodyShort } from '@navikt/ds-react';
-import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
-import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
-
-import { behandlingForm, behandlingFormValueSelector, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, isObject, required } from '@fpsak-frontend/utils';
 import { ProsessPanelTemplate, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Behandling, Kodeverk, KodeverkMedNavn, ManglendeVedleggSoknad, Soknad } from '@k9-sak-web/types';
+import { BodyShort, Table } from '@navikt/ds-react';
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import React from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
 
 const formName = 'SokersOpplysningspliktForm';
 
@@ -141,20 +140,25 @@ export const SokersOpplysningspliktFormImpl = ({
         <VerticalSpacer eightPx />
         <Row>
           <Column xs="11">
-            <Table noHover>
-              {manglendeVedlegg.map(vedlegg => (
-                <TableRow
-                  key={
-                    vedlegg.dokumentType.kode + (vedlegg.arbeidsgiver ? vedlegg.arbeidsgiver.organisasjonsnummer : '')
-                  }
-                >
-                  <TableColumn>{dokumentTypeIds.find(dti => dti.kode === vedlegg.dokumentType.kode).navn}</TableColumn>
-                  <TableColumn>
-                    {vedlegg.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING &&
-                      formatArbeidsgiver(vedlegg.arbeidsgiver)}
-                  </TableColumn>
-                </TableRow>
-              ))}
+            <Table>
+              <Table.Body>
+                {manglendeVedlegg.map(vedlegg => (
+                  <Table.Row
+                    key={
+                      vedlegg.dokumentType.kode + (vedlegg.arbeidsgiver ? vedlegg.arbeidsgiver.organisasjonsnummer : '')
+                    }
+                    shadeOnHover={false}
+                  >
+                    <Table.DataCell>
+                      {dokumentTypeIds.find(dti => dti.kode === vedlegg.dokumentType.kode).navn}
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      {vedlegg.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING &&
+                        formatArbeidsgiver(vedlegg.arbeidsgiver)}
+                    </Table.DataCell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
             </Table>
           </Column>
         </Row>

@@ -1,14 +1,13 @@
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { AksjonspunktHelpTextTemp, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Alert, Button, Table, Tag, Textarea } from '@navikt/ds-react';
+import { isDate } from 'date-fns';
 import { Field, FieldArray, Form, Formik } from 'formik';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import * as Yup from 'yup';
-
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { AksjonspunktHelpTextTemp, BorderBox, Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { Alert, Button, Tag, Textarea } from '@navikt/ds-react';
-import { isDate } from 'date-fns';
 import { OverstyrInputBeregningDto } from '../types/OverstyrInputBeregningDto';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
 import OverstyrBeregningAktivitetForm from './OverstyrBeregningAktivitetForm';
@@ -113,6 +112,14 @@ const OverstyrBeregningFaktaForm = ({
       aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).status.kode,
     );
 
+  const headerTextCodes = [
+    'OverstyrInputForm.FirmaHeader',
+    'OverstyrInputForm.InntektPrAar',
+    'OverstyrInputForm.RefusjonPrAar',
+    'OverstyrInputForm.StartdatoRefusjon',
+    'OverstyrInputForm.OpphorRefusjon',
+  ];
+
   /**
    * Formik liker ikke null i value feltene, null verdier kan forekomme fra backend.
    * "Oversetter" null verdier i skjemafeltene til en tom streng
@@ -187,31 +194,33 @@ const OverstyrBeregningFaktaForm = ({
                           {aktivitetliste.length > 0 && (
                             <FieldArray name={`perioder[${periodeIndex}].aktivitetliste`}>
                               {() => (
-                                <Table
-                                  stripet
-                                  headerTextCodes={[
-                                    'OverstyrInputForm.FirmaHeader',
-                                    'OverstyrInputForm.InntektPrAar',
-                                    'OverstyrInputForm.RefusjonPrAar',
-                                    'OverstyrInputForm.StartdatoRefusjon',
-                                    'OverstyrInputForm.OpphorRefusjon',
-                                  ]}
-                                >
-                                  {aktivitetliste.map((aktivitet, aktivitetIndex) => {
-                                    const { arbeidsgiverAktørId, arbeidsgiverOrgnr, skalKunneEndreRefusjon } =
-                                      aktivitet;
-                                    const firmaNavn = utledFirmaNavn(arbeidsgiverAktørId || arbeidsgiverOrgnr);
-                                    return (
-                                      <OverstyrBeregningAktivitetForm
-                                        key=""
-                                        periodeIndex={periodeIndex}
-                                        aktivitetIndex={aktivitetIndex}
-                                        firmaNavn={firmaNavn}
-                                        skalKunneEndreRefusjon={skalKunneEndreRefusjon !== false}
-                                        readOnly={readOnly}
-                                      />
-                                    );
-                                  })}
+                                <Table zebraStripes>
+                                  <Table.Header>
+                                    <Table.Row shadeOnHover={false}>
+                                      {headerTextCodes.map(text => (
+                                        <Table.HeaderCell scope="col" key={text}>
+                                          {text}
+                                        </Table.HeaderCell>
+                                      ))}
+                                    </Table.Row>
+                                  </Table.Header>
+                                  <Table.Body>
+                                    {aktivitetliste.map((aktivitet, aktivitetIndex) => {
+                                      const { arbeidsgiverAktørId, arbeidsgiverOrgnr, skalKunneEndreRefusjon } =
+                                        aktivitet;
+                                      const firmaNavn = utledFirmaNavn(arbeidsgiverAktørId || arbeidsgiverOrgnr);
+                                      return (
+                                        <OverstyrBeregningAktivitetForm
+                                          key={firmaNavn}
+                                          periodeIndex={periodeIndex}
+                                          aktivitetIndex={aktivitetIndex}
+                                          firmaNavn={firmaNavn}
+                                          skalKunneEndreRefusjon={skalKunneEndreRefusjon !== false}
+                                          readOnly={readOnly}
+                                        />
+                                      );
+                                    })}
+                                  </Table.Body>
                                 </Table>
                               )}
                             </FieldArray>

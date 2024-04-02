@@ -1,6 +1,6 @@
-import { PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { PeriodLabel } from '@fpsak-frontend/shared-components';
 import { ISO_DATE_FORMAT, formatCurrencyWithKr } from '@fpsak-frontend/utils';
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, Table } from '@navikt/ds-react';
 import moment from 'moment';
 import Panel from 'nav-frontend-paneler';
 import React from 'react';
@@ -33,19 +33,30 @@ const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({
 
   return (
     <Panel border>
-      <Table headerTextCodes={headerTextCodes}>
-        {inntekter.sort(sortInntekter).map(inntekt => {
-          const key = inntekt.navn + inntekt.utbetaler + inntekt.fom + inntekt.tom + inntekt.belop;
-          return (
-            <TableRow key={key} id={key}>
-              <TableColumn>{inntekt.utbetaler}</TableColumn>
-              <TableColumn>
-                <PeriodLabel showTodayString dateStringFom={inntekt.fom} dateStringTom={inntekt.tom} />
-              </TableColumn>
-              <TableColumn>{formatCurrencyWithKr(inntekt.belop)}</TableColumn>
-            </TableRow>
-          );
-        })}
+      <Table>
+        <Table.Header>
+          <Table.Row>
+            {headerTextCodes.map(textCode => (
+              <Table.HeaderCell scope="col" key={textCode}>
+                {textCode}
+              </Table.HeaderCell>
+            ))}
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {inntekter.sort(sortInntekter).map(inntekt => {
+            const key = inntekt.navn + inntekt.utbetaler + inntekt.fom + inntekt.tom + inntekt.belop;
+            return (
+              <Table.Row key={key} id={key}>
+                <Table.DataCell>{inntekt.utbetaler}</Table.DataCell>
+                <Table.DataCell>
+                  <PeriodLabel showTodayString dateStringFom={inntekt.fom} dateStringTom={inntekt.tom} />
+                </Table.DataCell>
+                <Table.DataCell>{formatCurrencyWithKr(inntekt.belop)}</Table.DataCell>
+              </Table.Row>
+            );
+          })}
+        </Table.Body>
       </Table>
     </Panel>
   );

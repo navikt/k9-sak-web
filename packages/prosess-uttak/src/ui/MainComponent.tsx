@@ -1,18 +1,16 @@
-import React from 'react';
-
-import { Alert, BodyShort, Button, HStack, Heading } from '@navikt/ds-react';
-
+import { HStack, Heading } from '@navikt/ds-react';
 import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
+import React from 'react';
+import { aksjonspunktVurderDatoKode, aksjonspunktkodeVentAnnenPSBSakKode } from '../constants/Aksjonspunkter';
 import ContainerContract from '../types/ContainerContract';
 import lagUttaksperiodeliste from '../util/uttaksperioder';
-import UttaksperiodeListe from './components/uttaksperiode-liste/UttaksperiodeListe';
-import ContainerContext from './context/ContainerContext';
 import Infostripe from './components/infostripe/Infostripe';
-import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe';
-import VurderDato from './components/vurderDato/VurderDato';
-import { aksjonspunktVurderDatoKode, aksjonspunktkodeVentAnnenPSBSakKode } from '../constants/Aksjonspunkter';
-import { OverstyrUttakContextProvider } from './context/OverstyrUttakContext';
 import OverstyrUttakForm from './components/overstyrUttakForm/OverstyrUttakForm';
+import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe';
+import UttaksperiodeListe from './components/uttaksperiode-liste/UttaksperiodeListe';
+import VurderDato from './components/vurderDato/VurderDato';
+import ContainerContext from './context/ContainerContext';
+import { OverstyrUttakContextProvider } from './context/OverstyrUttakContext';
 
 import styles from './mainComponent.module.css';
 
@@ -55,7 +53,6 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
       </HStack>
 
       <Infostripe harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt} />
-
 
       <OverstyrUttakContextProvider>
         <OverstyrUttakForm overstyringAktiv={overstyringAktiv} />

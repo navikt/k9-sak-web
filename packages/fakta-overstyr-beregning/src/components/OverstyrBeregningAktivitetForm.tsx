@@ -1,12 +1,9 @@
-import React from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-
-import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { parseCurrencyInput } from '@fpsak-frontend/utils';
+import { Table, TextField } from '@navikt/ds-react';
 import { Field, useFormikContext } from 'formik';
 import { Datepicker } from 'nav-datovelger';
-
-import { TextField } from '@navikt/ds-react';
+import React from 'react';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
 import styles from './OverstyrBeregningFaktaForm.module.css';
 
@@ -30,11 +27,11 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
 }) => {
   const { setFieldValue, setFieldTouched, values } = useFormikContext<OverstyrInputForBeregningDto>();
   return (
-    <TableRow key={key}>
-      <TableColumn>
+    <Table.Row key={key}>
+      <Table.DataCell>
         <span className={styles.firmaNavn}>{firmaNavn}</span>
-      </TableColumn>
-      <TableColumn>
+      </Table.DataCell>
+      <Table.DataCell>
         <Field name={`perioder.${periodeIndex}.aktivitetliste.${aktivitetIndex}.inntektPrAar`}>
           {({ field, meta }) => (
             <TextField
@@ -54,8 +51,8 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
             />
           )}
         </Field>
-      </TableColumn>
-      <TableColumn>
+      </Table.DataCell>
+      <Table.DataCell>
         <Field name={`perioder.${periodeIndex}.aktivitetliste.${aktivitetIndex}.refusjonPrAar`}>
           {({ field, meta }) => (
             <TextField
@@ -80,8 +77,8 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
             />
           )}
         </Field>
-      </TableColumn>
-      <TableColumn>
+      </Table.DataCell>
+      <Table.DataCell>
         <Field name={`perioder.${periodeIndex}.aktivitetliste.${aktivitetIndex}.startdatoRefusjon`}>
           {({ field, meta }) => (
             <>
@@ -101,8 +98,8 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
             </>
           )}
         </Field>
-      </TableColumn>
-      <TableColumn>
+      </Table.DataCell>
+      <Table.DataCell>
         <Field name={`perioder.${periodeIndex}.aktivitetliste.${aktivitetIndex}.opphørRefusjon`}>
           {({ field, meta }) => {
             const tallverdi = values.perioder[periodeIndex].aktivitetliste[aktivitetIndex].refusjonPrAar;
@@ -125,8 +122,8 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
             );
           }}
         </Field>
-      </TableColumn>
-    </TableRow>
+      </Table.DataCell>
+    </Table.Row>
   );
 };
 

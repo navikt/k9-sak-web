@@ -1,11 +1,8 @@
-import moment from 'moment';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { connect } from 'react-redux';
-
-import { SelectField, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { SelectField } from '@fpsak-frontend/form';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+import { Table } from '@navikt/ds-react';
+import moment from 'moment';
+import React from 'react';
 
 import styles from './feilutbetalingPerioderTable.module.css';
 
@@ -25,11 +22,11 @@ export const FeilutbetalingPerioderFormImpl = ({
 }) => {
   const hendelseUndertyper = getHendelseUndertyper(årsak, årsaker);
   return (
-    <TableRow>
-      <TableColumn>
+    <Table.Row shadeOnHover={false}>
+      <Table.DataCell>
         {`${moment(periode.fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(periode.tom).format(DDMMYYYY_DATE_FORMAT)}`}
-      </TableColumn>
-      <TableColumn>
+      </Table.DataCell>
+      <Table.DataCell>
         <SelectField
           name={`perioder.${elementId}.årsak`}
           selectValues={årsaker.map(a => (
@@ -58,9 +55,9 @@ export const FeilutbetalingPerioderFormImpl = ({
             label=""
           />
         )}
-      </TableColumn>
-      <TableColumn className={styles.redText}>{periode.belop}</TableColumn>
-    </TableRow>
+      </Table.DataCell>
+      <Table.DataCell className={styles.redText}>{periode.belop}</Table.DataCell>
+    </Table.Row>
   );
 };
 

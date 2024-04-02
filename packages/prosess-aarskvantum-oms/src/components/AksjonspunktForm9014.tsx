@@ -1,17 +1,10 @@
 import { CheckboxField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
 import { behandlingForm, getBehandlingFormName } from '@fpsak-frontend/form/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
-  AksjonspunktHelpTextTemp,
-  BorderBox,
-  Table,
-  TableColumn,
-  TableRow,
-  VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, hasValidValue, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
-import { Button, Label } from '@navikt/ds-react';
+import { Button, Label, Table } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -194,20 +187,22 @@ export const FormContent = ({
         <>
           <VerticalSpacer eightPx />
           <Table>
-            <TableRow isHeader>
-              <TableColumn>
-                <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.FosterbarnTittel" />
-              </TableColumn>
-            </TableRow>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell scope="col">
+                  <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.FosterbarnTittel" />
+                </Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
             {initialValues.fosterbarn.map((fosterbarnFnr, index) => {
               const fosterbarnObj = fosterbarn.find(barn => barn.fnr === fosterbarnFnr);
               const navn = fosterbarnObj && fosterbarnObj.navn ? fosterbarnObj.navn : `Fosterbarn ${index + 1}`;
               return (
-                <TableRow key={`${navn}`}>
-                  <TableColumn className={styles.vertikaltSentrert}>
+                <Table.Row key={`${navn}`}>
+                  <Table.DataCell className={styles.vertikaltSentrert}>
                     {navn} ({fosterbarnObj.fnr})
-                  </TableColumn>
-                </TableRow>
+                  </Table.DataCell>
+                </Table.Row>
               );
             })}
           </Table>

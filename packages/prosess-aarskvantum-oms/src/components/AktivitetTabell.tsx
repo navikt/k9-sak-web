@@ -1,7 +1,7 @@
 import hide from '@fpsak-frontend/assets/images/hide.svg';
 import show from '@fpsak-frontend/assets/images/show.svg';
 import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
-import { Image, Table, TableRow } from '@fpsak-frontend/shared-components/index';
+import { Image } from '@fpsak-frontend/shared-components/index';
 import { calcDays, convertHoursToDays, formatereLukketPeriode, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
 import {
   ArbeidsforholdV2,
@@ -13,7 +13,7 @@ import {
   VilkårEnum,
 } from '@k9-sak-web/types';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
-import { BodyShort, Label } from '@navikt/ds-react';
+import { BodyShort, Label, Table } from '@navikt/ds-react';
 import classNames from 'classnames';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
@@ -163,33 +163,29 @@ const AktivitetTabell = ({
           {beskrivelse}
         </Label>
       </div>
-      <Table
-        suppliedHeaders={
-          <>
-            <th>
+      <Table>
+        <Table.Header>
+          <Table.Row shadeOnHover={false}>
+            <Table.HeaderCell scope="col">
               <FormattedMessage id="Uttaksplan.Periode" />
-            </th>
-            <th>
+            </Table.HeaderCell>
+            <Table.HeaderCell scope="col">
               <FormattedMessage id="Uttaksplan.Utfall" />
-            </th>
-            <th>
+            </Table.HeaderCell>
+            <Table.HeaderCell scope="col">
               <FormattedMessage id="Uttaksplan.Fravær" />
-            </th>
+            </Table.HeaderCell>
             {skalÅrsakVises && (
-              <th>
+              <Table.HeaderCell scope="col">
                 <FormattedMessage id="Uttaksplan.Årsak" />
-              </th>
+              </Table.HeaderCell>
             )}
-            <th>
+            <Table.HeaderCell scope="col">
               <FormattedMessage id="Uttaksplan.Utbetalingsgrad" />
-            </th>
-            <th />
-          </>
-        }
-        noHover
-        withoutTbody
-        notFocusableHeader
-      >
+            </Table.HeaderCell>
+            <Table.HeaderCell scope="col" />
+          </Table.Row>
+        </Table.Header>
         {uttaksperioder.map(
           (
             {
@@ -217,18 +213,18 @@ const AktivitetTabell = ({
               switch (faneindex) {
                 case Fanenavn.HJEMMEL:
                   return (
-                    <td colSpan={antallKolonner}>
+                    <Table.DataCell colSpan={antallKolonner}>
                       {hjemler.map(hjemmel => (
                         <div key={`${periode}--${hjemmel}`}>
                           <FormattedMessage id={`Uttaksplan.Hjemmel.${hjemmel}`} />
                         </div>
                       ))}
-                    </td>
+                    </Table.DataCell>
                   );
 
                 case Fanenavn.NOKKELTALL:
                   return (
-                    <td colSpan={antallKolonner}>
+                    <Table.DataCell colSpan={antallKolonner}>
                       <NøkkeltallContainer
                         totaltAntallDager={nøkkeltall.totaltAntallDager}
                         antallDagerArbeidsgiverDekker={nøkkeltall.antallDagerArbeidsgiverDekker}
@@ -244,13 +240,13 @@ const AktivitetTabell = ({
                         migrertData={nøkkeltall.migrertData}
                         ar={ar}
                       />
-                    </td>
+                    </Table.DataCell>
                   );
 
                 default:
                   return (
                     <>
-                      <td>
+                      <Table.DataCell>
                         {sorterteVilkår.map(([vilkår, vilkårsutfall]) => (
                           <BodyShort size="small" key={`${periode}--${vilkår}`}>
                             <FormattedMessage
@@ -262,13 +258,13 @@ const AktivitetTabell = ({
                             />
                           </BodyShort>
                         ))}
-                      </td>
-                      <td>
+                      </Table.DataCell>
+                      <Table.DataCell>
                         {sorterteVilkår.map(([key, vilkårsutfall]) => (
                           <Utfall utfall={vilkårsutfall} key={`${periode}--${key}.${vilkårsutfall}`} />
                         ))}
-                      </td>
-                      <td colSpan={antallKolonner - 2} />
+                      </Table.DataCell>
+                      <Table.DataCell colSpan={antallKolonner - 2} />
                     </>
                   );
               }
@@ -280,9 +276,9 @@ const AktivitetTabell = ({
             }
 
             return (
-              <tbody key={periode}>
-                <TableRow notFocusable>
-                  <td>
+              <Table.Body key={periode}>
+                <Table.Row shadeOnHover={false}>
+                  <Table.DataCell>
                     <BodyShort
                       size="small"
                       className={classNames({
@@ -298,17 +294,17 @@ const AktivitetTabell = ({
                       )}
                       {formatereLukketPeriode(periode)}
                     </BodyShort>
-                  </td>
-                  <td>
+                  </Table.DataCell>
+                  <Table.DataCell>
                     <Utfall
                       utfall={utfall}
                       textId={utfallIngenUtbetaling ? 'Uttaksplan.Utfall.IngenUtbetaling' : undefined}
                     />
-                  </td>
-                  <td>{formaterFravær(periode, delvisFravær)}</td>
-                  {skalÅrsakVises && <td>{formaterFraværsårsak(fraværÅrsak)}</td>}
-                  <td>{`${utbetalingsgrad}%`}</td>
-                  <td>
+                  </Table.DataCell>
+                  <Table.DataCell>{formaterFravær(periode, delvisFravær)}</Table.DataCell>
+                  {skalÅrsakVises && <Table.DataCell>{formaterFraværsårsak(fraværÅrsak)}</Table.DataCell>}
+                  <Table.DataCell>{`${utbetalingsgrad}%`}</Table.DataCell>
+                  <Table.DataCell>
                     <button
                       className={styles.utvidelsesknapp}
                       onClick={() => velgPeriode(index)}
@@ -318,12 +314,12 @@ const AktivitetTabell = ({
                     >
                       <NavFrontendChevron type={erValgt ? 'opp' : 'ned'} />
                     </button>
-                  </td>
-                </TableRow>
+                  </Table.DataCell>
+                </Table.Row>
                 {erValgt && (
                   <>
-                    <TableRow className={styles.fanerad} notFocusable>
-                      <td colSpan={antallKolonner}>
+                    <Table.Row className={styles.fanerad} shadeOnHover={false}>
+                      <Table.DataCell colSpan={antallKolonner}>
                         <div className={styles.fanewrapper}>
                           <Tabs
                             tabs={faner.map(id => ({ label: <FormattedMessage id={id} /> }))}
@@ -355,17 +351,17 @@ const AktivitetTabell = ({
                             </button>
                           )}
                         </div>
-                      </td>
-                    </TableRow>
-                    <TableRow
+                      </Table.DataCell>
+                    </Table.Row>
+                    <Table.Row
                       className={classNames(styles.innholdsrad, !valgteDetaljfaner?.[index] && styles.vilkar)}
-                      notFocusable
+                      shadeOnHover={false}
                     >
                       {visVilkarHjemlerEllerNokkeltall(valgteDetaljfaner?.[index])}
-                    </TableRow>
+                    </Table.Row>
                   </>
                 )}
-              </tbody>
+              </Table.Body>
             );
           },
         )}

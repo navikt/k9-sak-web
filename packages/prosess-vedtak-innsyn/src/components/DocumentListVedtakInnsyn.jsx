@@ -1,5 +1,4 @@
-import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { BodyShort, Detail } from '@navikt/ds-react';
+import { BodyShort, Detail, Table } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -36,24 +35,35 @@ const DocumentListVedtakInnsyn = ({ documents, saksNr }) => {
       </Detail>
       <Row>
         <Column xs="6">
-          <Table noHover headerTextCodes={headerTextCodes}>
-            {documents.map(document => {
-              const dokId = parseInt(document.dokumentId, 10);
-              return (
-                <TableRow key={dokId} id={dokId}>
-                  <TableColumn className={styles.linkCol}>
-                    <a
-                      href={getLink(document, saksNr)}
-                      className="lenke lenke--frittstaende"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {document.tittel}
-                    </a>
-                  </TableColumn>
-                </TableRow>
-              );
-            })}
+          <Table>
+            <Table.Header>
+              <Table.Row shadeOnHover={false}>
+                {headerTextCodes.map(text => (
+                  <Table.HeaderCell scope="col" key={text}>
+                    {text}
+                  </Table.HeaderCell>
+                ))}
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {documents.map(document => {
+                const dokId = parseInt(document.dokumentId, 10);
+                return (
+                  <Table.Row key={dokId} id={dokId} shadeOnHover={false}>
+                    <Table.DataCell className={styles.linkCol}>
+                      <a
+                        href={getLink(document, saksNr)}
+                        className="lenke lenke--frittstaende"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {document.tittel}
+                      </a>
+                    </Table.DataCell>
+                  </Table.Row>
+                );
+              })}
+            </Table.Body>
           </Table>
         </Column>
       </Row>
