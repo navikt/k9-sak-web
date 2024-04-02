@@ -7,9 +7,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { AksjonspunktHelpTextTemp, BorderBox, Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { Alert, Button, Textarea } from '@navikt/ds-react';
+import { Alert, Button, Tag, Textarea } from '@navikt/ds-react';
 import { isDate } from 'date-fns';
-import { EtikettFokus, EtikettInfo } from 'nav-frontend-etiketter';
 import { OverstyrInputBeregningDto } from '../types/OverstyrInputBeregningDto';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
 import OverstyrBeregningAktivitetForm from './OverstyrBeregningAktivitetForm';
@@ -165,23 +164,23 @@ const OverstyrBeregningFaktaForm = ({
                     return (
                       <div key={skjaeringstidspunkt}>
                         <BorderBox>
-                          <EtikettInfo className="skjaeringstidspunkt">
+                          <Tag variant="info" className="skjaeringstidspunkt">
                             Skjæringstidspunkt: {formaterDatoString(skjaeringstidspunkt)}
-                          </EtikettInfo>
+                          </Tag>
                           {harKategoriNæring && (
                             <div>
                               <VerticalSpacer twentyPx />
-                              <EtikettFokus>
+                              <Tag variant="warning">
                                 <FormattedMessage id="OverstyrInputForm.HarKategoriNæring" />
-                              </EtikettFokus>
+                              </Tag>
                             </div>
                           )}
                           {harKategoriFrilans && (
                             <div>
                               <VerticalSpacer twentyPx />
-                              <EtikettFokus>
+                              <Tag variant="warning">
                                 <FormattedMessage id="OverstyrInputForm.HarKategoriFrilans" />
-                              </EtikettFokus>
+                              </Tag>
                             </div>
                           )}
                           <VerticalSpacer twentyPx />

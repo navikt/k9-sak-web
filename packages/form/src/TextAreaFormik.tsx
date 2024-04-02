@@ -1,6 +1,5 @@
-import { Textarea } from '@navikt/ds-react';
+import { Tag, Textarea } from '@navikt/ds-react';
 import { Field as FormikField, FormikState, connect, getIn } from 'formik';
-import { EtikettFokus } from 'nav-frontend-etiketter';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import LabelType from './LabelType';
@@ -28,9 +27,9 @@ const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges
       {badges && (
         <div className={styles.etikettWrapper}>
           {badges.map(({ text, title }) => (
-            <EtikettFokus key={text} title={title}>
+            <Tag variant="warning" key={text} title={title}>
               <span>{text}</span>
-            </EtikettFokus>
+            </Tag>
           ))}
         </div>
       )}

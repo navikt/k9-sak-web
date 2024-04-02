@@ -212,7 +212,7 @@ export class AvregningPanelImpl extends Component {
                                     id="avregningFritekst"
                                     badges={[
                                       {
-                                        type: 'fokus',
+                                        type: 'warning',
                                         textId: getLanguageCodeFromSprakkode(sprakkode),
                                         title: 'Malform.Beskrivelse',
                                       },
