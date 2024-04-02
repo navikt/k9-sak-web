@@ -13,9 +13,8 @@ import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Opptjening } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
-import { BodyShort, Button, Detail, Heading } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Detail, Heading } from '@navikt/ds-react';
 import moment from 'moment';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { TabsPure } from 'nav-frontend-tabs';
 import React, { Component, KeyboardEvent, MouseEvent } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -321,7 +320,7 @@ export class OpptjeningFaktaFormImpl extends Component<
           )}
           {dokStatus && (
             <>
-              <AlertStripeInfo className={styles.info}>
+              <Alert size="small" variant="info">
                 <FormattedMessage
                   id={
                     dokStatus === DOKUMENTASJON_VIL_BLI_INNHENTET
@@ -329,7 +328,7 @@ export class OpptjeningFaktaFormImpl extends Component<
                       : 'OpptjeningFaktaForm.DetErIkkeInnhentetDok'
                   }
                 />
-              </AlertStripeInfo>
+              </Alert>
               <VerticalSpacer twentyPx />
             </>
           )}

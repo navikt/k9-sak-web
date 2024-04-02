@@ -1,8 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import React, { useMemo } from 'react';
 
-import { Link } from '@navikt/ds-react';
-import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { Alert, Link } from '@navikt/ds-react';
 
 import styles from './punsjstripe.module.css';
 
@@ -50,7 +49,11 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ behandlingUuid, pathToLos }) 
   const harPunsjoppgaver = punsjoppgaver?.journalpostIder?.length > 0 || punsjoppgaver?.journalpostIderBarn?.length > 0;
 
   if (error) {
-    return <AlertStripeFeil>Får ikke kontakt med K9-Punsj</AlertStripeFeil>;
+    return (
+      <Alert size="small" variant="error">
+        Får ikke kontakt med K9-Punsj
+      </Alert>
+    );
   }
 
   if (!harPunsjoppgaver) {
@@ -92,10 +95,10 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ behandlingUuid, pathToLos }) 
   };
 
   return (
-    <AlertStripeAdvarsel>
+    <Alert size="small" variant="warning">
       <div>{getUløsteOppgaverText(journalpostIder, 'søkeren')}</div>
       <div className="marginTop">{getUløsteOppgaverText(journalpostIderBarn, 'barnet')}</div>
-    </AlertStripeAdvarsel>
+    </Alert>
   );
 };
 export default Punsjstripe;
