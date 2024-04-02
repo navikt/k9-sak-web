@@ -22,6 +22,7 @@
 
 .form {
   margin-top: 1rem;
+  max-width: 43.75rem;
 }
 
 .feilmelding {
