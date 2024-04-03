@@ -14,7 +14,7 @@
   width: 20px;
 }
 
-.vilkar {
+.vilkar:global(.navds-detail) {
   margin-top: 3px;
 }
 

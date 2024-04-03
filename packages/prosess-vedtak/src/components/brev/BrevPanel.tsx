@@ -3,7 +3,6 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-
 import { required, safeJSONParse } from '@fpsak-frontend/utils';
 import {
   Brevmottaker,

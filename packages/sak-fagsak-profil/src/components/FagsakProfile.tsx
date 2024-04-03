@@ -1,11 +1,9 @@
-import React, { ReactNode } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import { EtikettInfo } from 'nav-frontend-etiketter';
-
-import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer, Tooltip } from '@fpsak-frontend/shared-components';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { FlexColumn, FlexContainer, FlexRow, Tooltip, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
+import { BodyShort, Heading, Tag } from '@navikt/ds-react';
+import React, { ReactNode } from 'react';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 
 const visSakDekningsgrad = (saksKode: string, dekningsgrad?: number): boolean => {
   const erForeldrepenger = saksKode === FagsakYtelseType.FORELDREPENGER;
@@ -43,7 +41,9 @@ export const FagsakProfile = ({
         <FlexColumn>
           <FlexRow wrap>
             <FlexColumn>
-              <Systemtittel>{fagsakYtelseType.navn}</Systemtittel>
+              <Heading level="2" size="medium" className="-ml-2">
+                {fagsakYtelseType.navn}
+              </Heading>
             </FlexColumn>
             {visSakDekningsgrad(fagsakYtelseType.kode, dekningsgrad) && (
               <FlexColumn>
@@ -51,7 +51,7 @@ export const FagsakProfile = ({
                   content={intl.formatMessage({ id: 'FagsakProfile.Dekningsgrad' }, { dekningsgrad })}
                   alignBottom
                 >
-                  <EtikettInfo>{`${dekningsgrad}%`}</EtikettInfo>
+                  <Tag variant="info">{`${dekningsgrad}%`}</Tag>
                 </Tooltip>
               </FlexColumn>
             )}
@@ -62,7 +62,7 @@ export const FagsakProfile = ({
       <VerticalSpacer eightPx />
       <FlexRow>
         <FlexColumn>
-          <Normaltekst>{`${saksnummer} - ${fagsakStatus.navn}`}</Normaltekst>
+          <BodyShort size="small">{`${saksnummer} - ${fagsakStatus.navn}`}</BodyShort>
         </FlexColumn>
       </FlexRow>
     </FlexContainer>

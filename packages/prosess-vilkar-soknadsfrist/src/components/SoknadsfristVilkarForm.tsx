@@ -1,11 +1,3 @@
-import moment from 'moment';
-import hash from 'object-hash';
-import React, { SetStateAction } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
-
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -24,14 +16,17 @@ import {
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, DokumentStatus, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-
+import { BodyShort, Button, Label } from '@navikt/ds-react';
+import moment from 'moment';
+import hash from 'object-hash';
+import React, { SetStateAction } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
+import { utledInnsendtSoknadsfrist } from '../utils';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import SoknadsfristVilkarDokument, { DELVIS_OPPFYLT } from './SoknadsfristVilkarDokument';
-
-import { utledInnsendtSoknadsfrist } from '../utils';
-
 import styles from './SoknadsfristVilkarForm.module.css';
 
 const formName = 'SøknadsfristVilkårOverstyringForm';
@@ -127,9 +122,9 @@ export const SoknadsfristVilkarForm = ({
                 {[<FormattedMessage key={1} id="SoknadsfristVilkarForm.AvklarVurdering" />]}
               </AksjonspunktHelpTextTemp>
             ) : (
-              <Element>
+              <Label size="small" as="p">
                 <FormattedMessage id="SoknadsfristVilkarForm.AutomatiskVurdering" />
-              </Element>
+              </Label>
             ))}
           <VerticalSpacer eightPx />
           {Array.isArray(alleDokumenter) && alleDokumenter.length > 0 ? (
@@ -160,9 +155,9 @@ export const SoknadsfristVilkarForm = ({
                   <EditedIcon />
                 </FlexColumn>
                 <FlexColumn>
-                  <Normaltekst>
+                  <BodyShort size="small">
                     <FormattedMessage id="SoknadsfristVilkarForm.Endret" />
-                  </Normaltekst>
+                  </BodyShort>
                 </FlexColumn>
               </FlexRow>
             </>
@@ -174,9 +169,9 @@ export const SoknadsfristVilkarForm = ({
                   <Image src={advarselIkonUrl} />
                 </FlexColumn>
                 <FlexColumn>
-                  <Element>
+                  <Label size="small" as="p">
                     <FormattedMessage id="SoknadsfristVilkarForm.Unntakstilfeller" />
-                  </Element>
+                  </Label>
                 </FlexColumn>
               </FlexRow>
               <VerticalSpacer sixteenPx />
@@ -190,17 +185,23 @@ export const SoknadsfristVilkarForm = ({
                   />
                 </FlexColumn>
                 <FlexColumn>
-                  <Knapp htmlType="button" spinner={submitting} disabled={submitting} onClick={toggleAv}>
+                  <Button
+                    variant="secondary"
+                    type="button"
+                    loading={submitting}
+                    disabled={submitting}
+                    onClick={toggleAv}
+                  >
                     <FormattedMessage id="SoknadsfristVilkarForm.Avbryt" />
-                  </Knapp>
+                  </Button>
                 </FlexColumn>
               </FlexRow>
             </FlexContainer>
           )}
           {harÅpentAksjonspunkt && !erOverstyrt && (
-            <Hovedknapp mini spinner={submitting} disabled={invalid || submitting}>
+            <Button variant="primary" size="small" loading={submitting} disabled={invalid || submitting}>
               <FormattedMessage id="SoknadsfristVilkarForm.ConfirmInformation" />
-            </Hovedknapp>
+            </Button>
           )}
         </AksjonspunktBox>
       )}

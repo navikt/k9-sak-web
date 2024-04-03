@@ -4,9 +4,9 @@ import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessPanelTemplate, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
+import { Label } from '@navikt/ds-react';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
-import { Element } from 'nav-frontend-typografi';
 import React, { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -156,14 +156,14 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       isPeriodisertFormComplete={isFormComplete()}
     >
       <div className={styles.titelOgHjelpetekstFlexbox}>
-        <Element>
+        <Label size="small" as="p">
           {erOmsorgspenger && (
             <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilOmsorgspenger" />
           )}
           {erPleiepenger && (
             <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilPleiepenger" />
           )}
-        </Element>
+        </Label>
         <Hjelpetekst type={PopoverOrientering.UnderHoyre}>
           <FormattedMessage
             id="OpptjeningVilkarAksjonspunktPanel.VurderingHjelpetekst"

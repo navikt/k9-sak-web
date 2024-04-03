@@ -1,14 +1,12 @@
-import { KodeverkMedNavn } from '@k9-sak-web/types';
-import Etikettfokus from 'nav-frontend-etiketter';
-import { Column, Row } from 'nav-frontend-grid';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import React from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import Region from '@fpsak-frontend/kodeverk/src/region';
 import { getAddresses } from '@fpsak-frontend/utils';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
+import { BodyShort, Detail, Label, Tag } from '@navikt/ds-react';
+import { Column, Row } from 'nav-frontend-grid';
+import React from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
 import { BostedSokerPersonopplysninger } from '../BostedSokerFaktaIndex';
 
@@ -52,43 +50,47 @@ export const BostedSokerView = ({
   <div className={styles.defaultBostedSoker}>
     <Row>
       <Column xs="8">
-        <Undertekst>
+        <Detail>
           <FormattedMessage id={sokerTypeTextId} />
-        </Undertekst>
-        <Element>{personopplysninger.navn ? personopplysninger.navn : '-'}</Element>
-        <Normaltekst className={styles.paddingBottom}>{getAdresse(personopplysninger.adresser)}</Normaltekst>
-        <Undertekst>
+        </Detail>
+        <Label size="small" as="p">
+          {personopplysninger.navn ? personopplysninger.navn : '-'}
+        </Label>
+        <BodyShort size="small" className={styles.paddingBottom}>
+          {getAdresse(personopplysninger.adresser)}
+        </BodyShort>
+        <Detail>
           <FormattedMessage id="BostedSokerView.ForeignAddresse" />
-        </Undertekst>
-        <Normaltekst>{getUtlandsadresse(personopplysninger.adresser)}</Normaltekst>
+        </Detail>
+        <BodyShort size="small">{getUtlandsadresse(personopplysninger.adresser)}</BodyShort>
       </Column>
       <Column xs="4">
         {getPersonstatus(personopplysninger) && (
           <div className={styles.etikettMargin}>
-            <Etikettfokus
+            <Tag
+              variant="warning"
+              size="small"
               className={getPersonstatus(personopplysninger).kode === personstatusType.DOD ? styles.dodEtikett : ''}
-              type="fokus"
-              typo="undertekst"
               title={intl.formatMessage({ id: 'Personstatus.Hjelpetekst' })}
             >
               {getPersonstatus(personopplysninger).kode === personstatusType.UDEFINERT
                 ? intl.formatMessage({ id: 'Personstatus.Ukjent' })
                 : personstatusTypes.find(s => s.kode === getPersonstatus(personopplysninger).kode).navn}
-            </Etikettfokus>
+            </Tag>
           </div>
         )}
         {personopplysninger.sivilstand && (
           <div className={styles.etikettMargin}>
-            <Etikettfokus type="fokus" typo="undertekst" title={intl.formatMessage({ id: 'Sivilstand.Hjelpetekst' })}>
+            <Tag variant="warning" size="small" title={intl.formatMessage({ id: 'Sivilstand.Hjelpetekst' })}>
               {sivilstandTypes.find(s => s.kode === personopplysninger.sivilstand.kode).navn}
-            </Etikettfokus>
+            </Tag>
           </div>
         )}
         {personopplysninger.region && personopplysninger.region.kode !== Region.UDEFINERT && (
           <div className={styles.etikettMargin}>
-            <Etikettfokus type="fokus" typo="undertekst" title={intl.formatMessage({ id: 'BostedSokerView.Region' })}>
+            <Tag variant="warning" size="small" title={intl.formatMessage({ id: 'BostedSokerView.Region' })}>
               {regionTypes.find(r => r.kode === personopplysninger.region.kode).navn}
-            </Etikettfokus>
+            </Tag>
           </div>
         )}
       </Column>

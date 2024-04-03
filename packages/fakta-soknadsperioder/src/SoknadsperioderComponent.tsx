@@ -1,14 +1,14 @@
 import { Tidslinje, TidslinjeZoom } from '@fpsak-frontend/shared-components';
 import HorisontalNavigering from '@fpsak-frontend/shared-components/src/tidslinje/HorisontalNavigering';
 import { useSenesteDato } from '@fpsak-frontend/shared-components/src/tidslinje/useTidslinjerader';
+import { Period, dateStringSorter } from '@fpsak-frontend/utils';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import BehandlingPerioderårsakMedVilkår, {
   DokumenterTilBehandling,
 } from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
-import { dateStringSorter, Period } from '@fpsak-frontend/utils';
+import { BodyShort } from '@navikt/ds-react';
 import dayjs, { Dayjs } from 'dayjs';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import CheckIcon from './icons/CheckIcon';
@@ -348,18 +348,18 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       </div>
       <Tidslinje rader={filtrerteRader} tidslinjeSkala={tidslinjeSkala} startDato={navigasjonFomDato} />
       <div className={styles.legendContainer}>
-        <Normaltekst>
+        <BodyShort size="small">
           <CheckIcon />
           {intl.formatMessage({ id: 'Soknadsperioder.Status.InnvilgetPeriode' })}
-        </Normaltekst>
-        <Normaltekst>
+        </BodyShort>
+        <BodyShort size="small">
           <RejectedIcon />
           {intl.formatMessage({ id: 'Soknadsperioder.Status.AvslåttPeriode' })}
-        </Normaltekst>
-        <Normaltekst>
+        </BodyShort>
+        <BodyShort size="small">
           <SaksbehandlerIcon />
           {intl.formatMessage({ id: 'Soknadsperioder.Status.TilBehandling' })}
-        </Normaltekst>
+        </BodyShort>
       </div>
     </div>
   );

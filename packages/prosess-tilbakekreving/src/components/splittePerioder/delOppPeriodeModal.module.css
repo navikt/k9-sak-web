@@ -8,7 +8,7 @@
   padding-right: 36px;
 }
 
-.cancelButton {
+button.cancelButton {
   margin: 0 10px 0 10px;
 }
 

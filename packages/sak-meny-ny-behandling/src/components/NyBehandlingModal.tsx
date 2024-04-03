@@ -1,13 +1,3 @@
-import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import Modal from 'nav-frontend-modal';
-import { Element } from 'nav-frontend-typografi';
-import React, { ReactElement, useEffect } from 'react';
-import { FormattedMessage, IntlShape, WrappedComponentProps, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
-import { createSelector } from 'reselect';
-
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { CheckboxField, SelectField } from '@fpsak-frontend/form';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
@@ -15,7 +5,13 @@ import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-
+import { Button, Label, Modal } from '@navikt/ds-react';
+import { Column, Row } from 'nav-frontend-grid';
+import React, { ReactElement, useEffect } from 'react';
+import { FormattedMessage, IntlShape, WrappedComponentProps, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
+import { createSelector } from 'reselect';
 import styles from './nyBehandlingModal.module.css';
 
 const createOptions = (
@@ -115,65 +111,72 @@ export const NyBehandlingModal = ({
   return (
     <Modal
       className={styles.modal}
-      isOpen
-      closeButton={false}
-      contentLabel={intl.formatMessage({ id: 'MenyNyBehandlingIndex.ModalDescription' })}
-      onRequestClose={cancelEvent}
-      shouldCloseOnOverlayClick={false}
+      open
+      aria-label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.ModalDescription' })}
+      onClose={cancelEvent}
     >
-      <form onSubmit={handleSubmit}>
-        <Row>
-          <Column xs="1">
-            <Image className={styles.image} src={innvilgetImageUrl} />
-            <div className={styles.divider} />
-          </Column>
-          <Column xs="11">
-            <div className={styles.label}>
-              <Element>
-                <FormattedMessage id="MenyNyBehandlingIndex.OpprettNyForstegangsbehandling" />
-              </Element>
-            </div>
-            <VerticalSpacer sixteenPx />
-            <VerticalSpacer sixteenPx />
-            <SelectField
-              name="behandlingType"
-              label=""
-              placeholder={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectBehandlingTypePlaceholder' })}
-              validate={[required]}
-              selectValues={behandlingTyper.map(bt => createOptions(bt, enabledBehandlingstyper, intl))}
-              bredde="l"
-            />
-            <VerticalSpacer eightPx />
-            {valgtBehandlingTypeKode === bType.FORSTEGANGSSOKNAD && (
-              <CheckboxField
-                name="nyBehandlingEtterKlage"
-                label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.NyBehandlingEtterKlage' })}
-              />
-            )}
-            {behandlingArsakTyper.length > 0 && (
+      <Modal.Body>
+        <form onSubmit={handleSubmit}>
+          <Row>
+            <Column xs="1">
+              <Image className={styles.image} src={innvilgetImageUrl} />
+              <div className={styles.divider} />
+            </Column>
+            <Column xs="11">
+              <div className={styles.label}>
+                <Label size="small" as="p">
+                  <FormattedMessage id="MenyNyBehandlingIndex.OpprettNyForstegangsbehandling" />
+                </Label>
+              </div>
+              <VerticalSpacer sixteenPx />
+              <VerticalSpacer sixteenPx />
               <SelectField
-                name="behandlingArsakType"
+                name="behandlingType"
                 label=""
-                placeholder={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectBehandlingArsakTypePlaceholder' })}
+                placeholder={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectBehandlingTypePlaceholder' })}
                 validate={[required]}
-                selectValues={behandlingArsakTyper.map(b => (
-                  <option key={b.kode} value={b.kode}>
-                    {b.navn}
-                  </option>
-                ))}
+                selectValues={behandlingTyper.map(bt => createOptions(bt, enabledBehandlingstyper, intl))}
+                bredde="l"
               />
-            )}
-            <div className={styles.right}>
-              <Hovedknapp mini className={styles.button}>
-                <FormattedMessage id="MenyNyBehandlingIndex.Ok" />
-              </Hovedknapp>
-              <Knapp htmlType="button" mini onClick={cancelEvent} className={styles.cancelButton}>
-                <FormattedMessage id="MenyNyBehandlingIndex.Avbryt" />
-              </Knapp>
-            </div>
-          </Column>
-        </Row>
-      </form>
+              <VerticalSpacer eightPx />
+              {valgtBehandlingTypeKode === bType.FORSTEGANGSSOKNAD && (
+                <CheckboxField
+                  name="nyBehandlingEtterKlage"
+                  label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.NyBehandlingEtterKlage' })}
+                />
+              )}
+              {behandlingArsakTyper.length > 0 && (
+                <SelectField
+                  name="behandlingArsakType"
+                  label=""
+                  placeholder={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectBehandlingArsakTypePlaceholder' })}
+                  validate={[required]}
+                  selectValues={behandlingArsakTyper.map(b => (
+                    <option key={b.kode} value={b.kode}>
+                      {b.navn}
+                    </option>
+                  ))}
+                />
+              )}
+              <VerticalSpacer sixteenPx />
+              <div className={styles.buttonContainer}>
+                <Button variant="primary" size="small" className={styles.button}>
+                  <FormattedMessage id="MenyNyBehandlingIndex.Ok" />
+                </Button>
+                <Button
+                  variant="secondary"
+                  type="button"
+                  size="small"
+                  onClick={cancelEvent}
+                  className={styles.cancelButton}
+                >
+                  <FormattedMessage id="MenyNyBehandlingIndex.Avbryt" />
+                </Button>
+              </div>
+            </Column>
+          </Row>
+        </form>
+      </Modal.Body>
     </Modal>
   );
 };

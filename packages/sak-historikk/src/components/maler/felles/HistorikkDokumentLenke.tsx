@@ -3,6 +3,8 @@ import { FormattedMessage } from 'react-intl';
 
 import { HistorikkInnslagDokumentLink } from '@k9-sak-web/types';
 
+import { FileIcon } from '@navikt/aksel-icons';
+import { Link } from '@navikt/ds-react';
 import styles from '../historikkMalType.module.css';
 
 const DOCUMENT_SERVER_URL = '/k9/sak/api/dokument/hent-dokument';
@@ -24,15 +26,16 @@ const HistorikkDokumentLenke = ({ dokumentLenke, saksnummer }: OwnProps) => {
     );
   }
   return (
-    <a
+    <Link
       className={styles.dokumentLenke}
       href={`${DOCUMENT_SERVER_URL}?saksnummer=${saksnummer}&journalpostId=${journalpostId}&dokumentId=${dokumentId}`}
       target="_blank"
       rel="noopener noreferrer"
+      inlineText
     >
-      <i className={styles.dokumentIkon} title={tag} />
+      <FileIcon title="Dokument" fontSize="1.5rem" />
       {tag}
-    </a>
+    </Link>
   );
 };
 

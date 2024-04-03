@@ -16,6 +16,6 @@ describe('<BekreftOgForsettKnapp>', () => {
   });
   it('Skal vise en disablet hovedknapp hvis isSubmitting er true', () => {
     renderWithIntl(<BekreftOgForsettKnapp readOnly={false} isSubmitting />, { messages });
-    expect(screen.getByRole('button', { name: 'Laster' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeDisabled();
   });
 });

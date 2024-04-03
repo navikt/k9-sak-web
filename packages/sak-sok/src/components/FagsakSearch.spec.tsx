@@ -54,7 +54,7 @@ describe('<FagsakSearch>', () => {
       { messages },
     );
     expect(screen.getByLabelText('Saksnummer eller fødselsnummer/D-nummer')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Laster' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Søk' })).toBeInTheDocument();
   });
 
   it('skal vise søkefelt og label for ingen søketreff når ingen fagsaker blir hentet', () => {

@@ -4,7 +4,7 @@ import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
-import Panel from 'nav-frontend-paneler';
+import { Box } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -12,7 +12,6 @@ import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 import { BekreftOgForsettKnapp } from './BekreftOgForsettKnapp';
 import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
-
 import styles from './arbeidsforholdInfoPanel.module.css';
 
 // ----------------------------------------------------------------------------
@@ -75,7 +74,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
   return (
     <>
       {aksjonspunkter.length > 0 && (
-        <Panel className={styles.begrunnelseSaksbehandler}>
+        <Box background="surface-default" padding="4" className={styles.begrunnelseSaksbehandler}>
           <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
             {[
               <FormattedMessage
@@ -84,7 +83,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
               />,
             ]}
           </AksjonspunktHelpTextTemp>
-        </Panel>
+        </Box>
       )}
       <h3>
         <FormattedMessage id="PersonArbeidsforholdPanel.ArbeidsforholdHeader" />

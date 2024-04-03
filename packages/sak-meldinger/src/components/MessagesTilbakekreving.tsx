@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import React, { useEffect } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
@@ -33,6 +32,7 @@ import {
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
+import { Button } from '@navikt/ds-react';
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 import styles from './messages.module.css';
 
@@ -286,7 +286,7 @@ export const MessagesTilbakekrevingImpl = ({
                   label={intl.formatMessage({ id: 'Messages.Fritekst' })}
                   validate={[required, maxLength4000, minLength3, hasValidText]}
                   maxLength={4000}
-                  badges={[{ type: 'fokus', textId: languageCode, title: 'Messages.Beskrivelse' }]}
+                  badges={[{ type: 'warning', textId: languageCode, title: 'Messages.Beskrivelse' }]}
                 />
               </div>
             </>
@@ -307,15 +307,21 @@ export const MessagesTilbakekrevingImpl = ({
                 label={intl.formatMessage({ id: 'Messages.Fritekst' })}
                 validate={[required, minLength3, maxLength100000, hasValidText]}
                 maxLength={100000}
-                badges={[{ type: 'fokus', textId: languageCode, title: 'Messages.Beskrivelse' }]}
+                badges={[{ type: 'warning', textId: languageCode, title: 'Messages.Beskrivelse' }]}
               />
             </div>
           )}
           <VerticalSpacer eightPx />
           <div className={styles.buttonRow}>
-            <Hovedknapp mini spinner={formProps.submitting} disabled={formProps.submitting} onClick={ariaCheck}>
+            <Button
+              variant="primary"
+              size="small"
+              loading={formProps.submitting}
+              disabled={formProps.submitting}
+              onClick={ariaCheck}
+            >
               {intl.formatMessage({ id: 'Messages.Submit' })}
-            </Hovedknapp>
+            </Button>
             {brevmalkode && (
               <a
                 href=""

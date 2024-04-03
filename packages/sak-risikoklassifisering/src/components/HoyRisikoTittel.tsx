@@ -1,14 +1,9 @@
-import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
-import React from 'react';
-
-import risikoIkon from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import { Aksjonspunkt, Risikoklassifisering } from '@k9-sak-web/types';
-
+import { Alert, ReadMore } from '@navikt/ds-react';
+import React from 'react';
+import { useIntl } from 'react-intl';
 import { VuderFaresignalerAp } from './AvklarFaresignalerForm';
 import HoyRisikoPanel from './HoyRisikoPanel';
-import TittelMedDivider from './TittelMedDivider';
-
-import styles from './hoyRisikoTittel.module.css';
 
 interface OwnProps {
   risikoklassifisering: Risikoklassifisering;
@@ -35,24 +30,25 @@ const HoyRisikoTittel = ({
   toggleRiskPanel,
   behandlingId,
   behandlingVersjon,
-}: OwnProps) => (
-  <EkspanderbartpanelBase
-    data-testid="HoyRisikoTittel"
-    className={styles.hoyRisikoPanelTittel}
-    apen={isRiskPanelOpen}
-    onClick={toggleRiskPanel}
-    tittel={<TittelMedDivider imageSrc={risikoIkon} tittel="Risikopanel.Tittel.Faresignaler" />}
-    border
-  >
-    <HoyRisikoPanel
-      risikoklassifisering={risikoklassifisering}
-      aksjonspunkt={aksjonspunkt}
-      readOnly={readOnly}
-      submitCallback={submitCallback}
-      behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
-    />
-  </EkspanderbartpanelBase>
-);
-
+}: OwnProps) => {
+  const intl = useIntl();
+  return (
+    <Alert variant="error">
+      <ReadMore
+        onClick={toggleRiskPanel}
+        open={isRiskPanelOpen}
+        header={intl.formatMessage({ id: 'Risikopanel.Tittel.Faresignaler' })}
+      >
+        <HoyRisikoPanel
+          risikoklassifisering={risikoklassifisering}
+          aksjonspunkt={aksjonspunkt}
+          readOnly={readOnly}
+          submitCallback={submitCallback}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+        />
+      </ReadMore>
+    </Alert>
+  );
+};
 export default HoyRisikoTittel;

@@ -1,12 +1,10 @@
-import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-
 import { DecimalField, InputField, RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
 import { ArrowBox, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr, maxValue, minValue, required } from '@fpsak-frontend/utils';
-
+import { BodyShort, Detail } from '@navikt/ds-react';
+import { Column, Row } from 'nav-frontend-grid';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 
 import styles from './aktsomhetReduksjonAvBelopFormPanel.module.css';
@@ -44,9 +42,9 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
     <Row>
       <Column md="12">
         <VerticalSpacer eightPx />
-        <Undertekst>
+        <Detail>
           <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.SkalSarligeGrunnerGiReduksjon" />
-        </Undertekst>
+        </Detail>
         <VerticalSpacer eightPx />
         <RadioGroupField validate={[required]} name="harGrunnerTilReduksjon" readOnly={readOnly}>
           <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />} value />
@@ -60,9 +58,9 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
           <Column md="6">
             {!harMerEnnEnYtelse && andelSomTilbakekreves !== EGENDEFINERT && (
               <>
-                <Undertekst>
+                <Detail>
                   <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.AngiAndelSomTilbakekreves" />
-                </Undertekst>
+                </Detail>
                 <FlexRow>
                   <FlexColumn>
                     <SelectField
@@ -83,9 +81,9 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
             )}
             {!harMerEnnEnYtelse && andelSomTilbakekreves === EGENDEFINERT && (
               <>
-                <Undertekst>
+                <Detail>
                   <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.AngiAndelSomTilbakekreves" />
-                </Undertekst>
+                </Detail>
                 <FlexRow>
                   <FlexColumn>
                     <DecimalField
@@ -121,12 +119,12 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
           </Column>
           {handletUaktsomhetGrad === Aktsomhet.GROVT_UAKTSOM && (
             <Column md="6">
-              <Undertekst>
+              <Detail>
                 <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.SkalTilleggesRenter" />
-              </Undertekst>
-              <Normaltekst className={styles.labelPadding}>
+              </Detail>
+              <BodyShort size="small" className={styles.labelPadding}>
                 <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />
-              </Normaltekst>
+              </BodyShort>
             </Column>
           )}
         </Row>
@@ -136,7 +134,7 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
       <ArrowBox alignOffset={90}>
         <Row>
           <Column md="6">
-            <Undertekst>
+            <Detail>
               <FormattedMessage
                 id={
                   harMerEnnEnYtelse
@@ -144,10 +142,10 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
                     : 'AktsomhetReduksjonAvBelopFormPanel.andelSomTilbakekreves'
                 }
               />
-            </Undertekst>
-            <Normaltekst className={styles.labelPadding}>
+            </Detail>
+            <BodyShort size="small" className={styles.labelPadding}>
               {harMerEnnEnYtelse ? formatCurrencyNoKr(feilutbetalingBelop) : '100%'}
-            </Normaltekst>
+            </BodyShort>
           </Column>
           {handletUaktsomhetGrad === Aktsomhet.GROVT_UAKTSOM && (
             <Column md="6">

@@ -1,4 +1,4 @@
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Alert, Button } from '@navikt/ds-react';
 import { RadioGruppe } from 'nav-frontend-skjema';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -6,13 +6,12 @@ import { OmsorgProps } from '../../../types/OmsorgProps';
 import { booleanTilTekst, tekstTilBoolean } from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
-import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
 import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
 import TextArea from '../react-hook-form-wrappers/TextArea';
-import styles from './omsorg.module.css';
-import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
+import VilkarStatus from '../vilkar-status/VilkarStatus';
+import styles from './omsorg.module.css';
 
 type FormData = {
   harOmsorgen: string;
@@ -158,13 +157,11 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
 
       {(åpenForRedigering || (!lesemodus && !vedtakFattetVilkarOppfylt)) && (
         <>
-          <AlertStripeTrekantVarsel
-            text={
-              harBarnSoktForRammevedtakOmKroniskSyk
-                ? tekstKroniskSyk.harBarnSoktForRammevedtakOmKroniskSykTekst
-                : tekst.instruksjon
-            }
-          />
+          <Alert size="small" variant="warning">
+            {harBarnSoktForRammevedtakOmKroniskSyk
+              ? tekstKroniskSyk.harBarnSoktForRammevedtakOmKroniskSykTekst
+              : tekst.instruksjon}
+          </Alert>
           {opplysningerFraSoknaden}
 
           <hr />
@@ -181,7 +178,9 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
                 {errors.harOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
               </div>
 
-              <Hovedknapp htmlType="submit">Bekreft og fortsett</Hovedknapp>
+              <Button variant="primary" type="submit">
+                Bekreft og fortsett
+              </Button>
             </form>
           </FormProvider>
         </>

@@ -1,13 +1,13 @@
+import { Label } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Element } from 'nav-frontend-typografi';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   KlageVurdering,
   Kodeverk,
@@ -17,11 +17,11 @@ import {
   TotrinnskontrollArbeidsforhold,
 } from '@k9-sak-web/types';
 
+import vurderFaktaOmBeregningTotrinnText from '../../VurderFaktaBeregningTotrinnText';
 import totrinnskontrollaksjonspunktTextCodes, {
   totrinnsTilbakekrevingkontrollaksjonspunktTextCodes,
 } from '../../totrinnskontrollaksjonspunktTextCodes';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
-import vurderFaktaOmBeregningTotrinnText from '../../VurderFaktaBeregningTotrinnText';
 
 const buildVarigEndringBeregningText = (beregningDto: TotrinnskontrollAksjonspunkt['beregningDtoer'][number]) =>
   beregningDto?.fastsattVarigEndringNaering || beregningDto?.fastsattVarigEndring ? (
@@ -144,14 +144,14 @@ const lagBgTilfelleTekst = (bg: TotrinnsBeregningDto): ReactNode => {
   const aksjonspunktTextIds = bg.faktaOmBeregningTilfeller.map(({ kode }) => vurderFaktaOmBeregningTotrinnText[kode]);
   return (
     <>
-      <Element>
+      <Label size="small" as="p">
         <FormattedMessage
           id="ToTrinnsForm.Beregning.Tittel"
           values={{
             dato: bg.skjæringstidspunkt,
           }}
         />
-      </Element>
+      </Label>
       <VerticalSpacer eightPx />
       {aksjonspunktTextIds.map(aksjonspunktTextId =>
         aksjonspunktTextId ? <FormattedMessage id={aksjonspunktTextId} /> : null,

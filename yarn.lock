@@ -2266,9 +2266,6 @@ __metadata:
     moment: 2.30.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-paneler: 3.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2290,8 +2287,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-etiketter: 3.0.3
-    nav-frontend-etiketter-style: 2.0.3
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
@@ -2313,12 +2308,11 @@ __metadata:
     date-fns: 2.30.0
     dayjs: 1.11.10
     formik: 2.4.5
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
-    nav-frontend-etiketter: 3.0.3
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
+    nav-frontend-lenker: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -2341,13 +2335,9 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2369,8 +2359,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2391,16 +2379,13 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/fakta-felles": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-plattform-komponenter": 2.5.1
     i18n-iso-countries: 7.10.1
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-ekspanderbartpanel: 4.0.4
-    nav-frontend-ekspanderbartpanel-style: 2.0.2
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
+    nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2426,8 +2411,6 @@ __metadata:
     classnames: 2.5.1
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-tabs: 2.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -2452,12 +2435,10 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-knapper: 3.1.3
     nav-frontend-tabs: 2.0.3
     nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -2478,29 +2459,25 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/fakta-overstyr-beregning@workspace:packages/fakta-overstyr-beregning"
   dependencies:
-    "@fpsak-frontend/form": 1.0.0
     "@fpsak-frontend/kodeverk": 1.0.0
     "@fpsak-frontend/shared-components": 1.0.0
+    "@fpsak-frontend/utils": "workspace:^"
+    "@k9-sak-web/types": "workspace:^"
+    "@navikt/ds-react": ^6.2.0
     "@types/yup": 0.32.0
     date-fns: 2.30.0
-    dayjs: 1.11.10
     formik: 2.4.5
     nav-datovelger: 12.6.0
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
-    nav-frontend-etiketter: 3.0.3
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
+    nav-frontend-lenker: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
-    react-day-picker: 7.4.10
     react-intl: 6.6.2
     yup: 0.32.11
-  peerDependencies:
-    dayjs: 1.10.7
   languageName: unknown
   linkType: soft
 
@@ -2537,23 +2514,19 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-plattform-komponenter": 2.5.1
     classnames: 2.5.1
     formik: 2.4.5
     lodash: 4.17.21
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-etiketter: 3.0.3
-    nav-frontend-etiketter-style: 2.0.3
     nav-frontend-js-utils: 1.0.20
+    nav-frontend-lenker: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
     nav-frontend-lukknapp: 2.0.2
     nav-frontend-lukknapp-style: 2.0.2
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2647,8 +2620,6 @@ __metadata:
     moment: 2.30.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2679,8 +2650,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2707,13 +2676,9 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-modal: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2797,8 +2762,6 @@ __metadata:
     classnames: 2.5.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2851,8 +2814,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2880,13 +2841,9 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-modal: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -2914,13 +2871,9 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-modal: 2.0.2
     nav-frontend-tabs: 2.0.3
     nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -2951,8 +2904,6 @@ __metadata:
     classnames: 2.5.1
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -3000,7 +2951,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     classnames: 2.5.1
     nav-frontend-grid: 2.0.2
-    nav-frontend-knapper: 3.1.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -3026,8 +2976,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
     nav-frontend-core: 6.0.1
-    nav-frontend-ekspanderbartpanel: 4.0.4
-    nav-frontend-ekspanderbartpanel-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3062,14 +3010,11 @@ __metadata:
     editorjs-html: 3.4.3
     formik: 2.4.5
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-lenker: 2.0.2
-    nav-frontend-modal: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -3095,7 +3040,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-plattform-komponenter": 2.5.1
     classnames: 2.5.1
     dayjs: 1.11.10
     lodash: 4.17.21
@@ -3103,10 +3048,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-tabs: 2.0.3
     nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -3136,13 +3077,9 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-plattform-komponenter": 2.5.1
     classnames: 2.5.1
     moment: 2.30.1
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3187,21 +3124,13 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-plattform-komponenter": 2.5.1
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-ikonknapper: 2.1.3
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-lukknapp: 2.0.2
     nav-frontend-lukknapp-style: 2.0.2
-    nav-frontend-modal: 2.0.2
-    nav-frontend-modal-style: 2.0.2
-    nav-frontend-paneler-style: 2.0.2
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3241,12 +3170,8 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-etiketter: 3.0.3
-    nav-frontend-etiketter-style: 2.0.3
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3271,10 +3196,6 @@ __metadata:
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
-    nav-frontend-snakkeboble: 3.0.2
-    nav-frontend-snakkeboble-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3295,10 +3216,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-modal: 2.0.2
-    nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3324,10 +3241,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-modal: 2.0.2
-    nav-frontend-modal-style: 2.0.2
+    nav-frontend-lenker: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
@@ -3355,10 +3270,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-modal: 2.0.2
-    nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3384,10 +3295,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-modal: 2.0.2
-    nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3428,12 +3335,7 @@ __metadata:
     "@fpsak-frontend/assets": 1.0.0
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.0
-    nav-frontend-ikonknapper: 2.1.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
+    "@navikt/ft-plattform-komponenter": 2.5.1
     react: 18.2.0
     react-intl: 6.6.2
   languageName: unknown
@@ -3451,12 +3353,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-ekspanderbartpanel: 4.0.4
-    nav-frontend-ekspanderbartpanel-style: 2.0.2
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3482,8 +3378,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3508,14 +3402,9 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     history: 5.3.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-modal: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -3539,16 +3428,12 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-plattform-komponenter": 2.5.1
     dayjs: 1.11.10
     moment: 2.30.1
-    nav-frontend-etiketter: 3.0.3
-    nav-frontend-etiketter-style: 2.0.3
-    nav-frontend-ikonknapper: 2.1.3
     nav-frontend-lenker: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
     nav-frontend-skjema: 4.0.6
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3570,28 +3455,21 @@ __metadata:
     "@navikt/aksel-icons": 6.1.1
     "@navikt/ds-react": 6.1.1
     "@navikt/fnrvalidator": 1.3.3
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-plattform-komponenter": 2.5.1
     axios: 1.6.7
     classnames: 2.5.1
     date-fns: 2.30.0
     date-fns-tz: 2.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
+    nav-frontend-lenker: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
     nav-frontend-lukknapp: 2.0.2
     nav-frontend-lukknapp-style: 2.0.2
-    nav-frontend-modal: 2.0.2
-    nav-frontend-modal-style: 2.0.2
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3638,14 +3516,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fpsak-frontend/utils@*, @fpsak-frontend/utils@1.0.0, @fpsak-frontend/utils@workspace:packages/utils":
+"@fpsak-frontend/utils@*, @fpsak-frontend/utils@1.0.0, @fpsak-frontend/utils@workspace:^, @fpsak-frontend/utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils@workspace:packages/utils"
   dependencies:
     "@fpsak-frontend/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-types": 2.4.0
+    "@navikt/ft-types": 2.4.1
     moment: 2.30.1
     react: 18.2.0
     react-intl: 6.6.2
@@ -3897,10 +3775,6 @@ __metadata:
     axios-mock-adapter: 1.22.0
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-modal: 2.0.2
-    nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3927,18 +3801,11 @@ __metadata:
     "@k9-sak-web/modal-sett-pa-vent": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-plattform-komponenter": 2.5.1
     classnames: 2.5.1
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-ikonknapper: 2.1.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-modal: 2.0.2
-    nav-frontend-modal-style: 2.0.2
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-tabs: 2.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -3972,8 +3839,8 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning-redesign": 1.2.0
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.0
+    "@navikt/ft-fakta-beregning-redesign": 1.2.1
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.1
     axios-mock-adapter: 1.22.0
     react: 18.2.0
     react-intl: 6.6.2
@@ -4032,10 +3899,6 @@ __metadata:
     axios-mock-adapter: 1.22.0
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-modal: 2.0.2
-    nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4079,9 +3942,9 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning-redesign": 1.2.0
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.0
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.0
+    "@navikt/ft-fakta-beregning-redesign": 1.2.1
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.2
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.1
     axios-mock-adapter: 1.22.0
     nav-frontend-popover: 2.0.4
     react: 18.2.0
@@ -4132,12 +3995,11 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning-redesign": 1.2.0
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.0
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.0
+    "@navikt/ft-fakta-beregning-redesign": 1.2.1
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.2
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.1
     axios: 1.6.7
     axios-mock-adapter: 1.22.0
-    nav-frontend-alertstriper: 4.0.2
     react: 18.2.0
     react-intl: 6.6.2
     react-redux: 8.1.3
@@ -4182,12 +4044,11 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning-redesign": 1.2.0
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.0
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.0
+    "@navikt/ft-fakta-beregning-redesign": 1.2.1
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.2
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.1
     axios: 1.6.7
     axios-mock-adapter: 1.22.0
-    nav-frontend-alertstriper: 4.0.2
     react: 18.2.0
     react-intl: 6.6.2
     react-redux: 8.1.3
@@ -4238,12 +4099,11 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/diagnosekoder": ^1.2024.0
-    "@navikt/ft-fakta-beregning-redesign": 1.2.0
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.0
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.0
+    "@navikt/ft-fakta-beregning-redesign": 1.2.1
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.2
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.1
     axios: 1.6.7
     axios-mock-adapter: 1.22.0
-    nav-frontend-alertstriper: 4.0.2
     react: 18.2.0
     react-intl: 6.6.2
     react-redux: 8.1.3
@@ -4274,8 +4134,8 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-kodeverk": ^2.4.0
-    "@navikt/ft-prosess-tilbakekreving-foreldelse": 3.3.0
+    "@navikt/ft-kodeverk": ^2.4.1
+    "@navikt/ft-prosess-tilbakekreving-foreldelse": 3.3.1
     axios-mock-adapter: 1.22.0
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -4320,10 +4180,6 @@ __metadata:
     axios-mock-adapter: 1.22.0
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-modal: 2.0.2
-    nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4379,17 +4235,11 @@ __metadata:
     classnames: 2.5.1
     just-is-empty: 3.4.1
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-core: 6.0.1
-    nav-frontend-ekspanderbartpanel: 4.0.4
     nav-frontend-hjelpetekst: 3.1.3
     nav-frontend-hjelpetekst-style: 3.0.2
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-paneler: 3.0.2
     nav-frontend-popover: 2.0.4
     nav-frontend-popover-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -4415,12 +4265,6 @@ __metadata:
     "@k9-sak-web/prosess-aarskvantum-oms": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
-    nav-frontend-ekspanderbartpanel: 4.0.4
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-paneler: 3.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4437,7 +4281,7 @@ __metadata:
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.1.1
     "@navikt/fnrvalidator": 1.3.3
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
     "@testing-library/cypress": ^10.0.1
     axios: 1.6.7
@@ -4446,26 +4290,17 @@ __metadata:
     dayjs: 1.11.10
     eslint-plugin-cypress: ^2.15.1
     lodash: 4.17.21
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
-    nav-frontend-etiketter: 3.0.3
-    nav-frontend-etiketter-style: 2.0.3
     nav-frontend-ikoner-assets: 3.0.1
-    nav-frontend-ikonknapper: 2.1.3
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-lenkepanel: 2.0.2
     nav-frontend-lenkepanel-style: 2.0.2
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
+    nav-frontend-lenker: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-tabs: 2.0.3
     nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -4491,10 +4326,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-etiketter: 3.0.3
-    nav-frontend-etiketter-style: 2.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4513,8 +4344,8 @@ __metadata:
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.1.1
     "@navikt/fnrvalidator": 1.3.3
-    "@navikt/ft-form-hooks": 4.4.0
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-form-hooks": 4.4.1
+    "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
     axios: 1.6.7
     classnames: 2.5.1
@@ -4523,26 +4354,16 @@ __metadata:
     lodash: 4.17.21
     msw: 1.3.2
     msw-storybook-addon: 1.10.0
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
-    nav-frontend-ekspanderbartpanel: 4.0.4
-    nav-frontend-ekspanderbartpanel-style: 2.0.2
     nav-frontend-ikoner-assets: 3.0.1
-    nav-frontend-ikonknapper: 2.1.3
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
-    nav-frontend-paneler: 3.0.2
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4561,7 +4382,7 @@ __metadata:
   dependencies:
     "@fpsak-frontend/form": "*"
     "@k9-sak-web/types": "*"
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-plattform-komponenter": 2.5.1
     formik: 2.4.5
     yup: 0.32.11
   languageName: unknown
@@ -4577,7 +4398,7 @@ __metadata:
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.1.1
     "@navikt/fnrvalidator": 1.3.3
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
     "@testing-library/cypress": ^10.0.1
     axios: 1.6.7
@@ -4607,7 +4428,7 @@ __metadata:
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-react": 6.1.1
     "@navikt/fnrvalidator": 1.3.3
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
     axios: 1.6.7
     classnames: 2.5.1
@@ -4632,31 +4453,22 @@ __metadata:
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.1.1
     "@navikt/fnrvalidator": 1.3.3
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
     axios: 1.6.7
     classnames: 2.5.1
     dayjs: 1.11.10
     lodash: 4.17.21
     msw: 1.3.2
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
-    nav-frontend-ikonknapper: 2.1.3
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     object-hash: 3.0.0
@@ -4679,7 +4491,7 @@ __metadata:
     "@k9-sak-web/types": "*"
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.1.1
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-plattform-komponenter": 2.5.1
     classnames: 2.5.1
     dayjs: 1.11.10
     formik: 2.4.5
@@ -4699,8 +4511,6 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4758,10 +4568,6 @@ __metadata:
     moment: 2.30.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-modal: 2.0.2
-    nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4789,8 +4595,6 @@ __metadata:
     classnames: 2.5.1
     lodash: 4.17.21
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
@@ -4798,10 +4602,6 @@ __metadata:
     nav-frontend-hjelpetekst-style: 3.0.2
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-paneler: 3.0.2
     nav-frontend-popover: 2.0.4
     nav-frontend-popover-style: 2.0.2
     nav-frontend-tabs: 2.0.3
@@ -4829,8 +4629,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4852,20 +4650,13 @@ __metadata:
     dayjs: 1.11.10
     lodash: 4.17.21
     nav-datovelger: 12.6.0
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4892,8 +4683,6 @@ __metadata:
     classnames: 2.5.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -4927,35 +4716,24 @@ __metadata:
     "@hookform/resolvers": ^3.3.4
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-react": 6.1.1
-    "@navikt/ft-form-hooks": 4.4.0
-    "@navikt/ft-form-validators": 2.3.0
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-form-hooks": 4.4.1
+    "@navikt/ft-form-validators": 2.3.1
+    "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
     cors: 2.8.5
     dayjs: 1.11.10
     express: 4.18.3
     lodash: 4.17.21
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
-    nav-frontend-etiketter: 3.0.3
-    nav-frontend-etiketter-style: 2.0.3
     nav-frontend-hjelpetekst: 3.1.3
     nav-frontend-hjelpetekst-style: 3.0.2
     nav-frontend-ikoner-assets: 3.0.1
-    nav-frontend-ikonknapper: 2.1.3
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-popover: 2.0.4
     nav-frontend-popover-style: 2.0.2
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-tabs: 2.0.3
     nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -4979,11 +4757,10 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-form-hooks": 4.4.0
-    "@navikt/ft-form-validators": 2.3.0
+    "@navikt/ft-form-hooks": 4.4.1
+    "@navikt/ft-form-validators": 2.3.1
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
-    nav-frontend-knapper: 3.1.3
     react: 18.2.0
     react-dom: 18.2.0
     react-hook-form: 7.51.0
@@ -5006,13 +4783,9 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-plattform-komponenter": 2.5.1
     classnames: 2.5.1
     moment: 2.30.1
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     object-hash: 3.0.0
@@ -5034,12 +4807,10 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-plattform-komponenter": 2.5.1
     classnames: 2.5.1
     lodash: 4.17.21
     nav-frontend-core: 6.0.1
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     react: 18.2.0
     react-intl: 6.6.2
@@ -5138,28 +4909,21 @@ __metadata:
     "@k9-sak-web/sak-soknadsperiodestripe": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ds-react": 6.1.1
-    "@navikt/ft-fakta-beregning-redesign": 1.2.0
-    "@navikt/ft-form-hooks": 4.4.0
-    "@navikt/ft-plattform-komponenter": 2.5.0
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.0
-    "@navikt/ft-ui-komponenter": 2.3.0
+    "@navikt/ft-fakta-beregning-redesign": 1.2.1
+    "@navikt/ft-form-hooks": 4.4.1
+    "@navikt/ft-plattform-komponenter": 2.5.1
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.1
+    "@navikt/ft-ui-komponenter": 2.3.1
     "@sentry/browser": 7.105.0
     axios: 1.6.7
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
     nav-frontend-lenkepanel: 2.0.2
     nav-frontend-lenkepanel-style: 2.0.2
-    nav-frontend-modal: 2.0.2
-    nav-frontend-modal-style: 2.0.2
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -5196,8 +4960,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -5211,7 +4973,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-infosider@workspace:packages/sak-infosider"
   dependencies:
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -5236,10 +4997,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-modal: 2.0.2
-    nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -5262,8 +5019,8 @@ __metadata:
     "@navikt/ds-react": 6.1.1
     formik: 2.4.5
     nav-frontend-core: 6.0.1
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
+    nav-frontend-lenker: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -5282,8 +5039,8 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/aksel-icons": 6.1.1
     "@navikt/ds-react": 6.1.1
-    "@navikt/ft-form-hooks": 4.4.0
-    "@navikt/ft-form-validators": 2.3.0
+    "@navikt/ft-form-hooks": 4.4.1
+    "@navikt/ft-form-validators": 2.3.1
     date-fns: 2.30.0
     react: 18.2.0
     react-hook-form: 7.51.0
@@ -5307,7 +5064,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/types@*, @k9-sak-web/types@1.0.0, @k9-sak-web/types@workspace:packages/types":
+"@k9-sak-web/types@*, @k9-sak-web/types@1.0.0, @k9-sak-web/types@workspace:^, @k9-sak-web/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/types@workspace:packages/types"
   languageName: unknown
@@ -5358,6 +5115,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/aksel-icons@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "@navikt/aksel-icons@npm:6.2.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F6.2.0%2F2bb2e3174b9608894845932ee463f5548418875f"
+  checksum: 5183e330483f191866e7d4ec2587dd40ccd73d1f7e7a09ef07af14e882301b335f04698e26b1b3b36cf8998f6c45720a1317561975df92b0cb5305eda3b8d3bd
+  languageName: node
+  linkType: hard
+
 "@navikt/diagnosekoder@npm:^1.2024.0":
   version: 1.2024.0
   resolution: "@navikt/diagnosekoder@npm:1.2024.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fdiagnosekoder%2F1.2024.0%2F2d990449f3bb8d5231f2e9b583ba30f8bebbeccb"
@@ -5401,6 +5165,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ds-react@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "@navikt/ds-react@npm:6.2.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-react%2F6.2.0%2F1197cd28bbb0fad38d5590cd80f021e26ff4b344"
+  dependencies:
+    "@floating-ui/react": 0.25.4
+    "@navikt/aksel-icons": ^6.2.0
+    "@navikt/ds-tokens": ^6.2.0
+    "@radix-ui/react-tabs": 1.0.0
+    "@radix-ui/react-toggle-group": 1.0.0
+    clsx: ^2.1.0
+    date-fns: ^3.0.0
+    react-day-picker: 8.10.0
+  peerDependencies:
+    "@types/react": ^17.0.30 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  checksum: 2db6724002979af95c3e0a3f679900842864bac96566836de44e95c64c10e2b9a395c316247c4a383b37e1cc468d26679f083aabfdc783d94cf03ddaea08243e
+  languageName: node
+  linkType: hard
+
 "@navikt/ds-tailwind@npm:^6.1.1":
   version: 6.1.1
   resolution: "@navikt/ds-tailwind@npm:6.1.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tailwind%2F6.1.1%2F473f9ffd79af772b998a8ce82a05e7a9266735cf"
@@ -5412,6 +5195,13 @@ __metadata:
   version: 6.1.1
   resolution: "@navikt/ds-tokens@npm:6.1.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tokens%2F6.1.1%2F1376ccdcc9d7a1e72016803adaf4e6548bb684d5"
   checksum: 51e92b389ac4bfb05fa8b8d0901fd14ccb4bd17f84d0a2e98e6a229ffdb1a38d16b1a8970e1c9493676e773437d06a5d3891b91e002548624c805e10f9b4c928
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-tokens@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "@navikt/ds-tokens@npm:6.2.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tokens%2F6.2.0%2F0283ef29deb154cb801d39624a02be1cff90d206"
+  checksum: 75e9103d40e4d78aae8620103aa8da572cb2287a2a1a4ee10743d44ead185dfc674601cc2bbd177327c7a274f31538721f068bd79182e9bcbafed680985a49ce
   languageName: node
   linkType: hard
 
@@ -5438,20 +5228,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-fakta-beregning-redesign@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@navikt/ft-fakta-beregning-redesign@npm:1.2.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-beregning-redesign%2F1.2.0%2F155cf7724690a21c5075eac7231bc1107f5cecb6"
+"@navikt/ft-fakta-beregning-redesign@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@navikt/ft-fakta-beregning-redesign@npm:1.2.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-beregning-redesign%2F1.2.1%2Ff4bc5017c1c971a6727ae5f786801b0f6b33b437"
   dependencies:
     "@navikt/aksel-icons": 6.1.1
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-react": 6.1.1
-    "@navikt/ft-form-hooks": ^4.4.0
-    "@navikt/ft-form-validators": ^2.3.0
-    "@navikt/ft-kodeverk": ^2.4.0
-    "@navikt/ft-konstanter": ^2.3.0
-    "@navikt/ft-types": ^2.4.0
-    "@navikt/ft-ui-komponenter": ^2.3.0
-    "@navikt/ft-utils": ^2.3.0
+    "@navikt/ft-form-hooks": ^4.4.1
+    "@navikt/ft-form-validators": ^2.3.1
+    "@navikt/ft-kodeverk": ^2.4.1
+    "@navikt/ft-konstanter": ^2.3.1
+    "@navikt/ft-types": ^2.4.1
+    "@navikt/ft-ui-komponenter": ^2.3.1
+    "@navikt/ft-utils": ^2.3.1
     core-js: 3.36.0
     dayjs: 1.11.10
     dayjs-plugin-utc: 0.1.2
@@ -5477,23 +5267,23 @@ __metadata:
     react-dom: 18.2.0
     react-hook-form: 7.43.9
     react-intl: 6.4.2
-  checksum: adae3e96d57588cfc098e297009334e7d1a416ec72d35aab07821855dbc8457a15f76b5146d70c5ec3228ae8f00f8dd6c3516858acdae74df1e954761916b32c
+  checksum: c22ba27c101fee7a38ce7cdcc0d682810c5789037a980826a9c50020c3c44188d52c1c6866f78fca116c43f23df7474a656828023279b61e3ba2814a52f5344d
   languageName: node
   linkType: hard
 
-"@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.5.0":
-  version: 7.5.0
-  resolution: "@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.5.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-fordel-beregningsgrunnlag%2F7.5.0%2Fc411e33121b73bff2f80e344ae9b47a3b2a0318f"
+"@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.5.2":
+  version: 7.5.2
+  resolution: "@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.5.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-fordel-beregningsgrunnlag%2F7.5.2%2F95b59c20cfc739fe9ccbcf80585175f2850047ae"
   dependencies:
     "@navikt/aksel-icons": 6.1.1
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-react": 6.1.1
-    "@navikt/ft-form-hooks": ^4.4.0
-    "@navikt/ft-form-validators": ^2.3.0
-    "@navikt/ft-kodeverk": ^2.4.0
-    "@navikt/ft-types": ^2.4.0
-    "@navikt/ft-ui-komponenter": ^2.3.0
-    "@navikt/ft-utils": ^2.3.0
+    "@navikt/ft-form-hooks": ^4.4.1
+    "@navikt/ft-form-validators": ^2.3.1
+    "@navikt/ft-kodeverk": ^2.4.1
+    "@navikt/ft-types": ^2.4.1
+    "@navikt/ft-ui-komponenter": ^2.3.1
+    "@navikt/ft-utils": ^2.3.1
     classnames: 2.5.1
     core-js: 3.36.0
     dayjs: 1.11.10
@@ -5517,21 +5307,21 @@ __metadata:
     react: 18.2.0
     react-hook-form: 7.43.9
     react-intl: 6.3.2
-  checksum: 2e6c3b6cf4320d93603a479f10232e05cb1beb71042e75161ec14fbbd49bdbc1faa3ef528d3ab60593e9c76e96ac39586b4819e37c9e8b1747f99b3c270530dc
+  checksum: ec21aab45fe4a4f06a3d6da1e60ef558658b41cd9adb9636475a9960727461cdca53caacf822c85e5dfdde881193c277f4f96bf5b064ac74d73259db043d1eaf
   languageName: node
   linkType: hard
 
-"@navikt/ft-form-hooks@npm:4.4.0, @navikt/ft-form-hooks@npm:^4.4.0":
-  version: 4.4.0
-  resolution: "@navikt/ft-form-hooks@npm:4.4.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F4.4.0%2Ffd1b43e5b23beb8a4802f08b8b94aaa1dfc534f9"
+"@navikt/ft-form-hooks@npm:4.4.1, @navikt/ft-form-hooks@npm:^4.4.1":
+  version: 4.4.1
+  resolution: "@navikt/ft-form-hooks@npm:4.4.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F4.4.1%2F9cac1c1f481f795d47d7218ea760278e20d10baa"
   dependencies:
     "@navikt/aksel-icons": 6.1.1
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-react": 6.1.1
-    "@navikt/ft-form-validators": ^2.3.0
-    "@navikt/ft-types": ^2.4.0
-    "@navikt/ft-ui-komponenter": ^2.3.0
-    "@navikt/ft-utils": ^2.3.0
+    "@navikt/ft-form-validators": ^2.3.1
+    "@navikt/ft-types": ^2.4.1
+    "@navikt/ft-ui-komponenter": ^2.3.1
+    "@navikt/ft-utils": ^2.3.1
     classnames: 2.5.1
     dayjs: 1.11.10
     lodash.throttle: 4.1.1
@@ -5550,45 +5340,45 @@ __metadata:
     lodash.throttle: 4.1.1
     react: 18.2.0
     react-hook-form: 7.43.9
-  checksum: d5d31b7ae9b9ac5d10a217950aa06cb585a85b619ed30cdf728ea30880abaf8ad50edb6a058ecad7b3b448c59d89c3012f9d38efaaafd01602b4dbd69760c8ea
+  checksum: 07026be31cd47752a0de569936508c20585f704160b709533b290f08b40e183452f05da62f38a0242e0075cfec28841f433e85e8fc8dbe9294edbf3863b9a00a
   languageName: node
   linkType: hard
 
-"@navikt/ft-form-validators@npm:2.3.0, @navikt/ft-form-validators@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@navikt/ft-form-validators@npm:2.3.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F2.3.0%2Ffd4cd930d873c3486c47d23fabe9d244d22ce46a"
+"@navikt/ft-form-validators@npm:2.3.1, @navikt/ft-form-validators@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "@navikt/ft-form-validators@npm:2.3.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F2.3.1%2F70c01865aaa0dade04743f1b1405f6e260b8e6b0"
   dependencies:
-    "@navikt/ft-utils": ^2.3.0
+    "@navikt/ft-utils": ^2.3.1
     moment: 2.30.1
   peerDependencies:
     "@navikt/ft-utils": 2.x
     moment: 2.29.4
-  checksum: 7aa07fe2e77ec6a893991d31f2755b181d6df10c798496de823c36454b522fb3b7f5834e755cf6fa9e9a434f8c62c1fd8e4603ba72cf60a17a85aeef32bd1d32
+  checksum: 1d4e1a43f35eaf47420b96b226d59a8c080e566cf214882d146141f6b0d2e03b215f3dc6686a353859045b6c0df3e358d2c88191a3003298007efd127885336d
   languageName: node
   linkType: hard
 
-"@navikt/ft-kodeverk@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "@navikt/ft-kodeverk@npm:2.4.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F2.4.0%2Fd34a8bb9172904f499d4dd244ff4a2c62704f026"
-  checksum: 22de0447934fc65604b2fcad6510b1db9f5c73439c0841a95f6c0475ab9af5ca32c0bf029dbbe0ce283c5d311de0d181e6569e95fc36679461306d4698721433
+"@navikt/ft-kodeverk@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "@navikt/ft-kodeverk@npm:2.4.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F2.4.1%2Fabbb43566601b06750e917eeceed13c17c8d64c6"
+  checksum: d8322ce8dbf409a0ff5b640011788851a288be895242dc83cdf2816a18b2abf3bcc6d4cf799bb73f16fb4375f3ff29fc3f3eef5aa39329d74a3d21a0f96fb255
   languageName: node
   linkType: hard
 
-"@navikt/ft-konstanter@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@navikt/ft-konstanter@npm:2.3.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-konstanter%2F2.3.0%2F790519a0fbcf810b25bedaab3f2d7e5ae8fdd7c6"
-  checksum: a277d83052cdaaa7c58f307a25f3ac09f0b99b6c95220d3bf34565ef55e9a8c4ece9f77762f46d3870ca05eb0359c96760479d2072dbd49b3146056eec8352b2
+"@navikt/ft-konstanter@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "@navikt/ft-konstanter@npm:2.3.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-konstanter%2F2.3.1%2Fa02f653497213eb24d183daaee8725216847a5bf"
+  checksum: f93231e33c361520a122189af6ee48066688bc4208fe1e0040d6bfe8bb6840fe4713943679936220240e68cdf45bddfcdc5434935a87a61969117cef38aa498e
   languageName: node
   linkType: hard
 
-"@navikt/ft-plattform-komponenter@npm:2.5.0, @navikt/ft-plattform-komponenter@npm:^2.5.0":
-  version: 2.5.0
-  resolution: "@navikt/ft-plattform-komponenter@npm:2.5.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-plattform-komponenter%2F2.5.0%2F78d521be1d0a454c463e7e7adcc2726cdf799de4"
+"@navikt/ft-plattform-komponenter@npm:2.5.1, @navikt/ft-plattform-komponenter@npm:^2.5.1":
+  version: 2.5.1
+  resolution: "@navikt/ft-plattform-komponenter@npm:2.5.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-plattform-komponenter%2F2.5.1%2F730bf499992992fc7f501db0f018de7f5ae899d5"
   dependencies:
     "@navikt/aksel-icons": 6.1.1
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-react": 6.1.1
-    "@navikt/ft-utils": ^2.3.0
+    "@navikt/ft-utils": ^2.3.1
     classnames: 2.5.1
   peerDependencies:
     "@popperjs/core": 2.11.7
@@ -5600,24 +5390,24 @@ __metadata:
     react-collapse: 5.1.1
     react-dom: 18.2.0
     react-popper: 2.3.0
-  checksum: f4bfed0c7f75505503eae59f2dd1586937dd6333e1302c2aba4a2ef8905d11efa84a3b0294bbb33682fc7d81966163aeec17642f0aa57c0486f9baa0aa13946e
+  checksum: 70dcc71df8d69172c4c3a8a7f85186f3a3cc508a6a7e781a8f662f36c25ade7ed1516e8dd59e692d79ada44e698e0c5577ccad8cd4fcfba0556e8989a6d3c0d3
   languageName: node
   linkType: hard
 
-"@navikt/ft-prosess-beregningsgrunnlag@npm:6.5.0":
-  version: 6.5.0
-  resolution: "@navikt/ft-prosess-beregningsgrunnlag@npm:6.5.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-beregningsgrunnlag%2F6.5.0%2F58911506fbb448b659ae0a6e5c28af46d57d232c"
+"@navikt/ft-prosess-beregningsgrunnlag@npm:6.5.1":
+  version: 6.5.1
+  resolution: "@navikt/ft-prosess-beregningsgrunnlag@npm:6.5.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-beregningsgrunnlag%2F6.5.1%2F89aa736fdaf23677da3f0d5f42d4a7350574ed61"
   dependencies:
     "@navikt/aksel-icons": 6.1.1
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-react": 6.1.1
-    "@navikt/ft-form-hooks": ^4.4.0
-    "@navikt/ft-form-validators": ^2.3.0
-    "@navikt/ft-kodeverk": ^2.4.0
-    "@navikt/ft-plattform-komponenter": ^2.5.0
-    "@navikt/ft-types": ^2.4.0
-    "@navikt/ft-ui-komponenter": ^2.3.0
-    "@navikt/ft-utils": ^2.3.0
+    "@navikt/ft-form-hooks": ^4.4.1
+    "@navikt/ft-form-validators": ^2.3.1
+    "@navikt/ft-kodeverk": ^2.4.1
+    "@navikt/ft-plattform-komponenter": ^2.5.1
+    "@navikt/ft-types": ^2.4.1
+    "@navikt/ft-ui-komponenter": ^2.3.1
+    "@navikt/ft-utils": ^2.3.1
     classnames: 2.5.1
     dayjs: 1.11.10
     echarts: 5.5.0
@@ -5643,23 +5433,23 @@ __metadata:
     react-collapse: 5.1.1
     react-hook-form: 7.43.9
     react-intl: 6.3.2
-  checksum: f63fa054e636533213c83af534df86494b0a78a4de5d066975d6537cbfd638ed3a5159d994d56a9a9d4dceee8d2985a43db66624dab8c989bda46e44415f4ed1
+  checksum: 691c8f95c34d04dca5e2efb39ea41289239aa160ac288157fe445c2ac9b37dea20e103ebae7a6125d711a23082d9bf1ef6f6715e3aa111db1ef102a4bdc641b1
   languageName: node
   linkType: hard
 
-"@navikt/ft-prosess-tilbakekreving-foreldelse@npm:3.3.0":
-  version: 3.3.0
-  resolution: "@navikt/ft-prosess-tilbakekreving-foreldelse@npm:3.3.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-tilbakekreving-foreldelse%2F3.3.0%2Febab8af6d4ff0688e45c37d849490737f8f91edc"
+"@navikt/ft-prosess-tilbakekreving-foreldelse@npm:3.3.1":
+  version: 3.3.1
+  resolution: "@navikt/ft-prosess-tilbakekreving-foreldelse@npm:3.3.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-tilbakekreving-foreldelse%2F3.3.1%2F2a7fdd0ea204d857633760c271c8a0852f7c4487"
   dependencies:
     "@navikt/aksel-icons": 6.1.1
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-react": 6.1.1
-    "@navikt/ft-form-hooks": ^4.4.0
-    "@navikt/ft-form-validators": ^2.3.0
-    "@navikt/ft-kodeverk": ^2.4.0
-    "@navikt/ft-types": ^2.4.0
-    "@navikt/ft-ui-komponenter": ^2.3.0
-    "@navikt/ft-utils": ^2.3.0
+    "@navikt/ft-form-hooks": ^4.4.1
+    "@navikt/ft-form-validators": ^2.3.1
+    "@navikt/ft-kodeverk": ^2.4.1
+    "@navikt/ft-types": ^2.4.1
+    "@navikt/ft-ui-komponenter": ^2.3.1
+    "@navikt/ft-utils": ^2.3.1
     dayjs: 1.11.10
     moment: 2.30.1
     react: 18.2.0
@@ -5680,29 +5470,29 @@ __metadata:
     react: 18.2.0
     react-hook-form: 7.43.9
     react-intl: 6.3.2
-  checksum: c895ddbc22daec0003750be0faac5818a1decb3c73cc9c1b9b58a9eab894e357d6d693ae4eda541fa9251de90b7bd62aaec6638364e6c4b0aa6c5404e8b88e87
+  checksum: 0327f5b603e329f49d15fc72f4fa60d6088a02abc5d477dfd87eea44a77eab1f236d963cc36f9eceb179a45e78064ee5128a0debe9694b121bbd1a40ec63375a
   languageName: node
   linkType: hard
 
-"@navikt/ft-types@npm:2.4.0, @navikt/ft-types@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "@navikt/ft-types@npm:2.4.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-types%2F2.4.0%2F290d7b0e3e2c1467503e42a386844f9fdb2c7994"
+"@navikt/ft-types@npm:2.4.1, @navikt/ft-types@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "@navikt/ft-types@npm:2.4.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-types%2F2.4.1%2Fb489f6987afad5c16d6bf3a29ddc1da89eff660d"
   dependencies:
-    "@navikt/ft-kodeverk": ^2.4.0
+    "@navikt/ft-kodeverk": ^2.4.1
   peerDependencies:
     "@navikt/ft-kodeverk": 2.x
-  checksum: e8a99e87e8cbd54c6be09cce36ced6510e0b28a2f39fc6aaf6f54308d68709daca677ca72624d16c3f61e6290c790eb1141a236735a62df7f6b7a8e898446012
+  checksum: 00b8401e9c82a8d937dff7fc7cf1aac0168144e29f88d69c75cae31847579f84feec8abf6d178fd431a4e6bda573171147ce68e7cd572c929436bdbaf3223695
   languageName: node
   linkType: hard
 
-"@navikt/ft-ui-komponenter@npm:2.3.0, @navikt/ft-ui-komponenter@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@navikt/ft-ui-komponenter@npm:2.3.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F2.3.0%2F855fb1304a0335a928255ceab40d134ba1ce259b"
+"@navikt/ft-ui-komponenter@npm:2.3.1, @navikt/ft-ui-komponenter@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "@navikt/ft-ui-komponenter@npm:2.3.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F2.3.1%2F06fc5903847c8f21795cea7d9f38318ed27ce42e"
   dependencies:
     "@navikt/aksel-icons": 6.1.1
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-react": 6.1.1
-    "@navikt/ft-utils": ^2.3.0
+    "@navikt/ft-utils": ^2.3.1
     classnames: 2.5.1
     react: 18.2.0
     react-intl: 6.6.2
@@ -5716,16 +5506,16 @@ __metadata:
     react: 18.2.0
     react-intl: 6.3.2
     react-modal: 3.16.1
-  checksum: 9348008fa0e24507fbd1b99f81bcb963e5aafe7f90604f1cad964070f0dee66293bd492ad330dd512b517969608d59fb67312b9fbf23e7af42d578e9d2790dbc
+  checksum: 6a67c2b8111e5611d2bdd555166e868701c7457c4d01952c0c068ee88abcfa7929a578b060ded963e74eb88268ee0136f375f614b0c22ed08a0061017390de5e
   languageName: node
   linkType: hard
 
-"@navikt/ft-utils@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@navikt/ft-utils@npm:2.3.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-utils%2F2.3.0%2F500a018215b90a3a892ee1e2b90d5fc15b4cad4c"
+"@navikt/ft-utils@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "@navikt/ft-utils@npm:2.3.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-utils%2F2.3.1%2F7b4cf6d8bf38ba91ea37f33225cb0b7f3bf7efd2"
   dependencies:
-    "@navikt/ft-kodeverk": ^2.4.0
-    "@navikt/ft-types": ^2.4.0
+    "@navikt/ft-kodeverk": ^2.4.1
+    "@navikt/ft-types": ^2.4.1
     dayjs: 1.11.10
     react-intl: 6.6.2
   peerDependencies:
@@ -5733,7 +5523,7 @@ __metadata:
     "@navikt/ft-types": 2.x
     dayjs: 1.11.7
     react-intl: 6.3.2
-  checksum: badaa94795f4dffe94abb553de827c3bd11aa9d6d5b3c701f7430ac1dd246a47f550de6abc50f7c11fec789edb8b8c6bfa7e111372b39d09bc118e592ce8df79
+  checksum: 0cb043fa5da3edade107fad7e3bd62fe447248d3fe45fff40f8862e501bd7ebdce0fdd8554fe7c455ee66b7fb7e8159a94195ad58c6cfb97cb23c371a8851c57
   languageName: node
   linkType: hard
 
@@ -10090,7 +9880,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"camelcase@npm:^6.2.0, camelcase@npm:^6.3.0":
+"camelcase@npm:^6.0.0, camelcase@npm:^6.2.0, camelcase@npm:^6.3.0":
   version: 6.3.0
   resolution: "camelcase@npm:6.3.0"
   checksum: 8c96818a9076434998511251dcb2761a94817ea17dbdc37f47ac080bd088fc62c7369429a19e2178b993497132c8cbcf5cc1f44ba963e76782ba469c0474938d
@@ -10194,7 +9984,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:^3.4.2, chokidar@npm:^3.5.3":
+"chokidar@npm:^3.4.0, chokidar@npm:^3.4.2, chokidar@npm:^3.5.3":
   version: 3.6.0
   resolution: "chokidar@npm:3.6.0"
   dependencies:
@@ -12851,12 +12641,12 @@ __metadata:
   linkType: hard
 
 "follow-redirects@npm:^1.15.4":
-  version: 1.15.5
-  resolution: "follow-redirects@npm:1.15.5"
+  version: 1.15.6
+  resolution: "follow-redirects@npm:1.15.6"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 5ca49b5ce6f44338cbfc3546823357e7a70813cecc9b7b768158a1d32c1e62e7407c944402a918ea8c38ae2e78266312d617dc68783fac502cbb55e1047b34ec
+  checksum: a62c378dfc8c00f60b9c80cab158ba54e99ba0239a5dd7c81245e5a5b39d10f0c35e249c3379eae719ff0285fff88c365dd446fab19dee771f1d76252df1bbf5
   languageName: node
   linkType: hard
 
@@ -13758,6 +13548,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"icss-replace-symbols@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "icss-replace-symbols@npm:1.1.0"
+  checksum: 24575b2c2f7e762bfc6f4beee31be9ba98a01cad521b5aa9954090a5de2b5e1bf67814c17e22f9e51b7d798238db8215a173d6c2b4726ce634ce06b68ece8045
+  languageName: node
+  linkType: hard
+
+"icss-utils@npm:^5.0.0":
+  version: 5.1.0
+  resolution: "icss-utils@npm:5.1.0"
+  peerDependencies:
+    postcss: ^8.1.0
+  checksum: 5c324d283552b1269cfc13a503aaaa172a280f914e5b81544f3803bc6f06a3b585fb79f66f7c771a2c052db7982c18bf92d001e3b47282e3abbbb4c4cc488d68
+  languageName: node
+  linkType: hard
+
 "ieee754@npm:^1.1.13":
   version: 1.2.1
   resolution: "ieee754@npm:1.2.1"
@@ -14307,6 +14113,13 @@ __metadata:
   dependencies:
     has-symbols: ^1.0.2
   checksum: 92805812ef590738d9de49d677cd17dfd486794773fb6fa0032d16452af46e9b91bb43ffe82c983570f015b37136f4b53b28b8523bfb10b0ece7a66c31a54510
+  languageName: node
+  linkType: hard
+
+"is-there@npm:^4.4.2":
+  version: 4.5.1
+  resolution: "is-there@npm:4.5.1"
+  checksum: 763240c846c85b516271c747d675bae1f49efdfb252556c946e9940cb0d5d9953a50610d6f2a1ee9827da7ac1f8e74157c0f02a6ab17e86aaf319c56ba4652c2
   languageName: node
   linkType: hard
 
@@ -14873,7 +14686,7 @@ __metadata:
     "@navikt/ds-react": 6.1.1
     "@navikt/ds-tailwind": ^6.1.1
     "@navikt/familie-endringslogg": 12.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.0
+    "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
     "@sentry/browser": 7.105.0
     "@sentry/cli": 2.30.0
@@ -14941,6 +14754,7 @@ __metadata:
     stylelint: 15.11.0
     stylelint-order: 6.0.4
     tailwindcss: ^3.4.1
+    typed-css-modules: ^0.9.1
     typescript: 5.4.2
     vite: ^5.1.5
     vite-plugin-html: ^3.2.2
@@ -15767,6 +15581,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mkdirp@npm:^3.0.0":
+  version: 3.0.1
+  resolution: "mkdirp@npm:3.0.1"
+  bin:
+    mkdirp: dist/cjs/src/bin.js
+  checksum: 972deb188e8fb55547f1e58d66bd6b4a3623bf0c7137802582602d73e6480c1c2268dcbafbfb1be466e00cc7e56ac514d7fd9334b7cf33e3e2ab547c16f83a8d
+  languageName: node
+  linkType: hard
+
 "mlly@npm:^1.2.0, mlly@npm:^1.4.2":
   version: 1.5.0
   resolution: "mlly@npm:1.5.0"
@@ -15949,46 +15772,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-alertstriper-style@npm:3.0.2":
-  version: 3.0.2
-  resolution: "nav-frontend-alertstriper-style@npm:3.0.2"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-    nav-frontend-ikoner-assets: ^3.0.0
-    nav-frontend-paneler-style: ^2.0.0
-    nav-frontend-typografi-style: ^2.0.0
-  checksum: 5632fe0c54cca67183e1aa615ea059c8bbaf9e0edd78ac24bc8513bb3194d2cce80544acd2f14c16512af935477287d7eeeb006d1f70ba1bd3c997a84fe8f9bb
-  languageName: node
-  linkType: hard
-
-"nav-frontend-alertstriper@npm:4.0.2":
-  version: 4.0.2
-  resolution: "nav-frontend-alertstriper@npm:4.0.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-alertstriper-style: ^3.0.0
-    nav-frontend-ikoner-assets: ^3.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 37eb283685186cf5e19948f22efa8e148dbf1f1815cf17858c2e4fe4289cda388844636631c968d9652ccd93966b0854da4260b928943107495db7816bd8344b
-  languageName: node
-  linkType: hard
-
-"nav-frontend-alertstriper@patch:nav-frontend-alertstriper@npm%3A4.0.2#./.yarn/patches/nav-frontend-alertstriper-npm-4.0.2-b212c92a4c.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 4.0.2
-  resolution: "nav-frontend-alertstriper@patch:nav-frontend-alertstriper@npm%3A4.0.2#./.yarn/patches/nav-frontend-alertstriper-npm-4.0.2-b212c92a4c.patch::version=4.0.2&hash=ff89da&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-alertstriper-style: ^3.0.0
-    nav-frontend-ikoner-assets: ^3.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: fd4d12110448ed97b5ac3f84d24b47df23b0907cd7ef3c0576ace3a2088871fabf88d46c3f2553e7c3eb6aa9619788d2b363fe6f68adab25710657f250b706b4
-  languageName: node
-  linkType: hard
-
 "nav-frontend-chevron-style@npm:1.0.4":
   version: 1.0.4
   resolution: "nav-frontend-chevron-style@npm:1.0.4"
@@ -16024,83 +15807,6 @@ __metadata:
   version: 6.0.1
   resolution: "nav-frontend-core@npm:6.0.1"
   checksum: 7673f42a2a93a08fa6952d2c32d8e5d424de437910b76d84363d7cb86a7c0691e5f475a3623c8964366b3bbd33a6defb8e3907bc61b41c3434b4619aab7567d2
-  languageName: node
-  linkType: hard
-
-"nav-frontend-ekspanderbartpanel-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-ekspanderbartpanel-style@npm:2.0.2"
-  peerDependencies:
-    nav-frontend-chevron-style: ^1.0.4
-    nav-frontend-core: ^6.0.0
-    nav-frontend-paneler-style: ^2.0.0
-    nav-frontend-typografi-style: ^2.0.0
-  checksum: 116827e6f3ece2aeeca442dbad8b7772a202640852778a39f2c9a390651e49b461cb18ef113bccd48c34ec9f6adb83845b7f8763dd321ad845b756fcd5562402
-  languageName: node
-  linkType: hard
-
-"nav-frontend-ekspanderbartpanel@npm:4.0.4":
-  version: 4.0.4
-  resolution: "nav-frontend-ekspanderbartpanel@npm:4.0.4"
-  peerDependencies:
-    "@types/react-collapse": ^5.0.0
-    classnames: ^2.2.5
-    nav-frontend-ekspanderbartpanel-style: ^2.0.0
-    nav-frontend-js-utils: ^1.0.19
-    react: ^16.8.0 || ^17.0.0
-    react-collapse: ^5.0.0
-  checksum: b694fe56582a7363d2f9f25ec614389f57bce48d9ce5e9dd6922870d39ca0c347ed020f8371430b0bea2f6685a8fa2276e7d8123dbeafc830e78a3bde96dfb77
-  languageName: node
-  linkType: hard
-
-"nav-frontend-ekspanderbartpanel@patch:nav-frontend-ekspanderbartpanel@npm%3A4.0.4#./.yarn/patches/nav-frontend-ekspanderbartpanel-npm-4.0.4-343a9004ea.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 4.0.4
-  resolution: "nav-frontend-ekspanderbartpanel@patch:nav-frontend-ekspanderbartpanel@npm%3A4.0.4#./.yarn/patches/nav-frontend-ekspanderbartpanel-npm-4.0.4-343a9004ea.patch::version=4.0.4&hash=affa99&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    "@types/react-collapse": ^5.0.0
-    classnames: ^2.2.5
-    nav-frontend-ekspanderbartpanel-style: ^2.0.0
-    nav-frontend-js-utils: ^1.0.19
-    react: ^16.8.0 || ^17.0.0
-    react-collapse: ^5.0.0
-  checksum: 22ea01f67b6659bdca0e19bbb073408302a6c3ca0a96c9793ce0708ebf3723c5f72d0aa981c31937f352cbe3eca7919d1d684a1882fc25aa751e6eba992424d6
-  languageName: node
-  linkType: hard
-
-"nav-frontend-etiketter-style@npm:2.0.3":
-  version: 2.0.3
-  resolution: "nav-frontend-etiketter-style@npm:2.0.3"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-  checksum: 156253db8a24b8ba3fa70282b9f68902c72e8e51a7a6f851a1a4e90e721293e85606f9f44f90dbf78872bef8d4010b72c004b044634150a5609cd8d69bf1e52c
-  languageName: node
-  linkType: hard
-
-"nav-frontend-etiketter@npm:3.0.3":
-  version: 3.0.3
-  resolution: "nav-frontend-etiketter@npm:3.0.3"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-core: ^6.0.0
-    nav-frontend-etiketter-style: ^2.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 8b0552ead6616f7d22f9d8fad291c2929a7568f004093eb4da08ea6dcdcd5eed13e32d0963d1ecf790ab3629597ee3006e7c110c09dce6b60220d52d1e12209c
-  languageName: node
-  linkType: hard
-
-"nav-frontend-etiketter@patch:nav-frontend-etiketter@npm%3A3.0.3#./.yarn/patches/nav-frontend-etiketter-npm-3.0.3-509c94aa5d.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 3.0.3
-  resolution: "nav-frontend-etiketter@patch:nav-frontend-etiketter@npm%3A3.0.3#./.yarn/patches/nav-frontend-etiketter-npm-3.0.3-509c94aa5d.patch::version=3.0.3&hash=7b258c&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-core: ^6.0.0
-    nav-frontend-etiketter-style: ^2.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 6b47123bf37654933671e64b86ec0d3a1eec16c11d901a58aa4eb020865e21677d2acadfc4e621d6e43bd34696141a7e4922e1e0d3306e58810b25fa7c90c47e
   languageName: node
   linkType: hard
 
@@ -16184,18 +15890,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-ikonknapper@npm:2.1.3":
-  version: 2.1.3
-  resolution: "nav-frontend-ikonknapper@npm:2.1.3"
-  peerDependencies:
-    nav-frontend-chevron: ^1.0.29
-    nav-frontend-ikoner-assets: ^3.0.0
-    nav-frontend-knapper: ^3.0.0
-    react: ^16.8.0 || ^17.0.0
-  checksum: f51fddf774fcebf3349769a95a03476f08eaf82892272664bfd59a471b817858d8317bf2c675324dfba82618136bdf9beed1e34c42f3179ff6d1519237c0794b
-  languageName: node
-  linkType: hard
-
 "nav-frontend-js-utils@npm:1.0.20":
   version: 1.0.20
   resolution: "nav-frontend-js-utils@npm:1.0.20"
@@ -16206,42 +15900,6 @@ __metadata:
     prop-types: ^15.5.10
     react: ^16.8.0 || ^17.0.0
   checksum: c572c63794715c27eed790911fcb4f0ac71934184813d4b9d3ad33827a5f05164f4563c22aac8d577bbbb7cf9c95e0da2383f247f539da1d4032d831193f915a
-  languageName: node
-  linkType: hard
-
-"nav-frontend-knapper-style@npm:2.1.2":
-  version: 2.1.2
-  resolution: "nav-frontend-knapper-style@npm:2.1.2"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-    nav-frontend-typografi-style: ^2.0.0
-  checksum: b2801d4fdeb74c21dd8dad3e686bb243213ef6c56df1ea7b36212d8e819a2c69836ecb2d62e6ed45d8fc36ca10c5921b3552abd95562743414be7ae9613a53c3
-  languageName: node
-  linkType: hard
-
-"nav-frontend-knapper@npm:3.1.3":
-  version: 3.1.3
-  resolution: "nav-frontend-knapper@npm:3.1.3"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-js-utils: ^1.0.19
-    nav-frontend-knapper-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 7f76b51730f550379c8d2a6add956060e76af05ff70574c6f743653330e82b05f443bd763322cef1b6cfc5d59d2e8a3a3f23cc391a938c5bf63ff61b0ed2af61
-  languageName: node
-  linkType: hard
-
-"nav-frontend-knapper@patch:nav-frontend-knapper@npm%3A3.1.3#./.yarn/patches/nav-frontend-knapper-npm-3.1.3-f1d93117df.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 3.1.3
-  resolution: "nav-frontend-knapper@patch:nav-frontend-knapper@npm%3A3.1.3#./.yarn/patches/nav-frontend-knapper-npm-3.1.3-f1d93117df.patch::version=3.1.3&hash=c26b6e&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-js-utils: ^1.0.19
-    nav-frontend-knapper-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 5b3d4df73665eb0adfe849247c26aa16aebfc9e29e3cb27d22f99e908052076ace5b1713db58947b84a0fefe0b6b2ba5b2f93aa1ba6c680b27428c8d06d66b28
   languageName: node
   linkType: hard
 
@@ -16348,81 +16006,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-modal-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-modal-style@npm:2.0.2"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-    nav-frontend-lukknapp-style: ^2.0.0
-    nav-frontend-paneler-style: ^2.0.0
-  checksum: 4b994e42e167689c21a6f40390a39c7e70d56832a396761f3d940611ed8b75827bcb8a80bbb2c45b81e8e8ac298d2f80df0e09b4c1c99a32cec94bf03a79dd33
-  languageName: node
-  linkType: hard
-
-"nav-frontend-modal@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-modal@npm:2.0.2"
-  peerDependencies:
-    "@types/react-modal": ^3.1.2
-    classnames: ^2.2.5
-    nav-frontend-lukknapp: ^2.0.0
-    nav-frontend-modal-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-    react-modal: ^2.2.4 || ^3.3.1
-  checksum: 264f32dbf190eabd126f3e2459b99089366e9b3287c38e43a34aab81382f30c6af9e0a85c5ce57bf71bdbffcb523b49caecc340b241938d5a83c0c2039e23c56
-  languageName: node
-  linkType: hard
-
-"nav-frontend-modal@patch:nav-frontend-modal@npm%3A2.0.2#./.yarn/patches/nav-frontend-modal-npm-2.0.2-ff97011d36.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 2.0.2
-  resolution: "nav-frontend-modal@patch:nav-frontend-modal@npm%3A2.0.2#./.yarn/patches/nav-frontend-modal-npm-2.0.2-ff97011d36.patch::version=2.0.2&hash=81831f&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    "@types/react-modal": ^3.1.2
-    classnames: ^2.2.5
-    nav-frontend-lukknapp: ^2.0.0
-    nav-frontend-modal-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-    react-modal: ^2.2.4 || ^3.3.1
-  checksum: 07eb7e489c8f183d91d993a1ababb13f5bab344d101dcff599773c924917911685591aaafd6c58f73fdc2443246b88d2b289d6c5f942d12652b8de2583e82c53
-  languageName: node
-  linkType: hard
-
 "nav-frontend-paneler-style@npm:2.0.2":
   version: 2.0.2
   resolution: "nav-frontend-paneler-style@npm:2.0.2"
   peerDependencies:
     nav-frontend-core: ^6.0.0
   checksum: 7d4b15e3b1a6cc127eca837ae17c42736ef69da9f7f2ca617180809d244c3abda7e4385dd144478c0befc3831c5bec686f5cae281c31235aacba8b79f032cc5d
-  languageName: node
-  linkType: hard
-
-"nav-frontend-paneler@npm:3.0.2":
-  version: 3.0.2
-  resolution: "nav-frontend-paneler@npm:3.0.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-paneler-style: ^2.0.0
-    nav-frontend-typografi: ^4.0.0
-    nav-frontend-typografi-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 61203dc41c3b6e49cbf3a2b6225ffe769715f643a75cc4df5352e6181ff549ae8f51361dcc62d69e25f6923d596eb795be4a22c2cd6b4661180dcb496a82df66
-  languageName: node
-  linkType: hard
-
-"nav-frontend-paneler@patch:nav-frontend-paneler@npm%3A3.0.2#./.yarn/patches/nav-frontend-paneler-npm-3.0.2-45502b626d.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 3.0.2
-  resolution: "nav-frontend-paneler@patch:nav-frontend-paneler@npm%3A3.0.2#./.yarn/patches/nav-frontend-paneler-npm-3.0.2-45502b626d.patch::version=3.0.2&hash=51f6b5&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-paneler-style: ^2.0.0
-    nav-frontend-typografi: ^4.0.0
-    nav-frontend-typografi-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: ca693fe04bc43e74481c50f2e38b2f534e6905a1d4ea4a4b224235ea951825feb3a194f909a835c3266b5868a3cad8080aabf170f2ff5d63c4d7b137a6bbee66
   languageName: node
   linkType: hard
 
@@ -16503,79 +16092,6 @@ __metadata:
     prop-types: ^15.5.10
     react: ^16.8.0 || ^17.0.0
   checksum: 2aca4d45d39a250725f130cd3d84e80a2b6bce260a7790ad50a70a4c20e3d7e84fdba18de9987634979fd7c06a6aa55f41cf2bd398d8fe190a32e0f0cb216666
-  languageName: node
-  linkType: hard
-
-"nav-frontend-snakkeboble-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-snakkeboble-style@npm:2.0.2"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-    nav-frontend-typografi-style: ^2.0.0
-  checksum: 3d0c6d2b409f321e9ce4115c534f886cdcbd59900623fd930160ab003c21ca3006483b6a54a0401840272a93f4058ea8448874ad99f9c515d9c1ee0654b01b74
-  languageName: node
-  linkType: hard
-
-"nav-frontend-snakkeboble@npm:3.0.2":
-  version: 3.0.2
-  resolution: "nav-frontend-snakkeboble@npm:3.0.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-paneler: ^3.0.0
-    nav-frontend-paneler-style: ^2.0.0
-    nav-frontend-snakkeboble-style: ^2.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: b5171cd20b7f7f48b0cbfec9f5d96946ab0fb783c83ce99f26d1d81a827347751867fb8a73b8e0cf23cb6104e2998715dfceca3030bfd2a3f47257c0538b0cfd
-  languageName: node
-  linkType: hard
-
-"nav-frontend-snakkeboble@patch:nav-frontend-snakkeboble@npm%3A3.0.2#./.yarn/patches/nav-frontend-snakkeboble-npm-3.0.2-ebcb5dd2db.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 3.0.2
-  resolution: "nav-frontend-snakkeboble@patch:nav-frontend-snakkeboble@npm%3A3.0.2#./.yarn/patches/nav-frontend-snakkeboble-npm-3.0.2-ebcb5dd2db.patch::version=3.0.2&hash=fcfa71&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-paneler: ^3.0.0
-    nav-frontend-paneler-style: ^2.0.0
-    nav-frontend-snakkeboble-style: ^2.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: cd8cce32645f4b6d91aa35391786f9c63216a476adee157f10ab4cd03710186e9ce32a3d41eb2386385d68f6c6749a19a98de944099701d83043ba7a02e132ca
-  languageName: node
-  linkType: hard
-
-"nav-frontend-spinner-style@npm:1.0.2":
-  version: 1.0.2
-  resolution: "nav-frontend-spinner-style@npm:1.0.2"
-  checksum: 28e376811be644987470012a513d4c4a22231263631e8911355cc15080301a54334ac8163a45503146706bf76483b3243a3495b1272b1321b4535a0e5103977f
-  languageName: node
-  linkType: hard
-
-"nav-frontend-spinner@npm:3.0.1":
-  version: 3.0.1
-  resolution: "nav-frontend-spinner@npm:3.0.1"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-ikoner-assets: ^3.0.0
-    nav-frontend-spinner-style: ^1.0.2
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 16b52e8de4077c0d01957f914f668ee4f21671f788d3d171ad0cbd02947f8d77ce90d8c8b1566e7d1dc77cafcdcfcfb87a55cddeb0be2c5d25d67340da27736a
-  languageName: node
-  linkType: hard
-
-"nav-frontend-spinner@patch:nav-frontend-spinner@npm%3A3.0.1#./.yarn/patches/nav-frontend-spinner-npm-3.0.1-e8209cee75.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 3.0.1
-  resolution: "nav-frontend-spinner@patch:nav-frontend-spinner@npm%3A3.0.1#./.yarn/patches/nav-frontend-spinner-npm-3.0.1-e8209cee75.patch::version=3.0.1&hash=1c222e&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-ikoner-assets: ^3.0.0
-    nav-frontend-spinner-style: ^1.0.2
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 3da7b766a10424ce9ed66eedfe76909fd2728a2da8a1fdd755737ebef32a5fa3c7755478d8a24b5cfaad29e63ceaf8fb99057677bdc88ed1a834e335fed802b3
   languageName: node
   linkType: hard
 
@@ -17520,6 +17036,50 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-modules-extract-imports@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "postcss-modules-extract-imports@npm:3.0.0"
+  peerDependencies:
+    postcss: ^8.1.0
+  checksum: 4b65f2f1382d89c4bc3c0a1bdc5942f52f3cb19c110c57bd591ffab3a5fee03fcf831604168205b0c1b631a3dce2255c70b61aaae3ef39d69cd7eb450c2552d2
+  languageName: node
+  linkType: hard
+
+"postcss-modules-local-by-default@npm:^4.0.0":
+  version: 4.0.4
+  resolution: "postcss-modules-local-by-default@npm:4.0.4"
+  dependencies:
+    icss-utils: ^5.0.0
+    postcss-selector-parser: ^6.0.2
+    postcss-value-parser: ^4.1.0
+  peerDependencies:
+    postcss: ^8.1.0
+  checksum: 578b955b0773147890caa88c30b10dfc849c5b1412a47ad51751890dba16fca9528c3ab00a19b186a8c2c150c2d08e2ce64d3d907800afee1f37c6d38252e365
+  languageName: node
+  linkType: hard
+
+"postcss-modules-scope@npm:^3.0.0":
+  version: 3.1.1
+  resolution: "postcss-modules-scope@npm:3.1.1"
+  dependencies:
+    postcss-selector-parser: ^6.0.4
+  peerDependencies:
+    postcss: ^8.1.0
+  checksum: 9e9d23abb0babc7fa243be65704d72a5a9ceb2bded4dbaef96a88210d468b03c8c3158c197f4e22300c851f08c6fdddd6ebe65f44e4c34448b45b8a2e063a16d
+  languageName: node
+  linkType: hard
+
+"postcss-modules-values@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "postcss-modules-values@npm:4.0.0"
+  dependencies:
+    icss-utils: ^5.0.0
+  peerDependencies:
+    postcss: ^8.1.0
+  checksum: f7f2cdf14a575b60e919ad5ea52fed48da46fe80db2733318d71d523fc87db66c835814940d7d05b5746b0426e44661c707f09bdb83592c16aea06e859409db6
+  languageName: node
+  linkType: hard
+
 "postcss-nested@npm:^6.0.1":
   version: 6.0.1
   resolution: "postcss-nested@npm:6.0.1"
@@ -17557,6 +17117,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-selector-parser@npm:^6.0.2, postcss-selector-parser@npm:^6.0.4":
+  version: 6.0.16
+  resolution: "postcss-selector-parser@npm:6.0.16"
+  dependencies:
+    cssesc: ^3.0.0
+    util-deprecate: ^1.0.2
+  checksum: e1cd68e33a39e3dc1e1e5bd8717be5bbe3cc23a4cecb466c3acb2f3a77daad7a47df4d6137a76f8db74cf160d2fb16b2cfdb4ccbebdfda844690f8d545fe281d
+  languageName: node
+  linkType: hard
+
 "postcss-sorting@npm:^8.0.2":
   version: 8.0.2
   resolution: "postcss-sorting@npm:8.0.2"
@@ -17566,7 +17136,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-value-parser@npm:^4.0.0, postcss-value-parser@npm:^4.2.0":
+"postcss-value-parser@npm:^4.0.0, postcss-value-parser@npm:^4.1.0, postcss-value-parser@npm:^4.2.0":
   version: 4.2.0
   resolution: "postcss-value-parser@npm:4.2.0"
   checksum: 819ffab0c9d51cf0acbabf8996dffbfafbafa57afc0e4c98db88b67f2094cb44488758f06e5da95d7036f19556a4a732525e84289a425f4f6fd8e412a9d7442f
@@ -20457,6 +20027,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typed-css-modules@npm:^0.9.1":
+  version: 0.9.1
+  resolution: "typed-css-modules@npm:0.9.1"
+  dependencies:
+    camelcase: ^6.0.0
+    chalk: ^4.0.0
+    chokidar: ^3.4.0
+    glob: ^10.3.10
+    icss-replace-symbols: ^1.1.0
+    is-there: ^4.4.2
+    mkdirp: ^3.0.0
+    postcss: ^8.0.0
+    postcss-modules-extract-imports: ^3.0.0
+    postcss-modules-local-by-default: ^4.0.0
+    postcss-modules-scope: ^3.0.0
+    postcss-modules-values: ^4.0.0
+    yargs: ^17.7.2
+  bin:
+    tcm: lib/cli.js
+  checksum: d50b09b864ba37c185b27b1d82752a08da5bd18b79bf85542c50a815e09108c81f355c6a82bb7ddbbbde75bb2482d656216ca8c3917d4e55b7f819fbf23e7901
+  languageName: node
+  linkType: hard
+
 "typedarray@npm:^0.0.6":
   version: 0.0.6
   resolution: "typedarray@npm:0.0.6"
@@ -21589,7 +21182,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^17.3.1":
+"yargs@npm:^17.3.1, yargs@npm:^17.7.2":
   version: 17.7.2
   resolution: "yargs@npm:17.7.2"
   dependencies:

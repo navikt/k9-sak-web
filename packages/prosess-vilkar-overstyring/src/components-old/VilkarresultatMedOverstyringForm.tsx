@@ -15,9 +15,8 @@ import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
+import { BodyShort, Button, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import { Knapp } from 'nav-frontend-knapper';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { SetStateAction, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -109,9 +108,9 @@ export const VilkarresultatMedOverstyringForm = ({
     <form data-testid="overstyringform" onSubmit={handleSubmit}>
       {(erOverstyrt || hasAksjonspunkt) && (
         <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={erOverstyrt}>
-          <Element>
+          <Label size="small" as="p">
             <FormattedMessage id="VilkarresultatMedOverstyringForm.AutomatiskVurdering" />
-          </Element>
+          </Label>
           <VerticalSpacer eightPx />
           <VilkarresultatMedBegrunnelse
             skalViseBegrunnelse={erOverstyrt || hasAksjonspunkt}
@@ -131,9 +130,9 @@ export const VilkarresultatMedOverstyringForm = ({
                   <EditedIcon />
                 </FlexColumn>
                 <FlexColumn>
-                  <Normaltekst>
+                  <BodyShort size="small">
                     <FormattedMessage id="VilkarresultatMedOverstyringForm.Endret" />
-                  </Normaltekst>
+                  </BodyShort>
                 </FlexColumn>
               </FlexRow>
             </>
@@ -145,9 +144,9 @@ export const VilkarresultatMedOverstyringForm = ({
                   <Image src={advarselIkonUrl} />
                 </FlexColumn>
                 <FlexColumn>
-                  <Element>
+                  <Label size="small" as="p">
                     <FormattedMessage id="VilkarresultatMedOverstyringForm.Unntakstilfeller" />
-                  </Element>
+                  </Label>
                 </FlexColumn>
               </FlexRow>
               <VerticalSpacer sixteenPx />
@@ -160,9 +159,15 @@ export const VilkarresultatMedOverstyringForm = ({
                   />
                 </FlexColumn>
                 <FlexColumn>
-                  <Knapp htmlType="button" spinner={submitting} disabled={submitting} onClick={toggleAv}>
+                  <Button
+                    variant="secondary"
+                    type="button"
+                    loading={submitting}
+                    disabled={submitting}
+                    onClick={toggleAv}
+                  >
                     <FormattedMessage id="VilkarresultatMedOverstyringForm.Avbryt" />
-                  </Knapp>
+                  </Button>
                 </FlexColumn>
               </FlexRow>
             </FlexContainer>

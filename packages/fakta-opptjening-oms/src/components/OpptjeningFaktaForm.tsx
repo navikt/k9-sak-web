@@ -13,11 +13,9 @@ import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Opptjening } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
+import { Alert, BodyShort, Button, Detail, Heading } from '@navikt/ds-react';
 import moment from 'moment';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { TabsPure } from 'nav-frontend-tabs';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React, { Component, KeyboardEvent, MouseEvent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -284,7 +282,7 @@ export class OpptjeningFaktaFormImpl extends Component<
       arbeidsgiverOpplysningerPerId,
     } = this.props;
     if (!opptjeningList || opptjeningList.length === 0) {
-      return <Normaltekst>Fant ingen opptjeningsaktiviteter</Normaltekst>;
+      return <BodyShort size="small">Fant ingen opptjeningsaktiviteter</BodyShort>;
     }
 
     const { selectedOpptjeningActivity, activeTab } = this.state;
@@ -297,9 +295,9 @@ export class OpptjeningFaktaFormImpl extends Component<
       <div className={styles.container}>
         {opptjeningList.length > 1 && (
           <>
-            <Undertittel>
+            <Heading size="small" level="2">
               <FormattedMessage id="OpptjeningFaktaForm.Opptjeningsperioder" />
-            </Undertittel>
+            </Heading>
             <VerticalSpacer sixteenPx />
             <TabsPure
               tabs={opptjeningList.map((currentOpptjening, currentOpptjeningIndex) => ({
@@ -322,7 +320,7 @@ export class OpptjeningFaktaFormImpl extends Component<
           )}
           {dokStatus && (
             <>
-              <AlertStripeInfo className={styles.info}>
+              <Alert size="small" variant="info">
                 <FormattedMessage
                   id={
                     dokStatus === DOKUMENTASJON_VIL_BLI_INNHENTET
@@ -330,16 +328,16 @@ export class OpptjeningFaktaFormImpl extends Component<
                       : 'OpptjeningFaktaForm.DetErIkkeInnhentetDok'
                   }
                 />
-              </AlertStripeInfo>
+              </Alert>
               <VerticalSpacer twentyPx />
             </>
           )}
-          <Undertekst>
+          <Detail>
             <FormattedMessage id="OpptjeningFaktaForm.Skjaringstidspunkt" />
-          </Undertekst>
-          <Normaltekst>
+          </Detail>
+          <BodyShort size="small">
             <DateLabel dateString={findSkjaringstidspunkt(opptjeningTom)} />
-          </Normaltekst>
+          </BodyShort>
           <VerticalSpacer twentyPx />
           <OpptjeningTimeLine
             opptjeningPeriods={opptjeningAktivitetList}
@@ -379,19 +377,20 @@ export class OpptjeningFaktaFormImpl extends Component<
             <FlexContainer>
               <FlexRow>
                 <FlexColumn>
-                  <Hovedknapp mini disabled={this.isConfirmButtonDisabled()} spinner={submitting}>
+                  <Button variant="primary" size="small" disabled={this.isConfirmButtonDisabled()} loading={submitting}>
                     <FormattedMessage id="OpptjeningFaktaForm.Confirm" />
-                  </Hovedknapp>
+                  </Button>
                 </FlexColumn>
                 <FlexColumn>
-                  <Knapp
-                    mini
-                    htmlType="button"
+                  <Button
+                    variant="secondary"
+                    size="small"
+                    type="button"
                     onClick={this.addOpptjeningActivity}
                     disabled={this.isAddButtonDisabled()}
                   >
                     <FormattedMessage id="OpptjeningFaktaForm.AddActivity" />
-                  </Knapp>
+                  </Button>
                 </FlexColumn>
               </FlexRow>
             </FlexContainer>

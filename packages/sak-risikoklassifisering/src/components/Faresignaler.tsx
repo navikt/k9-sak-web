@@ -1,10 +1,9 @@
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { Risikoklassifisering } from '@k9-sak-web/types';
+import { BodyShort, Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import { Risikoklassifisering } from '@k9-sak-web/types';
 
 interface OwnProps {
   risikoklassifisering: Risikoklassifisering;
@@ -21,13 +20,13 @@ const Faresignaler = ({ risikoklassifisering }: OwnProps) => (
       <div>
         <FlexRow>
           <FlexColumn>
-            <Element>
+            <Label size="small" as="p">
               <FormattedMessage id="Risikopanel.Panel.Medlemskap" />
-            </Element>
+            </Label>
             <ul>
               {risikoklassifisering.medlFaresignaler.faresignaler.map(faresignal => (
                 <li key={faresignal}>
-                  <Normaltekst>{decodeHtmlEntity(faresignal)}</Normaltekst>
+                  <BodyShort size="small">{decodeHtmlEntity(faresignal)}</BodyShort>
                 </li>
               ))}
             </ul>
@@ -39,13 +38,13 @@ const Faresignaler = ({ risikoklassifisering }: OwnProps) => (
       <div>
         <FlexRow>
           <FlexColumn>
-            <Element>
+            <Label size="small" as="p">
               <FormattedMessage id="Risikopanel.Panel.ArbeidsforholdInntekt" />
-            </Element>
+            </Label>
             <ul>
               {risikoklassifisering.iayFaresignaler.faresignaler.map(faresignal => (
                 <li key={faresignal}>
-                  <Normaltekst>{decodeHtmlEntity(faresignal)}</Normaltekst>
+                  <BodyShort size="small">{decodeHtmlEntity(faresignal)}</BodyShort>
                 </li>
               ))}
             </ul>

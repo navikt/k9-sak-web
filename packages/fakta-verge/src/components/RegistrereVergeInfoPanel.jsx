@@ -1,16 +1,15 @@
-import React from 'react';
+import { behandlingForm } from '@fpsak-frontend/form';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
+import { BodyShort } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
-import { behandlingForm } from '@fpsak-frontend/form';
-import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
-
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { Normaltekst } from 'nav-frontend-typografi';
 import vergeAksjonspunkterPropType from '../propTypes/vergeAksjonspunkterPropType';
 
 /**
@@ -38,9 +37,7 @@ export const RegistrereVergeInfoPanelImpl = ({
         {[intl.formatMessage({ id: 'RegistrereVergeInfoPanel.CheckInformation' })]}
       </AksjonspunktHelpTextTemp>
       <VerticalSpacer twentyPx />
-      <Normaltekst>
-        {[intl.formatMessage({ id: 'RegistrereVergeInfoPanel.HjelpeTekst' })]}
-      </Normaltekst>
+      <BodyShort size="small">{[intl.formatMessage({ id: 'RegistrereVergeInfoPanel.HjelpeTekst' })]}</BodyShort>
       <form onSubmit={formProps.handleSubmit}>
         <VerticalSpacer twentyPx />
         <FaktaBegrunnelseTextField
@@ -92,7 +89,7 @@ const buildInitialValues = createSelector(
   }),
 );
 
-const transformValues = values => ({ begrunnelse: values.begrunnelse, kode: aksjonspunktCodes.AVKLAR_VERGE});
+const transformValues = values => ({ begrunnelse: values.begrunnelse, kode: aksjonspunktCodes.AVKLAR_VERGE });
 
 const FORM_NAVN = 'RegistrereVergeInfoPanel';
 

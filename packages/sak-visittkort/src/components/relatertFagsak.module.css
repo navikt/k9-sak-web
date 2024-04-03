@@ -58,7 +58,7 @@
   margin-left: 0.75rem;
 }
 
-.relatertFagsak__name:global(.typo-normal) {
+.relatertFagsak__name:global(.navds-body-short) {
   color: var(--a-blue-500);
   font-weight: 400;
   line-height: 1.25rem;

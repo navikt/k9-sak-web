@@ -1,7 +1,7 @@
 import { InputField, PeriodpickerField } from '@fpsak-frontend/form/index';
 import { FlexRow } from '@fpsak-frontend/shared-components/index';
+import { Label } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
-import { Element } from 'nav-frontend-typografi';
 import React, { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { WrappedFieldArrayProps } from 'redux-form';
@@ -36,9 +36,9 @@ const typeTilTekstIdMap = {
 const renderHeaders = (antallRader: number, type: Overføringstype, retning: Overføringsretning): ReactNode => {
   if (antallRader === 0) {
     return (
-      <Element>
+      <Label size="small" as="p">
         <FormattedMessage id="FaktaRammevedtak.IngenOverføringer" />
-      </Element>
+      </Label>
     );
   }
 
@@ -50,27 +50,27 @@ const renderHeaders = (antallRader: number, type: Overføringstype, retning: Ove
             width: '225px',
             id: 'overføring',
             content: (
-              <Element>
+              <Label size="small" as="p">
                 <FormattedMessage id={typeTilTekstIdMap[type]} />
-              </Element>
+              </Label>
             ),
           },
           {
             width: '150px',
             id: 'fra/til',
             content: (
-              <Element>
+              <Label size="small" as="p">
                 <FormattedMessage id={retningTilTekstIdMap[retning]} />
-              </Element>
+              </Label>
             ),
           },
           {
             width: 'inherit',
             id: 'gyldighetsperiode',
             content: (
-              <Element>
+              <Label size="small" as="p">
                 <FormattedMessage id="Gyldighetsperiode" />
-              </Element>
+              </Label>
             ),
           },
         ]}
@@ -83,9 +83,9 @@ const Overføringsrader = ({ fields, type, retning }: WrappedFieldArrayProps<Ove
   if (fields.length === 0) {
     return (
       <FlexRow spaceBetween alignItemsToBaseline>
-        <Element>
+        <Label size="small" as="p">
           <FormattedMessage id="FaktaRammevedtak.IngenOverføringer" />
-        </Element>
+        </Label>
       </FlexRow>
     );
   }

@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
 
-import { Innholdstittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
 import messages from '../../i18n/nb_NO.json';
 import styles from './errorPageWrapper.module.css';
 
@@ -29,9 +29,9 @@ interface OwnProps {
 const ErrorPageWrapper = ({ children, titleCode }: OwnProps) => (
   <RawIntlProvider value={intl}>
     <div className={styles.pageContainer}>
-      <Innholdstittel>
+      <Heading size="large">
         <FormattedMessage id={titleCode} values={{ br: <br /> }} />
-      </Innholdstittel>
+      </Heading>
       <br />
       {children}
     </div>
