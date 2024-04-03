@@ -13,11 +13,10 @@ import {
   VilkårEnum,
 } from '@k9-sak-web/types';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
-import { BodyShort, Label } from '@navikt/ds-react';
+import { BodyShort, Box, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import Panel from 'nav-frontend-paneler';
 import Tabs from 'nav-frontend-tabs';
 import React, { ReactNode, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -157,7 +156,7 @@ const AktivitetTabell = ({
   }
 
   return (
-    <Panel border className={styles.aktivitetTabell}>
+    <Box background="surface-default" padding="4" borderWidth="1" className={styles.aktivitetTabell}>
       <div className={styles.header}>
         <Label size="small" as="p">
           {beskrivelse}
@@ -370,7 +369,7 @@ const AktivitetTabell = ({
           },
         )}
       </Table>
-    </Panel>
+    </Box>
   );
 };
 

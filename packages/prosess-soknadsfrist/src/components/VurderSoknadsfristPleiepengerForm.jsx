@@ -12,10 +12,9 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, dateBeforeOrEqualToToday, hasValidDate, required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { BodyShort, Detail, Heading, Label } from '@navikt/ds-react';
+import { BodyShort, Box, Detail, Heading, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
-import Panel from 'nav-frontend-paneler';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -67,7 +66,7 @@ export const VurderSoknadsfristPleiepengerFormImpl = ({
     <VerticalSpacer twentyPx />
     <Row>
       <Column xs="6">
-        <Panel className={styles.panel}>
+        <Box background="surface-default" padding="4" className={styles.panel}>
           <Label size="small" as="p">
             <FormattedMessage id="VurderSoknadsfristPleiepengerForm.Vurder" />
           </Label>
@@ -82,7 +81,7 @@ export const VurderSoknadsfristPleiepengerFormImpl = ({
               <FormattedMessage id="VurderSoknadsfristPleiepengerForm.Punkt3" />
             </li>
           </ul>
-        </Panel>
+        </Box>
       </Column>
       <Column xs="6">
         <Row className={styles.marginBottom}>
