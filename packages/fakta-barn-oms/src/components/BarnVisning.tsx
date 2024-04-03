@@ -1,6 +1,6 @@
 import KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
+import { Box } from '@navikt/ds-react';
 import moment from 'moment';
-import Panel from 'nav-frontend-paneler';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import BarnInformasjonVisning from './BarnInformasjonVisning';
@@ -15,7 +15,7 @@ interface BarnInputProps {
 const beregnAntallÅr = fodselsdato => moment().diff(fodselsdato, 'years').toString();
 
 const BarnVisning = ({ barnet, index }: BarnInputProps) => (
-  <Panel border className={styles.barnInput}>
+  <Box background="surface-default" padding="4" borderWidth="1" className={styles.barnInput}>
     <div className={styles.header}>
       <h4>
         <FormattedMessage id="FaktaRammevedtak.BarnVisningNummer" values={{ nummer: index + 1 }} />
@@ -27,7 +27,7 @@ const BarnVisning = ({ barnet, index }: BarnInputProps) => (
 
     {barnet.barnRelevantIBehandling && <BarnInformasjonVisning barnet={barnet} />}
     {barnet.rammevedtak && <BarnRammevedtakVisning barnet={barnet} />}
-  </Panel>
+  </Box>
 );
 
 export default BarnVisning;

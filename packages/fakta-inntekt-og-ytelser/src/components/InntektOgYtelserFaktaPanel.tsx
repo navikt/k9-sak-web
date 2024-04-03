@@ -1,8 +1,7 @@
 import { PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { ISO_DATE_FORMAT, formatCurrencyWithKr } from '@fpsak-frontend/utils';
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, Box } from '@navikt/ds-react';
 import moment from 'moment';
-import Panel from 'nav-frontend-paneler';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Inntekt } from '../InntektType';
@@ -23,16 +22,16 @@ interface InntektOgYtelserFaktaPanelProps {
 const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({ inntekter }) => {
   if (!inntekter || inntekter.length === 0) {
     return (
-      <Panel border>
+      <Box background="surface-default" padding="4" borderWidth="1">
         <BodyShort size="small">
           <FormattedMessage id="InntektOgYtelserFaktaPanel.NoInformation" />
         </BodyShort>
-      </Panel>
+      </Box>
     );
   }
 
   return (
-    <Panel border>
+    <Box background="surface-default" padding="4" borderWidth="1">
       <Table headerTextCodes={headerTextCodes}>
         {inntekter.sort(sortInntekter).map(inntekt => {
           const key = inntekt.navn + inntekt.utbetaler + inntekt.fom + inntekt.tom + inntekt.belop;
@@ -47,7 +46,7 @@ const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({
           );
         })}
       </Table>
-    </Panel>
+    </Box>
   );
 };
 

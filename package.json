@@ -138,7 +138,6 @@
     "nav-frontend-lenkepanel@2.0.2": "patch:nav-frontend-lenkepanel@npm%3A2.0.2#./.yarn/patches/nav-frontend-lenkepanel-npm-2.0.2-c191f8e773.patch",
     "nav-frontend-lenker@2.0.2": "patch:nav-frontend-lenker@npm%3A2.0.2#./.yarn/patches/nav-frontend-lenker-npm-2.0.2-f01a3f3c03.patch",
     "nav-frontend-lukknapp@2.0.2": "patch:nav-frontend-lukknapp@npm%3A2.0.2#./.yarn/patches/nav-frontend-lukknapp-npm-2.0.2-fa6e0532f9.patch",
-    "nav-frontend-paneler@3.0.2": "patch:nav-frontend-paneler@npm%3A3.0.2#./.yarn/patches/nav-frontend-paneler-npm-3.0.2-45502b626d.patch",
     "nav-frontend-popover@2.0.4": "patch:nav-frontend-popover@npm%3A2.0.4#./.yarn/patches/nav-frontend-popover-npm-2.0.4-5118064ee1.patch",
     "nav-frontend-skjema@4.0.6": "patch:nav-frontend-skjema@npm%3A4.0.6#./.yarn/patches/nav-frontend-skjema-npm-4.0.6-34e6189688.patch",
     "nav-frontend-tabs@2.0.3": "patch:nav-frontend-tabs@npm%3A2.0.3#./.yarn/patches/nav-frontend-tabs-npm-2.0.3-3d1b6739cc.patch",
