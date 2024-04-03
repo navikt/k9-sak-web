@@ -25,7 +25,7 @@ import '@navikt/ft-ui-komponenter/dist/style.css';
 import 'nav-datovelger/lib/styles/main.css';
 import 'nav-frontend-chevron-style/dist/main.css';
 import 'nav-frontend-core/dist/main.css';
-import 'nav-frontend-ekspanderbartpanel-style/dist/main.css';
+
 import 'nav-frontend-grid-style/dist/main.css';
 import 'nav-frontend-hjelpetekst-style/dist/main.css';
 import 'nav-frontend-lukknapp-style/dist/main.css';
