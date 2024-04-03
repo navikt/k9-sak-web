@@ -60,6 +60,8 @@ const config = {
 
     'function-paren-newline': OFF,
     'function-call-argument-newline': OFF,
+    // Want to be able to use for ... of loops:
+    'no-restricted-syntax': ['off', 'ForOfStatement'],
     'no-restricted-exports': OFF,
     'import/no-extraneous-dependencies': [
       'error',

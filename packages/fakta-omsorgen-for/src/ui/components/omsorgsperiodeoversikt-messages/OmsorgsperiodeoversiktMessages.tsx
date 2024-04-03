@@ -1,5 +1,5 @@
+import { Alert } from '@navikt/ds-react';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import Alertstripe from 'nav-frontend-alertstriper';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Omsorgsperiodeoversikt from '../../../types/Omsorgsperiodeoversikt';
@@ -17,9 +17,9 @@ const OmsorgsperiodeoversiktMessages = ({
     const perioderTilVurdering = omsorgsperiodeoversikt.finnPerioderTilVurdering().map(({ periode }) => periode);
     return (
       <Box marginBottom={Margin.large}>
-        <Alertstripe type="advarsel" className={styles.alertstripe}>
+        <Alert size="small" variant="warning" className={styles.alertstripe}>
           <FormattedMessage id="vurdering.advarsel" values={{ perioder: getStringMedPerioder(perioderTilVurdering) }} />
-        </Alertstripe>
+        </Alert>
       </Box>
     );
   }

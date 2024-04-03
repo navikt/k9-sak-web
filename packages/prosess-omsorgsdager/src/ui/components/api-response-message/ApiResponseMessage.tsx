@@ -1,4 +1,4 @@
-import { AlertStripeFeil, AlertStripeSuksess } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import React from 'react';
 import ApiErrorMessage from '../api-error-message/ApiErrorMessage';
 import styles from './apiResponseMessage.module.css';
@@ -12,12 +12,16 @@ const ApiResponseMessage: React.FunctionComponent<ApiResponseMessageProps> = ({ 
     if (response !== null) {
       switch (response.status) {
         case 200:
-          return <AlertStripeSuksess>Vedtaket er løst.</AlertStripeSuksess>;
+          return (
+            <Alert size="small" variant="success">
+              Vedtaket er løst.
+            </Alert>
+          );
         case 409:
           return (
-            <AlertStripeFeil>
+            <Alert size="small" variant="error">
               Vedtaket har en annen status enn <i>foreslått</i>.
-            </AlertStripeFeil>
+            </Alert>
           );
         default:
           return <ApiErrorMessage response={response} />;

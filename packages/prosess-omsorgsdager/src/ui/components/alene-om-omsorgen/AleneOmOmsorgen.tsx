@@ -5,7 +5,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { RadioGruppe, Select, SkjemaGruppe } from 'nav-frontend-skjema';
 
-import { Button } from '@navikt/ds-react';
+import { Alert, Button } from '@navikt/ds-react';
 import { AleneOmOmsorgenProps } from '../../../types/AleneOmOmsorgenProps';
 import {
   booleanTilTekst,
@@ -17,7 +17,6 @@ import {
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import { valideringsFunksjoner } from '../../../util/validationReactHookFormUtils';
 import AleneOmOmsorgenLesemodus from '../alene-om-omsorgen-lesemodus/AleneOmOmsorgenLesemodus';
-import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
 import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
 import DatePicker from '../react-hook-form-wrappers/DatePicker';
@@ -148,7 +147,9 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
 
       {(åpenForRedigering || (!lesemodus && !vedtakFattetVilkarOppfylt)) && (
         <>
-          <AlertStripeTrekantVarsel text={tekst.aksjonspunkt} />
+          <Alert size="small" variant="warning">
+            {tekst.aksjonspunkt}
+          </Alert>
 
           <OpplysningerFraSoknad
             periodeTekst="Fra dato oppgitt"

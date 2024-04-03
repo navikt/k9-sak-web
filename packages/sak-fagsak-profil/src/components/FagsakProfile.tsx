@@ -1,8 +1,7 @@
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { FlexColumn, FlexContainer, FlexRow, Tooltip, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort, Heading } from '@navikt/ds-react';
-import { EtikettInfo } from 'nav-frontend-etiketter';
+import { BodyShort, Heading, Tag } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 
@@ -52,7 +51,7 @@ export const FagsakProfile = ({
                   content={intl.formatMessage({ id: 'FagsakProfile.Dekningsgrad' }, { dekningsgrad })}
                   alignBottom
                 >
-                  <EtikettInfo>{`${dekningsgrad}%`}</EtikettInfo>
+                  <Tag variant="info">{`${dekningsgrad}%`}</Tag>
                 </Tooltip>
               </FlexColumn>
             )}

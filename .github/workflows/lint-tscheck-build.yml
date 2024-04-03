@@ -39,6 +39,9 @@ jobs:
       - name: Eslint
         run: yarn lint
 
+      - name: Css modules typegenerator check
+        run: yarn css:modules:typegen:check
+
       - name: CSS-lint
         run: yarn css:lint
 

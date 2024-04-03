@@ -2266,7 +2266,6 @@ __metadata:
     moment: 2.30.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-paneler: 3.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2288,8 +2287,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-etiketter: 3.0.3
-    nav-frontend-etiketter-style: 2.0.3
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
@@ -2311,9 +2308,7 @@ __metadata:
     date-fns: 2.30.0
     dayjs: 1.11.10
     formik: 2.4.5
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
-    nav-frontend-etiketter: 3.0.3
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-lenker: 2.0.2
@@ -2340,8 +2335,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -2366,8 +2359,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2394,6 +2385,7 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
+    nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2443,7 +2435,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -2477,9 +2468,7 @@ __metadata:
     date-fns: 2.30.0
     formik: 2.4.5
     nav-datovelger: 12.6.0
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
-    nav-frontend-etiketter: 3.0.3
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-lenker: 2.0.2
@@ -2531,15 +2520,11 @@ __metadata:
     lodash: 4.17.21
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-etiketter: 3.0.3
-    nav-frontend-etiketter-style: 2.0.3
     nav-frontend-js-utils: 1.0.20
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
     nav-frontend-lukknapp: 2.0.2
     nav-frontend-lukknapp-style: 2.0.2
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
@@ -2691,7 +2676,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -2830,8 +2814,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2859,7 +2841,6 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -2890,7 +2871,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -3030,7 +3010,6 @@ __metadata:
     editorjs-html: 3.4.3
     formik: 2.4.5
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -3152,7 +3131,6 @@ __metadata:
     nav-frontend-js-utils: 1.0.20
     nav-frontend-lukknapp: 2.0.2
     nav-frontend-lukknapp-style: 2.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3192,8 +3170,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-etiketter: 3.0.3
-    nav-frontend-etiketter-style: 2.0.3
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
@@ -3220,8 +3196,6 @@ __metadata:
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3379,8 +3353,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3442,8 +3414,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     history: 5.3.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -3473,8 +3443,6 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.5.1
     dayjs: 1.11.10
     moment: 2.30.1
-    nav-frontend-etiketter: 3.0.3
-    nav-frontend-etiketter-style: 2.0.3
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
     nav-frontend-skjema: 4.0.6
@@ -3505,7 +3473,6 @@ __metadata:
     date-fns: 2.30.0
     date-fns-tz: 2.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -3513,8 +3480,6 @@ __metadata:
     nav-frontend-lenker-style: 2.0.2
     nav-frontend-lukknapp: 2.0.2
     nav-frontend-lukknapp-style: 2.0.2
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
@@ -4047,7 +4012,6 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.1
     axios: 1.6.7
     axios-mock-adapter: 1.22.0
-    nav-frontend-alertstriper: 4.0.2
     react: 18.2.0
     react-intl: 6.6.2
     react-redux: 8.1.3
@@ -4097,7 +4061,6 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.1
     axios: 1.6.7
     axios-mock-adapter: 1.22.0
-    nav-frontend-alertstriper: 4.0.2
     react: 18.2.0
     react-intl: 6.6.2
     react-redux: 8.1.3
@@ -4153,7 +4116,6 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.1
     axios: 1.6.7
     axios-mock-adapter: 1.22.0
-    nav-frontend-alertstriper: 4.0.2
     react: 18.2.0
     react-intl: 6.6.2
     react-redux: 8.1.3
@@ -4285,14 +4247,11 @@ __metadata:
     classnames: 2.5.1
     just-is-empty: 3.4.1
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-hjelpetekst: 3.1.3
     nav-frontend-hjelpetekst-style: 3.0.2
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-paneler: 3.0.2
     nav-frontend-popover: 2.0.4
     nav-frontend-popover-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -4318,9 +4277,6 @@ __metadata:
     "@k9-sak-web/prosess-aarskvantum-oms": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
-    nav-frontend-paneler: 3.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4346,21 +4302,15 @@ __metadata:
     dayjs: 1.11.10
     eslint-plugin-cypress: ^2.15.1
     lodash: 4.17.21
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
-    nav-frontend-etiketter: 3.0.3
-    nav-frontend-etiketter-style: 2.0.3
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
     nav-frontend-lenkepanel: 2.0.2
     nav-frontend-lenkepanel-style: 2.0.2
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
     nav-frontend-tabs: 2.0.3
@@ -4388,8 +4338,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-etiketter: 3.0.3
-    nav-frontend-etiketter-style: 2.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4418,8 +4366,6 @@ __metadata:
     lodash: 4.17.21
     msw: 1.3.2
     msw-storybook-addon: 1.10.0
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
@@ -4427,7 +4373,6 @@ __metadata:
     nav-frontend-js-utils: 1.0.20
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
-    nav-frontend-paneler: 3.0.2
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
@@ -4527,8 +4472,6 @@ __metadata:
     dayjs: 1.11.10
     lodash: 4.17.21
     msw: 1.3.2
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
@@ -4536,8 +4479,6 @@ __metadata:
     nav-frontend-js-utils: 1.0.20
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
@@ -4666,8 +4607,6 @@ __metadata:
     classnames: 2.5.1
     lodash: 4.17.21
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
@@ -4675,7 +4614,6 @@ __metadata:
     nav-frontend-hjelpetekst-style: 3.0.2
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-paneler: 3.0.2
     nav-frontend-popover: 2.0.4
     nav-frontend-popover-style: 2.0.2
     nav-frontend-tabs: 2.0.3
@@ -4724,14 +4662,11 @@ __metadata:
     dayjs: 1.11.10
     lodash: 4.17.21
     nav-datovelger: 12.6.0
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
@@ -4802,19 +4737,13 @@ __metadata:
     dayjs: 1.11.10
     express: 4.18.3
     lodash: 4.17.21
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
-    nav-frontend-etiketter: 3.0.3
-    nav-frontend-etiketter-style: 2.0.3
     nav-frontend-hjelpetekst: 3.1.3
     nav-frontend-hjelpetekst-style: 3.0.2
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-popover: 2.0.4
     nav-frontend-popover-style: 2.0.2
     nav-frontend-tabs: 2.0.3
@@ -5003,14 +4932,11 @@ __metadata:
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-lenkepanel: 2.0.2
     nav-frontend-lenkepanel-style: 2.0.2
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -5047,8 +4973,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -5062,7 +4986,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-infosider@workspace:packages/sak-infosider"
   dependencies:
-    nav-frontend-alertstriper: 4.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -9970,7 +9893,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"camelcase@npm:^6.2.0, camelcase@npm:^6.3.0":
+"camelcase@npm:^6.0.0, camelcase@npm:^6.2.0, camelcase@npm:^6.3.0":
   version: 6.3.0
   resolution: "camelcase@npm:6.3.0"
   checksum: 8c96818a9076434998511251dcb2761a94817ea17dbdc37f47ac080bd088fc62c7369429a19e2178b993497132c8cbcf5cc1f44ba963e76782ba469c0474938d
@@ -10074,7 +9997,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:^3.4.2, chokidar@npm:^3.5.3":
+"chokidar@npm:^3.4.0, chokidar@npm:^3.4.2, chokidar@npm:^3.5.3":
   version: 3.6.0
   resolution: "chokidar@npm:3.6.0"
   dependencies:
@@ -13638,6 +13561,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"icss-replace-symbols@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "icss-replace-symbols@npm:1.1.0"
+  checksum: 24575b2c2f7e762bfc6f4beee31be9ba98a01cad521b5aa9954090a5de2b5e1bf67814c17e22f9e51b7d798238db8215a173d6c2b4726ce634ce06b68ece8045
+  languageName: node
+  linkType: hard
+
+"icss-utils@npm:^5.0.0":
+  version: 5.1.0
+  resolution: "icss-utils@npm:5.1.0"
+  peerDependencies:
+    postcss: ^8.1.0
+  checksum: 5c324d283552b1269cfc13a503aaaa172a280f914e5b81544f3803bc6f06a3b585fb79f66f7c771a2c052db7982c18bf92d001e3b47282e3abbbb4c4cc488d68
+  languageName: node
+  linkType: hard
+
 "ieee754@npm:^1.1.13":
   version: 1.2.1
   resolution: "ieee754@npm:1.2.1"
@@ -14187,6 +14126,13 @@ __metadata:
   dependencies:
     has-symbols: ^1.0.2
   checksum: 92805812ef590738d9de49d677cd17dfd486794773fb6fa0032d16452af46e9b91bb43ffe82c983570f015b37136f4b53b28b8523bfb10b0ece7a66c31a54510
+  languageName: node
+  linkType: hard
+
+"is-there@npm:^4.4.2":
+  version: 4.5.1
+  resolution: "is-there@npm:4.5.1"
+  checksum: 763240c846c85b516271c747d675bae1f49efdfb252556c946e9940cb0d5d9953a50610d6f2a1ee9827da7ac1f8e74157c0f02a6ab17e86aaf319c56ba4652c2
   languageName: node
   linkType: hard
 
@@ -14821,6 +14767,7 @@ __metadata:
     stylelint: 15.11.0
     stylelint-order: 6.0.4
     tailwindcss: ^3.4.1
+    typed-css-modules: ^0.9.1
     typescript: 5.4.2
     vite: ^5.1.5
     vite-plugin-html: ^3.2.2
@@ -15647,6 +15594,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mkdirp@npm:^3.0.0":
+  version: 3.0.1
+  resolution: "mkdirp@npm:3.0.1"
+  bin:
+    mkdirp: dist/cjs/src/bin.js
+  checksum: 972deb188e8fb55547f1e58d66bd6b4a3623bf0c7137802582602d73e6480c1c2268dcbafbfb1be466e00cc7e56ac514d7fd9334b7cf33e3e2ab547c16f83a8d
+  languageName: node
+  linkType: hard
+
 "mlly@npm:^1.2.0, mlly@npm:^1.4.2":
   version: 1.5.0
   resolution: "mlly@npm:1.5.0"
@@ -15829,46 +15785,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-alertstriper-style@npm:3.0.2":
-  version: 3.0.2
-  resolution: "nav-frontend-alertstriper-style@npm:3.0.2"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-    nav-frontend-ikoner-assets: ^3.0.0
-    nav-frontend-paneler-style: ^2.0.0
-    nav-frontend-typografi-style: ^2.0.0
-  checksum: 5632fe0c54cca67183e1aa615ea059c8bbaf9e0edd78ac24bc8513bb3194d2cce80544acd2f14c16512af935477287d7eeeb006d1f70ba1bd3c997a84fe8f9bb
-  languageName: node
-  linkType: hard
-
-"nav-frontend-alertstriper@npm:4.0.2":
-  version: 4.0.2
-  resolution: "nav-frontend-alertstriper@npm:4.0.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-alertstriper-style: ^3.0.0
-    nav-frontend-ikoner-assets: ^3.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 37eb283685186cf5e19948f22efa8e148dbf1f1815cf17858c2e4fe4289cda388844636631c968d9652ccd93966b0854da4260b928943107495db7816bd8344b
-  languageName: node
-  linkType: hard
-
-"nav-frontend-alertstriper@patch:nav-frontend-alertstriper@npm%3A4.0.2#./.yarn/patches/nav-frontend-alertstriper-npm-4.0.2-b212c92a4c.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 4.0.2
-  resolution: "nav-frontend-alertstriper@patch:nav-frontend-alertstriper@npm%3A4.0.2#./.yarn/patches/nav-frontend-alertstriper-npm-4.0.2-b212c92a4c.patch::version=4.0.2&hash=ff89da&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-alertstriper-style: ^3.0.0
-    nav-frontend-ikoner-assets: ^3.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: fd4d12110448ed97b5ac3f84d24b47df23b0907cd7ef3c0576ace3a2088871fabf88d46c3f2553e7c3eb6aa9619788d2b363fe6f68adab25710657f250b706b4
-  languageName: node
-  linkType: hard
-
 "nav-frontend-chevron-style@npm:1.0.4":
   version: 1.0.4
   resolution: "nav-frontend-chevron-style@npm:1.0.4"
@@ -15904,43 +15820,6 @@ __metadata:
   version: 6.0.1
   resolution: "nav-frontend-core@npm:6.0.1"
   checksum: 7673f42a2a93a08fa6952d2c32d8e5d424de437910b76d84363d7cb86a7c0691e5f475a3623c8964366b3bbd33a6defb8e3907bc61b41c3434b4619aab7567d2
-  languageName: node
-  linkType: hard
-
-"nav-frontend-etiketter-style@npm:2.0.3":
-  version: 2.0.3
-  resolution: "nav-frontend-etiketter-style@npm:2.0.3"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-  checksum: 156253db8a24b8ba3fa70282b9f68902c72e8e51a7a6f851a1a4e90e721293e85606f9f44f90dbf78872bef8d4010b72c004b044634150a5609cd8d69bf1e52c
-  languageName: node
-  linkType: hard
-
-"nav-frontend-etiketter@npm:3.0.3":
-  version: 3.0.3
-  resolution: "nav-frontend-etiketter@npm:3.0.3"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-core: ^6.0.0
-    nav-frontend-etiketter-style: ^2.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 8b0552ead6616f7d22f9d8fad291c2929a7568f004093eb4da08ea6dcdcd5eed13e32d0963d1ecf790ab3629597ee3006e7c110c09dce6b60220d52d1e12209c
-  languageName: node
-  linkType: hard
-
-"nav-frontend-etiketter@patch:nav-frontend-etiketter@npm%3A3.0.3#./.yarn/patches/nav-frontend-etiketter-npm-3.0.3-509c94aa5d.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 3.0.3
-  resolution: "nav-frontend-etiketter@patch:nav-frontend-etiketter@npm%3A3.0.3#./.yarn/patches/nav-frontend-etiketter-npm-3.0.3-509c94aa5d.patch::version=3.0.3&hash=7b258c&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-core: ^6.0.0
-    nav-frontend-etiketter-style: ^2.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 6b47123bf37654933671e64b86ec0d3a1eec16c11d901a58aa4eb020865e21677d2acadfc4e621d6e43bd34696141a7e4922e1e0d3306e58810b25fa7c90c47e
   languageName: node
   linkType: hard
 
@@ -16146,34 +16025,6 @@ __metadata:
   peerDependencies:
     nav-frontend-core: ^6.0.0
   checksum: 7d4b15e3b1a6cc127eca837ae17c42736ef69da9f7f2ca617180809d244c3abda7e4385dd144478c0befc3831c5bec686f5cae281c31235aacba8b79f032cc5d
-  languageName: node
-  linkType: hard
-
-"nav-frontend-paneler@npm:3.0.2":
-  version: 3.0.2
-  resolution: "nav-frontend-paneler@npm:3.0.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-paneler-style: ^2.0.0
-    nav-frontend-typografi: ^4.0.0
-    nav-frontend-typografi-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 61203dc41c3b6e49cbf3a2b6225ffe769715f643a75cc4df5352e6181ff549ae8f51361dcc62d69e25f6923d596eb795be4a22c2cd6b4661180dcb496a82df66
-  languageName: node
-  linkType: hard
-
-"nav-frontend-paneler@patch:nav-frontend-paneler@npm%3A3.0.2#./.yarn/patches/nav-frontend-paneler-npm-3.0.2-45502b626d.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 3.0.2
-  resolution: "nav-frontend-paneler@patch:nav-frontend-paneler@npm%3A3.0.2#./.yarn/patches/nav-frontend-paneler-npm-3.0.2-45502b626d.patch::version=3.0.2&hash=51f6b5&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-paneler-style: ^2.0.0
-    nav-frontend-typografi: ^4.0.0
-    nav-frontend-typografi-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: ca693fe04bc43e74481c50f2e38b2f534e6905a1d4ea4a4b224235ea951825feb3a194f909a835c3266b5868a3cad8080aabf170f2ff5d63c4d7b137a6bbee66
   languageName: node
   linkType: hard
 
@@ -17198,6 +17049,50 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-modules-extract-imports@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "postcss-modules-extract-imports@npm:3.0.0"
+  peerDependencies:
+    postcss: ^8.1.0
+  checksum: 4b65f2f1382d89c4bc3c0a1bdc5942f52f3cb19c110c57bd591ffab3a5fee03fcf831604168205b0c1b631a3dce2255c70b61aaae3ef39d69cd7eb450c2552d2
+  languageName: node
+  linkType: hard
+
+"postcss-modules-local-by-default@npm:^4.0.0":
+  version: 4.0.4
+  resolution: "postcss-modules-local-by-default@npm:4.0.4"
+  dependencies:
+    icss-utils: ^5.0.0
+    postcss-selector-parser: ^6.0.2
+    postcss-value-parser: ^4.1.0
+  peerDependencies:
+    postcss: ^8.1.0
+  checksum: 578b955b0773147890caa88c30b10dfc849c5b1412a47ad51751890dba16fca9528c3ab00a19b186a8c2c150c2d08e2ce64d3d907800afee1f37c6d38252e365
+  languageName: node
+  linkType: hard
+
+"postcss-modules-scope@npm:^3.0.0":
+  version: 3.1.1
+  resolution: "postcss-modules-scope@npm:3.1.1"
+  dependencies:
+    postcss-selector-parser: ^6.0.4
+  peerDependencies:
+    postcss: ^8.1.0
+  checksum: 9e9d23abb0babc7fa243be65704d72a5a9ceb2bded4dbaef96a88210d468b03c8c3158c197f4e22300c851f08c6fdddd6ebe65f44e4c34448b45b8a2e063a16d
+  languageName: node
+  linkType: hard
+
+"postcss-modules-values@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "postcss-modules-values@npm:4.0.0"
+  dependencies:
+    icss-utils: ^5.0.0
+  peerDependencies:
+    postcss: ^8.1.0
+  checksum: f7f2cdf14a575b60e919ad5ea52fed48da46fe80db2733318d71d523fc87db66c835814940d7d05b5746b0426e44661c707f09bdb83592c16aea06e859409db6
+  languageName: node
+  linkType: hard
+
 "postcss-nested@npm:^6.0.1":
   version: 6.0.1
   resolution: "postcss-nested@npm:6.0.1"
@@ -17235,6 +17130,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-selector-parser@npm:^6.0.2, postcss-selector-parser@npm:^6.0.4":
+  version: 6.0.16
+  resolution: "postcss-selector-parser@npm:6.0.16"
+  dependencies:
+    cssesc: ^3.0.0
+    util-deprecate: ^1.0.2
+  checksum: e1cd68e33a39e3dc1e1e5bd8717be5bbe3cc23a4cecb466c3acb2f3a77daad7a47df4d6137a76f8db74cf160d2fb16b2cfdb4ccbebdfda844690f8d545fe281d
+  languageName: node
+  linkType: hard
+
 "postcss-sorting@npm:^8.0.2":
   version: 8.0.2
   resolution: "postcss-sorting@npm:8.0.2"
@@ -17244,7 +17149,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-value-parser@npm:^4.0.0, postcss-value-parser@npm:^4.2.0":
+"postcss-value-parser@npm:^4.0.0, postcss-value-parser@npm:^4.1.0, postcss-value-parser@npm:^4.2.0":
   version: 4.2.0
   resolution: "postcss-value-parser@npm:4.2.0"
   checksum: 819ffab0c9d51cf0acbabf8996dffbfafbafa57afc0e4c98db88b67f2094cb44488758f06e5da95d7036f19556a4a732525e84289a425f4f6fd8e412a9d7442f
@@ -20135,6 +20040,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typed-css-modules@npm:^0.9.1":
+  version: 0.9.1
+  resolution: "typed-css-modules@npm:0.9.1"
+  dependencies:
+    camelcase: ^6.0.0
+    chalk: ^4.0.0
+    chokidar: ^3.4.0
+    glob: ^10.3.10
+    icss-replace-symbols: ^1.1.0
+    is-there: ^4.4.2
+    mkdirp: ^3.0.0
+    postcss: ^8.0.0
+    postcss-modules-extract-imports: ^3.0.0
+    postcss-modules-local-by-default: ^4.0.0
+    postcss-modules-scope: ^3.0.0
+    postcss-modules-values: ^4.0.0
+    yargs: ^17.7.2
+  bin:
+    tcm: lib/cli.js
+  checksum: d50b09b864ba37c185b27b1d82752a08da5bd18b79bf85542c50a815e09108c81f355c6a82bb7ddbbbde75bb2482d656216ca8c3917d4e55b7f819fbf23e7901
+  languageName: node
+  linkType: hard
+
 "typedarray@npm:^0.0.6":
   version: 0.0.6
   resolution: "typedarray@npm:0.0.6"
@@ -21267,7 +21195,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^17.3.1":
+"yargs@npm:^17.3.1, yargs@npm:^17.7.2":
   version: 17.7.2
   resolution: "yargs@npm:17.7.2"
   dependencies:
