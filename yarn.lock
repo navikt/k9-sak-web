@@ -3466,7 +3466,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/aksel-icons": 6.1.1
     "@navikt/ds-react": 6.1.1
-    "@navikt/fnrvalidator": 1.3.3
+    "@navikt/fnrvalidator": 2.0.7
     "@navikt/ft-plattform-komponenter": 2.5.1
     axios: 1.6.7
     classnames: 2.5.1
@@ -4292,7 +4292,7 @@ __metadata:
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.1.1
-    "@navikt/fnrvalidator": 1.3.3
+    "@navikt/fnrvalidator": 2.0.7
     "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
     "@testing-library/cypress": ^10.0.1
@@ -4355,7 +4355,7 @@ __metadata:
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.1.1
-    "@navikt/fnrvalidator": 1.3.3
+    "@navikt/fnrvalidator": 2.0.7
     "@navikt/ft-form-hooks": 4.4.1
     "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
@@ -4409,7 +4409,7 @@ __metadata:
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.1.1
-    "@navikt/fnrvalidator": 1.3.3
+    "@navikt/fnrvalidator": 2.0.7
     "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
     "@testing-library/cypress": ^10.0.1
@@ -4439,7 +4439,7 @@ __metadata:
   dependencies:
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-react": 6.1.1
-    "@navikt/fnrvalidator": 1.3.3
+    "@navikt/fnrvalidator": 2.0.7
     "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
     axios: 1.6.7
@@ -4464,7 +4464,7 @@ __metadata:
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.1.1
-    "@navikt/fnrvalidator": 1.3.3
+    "@navikt/fnrvalidator": 2.0.7
     "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
     axios: 1.6.7
@@ -4657,7 +4657,7 @@ __metadata:
   dependencies:
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-react": 6.1.1
-    "@navikt/fnrvalidator": 1.3.3
+    "@navikt/fnrvalidator": 2.0.7
     classnames: 2.5.1
     dayjs: 1.11.10
     lodash: 4.17.21
@@ -5234,10 +5234,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/fnrvalidator@npm:1.3.3":
-  version: 1.3.3
-  resolution: "@navikt/fnrvalidator@npm:1.3.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffnrvalidator%2F1.3.3%2F8414963a30e59e3056c9befea7bb022498a2a742"
-  checksum: 49b2f481e1d5fdd107ba3cfd13a7a6fdb32371da2a634b97d5142d3940b73fe6cc90201c23381484def2859aecbd51b7e897ff3d69be483dafb13f1e2dd3060e
+"@navikt/fnrvalidator@npm:2.0.7":
+  version: 2.0.7
+  resolution: "@navikt/fnrvalidator@npm:2.0.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffnrvalidator%2F2.0.7%2F89ceb6a448fbd068e4ad8ff7a414705bd0ea6315"
+  dependencies:
+    typescript: ^5.4.2
+  checksum: 51203dec469f64d497a31623c99cc21035e47a91cc8835d448b36e4267393f864cff1b3910a9adc71eb1fa52476c19375ebe007250238ec5f5d5611feff94526
   languageName: node
   linkType: hard
 
@@ -20105,6 +20107,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:^5.4.2":
+  version: 5.4.3
+  resolution: "typescript@npm:5.4.3"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: d74d731527e35e64d8d2dcf2f897cf8cfbc3428be0ad7c48434218ba4ae41239f53be7c90714089db1068c05cae22436af2ecba71fd36ecc5e7a9118af060198
+  languageName: node
+  linkType: hard
+
 "typescript@patch:typescript@5.4.2#~builtin<compat/typescript>":
   version: 5.4.2
   resolution: "typescript@patch:typescript@npm%3A5.4.2#~builtin<compat/typescript>::version=5.4.2&hash=1f5320"
@@ -20112,6 +20124,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: c1b669146bca5529873aae60870e243fa8140c85f57ca32c42f898f586d73ce4a6b4f6bb02ae312729e214d7f5859a0c70da3e527a116fdf5ad00c9fc733ecc6
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@^5.4.2#~builtin<compat/typescript>":
+  version: 5.4.3
+  resolution: "typescript@patch:typescript@npm%3A5.4.3#~builtin<compat/typescript>::version=5.4.3&hash=1f5320"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 3a62fe90aa79d68c9ce38ea5edb2957e62801c733b99f0e5a2b8b50922761f68f7d9a40d28c544b449866e81185cddb93cba2496d0ff3fa52ef5b1f8bcace38c
   languageName: node
   linkType: hard
 
