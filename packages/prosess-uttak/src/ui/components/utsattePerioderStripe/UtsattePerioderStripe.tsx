@@ -1,5 +1,4 @@
-import { BodyShort, Heading } from '@navikt/ds-react';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Alert, BodyShort, Heading } from '@navikt/ds-react';
 import React from 'react';
 import Period from '../../../types/Period';
 import { sortPeriodsChronological } from '../../../util/periodUtils';
@@ -19,7 +18,7 @@ const UtsattePerioderStripe = () => {
 
   return (
     <div className={styles.utsattePerioderStripe}>
-      <AlertStripeInfo>
+      <Alert size="small" variant="info">
         <Heading level="3" size="xsmall">
           Perioder i denne behandlingen har blitt utsatt
         </Heading>
@@ -31,7 +30,7 @@ const UtsattePerioderStripe = () => {
             <li>{periode.prettifyPeriod()}</li>
           ))}
         </ul>
-      </AlertStripeInfo>
+      </Alert>
     </div>
   );
 };

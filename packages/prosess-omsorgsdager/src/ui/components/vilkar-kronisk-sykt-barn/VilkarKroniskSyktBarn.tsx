@@ -1,4 +1,4 @@
-import { Button } from '@navikt/ds-react';
+import { Alert, Button } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { RadioGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
@@ -8,7 +8,6 @@ import { booleanTilTekst, formatereDato, formatereDatoTilLesemodus, tekstTilBool
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import { valideringsFunksjoner } from '../../../util/validationReactHookFormUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
-import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
 import DatePicker from '../react-hook-form-wrappers/DatePicker';
 import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
@@ -192,7 +191,9 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
       {(åpenForRedigering || (!lesemodus && !vedtakFattetVilkarOppfylt)) && (
         <>
-          <AlertStripeTrekantVarsel text={tekst.instruksjon} />
+          <Alert size="small" variant="warning" className="max-w-fit">
+            {tekst.instruksjon}
+          </Alert>
           <FormProvider {...methods}>
             <>
               <p className={styleLesemodus.label}>{tekst.soknadsdato}</p>

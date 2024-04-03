@@ -1,4 +1,4 @@
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import React from 'react';
 
 interface ApiErrorMessageProps {
@@ -6,11 +6,11 @@ interface ApiErrorMessageProps {
 }
 
 const ApiErrorMessage: React.FunctionComponent<ApiErrorMessageProps> = ({ response }) => (
-  <AlertStripeFeil>
+  <Alert size="small" variant="error">
     Det har oppstått en teknisk feil.
     <br />
     Status: {response.status} {response.statusText}
-  </AlertStripeFeil>
+  </Alert>
 );
 
 export default ApiErrorMessage;
