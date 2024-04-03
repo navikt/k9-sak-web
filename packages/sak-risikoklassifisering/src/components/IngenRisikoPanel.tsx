@@ -1,10 +1,7 @@
-import Panel from 'nav-frontend-paneler';
-import React from 'react';
-
 import innvilgetIkonUrl from '@fpsak-frontend/assets/images/innvilget.svg';
-
+import { Box } from '@navikt/ds-react';
+import React from 'react';
 import TittelMedDivider from './TittelMedDivider';
-
 import styles from './ingenRisikoPanel.module.css';
 
 /**
@@ -13,9 +10,9 @@ import styles from './ingenRisikoPanel.module.css';
  * Presentasjonskomponent. Statisk visning av panel som tilsier ingen faresignaler funnet i behandlingen.
  */
 const IngenRisikoPanel = () => (
-  <Panel className={styles.ingenRisikoOppdagetTittel}>
+  <Box background="surface-default" padding="4" className={styles.ingenRisikoOppdagetTittel}>
     <TittelMedDivider imageSrc={innvilgetIkonUrl} tittel="Risikopanel.Tittel.IngenFaresignaler" />
-  </Panel>
+  </Box>
 );
 
 export default IngenRisikoPanel;

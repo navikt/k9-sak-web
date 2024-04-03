@@ -2,8 +2,7 @@ import calendarImg from '@fpsak-frontend/assets/images/calendar-2.svg';
 import chevronBlueRightImg from '@fpsak-frontend/assets/images/chevron_blue_right.svg';
 import { DateLabel, Image } from '@fpsak-frontend/shared-components';
 import { Periode } from '@k9-sak-web/types';
-import { BodyShort, Heading } from '@navikt/ds-react';
-import Panel from 'nav-frontend-paneler';
+import { BodyShort, Box, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './behandlingPickerItemContent.module.css';
@@ -50,7 +49,12 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   opprettet,
   avsluttet,
 }) => (
-  <Panel className={erAutomatiskRevurdering ? styles.indent : ''} border>
+  <Box
+    background="surface-default"
+    padding="4"
+    className={erAutomatiskRevurdering ? styles.indent : ''}
+    borderWidth="1"
+  >
     <div className={styles.behandlingPicker}>
       <div>
         <Heading size="small" level="2">
@@ -106,7 +110,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
         />
       </div>
     </div>
-  </Panel>
+  </Box>
 );
 
 export default BehandlingPickerItemContent;
