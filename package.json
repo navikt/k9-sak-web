@@ -127,7 +127,7 @@
     "webpack-merge": "5.10.0"
   },
   "resolutions": {
-    "postcss": "8.4.31",
+    "postcss": "8.4.38",
     "parse-url": "8.1.0",
     "@types/react": "17",
     "nav-frontend-chevron@1.0.30": "patch:nav-frontend-chevron@npm%3A1.0.30#./.yarn/patches/nav-frontend-chevron-npm-1.0.30-1fbba039a5.patch",
