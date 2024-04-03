@@ -3647,7 +3647,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/aksel-icons": 6.1.1
     "@navikt/ds-react": 6.1.1
-    "@navikt/fnrvalidator": 2.0.7
+    "@navikt/fnrvalidator": 2.0.6
     "@navikt/ft-plattform-komponenter": 2.5.1
     axios: 1.6.8
     classnames: 2.5.1
@@ -4473,7 +4473,7 @@ __metadata:
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.1.1
-    "@navikt/fnrvalidator": 2.0.7
+    "@navikt/fnrvalidator": 2.0.6
     "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
     "@testing-library/cypress": ^10.0.1
@@ -4536,7 +4536,7 @@ __metadata:
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.1.1
-    "@navikt/fnrvalidator": 2.0.7
+    "@navikt/fnrvalidator": 2.0.6
     "@navikt/ft-form-hooks": 4.4.1
     "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
@@ -4590,7 +4590,7 @@ __metadata:
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.1.1
-    "@navikt/fnrvalidator": 2.0.7
+    "@navikt/fnrvalidator": 2.0.6
     "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
     "@testing-library/cypress": ^10.0.1
@@ -4620,7 +4620,7 @@ __metadata:
   dependencies:
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-react": 6.1.1
-    "@navikt/fnrvalidator": 2.0.7
+    "@navikt/fnrvalidator": 2.0.6
     "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
     axios: 1.6.8
@@ -4645,7 +4645,7 @@ __metadata:
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.1.1
-    "@navikt/fnrvalidator": 2.0.7
+    "@navikt/fnrvalidator": 2.0.6
     "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
     axios: 1.6.8
@@ -4838,7 +4838,7 @@ __metadata:
   dependencies:
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-react": 6.1.1
-    "@navikt/fnrvalidator": 2.0.7
+    "@navikt/fnrvalidator": 2.0.6
     classnames: 2.5.1
     dayjs: 1.11.10
     lodash: 4.17.21
@@ -5382,12 +5382,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/fnrvalidator@npm:2.0.7":
-  version: 2.0.7
-  resolution: "@navikt/fnrvalidator@npm:2.0.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffnrvalidator%2F2.0.7%2F89ceb6a448fbd068e4ad8ff7a414705bd0ea6315"
+"@navikt/fnrvalidator@npm:2.0.6":
+  version: 2.0.6
+  resolution: "@navikt/fnrvalidator@npm:2.0.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffnrvalidator%2F2.0.6%2Ff5c2e35971c97ddb6f77e1d8c2279c22925cd1db"
   dependencies:
     typescript: ^5.4.2
-  checksum: 51203dec469f64d497a31623c99cc21035e47a91cc8835d448b36e4267393f864cff1b3910a9adc71eb1fa52476c19375ebe007250238ec5f5d5611feff94526
+  checksum: f9bf0aa51976d81fabfb7bfd438bf831361bff4725fd3629b1ab14800341b21fed297e41838dbf389cefac5fbeb60ed26951f9864a9a1b6876c013d5ad0a95ba
   languageName: node
   linkType: hard
 
