@@ -1,9 +1,3 @@
-import classNames from 'classnames';
-import Panel from 'nav-frontend-paneler';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import React, { ReactElement } from 'react';
-import { FormattedMessage } from 'react-intl';
-
 import chevronDown from '@fpsak-frontend/assets/images/pil_ned.svg';
 import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
 import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
@@ -20,6 +14,10 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { BehandlingAppKontekst, Kodeverk } from '@k9-sak-web/types';
+import { BodyShort, Box, Detail, Label } from '@navikt/ds-react';
+import classNames from 'classnames';
+import React, { ReactElement } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import styles from './behandlingPickerItemContent.module.css';
 
@@ -134,19 +132,21 @@ const BehandlingPickerItemContent = ({
   førsteÅrsak,
   behandlingTypeKode,
 }: OwnProps) => (
-  <Panel border>
+  <Box background="surface-default" padding="4" borderWidth="1">
     <FlexContainer>
       <FlexRow>
         <FlexColumn className={styles.arsakPadding}>
-          <Element>{behandlingTypeNavn}</Element>
+          <Label size="small" as="p">
+            {behandlingTypeNavn}
+          </Label>
         </FlexColumn>
         {behandlingTypeKode === behandlingType.REVURDERING && førsteÅrsak?.behandlingArsakType && (
           <>
             <FlexColumn className={styles.arsakPadding}>-</FlexColumn>
             <FlexColumn>
-              <Normaltekst>
+              <BodyShort size="small">
                 <FormattedMessage id={getÅrsak(førsteÅrsak)} />
-              </Normaltekst>
+              </BodyShort>
             </FlexColumn>
           </>
         )}
@@ -155,9 +155,9 @@ const BehandlingPickerItemContent = ({
             <>
               <FlexColumn className={styles.arsakPadding}>-</FlexColumn>
               <FlexColumn>
-                <Normaltekst>
+                <BodyShort size="small">
                   <FormattedMessage id="Behandlingspunkt.Årsak.Klage" />
-                </Normaltekst>
+                </BodyShort>
               </FlexColumn>
             </>
           )}
@@ -183,76 +183,78 @@ const BehandlingPickerItemContent = ({
     <FlexContainer>
       <FlexRow>
         <FlexColumn className={styles.firstColumnWidth}>
-          <Normaltekst>
+          <BodyShort size="small">
             <FormattedMessage id="BehandlingPickerItemContent.Behandlingstatus" />
-          </Normaltekst>
+          </BodyShort>
         </FlexColumn>
         <FlexColumn>
-          <Normaltekst>{behandlingsstatus}</Normaltekst>
+          <BodyShort size="small">{behandlingsstatus}</BodyShort>
         </FlexColumn>
       </FlexRow>
       <FlexRow>
         <FlexColumn className={styles.firstColumnWidth}>
-          <Normaltekst>
+          <BodyShort size="small">
             <FormattedMessage id="BehandlingPickerItemContent.Resultat" />
-          </Normaltekst>
+          </BodyShort>
         </FlexColumn>
         <FlexColumn>
-          <Normaltekst>{behandlingsresultatTypeKode ? behandlingsresultatTypeNavn : '-'}</Normaltekst>
+          <BodyShort size="small">{behandlingsresultatTypeKode ? behandlingsresultatTypeNavn : '-'}</BodyShort>
         </FlexColumn>
       </FlexRow>
       <VerticalSpacer sixteenPx />
       <FlexRow>
         <FlexColumn className={styles.firstColumnWidth}>
-          <Normaltekst>
+          <BodyShort size="small">
             <FormattedMessage id="BehandlingPickerItemContent.Opprettet" />
-          </Normaltekst>
+          </BodyShort>
         </FlexColumn>
         <FlexColumn>
-          <Normaltekst className={styles.inline}>
+          <BodyShort size="small" className={styles.inline}>
             <DateLabel dateString={opprettetDato} />
-          </Normaltekst>
-          <Undertekst className={classNames(styles.inline, styles.timePadding)}>
+          </BodyShort>
+          <Detail className={classNames(styles.inline, styles.timePadding)}>
             <FormattedMessage id="DateTimeLabel.Kl" />
-          </Undertekst>
-          <Undertekst className={styles.inline}>
+          </Detail>
+          <Detail className={styles.inline}>
             <TimeLabel dateTimeString={opprettetDato} />
-          </Undertekst>
+          </Detail>
         </FlexColumn>
       </FlexRow>
       <FlexRow>
         <FlexColumn className={styles.firstColumnWidth}>
-          <Normaltekst>
+          <BodyShort size="small">
             <FormattedMessage id="BehandlingPickerItemContent.Avsluttet" />
-          </Normaltekst>
+          </BodyShort>
         </FlexColumn>
         <FlexColumn>
           {avsluttetDato && (
             <>
-              <Normaltekst className={styles.inline}>
+              <BodyShort size="small" className={styles.inline}>
                 <DateLabel dateString={avsluttetDato} />
-              </Normaltekst>
-              <Undertekst className={classNames(styles.inline, styles.timePadding)}>
+              </BodyShort>
+              <Detail className={classNames(styles.inline, styles.timePadding)}>
                 <FormattedMessage id="DateTimeLabel.Kl" />
-              </Undertekst>
-              <Undertekst className={styles.inline}>
+              </Detail>
+              <Detail className={styles.inline}>
                 <TimeLabel dateTimeString={avsluttetDato} />
-              </Undertekst>
+              </Detail>
             </>
           )}
         </FlexColumn>
         <FlexColumn className={styles.pushRightCorner}>
-          <Normaltekst className={styles.inline}>
+          <BodyShort size="small" className={styles.inline}>
             <FormattedMessage id="BehandlingPickerItemContent.Enhet" />
-          </Normaltekst>
+          </BodyShort>
           <Tooltip content={behandlendeEnhetNavn} alignLeft>
-            <Normaltekst className={styles.inline}>{behandlendeEnhetId}</Normaltekst>
+            <BodyShort size="small" className={styles.inline}>
+              {behandlendeEnhetId}
+            </BodyShort>
           </Tooltip>
         </FlexColumn>
       </FlexRow>
     </FlexContainer>
     <VerticalSpacer fourPx />
-  </Panel>
+  </Box>
 );
 
 export default BehandlingPickerItemContent;

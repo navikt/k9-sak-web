@@ -4,7 +4,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-h
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../../i18n/nb_NO.json';
 import { OppholdInntektOgPeriodeForm } from './OppholdInntektOgPeriodeForm';
 
@@ -41,8 +40,8 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
         initialValues={{}}
         intl={intlMock}
         aksjonspunkter={[]}
-        updateOppholdInntektPeriode={sinon.spy()}
-        periodeResetCallback={sinon.spy()}
+        updateOppholdInntektPeriode={vi.fn()}
+        periodeResetCallback={vi.fn()}
         hasOpenAksjonspunkter={false}
         valgtPeriode={valgtPeriode}
         submittable
@@ -91,8 +90,8 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
         initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT}`]: 'test', begrunnelse: 'test' }}
         intl={intlMock}
         aksjonspunkter={[bosattAksjonspunkt]}
-        updateOppholdInntektPeriode={sinon.spy()}
-        periodeResetCallback={sinon.spy()}
+        updateOppholdInntektPeriode={vi.fn()}
+        periodeResetCallback={vi.fn()}
         hasOpenAksjonspunkter
         submittable
         readOnly={false}
@@ -142,8 +141,8 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
         }}
         intl={intlMock}
         aksjonspunkter={[periodeAksjonspunkt]}
-        updateOppholdInntektPeriode={sinon.spy()}
-        periodeResetCallback={sinon.spy()}
+        updateOppholdInntektPeriode={vi.fn()}
+        periodeResetCallback={vi.fn()}
         hasOpenAksjonspunkter
         submittable
         readOnly={false}
@@ -191,8 +190,8 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
         initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OPPHOLDSRETT}`]: 'test', begrunnelse: 'test' }}
         intl={intlMock}
         aksjonspunkter={[oppholdsrettAksjonspunkt]}
-        updateOppholdInntektPeriode={sinon.spy()}
-        periodeResetCallback={sinon.spy()}
+        updateOppholdInntektPeriode={vi.fn()}
+        periodeResetCallback={vi.fn()}
         hasOpenAksjonspunkter
         submittable
         readOnly={false}
@@ -240,8 +239,8 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
         initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD}`]: 'test', begrunnelse: 'test' }}
         intl={intlMock}
         aksjonspunkter={[lovligOppholdAksjonspunkt]}
-        updateOppholdInntektPeriode={sinon.spy()}
-        periodeResetCallback={sinon.spy()}
+        updateOppholdInntektPeriode={vi.fn()}
+        periodeResetCallback={vi.fn()}
         hasOpenAksjonspunkter
         submittable
         readOnly={false}

@@ -2,27 +2,26 @@ import { renderFieldComponent } from '@fpsak-frontend/utils-test/redux-form-test
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import { RenderCheckboxField } from './CheckboxField';
 
 describe('<CheckboxField>', () => {
   it('skal kalle onChange med boolsk verdi for checked', async () => {
-    const onChange = sinon.spy();
+    const onChange = vi.fn();
     renderFieldComponent(<RenderCheckboxField input={undefined} meta={undefined} />, { onChange });
 
     await act(async () => {
       await userEvent.click(screen.getByRole('checkbox', { name: 'field' }));
     });
 
-    expect(onChange.called).toBe(true);
-    const { args } = onChange.getCalls()[0];
+    expect(onChange.mock.calls.length).toBeGreaterThan(0);
+    const args = onChange.mock.calls[0];
     expect(args).toHaveLength(1);
     expect(args[0]).toBe(true);
 
     await act(async () => {
       await userEvent.click(screen.getByRole('checkbox', { name: 'field' }));
     });
-    const args2 = onChange.getCalls()[0].args;
+    const args2 = onChange.mock.calls[0];
     expect(args2).toHaveLength(1);
     expect(args2[0]).toBe(true);
   });

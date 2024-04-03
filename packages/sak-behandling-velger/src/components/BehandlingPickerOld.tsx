@@ -1,6 +1,6 @@
 import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { BodyShort } from '@navikt/ds-react';
 import { Location } from 'history';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactElement } from 'react';
 import { FormattedMessage } from 'react-intl';
 import BehandlingPickerItem from './BehandlingPickerItem';
@@ -57,9 +57,9 @@ const BehandlingPicker = ({
 }: OwnProps) => (
   <ul className={styles.behandlingList}>
     {noExistingBehandlinger && (
-      <Normaltekst>
+      <BodyShort size="small">
         <FormattedMessage id="BehandlingList.ZeroBehandlinger" />
-      </Normaltekst>
+      </BodyShort>
     )}
     {!noExistingBehandlinger &&
       renderListItems(behandlinger, getBehandlingLocation, showAll, toggleShowAll, getKodeverkFn, behandlingId)}

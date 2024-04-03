@@ -3,7 +3,6 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import { OpptjeningFaktaFormImpl as OpptjeningFaktaForm } from './OpptjeningFaktaForm';
 
@@ -87,8 +86,8 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         formName="test"
         behandlingFormPrefix="test"
-        reduxFormChange={sinon.spy()}
-        reduxFormInitialize={sinon.spy()}
+        reduxFormChange={vi.fn()}
+        reduxFormInitialize={vi.fn()}
         harApneAksjonspunkter
         submitting={false}
         isDirty={false}
@@ -125,8 +124,8 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         formName="test"
         behandlingFormPrefix="test"
-        reduxFormChange={sinon.spy()}
-        reduxFormInitialize={sinon.spy()}
+        reduxFormChange={vi.fn()}
+        reduxFormInitialize={vi.fn()}
         harApneAksjonspunkter
         submitting={false}
         isDirty={false}
@@ -154,8 +153,8 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         formName="test"
         behandlingFormPrefix="test"
-        reduxFormChange={sinon.spy()}
-        reduxFormInitialize={sinon.spy()}
+        reduxFormChange={vi.fn()}
+        reduxFormInitialize={vi.fn()}
         harApneAksjonspunkter
         submitting={false}
         isDirty={false}
@@ -195,8 +194,8 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         formName="test"
         behandlingFormPrefix="test"
-        reduxFormChange={sinon.spy()}
-        reduxFormInitialize={sinon.spy()}
+        reduxFormChange={vi.fn()}
+        reduxFormInitialize={vi.fn()}
         harApneAksjonspunkter
         submitting={false}
         isDirty={false}
@@ -216,8 +215,8 @@ describe('<OpptjeningFaktaForm>', () => {
   });
 
   it('skal automatisk åpne aktivitet som må avklares', () => {
-    const formChangeCallback = sinon.spy();
-    const formInitCallback = sinon.spy();
+    const formChangeCallback = vi.fn();
+    const formInitCallback = vi.fn();
 
     renderWithIntlAndReduxForm(
       <OpptjeningFaktaForm
@@ -246,8 +245,8 @@ describe('<OpptjeningFaktaForm>', () => {
   });
 
   it('skal oppdatere aktivitet etter editering', async () => {
-    const formChangeCallback = sinon.spy();
-    const formInitCallback = sinon.spy();
+    const formChangeCallback = vi.fn();
+    const formInitCallback = vi.fn();
 
     renderWithIntlAndReduxForm(
       <OpptjeningFaktaForm
@@ -287,19 +286,19 @@ describe('<OpptjeningFaktaForm>', () => {
       erGodkjent: true,
     };
 
-    const calls = formChangeCallback.getCalls();
+    const { calls } = formChangeCallback.mock;
     expect(calls).toHaveLength(1);
-    const { args } = calls[0];
+    const args = calls[0];
     expect(args).toHaveLength(3);
     expect(args[0]).toBe('Behandling_123.OpptjeningFaktaForm');
     expect(args[1]).toBe('opptjeningList[0].opptjeningAktivitetList');
     expect(args[2]).toStrictEqual([opptjeningActivities[0], editedActivity]);
 
-    expect(formInitCallback.getCalls()).toHaveLength(1);
+    expect(formInitCallback.mock.calls).toHaveLength(1);
   });
 
   it('skal legge til aktivitet', async () => {
-    const formChangeCallback = sinon.spy();
+    const formChangeCallback = vi.fn();
 
     renderWithIntlAndReduxForm(
       <OpptjeningFaktaForm
@@ -309,7 +308,7 @@ describe('<OpptjeningFaktaForm>', () => {
         behandlingFormPrefix="Behandling_123"
         formName="OpptjeningFaktaForm"
         reduxFormChange={formChangeCallback}
-        reduxFormInitialize={sinon.spy()}
+        reduxFormInitialize={vi.fn()}
         harApneAksjonspunkter
         submitting={false}
         isDirty={false}
@@ -340,8 +339,8 @@ describe('<OpptjeningFaktaForm>', () => {
   });
 
   it('skal kunne avbryte editering', async () => {
-    const formChangeCallback = sinon.spy();
-    const formInitCallback = sinon.spy();
+    const formChangeCallback = vi.fn();
+    const formInitCallback = vi.fn();
 
     renderWithIntlAndReduxForm(
       <OpptjeningFaktaForm
@@ -370,10 +369,10 @@ describe('<OpptjeningFaktaForm>', () => {
       await userEvent.click(screen.getByRole('button', { name: 'Avbryt' }));
     });
 
-    const initCalls = formInitCallback.getCalls();
+    const initCalls = formInitCallback.mock.calls;
     expect(initCalls.length).toBe(1);
-    expect(initCalls[0].args.length).toBe(2);
-    expect(initCalls[0].args[0]).toBe('Behandling_123.ActivityPanelForm');
-    expect(initCalls[0].args[1]).toStrictEqual({});
+    expect(initCalls[0].length).toBe(2);
+    expect(initCalls[0][0]).toBe('Behandling_123.ActivityPanelForm');
+    expect(initCalls[0][1]).toStrictEqual({});
   });
 });

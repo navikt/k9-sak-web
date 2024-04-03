@@ -1,7 +1,6 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
 import TilbakekrevingTimeline from './TilbakekrevingTimeline';
@@ -37,8 +36,8 @@ describe('<TilbakekrevingTimeline>', () => {
         intl={intlMock}
         perioder={perioder}
         selectedPeriod={valgtPeriode}
-        toggleDetaljevindu={sinon.spy()}
-        selectPeriodCallback={sinon.spy()}
+        toggleDetaljevindu={vi.fn()}
+        selectPeriodCallback={vi.fn()}
         hjelpetekstKomponent={<div>test</div>}
         kjonn="MANN"
       />,

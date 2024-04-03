@@ -14,12 +14,9 @@ import {
 } from '@fpsak-frontend/utils';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
+import { BodyShort, Button, Label, Modal } from '@navikt/ds-react';
 import moment from 'moment';
-import { Container } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import Modal from 'nav-frontend-modal';
 import { Select as NavSelect } from 'nav-frontend-skjema';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -194,16 +191,15 @@ export const SettPaVentModal = ({
   return (
     <Modal
       className={`${styles.modal} ${styles.settPaVentModal}`}
-      isOpen={showModal}
-      closeButton
-      contentLabel={intl.formatMessage({
+      open={showModal}
+      aria-label={intl.formatMessage({
         id: originalVentearsak ? 'SettPaVentModal.ModalDescriptionErPaVent' : 'SettPaVentModal.ModalDescription',
       })}
-      onRequestClose={cancelEvent}
-      shouldCloseOnOverlayClick={false}
+      onClose={cancelEvent}
+      data-testid="SettPaVentModal"
     >
-      <Container fluid data-testid="SettPaVentModal">
-        <form onSubmit={handleSubmit} name="ventModalForm" data-testid="ventModalForm">
+      <form onSubmit={handleSubmit} name="ventModalForm" data-testid="ventModalForm">
+        <Modal.Header>
           <div className={styles.topContainer}>
             <Image
               className={styles.image}
@@ -212,9 +208,9 @@ export const SettPaVentModal = ({
             />
             <div className={styles.divider} />
             <div className={styles.calendarContainer}>
-              <Normaltekst className={styles.label}>
+              <BodyShort size="small" className={styles.label}>
                 {getPaVentText(originalVentearsak, hasManualPaVent, frist, originalFrist, showEndreFrist)}
-              </Normaltekst>
+              </BodyShort>
               {showEndreFrist && (
                 <div className={styles.datePicker}>
                   <DatepickerField
@@ -226,7 +222,8 @@ export const SettPaVentModal = ({
               )}
             </div>
           </div>
-
+        </Modal.Header>
+        <Modal.Body>
           <div className={styles.contentContainer}>
             {showSelect && (
               <div className={styles.selectContainer}>
@@ -237,7 +234,11 @@ export const SettPaVentModal = ({
                 ) : (
                   <SelectField
                     name="ventearsak"
-                    label={<Element>{intl.formatMessage({ id: 'SettPaVentModal.HvaVenterViPa' })}</Element>}
+                    label={
+                      <Label size="small" as="p">
+                        {intl.formatMessage({ id: 'SettPaVentModal.HvaVenterViPa' })}
+                      </Label>
+                    }
                     placeholder={intl.formatMessage({ id: 'SettPaVentModal.SelectPlaceholder' })}
                     validate={[required]}
                     selectValues={ventearsaker
@@ -262,30 +263,33 @@ export const SettPaVentModal = ({
                 validate={[hasValidText, maxLength200]}
                 label={
                   <div className={styles.commentInputLabel}>
-                    <Element>{intl.formatMessage({ id: 'SettPaVentModal.Kommentar' })}</Element>
+                    <Label size="small" as="p">
+                      {intl.formatMessage({ id: 'SettPaVentModal.Kommentar' })}
+                    </Label>
                     <span>({intl.formatMessage({ id: 'SettPaVentModal.Valgfritt' })})</span>
                   </div>
                 }
               />
             )}
             {visBrevErBestilt && (
-              <Normaltekst>
+              <BodyShort size="small">
                 <FormattedMessage id="SettPaVentModal.BrevBlirBestilt" />
-              </Normaltekst>
+              </BodyShort>
             )}
             <div className={styles.flexContainer}>
               {!hasManualPaVent && showFristenTekst && (
-                <Normaltekst>
+                <BodyShort size="small">
                   <FormattedMessage id="SettPaVentModal.UtløptFrist" />
                   <VerticalSpacer eightPx />
                   <FormattedMessage id="SettPaVentModal.HenleggeSaken" />
-                </Normaltekst>
+                </BodyShort>
               )}
             </div>
             <div className={showSelect ? styles.buttonContainer : ''}>
-              <Hovedknapp
-                mini
-                htmlType={
+              <Button
+                variant="primary"
+                size="small"
+                type={
                   hovedKnappenType(venteArsakHasChanged, fristHasChanged, ventearsakVariantHasChanged)
                     ? 'submit'
                     : 'button'
@@ -301,25 +305,25 @@ export const SettPaVentModal = ({
                 )}
               >
                 {getHovedknappTekst()}
-              </Hovedknapp>
+              </Button>
               {(!hasManualPaVent || showAvbryt || !visBrevErBestilt) && (
-                <Knapp
-                  htmlType="button"
-                  mini
+                <Button
+                  variant="secondary"
+                  type="button"
+                  size="small"
                   onClick={!showEndreFrist ? toggleEndreFrist : cancelEvent}
-                  className={styles.cancelButton}
                 >
                   {showEndreFrist ? (
                     <FormattedMessage id="SettPaVentModal.Lukk" />
                   ) : (
                     <FormattedMessage id="SettPaVentModal.EndreFrist" />
                   )}
-                </Knapp>
+                </Button>
               )}
             </div>
           </div>
-        </form>
-      </Container>
+        </Modal.Body>
+      </form>
     </Modal>
   );
 };

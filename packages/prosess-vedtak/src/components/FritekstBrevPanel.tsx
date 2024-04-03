@@ -14,7 +14,6 @@ import {
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 
-import AlertStripe from 'nav-frontend-alertstriper';
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 
 import FritekstRedigering from './FritekstRedigering/FritekstRedigering';
@@ -147,7 +146,9 @@ const FritekstBrevPanel = ({
           {formikProps.touched?.[fieldnames.REDIGERT_HTML] && formikProps.errors?.[fieldnames.REDIGERT_HTML] && (
             <>
               <VerticalSpacer sixteenPx />
-              <AlertStripe type="feil">{formikProps.errors[fieldnames.REDIGERT_HTML] as string}</AlertStripe>
+              <Alert size="small" variant="error">
+                {formikProps.errors[fieldnames.REDIGERT_HTML] as string}
+              </Alert>
             </>
           )}
 

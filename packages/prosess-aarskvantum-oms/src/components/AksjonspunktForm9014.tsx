@@ -11,9 +11,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { hasValidText, hasValidValue, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
-import { Modal } from '@navikt/ds-react';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { Element } from 'nav-frontend-typografi';
+import { Button, Label } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -118,9 +116,9 @@ export const FormContent = ({
                     : 'Årskvantum.Aksjonspunkt.Uavklart.BekreftInfotrygd',
                 }}
               />
-              <Hovedknapp onClick={handleSubmit} htmlType="submit">
+              <Button variant="primary" onClick={handleSubmit} type="submit">
                 <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.KjørPåNytt" />
-              </Hovedknapp>
+              </Button>
             </div>
           </>
         )}
@@ -144,9 +142,9 @@ export const FormContent = ({
           name="valg"
           validate={[required]}
           label={
-            <Element>
+            <Label size="small" as="p">
               <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Valg" />
-            </Element>
+            </Label>
           }
         >
           <RadioOption
@@ -219,9 +217,9 @@ export const FormContent = ({
 
       {isAksjonspunktOpen && (
         <div className={styles.spaceBetween}>
-          <Hovedknapp onClick={handleSubmit} htmlType="submit">
+          <Button variant="primary" onClick={handleSubmit} type="submit">
             <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Bekreft" />
-          </Hovedknapp>
+          </Button>
         </div>
       )}
     </>

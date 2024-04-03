@@ -17,8 +17,8 @@ import {
 } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Behandling, SubmitCallback } from '@k9-sak-web/types';
 import OpplysningerFraSøknaden, { Måned } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
+import { Button } from '@navikt/ds-react';
 import moment from 'moment';
-import { Knapp } from 'nav-frontend-knapper';
 import { TabsPure } from 'nav-frontend-tabs';
 import React from 'react';
 import { useIntl } from 'react-intl';
@@ -132,14 +132,14 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
   return (
     <form onSubmit={handleSubmit}>
       {kanEndrePåSøknadsopplysninger && (
-        <Knapp
+        <Button
           className={styles.formUnlockButton}
-          type="hoved"
-          htmlType="button"
+          variant="primary"
+          type="button"
           onClick={() => setFormIsEditable(!formIsEditable)}
         >
           {formIsEditable ? 'Lås opp skjema' : 'Lås skjema'}
-        </Knapp>
+        </Button>
       )}
       <div className={styles.tabsContainer}>
         <TabsPure
@@ -173,7 +173,7 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
           <div className={styles.fieldContainer}>
             <InputField
               name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2019}
-              bredde="S"
+              htmlSize={14}
               label={{ id: 'OpplysningerFraSoknaden.Inntekt2019' }}
               readOnly={formIsEditable}
             />
@@ -181,7 +181,7 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
           <div className={styles.fieldContainer}>
             <InputField
               name={SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKT_2020}
-              bredde="S"
+              htmlSize={14}
               label={{ id: 'OpplysningerFraSoknaden.Inntekt2020' }}
               readOnly={formIsEditable}
             />
@@ -205,24 +205,25 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
             aria-label={intl.formatMessage({
               id: 'OpplysningerFraSoknaden.Begrunnelse',
             })}
+            maxLength={2000}
           />
         </div>
       )}
       {kanEndrePåSøknadsopplysninger && !formIsEditable && (
         <>
-          <Knapp htmlType="submit" type="hoved">
+          <Button type="submit" variant="primary">
             Bekreft og fortsett
-          </Knapp>
-          <Knapp
+          </Button>
+          <Button
             onClick={() => {
               // eslint-disable-next-line no-self-assign
               window.location = window.location;
             }}
-            htmlType="button"
+            type="button"
             style={{ marginLeft: '8px', marginTop: '2px' }}
           >
             Tilbakestill skjema (OBS! Relaster siden)
-          </Knapp>
+          </Button>
         </>
       )}
     </form>

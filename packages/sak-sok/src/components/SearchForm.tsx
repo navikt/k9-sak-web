@@ -1,6 +1,5 @@
+import { Button, Heading } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -40,28 +39,25 @@ export const SearchForm = ({
   ...formProps
 }: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => (
   <form className={styles.container} onSubmit={formProps.handleSubmit}>
-    <Undertittel>{intl.formatMessage({ id: 'Search.SearchFagsakOrPerson' })}</Undertittel>
+    <Heading size="small" level="2">
+      {intl.formatMessage({ id: 'Search.SearchFagsakOrPerson' })}
+    </Heading>
     <VerticalSpacer eightPx />
-    <Row>
-      <Column xs="7">
-        <InputField
-          name="searchString"
-          parse={(s = '') => s.trim()}
-          label={intl.formatMessage({ id: 'Search.SaksnummerOrPersonId' })}
-          bredde="L"
-        />
-      </Column>
-      <Column xs="5">
-        <Hovedknapp
-          mini
-          className={styles.button}
-          spinner={searchStarted}
-          disabled={isButtonDisabled(searchStarted, searchString)}
-        >
-          <FormattedMessage id="Search.Search" />
-        </Hovedknapp>
-      </Column>
-    </Row>
+    <div className="flex gap-3">
+      <InputField
+        name="searchString"
+        parse={(s = '') => s.trim()}
+        label={intl.formatMessage({ id: 'Search.SaksnummerOrPersonId' })}
+        size="medium"
+      />
+      <Button
+        className={styles.button}
+        loading={searchStarted}
+        disabled={isButtonDisabled(searchStarted, searchString)}
+      >
+        <FormattedMessage id="Search.Search" />
+      </Button>
+    </div>
     {searchResultAccessDenied && (
       <Row>
         <Column xs="12">

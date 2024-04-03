@@ -1,6 +1,6 @@
-import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import React from 'react';
 
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 // eslint-disable-next-line import/no-relative-packages
@@ -16,11 +16,14 @@ describe('Utenlandsopphold', () => {
 
   test('kan kan toggle på hjelpetekst', async () => {
     renderWithIntl(<Utenlandsopphold utenlandsopphold={utenlandsoppholdMock} kodeverk={utenlandsoppholdÅrsakMock} />);
-    const infoboksTekst =
-      'Opphold innenfor EØS likestilles med opphold i Norge, og det er ingen tidsbegrensning på hvor lenge søker kan motta pleiepenger.';
-    expect(screen.queryByText(infoboksTekst)).toBeFalsy();
-    await userEvent.click(screen.getByRole('button'));
-    expect(screen.getByText(infoboksTekst)).toBeVisible();
+
+    expect(
+      screen.getByRole('button', { name: 'Hvor lenge har søker rett på pleiepenger i utlandet?', expanded: false }),
+    ).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: 'Hvor lenge har søker rett på pleiepenger i utlandet?' }));
+    expect(
+      screen.getByRole('button', { name: 'Hvor lenge har søker rett på pleiepenger i utlandet?', expanded: true }),
+    ).toBeInTheDocument();
   });
 
   test('viser land, tilhørighet til EØS og årsak for utenlandsopphold', () => {

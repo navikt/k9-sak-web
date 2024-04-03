@@ -3,7 +3,6 @@ import { AbstractRequestApi } from '@k9-sak-web/rest-api';
 import { render } from '@testing-library/react';
 import React, { useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
-import sinon from 'sinon';
 import { RestApiErrorProvider } from '../error/RestApiErrorContext';
 import { RestApiProvider } from './RestApiContext';
 import getUseGlobalStateRestApi from './useGlobalStateRestApi';
@@ -66,7 +65,7 @@ const TestGlobalData = ({ setValue }) => {
 
 describe('<RestApiContext>', () => {
   it('skal utføre restkall og så hente data inn i komponent', async () => {
-    const setValue = sinon.spy();
+    const setValue = vi.fn();
 
     await act(async () => {
       render(
@@ -79,8 +78,8 @@ describe('<RestApiContext>', () => {
     });
 
     // Må sjekke resultatet via funksjon fordi per i dag blir ikke output fra TestGlobalData korrekt oppdatert
-    expect(setValue.calledTwice).toBe(true);
-    const { args } = setValue.getCalls()[1];
+    expect(setValue.mock.calls.length).toBe(2);
+    const args = setValue.mock.calls[1];
     expect(args).toHaveLength(1);
     expect(args[0]).toEqual(dataHentetFraBackend);
   });

@@ -1,12 +1,11 @@
+import { BodyShort, Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-
-import Skjermlenke from './felles/Skjermlenke';
-import { findHendelseText, findIdForOpplysningCode, findResultatText } from './felles/historikkUtils';
+import HistorikkMal from '../HistorikkMalTsType';
 import BubbleText from './felles/bubbleText';
 import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
-import HistorikkMal from '../HistorikkMalTsType';
+import { findHendelseText, findIdForOpplysningCode, findResultatText } from './felles/historikkUtils';
+import Skjermlenke from './felles/Skjermlenke';
 
 // TODO Kan denne slettast?
 const HistorikkMalFelles7og8 = ({
@@ -35,11 +34,15 @@ const HistorikkMalFelles7og8 = ({
           />
 
           {historikkinnslagDel.hendelse && (
-            <Element>{findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}</Element>
+            <Label size="small" as="p">
+              {findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}
+            </Label>
           )}
 
           {historikkinnslagDel.resultat && (
-            <Element>{findResultatText(historikkinnslagDel.resultat, intl, getKodeverknavn)}</Element>
+            <Label size="small" as="p">
+              {findResultatText(historikkinnslagDel.resultat, intl, getKodeverknavn)}
+            </Label>
           )}
 
           {historikkinnslagDel.endredeFelter &&
@@ -49,17 +52,14 @@ const HistorikkMalFelles7og8 = ({
 
           {historikkinnslagDel.opplysninger &&
             historikkinnslagDel.opplysninger.map(opplysning => (
-              <FormattedMessage
-                id={findIdForOpplysningCode(opplysning)}
-                values={{ antallBarn: opplysning.tilVerdi }}
-              />
+              <FormattedMessage id={findIdForOpplysningCode(opplysning)} values={{ antallBarn: opplysning.tilVerdi }} />
             ))}
 
-          {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
-          {historikkinnslagDel.begrunnelse && <BubbleText bodyText="" />}
-          {historikkinnslagDel.begrunnelseFritekst && (
-            <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />
+          {historikkinnslagDel.aarsak && (
+            <BodyShort size="small">{getKodeverknavn(historikkinnslagDel.aarsak)}</BodyShort>
           )}
+          {historikkinnslagDel.begrunnelse && <BubbleText bodyText="" />}
+          {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />}
           <div>
             {dokumentLinks &&
               dokumentLinks.map(dokumentLenke => (

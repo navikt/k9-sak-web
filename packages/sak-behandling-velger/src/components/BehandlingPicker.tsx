@@ -1,18 +1,16 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn, PerioderMedBehandlingsId } from '@k9-sak-web/types';
+import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { AddCircle } from '@navikt/ds-icons';
-import { Button } from '@navikt/ds-react';
+import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import axios from 'axios';
 import { Location } from 'history';
-import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { UseQueryResult, useQueries } from 'react-query';
 import { NavLink, useNavigate } from 'react-router-dom';
-
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
@@ -250,20 +248,26 @@ const BehandlingPicker = ({
   return (
     <div className={styles.behandlingPicker} data-testid="BehandlingPicker">
       {valgtBehandlingId && (
-        <Tilbakeknapp className={styles.backButton} onClick={() => setValgtBehandlingId(undefined)}>
+        <Button
+          variant="tertiary"
+          icon={<ChevronLeftIcon fontSize="1.5rem" />}
+          iconPosition="left"
+          className={styles.backButton}
+          onClick={() => setValgtBehandlingId(undefined)}
+        >
           <FormattedMessage id="Behandlingspunkt.Behandling.SeAlle" />
-        </Tilbakeknapp>
+        </Button>
       )}
 
       {!valgtBehandlingId && (
         <>
           <div className={styles.headerContainer}>
-            <Undertittel>
+            <Heading size="small" level="2">
               <FormattedMessage
                 id="Behandlingspunkt.VelgBehandling"
                 values={{ antallBehandlinger: behandlinger.length }}
               />
-            </Undertittel>
+            </Heading>
             <BehandlingFilter
               filters={getFilterListe()}
               activeFilters={activeFilters}
@@ -273,9 +277,9 @@ const BehandlingPicker = ({
           </div>
           <ul className={styles.behandlingList}>
             {noExistingBehandlinger && (
-              <Normaltekst data-testid="ingenBehandlinger">
+              <BodyShort size="small" data-testid="ingenBehandlinger">
                 <FormattedMessage id="BehandlingList.ZeroBehandlinger" />
-              </Normaltekst>
+              </BodyShort>
             )}
             {!noExistingBehandlinger &&
               renderListItems({

@@ -1,11 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { formPropTypes } from 'redux-form';
-import { createSelector } from 'reselect';
-import { connect } from 'react-redux';
-import { injectIntl, FormattedMessage } from 'react-intl';
-import { Undertekst, Undertittel } from 'nav-frontend-typografi';
-import { Column, Row } from 'nav-frontend-grid';
 import {
   behandlingForm,
   behandlingFormValueSelector,
@@ -13,11 +5,19 @@ import {
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
-import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
+import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { Detail, Heading } from '@navikt/ds-react';
+import { Column, Row } from 'nav-frontend-grid';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { formPropTypes } from 'redux-form';
+import { createSelector } from 'reselect';
 
 import PreviewAnkeLink from './PreviewAnkeLink';
 
@@ -27,14 +27,14 @@ const isFatterVedtak = apCodes => apCodes.includes(aksjonspunktCodes.FATTER_VEDT
 
 const ResultatEnkel = ({ ankevurderingresultat: { begrunnelse } }) => (
   <div>
-    <Undertekst>
+    <Detail>
       <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Stadfest" />
-    </Undertekst>
+    </Detail>
     <VerticalSpacer sixteenPx />
-    <Undertekst>
+    <Detail>
       <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" />
-    </Undertekst>
-    <Undertekst>{begrunnelse}</Undertekst>
+    </Detail>
+    <Detail>{begrunnelse}</Detail>
   </div>
 );
 
@@ -44,14 +44,14 @@ ResultatEnkel.propTypes = {
 
 const ResultatOpphev = ({ ankevurderingresultat: { begrunnelse } }) => (
   <div>
-    <Undertekst>
+    <Detail>
       <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Oppheves" />
-    </Undertekst>
+    </Detail>
     <VerticalSpacer sixteenPx />
-    <Undertekst>
+    <Detail>
       <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" />
-    </Undertekst>
-    <Undertekst>{begrunnelse}</Undertekst>
+    </Detail>
+    <Detail>{begrunnelse}</Detail>
   </div>
 );
 
@@ -71,14 +71,14 @@ const ResultatAvvise = ({
   },
 }) => (
   <>
-    <Undertekst>
+    <Detail>
       {paAnketBehandlingId != null && <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Avvises" />}
       {paAnketBehandlingId == null && <FormattedMessage id="Ankebehandling.Resultat.Innstilling.AvvisesUten" />}
-    </Undertekst>
+    </Detail>
     <VerticalSpacer sixteenPx />
-    <Undertekst>
+    <Detail>
       <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Arsak" />
-    </Undertekst>
+    </Detail>
     <ul>
       {erAnkerIkkePart && (
         <li>
@@ -101,7 +101,7 @@ const ResultatAvvise = ({
         </li>
       )}
     </ul>
-    <Undertekst>
+    <Detail>
       <FormattedMessage id="Ankebehandling.Realitetsbehandles" />
       <FormattedMessage
         id={
@@ -110,12 +110,12 @@ const ResultatAvvise = ({
             : 'Ankebehandling.Realitetsbehandles.Nei'
         }
       />
-    </Undertekst>
+    </Detail>
     <VerticalSpacer sixteenPx />
-    <Undertekst>
+    <Detail>
       <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" />
-    </Undertekst>
-    <Undertekst>{begrunnelse}</Undertekst>
+    </Detail>
+    <Detail>{begrunnelse}</Detail>
   </>
 );
 
@@ -140,19 +140,19 @@ const ResultatOmgjores = ({
   ankevurderingresultat: { ankeVurderingOmgjoer: omgjoer, ankeOmgjoerArsakNavn, begrunnelse },
 }) => (
   <>
-    <Undertekst>
+    <Detail>
       <FormattedMessage id={hentSprakKode(omgjoer)} />
-    </Undertekst>
+    </Detail>
     <VerticalSpacer sixteenPx />
-    <Undertekst>
+    <Detail>
       <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Arsak" />
-    </Undertekst>
-    <Undertekst>{ankeOmgjoerArsakNavn}</Undertekst>
+    </Detail>
+    <Detail>{ankeOmgjoerArsakNavn}</Detail>
     <VerticalSpacer sixteenPx />
-    <Undertekst>
+    <Detail>
       <FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" />
-    </Undertekst>
-    <Undertekst>{begrunnelse}</Undertekst>
+    </Detail>
+    <Detail>{begrunnelse}</Detail>
   </>
 );
 
@@ -197,15 +197,15 @@ const AnkeResultatForm = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <FadingPanel>
-      <Undertittel>
+      <Heading size="small" level="2">
         <FormattedMessage id="Ankebehandling.Resultat.Title" />
-      </Undertittel>
+      </Heading>
       <VerticalSpacer fourPx />
       <Row>
         <Column xs="12">
-          <Undertekst>
+          <Detail>
             <FormattedMessage id="Ankebehandling.Resultat.Innstilling" />
-          </Undertekst>
+          </Detail>
           <AnkeResultat ankevurderingresultat={ankeVurderingResultat} />
         </Column>
       </Row>

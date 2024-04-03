@@ -1,6 +1,5 @@
 import React from 'react';
 import { FieldArrayFieldsProps } from 'redux-form';
-import sinon from 'sinon';
 import { intlMock } from './intl-test-helper';
 import { renderWithIntl } from './test-utils';
 
@@ -54,34 +53,34 @@ export const reduxFormPropsMock = Object.assign(metaMock, {
   initialized: false,
   pure: false,
   submitSucceeded: false,
-  asyncValidate: sinon.spy(),
-  autofill: sinon.spy(),
-  blur: sinon.spy(),
-  change: sinon.spy(),
-  clearAsyncError: sinon.spy(),
-  destroy: sinon.spy(),
-  handleSubmit: sinon.spy(),
-  initialize: sinon.spy(),
-  reset: sinon.spy(),
-  touch: sinon.spy(),
-  submit: sinon.spy(),
-  untouch: sinon.spy(),
-  clearSubmit: sinon.spy(),
-  resetSection: sinon.spy(),
-  clearFields: sinon.spy(),
-  clearSubmitErrors: sinon.spy(),
+  asyncValidate: vi.fn(),
+  autofill: vi.fn(),
+  blur: vi.fn(),
+  change: vi.fn(),
+  clearAsyncError: vi.fn(),
+  destroy: vi.fn(),
+  handleSubmit: vi.fn(),
+  initialize: vi.fn(),
+  reset: vi.fn(),
+  touch: vi.fn(),
+  submit: vi.fn(),
+  untouch: vi.fn(),
+  clearSubmit: vi.fn(),
+  resetSection: vi.fn(),
+  clearFields: vi.fn(),
+  clearSubmitErrors: vi.fn(),
   submitAsSideEffect: false,
   array: {
-    insert: sinon.spy(),
-    move: sinon.spy(),
-    pop: sinon.spy(),
-    push: sinon.spy(),
-    remove: sinon.spy(),
-    removeAll: sinon.spy(),
-    shift: sinon.spy(),
-    splice: sinon.spy(),
-    swap: sinon.spy(),
-    unshift: sinon.spy(),
+    insert: vi.fn(),
+    move: vi.fn(),
+    pop: vi.fn(),
+    push: vi.fn(),
+    remove: vi.fn(),
+    removeAll: vi.fn(),
+    shift: vi.fn(),
+    splice: vi.fn(),
+    swap: vi.fn(),
+    unshift: vi.fn(),
   },
   initialValues: {},
 });
@@ -129,16 +128,16 @@ export class MockFields implements FieldArrayFieldsProps<any> {
     this.pop = array.pop.bind(array);
     this.map = array.map.bind(array);
 
-    this.forEach = sinon.spy();
-    this.getAll = sinon.spy();
-    this.removeAll = sinon.spy();
-    this.insert = sinon.spy();
+    this.forEach = vi.fn();
+    this.getAll = vi.fn();
+    this.removeAll = vi.fn();
+    this.insert = vi.fn();
     this.name = '';
-    this.shift = sinon.spy();
-    this.splice = sinon.spy();
-    this.swap = sinon.spy();
-    this.move = sinon.spy();
-    this.unshift = sinon.spy();
+    this.shift = vi.fn();
+    this.splice = vi.fn();
+    this.swap = vi.fn();
+    this.move = vi.fn();
+    this.unshift = vi.fn();
 
     this.get = index => array[index];
 
@@ -191,16 +190,16 @@ export class MockFieldsWithContent implements FieldArrayFieldsProps<any> {
     this.array = [array].map(formatName); // NOSONAR;
     this.push = () => array.push(formatName(array.length));
 
-    this.forEach = sinon.spy();
-    this.getAll = sinon.spy();
-    this.removeAll = sinon.spy();
-    this.insert = sinon.spy();
+    this.forEach = vi.fn();
+    this.getAll = vi.fn();
+    this.removeAll = vi.fn();
+    this.insert = vi.fn();
     this.name = '';
-    this.shift = sinon.spy();
-    this.splice = sinon.spy();
-    this.swap = sinon.spy();
-    this.move = sinon.spy();
-    this.unshift = sinon.spy();
+    this.shift = vi.fn();
+    this.splice = vi.fn();
+    this.swap = vi.fn();
+    this.move = vi.fn();
+    this.unshift = vi.fn();
 
     this.pop = array.pop.bind(array);
     this.map = array.map.bind(array);

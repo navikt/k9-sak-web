@@ -8,8 +8,8 @@ import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp } from 'nav-frontend-knapper';
 
+import { Button } from '@navikt/ds-react';
 import style from './AldersvilkarForm.module.css';
 
 type Inputs = {
@@ -79,6 +79,7 @@ const AldersvilkarForm = ({
           label={intl.formatMessage({ id: 'AlderVilkar.Lese.KroniskSyk' })}
           name="begrunnelse"
           validate={[required, minLength3, maxLength2000]}
+          maxLength={2000}
         />
       </Row>
       <VerticalSpacer sixteenPx />
@@ -98,9 +99,9 @@ const AldersvilkarForm = ({
       </Row>
       <VerticalSpacer sixteenPx />
       <Row>
-        <Hovedknapp htmlType="submit">
+        <Button variant="primary" type="submit">
           <FormattedMessage id="AlderVilkar.Bekreft" />
-        </Hovedknapp>
+        </Button>
       </Row>
     </Form>
   );

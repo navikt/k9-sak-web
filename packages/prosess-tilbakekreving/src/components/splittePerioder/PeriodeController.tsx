@@ -1,5 +1,4 @@
 import { Column, Row } from 'nav-frontend-grid';
-import { Element } from 'nav-frontend-typografi';
 import React, { Component } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
@@ -7,7 +6,7 @@ import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
 import { EditedIcon, FloatRight, Image } from '@fpsak-frontend/shared-components';
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
-
+import { Label } from '@navikt/ds-react';
 import DataForPeriode from '../../types/dataForPeriodeTsType';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 
@@ -123,10 +122,10 @@ export class PeriodeController extends Component<OwnProps & WrappedComponentProp
     return (
       <Row>
         <Column xs="3">
-          <Element>
+          <Label size="small" as="p">
             <FormattedMessage id="PeriodeController.Detaljer" />
             {isEdited && <EditedIcon />}
-          </Element>
+          </Label>
         </Column>
         <Column xs="7">
           {!readOnly && (

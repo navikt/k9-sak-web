@@ -1,5 +1,5 @@
 import React from 'react';
-import { injectIntl, WrappedComponentProps, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { FieldArrayMetaProps, WrappedFieldInputProps } from 'redux-form';
 import Label from './Label';
 import LabelType from './LabelType';
@@ -39,7 +39,7 @@ const renderNavField = WrappedNavFieldComponent => {
     }
     const fieldProps = {
       id: input.name,
-      feil: formatError(submitFailed, error),
+      error: formatError(submitFailed, error),
       label: <Label input={label} readOnly={readOnly} />,
     };
     if (!readOnly) {

@@ -1,30 +1,30 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
-import { Undertittel } from 'nav-frontend-typografi';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import {
-  behandlingForm,
   RadioGroupField,
   RadioOption,
+  behandlingForm,
   behandlingFormValueSelector,
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
-import { required } from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import {
-  VerticalSpacer,
-  FlexContainer,
-  FlexRow,
   AksjonspunktHelpTextTemp,
   FlexColumn,
+  FlexContainer,
+  FlexRow,
+  VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
+import { required } from '@fpsak-frontend/utils';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Kodeverk } from '@k9-sak-web/types';
+import { Heading } from '@navikt/ds-react';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
 import FritekstTextField from './FritekstTextField';
 
 const FORM_NAME = 'BehandleUnntakForm';
@@ -50,9 +50,9 @@ export const BehandleUnntakForm = ({
   <form onSubmit={handleSubmit}>
     <FlexContainer>
       <FlexRow>
-        <Undertittel>
+        <Heading size="small" level="2">
           <FormattedMessage id="Unntak.Title" />
-        </Undertittel>
+        </Heading>
       </FlexRow>
       <VerticalSpacer twentyPx />
 

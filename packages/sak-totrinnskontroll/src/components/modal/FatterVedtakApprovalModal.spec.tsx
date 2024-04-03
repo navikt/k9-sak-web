@@ -4,12 +4,11 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../../i18n/nb_NO.json';
 import FatterVedtakApprovalModal from './FatterVedtakApprovalModal';
 
 describe('<FatterVedtakApprovalModal>', () => {
-  const closeEventCallback = sinon.spy();
+  const closeEventCallback = vi.fn();
   it('skal rendre modal for fatter vedtak', () => {
     renderWithIntl(
       <FatterVedtakApprovalModal

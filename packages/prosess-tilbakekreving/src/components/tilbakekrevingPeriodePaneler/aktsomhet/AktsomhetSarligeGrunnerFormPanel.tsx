@@ -1,12 +1,11 @@
-import { Column, Row } from 'nav-frontend-grid';
-import { Undertekst } from 'nav-frontend-typografi';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-
 import { CheckboxField, TextAreaField } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
+import { Detail } from '@navikt/ds-react';
+import { Column, Row } from 'nav-frontend-grid';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import AktsomhetReduksjonAvBelopFormPanel from './AktsomhetReduksjonAvBelopFormPanel';
 
@@ -35,9 +34,9 @@ const AktsomhetSarligeGrunnerFormPanel = ({
   andelSomTilbakekreves,
 }: OwnProps) => (
   <div>
-    <Undertekst>
+    <Detail>
       <FormattedMessage id="AktsomhetSarligeGrunnerFormPanel.GrunnerTilReduksjon" />
-    </Undertekst>
+    </Detail>
     <VerticalSpacer eightPx />
     {sarligGrunnTyper.map((sgt: KodeverkMedNavn) => (
       <React.Fragment key={sgt.kode}>

@@ -5,7 +5,6 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { screen } from '@testing-library/react';
 
 import React from 'react';
-import sinon from 'sinon';
 import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
 import { KlageVurderingRadioOptionsNfp } from './KlageVurderingRadioOptionsNfp';
@@ -31,7 +30,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
         medholdReasons={medholdReasons}
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
         klageVurdering={klageVurdering.STADFESTE_YTELSESVEDTAK}
-        previewCallback={sinon.spy()}
+        previewCallback={vi.fn()}
         intl={intlMock}
         formProps={{}}
         sprakkode={sprakkode}
@@ -51,7 +50,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
         klageVurdering={klageVurdering.MEDHOLD_I_KLAGE}
         medholdReasons={medholdReasons}
-        previewCallback={sinon.spy()}
+        previewCallback={vi.fn()}
         intl={intlMock}
         formProps={{}}
         sprakkode={sprakkode}
@@ -75,7 +74,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
         medholdReasons={medholdReasons}
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
         klageVurdering={klageVurdering.STADFESTE_YTELSESVEDTAK}
-        previewCallback={sinon.spy()}
+        previewCallback={vi.fn()}
         intl={intlMock}
         formProps={{}}
         sprakkode={sprakkode}
@@ -94,7 +93,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
         medholdReasons={medholdReasons}
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
         klageVurdering={klageVurdering.STADFESTE_YTELSESVEDTAK}
-        previewCallback={sinon.spy()}
+        previewCallback={vi.fn()}
         intl={intlMock}
         formProps={{}}
         sprakkode={sprakkode}

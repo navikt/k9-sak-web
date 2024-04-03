@@ -7,11 +7,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { AksjonspunktHelpTextTemp, BorderBox, Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Alert, Button, Tag, Textarea } from '@navikt/ds-react';
 import { isDate } from 'date-fns';
-import AlertStripe from 'nav-frontend-alertstriper';
-import { EtikettFokus, EtikettInfo } from 'nav-frontend-etiketter';
-import { Knapp } from 'nav-frontend-knapper';
-import { Textarea } from 'nav-frontend-skjema';
 import { OverstyrInputBeregningDto } from '../types/OverstyrInputBeregningDto';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
 import OverstyrBeregningAktivitetForm from './OverstyrBeregningAktivitetForm';
@@ -167,23 +164,23 @@ const OverstyrBeregningFaktaForm = ({
                     return (
                       <div key={skjaeringstidspunkt}>
                         <BorderBox>
-                          <EtikettInfo className="skjaeringstidspunkt">
+                          <Tag variant="info" className="skjaeringstidspunkt">
                             Skjæringstidspunkt: {formaterDatoString(skjaeringstidspunkt)}
-                          </EtikettInfo>
+                          </Tag>
                           {harKategoriNæring && (
                             <div>
                               <VerticalSpacer twentyPx />
-                              <EtikettFokus>
+                              <Tag variant="warning">
                                 <FormattedMessage id="OverstyrInputForm.HarKategoriNæring" />
-                              </EtikettFokus>
+                              </Tag>
                             </div>
                           )}
                           {harKategoriFrilans && (
                             <div>
                               <VerticalSpacer twentyPx />
-                              <EtikettFokus>
+                              <Tag variant="warning">
                                 <FormattedMessage id="OverstyrInputForm.HarKategoriFrilans" />
-                              </EtikettFokus>
+                              </Tag>
                             </div>
                           )}
                           <VerticalSpacer twentyPx />
@@ -236,6 +233,7 @@ const OverstyrBeregningFaktaForm = ({
                   feil={meta.touched && meta.error ? meta.error : false}
                   value={field.value}
                   disabled={readOnly}
+                  size="small"
                   {...field}
                 />
               )}
@@ -243,26 +241,25 @@ const OverstyrBeregningFaktaForm = ({
             {(readOnly || !submittable) && (
               <>
                 <VerticalSpacer sixteenPx />
-                <AlertStripe type="advarsel">
+                <Alert size="small" variant="warning">
                   <FormattedMessage id="OverstyrInputForm.KanIkkeBekreftes" />
-                </AlertStripe>
+                </Alert>
               </>
             )}
             <VerticalSpacer sixteenPx />
             <div className={styles.buttonBar}>
-              <Knapp
+              <Button
                 className={styles.button}
-                spinner={isSubmitting}
+                loading={isSubmitting}
                 disabled={readOnly || !submittable || !isValid}
-                autoDisableVedSpinner
-                type="hoved"
-                htmlType="submit"
+                variant="primary"
+                type="submit"
               >
                 <FormattedMessage id="OverstyrInputForm.LagreAksjonspunkt" />
-              </Knapp>
-              <Knapp className={styles.button} disabled={isValid} type="flat" htmlType="submit">
+              </Button>
+              <Button className={styles.button} disabled={isValid} variant="tertiary" type="submit">
                 <FormattedMessage id="OverstyrInputForm.KontrollerSkjema" />
-              </Knapp>
+              </Button>
             </div>
           </Form>
         )}

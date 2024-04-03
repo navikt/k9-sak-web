@@ -1,15 +1,14 @@
-import React, { ReactNode } from 'react';
-import { injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { HistorikkInnslagAksjonspunkt } from '@k9-sak-web/types';
+import { BodyShort, Label } from '@navikt/ds-react';
+import React, { ReactNode } from 'react';
+import { IntlShape, WrappedComponentProps, injectIntl } from 'react-intl';
 
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { findHendelseText } from './felles/historikkUtils';
 import HistorikkMal from '../HistorikkMalTsType';
 import Skjermlenke from './felles/Skjermlenke';
+import { findHendelseText } from './felles/historikkUtils';
 
 const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]: 'Historikk.Behandlingspunkt.Opptjeningsvilkaret',
@@ -64,20 +63,20 @@ const formaterAksjonspunkt = (
 
   if (aksjonspunkt.godkjent) {
     return (
-      <Normaltekst>
+      <BodyShort size="small">
         {aksjonspktText && `${formatMessage({ id: aksjonspktText })} ${formatMessage({ id: 'Historikk.godkjent' })}`}
         {!aksjonspktText && formatMessage({ id: 'Historikk.godkjentKomplett' })}
-      </Normaltekst>
+      </BodyShort>
     );
   }
   return (
     <span>
-      <Element>
+      <Label size="small" as="p">
         {aksjonspktText &&
           `${formatMessage({ id: aksjonspktText })} ${formatMessage({ id: 'Historikk.ikkeGodkjent' })}`}
         {!aksjonspktText && formatMessage({ id: 'Historikk.ikkeGodkjentKomplett' })}
-      </Element>
-      <Normaltekst>{decodeHtmlEntity(aksjonspunkt.aksjonspunktBegrunnelse)}</Normaltekst>
+      </Label>
+      <BodyShort size="small">{decodeHtmlEntity(aksjonspunkt.aksjonspunktBegrunnelse)}</BodyShort>
     </span>
   );
 };
@@ -97,7 +96,9 @@ const HistorikkMalType3 = ({
         <div key={`totrinnsvurdering${index + 1}`}>
           {historikkinnslagDel.hendelse && (
             <>
-              <Element>{findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}</Element>
+              <Label size="small" as="p">
+                {findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}
+              </Label>
               <VerticalSpacer fourPx />
             </>
           )}

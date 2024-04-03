@@ -26,8 +26,7 @@ describe('SnakkebobleContainer', () => {
       { messages },
     );
 
-    expect(
-      screen.getAllByText((_, element) => element.textContent === '10.12.2017 -  // Saksbehandler test')[0],
-    ).toBeInTheDocument();
+    expect(screen.getByText('10.12.2017 -')).toBeInTheDocument();
+    expect(screen.getByText('Saksbehandler test')).toBeInTheDocument();
   });
 });

@@ -1,16 +1,14 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { Undertittel, Undertekst, Normaltekst } from 'nav-frontend-typografi';
-
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-
-import TilbakekrevingVedtakPeriodeTabell from './TilbakekrevingVedtakPeriodeTabell';
-import TilbakekrevingVedtakForm from './TilbakekrevingVedtakForm';
-import VedtaksbrevAvsnitt from '../types/vedtaksbrevAvsnittTsType';
+import { BodyShort, Detail, Heading } from '@navikt/ds-react';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
+import VedtaksbrevAvsnitt from '../types/vedtaksbrevAvsnittTsType';
+import TilbakekrevingVedtakForm from './TilbakekrevingVedtakForm';
+import TilbakekrevingVedtakPeriodeTabell from './TilbakekrevingVedtakPeriodeTabell';
 
 interface OwnProps {
   submitCallback: (aksjonspunktData: { kode: string }[]) => Promise<any>;
@@ -46,14 +44,14 @@ const TilbakekrevingVedtak = ({
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
     <>
-      <Undertittel>
+      <Heading size="small" level="2">
         <FormattedMessage id="TilbakekrevingVedtak.Vedtak" />
-      </Undertittel>
+      </Heading>
       <VerticalSpacer twentyPx />
-      <Undertekst>
+      <Detail>
         <FormattedMessage id="TilbakekrevingVedtak.Resultat" />
-      </Undertekst>
-      <Normaltekst>{getKodeverknavn(resultat)}</Normaltekst>
+      </Detail>
+      <BodyShort size="small">{getKodeverknavn(resultat)}</BodyShort>
       <VerticalSpacer sixteenPx />
       <TilbakekrevingVedtakPeriodeTabell perioder={perioder} getKodeverknavn={getKodeverknavn} />
       <VerticalSpacer sixteenPx />

@@ -1,6 +1,5 @@
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
@@ -10,9 +9,9 @@ import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi'
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
-import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 
 const behandling = {
   id: 1,
@@ -100,13 +99,13 @@ describe('<AvslagårsakListe>', () => {
           aksjonspunkter={[aksjonspunkt5085]}
           employeeHasAccess={false}
           isReadOnly={false}
-          previewCallback={sinon.spy()}
-          submitCallback={sinon.spy()}
+          previewCallback={vi.fn()}
+          submitCallback={vi.fn()}
           alleKodeverk={alleKodeverk}
           ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
           arbeidsgiverOpplysningerPerId={{}}
-          lagreDokumentdata={sinon.spy()}
-          hentFritekstbrevHtmlCallback={sinon.spy()}
+          lagreDokumentdata={vi.fn()}
+          hentFritekstbrevHtmlCallback={vi.fn()}
         />
       </ProsessStegContainer>,
     );
@@ -152,13 +151,13 @@ describe('<AvslagårsakListe>', () => {
           ]}
           employeeHasAccess={false}
           isReadOnly={false}
-          previewCallback={sinon.spy()}
-          submitCallback={sinon.spy()}
+          previewCallback={vi.fn()}
+          submitCallback={vi.fn()}
           alleKodeverk={alleKodeverk}
           ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
           arbeidsgiverOpplysningerPerId={{}}
-          lagreDokumentdata={sinon.spy()}
-          hentFritekstbrevHtmlCallback={sinon.spy()}
+          lagreDokumentdata={vi.fn()}
+          hentFritekstbrevHtmlCallback={vi.fn()}
         />
       </ProsessStegContainer>,
     );

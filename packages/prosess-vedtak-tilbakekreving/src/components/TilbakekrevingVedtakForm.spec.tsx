@@ -1,5 +1,4 @@
 import React from 'react';
-import sinon from 'sinon';
 
 import userEvent from '@testing-library/user-event';
 
@@ -9,8 +8,8 @@ import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/t
 
 // import { FlexColumn } from '@fpsak-frontend/shared-components';
 // import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
-import { TilbakekrevingVedtakFormImplWithIntl as TilbakekrevingVedtakForm } from './TilbakekrevingVedtakForm';
 import underavsnittType from '../kodeverk/avsnittType';
+import { TilbakekrevingVedtakFormImplWithIntl as TilbakekrevingVedtakForm } from './TilbakekrevingVedtakForm';
 
 import messages from '../../i18n/nb_NO.json';
 
@@ -18,9 +17,9 @@ test('<TilbakekrevingVedtakForm> skal vise tekstfelt for begrunnelse og godkjenn
   renderWithIntlAndReduxForm(
     <TilbakekrevingVedtakForm
       {...reduxFormPropsMock}
-      submitCallback={sinon.spy()}
+      submitCallback={vi.fn()}
       readOnly={false}
-      fetchPreviewVedtaksbrev={sinon.spy()}
+      fetchPreviewVedtaksbrev={vi.fn()}
       formVerdier={{}}
       vedtaksbrevAvsnitt={[
         {
@@ -47,11 +46,11 @@ test('<TilbakekrevingVedtakForm> skal vise tekstfelt for begrunnelse og godkjenn
 });
 
 test('<TilbakekrevingVedtakForm> skal formatere data for forhåndsvisning av vedtaksbrevet', async () => {
-  const fetchPreview = sinon.spy();
+  const fetchPreview = vi.fn();
   renderWithIntlAndReduxForm(
     <TilbakekrevingVedtakForm
       {...reduxFormPropsMock}
-      submitCallback={sinon.spy()}
+      submitCallback={vi.fn()}
       readOnly={false}
       fetchPreviewVedtaksbrev={fetchPreview}
       formVerdier={{
@@ -83,8 +82,8 @@ test('<TilbakekrevingVedtakForm> skal formatere data for forhåndsvisning av ved
   );
 
   await userEvent.click(screen.getByRole('link'));
-  expect(fetchPreview.calledOnce).toBe(true);
-  expect(fetchPreview.getCalls()[0].args[0]).toEqual({
+  expect(fetchPreview.mock.calls.length).toBe(1);
+  expect(fetchPreview.mock.calls[0][0]).toEqual({
     uuid: 'uuid',
     oppsummeringstekst: 'Dette er oppsummeringen',
     perioderMedTekst: [
@@ -104,9 +103,9 @@ test('<TilbakekrevingVedtakForm> skal ikke vise trykkbar godkjenningsknapp og fo
   renderWithIntlAndReduxForm(
     <TilbakekrevingVedtakForm
       {...reduxFormPropsMock}
-      submitCallback={sinon.spy()}
+      submitCallback={vi.fn()}
       readOnly={false}
-      fetchPreviewVedtaksbrev={sinon.spy()}
+      fetchPreviewVedtaksbrev={vi.fn()}
       formVerdier={{}}
       vedtaksbrevAvsnitt={[
         {
@@ -127,7 +126,7 @@ test('<TilbakekrevingVedtakForm> skal ikke vise trykkbar godkjenningsknapp og fo
     { messages },
   );
 
-  expect(screen.getByText('Til godkjenning')).toBeDisabled();
+  expect(screen.getByRole('button', { name: 'Til godkjenning' })).toBeDisabled();
   expect(screen.queryByText('Forhåndsvis brev')).not.toBeInTheDocument();
 });
 
@@ -136,9 +135,9 @@ test(`<TilbakekrevingVedtakForm> skal ikke vise trykkbar godkjenningsknapp og fo
   renderWithIntlAndReduxForm(
     <TilbakekrevingVedtakForm
       {...reduxFormPropsMock}
-      submitCallback={sinon.spy()}
+      submitCallback={vi.fn()}
       readOnly={false}
-      fetchPreviewVedtaksbrev={sinon.spy()}
+      fetchPreviewVedtaksbrev={vi.fn()}
       formVerdier={{}}
       vedtaksbrevAvsnitt={[
         {
@@ -170,7 +169,7 @@ test(`<TilbakekrevingVedtakForm> skal ikke vise trykkbar godkjenningsknapp og fo
     { messages },
   );
 
-  expect(screen.getByText('Til godkjenning')).toBeDisabled();
+  expect(screen.getByRole('button', { name: 'Til godkjenning' })).toBeDisabled();
   expect(screen.getByText('Forhåndsvis brev')).toBeInTheDocument();
 
   const form = screen.getByRole('form');

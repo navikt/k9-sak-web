@@ -1,24 +1,19 @@
-import moment from 'moment/moment';
-import AlertStripe from 'nav-frontend-alertstriper';
-import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import Modal from 'nav-frontend-modal';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-
-import { behandlingForm, DatepickerField } from '@fpsak-frontend/form';
+import { DatepickerField, behandlingForm } from '@fpsak-frontend/form';
 import {
+  DDMMYYYY_DATE_FORMAT,
+  ISO_DATE_FORMAT,
   dateAfterOrEqual,
   dateBeforeOrEqual,
-  DDMMYYYY_DATE_FORMAT,
   hasValidDate,
-  ISO_DATE_FORMAT,
   required,
 } from '@fpsak-frontend/utils';
-
+import { Alert, BodyShort, Button, Detail, Label, Modal } from '@navikt/ds-react';
+import moment from 'moment/moment';
+import { Column, Row } from 'nav-frontend-grid';
+import React from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
 import styles from './delOppPeriodeModal.module.css';
 
 type PeriodeData = {
@@ -42,60 +37,61 @@ export const DelOppPeriodeModalImpl = ({
   ...formProps
 }: OwnProps & WrappedComponentProps & InjectedFormProps) => (
   <Modal
-    isOpen={showModal}
-    contentLabel={intl.formatMessage({ id: 'DelOppPeriodeModalImpl.ModalDescription' })}
-    onRequestClose={cancelEvent}
-    closeButton={false}
+    open={showModal}
+    aria-label={intl.formatMessage({ id: 'DelOppPeriodeModalImpl.ModalDescription' })}
+    onClose={cancelEvent}
     className={styles.modal}
-    shouldCloseOnOverlayClick={false}
   >
-    <Element className={styles.marginTop}>
-      <FormattedMessage id="DelOppPeriodeModalImpl.DelOppPerioden" />
-    </Element>
-    <div className={styles.marginTop}>
-      <Undertekst>
+    <Modal.Header closeButton={false}>
+      <Label size="small" as="p">
+        <FormattedMessage id="DelOppPeriodeModalImpl.DelOppPerioden" />
+      </Label>
+    </Modal.Header>
+    <Modal.Body>
+      <Detail>
         <FormattedMessage id="DelOppPeriodeModalImpl.Periode" />
-      </Undertekst>
-      <Normaltekst>
+      </Detail>
+      <BodyShort size="small">
         {`${moment(periodeData.fom.toString()).format(DDMMYYYY_DATE_FORMAT)} - ${moment(
           periodeData.tom.toString(),
         ).format(DDMMYYYY_DATE_FORMAT)}`}
-      </Normaltekst>
-    </div>
-    <div className={styles.marginTop}>
-      <Undertekst>
-        <FormattedMessage id="DelOppPeriodeModalImpl.AngiTomDato" />
-      </Undertekst>
-      <DatepickerField
-        name="ForstePeriodeTomDato"
-        // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
-        className={styles.datePicker}
-        validate={[required, hasValidDate]}
-        disabledDays={{ before: moment(periodeData.fom).toDate(), after: moment(periodeData.tom).toDate() }}
-        initialMonth={moment(periodeData.tom).toDate()}
-      />
-    </div>
-    {finnesBelopMed0Verdi && (
-      <AlertStripe type="feil">
-        <FormattedMessage id="DelOppPeriodeModalImpl.BelopEr0" />
-      </AlertStripe>
-    )}
-    <Row className={styles.marginTop}>
-      <Column>
-        <Hovedknapp
-          mini
-          htmlType="button"
-          className={styles.button}
-          onClick={formProps.handleSubmit}
-          disabled={formProps.pristine}
-        >
-          <FormattedMessage id="DelOppPeriodeModalImpl.Ok" />
-        </Hovedknapp>
-        <Knapp htmlType="button" mini onClick={cancelEvent} className={styles.cancelButton}>
-          <FormattedMessage id="DelOppPeriodeModalImpl.Avbryt" />
-        </Knapp>
-      </Column>
-    </Row>
+      </BodyShort>
+      <div className={styles.marginTop}>
+        <Detail>
+          <FormattedMessage id="DelOppPeriodeModalImpl.AngiTomDato" />
+        </Detail>
+        <DatepickerField
+          name="ForstePeriodeTomDato"
+          // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
+          className={styles.datePicker}
+          validate={[required, hasValidDate]}
+          disabledDays={{ before: moment(periodeData.fom).toDate(), after: moment(periodeData.tom).toDate() }}
+          initialMonth={moment(periodeData.tom).toDate()}
+        />
+      </div>
+      {finnesBelopMed0Verdi && (
+        <Alert size="small" variant="error">
+          <FormattedMessage id="DelOppPeriodeModalImpl.BelopEr0" />
+        </Alert>
+      )}
+      <Row className={styles.marginTop}>
+        <Column>
+          <Button
+            variant="primary"
+            size="small"
+            type="button"
+            className={styles.button}
+            onClick={formProps.handleSubmit}
+            disabled={formProps.pristine}
+          >
+            <FormattedMessage id="DelOppPeriodeModalImpl.Ok" />
+          </Button>
+          <Button variant="secondary" type="button" size="small" onClick={cancelEvent} className={styles.cancelButton}>
+            <FormattedMessage id="DelOppPeriodeModalImpl.Avbryt" />
+          </Button>
+        </Column>
+      </Row>
+    </Modal.Body>
   </Modal>
 );
 

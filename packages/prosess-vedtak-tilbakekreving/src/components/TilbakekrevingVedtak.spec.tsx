@@ -1,7 +1,6 @@
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
 import TilbakekrevingVedtak from './TilbakekrevingVedtak';
@@ -34,7 +33,7 @@ describe('<TilbakekrevingVedtak>', () => {
   it('skal vise vedtakspanel for tilbakekreving', () => {
     renderWithIntlAndReduxForm(
       <TilbakekrevingVedtak
-        submitCallback={sinon.spy()}
+        submitCallback={vi.fn()}
         readOnly={false}
         resultat={{ kode: 'testresultat', kodeverk: '' }}
         perioder={perioder as BeregningResultatPeriode[]}
@@ -43,7 +42,7 @@ describe('<TilbakekrevingVedtak>', () => {
         behandlingVersjon={1}
         alleKodeverk={{}}
         avsnittsliste={[]}
-        fetchPreviewVedtaksbrev={sinon.spy()}
+        fetchPreviewVedtaksbrev={vi.fn()}
         aksjonspunktKodeForeslaVedtak="1234"
       />,
       { messages },

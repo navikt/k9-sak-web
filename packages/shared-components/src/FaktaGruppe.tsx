@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Element } from 'nav-frontend-typografi';
 
+import { Label } from '@navikt/ds-react';
 import BorderBox from './BorderBox';
 import VerticalSpacer from './VerticalSpacer';
 
@@ -53,9 +53,9 @@ const FaktaGruppe = ({
     <Wrapper withoutBorder={withoutBorder && !error} error={error} className={className}>
       {titleCode && (
         <div>
-          <Element>
+          <Label size="small" as="p">
             <FormattedMessage id={titleCode} />
-          </Element>
+          </Label>
           <VerticalSpacer twentyPx />
         </div>
       )}

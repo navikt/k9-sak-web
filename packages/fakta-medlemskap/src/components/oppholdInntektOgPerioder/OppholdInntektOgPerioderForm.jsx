@@ -1,4 +1,4 @@
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Button } from '@navikt/ds-react';
 import React, { Component } from 'react';
 // eslint-disable-next-line import/no-duplicates
 import PropTypes from 'prop-types';
@@ -205,9 +205,9 @@ export class OppholdInntektOgPerioderForm extends Component {
         )}
 
         <VerticalSpacer twentyPx />
-        <Hovedknapp mini disabled={this.isConfirmButtonDisabled()} spinner={submitting}>
+        <Button variant="primary" size="small" disabled={this.isConfirmButtonDisabled()} loading={submitting}>
           <FormattedMessage id="OppholdInntektOgPerioder.Bekreft" />
-        </Hovedknapp>
+        </Button>
       </form>
     );
   }

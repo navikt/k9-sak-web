@@ -66,6 +66,7 @@ export default ({ mode }) => {
     plugins: [
       react({
         include: [/\.jsx$/, /\.tsx?$/],
+
       }),
       svgr(),
       viteMockServe({

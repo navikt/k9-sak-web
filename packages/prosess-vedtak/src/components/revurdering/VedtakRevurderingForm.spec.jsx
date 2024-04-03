@@ -1,5 +1,4 @@
 import React from 'react';
-import sinon from 'sinon';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
@@ -62,7 +61,7 @@ const createBehandlingOpphor = () => createBehandling(BehandlingResultatType.OPP
 describe('<VedtakRevurderingForm>', () => {
   it('skal vise result ved avslag, og submitpanel', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    const previewCallback = sinon.spy();
+    const previewCallback = vi.fn();
     const revurdering = createBehandlingAvslag();
 
     revurdering.type = {
@@ -117,7 +116,7 @@ describe('<VedtakRevurderingForm>', () => {
 
   it('Revurdering, skal vise resultat ved endret belop, hovedknappen for totrinnskontroll', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    const previewCallback = sinon.spy();
+    const previewCallback = vi.fn();
     const revurdering = createBehandlingAvslag();
 
     revurdering.behandlingsresultat = {
@@ -176,7 +175,7 @@ describe('<VedtakRevurderingForm>', () => {
 
   it('skal vise result ved ingen endring, hovedknappen', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    const previewCallback = sinon.spy();
+    const previewCallback = vi.fn();
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
       id: 1,
@@ -218,7 +217,7 @@ describe('<VedtakRevurderingForm>', () => {
 
   it('skal vise result ved ingen endring, og submitpanel', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    const previewCallback = sinon.spy();
+    const previewCallback = vi.fn();
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
       id: 1,
@@ -260,7 +259,7 @@ describe('<VedtakRevurderingForm>', () => {
 
   it('skal vise opphørspanel når behandlingsresultat er opphør', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    const previewCallback = sinon.spy();
+    const previewCallback = vi.fn();
     const revurdering = createBehandlingOpphor();
 
     renderWithIntlAndReduxForm(

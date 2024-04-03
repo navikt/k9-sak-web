@@ -3,7 +3,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-h
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import ArbeidsforholdInfoPanel from './ArbeidsforholdInfoPanel';
 
@@ -35,7 +34,7 @@ const ap5080 = {
   },
 };
 
-const submitCallback = sinon.spy();
+const submitCallback = vi.fn();
 
 describe('<ArbeidsforholdInfoPanel>', () => {
   it('Skal vise komponenten korrekt med aksjonspunkt hvor man ikke kan legge til nye arbeidsforhold', () => {

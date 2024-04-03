@@ -28,6 +28,7 @@ const velgHistorikkMal = (histType: Kodeverk) => {
   ) {
     case historikkinnslagType.BEH_GJEN:
     case historikkinnslagType.KOET_BEH_GJEN:
+    case historikkinnslagType.FORTSETT_UTEN_AA_VENTE_PAA_TILBAKEKREVING:
     case historikkinnslagType.BEH_MAN_GJEN:
     case historikkinnslagType.BEH_STARTET:
     case historikkinnslagType.BEH_STARTET_PAA_NYTT:

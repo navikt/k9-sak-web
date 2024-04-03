@@ -1,9 +1,8 @@
-import { Normaltekst } from 'nav-frontend-typografi';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
+import { BodyShort } from '@navikt/ds-react';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import FagsakList from './FagsakList';
 import SearchForm from './SearchForm';
@@ -46,9 +45,9 @@ const FagsakSearch = ({
     />
 
     {searchResultReceived && fagsaker.length === 0 && (
-      <Normaltekst className={styles.label}>
+      <BodyShort size="small" className={styles.label}>
         <FormattedMessage id="FagsakSearch.ZeroSearchResults" />
-      </Normaltekst>
+      </BodyShort>
     )}
 
     <VerticalSpacer eightPx />

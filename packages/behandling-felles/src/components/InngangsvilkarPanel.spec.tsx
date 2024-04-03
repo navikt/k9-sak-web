@@ -9,7 +9,6 @@ import { Behandling } from '@k9-sak-web/types';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import { ProsessStegDef, ProsessStegPanelDef } from '../util/prosessSteg/ProsessStegDef';
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
@@ -97,8 +96,8 @@ describe('<InngangsvilkarPanel>', () => {
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         prosessStegData={prosessStegData}
-        submitCallback={sinon.spy()}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
+        submitCallback={vi.fn()}
+        oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
         useMultipleRestApi={() => ({ data: undefined, state: RestApiState.SUCCESS })}
       />,
     );
@@ -124,14 +123,14 @@ describe('<InngangsvilkarPanel>', () => {
       [],
     );
 
-    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+    const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
 
     renderWithIntl(
       <InngangsvilkarPanel
         behandling={behandling as Behandling}
         alleKodeverk={{}}
         prosessStegData={[utledetFodselDelPanel]}
-        submitCallback={sinon.spy()}
+        submitCallback={vi.fn()}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         apentFaktaPanelInfo={{
           urlCode: 'MEDLEMSKAP',
@@ -145,12 +144,12 @@ describe('<InngangsvilkarPanel>', () => {
     expect(screen.getByText('FAKTA_APENT')).toBeInTheDocument();
     userEvent.click(screen.getByText('FAKTA_APENT'));
     await waitFor(() => {
-      expect(oppdaterProsessStegOgFaktaPanelIUrl.callCount).toBeGreaterThan(0);
+      expect(oppdaterProsessStegOgFaktaPanelIUrl.mock.calls.length).toBeGreaterThan(0);
     });
-    const oppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    const oppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.mock.calls;
     expect(oppdaterKall).toHaveLength(1);
-    expect(oppdaterKall[0].args).toHaveLength(2);
-    expect(oppdaterKall[0].args[0]).toBeUndefined();
-    expect(oppdaterKall[0].args[1]).toEqual('MEDLEMSKAP');
+    expect(oppdaterKall[0]).toHaveLength(2);
+    expect(oppdaterKall[0][0]).toBeUndefined();
+    expect(oppdaterKall[0][1]).toEqual('MEDLEMSKAP');
   });
 });

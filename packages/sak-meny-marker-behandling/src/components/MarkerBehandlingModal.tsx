@@ -3,10 +3,9 @@ import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
 import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { goToLos, goToSearch } from '@k9-sak-web/sak-app/src/app/paths';
 import { MerknadFraLos } from '@k9-sak-web/types';
-import { Alert, Button, ErrorMessage, Heading, Modal, VStack } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, ErrorMessage, Heading, Label, Modal, VStack } from '@navikt/ds-react';
 import { Form, Formik, FormikProps } from 'formik';
 import { CheckboxGruppe } from 'nav-frontend-skjema';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import * as Yup from 'yup';
@@ -96,7 +95,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   return (
     <Modal open onClose={lukkModal} aria-label="Modal for markering av behandling" portal width="38.375rem">
       <Modal.Header>
-        <Heading as="h3" size="medium">
+        <Heading as="h3" size="small">
           Marker behandling og send til egen kø
         </Heading>
       </Modal.Header>
@@ -173,8 +172,10 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
               )}
               {formikProps.values.markerSomVanskelig && (
                 <>
-                  <Element className={styles.aksjonspunktHeading}>Aksjonspunkt:</Element>
-                  <Normaltekst>Beregning</Normaltekst>
+                  <Label size="small" as="p" className={styles.aksjonspunktHeading}>
+                    Aksjonspunkt:
+                  </Label>
+                  <BodyShort size="small">Beregning</BodyShort>
                 </>
               )}
               {(formikProps.values.markerSomVanskelig || formikProps.values.markerSomHastesak) && (

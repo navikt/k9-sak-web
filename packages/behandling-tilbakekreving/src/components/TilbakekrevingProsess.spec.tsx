@@ -13,7 +13,6 @@ import { Behandling, Fagsak, FeilutbetalingPerioderWrapper } from '@k9-sak-web/t
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import { TilbakekrevingBehandlingApiKeys, requestTilbakekrevingApi } from '../data/tilbakekrevingBehandlingApi';
 import vedtakResultatType from '../kodeverk/vedtakResultatType';
 import TilbakekrevingProsess from './TilbakekrevingProsess';
@@ -137,11 +136,11 @@ describe('<TilbakekrevingProsess>', () => {
         rettigheter={rettigheter}
         valgtProsessSteg="default"
         hasFetchError={false}
-        oppdaterBehandlingVersjon={sinon.spy()}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        opneSokeside={sinon.spy()}
+        oppdaterBehandlingVersjon={vi.fn()}
+        oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
+        opneSokeside={vi.fn()}
         harApenRevurdering={false}
-        setBehandling={sinon.spy()}
+        setBehandling={vi.fn()}
       />,
     );
 
@@ -156,7 +155,7 @@ describe('<TilbakekrevingProsess>', () => {
       perioder: [{ vilkarResultat: undefined, begrunnelse: '', vilkarResultatInfo: undefined, ytelser: [] }],
     });
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VILKARVURDERING, { vilkarsVurdertePerioder: [] });
-    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+    const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
 
     renderWithIntlAndReduxForm(
       <TilbakekrevingProsess.WrappedComponent
@@ -174,11 +173,11 @@ describe('<TilbakekrevingProsess>', () => {
         rettigheter={rettigheter}
         valgtProsessSteg="default"
         hasFetchError={false}
-        oppdaterBehandlingVersjon={sinon.spy()}
+        oppdaterBehandlingVersjon={vi.fn()}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        opneSokeside={sinon.spy()}
+        opneSokeside={vi.fn()}
         harApenRevurdering={false}
-        setBehandling={sinon.spy()}
+        setBehandling={vi.fn()}
       />,
     );
 
@@ -186,10 +185,10 @@ describe('<TilbakekrevingProsess>', () => {
       await userEvent.click(screen.getByRole('button', { name: /Foreldelse/i }));
     });
 
-    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.mock.calls;
     expect(opppdaterKall).toHaveLength(1);
-    expect(opppdaterKall[0].args).toHaveLength(2);
-    expect(opppdaterKall[0].args[0]).toEqual('foreldelse');
-    expect(opppdaterKall[0].args[1]).toEqual('default');
+    expect(opppdaterKall[0]).toHaveLength(2);
+    expect(opppdaterKall[0][0]).toEqual('foreldelse');
+    expect(opppdaterKall[0][1]).toEqual('default');
   });
 });

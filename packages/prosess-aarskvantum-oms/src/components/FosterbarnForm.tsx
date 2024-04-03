@@ -2,13 +2,11 @@ import { InputField } from '@fpsak-frontend/form/index';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidFodselsnummer, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import { Knapp } from 'nav-frontend-knapper';
-import React, { useEffect } from 'react';
-
 import { Delete } from '@navikt/ds-icons';
+import { Button } from '@navikt/ds-react';
+import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
-
 import styles from './aksjonspunktForm.module.css';
 import { valgValues } from './utils';
 
@@ -51,17 +49,16 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue, aksjonspu
                     <InputField
                       name={field}
                       type="text"
-                      size={11}
-                      bredde="S"
+                      htmlSize={14}
                       validate={[required, minLength(11), maxLength(11), hasValidFodselsnummer]}
                       maxLength={11}
                       readOnly={!isAksjonspunktOpen}
                     />
                   </TableColumn>
                   <TableColumn className={`${styles.sentrert} ${styles.vertikaltSentrert}`}>
-                    <Knapp
-                      type="flat"
-                      htmlType="button"
+                    <Button
+                      variant="tertiary"
+                      type="button"
                       onClick={() => fields.remove(index)}
                       disabled={
                         !isAksjonspunktOpen ||
@@ -71,7 +68,7 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue, aksjonspu
                       }
                     >
                       <Delete />
-                    </Knapp>
+                    </Button>
                   </TableColumn>
                 </TableRow>
               );
@@ -80,9 +77,9 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue, aksjonspu
           <VerticalSpacer eightPx />
         </>
       )}
-      <Knapp type="flat" htmlType="button" onClick={() => fields.push('')} mini>
+      <Button variant="tertiary" type="button" onClick={() => fields.push('')} size="small">
         <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.LeggTil" />
-      </Knapp>
+      </Button>
     </>
   );
 };

@@ -1,16 +1,12 @@
-import { Field, Form, Formik } from 'formik';
-import React from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-import * as Yup from 'yup';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { Knapp } from 'nav-frontend-knapper';
-import { Textarea } from 'nav-frontend-skjema';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Alert, BodyShort, Button, Textarea } from '@navikt/ds-react';
+import { Field, Form, Formik } from 'formik';
+import React from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import * as Yup from 'yup';
 import styles from './ManglerSøknadForm.module.css';
 
 interface Props {
@@ -75,24 +71,24 @@ const ManglerSøknadForm = ({
       </AksjonspunktHelpTextTemp>
       <VerticalSpacer thirtyTwoPx />
       {manglerSøknadForPeriode() && (
-        <AlertStripeAdvarsel>
+        <Alert size="small" variant="warning">
           {' '}
           <FormattedMessage id="ManglerSøknadForm.ManglerKomplettSøknad" key="aksjonspunktText" />{' '}
-        </AlertStripeAdvarsel>
+        </Alert>
       )}
       <VerticalSpacer thirtyTwoPx />
       {manglerSøknadAnnenPart() && (
-        <AlertStripeAdvarsel>
+        <Alert size="small" variant="warning">
           {' '}
           <FormattedMessage id="ManglerSøknadForm.ManglerKomplettSøknadAnnenPart" key="aksjonspunktText" />{' '}
-        </AlertStripeAdvarsel>
+        </Alert>
       )}
 
       <VerticalSpacer thirtyTwoPx />
-      <Normaltekst>
+      <BodyShort size="small">
         {' '}
         <FormattedMessage id="ManglerSøknadForm.OppgiBegrunnelse" key="aksjonspunktText" />{' '}
-      </Normaltekst>
+      </BodyShort>
 
       <Formik
         initialValues={initialValues}
@@ -127,22 +123,22 @@ const ManglerSøknadForm = ({
                   placeholder={intl.formatMessage({ id: 'ManglerSøknadForm.Begrunnelse' })}
                   value={field.value}
                   disabled={readOnly}
+                  size="small"
                   {...field}
                 />
               )}
             </Field>
             <VerticalSpacer sixteenPx />
             <div className={styles.buttonBar}>
-              <Knapp
+              <Button
                 className={styles.button}
-                spinner={isSubmitting}
+                loading={isSubmitting}
                 disabled={readOnly || !submittable || !isValid}
-                autoDisableVedSpinner
-                type="hoved"
-                htmlType="submit"
+                variant="primary"
+                type="submit"
               >
                 <FormattedMessage id="ManglerSøknadForm.LagreAksjonspunkt" />
-              </Knapp>
+              </Button>
             </div>
           </Form>
         )}

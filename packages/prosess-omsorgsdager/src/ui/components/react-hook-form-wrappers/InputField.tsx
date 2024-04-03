@@ -1,12 +1,11 @@
+import { TextField } from '@navikt/ds-react';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { Input } from 'nav-frontend-skjema';
 
 interface OwnProps {
   label?: string;
   name: `${string}`;
   valideringsFunksjoner?: any;
-  isMini: boolean;
   arialabel?: string;
   placeholder?: string;
   feil?: string;
@@ -16,7 +15,6 @@ const InputField: React.FunctionComponent<OwnProps> = ({
   label,
   name,
   valideringsFunksjoner,
-  isMini,
   arialabel,
   placeholder,
   feil,
@@ -25,33 +23,18 @@ const InputField: React.FunctionComponent<OwnProps> = ({
   const valideringsValg = valideringsFunksjoner !== undefined ? { validate: valideringsFunksjoner } : {};
   const input = register(name, valideringsValg);
 
-  if (isMini) {
-    return (
-      <Input
-        mini
-        name={input.name}
-        label={label}
-        onChange={input.onChange}
-        onBlur={input.onBlur}
-        inputRef={input.ref}
-        bredde="S"
-        placeholder={placeholder}
-        aria-label={arialabel}
-        feil={typeof feil !== 'undefined' ? feil : ''}
-      />
-    );
-  }
   return (
-    <Input
+    <TextField
+      size="small"
       name={input.name}
       label={label}
       onChange={input.onChange}
       onBlur={input.onBlur}
-      inputRef={input.ref}
-      bredde="XS"
+      ref={input.ref}
+      htmlSize={5}
       placeholder={placeholder}
       aria-label={arialabel}
-      feil={typeof feil !== 'undefined' ? feil : ''}
+      error={typeof feil !== 'undefined' ? feil : ''}
     />
   );
 };

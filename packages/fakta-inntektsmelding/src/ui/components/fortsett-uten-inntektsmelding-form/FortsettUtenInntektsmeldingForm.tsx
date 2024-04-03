@@ -1,9 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Alert, Heading } from '@navikt/ds-react';
+import { Alert, Button, Box as DSBox, Heading } from '@navikt/ds-react';
 import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import Panel from 'nav-frontend-paneler';
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import ContainerContext from '../../../context/ContainerContext';
@@ -122,7 +120,7 @@ const FortsettUtenInntektsmeldingForm = ({
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <Form formMethods={formMethods} onSubmit={submit}>
-      <Panel className={styles.fortsettUtenInntektsmelding__panel}>
+      <DSBox background="surface-default" padding="4" className={styles.fortsettUtenInntektsmelding__panel}>
         <Heading level="3" size="xsmall">
           Kan du gå videre uten inntektsmelding?
         </Heading>
@@ -174,17 +172,19 @@ const FortsettUtenInntektsmeldingForm = ({
           <Box marginTop={Margin.large}>
             <div className={styles.fortsettUtenInntektsmelding__knapper}>
               {!harFlereTilstanderTilVurdering && !!beslutning && (
-                <Hovedknapp mini>{fortsettKnappTekstFunc[aksjonspunktKode](beslutning === Kode.FORTSETT)}</Hovedknapp>
+                <Button variant="primary" size="small">
+                  {fortsettKnappTekstFunc[aksjonspunktKode](beslutning === Kode.FORTSETT)}
+                </Button>
               )}
               {redigeringsmodus && (
-                <Knapp mini onClick={avbrytRedigering}>
+                <Button variant="secondary" size="small" onClick={avbrytRedigering}>
                   Avbryt redigering
-                </Knapp>
+                </Button>
               )}
             </div>
           </Box>
         </>
-      </Panel>
+      </DSBox>
     </Form>
   );
 };

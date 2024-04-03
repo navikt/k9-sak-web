@@ -1,11 +1,10 @@
-import { Undertekst } from 'nav-frontend-typografi';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { FormSection } from 'redux-form';
-
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
+import { Detail } from '@navikt/ds-react';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { FormSection } from 'redux-form';
 
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import KodeverkMedNavnTsType from '@k9-sak-web/types/src/kodeverkMedNavnTsType';
@@ -78,9 +77,9 @@ const AktsomhetFormPanel = ({
   andelSomTilbakekreves,
 }: OwnProps) => (
   <>
-    <Undertekst>
+    <Detail>
       <FormattedMessage id="AktsomhetFormPanel.HandletUaktsomhetGrad" />
-    </Undertekst>
+    </Detail>
     <VerticalSpacer eightPx />
     <RadioGroupField
       validate={[required]}

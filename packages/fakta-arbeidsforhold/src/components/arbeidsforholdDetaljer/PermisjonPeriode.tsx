@@ -1,8 +1,8 @@
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
 
-import { VerticalSpacer, PeriodLabel } from '@fpsak-frontend/shared-components';
+import { PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 
 const utledPermisjonLabelID = arbeidsforhold => {
@@ -24,9 +24,9 @@ const PermisjonPeriode = ({ arbeidsforhold }: OwnProps) => (
     {arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 0 && (
       <div>
         <VerticalSpacer sixteenPx />
-        <Normaltekst>
+        <BodyShort size="small">
           <FormattedMessage id={utledPermisjonLabelID(arbeidsforhold)} />
-        </Normaltekst>
+        </BodyShort>
         {arbeidsforhold.permisjoner.map((permisjon, index) => (
           <div key={utledPeriodeLabelKey(arbeidsforhold.id, index)}>
             <PeriodLabel

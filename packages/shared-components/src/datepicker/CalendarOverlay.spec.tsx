@@ -2,17 +2,16 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { act, fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import CalendarOverlay from './CalendarOverlay';
 
 describe('<CalendarOverlay>', () => {
   it('skal ikke vise overlay når disabled', () => {
     renderWithIntl(
       <CalendarOverlay
-        onDayChange={sinon.spy()}
+        onDayChange={vi.fn()}
         className="test"
         dayPickerClassName="test"
-        elementIsCalendarButton={sinon.spy()}
+        elementIsCalendarButton={vi.fn()}
         value="21.08.2017"
         numberOfMonths={1}
         disabled
@@ -25,11 +24,11 @@ describe('<CalendarOverlay>', () => {
   it('skal vise overlay', () => {
     renderWithIntl(
       <CalendarOverlay
-        onDayChange={sinon.spy()}
+        onDayChange={vi.fn()}
         className="test"
         dayPickerClassName="test"
         numberOfMonths={1}
-        elementIsCalendarButton={sinon.spy()}
+        elementIsCalendarButton={vi.fn()}
         value="21.08.2017"
       />,
     );
@@ -41,7 +40,7 @@ describe('<CalendarOverlay>', () => {
   });
 
   it('skal ikke sette dato når denne ikke er korrekt', () => {
-    const onDayChangeCallback = sinon.spy();
+    const onDayChangeCallback = vi.fn();
     const date = '21.sd.2017';
     renderWithIntl(
       <CalendarOverlay
@@ -49,9 +48,9 @@ describe('<CalendarOverlay>', () => {
         className="test"
         dayPickerClassName="test"
         numberOfMonths={1}
-        elementIsCalendarButton={sinon.spy()}
+        elementIsCalendarButton={vi.fn()}
         value={date}
-        onClose={sinon.spy()}
+        onClose={vi.fn()}
       />,
     );
 
@@ -59,11 +58,11 @@ describe('<CalendarOverlay>', () => {
   });
 
   it('skal kjøre callback når overlay blir lukket og target er noe annet enn kalender eller kalenderknapp', async () => {
-    const onCloseCallback = sinon.spy();
+    const onCloseCallback = vi.fn();
     const elementIsCalendarButton = () => false;
     renderWithIntl(
       <CalendarOverlay
-        onDayChange={sinon.spy()}
+        onDayChange={vi.fn()}
         className="test"
         dayPickerClassName="test"
         numberOfMonths={1}
@@ -77,18 +76,18 @@ describe('<CalendarOverlay>', () => {
     await act(async () => {
       fireEvent.blur(screen.getByRole('link'));
     });
-    expect(onCloseCallback.called).toBe(true);
+    expect(onCloseCallback.mock.calls.length).toBeGreaterThan(0);
   });
 
   it('skal kjøre callback når en trykker escape-knappen', async () => {
-    const onCloseCallback = sinon.spy();
+    const onCloseCallback = vi.fn();
     renderWithIntl(
       <CalendarOverlay
-        onDayChange={sinon.spy()}
+        onDayChange={vi.fn()}
         className="test"
         dayPickerClassName="test"
         numberOfMonths={1}
-        elementIsCalendarButton={sinon.spy()}
+        elementIsCalendarButton={vi.fn()}
         value="21.08.2017"
         onClose={onCloseCallback}
       />,
@@ -96,18 +95,18 @@ describe('<CalendarOverlay>', () => {
 
     await userEvent.keyboard('{Escape}');
 
-    expect(onCloseCallback.called).toBe(true);
+    expect(onCloseCallback.mock.calls.length).toBeGreaterThan(0);
   });
 
   it('skal ikke kjøre callback når en trykker noe annet enn escape-knappen', async () => {
-    const onCloseCallback = sinon.spy();
+    const onCloseCallback = vi.fn();
     renderWithIntl(
       <CalendarOverlay
-        onDayChange={sinon.spy()}
+        onDayChange={vi.fn()}
         className="test"
         dayPickerClassName="test"
         numberOfMonths={1}
-        elementIsCalendarButton={sinon.spy()}
+        elementIsCalendarButton={vi.fn()}
         value="21.08.2017"
         onClose={onCloseCallback}
       />,
@@ -115,6 +114,6 @@ describe('<CalendarOverlay>', () => {
 
     await userEvent.keyboard('{Enter}');
 
-    expect(onCloseCallback.called).toBe(false);
+    expect(onCloseCallback.mock.calls.length).toBe(0);
   });
 });

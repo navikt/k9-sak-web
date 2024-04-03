@@ -1,7 +1,7 @@
 import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import { joinNonNullStrings } from '@fpsak-frontend/utils';
 import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './uidentifisertRammevedtak.module.css';
@@ -36,7 +36,7 @@ const UidentifiserteRammevedtak = ({ rammevedtak, type }: UidentifiserteRammeved
 
   return uidentifiserteRammevedtak.length > 0 ? (
     <>
-      <AlertStripeAdvarsel className={styles.advarsel}>
+      <Alert variant="warning" size="small" className={styles.advarsel}>
         <FormattedMessage id={text} values={{ antall: uidentifiserteRammevedtak.length }} />
         <ol className={styles.ol}>
           {uidentifiserteRammevedtak.map(({ gyldigFraOgMed, gyldigTilOgMed, lengde, fritekst, vedtatt, mottaker }) => (
@@ -45,7 +45,7 @@ const UidentifiserteRammevedtak = ({ rammevedtak, type }: UidentifiserteRammeved
             </li>
           ))}
         </ol>
-      </AlertStripeAdvarsel>
+      </Alert>
       <VerticalSpacer sixteenPx />
     </>
   ) : null;

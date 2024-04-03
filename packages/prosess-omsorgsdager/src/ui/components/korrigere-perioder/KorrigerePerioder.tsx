@@ -1,15 +1,13 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { HelpText } from '@navikt/ds-react';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Alert, Button, HelpText } from '@navikt/ds-react';
 import { RadioGruppe } from 'nav-frontend-skjema';
 
 import { KorrigerePerioderProps } from '../../../types/KorrigerePerioderProps';
 import { booleanTilTekst } from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
-import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
 import InputField from '../react-hook-form-wrappers/InputField';
 import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
@@ -160,9 +158,9 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
   return (
     <div className={styles.korrigerePerioder}>
       <div className={styles.korrigerePerioderAlertStripe}>
-        <AlertStripeTrekantVarsel
-          text={konfliktMedArbeidsgiver ? tekstKonfliktMedArbeidsgiver.instruksjon : tekst.instruksjon}
-        />
+        <Alert size="small" variant="warning">
+          {konfliktMedArbeidsgiver ? tekstKonfliktMedArbeidsgiver.instruksjon : tekst.instruksjon}
+        </Alert>
         {!konfliktMedArbeidsgiver && (
           <HelpText className={styles.korrigerePerioderHelpText} placement="right">
             Disse situasjonene kan gi rett til at det skal utbetales dager:
@@ -214,19 +212,18 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
             <div className={styles.antallDagerDelvisInnvilgetContainer}>
               <InputField
                 label="Hvor mange dager har søker rett på?"
-                isMini={false}
                 name="antallDagerDelvisInnvilget"
                 valideringsFunksjoner={erAntallDagerDelvisInnvilgetFyltUt}
                 feil={errors.antallDagerDelvisInnvilget !== undefined ? tekst.feilManglerDager : ''}
               />
             </div>
           )}
-          <Hovedknapp className={styles.knapp} htmlType="submit">
+          <Button variant="primary" className={styles.knapp} type="submit">
             Bekreft og fortsett
-          </Hovedknapp>
-          <Knapp className={styles.knapp} htmlType="button" onClick={avbrytRedigereInformasjon}>
+          </Button>
+          <Button variant="secondary" className={styles.knapp} type="button" onClick={avbrytRedigereInformasjon}>
             Avbryt
-          </Knapp>
+          </Button>
         </form>
       </FormProvider>
     </div>

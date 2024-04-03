@@ -7,7 +7,6 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
 import { HenleggBehandlingModalImpl, getHenleggArsaker } from './HenleggBehandlingModal';
 
@@ -56,9 +55,9 @@ describe('<HenleggBehandlingModal>', () => {
     renderWithIntlAndReduxForm(
       <HenleggBehandlingModalImpl
         {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        cancelEvent={sinon.spy()}
-        previewHenleggBehandling={sinon.spy()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
+        cancelEvent={vi.fn()}
+        previewHenleggBehandling={vi.fn()}
         årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
         begrunnelse="Dette er en begrunnelse"
         intl={intlMock}
@@ -71,7 +70,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
-        hentMottakere={sinon.spy()}
+        hentMottakere={vi.fn()}
       />,
       { messages },
     );
@@ -86,9 +85,9 @@ describe('<HenleggBehandlingModal>', () => {
     renderWithIntlAndReduxForm(
       <HenleggBehandlingModalImpl
         {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        cancelEvent={sinon.spy()}
-        previewHenleggBehandling={sinon.spy()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
+        cancelEvent={vi.fn()}
+        previewHenleggBehandling={vi.fn()}
         årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
         begrunnelse="Dette er en begrunnelse"
         intl={intlMock}
@@ -101,7 +100,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
-        hentMottakere={sinon.spy()}
+        hentMottakere={vi.fn()}
       />,
       { messages },
     );
@@ -180,9 +179,9 @@ describe('<HenleggBehandlingModal>', () => {
     renderWithIntlAndReduxForm(
       <HenleggBehandlingModalImpl
         {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        cancelEvent={sinon.spy()}
-        previewHenleggBehandling={sinon.spy()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
+        cancelEvent={vi.fn()}
+        previewHenleggBehandling={vi.fn()}
         intl={intlMock}
         showLink
         ytelseType={ytelseType}
@@ -193,7 +192,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
-        hentMottakere={sinon.spy()}
+        hentMottakere={vi.fn()}
       />,
       { messages },
     );
@@ -204,9 +203,9 @@ describe('<HenleggBehandlingModal>', () => {
     renderWithIntlAndReduxForm(
       <HenleggBehandlingModalImpl
         {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        cancelEvent={sinon.spy()}
-        previewHenleggBehandling={sinon.spy()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
+        cancelEvent={vi.fn()}
+        previewHenleggBehandling={vi.fn()}
         intl={intlMock}
         showLink
         ytelseType={ytelseType}
@@ -217,7 +216,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
-        hentMottakere={sinon.spy()}
+        hentMottakere={vi.fn()}
       />,
       { messages },
     );
@@ -226,13 +225,13 @@ describe('<HenleggBehandlingModal>', () => {
   });
 
   it('skal bruke submit-callback når en trykker lagre', async () => {
-    const submitEventCallback = sinon.spy();
+    const submitEventCallback = vi.fn();
     renderWithIntlAndReduxForm(
       <HenleggBehandlingModalImpl
         {...reduxFormPropsMock}
         handleSubmit={submitEventCallback}
-        cancelEvent={sinon.spy()}
-        previewHenleggBehandling={sinon.spy()}
+        cancelEvent={vi.fn()}
+        previewHenleggBehandling={vi.fn()}
         årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
         begrunnelse="Dette er en begrunnelse"
         intl={intlMock}
@@ -245,7 +244,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
-        hentMottakere={sinon.spy()}
+        hentMottakere={vi.fn()}
       />,
       { messages },
     );
@@ -253,17 +252,17 @@ describe('<HenleggBehandlingModal>', () => {
     await act(async () => {
       await userEvent.click(screen.getByRole('button', { name: 'Henlegg behandling' }));
     });
-    expect(submitEventCallback.called).toBe(true);
+    expect(submitEventCallback.mock.calls.length).toBeGreaterThan(0);
   });
 
   it('skal avbryte redigering ved trykk på avbryt-knapp', async () => {
-    const cancelEventCallback = sinon.spy();
+    const cancelEventCallback = vi.fn();
     renderWithIntlAndReduxForm(
       <HenleggBehandlingModalImpl
         {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
         cancelEvent={cancelEventCallback}
-        previewHenleggBehandling={sinon.spy()}
+        previewHenleggBehandling={vi.fn()}
         årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
         begrunnelse="Dette er en begrunnelse"
         intl={intlMock}
@@ -276,7 +275,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
-        hentMottakere={sinon.spy()}
+        hentMottakere={vi.fn()}
       />,
       { messages },
     );
@@ -284,16 +283,16 @@ describe('<HenleggBehandlingModal>', () => {
     await act(async () => {
       await userEvent.click(screen.getByRole('button', { name: 'Avbryt' }));
     });
-    expect(cancelEventCallback.called).toBe(true);
+    expect(cancelEventCallback.mock.calls.length).toBeGreaterThan(0);
   });
 
   it('skal vise forhåndvisningslenke når søknad om henleggelse er trukket', async () => {
-    const previewEventCallback = sinon.spy();
+    const previewEventCallback = vi.fn();
     renderWithIntlAndReduxForm(
       <HenleggBehandlingModalImpl
         {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        cancelEvent={sinon.spy()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
+        cancelEvent={vi.fn()}
         previewHenleggBehandling={previewEventCallback}
         årsakKode={behandlingResultatType.HENLAGT_SOKNAD_TRUKKET}
         begrunnelse="Dette er en begrunnelse"
@@ -307,7 +306,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
-        hentMottakere={sinon.spy()}
+        hentMottakere={vi.fn()}
       />,
       { messages },
     );
@@ -316,16 +315,16 @@ describe('<HenleggBehandlingModal>', () => {
     await act(async () => {
       await userEvent.click(screen.getByRole('link', { name: 'Forhåndsvis brev' }));
     });
-    expect(previewEventCallback.called).toBe(true);
+    expect(previewEventCallback.mock.calls.length).toBeGreaterThan(0);
   });
 
   it('skal vise forhåndvisningslenke når tilbakekreving revurdering henlagt ved feilaktig opprettet med henleggelsesbrev', async () => {
-    const previewEventCallback = sinon.spy();
+    const previewEventCallback = vi.fn();
     renderWithIntlAndReduxForm(
       <HenleggBehandlingModalImpl
         {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        cancelEvent={sinon.spy()}
+        handleSubmit={vi.fn().mockImplementation(() => Promise.resolve())}
+        cancelEvent={vi.fn()}
         previewHenleggBehandling={previewEventCallback}
         årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET_MED_BREV}
         begrunnelse="Dette er en begrunnelse"
@@ -340,7 +339,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
-        hentMottakere={sinon.spy()}
+        hentMottakere={vi.fn()}
       />,
       { messages },
     );
@@ -349,6 +348,6 @@ describe('<HenleggBehandlingModal>', () => {
     await act(async () => {
       await userEvent.click(screen.getByRole('link', { name: 'Forhåndsvis brev' }));
     });
-    expect(previewEventCallback.called).toBe(true);
+    expect(previewEventCallback.mock.calls.length).toBeGreaterThan(0);
   });
 });

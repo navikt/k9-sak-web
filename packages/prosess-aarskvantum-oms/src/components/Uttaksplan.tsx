@@ -2,9 +2,8 @@ import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
 import { Image } from '@fpsak-frontend/shared-components/index';
 import { joinNonNullStrings } from '@fpsak-frontend/utils';
 import { ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Alert, Heading } from '@navikt/ds-react';
 import Tabs from 'nav-frontend-tabs';
-import { Undertittel } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Aktivitet from '../dto/Aktivitet';
@@ -66,14 +65,14 @@ const Uttaksplan = ({
     <div className={styles.uttaksboks}>
       <div className={styles.overskrift}>
         {!aktiv && (
-          <AlertStripeInfo className={styles.alertstripe}>
+          <Alert size="small" variant="info" className={styles.alertstripe}>
             <FormattedMessage id="Uttaksplan.Inaktiv" />
-          </AlertStripeInfo>
+          </Alert>
         )}
-        <Undertittel tag="h3">
+        <Heading size="small" level="3">
           <Image src={kalender} />
           <FormattedMessage id="Uttaksplan.Heading" />
-        </Undertittel>
+        </Heading>
       </div>
       <Tabs
         tabs={[

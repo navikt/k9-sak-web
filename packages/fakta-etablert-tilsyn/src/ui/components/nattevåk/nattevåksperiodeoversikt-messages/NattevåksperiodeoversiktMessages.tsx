@@ -1,8 +1,8 @@
+import { Alert } from '@navikt/ds-react';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import NattevåkType from '../../../../types/NattevåkType';
 import { getStringMedPerioder } from '../../../../util/periodUtils';
-import CustomAlertstripe from '../../alertstripe/Alertstripe';
 
 interface NattevåksperiodeoversiktMessagesProps {
   nattevåkData: NattevåkType;
@@ -16,9 +16,9 @@ const NattevåksperiodeoversiktMessages = ({ nattevåkData }: Nattevåksperiodeo
     const perioderTilVurdering = nattevåkData.finnPerioderTilVurdering().map(({ periode }) => periode);
     return (
       <Box marginBottom={Margin.large}>
-        <CustomAlertstripe type="advarsel">
+        <Alert size="small" variant="warning">
           {`Vurder behov for nattevåk i ${getStringMedPerioder(perioderTilVurdering)}.`}
-        </CustomAlertstripe>
+        </Alert>
       </Box>
     );
   }

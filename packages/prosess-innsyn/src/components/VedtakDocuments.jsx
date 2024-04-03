@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 import classNames from 'classnames';
+import { Column, Row } from 'nav-frontend-grid';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
@@ -39,7 +39,7 @@ class VedtakDocuments extends Component {
     return (
       <>
         <a href="" onClick={this.toggleDocuments} className="lenke lenke--frittstaende">
-          <Normaltekst>
+          <BodyShort size="small">
             <FormattedMessage
               id="DocumentListInnsyn.Vedtaksdokumentasjon"
               values={{ numberOfDocuments: vedtaksdokumenter.length }}
@@ -50,7 +50,7 @@ class VedtakDocuments extends Component {
                 showDocuments ? 'chevron--ned' : 'chevron--opp',
               )}
             />
-          </Normaltekst>
+          </BodyShort>
         </a>
         {showDocuments && (
           <>

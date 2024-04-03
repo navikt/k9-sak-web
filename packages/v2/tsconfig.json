@@ -11,6 +11,7 @@
     "allowImportingTsExtensions": true,
     "allowUnusedLabels": false,
     "allowUnreachableCode": false,
+    "allowArbitraryExtensions": true, // So that typed-css-modules work
     "exactOptionalPropertyTypes": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,

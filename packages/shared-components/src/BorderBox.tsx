@@ -1,7 +1,6 @@
+import { Box } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
-import Panel from 'nav-frontend-paneler';
 import React, { ReactNode } from 'react';
-
 import styles from './borderBox.module.css';
 
 const classNames = classnames.bind(styles);
@@ -18,9 +17,14 @@ interface OwnProps {
  * Valideringskomponent. Visar en box kring noe som skall fikses.
  */
 const BorderBox = ({ error = false, className, children }: OwnProps) => (
-  <Panel border className={classNames('borderbox', { error }, className)}>
+  <Box
+    background="surface-default"
+    padding="4"
+    borderWidth="1"
+    className={classNames('borderbox', { error }, className)}
+  >
     {children}
-  </Panel>
+  </Box>
 );
 
 export default BorderBox;

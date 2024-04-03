@@ -1,14 +1,13 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
+import { BodyShort } from '@navikt/ds-react';
 import historikkEndretFeltType from '../../kodeverk/historikkEndretFeltType';
-import Skjermlenke from './felles/Skjermlenke';
+import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import HistorikkMal from '../HistorikkMalTsType';
+import Skjermlenke from './felles/Skjermlenke';
 
 export const HistorikkMalTypeTilbakekreving = ({
   historikkinnslag,
@@ -52,12 +51,12 @@ export const HistorikkMalTypeTilbakekreving = ({
 
         return (
           <div key={periodeFom + periodeTom}>
-            <Normaltekst>
+            <BodyShort size="small">
               <FormattedMessage
                 id="Historikk.Template.Tilbakekreving.VurderingAvPerioden"
                 values={{ periodeFom, periodeTom, b: chunks => <b>{chunks}</b> }}
               />
-            </Normaltekst>
+            </BodyShort>
             <VerticalSpacer eightPx />
             {endredeFelter &&
               endredeFelter.map((felt, index) => {
@@ -83,7 +82,7 @@ export const HistorikkMalTypeTilbakekreving = ({
                     {visBegrunnelse && <VerticalSpacer eightPx />}
                     {visAktsomhetBegrunnelse && decodeHtmlEntity(begrunnelseFritekst)}
                     {visAktsomhetBegrunnelse && <VerticalSpacer eightPx />}
-                    <Normaltekst>
+                    <BodyShort size="small">
                       <FormattedMessage
                         id={
                           felt.fraVerdi
@@ -97,14 +96,14 @@ export const HistorikkMalTypeTilbakekreving = ({
                           b: chunks => <b>{chunks}</b>,
                         }}
                       />
-                    </Normaltekst>
+                    </BodyShort>
                     <VerticalSpacer eightPx />
                     {visSarligGrunnerBegrunnelse && sarligGrunnerBegrunnelse}
                     {visSarligGrunnerBegrunnelse && <VerticalSpacer eightPx />}
                   </React.Fragment>
                 );
               })}
-            <Normaltekst>{!endredeFelter && begrunnelseFritekst && begrunnelseFritekst}</Normaltekst>
+            <BodyShort size="small">{!endredeFelter && begrunnelseFritekst && begrunnelseFritekst}</BodyShort>
             <VerticalSpacer eightPx />
           </div>
         );

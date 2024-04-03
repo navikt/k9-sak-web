@@ -2,7 +2,6 @@
   padding: 0.5rem;
 }
 
-.aksjonspunktUtenLøsningModal__knapp {
-  display: block !important;
+button.aksjonspunktUtenLøsningModal__knapp {
   margin: 1rem auto auto auto;
 }

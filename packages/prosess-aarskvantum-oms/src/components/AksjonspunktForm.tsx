@@ -19,8 +19,7 @@ import {
 } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
 import { Delete } from '@navikt/ds-icons';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { Element } from 'nav-frontend-typografi';
+import { Button, Label } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -88,22 +87,21 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
                     <InputField
                       name={field}
                       type="text"
-                      size={11}
-                      bredde="S"
+                      htmlSize={14}
                       validate={[required, minLength(11), maxLength(11), hasValidFodselsnummer]}
                       maxLength={11}
                       readOnly={!isAksjonspunktOpen}
                     />
                   </TableColumn>
                   <TableColumn className={`${styles.sentrert} ${styles.vertikaltSentrert}`}>
-                    <Knapp
-                      type="flat"
-                      htmlType="button"
+                    <Button
+                      variant="tertiary"
+                      type="button"
                       onClick={() => fields.remove(index)}
                       disabled={!isAksjonspunktOpen}
                     >
                       <Delete />
-                    </Knapp>
+                    </Button>
                   </TableColumn>
                 </TableRow>
               );
@@ -112,9 +110,9 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
           <VerticalSpacer eightPx />
         </>
       )}
-      <Knapp type="flat" htmlType="button" onClick={() => fields.push('')} mini>
+      <Button variant="tertiary" type="button" onClick={() => fields.push('')} size="small">
         Legg til fosterbarn
-      </Knapp>
+      </Button>
     </>
   );
 
@@ -151,9 +149,9 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
                     : 'Årskvantum.Aksjonspunkt.Uavklart.BekreftInfotrygd',
                 }}
               />
-              <Hovedknapp onClick={handleSubmit} htmlType="submit">
+              <Button variant="primary" onClick={handleSubmit} type="submit">
                 <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.KjørPåNytt" />
-              </Hovedknapp>
+              </Button>
             </div>
           </>
         )}
@@ -172,9 +170,9 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
           name="valg"
           validate={[required]}
           label={
-            <Element>
+            <Label size="small" as="p">
               <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Valg" />
-            </Element>
+            </Label>
           }
         >
           <RadioOption value={valgValues.reBehandling} label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling' }} />
@@ -199,9 +197,9 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
 
       {isAksjonspunktOpen && (
         <div className={styles.spaceBetween}>
-          <Hovedknapp onClick={handleSubmit} htmlType="submit">
+          <Button variant="primary" onClick={handleSubmit} type="submit">
             <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Bekreft" />
-          </Hovedknapp>
+          </Button>
         </div>
       )}
     </>

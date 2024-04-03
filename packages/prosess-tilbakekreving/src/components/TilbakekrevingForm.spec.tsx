@@ -1,6 +1,6 @@
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';
@@ -159,7 +159,7 @@ describe('<TilbakekrevingForm>', () => {
       { messages },
     );
 
-    expect(screen.getByText('feil')).toBeInTheDocument();
+    expect(screen.getByText('Feil')).toBeInTheDocument();
   });
 
   it('skal lage initial values til form der en har lagret en periode og den andre er foreldet', () => {
