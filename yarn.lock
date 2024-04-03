@@ -1606,12 +1606,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/paragraph@npm:2.11.3":
-  version: 2.11.3
-  resolution: "@editorjs/paragraph@npm:2.11.3"
+"@editorjs/paragraph@npm:2.11.4":
+  version: 2.11.4
+  resolution: "@editorjs/paragraph@npm:2.11.4"
   dependencies:
     "@codexteam/icons": ^0.0.4
-  checksum: 80b040d1b6d57436c1c6186db0c903cc09076d608e4525b3ca058a24ad0eb6a9bfa80a9096518171ca45aacde20f60189311e970e4c5fd3ff67a61ae7babb987
+  checksum: 162863b56fdf197691c629438fee1b910b4d0512b25bd5726d51442a6ab0c83e29162945265ac9305823d452fb159e8cf863f78ec06611817940ee21fc6789c0
   languageName: node
   linkType: hard
 
@@ -3003,7 +3003,7 @@ __metadata:
     "@editorjs/editorjs": 2.29.1
     "@editorjs/header": 2.8.1
     "@editorjs/list": 1.9.0
-    "@editorjs/paragraph": 2.11.3
+    "@editorjs/paragraph": 2.11.4
     "@fpsak-frontend/assets": 1.0.0
     "@fpsak-frontend/form": 1.0.0
     "@fpsak-frontend/kodeverk": 1.0.0
@@ -3485,10 +3485,10 @@ __metadata:
     "@navikt/ds-react": 6.1.1
     "@navikt/fnrvalidator": 1.3.3
     "@navikt/ft-plattform-komponenter": 2.5.1
-    axios: 1.6.7
+    axios: 1.6.8
     classnames: 2.5.1
     date-fns: 2.30.0
-    date-fns-tz: 2.0.0
+    date-fns-tz: 2.0.1
     moment: 2.30.1
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
@@ -4029,7 +4029,7 @@ __metadata:
     "@navikt/ft-fakta-beregning-redesign": 1.2.1
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.2
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.1
-    axios: 1.6.7
+    axios: 1.6.8
     axios-mock-adapter: 1.22.0
     react: 18.2.0
     react-intl: 6.6.2
@@ -4078,7 +4078,7 @@ __metadata:
     "@navikt/ft-fakta-beregning-redesign": 1.2.1
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.2
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.1
-    axios: 1.6.7
+    axios: 1.6.8
     axios-mock-adapter: 1.22.0
     react: 18.2.0
     react-intl: 6.6.2
@@ -4133,7 +4133,7 @@ __metadata:
     "@navikt/ft-fakta-beregning-redesign": 1.2.1
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.2
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.1
-    axios: 1.6.7
+    axios: 1.6.8
     axios-mock-adapter: 1.22.0
     react: 18.2.0
     react-intl: 6.6.2
@@ -4319,7 +4319,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
     "@testing-library/cypress": ^10.0.1
-    axios: 1.6.7
+    axios: 1.6.8
     classnames: 2.5.1
     cypress: ^13.6.6
     dayjs: 1.11.10
@@ -4384,7 +4384,7 @@ __metadata:
     "@navikt/ft-form-hooks": 4.4.1
     "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
-    axios: 1.6.7
+    axios: 1.6.8
     classnames: 2.5.1
     date-fns: 2.30.0
     dayjs: 1.11.10
@@ -4441,7 +4441,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
     "@testing-library/cypress": ^10.0.1
-    axios: 1.6.7
+    axios: 1.6.8
     classnames: 2.5.1
     cypress: ^13.6.6
     dayjs: 1.11.10
@@ -4470,7 +4470,7 @@ __metadata:
     "@navikt/fnrvalidator": 1.3.3
     "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
-    axios: 1.6.7
+    axios: 1.6.8
     classnames: 2.5.1
     dayjs: 1.11.10
     lodash: 4.17.21
@@ -4480,7 +4480,7 @@ __metadata:
     react-dom: 18.2.0
     react-hook-form: 7.51.0
     react-popper: 2.3.0
-    tailwindcss: ^3.4.1
+    tailwindcss: ^3.4.3
     vite: ^5.1.5
   languageName: unknown
   linkType: soft
@@ -4495,7 +4495,7 @@ __metadata:
     "@navikt/fnrvalidator": 1.3.3
     "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
-    axios: 1.6.7
+    axios: 1.6.8
     classnames: 2.5.1
     dayjs: 1.11.10
     lodash: 4.17.21
@@ -4877,7 +4877,7 @@ __metadata:
   resolution: "@k9-sak-web/rest-api@workspace:packages/rest-api"
   dependencies:
     "@sentry/browser": 7.105.0
-    axios: 1.6.7
+    axios: 1.6.8
     node-cache: 5.1.2
   languageName: unknown
   linkType: soft
@@ -4962,7 +4962,7 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.1
     "@navikt/ft-ui-komponenter": 2.3.1
     "@sentry/browser": 7.105.0
-    axios: 1.6.7
+    axios: 1.6.8
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
@@ -7842,9 +7842,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:14.2.1":
-  version: 14.2.1
-  resolution: "@testing-library/react@npm:14.2.1"
+"@testing-library/react@npm:14.2.2":
+  version: 14.2.2
+  resolution: "@testing-library/react@npm:14.2.2"
   dependencies:
     "@babel/runtime": ^7.12.5
     "@testing-library/dom": ^9.0.0
@@ -7852,7 +7852,7 @@ __metadata:
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0
-  checksum: 7054ae69a0e06c0777da8105fa08fac7e8dac570476a065285d7b993947acda5c948598764a203ebaac759c161c562d6712f19f5bd08be3f09a07e23baee5426
+  checksum: cb73df588592d9101429f057eaa6f320fc12524d5eb2acc8a16002c1ee2d9422a49e44841003bba42974c9ae1ced6b134f0d647826eca42ab8f19e4592971b16
   languageName: node
   linkType: hard
 
@@ -9400,12 +9400,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:^10.4.18":
-  version: 10.4.18
-  resolution: "autoprefixer@npm:10.4.18"
+"autoprefixer@npm:^10.4.19":
+  version: 10.4.19
+  resolution: "autoprefixer@npm:10.4.19"
   dependencies:
     browserslist: ^4.23.0
-    caniuse-lite: ^1.0.30001591
+    caniuse-lite: ^1.0.30001599
     fraction.js: ^4.3.7
     normalize-range: ^0.1.2
     picocolors: ^1.0.0
@@ -9414,7 +9414,7 @@ __metadata:
     postcss: ^8.1.0
   bin:
     autoprefixer: bin/autoprefixer
-  checksum: 3c6fe631db3c36f36e5d56ef93891ac44be00bc2d50001b23703e99c3618bdb8807a97413af1252314ec043aee57ef80775f4f2cc3599db2662cbf05a08210df
+  checksum: 3a4bc5bace05e057396dca2b306503efc175e90e8f2abf5472d3130b72da1d54d97c0ee05df21bf04fe66a7df93fd8c8ec0f1aca72a165f4701a02531abcbf11
   languageName: node
   linkType: hard
 
@@ -9472,7 +9472,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.6.7, axios@npm:^1.6.1":
+"axios@npm:1.6.8":
+  version: 1.6.8
+  resolution: "axios@npm:1.6.8"
+  dependencies:
+    follow-redirects: ^1.15.6
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: bf007fa4b207d102459300698620b3b0873503c6d47bf5a8f6e43c0c64c90035a4f698b55027ca1958f61ab43723df2781c38a99711848d232cad7accbcdfcdd
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.6.1":
   version: 1.6.7
   resolution: "axios@npm:1.6.7"
   dependencies:
@@ -9945,10 +9956,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30001587, caniuse-lite@npm:^1.0.30001591":
+"caniuse-lite@npm:^1.0.30001587":
   version: 1.0.30001594
   resolution: "caniuse-lite@npm:1.0.30001594"
   checksum: 59e52b2213f34fa9317813037fbab4f9b163f9bfeaeeb53035a57046ee2366b69eafc257997eab22982dc061d0576d1f4ef97c29425e1989f6589a7b1d8ed2d5
+  languageName: node
+  linkType: hard
+
+"caniuse-lite@npm:^1.0.30001599":
+  version: 1.0.30001605
+  resolution: "caniuse-lite@npm:1.0.30001605"
+  checksum: 8af1ae364c4f4c0796e7fd1aa195dfae2d9c3011c61f0907030201e4fc31a12e81407a13cca621a3b7f6a1eb0217ee9c681fb15670074c204a54edfab798d5c9
   languageName: node
   linkType: hard
 
@@ -10748,12 +10766,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns-tz@npm:2.0.0":
-  version: 2.0.0
-  resolution: "date-fns-tz@npm:2.0.0"
+"date-fns-tz@npm:2.0.1":
+  version: 2.0.1
+  resolution: "date-fns-tz@npm:2.0.1"
   peerDependencies:
-    date-fns: ">=2.0.0"
-  checksum: a6553603a9d26dd9669326c99a58a2335ac550bc060c74b86a5ad9e1de73c9d4e3e5236f0f552f990e616e4e8dcc2b6a637913a04d2e04396e6a9f8ae83c73da
+    date-fns: 2.x
+  checksum: 2d2bb3d67f1ac876a7bd3bbe027aba61347d21c74f20a3f014c53d6057a7a1653ed3021c2d9271dc24411ab38f82763fec362c4f24e944465172cd80ee8c4b5f
   languageName: node
   linkType: hard
 
@@ -11949,9 +11967,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:7.34.0":
-  version: 7.34.0
-  resolution: "eslint-plugin-react@npm:7.34.0"
+"eslint-plugin-react@npm:7.34.1":
+  version: 7.34.1
+  resolution: "eslint-plugin-react@npm:7.34.1"
   dependencies:
     array-includes: ^3.1.7
     array.prototype.findlast: ^1.2.4
@@ -11973,7 +11991,7 @@ __metadata:
     string.prototype.matchall: ^4.0.10
   peerDependencies:
     eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
-  checksum: 9c110a881973e8b795149987382db62411bf5071355a8ec71b900ad5cf18233c44cc65dee23bc55544882b9474fc95487a4a1cb26f7b15f93e4f6d365fb0cd0a
+  checksum: 82f391c5a093235c3bc2f664c54e009c49460778ee7d1b86c1536df9ac4d2a80d1dedc9241ac797df4a9dced936e955d9c89042fb3ac8d017b5359d1320d3c0f
   languageName: node
   linkType: hard
 
@@ -12691,7 +12709,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.15.4":
+"follow-redirects@npm:^1.15.4, follow-redirects@npm:^1.15.6":
   version: 1.15.6
   resolution: "follow-redirects@npm:1.15.6"
   peerDependenciesMeta:
@@ -14433,7 +14451,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jiti@npm:^1.19.1":
+"jiti@npm:^1.21.0":
   version: 1.21.0
   resolution: "jiti@npm:1.21.0"
   bin:
@@ -14755,7 +14773,7 @@ __metadata:
     "@testing-library/cypress": ^10.0.1
     "@testing-library/dom": 9.3.4
     "@testing-library/jest-dom": ^6.4.2
-    "@testing-library/react": 14.2.1
+    "@testing-library/react": 14.2.2
     "@testing-library/user-event": 14.5.2
     "@types/history": 5.0.0
     "@types/prop-types": 15.7.11
@@ -14766,13 +14784,13 @@ __metadata:
     "@typescript-eslint/eslint-plugin": 7.1.1
     "@typescript-eslint/parser": ^7.1.1
     "@vitejs/plugin-react": ^4.2.1
-    autoprefixer: ^10.4.18
-    axios: 1.6.7
+    autoprefixer: ^10.4.19
+    axios: 1.6.8
     axios-mock-adapter: 1.22.0
     cross-env: 7.0.3
     cypress: ^13.6.6
     date-fns: 2.30.0
-    date-fns-tz: 2.0.0
+    date-fns-tz: 2.0.1
     eslint: 8.57.0
     eslint-config-airbnb: 19.0.4
     eslint-config-prettier: 9.1.0
@@ -14780,7 +14798,7 @@ __metadata:
     eslint-plugin-import: 2.29.1
     eslint-plugin-jest-dom: 5.1.0
     eslint-plugin-jsx-a11y: 6.8.0
-    eslint-plugin-react: 7.34.0
+    eslint-plugin-react: 7.34.1
     eslint-plugin-storybook: 0.8.0
     eslint-plugin-vitest: ^0.3.22
     history: 5.3.0
@@ -14792,7 +14810,7 @@ __metadata:
     msw: 1.3.2
     msw-storybook-addon: ^1.10.0
     node-cache: 5.1.2
-    postcss: ^8.4.35
+    postcss: ^8.4.38
     postcss-import: ^16.0.1
     prettier: 3.2.5
     react: 18.2.0
@@ -14804,9 +14822,9 @@ __metadata:
     storybook: 7.6.17
     stylelint: 15.11.0
     stylelint-order: 6.0.4
-    tailwindcss: ^3.4.1
+    tailwindcss: ^3.4.3
     typed-css-modules: ^0.9.1
-    typescript: 5.4.2
+    typescript: 5.4.3
     vite: ^5.1.5
     vite-plugin-html: ^3.2.2
     vite-plugin-mock: ^3.0.1
@@ -15771,7 +15789,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.3.6":
+"nanoid@npm:^3.3.7":
   version: 3.3.7
   resolution: "nanoid@npm:3.3.7"
   bin:
@@ -17262,14 +17280,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:8.4.31":
-  version: 8.4.31
-  resolution: "postcss@npm:8.4.31"
+"postcss@npm:8.4.38":
+  version: 8.4.38
+  resolution: "postcss@npm:8.4.38"
   dependencies:
-    nanoid: ^3.3.6
+    nanoid: ^3.3.7
     picocolors: ^1.0.0
-    source-map-js: ^1.0.2
-  checksum: 1d8611341b073143ad90486fcdfeab49edd243377b1f51834dc4f6d028e82ce5190e4f11bb2633276864503654fb7cab28e67abdc0fbf9d1f88cad4a0ff0beea
+    source-map-js: ^1.2.0
+  checksum: 649f9e60a763ca4b5a7bbec446a069edf07f057f6d780a5a0070576b841538d1ecf7dd888f2fbfd1f76200e26c969e405aeeae66332e6927dbdc8bdcb90b9451
   languageName: node
   linkType: hard
 
@@ -18990,10 +19008,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-js@npm:^1.0.1, source-map-js@npm:^1.0.2":
+"source-map-js@npm:^1.0.1":
   version: 1.0.2
   resolution: "source-map-js@npm:1.0.2"
   checksum: c049a7fc4deb9a7e9b481ae3d424cc793cb4845daa690bc5a05d428bf41bf231ced49b4cf0c9e77f9d42fdb3d20d6187619fc586605f5eabe995a316da8d377c
+  languageName: node
+  linkType: hard
+
+"source-map-js@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "source-map-js@npm:1.2.0"
+  checksum: 791a43306d9223792e84293b00458bf102a8946e7188f3db0e4e22d8d530b5f80a4ce468eb5ec0bf585443ad55ebbd630bf379c98db0b1f317fd902500217f97
   languageName: node
   linkType: hard
 
@@ -19597,9 +19622,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.4.1":
-  version: 3.4.1
-  resolution: "tailwindcss@npm:3.4.1"
+"tailwindcss@npm:^3.4.3":
+  version: 3.4.3
+  resolution: "tailwindcss@npm:3.4.3"
   dependencies:
     "@alloc/quick-lru": ^5.2.0
     arg: ^5.0.2
@@ -19609,7 +19634,7 @@ __metadata:
     fast-glob: ^3.3.0
     glob-parent: ^6.0.2
     is-glob: ^4.0.3
-    jiti: ^1.19.1
+    jiti: ^1.21.0
     lilconfig: ^2.1.0
     micromatch: ^4.0.5
     normalize-path: ^3.0.0
@@ -19626,7 +19651,7 @@ __metadata:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: ef5a587dd32bb4e91e1549ead6162f85f0b78d3e6ffd8b4e8eeb15585b7b886cb3af6ae9df5092ed8ccb7e590608d1b3eec79ca08c862b07cd9ff7e72f73104b
+  checksum: 7d181a6aafb520c5760d23d0a199444a324dfa36538edd31934daa253ed9a7ac4bde18c4205aaa89c1269bc2ff11781efda04d2e27ded535a9a2547667a344b1
   languageName: node
   linkType: hard
 
@@ -20201,23 +20226,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.4.2":
-  version: 5.4.2
-  resolution: "typescript@npm:5.4.2"
+"typescript@npm:5.4.3":
+  version: 5.4.3
+  resolution: "typescript@npm:5.4.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 96d80fde25a09bcb04d399082fb27a808a9e17c2111e43849d2aafbd642d835e4f4ef0de09b0ba795ec2a700be6c4c2c3f62bf4660c05404c948727b5bbfb32a
+  checksum: d74d731527e35e64d8d2dcf2f897cf8cfbc3428be0ad7c48434218ba4ae41239f53be7c90714089db1068c05cae22436af2ecba71fd36ecc5e7a9118af060198
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@5.4.2#~builtin<compat/typescript>":
-  version: 5.4.2
-  resolution: "typescript@patch:typescript@npm%3A5.4.2#~builtin<compat/typescript>::version=5.4.2&hash=1f5320"
+"typescript@patch:typescript@5.4.3#~builtin<compat/typescript>":
+  version: 5.4.3
+  resolution: "typescript@patch:typescript@npm%3A5.4.3#~builtin<compat/typescript>::version=5.4.3&hash=1f5320"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: c1b669146bca5529873aae60870e243fa8140c85f57ca32c42f898f586d73ce4a6b4f6bb02ae312729e214d7f5859a0c70da3e527a116fdf5ad00c9fc733ecc6
+  checksum: 3a62fe90aa79d68c9ce38ea5edb2957e62801c733b99f0e5a2b8b50922761f68f7d9a40d28c544b449866e81185cddb93cba2496d0ff3fa52ef5b1f8bcace38c
   languageName: node
   linkType: hard
 
