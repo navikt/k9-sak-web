@@ -15,12 +15,16 @@ import {
 import {
   ArrowUndoIcon,
   ClockDashedIcon,
+  FolderFillIcon,
   FolderIcon,
+  PaperplaneFillIcon,
   PaperplaneIcon,
+  PencilWritingFillIcon,
   PencilWritingIcon,
+  PersonGavelFillIcon,
   PersonGavelIcon,
 } from '@navikt/aksel-icons';
-import { BodyShort, Tabs } from '@navikt/ds-react';
+import { BodyShort, Tabs, Tooltip } from '@navikt/ds-react';
 import axios from 'axios';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
@@ -64,19 +68,25 @@ export const hentValgbarePaneler = (
 interface GetSvgProps {
   tooltip: string;
   antallUlesteNotater: number;
+  isActive: boolean;
 }
 
 const TABS = {
   [SupportTabs.TIL_BESLUTTER]: {
-    getSvg: ({ tooltip }: GetSvgProps) => <PersonGavelIcon title={tooltip} fontSize="1.625rem" />,
-    tooltipTextCode: 'SupportMenySakIndex.Godkjenning',
+    getSvg: ({ tooltip, isActive }: GetSvgProps) =>
+      isActive ? (
+        <PersonGavelFillIcon title={tooltip} fontSize="1.625rem" />
+      ) : (
+        <PersonGavelIcon title={tooltip} fontSize="1.625rem" />
+      ),
+    tooltipTextCode: 'Til beslutter',
     tabKey: SupportTabs.TIL_BESLUTTER,
   },
   [SupportTabs.FRA_BESLUTTER]: {
     getSvg: ({ tooltip }: GetSvgProps) => (
       <ArrowUndoIcon title={tooltip} fontSize="1.625rem" style={{ transform: 'rotateX(180deg)' }} />
     ),
-    tooltipTextCode: 'SupportMenySakIndex.FraBeslutter',
+    tooltipTextCode: 'Fra beslutter',
     tabKey: SupportTabs.FRA_BESLUTTER,
   },
   [SupportTabs.HISTORIKK]: {
@@ -85,20 +95,34 @@ const TABS = {
     tabKey: SupportTabs.HISTORIKK,
   },
   [SupportTabs.MELDINGER]: {
-    getSvg: ({ tooltip }: GetSvgProps) => <PaperplaneIcon title={tooltip} fontSize="1.625rem" />,
+    getSvg: ({ tooltip, isActive }: GetSvgProps) =>
+      isActive ? (
+        <PaperplaneFillIcon title={tooltip} fontSize="1.625rem" />
+      ) : (
+        <PaperplaneIcon title={tooltip} fontSize="1.625rem" />
+      ),
     tooltipTextCode: 'Send melding',
     tabKey: SupportTabs.MELDINGER,
   },
   [SupportTabs.DOKUMENTER]: {
-    getSvg: ({ tooltip }: GetSvgProps) => <FolderIcon title={tooltip} fontSize="1.625rem" />,
+    getSvg: ({ tooltip, isActive }: GetSvgProps) =>
+      isActive ? (
+        <FolderFillIcon title={tooltip} fontSize="1.625rem" />
+      ) : (
+        <FolderIcon title={tooltip} fontSize="1.625rem" />
+      ),
     tooltipTextCode: 'Dokumenter',
     tabKey: SupportTabs.DOKUMENTER,
   },
   [SupportTabs.NOTATER]: {
-    getSvg: ({ antallUlesteNotater }: GetSvgProps) => (
+    getSvg: ({ antallUlesteNotater, isActive }: GetSvgProps) => (
       <div className={styles.pencilSvgContainer}>
         {antallUlesteNotater > 0 && <div className={styles.ulesteNotater}>{antallUlesteNotater}</div>}
-        <PencilWritingIcon title="Notater" fontSize="1.625rem" className={styles.pencilSvg} />
+        {isActive ? (
+          <PencilWritingFillIcon title="Notater" fontSize="1.625rem" className={styles.pencilSvg} />
+        ) : (
+          <PencilWritingIcon title="Notater" fontSize="1.625rem" className={styles.pencilSvg} />
+        )}
       </div>
     ),
     tooltipTextCode: 'Notater',
@@ -138,13 +162,13 @@ const BehandlingSupportIndex = ({
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
 
+  const k9SakClient = useContext(K9SakClientContext);
   const meldingerBackendClientFactory = useCallback(() => {
-    const k9SakClient = useContext(K9SakClientContext);
     if (featureToggles?.USE_NEW_BACKEND_CLIENT === true) {
       return new MeldingerBackendClient(k9SakClient);
     }
     return new MeldingBackendClient();
-  }, [K9SakClientContext, featureToggles]);
+  }, [k9SakClient, featureToggles]);
 
   const getNotater = (signal: AbortSignal) =>
     axios
@@ -201,8 +225,8 @@ const BehandlingSupportIndex = ({
     [synligeSupportPaneler, erSendMeldingRelevant, behandlingRettigheter],
   );
 
-  const defaultSupportPanel = valgbareSupportPaneler.find(() => true) || SupportTabs.HISTORIKK;
-  const aktivtSupportPanel = valgbareSupportPaneler.includes(valgtSupportPanel)
+  const defaultSupportPanel = synligeSupportPaneler.find(() => true) || SupportTabs.HISTORIKK;
+  const aktivtSupportPanel = synligeSupportPaneler.includes(valgtSupportPanel)
     ? valgtSupportPanel
     : defaultSupportPanel;
 
@@ -222,17 +246,22 @@ const BehandlingSupportIndex = ({
   const isPanelDisabled = () => (valgtSupportPanel ? !valgbareSupportPaneler.includes(valgtSupportPanel) : false);
 
   return (
-    <Tabs defaultValue={defaultSupportPanel} className={styles.tablistWrapper}>
+    <Tabs defaultValue={aktivtSupportPanel} className={styles.tablistWrapper}>
       <div className={styles.meny}>
         <Tabs.List className={styles.tablist}>
           {tabs.map((tab, index) => (
             <Tabs.Tab
               key={tab.tooltip}
               value={tab.tabKey}
-              icon={tab.getSvg({
-                tooltip: tab.tooltip,
-                antallUlesteNotater: tab.antallUlesteNotater,
-              })}
+              icon={
+                <Tooltip content={tab.tooltip}>
+                  {tab.getSvg({
+                    tooltip: tab.tooltip,
+                    antallUlesteNotater: tab.antallUlesteNotater,
+                    isActive: tab.isActive,
+                  })}
+                </Tooltip>
+              }
               onClick={() => {
                 changeRouteCallback(index);
               }}
@@ -268,15 +297,17 @@ const BehandlingSupportIndex = ({
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.MELDINGER}>
-            <MeldingIndex
-              fagsak={fagsak}
-              alleBehandlinger={alleBehandlinger}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              personopplysninger={personopplysninger}
-              arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-              backendApi={meldingerBackendClientFactory()}
-            />
+            {behandlingId && (
+              <MeldingIndex
+                fagsak={fagsak}
+                alleBehandlinger={alleBehandlinger}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                personopplysninger={personopplysninger}
+                arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+                backendApi={meldingerBackendClientFactory()}
+              />
+            )}
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.DOKUMENTER}>
             <DokumentIndex
