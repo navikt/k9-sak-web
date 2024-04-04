@@ -5352,10 +5352,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ds-tailwind@npm:^6.1.1":
-  version: 6.1.1
-  resolution: "@navikt/ds-tailwind@npm:6.1.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tailwind%2F6.1.1%2F473f9ffd79af772b998a8ce82a05e7a9266735cf"
-  checksum: 57e78fe52a4ef2988f96352f9220d344eaea0656ab7a4d50e3024057f3916a3bbd2064191194b48639fc73e72228e4bc1d36e9b8217d54ac1215207253796055
+"@navikt/ds-tailwind@npm:^6.3.6":
+  version: 6.3.6
+  resolution: "@navikt/ds-tailwind@npm:6.3.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tailwind%2F6.3.6%2Fa7b7b8b579947a1de635132205c1c850430c4b45"
+  checksum: 68f5e0058fe35b5a247504e2d580beb42b55f041c72039697bc01e737ce90beb8f9105b50f7960278001e3ee4c508425d9f080a9a7cc0e80a7a75908133c1357
   languageName: node
   linkType: hard
 
@@ -15001,7 +15001,7 @@ __metadata:
     "@navikt/aksel-icons": 6.1.1
     "@navikt/ds-css": 6.1.1
     "@navikt/ds-react": 6.1.1
-    "@navikt/ds-tailwind": ^6.1.1
+    "@navikt/ds-tailwind": ^6.3.6
     "@navikt/familie-endringslogg": 12.0.0
     "@navikt/ft-plattform-komponenter": 2.5.1
     "@popperjs/core": 2.11.8
