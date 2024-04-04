@@ -54,6 +54,8 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
     padding="4"
     className={erAutomatiskRevurdering ? styles.indent : ''}
     borderWidth="1"
+    borderColor="border-subtle"
+    borderRadius="medium"
   >
     <div className={styles.behandlingPicker}>
       <div>

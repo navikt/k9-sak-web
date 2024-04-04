@@ -21,6 +21,8 @@ const BorderBox = ({ error = false, className, children }: OwnProps) => (
     background="surface-default"
     padding="4"
     borderWidth="1"
+    borderColor="border-subtle"
+    borderRadius="medium"
     className={classNames('borderbox', { error }, className)}
   >
     {children}

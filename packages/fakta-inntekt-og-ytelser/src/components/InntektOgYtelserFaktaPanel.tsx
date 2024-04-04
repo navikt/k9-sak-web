@@ -22,7 +22,7 @@ interface InntektOgYtelserFaktaPanelProps {
 const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({ inntekter }) => {
   if (!inntekter || inntekter.length === 0) {
     return (
-      <Box background="surface-default" padding="4" borderWidth="1">
+      <Box background="surface-default" padding="4" borderWidth="1" borderColor="border-subtle" borderRadius="medium">
         <BodyShort size="small">
           <FormattedMessage id="InntektOgYtelserFaktaPanel.NoInformation" />
         </BodyShort>
@@ -31,7 +31,7 @@ const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({
   }
 
   return (
-    <Box background="surface-default" padding="4" borderWidth="1">
+    <Box background="surface-default" padding="4" borderWidth="1" borderColor="border-subtle" borderRadius="medium">
       <Table headerTextCodes={headerTextCodes}>
         {inntekter.sort(sortInntekter).map(inntekt => {
           const key = inntekt.navn + inntekt.utbetaler + inntekt.fom + inntekt.tom + inntekt.belop;
