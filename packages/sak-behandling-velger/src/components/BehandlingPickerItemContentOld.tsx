@@ -132,7 +132,7 @@ const BehandlingPickerItemContent = ({
   førsteÅrsak,
   behandlingTypeKode,
 }: OwnProps) => (
-  <Box background="surface-default" padding="4" borderWidth="1">
+  <Box background="surface-default" padding="4" borderWidth="1" borderColor="border-subtle" borderRadius="medium">
     <FlexContainer>
       <FlexRow>
         <FlexColumn className={styles.arsakPadding}>
