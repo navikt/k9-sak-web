@@ -1,4 +1,6 @@
 import react from '@vitejs/plugin-react';
+import fs from 'fs';
+import path from 'path';
 import { loadEnv } from 'vite';
 import { viteMockServe } from 'vite-plugin-mock';
 import svgr from 'vite-plugin-svgr';
@@ -20,6 +22,20 @@ const createProxy = (target, pathRewrite) => ({
     });
   },
 });
+
+function excludeMsw() {
+  return {
+    name: "exclude-msw",
+    resolveId(source) {
+      return source === "virtual-module" ? source : null;
+    },
+    renderStart(outputOptions, _inputOptions) {
+      const outDir = outputOptions.dir;
+      const msWorker = path.resolve(outDir, "mockServiceWorker.js");
+      fs.rm(msWorker, () => console.log(`Deleted ${msWorker}`));
+    },
+  };
+}
 
 export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, `${process.cwd()}/envDir`) };
@@ -72,11 +88,17 @@ export default ({ mode }) => {
       viteMockServe({
         mockPath: '_mocks',
       }),
+      excludeMsw()
     ],
     build: {
       // Relative to the root
       outDir: './dist/k9/web',
       sourcemap: true,
+      rollupOptions: {
+        external: [
+          "mockServiceWorker.js"
+        ],
+      },
     },
     test: {
       deps: {
