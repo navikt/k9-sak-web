@@ -99,9 +99,9 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
                       type="button"
                       onClick={() => fields.remove(index)}
                       disabled={!isAksjonspunktOpen}
-                    >
-                      <Delete />
-                    </Button>
+                      icon={<Delete />}
+                      aria-label="Slett"
+                    />
                   </TableColumn>
                 </TableRow>
               );
