@@ -66,9 +66,9 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue, aksjonspu
                           index === 0 &&
                           fields.length < 2)
                       }
-                    >
-                      <Delete />
-                    </Button>
+                      icon={<Delete />}
+                      aria-label="Slett"
+                    />
                   </TableColumn>
                 </TableRow>
               );
