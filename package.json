@@ -118,8 +118,8 @@
     "stylelint-order": "6.0.4",
     "tailwindcss": "^3.4.3",
     "typed-css-modules": "^0.9.1",
-    "typescript": "5.4.3",
-    "vite": "^5.2.7",
+    "typescript": "5.4.4",
+    "vite": "^5.2.8",
     "vite-plugin-html": "^3.2.2",
     "vite-plugin-mock": "^3.0.1",
     "vitest": "1.4.0",
@@ -127,7 +127,7 @@
     "webpack-merge": "5.10.0"
   },
   "resolutions": {
-    "postcss": "8.4.31",
+    "postcss": "8.4.38",
     "parse-url": "8.1.0",
     "@types/react": "17",
     "nav-frontend-chevron@1.0.30": "patch:nav-frontend-chevron@npm%3A1.0.30#./.yarn/patches/nav-frontend-chevron-npm-1.0.30-1fbba039a5.patch",
