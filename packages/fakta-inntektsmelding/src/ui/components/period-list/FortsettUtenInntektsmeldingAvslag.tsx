@@ -23,8 +23,7 @@ const FortsettUtenInntektsmeldingAvslag = ({
         <Alert variant="error" size="medium" className={styles.periodList__alertstripe}>
           <span>Kan ikke gå videre uten inntektsmelding, søknad avslås.</span>
           {!readOnly && (
-            <Button variant="secondary" size="small" onClick={() => setRedigeringsmodus(true)}>
-              <Edit />
+            <Button variant="secondary" size="small" onClick={() => setRedigeringsmodus(true)} icon={<Edit />}>
               <span>Rediger vurdering</span>
             </Button>
           )}
