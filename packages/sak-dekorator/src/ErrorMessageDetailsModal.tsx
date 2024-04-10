@@ -33,7 +33,7 @@ const ErrorMessageDetailsModal = ({
   >
     <Modal.Header closeButton={false}>
       <HGrid gap="1" columns={{ xs: '1fr 10fr 1fr' }}>
-        <div>
+        <div className="relative">
           <Image className={styles.image} src={infoImageUrl} />
           <div className={styles.divider} />
         </div>

@@ -56,7 +56,7 @@ export class DataFetchPendingModal extends Component<OwnProps, OwnState> {
       <Modal className={styles.modal} open aria-label={pendingMessage} onClose={doNothing}>
         <Modal.Body>
           <HGrid gap="1" columns={{ xs: '2fr 10fr' }}>
-            <div>
+            <div className="relative">
               <Loader className="loader" variant="neutral" size="xlarge" title="venter..." />
               <div className={styles.divider} />
             </div>

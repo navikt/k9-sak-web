@@ -231,7 +231,7 @@ const FatterVedtakApprovalModal = ({
     >
       <Modal.Body>
         <HGrid gap="1" columns={{ xs: '1fr 9fr 2fr' }}>
-          <div>
+          <div className="relative">
             <Image
               className={styles.image}
               alt={altImgTextCode ? intl.formatMessage({ id: altImgTextCode }) : ''}

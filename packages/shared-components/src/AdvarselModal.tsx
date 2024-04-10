@@ -23,7 +23,7 @@ const AdvarselModal = ({ bodyText, headerText, showModal, submit }: OwnProps) =>
     <Modal className={styles.modal} open={showModal} aria-label={bodyText} onClose={submit}>
       <Modal.Body>
         <HGrid gap="1" columns={{ xs: '1fr 8fr 2fr' }}>
-          <div>
+          <div className="relative">
             <Image className={styles.image} alt={bodyText} src={advarselImageUrl} />
             <div className={styles.divider} />
           </div>

@@ -25,7 +25,7 @@ const KlageVurderingModal = ({ visModal = false, lukkModal, intl }: OwnProps & W
     onClose={lukkModal}
   >
     <HGrid gap="4" columns={{ xs: '1fr 9fr 2fr' }}>
-      <div>
+      <div className="relative">
         <Image className={styles.image} src={innvilgetImageUrl} />
         <div className={styles.divider} />
       </div>
