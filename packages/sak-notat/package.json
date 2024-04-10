@@ -9,7 +9,7 @@
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/aksel-icons": "6.3.6",
-    "@navikt/ds-react": "6.3.6",
+    "@navikt/ds-react": "6.4.1",
     "@navikt/ft-form-hooks": "4.4.2",
     "@navikt/ft-form-validators": "2.3.2",
     "date-fns": "2.30.0",
