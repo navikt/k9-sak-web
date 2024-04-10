@@ -44,7 +44,7 @@
     "@navikt/aksel-icons": "6.3.6",
     "@navikt/ds-css": "6.3.6",
     "@navikt/ds-react": "6.3.6",
-    "@navikt/ds-tailwind": "^6.3.6",
+    "@navikt/ds-tailwind": "^6.4.1",
     "@navikt/familie-endringslogg": "12.0.0",
     "@navikt/ft-plattform-komponenter": "2.5.3",
     "@popperjs/core": "2.11.8",
