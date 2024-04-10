@@ -18,8 +18,6 @@
     "@navikt/ft-plattform-komponenter": "2.5.3",
     "classnames": "2.5.1",
     "nav-frontend-core": "6.0.1",
-    "nav-frontend-grid": "2.0.2",
-    "nav-frontend-grid-style": "1.0.3",
     "nav-frontend-tabs": "2.0.3",
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",

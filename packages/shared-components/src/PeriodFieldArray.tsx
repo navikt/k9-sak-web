@@ -1,7 +1,6 @@
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import NavFieldGroup from '@fpsak-frontend/form/src/NavFieldGroup';
-import { Detail } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { Detail, HGrid } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
@@ -91,31 +90,29 @@ const PeriodFieldArray = ({
       children(periodeElementFieldId, index, getRemoveButton(index, fields)),
     )}
     {shouldShowAddButton && (
-      <Row className="">
-        <Column xs="12">
-          {!createAddButtonInsteadOfImageLink && !readOnly && (
-            // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-            <div
-              onClick={onClick(fields, emptyPeriodTemplate)}
-              onKeyDown={onKeyDown(fields, emptyPeriodTemplate)}
-              className={styles.addPeriode}
-              role="button"
-              tabIndex={0}
-            >
-              <Image className={styles.addCircleIcon} src={addCircleIcon} alt={intl.formatMessage({ id: textCode })} />
-              <Detail className={styles.imageText}>
-                <FormattedMessage id={textCode} />
-              </Detail>
-            </div>
-          )}
-          {createAddButtonInsteadOfImageLink && !readOnly && (
-            <button type="button" onClick={onClick(fields, emptyPeriodTemplate)} className={styles.buttonAdd}>
+      <HGrid gap="1" columns={{ xs: '12fr' }}>
+        {!createAddButtonInsteadOfImageLink && !readOnly && (
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+          <div
+            onClick={onClick(fields, emptyPeriodTemplate)}
+            onKeyDown={onKeyDown(fields, emptyPeriodTemplate)}
+            className={styles.addPeriode}
+            role="button"
+            tabIndex={0}
+          >
+            <Image className={styles.addCircleIcon} src={addCircleIcon} alt={intl.formatMessage({ id: textCode })} />
+            <Detail className={styles.imageText}>
               <FormattedMessage id={textCode} />
-            </button>
-          )}
-          <VerticalSpacer sixteenPx />
-        </Column>
-      </Row>
+            </Detail>
+          </div>
+        )}
+        {createAddButtonInsteadOfImageLink && !readOnly && (
+          <button type="button" onClick={onClick(fields, emptyPeriodTemplate)} className={styles.buttonAdd}>
+            <FormattedMessage id={textCode} />
+          </button>
+        )}
+        <VerticalSpacer sixteenPx />
+      </HGrid>
     )}
   </NavFieldGroup>
 );

@@ -4,10 +4,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { FaktaGruppe, PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
-import { BodyShort, Detail } from '@navikt/ds-react';
+import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
-import { Column, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -33,16 +32,12 @@ const lagOppholdIUtland = utlandsOpphold =>
   Array.isArray(utlandsOpphold) && utlandsOpphold.length > 0 ? (
     utlandsOpphold.map(u => (
       <div key={`${u.landNavn}${u.fom}${u.tom}`}>
-        <Row>
-          <Column xs="4">
-            <BodyShort size="small">{capitalizeFirstLetter(formatLandNavn(u.landNavn))}</BodyShort>
-          </Column>
-          <Column xs="8">
-            <BodyShort size="small">
-              <PeriodLabel showTodayString dateStringFom={u.fom} dateStringTom={u.tom} />
-            </BodyShort>
-          </Column>
-        </Row>
+        <HGrid gap="1" columns={{ xs: '4fr 8fr' }}>
+          <BodyShort size="small">{capitalizeFirstLetter(formatLandNavn(u.landNavn))}</BodyShort>
+          <BodyShort size="small">
+            <PeriodLabel showTodayString dateStringFom={u.fom} dateStringTom={u.tom} />
+          </BodyShort>
+        </HGrid>
       </div>
     ))
   ) : (
@@ -64,8 +59,8 @@ const OppholdINorgeOgAdresserFaktaPanel = ({
   alleMerknaderFraBeslutter,
 }) => (
   <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]}>
-    <Row>
-      <Column xs="6">
+    <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+      <div>
         <FaktaGruppe withoutBorder titleCode="OppholdINorgeOgAdresserFaktaPanel.OppholdINorge">
           <Detail>
             <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.StayingOutsideOfNorway" />
@@ -73,8 +68,8 @@ const OppholdINorgeOgAdresserFaktaPanel = ({
           <VerticalSpacer fourPx />
           {lagOppholdIUtland(opphold.utlandsopphold)}
         </FaktaGruppe>
-      </Column>
-      <Column xs="6">
+      </div>
+      <div>
         <FaktaGruppe withoutBorder titleCode="OppholdINorgeOgAdresserFaktaPanel.BosattAdresser">
           {foreldre.map(f => (
             <div key={f.personopplysning.navn}>
@@ -115,8 +110,8 @@ const OppholdINorgeOgAdresserFaktaPanel = ({
             </RadioGroupField>
           </div>
         )}
-      </Column>
-    </Row>
+      </div>
+    </HGrid>
   </FaktaGruppe>
 );
 

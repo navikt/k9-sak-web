@@ -4,8 +4,7 @@ import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.sv
 import { CheckboxField } from '@fpsak-frontend/form';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import { DateTimeLabel, Image, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { BodyShort, Detail } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -79,43 +78,41 @@ const DocumentListInnsyn = ({ intl, documents, saksNr, readOnly }) => {
       <Detail className={styles.noDocuments}>
         <FormattedMessage id="DocumentListInnsyn.VelgInnsynsDok" />
       </Detail>
-      <Row>
-        <Column xs={readOnly ? '6' : '10'}>
-          <Table headerTextCodes={headerTextCodes}>
-            {documents.map(document => {
-              const img = getDirectionImage(document, intl);
-              const dokId = parseInt(document.dokumentId, 10);
-              return (
-                <TableRow key={dokId} id={dokId}>
-                  <TableColumn className={styles.checkboxCol}>
-                    <CheckboxField label={noLabelHack()} name={`dokument_${dokId}`} disabled={readOnly} />
-                  </TableColumn>
-                  <TableColumn hidden={readOnly}>{img}</TableColumn>
-                  <TableColumn className={styles.linkCol}>
-                    <a
-                      href={getLink(document, saksNr)}
-                      className="lenke lenke--frittstaende"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {document.tittel}
-                    </a>
-                  </TableColumn>
-                  <TableColumn hidden={readOnly}>
-                    {document.tidspunkt ? (
-                      <DateTimeLabel dateTimeString={document.tidspunkt} />
-                    ) : (
-                      <BodyShort size="small">
-                        <FormattedMessage id="DocumentListInnsyn.IProduksjon" />
-                      </BodyShort>
-                    )}
-                  </TableColumn>
-                </TableRow>
-              );
-            })}
-          </Table>
-        </Column>
-      </Row>
+      <HGrid gap="1" columns={{ xs: readOnly ? '6fr 6fr' : '10fr 2fr' }}>
+        <Table headerTextCodes={headerTextCodes}>
+          {documents.map(document => {
+            const img = getDirectionImage(document, intl);
+            const dokId = parseInt(document.dokumentId, 10);
+            return (
+              <TableRow key={dokId} id={dokId}>
+                <TableColumn className={styles.checkboxCol}>
+                  <CheckboxField label={noLabelHack()} name={`dokument_${dokId}`} disabled={readOnly} />
+                </TableColumn>
+                <TableColumn hidden={readOnly}>{img}</TableColumn>
+                <TableColumn className={styles.linkCol}>
+                  <a
+                    href={getLink(document, saksNr)}
+                    className="lenke lenke--frittstaende"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {document.tittel}
+                  </a>
+                </TableColumn>
+                <TableColumn hidden={readOnly}>
+                  {document.tidspunkt ? (
+                    <DateTimeLabel dateTimeString={document.tidspunkt} />
+                  ) : (
+                    <BodyShort size="small">
+                      <FormattedMessage id="DocumentListInnsyn.IProduksjon" />
+                    </BodyShort>
+                  )}
+                </TableColumn>
+              </TableRow>
+            );
+          })}
+        </Table>
+      </HGrid>
     </>
   );
 };

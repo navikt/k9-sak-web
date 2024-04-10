@@ -1,6 +1,5 @@
 import { Alert, Heading } from '@navikt/ds-react';
 import { FormikProps, FormikValues } from 'formik';
-import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
 import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 
@@ -68,21 +67,13 @@ const FritekstBrevPanel = ({
   return (
     <div className={styles.fritekstbrevPanel}>
       {!harAutomatiskVedtaksbrev && <VerticalSpacer sixteenPx />}
-      <Row>
-        <Column xs="12">
-          <Heading className={styles.brevHeading} size="small" level="2">
-            <FormattedMessage id="VedtakForm.Brev" />
-          </Heading>
-        </Column>
-      </Row>
+      <Heading className={styles.brevHeading} size="small" level="2">
+        <FormattedMessage id="VedtakForm.Brev" />
+      </Heading>
       {!readOnly && harAutomatiskVedtaksbrev && (
         <div className={styles.brevAlertContainer} data-testid="harAutomatiskVedtaksbrev">
           <Alert variant="info" size="small">
-            <Row>
-              <Column xs="12">
-                <FormattedMessage id="VedtakForm.AutomatiskBrev" />
-              </Column>
-            </Row>
+            <FormattedMessage id="VedtakForm.AutomatiskBrev" />
           </Alert>
         </div>
       )}
@@ -97,29 +88,21 @@ const FritekstBrevPanel = ({
       {!featureToggles.FRITEKST_REDIGERING ||
         (!kanRedigereFritekstbrev && (
           <div className={readOnly ? '' : styles.brevFormContainer}>
-            <Row>
-              <Column xs="12">
-                <TextFieldFormik
-                  name="overskrift"
-                  label={formatMessage({ id: 'VedtakForm.Overskrift' })}
-                  validate={[required, minLength3, maxLength200, hasValidText]}
-                  maxLength={200}
-                  readOnly={readOnly}
-                />
-              </Column>
-            </Row>
+            <TextFieldFormik
+              name="overskrift"
+              label={formatMessage({ id: 'VedtakForm.Overskrift' })}
+              validate={[required, minLength3, maxLength200, hasValidText]}
+              maxLength={200}
+              readOnly={readOnly}
+            />
             <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
-              <Row>
-                <Column xs="12">
-                  <TextAreaFormik
-                    name="brødtekst"
-                    label={formatMessage({ id: 'VedtakForm.Innhold' })}
-                    validate={[required, minLength3, maxLength100000, hasValidText]}
-                    maxLength={100000}
-                    readOnly={readOnly}
-                  />
-                </Column>
-              </Row>
+              <TextAreaFormik
+                name="brødtekst"
+                label={formatMessage({ id: 'VedtakForm.Innhold' })}
+                validate={[required, minLength3, maxLength100000, hasValidText]}
+                maxLength={100000}
+                readOnly={readOnly}
+              />
             </div>
           </div>
         ))}
@@ -154,16 +137,12 @@ const FritekstBrevPanel = ({
 
           {kanInkludereKalender && !kanRedigereFritekstbrev && (
             <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
-              <Row>
-                <Column xs="12">
-                  <InkluderKalenderCheckbox
-                    intl={intl}
-                    setFieldValue={formikProps.setFieldValue}
-                    skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
-                    disabled={readOnly}
-                  />
-                </Column>
-              </Row>
+              <InkluderKalenderCheckbox
+                intl={intl}
+                setFieldValue={formikProps.setFieldValue}
+                skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+                disabled={readOnly}
+              />
             </div>
           )}
         </div>

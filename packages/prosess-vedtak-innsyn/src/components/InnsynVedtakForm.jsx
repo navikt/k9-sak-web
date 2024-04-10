@@ -19,8 +19,7 @@ import {
   requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { BodyShort, Detail, Heading } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { BodyShort, Detail, HGrid, Heading } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -102,8 +101,8 @@ export const InnsynVedtakFormImpl = ({
         </BodyShort>
         <VerticalSpacer twentyPx />
         {resultat !== innsynResultatType.INNVILGET && (
-          <Row>
-            <Column xs="8">
+          <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+            <div>
               <TextAreaField
                 name="begrunnelse"
                 label={intl.formatMessage({ id: 'InnsynVedtakForm.Fritekst' })}
@@ -118,8 +117,8 @@ export const InnsynVedtakFormImpl = ({
                   },
                 ]}
               />
-            </Column>
-          </Row>
+            </div>
+          </HGrid>
         )}
         <VerticalSpacer twentyPx />
         {resultat !== innsynResultatType.AVVIST && (
@@ -130,9 +129,9 @@ export const InnsynVedtakFormImpl = ({
           />
         )}
         <VerticalSpacer twentyPx />
-        <Row>
+        <HGrid gap="1" columns={{ xs: !readOnly ? '3fr 4fr 5fr' : '4fr 8fr' }}>
           {!readOnly && (
-            <Column xs="3">
+            <div>
               <ProsessStegSubmitButton
                 textCode="SubmitButton.ConfirmInformation"
                 behandlingId={behandlingId}
@@ -144,9 +143,9 @@ export const InnsynVedtakFormImpl = ({
                 isBehandlingFormDirty={isBehandlingFormDirty}
                 hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
               />
-            </Column>
+            </div>
           )}
-          <Column xs="4">
+          <div>
             <a
               onClick={previewBrev}
               onKeyDown={e => (e.keyCode === 13 ? previewBrev(e) : null)}
@@ -160,8 +159,8 @@ export const InnsynVedtakFormImpl = ({
                 id={readOnly ? 'InnsynVedtakForm.VisVedtaksbrev' : 'InnsynVedtakForm.ForhåndsvisBrev'}
               />
             </a>
-          </Column>
-        </Row>
+          </div>
+        </HGrid>
       </form>
     </FadingPanel>
   );

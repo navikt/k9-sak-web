@@ -9,7 +9,6 @@ import {
 } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, BeregningsresultatPeriode, KodeverkMedNavn } from '@k9-sak-web/types';
 import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
 import React, { Component, RefObject } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { createVisningsnavnForAndel } from './TilkjentYteleseUtils';
@@ -26,18 +25,14 @@ const getOptions = (nyePerioder: PeriodeMedId[]) => {
   const lastPeriod = nyePerioder[nyePerioder.length - 1];
 
   return {
-    end: moment(lastPeriod?.tom)
-      .add(2, 'days')
-      .toDate(),
+    end: moment(lastPeriod?.tom).add(2, 'days').toDate(),
     locale: moment.locale('nb'),
     margin: { item: 10 },
     moment,
     orientation: { axis: 'top' },
     showCurrentTime: false,
     stack: false,
-    start: moment(firstPeriod?.fom)
-      .subtract(1, 'days')
-      .toDate(),
+    start: moment(firstPeriod?.fom).subtract(1, 'days').toDate(),
     tooltip: { followMouse: true },
     width: '100%',
     zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
@@ -265,31 +260,24 @@ export class TilkjentYtelse extends Component<OwnProps & WrappedComponentProps, 
       <div className={styles.timelineContainer}>
         <VerticalSpacer sixteenPx />
         <VerticalSpacer sixteenPx />
-        <Row>
-          <Column xs="12">
-            <div className={styles.timeLineWrapper}>
-              <Timeline
-                ref={this.timelineRef}
-                options={getOptions(items)}
-                initialItems={timelineData}
-                initialGroups={groups}
-                selectHandler={selectHandler}
-                selection={[selectedItem ? selectedItem.id : null]}
-              />
-            </div>
-          </Column>
-        </Row>
-        <Row>
-          <Column xs="12">
-            <TimeLineControl
-              goBackwardCallback={goBackward}
-              goForwardCallback={goForward}
-              zoomInCallback={zoomIn}
-              zoomOutCallback={zoomOut}
-              openPeriodInfo={openPeriodInfo}
-            />
-          </Column>
-        </Row>
+        <div className={styles.timeLineWrapper}>
+          <Timeline
+            ref={this.timelineRef}
+            options={getOptions(items)}
+            initialItems={timelineData}
+            initialGroups={groups}
+            selectHandler={selectHandler}
+            selection={[selectedItem ? selectedItem.id : null]}
+          />
+        </div>
+
+        <TimeLineControl
+          goBackwardCallback={goBackward}
+          goForwardCallback={goForward}
+          zoomInCallback={zoomIn}
+          zoomOutCallback={zoomOut}
+          openPeriodInfo={openPeriodInfo}
+        />
         {selectedItem && (
           <TilkjentYtelseTimelineData
             alleKodeverk={alleKodeverk}

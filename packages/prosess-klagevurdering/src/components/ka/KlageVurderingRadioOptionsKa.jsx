@@ -1,4 +1,4 @@
-import { Column, Row } from 'nav-frontend-grid';
+import { HGrid } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { injectIntl } from 'react-intl';
@@ -26,35 +26,28 @@ export const KlageVurderingRadioOptionsKa = ({ readOnly, medholdReasons, klageVu
         text={intl.formatMessage({ id: 'KlageVurderingRadioOptionsKa.VurderingForKlage' })}
       />
       <VerticalSpacer sixteenPx />
-      <Row>
-        <Column xs="4">
-          <RadioGroupField name="klageVurdering" validate={[required]} direction="vertical" readOnly={readOnly}>
-            <RadioOption
-              value={klageVurderingType.STADFESTE_YTELSESVEDTAK}
-              label={{ id: 'Klage.ResolveKlage.KeepVedtakNk' }}
-            />
-            <RadioOption value={klageVurderingType.MEDHOLD_I_KLAGE} label={{ id: 'Klage.ResolveKlage.ChangeVedtak' }} />
-          </RadioGroupField>
-        </Column>
-        <Column xs="4">
-          <RadioGroupField
-            name="klageVurdering"
-            validate={[required]}
-            readOnly={readOnly}
-            className={readOnly ? styles.selectReadOnly : null}
-            direction="vertical"
-          >
-            <RadioOption
-              value={klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE}
-              label={{ id: 'Klage.Behandle.Hjemsendt' }}
-            />
-            <RadioOption
-              value={klageVurderingType.OPPHEVE_YTELSESVEDTAK}
-              label={{ id: 'Klage.ResolveKlage.NullifyVedtak' }}
-            />
-          </RadioGroupField>
-        </Column>
-      </Row>
+      <HGrid gap="1" columns={{ xs: '4fr 4fr 4fr' }}>
+        <RadioGroupField name="klageVurdering" validate={[required]} direction="vertical" readOnly={readOnly}>
+          <RadioOption
+            value={klageVurderingType.STADFESTE_YTELSESVEDTAK}
+            label={{ id: 'Klage.ResolveKlage.KeepVedtakNk' }}
+          />
+          <RadioOption value={klageVurderingType.MEDHOLD_I_KLAGE} label={{ id: 'Klage.ResolveKlage.ChangeVedtak' }} />
+        </RadioGroupField>
+        <RadioGroupField
+          name="klageVurdering"
+          validate={[required]}
+          readOnly={readOnly}
+          className={readOnly ? styles.selectReadOnly : null}
+          direction="vertical"
+        >
+          <RadioOption value={klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE} label={{ id: 'Klage.Behandle.Hjemsendt' }} />
+          <RadioOption
+            value={klageVurderingType.OPPHEVE_YTELSESVEDTAK}
+            label={{ id: 'Klage.ResolveKlage.NullifyVedtak' }}
+          />
+        </RadioGroupField>
+      </HGrid>
       {klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE && (
         <ArrowBox>
           <SelectField

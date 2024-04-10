@@ -1,4 +1,4 @@
-import { Column, Row } from 'nav-frontend-grid';
+import { HGrid } from '@navikt/ds-react';
 import React from 'react';
 import styles from './dateContainer.module.css';
 
@@ -10,15 +10,11 @@ interface DateContainerProps {
 const DateContainer = ({ opptjeningFomDato, opptjeningTomDato }: DateContainerProps) => (
   <div className={styles.dateContainer}>
     <div className={styles.dates}>
-      <Row className={styles.dateContainer}>
-        <Column xs="1" className={styles.startDateContainer} />
-        <Column xs="9">
-          <div>{opptjeningFomDato}</div>
-        </Column>
-        <Column xs="2">
-          <div className={styles.endDate}>{opptjeningTomDato}</div>
-        </Column>
-      </Row>
+      <HGrid gap="1" columns={{ xs: '1fr 9fr 2fr' }} className={styles.dateContainer}>
+        <div className={styles.startDateContainer} />
+        <div>{opptjeningFomDato}</div>
+        <div className={styles.endDate}>{opptjeningTomDato}</div>
+      </HGrid>
     </div>
   </div>
 );

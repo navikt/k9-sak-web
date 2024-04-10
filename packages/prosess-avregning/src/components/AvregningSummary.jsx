@@ -1,8 +1,7 @@
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { BodyShort, Label } from '@navikt/ds-react';
+import { BodyShort, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -28,46 +27,40 @@ const AvregningSummary = ({ fom, tom, feilutbetaling, etterbetaling, inntrekk, i
       )}
       {!ingenPerioderMedAvvik && (
         <>
-          <Row>
-            <Column xs="12">
-              <Label size="small" as="p">
-                {`${moment(fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(tom).format(DDMMYYYY_DATE_FORMAT)}`}
-              </Label>
-            </Column>
-          </Row>
+          <Label size="small" as="p">
+            {`${moment(fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(tom).format(DDMMYYYY_DATE_FORMAT)}`}
+          </Label>
           <div className={styles.resultSum}>
-            <Row>
-              <Column xs="3">
-                <BodyShort size="small" className={styles.resultName}>
-                  <FormattedMessage id="Avregning.etterbetaling" />:
-                </BodyShort>
-              </Column>
-              <Column xs="2">
+            <HGrid gap="1" columns={{ xs: '3fr 2fr 7fr' }}>
+              <BodyShort size="small" className={styles.resultName}>
+                <FormattedMessage id="Avregning.etterbetaling" />:
+              </BodyShort>
+              <div>
                 <span className={styles.number}>{formatCurrencyNoKr(etterbetaling)}</span>
-              </Column>
-            </Row>
-            <Row className={styles.redNumbers}>
-              <Column xs="3">
+              </div>
+            </HGrid>
+            <HGrid
+              gap="1"
+              columns={{ xs: inntrekk !== null ? '3fr 2fr 4fr 3fr' : '3fr 2fr 7fr' }}
+              className={styles.redNumbers}
+            >
+              <div>
                 <BodyShort size="small" className={styles.resultName}>
                   <FormattedMessage id="Avregning.tilbakekreving" />:
                 </BodyShort>
-              </Column>
-              <Column xs="2">
-                <span className={feilutbetaling ? styles.redNumber : styles.positivNumber}>
-                  {formatCurrencyNoKr(feilutbetaling)}
-                </span>
-              </Column>
+              </div>
+              <span className={feilutbetaling ? styles.redNumber : styles.positivNumber}>
+                {formatCurrencyNoKr(feilutbetaling)}
+              </span>
               {inntrekk !== null && (
-                <Column xs="4">
-                  <BodyShort size="small">
-                    <FormattedMessage id="Avregning.inntrekk" />:
-                    <span className={inntrekk ? styles.lastNumberRed : styles.lastNumberPositiv}>
-                      {formatCurrencyNoKr(inntrekk)}
-                    </span>
-                  </BodyShort>
-                </Column>
+                <BodyShort size="small">
+                  <FormattedMessage id="Avregning.inntrekk" />:
+                  <span className={inntrekk ? styles.lastNumberRed : styles.lastNumberPositiv}>
+                    {formatCurrencyNoKr(inntrekk)}
+                  </span>
+                </BodyShort>
               )}
-            </Row>
+            </HGrid>
           </div>
         </>
       )}

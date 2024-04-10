@@ -2425,8 +2425,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2448,8 +2446,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2470,8 +2466,6 @@ __metadata:
     dayjs: 1.11.10
     formik: 2.4.5
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
     nav-frontend-skjema: 4.0.6
@@ -2497,8 +2491,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2544,8 +2536,6 @@ __metadata:
     i18n-iso-countries: 7.11.0
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -2597,8 +2587,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-js-utils: 1.0.20
     nav-frontend-tabs: 2.0.3
     nav-frontend-tabs-style: 2.0.2
@@ -2630,8 +2618,6 @@ __metadata:
     formik: 2.4.5
     nav-datovelger: 12.6.0
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
     nav-frontend-skjema: 4.0.6
@@ -2653,8 +2639,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/fakta-felles": 1.0.0
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2729,8 +2713,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     classnames: 2.5.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2753,8 +2735,6 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     classnames: 2.5.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2779,8 +2759,6 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     classnames: 2.5.1
     moment: 2.30.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2809,8 +2787,6 @@ __metadata:
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2838,8 +2814,6 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2865,8 +2839,6 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2895,8 +2867,6 @@ __metadata:
     moment: 2.30.1
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2921,8 +2891,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     classnames: 2.5.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2948,33 +2916,6 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.2.0
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-soknadsfrist@1.0.0, @fpsak-frontend/prosess-soknadsfrist@workspace:packages/prosess-soknadsfrist":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-soknadsfrist@workspace:packages/prosess-soknadsfrist"
-  dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -3003,8 +2944,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3033,8 +2972,6 @@ __metadata:
     classnames: 2.5.1
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-tabs: 2.0.3
     nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -3088,7 +3025,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
-    nav-frontend-grid: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -3111,7 +3047,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     classnames: 2.5.1
-    nav-frontend-grid: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -3172,8 +3107,6 @@ __metadata:
     formik: 2.4.5
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
     nav-frontend-skjema: 4.0.6
@@ -3207,7 +3140,6 @@ __metadata:
     lodash: 4.17.21
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
     nav-frontend-js-utils: 1.0.20
     nav-frontend-tabs: 2.0.3
     nav-frontend-tabs-style: 2.0.2
@@ -3263,8 +3195,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3287,8 +3217,6 @@ __metadata:
     "@k9-sak-web/konstanter": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.5.3
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-js-utils: 1.0.20
     nav-frontend-lukknapp: 2.0.2
     nav-frontend-lukknapp-style: 2.0.2
@@ -3331,8 +3259,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3375,8 +3301,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3400,8 +3324,6 @@ __metadata:
     "@k9-sak-web/behandling-klage": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
     nav-frontend-skjema: 4.0.6
@@ -3429,8 +3351,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3454,8 +3374,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3537,8 +3455,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3576,8 +3492,6 @@ __metadata:
     history: 5.3.0
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -3635,8 +3549,6 @@ __metadata:
     date-fns-tz: 2.0.1
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
     nav-frontend-lukknapp: 2.0.2
@@ -3665,8 +3577,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -3946,8 +3856,6 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     axios-mock-adapter: 1.22.0
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -3977,8 +3885,6 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.5.3
     classnames: 2.5.1
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-tabs: 2.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -4070,8 +3976,6 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     axios-mock-adapter: 1.22.0
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4144,7 +4048,6 @@ __metadata:
     "@fpsak-frontend/kodeverk": 1.0.0
     "@fpsak-frontend/prosess-avregning": 1.0.0
     "@fpsak-frontend/prosess-saksopplysninger": 1.0.0
-    "@fpsak-frontend/prosess-soknadsfrist": 1.0.0
     "@fpsak-frontend/prosess-tilkjent-ytelse": 1.0.0
     "@fpsak-frontend/prosess-varsel-om-revurdering": 1.0.0
     "@fpsak-frontend/prosess-vedtak": 1.0.0
@@ -4196,7 +4099,6 @@ __metadata:
     "@fpsak-frontend/kodeverk": 1.0.0
     "@fpsak-frontend/prosess-avregning": 1.0.0
     "@fpsak-frontend/prosess-saksopplysninger": 1.0.0
-    "@fpsak-frontend/prosess-soknadsfrist": 1.0.0
     "@fpsak-frontend/prosess-tilkjent-ytelse": 1.0.0
     "@fpsak-frontend/prosess-varsel-om-revurdering": 1.0.0
     "@fpsak-frontend/prosess-vedtak": 1.0.0
@@ -4247,7 +4149,6 @@ __metadata:
     "@fpsak-frontend/kodeverk": 1.0.0
     "@fpsak-frontend/prosess-avregning": 1.0.0
     "@fpsak-frontend/prosess-saksopplysninger": 1.0.0
-    "@fpsak-frontend/prosess-soknadsfrist": 1.0.0
     "@fpsak-frontend/prosess-tilkjent-ytelse": 1.0.0
     "@fpsak-frontend/prosess-varsel-om-revurdering": 1.0.0
     "@fpsak-frontend/prosess-vedtak": 1.0.0
@@ -4351,8 +4252,6 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     axios-mock-adapter: 1.22.0
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4739,8 +4638,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -4770,7 +4667,6 @@ __metadata:
     moment: 2.30.1
     nav-frontend-chevron: 1.0.30
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
     nav-frontend-hjelpetekst: 3.1.3
     nav-frontend-hjelpetekst-style: 3.0.2
     nav-frontend-ikoner-assets: 3.0.1
@@ -4854,8 +4750,6 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -4933,7 +4827,6 @@ __metadata:
     "@navikt/ft-form-hooks": 4.4.2
     "@navikt/ft-form-validators": 2.3.2
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
     react: 18.2.0
     react-dom: 18.2.0
     react-hook-form: 7.51.2
@@ -5094,8 +4987,6 @@ __metadata:
     history: 5.3.0
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-lenkepanel: 2.0.2
     nav-frontend-lenkepanel-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -5132,8 +5023,6 @@ __metadata:
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -5169,8 +5058,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
     nav-frontend-core: 6.0.1
-    nav-frontend-grid: 2.0.2
-    nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
@@ -16111,39 +15998,6 @@ __metadata:
   version: 6.0.1
   resolution: "nav-frontend-core@npm:6.0.1"
   checksum: 7673f42a2a93a08fa6952d2c32d8e5d424de437910b76d84363d7cb86a7c0691e5f475a3623c8964366b3bbd33a6defb8e3907bc61b41c3434b4619aab7567d2
-  languageName: node
-  linkType: hard
-
-"nav-frontend-grid-style@npm:1.0.3":
-  version: 1.0.3
-  resolution: "nav-frontend-grid-style@npm:1.0.3"
-  checksum: 27a9558979a17f4a0756280e47624ed4bdffecc67a2e50f3163f6690c249fd9c464439438b455dc52a271ba9115e9b1f75d5b8148b70fd0bbdefb7260943ef4c
-  languageName: node
-  linkType: hard
-
-"nav-frontend-grid@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-grid@npm:2.0.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-core: ^6.0.0
-    nav-frontend-grid-style: ^1.0.2
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 7a39cf4099008b9e6237203c529b26a869dd5c7a0be37065579eed7681e80c646da1175578b596e5775279ea99deb003c7c231270b56196ca8fc6c701fdcd385
-  languageName: node
-  linkType: hard
-
-"nav-frontend-grid@patch:nav-frontend-grid@npm%3A2.0.2#./.yarn/patches/nav-frontend-grid-npm-2.0.2-a14357d0a8.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 2.0.2
-  resolution: "nav-frontend-grid@patch:nav-frontend-grid@npm%3A2.0.2#./.yarn/patches/nav-frontend-grid-npm-2.0.2-a14357d0a8.patch::version=2.0.2&hash=bac39f&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-core: ^6.0.0
-    nav-frontend-grid-style: ^1.0.2
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 8976254c375902e9ad6f8bfe49b8990abe428407122fb70f91889bd1f2f3943c8adf5f8d0a7b2c80b3fe9dd9c49f9f21624ae7c69fed962ec6167fbc6a3529bf
   languageName: node
   linkType: hard
 

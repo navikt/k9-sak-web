@@ -11,7 +11,6 @@ import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgj
 import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Detail, Heading } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -201,51 +200,43 @@ const AnkeResultatForm = ({
         <FormattedMessage id="Ankebehandling.Resultat.Title" />
       </Heading>
       <VerticalSpacer fourPx />
-      <Row>
-        <Column xs="12">
-          <Detail>
-            <FormattedMessage id="Ankebehandling.Resultat.Innstilling" />
-          </Detail>
-          <AnkeResultat ankevurderingresultat={ankeVurderingResultat} />
-        </Column>
-      </Row>
+      <Detail>
+        <FormattedMessage id="Ankebehandling.Resultat.Innstilling" />
+      </Detail>
+      <AnkeResultat ankevurderingresultat={ankeVurderingResultat} />
       <VerticalSpacer sixteenPx />
-      <Row>
-        <Column xs="12">
-          <ProsessStegSubmitButton
-            formName={formProps.form}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            isReadOnly={readOnly}
-            isSubmittable={!readOnly && isMedUnderskriver(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
-            hasEmptyRequiredFields={false}
-            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-            isBehandlingFormDirty={isBehandlingFormDirty}
-            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-            text={intl.formatMessage({ id: 'Ankebehandling.Resultat.SendTilMedunderskriver' })}
-          />
-          <span>&nbsp;</span>
-          <ProsessStegSubmitButton
-            formName={formProps.form}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            isReadOnly={readOnly}
-            isSubmittable={!readOnly && isVedtakUtenToTrinn(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
-            hasEmptyRequiredFields={false}
-            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-            isBehandlingFormDirty={isBehandlingFormDirty}
-            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-            text={intl.formatMessage({ id: 'Ankebehandling.Resultat.FerdigstillAnke' })}
-          />
-          <span>&nbsp;</span>
-          <PreviewAnkeLink
-            previewCallback={previewCallback}
-            fritekstTilBrev={formValues.fritekstTilBrev}
-            ankeVurdering={formValues.ankeVurdering}
-            aksjonspunktCode={aksjonspunktCode}
-          />
-        </Column>
-      </Row>
+      <ProsessStegSubmitButton
+        formName={formProps.form}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        isReadOnly={readOnly}
+        isSubmittable={!readOnly && isMedUnderskriver(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
+        hasEmptyRequiredFields={false}
+        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+        isBehandlingFormDirty={isBehandlingFormDirty}
+        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+        text={intl.formatMessage({ id: 'Ankebehandling.Resultat.SendTilMedunderskriver' })}
+      />
+      <span>&nbsp;</span>
+      <ProsessStegSubmitButton
+        formName={formProps.form}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        isReadOnly={readOnly}
+        isSubmittable={!readOnly && isVedtakUtenToTrinn(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
+        hasEmptyRequiredFields={false}
+        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+        isBehandlingFormDirty={isBehandlingFormDirty}
+        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+        text={intl.formatMessage({ id: 'Ankebehandling.Resultat.FerdigstillAnke' })}
+      />
+      <span>&nbsp;</span>
+      <PreviewAnkeLink
+        previewCallback={previewCallback}
+        fritekstTilBrev={formValues.fritekstTilBrev}
+        ankeVurdering={formValues.ankeVurdering}
+        aksjonspunktCode={aksjonspunktCode}
+      />
     </FadingPanel>
   </form>
 );
