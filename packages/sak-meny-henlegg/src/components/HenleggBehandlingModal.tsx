@@ -201,7 +201,7 @@ export const HenleggBehandlingModalImpl = ({
                 </div>
               </HGrid>
               {showHenleggelseFritekst(behandlingType.kode, årsakKode) && (
-                <HGrid gap="1" columns={{ xs: '8fr' }}>
+                <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
                   <div className={styles.fritekstTilBrevTextArea}>
                     <TextAreaField
                       name="fritekst"
