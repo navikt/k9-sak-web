@@ -34,7 +34,7 @@ const DiagnosekodeModal = ({
   return (
     <Modal
       open={isOpen}
-      header={{ heading: 'Legg til diagnosekoder', closeButton: false }}
+      header={{ heading: 'Legg til diagnosekoder', closeButton: true }}
       onClose={onRequestClose}
       className={styles.diagnosekodeoversikt__modal}
     >
