@@ -5109,7 +5109,6 @@ __metadata:
     react-router-dom: 6.22.3
     redux: 4.2.1
     redux-form: 8.3.10
-    redux-logger: 3.0.6
     redux-thunk: 2.4.2
     reselect: 4.1.8
   languageName: unknown
@@ -11018,13 +11017,6 @@ __metadata:
   version: 10.4.3
   resolution: "decimal.js@npm:10.4.3"
   checksum: 796404dcfa9d1dbfdc48870229d57f788b48c21c603c3f6554a1c17c10195fc1024de338b0cf9e1efe0c7c167eeb18f04548979bcc5fdfabebb7cc0ae3287bae
-  languageName: node
-  linkType: hard
-
-"deep-diff@npm:^0.3.5":
-  version: 0.3.8
-  resolution: "deep-diff@npm:0.3.8"
-  checksum: 8a0fb6cbe468e50211836f8daa1c14798b2d7436bfbcb7d8eb0902e0d61bf1dfd48d5b9edd46a10596182b90ad25f87461b8e55111ff9257b6067ad0676f79c9
   languageName: node
   linkType: hard
 
@@ -18358,15 +18350,6 @@ __metadata:
     immutable:
       optional: true
   checksum: 2cefe541419cc8a9e61f7a597202ecfbfea4ecb497470117f492b8ea13a44c5f93783c31838011a86c2cee20ed4e3e1687e1ca6ad8ea17e34ca7120496eb117d
-  languageName: node
-  linkType: hard
-
-"redux-logger@npm:3.0.6":
-  version: 3.0.6
-  resolution: "redux-logger@npm:3.0.6"
-  dependencies:
-    deep-diff: ^0.3.5
-  checksum: c40f63c44c6475cf6374ae0eaa810d913f142614cb80692a0beacaf135c5dc3eb3e2cdd4296f01446ba48cb69b82e81363b84d829f1f6659382c991022a814ac
   languageName: node
   linkType: hard
 
