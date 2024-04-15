@@ -67,11 +67,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
   };
 
   it('skal rendre komponent', async () => {
-    const arbeidsgiver = {
-      arbeidsgiverOrgnr: '1234567',
-      arbeidsgiverAktørId: null,
-    };
-
     renderWithIntlAndReduxForm(
       <PersonArbeidsforholdPanelImpl
         intl={intlMock}

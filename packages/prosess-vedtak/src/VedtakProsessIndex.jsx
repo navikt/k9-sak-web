@@ -1,18 +1,18 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import VedtakPanels from './components/VedtakPanels';
 import messages from '../i18n/nb_NO.json';
-import vedtakBehandlingPropType from './propTypes/vedtakBehandlingPropType';
-import vedtakBeregningsresultatPropType from './propTypes/vedtakBeregningsresultatPropType';
+import VedtakPanels from './components/VedtakPanels';
 import vedtakAksjonspunkterPropType from './propTypes/vedtakAksjonspunkterPropType';
-import vedtakSimuleringResultatPropType from './propTypes/vedtakSimuleringResultatPropType';
-import vedtakMedlemskapPropType from './propTypes/vedtakMedlemskapPropType';
-import vedtakVilkarPropType from './propTypes/vedtakVilkarPropType';
-import vedtakTilbakekrevingvalgPropType from './propTypes/vedtakTilbakekrevingvalgPropType';
-import vedtakOriginalBehandlingPropType from './propTypes/vedtakOriginalBehandlingPropType';
+import vedtakBehandlingPropType from './propTypes/vedtakBehandlingPropType';
 import vedtakBeregningsgrunnlagPropType from './propTypes/vedtakBeregningsgrunnlagPropType';
+import vedtakBeregningsresultatPropType from './propTypes/vedtakBeregningsresultatPropType';
+import vedtakMedlemskapPropType from './propTypes/vedtakMedlemskapPropType';
+import vedtakOriginalBehandlingPropType from './propTypes/vedtakOriginalBehandlingPropType';
+import vedtakSimuleringResultatPropType from './propTypes/vedtakSimuleringResultatPropType';
+import vedtakTilbakekrevingvalgPropType from './propTypes/vedtakTilbakekrevingvalgPropType';
 import vedtakVarselPropType from './propTypes/vedtakVarselPropType';
+import vedtakVilkarPropType from './propTypes/vedtakVilkarPropType';
 
 const cache = createIntlCache();
 
@@ -51,7 +51,6 @@ const VedtakProsessIndex = ({
   fritekstdokumenter,
   lagreDokumentdata,
   overlappendeYtelser,
-  featureToggles,
 }) => (
   <RawIntlProvider value={intl}>
     <VedtakPanels

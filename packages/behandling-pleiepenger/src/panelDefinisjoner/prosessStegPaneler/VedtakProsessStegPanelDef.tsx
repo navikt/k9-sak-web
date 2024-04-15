@@ -1,13 +1,13 @@
 import React from 'react';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 
-import findStatusForVedtak from '../vedtakStatusUtlederPleiepenger';
 import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
+import findStatusForVedtak from '../vedtakStatusUtlederPleiepenger';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <VedtakProsessIndex {...props} />;
@@ -38,8 +38,8 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getOverstyrtStatus = ({ vilkar, aksjonspunkter, behandling, aksjonspunkterForSteg, featureToggles }) =>
-    findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg, behandling.behandlingsresultat, featureToggles);
+  getOverstyrtStatus = ({ vilkar, aksjonspunkter, behandling, aksjonspunkterForSteg }) =>
+    findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg, behandling.behandlingsresultat);
 
   getData = ({
     previewCallback,

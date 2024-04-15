@@ -1,13 +1,13 @@
-import { Box, Margin, DetailView, LabelledContent, Form } from '@navikt/ft-plattform-komponenter';
 import { TextAreaFormik } from '@fpsak-frontend/form';
 import { Calender } from '@navikt/ds-icons';
+import { Box, DetailView, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 
-import React from 'react';
-import { InstitusjonVurderingMedPerioder, Vurderingsresultat } from '@k9-sak-web/types';
-import { required } from '@fpsak-frontend/utils';
-import { Formik } from 'formik';
 import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
+import { required } from '@fpsak-frontend/utils';
+import { InstitusjonVurderingMedPerioder, Vurderingsresultat } from '@k9-sak-web/types';
 import { Button } from '@navikt/ds-react';
+import { Formik } from 'formik';
+import React from 'react';
 
 enum fieldname {
   BEGRUNNELSE = 'BEGRUNNELSE',

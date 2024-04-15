@@ -247,22 +247,11 @@ const getCustomVilkarTextForIkkeOppfylt = createSelector(
   (medlemskapFom, behandlingType) => getCustomVilkarText(medlemskapFom, behandlingType, false),
 );
 
-const transformValues = (values, overstyringApKode, periodeFom, periodeTom) => {
-  let periode = periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : undefined;
-
-  if (
-    values.erVilkarOk === vilkarUtfallPeriodisert.DELVIS_IKKE_OPPFYLT ||
-    values.erVilkarOk === vilkarUtfallPeriodisert.DELVIS_OPPFYLT
-  ) {
-    periode = { fom: values.valgtPeriodeFom, tom: values.valgtPeriodeTom };
-  }
-
-  return {
-    kode: overstyringApKode,
-    ...VilkarResultPicker.transformValues(values, periodeFom, periodeTom),
-    ...VilkarresultatMedBegrunnelse.transformValues(values),
-  };
-};
+const transformValues = (values, overstyringApKode, periodeFom, periodeTom) => ({
+  kode: overstyringApKode,
+  ...VilkarResultPicker.transformValues(values, periodeFom, periodeTom),
+  ...VilkarresultatMedBegrunnelse.transformValues(values),
+});
 
 const validate = values => VilkarresultatMedBegrunnelse.validate(values);
 

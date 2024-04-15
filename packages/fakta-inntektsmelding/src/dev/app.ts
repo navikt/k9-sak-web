@@ -1,7 +1,8 @@
-import renderers from '../util/renderers';
-import ContainerContract from '../types/ContainerContract';
-import '@navikt/ft-plattform-komponenter/dist/style.css';
+/* eslint-disable no-console */
 import '@navikt/ds-css';
+import '@navikt/ft-plattform-komponenter/dist/style.css';
+import ContainerContract from '../types/ContainerContract';
+import renderers from '../util/renderers';
 
 interface ExtendedWindow extends Window {
   renderKompletthetApp: (id: string, contract: ContainerContract) => void;

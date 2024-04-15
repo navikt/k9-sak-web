@@ -73,7 +73,6 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   } = methods;
   const erSokerAleneOmOmsorgen = watch('erSokerenAleneOmOmsorgen');
   const åpenForRedigering = watch('åpenForRedigering');
-  const tilDatovalue = watch('tilDato');
 
   const { erDatoFyltUt, erDatoGyldig } = valideringsFunksjoner(getValues, 'erSokerenAleneOmOmsorgen');
 

@@ -1,4 +1,3 @@
-import { prettifyDateString } from '../format';
 import initializeDate from '../initialize';
 import dateSorter, { dateStringSorter } from '../sort';
 
