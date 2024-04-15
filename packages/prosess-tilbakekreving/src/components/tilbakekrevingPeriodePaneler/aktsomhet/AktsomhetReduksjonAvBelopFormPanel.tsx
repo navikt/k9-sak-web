@@ -1,8 +1,7 @@
 import { DecimalField, InputField, RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
 import { ArrowBox, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr, maxValue, minValue, required } from '@fpsak-frontend/utils';
-import { BodyShort, Detail } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
@@ -39,8 +38,8 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
   andelSomTilbakekreves,
 }: OwnProps) => (
   <>
-    <Row>
-      <Column md="12">
+    <HGrid gap="1" columns={{ xs: '12fr' }}>
+      <div>
         <VerticalSpacer eightPx />
         <Detail>
           <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.SkalSarligeGrunnerGiReduksjon" />
@@ -50,12 +49,12 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
           <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />} value />
           <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />} value={false} />
         </RadioGroupField>
-      </Column>
-    </Row>
+      </div>
+    </HGrid>
     {harGrunnerTilReduksjon && (
       <ArrowBox alignOffset={24}>
-        <Row>
-          <Column md="6">
+        <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+          <div>
             {!harMerEnnEnYtelse && andelSomTilbakekreves !== EGENDEFINERT && (
               <>
                 <Detail>
@@ -116,24 +115,24 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
                 htmlSize={14}
               />
             )}
-          </Column>
+          </div>
           {handletUaktsomhetGrad === Aktsomhet.GROVT_UAKTSOM && (
-            <Column md="6">
+            <div>
               <Detail>
                 <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.SkalTilleggesRenter" />
               </Detail>
               <BodyShort size="small" className={styles.labelPadding}>
                 <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />
               </BodyShort>
-            </Column>
+            </div>
           )}
-        </Row>
+        </HGrid>
       </ArrowBox>
     )}
     {harGrunnerTilReduksjon === false && (
       <ArrowBox alignOffset={90}>
-        <Row>
-          <Column md="6">
+        <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+          <div>
             <Detail>
               <FormattedMessage
                 id={
@@ -146,9 +145,9 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
             <BodyShort size="small" className={styles.labelPadding}>
               {harMerEnnEnYtelse ? formatCurrencyNoKr(feilutbetalingBelop) : '100%'}
             </BodyShort>
-          </Column>
+          </div>
           {handletUaktsomhetGrad === Aktsomhet.GROVT_UAKTSOM && (
-            <Column md="6">
+            <div>
               <RadioGroupField
                 label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.SkalTilleggesRenter" />}
                 validate={[required]}
@@ -158,9 +157,9 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
                 <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />} value />
                 <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />} value={false} />
               </RadioGroupField>
-            </Column>
+            </div>
           )}
-        </Row>
+        </HGrid>
       </ArrowBox>
     )}
   </>

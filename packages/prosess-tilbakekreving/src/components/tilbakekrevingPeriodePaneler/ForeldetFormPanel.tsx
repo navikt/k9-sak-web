@@ -1,19 +1,15 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Column, Row } from 'nav-frontend-grid';
 
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import { HGrid } from '@navikt/ds-react';
 
 const ForeldetFormPanel = () => (
-  <Row>
-    <Column md="6">
-      <TextAreaField
-        name="foreldetBegrunnelse"
-        label={{ id: 'ForeldetPanel.Vurdering' }}
-        readOnly
-      />
-    </Column>
-    <Column md="6">
+  <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+    <div>
+      <TextAreaField name="foreldetBegrunnelse" label={{ id: 'ForeldetPanel.Vurdering' }} readOnly />
+    </div>
+    <div>
       <RadioGroupField
         name="periodenErForeldet"
         readOnly
@@ -21,8 +17,8 @@ const ForeldetFormPanel = () => (
       >
         {[<RadioOption key={1} label={<FormattedMessage id="ForeldetPanel.PeriodenErForeldet" />} value />]}
       </RadioGroupField>
-    </Column>
-  </Row>
+    </div>
+  </HGrid>
 );
 
 export default ForeldetFormPanel;

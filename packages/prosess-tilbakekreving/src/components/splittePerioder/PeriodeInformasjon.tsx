@@ -1,7 +1,6 @@
 import { DDMMYYYY_DATE_FORMAT, calcDaysAndWeeks, formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { BodyShort, Label } from '@navikt/ds-react';
+import { BodyShort, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import DataForPeriode from '../../types/dataForPeriodeTsType';
@@ -25,16 +24,16 @@ interface OwnProps {
 const PeriodeInformasjon = ({ fom, tom, feilutbetaling, arsak }: OwnProps) => {
   const daysAndWeeks = calcDaysAndWeeks(fom, tom);
   return (
-    <Row>
-      <Column md="8">
+    <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+      <div>
         <div className={styles.infoSummary}>
-          <Row>
-            <Column xs="6">
+          <HGrid gap="4" columns={{ xs: '6fr 6fr' }}>
+            <div>
               <Label size="small" as="p">
                 {`${moment(fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(tom).format(DDMMYYYY_DATE_FORMAT)}`}
               </Label>
-            </Column>
-            <Column xs="6">
+            </div>
+            <div>
               <BodyShort size="small">
                 <FormattedMessage
                   id={daysAndWeeks.id}
@@ -44,30 +43,30 @@ const PeriodeInformasjon = ({ fom, tom, feilutbetaling, arsak }: OwnProps) => {
                   }}
                 />
               </BodyShort>
-            </Column>
-          </Row>
+            </div>
+          </HGrid>
           <div className={styles.resultSum}>
-            <Row className={styles.redNumbers}>
-              <Column xs="6">
+            <HGrid gap="4" columns={{ xs: '6fr 6fr' }} className={styles.redNumbers}>
+              <div>
                 <BodyShort size="small" className={styles.resultName}>
                   <FormattedMessage id="PeriodeInformasjon.Feilutbetaling" />:
                   <span className={feilutbetaling ? styles.redNumber : styles.positivNumber}>
                     {formatCurrencyNoKr(feilutbetaling)}
                   </span>
                 </BodyShort>
-              </Column>
-              <Column xs="6">
+              </div>
+              <div>
                 {arsak && (
                   <BodyShort size="small" className={styles.resultName}>
                     {arsak.hendelseType.navn}
                   </BodyShort>
                 )}
-              </Column>
-            </Row>
+              </div>
+            </HGrid>
           </div>
         </div>
-      </Column>
-    </Row>
+      </div>
+    </HGrid>
   );
 };
 

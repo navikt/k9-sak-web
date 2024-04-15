@@ -3,8 +3,7 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import Region from '@fpsak-frontend/kodeverk/src/region';
 import { getAddresses } from '@fpsak-frontend/utils';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort, Detail, Label, Tag } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { BodyShort, Detail, HGrid, Label, Tag } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
@@ -48,8 +47,8 @@ export const BostedSokerView = ({
   personstatusTypes,
 }: OwnProps & WrappedComponentProps) => (
   <div className={styles.defaultBostedSoker}>
-    <Row>
-      <Column xs="8">
+    <HGrid gap="4" columns={{ xs: '8fr 4fr' }}>
+      <div>
         <Detail>
           <FormattedMessage id={sokerTypeTextId} />
         </Detail>
@@ -63,8 +62,8 @@ export const BostedSokerView = ({
           <FormattedMessage id="BostedSokerView.ForeignAddresse" />
         </Detail>
         <BodyShort size="small">{getUtlandsadresse(personopplysninger.adresser)}</BodyShort>
-      </Column>
-      <Column xs="4">
+      </div>
+      <div>
         {getPersonstatus(personopplysninger) && (
           <div className={styles.etikettMargin}>
             <Tag
@@ -93,8 +92,8 @@ export const BostedSokerView = ({
             </Tag>
           </div>
         )}
-      </Column>
-    </Row>
+      </div>
+    </HGrid>
   </div>
 );
 

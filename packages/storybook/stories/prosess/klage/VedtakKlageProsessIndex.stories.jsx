@@ -1,16 +1,14 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import { boolean, object, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import VedtakKlageProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
-
 import withReduxProvider from '../../../decorators/withRedux';
-
-const alleKodeverk = require('../../mocks/alleKodeverk.json'); // eslint-disable-line
+import alleKodeverk from '../../mocks/alleKodeverk.json';
 
 const behandling = {
   id: 1,
