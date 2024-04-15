@@ -126,7 +126,6 @@ const formatAvkortingMotArbeid = (
   utbetalingsgrader: Utbetalingsgrad[],
   søkersTapteArbeidstid: number,
   alleArbeidsforhold: Record<string, ArbeidsgiverOpplysninger>,
-  manueltOverstyrt?: boolean,
 ) => (
   <>
     <div className={styles.uttakDetaljer__avkortingMotArbeid}>
@@ -226,7 +225,6 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
     pleiebehov,
     utenlandsopphold,
     utfall,
-    manueltOverstyrt,
   } = uttak;
   return (
     <div className={styles.uttakDetaljer}>
@@ -256,7 +254,7 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
           heading="Avkorting mot arbeid"
           highlight={shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT, årsaker)}
         >
-          {formatAvkortingMotArbeid(utbetalingsgrader, søkersTapteArbeidstid, arbeidsforhold, manueltOverstyrt)}
+          {formatAvkortingMotArbeid(utbetalingsgrader, søkersTapteArbeidstid, arbeidsforhold)}
         </UttakUtregning>
       </div>
     </div>

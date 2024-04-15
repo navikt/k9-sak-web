@@ -7,7 +7,6 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { renderWithReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
-import * as useTrackRouteParam from '../app/useTrackRouteParam';
 import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import BehandlingSupportIndex, { hentSynligePaneler, hentValgbarePaneler } from './BehandlingSupportIndex';
@@ -40,16 +39,6 @@ describe('<BehandlingSupportIndex>', () => {
       kodeverk: '',
     },
   };
-
-  const location = { pathname: '', search: '', state: {}, hash: '', key: '' };
-
-  let contextStub;
-  beforeEach(() => {
-    contextStub = vi.spyOn(useTrackRouteParam, 'default').mockImplementation(() => ({
-      selected: 123456,
-      location,
-    }));
-  });
 
   it('skal vise godkjennings-panelet', () => {
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);

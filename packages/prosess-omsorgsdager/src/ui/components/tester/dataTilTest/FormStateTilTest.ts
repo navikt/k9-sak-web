@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 export default {
   getState: () => '',
   setState: (key, data) => console.log('setState', key, data),

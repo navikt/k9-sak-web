@@ -1,9 +1,10 @@
-import renderers from '../util/renderers';
-import ContainerContract from '../types/ContainerContract';
-import '@navikt/ft-plattform-komponenter/dist/style.css';
+/* eslint-disable no-console */
 import '@navikt/ds-css';
-import FagsakYtelseType from '../constants/FagsakYtelseType';
+import '@navikt/ft-plattform-komponenter/dist/style.css';
 import BehandlingType from '../constants/BehandlingType';
+import FagsakYtelseType from '../constants/FagsakYtelseType';
+import ContainerContract from '../types/ContainerContract';
+import renderers from '../util/renderers';
 
 interface ExtendedWindow extends Window {
   renderMedisinskVilkarApp: (id: string, contract: ContainerContract) => void;

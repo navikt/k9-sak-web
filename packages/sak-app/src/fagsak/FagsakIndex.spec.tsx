@@ -158,9 +158,8 @@ describe('<FagsakIndex>', () => {
     behandlingÅrsaker: undefined,
   };
 
-  let contextStub;
   beforeEach(() => {
-    contextStub = vi.spyOn(useTrackRouteParam, 'default').mockImplementation(() => ({
+    vi.spyOn(useTrackRouteParam, 'default').mockImplementation(() => ({
       selected: 123456,
       location: {
         pathname: 'test',
