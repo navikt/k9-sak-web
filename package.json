@@ -115,6 +115,7 @@
     "react-popper": "2.3.0",
     "storybook": "7.6.17",
     "stylelint": "16.3.1",
+    "stylelint-config-standard": "^36.0.0",
     "stylelint-order": "6.0.4",
     "tailwindcss": "^3.4.3",
     "typed-css-modules": "^0.9.1",

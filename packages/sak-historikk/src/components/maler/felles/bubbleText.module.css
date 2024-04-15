@@ -1,7 +1,7 @@
 .clickableArea {
   background: none;
   border: none;
-  color: rgb(0, 103, 197);
+  color: rgb(0 103 197);
   cursor: pointer;
   float: right;
   margin-bottom: 4px;
