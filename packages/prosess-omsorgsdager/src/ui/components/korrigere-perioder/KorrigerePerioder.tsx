@@ -1,8 +1,7 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Alert, Button, HelpText } from '@navikt/ds-react';
-import { RadioGruppe } from 'nav-frontend-skjema';
+import { Alert, Button, HelpText, RadioGroup } from '@navikt/ds-react';
 
 import { KorrigerePerioderProps } from '../../../types/KorrigerePerioderProps';
 import { booleanTilTekst } from '../../../util/stringUtils';
@@ -189,7 +188,7 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
             label={konfliktMedArbeidsgiver ? tekstKonfliktMedArbeidsgiver.begrunnelse : tekst.begrunnelse}
             name="begrunnelse"
           />
-          <RadioGruppe
+          <RadioGroup
             legend={
               konfliktMedArbeidsgiver ? tekstKonfliktMedArbeidsgiver.sporsmalErInnvilget : tekst.sporsmalErInnvilget
             }
@@ -202,7 +201,7 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
               value="delvis"
               name="fravaerGrunnetSmittevernhensynEllerStengt"
             />
-          </RadioGruppe>
+          </RadioGroup>
 
           {errors.fravaerGrunnetSmittevernhensynEllerStengt && (
             <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>

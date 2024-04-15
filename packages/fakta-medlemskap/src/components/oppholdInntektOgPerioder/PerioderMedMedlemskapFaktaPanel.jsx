@@ -88,7 +88,12 @@ export const PerioderMedMedlemskapFaktaPanel = ({
                 isEdited={isPeriodAksjonspunktClosed}
               >
                 {vurderingTypes.map(type => (
-                  <RadioOption key={type.kode} value={type.kode} label={type.navn} />
+                  <RadioOption
+                    key={type.kode}
+                    value={type.kode}
+                    label={type.navn}
+                    name="medlemskapManuellVurderingType.kode"
+                  />
                 ))}
               </RadioGroupField>
             </FlexColumn>

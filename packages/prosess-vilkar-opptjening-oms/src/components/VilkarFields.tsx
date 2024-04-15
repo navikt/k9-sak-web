@@ -104,7 +104,7 @@ export const VilkarFields = ({
                 {!erOmsorgspenger ? (
                   <FlexRow spaceBetween={false}>
                     <RadioOption
-                      label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA' }}
+                      label={intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA' })}
                       value={midlertidigInaktiv.TYPE_A}
                       {...optionProps}
                     />
@@ -113,7 +113,7 @@ export const VilkarFields = ({
                 {skalValgMidlertidigInaktivTypeBVises && (
                   <FlexRow spaceBetween={false}>
                     <RadioOption
-                      label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' }}
+                      label={intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' })}
                       value={midlertidigInaktiv.TYPE_B}
                       {...optionProps}
                     />

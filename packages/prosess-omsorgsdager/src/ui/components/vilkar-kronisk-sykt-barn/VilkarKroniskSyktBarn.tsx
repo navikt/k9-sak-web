@@ -1,6 +1,5 @@
-import { Alert, Button } from '@navikt/ds-react';
+import { Alert, Button, Fieldset, RadioGroup } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { RadioGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { VilkarKroniskSyktBarnProps } from '../../../types/VilkarKroniskSyktBarnProps';
@@ -204,13 +203,13 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
               <TextArea label={tekst.begrunnelse} name="begrunnelse" />
 
               <div>
-                <RadioGruppe
+                <RadioGroup
                   className={styleRadioknapper.horisontalPlassering}
                   legend={tekst.sporsmalHarDokumentasjonOgFravaerRisiko}
                 >
                   <RadioButtonWithBooleanValue label="Ja" value="true" name="harDokumentasjonOgFravaerRisiko" />
                   <RadioButtonWithBooleanValue label="Nei" value="false" name="harDokumentasjonOgFravaerRisiko" />
-                </RadioGruppe>
+                </RadioGroup>
                 {errors.harDokumentasjonOgFravaerRisiko && (
                   <p className="typo-feilmelding">{tekst.feilOppgiHvisDokumentasjonGirRett}</p>
                 )}
@@ -218,7 +217,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
               {harDokumentasjonOgFravaerRisiko.length > 0 && !tekstTilBoolean(harDokumentasjonOgFravaerRisiko) && (
                 <div>
-                  <RadioGruppe className={styleRadioknapper.horisontalPlassering} legend={tekst.velgArsak}>
+                  <RadioGroup className={styleRadioknapper.horisontalPlassering} legend={tekst.velgArsak}>
                     <RadioButtonWithBooleanValue
                       label={tekst.arsakIkkeSyk}
                       value={AvslagskoderKroniskSyk.IKKE_KRONISK_SYK_ELLER_FUNKSJONSHEMMET}
@@ -237,17 +236,17 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                       name="avslagsårsakKode"
                       valideringsFunksjoner={erArsakErIkkeRiskioFraFravaer}
                     />
-                  </RadioGruppe>
+                  </RadioGroup>
                   {errors.avslagsårsakKode && <p className="typo-feilmelding">{tekst.feilOppgiÅrsak}</p>}
                 </div>
               )}
 
               {harDokumentasjonOgFravaerRisiko.length > 0 && tekstTilBoolean(harDokumentasjonOgFravaerRisiko) && (
                 <div>
-                  <SkjemaGruppe
+                  <Fieldset
                     className={styles.fraDato}
                     legend={tekst.sporsmalPeriodeVedtakGyldig}
-                    feil={
+                    error={
                       (errors.fraDato && errors.fraDato.type === 'erDatoFyltUt' && tekst.feilmedlingManglerFraDato) ||
                       (errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato) ||
                       (errors.fraDato &&
@@ -264,7 +263,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                         erDatoIkkeIFremtid,
                       }}
                     />
-                  </SkjemaGruppe>
+                  </Fieldset>
                 </div>
               )}
 

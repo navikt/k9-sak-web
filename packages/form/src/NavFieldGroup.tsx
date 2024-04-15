@@ -1,12 +1,12 @@
-import { SkjemaGruppe } from 'nav-frontend-skjema';
+import { Fieldset } from '@navikt/ds-react';
 import React, { ReactNode, ReactNodeArray } from 'react';
 import { Field } from 'redux-form';
 import renderNavField from './renderNavField';
 
 const renderNavSkjemaGruppeWithError = renderNavField(({ title, feil, getChildren, className }) => (
-  <SkjemaGruppe description={title} feil={feil} className={className}>
+  <Fieldset legend={title} hideLegend description={title} error={feil} className={className}>
     {getChildren()}
-  </SkjemaGruppe>
+  </Fieldset>
 ));
 
 interface NavFieldGroupProps {
@@ -20,9 +20,9 @@ interface NavFieldGroupProps {
 const NavFieldGroup = ({ errorMessageName, errorMessage, title, children, className }: NavFieldGroupProps) => {
   if (!errorMessageName) {
     return (
-      <SkjemaGruppe description={title} className={className} feil={errorMessage}>
+      <Fieldset legend={title} hideLegend description={title} className={className} error={errorMessage}>
         {children}
-      </SkjemaGruppe>
+      </Fieldset>
     );
   }
   return (
