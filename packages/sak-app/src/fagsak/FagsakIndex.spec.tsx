@@ -6,6 +6,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
+import * as useTrackRouteParam from '../app/useTrackRouteParam';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import FagsakIndex from './FagsakIndex';
 
@@ -156,6 +157,19 @@ describe('<FagsakIndex>', () => {
     toTrinnsBehandling: undefined,
     behandlingÅrsaker: undefined,
   };
+
+  beforeEach(() => {
+    vi.spyOn(useTrackRouteParam, 'default').mockImplementation(() => ({
+      selected: 123456,
+      location: {
+        pathname: 'test',
+        search: 'test',
+        state: {},
+        hash: 'test',
+        key: 'test',
+      },
+    }));
+  });
 
   it('skal hente alle behandlinger fra k9sak, tilbake og klage', () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
