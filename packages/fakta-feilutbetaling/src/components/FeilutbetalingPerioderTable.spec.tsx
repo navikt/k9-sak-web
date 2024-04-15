@@ -15,12 +15,6 @@ const perioder = [
   },
 ];
 
-const headerTextCodes = [
-  'FeilutbetalingInfoPanel.Period',
-  'FeilutbetalingInfoPanel.Hendelse',
-  'FeilutbetalingInfoPanel.Beløp',
-];
-
 const mockProps = {
   perioder,
   årsaker: [],

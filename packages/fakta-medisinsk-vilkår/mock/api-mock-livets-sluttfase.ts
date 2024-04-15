@@ -1,14 +1,15 @@
-import express from 'express';
+/* eslint-disable no-console */
 import cors from 'cors';
+import express from 'express';
+import { Dokumenttype } from '../src/types/Dokument';
+import { createLivetsSluttfaseVurdering } from './apiUtils';
+import createMockedVurderingselementLinks from './mocked-data/createMockedVurderingselementLinks';
+import createStrukturertDokument from './mocked-data/createStrukturertDokument';
 import mockedDokumentliste from './mocked-data/mockedDokumentliste';
 import mockedDokumentoversikt from './mocked-data/mockedDokumentoversikt';
-import { createLivetsSluttfaseVurdering } from './apiUtils';
-import createStrukturertDokument from './mocked-data/createStrukturertDokument';
-import { Dokumenttype } from '../src/types/Dokument';
-import createMockedVurderingselementLinks from './mocked-data/createMockedVurderingselementLinks';
-import mockedNyeDokumenterList from './mocked-data/mockedNyeDokumenter';
-import livetsSluttfaseVurderingsoversiktMock from './mocked-data/mockedLivetsSluttfaseVurderingsoversikt';
 import livetsSluttfaseVurderingerMock from './mocked-data/mockedLivetsSluttfaseVurderinger';
+import livetsSluttfaseVurderingsoversiktMock from './mocked-data/mockedLivetsSluttfaseVurderingsoversikt';
+import mockedNyeDokumenterList from './mocked-data/mockedNyeDokumenter';
 
 const app = express();
 

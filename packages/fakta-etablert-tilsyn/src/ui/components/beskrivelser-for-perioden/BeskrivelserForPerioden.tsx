@@ -1,8 +1,8 @@
 import {
   Box,
-  Margin,
   ContentWithTooltip,
   LabelledContent,
+  Margin,
   OnePersonIconGray,
   OnePersonOutlineGray,
 } from '@navikt/ft-plattform-komponenter';
@@ -43,7 +43,7 @@ const BeskrivelserForPerioden = ({ periodebeskrivelser }: BeskrivelserForPeriode
   if (periodebeskrivelser?.length > 0) {
     return (
       <>
-        {periodebeskrivelser.map((periodebeskrivelse, index) => (
+        {periodebeskrivelser.map(periodebeskrivelse => (
           <Box marginBottom={Margin.large} key={periodebeskrivelse.tekst}>
             <LabelledContent label={getLabel(periodebeskrivelse)} content={periodebeskrivelse.tekst} labelTag="div" />
           </Box>

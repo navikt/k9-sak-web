@@ -1,21 +1,19 @@
 /* eslint-disable import/prefer-default-export */
-import express from 'express';
-import cors from 'cors';
 import { rest } from 'msw';
-import mockedTilsynsbehovVurderingsoversikt from './mocked-data/mockedTilsynsbehovVurderingsoversikt';
-import mockedToOmsorgspersonerVurderingsoversikt from './mocked-data/mockedToOmsorgspersonerVurderingsoversikt';
-import mockedToOmsorgspersonerVurderinger from './mocked-data/mockedToOmsorgspersonerVurderinger';
-import mockedTilsynsbehovVurderinger from './mocked-data/mockedTilsynsbehovVurderinger';
+import { Dokumenttype } from '../src/types/Dokument';
+import Vurderingstype from '../src/types/Vurderingstype';
+import { createKontinuerligTilsynVurdering, createToOmsorgspersonerVurdering } from './apiUtils';
+import createMockedVurderingselementLinks from './mocked-data/createMockedVurderingselementLinks';
+import createStrukturertDokument from './mocked-data/createStrukturertDokument';
+import mockedDiagnosekoderesponse from './mocked-data/mockedDiagnosekodeResponse';
 import mockedDokumentliste from './mocked-data/mockedDokumentliste';
 import mockedDokumentoversikt from './mocked-data/mockedDokumentoversikt';
-import { createKontinuerligTilsynVurdering, createToOmsorgspersonerVurdering } from './apiUtils';
-import Vurderingstype from '../src/types/Vurderingstype';
-import mockedDiagnosekoderesponse from './mocked-data/mockedDiagnosekodeResponse';
-import createStrukturertDokument from './mocked-data/createStrukturertDokument';
 import mockedInnleggelsesperioder from './mocked-data/mockedInnleggelsesperioder';
-import { Dokumenttype } from '../src/types/Dokument';
-import createMockedVurderingselementLinks from './mocked-data/createMockedVurderingselementLinks';
 import mockedNyeDokumenterList from './mocked-data/mockedNyeDokumenter';
+import mockedTilsynsbehovVurderinger from './mocked-data/mockedTilsynsbehovVurderinger';
+import mockedTilsynsbehovVurderingsoversikt from './mocked-data/mockedTilsynsbehovVurderingsoversikt';
+import mockedToOmsorgspersonerVurderinger from './mocked-data/mockedToOmsorgspersonerVurderinger';
+import mockedToOmsorgspersonerVurderingsoversikt from './mocked-data/mockedToOmsorgspersonerVurderingsoversikt';
 
 let mockedNyeDokumenter = [...mockedNyeDokumenterList];
 

@@ -1,11 +1,11 @@
-import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { reducer as formReducer, reduxForm } from 'redux-form';
-import { Provider } from 'react-redux';
-import { combineReducers, createStore } from 'redux';
-import { format, add } from 'date-fns';
-import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { add, format } from 'date-fns';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
+import { combineReducers, createStore } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import MenySettPaVentIndex from './MenySettPaVentIndex';
@@ -18,11 +18,6 @@ vi.mock('react-router-dom', async () => {
       push: vi.fn(),
     }),
   };
-});
-
-const MockForm = reduxForm({ form: 'mock' })(({ children }) => {
-  const handleSubmit = vi.fn();
-  return <form onSubmit={handleSubmit}>{children}</form>;
 });
 
 const ventearsaker = [

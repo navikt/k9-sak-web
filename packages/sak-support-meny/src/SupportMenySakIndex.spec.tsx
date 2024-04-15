@@ -7,7 +7,7 @@ import SupportTabs from './supportTabs';
 
 describe('<SupportMenySakIndex>', () => {
   it('skal lage tabs og sette Send melding som valgt', () => {
-    const { container } = renderWithIntl(
+    renderWithIntl(
       <SupportMenySakIndex
         tilgjengeligeTabs={[SupportTabs.HISTORIKK, SupportTabs.MELDINGER, SupportTabs.DOKUMENTER]}
         valgbareTabs={[SupportTabs.HISTORIKK, SupportTabs.MELDINGER, SupportTabs.DOKUMENTER]}

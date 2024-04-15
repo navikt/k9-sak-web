@@ -51,7 +51,8 @@ const config = {
     'import/extensions': OFF,
     'linebreak-style': OFF,
     'import/no-named-as-default': OFF,
-    'max-len': [1, 160],
+    // 'max-len': [1, 160],
+    "max-len": ["error", { "code": 160, "ignoreTemplateLiterals": true, "ignoreStrings": true }],
     'no-undef': ERROR,
     'react/require-default-props': OFF,
     'react/jsx-filename-extension': OFF,
@@ -109,9 +110,18 @@ const config = {
   },
   overrides: [
     {
+      files: ['*.ts', '*.tsx', '*.jsx'],
+      rules: {
+        'no-undef': OFF,
+        'no-console': ["warn", { allow: ["warn", "error"] }],
+
+      },
+    },
+    {
       files: ['*.spec.jsx', '*.spec.tsx', '*.spec.ts'],
       rules: {
         'no-unused-expressions': OFF,
+        'no-console': OFF
       },
     },
     {
@@ -120,10 +130,7 @@ const config = {
         'react/prop-types': OFF,
       },
     },
-    {
-      files: ['*.ts', '*.tsx', '*.jsx'],
-      rules: { 'no-undef': OFF },
-    },
+
   ],
 };
 module.exports = config;
