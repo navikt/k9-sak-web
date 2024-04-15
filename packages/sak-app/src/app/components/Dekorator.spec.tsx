@@ -1,17 +1,17 @@
 /* eslint-disable vitest/no-commented-out-tests */
 // import Dekorator from './Dekorator';
 
-const navAnsatt = {
-  brukernavn: 'Test',
-  kanBehandleKode6: false,
-  kanBehandleKode7: false,
-  kanBehandleKodeEgenAnsatt: false,
-  kanBeslutte: true,
-  kanOverstyre: false,
-  kanSaksbehandle: true,
-  kanVeilede: false,
-  navn: 'Test',
-};
+// const navAnsatt = {
+//   brukernavn: 'Test',
+//   kanBehandleKode6: false,
+//   kanBehandleKode7: false,
+//   kanBehandleKodeEgenAnsatt: false,
+//   kanBeslutte: true,
+//   kanOverstyre: false,
+//   kanSaksbehandle: true,
+//   kanVeilede: false,
+//   navn: 'Test',
+// };
 
 let contextStubHistory;
 afterEach(() => {

@@ -1,12 +1,5 @@
 import Kodeverk from './kodeverkTsType';
 
-enum TypeEndring {
-  AVKLART = 'AVKLART',
-  ENDRET = 'ENDRET',
-  SLETTET = 'SLETTET',
-  LAGT_TIL = 'LAGT_TIL',
-}
-
 export type TotrinnskontrollArbeidsforhold = Readonly<{
   navn: string;
   organisasjonsnummer: string;
