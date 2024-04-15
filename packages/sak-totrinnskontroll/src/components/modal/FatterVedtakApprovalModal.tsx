@@ -227,7 +227,6 @@ const FatterVedtakApprovalModal = ({
       open
       aria-label={intl.formatMessage({ id: modalDescriptionTextCode })}
       onClose={closeEvent}
-      width="small"
     >
       <Modal.Body>
         <HGrid gap="1" columns={{ xs: '1fr 9fr 2fr' }}>
