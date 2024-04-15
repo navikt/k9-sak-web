@@ -3,7 +3,6 @@ import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-front
 import AksjonspunktAvklarArbeidsforholdText from '@fpsak-frontend/shared-components/src/AksjonspunktAvklarArbeidsforholdText';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { Button } from '@navikt/ds-react';
-import { Row } from 'nav-frontend-grid';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -54,7 +53,7 @@ export const PersonArbeidsforholdDetailForm = ({
     <AksjonspunktAvklarArbeidsforholdText arbeidsforhold={arbeidsforhold} />
     <VerticalSpacer eightPx />
     {IMutenArbeidsforhold(arbeidsforhold) && (
-      <Row>
+      <div>
         <ArbeidsforholdRadioknapper
           formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
           behandlingId={behandlingId}
@@ -82,7 +81,7 @@ export const PersonArbeidsforholdDetailForm = ({
             </FlexColumn>
           </FlexRow>
         </FlexContainer>
-      </Row>
+      </div>
     )}
   </div>
 );

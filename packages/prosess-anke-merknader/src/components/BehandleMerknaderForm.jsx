@@ -1,5 +1,4 @@
-import { Heading } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { Heading, HGrid } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -8,14 +7,14 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 
 import {
-  RadioGroupField,
-  RadioOption,
-  TextAreaField,
   behandlingForm,
   behandlingFormValueSelector,
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
+  RadioGroupField,
+  RadioOption,
+  TextAreaField,
 } from '@fpsak-frontend/form';
 import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
@@ -44,30 +43,28 @@ const AnkeMerknader = ({
         {[<FormattedMessage id="Ankebehandling.Merknad.HelpText" key={aksjonspunktCode} />]}
       </AksjonspunktHelpTextTemp>
       <VerticalSpacer sixteenPx />
-      <Row>
-        <Column xs="7">
+      <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+        <div>
           <FormattedMessage id="Ankebehandling.Merknad.Merknader" />
           <RadioGroupField name="erMerknaderMottatt" validate={[required]} direction="horisontal" readOnly={readOnly}>
             <RadioOption value="ja" label={{ id: 'Ankebehandling.Merknad.Merknader.Ja' }} />
             <RadioOption value="nei" label={{ id: 'Ankebehandling.Merknad.Merknader.Nei' }} />
           </RadioGroupField>
-        </Column>
-      </Row>
+        </div>
+      </HGrid>
 
       <VerticalSpacer sixteenPx />
-      <Row>
-        <Column xs="7">
-          <TextAreaField
-            readOnly={readOnly}
-            readOnlyHideEmpty={false}
-            label={{ id: 'Ankebehandling.Merknad.Merknader.Kommentarer' }}
-            name="merknadKommentar"
-          />
-        </Column>
-      </Row>
+      <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+        <TextAreaField
+          readOnly={readOnly}
+          readOnlyHideEmpty={false}
+          label={{ id: 'Ankebehandling.Merknad.Merknader.Kommentarer' }}
+          name="merknadKommentar"
+        />
+      </HGrid>
       <VerticalSpacer sixteenPx />
-      <Row>
-        <Column xs="8">
+      <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+        <div>
           <ProsessStegSubmitButton
             formName={formProps.form}
             behandlingId={behandlingId}
@@ -85,8 +82,8 @@ const AnkeMerknader = ({
             ankeVurdering={formValues.ankeVurdering}
             aksjonspunktCode={aksjonspunktCode}
           />
-        </Column>
-      </Row>
+        </div>
+      </HGrid>
     </FadingPanel>
   </form>
 );

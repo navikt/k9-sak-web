@@ -13,8 +13,6 @@
     "@k9-sak-web/types": "1.0.0",
     "moment": "2.30.1",
     "nav-frontend-core": "6.0.1",
-    "nav-frontend-grid": "2.0.2",
-    "nav-frontend-grid-style": "1.0.3",
     "nav-frontend-js-utils": "1.0.20",
     "nav-frontend-tabs": "2.0.3",
     "nav-frontend-tabs-style": "2.0.2",

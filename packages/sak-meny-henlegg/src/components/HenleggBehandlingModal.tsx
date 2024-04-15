@@ -7,8 +7,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, required, safeJSONParse } from '@fpsak-frontend/utils';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
-import { Button, Detail, Modal } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { Button, Detail, HGrid, Modal } from '@navikt/ds-react';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React, { useMemo } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
@@ -176,8 +175,8 @@ export const HenleggBehandlingModalImpl = ({
         <form onSubmit={handleSubmit}>
           <div>
             <SkjemaGruppe legend={intl.formatMessage({ id: 'HenleggBehandlingModal.HenleggBehandling' })}>
-              <Row>
-                <Column xs="5">
+              <HGrid gap="1" columns={{ xs: '5fr 7fr' }}>
+                <div>
                   <SelectField
                     name="årsakKode"
                     label={intl.formatMessage({ id: 'HenleggBehandlingModal.ArsakField' })}
@@ -189,50 +188,46 @@ export const HenleggBehandlingModalImpl = ({
                       </option>
                     ))}
                   />
-                </Column>
-              </Row>
-              <Row>
-                <Column xs="8">
+                </div>
+              </HGrid>
+              <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+                <div>
                   <TextAreaField
                     name="begrunnelse"
                     label={intl.formatMessage({ id: 'HenleggBehandlingModal.BegrunnelseField' })}
                     validate={[required, maxLength1500, hasValidText]}
                     maxLength={1500}
                   />
-                </Column>
-              </Row>
+                </div>
+              </HGrid>
               {showHenleggelseFritekst(behandlingType.kode, årsakKode) && (
-                <Row>
-                  <Column xs="8">
-                    <div className={styles.fritekstTilBrevTextArea}>
-                      <TextAreaField
-                        name="fritekst"
-                        label={intl.formatMessage({ id: 'HenleggBehandlingModal.Fritekst' })}
-                        validate={[required, hasValidText]}
-                        maxLength={2000}
-                      />
-                    </div>
-                  </Column>
-                </Row>
+                <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+                  <div className={styles.fritekstTilBrevTextArea}>
+                    <TextAreaField
+                      name="fritekst"
+                      label={intl.formatMessage({ id: 'HenleggBehandlingModal.Fritekst' })}
+                      validate={[required, hasValidText]}
+                      maxLength={2000}
+                    />
+                  </div>
+                </HGrid>
               )}
               <VerticalSpacer sixteenPx />
-              <Row>
-                <Column xs="7">
-                  <div>
-                    <Button
-                      variant="primary"
-                      size="small"
-                      className={styles.button}
-                      disabled={disableHovedKnapp(behandlingType.kode, årsakKode, begrunnelse, fritekst)}
-                    >
-                      {intl.formatMessage({ id: 'HenleggBehandlingModal.HenleggBehandlingSubmit' })}
-                    </Button>
-                    <Button variant="secondary" type="button" size="small" onClick={cancelEvent}>
-                      {intl.formatMessage({ id: 'HenleggBehandlingModal.Avbryt' })}
-                    </Button>
-                  </div>
-                </Column>
-                <Column xs="4">
+              <HGrid gap="1" columns={{ xs: '7fr 4fr 1fr' }}>
+                <div>
+                  <Button
+                    variant="primary"
+                    size="small"
+                    className={styles.button}
+                    disabled={disableHovedKnapp(behandlingType.kode, årsakKode, begrunnelse, fritekst)}
+                  >
+                    {intl.formatMessage({ id: 'HenleggBehandlingModal.HenleggBehandlingSubmit' })}
+                  </Button>
+                  <Button variant="secondary" type="button" size="small" onClick={cancelEvent}>
+                    {intl.formatMessage({ id: 'HenleggBehandlingModal.Avbryt' })}
+                  </Button>
+                </div>
+                <div>
                   {showLink && (
                     <div className={styles.forhandsvis}>
                       {behandlingType.kode === BehandlingType.KLAGE && (
@@ -270,8 +265,8 @@ export const HenleggBehandlingModalImpl = ({
                       </a>
                     </div>
                   )}
-                </Column>
-              </Row>
+                </div>
+              </HGrid>
             </SkjemaGruppe>
           </div>
         </form>

@@ -1,13 +1,11 @@
-import { Button, Heading } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { Alert, Button, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
 
-import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import { InputField } from '@fpsak-frontend/form';
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidSaksnummerOrFodselsnummerFormat } from '@fpsak-frontend/utils';
 
 import styles from './searchForm.module.css';
@@ -59,12 +57,9 @@ export const SearchForm = ({
       </Button>
     </div>
     {searchResultAccessDenied && (
-      <Row>
-        <Column xs="12">
-          <Image className={styles.advarselIcon} src={advarselIcon} />
-          <FormattedMessage id={searchResultAccessDenied.feilmelding} />
-        </Column>
-      </Row>
+      <Alert inline variant="warning">
+        <FormattedMessage id={searchResultAccessDenied.feilmelding} />
+      </Alert>
     )}
   </form>
 );

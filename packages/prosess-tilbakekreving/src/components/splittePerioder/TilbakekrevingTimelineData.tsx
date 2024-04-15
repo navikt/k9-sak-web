@@ -1,9 +1,8 @@
 import React from 'react';
-import { Column, Row } from 'nav-frontend-grid';
 
+import DataForPeriode from '../../types/dataForPeriodeTsType';
 import PeriodeController from './PeriodeController';
 import PeriodeInformasjon from './PeriodeInformasjon';
-import DataForPeriode from '../../types/dataForPeriodeTsType';
 
 type OwnProps = {
   periode: DataForPeriode;
@@ -26,26 +25,24 @@ export const TilbakekrevingTimelineData = ({
   behandlingVersjon,
   beregnBelop,
 }: OwnProps) => (
-  <Row>
-    <Column xs="12">
-      <PeriodeController
-        callbackForward={callbackForward}
-        callbackBackward={callbackBackward}
-        periode={periode}
-        readOnly={readOnly}
-        oppdaterSplittedePerioder={oppdaterSplittedePerioder}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        beregnBelop={beregnBelop}
-      />
-      <PeriodeInformasjon
-        feilutbetaling={periode.feilutbetaling}
-        fom={periode.fom}
-        tom={periode.tom}
-        arsak={periode.årsak}
-      />
-    </Column>
-  </Row>
+  <div>
+    <PeriodeController
+      callbackForward={callbackForward}
+      callbackBackward={callbackBackward}
+      periode={periode}
+      readOnly={readOnly}
+      oppdaterSplittedePerioder={oppdaterSplittedePerioder}
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
+      beregnBelop={beregnBelop}
+    />
+    <PeriodeInformasjon
+      feilutbetaling={periode.feilutbetaling}
+      fom={periode.fom}
+      tom={periode.tom}
+      arsak={periode.årsak}
+    />
+  </div>
 );
 
 export default TilbakekrevingTimelineData;

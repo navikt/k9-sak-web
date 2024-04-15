@@ -15,7 +15,6 @@ import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-fronte
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { BodyShort, Detail, Heading } from '@navikt/ds-react';
 import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -61,14 +60,10 @@ export const CheckPersonStatusFormImpl = ({
     )}
     <VerticalSpacer twentyPx />
     <div className={styles.radioGroup}>
-      <Row>
-        <Column xs="12">
-          <RadioGroupField name="fortsettBehandling" validate={[required]} readOnly={readOnly}>
-            <RadioOption label={{ id: 'CheckPersonStatusForm.HaltBehandling' }} value={false} />
-            <RadioOption label={{ id: 'CheckPersonStatusForm.ContinueBehandling' }} value />
-          </RadioGroupField>
-        </Column>
-      </Row>
+      <RadioGroupField name="fortsettBehandling" validate={[required]} readOnly={readOnly}>
+        <RadioOption label={{ id: 'CheckPersonStatusForm.HaltBehandling' }} value={false} />
+        <RadioOption label={{ id: 'CheckPersonStatusForm.ContinueBehandling' }} value />
+      </RadioGroupField>
       {fortsettBehandling === true && (
         <ArrowBox alignOffset={readOnly ? 0 : 198}>
           <Detail>{intl.formatMessage({ id: 'CheckPersonStatusForm.SetPersonStatus' })}</Detail>

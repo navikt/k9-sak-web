@@ -1,4 +1,4 @@
-import { Column, Row } from 'nav-frontend-grid';
+import { HGrid } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -17,35 +17,31 @@ import vergeType from '../kodeverk/vergeType';
 export const RegistrereVergeFaktaForm = ({ intl, readOnly, vergetyper, alleMerknaderFraBeslutter, valgtVergeType }) => (
   <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_VERGE]}>
     <div>
-      <Row>
-        <Column xs="5">
-          <SelectField
-            name="vergeType"
-            label={intl.formatMessage({ id: 'Verge.TypeVerge' })}
-            placeholder={intl.formatMessage({ id: 'Verge.TypeVerge' })}
-            validate={[required]}
-            selectValues={vergetyper.map(vt => (
-              <option key={vt.kode} value={vt.kode}>
-                {vt.navn}
-              </option>
-            ))}
-            readOnly={readOnly}
-          />
-        </Column>
-      </Row>
+      <HGrid gap="1" columns={{ xs: '5fr 7fr' }}>
+        <SelectField
+          name="vergeType"
+          label={intl.formatMessage({ id: 'Verge.TypeVerge' })}
+          placeholder={intl.formatMessage({ id: 'Verge.TypeVerge' })}
+          validate={[required]}
+          selectValues={vergetyper.map(vt => (
+            <option key={vt.kode} value={vt.kode}>
+              {vt.navn}
+            </option>
+          ))}
+          readOnly={readOnly}
+        />
+      </HGrid>
       {valgtVergeType && (
         <>
-          <Row>
-            <Column xs="3">
-              <InputField
-                bredde="XXL"
-                name="navn"
-                label={{ id: 'Verge.Navn' }}
-                validate={[required, hasValidName]}
-                readOnly={readOnly}
-              />
-            </Column>
-            <Column xs="3">
+          <HGrid gap="1" columns={{ xs: '3fr 3fr 6fr' }}>
+            <InputField
+              bredde="XXL"
+              name="navn"
+              label={{ id: 'Verge.Navn' }}
+              validate={[required, hasValidName]}
+              readOnly={readOnly}
+            />
+            <div>
               {valgtVergeType !== vergeType.ADVOKAT && (
                 <InputField
                   htmlSize={14}
@@ -64,27 +60,23 @@ export const RegistrereVergeFaktaForm = ({ intl, readOnly, vergetyper, alleMerkn
                   readOnly={readOnly}
                 />
               )}
-            </Column>
-          </Row>
+            </div>
+          </HGrid>
           <VerticalSpacer eightPx />
-          <Row>
-            <Column xs="2">
-              <DatepickerField
-                name="gyldigFom"
-                label={{ id: 'Verge.PeriodeFOM' }}
-                validate={[required, hasValidDate]}
-                readOnly={readOnly}
-              />
-            </Column>
-            <Column xs="2">
-              <DatepickerField
-                name="gyldigTom"
-                label={{ id: 'Verge.PeriodeTOM' }}
-                validate={[hasValidDate]}
-                readOnly={readOnly}
-              />
-            </Column>
-          </Row>
+          <HGrid gap="1" columns={{ xs: '2fr 2fr 8fr' }}>
+            <DatepickerField
+              name="gyldigFom"
+              label={{ id: 'Verge.PeriodeFOM' }}
+              validate={[required, hasValidDate]}
+              readOnly={readOnly}
+            />
+            <DatepickerField
+              name="gyldigTom"
+              label={{ id: 'Verge.PeriodeTOM' }}
+              validate={[hasValidDate]}
+              readOnly={readOnly}
+            />
+          </HGrid>
         </>
       )}
     </div>

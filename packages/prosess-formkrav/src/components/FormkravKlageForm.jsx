@@ -11,9 +11,8 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { Detail, Heading } from '@navikt/ds-react';
+import { Detail, HGrid, Heading } from '@navikt/ds-react';
 import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -83,8 +82,8 @@ export const FormkravKlageForm = ({
         {[<FormattedMessage id="Klage.Formkrav.HelpText" key={aksjonspunktCode} />]}
       </AksjonspunktHelpTextTemp>
       <VerticalSpacer sixteenPx />
-      <Row>
-        <Column xs="6">
+      <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+        <div>
           {Array.isArray(parterMedKlagerett) && parterMedKlagerett.length ? (
             <>
               <SelectField
@@ -108,8 +107,8 @@ export const FormkravKlageForm = ({
             </>
           ) : null}
           <ProsessStegBegrunnelseTextField readOnly={readOnly} />
-        </Column>
-        <Column xs="6">
+        </div>
+        <div>
           <SelectField
             readOnly={readOnly}
             validate={[required]}
@@ -120,44 +119,44 @@ export const FormkravKlageForm = ({
             bredde="l"
           />
           <VerticalSpacer sixteenPx />
-          <Row>
-            <Column xs="4">
+          <HGrid gap="1" columns={{ xs: '4fr 8fr' }}>
+            <div>
               <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErKlagerPart' })}</Detail>
               <VerticalSpacer sixteenPx />
               <RadioGroupField name="erKlagerPart" validate={[required]} readOnly={readOnly}>
                 <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
                 <RadioOption value={false} label={{ id: 'Klage.Formkrav.Nei' }} />
               </RadioGroupField>
-            </Column>
-            <Column xs="8">
+            </div>
+            <div>
               <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErKonkret' })}</Detail>
               <VerticalSpacer sixteenPx />
               <RadioGroupField name="erKonkret" validate={[required]} readOnly={readOnly}>
                 <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
                 <RadioOption value={false} label={{ id: 'Klage.Formkrav.Nei' }} />
               </RadioGroupField>
-            </Column>
-          </Row>
-          <Row>
-            <Column xs="4">
+            </div>
+          </HGrid>
+          <HGrid gap="1" columns={{ xs: '4fr 8fr' }}>
+            <div>
               <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErFristOverholdt' })}</Detail>
               <VerticalSpacer sixteenPx />
               <RadioGroupField name="erFristOverholdt" validate={[required]} readOnly={readOnly}>
                 <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
                 <RadioOption value={false} label={{ id: 'Klage.Formkrav.Nei' }} />
               </RadioGroupField>
-            </Column>
-            <Column xs="8">
+            </div>
+            <div>
               <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErSignert' })}</Detail>
               <VerticalSpacer sixteenPx />
               <RadioGroupField name="erSignert" validate={[required]} readOnly={readOnly}>
                 <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
                 <RadioOption value={false} label={{ id: 'Klage.Formkrav.Nei' }} />
               </RadioGroupField>
-            </Column>
-          </Row>
-        </Column>
-      </Row>
+            </div>
+          </HGrid>
+        </div>
+      </HGrid>
       <VerticalSpacer sixteenPx />
       <div className={styles.confirmVilkarForm}>
         <ProsessStegSubmitButton
