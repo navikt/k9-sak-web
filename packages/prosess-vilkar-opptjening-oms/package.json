@@ -12,7 +12,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/prosess-felles": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "2.5.3",
+    "@navikt/ft-plattform-komponenter": "2.5.4",
     "classnames": "2.5.1",
     "dayjs": "1.11.10",
     "lodash": "4.17.21",

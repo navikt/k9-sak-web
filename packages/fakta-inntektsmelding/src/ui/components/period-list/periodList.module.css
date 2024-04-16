@@ -6,7 +6,7 @@
 
 .periodList__element {
   border-bottom: 1px solid #b0b0b0;
-  padding: 1.5rem 0 2.1875rem 0;
+  padding: 1.5rem 0 2.1875rem;
 }
 
 .periodList__element:first-of-type {
@@ -24,7 +24,7 @@
 }
 
 .periodList__alertstripe {
-  margin: 2.4375rem 0 1.6875rem 0;
+  margin: 2.4375rem 0 1.6875rem;
 }
 
 .periodList__alertstripe div {

@@ -1,7 +1,7 @@
 .prosesspunkt {
   background-color: var(--a-white);
   border-top: 1px solid #6a6a6a;
-  box-shadow: 0 1px 6px 1px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 1px 6px 1px rgb(0 0 0 / 23%);
   position: relative;
   width: 100%;
 }
