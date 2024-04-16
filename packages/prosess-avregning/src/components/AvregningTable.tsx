@@ -53,7 +53,7 @@ const rowToggable = (fagOmråde, rowIsFeilUtbetalt) => {
 
 const rowIsHidden = (isRowToggable, showDetails) => isRowToggable && !showDetails;
 
-const createColumns = (perioder, rangeOfMonths, nextPeriod) => {
+const createColumns = (perioder, rangeOfMonths, nextPeriod, boldText?: boolean) => {
   const nextPeriodFormatted = `${moment(nextPeriod).format('MMMMYY')}`;
 
   const perioderData = rangeOfMonths.map(month => {
@@ -71,6 +71,7 @@ const createColumns = (perioder, rangeOfMonths, nextPeriod) => {
         lastColumn: måned.måned
           ? måned.måned === nextPeriodFormatted
           : moment(måned.periode.tom).format('MMMMYY') === nextPeriodFormatted,
+        'font-bold': boldText,
       })}
     >
       {formatCurrencyNoKr(måned.beløp)}
@@ -163,15 +164,14 @@ const AvregningTable = ({
                     .map((rad, rowIndex) => {
                       const isFeilUtbetalt = rad.feltnavn === avregningCodes.DIFFERANSE;
                       const isRowToggable = rowToggable(fagOmråde, isFeilUtbetalt);
+                      const rowClassnames = `${isRowToggable ? styles.rowBorderDashed : styles.rowBorderSolid}`;
+                      const boldText = isFeilUtbetalt || ingenPerioderMedAvvik;
                       return (
-                        <Table.Row
-                          key={`rowIndex${fagIndex + 1}${rowIndex + 1}`}
-                          className={isFeilUtbetalt || ingenPerioderMedAvvik ? 'font-bold' : ''}
-                        >
-                          <Table.DataCell>
+                        <Table.Row key={`rowIndex${fagIndex + 1}${rowIndex + 1}`} className={rowClassnames}>
+                          <Table.DataCell className={boldText ? 'font-bold' : ''}>
                             <FormattedMessage id={`Avregning.${fagOmråde.fagOmrådeKode.kode}.${rad.feltnavn}`} />
                           </Table.DataCell>
-                          {createColumns(rad.resultaterPerMåned, rangeOfMonths, nesteMåned)}
+                          {createColumns(rad.resultaterPerMåned, rangeOfMonths, nesteMåned, boldText)}
                         </Table.Row>
                       );
                     }),
@@ -182,17 +182,17 @@ const AvregningTable = ({
                   ingenPerioderMedAvvik,
                   mottaker.resultatPerFagområde,
                   mottaker.resultatOgMotregningRader,
-                ).map((resultat, resultatIndex) => (
-                  <Table.Row
-                    key={`rowIndex${resultatIndex + 1}`}
-                    className={resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED ? 'font-bold' : ''}
-                  >
-                    <Table.DataCell>
-                      <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
-                    </Table.DataCell>
-                    {createColumns(resultat.resultaterPerMåned, rangeOfMonths, nesteMåned)}
-                  </Table.Row>
-                )),
+                ).map((resultat, resultatIndex) => {
+                  const boldText = resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED;
+                  return (
+                    <Table.Row key={`rowIndex${resultatIndex + 1}`} className={styles.rowBorderSolid}>
+                      <Table.DataCell className={boldText ? 'font-bold' : ''}>
+                        <FormattedMessage id={`Avregning.${resultat.feltnavn}`} />
+                      </Table.DataCell>
+                      {createColumns(resultat.resultaterPerMåned, rangeOfMonths, nesteMåned, boldText)}
+                    </Table.Row>
+                  );
+                }),
               )}
           </Table.Body>
         </Table>
