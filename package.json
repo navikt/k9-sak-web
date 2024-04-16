@@ -49,6 +49,7 @@
     "@navikt/ft-plattform-komponenter": "2.5.4",
     "@popperjs/core": "2.11.8",
     "@sentry/browser": "7.110.1",
+    "@sentry/react": "^7.110.1",
     "@storybook/testing-react": "2.0.1",
     "axios": "1.6.8",
     "date-fns": "2.30.0",
