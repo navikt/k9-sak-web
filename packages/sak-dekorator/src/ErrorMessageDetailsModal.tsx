@@ -1,7 +1,6 @@
 import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { BodyShort, Button, Detail, Heading, Modal } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { BodyShort, Button, Detail, HGrid, Heading, Modal } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './errorMessageDetailsModal.module.css';
@@ -33,22 +32,22 @@ const ErrorMessageDetailsModal = ({
     onClose={closeModalFn}
   >
     <Modal.Header closeButton={false}>
-      <Row>
-        <Column xs="1">
+      <HGrid gap="1" columns={{ xs: '1fr 10fr 1fr' }}>
+        <div className="relative">
           <Image className={styles.image} src={infoImageUrl} />
           <div className={styles.divider} />
-        </Column>
-        <Column xs="10" className={styles.text}>
+        </div>
+        <div className={styles.text}>
           <Heading size="small" level="2">
             <FormattedMessage id="ErrorMessageDetailsModal.ErrorDetails" />
           </Heading>
-        </Column>
-      </Row>
+        </div>
+      </HGrid>
     </Modal.Header>
     <Modal.Body>
-      <Row>
-        <Column xs="1" />
-        <Column xs="11">
+      <HGrid gap="1" columns={{ xs: '1fr 11fr' }}>
+        <div />
+        <div>
           {Object.keys(errorDetails).map(edKey => (
             <React.Fragment key={edKey}>
               <Detail>{`${capitalizeFirstLetters(edKey)}:`}</Detail>
@@ -58,15 +57,13 @@ const ErrorMessageDetailsModal = ({
               <VerticalSpacer eightPx />
             </React.Fragment>
           ))}
-        </Column>
-      </Row>
-      <Row>
-        <Column xs="12">
-          <Button variant="secondary" className={styles.cancelButton} size="small" type="reset" onClick={closeModalFn}>
-            <FormattedMessage id="ErrorMessageDetailsModal.Close" />
-          </Button>
-        </Column>
-      </Row>
+        </div>
+      </HGrid>
+      <HGrid gap="1" columns={{ xs: '12fr' }}>
+        <Button variant="secondary" className={styles.cancelButton} size="small" type="reset" onClick={closeModalFn}>
+          <FormattedMessage id="ErrorMessageDetailsModal.Close" />
+        </Button>
+      </HGrid>
     </Modal.Body>
   </Modal>
 );

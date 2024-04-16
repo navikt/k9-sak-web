@@ -4,8 +4,7 @@ import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.sv
 import { CheckboxField } from '@fpsak-frontend/form';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import { DateTimeLabel, Image } from '@fpsak-frontend/shared-components';
-import { BodyShort, Detail, Table } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { BodyShort, Detail, HGrid, Table } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -79,54 +78,52 @@ const DocumentListInnsyn = ({ intl, documents, saksNr, readOnly }) => {
       <Detail className={styles.noDocuments}>
         <FormattedMessage id="DocumentListInnsyn.VelgInnsynsDok" />
       </Detail>
-      <Row>
-        <Column xs={readOnly ? '6' : '10'}>
-          <Table>
-            <Table.Header>
-              <Table.Row>
-                {headerTextCodes.map(text => (
-                  <Table.HeaderCell scope="col" key={text}>
-                    {text}
-                  </Table.HeaderCell>
-                ))}
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {documents.map(document => {
-                const img = getDirectionImage(document, intl);
-                const dokId = parseInt(document.dokumentId, 10);
-                return (
-                  <Table.Row key={dokId} id={dokId}>
-                    <Table.DataCell className={styles.checkboxCol}>
-                      <CheckboxField label={noLabelHack()} name={`dokument_${dokId}`} disabled={readOnly} />
-                    </Table.DataCell>
-                    <Table.DataCell hidden={readOnly}>{img}</Table.DataCell>
-                    <Table.DataCell className={styles.linkCol}>
-                      <a
-                        href={getLink(document, saksNr)}
-                        className="lenke lenke--frittstaende"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {document.tittel}
-                      </a>
-                    </Table.DataCell>
-                    <Table.DataCell hidden={readOnly}>
-                      {document.tidspunkt ? (
-                        <DateTimeLabel dateTimeString={document.tidspunkt} />
-                      ) : (
-                        <BodyShort size="small">
-                          <FormattedMessage id="DocumentListInnsyn.IProduksjon" />
-                        </BodyShort>
-                      )}
-                    </Table.DataCell>
-                  </Table.Row>
-                );
-              })}
-            </Table.Body>
-          </Table>
-        </Column>
-      </Row>
+      <HGrid gap="1" columns={{ xs: readOnly ? '6fr 6fr' : '10fr 2fr' }}>
+        <Table>
+          <Table.Header>
+            <Table.Row>
+              {headerTextCodes.map(text => (
+                <Table.HeaderCell scope="col" key={text}>
+                  {text}
+                </Table.HeaderCell>
+              ))}
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {documents.map(document => {
+              const img = getDirectionImage(document, intl);
+              const dokId = parseInt(document.dokumentId, 10);
+              return (
+                <Table.Row key={dokId} id={dokId}>
+                  <Table.DataCell className={styles.checkboxCol}>
+                    <CheckboxField label={noLabelHack()} name={`dokument_${dokId}`} disabled={readOnly} />
+                  </Table.DataCell>
+                  <Table.DataCell hidden={readOnly}>{img}</Table.DataCell>
+                  <Table.DataCell className={styles.linkCol}>
+                    <a
+                      href={getLink(document, saksNr)}
+                      className="lenke lenke--frittstaende"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {document.tittel}
+                    </a>
+                  </Table.DataCell>
+                  <Table.DataCell hidden={readOnly}>
+                    {document.tidspunkt ? (
+                      <DateTimeLabel dateTimeString={document.tidspunkt} />
+                    ) : (
+                      <BodyShort size="small">
+                        <FormattedMessage id="DocumentListInnsyn.IProduksjon" />
+                      </BodyShort>
+                    )}
+                  </Table.DataCell>
+                </Table.Row>
+              );
+            })}
+          </Table.Body>
+        </Table>
+      </HGrid>
     </>
   );
 };

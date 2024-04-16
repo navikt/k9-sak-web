@@ -1,6 +1,5 @@
-import Panel from 'nav-frontend-paneler';
+import { Box } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
-
 import styles from './fadingPanel.module.css';
 
 interface OwnProps {
@@ -14,7 +13,13 @@ interface OwnProps {
  * Wrapper rundt Panel-komponenten fra nav-frontend. Animerer(fade-in) innholdet i panelet.
  */
 const FadingPanel = ({ withoutTopMargin = false, children }: OwnProps) => (
-  <Panel className={withoutTopMargin ? styles.containerWithoutTopMargin : styles.container}>{children}</Panel>
+  <Box
+    background="surface-default"
+    padding="4"
+    className={withoutTopMargin ? styles.containerWithoutTopMargin : styles.container}
+  >
+    {children}
+  </Box>
 );
 
 export default FadingPanel;

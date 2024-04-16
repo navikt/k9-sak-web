@@ -3,7 +3,6 @@ import { DDMMYYYY_DATE_FORMAT, isEqual } from '@fpsak-frontend/utils';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
 import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
 import hash from 'object-hash';
 import React, { Component } from 'react';
 import DateContainer from './DateContainer';
@@ -186,30 +185,26 @@ class OpptjeningTimeLine extends Component<OpptjeningTimeLineProps, OpptjeningTi
     const { items, groups } = this.state;
     return (
       <div className="opptjening">
-        <Row>
-          <Column xs="12">
-            <DateContainer
-              opptjeningFomDato={moment(opptjeningFomDato).format(DDMMYYYY_DATE_FORMAT)}
-              opptjeningTomDato={moment(opptjeningTomDato).format(DDMMYYYY_DATE_FORMAT)}
-            />
-            <div className={styles.timelineContainer}>
-              <div className={styles.timeLineWrapper}>
-                <div className={styles.timeLine}>
-                  <Timeline
-                    key={hash(opptjeningPeriods)}
-                    ref={this.timelineRef}
-                    options={options(opptjeningFomDato, opptjeningTomDato)}
-                    initialItems={items}
-                    initialGroups={groups}
-                    customTimes={{ currentDate: new Date(opptjeningTomDato) }}
-                    selectHandler={this.selectHandler}
-                    selection={[selectedPeriod ? selectedPeriod.id : undefined]}
-                  />
-                </div>
-              </div>
+        <DateContainer
+          opptjeningFomDato={moment(opptjeningFomDato).format(DDMMYYYY_DATE_FORMAT)}
+          opptjeningTomDato={moment(opptjeningTomDato).format(DDMMYYYY_DATE_FORMAT)}
+        />
+        <div className={styles.timelineContainer}>
+          <div className={styles.timeLineWrapper}>
+            <div className={styles.timeLine}>
+              <Timeline
+                key={hash(opptjeningPeriods)}
+                ref={this.timelineRef}
+                options={options(opptjeningFomDato, opptjeningTomDato)}
+                initialItems={items}
+                initialGroups={groups}
+                customTimes={{ currentDate: new Date(opptjeningTomDato) }}
+                selectHandler={this.selectHandler}
+                selection={[selectedPeriod ? selectedPeriod.id : undefined]}
+              />
             </div>
-          </Column>
-        </Row>
+          </div>
+        </div>
       </div>
     );
   }

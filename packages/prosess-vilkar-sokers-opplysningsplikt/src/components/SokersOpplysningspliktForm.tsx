@@ -9,9 +9,8 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, isObject, required } from '@fpsak-frontend/utils';
 import { ProsessPanelTemplate, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Behandling, Kodeverk, KodeverkMedNavn, ManglendeVedleggSoknad, Soknad } from '@k9-sak-web/types';
-import { BodyShort, Table } from '@navikt/ds-react';
+import { BodyShort, HGrid, Table } from '@navikt/ds-react';
 import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -138,8 +137,8 @@ export const SokersOpplysningspliktFormImpl = ({
           <FormattedMessage id="SokersOpplysningspliktForm.ManglendeDokumentasjon" />
         </BodyShort>
         <VerticalSpacer eightPx />
-        <Row>
-          <Column xs="11">
+        <HGrid gap="1" columns={{ xs: '11fr 1fr' }}>
+          <div>
             <Table>
               <Table.Body>
                 {manglendeVedlegg.map(vedlegg => (
@@ -160,26 +159,24 @@ export const SokersOpplysningspliktFormImpl = ({
                 ))}
               </Table.Body>
             </Table>
-          </Column>
-        </Row>
+          </div>
+        </HGrid>
       </>
     )}
     <ProsessStegBegrunnelseTextField readOnly={readOnly} />
     {!readOnly && (
       <>
         <VerticalSpacer sixteenPx />
-        <Row>
-          <Column xs="6">
-            <RadioGroupField name="erVilkarOk" validate={[required]}>
-              <RadioOption
-                label={<FormattedMessage id={findRadioButtonTextCode(true)} />}
-                value
-                disabled={isVilkarOppfyltDisabled(hasSoknad, inntektsmeldingerSomIkkeKommer)}
-              />
-              <RadioOption label={getLabel(intl)} value={false} />
-            </RadioGroupField>
-          </Column>
-        </Row>
+        <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+          <RadioGroupField name="erVilkarOk" validate={[required]}>
+            <RadioOption
+              label={<FormattedMessage id={findRadioButtonTextCode(true)} />}
+              value
+              disabled={isVilkarOppfyltDisabled(hasSoknad, inntektsmeldingerSomIkkeKommer)}
+            />
+            <RadioOption label={getLabel(intl)} value={false} />
+          </RadioGroupField>
+        </HGrid>
       </>
     )}
     {readOnly && (

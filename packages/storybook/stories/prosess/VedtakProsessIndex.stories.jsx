@@ -1,20 +1,21 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { boolean, withKnobs } from '@storybook/addon-knobs';
+import React, { useMemo, useState } from 'react';
 
-import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
+import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
+import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 
 import withReduxProvider from '../../decorators/withRedux';
 
@@ -193,56 +194,63 @@ export const visÅpentAksjonspunktForSvangerskapspenger = () => (
   />
 );
 
-export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = () => (
-  <VedtakProsessIndex
-    behandling={{
-      ...behandling,
-      behandlingsresultat: {
-        vedtaksbrev: {
-          kode: 'FRITEKST',
-        },
-        type: {
-          kode: behandlingResultatType.AVSLATT,
-        },
-        avslagsarsak: {
-          kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-          kodeverk: kodeverkTyper.AVSLAGSARSAK,
-        },
-      },
-    }}
-    vilkar={[
-      {
-        ...vilkar[0],
-        vilkarStatus: {
-          kode: vilkarUtfallType.IKKE_OPPFYLT,
-        },
-      },
-    ]}
-    beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
-    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-    medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[
-      {
-        definisjon: {
-          kode: aksjonspunktCodes.FORESLA_VEDTAK,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      },
-    ]}
-    ytelseType={{ kode: fagsakYtelseType.SVANGERSKAPSPENGER }}
-    employeeHasAccess={boolean('employeeHasAccess', false)}
-    isReadOnly={boolean('isReadOnly', false)}
-    previewCallback={action('button-click')}
-    submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
-  />
-);
+export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = () => {
+  const [vedtakFormState, setVedtakFormState] = useState(null);
+  const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
+
+  return (
+    <VedtakFormContext.Provider value={value}>
+      <VedtakProsessIndex
+        behandling={{
+          ...behandling,
+          behandlingsresultat: {
+            vedtaksbrev: {
+              kode: 'FRITEKST',
+            },
+            type: {
+              kode: behandlingResultatType.AVSLATT,
+            },
+            avslagsarsak: {
+              kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
+              kodeverk: kodeverkTyper.AVSLAGSARSAK,
+            },
+          },
+        }}
+        vilkar={[
+          {
+            ...vilkar[0],
+            vilkarStatus: {
+              kode: vilkarUtfallType.IKKE_OPPFYLT,
+            },
+          },
+        ]}
+        beregningresultatForeldrepenger={resultatstruktur}
+        sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+        resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+        medlemskap={{ fom: '2019-01-01' }}
+        aksjonspunkter={[
+          {
+            definisjon: {
+              kode: aksjonspunktCodes.FORESLA_VEDTAK,
+            },
+            status: {
+              kode: aksjonspunktStatus.OPPRETTET,
+            },
+            begrunnelse: undefined,
+            kanLoses: true,
+            erAktivt: true,
+          },
+        ]}
+        ytelseType={{ kode: fagsakYtelseType.SVANGERSKAPSPENGER }}
+        employeeHasAccess={boolean('employeeHasAccess', false)}
+        isReadOnly={boolean('isReadOnly', false)}
+        previewCallback={action('button-click')}
+        submitCallback={action('button-click')}
+        alleKodeverk={alleKodeverk}
+      />
+    </VedtakFormContext.Provider>
+  );
+};
 
 export const visÅpentAksjonspunktForEngangsstønad = () => (
   <VedtakProsessIndex
@@ -453,6 +461,9 @@ export const visAvslåttForEngangsstønadRevurdering = () => (
 );
 
 export const visOverlappendeYtelser = () => {
+  const [vedtakFormState, setVedtakFormState] = useState(null);
+  const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
+
   const aksjonspunkt5040 = {
     aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
     begrunnelse: null,
@@ -556,93 +567,102 @@ export const visOverlappendeYtelser = () => {
   ];
 
   return (
-    <VedtakProsessIndex
-      behandling={{
-        ...behandling,
-        type: {
-          kode: behandlingType.OMSORGSPENGER,
-        },
-        behandlingsresultat: {
-          vedtaksbrev: {
-            kode: 'FRITEKST',
-          },
+    <VedtakFormContext.Provider value={value}>
+      <VedtakProsessIndex
+        behandling={{
+          ...behandling,
           type: {
-            kode: behandlingResultatType.INNVILGET,
+            kode: behandlingType.OMSORGSPENGER,
           },
-          avslagsarsak: {
-            kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-            kodeverk: kodeverkTyper.AVSLAGSARSAK,
+          behandlingsresultat: {
+            vedtaksbrev: {
+              kode: 'FRITEKST',
+            },
+            type: {
+              kode: behandlingResultatType.INNVILGET,
+            },
+            avslagsarsak: {
+              kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
+              kodeverk: kodeverkTyper.AVSLAGSARSAK,
+            },
           },
-        },
-      }}
-      vilkar={[
-        {
-          ...vilkar[0],
-          vilkarStatus: {
-            kode: vilkarUtfallType.IKKE_OPPFYLT,
+        }}
+        vilkar={[
+          {
+            ...vilkar[0],
+            vilkarStatus: {
+              kode: vilkarUtfallType.IKKE_OPPFYLT,
+            },
           },
-        },
-      ]}
-      beregningresultatEngangsstonad={resultatstruktur}
-      sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
-      resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-      medlemskap={{ fom: '2019-01-01' }}
-      aksjonspunkter={[aksjonspunkt5040]}
-      ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
-      employeeHasAccess={boolean('employeeHasAccess', false)}
-      isReadOnly={boolean('isReadOnly', false)}
-      previewCallback={action('button-click')}
-      submitCallback={action('button-click')}
-      alleKodeverk={alleKodeverk}
-      overlappendeYtelser={overlappendeYtelser}
-    />
+        ]}
+        beregningresultatEngangsstonad={resultatstruktur}
+        sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+        resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+        medlemskap={{ fom: '2019-01-01' }}
+        aksjonspunkter={[aksjonspunkt5040]}
+        ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
+        employeeHasAccess={boolean('employeeHasAccess', false)}
+        isReadOnly={boolean('isReadOnly', false)}
+        previewCallback={action('button-click')}
+        submitCallback={action('button-click')}
+        alleKodeverk={alleKodeverk}
+        overlappendeYtelser={overlappendeYtelser}
+      />
+    </VedtakFormContext.Provider>
   );
 };
 
-export const brevMedFritekstfelt = () => (
-  <VedtakProsessIndex
-    behandling={behandling}
-    vilkar={[]}
-    beregningresultatEngangsstonad={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
-    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-    medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[]}
-    ytelseType={{ kode: fagsakYtelseType.PLEIEPENGER }}
-    employeeHasAccess={boolean('employeeHasAccess', true)}
-    isReadOnly={boolean('isReadOnly', false)}
-    previewCallback={action('button-click')}
-    submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
-    informasjonsbehovVedtaksbrev={{
-      informasjonsbehov: [
-        {
-          kode: 'TOM_BEKREFTELSE',
-          beskrivelse: 'Tomt informasjonsbehov som kun krever en bekreftekse av saksbehandler',
-          type: 'UKJENT',
-        },
-        {
-          kode: 'FRITEKSTVEDTAKSBREV',
-          beskrivelse: 'Fritekstvedtaksbrev',
-          type: 'FRITEKSTBREV',
-        },
-        {
-          kode: 'REVURDERING_ENDRING',
-          beskrivelse:
-            'Fritekstbeskrivelse av endringsvedtaket. Hvor opplysningene kommer fra, hva slags nye opplysninger og hvilke perioder de gjelder',
-          type: 'FRITEKST',
-        },
-      ],
-      mangler: ['REVURDERING_ENDRING'],
-    }}
-    fritekstdokumenter={[]}
-    tilgjengeligeVedtaksbrev={{
-      alternativeMottakere: [],
-      vedtaksbrevmaler: {
-        FRITEKST: 'FRITKS',
-        AUTOMATISK: 'ENDRING',
-        INGEN: null,
-      },
-    }}
-  />
-);
+export const brevMedFritekstfelt = () => {
+  const [vedtakFormState, setVedtakFormState] = useState(null);
+  const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
+
+  return (
+    <VedtakFormContext.Provider value={value}>
+      <VedtakProsessIndex
+        behandling={behandling}
+        vilkar={[]}
+        beregningresultatEngangsstonad={resultatstruktur}
+        sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+        resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+        medlemskap={{ fom: '2019-01-01' }}
+        aksjonspunkter={[]}
+        ytelseType={{ kode: fagsakYtelseType.PLEIEPENGER }}
+        employeeHasAccess={boolean('employeeHasAccess', true)}
+        isReadOnly={boolean('isReadOnly', false)}
+        previewCallback={action('button-click')}
+        submitCallback={action('button-click')}
+        alleKodeverk={alleKodeverk}
+        informasjonsbehovVedtaksbrev={{
+          informasjonsbehov: [
+            {
+              kode: 'TOM_BEKREFTELSE',
+              beskrivelse: 'Tomt informasjonsbehov som kun krever en bekreftekse av saksbehandler',
+              type: 'UKJENT',
+            },
+            {
+              kode: 'FRITEKSTVEDTAKSBREV',
+              beskrivelse: 'Fritekstvedtaksbrev',
+              type: 'FRITEKSTBREV',
+            },
+            {
+              kode: 'REVURDERING_ENDRING',
+              beskrivelse:
+                'Fritekstbeskrivelse av endringsvedtaket. Hvor opplysningene kommer fra, hva slags nye opplysninger og hvilke perioder de gjelder',
+              type: 'FRITEKST',
+            },
+          ],
+          mangler: ['REVURDERING_ENDRING'],
+        }}
+        fritekstdokumenter={[]}
+        tilgjengeligeVedtaksbrev={{
+          alternativeMottakere: [],
+          vedtaksbrevmaler: {
+            FRITEKST: 'FRITKS',
+            AUTOMATISK: 'ENDRING',
+            INGEN: null,
+          },
+        }}
+      />
+    </VedtakFormContext.Provider>
+  );
+};

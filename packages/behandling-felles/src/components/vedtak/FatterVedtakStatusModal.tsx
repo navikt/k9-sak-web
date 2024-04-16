@@ -1,7 +1,6 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Image } from '@fpsak-frontend/shared-components';
-import { BodyShort, Button, Modal } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './fatterVedtakStatusModal.module.css';
@@ -31,25 +30,25 @@ const FatterVedtakStatusModal = ({
     onClose={lukkModal}
   >
     <Modal.Body>
-      <Row className="">
-        <Column xs="1">
+      <HGrid gap="4" columns={{ xs: '1fr 9fr 2fr' }}>
+        <div className="relative">
           <Image className={styles.image} alt={intl.formatMessage({ id: tekstkode })} src={innvilgetImageUrl} />
           <div className={styles.divider} />
-        </Column>
-        <Column xs="9">
+        </div>
+        <div>
           <BodyShort size="small">
             <FormattedMessage id={tekstkode} />
           </BodyShort>
           <BodyShort size="small">
             <FormattedMessage id="FatterVedtakStatusModal.GoToSearchPage" />
           </BodyShort>
-        </Column>
-        <Column xs="2">
+        </div>
+        <div>
           <Button variant="primary" size="small" className={styles.button} onClick={lukkModal} autoFocus>
             {intl.formatMessage({ id: 'FatterVedtakStatusModal.Ok' })}
           </Button>
-        </Column>
-      </Row>
+        </div>
+      </HGrid>
     </Modal.Body>
   </Modal>
 );

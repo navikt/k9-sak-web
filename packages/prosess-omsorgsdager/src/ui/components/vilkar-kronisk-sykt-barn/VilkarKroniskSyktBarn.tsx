@@ -191,7 +191,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
       {(åpenForRedigering || (!lesemodus && !vedtakFattetVilkarOppfylt)) && (
         <>
-          <Alert size="small" variant="warning">
+          <Alert size="small" variant="warning" className="max-w-fit">
             {tekst.instruksjon}
           </Alert>
           <FormProvider {...methods}>

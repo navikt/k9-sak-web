@@ -1,11 +1,11 @@
-import React from 'react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
-
-import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
+import { action } from '@storybook/addon-actions';
+import { boolean, object, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
 import withReduxProvider from '../../../decorators/withRedux';
 
@@ -28,6 +28,13 @@ const avsluttedeBehandlinger = [
     avsluttet: '2017-08-02T00:54:25.455',
   },
 ];
+
+const fagsak = {
+  sakstype: {
+    kode: fagsakYtelseType.PLEIEPENGER,
+    kodeverk: '',
+  },
+};
 
 export default {
   title: 'prosess/klage/prosess-formkrav',
@@ -66,6 +73,7 @@ export const visFormkravPanelForAksjonspunktNfp = () => (
         },
       },
     ]}
+    fagsak={fagsak}
   />
 );
 
@@ -100,5 +108,6 @@ export const visFormkravPanelForAksjonspunktKa = () => (
         },
       },
     ]}
+    fagsak={fagsak}
   />
 );

@@ -1,5 +1,4 @@
-import { Heading } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { Heading, HGrid } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -79,8 +78,8 @@ export const BehandleKlageFormNfpImpl = ({
         <VerticalSpacer sixteenPx />
         <FritekstBrevTextField sprakkode={sprakkode} readOnly={readOnly} intl={intl} />
         <VerticalSpacer sixteenPx />
-        <Row>
-          <Column xs="8">
+        <HGrid gap="1" columns={{ xs: '8fr 2fr 2fr' }}>
+          <div>
             <ProsessStegSubmitButton
               formName={formProps.form}
               behandlingId={behandlingId}
@@ -104,16 +103,16 @@ export const BehandleKlageFormNfpImpl = ({
                   previewCallback={previewCallback}
                 />
               )}
-          </Column>
-          <Column xs="2">
+          </div>
+          <div>
             <TempsaveKlageButton
               formValues={formValues}
               saveKlage={saveKlage}
               readOnly={readOnly}
               aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
             />
-          </Column>
-        </Row>
+          </div>
+        </HGrid>
       </div>
     </FadingPanel>
   </form>

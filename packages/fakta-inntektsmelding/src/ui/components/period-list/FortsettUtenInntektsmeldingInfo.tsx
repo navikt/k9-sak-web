@@ -23,8 +23,7 @@ const FortsettUtenInntektsmeldingInfo = ({
         <Alert variant="info" size="medium" className={styles.periodList__alertstripe}>
           <span>Fortsett uten inntektsmelding.</span>
           {!readOnly && (
-            <Button variant="secondary" size="small" onClick={() => setRedigeringsmodus(true)}>
-              <Edit />
+            <Button variant="secondary" size="small" onClick={() => setRedigeringsmodus(true)} icon={<Edit />}>
               <span>Rediger vurdering</span>
             </Button>
           )}

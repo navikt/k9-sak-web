@@ -1,5 +1,4 @@
-import { BodyShort, Detail, Table } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { BodyShort, Detail, HGrid, Table } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -33,8 +32,8 @@ const DocumentListVedtakInnsyn = ({ documents, saksNr }) => {
       <Detail className={styles.noDocuments}>
         <FormattedMessage id="DocumentListVedtakInnsyn.InnsynsDok" />
       </Detail>
-      <Row>
-        <Column xs="6">
+      <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+        <div>
           <Table>
             <Table.Header>
               <Table.Row shadeOnHover={false}>
@@ -65,8 +64,8 @@ const DocumentListVedtakInnsyn = ({ documents, saksNr }) => {
               })}
             </Table.Body>
           </Table>
-        </Column>
-      </Row>
+        </div>
+      </HGrid>
     </>
   );
 };

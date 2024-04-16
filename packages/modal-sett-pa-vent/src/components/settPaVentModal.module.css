@@ -67,7 +67,6 @@
 .buttonContainer {
   display: flex;
   gap: 0.625rem;
-  margin-top: 2.875rem;
 }
 
 .disabledNavSelect {

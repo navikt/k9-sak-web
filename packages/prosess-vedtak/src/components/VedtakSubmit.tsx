@@ -6,7 +6,6 @@ import { useIntl } from 'react-intl';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Button, ErrorMessage } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
 
 import styles from './vedtakForm.module.css';
 
@@ -59,18 +58,14 @@ const VedtakSubmit = ({
     return null;
   }
   return (
-    <Row>
-      <Column xs="12">
-        {!readOnly && (
-          <>
-            <VerticalSpacer sixteenPx />
-            {submitKnapp}
-            <VerticalSpacer sixteenPx />
-            {errorOnSubmit && <ErrorMessage size="small">{errorOnSubmit}</ErrorMessage>}
-          </>
-        )}
-      </Column>
-    </Row>
+    !readOnly && (
+      <>
+        <VerticalSpacer sixteenPx />
+        {submitKnapp}
+        <VerticalSpacer sixteenPx />
+        {errorOnSubmit && <ErrorMessage size="small">{errorOnSubmit}</ErrorMessage>}
+      </>
+    )
   );
 };
 

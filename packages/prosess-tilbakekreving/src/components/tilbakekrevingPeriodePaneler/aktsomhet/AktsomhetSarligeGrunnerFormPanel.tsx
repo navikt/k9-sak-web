@@ -2,8 +2,7 @@ import { CheckboxField, TextAreaField } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
-import { Detail } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { Detail, HGrid } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
@@ -45,9 +44,9 @@ const AktsomhetSarligeGrunnerFormPanel = ({
       </React.Fragment>
     ))}
     {erSerligGrunnAnnetValgt && (
-      <Row>
-        <Column md="1" />
-        <Column md="10">
+      <HGrid gap="1" columns={{ xs: '1fr 10fr 1fr' }}>
+        <div />
+        <div>
           <TextAreaField
             name="annetBegrunnelse"
             label=""
@@ -56,8 +55,8 @@ const AktsomhetSarligeGrunnerFormPanel = ({
             readOnly={readOnly}
             dataId="annetBegrunnelse"
           />
-        </Column>
-      </Row>
+        </div>
+      </HGrid>
     )}
     <AktsomhetReduksjonAvBelopFormPanel
       harGrunnerTilReduksjon={harGrunnerTilReduksjon}

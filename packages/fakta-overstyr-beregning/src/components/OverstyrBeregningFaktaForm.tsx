@@ -3,7 +3,6 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { AksjonspunktHelpTextTemp, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Alert, Button, Table, Tag, Textarea } from '@navikt/ds-react';
-import { isDate } from 'date-fns';
 import { Field, FieldArray, Form, Formik } from 'formik';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -35,52 +34,6 @@ const OverstyrBeregningFaktaForm = ({
   aksjonspunkter,
   intl,
 }: Props & WrappedComponentProps) => {
-  const aktivitetSchema = Yup.object().shape({
-    arbiedsgiverAktørId: Yup.string(),
-    arbeidsgiverOrgnr: Yup.string(),
-    inntektPrAar: Yup.number()
-      .typeError(intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltTypeFeil' }))
-      .required(intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltPakrevdFeil' }))
-      .min(0, intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltMin' }))
-      .max(100000000, intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltMax' })),
-    refusjonPrAar: Yup.number()
-      .typeError(intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltTypeFeil' }))
-      .when('skalKunneEndreRefusjon', {
-        is: true,
-        then: schema => schema.required(intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltPakrevdFeil' })),
-      })
-      .min(0, intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltMin' }))
-      .max(100000000, intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltMax' })),
-    startdatoRefusjon: Yup.date()
-      .typeError(intl.formatMessage({ id: 'OverstyrInputForm.StartdatoFeltDato' }))
-      .when('opphørRefusjon', (opphørRefusjon, schema) => {
-        if (opphørRefusjon != null && isDate(opphørRefusjon)) {
-          return schema.max(
-            opphørRefusjon,
-            intl.formatMessage({ id: 'OverstyrInputForm.StartdatoRefusjonFørSluttdato' }),
-          );
-        }
-        return schema;
-      }),
-    opphørRefusjon: Yup.date()
-      .typeError(intl.formatMessage({ id: 'OverstyrInputForm.OpphorFeltDato' }))
-      .when('refusjonPrAar', (refusjonPrAar, schema) => {
-        if (!Number.isNaN(refusjonPrAar) && refusjonPrAar > 0) {
-          return schema.test(
-            'dato',
-            intl.formatMessage({ id: 'OverstyrInputForm.MaVareDato' }),
-            value => (value ? isDate(value) : true), // dato skal ikke være påkrevd
-          );
-        }
-        return schema;
-      }),
-  });
-
-  const periodeSchema = Yup.object().shape({
-    skjaeringstudspunkt: Yup.string(),
-    aktivitetliste: Yup.array().of(aktivitetSchema),
-  });
-
   const validationSchema = Yup.object().shape({
     kode: Yup.string().required(),
     begrunnelse: Yup.string().required(intl.formatMessage({ id: 'OverstyrInputForm.BegrunnelseErPåkrevd' })),

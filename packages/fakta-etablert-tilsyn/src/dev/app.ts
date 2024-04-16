@@ -1,6 +1,7 @@
-import renderers from '../util/renderers';
-import '@navikt/ft-plattform-komponenter/dist/style.css';
+/* eslint-disable no-console */
 import '@navikt/ds-css';
+import '@navikt/ft-plattform-komponenter/dist/style.css';
+import renderers from '../util/renderers';
 
 const data = {
   readOnly: false,

@@ -1,5 +1,4 @@
-import { Label } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { HGrid, Label } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -117,14 +116,12 @@ export class PeriodeController extends Component {
     const { showDelPeriodeModal, finnesBelopMed0Verdi } = this.state;
 
     return (
-      <Row>
-        <Column xs="3">
-          <Label size="small" as="p">
-            <FormattedMessage id="PeriodeController.Detaljer" />
-            {isEdited && <EditedIcon />}
-          </Label>
-        </Column>
-        <Column xs="7">
+      <HGrid gap="1" columns={{ xs: '3fr 7fr 2fr' }}>
+        <Label size="small" as="p">
+          <FormattedMessage id="PeriodeController.Detaljer" />
+          {isEdited && <EditedIcon />}
+        </Label>
+        <div>
           {!readOnly && (
             <span className={styles.splitPeriodPosition}>
               <Image
@@ -150,8 +147,8 @@ export class PeriodeController extends Component {
               finnesBelopMed0Verdi={finnesBelopMed0Verdi}
             />
           )}
-        </Column>
-        <Column xs="2">
+        </div>
+        <div>
           <FloatRight>
             <TimeLineButton
               text={intl.formatMessage({ id: 'PeriodeController.ForrigePeriode' })}
@@ -164,8 +161,8 @@ export class PeriodeController extends Component {
               callback={callbackForward}
             />
           </FloatRight>
-        </Column>
-      </Row>
+        </div>
+      </HGrid>
     );
   }
 }

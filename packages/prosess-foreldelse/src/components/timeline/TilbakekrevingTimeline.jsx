@@ -1,5 +1,5 @@
+import { HGrid } from '@navikt/ds-react';
 import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
@@ -150,20 +150,18 @@ class TilbakekrevingTimeline extends Component {
     const items = formatItems(newPerioder);
     return (
       <div className={styles.timelineContainer}>
-        <Row>
-          <Column xs="1" className={styles.sokerContainer}>
-            <Row>
-              <Image
-                className={styles.iconMedsoker}
-                src={isKvinne(kjonn) ? urlKvinne : urlMann}
-                alt={intl.formatMessage({ id: 'TilbakekrevingTimeline.ImageText' })}
-                title={intl.formatMessage({
-                  id: isKvinne(kjonn) ? 'TilbakekrevingTimeline.Woman' : 'TilbakekrevingTimeline.Man',
-                })}
-              />
-            </Row>
-          </Column>
-          <Column xs="11">
+        <HGrid gap="1" columns={{ xs: '1fr 11fr' }}>
+          <div className="relative">
+            <Image
+              className={styles.iconMedsoker}
+              src={isKvinne(kjonn) ? urlKvinne : urlMann}
+              alt={intl.formatMessage({ id: 'TilbakekrevingTimeline.ImageText' })}
+              title={intl.formatMessage({
+                id: isKvinne(kjonn) ? 'TilbakekrevingTimeline.Woman' : 'TilbakekrevingTimeline.Man',
+              })}
+            />
+          </div>
+          <div>
             <div className={styles.timeLineWrapper}>
               <div className="uttakTimeline">
                 <Timeline
@@ -176,22 +174,20 @@ class TilbakekrevingTimeline extends Component {
                 />
               </div>
             </div>
-          </Column>
-        </Row>
-        <Row>
-          <Column xs="12">
-            <TimeLineControl
-              goBackwardCallback={this.goBackward}
-              goForwardCallback={this.goForward}
-              zoomInCallback={this.zoomIn}
-              zoomOutCallback={this.zoomOut}
-              openPeriodInfo={toggleDetaljevindu}
-              selectedPeriod={selectedPeriod}
-            >
-              {hjelpetekstKomponent}
-            </TimeLineControl>
-          </Column>
-        </Row>
+          </div>
+        </HGrid>
+        <div>
+          <TimeLineControl
+            goBackwardCallback={this.goBackward}
+            goForwardCallback={this.goForward}
+            zoomInCallback={this.zoomIn}
+            zoomOutCallback={this.zoomOut}
+            openPeriodInfo={toggleDetaljevindu}
+            selectedPeriod={selectedPeriod}
+          >
+            {hjelpetekstKomponent}
+          </TimeLineControl>
+        </div>
       </div>
     );
   }

@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Alert, Button, Heading } from '@navikt/ds-react';
+import { Alert, Button, Box as DSBox, Heading } from '@navikt/ds-react';
 import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import Panel from 'nav-frontend-paneler';
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import ContainerContext from '../../../context/ContainerContext';
@@ -121,7 +120,7 @@ const FortsettUtenInntektsmeldingForm = ({
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <Form formMethods={formMethods} onSubmit={submit}>
-      <Panel className={styles.fortsettUtenInntektsmelding__panel}>
+      <DSBox background="surface-default" padding="4" className={styles.fortsettUtenInntektsmelding__panel}>
         <Heading level="3" size="xsmall">
           Kan du gå videre uten inntektsmelding?
         </Heading>
@@ -185,7 +184,7 @@ const FortsettUtenInntektsmeldingForm = ({
             </div>
           </Box>
         </>
-      </Panel>
+      </DSBox>
     </Form>
   );
 };

@@ -1,12 +1,12 @@
 import classnames from 'classnames/bind';
 import { SkjemaGruppe as NavSkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
-import { Field, WrappedFieldArrayProps } from 'redux-form';
+import { Field } from 'redux-form';
+import LabelType from './LabelType';
 import OptionGrid from './OptionGrid';
 import { RadioOptionProps } from './RadioOption';
 import styles from './radioGroupField.module.css';
 import renderNavField from './renderNavField';
-import LabelType from './LabelType';
 
 type Direction = 'horizontal' | 'vertical';
 
