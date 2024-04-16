@@ -1,11 +1,11 @@
-import React, { createContext } from 'react';
 import dayjs from 'dayjs';
+import React, { createContext } from 'react';
 
 import { httpUtils } from '@fpsak-frontend/utils';
 import { arbeidstypeTilVisning } from '@k9-sak-web/prosess-uttak/src/constants/Arbeidstype';
 
-import ContainerContext from './ContainerContext';
 import { Arbeidsforhold, OverstyrbareAktiviteterResponse, OverstyringUttak, OverstyrtUttakResponse } from '../../types';
+import ContainerContext from './ContainerContext';
 
 type OverstyrUttakContextType = {
   lasterOverstyringer: boolean;
@@ -32,7 +32,7 @@ export const OverstyrUttakContextProvider = ({ children }) => {
   const harAksjonspunktForOverstyringAvUttak = aksjonspunktkoder.includes('6017');
 
   const hentOverstyrte = async () => {
-    if (endpoints.behandlingUttakOverstyrt) {
+    if (endpoints?.behandlingUttakOverstyrt) {
       setLasterOverstyringer(true);
       const apiResult: OverstyrtUttakResponse = await httpUtils
         .get(endpoints.behandlingUttakOverstyrt, httpErrorHandler)
