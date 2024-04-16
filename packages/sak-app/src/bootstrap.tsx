@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { RestApiErrorProvider, RestApiProvider } from '@k9-sak-web/rest-api-hooks';
-import { Integrations, init } from '@sentry/browser';
+import { init } from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, createRoutesFromChildren, matchRoutes, useLocation, useNavigationType } from 'react-router-dom';
 
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
@@ -19,7 +20,17 @@ init({
   environment,
   dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
   release: VITE_SENTRY_RELEASE || 'unknown',
-  integrations: [new Integrations.Breadcrumbs({ console: false })],
+  tracesSampleRate: isDevelopment ? 1.0 : 0.5, // Consider adjusting this in production
+  integrations: [
+    Sentry.breadcrumbsIntegration({ console: false }),
+    Sentry.reactRouterV6BrowserTracingIntegration({
+      useEffect: React.useEffect,
+      useLocation,
+      useNavigationType,
+      createRoutesFromChildren,
+      matchRoutes,
+    }),
+  ],
   beforeSend: (event, hint) => {
     const exception = hint.originalException;
     // @ts-ignore
