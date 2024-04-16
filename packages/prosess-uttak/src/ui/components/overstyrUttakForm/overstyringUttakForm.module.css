@@ -1,4 +1,4 @@
-@import '@navikt/ds-tokens';
+@import url('@navikt/ds-tokens');
 
 .overstyringSkjemaWrapper {
   border: 1px solid var(--a-border-divider);
