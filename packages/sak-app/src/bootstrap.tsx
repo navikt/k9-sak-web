@@ -20,7 +20,8 @@ init({
   environment,
   dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
   release: VITE_SENTRY_RELEASE || 'unknown',
-  tracesSampleRate: isDevelopment ? 1.0 : 0.5, // Consider adjusting this in production
+  // tracesSampleRate: isDevelopment ? 1.0 : 0.5, // Consider adjusting this in production
+  tracesSampleRate: 1.0,
   integrations: [
     Sentry.breadcrumbsIntegration({ console: false }),
     Sentry.reactRouterV6BrowserTracingIntegration({
