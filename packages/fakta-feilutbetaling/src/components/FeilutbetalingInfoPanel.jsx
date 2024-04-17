@@ -1,3 +1,12 @@
+import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { change, clearFields, formPropTypes, getFormValues } from 'redux-form';
+import { createSelector } from 'reselect';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
 import {
   CheckboxField,
   TextAreaField,
@@ -7,27 +16,17 @@ import {
   getBehandlingFormPrefix,
 } from '@fpsak-frontend/form';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpTextTemp, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   DDMMYYYY_DATE_FORMAT,
   decodeHtmlEntity,
-  getKodeverknavnFn,
   hasValidText,
   maxLength,
   minLength,
   required,
 } from '@fpsak-frontend/utils';
 import { BodyShort, Button, Detail, Label } from '@navikt/ds-react';
-import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { change, clearFields, formPropTypes, getFormValues } from 'redux-form';
-import { createSelector } from 'reselect';
+import { KodeverkKlageType, KodeverkTilbakeType } from '@k9-sak-web/lib/types/index.ts';
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
 import styles from './feilutbetalingInfoPanel.module.css';
 
@@ -99,13 +98,10 @@ export class FeilutbetalingInfoPanelImpl extends Component {
       merknaderFraBeslutter,
       behandlingId,
       behandlingVersjon,
-      alleKodeverk,
-      fpsakKodeverk,
+      kodeverkTilbakekNavnFraKode,
+      kodeverkKlageNavnFraKode,
       ...formProps
     } = this.props;
-
-    const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-    const getFpsakKodeverknavn = getKodeverknavnFn(fpsakKodeverk, kodeverkTyper);
 
     return (
       <>
@@ -209,7 +205,9 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                   {feilutbetaling.behandlingÅrsaker && (
                     <BodyShort size="small" className={styles.smallPaddingRight}>
                       {feilutbetaling.behandlingÅrsaker
-                        .map(ba => getFpsakKodeverknavn(ba.behandlingArsakType))
+                        .map(ba =>
+                          kodeverkKlageNavnFraKode(ba.behandlingArsakType, KodeverkKlageType.BEHANDLING_AARSAK),
+                        )
                         .join(', ')}
                     </BodyShort>
                   )}
@@ -232,7 +230,10 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                   </Detail>
                   {feilutbetaling.behandlingsresultat && (
                     <BodyShort size="small" className={styles.smallPaddingRight}>
-                      {getFpsakKodeverknavn(feilutbetaling.behandlingsresultat.type)}
+                      {kodeverkKlageNavnFraKode(
+                        feilutbetaling.behandlingsresultat.type,
+                        KodeverkKlageType.BEHANDLING_RESULTAT_TYPE,
+                      )}
                     </BodyShort>
                   )}
                 </Column>
@@ -244,7 +245,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                     <BodyShort size="small" className={styles.smallPaddingRight}>
                       {feilutbetaling.behandlingsresultat.konsekvenserForYtelsen &&
                         feilutbetaling.behandlingsresultat.konsekvenserForYtelsen
-                          .map(ba => getFpsakKodeverknavn(ba))
+                          .map(ba => kodeverkKlageNavnFraKode(ba, KodeverkKlageType.KONSEKVENS_FOR_YTELSEN))
                           .join(', ')}
                     </BodyShort>
                   )}
@@ -257,7 +258,10 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                   </Detail>
                   {feilutbetaling.tilbakekrevingValg && (
                     <BodyShort size="small" className={styles.smallPaddingRight}>
-                      {getKodeverknavn(feilutbetaling.tilbakekrevingValg.videreBehandling)}
+                      {kodeverkTilbakekNavnFraKode(
+                        feilutbetaling.tilbakekrevingValg.videreBehandling,
+                        KodeverkTilbakeType.TILBAKEKR_VIDERE_BEH,
+                      )}
                     </BodyShort>
                   )}
                 </Column>
@@ -301,13 +305,13 @@ FeilutbetalingInfoPanelImpl.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   feilutbetaling: PropTypes.shape().isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
-  fpsakKodeverk: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
   årsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   merknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }),
+  kodeverkTilbakekNavnFraKode: PropTypes.func.isRequired,
+  kodeverkKlageNavnFraKode: PropTypes.func.isRequired,
   ...formPropTypes,
 };
 

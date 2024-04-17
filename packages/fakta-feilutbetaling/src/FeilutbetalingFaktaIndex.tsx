@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
+import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
 import FeilutbetalingInfoPanel from './components/FeilutbetalingInfoPanel';
-import FeilutbetalingInfoPanelV2 from './components/FeilutbetalingInfoPanelV2';
 import { FeilutbetalingAarsak, FeilutbetalingFakta } from './types';
 import messages from '../i18n/nb_NO.json';
 
@@ -46,30 +46,31 @@ const FeilutbetalingFaktaIndex: FC<Props> = ({
   submitCallback,
   readOnly,
   harApneAksjonspunkter,
-  v2 = false,
-}) => (
-  <>
-    {v2 && <FeilutbetalingInfoPanelV2 harApneAksjonspunkter={harApneAksjonspunkter} />}
-    {!v2 && (
-      <RawIntlProvider value={intl}>
-        <FeilutbetalingInfoPanel
-          behandlingId={behandling.id}
-          behandlingVersjon={behandling.versjon}
-          feilutbetalingFakta={feilutbetalingFakta.behandlingFakta}
-          feilutbetalingAarsak={
-            Array.isArray(feilutbetalingAarsak) && feilutbetalingAarsak.find(a => a.ytelseType === fagsakYtelseTypeKode)
-          }
-          aksjonspunkter={aksjonspunkter}
-          alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-          alleKodeverk={alleKodeverk}
-          fpsakKodeverk={fpsakKodeverk}
-          submitCallback={submitCallback}
-          readOnly={readOnly}
-          hasOpenAksjonspunkter={harApneAksjonspunkter}
-        />
-      </RawIntlProvider>
-    )}
-  </>
-);
+}) => {
+  const { getKodeverkNavnFraKodeFn } = useKodeverkV2();
+  const kodeverTilbakekNavnFraKode = getKodeverkNavnFraKodeFn('kodeverkTilbake');
+  const kodeverkKlageNavnFraKode = getKodeverkNavnFraKodeFn('kodeverkKlage');
+  return (
+    <RawIntlProvider value={intl}>
+      <FeilutbetalingInfoPanel
+        behandlingId={behandling.id}
+        behandlingVersjon={behandling.versjon}
+        feilutbetalingFakta={feilutbetalingFakta.behandlingFakta}
+        feilutbetalingAarsak={
+          Array.isArray(feilutbetalingAarsak) && feilutbetalingAarsak.find(a => a.ytelseType === fagsakYtelseTypeKode)
+        }
+        aksjonspunkter={aksjonspunkter}
+        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+        alleKodeverk={alleKodeverk}
+        fpsakKodeverk={fpsakKodeverk}
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        hasOpenAksjonspunkter={harApneAksjonspunkter}
+        kodeverkKlageNavnFraKode={kodeverkKlageNavnFraKode}
+        kodeverTilbakekNavnFraKode={kodeverTilbakekNavnFraKode}
+      />
+    </RawIntlProvider>
+  );
+};
 
 export default FeilutbetalingFaktaIndex;
