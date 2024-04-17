@@ -1,5 +1,9 @@
-import { KodeverkType, KodeverkV2 } from '.';
+import { KodeverkType, KodeverkV2, KodeverkKlageType } from '.';
+
+export type KodeverkMedUndertype = {
+  [key: string]: KodeverkV2[];
+};
 
 export type AlleKodeverk = {
-  [key in KodeverkType]: KodeverkV2[];
+  [key in KodeverkType | KodeverkKlageType]?: KodeverkV2[] | KodeverkMedUndertype;
 };

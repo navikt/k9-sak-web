@@ -1,9 +1,9 @@
+import React, { useState } from 'react';
+
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { utledKodeverkNavnFraKode, utledKodeverkNavnFraUndertypeKode } from '@k9-sak-web/lib/kodeverk/kodeverkUtils.js';
-import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import { KodeverkResponse } from '@k9-sak-web/lib/types/KodeverkResponse.js';
-import { AlleKodeverk } from '@k9-sak-web/lib/types/AlleKodeverk.js';
-import { useState } from 'react';
+import { AlleKodeverk, KodeverkKlageType, KodeverkType } from '@k9-sak-web/lib/types/index.ts';
 
 export const useKodeverkV2 = () => {
   const [alleKodeverk, setAlleKodeverk] = useState<KodeverkResponse | undefined>(undefined);
@@ -12,6 +12,7 @@ export const useKodeverkV2 = () => {
 
   const hentAlleKodeverk = async (kodeverkKilde: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage') => {
     let kodeverkResponse;
+
     switch (kodeverkKilde) {
       case 'kodeverkTilbake':
         kodeverkResponse = await restApiHooks.useGlobalStateRestApiData<KodeverkResponse>(
@@ -21,13 +22,14 @@ export const useKodeverkV2 = () => {
         break;
       case 'kodeverkKlage':
         kodeverkResponse = await restApiHooks.useGlobalStateRestApiData<KodeverkResponse>(K9sakApiKeys.KODEVERK_KLAGE);
-        setAlleKodeverk(kodeverkResponse);
+        setAlleKodeverkKlage(kodeverkResponse);
         break;
       default:
         kodeverkResponse = await restApiHooks.useGlobalStateRestApiData<KodeverkResponse>(K9sakApiKeys.KODEVERK);
-        setAlleKodeverkKlage(kodeverkResponse);
+        setAlleKodeverk(kodeverkResponse);
         break;
     }
+    return kodeverkResponse;
   };
 
   /*
@@ -35,25 +37,76 @@ export const useKodeverkV2 = () => {
    * Har her lagt opp til alle kodeverk i ett oppslag, men det er mulig det må legges til en mulighet for
    * flere ulike oppslag. Da det kanskje er forskjellige sett med kodeverk, for eksempel for TILBAKE.
    */
-
   const kodeverkNavnFraKode = async (
     kode: string,
-    kodeverkType: KodeverkType,
-    undertypeKode?: string,
-    kilde: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' = 'kodeverk',
+    kodeverkType: KodeverkType | KodeverkKlageType,
+    undertypeKode?: string | null,
+    kodeverkKilde: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' = 'kodeverk',
   ) => {
-    if (!alleKodeverk) await hentAlleKodeverk(kilde);
+    let kodeverkForKilde;
+    switch (kodeverkKilde) {
+      case 'kodeverkTilbake':
+        kodeverkForKilde = alleKodeverkTilbake || (await hentAlleKodeverk(kodeverkKilde));
+        break;
 
-    if (alleKodeverk) {
-      if (undertypeKode) {
-        if (alleKodeverk[kodeverkType]) {
-          return utledKodeverkNavnFraUndertypeKode(undertypeKode, alleKodeverk[kodeverkType]);
-        }
-        return 'Ukjent kodeverkstype';
-      }
-      return utledKodeverkNavnFraKode(kode, kodeverkType, alleKodeverk as AlleKodeverk);
+      case 'kodeverkKlage':
+        kodeverkForKilde = alleKodeverkKlage || (await hentAlleKodeverk(kodeverkKilde));
+        break;
+
+      case 'kodeverk':
+      default:
+        kodeverkForKilde = alleKodeverk || (await hentAlleKodeverk(kodeverkKilde));
+        break;
     }
-    return '';
+
+    if (kodeverkForKilde) {
+      if (undertypeKode) {
+        if (kodeverkForKilde[kodeverkType]) {
+          return kodeverkForKilde[kodeverkType]
+            ? utledKodeverkNavnFraUndertypeKode(undertypeKode, kodeverkForKilde[kodeverkType])
+            : 'Ukjent kodeverkstype';
+        }
+      }
+      return utledKodeverkNavnFraKode(kode, kodeverkType, kodeverkForKilde);
+    }
+
+    return 'Ukjent kodeverk';
+  };
+
+  const getKodeverkNavnFraKodeFn = async (
+    kodeverkKilde: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' = 'kodeverk',
+  ) => {
+    let kodeverkForKilde;
+    switch (kodeverkKilde) {
+      case 'kodeverkTilbake':
+        kodeverkForKilde = alleKodeverkTilbake || (await hentAlleKodeverk(kodeverkKilde));
+        break;
+
+      case 'kodeverkKlage':
+        kodeverkForKilde = alleKodeverkKlage || (await hentAlleKodeverk(kodeverkKilde));
+        break;
+
+      case 'kodeverk':
+      default:
+        kodeverkForKilde = alleKodeverk || (await hentAlleKodeverk(kodeverkKilde));
+        break;
+    }
+    console.log('etablerer kodeverkNavnFraKodeFn');
+    return (kode: string, kodeverkType: KodeverkType | KodeverkKlageType, undertypeKode?: string) => {
+      console.log('bruker kodeverknavnFraKodeFn', kodeverkForKilde);
+      if (kodeverkForKilde) {
+        if (undertypeKode) {
+          if (kodeverkForKilde[kodeverkType]) {
+            return kodeverkForKilde[kodeverkType]
+              ? utledKodeverkNavnFraUndertypeKode(undertypeKode, kodeverkForKilde[kodeverkType])
+              : 'Ukjent kodeverkstype';
+          }
+        }
+        return utledKodeverkNavnFraKode(kode, kodeverkType, kodeverkForKilde);
+      }
+
+      return 'Ukjent kodeverk';
+    };
   };
 
   const hentKodeverkForType = (kodeverkType: KodeverkType) => {
@@ -63,5 +116,14 @@ export const useKodeverkV2 = () => {
     return [];
   };
 
-  return { kodeverkNavnFraKode, hentKodeverkForType, alleKodeverk, alleKodeverkKlage, alleKodeverkTilbake };
+  return {
+    kodeverkNavnFraKode,
+    hentKodeverkForType,
+    getKodeverkNavnFraKodeFn,
+    alleKodeverk,
+    alleKodeverkKlage,
+    alleKodeverkTilbake,
+  };
 };
+
+export default useKodeverkV2;
