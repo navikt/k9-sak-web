@@ -158,7 +158,11 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
               <TextArea label={tekst.begrunnelse} name="begrunnelse" />
 
               <div>
-                <RadioGroup className={styleRadioknapper.horisontalPlassering} legend={tekst.sporsmålVilkarOppfylt}>
+                <RadioGroup
+                  className={styleRadioknapper.horisontalPlassering}
+                  legend={tekst.sporsmålVilkarOppfylt}
+                  size="small"
+                >
                   <RadioButtonWithBooleanValue label="Ja" value="true" name="erSokerenAleneOmOmsorgen" />
                   <RadioButtonWithBooleanValue label="Nei" value="false" name="erSokerenAleneOmOmsorgen" />
                 </RadioGroup>

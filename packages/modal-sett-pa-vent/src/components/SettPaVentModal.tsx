@@ -227,7 +227,13 @@ export const SettPaVentModal = ({
             {showSelect && (
               <div className={styles.selectContainer}>
                 {erVenterEtterlysInntektsmelding ? (
-                  <Select className={styles.disabledNavSelect} disabled label="Hva venter vi på?" hideLabel>
+                  <Select
+                    className={styles.disabledNavSelect}
+                    disabled
+                    label="Hva venter vi på?"
+                    hideLabel
+                    size="small"
+                  >
                     <option value="">Inntektsmelding</option>
                   </Select>
                 ) : (

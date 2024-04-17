@@ -21,7 +21,7 @@ const RadioButtonWithBooleanValue: React.FunctionComponent<OwnProps> = ({
   const radio = register(name, valideringsValg);
 
   return (
-    <Radio value={value} name={radio.name} onChange={radio.onChange} onBlur={radio.onBlur} ref={radio.ref}>
+    <Radio value={value} name={radio.name} onChange={radio.onChange} onBlur={radio.onBlur} ref={radio.ref} size="small">
       {label}
     </Radio>
   );

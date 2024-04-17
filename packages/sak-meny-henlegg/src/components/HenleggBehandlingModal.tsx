@@ -173,7 +173,7 @@ export const HenleggBehandlingModalImpl = ({
       <Modal.Body>
         <form onSubmit={handleSubmit}>
           <div>
-            <Fieldset legend={intl.formatMessage({ id: 'HenleggBehandlingModal.HenleggBehandling' })}>
+            <Fieldset legend={intl.formatMessage({ id: 'HenleggBehandlingModal.HenleggBehandling' })} hideLegend>
               <HGrid gap="1" columns={{ xs: '5fr 7fr' }}>
                 <div>
                   <SelectField

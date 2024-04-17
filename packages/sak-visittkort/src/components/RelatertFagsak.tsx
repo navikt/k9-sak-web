@@ -43,6 +43,7 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
         label="Velg relatert søker"
         onChange={e => setValgtSøkerIdent(e.target.value)}
         className={styles.relatertFagsak__søkerSelect}
+        size="small"
       >
         {relaterteSøkere.map(søker => (
           <option key={søker.søkerIdent} value={søker.søkerIdent}>

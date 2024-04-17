@@ -54,6 +54,7 @@ const renderRadioGroupField = renderNavField(
         error={readOnly ? undefined : feil}
         className={classNames(`input--${bredde}`, 'radioGroup', { readOnly })}
         legend={legend}
+        hideLegend
       >
         <RadioGroup legend={label} onChange={onChange} size="small" value={value}>
           {childIsRenderFn ? children({ value, optionProps }) : children}

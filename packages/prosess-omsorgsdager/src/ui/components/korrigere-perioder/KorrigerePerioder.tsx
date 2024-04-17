@@ -193,6 +193,7 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
               konfliktMedArbeidsgiver ? tekstKonfliktMedArbeidsgiver.sporsmalErInnvilget : tekst.sporsmalErInnvilget
             }
             className={styleRadioknapper.horisontalPlassering}
+            size="small"
           >
             <RadioButtonWithBooleanValue label="Ja" value="true" name="fravaerGrunnetSmittevernhensynEllerStengt" />
             <RadioButtonWithBooleanValue label="Nei" value="false" name="fravaerGrunnetSmittevernhensynEllerStengt" />

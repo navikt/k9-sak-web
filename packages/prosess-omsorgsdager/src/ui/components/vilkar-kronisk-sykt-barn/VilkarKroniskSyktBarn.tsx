@@ -206,6 +206,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                 <RadioGroup
                   className={styleRadioknapper.horisontalPlassering}
                   legend={tekst.sporsmalHarDokumentasjonOgFravaerRisiko}
+                  size="small"
                 >
                   <RadioButtonWithBooleanValue label="Ja" value="true" name="harDokumentasjonOgFravaerRisiko" />
                   <RadioButtonWithBooleanValue label="Nei" value="false" name="harDokumentasjonOgFravaerRisiko" />
@@ -217,7 +218,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
               {harDokumentasjonOgFravaerRisiko.length > 0 && !tekstTilBoolean(harDokumentasjonOgFravaerRisiko) && (
                 <div>
-                  <RadioGroup className={styleRadioknapper.horisontalPlassering} legend={tekst.velgArsak}>
+                  <RadioGroup className={styleRadioknapper.horisontalPlassering} legend={tekst.velgArsak} size="small">
                     <RadioButtonWithBooleanValue
                       label={tekst.arsakIkkeSyk}
                       value={AvslagskoderKroniskSyk.IKKE_KRONISK_SYK_ELLER_FUNKSJONSHEMMET}

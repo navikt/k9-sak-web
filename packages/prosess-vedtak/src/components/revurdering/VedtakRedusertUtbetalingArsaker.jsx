@@ -16,6 +16,7 @@ const VedtakRedusertUtbetalingArsaker = ({ intl, readOnly, values, erSendtInnUte
         ingenArsakErValgt &&
         intl.formatMessage({ id: 'VedtakForm.RedusertUtbetalingArsaker.IkkeSatt' })
       }
+      size="small"
     >
       {Object.values(redusertUtbetalingArsak).map(name => (
         <CheckboxFieldFormik

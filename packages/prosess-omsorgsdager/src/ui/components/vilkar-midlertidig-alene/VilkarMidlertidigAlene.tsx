@@ -151,7 +151,11 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
               <TextArea label={tekst.begrunnelse} name="begrunnelse" />
 
               <div>
-                <RadioGroup className={styleRadioknapper.horisontalPlassering} legend={tekst.sporsmålVilkarOppfylt}>
+                <RadioGroup
+                  className={styleRadioknapper.horisontalPlassering}
+                  legend={tekst.sporsmålVilkarOppfylt}
+                  size="small"
+                >
                   <RadioButtonWithBooleanValue label="Ja" value="true" name="erSokerenMidlertidigAleneOmOmsorgen" />
                   <RadioButtonWithBooleanValue label="Nei" value="false" name="erSokerenMidlertidigAleneOmOmsorgen" />
                 </RadioGroup>
@@ -170,6 +174,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                         styles.avslagsArsakErPeriodeErIkkeOverSeksMån,
                       )}
                       legend={tekst.velgArsak}
+                      size="small"
                     >
                       <RadioButtonWithBooleanValue
                         label={tekst.arsakIkkeAleneOmsorg}

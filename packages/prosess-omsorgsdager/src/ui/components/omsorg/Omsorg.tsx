@@ -170,7 +170,11 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
               <TextArea label={tekst.begrunnelse} name="begrunnelse" />
 
               <div>
-                <RadioGroup legend={tekst.sporsmalHarOmsorgen} className={styleRadioknapper.horisontalPlassering}>
+                <RadioGroup
+                  legend={tekst.sporsmalHarOmsorgen}
+                  className={styleRadioknapper.horisontalPlassering}
+                  size="small"
+                >
                   <RadioButtonWithBooleanValue label="Ja" value="true" name="harOmsorgen" />
                   <RadioButtonWithBooleanValue label="Nei" value="false" name="harOmsorgen" />
                 </RadioGroup>
