@@ -94,7 +94,7 @@ const AldersvilkarForm = ({
       />
       <VerticalSpacer sixteenPx />
 
-      <Button variant="primary" type="submit">
+      <Button size="small" variant="primary" type="submit">
         <FormattedMessage id="AlderVilkar.Bekreft" />
       </Button>
     </Form>

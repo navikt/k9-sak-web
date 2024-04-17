@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Button } from '@navikt/ds-react';
 import MenyMarkerBehandling from '@k9-sak-web/sak-meny-marker-behandling';
-import { MerknadFraLos, FeatureToggles } from '@k9-sak-web/types';
+import { FeatureToggles, MerknadFraLos } from '@k9-sak-web/types';
+import { Button } from '@navikt/ds-react';
+import React, { useState } from 'react';
 
 interface VeiledervisningProps {
   behandlingUuid: string;

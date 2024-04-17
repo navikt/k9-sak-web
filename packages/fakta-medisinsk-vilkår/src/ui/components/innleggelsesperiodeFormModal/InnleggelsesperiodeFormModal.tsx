@@ -1,7 +1,7 @@
-import { Alert, Button, Label, Modal } from '@navikt/ds-react';
-import { Box, Form, Margin } from '@navikt/ft-plattform-komponenter';
 import { PeriodpickerListRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
+import { Alert, Button, Label, Modal } from '@navikt/ds-react';
+import { Box, Form, Margin } from '@navikt/ft-plattform-komponenter';
 import React, { useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { InnleggelsesperiodeDryRunResponse } from '../../../api/api';

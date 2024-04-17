@@ -129,6 +129,7 @@ export class PeriodeController extends Component<OwnProps & WrappedComponentProp
         <div>
           {!readOnly && (
             <Button
+              size="small"
               variant="tertiary"
               icon={
                 <Image

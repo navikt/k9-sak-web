@@ -160,6 +160,7 @@ export const VilkarresultatMedOverstyringForm = ({
                 </FlexColumn>
                 <FlexColumn>
                   <Button
+                    size="small"
                     variant="secondary"
                     type="button"
                     loading={submitting}

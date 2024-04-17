@@ -202,6 +202,7 @@ const OverstyrBeregningFaktaForm = ({
             <VerticalSpacer sixteenPx />
             <div className={styles.buttonBar}>
               <Button
+                size="small"
                 className={styles.button}
                 loading={isSubmitting}
                 disabled={readOnly || !submittable || !isValid}
@@ -210,7 +211,7 @@ const OverstyrBeregningFaktaForm = ({
               >
                 <FormattedMessage id="OverstyrInputForm.LagreAksjonspunkt" />
               </Button>
-              <Button className={styles.button} disabled={isValid} variant="tertiary" type="submit">
+              <Button size="small" className={styles.button} disabled={isValid} variant="tertiary" type="submit">
                 <FormattedMessage id="OverstyrInputForm.KontrollerSkjema" />
               </Button>
             </div>

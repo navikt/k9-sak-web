@@ -95,6 +95,7 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
                   </TableColumn>
                   <TableColumn className={`${styles.sentrert} ${styles.vertikaltSentrert}`}>
                     <Button
+                      size="small"
                       variant="tertiary"
                       type="button"
                       onClick={() => fields.remove(index)}
@@ -149,7 +150,7 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
                     : 'Årskvantum.Aksjonspunkt.Uavklart.BekreftInfotrygd',
                 }}
               />
-              <Button variant="primary" onClick={handleSubmit} type="submit">
+              <Button size="small" variant="primary" onClick={handleSubmit} type="submit">
                 <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.KjørPåNytt" />
               </Button>
             </div>
@@ -197,7 +198,7 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
 
       {isAksjonspunktOpen && (
         <div className={styles.spaceBetween}>
-          <Button variant="primary" onClick={handleSubmit} type="submit">
+          <Button size="small" variant="primary" onClick={handleSubmit} type="submit">
             <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Bekreft" />
           </Button>
         </div>

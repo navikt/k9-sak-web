@@ -1,16 +1,16 @@
-import React from 'react';
 import dayjs from 'dayjs';
+import React from 'react';
 
-import { Alert, Label, BodyShort, Button } from '@navikt/ds-react';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { Alert, BodyShort, Button, Label } from '@navikt/ds-react';
 
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
-import Table from '../table/Table';
-import TableColumn from '../table/TableColumn';
-import styles from './uttaksperiodeListe.module.css';
-import Uttak from '../uttak/Uttak';
 import ContainerContext from '../../context/ContainerContext';
 import FullWidthRow from '../table/FullWidthRow';
+import Table from '../table/Table';
+import TableColumn from '../table/TableColumn';
+import Uttak from '../uttak/Uttak';
+import styles from './uttaksperiodeListe.module.css';
 
 interface UttaksperiodeListeProps {
   uttaksperioder: Uttaksperiode[];

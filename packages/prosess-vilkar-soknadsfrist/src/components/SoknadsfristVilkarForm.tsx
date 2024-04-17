@@ -186,6 +186,7 @@ export const SoknadsfristVilkarForm = ({
                 </FlexColumn>
                 <FlexColumn>
                   <Button
+                    size="small"
                     variant="secondary"
                     type="button"
                     loading={submitting}

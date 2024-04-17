@@ -1,6 +1,6 @@
+import { post } from '@fpsak-frontend/utils';
 import { BodyShort, Button, Modal } from '@navikt/ds-react';
 import { Box, Margin, PageError } from '@navikt/ft-plattform-komponenter';
-import { post } from '@fpsak-frontend/utils';
 import React, { useMemo, useState } from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Dokument from '../../../types/Dokument';
@@ -65,6 +65,7 @@ const SlettDuplikatModal = ({ handleCloseModal, selectedDocument, onRemove }: Sl
         )}
         <div className={styles.buttonContainer}>
           <Button
+            size="small"
             id="submitButton"
             onClick={e => {
               e.preventDefault();
@@ -76,7 +77,7 @@ const SlettDuplikatModal = ({ handleCloseModal, selectedDocument, onRemove }: Sl
             Fjern som duplikat
           </Button>
           <div className={styles.cancelButton}>
-            <Button variant="secondary" onClick={handleCloseModal}>
+            <Button size="small" variant="secondary" onClick={handleCloseModal}>
               Avbryt
             </Button>
           </div>

@@ -1,6 +1,6 @@
+import { prettifyDateString } from '@fpsak-frontend/utils';
 import { Button, Label } from '@navikt/ds-react';
 import { Box, DocumentIcon, Margin } from '@navikt/ft-plattform-komponenter';
-import { prettifyDateString } from '@fpsak-frontend/utils';
 import React from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Dokument, { Dokumenttype } from '../../../types/Dokument';

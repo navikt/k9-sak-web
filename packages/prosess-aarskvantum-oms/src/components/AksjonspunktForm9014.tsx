@@ -116,7 +116,7 @@ export const FormContent = ({
                     : 'Årskvantum.Aksjonspunkt.Uavklart.BekreftInfotrygd',
                 }}
               />
-              <Button variant="primary" onClick={handleSubmit} type="submit">
+              <Button size="small" variant="primary" onClick={handleSubmit} type="submit">
                 <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.KjørPåNytt" />
               </Button>
             </div>
@@ -217,7 +217,7 @@ export const FormContent = ({
 
       {isAksjonspunktOpen && (
         <div className={styles.spaceBetween}>
-          <Button variant="primary" onClick={handleSubmit} type="submit">
+          <Button size="small" variant="primary" onClick={handleSubmit} type="submit">
             <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Bekreft" />
           </Button>
         </div>
