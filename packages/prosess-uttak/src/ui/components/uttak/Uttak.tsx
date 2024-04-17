@@ -70,7 +70,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
             )}
           </BodyShort>
         </Table.DataCell>
-        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
+        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} flex`}>
           {harOppfyltAlleInngangsvilkår ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
         </Table.DataCell>
         {erFagytelsetypeLivetsSluttfase && (
@@ -116,7 +116,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
           </div>
         </Table.DataCell>
       </Table.Row>
-      <tr className={erValgt ? '' : styles.collapseRow}>
+      <tr className={`${erValgt ? '' : styles.collapseRow} ${styles.expandedRow}`}>
         <td colSpan={erFagytelsetypeLivetsSluttfase ? 7 : 6}>
           <Collapse isOpened={erValgt}>
             <div className={styles.expanded}>
