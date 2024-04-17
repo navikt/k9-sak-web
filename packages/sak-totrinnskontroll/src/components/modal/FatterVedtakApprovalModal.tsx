@@ -229,7 +229,7 @@ const FatterVedtakApprovalModal = ({
       onClose={closeEvent}
     >
       <Modal.Body>
-        <HGrid gap="1" columns={{ xs: '1fr 9fr 2fr' }}>
+        <HGrid gap="1" columns={{ xs: '1fr 10fr 1fr' }}>
           <div className="relative">
             <Image
               className={styles.image}
