@@ -89,7 +89,7 @@ const TilbakekrevingVedtakPeriodeTabell = ({ perioder, getKodeverknavn }: OwnPro
           <Table.Row shadeOnHover={false}>
             {headerTextCodes.map(text => (
               <Table.HeaderCell scope="col" key={text}>
-                {text}
+                <FormattedMessage id={text} />
               </Table.HeaderCell>
             ))}
           </Table.Row>

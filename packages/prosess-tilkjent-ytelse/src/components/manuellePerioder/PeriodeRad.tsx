@@ -60,7 +60,7 @@ const PeriodeRad = ({
           <Table.Row>
             {headerTextCodes.map(text => (
               <Table.HeaderCell scope="col" key={text}>
-                {text}
+                {intl.formatMessage({ id: text })}
               </Table.HeaderCell>
             ))}
           </Table.Row>

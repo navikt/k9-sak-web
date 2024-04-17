@@ -3,7 +3,7 @@ import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Alert, BodyShort, Table } from '@navikt/ds-react';
 import React from 'react';
-import { WrappedComponentProps } from 'react-intl';
+import { WrappedComponentProps, useIntl } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import { createVisningsnavnForAndel, getInntektskategori } from '../TilkjentYteleseUtils';
 
@@ -33,6 +33,7 @@ const headerTextCodes = [
 ];
 
 const Andeler = ({ fields, meta, alleKodeverk, arbeidsgivere }: Partial<OwnProps> & WrappedComponentProps) => {
+  const intl = useIntl();
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
   return (
@@ -53,7 +54,7 @@ const Andeler = ({ fields, meta, alleKodeverk, arbeidsgivere }: Partial<OwnProps
           <Table.Row>
             {headerTextCodes.map(textCode => (
               <Table.HeaderCell scope="col" key={textCode}>
-                {textCode}
+                {intl.formatMessage({ id: textCode })}
               </Table.HeaderCell>
             ))}
           </Table.Row>

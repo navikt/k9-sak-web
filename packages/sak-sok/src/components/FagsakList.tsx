@@ -5,6 +5,7 @@ import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Table } from '@navikt/ds-react';
 import React from 'react';
 
+import { useIntl } from 'react-intl';
 import styles from './fagsakList.module.css';
 
 const headerTextCodes = ['FagsakList.Saksnummer', 'FagsakList.Sakstype', 'FagsakList.Status'];
@@ -44,6 +45,7 @@ interface OwnProps {
  * Presentasjonskomponent. Formaterer fagsak-søkeresultatet for visning i tabell. Sortering av fagsakene blir håndtert her.
  */
 const FagsakList = ({ fagsaker, selectFagsakCallback, alleKodeverk }: OwnProps) => {
+  const intl = useIntl();
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
   return (
@@ -52,7 +54,7 @@ const FagsakList = ({ fagsaker, selectFagsakCallback, alleKodeverk }: OwnProps) 
         <Table.Row shadeOnHover={false}>
           {headerTextCodes.map(text => (
             <Table.HeaderCell scope="col" key={text}>
-              {text}
+              {intl.formatMessage({ id: text })}
             </Table.HeaderCell>
           ))}
         </Table.Row>

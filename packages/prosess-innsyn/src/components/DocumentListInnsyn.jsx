@@ -84,7 +84,7 @@ const DocumentListInnsyn = ({ intl, documents, saksNr, readOnly }) => {
             <Table.Row>
               {headerTextCodes.map(text => (
                 <Table.HeaderCell scope="col" key={text}>
-                  {text}
+                  <FormattedMessage id={text} />
                 </Table.HeaderCell>
               ))}
             </Table.Row>

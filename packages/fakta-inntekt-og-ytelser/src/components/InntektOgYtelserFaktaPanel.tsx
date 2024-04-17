@@ -3,7 +3,7 @@ import { ISO_DATE_FORMAT, formatCurrencyWithKr } from '@fpsak-frontend/utils';
 import { BodyShort, Box, Table } from '@navikt/ds-react';
 import moment from 'moment';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Inntekt } from '../InntektType';
 
 const headerTextCodes = [
@@ -20,6 +20,7 @@ interface InntektOgYtelserFaktaPanelProps {
 }
 
 const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({ inntekter }) => {
+  const intl = useIntl();
   if (!inntekter || inntekter.length === 0) {
     return (
       <Box background="surface-default" padding="4" borderWidth="1" borderColor="border-subtle" borderRadius="medium">
@@ -37,7 +38,7 @@ const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({
           <Table.Row>
             {headerTextCodes.map(textCode => (
               <Table.HeaderCell scope="col" key={textCode}>
-                {textCode}
+                {intl.formatMessage({ id: textCode })}
               </Table.HeaderCell>
             ))}
           </Table.Row>

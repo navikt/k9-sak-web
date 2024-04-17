@@ -39,7 +39,7 @@ const DocumentListVedtakInnsyn = ({ documents, saksNr }) => {
               <Table.Row shadeOnHover={false}>
                 {headerTextCodes.map(text => (
                   <Table.HeaderCell scope="col" key={text}>
-                    {text}
+                    <FormattedMessage id={text} />
                   </Table.HeaderCell>
                 ))}
               </Table.Row>
