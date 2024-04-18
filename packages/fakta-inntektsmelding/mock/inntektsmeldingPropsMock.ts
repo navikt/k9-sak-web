@@ -36,38 +36,19 @@ export default {
   },
   aksjonspunkter: [
     {
-      aksjonspunktType: {
-        kode: 'MANU',
-        kodeverk: 'AKSJONSPUNKT_TYPE',
-      },
+      aksjonspunktType: 'MANU',
       begrunnelse: null,
       besluttersBegrunnelse: 'evvv',
-      definisjon: {
-        skalAvbrytesVedTilbakeføring: false,
-        kode: '9069',
-        kodeverk: 'AKSJONSPUNKT_DEF',
-      },
+      definisjon: '9069', // #Kodeverk inneholdt: skalAvbrytesVedTilbakeføring: false,
       erAktivt: true,
       fristTid: null,
       kanLoses: true,
-      status: {
-        kode: 'OPPR',
-        kodeverk: 'AKSJONSPUNKT_STATUS',
-      },
+      status: 'OPPR',
       toTrinnsBehandling: true,
       toTrinnsBehandlingGodkjent: false,
       vilkarType: null,
-      vurderPaNyttArsaker: [
-        {
-          kode: 'ANNET',
-          kodeverk: 'VURDER_AARSAK',
-        },
-      ],
-      venteårsak: {
-        kanVelgesIGui: false,
-        kode: '-',
-        kodeverk: 'VENT_AARSAK',
-      },
+      vurderPaNyttArsaker: ['ANNET'],
+      venteårsak: '-', // #Kodeverk inneholdt: kanVelgesIGui: false,
       venteårsakVariant: null,
       opprettetAv: 'srvk9sak',
     },
@@ -112,38 +93,19 @@ export const aksjonspunkt9071Props = {
   },
   aksjonspunkter: [
     {
-      aksjonspunktType: {
-        kode: 'MANU',
-        kodeverk: 'AKSJONSPUNKT_TYPE',
-      },
+      aksjonspunktType: 'MANU',
       begrunnelse: null,
       besluttersBegrunnelse: 'evvv',
-      definisjon: {
-        skalAvbrytesVedTilbakeføring: false,
-        kode: '9071',
-        kodeverk: 'AKSJONSPUNKT_DEF',
-      },
+      definisjon: '9071', // #Kodeverk Inneholdt skalAvbrytesVedTilbakeføring: false,
       erAktivt: true,
       fristTid: null,
       kanLoses: true,
-      status: {
-        kode: 'OPPR',
-        kodeverk: 'AKSJONSPUNKT_STATUS',
-      },
+      status: 'OPPR',
       toTrinnsBehandling: true,
       toTrinnsBehandlingGodkjent: false,
       vilkarType: null,
-      vurderPaNyttArsaker: [
-        {
-          kode: 'ANNET',
-          kodeverk: 'VURDER_AARSAK',
-        },
-      ],
-      venteårsak: {
-        kanVelgesIGui: false,
-        kode: '-',
-        kodeverk: 'VENT_AARSAK',
-      },
+      vurderPaNyttArsaker: ['ANNET'],
+      venteårsak: '-',
       venteårsakVariant: null,
       opprettetAv: 'srvk9sak',
     },
@@ -187,38 +149,19 @@ export const aksjonspunkt9071FerdigProps = {
   },
   aksjonspunkter: [
     {
-      aksjonspunktType: {
-        kode: 'MANU',
-        kodeverk: 'AKSJONSPUNKT_TYPE',
-      },
+      aksjonspunktType: 'MANU',
       begrunnelse: null,
       besluttersBegrunnelse: 'evvv',
-      definisjon: {
-        skalAvbrytesVedTilbakeføring: false,
-        kode: '9071',
-        kodeverk: 'AKSJONSPUNKT_DEF',
-      },
+      definisjon: '9071', // #Kodeverk inneholdt skalAvbrytesVedTilbakeføring: false,
       erAktivt: true,
       fristTid: null,
       kanLoses: true,
-      status: {
-        kode: 'UTFORT',
-        kodeverk: 'AKSJONSPUNKT_STATUS',
-      },
+      status: 'UTFORT',
       toTrinnsBehandling: true,
       toTrinnsBehandlingGodkjent: false,
       vilkarType: null,
-      vurderPaNyttArsaker: [
-        {
-          kode: 'ANNET',
-          kodeverk: 'VURDER_AARSAK',
-        },
-      ],
-      venteårsak: {
-        kanVelgesIGui: false,
-        kode: '-',
-        kodeverk: 'VENT_AARSAK',
-      },
+      vurderPaNyttArsaker: ['ANNET'],
+      venteårsak: '-', // #kodeverk inneholdt kanVelgesIGui: false,
       venteårsakVariant: null,
       opprettetAv: 'srvk9sak',
     },

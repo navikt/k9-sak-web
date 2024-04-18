@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import React from 'react';
+import { UseFormReturn } from 'react-hook-form';
+import Panel from 'nav-frontend-paneler';
 import { Alert, Button, Heading } from '@navikt/ds-react';
 import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import Panel from 'nav-frontend-paneler';
-import React from 'react';
-import { UseFormReturn } from 'react-hook-form';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import ContainerContext from '../../../context/ContainerContext';
-import Aksjonspunkt from '../../../types/Aksjonspunkt';
 import AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
 import { Kode, TilstandBeriket } from '../../../types/KompletthetData';
 import TilstandStatus from '../../../types/TilstandStatus';
@@ -44,7 +44,7 @@ const FortsettUtenInntektsmeldingForm = ({
   const beslutningId = `beslutning-${tilstand.periodeOpprinneligFormat}`;
   const begrunnelseId = `begrunnelse-${tilstand.periodeOpprinneligFormat}`;
   const beslutning = watch(beslutningFieldName);
-  const aksjonspunktKode = aksjonspunkt?.definisjon?.kode;
+  const aksjonspunktKode = aksjonspunkt?.definisjon;
   const vis = ((skalVurderes(tilstand) && !readOnly) || redigeringsmodus) && aksjonspunkt && tilstand.tilVurdering;
   const skalViseBegrunnelse = !(aksjonspunktKode === '9069' && beslutning !== Kode.FORTSETT);
   const fortsettKnappTekstFunc = {
