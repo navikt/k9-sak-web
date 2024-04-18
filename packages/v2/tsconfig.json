@@ -12,7 +12,7 @@
     "allowUnusedLabels": false,
     "allowUnreachableCode": false,
     "allowArbitraryExtensions": true, // So that typed-css-modules work
-    "exactOptionalPropertyTypes": true,
+    "exactOptionalPropertyTypes": false,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -24,6 +24,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
+    "verbatimModuleSyntax": true,
     "sourceMap": true,
     "jsx": "react",
     "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
