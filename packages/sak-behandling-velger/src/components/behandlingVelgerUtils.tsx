@@ -31,17 +31,11 @@ export const getFormattedSøknadserioder = (søknadsperioder: Periode[]) =>
 export const getStatusIcon = (behandlingsresultatTypeKode: string, className: string, erFerdigstilt?: boolean) => {
   if (behandlingsresultatTypeKode === behandlingResultatType.IKKE_FASTSATT || !erFerdigstilt) {
     return (
-      // <Image
-      //   className={className}
-      //   src={advarselImg}
-      //   tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.UnderBehandling" />}
-      //   alignTooltipLeft
-      // />
-
       <ExclamationmarkTriangleFillIcon
         fontSize="1.25rem"
         className={className}
         style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
+        title="Under behandling"
       />
     );
   }
