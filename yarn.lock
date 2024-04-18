@@ -3914,7 +3914,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.4
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.5
     axios-mock-adapter: 1.22.0
     react: 18.2.0
     react-intl: 6.6.5
@@ -4016,7 +4016,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.4
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.4
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.5
     axios-mock-adapter: 1.22.0
     nav-frontend-popover: 2.0.4
     react: 18.2.0
@@ -4068,7 +4068,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.4
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.4
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.5
     axios: 1.6.8
     axios-mock-adapter: 1.22.0
     react: 18.2.0
@@ -4116,7 +4116,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.4
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.4
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.5
     axios: 1.6.8
     axios-mock-adapter: 1.22.0
     react: 18.2.0
@@ -4170,7 +4170,7 @@ __metadata:
     "@navikt/diagnosekoder": ^1.2024.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.4
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.4
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.5
     axios: 1.6.8
     axios-mock-adapter: 1.22.0
     react: 18.2.0
@@ -4973,7 +4973,7 @@ __metadata:
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
     "@navikt/ft-form-hooks": 4.4.3
     "@navikt/ft-plattform-komponenter": 2.5.4
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.4
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.5
     "@navikt/ft-ui-komponenter": 2.3.3
     "@sentry/browser": 7.110.1
     "@sentry/react": ^7.110.1
@@ -5393,7 +5393,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-plattform-komponenter@npm:2.5.4, @navikt/ft-plattform-komponenter@npm:^2.5.4":
+"@navikt/ft-plattform-komponenter@npm:2.5.4":
   version: 2.5.4
   resolution: "@navikt/ft-plattform-komponenter@npm:2.5.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-plattform-komponenter%2F2.5.4%2Fb10d3c6aeede5e9fbf1a9042d3dde7946c1cce22"
   dependencies:
@@ -5416,9 +5416,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-prosess-beregningsgrunnlag@npm:6.5.4":
-  version: 6.5.4
-  resolution: "@navikt/ft-prosess-beregningsgrunnlag@npm:6.5.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-beregningsgrunnlag%2F6.5.4%2Fe2a4109d7b89742300832eef2faa1cf96def227b"
+"@navikt/ft-plattform-komponenter@npm:^2.5.5":
+  version: 2.5.5
+  resolution: "@navikt/ft-plattform-komponenter@npm:2.5.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-plattform-komponenter%2F2.5.5%2F1e85e6b5801662cd908ffe0d86e420c06ea7835e"
+  dependencies:
+    "@navikt/aksel-icons": 6.5.0
+    "@navikt/ds-css": 6.5.0
+    "@navikt/ds-react": 6.5.0
+    "@navikt/ft-utils": ^2.3.3
+    classnames: 2.5.1
+  peerDependencies:
+    "@popperjs/core": 2.11.7
+    classnames: 2.3.2
+    dayjs: 1.11.7
+    lodash.throttle: 4.1.1
+    prop-types: 15.8.1
+    react: 18.2.0
+    react-collapse: 5.1.1
+    react-dom: 18.2.0
+    react-popper: 2.3.0
+  checksum: 5499a1ac1e42c79178e22c367adacf768a6fa97a7ec06f9562794ac9e9dd9a2d5972d87c07f743005eeb3f17385c5de28b525c40faa7ab51f005d9da26150aa0
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-prosess-beregningsgrunnlag@npm:6.5.5":
+  version: 6.5.5
+  resolution: "@navikt/ft-prosess-beregningsgrunnlag@npm:6.5.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-beregningsgrunnlag%2F6.5.5%2F6aafcaccd89ef1fee84f5378b33744912cf298e6"
   dependencies:
     "@navikt/aksel-icons": 6.5.0
     "@navikt/ds-css": 6.5.0
@@ -5426,7 +5449,7 @@ __metadata:
     "@navikt/ft-form-hooks": ^4.4.3
     "@navikt/ft-form-validators": ^2.3.3
     "@navikt/ft-kodeverk": ^2.4.3
-    "@navikt/ft-plattform-komponenter": ^2.5.4
+    "@navikt/ft-plattform-komponenter": ^2.5.5
     "@navikt/ft-types": ^2.4.3
     "@navikt/ft-ui-komponenter": ^2.3.3
     "@navikt/ft-utils": ^2.3.3
@@ -5455,7 +5478,7 @@ __metadata:
     react-collapse: 5.1.1
     react-hook-form: 7.43.9
     react-intl: 6.3.2
-  checksum: cc8148ba764ac92115b6b8ebd55092481848ea810c6ae2d8b46f25f227a8816d68b023b685447234f767fb9af7c9a9453faea409b5fcf56d4c4aa2300dfa3070
+  checksum: e26e3b1da9128930dd431099c8abb924478512dfb42447677e217600b5f7783d8f7c9bc50b5993be57dc5625c72d22542e16526f71172f13759f0acd369399bc
   languageName: node
   linkType: hard
 
