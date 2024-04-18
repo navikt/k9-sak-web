@@ -12,7 +12,7 @@ import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } 
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 // eslint-disable-next-line import/no-duplicates
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { guid } from '@fpsak-frontend/utils';
@@ -175,9 +175,7 @@ export class OppholdInntektOgPerioderForm extends Component {
 
     return (
       <form onSubmit={formProps.handleSubmit} data-testid="OppholdInntektOgPerioderForm">
-        <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
-          {getHelpTexts(aksjonspunkter)}
-        </AksjonspunktHelpTextTemp>
+        <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>{getHelpTexts(aksjonspunkter)}</AksjonspunktHelpText>
         {hasAksjonspunkt(AVKLAR_FORTSATT_MEDLEMSKAP, aksjonspunkter) && (
           <MedlemskapEndringerTabell
             selectedId={valgtPeriode ? valgtPeriode.id : undefined}

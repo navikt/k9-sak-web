@@ -1,5 +1,5 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { BodyShort, Label } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -35,7 +35,7 @@ export const VedtakHelpTextPanelImpl = ({ intl, readOnly, aksjonspunktKoder, vis
     return (
       <>
         <div className={viseFlereSjekkbokserForBrev ? styles.begrensMaksBredde : null}>
-          <AksjonspunktHelpTextTemp isAksjonspunktOpen>{helpTexts}</AksjonspunktHelpTextTemp>
+          <AksjonspunktHelpText isAksjonspunktOpen>{helpTexts}</AksjonspunktHelpText>
         </div>
         <VerticalSpacer eightPx />
         {aksjonspunktKoder &&

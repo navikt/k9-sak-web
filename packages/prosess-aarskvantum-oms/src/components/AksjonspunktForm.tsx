@@ -2,7 +2,7 @@ import { CheckboxField, InputField, RadioGroupField, RadioOption, TextAreaField 
 import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  AksjonspunktHelpTextTemp,
+  AksjonspunktHelpText,
   BorderBox,
   Table,
   TableColumn,
@@ -124,7 +124,7 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
 
     return (
       <>
-        <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
+        <AksjonspunktHelpText isAksjonspunktOpen={isAksjonspunktOpen}>
           {[
             <FormattedMessage
               key={1}
@@ -135,7 +135,7 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
               }
             />,
           ]}
-        </AksjonspunktHelpTextTemp>
+        </AksjonspunktHelpText>
         {isAksjonspunktOpen && (
           <>
             <VerticalSpacer sixteenPx />
@@ -162,9 +162,9 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
 
   return (
     <>
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
+      <AksjonspunktHelpText isAksjonspunktOpen={isAksjonspunktOpen}>
         {[<FormattedMessage key={1} id="Årskvantum.Aksjonspunkt.Avslått" />]}
-      </AksjonspunktHelpTextTemp>
+      </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
       {isAksjonspunktOpen && (
         <RadioGroupField

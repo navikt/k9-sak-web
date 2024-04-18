@@ -1,5 +1,7 @@
 .container {
-  margin-bottom: 24px;
+  background-color: #ffe5c2;
+  border: 1px solid #d47b00;
+  border-radius: 4px;
 }
 
 .divider {
@@ -12,14 +14,14 @@
 }
 
 .image {
-  height: 30px;
+  margin-left: 10px;
   margin-top: 8px;
-  width: 30px;
 }
 
 .oneElement {
+  margin-bottom: 9px;
   margin-left: 0;
-  margin-top: 11px;
+  margin-top: 9px;
 }
 
 .severalElements {
@@ -29,9 +31,10 @@
 
 .aksjonspunktText {
   max-width: 100%;
-  padding-right: 80px;
+  padding-right: 20px;
 }
 
 .wordwrap {
+  white-space: pre-line;
   word-wrap: break-word;
 }

@@ -50,7 +50,7 @@ const Dokumentnavigasjon = ({
   return (
     <div className={styles.dokumentnavigasjon}>
       <Accordion>
-        <Accordion.Item defaultOpen={expandedByDefault}>
+        <Accordion.Item defaultOpen={expandedByDefault} className="shadow-none">
           <Accordion.Header>{tittel}</Accordion.Header>
           <Accordion.Content>
             <div className={styles.dokumentnavigasjon__container}>

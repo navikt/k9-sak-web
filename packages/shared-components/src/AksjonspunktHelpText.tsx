@@ -1,41 +1,23 @@
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 import { isObject } from '@fpsak-frontend/utils';
-import { BodyShort, Label } from '@navikt/ds-react';
+import { Alert, BodyShort } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { FlexColumn, FlexContainer, FlexRow } from './flexGrid';
-import Image from './Image';
-
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './aksjonspunktHelpText.module.css';
 
 interface OwnProps {
-  children: string[] | ReactNode[];
+  children: string[] | ReactNode[] | ReactNode;
   isAksjonspunktOpen: boolean;
-  marginBottom?: boolean;
 }
 
-/**
- * AksjonspunktHelpText
- *
- * Presentasjonskomponent. Viser hjelpetekster som forteller NAV-ansatt hva som må gjøres for
- * å avklare en eller flere aksjonspunkter.
- *
- * Eksempel:
- * ```html
- * <AksjonspunktHelpText children={['tekst1', 'tekst2']} isAksjonspunktOpen={false} />
- * ```
- */
-const AksjonspunktHelpText = ({
-  children,
-  intl,
-  isAksjonspunktOpen,
-  marginBottom = false,
-}: OwnProps & WrappedComponentProps) => {
+const AksjonspunktHelpText = ({ isAksjonspunktOpen, children }: OwnProps & WrappedComponentProps) => {
+  if (!children || (Array.isArray(children) && children.length === 0)) {
+    return null;
+  }
   if (!isAksjonspunktOpen) {
     return (
       <>
         {React.Children.map(children, child => (
-          // @ts-ignore (Denne komponenten skal fjernast)
+          // @ts-ignore
           <BodyShort size="small" key={isObject(child) ? child.key : child} className={styles.wordwrap}>
             <strong>
               <FormattedMessage id="HelpText.Aksjonspunkt.BehandletAksjonspunkt" />
@@ -46,34 +28,17 @@ const AksjonspunktHelpText = ({
       </>
     );
   }
-  const elementStyle = children.length === 1 ? styles.oneElement : styles.severalElements;
   return (
-    <div className={marginBottom ? styles.container : ''}>
-      <FlexContainer>
-        <FlexRow>
-          <FlexColumn>
-            <Image
-              className={styles.image}
-              alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
-              src={advarselIkonUrl}
-            />
-          </FlexColumn>
-          <FlexColumn>
-            <div className={styles.divider} />
-          </FlexColumn>
-          <FlexColumn className={styles.aksjonspunktText}>
-            {React.Children.map(children, child => (
-              // @ts-ignore (Denne komponenten skal fjernast)
-              <div key={isObject(child) ? child.key : child} className={elementStyle}>
-                <Label size="small" as="p" className={styles.wordwrap}>
-                  {child}
-                </Label>
-              </div>
-            ))}
-          </FlexColumn>
-        </FlexRow>
-      </FlexContainer>
-    </div>
+    <Alert variant="warning" size="small">
+      {React.Children.map(children, child => (
+        // @ts-ignore
+        <div key={isObject(child) ? child.key : child}>
+          <BodyShort size="small" className={styles.wordwrap}>
+            {child}
+          </BodyShort>
+        </div>
+      ))}
+    </Alert>
   );
 };
 

@@ -10,7 +10,7 @@ import {
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import {
-  AksjonspunktHelpTextTemp,
+  AksjonspunktHelpText,
   FlexColumn,
   FlexContainer,
   FlexRow,
@@ -56,14 +56,14 @@ export const BehandleUnntakForm = ({
       </FlexRow>
       <VerticalSpacer twentyPx />
 
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
+      <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
         {[
           <FormattedMessage
             id="Unntak.AvklarAkjsonspunkt"
             key={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
           />,
         ]}
-      </AksjonspunktHelpTextTemp>
+      </AksjonspunktHelpText>
       <VerticalSpacer twentyPx />
 
       <FritekstTextField sprakkode={sprakkode} readOnly={readOnly} />

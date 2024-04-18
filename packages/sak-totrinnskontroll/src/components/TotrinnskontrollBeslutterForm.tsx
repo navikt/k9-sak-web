@@ -1,6 +1,6 @@
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
-import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ariaCheck, decodeHtmlEntity, isRequiredMessage } from '@fpsak-frontend/utils';
 import {
   Behandling,
@@ -67,9 +67,9 @@ export const TotrinnskontrollBeslutterForm = ({
     <form name="toTrinn" onSubmit={handleSubmit}>
       {!readOnly && (
         <>
-          <AksjonspunktHelpTextHTML>
+          <AksjonspunktHelpText isAksjonspunktOpen>
             {[<FormattedMessage key={1} id="HelpText.ToTrinnsKontroll" />]}
-          </AksjonspunktHelpTextHTML>
+          </AksjonspunktHelpText>
           <VerticalSpacer sixteenPx />
         </>
       )}

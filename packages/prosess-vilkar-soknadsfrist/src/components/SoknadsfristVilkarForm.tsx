@@ -5,7 +5,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
   AksjonspunktBox,
-  AksjonspunktHelpTextTemp,
+  AksjonspunktHelpText,
   EditedIcon,
   FlexColumn,
   FlexContainer,
@@ -118,9 +118,9 @@ export const SoknadsfristVilkarForm = ({
         >
           {!isReadOnly &&
             (harÅpentAksjonspunkt ? (
-              <AksjonspunktHelpTextTemp isAksjonspunktOpen>
+              <AksjonspunktHelpText isAksjonspunktOpen>
                 {[<FormattedMessage key={1} id="SoknadsfristVilkarForm.AvklarVurdering" />]}
-              </AksjonspunktHelpTextTemp>
+              </AksjonspunktHelpText>
             ) : (
               <Label size="small" as="p">
                 <FormattedMessage id="SoknadsfristVilkarForm.AutomatiskVurdering" />

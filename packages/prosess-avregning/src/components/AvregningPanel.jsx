@@ -12,7 +12,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import { AksjonspunktHelpTextTemp, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { BodyShort, Button, Detail, HGrid, Heading, Label } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
@@ -119,9 +119,9 @@ export class AvregningPanelImpl extends Component {
         <VerticalSpacer twentyPx />
         {simuleringResultatOption && (
           <div>
-            <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
+            <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
               {[<FormattedMessage id="Avregning.AksjonspunktHelpText.5084" key="vurderFeilutbetaling" />]}
-            </AksjonspunktHelpTextTemp>
+            </AksjonspunktHelpText>
             <VerticalSpacer twentyPx />
             <AvregningSummary
               fom={simuleringResultatOption.periode?.fom}

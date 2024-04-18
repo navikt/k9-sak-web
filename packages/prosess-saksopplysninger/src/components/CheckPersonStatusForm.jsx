@@ -10,7 +10,7 @@ import {
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { BodyShort, Detail, Heading } from '@navikt/ds-react';
@@ -46,9 +46,9 @@ export const CheckPersonStatusFormImpl = ({
       {intl.formatMessage({ id: 'CheckPersonStatusForm.CheckInformation' })}
     </Heading>
     <VerticalSpacer twentyPx />
-    <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton && !readOnly}>
+    <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton && !readOnly}>
       {[intl.formatMessage({ id: 'CheckPersonStatusForm.PersonStatus' }, { status: originalPersonstatusName })]}
-    </AksjonspunktHelpTextTemp>
+    </AksjonspunktHelpText>
     <VerticalSpacer twentyPx />
     {gjeldeneFom && (
       <BodyShort size="small">
