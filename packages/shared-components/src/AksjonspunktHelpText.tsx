@@ -1,4 +1,3 @@
-import { isObject } from '@fpsak-frontend/utils';
 import { Alert, BodyShort } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -17,8 +16,7 @@ const AksjonspunktHelpText = ({ isAksjonspunktOpen, children }: OwnProps & Wrapp
     return (
       <>
         {React.Children.map(children, child => (
-          // @ts-ignore
-          <BodyShort size="small" key={isObject(child) ? child.key : child} className={styles.wordwrap}>
+          <BodyShort size="small" className={styles.wordwrap}>
             <strong>
               <FormattedMessage id="HelpText.Aksjonspunkt.BehandletAksjonspunkt" />
             </strong>
@@ -30,9 +28,8 @@ const AksjonspunktHelpText = ({ isAksjonspunktOpen, children }: OwnProps & Wrapp
   }
   return (
     <Alert variant="warning" size="small">
-      {React.Children.map(children, child => (
-        // @ts-ignore
-        <div key={isObject(child) ? child.key : child}>
+      {React.Children.map(children, (child: ReactNode) => (
+        <div>
           <BodyShort size="small" className={styles.wordwrap}>
             {child}
           </BodyShort>
