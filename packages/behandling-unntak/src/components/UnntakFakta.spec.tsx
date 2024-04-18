@@ -149,7 +149,7 @@ describe('<UnntakFakta>', () => {
       />,
     );
 
-    expect(screen.getByRole('button', { name: 'Arbeidsforhold Aksjonspunkt' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Arbeidsforhold' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Inntekt og ytelser' })).toBeInTheDocument();
     expect(screen.getByText('Avklar om arbeidsforholdene skal benyttes i behandlingen')).toBeInTheDocument();
   });
@@ -181,7 +181,7 @@ describe('<UnntakFakta>', () => {
     );
 
     await act(async () => {
-      await userEvent.click(screen.getByRole('button', { name: 'Arbeidsforhold Aksjonspunkt' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Arbeidsforhold' }));
     });
 
     const { calls } = oppdaterProsessStegOgFaktaPanelIUrl.mock;
