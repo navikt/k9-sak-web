@@ -9,7 +9,7 @@
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "2.5.4",
+    "@navikt/ft-plattform-komponenter": "2.5.5",
     "classnames": "2.5.1",
     "formik": "2.4.5",
     "lodash": "4.17.21",

@@ -1,4 +1,4 @@
-import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -52,9 +52,9 @@ const AldersvilkarForm = ({
 
   return (
     <Form<Inputs> formMethods={methods} onSubmit={bekreftAksjonspunkt}>
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen>
+      <AksjonspunktHelpText isAksjonspunktOpen>
         {[<FormattedMessage key={1} id="AlderVilkar.Hjelpetekst" />]}
-      </AksjonspunktHelpTextTemp>
+      </AksjonspunktHelpText>
 
       <VerticalSpacer sixteenPx />
 
@@ -94,7 +94,7 @@ const AldersvilkarForm = ({
       />
       <VerticalSpacer sixteenPx />
 
-      <Button variant="primary" type="submit">
+      <Button size="small" variant="primary" type="submit">
         <FormattedMessage id="AlderVilkar.Bekreft" />
       </Button>
     </Form>

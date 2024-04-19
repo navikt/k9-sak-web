@@ -49,6 +49,7 @@ export const SearchForm = ({
         size="medium"
       />
       <Button
+        size="small"
         className={styles.button}
         loading={searchStarted}
         disabled={isButtonDisabled(searchStarted, searchString)}

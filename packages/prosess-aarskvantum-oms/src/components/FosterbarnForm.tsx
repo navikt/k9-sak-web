@@ -69,6 +69,7 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue, aksjonspu
                             index === 0 &&
                             fields.length < 2)
                         }
+                        size="small"
                       >
                         <Delete />
                       </Button>

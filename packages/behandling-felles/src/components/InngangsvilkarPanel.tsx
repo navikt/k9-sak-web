@@ -1,6 +1,6 @@
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
-  AksjonspunktHelpTextHTML,
+  AksjonspunktHelpText,
   FadingPanel,
   LoadingPanel,
   NestedIntlProvider,
@@ -83,7 +83,7 @@ const InngangsvilkarPanel = ({
       <FadingPanel>
         {((apentFaktaPanelInfo && erIkkeFerdigbehandlet) || aksjonspunktTekstKoder.length > 0) && (
           <>
-            <AksjonspunktHelpTextHTML>
+            <AksjonspunktHelpText isAksjonspunktOpen>
               {apentFaktaPanelInfo && erIkkeFerdigbehandlet
                 ? [
                     <>
@@ -94,7 +94,7 @@ const InngangsvilkarPanel = ({
                     </>,
                   ]
                 : aksjonspunktTekstKoder.map(kode => <FormattedMessage key={kode} id={kode} />)}
-            </AksjonspunktHelpTextHTML>
+            </AksjonspunktHelpText>
             <VerticalSpacer thirtyTwoPx />
           </>
         )}

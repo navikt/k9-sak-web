@@ -1,9 +1,9 @@
-import advarselImg from '@fpsak-frontend/assets/images/advarsel-circle.svg';
 import avslaattImg from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
 import innvilgetImg from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { DateLabel, Image } from '@fpsak-frontend/shared-components';
 import { BehandlingAppKontekst, Periode } from '@k9-sak-web/types';
+import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import moment from 'moment';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -31,11 +31,11 @@ export const getFormattedSøknadserioder = (søknadsperioder: Periode[]) =>
 export const getStatusIcon = (behandlingsresultatTypeKode: string, className: string, erFerdigstilt?: boolean) => {
   if (behandlingsresultatTypeKode === behandlingResultatType.IKKE_FASTSATT || !erFerdigstilt) {
     return (
-      <Image
+      <ExclamationmarkTriangleFillIcon
+        fontSize="1.25rem"
         className={className}
-        src={advarselImg}
-        tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.UnderBehandling" />}
-        alignTooltipLeft
+        style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))' }}
+        title="Under behandling"
       />
     );
   }

@@ -45,11 +45,11 @@ export const VedtakSjekkTilbakekreving: React.FC<Props> = ({
           <Radio value="nei">Nei, behandle denne behandlingen videre</Radio>
         </RadioGroup>
         <VerticalSpacer twentyPx />
-        <Button variant="primary" onClick={handleSubmit} type="button" disabled={deaktiverBekreftKnapp}>
+        <Button size="small" variant="primary" onClick={handleSubmit} type="button" disabled={deaktiverBekreftKnapp}>
           Bekreft
         </Button>
         {redigerSjekkTilbakekreving && (
-          <Button className="ml-2" variant="secondary" onClick={() => toggleSjekkTilbakekreving()}>
+          <Button size="small" className="ml-2" variant="secondary" onClick={() => toggleSjekkTilbakekreving()}>
             Avbryt
           </Button>
         )}

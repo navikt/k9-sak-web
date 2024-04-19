@@ -133,6 +133,7 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
     <form onSubmit={handleSubmit}>
       {kanEndrePåSøknadsopplysninger && (
         <Button
+          size="small"
           className={styles.formUnlockButton}
           variant="primary"
           type="button"
@@ -211,10 +212,11 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
       )}
       {kanEndrePåSøknadsopplysninger && !formIsEditable && (
         <>
-          <Button type="submit" variant="primary">
+          <Button size="small" type="submit" variant="primary">
             Bekreft og fortsett
           </Button>
           <Button
+            size="small"
             onClick={() => {
               // eslint-disable-next-line no-self-assign
               window.location = window.location;

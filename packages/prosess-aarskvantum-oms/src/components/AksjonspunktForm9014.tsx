@@ -1,7 +1,7 @@
 import { CheckboxField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
 import { behandlingForm, getBehandlingFormName } from '@fpsak-frontend/form/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpTextTemp, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, hasValidValue, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
 import { Button, Label, Table } from '@navikt/ds-react';
@@ -83,7 +83,7 @@ export const FormContent = ({
 
     return (
       <>
-        <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
+        <AksjonspunktHelpText isAksjonspunktOpen={isAksjonspunktOpen}>
           {[
             <FormattedMessage
               key={1}
@@ -94,7 +94,7 @@ export const FormContent = ({
               }
             />,
           ]}
-        </AksjonspunktHelpTextTemp>
+        </AksjonspunktHelpText>
         {isAksjonspunktOpen && (
           <>
             <VerticalSpacer sixteenPx />
@@ -109,7 +109,7 @@ export const FormContent = ({
                     : 'Årskvantum.Aksjonspunkt.Uavklart.BekreftInfotrygd',
                 }}
               />
-              <Button variant="primary" onClick={handleSubmit} type="submit">
+              <Button size="small" variant="primary" onClick={handleSubmit} type="submit">
                 <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.KjørPåNytt" />
               </Button>
             </div>
@@ -121,14 +121,14 @@ export const FormContent = ({
 
   return (
     <>
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
+      <AksjonspunktHelpText isAksjonspunktOpen={isAksjonspunktOpen}>
         {[
           <FormattedMessage
             key={1}
             id={erÅF ? 'Årskvantum.Aksjonspunkt.Avslått.Fosterbarn' : 'Årskvantum.Aksjonspunkt.Avslått'}
           />,
         ]}
-      </AksjonspunktHelpTextTemp>
+      </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
       {isAksjonspunktOpen && (
         <RadioGroupField
@@ -212,7 +212,7 @@ export const FormContent = ({
 
       {isAksjonspunktOpen && (
         <div className={styles.spaceBetween}>
-          <Button variant="primary" onClick={handleSubmit} type="submit">
+          <Button size="small" variant="primary" onClick={handleSubmit} type="submit">
             <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Bekreft" />
           </Button>
         </div>

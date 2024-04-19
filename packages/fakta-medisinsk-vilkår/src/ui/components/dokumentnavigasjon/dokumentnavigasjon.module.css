@@ -52,6 +52,7 @@
 }
 
 .dokumentnavigasjon :global(.navds-accordion__header[aria-expanded='false']) {
+  box-shadow: none;
   border-bottom: 1px solid #6a6a6a;
   border-radius: 4px;
 }

@@ -119,6 +119,7 @@ const VurderingAvNattevåksperioderForm = ({
           cancelButtonDisabled={isSubmitting}
           submitButtonDisabled={isSubmitting}
           shouldShowSubmitButton={!readOnly}
+          smallButtons
         >
           <Box marginTop={Margin.large}>
             <BeskrivelserForPerioden periodebeskrivelser={beskrivelser} />

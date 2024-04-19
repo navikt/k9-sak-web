@@ -38,8 +38,12 @@
 .medisinskVilkårTabItem__warningIcon {
   position: absolute;
   right: 0;
-  bottom: -2px;
+  bottom: 0;
   height: 1.5rem;
+}
+
+.medisinskVilkårTabItem__warningIcon svg {
+  font-size: 1rem;
 }
 
 .medisinskVilkårTabItemExtended {

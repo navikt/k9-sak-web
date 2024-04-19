@@ -8,7 +8,7 @@ import {
 } from '@fpsak-frontend/form';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { AksjonspunktHelpTextTemp, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   DDMMYYYY_DATE_FORMAT,
   decodeHtmlEntity,
@@ -108,9 +108,9 @@ export class FeilutbetalingInfoPanelImpl extends Component {
 
     return (
       <>
-        <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
+        <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
           {[<FormattedMessage key="1" id="FeilutbetalingInfoPanel.Aksjonspunkt" />]}
-        </AksjonspunktHelpTextTemp>
+        </AksjonspunktHelpText>
         <VerticalSpacer sixteenPx />
         <form onSubmit={formProps.handleSubmit}>
           <HGrid gap="4" columns={{ xs: '12fr', md: '6fr 6fr' }} className={styles.smallMarginBottom}>
