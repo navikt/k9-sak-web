@@ -1,6 +1,6 @@
 import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
@@ -75,14 +75,14 @@ export const ArbeidsforholdInfoPanelImpl = ({
     <>
       {aksjonspunkter.length > 0 && (
         <Box background="surface-default" padding="4" className={styles.begrunnelseSaksbehandler}>
-          <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
+          <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
             {[
               <FormattedMessage
                 key="ArbeidsforholdInfoPanelAksjonspunkt"
                 id="ArbeidsforholdInfoPanel.AvklarArbeidsforhold"
               />,
             ]}
-          </AksjonspunktHelpTextTemp>
+          </AksjonspunktHelpText>
         </Box>
       )}
       <h3>

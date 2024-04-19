@@ -1,6 +1,6 @@
 import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
 import { BodyShort } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
@@ -33,9 +33,9 @@ export const RegistrereVergeInfoPanelImpl = ({
   }
   return (
     <>
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
+      <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
         {[intl.formatMessage({ id: 'RegistrereVergeInfoPanel.CheckInformation' })]}
-      </AksjonspunktHelpTextTemp>
+      </AksjonspunktHelpText>
       <VerticalSpacer twentyPx />
       <BodyShort size="small">{[intl.formatMessage({ id: 'RegistrereVergeInfoPanel.HjelpeTekst' })]}</BodyShort>
       <form onSubmit={formProps.handleSubmit}>

@@ -15,7 +15,7 @@ import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { AksjonspunktHelpTextTemp, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { BodyShort, HGrid, Heading } from '@navikt/ds-react';
@@ -165,9 +165,9 @@ const BehandleAnkeFormImpl = ({
         <FormattedMessage id="Ankebehandling.Title" />
       </Heading>
       <VerticalSpacer fourPx />
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
+      <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Ankebehandling.HelpText" key={aksjonspunktCode} />]}
-      </AksjonspunktHelpTextTemp>
+      </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
       <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
         <div>

@@ -1,10 +1,10 @@
+import { Button } from '@navikt/ds-react';
+import { Datepicker, Form, TextAreaField } from '@navikt/ft-form-hooks';
+import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Button } from '@navikt/ds-react';
-import { maxLength, minLength, required } from '@navikt/ft-form-validators';
-import { Datepicker, Form, TextAreaField } from '@navikt/ft-form-hooks';
-import styles from './VurderDatoAksjonspunkt.module.css';
 import ContainerContext from '../../context/ContainerContext';
+import styles from './VurderDatoAksjonspunkt.module.css';
 
 interface FormData {
   virkningsdato: string;

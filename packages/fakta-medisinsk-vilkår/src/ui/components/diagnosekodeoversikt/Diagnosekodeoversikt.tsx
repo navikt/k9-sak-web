@@ -1,20 +1,19 @@
-import { Box, Margin, TitleWithUnderline, WarningIcon } from '@navikt/ft-plattform-komponenter';
 import { httpUtils } from '@fpsak-frontend/utils';
+import { Box, Margin, TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
 
-import { Loader } from '@navikt/ds-react';
+import { Alert, Loader } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
 import { useMutation, useQueries, useQuery } from 'react-query';
 import LinkRel from '../../../constants/LinkRel';
 import Diagnosekode from '../../../types/Diagnosekode';
 import { DiagnosekodeResponse } from '../../../types/DiagnosekodeResponse';
+import initDiagnosekodeSearcher, { toLegacyDiagnosekode } from '../../../util/diagnosekodeSearcher';
 import { findLinkByRel } from '../../../util/linkUtils';
 import ContainerContext from '../../context/ContainerContext';
 import AddButton from '../add-button/AddButton';
 import DiagnosekodeModal from '../diagnosekode-modal/DiagnosekodeModal';
 import Diagnosekodeliste from '../diagnosekodeliste/Diagnosekodeliste';
-import IconWithText from '../icon-with-text/IconWithText';
 import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
-import initDiagnosekodeSearcher, { toLegacyDiagnosekode } from '../../../util/diagnosekodeSearcher';
 
 // Start initializing diagnosekode searcher instance, with pagesize 8, so that it can be used both here and in the DiagnosekodeModal.
 // This reuse is possible since we don't use the paging functionality in the instance anyways.
@@ -130,9 +129,11 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
       {isLoading ? (
         <Loader size="large" />
       ) : (
-        <Box marginTop={Margin.large}>
+        <Box marginTop={Margin.medium}>
           {diagnosekoder.length === 0 && (
-            <IconWithText iconRenderer={() => <WarningIcon />} text="Ingen diagnosekode registrert." />
+            <Alert inline variant="warning">
+              Ingen diagnosekode registrert.
+            </Alert>
           )}
           {diagnosekoder.length >= 1 && (
             <Diagnosekodeliste diagnosekoder={diagnosekoderMedNavn} onDeleteClick={slettDiagnosekodeMutation.mutate} />

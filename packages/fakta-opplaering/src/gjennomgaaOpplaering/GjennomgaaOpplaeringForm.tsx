@@ -16,9 +16,9 @@ import {
 import { GjennomgaaOpplaeringVurdering, Vurderingsresultat } from '@k9-sak-web/types';
 import { Alert, Button, ErrorMessage, Label } from '@navikt/ds-react';
 import { Field, FieldArray, Formik } from 'formik';
-import DokumenterIVurderingen from '../components/DokumenterIVurderingen';
 import AddButton from '../components/add-button/AddButton';
 import DeleteButton from '../components/delete-button/DeleteButton';
+import DokumenterIVurderingen from '../components/DokumenterIVurderingen';
 import RangeDatepicker from '../components/rangeDatepicker/RangeDatepicker';
 
 enum fieldname {

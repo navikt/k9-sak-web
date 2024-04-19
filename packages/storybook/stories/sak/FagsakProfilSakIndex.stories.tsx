@@ -27,7 +27,7 @@ export const visPanelForValgAvBehandlinger = () => (
         navn: 'Foreldrepenger',
       }}
       fagsakStatus={{ kode: fagsakStatus.OPPRETTET, kodeverk: FAGSAK_STATUS_KODEVERK, navn: 'Opprettet' }}
-      renderBehandlingMeny={() => <Button>Meny (Placeholder)</Button>}
+      renderBehandlingMeny={() => <Button size="small">Meny (Placeholder)</Button>}
       renderBehandlingVelger={() => <div>Liste (placeholder)</div>}
       dekningsgrad={100}
     />

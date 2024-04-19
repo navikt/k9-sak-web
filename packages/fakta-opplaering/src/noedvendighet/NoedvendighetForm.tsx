@@ -1,17 +1,17 @@
-import { Box, Margin, DetailView } from '@navikt/ft-plattform-komponenter';
 import { TextAreaFormik } from '@fpsak-frontend/form';
 import { Calender } from '@navikt/ds-icons';
+import { Box, DetailView, Margin } from '@navikt/ft-plattform-komponenter';
 
-import React, { useContext, useEffect } from 'react';
-import { NoedvendighetVurdering, Vurderingsresultat } from '@k9-sak-web/types';
-import { required } from '@fpsak-frontend/utils';
-import { Field, Formik } from 'formik';
 import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
-import { Button } from '@navikt/ds-react';
+import { required } from '@fpsak-frontend/utils';
 import {
   FaktaOpplaeringContext,
   FaktaOpplaeringContextTypes,
 } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
+import { NoedvendighetVurdering, Vurderingsresultat } from '@k9-sak-web/types';
+import { Button } from '@navikt/ds-react';
+import { Field, Formik } from 'formik';
+import React, { useContext, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import DokumenterIVurderingen from '../components/DokumenterIVurderingen';
 

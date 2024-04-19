@@ -132,6 +132,7 @@ const VurderingAvOmsorgsperioderForm = ({
             buttonLabel="Bekreft og fortsett"
             onAvbryt={onAvbryt}
             shouldShowSubmitButton={!readOnly}
+            smallButtons
           >
             <Box marginTop={Margin.xLarge}>
               <Label htmlFor={FieldName.BEGRUNNELSE}>{intl.formatMessage({ id: 'vurdering.hjemmel' })}</Label>

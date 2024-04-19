@@ -16,7 +16,7 @@ import {
   RadioOption,
   TextAreaField,
 } from '@fpsak-frontend/form';
-import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 
@@ -39,9 +39,9 @@ const AnkeMerknader = ({
         <FormattedMessage id="Ankebehandling.Merknad.Title" />
       </Heading>
       <VerticalSpacer fourPx />
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
+      <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Ankebehandling.Merknad.HelpText" key={aksjonspunktCode} />]}
-      </AksjonspunktHelpTextTemp>
+      </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
       <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
         <div>

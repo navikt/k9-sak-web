@@ -1,5 +1,5 @@
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import { Alert, Button } from '@navikt/ds-react';
+import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import FagsakYtelseType from '../../../constants/FagsakYtelseType';
 import Dokumentoversikt from '../../../types/Dokumentoversikt';

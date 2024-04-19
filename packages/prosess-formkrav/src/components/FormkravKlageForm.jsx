@@ -8,7 +8,7 @@ import {
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Detail, HGrid, Heading } from '@navikt/ds-react';
@@ -78,9 +78,9 @@ export const FormkravKlageForm = ({
       <VerticalSpacer fourPx />
       <Detail>{intl.formatMessage({ id: getLovHjemmeler(aksjonspunktCode) })}</Detail>
       <VerticalSpacer fourPx />
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
+      <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Klage.Formkrav.HelpText" key={aksjonspunktCode} />]}
-      </AksjonspunktHelpTextTemp>
+      </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
       <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
         <div>

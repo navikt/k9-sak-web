@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { AksjonspunktHelpTextTemp, BorderBox, Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, BorderBox, Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Alert, Button, Tag, Textarea } from '@navikt/ds-react';
 import { OverstyrInputBeregningDto } from '../types/OverstyrInputBeregningDto';
@@ -94,9 +94,9 @@ const OverstyrBeregningFaktaForm = ({
   return (
     <div className={styles.container}>
       <VerticalSpacer thirtyTwoPx />
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={erAksjonspunktÅpent()}>
+      <AksjonspunktHelpText isAksjonspunktOpen={erAksjonspunktÅpent()}>
         {[<FormattedMessage id="OverstyrInputForm.Aksjonspunkt" key="aksjonspunktText" />]}
-      </AksjonspunktHelpTextTemp>
+      </AksjonspunktHelpText>
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
@@ -202,6 +202,7 @@ const OverstyrBeregningFaktaForm = ({
             <VerticalSpacer sixteenPx />
             <div className={styles.buttonBar}>
               <Button
+                size="small"
                 className={styles.button}
                 loading={isSubmitting}
                 disabled={readOnly || !submittable || !isValid}
@@ -210,7 +211,7 @@ const OverstyrBeregningFaktaForm = ({
               >
                 <FormattedMessage id="OverstyrInputForm.LagreAksjonspunkt" />
               </Button>
-              <Button className={styles.button} disabled={isValid} variant="tertiary" type="submit">
+              <Button size="small" className={styles.button} disabled={isValid} variant="tertiary" type="submit">
                 <FormattedMessage id="OverstyrInputForm.KontrollerSkjema" />
               </Button>
             </div>

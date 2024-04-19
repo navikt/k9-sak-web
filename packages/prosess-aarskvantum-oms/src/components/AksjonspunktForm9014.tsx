@@ -2,7 +2,7 @@ import { CheckboxField, RadioGroupField, RadioOption, TextAreaField } from '@fps
 import { behandlingForm, getBehandlingFormName } from '@fpsak-frontend/form/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  AksjonspunktHelpTextTemp,
+  AksjonspunktHelpText,
   BorderBox,
   Table,
   TableColumn,
@@ -90,7 +90,7 @@ export const FormContent = ({
 
     return (
       <>
-        <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
+        <AksjonspunktHelpText isAksjonspunktOpen={isAksjonspunktOpen}>
           {[
             <FormattedMessage
               key={1}
@@ -101,7 +101,7 @@ export const FormContent = ({
               }
             />,
           ]}
-        </AksjonspunktHelpTextTemp>
+        </AksjonspunktHelpText>
         {isAksjonspunktOpen && (
           <>
             <VerticalSpacer sixteenPx />
@@ -116,7 +116,7 @@ export const FormContent = ({
                     : 'Årskvantum.Aksjonspunkt.Uavklart.BekreftInfotrygd',
                 }}
               />
-              <Button variant="primary" onClick={handleSubmit} type="submit">
+              <Button size="small" variant="primary" onClick={handleSubmit} type="submit">
                 <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.KjørPåNytt" />
               </Button>
             </div>
@@ -128,14 +128,14 @@ export const FormContent = ({
 
   return (
     <>
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
+      <AksjonspunktHelpText isAksjonspunktOpen={isAksjonspunktOpen}>
         {[
           <FormattedMessage
             key={1}
             id={erÅF ? 'Årskvantum.Aksjonspunkt.Avslått.Fosterbarn' : 'Årskvantum.Aksjonspunkt.Avslått'}
           />,
         ]}
-      </AksjonspunktHelpTextTemp>
+      </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
       {isAksjonspunktOpen && (
         <RadioGroupField
@@ -217,7 +217,7 @@ export const FormContent = ({
 
       {isAksjonspunktOpen && (
         <div className={styles.spaceBetween}>
-          <Button variant="primary" onClick={handleSubmit} type="submit">
+          <Button size="small" variant="primary" onClick={handleSubmit} type="submit">
             <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Bekreft" />
           </Button>
         </div>

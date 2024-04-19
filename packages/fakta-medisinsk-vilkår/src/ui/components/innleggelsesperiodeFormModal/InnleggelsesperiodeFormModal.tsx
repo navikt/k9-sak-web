@@ -1,7 +1,7 @@
-import { Alert, Button, Label, Modal } from '@navikt/ds-react';
-import { Box, Form, Margin } from '@navikt/ft-plattform-komponenter';
 import { PeriodpickerListRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
+import { Alert, Button, Label, Modal } from '@navikt/ds-react';
+import { Box, Form, Margin } from '@navikt/ft-plattform-komponenter';
 import React, { useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { InnleggelsesperiodeDryRunResponse } from '../../../api/api';
@@ -75,7 +75,7 @@ const InnleggelsesperiodeFormModal = ({
       <Modal.Body>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <FormProvider {...formMethods}>
-          <Form onSubmit={formMethods.handleSubmit(handleSubmit)} shouldShowSubmitButton={false}>
+          <Form onSubmit={formMethods.handleSubmit(handleSubmit)} shouldShowSubmitButton={false} smallButtons>
             <Box marginTop={Margin.large}>
               <PeriodpickerListRHF
                 name="innleggelsesperioder"
@@ -134,7 +134,7 @@ const InnleggelsesperiodeFormModal = ({
                 }}
                 renderBeforeFieldArray={fieldArrayMethods => (
                   <>
-                    <Box marginTop={Margin.large} marginBottom={Margin.medium}>
+                    <Box marginBottom={Margin.medium}>
                       <AddButton
                         label="Legg til innleggelsesperiode"
                         onClick={() => fieldArrayMethods.append({ fom: '', tom: '' })}
