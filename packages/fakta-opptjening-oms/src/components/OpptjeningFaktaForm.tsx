@@ -1,7 +1,7 @@
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
-  AksjonspunktHelpTextTemp,
+  AksjonspunktHelpText,
   DateLabel,
   FlexColumn,
   FlexContainer,
@@ -312,9 +312,9 @@ export class OpptjeningFaktaFormImpl extends Component<
         <div className={opptjeningList.length > 1 ? styles.tabContainer : ''}>
           {hasAksjonspunkt && (
             <>
-              <AksjonspunktHelpTextTemp isAksjonspunktOpen={harApneAksjonspunkter}>
+              <AksjonspunktHelpText isAksjonspunktOpen={harApneAksjonspunkter}>
                 {getAksjonspunktHelpTexts(opptjeningAktivitetList)}
-              </AksjonspunktHelpTextTemp>
+              </AksjonspunktHelpText>
               <VerticalSpacer twentyPx />
             </>
           )}

@@ -126,10 +126,10 @@ const FritekstEditor = ({
           </Alert>
 
           <div className={styles.knapperHoyere}>
-            <Button type="button" variant="tertiary" onClick={() => setVisAdvarsel(false)}>
+            <Button size="small" type="button" variant="tertiary" onClick={() => setVisAdvarsel(false)}>
               <FormattedMessage id="RedigeringAvFritekstBrev.IkkeTilbakestill" />
             </Button>
-            <Button type="button" variant="primary" onClick={handleTilbakestill}>
+            <Button size="small" type="button" variant="primary" onClick={handleTilbakestill}>
               <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
             </Button>
           </div>

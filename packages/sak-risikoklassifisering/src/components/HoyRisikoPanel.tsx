@@ -1,5 +1,5 @@
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt, Risikoklassifisering } from '@k9-sak-web/types';
 import { Box } from '@navikt/ds-react';
 import React from 'react';
@@ -32,9 +32,9 @@ const HoyRisikoPanel = ({
   <Box background="surface-default" padding="4">
     {aksjonspunkt && aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && (
       <>
-        <AksjonspunktHelpTextHTML>
+        <AksjonspunktHelpText isAksjonspunktOpen>
           <FormattedMessage id="Risikopanel.Panel.Tittel" />
-        </AksjonspunktHelpTextHTML>
+        </AksjonspunktHelpText>
         <VerticalSpacer sixteenPx />
       </>
     )}

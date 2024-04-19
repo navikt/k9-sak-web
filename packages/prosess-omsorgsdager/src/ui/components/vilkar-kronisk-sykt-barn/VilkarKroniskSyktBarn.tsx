@@ -268,7 +268,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                 </div>
               )}
 
-              <Button variant="primary" type="submit">
+              <Button size="small" variant="primary" type="submit">
                 Bekreft og fortsett
               </Button>
             </form>

@@ -1,12 +1,14 @@
+import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
+import { Period, isSameOrBefore } from '@fpsak-frontend/utils';
 import { Close } from '@navikt/ds-icons';
 import { Alert, Label, Link } from '@navikt/ds-react';
 import { Box, ContentWithTooltip, Form, Margin, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
-import { isSameOrBefore, Period } from '@fpsak-frontend/utils';
-import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
 import React, { useState } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
 import { Vurderingsversjon } from '../../../types/Vurdering';
+import Vurderingsresultat from '../../../types/Vurderingsresultat';
+import { finnBenyttedeDokumenter } from '../../../util/dokumentUtils';
 import {
   finnHullIPerioder,
   finnMaksavgrensningerForPerioder,
@@ -18,12 +20,10 @@ import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
 import DokumentLink from '../dokument-link/DokumentLink';
-import VurderingDokumentfilter from '../vurdering-dokumentfilter/VurderingDokumentfilter';
-import vurderingDokumentfilterOptions from '../vurdering-dokumentfilter/vurderingDokumentfilterOptions';
 import StjerneIkon from '../vurdering-av-form/StjerneIkon';
 import styles from '../vurdering-av-form/vurderingForm.module.css';
-import Vurderingsresultat from '../../../types/Vurderingsresultat';
-import { finnBenyttedeDokumenter } from '../../../util/dokumentUtils';
+import VurderingDokumentfilter from '../vurdering-dokumentfilter/VurderingDokumentfilter';
+import vurderingDokumentfilterOptions from '../vurdering-dokumentfilter/vurderingDokumentfilterOptions';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyType = any;
@@ -191,6 +191,7 @@ const VurderingAvTilsynsbehovForm = ({
           submitButtonDisabled={isSubmitting}
           cancelButtonDisabled={isSubmitting}
           shouldShowSubmitButton={!readOnly}
+          smallButtons
         >
           {dokumenter?.length > 0 && (
             <Box marginTop={Margin.large}>

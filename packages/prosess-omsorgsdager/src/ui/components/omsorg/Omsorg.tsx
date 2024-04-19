@@ -181,7 +181,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
                 {errors.harOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
               </div>
 
-              <Button variant="primary" type="submit">
+              <Button size="small" variant="primary" type="submit">
                 Bekreft og fortsett
               </Button>
             </form>

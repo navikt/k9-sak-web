@@ -215,7 +215,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                   )}
                 </Fieldset>
               )}
-              <Button variant="primary" className={styles.bekreftKnapp} type="submit">
+              <Button size="small" variant="primary" className={styles.bekreftKnapp} type="submit">
                 {' '}
                 {tekst.bekreftFortsettKnapp}
               </Button>

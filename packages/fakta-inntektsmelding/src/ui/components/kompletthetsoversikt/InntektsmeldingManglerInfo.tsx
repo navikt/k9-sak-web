@@ -7,7 +7,7 @@ import styles from './kompletthetsoversikt.module.css';
 const InntektsmeldingManglerInfo = (): JSX.Element => (
   <>
     <Box marginBottom={Margin.large}>
-      <Alert variant="warning" size="medium" className={styles.alert}>
+      <Alert variant="warning" size="small" className={styles.alert}>
         <Heading spacing size="xsmall" level="3">
           Vurder om du kan fortsette behandlingen uten inntektsmelding.
         </Heading>
@@ -18,7 +18,7 @@ const InntektsmeldingManglerInfo = (): JSX.Element => (
       </Alert>
     </Box>
     <Box marginBottom={Margin.large}>
-      <Alert variant="info" size="medium">
+      <Alert variant="info" size="small">
         <Accordion className={styles.alertAccordion}>
           <Accordion.Item>
             <Accordion.Header>

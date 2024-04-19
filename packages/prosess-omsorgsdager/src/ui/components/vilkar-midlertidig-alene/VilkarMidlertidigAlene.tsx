@@ -218,7 +218,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                 </Fieldset>
               )}
 
-              <Button variant="primary" className={styles.bekreftKnapp} type="submit">
+              <Button size="small" variant="primary" className={styles.bekreftKnapp} type="submit">
                 {' '}
                 {tekst.bekreftFortsettKnapp}
               </Button>

@@ -81,6 +81,7 @@ const Fosterbarn = ({ setFosterbarn }: FosterbarnProps) => {
                     </Table.DataCell>
                     <Table.DataCell>
                       <Button
+                        size="small"
                         variant="tertiary"
                         onClick={() => remove(index)}
                         disabled={readOnly}
