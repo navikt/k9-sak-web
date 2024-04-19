@@ -25,6 +25,6 @@ describe('<RadioGroupField>', () => {
       </RadioGroupField>,
       { messages },
     );
-    expect(container.getElementsByClassName('skjemagruppe input--fullbredde radioGroup').length).toBeGreaterThan(0);
+    expect(container.getElementsByClassName('input--fullbredde radioGroup').length).toBeGreaterThan(0);
   });
 });

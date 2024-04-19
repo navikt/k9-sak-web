@@ -56,7 +56,7 @@ const renderRadioGroupField = renderNavField(
         legend={legend}
         hideLegend
       >
-        <RadioGroup legend={label} onChange={onChange} size="small" value={value}>
+        <RadioGroup legend={label} onChange={onChange} size="small" value={value} disabled={readOnly}>
           {childIsRenderFn ? children({ value, optionProps }) : children}
         </RadioGroup>
       </Fieldset>
