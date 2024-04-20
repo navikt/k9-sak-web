@@ -12,7 +12,7 @@
 }
 
 .vilkarStatusOverskrift * {
-  margin: 0 0.5rem 0 0.5rem;
+  margin: 0 0.5rem;
 }
 
 .aksjonspunktNavn {
@@ -43,7 +43,7 @@
 .vilkarStatus {
   font-size: 1rem;
   font-weight: bold;
-  margin: 0.75rem 0 1rem 0;
+  margin: 0.75rem 0 1rem;
 }
 
 .beskrivelseForOmsorgenForOppfyltVilkar {

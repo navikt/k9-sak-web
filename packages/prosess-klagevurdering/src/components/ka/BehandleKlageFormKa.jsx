@@ -8,10 +8,9 @@ import {
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { Heading } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { HGrid, Heading } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -52,9 +51,9 @@ export const BehandleKlageFormKaImpl = ({
         {intl.formatMessage({ id: 'Klage.ResolveKlage.Title' })}
       </Heading>
       <VerticalSpacer fourPx />
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
+      <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Klage.ResolveKlage.HelpText" key={aksjonspunktCodes.BEHANDLE_KLAGE_NK} />]}
-      </AksjonspunktHelpTextTemp>
+      </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
       <KlageVurderingRadioOptionsKa
         readOnly={readOnly}
@@ -67,8 +66,8 @@ export const BehandleKlageFormKaImpl = ({
         <VerticalSpacer sixteenPx />
         <FritekstBrevTextField sprakkode={sprakkode} readOnly={readOnly} intl={intl} />
         <VerticalSpacer sixteenPx />
-        <Row>
-          <Column xs="8">
+        <HGrid gap="1" columns={{ xs: '8fr 2fr 2fr' }}>
+          <div className="relative">
             <ProsessStegSubmitButton
               formName={formProps.form}
               behandlingId={behandlingId}
@@ -92,16 +91,16 @@ export const BehandleKlageFormKaImpl = ({
                   previewCallback={previewCallback}
                 />
               )}
-          </Column>
-          <Column xs="2">
+          </div>
+          <div>
             <TempsaveKlageButton
               formValues={formValues}
               saveKlage={saveKlage}
               readOnly={readOnly}
               aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NK}
             />
-          </Column>
-        </Row>
+          </div>
+        </HGrid>
       </div>
     </FadingPanel>
   </form>

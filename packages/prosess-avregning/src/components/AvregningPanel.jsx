@@ -12,10 +12,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import { AksjonspunktHelpTextTemp, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import { BodyShort, Button, Detail, Heading, Label } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { BodyShort, Button, Detail, HGrid, Heading, Label } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -120,151 +119,139 @@ export class AvregningPanelImpl extends Component {
         <VerticalSpacer twentyPx />
         {simuleringResultatOption && (
           <div>
-            <Row>
-              <Column xs="12">
-                <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
-                  {[<FormattedMessage id="Avregning.AksjonspunktHelpText.5084" key="vurderFeilutbetaling" />]}
-                </AksjonspunktHelpTextTemp>
-                <VerticalSpacer twentyPx />
-                <AvregningSummary
-                  fom={simuleringResultatOption.periode?.fom}
-                  tom={simuleringResultatOption.periode?.tom}
-                  feilutbetaling={simuleringResultatOption.sumFeilutbetaling}
-                  etterbetaling={simuleringResultatOption.sumEtterbetaling}
-                  inntrekk={simuleringResultatOption.sumInntrekk}
-                  ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
-                />
-                <AvregningTable
-                  showDetails={showDetails}
-                  toggleDetails={this.toggleDetails}
-                  simuleringResultat={simuleringResultatOption}
-                  ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
-                />
-                <VerticalSpacer twentyPx />
-                {hasOpenTilbakekrevingsbehandling && (
-                  <Label size="small" as="p">
-                    <FormattedMessage id="Avregning.ApenTilbakekrevingsbehandling" />
-                  </Label>
-                )}
-              </Column>
-            </Row>
+            <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
+              {[<FormattedMessage id="Avregning.AksjonspunktHelpText.5084" key="vurderFeilutbetaling" />]}
+            </AksjonspunktHelpText>
+            <VerticalSpacer twentyPx />
+            <AvregningSummary
+              fom={simuleringResultatOption.periode?.fom}
+              tom={simuleringResultatOption.periode?.tom}
+              feilutbetaling={simuleringResultatOption.sumFeilutbetaling}
+              etterbetaling={simuleringResultatOption.sumEtterbetaling}
+              inntrekk={simuleringResultatOption.sumInntrekk}
+              ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
+            />
+            <AvregningTable
+              showDetails={showDetails}
+              toggleDetails={this.toggleDetails}
+              simuleringResultat={simuleringResultatOption}
+              ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
+            />
+            <VerticalSpacer twentyPx />
+            {hasOpenTilbakekrevingsbehandling && (
+              <Label size="small" as="p">
+                <FormattedMessage id="Avregning.ApenTilbakekrevingsbehandling" />
+              </Label>
+            )}
           </div>
         )}
         {!simuleringResultat && <FormattedMessage id="Avregning.ingenData" />}
         {apCodes[0] && (
           <div>
-            <Row>
-              <Column xs="12">
-                <form onSubmit={formProps.handleSubmit}>
-                  <Row>
-                    <Column sm="6">
-                      <TextAreaField
-                        name="begrunnelse"
-                        label={{ id: 'Avregning.vurdering' }}
-                        validate={[required, minLength3, maxLength1500, hasValidText]}
-                        maxLength={1500}
-                        readOnly={readOnly}
-                        id="avregningVurdering"
-                      />
-                    </Column>
-                    {apCodes[0] === aksjonspunktCodes.VURDER_FEILUTBETALING && (
-                      <Column sm="6">
-                        <Detail>
-                          <FormattedMessage id="Avregning.videreBehandling" />
-                        </Detail>
-                        <VerticalSpacer eightPx />
-                        <RadioGroupField
-                          name="videreBehandling"
-                          validate={[required]}
-                          direction="vertical"
-                          readOnly={readOnly}
+            <form onSubmit={formProps.handleSubmit}>
+              <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+                <TextAreaField
+                  name="begrunnelse"
+                  label={{ id: 'Avregning.vurdering' }}
+                  validate={[required, minLength3, maxLength1500, hasValidText]}
+                  maxLength={1500}
+                  readOnly={readOnly}
+                  id="avregningVurdering"
+                />
+                {apCodes[0] === aksjonspunktCodes.VURDER_FEILUTBETALING && (
+                  <div>
+                    <Detail>
+                      <FormattedMessage id="Avregning.videreBehandling" />
+                    </Detail>
+                    <VerticalSpacer eightPx />
+                    <RadioGroupField
+                      name="videreBehandling"
+                      validate={[required]}
+                      direction="vertical"
+                      readOnly={readOnly}
+                    >
+                      {featureVarseltekst && (
+                        <RadioOption
+                          label={<FormattedMessage id="Avregning.gjennomfør" />}
+                          value={tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT}
                         >
-                          {featureVarseltekst && (
-                            <RadioOption
-                              label={<FormattedMessage id="Avregning.gjennomfør" />}
-                              value={tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT}
-                            >
-                              <div className={styles.varsel}>
-                                <ArrowBox alignOffset={20}>
-                                  <Row>
-                                    <Column sm="10">
-                                      <BodyShort size="small" className={styles.bold}>
-                                        <FormattedMessage id="Avregning.varseltekst" />
-                                      </BodyShort>
-                                    </Column>
-                                    <Column sm="2">
-                                      <Image
-                                        tabIndex="0"
-                                        src={questionNormalUrl}
-                                        srcHover={questionHoverUrl}
-                                        alt={intl.formatMessage({ id: 'Avregning.HjelpetekstPleiepenger' })}
-                                        tooltip={<FormattedMessage id="Avregning.HjelpetekstPleiepenger" />}
-                                      />
-                                    </Column>
-                                  </Row>
-                                  <VerticalSpacer eightPx />
-                                  <TextAreaField
-                                    name="varseltekst"
-                                    label={{ id: 'Avregning.fritekst' }}
-                                    validate={[required, minLength3, maxLength1500, hasValidText]}
-                                    maxLength={1500}
-                                    readOnly={readOnly}
-                                    id="avregningFritekst"
-                                    badges={[
-                                      {
-                                        type: 'warning',
-                                        textId: getLanguageCodeFromSprakkode(sprakkode),
-                                        title: 'Malform.Beskrivelse',
-                                      },
-                                    ]}
+                          <div className={styles.varsel}>
+                            <ArrowBox alignOffset={20}>
+                              <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
+                                <BodyShort size="small" className={styles.bold}>
+                                  <FormattedMessage id="Avregning.varseltekst" />
+                                </BodyShort>
+                                <div>
+                                  <Image
+                                    tabIndex="0"
+                                    src={questionNormalUrl}
+                                    srcHover={questionHoverUrl}
+                                    alt={intl.formatMessage({ id: 'Avregning.HjelpetekstPleiepenger' })}
+                                    tooltip={<FormattedMessage id="Avregning.HjelpetekstPleiepenger" />}
                                   />
-                                  <VerticalSpacer fourPx />
-                                  <a
-                                    href=""
-                                    onClick={e => {
-                                      this.previewMessage(e, previewCallback);
-                                    }}
-                                    className={styles.previewLink}
-                                  >
-                                    <FormattedMessage id="Messages.PreviewText" />
-                                  </a>
-                                </ArrowBox>
-                              </div>
-                            </RadioOption>
-                          )}
-                          <RadioOption
-                            label={
-                              <FormattedMessage
-                                id={featureVarseltekst ? 'Avregning.OpprettMenIkkeSendVarsel' : 'Avregning.Opprett'}
+                                </div>
+                              </HGrid>
+                              <VerticalSpacer eightPx />
+                              <TextAreaField
+                                name="varseltekst"
+                                label={{ id: 'Avregning.fritekst' }}
+                                validate={[required, minLength3, maxLength1500, hasValidText]}
+                                maxLength={1500}
+                                readOnly={readOnly}
+                                id="avregningFritekst"
+                                badges={[
+                                  {
+                                    type: 'warning',
+                                    textId: getLanguageCodeFromSprakkode(sprakkode),
+                                    title: 'Malform.Beskrivelse',
+                                  },
+                                ]}
                               />
-                            }
-                            value={`${tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT}${IKKE_SEND}`}
+                              <VerticalSpacer fourPx />
+                              <a
+                                href=""
+                                onClick={e => {
+                                  this.previewMessage(e, previewCallback);
+                                }}
+                                className={styles.previewLink}
+                              >
+                                <FormattedMessage id="Messages.PreviewText" />
+                              </a>
+                            </ArrowBox>
+                          </div>
+                        </RadioOption>
+                      )}
+                      <RadioOption
+                        label={
+                          <FormattedMessage
+                            id={featureVarseltekst ? 'Avregning.OpprettMenIkkeSendVarsel' : 'Avregning.Opprett'}
                           />
-                          <RadioOption
-                            label={<FormattedMessage id="Avregning.avvent" />}
-                            value={tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER}
-                          />
-                        </RadioGroupField>
-                      </Column>
-                    )}
-                  </Row>
-                  <Row>
-                    <Column xs="6">
-                      <Button
-                        variant="primary"
-                        size="small"
-                        type="button"
-                        onClick={formProps.handleSubmit}
-                        disabled={formProps.invalid || formProps.pristine || formProps.submitting}
-                        loading={formProps.submitting}
-                      >
-                        <FormattedMessage id="SubmitButton.ConfirmInformation" />
-                      </Button>
-                    </Column>
-                  </Row>
-                </form>
-              </Column>
-            </Row>
+                        }
+                        value={`${tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT}${IKKE_SEND}`}
+                      />
+                      <RadioOption
+                        label={<FormattedMessage id="Avregning.avvent" />}
+                        value={tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER}
+                      />
+                    </RadioGroupField>
+                  </div>
+                )}
+              </HGrid>
+              <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+                <div>
+                  <Button
+                    variant="primary"
+                    size="small"
+                    type="button"
+                    onClick={formProps.handleSubmit}
+                    disabled={formProps.invalid || formProps.pristine || formProps.submitting}
+                    loading={formProps.submitting}
+                  >
+                    <FormattedMessage id="SubmitButton.ConfirmInformation" />
+                  </Button>
+                </div>
+              </HGrid>
+            </form>
           </div>
         )}
       </>

@@ -5,8 +5,7 @@ import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import { Button, Label, Modal } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { Button, HGrid, Label, Modal } from '@navikt/ds-react';
 import React, { ReactElement, useEffect } from 'react';
 import { FormattedMessage, IntlShape, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -117,12 +116,12 @@ export const NyBehandlingModal = ({
     >
       <Modal.Body>
         <form onSubmit={handleSubmit}>
-          <Row>
-            <Column xs="1">
+          <HGrid gap="1" columns={{ xs: '1fr 11fr' }}>
+            <div className="relative">
               <Image className={styles.image} src={innvilgetImageUrl} />
               <div className={styles.divider} />
-            </Column>
-            <Column xs="11">
+            </div>
+            <div>
               <div className={styles.label}>
                 <Label size="small" as="p">
                   <FormattedMessage id="MenyNyBehandlingIndex.OpprettNyForstegangsbehandling" />
@@ -173,8 +172,8 @@ export const NyBehandlingModal = ({
                   <FormattedMessage id="MenyNyBehandlingIndex.Avbryt" />
                 </Button>
               </div>
-            </Column>
-          </Row>
+            </div>
+          </HGrid>
         </form>
       </Modal.Body>
     </Modal>

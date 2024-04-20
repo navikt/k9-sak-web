@@ -13,12 +13,11 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import innsynResultatTyperKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import { AksjonspunktHelpTextTemp, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ISO_DATE_FORMAT, hasValidDate, required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Heading } from '@navikt/ds-react';
 import moment from 'moment';
-import { Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -56,9 +55,9 @@ export const InnsynFormImpl = ({
         <FormattedMessage id="InnsynForm.Innsynsbehandling" />
       </Heading>
       <VerticalSpacer twentyPx />
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
+      <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
         {[<FormattedMessage id="InnsynForm.VurderKravetOmInnsyn" key="1" />]}
-      </AksjonspunktHelpTextTemp>
+      </AksjonspunktHelpText>
       <VerticalSpacer twentyPx />
       <DatepickerField
         name="mottattDato"
@@ -100,17 +99,15 @@ export const InnsynFormImpl = ({
             <RadioOption label={{ id: 'InnsynForm.SettBehandlingPåVent' }} value />
             <RadioOption label={{ id: 'InnsynForm.ForeslåOgFatteVedtak' }} value={false} />
           </RadioGroupField>
-          <Row>
-            {sattPaVent && (
-              <DatepickerField
-                name="fristDato"
-                label={{ id: 'InnsynForm.FristDato' }}
-                readOnly={readOnly}
-                isEdited={!isApOpen}
-                validate={[required, hasValidDate]}
-              />
-            )}
-          </Row>
+          {sattPaVent && (
+            <DatepickerField
+              name="fristDato"
+              label={{ id: 'InnsynForm.FristDato' }}
+              readOnly={readOnly}
+              isEdited={!isApOpen}
+              validate={[required, hasValidDate]}
+            />
+          )}
         </ArrowBox>
       )}
       <VerticalSpacer sixteenPx />

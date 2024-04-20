@@ -1,4 +1,3 @@
-import { Column, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -14,25 +13,23 @@ const minLength3 = minLength(3);
 const VedtakFritekstPanelImpl = ({ begrunnelse, begrunnelseFieldName, sprakkode, readOnly, label, intl }) => (
   <>
     {!readOnly && (
-      <Row>
+      <div>
         <VerticalSpacer sixteenPx />
-        <Column xs="12">
-          <TextAreaFormik
-            name={begrunnelseFieldName}
-            label={label}
-            validate={[minLength3, maxLength100000, hasValidText]}
-            maxLength={100000}
-            readOnly={readOnly}
-            badges={[
-              {
-                type: 'warning',
-                text: getLanguageFromSprakkode(sprakkode),
-                title: intl.formatMessage({ id: 'Malform.Beskrivelse' }),
-              },
-            ]}
-          />
-        </Column>
-      </Row>
+        <TextAreaFormik
+          name={begrunnelseFieldName}
+          label={label}
+          validate={[minLength3, maxLength100000, hasValidText]}
+          maxLength={100000}
+          readOnly={readOnly}
+          badges={[
+            {
+              type: 'warning',
+              text: getLanguageFromSprakkode(sprakkode),
+              title: intl.formatMessage({ id: 'Malform.Beskrivelse' }),
+            },
+          ]}
+        />
+      </div>
     )}
     {readOnly && begrunnelse !== null && (
       <span>

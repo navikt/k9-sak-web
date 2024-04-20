@@ -3,7 +3,7 @@ import { Button, Checkbox, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
-import { dokumentLabel, Dokumenttype } from '../../../types/Dokument';
+import { Dokumenttype, dokumentLabel } from '../../../types/Dokument';
 import styles from './dokumentfilter.module.css';
 
 interface ChevronWithTextProps {
@@ -20,6 +20,7 @@ interface DokumentfilterProps {
 
 const ChevronWithText = ({ chevronDirection, onClick, text }: ChevronWithTextProps): JSX.Element => (
   <Button
+    size="small"
     variant="tertiary"
     className={styles.chevronDropdown__toggleButton}
     onClick={onClick}

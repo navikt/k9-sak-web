@@ -3,7 +3,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { BodyShort, Detail, Heading } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
@@ -57,9 +57,9 @@ export const VedtakKlageFormImpl = ({
       <VerticalSpacer twentyPx />
       {!readOnly && åpneAksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_DOKUMENT) ? (
         <>
-          <AksjonspunktHelpTextTemp isAksjonspunktOpen>
+          <AksjonspunktHelpText isAksjonspunktOpen>
             {intl.formatMessage({ id: 'VedtakKlageForm.VurderDokument' })}
-          </AksjonspunktHelpTextTemp>
+          </AksjonspunktHelpText>
           <VerticalSpacer eightPx />
         </>
       ) : null}

@@ -8,7 +8,7 @@ import {
 } from '@fpsak-frontend/form';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { AksjonspunktHelpTextTemp, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   DDMMYYYY_DATE_FORMAT,
   decodeHtmlEntity,
@@ -18,9 +18,8 @@ import {
   minLength,
   required,
 } from '@fpsak-frontend/utils';
-import { BodyShort, Button, Detail, Label } from '@navikt/ds-react';
+import { BodyShort, Button, Detail, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -109,75 +108,59 @@ export class FeilutbetalingInfoPanelImpl extends Component {
 
     return (
       <>
-        <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
+        <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
           {[<FormattedMessage key="1" id="FeilutbetalingInfoPanel.Aksjonspunkt" />]}
-        </AksjonspunktHelpTextTemp>
+        </AksjonspunktHelpText>
         <VerticalSpacer sixteenPx />
         <form onSubmit={formProps.handleSubmit}>
-          <Row className={styles.smallMarginBottom}>
-            <Column xs="12" md="6">
-              <Row className={styles.smallMarginBottom}>
-                <Column xs="12">
-                  <Label size="small" as="p">
-                    <FormattedMessage id="FeilutbetalingInfoPanel.Feilutbetaling" />
-                  </Label>
-                </Column>
-              </Row>
-              <Row>
-                <Column xs="12" md="4">
-                  <Row>
-                    <Column xs="12">
-                      <Detail className={styles.undertekstMarginBottom}>
-                        <FormattedMessage id="FeilutbetalingInfoPanel.PeriodeMedFeilutbetaling" />
-                      </Detail>
-                      <BodyShort size="small" className={styles.smallPaddingRight}>
-                        {`${moment(feilutbetaling.totalPeriodeFom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(
-                          feilutbetaling.totalPeriodeTom,
-                        ).format(DDMMYYYY_DATE_FORMAT)}`}
-                      </BodyShort>
-                    </Column>
-                  </Row>
-                </Column>
-                <Column xs="12" md="4">
-                  <Row>
-                    <Column xs="12">
-                      <Detail className={styles.undertekstMarginBottom}>
-                        <FormattedMessage id="FeilutbetalingInfoPanel.FeilutbetaltBeløp" />
-                      </Detail>
-                      <BodyShort size="small" className={styles.redText}>
-                        {feilutbetaling.aktuellFeilUtbetaltBeløp}
-                      </BodyShort>
-                    </Column>
-                  </Row>
-                </Column>
-                <Column xs="12" md="4">
-                  <Row>
-                    <Column xs="12">
-                      <Detail className={styles.undertekstMarginBottom}>
-                        <FormattedMessage id="FeilutbetalingInfoPanel.TidligereVarseltBeløp" />
-                      </Detail>
-                      <BodyShort size="small" className={styles.smallPaddingRight}>
-                        {feilutbetaling.tidligereVarseltBeløp ? (
-                          feilutbetaling.tidligereVarseltBeløp
-                        ) : (
-                          <FormattedMessage id="FeilutbetalingInfoPanel.IkkeVarslet" />
-                        )}
-                      </BodyShort>
-                    </Column>
-                  </Row>
-                </Column>
-              </Row>
-              <Row className={styles.smallMarginTop}>
-                <Column xs="11">
-                  <CheckboxField
-                    name="behandlePerioderSamlet"
-                    label={{ id: 'FeilutbetalingInfoPanel.BehandlePerioderSamlet' }}
-                    readOnly={readOnly}
-                  />
-                </Column>
-              </Row>
-              <Row className={styles.smallMarginTop}>
-                <Column xs="11">
+          <HGrid gap="4" columns={{ xs: '12fr', md: '6fr 6fr' }} className={styles.smallMarginBottom}>
+            <div>
+              <div className={styles.smallMarginBottom}>
+                <Label size="small" as="p">
+                  <FormattedMessage id="FeilutbetalingInfoPanel.Feilutbetaling" />
+                </Label>
+              </div>
+              <HGrid gap="4" columns={{ xs: '12fr', md: '4fr 4fr 4fr' }}>
+                <div>
+                  <Detail className={styles.undertekstMarginBottom}>
+                    <FormattedMessage id="FeilutbetalingInfoPanel.PeriodeMedFeilutbetaling" />
+                  </Detail>
+                  <BodyShort size="small" className={styles.smallPaddingRight}>
+                    {`${moment(feilutbetaling.totalPeriodeFom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(
+                      feilutbetaling.totalPeriodeTom,
+                    ).format(DDMMYYYY_DATE_FORMAT)}`}
+                  </BodyShort>
+                </div>
+                <div>
+                  <Detail className={styles.undertekstMarginBottom}>
+                    <FormattedMessage id="FeilutbetalingInfoPanel.FeilutbetaltBeløp" />
+                  </Detail>
+                  <BodyShort size="small" className={styles.redText}>
+                    {feilutbetaling.aktuellFeilUtbetaltBeløp}
+                  </BodyShort>
+                </div>
+                <div>
+                  <Detail className={styles.undertekstMarginBottom}>
+                    <FormattedMessage id="FeilutbetalingInfoPanel.TidligereVarseltBeløp" />
+                  </Detail>
+                  <BodyShort size="small" className={styles.smallPaddingRight}>
+                    {feilutbetaling.tidligereVarseltBeløp ? (
+                      feilutbetaling.tidligereVarseltBeløp
+                    ) : (
+                      <FormattedMessage id="FeilutbetalingInfoPanel.IkkeVarslet" />
+                    )}
+                  </BodyShort>
+                </div>
+              </HGrid>
+              <HGrid gap="4" columns={{ xs: '11fr 1fr' }} className={styles.smallMarginTop}>
+                <CheckboxField
+                  name="behandlePerioderSamlet"
+                  label={{ id: 'FeilutbetalingInfoPanel.BehandlePerioderSamlet' }}
+                  readOnly={readOnly}
+                />
+              </HGrid>
+              <HGrid gap="4" columns={{ xs: '11fr 1fr' }} className={styles.smallMarginTop}>
+                <div>
                   <FaktaGruppe merknaderFraBeslutter={merknaderFraBeslutter} withoutBorder>
                     <FeilutbetalingPerioderTable
                       behandlingId={behandlingId}
@@ -190,19 +173,17 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                       onChangeUnderÅrsak={this.onChangeUnderÅrsak}
                     />
                   </FaktaGruppe>
-                </Column>
-              </Row>
-            </Column>
-            <Column xs="12" md="6">
-              <Row className={styles.smallMarginBottom}>
-                <Column xs="12">
-                  <Label size="small" as="p">
-                    <FormattedMessage id="FeilutbetalingInfoPanel.Revurdering" />
-                  </Label>
-                </Column>
-              </Row>
-              <Row>
-                <Column xs="6">
+                </div>
+              </HGrid>
+            </div>
+            <div>
+              <div className={styles.smallMarginBottom}>
+                <Label size="small" as="p">
+                  <FormattedMessage id="FeilutbetalingInfoPanel.Revurdering" />
+                </Label>
+              </div>
+              <HGrid gap="4" columns={{ xs: '6fr 6fr' }}>
+                <div>
                   <Detail className={styles.undertekstMarginBottom}>
                     <FormattedMessage id="FeilutbetalingInfoPanel.Årsaker" />
                   </Detail>
@@ -213,20 +194,20 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                         .join(', ')}
                     </BodyShort>
                   )}
-                </Column>
+                </div>
                 {feilutbetaling.datoForRevurderingsvedtak && (
-                  <Column xs="6">
+                  <div>
                     <Detail className={styles.undertekstMarginBottom}>
                       <FormattedMessage id="FeilutbetalingInfoPanel.DatoForRevurdering" />
                     </Detail>
                     <BodyShort size="small" className={styles.smallPaddingRight}>
                       {moment(feilutbetaling.datoForRevurderingsvedtak).format(DDMMYYYY_DATE_FORMAT)}
                     </BodyShort>
-                  </Column>
+                  </div>
                 )}
-              </Row>
-              <Row className={styles.smallMarginTop}>
-                <Column xs="6">
+              </HGrid>
+              <HGrid gap="4" columns={{ xs: '6fr 6fr' }} className={styles.smallMarginTop}>
+                <div>
                   <Detail className={styles.undertekstMarginBottom}>
                     <FormattedMessage id="FeilutbetalingInfoPanel.Resultat" />
                   </Detail>
@@ -235,8 +216,8 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                       {getFpsakKodeverknavn(feilutbetaling.behandlingsresultat.type)}
                     </BodyShort>
                   )}
-                </Column>
-                <Column xs="6">
+                </div>
+                <div>
                   <Detail className={styles.undertekstMarginBottom}>
                     <FormattedMessage id="FeilutbetalingInfoPanel.Konsekvens" />
                   </Detail>
@@ -248,10 +229,10 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                           .join(', ')}
                     </BodyShort>
                   )}
-                </Column>
-              </Row>
-              <Row className={styles.smallMarginTop}>
-                <Column xs="6">
+                </div>
+              </HGrid>
+              <HGrid gap="4" columns={{ xs: '6fr 6fr' }} className={styles.smallMarginTop}>
+                <div>
                   <Detail className={styles.undertekstMarginBottom}>
                     <FormattedMessage id="FeilutbetalingInfoPanel.Tilbakekrevingsvalg" />
                   </Detail>
@@ -260,25 +241,23 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                       {getKodeverknavn(feilutbetaling.tilbakekrevingValg.videreBehandling)}
                     </BodyShort>
                   )}
-                </Column>
-              </Row>
-            </Column>
-          </Row>
-          <Row>
-            <Column md="6">
-              <TextAreaField
-                name="begrunnelse"
-                label={{ id: 'FeilutbetalingInfoPanel.Begrunnelse' }}
-                validate={[required, minLength3, maxLength1500, hasValidText]}
-                maxLength={1500}
-                readOnly={readOnly}
-                id="begrunnelse"
-              />
-            </Column>
-          </Row>
+                </div>
+              </HGrid>
+            </div>
+          </HGrid>
+          <HGrid gap="4" columns={{ xs: '6fr 6fr' }}>
+            <TextAreaField
+              name="begrunnelse"
+              label={{ id: 'FeilutbetalingInfoPanel.Begrunnelse' }}
+              validate={[required, minLength3, maxLength1500, hasValidText]}
+              maxLength={1500}
+              readOnly={readOnly}
+              id="begrunnelse"
+            />
+          </HGrid>
           <VerticalSpacer eightPx />
-          <Row>
-            <Column md="6">
+          <HGrid gap="4" columns={{ xs: '6fr 6fr' }}>
+            <div>
               <Button
                 variant="primary"
                 size="small"
@@ -289,8 +268,8 @@ export class FeilutbetalingInfoPanelImpl extends Component {
               >
                 <FormattedMessage id="FeilutbetalingInfoPanel.Confirm" />
               </Button>
-            </Column>
-          </Row>
+            </div>
+          </HGrid>
         </form>
       </>
     );

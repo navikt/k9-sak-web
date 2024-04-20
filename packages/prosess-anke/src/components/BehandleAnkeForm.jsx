@@ -15,12 +15,11 @@ import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { AksjonspunktHelpTextTemp, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { BodyShort, Heading } from '@navikt/ds-react';
+import { BodyShort, HGrid, Heading } from '@navikt/ds-react';
 import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -166,12 +165,12 @@ const BehandleAnkeFormImpl = ({
         <FormattedMessage id="Ankebehandling.Title" />
       </Heading>
       <VerticalSpacer fourPx />
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
+      <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Ankebehandling.HelpText" key={aksjonspunktCode} />]}
-      </AksjonspunktHelpTextTemp>
+      </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
-      <Row>
-        <Column xs="7">
+      <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+        <div>
           <SelectField
             readOnly={readOnly}
             name="vedtak"
@@ -181,41 +180,37 @@ const BehandleAnkeFormImpl = ({
             validate={[required]}
             bredde="xl"
           />
-        </Column>
-      </Row>
+        </div>
+      </HGrid>
 
       <BodyShort size="small">
         <FormattedMessage id="Ankebehandling.Resultat" />
       </BodyShort>
-      <Row>
-        <Column xs="4">
-          <RadioGroupField name="ankeVurdering" validate={[required]} direction="vertical" readOnly={readOnly}>
-            <RadioOption
-              value={ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK}
-              label={{ id: 'Ankebehandling.Resultat.Stadfest' }}
-            />
-            <RadioOption value={ankeVurdering.ANKE_OMGJOER} label={{ id: 'Ankebehandling.Resultat.Omgjør' }} />
-          </RadioGroupField>
-        </Column>
-        <Column xs="4">
-          <RadioGroupField
-            name="ankeVurdering"
-            validate={[required]}
-            readOnly={readOnly}
-            className={readOnly ? styles.selectReadOnly : null}
-            direction="vertical"
-          >
-            <RadioOption
-              value={ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE}
-              label={{ id: 'Ankebehandling.Resultat.OpphevHjemsend' }}
-            />
-            <RadioOption value={ankeVurdering.ANKE_AVVIS} label={{ id: 'Ankebehandling.Resultat.Avvis' }} />
-          </RadioGroupField>
-        </Column>
-      </Row>
+      <HGrid gap="1" columns={{ xs: '4fr 4fr 4fr' }}>
+        <RadioGroupField name="ankeVurdering" validate={[required]} direction="vertical" readOnly={readOnly}>
+          <RadioOption
+            value={ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK}
+            label={{ id: 'Ankebehandling.Resultat.Stadfest' }}
+          />
+          <RadioOption value={ankeVurdering.ANKE_OMGJOER} label={{ id: 'Ankebehandling.Resultat.Omgjør' }} />
+        </RadioGroupField>
+        <RadioGroupField
+          name="ankeVurdering"
+          validate={[required]}
+          readOnly={readOnly}
+          className={readOnly ? styles.selectReadOnly : null}
+          direction="vertical"
+        >
+          <RadioOption
+            value={ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE}
+            label={{ id: 'Ankebehandling.Resultat.OpphevHjemsend' }}
+          />
+          <RadioOption value={ankeVurdering.ANKE_AVVIS} label={{ id: 'Ankebehandling.Resultat.Avvis' }} />
+        </RadioGroupField>
+      </HGrid>
       {ankeVurdering.ANKE_AVVIS === formValues.ankeVurdering && (
-        <Row>
-          <Column xs="7">
+        <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+          <div>
             <ArrowBox>
               <BodyShort size="small">
                 <FormattedMessage id="Ankebehandling.Avvisning" />
@@ -256,12 +251,12 @@ const BehandleAnkeFormImpl = ({
                 />
               </RadioGroupField>
             </ArrowBox>
-          </Column>
-        </Row>
+          </div>
+        </HGrid>
       )}
       {ankeVurdering.ANKE_OMGJOER === formValues.ankeVurdering && (
-        <Row>
-          <Column xs="7">
+        <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+          <div>
             <ArrowBox>
               <RadioGroupField
                 name="ankeVurderingOmgjoer"
@@ -300,22 +295,20 @@ const BehandleAnkeFormImpl = ({
                 bredde="xl"
               />
             </ArrowBox>
-          </Column>
-        </Row>
+          </div>
+        </HGrid>
       )}
 
-      <Row>
-        <Column xs="7">
-          <TextAreaField label="Begrunnelse" name="begrunnelse" readOnly={readOnly} />
-        </Column>
-      </Row>
+      <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+        <TextAreaField label="Begrunnelse" name="begrunnelse" readOnly={readOnly} />
+      </HGrid>
 
       <div className={styles.confirmVilkarForm}>
         <VerticalSpacer sixteenPx />
         <FritekstBrevTextField sprakkode={sprakkode} readOnly={readOnly} intl={intl} />
         <VerticalSpacer sixteenPx />
-        <Row>
-          <Column xs="8">
+        <HGrid gap="1" columns={{ xs: '8fr 2fr 2fr' }}>
+          <div>
             <ProsessStegSubmitButton
               formName={formProps.form}
               behandlingId={behandlingId}
@@ -334,16 +327,16 @@ const BehandleAnkeFormImpl = ({
               ankeVurdering={formValues.ankeVurdering}
               aksjonspunktCode={aksjonspunktCode}
             />
-          </Column>
-          <Column xs="2">
+          </div>
+          <div>
             <TempsaveAnkeButton
               formValues={formValues}
               saveAnke={saveAnke}
               readOnly={readOnly}
               aksjonspunktCode={aksjonspunktCode}
             />
-          </Column>
-        </Row>
+          </div>
+        </HGrid>
       </div>
     </FadingPanel>
   </form>

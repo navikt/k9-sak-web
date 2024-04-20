@@ -1,13 +1,13 @@
-import { SetStateAction } from 'react';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
+import { SetStateAction } from 'react';
 
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
-import { Behandling, Aksjonspunkt, Vilkar, Fagsak, FeatureToggles } from '@k9-sak-web/types';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { Aksjonspunkt, Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 
-import readOnlyUtils from '../readOnlyUtils';
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
 import Rettigheter from '../../types/rettigheterTsType';
+import readOnlyUtils from '../readOnlyUtils';
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 import { ProsessStegPanelUtledet, ProsessStegUtledet } from './ProsessStegUtledet';
 
@@ -108,7 +108,6 @@ const finnProsessmenyType = (status: string, harApentAksjonspunkt: boolean): Pro
 export const formaterPanelerForProsessmeny = (
   prosessStegPaneler: ProsessStegUtledet[],
   valgtProsessStegPanelKode?: string,
-  featureToggles?: FeatureToggles,
 ): ProsessStegMenyRad[] =>
   prosessStegPaneler.map(panel => {
     const type = finnProsessmenyType(panel.getStatus(), panel.getErAksjonspunktOpen());
@@ -117,7 +116,7 @@ export const formaterPanelerForProsessmeny = (
       isActive: panel.getUrlKode() === valgtProsessStegPanelKode,
       isDisabled: false,
       isFinished: type === ProcessMenuStepType.success,
-      usePartialStatus: panel.getErStegDelvisBehandlet(featureToggles) || false,
+      usePartialStatus: panel.getErStegDelvisBehandlet() || false,
       type,
     };
   });

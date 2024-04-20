@@ -1,24 +1,21 @@
-import { Column, Row } from 'nav-frontend-grid';
-import Tabs from 'nav-frontend-tabs';
-import React, { useCallback, useMemo, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
-  AksjonspunktHelpTextHTML,
+  AksjonspunktHelpText,
   FadingPanel,
   LoadingPanel,
   NestedIntlProvider,
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
+import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
-
-import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
+import { HGrid } from '@navikt/ds-react';
+import Tabs from 'nav-frontend-tabs';
+import React, { useCallback, useMemo, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
-
 import styles from './inngangsvilkarPanel.module.css';
 
 interface OwnProps {
@@ -86,7 +83,7 @@ const InngangsvilkarPanel = ({
       <FadingPanel>
         {((apentFaktaPanelInfo && erIkkeFerdigbehandlet) || aksjonspunktTekstKoder.length > 0) && (
           <>
-            <AksjonspunktHelpTextHTML>
+            <AksjonspunktHelpText isAksjonspunktOpen>
               {apentFaktaPanelInfo && erIkkeFerdigbehandlet
                 ? [
                     <>
@@ -97,7 +94,7 @@ const InngangsvilkarPanel = ({
                     </>,
                   ]
                 : aksjonspunktTekstKoder.map(kode => <FormattedMessage key={kode} id={kode} />)}
-            </AksjonspunktHelpTextHTML>
+            </AksjonspunktHelpText>
             <VerticalSpacer thirtyTwoPx />
           </>
         )}
@@ -113,8 +110,8 @@ const InngangsvilkarPanel = ({
           onChange={(e, index) => setVisAllePerioder(index === 1)}
         />
         <VerticalSpacer thirtyTwoPx />
-        <Row className="">
-          <Column xs="6">
+        <HGrid gap="4" columns={{ xs: '6fr 6fr' }}>
+          <div>
             {filteredPanels
               .filter((_panel, index) => index < 2)
               .map((stegData, index) => (
@@ -129,8 +126,8 @@ const InngangsvilkarPanel = ({
                   })}
                 </div>
               ))}
-          </Column>
-          <Column xs="6">
+          </div>
+          <div>
             {filteredPanels
               .filter((_panel, index) => index > 1)
               .map((stegData, index) => (
@@ -145,8 +142,8 @@ const InngangsvilkarPanel = ({
                   })}
                 </div>
               ))}
-          </Column>
-        </Row>
+          </div>
+        </HGrid>
       </FadingPanel>
     </NestedIntlProvider>
   );

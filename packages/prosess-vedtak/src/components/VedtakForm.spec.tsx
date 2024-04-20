@@ -26,12 +26,6 @@ describe('<VedtakForm>', () => {
     kode: 'NO',
     kodeverk: '',
   };
-  const aksjonspunktKoder = [
-    {
-      navn: 'annen ytelse',
-      kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-    },
-  ];
 
   const ingenTilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler = {
     begrunnelse: 'begrunnelse',
@@ -106,7 +100,7 @@ describe('<VedtakForm>', () => {
     };
 
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={n => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={behandlingStatusUtredes}
@@ -128,7 +122,7 @@ describe('<VedtakForm>', () => {
           dokumentdata={{}}
           fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarselBase}
-          submitCallback={object => undefined}
+          submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
           resultatstruktur="resultatstruktur"
@@ -173,7 +167,7 @@ describe('<VedtakForm>', () => {
       },
     ];
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={n => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={behandlingStatusUtredes}
@@ -195,7 +189,7 @@ describe('<VedtakForm>', () => {
           dokumentdata={{}}
           fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarselBase}
-          submitCallback={object => undefined}
+          submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
           resultatstruktur="resultatstruktur"
@@ -230,7 +224,7 @@ describe('<VedtakForm>', () => {
       avslagsarsak: null,
     };
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={n => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={behandlingStatusUtredes}
@@ -252,7 +246,7 @@ describe('<VedtakForm>', () => {
           dokumentdata={{}}
           fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
+          submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
           resultatstruktur="resultatstruktur"
@@ -286,7 +280,7 @@ describe('<VedtakForm>', () => {
       avslagsarsak: { kode: '1099', navn: 'xoxo' },
     };
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={n => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={behandlingStatusUtredes}
@@ -308,7 +302,7 @@ describe('<VedtakForm>', () => {
           dokumentdata={{}}
           fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
+          submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
           resultatstruktur="resultatstruktur"
@@ -352,7 +346,7 @@ describe('<VedtakForm>', () => {
       },
     };
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={n => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={behandlingStatusUtredes}
@@ -374,7 +368,7 @@ describe('<VedtakForm>', () => {
           dokumentdata={{}}
           fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
+          submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
           resultatstruktur="resultatstruktur"
@@ -416,7 +410,7 @@ describe('<VedtakForm>', () => {
       avslagsarsak: null,
     };
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={n => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={{ kode: behandlingStatuser.AVSLUTTET }}
@@ -438,7 +432,7 @@ describe('<VedtakForm>', () => {
           dokumentdata={{}}
           fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
+          submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
           resultatstruktur="resultatstruktur"
@@ -479,7 +473,7 @@ describe('<VedtakForm>', () => {
     const previewCallback = vi.fn();
 
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={n => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={{ kode: behandlingStatuser.IVERKSETTER_VEDTAK }}
@@ -501,7 +495,7 @@ describe('<VedtakForm>', () => {
           dokumentdata={{}}
           fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
+          submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
           resultatstruktur="resultatstruktur"
@@ -542,7 +536,7 @@ describe('<VedtakForm>', () => {
       avslagsarsak: null,
     };
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={n => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={{ kode: behandlingStatuser.FATTER_VEDTAK }}
@@ -564,7 +558,7 @@ describe('<VedtakForm>', () => {
           dokumentdata={{}}
           fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
+          submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
           resultatstruktur="resultatstruktur"
@@ -619,7 +613,7 @@ describe('<VedtakForm>', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
 
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={n => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={behandlingStatusUtredes}
@@ -641,7 +635,7 @@ describe('<VedtakForm>', () => {
           dokumentdata={dokumentdata}
           fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
+          submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
           resultatstruktur="resultatstruktur"
@@ -663,7 +657,7 @@ describe('<VedtakForm>', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
 
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={n => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={behandlingStatusUtredes}
@@ -685,7 +679,7 @@ describe('<VedtakForm>', () => {
           dokumentdata={dokumentdata}
           fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
+          submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
           resultatstruktur="resultatstruktur"
@@ -708,7 +702,7 @@ describe('<VedtakForm>', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
 
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={n => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={behandlingStatusUtredes}
@@ -730,7 +724,7 @@ describe('<VedtakForm>', () => {
           dokumentdata={dokumentdata}
           fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
+          submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
           resultatstruktur="resultatstruktur"
@@ -762,7 +756,7 @@ describe('<VedtakForm>', () => {
     };
 
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={n => null}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
           behandlingStatus={behandlingStatusUtredes}
@@ -784,7 +778,7 @@ describe('<VedtakForm>', () => {
           dokumentdata={dokumentdata}
           fritekstdokumenter={[]}
           vedtakVarsel={vedtakVarsel}
-          submitCallback={object => undefined}
+          submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
           resultatstruktur="resultatstruktur"

@@ -10,7 +10,7 @@ import {
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
-import { AksjonspunktHelpTextTemp, FadingPanel, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, FadingPanel, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
@@ -254,9 +254,9 @@ export class TilbakekrevingFormImpl extends Component<OwnProps & DispatchProps &
               <FormattedMessage id="Behandlingspunkt.Tilbakekreving" />
             </Heading>
             <VerticalSpacer twentyPx />
-            <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
+            <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
               {[<FormattedMessage key="AksjonspunktHjelpetekst" id="TilbakekrevingForm.AksjonspunktHjelpetekst" />]}
-            </AksjonspunktHelpTextTemp>
+            </AksjonspunktHelpText>
             <VerticalSpacer twentyPx />
             {vilkarsVurdertePerioder && (
               <>

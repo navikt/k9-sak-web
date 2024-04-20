@@ -73,7 +73,6 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   } = methods;
   const erSokerAleneOmOmsorgen = watch('erSokerenAleneOmOmsorgen');
   const åpenForRedigering = watch('åpenForRedigering');
-  const tilDatovalue = watch('tilDato');
 
   const { erDatoFyltUt, erDatoGyldig } = valideringsFunksjoner(getValues, 'erSokerenAleneOmOmsorgen');
 
@@ -213,7 +212,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                   )}
                 </SkjemaGruppe>
               )}
-              <Button variant="primary" className={styles.bekreftKnapp} type="submit">
+              <Button size="small" variant="primary" className={styles.bekreftKnapp} type="submit">
                 {' '}
                 {tekst.bekreftFortsettKnapp}
               </Button>

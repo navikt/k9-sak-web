@@ -4,18 +4,17 @@ import { Aksjonspunkt, Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
 import Rettigheter from '../../types/rettigheterTsType';
 import { ProsessStegDef } from './ProsessStegDef';
+import { ProsessStegUtledet } from './ProsessStegUtledet';
 import {
   finnValgtPanel,
   formaterPanelerForProsessmeny,
   getBekreftAksjonspunktCallback,
   utledProsessStegPaneler,
 } from './prosessStegUtils';
-import { ProsessStegUtledet } from './ProsessStegUtledet';
 
 const useProsessStegPaneler = (
   prosessStegPanelDefinisjoner: ProsessStegDef[],
@@ -30,7 +29,6 @@ const useProsessStegPaneler = (
   apentFaktaPanelInfo?: { urlCode: string; textCode: string },
 ): [ProsessStegUtledet[], ProsessStegUtledet, ProsessStegMenyRad[]] => {
   const [overstyrteAksjonspunktKoder, toggleOverstyring] = useState<string[]>([]);
-  const [featureToggles] = useFeatureToggles();
   const ekstraPanelData = {
     ...panelData,
     fagsak,
@@ -111,7 +109,7 @@ const useProsessStegPaneler = (
 
   const urlCode = valgtPanel ? valgtPanel.getUrlKode() : undefined;
   const formaterteProsessStegPaneler = useMemo(
-    () => formaterPanelerForProsessmeny(prosessStegPaneler, urlCode, featureToggles),
+    () => formaterPanelerForProsessmeny(prosessStegPaneler, urlCode),
     [behandling.versjon, urlCode, overstyrteAksjonspunktKoder],
   );
 

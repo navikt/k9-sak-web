@@ -1,6 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Alert, BodyShort, Button, Textarea } from '@navikt/ds-react';
 import { Field, Form, Formik } from 'formik';
@@ -66,9 +66,9 @@ const ManglerSøknadForm = ({
   return (
     <div className={styles.container}>
       <VerticalSpacer thirtyTwoPx />
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={erAksjonspunktÅpent()}>
+      <AksjonspunktHelpText isAksjonspunktOpen={erAksjonspunktÅpent()}>
         {[<FormattedMessage id="HelpText.Aksjonspunkt" key="aksjonspunktText" />]}
-      </AksjonspunktHelpTextTemp>
+      </AksjonspunktHelpText>
       <VerticalSpacer thirtyTwoPx />
       {manglerSøknadForPeriode() && (
         <Alert size="small" variant="warning">
@@ -131,6 +131,7 @@ const ManglerSøknadForm = ({
             <VerticalSpacer sixteenPx />
             <div className={styles.buttonBar}>
               <Button
+                size="small"
                 className={styles.button}
                 loading={isSubmitting}
                 disabled={readOnly || !submittable || !isValid}

@@ -1,4 +1,3 @@
-import fagsakTsType from '@k9-sak-web/types/src/fagsakTsType';
 import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
 import { InformasjonTilLesemodus } from './informasjonTilLesemodus';

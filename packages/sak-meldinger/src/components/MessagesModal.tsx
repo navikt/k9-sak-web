@@ -1,7 +1,6 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Image } from '@fpsak-frontend/shared-components';
-import { Button, Label, Modal } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { Button, HGrid, Label, Modal } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './MessagesModal.module.css';
@@ -27,26 +26,26 @@ const MessagesModal = ({ showModal, closeEvent, intl }: OwnProps & WrappedCompon
     width="small"
   >
     <Modal.Body>
-      <Row>
-        <Column xs="1">
+      <HGrid gap="1" columns={{ xs: '1fr 9fr 2fr' }}>
+        <div className="relative">
           <Image
             className={styles.image}
             alt={intl.formatMessage({ id: 'MessagesModal.description' })}
             src={innvilgetImageUrl}
           />
           <div className={styles.divider} />
-        </Column>
-        <Column xs="9">
+        </div>
+        <div>
           <Label size="small" as="p" className={styles.text}>
             <FormattedMessage id="MessagesModal.text" />
           </Label>
-        </Column>
-        <Column xs="2">
+        </div>
+        <div>
           <Button variant="primary" className={styles.button} size="small" onClick={closeEvent} autoFocus>
             {intl.formatMessage({ id: 'MessagesModal.OK' })}
           </Button>
-        </Column>
-      </Row>
+        </div>
+      </HGrid>
     </Modal.Body>
   </Modal>
 );

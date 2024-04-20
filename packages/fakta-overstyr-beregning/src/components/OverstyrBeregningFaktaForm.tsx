@@ -5,10 +5,9 @@ import * as Yup from 'yup';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { AksjonspunktHelpTextTemp, BorderBox, Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, BorderBox, Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Alert, Button, Tag, Textarea } from '@navikt/ds-react';
-import { isDate } from 'date-fns';
 import { OverstyrInputBeregningDto } from '../types/OverstyrInputBeregningDto';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
 import OverstyrBeregningAktivitetForm from './OverstyrBeregningAktivitetForm';
@@ -36,52 +35,6 @@ const OverstyrBeregningFaktaForm = ({
   aksjonspunkter,
   intl,
 }: Props & WrappedComponentProps) => {
-  const aktivitetSchema = Yup.object().shape({
-    arbiedsgiverAktørId: Yup.string(),
-    arbeidsgiverOrgnr: Yup.string(),
-    inntektPrAar: Yup.number()
-      .typeError(intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltTypeFeil' }))
-      .required(intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltPakrevdFeil' }))
-      .min(0, intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltMin' }))
-      .max(100000000, intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltMax' })),
-    refusjonPrAar: Yup.number()
-      .typeError(intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltTypeFeil' }))
-      .when('skalKunneEndreRefusjon', {
-        is: true,
-        then: schema => schema.required(intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltPakrevdFeil' })),
-      })
-      .min(0, intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltMin' }))
-      .max(100000000, intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltMax' })),
-    startdatoRefusjon: Yup.date()
-      .typeError(intl.formatMessage({ id: 'OverstyrInputForm.StartdatoFeltDato' }))
-      .when('opphørRefusjon', (opphørRefusjon, schema) => {
-        if (opphørRefusjon != null && isDate(opphørRefusjon)) {
-          return schema.max(
-            opphørRefusjon,
-            intl.formatMessage({ id: 'OverstyrInputForm.StartdatoRefusjonFørSluttdato' }),
-          );
-        }
-        return schema;
-      }),
-    opphørRefusjon: Yup.date()
-      .typeError(intl.formatMessage({ id: 'OverstyrInputForm.OpphorFeltDato' }))
-      .when('refusjonPrAar', (refusjonPrAar, schema) => {
-        if (!Number.isNaN(refusjonPrAar) && refusjonPrAar > 0) {
-          return schema.test(
-            'dato',
-            intl.formatMessage({ id: 'OverstyrInputForm.MaVareDato' }),
-            value => (value ? isDate(value) : true), // dato skal ikke være påkrevd
-          );
-        }
-        return schema;
-      }),
-  });
-
-  const periodeSchema = Yup.object().shape({
-    skjaeringstudspunkt: Yup.string(),
-    aktivitetliste: Yup.array().of(aktivitetSchema),
-  });
-
   const validationSchema = Yup.object().shape({
     kode: Yup.string().required(),
     begrunnelse: Yup.string().required(intl.formatMessage({ id: 'OverstyrInputForm.BegrunnelseErPåkrevd' })),
@@ -141,9 +94,9 @@ const OverstyrBeregningFaktaForm = ({
   return (
     <div className={styles.container}>
       <VerticalSpacer thirtyTwoPx />
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={erAksjonspunktÅpent()}>
+      <AksjonspunktHelpText isAksjonspunktOpen={erAksjonspunktÅpent()}>
         {[<FormattedMessage id="OverstyrInputForm.Aksjonspunkt" key="aksjonspunktText" />]}
-      </AksjonspunktHelpTextTemp>
+      </AksjonspunktHelpText>
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
@@ -249,6 +202,7 @@ const OverstyrBeregningFaktaForm = ({
             <VerticalSpacer sixteenPx />
             <div className={styles.buttonBar}>
               <Button
+                size="small"
                 className={styles.button}
                 loading={isSubmitting}
                 disabled={readOnly || !submittable || !isValid}
@@ -257,7 +211,7 @@ const OverstyrBeregningFaktaForm = ({
               >
                 <FormattedMessage id="OverstyrInputForm.LagreAksjonspunkt" />
               </Button>
-              <Button className={styles.button} disabled={isValid} variant="tertiary" type="submit">
+              <Button size="small" className={styles.button} disabled={isValid} variant="tertiary" type="submit">
                 <FormattedMessage id="OverstyrInputForm.KontrollerSkjema" />
               </Button>
             </div>

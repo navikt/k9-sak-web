@@ -1,6 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Column, Row } from 'nav-frontend-grid';
+import React from 'react';
 
 import PeriodeController from './PeriodeController';
 import PeriodeInformasjon from './PeriodeInformasjon';
@@ -15,26 +14,24 @@ export const TilbakekrevingTimelineData = ({
   behandlingVersjon,
   beregnBelop,
 }) => (
-  <Row>
-    <Column xs="12">
-      <PeriodeController
-        callbackForward={callbackForward}
-        callbackBackward={callbackBackward}
-        periode={periode}
-        readOnly={readOnly}
-        oppdaterSplittedePerioder={oppdaterSplittedePerioder}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        beregnBelop={beregnBelop}
-      />
-      <PeriodeInformasjon
-        feilutbetaling={periode.feilutbetaling}
-        fom={periode.fom}
-        tom={periode.tom}
-        arsak={periode.årsak}
-      />
-    </Column>
-  </Row>
+  <>
+    <PeriodeController
+      callbackForward={callbackForward}
+      callbackBackward={callbackBackward}
+      periode={periode}
+      readOnly={readOnly}
+      oppdaterSplittedePerioder={oppdaterSplittedePerioder}
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
+      beregnBelop={beregnBelop}
+    />
+    <PeriodeInformasjon
+      feilutbetaling={periode.feilutbetaling}
+      fom={periode.fom}
+      tom={periode.tom}
+      arsak={periode.årsak}
+    />
+  </>
 );
 
 TilbakekrevingTimelineData.propTypes = {
