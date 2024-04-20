@@ -1,4 +1,4 @@
-import { Fieldset, RadioGroup } from '@navikt/ds-react';
+import { RadioGroup } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import React from 'react';
 import { Field } from 'redux-form';
@@ -50,16 +50,17 @@ const renderRadioGroupField = renderNavField(
     const childIsRenderFn = typeof children === 'function';
 
     return (
-      <Fieldset
-        error={readOnly ? undefined : feil}
+      <RadioGroup
         className={classNames(`input--${bredde}`, 'radioGroup', { readOnly })}
-        legend={legend}
-        hideLegend
+        error={readOnly ? undefined : feil}
+        legend={label}
+        onChange={onChange}
+        size="small"
+        value={value}
+        disabled={readOnly}
       >
-        <RadioGroup legend={label} onChange={onChange} size="small" value={value} disabled={readOnly}>
-          {childIsRenderFn ? children({ value, optionProps }) : children}
-        </RadioGroup>
-      </Fieldset>
+        {childIsRenderFn ? children({ value, optionProps }) : children}
+      </RadioGroup>
     );
   },
 );
