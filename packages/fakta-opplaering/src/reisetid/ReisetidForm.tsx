@@ -1,19 +1,19 @@
-import React, { useContext, useEffect } from 'react';
-import { Box, Margin, DetailView, LabelledContent } from '@navikt/ft-plattform-komponenter';
 import { TextAreaFormik } from '@fpsak-frontend/form';
+import { Box, DetailView, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
+import dayjs from 'dayjs';
+import React, { useContext, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import * as yup from 'yup';
-import dayjs from 'dayjs';
 
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 
-import { DDMMYYYY_DATE_FORMAT, required, getPeriodDifference, Period } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, Period, getPeriodDifference, required } from '@fpsak-frontend/utils';
+import { Alert, Button } from '@navikt/ds-react';
 import { Formik } from 'formik';
-import { Button, Alert } from '@navikt/ds-react';
-import { ReisetidVurdering } from './ReisetidTypes';
 import RangeDatepicker from '../components/rangeDatepicker/RangeDatepicker';
-import FraSoeknad from './FraSoeknad';
 import BeskrivelseFraSoeker from './BeskrivelseFraSoeker';
+import FraSoeknad from './FraSoeknad';
+import { ReisetidVurdering } from './ReisetidTypes';
 
 enum fieldname {
   BEGRUNNELSE = 'BEGRUNNELSE',

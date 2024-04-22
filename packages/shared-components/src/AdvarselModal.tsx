@@ -1,6 +1,5 @@
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
-import { BodyShort, Button, Heading, Modal } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { BodyShort, Button, HGrid, Heading, Modal } from '@navikt/ds-react';
 import React from 'react';
 import getPackageIntl from '../i18n/getPackageIntl';
 import Image from './Image';
@@ -23,20 +22,20 @@ const AdvarselModal = ({ bodyText, headerText, showModal, submit }: OwnProps) =>
   return (
     <Modal className={styles.modal} open={showModal} aria-label={bodyText} onClose={submit}>
       <Modal.Body>
-        <Row>
-          <Column xs="1">
+        <HGrid gap="1" columns={{ xs: '1fr 8fr 2fr' }}>
+          <div className="relative">
             <Image className={styles.image} alt={bodyText} src={advarselImageUrl} />
             <div className={styles.divider} />
-          </Column>
-          <Column xs="8" className={styles.text}>
+          </div>
+          <div className={styles.text}>
             {headerText && (
               <Heading size="small" level="2">
                 {headerText}
               </Heading>
             )}
             <BodyShort size="small">{bodyText}</BodyShort>
-          </Column>
-          <Column xs="2">
+          </div>
+          <div>
             <Button
               variant="primary"
               className={styles.submitButton}
@@ -47,8 +46,8 @@ const AdvarselModal = ({ bodyText, headerText, showModal, submit }: OwnProps) =>
             >
               {intl.formatMessage({ id: 'AdvarselModal.Ok' })}
             </Button>
-          </Column>
-        </Row>
+          </div>
+        </HGrid>
       </Modal.Body>
     </Modal>
   );

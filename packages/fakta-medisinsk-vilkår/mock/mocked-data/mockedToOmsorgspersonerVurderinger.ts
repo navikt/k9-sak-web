@@ -1,6 +1,5 @@
 import Vurderingsresultat from '../../src/types/Vurderingsresultat';
 import mockedDokumentliste from './mockedDokumentliste';
-import Vurderingstype from '../../src/types/Vurderingstype';
 
 const toOmsorgspersonerVurderingerMock = [
   {

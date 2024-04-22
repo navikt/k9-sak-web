@@ -144,10 +144,10 @@ const OverstyrUttakForm: React.FC<ownProps> = ({ overstyringAktiv }) => {
                 }}
               >
                 <Modal.Footer>
-                  <Button variant="danger" onClick={() => handleSlett(bekreftSlettId)}>
+                  <Button size="small" variant="danger" onClick={() => handleSlett(bekreftSlettId)}>
                     Slett
                   </Button>
-                  <Button variant="primary" onClick={() => ref.current?.close()}>
+                  <Button size="small" variant="primary" onClick={() => ref.current?.close()}>
                     Avbryt
                   </Button>
                 </Modal.Footer>

@@ -1,6 +1,5 @@
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { Detail } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { Detail, HGrid } from '@navikt/ds-react';
 import Lukknapp from 'nav-frontend-lukknapp';
 import React, { Component } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -67,23 +66,21 @@ export class ErrorMessagePanel extends Component<OwnProps & WrappedComponentProp
     return (
       <div className={styles.container}>
         {errorMessages.map((message, index) => (
-          <Row key={message.message}>
-            <Column xs="11">
-              <Detail className={styles.wordWrap}>{`${decodeHtmlEntity(message.message)} `}</Detail>
-              {message.additionalInfo && (
-                <Detail>
-                  <a
-                    href=""
-                    onClick={event => this.toggleModalOnClick(event, index)}
-                    onKeyDown={event => this.toggleModalOnKeyDown(event, index)}
-                    className={styles.link}
-                  >
-                    <FormattedMessage id="ErrorMessagePanel.ErrorDetails" />
-                  </a>
-                </Detail>
-              )}
-            </Column>
-          </Row>
+          <HGrid gap="1" columns={{ xs: '11fr 1fr' }} key={message.message}>
+            <Detail className={styles.wordWrap}>{`${decodeHtmlEntity(message.message)} `}</Detail>
+            {message.additionalInfo && (
+              <Detail>
+                <a
+                  href=""
+                  onClick={event => this.toggleModalOnClick(event, index)}
+                  onKeyDown={event => this.toggleModalOnKeyDown(event, index)}
+                  className={styles.link}
+                >
+                  <FormattedMessage id="ErrorMessagePanel.ErrorDetails" />
+                </a>
+              </Detail>
+            )}
+          </HGrid>
         ))}
         <div className={styles.lukkContainer}>
           <Lukknapp hvit onClick={removeErrorMessage}>

@@ -1,13 +1,4 @@
-import { BodyShort } from '@navikt/ds-react';
-import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
-import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
-
-import { behandlingForm, behandlingFormValueSelector, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
@@ -18,6 +9,13 @@ import { Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/sh
 import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, isObject, required } from '@fpsak-frontend/utils';
 import { ProsessPanelTemplate, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Behandling, Kodeverk, KodeverkMedNavn, ManglendeVedleggSoknad, Soknad } from '@k9-sak-web/types';
+import { BodyShort, HGrid } from '@navikt/ds-react';
+import moment from 'moment';
+import React from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
 
 const formName = 'SokersOpplysningspliktForm';
 
@@ -139,8 +137,8 @@ export const SokersOpplysningspliktFormImpl = ({
           <FormattedMessage id="SokersOpplysningspliktForm.ManglendeDokumentasjon" />
         </BodyShort>
         <VerticalSpacer eightPx />
-        <Row>
-          <Column xs="11">
+        <HGrid gap="1" columns={{ xs: '11fr 1fr' }}>
+          <div>
             <Table noHover>
               {manglendeVedlegg.map(vedlegg => (
                 <TableRow
@@ -156,26 +154,24 @@ export const SokersOpplysningspliktFormImpl = ({
                 </TableRow>
               ))}
             </Table>
-          </Column>
-        </Row>
+          </div>
+        </HGrid>
       </>
     )}
     <ProsessStegBegrunnelseTextField readOnly={readOnly} />
     {!readOnly && (
       <>
         <VerticalSpacer sixteenPx />
-        <Row>
-          <Column xs="6">
-            <RadioGroupField name="erVilkarOk" validate={[required]}>
-              <RadioOption
-                label={<FormattedMessage id={findRadioButtonTextCode(true)} />}
-                value
-                disabled={isVilkarOppfyltDisabled(hasSoknad, inntektsmeldingerSomIkkeKommer)}
-              />
-              <RadioOption label={getLabel(intl)} value={false} />
-            </RadioGroupField>
-          </Column>
-        </Row>
+        <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+          <RadioGroupField name="erVilkarOk" validate={[required]}>
+            <RadioOption
+              label={<FormattedMessage id={findRadioButtonTextCode(true)} />}
+              value
+              disabled={isVilkarOppfyltDisabled(hasSoknad, inntektsmeldingerSomIkkeKommer)}
+            />
+            <RadioOption label={getLabel(intl)} value={false} />
+          </RadioGroupField>
+        </HGrid>
       </>
     )}
     {readOnly && (

@@ -1,9 +1,9 @@
 import { Button, Modal } from '@navikt/ds-react';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
+import React, { useEffect } from 'react';
+import type { DiagnosekodeSearcherPromise } from '../../../util/diagnosekodeSearcher';
 import DiagnosekodeSelector from '../../form/pure/PureDiagnosekodeSelector';
 import styles from '../diagnosekodeoversikt/diagnosekodeoversikt.module.css';
-import type { DiagnosekodeSearcherPromise } from '../../../util/diagnosekodeSearcher';
 
 interface DiagnosekodeModalProps {
   isOpen: boolean;
@@ -20,6 +20,11 @@ const DiagnosekodeModal = ({
 }: DiagnosekodeModalProps): JSX.Element => {
   const [selectedDiagnosekoder, setSelectedDiagnosekoder] = React.useState([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [renderDiagnosekodeSelektor, setRenderDiagnosekodeSelektor] = React.useState(false);
+
+  useEffect(() => {
+    setRenderDiagnosekodeSelektor(isOpen);
+  }, [isOpen]);
 
   const handleClose = () => {
     setSelectedDiagnosekoder([]);
@@ -47,21 +52,29 @@ const DiagnosekodeModal = ({
           }}
         >
           <Box marginTop={Margin.large}>
-            <DiagnosekodeSelector
-              initialDiagnosekodeValue=""
-              name="diagnosekode"
-              onChange={diagnosekoder => {
-                setSelectedDiagnosekoder(diagnosekoder);
-              }}
-              label="Diagnosekode"
-              selectedDiagnosekoder={selectedDiagnosekoder}
-              hideLabel
-              searcherPromise={searcherPromise}
-            />
+            {renderDiagnosekodeSelektor && (
+              <DiagnosekodeSelector
+                initialDiagnosekodeValue=""
+                name="diagnosekode"
+                onChange={diagnosekoder => {
+                  setSelectedDiagnosekoder(diagnosekoder);
+                }}
+                label="Diagnosekode"
+                selectedDiagnosekoder={selectedDiagnosekoder}
+                hideLabel
+                searcherPromise={searcherPromise}
+              />
+            )}
           </Box>
           <Box marginTop={Margin.xLarge}>
             <div style={{ display: 'flex' }}>
-              <Button size="small" disabled={isSubmitting} loading={isSubmitting} id="bekreftDiagnosekodeKnapp">
+              <Button
+                size="small"
+                disabled={isSubmitting}
+                loading={isSubmitting}
+                id="bekreftDiagnosekodeKnapp"
+                type="submit"
+              >
                 Bekreft
               </Button>
               <Button
@@ -70,6 +83,7 @@ const DiagnosekodeModal = ({
                 style={{ marginLeft: '1rem' }}
                 onClick={handleClose}
                 disabled={isSubmitting}
+                type="button"
               >
                 Avbryt
               </Button>

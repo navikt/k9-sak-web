@@ -32,7 +32,7 @@ const Fosterbarn = ({ setFosterbarn }: FosterbarnProps) => {
 
   return (
     <Box marginBottom={Margin.large}>
-      <DSBox background="surface-default" padding="4" borderWidth="1">
+      <DSBox background="surface-default" padding="4" borderWidth="1" borderColor="border-subtle" borderRadius="medium">
         <Box marginBottom={Margin.medium}>
           <Heading level="2" size="medium">
             Fosterbarn
@@ -81,6 +81,7 @@ const Fosterbarn = ({ setFosterbarn }: FosterbarnProps) => {
                     </Table.DataCell>
                     <Table.DataCell>
                       <Button
+                        size="small"
                         variant="tertiary"
                         onClick={() => remove(index)}
                         disabled={readOnly}

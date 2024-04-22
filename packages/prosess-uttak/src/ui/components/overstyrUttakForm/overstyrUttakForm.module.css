@@ -1,4 +1,4 @@
-@import '@navikt/ds-tokens';
+@import url('@navikt/ds-tokens');
 
 .leggTilOverstyringKnapp {
   margin-top: var(--a-spacing-5);

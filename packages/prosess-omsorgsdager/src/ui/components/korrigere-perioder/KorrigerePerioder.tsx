@@ -218,10 +218,16 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
               />
             </div>
           )}
-          <Button variant="primary" className={styles.knapp} type="submit">
+          <Button size="small" variant="primary" className={styles.knapp} type="submit">
             Bekreft og fortsett
           </Button>
-          <Button variant="secondary" className={styles.knapp} type="button" onClick={avbrytRedigereInformasjon}>
+          <Button
+            size="small"
+            variant="secondary"
+            className={styles.knapp}
+            type="button"
+            onClick={avbrytRedigereInformasjon}
+          >
             Avbryt
           </Button>
         </form>

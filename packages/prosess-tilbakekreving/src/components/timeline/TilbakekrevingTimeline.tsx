@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
 import React, { Component, MouseEvent, RefObject } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
@@ -11,6 +10,7 @@ import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 import { Timeline, TimeLineControl } from '@fpsak-frontend/tidslinje';
 
+import { HGrid } from '@navikt/ds-react';
 import TidslinjePeriode from '../../types/tidslinjePeriodeTsType';
 import styles from './tilbakekrevingTimeline.module.css';
 
@@ -166,48 +166,40 @@ class TilbakekrevingTimeline extends Component<OwnProps & WrappedComponentProps>
     const items = formatItems(newPerioder);
     return (
       <div className={styles.timelineContainer}>
-        <Row>
-          <Column xs="1" className={styles.sokerContainer}>
-            <Row>
-              <Image
-                className={styles.iconMedsoker}
-                src={isKvinne(kjonn) ? urlKvinne : urlMann}
-                alt={intl.formatMessage({ id: 'TilbakekrevingTimeline.ImageText' })}
-                tooltip={intl.formatMessage({
-                  id: isKvinne(kjonn) ? 'TilbakekrevingTimeline.Woman' : 'TilbakekrevingTimeline.Man',
-                })}
+        <HGrid gap="1" columns={{ xs: '1fr 11fr' }}>
+          <div className={styles.sokerContainer}>
+            <Image
+              className={styles.iconMedsoker}
+              src={isKvinne(kjonn) ? urlKvinne : urlMann}
+              alt={intl.formatMessage({ id: 'TilbakekrevingTimeline.ImageText' })}
+              tooltip={intl.formatMessage({
+                id: isKvinne(kjonn) ? 'TilbakekrevingTimeline.Woman' : 'TilbakekrevingTimeline.Man',
+              })}
+            />
+          </div>
+          <div className={styles.timeLineWrapper}>
+            <div className="uttakTimeline">
+              <Timeline
+                ref={this.timelineRef}
+                options={getOptions(newPerioder.sort(sortByDate))}
+                initialItems={items}
+                initialGroups={groups}
+                selectHandler={selectPeriodCallback}
+                selection={[selectedPeriod ? selectedPeriod.id : null]}
               />
-            </Row>
-          </Column>
-          <Column xs="11">
-            <div className={styles.timeLineWrapper}>
-              <div className="uttakTimeline">
-                <Timeline
-                  ref={this.timelineRef}
-                  options={getOptions(newPerioder.sort(sortByDate))}
-                  initialItems={items}
-                  initialGroups={groups}
-                  selectHandler={selectPeriodCallback}
-                  selection={[selectedPeriod ? selectedPeriod.id : null]}
-                />
-              </div>
             </div>
-          </Column>
-        </Row>
-        <Row>
-          <Column xs="12">
-            <TimeLineControl
-              goBackwardCallback={this.goBackward}
-              goForwardCallback={this.goForward}
-              zoomInCallback={this.zoomIn}
-              zoomOutCallback={this.zoomOut}
-              openPeriodInfo={toggleDetaljevindu}
-              selectedPeriod={selectedPeriod}
-            >
-              {hjelpetekstKomponent}
-            </TimeLineControl>
-          </Column>
-        </Row>
+          </div>
+        </HGrid>
+        <TimeLineControl
+          goBackwardCallback={this.goBackward}
+          goForwardCallback={this.goForward}
+          zoomInCallback={this.zoomIn}
+          zoomOutCallback={this.zoomOut}
+          openPeriodInfo={toggleDetaljevindu}
+          selectedPeriod={selectedPeriod}
+        >
+          {hjelpetekstKomponent}
+        </TimeLineControl>
       </div>
     );
   }

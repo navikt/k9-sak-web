@@ -1,8 +1,7 @@
 /* eslint-disable react/no-danger, @typescript-eslint/no-this-alias */
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Cancel } from '@navikt/ds-icons';
-import { Alert, Button, Heading, Modal } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { Alert, Button, HGrid, Heading, Modal } from '@navikt/ds-react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import InkluderKalenderCheckbox from '../InkluderKalenderCheckbox';
@@ -127,10 +126,10 @@ const FritekstEditor = ({
           </Alert>
 
           <div className={styles.knapperHoyere}>
-            <Button type="button" variant="tertiary" onClick={() => setVisAdvarsel(false)}>
+            <Button size="small" type="button" variant="tertiary" onClick={() => setVisAdvarsel(false)}>
               <FormattedMessage id="RedigeringAvFritekstBrev.IkkeTilbakestill" />
             </Button>
-            <Button type="button" variant="primary" onClick={handleTilbakestill}>
+            <Button size="small" type="button" variant="primary" onClick={handleTilbakestill}>
               <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
             </Button>
           </div>
@@ -156,41 +155,37 @@ const FritekstEditor = ({
       <footer>
         <VerticalSpacer thirtyTwoPx />
         {kanInkludereKalender && (
-          <Row>
-            <Column xs="12">
-              <InkluderKalenderCheckbox
-                intl={intl}
-                setFieldValue={setFieldValue}
-                skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-                disabled={readOnly}
-              />
-              <VerticalSpacer sixteenPx />
-            </Column>
-          </Row>
+          <div>
+            <InkluderKalenderCheckbox
+              intl={intl}
+              setFieldValue={setFieldValue}
+              skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+              disabled={readOnly}
+            />
+            <VerticalSpacer sixteenPx />
+          </div>
         )}
-        <Row>
-          <Column xs="12">
-            <div className={styles.knapper}>
-              {visValideringsFeil && (
-                <>
-                  <Alert variant="error">
-                    {intl.formatMessage({
-                      id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndretForhåndsvis',
-                    })}{' '}
-                  </Alert>
-                  <VerticalSpacer sixteenPx />
-                </>
-              )}
-              <PreviewLink previewCallback={onForhåndsvis} size="small" intl={intl} loading={!redigerbartInnholdKlart}>
-                <FormattedMessage id="VedtakForm.ForhandvisBrev" />
-              </PreviewLink>
-            </div>
-            <FritekstFeilmeldinger />
-          </Column>
-        </Row>
+        <div>
+          <div className={styles.knapper}>
+            {visValideringsFeil && (
+              <>
+                <Alert variant="error">
+                  {intl.formatMessage({
+                    id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndretForhåndsvis',
+                  })}{' '}
+                </Alert>
+                <VerticalSpacer sixteenPx />
+              </>
+            )}
+            <PreviewLink previewCallback={onForhåndsvis} size="small" intl={intl} loading={!redigerbartInnholdKlart}>
+              <FormattedMessage id="VedtakForm.ForhandvisBrev" />
+            </PreviewLink>
+          </div>
+          <FritekstFeilmeldinger />
+        </div>
         <VerticalSpacer thirtyTwoPx />
-        <Row>
-          <Column xs="6">
+        <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+          <div>
             <Button
               type="button"
               variant="primary"
@@ -200,8 +195,8 @@ const FritekstEditor = ({
             >
               <FormattedMessage id="RedigeringAvFritekstBrev.Lagre" />
             </Button>
-          </Column>
-          <Column xs="6" className={styles.hoyere}>
+          </div>
+          <div className={styles.hoyere}>
             <Button
               variant="tertiary"
               icon={<Cancel aria-hidden />}
@@ -212,8 +207,8 @@ const FritekstEditor = ({
             >
               <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
             </Button>
-          </Column>
-        </Row>
+          </div>
+        </HGrid>
       </footer>
     </>
   );

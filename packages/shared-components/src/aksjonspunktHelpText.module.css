@@ -1,25 +1,27 @@
 .container {
-  margin-bottom: 24px;
+  background-color: #ffe5c2;
+  border: 1px solid #d47b00;
+  border-radius: 0.25rem;
 }
 
 .divider {
   border-left: 1px solid #a0a0a0;
   border-right: 0 solid #a0a0a0;
   height: 100%;
-  margin-bottom: 3px;
-  margin-left: 5px;
-  margin-top: 3px;
+  margin-bottom: 0.1875rem;
+  margin-left: 0.3125rem;
+  margin-top: 0.1875rem;
 }
 
 .image {
-  height: 30px;
-  margin-top: 8px;
-  width: 30px;
+  margin-left: 0.625rem;
+  margin-top: 0.5rem;
 }
 
 .oneElement {
+  margin-bottom: 0.5625rem;
   margin-left: 0;
-  margin-top: 11px;
+  margin-top: 0.5625rem;
 }
 
 .severalElements {
@@ -29,9 +31,10 @@
 
 .aksjonspunktText {
   max-width: 100%;
-  padding-right: 80px;
+  padding-right: 1.25rem;
 }
 
 .wordwrap {
+  white-space: pre-line;
   word-wrap: break-word;
 }

@@ -1,4 +1,4 @@
-import { Row } from 'nav-frontend-grid';
+import { HGrid } from '@navikt/ds-react';
 import React, { MouseEvent, ReactNode } from 'react';
 import { useIntl } from 'react-intl';
 import TimeLineButton from './TimeLineButton';
@@ -30,8 +30,8 @@ const TimeLineControl = ({
 }: TimeLineControlProps) => {
   const { formatMessage } = useIntl();
   return (
-    <div>
-      <Row>
+    <HGrid gap="1" columns={{ xs: '12fr' }}>
+      <div>
         <div className={styles.scrollButtonContainer}>
           {children}
           <TimeLineButton
@@ -59,8 +59,8 @@ const TimeLineControl = ({
             callback={goForwardCallback}
           />
         </div>
-      </Row>
-    </div>
+      </div>
+    </HGrid>
   );
 };
 

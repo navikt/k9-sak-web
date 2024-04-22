@@ -26,7 +26,7 @@ describe('<SideMenuWrapper>', () => {
 
     expect(screen.getByRole('button', { name: /Omsorg/i })).toBeInTheDocument();
     expect(screen.getByText('Saksopplysninger')).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: 'Aksjonspunkt' })).toBeInTheDocument();
+    expect(screen.getByRole('img')).toBeInTheDocument();
   });
 
   it('skal rendre komponent med sidemeny med ett menyinnslag med inaktivt aksjonspunkt', () => {

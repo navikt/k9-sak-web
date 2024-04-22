@@ -20,8 +20,5 @@
 
 .innleggelsesperiodeFormModal__pickerLabels {
   display: flex;
-}
-
-.innleggelsesperiodeFormModal__firstLabel {
-  width: 218px;
+  gap: 8.75rem;
 }

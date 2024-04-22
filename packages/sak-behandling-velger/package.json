@@ -17,12 +17,10 @@
     "nav-frontend-chevron": "1.0.30",
     "nav-frontend-chevron-style": "1.0.4",
     "nav-frontend-core": "6.0.1",
-    "nav-frontend-grid": "2.0.2",
-    "nav-frontend-grid-style": "1.0.3",
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
     "react": "18.2.0",
-    "react-intl": "6.6.4",
+    "react-intl": "6.6.5",
     "react-query": "3.39.3",
     "react-router-dom": "6.22.3"
   },

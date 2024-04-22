@@ -27,13 +27,7 @@
   display: inline-block;
 }
 
-.splitPeriodImage {
-  cursor: pointer;
-  margin-left: 12px;
-  margin-right: 4px;
-  padding-bottom: 4px;
-}
-
 .splitPeriodPosition {
-  margin-left: -30px;
+  margin-left: -1.875rem;
+  margin-top: -0.75rem;
 }

@@ -57,6 +57,7 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue, aksjonspu
                   </TableColumn>
                   <TableColumn className={`${styles.sentrert} ${styles.vertikaltSentrert}`}>
                     <Button
+                      size="small"
                       variant="tertiary"
                       type="button"
                       onClick={() => fields.remove(index)}
@@ -66,9 +67,9 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue, aksjonspu
                           index === 0 &&
                           fields.length < 2)
                       }
-                    >
-                      <Delete />
-                    </Button>
+                      icon={<Delete />}
+                      aria-label="Slett"
+                    />
                   </TableColumn>
                 </TableRow>
               );

@@ -1,8 +1,7 @@
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
-import { BodyShort, Detail } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './aktsomhetReduksjonAvBelopFormPanel.module.css';
@@ -16,16 +15,16 @@ const AktsomhetGradForsettFormPanel = ({ readOnly, erValgtResultatTypeForstoBurd
   <div>
     <ArrowBox alignOffset={erValgtResultatTypeForstoBurdeForstaatt ? 328 : 368}>
       {erValgtResultatTypeForstoBurdeForstaatt && (
-        <Row>
-          <Column md="6">
+        <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+          <div>
             <Detail>
               <FormattedMessage id="AktsomhetGradForsettFormPanel.Andel" />
             </Detail>
             <BodyShort size="small" className={styles.labelPadding}>
               100 %
             </BodyShort>
-          </Column>
-          <Column md="6">
+          </div>
+          <div>
             <RadioGroupField
               label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.SkalTilleggesRenter" />}
               validate={[required]}
@@ -35,8 +34,8 @@ const AktsomhetGradForsettFormPanel = ({ readOnly, erValgtResultatTypeForstoBurd
               <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />} value />
               <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />} value={false} />
             </RadioGroupField>
-          </Column>
-        </Row>
+          </div>
+        </HGrid>
       )}
       {!erValgtResultatTypeForstoBurdeForstaatt && (
         <>
