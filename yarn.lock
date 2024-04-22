@@ -4353,7 +4353,7 @@ __metadata:
     "@testing-library/cypress": ^10.0.1
     axios: 1.6.8
     classnames: 2.5.1
-    cypress: ^13.7.3
+    cypress: ^13.8.0
     dayjs: 1.11.10
     eslint-plugin-cypress: ^2.15.2
     lodash: 4.17.21
@@ -4470,7 +4470,7 @@ __metadata:
     "@testing-library/cypress": ^10.0.1
     axios: 1.6.8
     classnames: 2.5.1
-    cypress: ^13.7.3
+    cypress: ^13.8.0
     dayjs: 1.11.10
     eslint-plugin-cypress: ^2.15.2
     lodash: 4.17.21
@@ -10543,9 +10543,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^13.7.3":
-  version: 13.7.3
-  resolution: "cypress@npm:13.7.3"
+"cypress@npm:^13.8.0":
+  version: 13.8.0
+  resolution: "cypress@npm:13.8.0"
   dependencies:
     "@cypress/request": ^3.0.0
     "@cypress/xvfb": ^1.2.4
@@ -10591,7 +10591,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 618db0839893d7633771437a0109225251fc4d3c1fcf54f35e727acc1422ec811907edab2721fa3d8bbc3017df5eb974e2b96cf78d70e40eb92465b3772fa5ca
+  checksum: 908672e29e600ebdb765e94bff3dcb32774d81014f2910653ae083595ed2b47af514570f0cce7cf99c791bf90e8e26a002dae9f8f6cfc87f88e00fe686ac1797
   languageName: node
   linkType: hard
 
@@ -14658,7 +14658,7 @@ __metadata:
     axios: 1.6.8
     axios-mock-adapter: 1.22.0
     cross-env: 7.0.3
-    cypress: ^13.7.3
+    cypress: ^13.8.0
     date-fns: 2.30.0
     date-fns-tz: 2.0.1
     eslint: 8.57.0
