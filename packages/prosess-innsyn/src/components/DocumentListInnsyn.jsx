@@ -3,8 +3,8 @@ import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.
 import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
 import { CheckboxField } from '@fpsak-frontend/form';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import { DateTimeLabel, Image } from '@fpsak-frontend/shared-components';
-import { BodyShort, Detail, HGrid, Table } from '@navikt/ds-react';
+import { DateTimeLabel, Image, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -79,49 +79,38 @@ const DocumentListInnsyn = ({ intl, documents, saksNr, readOnly }) => {
         <FormattedMessage id="DocumentListInnsyn.VelgInnsynsDok" />
       </Detail>
       <HGrid gap="1" columns={{ xs: readOnly ? '6fr 6fr' : '10fr 2fr' }}>
-        <Table>
-          <Table.Header>
-            <Table.Row>
-              {headerTextCodes.map(text => (
-                <Table.HeaderCell scope="col" key={text}>
-                  <FormattedMessage id={text} />
-                </Table.HeaderCell>
-              ))}
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {documents.map(document => {
-              const img = getDirectionImage(document, intl);
-              const dokId = parseInt(document.dokumentId, 10);
-              return (
-                <Table.Row key={dokId} id={dokId}>
-                  <Table.DataCell className={styles.checkboxCol}>
-                    <CheckboxField label={noLabelHack()} name={`dokument_${dokId}`} disabled={readOnly} />
-                  </Table.DataCell>
-                  <Table.DataCell hidden={readOnly}>{img}</Table.DataCell>
-                  <Table.DataCell className={styles.linkCol}>
-                    <a
-                      href={getLink(document, saksNr)}
-                      className="lenke lenke--frittstaende"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {document.tittel}
-                    </a>
-                  </Table.DataCell>
-                  <Table.DataCell hidden={readOnly}>
-                    {document.tidspunkt ? (
-                      <DateTimeLabel dateTimeString={document.tidspunkt} />
-                    ) : (
-                      <BodyShort size="small">
-                        <FormattedMessage id="DocumentListInnsyn.IProduksjon" />
-                      </BodyShort>
-                    )}
-                  </Table.DataCell>
-                </Table.Row>
-              );
-            })}
-          </Table.Body>
+        <Table headerTextCodes={headerTextCodes}>
+          {documents.map(document => {
+            const img = getDirectionImage(document, intl);
+            const dokId = parseInt(document.dokumentId, 10);
+            return (
+              <TableRow key={dokId} id={dokId}>
+                <TableColumn className={styles.checkboxCol}>
+                  <CheckboxField label={noLabelHack()} name={`dokument_${dokId}`} disabled={readOnly} />
+                </TableColumn>
+                <TableColumn hidden={readOnly}>{img}</TableColumn>
+                <TableColumn className={styles.linkCol}>
+                  <a
+                    href={getLink(document, saksNr)}
+                    className="lenke lenke--frittstaende"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {document.tittel}
+                  </a>
+                </TableColumn>
+                <TableColumn hidden={readOnly}>
+                  {document.tidspunkt ? (
+                    <DateTimeLabel dateTimeString={document.tidspunkt} />
+                  ) : (
+                    <BodyShort size="small">
+                      <FormattedMessage id="DocumentListInnsyn.IProduksjon" />
+                    </BodyShort>
+                  )}
+                </TableColumn>
+              </TableRow>
+            );
+          })}
         </Table>
       </HGrid>
     </>

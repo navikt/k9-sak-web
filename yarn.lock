@@ -2539,7 +2539,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/fakta-felles": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     i18n-iso-countries: 7.11.0
     moment: 2.30.1
     nav-frontend-core: 6.0.1
@@ -2666,7 +2666,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     classnames: 2.5.1
     formik: 2.4.5
     lodash: 4.17.21
@@ -3141,7 +3141,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     classnames: 2.5.1
     dayjs: 1.11.10
     lodash: 4.17.21
@@ -3177,7 +3177,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     classnames: 2.5.1
     moment: 2.30.1
     nav-frontend-typografi: 4.0.2
@@ -3222,7 +3222,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     nav-frontend-core: 6.0.1
     nav-frontend-js-utils: 1.0.20
     nav-frontend-lukknapp: 2.0.2
@@ -3421,7 +3421,7 @@ __metadata:
     "@fpsak-frontend/assets": 1.0.0
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     react: 18.2.0
     react-intl: 6.6.5
   languageName: unknown
@@ -3510,7 +3510,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     dayjs: 1.11.10
     moment: 2.30.1
     nav-frontend-lenker: 2.0.2
@@ -3537,7 +3537,7 @@ __metadata:
     "@navikt/aksel-icons": 6.5.0
     "@navikt/ds-react": 6.5.0
     "@navikt/fnrvalidator": 2.0.7
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     axios: 1.6.8
     classnames: 2.5.1
     date-fns: 2.30.0
@@ -3877,7 +3877,7 @@ __metadata:
     "@k9-sak-web/modal-sett-pa-vent": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     classnames: 2.5.1
     nav-frontend-core: 6.0.1
     nav-frontend-tabs: 2.0.3
@@ -3914,7 +3914,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.5
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.6
     axios-mock-adapter: 1.22.0
     react: 18.2.0
     react-intl: 6.6.5
@@ -4016,7 +4016,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.4
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.5
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.6
     axios-mock-adapter: 1.22.0
     nav-frontend-popover: 2.0.4
     react: 18.2.0
@@ -4068,7 +4068,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.4
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.5
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.6
     axios: 1.6.8
     axios-mock-adapter: 1.22.0
     react: 18.2.0
@@ -4116,7 +4116,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.4
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.5
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.6
     axios: 1.6.8
     axios-mock-adapter: 1.22.0
     react: 18.2.0
@@ -4170,7 +4170,7 @@ __metadata:
     "@navikt/diagnosekoder": ^1.2024.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.4
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.5
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.6
     axios: 1.6.8
     axios-mock-adapter: 1.22.0
     react: 18.2.0
@@ -4348,7 +4348,7 @@ __metadata:
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.5.0
     "@navikt/fnrvalidator": 2.0.7
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     "@popperjs/core": 2.11.8
     "@testing-library/cypress": ^10.0.1
     axios: 1.6.8
@@ -4412,7 +4412,7 @@ __metadata:
     "@navikt/ds-react": 6.5.0
     "@navikt/fnrvalidator": 2.0.7
     "@navikt/ft-form-hooks": 4.4.3
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     "@popperjs/core": 2.11.8
     axios: 1.6.8
     classnames: 2.5.1
@@ -4449,7 +4449,7 @@ __metadata:
   dependencies:
     "@fpsak-frontend/form": "*"
     "@k9-sak-web/types": "*"
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     formik: 2.4.5
     yup: 0.32.11
   languageName: unknown
@@ -4465,7 +4465,7 @@ __metadata:
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.5.0
     "@navikt/fnrvalidator": 2.0.7
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     "@popperjs/core": 2.11.8
     "@testing-library/cypress": ^10.0.1
     axios: 1.6.8
@@ -4495,7 +4495,7 @@ __metadata:
     "@navikt/ds-css": 6.5.0
     "@navikt/ds-react": 6.5.0
     "@navikt/fnrvalidator": 2.0.7
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     "@popperjs/core": 2.11.8
     axios: 1.6.8
     classnames: 2.5.1
@@ -4520,7 +4520,7 @@ __metadata:
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.5.0
     "@navikt/fnrvalidator": 2.0.7
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     "@popperjs/core": 2.11.8
     axios: 1.6.8
     classnames: 2.5.1
@@ -4558,7 +4558,7 @@ __metadata:
     "@k9-sak-web/types": "*"
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.5.0
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     classnames: 2.5.1
     dayjs: 1.11.10
     formik: 2.4.5
@@ -4780,7 +4780,7 @@ __metadata:
     "@navikt/ds-react": 6.5.0
     "@navikt/ft-form-hooks": 4.4.3
     "@navikt/ft-form-validators": 2.3.3
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
     cors: 2.8.5
@@ -4844,7 +4844,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     classnames: 2.5.1
     moment: 2.30.1
     nav-frontend-typografi: 4.0.2
@@ -4868,7 +4868,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     classnames: 2.5.1
     lodash: 4.17.21
     nav-frontend-core: 6.0.1
@@ -4972,8 +4972,8 @@ __metadata:
     "@navikt/ds-react": 6.5.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
     "@navikt/ft-form-hooks": 4.4.3
-    "@navikt/ft-plattform-komponenter": 2.5.5
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.5.6
     "@navikt/ft-ui-komponenter": 2.3.3
     "@sentry/browser": 7.110.1
     "@sentry/react": ^7.110.1
@@ -5393,9 +5393,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-plattform-komponenter@npm:2.5.5, @navikt/ft-plattform-komponenter@npm:^2.5.5":
-  version: 2.5.5
-  resolution: "@navikt/ft-plattform-komponenter@npm:2.5.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-plattform-komponenter%2F2.5.5%2F1e85e6b5801662cd908ffe0d86e420c06ea7835e"
+"@navikt/ft-plattform-komponenter@npm:2.5.6, @navikt/ft-plattform-komponenter@npm:^2.5.6":
+  version: 2.5.6
+  resolution: "@navikt/ft-plattform-komponenter@npm:2.5.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-plattform-komponenter%2F2.5.6%2F1ef81b0b8bca8f545cfcd744644f14ef186aa513"
   dependencies:
     "@navikt/aksel-icons": 6.5.0
     "@navikt/ds-css": 6.5.0
@@ -5412,13 +5412,13 @@ __metadata:
     react-collapse: 5.1.1
     react-dom: 18.2.0
     react-popper: 2.3.0
-  checksum: 5499a1ac1e42c79178e22c367adacf768a6fa97a7ec06f9562794ac9e9dd9a2d5972d87c07f743005eeb3f17385c5de28b525c40faa7ab51f005d9da26150aa0
+  checksum: 48be2350c2090098ece43cebe80006b60add376d776e7d0f68ad61d3059c328160f1d9563dce22ff21c115c27d65e1249bc75b80e551f4f44a5e9fe6cf8386b5
   languageName: node
   linkType: hard
 
-"@navikt/ft-prosess-beregningsgrunnlag@npm:6.5.5":
-  version: 6.5.5
-  resolution: "@navikt/ft-prosess-beregningsgrunnlag@npm:6.5.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-beregningsgrunnlag%2F6.5.5%2F6aafcaccd89ef1fee84f5378b33744912cf298e6"
+"@navikt/ft-prosess-beregningsgrunnlag@npm:6.5.6":
+  version: 6.5.6
+  resolution: "@navikt/ft-prosess-beregningsgrunnlag@npm:6.5.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-beregningsgrunnlag%2F6.5.6%2F641017031eddcd03a2bed8b07942b2df501116d9"
   dependencies:
     "@navikt/aksel-icons": 6.5.0
     "@navikt/ds-css": 6.5.0
@@ -5426,7 +5426,7 @@ __metadata:
     "@navikt/ft-form-hooks": ^4.4.3
     "@navikt/ft-form-validators": ^2.3.3
     "@navikt/ft-kodeverk": ^2.4.3
-    "@navikt/ft-plattform-komponenter": ^2.5.5
+    "@navikt/ft-plattform-komponenter": ^2.5.6
     "@navikt/ft-types": ^2.4.3
     "@navikt/ft-ui-komponenter": ^2.3.3
     "@navikt/ft-utils": ^2.3.3
@@ -5455,7 +5455,7 @@ __metadata:
     react-collapse: 5.1.1
     react-hook-form: 7.43.9
     react-intl: 6.3.2
-  checksum: e26e3b1da9128930dd431099c8abb924478512dfb42447677e217600b5f7783d8f7c9bc50b5993be57dc5625c72d22542e16526f71172f13759f0acd369399bc
+  checksum: 2edd5c0e6e9a8ffa2713f3c2abf975890b8239588f3a411561ddef3a779c25a4ed0c724e8e422deca78f73dce5bbb38b8137d3b18869df252c8a7ddf5060e4db
   languageName: node
   linkType: hard
 
@@ -14624,7 +14624,7 @@ __metadata:
     "@navikt/ds-react": 6.5.0
     "@navikt/ds-tailwind": ^6.5.0
     "@navikt/familie-endringslogg": 12.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.5
+    "@navikt/ft-plattform-komponenter": 2.5.6
     "@popperjs/core": 2.11.8
     "@sentry/browser": 7.110.1
     "@sentry/cli": 2.31.0

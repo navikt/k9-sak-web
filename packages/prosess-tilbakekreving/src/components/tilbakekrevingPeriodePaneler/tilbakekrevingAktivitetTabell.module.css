@@ -2,7 +2,11 @@
   width: 400px;
 }
 
-.feilutbetalingTable td:last-child,
-.feilutbetalingTable th:last-child {
+.feilutbetalingTable td:first-child {
+  padding-left: 5;
+}
+
+.feilutbetalingTable td:last-child {
+  padding-right: 5;
   text-align: right;
 }

@@ -26,16 +26,14 @@
   display: flex;
 }
 
-.simuleringTable tr td,
-.simuleringTable tr th {
+.simuleringTable tr td {
   border: 0;
   display: flex;
   justify-content: flex-end;
   width: 80px;
 }
 
-.simuleringTable tr td:first-child,
-.simuleringTable tr th:first-child {
+.simuleringTable tr td:first-child {
   justify-content: flex-start;
   width: 300px;
 }
@@ -49,7 +47,7 @@
   border-bottom: solid 1px #a0a0a0;
 }
 
-.simuleringTable thead th:last-child span {
+.simuleringTable thead td:last-child span {
   align-items: center;
   display: flex;
   height: 100%;
@@ -57,28 +55,20 @@
   width: 100%;
 }
 
-.simuleringTable thead th {
+.simuleringTable thead td {
   padding: 0;
 }
 
-.simuleringTable thead th .nextPeriod {
+.simuleringTable thead td .nextPeriod {
   border-left: dashed 1px #a0a0a0;
   margin-right: -20px;
   padding: 8px;
 }
 
-.simuleringTable thead th .normalPeriod {
+.simuleringTable thead td .normalPeriod {
   padding: 8px;
 }
 
 .simuleringTable tbody tr:first-child td {
   border-top: 0;
-}
-
-.rowBorderSolid {
-  border-bottom: 1px solid var(--ac-table-row-border, var(--a-border-default));
-}
-
-.rowBorderDashed {
-  border-bottom: 1px dashed var(--ac-table-row-border, var(--a-border-default));
 }
