@@ -9,4 +9,5 @@ export {
   RETTSKILDE_URL,
   LINK_TIL_BESTE_BEREGNING_REGNEARK,
   SYSTEMRUTINE_URL,
+  SHAREPOINT_URL,
 } from './src/eksterneLenker';
