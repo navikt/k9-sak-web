@@ -1,5 +1,4 @@
 import Kodeverk from './kodeverkTsType';
-import Periode from './periodeTsType';
 
 export type SimuleringResultatRad = Readonly<{
   feltnavn: string;
@@ -22,7 +21,8 @@ export type Mottaker = Readonly<{
   mottakerNummer: string;
   mottakerNavn: string;
   mottakerIdentifikator: string;
-  nesteUtbPeriode: Periode;
+  nesteUtbPeriodeFom: string;
+  nestUtbPeriodeTom: string;
   resultatPerFagområde: SimuleringResultatPerFagområde[];
   resultatOgMotregningRader: SimuleringResultatRad[];
 }>;

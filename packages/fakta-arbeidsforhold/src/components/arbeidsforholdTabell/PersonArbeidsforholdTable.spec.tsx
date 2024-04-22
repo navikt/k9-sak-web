@@ -94,7 +94,7 @@ describe('<PersonArbeidsforholdTable>', () => {
       { messages },
     );
 
-    expect(container.getElementsByClassName('navds-table__row--selected').length).toBe(1);
+    expect(container.getElementsByClassName('selected').length).toBe(1);
     expect(screen.getByText(arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId)).toBeInTheDocument();
     expect(screen.getByText('80.00 %')).toBeInTheDocument();
   });

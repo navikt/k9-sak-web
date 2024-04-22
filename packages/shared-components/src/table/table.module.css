@@ -1,0 +1,39 @@
+.table {
+  background-color: transparent;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 1rem;
+  max-width: 100%;
+  width: 100%;
+}
+
+.table thead {
+  display: table-header-group;
+}
+
+.table caption {
+  color: #6a6a6a;
+  left: -3000px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  position: absolute;
+  text-align: left;
+}
+
+.table tbody tr:first-child th,
+.table tbody tr:first-child td {
+  border-top: 1px solid #a0a0a0;
+  border-top-width: 2px;
+}
+
+.table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.table.noHover tbody tr:hover {
+  background-color: transparent;
+}
+
+.table.stripet tbody tr:nth-child(odd) {
+  background-color: #f7f7f7;
+}
