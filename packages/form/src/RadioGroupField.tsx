@@ -1,7 +1,7 @@
 import { RadioGroup } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import React from 'react';
-import { Field } from 'redux-form';
+import { Field, WrappedFieldInputProps } from 'redux-form';
 import LabelType from './LabelType';
 import { RadioOptionProps } from './RadioOption';
 import styles from './radioGroupField.module.css';
@@ -31,15 +31,25 @@ interface RadioGroupFieldProps {
     | ((value: string) => boolean | undefined)[]
     | ((value: string) => boolean | undefined);
   readOnly?: boolean;
-  legend?: React.ReactNode;
   isEdited?: boolean;
   dataId?: string;
+  error?: string;
 }
 
 const classNames = classnames.bind(styles);
 
 const renderRadioGroupField = renderNavField(
-  ({ label, name, value, onChange, bredde, readOnly, feil, children, DOMName, legend }) => {
+  ({
+    label,
+    name,
+    value,
+    onChange,
+    bredde,
+    readOnly,
+    error,
+    children,
+    DOMName,
+  }: RadioGroupFieldProps & WrappedFieldInputProps) => {
     const optionProps = {
       onChange,
       name: DOMName || name,
@@ -52,7 +62,7 @@ const renderRadioGroupField = renderNavField(
     return (
       <RadioGroup
         className={classNames(`input--${bredde}`, 'radioGroup', { readOnly })}
-        error={readOnly ? undefined : feil}
+        error={readOnly ? undefined : error}
         legend={label}
         onChange={onChange}
         size="small"
@@ -75,7 +85,6 @@ RadioGroupField.defaultProps = {
   spaceBetween: false,
   direction: 'horizontal',
   DOMName: undefined,
-  legend: '',
 };
 
 export default RadioGroupField;
