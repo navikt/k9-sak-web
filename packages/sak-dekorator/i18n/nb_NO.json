@@ -6,10 +6,11 @@
   "ErrorMessageDetailsModal.ErrorDetails": "Detaljert informasjon",
   "ErrorMessageDetailsModal.Close": "Lukk",
 
-  "HeaderWithErrorPanel.Ytelse": "Pleiepenger, omsorgspenger og frisinn",
+  "HeaderWithErrorPanel.Ytelse": "Pleiepenger og omsorgspenger",
   "HeaderWithErrorPanel.Rettskilde": "Rettskildene",
   "HeaderWithErrorPanel.AInntekt": "A-inntekt",
   "HeaderWithErrorPanel.AAReg": "Aa-registeret",
+  "HeaderWithErrorPanel.Sharepoint": "Sharepoint",
   "HeaderWithErrorPanel.Systemrutine": "Systemrutine",
   "HeaderWithErrorPanel.Punsj": "Punsj",
 

@@ -1,4 +1,4 @@
-import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
+import { RETTSKILDE_URL, SHAREPOINT_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
 import Endringslogg from '@navikt/familie-endringslogg';
 import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/ft-plattform-komponenter';
 import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
@@ -112,6 +112,11 @@ const HeaderWithErrorPanel = ({
     {
       name: intl.formatMessage({ id: 'HeaderWithErrorPanel.Rettskilde' }),
       href: RETTSKILDE_URL,
+      isExternal: true,
+    },
+    {
+      name: intl.formatMessage({ id: 'HeaderWithErrorPanel.Sharepoint' }),
+      href: SHAREPOINT_URL,
       isExternal: true,
     },
     {

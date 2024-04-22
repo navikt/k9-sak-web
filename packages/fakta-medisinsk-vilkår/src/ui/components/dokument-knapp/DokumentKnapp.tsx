@@ -1,17 +1,23 @@
-import { Link } from '@navikt/ds-react';
+import { FileIcon } from '@navikt/aksel-icons';
+import { Button, Link } from '@navikt/ds-react';
 import * as React from 'react';
-import { DocumentIcon } from '@navikt/ft-plattform-komponenter';
-import styles from './dokumentKnapp.module.css';
 
 interface DokumentKnappProps {
   href: string;
 }
 
 const DokumentKnapp = ({ href }: DokumentKnappProps): JSX.Element => (
-  <Link href={href} target="_blank" className={styles.dokumentKnapp}>
-    <DocumentIcon />
+  <Button
+    as={Link}
+    href={href}
+    target="_blank"
+    underline={false}
+    size="small"
+    variant="secondary"
+    icon={<FileIcon aria-hidden fontSize="1.5rem" />}
+  >
     Åpne dokument
-  </Link>
+  </Button>
 );
 
 export default DokumentKnapp;
