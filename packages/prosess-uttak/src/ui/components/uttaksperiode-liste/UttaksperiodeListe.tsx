@@ -1,14 +1,9 @@
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { Alert, BodyShort, Button, Label, Table } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import React from 'react';
-
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { Alert, BodyShort, Button, Label } from '@navikt/ds-react';
-
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import ContainerContext from '../../context/ContainerContext';
-import FullWidthRow from '../table/FullWidthRow';
-import Table from '../table/Table';
-import TableColumn from '../table/TableColumn';
 import Uttak from '../uttak/Uttak';
 import styles from './uttaksperiodeListe.module.css';
 
@@ -74,18 +69,22 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
   };
   return (
     <div style={{ maxWidth: '961px' }}>
-      <Table
-        suppliedHeaders={
-          <>
+      <Table>
+        <Table.Header>
+          <Table.Row>
             {headers.map((header, index) => (
-              <TableColumn key={header} className={styles.headerColumn} colSpan={headers.length - 1 === index ? 2 : 1}>
+              <Table.HeaderCell
+                scope="col"
+                key={header}
+                className={styles.headerColumn}
+                colSpan={headers.length - 1 === index ? 2 : 1}
+              >
                 {header}
-              </TableColumn>
+              </Table.HeaderCell>
             ))}
-          </>
-        }
-      >
-        <>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
           {afterOrCovering.map((uttak, index) => (
             <Uttak
               key={uttak.periode.prettifyPeriod()}
@@ -95,28 +94,32 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
             />
           ))}
           {virkningsdatoUttakNyeRegler && !redigerVirkningsdato && (
-            <FullWidthRow colSpan={12}>
-              <div className={styles.alertRow}>
-                <Alert variant="info">
-                  <div style={{ display: 'flex' }}>
-                    <Label size="small">Endringsdato: {dayjs(virkningsdatoUttakNyeRegler).format('DD.MM.YYYY')}</Label>
-                    <Button
-                      variant="secondary"
-                      size="small"
-                      className={styles.redigerDato}
-                      onClick={redigerVirkningsdatoFunc}
-                      disabled={status === behandlingStatus.AVSLUTTET}
-                    >
-                      Rediger
-                    </Button>
-                  </div>
-                  <BodyShort>
-                    Etter denne datoen er det endring i hvordan utbetalingsgrad settes for ikke yrkesaktiv, kun ytelse
-                    og ny arbeidsaktivitet.
-                  </BodyShort>
-                </Alert>
-              </div>
-            </FullWidthRow>
+            <Table.Row>
+              <Table.DataCell colSpan={12}>
+                <div className={styles.alertRow}>
+                  <Alert variant="info">
+                    <div className="flex">
+                      <Label size="small">
+                        Endringsdato: {dayjs(virkningsdatoUttakNyeRegler).format('DD.MM.YYYY')}
+                      </Label>
+                      <Button
+                        variant="secondary"
+                        size="small"
+                        className={styles.redigerDato}
+                        onClick={redigerVirkningsdatoFunc}
+                        disabled={status === behandlingStatus.AVSLUTTET}
+                      >
+                        Rediger
+                      </Button>
+                    </div>
+                    <BodyShort>
+                      Etter denne datoen er det endring i hvordan utbetalingsgrad settes for ikke yrkesaktiv, kun ytelse
+                      og ny arbeidsaktivitet.
+                    </BodyShort>
+                  </Alert>
+                </div>
+              </Table.DataCell>
+            </Table.Row>
           )}
           {before.map((uttak, index) => (
             <Uttak
@@ -127,7 +130,7 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
               withBorderTop={index === 0 && !!virkningsdatoUttakNyeRegler}
             />
           ))}
-        </>
+        </Table.Body>
       </Table>
     </div>
   );

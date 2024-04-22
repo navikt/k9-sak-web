@@ -9,13 +9,10 @@ import {
   FlexContainer,
   FlexRow,
   PeriodLabel,
-  Table,
-  TableColumn,
-  TableRow,
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, Table } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -60,22 +57,33 @@ export const PerioderMedMedlemskapFaktaPanel = ({
       titleCode="PerioderMedMedlemskapFaktaPanel.ApplicationInformation"
       merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE]}
     >
-      <Table headerTextCodes={headerTextCodes}>
-        {fixedMedlemskapPerioder.map(periode => {
-          const key = periode.fom + periode.tom + periode.dekning + periode.status + periode.beslutningsdato;
-          return (
-            <TableRow key={key} id={key}>
-              <TableColumn>
-                <PeriodLabel showTodayString dateStringFom={periode.fom} dateStringTom={periode.tom} />
-              </TableColumn>
-              <TableColumn>{periode.dekning}</TableColumn>
-              <TableColumn>{periode.status}</TableColumn>
-              <TableColumn>
-                {periode.beslutningsdato ? <DateLabel dateString={periode.beslutningsdato} /> : null}
-              </TableColumn>
-            </TableRow>
-          );
-        })}
+      <Table>
+        <Table.Header>
+          <Table.Row>
+            {headerTextCodes.map(text => (
+              <Table.HeaderCell scope="col" key={text}>
+                <FormattedMessage id={text} />
+              </Table.HeaderCell>
+            ))}
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {fixedMedlemskapPerioder.map(periode => {
+            const key = periode.fom + periode.tom + periode.dekning + periode.status + periode.beslutningsdato;
+            return (
+              <Table.Row key={key} id={key}>
+                <Table.DataCell>
+                  <PeriodLabel showTodayString dateStringFom={periode.fom} dateStringTom={periode.tom} />
+                </Table.DataCell>
+                <Table.DataCell>{periode.dekning}</Table.DataCell>
+                <Table.DataCell>{periode.status}</Table.DataCell>
+                <Table.DataCell>
+                  {periode.beslutningsdato ? <DateLabel dateString={periode.beslutningsdato} /> : null}
+                </Table.DataCell>
+              </Table.Row>
+            );
+          })}
+        </Table.Body>
       </Table>
       <FlexContainer>
         {hasPeriodeAksjonspunkt && (
