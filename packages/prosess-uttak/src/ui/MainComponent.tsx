@@ -1,6 +1,8 @@
-import { HStack, Heading } from '@navikt/ds-react';
-import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
 import React from 'react';
+
+import { HStack, Heading } from '@navikt/ds-react';
+
+import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
 import { aksjonspunktVurderDatoKode, aksjonspunktkodeVentAnnenPSBSakKode } from '../constants/Aksjonspunkter';
 import ContainerContract from '../types/ContainerContract';
 import lagUttaksperiodeliste from '../util/uttaksperioder';

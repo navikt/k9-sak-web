@@ -1,9 +1,9 @@
 import { InputField } from '@fpsak-frontend/form/index';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidFodselsnummer, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Delete } from '@navikt/ds-icons';
-import { Button, Table } from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
 import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
@@ -30,54 +30,50 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue, aksjonspu
       {fields.length > 0 && (
         <>
           <Table>
-            <Table.Header>
-              <Table.Row>
-                <Table.DataCell />
-                <Table.DataCell>
-                  <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.Fnr" />
-                </Table.DataCell>
-                <Table.DataCell className={styles.sentrert}>
-                  <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.Fjern" />
-                </Table.DataCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {fields.map((field, index) => {
-                const fosterbarnObj = barn[index];
-                const navn = fosterbarnObj && fosterbarnObj.navn ? fosterbarnObj.navn : `Fosterbarn ${index + 1}`;
-                return (
-                  <Table.Row key={`${navn}`}>
-                    <Table.DataCell className={styles.vertikaltSentrert}>{navn}</Table.DataCell>
-                    <Table.DataCell className={styles.vertikaltSentrert}>
-                      <InputField
-                        name={field}
-                        type="text"
-                        htmlSize={14}
-                        validate={[required, minLength(11), maxLength(11), hasValidFodselsnummer]}
-                        maxLength={11}
-                        readOnly={!isAksjonspunktOpen}
-                      />
-                    </Table.DataCell>
-                    <Table.DataCell className={`${styles.sentrert} ${styles.vertikaltSentrert}`}>
-                      <Button
-                        variant="tertiary"
-                        type="button"
-                        onClick={() => fields.remove(index)}
-                        disabled={
-                          !isAksjonspunktOpen ||
-                          (aksjonspunktkode === aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN &&
-                            index === 0 &&
-                            fields.length < 2)
-                        }
-                        size="small"
-                      >
-                        <Delete />
-                      </Button>
-                    </Table.DataCell>
-                  </Table.Row>
-                );
-              })}
-            </Table.Body>
+            <TableRow isHeader>
+              <TableColumn />
+              <TableColumn>
+                <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.Fnr" />
+              </TableColumn>
+              <TableColumn className={styles.sentrert}>
+                <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.Fjern" />
+              </TableColumn>
+            </TableRow>
+            {fields.map((field, index) => {
+              const fosterbarnObj = barn[index];
+              const navn = fosterbarnObj && fosterbarnObj.navn ? fosterbarnObj.navn : `Fosterbarn ${index + 1}`;
+              return (
+                <TableRow key={`${navn}`}>
+                  <TableColumn className={styles.vertikaltSentrert}>{navn}</TableColumn>
+                  <TableColumn className={styles.vertikaltSentrert}>
+                    <InputField
+                      name={field}
+                      type="text"
+                      htmlSize={14}
+                      validate={[required, minLength(11), maxLength(11), hasValidFodselsnummer]}
+                      maxLength={11}
+                      readOnly={!isAksjonspunktOpen}
+                    />
+                  </TableColumn>
+                  <TableColumn className={`${styles.sentrert} ${styles.vertikaltSentrert}`}>
+                    <Button
+                      size="small"
+                      variant="tertiary"
+                      type="button"
+                      onClick={() => fields.remove(index)}
+                      disabled={
+                        !isAksjonspunktOpen ||
+                        (aksjonspunktkode === aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN &&
+                          index === 0 &&
+                          fields.length < 2)
+                      }
+                      icon={<Delete />}
+                      aria-label="Slett"
+                    />
+                  </TableColumn>
+                </TableRow>
+              );
+            })}
           </Table>
           <VerticalSpacer eightPx />
         </>

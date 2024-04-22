@@ -1,9 +1,10 @@
-import { PeriodLabel } from '@fpsak-frontend/shared-components';
+import { PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { Kodeverk } from '@k9-sak-web/types';
-import { BodyShort, Label, Table } from '@navikt/ds-react';
+import { BodyShort, Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+
 import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
 
 import styles from './tilbakekrevingVedtakPeriodeTabell.module.css';
@@ -26,75 +27,66 @@ interface OwnProps {
 const TilbakekrevingVedtakPeriodeTabell = ({ perioder, getKodeverknavn }: OwnProps) => {
   const rader = perioder
     .map(periode => (
-      <Table.Row key={periode.periode.fom} shadeOnHover={false}>
-        <Table.DataCell>
+      <TableRow key={periode.periode.fom}>
+        <TableColumn>
           <BodyShort size="small">
             <PeriodLabel dateStringFom={periode.periode.fom} dateStringTom={periode.periode.tom} />
           </BodyShort>
-        </Table.DataCell>
-        <Table.DataCell>
+        </TableColumn>
+        <TableColumn>
           <BodyShort size="small">{formatCurrencyNoKr(periode.feilutbetaltBeløp)}</BodyShort>
-        </Table.DataCell>
-        <Table.DataCell>
+        </TableColumn>
+        <TableColumn>
           <BodyShort size="small">{getKodeverknavn(periode.vurdering)}</BodyShort>
-        </Table.DataCell>
-        <Table.DataCell>
+        </TableColumn>
+        <TableColumn>
           <BodyShort size="small">
             {periode.andelAvBeløp !== undefined && periode.andelAvBeløp !== null ? `${periode.andelAvBeløp}%` : ''}
           </BodyShort>
-        </Table.DataCell>
-        <Table.DataCell>
+        </TableColumn>
+        <TableColumn>
           <BodyShort size="small">{periode.renterProsent ? `${periode.renterProsent}%` : ''}</BodyShort>
-        </Table.DataCell>
-        <Table.DataCell>
+        </TableColumn>
+        <TableColumn>
           <BodyShort size="small">{formatCurrencyNoKr(periode.tilbakekrevingBeløp)}</BodyShort>
-        </Table.DataCell>
-        <Table.DataCell>
+        </TableColumn>
+        <TableColumn>
           <BodyShort size="small">{formatCurrencyNoKr(periode.tilbakekrevingBeløpEtterSkatt)}</BodyShort>
-        </Table.DataCell>
-      </Table.Row>
+        </TableColumn>
+      </TableRow>
     ))
     .concat(
-      <Table.Row key="sum" shadeOnHover={false}>
-        <Table.DataCell>
+      <TableRow key="sum">
+        <TableColumn>
           <BodyShort size="small">
             <FormattedMessage id="TilbakekrevingVedtakPeriodeTabell.Sum" />
           </BodyShort>
-        </Table.DataCell>
-        <Table.DataCell>
+        </TableColumn>
+        <TableColumn>
           <BodyShort size="small">
             {formatCurrencyNoKr(perioder.reduce((sum, periode) => sum + periode.feilutbetaltBeløp, 0))}
           </BodyShort>
-        </Table.DataCell>
-        <Table.DataCell />
-        <Table.DataCell />
-        <Table.DataCell />
-        <Table.DataCell>
+        </TableColumn>
+        <TableColumn />
+        <TableColumn />
+        <TableColumn />
+        <TableColumn>
           <Label size="small" as="p">
             {formatCurrencyNoKr(perioder.reduce((sum, periode) => sum + periode.tilbakekrevingBeløp, 0))}
           </Label>
-        </Table.DataCell>
-        <Table.DataCell>
+        </TableColumn>
+        <TableColumn>
           <Label size="small" as="p">
             {formatCurrencyNoKr(perioder.reduce((sum, periode) => sum + periode.tilbakekrevingBeløpEtterSkatt, 0))}
           </Label>
-        </Table.DataCell>
-      </Table.Row>,
+        </TableColumn>
+      </TableRow>,
     );
 
   return (
     <div className={styles.table}>
-      <Table>
-        <Table.Header>
-          <Table.Row shadeOnHover={false}>
-            {headerTextCodes.map(text => (
-              <Table.HeaderCell scope="col" key={text}>
-                <FormattedMessage id={text} />
-              </Table.HeaderCell>
-            ))}
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>{rader}</Table.Body>
+      <Table noHover headerTextCodes={headerTextCodes}>
+        {rader}
       </Table>
     </div>
   );
