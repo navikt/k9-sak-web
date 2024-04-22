@@ -7,10 +7,18 @@ import { connect } from 'react-redux';
 
 const headerTextCodes = ['MedlemskapEndringerTabell.GjeldeneFom', 'MedlemskapEndringerTabell.Opplysning'];
 
+interface Periode {
+  id: string;
+  vurderingsdato: string;
+  årsaker: string[];
+  aksjonspunkter: string[];
+  begrunnelse: string;
+}
+
 interface MedlemskapEndringerTabellProps {
-  velgPeriodeCallback: () => void;
+  velgPeriodeCallback: (event: React.MouseEvent<HTMLTableRowElement, MouseEvent>, id: string, periode: Periode) => void;
   selectedId?: string;
-  perioder?: { id: string; vurderingsdato: string; årsaker: string[]; aksjonspunkter: string[]; begrunnelse: string }[];
+  perioder?: Periode[];
 }
 
 const MedlemskapEndringerTabellImpl = ({
@@ -35,12 +43,13 @@ const MedlemskapEndringerTabellImpl = ({
           <Table.Row
             key={periode.id}
             id={periode.id}
-            onMouseDown={velgPeriodeCallback}
-            onKeyDown={velgPeriodeCallback}
+            onClick={(event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) =>
+              velgPeriodeCallback(event, periode.id, periode)
+            }
             selected={periode.id === selectedId}
             className={
               periode.begrunnelse === null && periode.aksjonspunkter.length > 0
-                ? 'border-solid border-l-5 border-[#fa3]'
+                ? 'border-solid border-0 border-l-[5px] border-[#fa3]'
                 : ''
             }
           >

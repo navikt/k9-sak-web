@@ -103,10 +103,9 @@ const PersonArbeidsforholdTable = ({
             return (
               <Fragment key={a.id}>
                 <Table.Row
-                  onMouseDown={() => setVisAksjonspunktInfo(true)}
-                  onKeyDown={() => setVisAksjonspunktInfo(true)}
+                  onClick={() => setVisAksjonspunktInfo(true)}
                   selected={a.id === selectedId}
-                  className={harAksjonspunkt ? 'border-solid border-l-5 border-[#fa3]' : ''}
+                  className={harAksjonspunkt ? 'border-solid border-0 border-l-[5px] border-[#fa3]' : ''}
                 >
                   <Table.DataCell>
                     <BodyShort size="small">{decodeHtmlEntity(arbeidsforholdId)}</BodyShort>

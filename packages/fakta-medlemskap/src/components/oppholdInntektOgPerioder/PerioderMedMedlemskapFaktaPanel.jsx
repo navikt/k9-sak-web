@@ -12,7 +12,7 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import { BodyShort, Table } from '@navikt/ds-react';
+import { BodyShort, Table, VStack } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -57,63 +57,65 @@ export const PerioderMedMedlemskapFaktaPanel = ({
       titleCode="PerioderMedMedlemskapFaktaPanel.ApplicationInformation"
       merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE]}
     >
-      <Table>
-        <Table.Header>
-          <Table.Row>
-            {headerTextCodes.map(text => (
-              <Table.HeaderCell scope="col" key={text}>
-                <FormattedMessage id={text} />
-              </Table.HeaderCell>
-            ))}
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {fixedMedlemskapPerioder.map(periode => {
-            const key = periode.fom + periode.tom + periode.dekning + periode.status + periode.beslutningsdato;
-            return (
-              <Table.Row key={key} id={key}>
-                <Table.DataCell>
-                  <PeriodLabel showTodayString dateStringFom={periode.fom} dateStringTom={periode.tom} />
-                </Table.DataCell>
-                <Table.DataCell>{periode.dekning}</Table.DataCell>
-                <Table.DataCell>{periode.status}</Table.DataCell>
-                <Table.DataCell>
-                  {periode.beslutningsdato ? <DateLabel dateString={periode.beslutningsdato} /> : null}
-                </Table.DataCell>
-              </Table.Row>
-            );
-          })}
-        </Table.Body>
-      </Table>
-      <FlexContainer>
-        {hasPeriodeAksjonspunkt && (
-          <FlexRow>
+      <VStack gap="4">
+        <Table>
+          <Table.Header>
+            <Table.Row>
+              {headerTextCodes.map(text => (
+                <Table.HeaderCell scope="col" key={text}>
+                  <FormattedMessage id={text} />
+                </Table.HeaderCell>
+              ))}
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {fixedMedlemskapPerioder.map(periode => {
+              const key = periode.fom + periode.tom + periode.dekning + periode.status + periode.beslutningsdato;
+              return (
+                <Table.Row key={key} id={key}>
+                  <Table.DataCell>
+                    <PeriodLabel showTodayString dateStringFom={periode.fom} dateStringTom={periode.tom} />
+                  </Table.DataCell>
+                  <Table.DataCell>{periode.dekning}</Table.DataCell>
+                  <Table.DataCell>{periode.status}</Table.DataCell>
+                  <Table.DataCell>
+                    {periode.beslutningsdato ? <DateLabel dateString={periode.beslutningsdato} /> : null}
+                  </Table.DataCell>
+                </Table.Row>
+              );
+            })}
+          </Table.Body>
+        </Table>
+        <FlexContainer>
+          {hasPeriodeAksjonspunkt && (
+            <FlexRow>
+              <FlexColumn>
+                <RadioGroupField
+                  name="medlemskapManuellVurderingType.kode"
+                  validate={[required]}
+                  readOnly={readOnly}
+                  isEdited={isPeriodAksjonspunktClosed}
+                >
+                  {vurderingTypes.map(type => (
+                    <RadioOption key={type.kode} value={type.kode} label={type.navn} />
+                  ))}
+                </RadioGroupField>
+              </FlexColumn>
+            </FlexRow>
+          )}
+          <VerticalSpacer sixteenPx />
+          <FlexRow className="justifyItemsToFlexEnd">
             <FlexColumn>
-              <RadioGroupField
-                name="medlemskapManuellVurderingType.kode"
-                validate={[required]}
-                readOnly={readOnly}
-                isEdited={isPeriodAksjonspunktClosed}
-              >
-                {vurderingTypes.map(type => (
-                  <RadioOption key={type.kode} value={type.kode} label={type.navn} />
-                ))}
-              </RadioGroupField>
+              {fodselsdato && (
+                <FormattedMessage
+                  id="PerioderMedMedlemskapFaktaPanel.Fodselsdato"
+                  values={{ dato: moment(fodselsdato).format(DDMMYYYY_DATE_FORMAT) }}
+                />
+              )}
             </FlexColumn>
           </FlexRow>
-        )}
-        <VerticalSpacer sixteenPx />
-        <FlexRow className="justifyItemsToFlexEnd">
-          <FlexColumn>
-            {fodselsdato && (
-              <FormattedMessage
-                id="PerioderMedMedlemskapFaktaPanel.Fodselsdato"
-                values={{ dato: moment(fodselsdato).format(DDMMYYYY_DATE_FORMAT) }}
-              />
-            )}
-          </FlexColumn>
-        </FlexRow>
-      </FlexContainer>
+        </FlexContainer>
+      </VStack>
     </FaktaGruppe>
   );
 };
