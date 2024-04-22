@@ -1,4 +1,5 @@
-import { BodyShort, Detail, HGrid, Table } from '@navikt/ds-react';
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -34,35 +35,24 @@ const DocumentListVedtakInnsyn = ({ documents, saksNr }) => {
       </Detail>
       <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
         <div>
-          <Table>
-            <Table.Header>
-              <Table.Row shadeOnHover={false}>
-                {headerTextCodes.map(text => (
-                  <Table.HeaderCell scope="col" key={text}>
-                    <FormattedMessage id={text} />
-                  </Table.HeaderCell>
-                ))}
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {documents.map(document => {
-                const dokId = parseInt(document.dokumentId, 10);
-                return (
-                  <Table.Row key={dokId} id={dokId} shadeOnHover={false}>
-                    <Table.DataCell className={styles.linkCol}>
-                      <a
-                        href={getLink(document, saksNr)}
-                        className="lenke lenke--frittstaende"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {document.tittel}
-                      </a>
-                    </Table.DataCell>
-                  </Table.Row>
-                );
-              })}
-            </Table.Body>
+          <Table noHover headerTextCodes={headerTextCodes}>
+            {documents.map(document => {
+              const dokId = parseInt(document.dokumentId, 10);
+              return (
+                <TableRow key={dokId} id={dokId}>
+                  <TableColumn className={styles.linkCol}>
+                    <a
+                      href={getLink(document, saksNr)}
+                      className="lenke lenke--frittstaende"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {document.tittel}
+                    </a>
+                  </TableColumn>
+                </TableRow>
+              );
+            })}
           </Table>
         </div>
       </HGrid>

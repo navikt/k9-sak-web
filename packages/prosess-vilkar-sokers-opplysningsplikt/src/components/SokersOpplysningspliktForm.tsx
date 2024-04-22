@@ -5,11 +5,11 @@ import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, isObject, required } from '@fpsak-frontend/utils';
 import { ProsessPanelTemplate, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Behandling, Kodeverk, KodeverkMedNavn, ManglendeVedleggSoknad, Soknad } from '@k9-sak-web/types';
-import { BodyShort, HGrid, Table } from '@navikt/ds-react';
+import { BodyShort, HGrid } from '@navikt/ds-react';
 import moment from 'moment';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -139,25 +139,20 @@ export const SokersOpplysningspliktFormImpl = ({
         <VerticalSpacer eightPx />
         <HGrid gap="1" columns={{ xs: '11fr 1fr' }}>
           <div>
-            <Table>
-              <Table.Body>
-                {manglendeVedlegg.map(vedlegg => (
-                  <Table.Row
-                    key={
-                      vedlegg.dokumentType.kode + (vedlegg.arbeidsgiver ? vedlegg.arbeidsgiver.organisasjonsnummer : '')
-                    }
-                    shadeOnHover={false}
-                  >
-                    <Table.DataCell>
-                      {dokumentTypeIds.find(dti => dti.kode === vedlegg.dokumentType.kode).navn}
-                    </Table.DataCell>
-                    <Table.DataCell>
-                      {vedlegg.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING &&
-                        formatArbeidsgiver(vedlegg.arbeidsgiver)}
-                    </Table.DataCell>
-                  </Table.Row>
-                ))}
-              </Table.Body>
+            <Table noHover>
+              {manglendeVedlegg.map(vedlegg => (
+                <TableRow
+                  key={
+                    vedlegg.dokumentType.kode + (vedlegg.arbeidsgiver ? vedlegg.arbeidsgiver.organisasjonsnummer : '')
+                  }
+                >
+                  <TableColumn>{dokumentTypeIds.find(dti => dti.kode === vedlegg.dokumentType.kode).navn}</TableColumn>
+                  <TableColumn>
+                    {vedlegg.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING &&
+                      formatArbeidsgiver(vedlegg.arbeidsgiver)}
+                  </TableColumn>
+                </TableRow>
+              ))}
             </Table>
           </div>
         </HGrid>
