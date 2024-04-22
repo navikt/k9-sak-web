@@ -1,7 +1,6 @@
 .expanded {
   padding: 1.125rem 0 0;
-  border: 1px solid #b7b1a9;
-  border-top: none;
+  margin-top: -1px;
 }
 
 .uttak__expandButton {
@@ -78,10 +77,33 @@
   align-items: center;
 }
 
+.uttak__row {
+  --ac-table-row-border: #bbb;
+}
+
+.borderLeft {
+  border-left: 1px solid #bbb;
+}
+
+.borderRight {
+  border-right: 1px solid #bbb;
+  width: 6.5rem;
+}
+
 :global .ReactCollapse--collapse {
   transition: height 500ms;
 }
 
 .borderTop {
   border-top: 1px solid rgb(187 187 187);
+}
+
+.collapseRow {
+  visibility: collapse;
+}
+
+.expandedRow {
+  border-bottom: 1px solid #bbb;
+  border-left: 1px solid #bbb;
+  border-right: 1px solid #bbb;
 }
