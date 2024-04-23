@@ -21,7 +21,7 @@ const DatePicker: React.FunctionComponent<OwnProps> = ({
   const stringToDate = (date: string | Date): Date => new Date(date);
   const fraDato = new Date(begrensningerIKalender?.minDate);
   const tilDato = new Date(begrensningerIKalender?.maxDate);
-  const disabledDays = begrensningerIKalender?.invalidDateRanges.map(range => ({
+  const disabledDays = begrensningerIKalender?.invalidDateRanges?.map(range => ({
     from: stringToDate(range.from),
     to: stringToDate(range.to),
   }));
