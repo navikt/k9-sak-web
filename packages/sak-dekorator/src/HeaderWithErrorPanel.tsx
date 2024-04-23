@@ -170,7 +170,7 @@ const HeaderWithErrorPanel = ({
             titleHref={getHeaderTitleHref(getPathToFplos)}
           >
             {/*
-            Går mot en backend som foreldrepenger styrer.
+            Går mot en backend som BAKS styrer.
             https://github.com/navikt/familie-endringslogg
             For å nå backend lokalt må man være tilkoblet naisdevice og kjøre opp k9-sak-web på port 8000 pga CORS
             */}
