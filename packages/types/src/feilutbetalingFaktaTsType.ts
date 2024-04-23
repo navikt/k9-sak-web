@@ -1,5 +1,3 @@
-import Kodeverk from './kodeverkTsType';
-
 export type FeilutbetalingFakta = {
   behandlingFakta?: {
     perioder?: {
@@ -7,14 +5,8 @@ export type FeilutbetalingFakta = {
       tom: string;
       belop: number;
       feilutbetalingÅrsakDto?: {
-        hendelseType: {
-          kode: string;
-          navn: string;
-        };
-        hendelseUndertype?: {
-          kode: string;
-          navn: string;
-        };
+        hendelseType: string;
+        hendelseUndertype?: string;
       };
     }[];
     totalPeriodeFom: string;
@@ -22,14 +14,14 @@ export type FeilutbetalingFakta = {
     aktuellFeilUtbetaltBeløp: number;
     tidligereVarseltBeløp?: number;
     behandlingÅrsaker?: {
-      behandlingArsakType: Kodeverk;
+      behandlingArsakType: string;
     }[];
     behandlingsresultat?: {
-      type: Kodeverk;
-      konsekvenserForYtelsen: Kodeverk[];
+      type: string;
+      konsekvenserForYtelsen: string[];
     };
     tilbakekrevingValg?: {
-      videreBehandling: Kodeverk;
+      videreBehandling: string;
     };
     datoForRevurderingsvedtak: string;
     begrunnelse?: string;

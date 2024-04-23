@@ -1,7 +1,7 @@
-import classNames from 'classnames/bind';
-import moment from 'moment';
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
+import moment from 'moment';
+import classNames from 'classnames/bind';
 
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -90,7 +90,7 @@ const SoknadsfristVilkarProsessIndex = ({
   useEffect(() => {
     if (perioder.length > 1) {
       const førsteIkkeVurdertPeriodeIndex = perioder.findIndex(
-        periode => periode.vurderesIBehandlingen && periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT,
+        periode => periode.vurderesIBehandlingen && periode.vilkarStatus === vilkarUtfallType.IKKE_VURDERT,
       );
       if (førsteIkkeVurdertPeriodeIndex > 0) {
         setActiveTab(førsteIkkeVurdertPeriodeIndex);
@@ -102,15 +102,15 @@ const SoknadsfristVilkarProsessIndex = ({
 
   const harÅpentAksjonspunkt = aksjonspunkter.some(
     ap =>
-      ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST &&
-      ap.status.kode === aksjonspunktStatus.OPPRETTET &&
+      ap.definisjon === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST &&
+      ap.status === aksjonspunktStatus.OPPRETTET &&
       ap.kanLoses,
   );
 
   const dokumenterSomSkalVurderes = Array.isArray(soknadsfristStatus?.dokumentStatus)
     ? soknadsfristStatus.dokumentStatus.filter(dok =>
         dok.status.some(status => {
-          const erOppfyllt = status.status.kode === vilkarUtfallType.OPPFYLT;
+          const erOppfyllt = status.status === vilkarUtfallType.OPPFYLT;
           const avklartEllerOverstyrt = dok.overstyrteOpplysninger || dok.avklarteOpplysninger;
 
           if (erOppfyllt && !avklartEllerOverstyrt) {
@@ -159,7 +159,7 @@ const SoknadsfristVilkarProsessIndex = ({
               active: activeTab === index,
               label: `${dateFormat(periode.fom)} - ${dateFormat(periode.tom)}`,
               icon:
-                (erOverstyrt || harÅpentAksjonspunkt) && vilkarStatus.kode !== vilkarUtfallType.OPPFYLT ? (
+                (erOverstyrt || harÅpentAksjonspunkt) && vilkarStatus !== vilkarUtfallType.OPPFYLT ? (
                   <Image
                     src={advarselIcon}
                     className={styles.warningIcon}
@@ -181,7 +181,7 @@ const SoknadsfristVilkarProsessIndex = ({
             overrideReadOnly={overrideReadOnly || dokumenterSomSkalVurderes.length === 0}
             overstyringApKode={aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR}
             panelTittelKode={panelTittelKode}
-            status={activePeriode.vilkarStatus.kode}
+            status={activePeriode.vilkarStatus}
             toggleOverstyring={toggleOverstyring}
           />
           <SoknadsfristVilkarForm
@@ -192,11 +192,11 @@ const SoknadsfristVilkarProsessIndex = ({
             erOverstyrt={erOverstyrt}
             submitCallback={submitCallback}
             overrideReadOnly={overrideReadOnly}
-            kanOverstyreAccess={kanOverstyreAccess}
+            // kanOverstyreAccess={kanOverstyreAccess} // TODO: Tror denne kan fjernes
             toggleOverstyring={toggleOverstyring}
-            status={activePeriode.vilkarStatus.kode}
-            panelTittelKode={panelTittelKode}
-            lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
+            status={activePeriode.vilkarStatus}
+            // panelTittelKode={panelTittelKode} // TODO: tror denen kan fjernes
+            // lovReferanse={activeVilkår.lovReferanse ?? lovReferanse} // TODO: tror denen kan fjernes
             alleDokumenter={dokumenterSomSkalVurderes}
             dokumenterIAktivPeriode={dokumenterIAktivPeriode}
             periode={activePeriode}

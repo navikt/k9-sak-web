@@ -2,7 +2,7 @@ import { CheckboxField, NavFieldGroup, RadioGroupField, RadioOption, TextAreaFie
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
+import { KlageVurdering, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
 import { BodyShort, Detail } from '@navikt/ds-react';
 import { Location } from 'history';
 import React from 'react';
@@ -35,7 +35,7 @@ interface OwnProps {
   klageKA?: boolean;
   erForeldrepengerFagsak: boolean;
   klagebehandlingVurdering?: KlageVurdering;
-  behandlingStatus: Kodeverk;
+  behandlingStatus: string;
   arbeidsforholdHandlingTyper: KodeverkMedNavn[];
   erTilbakekreving: boolean;
   skjemalenkeTyper: KodeverkMedNavn[];

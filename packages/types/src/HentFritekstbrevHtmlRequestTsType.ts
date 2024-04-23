@@ -1,7 +1,5 @@
-import Kodeverk from './kodeverkTsType';
-
 export type HentFritekstbrevHtmlRequest = Readonly<{
-  dokumentMal: Kodeverk;
+  dokumentMal: string;
 }>;
 
 export default HentFritekstbrevHtmlRequest;

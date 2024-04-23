@@ -1,7 +1,7 @@
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { BehandlingAppKontekst, Kodeverk } from '@k9-sak-web/types';
+import { BehandlingAppKontekst } from '@k9-sak-web/types';
 import FatterVedtakApprovalModal from './components/modal/FatterVedtakApprovalModal';
 import messages from '../i18n/nb_NO.json';
 
@@ -19,7 +19,7 @@ interface OwnProps {
   behandling: BehandlingAppKontekst;
   closeEvent: () => void;
   allAksjonspunktApproved: boolean;
-  fagsakYtelseType: Kodeverk;
+  fagsakYtelseType: string;
   erKlageWithKA?: boolean;
   harSammeResultatSomOriginalBehandling?: boolean;
 }
@@ -39,8 +39,8 @@ const FatterVedtakTotrinnskontrollModalSakIndex = ({
       fagsakYtelseType={fagsakYtelseType}
       erKlageWithKA={erKlageWithKA}
       behandlingsresultat={behandling.behandlingsresultat}
-      behandlingStatusKode={behandling.status.kode}
-      behandlingTypeKode={behandling.type.kode}
+      behandlingStatusKode={behandling.status}
+      behandlingTypeKode={behandling.type}
       harSammeResultatSomOriginalBehandling={harSammeResultatSomOriginalBehandling}
     />
   </RawIntlProvider>

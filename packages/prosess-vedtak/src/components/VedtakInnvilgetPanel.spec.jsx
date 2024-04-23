@@ -10,9 +10,7 @@ import { VedtakInnvilgetPanelImpl } from './VedtakInnvilgetPanel';
 
 const foreldrepenger = fagsakYtelseType.FORELDREPENGER;
 const behandlingsresultat = {
-  type: {
-    kode: 'INNVILGET',
-  },
+  type: 'INNVILGET',
 };
 
 describe('<VedtakInnvilgetPanel>', () => {

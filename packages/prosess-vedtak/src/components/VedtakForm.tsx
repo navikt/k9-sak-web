@@ -530,7 +530,7 @@ export const VedtakForm: React.FC<Props> = ({
                     <UstrukturerteDokumenter fritekstdokumenter={fritekstdokumenter} />
                   )}
 
-                  {(isInnvilget(behandlingresultat.type.kode) || isDelvisInnvilget(behandlingresultat.type.kode)) && (
+                  {(isInnvilget(behandlingresultat.type) || isDelvisInnvilget(behandlingresultat.type)) && (
                     <VedtakInnvilgetPanel
                       intl={intl}
                       behandlingsresultat={behandlingresultat}
@@ -541,7 +541,7 @@ export const VedtakForm: React.FC<Props> = ({
                     />
                   )}
 
-                  {isAvslag(behandlingresultat.type.kode) && (
+                  {isAvslag(behandlingresultat.type) && (
                     <VedtakAvslagPanel
                       aksjonspunkter={aksjonspunkter}
                       behandlingsresultat={behandlingresultat}

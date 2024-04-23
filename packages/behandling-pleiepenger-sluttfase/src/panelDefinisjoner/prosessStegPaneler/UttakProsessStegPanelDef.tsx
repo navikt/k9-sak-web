@@ -1,12 +1,16 @@
+import React from 'react';
+
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import React from 'react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import AntallDagerLivetsSluttfaseIndex from '@k9-sak-web/prosess-uttak-antall-dager-sluttfase';
-import Uttak from '../../components/Uttak';
+import { AlleKodeverk } from '@k9-sak-web/lib/types/AlleKodeverk.js';
+import { Fagsak } from '@k9-sak-web/types';
+
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
+import Uttak from '../../components/Uttak';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = ({
@@ -62,13 +66,23 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [PleiepengerSluttfaseBehandlingApiKeys.ARBEIDSFORHOLD];
 
-  getData = ({ uttak, arbeidsgiverOpplysningerPerId, fagsak, alleKodeverk }) => ({
+  getData = ({
+    uttak,
+    arbeidsgiverOpplysningerPerId,
+    fagsak,
+    alleKodeverk,
+  }: {
+    uttak: any;
+    arbeidsgiverOpplysningerPerId: any;
+    fagsak: Fagsak;
+    alleKodeverk: AlleKodeverk;
+  }) => ({
     uttaksperioder: uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder,
     utsattePerioder: uttak?.utsattePerioder,
     kvoteInfo: uttak?.uttaksplan?.kvoteInfo,
     virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
     arbeidsgiverOpplysningerPerId,
-    erFagytelsetypeLivetsSluttfase: fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE,
+    erFagytelsetypeLivetsSluttfase: fagsak.sakstype === fagsakYtelseType.PLEIEPENGER_SLUTTFASE,
     alleKodeverk,
   });
 }

@@ -5,11 +5,12 @@ import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 
 import aksjonspunktÅrsaker from '@fpsak-frontend/fakta-arbeidsforhold/src/kodeverk/aksjonspunktÅrsaker';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
+
 import { FlexColumn, FlexContainer, FlexRow } from './flexGrid';
+import VerticalSpacer from './VerticalSpacer';
 import Image from './Image';
 
 import styles from './aksjonspunktAvklarArbeidsforholdText.module.css';
-import VerticalSpacer from './VerticalSpacer';
 
 interface OwnProps {
   arbeidsforhold: ArbeidsforholdV2;
@@ -42,10 +43,10 @@ const utledAksjonspunktText = (arbeidsforhold, imUtenArbeidsforhold) => {
 
 const AksjonspunktAvklarArbeidsforholdText = ({ intl, arbeidsforhold }: OwnProps & WrappedComponentProps) => {
   const overgangArbeidsforholdsId = arbeidsforhold.aksjonspunktÅrsaker
-    .map(k => k.kode)
+    .map(k => k)
     .includes(aksjonspunktÅrsaker.OVERGANG_ARBEIDSFORHOLDS_ID_UNDER_YTELSE);
   const imUtenArbeidsforhold = arbeidsforhold.aksjonspunktÅrsaker
-    .map(k => k.kode)
+    .map(k => k)
     .includes(aksjonspunktÅrsaker.INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD);
   return (
     <FlexContainer>

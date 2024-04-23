@@ -1,11 +1,14 @@
+import React from 'react';
+import { screen } from '@testing-library/react';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../../../i18n/nb_NO.json';
+
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
+
+import messages from '../../../i18n/nb_NO.json';
 
 describe('<PerioderMedMedlemskapFaktaPanel>', () => {
   it('skal vise periode og manuelle-vurderingstyper i form', () => {
@@ -156,23 +159,15 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       {
         fom: '2016-01-15',
         tom: '2016-10-15',
-        dekningType: {
-          kode: 'DEK_TYPE',
-        },
-        medlemskapType: {
-          kode: 'M_STATUS',
-        },
+        dekningType: 'DEK_TYPE',
+        medlemskapType: 'M_STATUS',
         beslutningsdato: '2016-10-16',
       },
       {
         fom: '2017-01-15',
         tom: '2017-10-15',
-        dekningType: {
-          kode: 'DEK_TYPE2',
-        },
-        medlemskapType: {
-          kode: 'M_STATUS2',
-        },
+        dekningType: 'DEK_TYPE2',
+        medlemskapType: 'M_STATUS2',
         beslutningsdato: '2017-10-16',
       },
     ];
@@ -185,25 +180,21 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
 
     const aksjonspunkter = [
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
+        status: aksjonspunktStatus.OPPRETTET,
       },
     ];
     const getKodeverknavn = kodeverk => {
-      if (kodeverk.kode === 'DEK_TYPE') {
+      if (kodeverk === 'DEK_TYPE') {
         return 'testdekning';
       }
-      if (kodeverk.kode === 'DEK_TYPE2') {
+      if (kodeverk === 'DEK_TYPE2') {
         return 'testdekning2017';
       }
-      if (kodeverk.kode === 'M_STATUS') {
+      if (kodeverk === 'M_STATUS') {
         return 'testStatus';
       }
-      if (kodeverk.kode === 'M_STATUS2') {
+      if (kodeverk === 'M_STATUS2') {
         return 'testStatus2017';
       }
       return '';

@@ -1,13 +1,12 @@
-import { Button } from '@navikt/ds-react';
 import React, { Component } from 'react';
-// eslint-disable-next-line import/no-duplicates
-import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { formPropTypes, change as reduxFormChange, reset as reduxFormReset } from 'redux-form';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { createSelector } from 'reselect';
-
+import { formPropTypes, change as reduxFormChange, reset as reduxFormReset } from 'redux-form';
+import { Button } from '@navikt/ds-react';
+// eslint-disable-next-line import/no-duplicates
+import PropTypes from 'prop-types';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -16,7 +15,6 @@ import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-com
 // eslint-disable-next-line import/no-duplicates
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { guid } from '@fpsak-frontend/utils';
-
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';
 import OppholdInntektOgPeriodeForm from './OppholdInntektOgPeriodeForm';
 
@@ -235,12 +233,12 @@ const medlemAksjonspunkter = [
 
 export const transformValues = (values, aksjonspunkter) => {
   const aktiveMedlemAksjonspunkter = aksjonspunkter
-    .filter(ap => medlemAksjonspunkter.includes(ap.definisjon.kode))
+    .filter(ap => medlemAksjonspunkter.includes(ap.definisjon))
     .filter(ap => ap.erAktivt)
-    .filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
+    .filter(ap => ap.definisjon !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
 
   return aktiveMedlemAksjonspunkter.map(ap => ({
-    kode: ap.definisjon.kode,
+    kode: ap.definisjon,
     // begrunnelse: '', //TODO (Hallvard): Kan vi fjerne denne?
     bekreftedePerioder: values.perioder
       .map(periode => {
@@ -267,8 +265,8 @@ export const transformValues = (values, aksjonspunkter) => {
       })
       .filter(
         periode =>
-          periode.aksjonspunkter.includes(ap.definisjon.kode) ||
-          (periode.aksjonspunkter.length > 0 && ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
+          periode.aksjonspunkter.includes(ap.definisjon) ||
+          (periode.aksjonspunkter.length > 0 && ap.definisjon === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
       ),
   }));
 };
@@ -289,12 +287,12 @@ const buildInitalValues = createSelector(
 
 export const isBehandlingRevurderingFortsattMedlemskap = createSelector(
   [ownProps => ownProps.behandlingType, ownProps => ownProps.medlemskap],
-  (type, medlem = {}) => type.kode === behandlingType.REVURDERING && !!medlem.fom,
+  (type, medlem = {}) => type === behandlingType.REVURDERING && !!medlem.fom,
 );
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => initialOwnProps.submitCallback(transformValues(values, initialOwnProps.aksjonspunkter));
-  const hasOpenAksjonspunkter = initialOwnProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const hasOpenAksjonspunkter = initialOwnProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status));
   const perioder = [];
 
   return (state, ownProps) => {

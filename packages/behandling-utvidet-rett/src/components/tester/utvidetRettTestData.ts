@@ -11,20 +11,20 @@ import UtvidetRettSoknad from '../../types/UtvidetRettSoknad';
 const utvidetRettTestData = {
   aksjonspunkter: [
     {
-      definisjon: { kode: aksjonspunktCodes.OMSORGEN_FOR, kodeverk: 'test' },
-      status: { kode: 'UTFO', kodeverk: 'test' },
+      definisjon: aksjonspunktCodes.OMSORGEN_FOR,
+      status: 'UTFO',
       kanLoses: true,
       erAktivt: true,
     },
     {
-      definisjon: { kode: aksjonspunktCodes.UTVIDET_RETT, kodeverk: 'test' },
-      status: { kode: 'UTFO', kodeverk: 'test' },
+      definisjon: aksjonspunktCodes.UTVIDET_RETT,
+      status: 'UTFO',
       kanLoses: true,
       erAktivt: true,
     },
     {
-      definisjon: { kode: aksjonspunktCodes.FORESLA_VEDTAK, kodeverk: 'test' },
-      status: { kode: 'UTFO', kodeverk: 'test' },
+      definisjon: aksjonspunktCodes.FORESLA_VEDTAK,
+      status: 'UTFO',
       kanLoses: true,
       erAktivt: true,
     },
@@ -35,14 +35,14 @@ const utvidetRettTestData = {
       erPrivatPerson: false,
       identifikator: 'test',
       navn: 'test',
-      arbeidsforholdreferanser: []
+      arbeidsforholdreferanser: [],
     },
   },
   behandling: {
     id: 995,
     versjon: 22,
-    status: { kode: behandlingStatus.AVSLUTTET, kodeverk: 'tilTest' },
-    type: { kode: 'BT-002', kodeverk: 'tilTest' },
+    status: behandlingStatus.AVSLUTTET,
+    type: 'BT-002',
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -52,12 +52,12 @@ const utvidetRettTestData = {
   } as Behandling,
   fagsak: {
     saksnummer: '111111',
-    sakstype: { kode: fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN, kodeverk: 'tilTest' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'tilTest' },
+    sakstype: fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN,
+    status: fagsakStatus.UNDER_BEHANDLING,
   } as Fagsak,
   fagsakPerson: {
     alder: 25,
-    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'tilTest' },
+    personstatusType: personstatusType.BOSATT,
     erDod: false,
     erKvinne: false,
     navn: 'Espen testperson',
@@ -85,23 +85,23 @@ const utvidetRettTestData = {
   },
   vilkar: [
     {
-      vilkarType: { kode: vilkarType.UTVIDETRETTVILKARET, kodeverk: 'test' },
+      vilkarType: vilkarType.UTVIDETRETTVILKARET,
       overstyrbar: true,
       perioder: [
         {
           merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
     },
     {
-      vilkarType: { kode: vilkarType.OMP_OMSORGENFORVILKARET, kodeverk: 'test' },
+      vilkarType: vilkarType.OMP_OMSORGENFORVILKARET,
       overstyrbar: true,
       perioder: [
         {
           merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
@@ -117,16 +117,15 @@ const utvidetRettTestData = {
         rolle: 'BARN',
         aktørId: '',
         personIdent: '',
+        situasjonKode: '',
+        tilleggsopplysninger: '',
       },
     ],
     mottattDato: '2021-02-18',
     oppgittStartdato: '2021-02-18',
     oppgittTilknytning: null,
     soknadsdato: '2021-02-18',
-    spraakkode: {
-      kode: 'NB',
-      kodeverk: 'SPRAAK_KODE',
-    },
+    spraakkode: 'NB',
     tilleggsopplysninger: null,
     søknadsperiode: {
       fom: '2021-02-18',

@@ -141,7 +141,7 @@ export const lagForhåndsvisRequest = (
   ytelseType: fagsak.sakstype,
   saksnummer: fagsak.saksnummer,
   aktørId: fagsakPerson.aktørId,
-  avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+  avsenderApplikasjon: bestemAvsenderApp(behandling.type),
   ...data,
 });
 

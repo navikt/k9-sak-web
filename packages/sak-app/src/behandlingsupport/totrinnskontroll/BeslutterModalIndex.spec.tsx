@@ -13,20 +13,9 @@ describe('<BeslutterModalIndex>', () => {
   const behandling = {
     id: 1,
     versjon: 2,
-    behandlingsresultat: {
-      type: {
-        kode: 'IKKE_FASTSATT',
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      },
-    },
-    type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: '',
-    },
-    status: {
-      kode: behandlingStatus.OPPRETTET,
-      kodeverk: '',
-    },
+    behandlingsresultat: { type: 'IKKE_FASTSATT' },
+    type: behandlingType.FORSTEGANGSSOKNAD,
+    status: behandlingStatus.OPPRETTET,
   } as Behandling;
 
   it('skal vise modal når beslutter godkjenner', () => {
@@ -37,10 +26,7 @@ describe('<BeslutterModalIndex>', () => {
     renderWithIntl(
       <BeslutterModalIndex
         behandling={behandling}
-        fagsakYtelseType={{
-          kode: fagsakYtelseType.FORELDREPENGER,
-          kodeverk: '',
-        }}
+        fagsakYtelseType={fagsakYtelseType.FORELDREPENGER}
         allAksjonspunktApproved={false}
         erKlageWithKA={false}
       />,
