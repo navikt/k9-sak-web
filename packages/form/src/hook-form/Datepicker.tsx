@@ -1,7 +1,7 @@
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { DatepickerLimitations } from './pure/DatepickerLimitations';
-import PureDatepicker from './pure/PureDatepicker';
+import { DatepickerLimitations } from '../DatepickerLimitations';
+import PureDatepicker from '../PureDatepicker';
 
 export interface DatepickerProps {
   label?: string;

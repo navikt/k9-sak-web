@@ -6,7 +6,6 @@ import renderers from '../util/renderers';
 const state = {};
 
 const getState = key => {
-  console.log(`getState med ${key} gir ${state[key]}`);
   try {
     return JSON.parse(state[key]);
   } catch {
@@ -14,11 +13,9 @@ const getState = key => {
   }
 };
 const deleteState = key => {
-  console.log(`deleteState med ${key}`);
   delete state[key];
 };
 const setState = (key, data) => {
-  console.log(`setState til ${key} med data:`, data);
   state[key] = JSON.stringify(data);
 };
 
@@ -139,16 +136,17 @@ const inputMocks = {
     props: {
       behandlingsID: '123',
       aksjonspunktLost: false,
-      lesemodus: true,
+      lesemodus: false,
       fraDatoFraSoknad: '2021-04-06',
-      vedtakFattetVilkarOppfylt: true,
+      fraDatoFraVilkar: '2021-04-06',
+      vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
         vilkar: '§ 9-3 vilkar',
       },
-      erBehandlingstypeRevurdering: true,
+      erBehandlingstypeRevurdering: false,
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
         vilkarOppfylt: true,
