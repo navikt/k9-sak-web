@@ -1,5 +1,5 @@
 import { PersonPencilFillIcon } from '@navikt/aksel-icons';
-import { BodyShort, HelpText } from '@navikt/ds-react';
+import { BodyShort, HelpText, Table } from '@navikt/ds-react';
 import {
   ChevronIconBlack,
   ContentWithTooltip,
@@ -11,7 +11,6 @@ import {
 import classNames from 'classnames/bind';
 import * as React from 'react';
 import { Collapse } from 'react-collapse';
-
 import AnnenPart from '../../../constants/AnnenPart';
 import Årsaker from '../../../constants/Årsaker';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
@@ -19,9 +18,6 @@ import { harÅrsak } from '../../../util/årsakUtils';
 import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
 import ContainerContext from '../../context/ContainerContext';
 import Endringsstatus from '../icons/Endringsstatus';
-import FullWidthRow from '../table/FullWidthRow';
-import TableColumn from '../table/TableColumn';
-import TableRow from '../table/TableRow';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 
 import styles from './uttak.module.css';
@@ -52,8 +48,8 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
 
   return (
     <>
-      <TableRow className={`${erValgt ? styles.uttak__expandedRow : ''}`} onClick={velgPeriode}>
-        <TableColumn className={`${withBorderTop ? styles.borderTop : ''}`}>
+      <Table.Row className={`${erValgt ? styles.uttak__expandedRow : ''} ${styles.uttak__row}`} onClick={velgPeriode}>
+        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} ${styles.borderLeft}`}>
           <BodyShort size="small">
             {periode.prettifyPeriod()}
             {manueltOverstyrt && (
@@ -73,20 +69,20 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
               </>
             )}
           </BodyShort>
-        </TableColumn>
-        <TableColumn className={`${withBorderTop ? styles.borderTop : ''}`}>
+        </Table.DataCell>
+        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} flex`}>
           {harOppfyltAlleInngangsvilkår ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
-        </TableColumn>
+        </Table.DataCell>
         {erFagytelsetypeLivetsSluttfase && (
-          <TableColumn>{uttaksgrad === 0 ? <RedCrossIconFilled /> : <GreenCheckIconFilled />}</TableColumn>
+          <Table.DataCell>{uttaksgrad === 0 ? <RedCrossIconFilled /> : <GreenCheckIconFilled />}</Table.DataCell>
         )}
-        <TableColumn className={`${withBorderTop ? styles.borderTop : ''}`}>
+        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
           <div className={styles.uttak__iconContainer}>
             {harPleiebehov ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
           </div>
           {harPleiebehov && !erFagytelsetypeLivetsSluttfase ? `${pleiebehov}%` : null}
-        </TableColumn>
-        <TableColumn className={`${withBorderTop ? styles.borderTop : ''}`}>
+        </Table.DataCell>
+        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
           {uttak.annenPart === AnnenPart.ALENE && (
             <ContentWithTooltip tooltipText="Søker">
               <OnePersonIconGray />
@@ -97,13 +93,13 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
               <TwoPersonsWithOneHighlightedIconGray />
             </ContentWithTooltip>
           )}
-        </TableColumn>
+        </Table.DataCell>
 
-        <TableColumn className={`${styles.uttak__uttaksgrad} ${withBorderTop ? styles.borderTop : ''}`}>
+        <Table.DataCell className={`${styles.uttak__uttaksgrad} ${withBorderTop ? styles.borderTop : ''}`}>
           <p className={styles.uttak__uttaksgrad__tekst}>{`${uttaksgrad} %`}</p>
           <div className={uttakGradIndikatorCls} />
-        </TableColumn>
-        <TableColumn className={`${withBorderTop ? styles.borderTop : ''}`}>
+        </Table.DataCell>
+        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} ${styles.borderRight}`}>
           <div className={styles.uttak__lastColumn}>
             <div className={styles.uttak__behandlerIcon}>
               <Endringsstatus status={endringsstatus} />
@@ -118,19 +114,21 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
               <ChevronIconBlack />
             </button>
           </div>
-        </TableColumn>
-      </TableRow>
-      <FullWidthRow colSpan={erFagytelsetypeLivetsSluttfase ? 7 : 6}>
-        <Collapse isOpened={erValgt}>
-          <div className={styles.expanded}>
-            {harOppfyltAlleInngangsvilkår ? (
-              <UttakDetaljer uttak={uttak} />
-            ) : (
-              <Vilkårsliste inngangsvilkår={inngangsvilkår} />
-            )}
-          </div>
-        </Collapse>
-      </FullWidthRow>
+        </Table.DataCell>
+      </Table.Row>
+      <tr className={`${erValgt ? '' : styles.collapseRow} ${styles.expandedRow}`}>
+        <td colSpan={erFagytelsetypeLivetsSluttfase ? 7 : 6}>
+          <Collapse isOpened={erValgt}>
+            <div className={styles.expanded}>
+              {harOppfyltAlleInngangsvilkår ? (
+                <UttakDetaljer uttak={uttak} />
+              ) : (
+                <Vilkårsliste inngangsvilkår={inngangsvilkår} />
+              )}
+            </div>
+          </Collapse>
+        </td>
+      </tr>
     </>
   );
 };
