@@ -4906,9 +4906,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/rest-api@workspace:packages/rest-api"
   dependencies:
+    "@k9-sak-web/lib": 1.0.0
     "@sentry/browser": 7.110.1
     axios: 1.6.8
-    "@k9-sak-web/lib": 1.0.0
     node-cache: 5.1.2
   languageName: unknown
   linkType: soft
