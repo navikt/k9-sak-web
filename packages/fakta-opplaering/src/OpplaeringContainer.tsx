@@ -3,7 +3,7 @@ import { WarningIcon } from '@navikt/ft-plattform-komponenter';
 import classnames from 'classnames';
 import TabsPure from 'nav-frontend-tabs';
 import React, { useContext, useState } from 'react';
-
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import { NestedIntlProvider } from '@fpsak-frontend/shared-components';
 import Tabs from './Tabs';
 import GjennomgaaOpplaeringOversikt from './gjennomgaaOpplaering/GjennomgaaOpplaeringOversikt';
@@ -17,8 +17,8 @@ interface TabItemProps {
   showWarningIcon: boolean;
 }
 
-const findInitialTabIndex = aktivtAksjonspunkt => {
-  const initialTab = Object.values(Tabs).find(tab => tab.aksjonspunkt === aktivtAksjonspunkt?.definisjon?.kode);
+const findInitialTabIndex = (aktivtAksjonspunkt: Aksjonspunkt) => {
+  const initialTab = Object.values(Tabs).find(tab => tab.aksjonspunkt === aktivtAksjonspunkt?.definisjon);
   const index = Object.values(Tabs).findIndex(tab => initialTab === tab);
   return index < 0 ? 0 : index;
 };
@@ -43,17 +43,15 @@ const OpplaeringContainer = () => {
   const { aksjonspunkter } = useContext(FaktaOpplaeringContext);
 
   const aktivtAksjonspunkt = aksjonspunkter
-    .sort((a, b) => a.definisjon.kode - b.definisjon.kode)
-    .find(aksjonspunkt => aksjonspunkt.status.kode === 'OPPR');
+    .sort((a, b) => a.definisjon.localeCompare(b.definisjon))
+    .find(aksjonspunkt => aksjonspunkt.status === 'OPPR');
   const [activeTab, setActiveTab] = useState(findInitialTabIndex(aktivtAksjonspunkt));
   return (
     <NestedIntlProvider messages={messages}>
       <TabsPure
         kompakt
         tabs={Object.values(Tabs).map((tab, index) => ({
-          label: (
-            <TabItem label={tab.label} showWarningIcon={tab.aksjonspunkt === aktivtAksjonspunkt?.definisjon?.kode} />
-          ),
+          label: <TabItem label={tab.label} showWarningIcon={tab.aksjonspunkt === aktivtAksjonspunkt?.definisjon} />,
           aktiv: activeTab === index,
         }))}
         onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
