@@ -1,4 +1,4 @@
-import { RETTSKILDE_URL, SHAREPOINT_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
+import { RETTSKILDE_URL, SHAREPOINT_URL } from '@k9-sak-web/konstanter';
 import Endringslogg from '@navikt/familie-endringslogg';
 import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/ft-plattform-komponenter';
 import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
@@ -75,7 +75,7 @@ interface OwnProps {
  * HeaderWithErrorPanel
  *
  * Presentasjonskomponent. Definerer header-linjen som alltid vises øverst nettleservinduet.
- * Denne viser lenke tilbake til hovedsiden, nettside-navnet, NAV-ansatt navn og lenke til rettskildene og systemrutinen.
+ * Denne viser lenke tilbake til hovedsiden, nettside-navnet, NAV-ansatt navn og lenke til rettskildene.
  * I tillegg vil den vise potensielle feilmeldinger i ErrorMessagePanel.
  */
 const HeaderWithErrorPanel = ({
@@ -117,11 +117,6 @@ const HeaderWithErrorPanel = ({
     {
       name: intl.formatMessage({ id: 'HeaderWithErrorPanel.Sharepoint' }),
       href: SHAREPOINT_URL,
-      isExternal: true,
-    },
-    {
-      name: intl.formatMessage({ id: 'HeaderWithErrorPanel.Systemrutine' }),
-      href: SYSTEMRUTINE_URL,
       isExternal: true,
     },
     {
