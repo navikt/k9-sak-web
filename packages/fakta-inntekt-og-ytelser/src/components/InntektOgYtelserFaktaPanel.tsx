@@ -1,9 +1,9 @@
-import { PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { PeriodLabel } from '@fpsak-frontend/shared-components';
 import { ISO_DATE_FORMAT, formatCurrencyWithKr } from '@fpsak-frontend/utils';
-import { BodyShort, Box } from '@navikt/ds-react';
+import { BodyShort, Box, Table } from '@navikt/ds-react';
 import moment from 'moment';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Inntekt } from '../InntektType';
 
 const headerTextCodes = [
@@ -20,6 +20,7 @@ interface InntektOgYtelserFaktaPanelProps {
 }
 
 const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({ inntekter }) => {
+  const intl = useIntl();
   if (!inntekter || inntekter.length === 0) {
     return (
       <Box background="surface-default" padding="4" borderWidth="1" borderColor="border-subtle" borderRadius="medium">
@@ -32,19 +33,30 @@ const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({
 
   return (
     <Box background="surface-default" padding="4" borderWidth="1" borderColor="border-subtle" borderRadius="medium">
-      <Table headerTextCodes={headerTextCodes}>
-        {inntekter.sort(sortInntekter).map(inntekt => {
-          const key = inntekt.navn + inntekt.utbetaler + inntekt.fom + inntekt.tom + inntekt.belop;
-          return (
-            <TableRow key={key} id={key}>
-              <TableColumn>{inntekt.utbetaler}</TableColumn>
-              <TableColumn>
-                <PeriodLabel showTodayString dateStringFom={inntekt.fom} dateStringTom={inntekt.tom} />
-              </TableColumn>
-              <TableColumn>{formatCurrencyWithKr(inntekt.belop)}</TableColumn>
-            </TableRow>
-          );
-        })}
+      <Table>
+        <Table.Header>
+          <Table.Row>
+            {headerTextCodes.map(textCode => (
+              <Table.HeaderCell scope="col" key={textCode}>
+                {intl.formatMessage({ id: textCode })}
+              </Table.HeaderCell>
+            ))}
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {inntekter.sort(sortInntekter).map(inntekt => {
+            const key = inntekt.navn + inntekt.utbetaler + inntekt.fom + inntekt.tom + inntekt.belop;
+            return (
+              <Table.Row key={key} id={key}>
+                <Table.DataCell>{inntekt.utbetaler}</Table.DataCell>
+                <Table.DataCell>
+                  <PeriodLabel showTodayString dateStringFom={inntekt.fom} dateStringTom={inntekt.tom} />
+                </Table.DataCell>
+                <Table.DataCell>{formatCurrencyWithKr(inntekt.belop)}</Table.DataCell>
+              </Table.Row>
+            );
+          })}
+        </Table.Body>
       </Table>
     </Box>
   );
