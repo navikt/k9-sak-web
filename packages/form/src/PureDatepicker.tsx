@@ -56,7 +56,7 @@ const PureDatepicker = ({
   hideLabel,
 }: PureDatepickerProps): JSX.Element => {
   const stringToDate = (date: string | Date): Date =>
-    dayjs(date, [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT], true).toDate();
+    dayjs(date, [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT, 'YYYY.MM.DD'], true).toDate();
   const [ugyldigDatoError, setUgyldigDatoError] = React.useState(false);
 
   const { datepickerProps, inputProps } = useDatepicker({

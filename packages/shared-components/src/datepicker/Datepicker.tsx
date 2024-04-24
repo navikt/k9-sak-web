@@ -1,25 +1,25 @@
 import { DDMMYYYY_DATE_FORMAT, DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { DatePicker, useDatepicker } from '@navikt/ds-react';
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import React, { ChangeEvent, ReactNode, useCallback, useState } from 'react';
+
+dayjs.extend(customParseFormat);
 
 interface OwnProps {
   label?: ReactNode;
-  placeholder?: string;
-  feil?: string;
   disabled?: boolean;
   onChange: (dato: string | ChangeEvent) => void;
-  onBlur: () => void;
   value?: string;
   initialMonth?: Date;
-  numberOfMonths?: number;
   disabledDays?: { before: Date; after: Date } | { before: Date; after: Date }[];
-  error?: React.Component;
+  error?: React.Component | string;
   hideLabel?: boolean;
+  inputId?: string;
 }
 
 const Datepicker: React.FC<OwnProps> = props => {
-  const { error, value, onChange, disabled, label, initialMonth, disabledDays, hideLabel } = props;
+  const { error, value, onChange, disabled, label, initialMonth, disabledDays, hideLabel, inputId } = props;
 
   const defaultDate = value
     ? dayjs(value, [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT], true).format(DDMMYYYY_DATE_FORMAT)
@@ -87,6 +87,7 @@ const Datepicker: React.FC<OwnProps> = props => {
         label={label}
         disabled={disabled}
         error={error}
+        id={inputId}
       />
     </DatePicker>
   );

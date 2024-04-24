@@ -72,15 +72,15 @@ const inputMocks = {
     visKomponent: 'VilkarMidlertidigAlene' as Komponenter.VILKAR_MIDLERTIDIG_ALENE,
     props: {
       behandlingsID: '123',
-      aksjonspunktLost: true,
-      lesemodus: true,
+      aksjonspunktLost: false,
+      lesemodus: false,
       soknadsopplysninger: {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
         periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
         soknadsdato: '2021-04-06',
       },
-      vedtakFattetVilkarOppfylt: true,
+      vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
@@ -163,5 +163,5 @@ const inputMocks = {
 // test
 (window as any).renderMicrofrontendOmsorgsdagerApp = async appId => {
   const { renderAppInSuccessfulState } = renderers;
-  renderAppInSuccessfulState(appId, inputMocks.korrigerePerioder);
+  renderAppInSuccessfulState(appId, inputMocks.vilkarMidlertidigAlene);
 };

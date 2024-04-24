@@ -1,4 +1,4 @@
-import { PureDatepicker } from '@fpsak-frontend/form';
+import { Datepicker } from '@fpsak-frontend/shared-components';
 import { parseCurrencyInput } from '@fpsak-frontend/utils';
 import { Table, TextField } from '@navikt/ds-react';
 import { Field, useFormikContext } from 'formik';
@@ -83,10 +83,10 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
       <Table.DataCell>
         <Field name={`perioder.${periodeIndex}.aktivitetliste.${aktivitetIndex}.startdatoRefusjon`}>
           {({ field, meta }) => (
-            <PureDatepicker
+            <Datepicker
               label={intl.formatMessage({ id: 'OverstyrInputForm.StartdatoRefusjonPlaceholder' })}
               hideLabel
-              errorMessage={meta.touched && meta.error ? meta.error : ''}
+              error={meta.touched && meta.error ? meta.error : ''}
               value={field.value}
               onChange={value => {
                 setFieldTouched(field.name, true);
@@ -102,10 +102,10 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
           {({ field, meta }) => {
             const tallverdi = values.perioder[periodeIndex].aktivitetliste[aktivitetIndex].refusjonPrAar;
             return (
-              <PureDatepicker
+              <Datepicker
                 label={intl.formatMessage({ id: 'OverstyrInputForm.OpphorRefusjonPlaceholder' })}
                 hideLabel
-                errorMessage={meta.touched && meta.error ? meta.error : ''}
+                error={meta.touched && meta.error ? meta.error : ''}
                 value={field.value}
                 onChange={value => {
                   setFieldTouched(field.name, true);
