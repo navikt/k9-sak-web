@@ -150,9 +150,9 @@ const TilkjentYtelseTimeLineData = ({
         </div>
         {(andeler || []).length > 1 &&
           andeler.map((andel, index) => (
-            <div key={`index${index + 1}`} className="mt-2">
+            <div key={`index${index + 1}`} className="flex flex-col gap-3">
               {!!andel.refusjon && (
-                <div className="flex gap-2">
+                <div className="flex justify-between items-start">
                   <BodyShort size="small" className="inline-block">
                     <FormattedMessage
                       id="Timeline.tooltip.dagsatsPerAndel"
@@ -169,7 +169,7 @@ const TilkjentYtelseTimeLineData = ({
                 </div>
               )}
               {!!andel.tilSoker && (
-                <div className="flex gap-2">
+                <div className="flex justify-between items-start">
                   <BodyShort size="small" className="inline-block">
                     <FormattedMessage
                       id="Timeline.tooltip.dagsatsPerAndel"
