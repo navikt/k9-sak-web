@@ -29,7 +29,7 @@ import moment from 'moment';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ApplicationContextPath from '../app/ApplicationContextPath';
-import { getLocationWithDefaultProsessStegAndFakta, getPathToFplos, pathToBehandling } from '../app/paths';
+import { getLocationWithDefaultProsessStegAndFakta, getPathToK9Los, pathToBehandling } from '../app/paths';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
 import BehandlingRettigheter, { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
@@ -143,7 +143,7 @@ export const BehandlingMenuIndex = ({
     .medKlageKodeverk(alleKlageKodeverk);
 
   const gaaTilSokeside = useCallback(() => {
-    window.location.assign(getPathToFplos() || '/');
+    window.location.assign(getPathToK9Los() || '/');
   }, []);
 
   const { startRequest: lagNyBehandlingK9Sak } = restApiHooks.useRestApiRunner<boolean>(
