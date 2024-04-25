@@ -1,10 +1,10 @@
-import { RadioGroupField, RadioOption, TextAreaField, behandlingForm } from '@fpsak-frontend/form';
+import { RadioGroupField, TextAreaField, behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ariaCheck, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Risikoklassifisering } from '@k9-sak-web/types';
-import { BodyShort, Button } from '@navikt/ds-react';
+import { BodyShort, Button, Radio } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -70,8 +70,12 @@ export const AvklarFaresignalerForm = ({ readOnly, aksjonspunkt, ...formProps }:
             readOnly={readOnly}
             isEdited={!isAksjonspunktOpen(aksjonspunkt.status.kode)}
           >
-            <RadioOption label={<FormattedMessage id="Risikopanel.Form.Innvirkning" />} value />
-            <RadioOption label={<FormattedMessage id="Risikopanel.Form.IngenInnvirkning" />} value={false} />
+            <Radio value>
+              <FormattedMessage id="Risikopanel.Form.Innvirkning" />
+            </Radio>
+            <Radio value={false}>
+              <FormattedMessage id="Risikopanel.Form.IngenInnvirkning" />
+            </Radio>
           </RadioGroupField>
         </FlexColumn>
       </FlexRow>

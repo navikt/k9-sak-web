@@ -1,6 +1,6 @@
 import {
+  Label,
   RadioGroupField,
-  RadioOption,
   SelectField,
   TextAreaField,
   behandlingForm,
@@ -18,7 +18,7 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort, Button, Detail, HGrid, Label } from '@navikt/ds-react';
+import { BodyShort, Button, Label as DSLabel, Detail, HGrid, Radio } from '@navikt/ds-react';
 import moment from 'moment';
 import React, { Component } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -273,9 +273,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
           <>
             <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
               <div>
-                <Label size="small" as="p">
+                <DSLabel size="small" as="p">
                   <FormattedMessage id="TilbakekrevingPeriodeForm.KopierVilkårsvurdering" />
-                </Label>
+                </DSLabel>
                 <SelectField
                   name="perioderForKopi"
                   selectValues={vurdertePerioder.map(per => {
@@ -304,9 +304,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
             {!data.erForeldet && (
               <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
                 <div>
-                  <Label size="small" as="p">
+                  <DSLabel size="small" as="p">
                     <FormattedMessage id="TilbakekrevingPeriodeForm.VilkarForTilbakekreving" />
-                  </Label>
+                  </DSLabel>
                   <VerticalSpacer eightPx />
                   <TextAreaField
                     name="begrunnelse"
@@ -331,7 +331,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                     onChange={this.resetFields}
                   >
                     {vilkarResultatTyper.map(vrt => (
-                      <RadioOption key={vrt.kode} label={vrt.navn} value={vrt.kode} />
+                      <Radio key={vrt.kode} value={vrt.kode}>
+                        <Label input={vrt.navn} textOnly />
+                      </Radio>
                     ))}
                   </RadioGroupField>
                 </div>
@@ -343,7 +345,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
               <div>
                 {valgtVilkarResultatType && (
                   <>
-                    <Label size="small" as="p">
+                    <DSLabel size="small" as="p">
                       <FormattedMessage
                         id={
                           valgtVilkarResultatType === VilkarResultat.GOD_TRO
@@ -351,7 +353,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                             : 'TilbakekrevingPeriodeForm.Aktsomhet'
                         }
                       />
-                    </Label>
+                    </DSLabel>
                     <VerticalSpacer eightPx />
                     <TextAreaField
                       name="vurderingBegrunnelse"

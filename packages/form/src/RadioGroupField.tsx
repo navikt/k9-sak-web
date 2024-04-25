@@ -21,7 +21,10 @@ interface RadioGroupFieldProps {
    */
   columns?: number;
   bredde?: string;
-  children?: RenderProp<{ value: any; optionProps: any }> | React.ReactElement<RadioOptionProps>[];
+  children?:
+    | RenderProp<{ value: any; optionProps: any }>
+    | React.ReactElement<RadioOptionProps>[]
+    | React.ReactElement<RadioOptionProps>;
   spaceBetween?: boolean;
   rows?: number;
   direction?: Direction;

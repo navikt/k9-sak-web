@@ -1,4 +1,4 @@
-import { CheckboxField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
+import { CheckboxField, RadioGroupField, TextAreaField } from '@fpsak-frontend/form/index';
 import { behandlingForm, getBehandlingFormName } from '@fpsak-frontend/form/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
@@ -11,7 +11,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { hasValidText, hasValidValue, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
-import { Button, Label } from '@navikt/ds-react';
+import { Button, Label, Radio } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -147,22 +147,24 @@ export const FormContent = ({
             </Label>
           }
         >
-          <RadioOption
-            value={valgValues.reBehandling}
-            label={{
-              id: erÅF
-                ? 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling.Fosterbarn'
-                : 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling',
-            }}
-          />
-          <RadioOption
-            value={valgValues.fortsett}
-            label={{
-              id: erÅF
-                ? 'Årskvantum.Aksjonspunkt.Avslått.Fortsett.Fosterbarn'
-                : 'Årskvantum.Aksjonspunkt.Avslått.Fortsett',
-            }}
-          />
+          <Radio value={valgValues.reBehandling}>
+            <FormattedMessage
+              id={
+                erÅF
+                  ? 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling.Fosterbarn'
+                  : 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling'
+              }
+            />
+          </Radio>
+          <Radio value={valgValues.fortsett}>
+            <FormattedMessage
+              id={
+                erÅF
+                  ? 'Årskvantum.Aksjonspunkt.Avslått.Fortsett.Fosterbarn'
+                  : 'Årskvantum.Aksjonspunkt.Avslått.Fortsett'
+              }
+            />
+          </Radio>
         </RadioGroupField>
       )}
       <TextAreaField

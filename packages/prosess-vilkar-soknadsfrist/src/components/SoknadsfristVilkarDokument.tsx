@@ -1,6 +1,6 @@
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
-import { DatepickerField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import { DatepickerField, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   dateAfterOrEqual,
@@ -13,7 +13,7 @@ import {
   requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 import { DokumentStatus } from '@k9-sak-web/types';
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, Radio } from '@navikt/ds-react';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import moment from 'moment';
 import React, { useCallback, useMemo } from 'react';
@@ -132,28 +132,17 @@ export const SoknadsfristVilkarDokument = ({
             <FlexContainer>
               <FlexColumn className={styles.fullBreddeIE}>
                 <FlexRow spaceBetween={false}>
-                  <RadioOption
-                    label={
-                      <FormattedMessage
-                        id="SoknadsfristVilkarForm.ErOppfylt"
-                        values={{ b: chunks => <b>{chunks}</b> }}
-                      />
-                    }
-                    value
-                    {...optionProps}
-                  />
+                  <Radio value {...optionProps}>
+                    <FormattedMessage id="SoknadsfristVilkarForm.ErOppfylt" values={{ b: chunks => <b>{chunks}</b> }} />
+                  </Radio>
                 </FlexRow>
                 <FlexRow spaceBetween={false}>
-                  <RadioOption
-                    label={
-                      <FormattedMessage
-                        id="SoknadsfristVilkarForm.ErDelvisOppfylt"
-                        values={{ b: chunks => <b>{chunks}</b> }}
-                      />
-                    }
-                    value={DELVIS_OPPFYLT}
-                    {...optionProps}
-                  />
+                  <Radio value={DELVIS_OPPFYLT} {...optionProps}>
+                    <FormattedMessage
+                      id="SoknadsfristVilkarForm.ErDelvisOppfylt"
+                      values={{ b: chunks => <b>{chunks}</b> }}
+                    />
+                  </Radio>
                 </FlexRow>
                 {value === DELVIS_OPPFYLT && (
                   <FlexRow spaceBetween={false}>
@@ -170,16 +159,12 @@ export const SoknadsfristVilkarDokument = ({
                   </FlexRow>
                 )}
                 <FlexRow spaceBetween={false}>
-                  <RadioOption
-                    label={
-                      <FormattedMessage
-                        id="SoknadsfristVilkarForm.VilkarIkkeOppfylt"
-                        values={{ b: chunks => <b>{chunks}</b> }}
-                      />
-                    }
-                    value={false}
-                    {...optionProps}
-                  />
+                  <Radio value={false} {...optionProps}>
+                    <FormattedMessage
+                      id="SoknadsfristVilkarForm.VilkarIkkeOppfylt"
+                      values={{ b: chunks => <b>{chunks}</b> }}
+                    />
+                  </Radio>
                 </FlexRow>
               </FlexColumn>
             </FlexContainer>

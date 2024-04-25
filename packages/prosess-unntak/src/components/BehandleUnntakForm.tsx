@@ -1,6 +1,5 @@
 import {
   RadioGroupField,
-  RadioOption,
   behandlingForm,
   behandlingFormValueSelector,
   hasBehandlingFormErrorsOfType,
@@ -19,7 +18,7 @@ import {
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Kodeverk } from '@k9-sak-web/types';
-import { Heading } from '@navikt/ds-react';
+import { Heading, Radio } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -71,8 +70,12 @@ export const BehandleUnntakForm = ({
       <VerticalSpacer twentyPx />
 
       <RadioGroupField name="behandlingsresultat" validate={[required]} direction="horizontal" readOnly={readOnly}>
-        <RadioOption value={behandlingResultatType.INNVILGET} label={{ id: 'Unntak.Innvilg' }} />
-        <RadioOption value={behandlingResultatType.AVSLATT} label={{ id: 'Unntak.Avslå' }} />
+        <Radio value={behandlingResultatType.INNVILGET}>
+          <FormattedMessage id="Unntak.Innvilg" />
+        </Radio>
+        <Radio value={behandlingResultatType.AVSLATT}>
+          <FormattedMessage id="Unntak.Avslå" />
+        </Radio>
       </RadioGroupField>
 
       <FlexColumn>

@@ -1,7 +1,7 @@
-import { DecimalField, InputField, RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
+import { DecimalField, InputField, RadioGroupField, SelectField } from '@fpsak-frontend/form';
 import { ArrowBox, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr, maxValue, minValue, required } from '@fpsak-frontend/utils';
-import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
+import { BodyShort, Detail, HGrid, Radio } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
@@ -46,8 +46,12 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
         </Detail>
         <VerticalSpacer eightPx />
         <RadioGroupField validate={[required]} name="harGrunnerTilReduksjon" readOnly={readOnly}>
-          <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />} value />
-          <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />} value={false} />
+          <Radio value>
+            <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />
+          </Radio>
+          <Radio value={false}>
+            <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />
+          </Radio>
         </RadioGroupField>
       </div>
     </HGrid>
@@ -154,8 +158,12 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
                 name="skalDetTilleggesRenter"
                 readOnly={readOnly}
               >
-                <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />} value />
-                <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />} value={false} />
+                <Radio value>
+                  <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />
+                </Radio>
+                <Radio value={false}>
+                  <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />
+                </Radio>
               </RadioGroupField>
             </div>
           )}

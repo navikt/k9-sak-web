@@ -1,12 +1,12 @@
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
-import { DatepickerField, RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
+import { DatepickerField, Label, RadioGroupField, SelectField } from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, Radio } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 
 import getPackageIntl from '../../i18n/getPackageIntl';
@@ -69,8 +69,12 @@ const VilkarResultPicker = ({
           direction="vertical"
           readOnly={readOnly}
         >
-          <RadioOption label={customVilkarOppfyltText} value />
-          <RadioOption label={customVilkarIkkeOppfyltText} value={false} />
+          <Radio value>
+            <Label input={customVilkarOppfyltText} textOnly />
+          </Radio>
+          <Radio value={false}>
+            <Label input={customVilkarIkkeOppfyltText} textOnly />
+          </Radio>
         </RadioGroupField>
       )}
       {erVilkarOk !== undefined && !erVilkarOk && avslagsarsaker && (

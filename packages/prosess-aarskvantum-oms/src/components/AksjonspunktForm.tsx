@@ -1,4 +1,4 @@
-import { CheckboxField, InputField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
+import { CheckboxField, InputField, RadioGroupField, TextAreaField } from '@fpsak-frontend/form/index';
 import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
@@ -19,7 +19,7 @@ import {
 } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
 import { Delete } from '@navikt/ds-icons';
-import { Button, Label } from '@navikt/ds-react';
+import { Button, Label, Radio } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -176,8 +176,12 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
             </Label>
           }
         >
-          <RadioOption value={valgValues.reBehandling} label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling' }} />
-          <RadioOption value={valgValues.fortsett} label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.Fortsett' }} />
+          <Radio value={valgValues.reBehandling}>
+            <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.ReBehandling" />
+          </Radio>
+          <Radio value={valgValues.fortsett}>
+            <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fortsett" />
+          </Radio>
         </RadioGroupField>
       )}
       <TextAreaField

@@ -1,7 +1,6 @@
 import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
 import {
   RadioGroupField,
-  RadioOption,
   TextAreaField,
   behandlingForm,
   hasBehandlingFormErrorsOfType,
@@ -14,7 +13,7 @@ import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsa
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, BeregningsresultatFp, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
-import { HGrid, Label } from '@navikt/ds-react';
+import { HGrid, Label, Radio } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -93,8 +92,12 @@ export const Tilbaketrekkpanel = ({
           readOnly={readOnly}
           isEdited={!isAksjonspunktOpen(vurderTilbaketrekkAP.status.kode)}
         >
-          <RadioOption label={<FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Utfør" />} value={false} />
-          <RadioOption label={<FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Hindre" />} value />
+          <Radio value={false}>
+            <FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Utfør" />
+          </Radio>
+          <Radio value>
+            <FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Hindre" />
+          </Radio>
         </RadioGroupField>
       </HGrid>
       <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>

@@ -1,4 +1,4 @@
-import { RadioGroupField, RadioOption, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { RadioGroupField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
@@ -9,7 +9,7 @@ import { Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/sh
 import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, isObject, required } from '@fpsak-frontend/utils';
 import { ProsessPanelTemplate, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Behandling, Kodeverk, KodeverkMedNavn, ManglendeVedleggSoknad, Soknad } from '@k9-sak-web/types';
-import { BodyShort, HGrid } from '@navikt/ds-react';
+import { BodyShort, HGrid, Radio } from '@navikt/ds-react';
 import moment from 'moment';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -164,12 +164,10 @@ export const SokersOpplysningspliktFormImpl = ({
         <VerticalSpacer sixteenPx />
         <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
           <RadioGroupField name="erVilkarOk" validate={[required]}>
-            <RadioOption
-              label={<FormattedMessage id={findRadioButtonTextCode(true)} />}
-              value
-              disabled={isVilkarOppfyltDisabled(hasSoknad, inntektsmeldingerSomIkkeKommer)}
-            />
-            <RadioOption label={getLabel(intl)} value={false} />
+            <Radio value disabled={isVilkarOppfyltDisabled(hasSoknad, inntektsmeldingerSomIkkeKommer)}>
+              <FormattedMessage id={findRadioButtonTextCode(true)} />
+            </Radio>
+            <Radio value={false}>{getLabel(intl)}</Radio>
           </RadioGroupField>
         </HGrid>
       </>

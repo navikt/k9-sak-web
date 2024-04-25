@@ -1,4 +1,4 @@
-import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { RadioGroupField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -15,7 +15,7 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, Radio } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -88,12 +88,9 @@ export const PerioderMedMedlemskapFaktaPanel = ({
                 isEdited={isPeriodAksjonspunktClosed}
               >
                 {vurderingTypes.map(type => (
-                  <RadioOption
-                    key={type.kode}
-                    value={type.kode}
-                    label={type.navn}
-                    name="medlemskapManuellVurderingType.kode"
-                  />
+                  <Radio key={type.kode} value={type.kode} name="medlemskapManuellVurderingType.kode">
+                    {type.navn}
+                  </Radio>
                 ))}
               </RadioGroupField>
             </FlexColumn>

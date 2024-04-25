@@ -1,9 +1,9 @@
-import { CheckboxField, NavFieldGroup, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import { CheckboxField, NavFieldGroup, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
-import { BodyShort, Detail } from '@navikt/ds-react';
+import { BodyShort, Detail, Radio } from '@navikt/ds-react';
 import { Location } from 'history';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -108,8 +108,12 @@ export const AksjonspunktGodkjenningFieldArray = ({
               ))}
             <NavFieldGroup>
               <RadioGroupField name={`${id}.totrinnskontrollGodkjent`} bredde="M" readOnly={readOnly}>
-                <RadioOption label={{ id: 'ApprovalField.Godkjent' }} value />
-                <RadioOption label={{ id: 'ApprovalField.Vurder' }} value={false} />
+                <Radio value>
+                  <FormattedMessage id="ApprovalField.Godkjent" />
+                </Radio>
+                <Radio value={false}>
+                  <FormattedMessage id="ApprovalField.Vurder" />
+                </Radio>
               </RadioGroupField>
               {visArsaker && (
                 <ArrowBox alignOffset={erKlageKA ? 1 : 110}>
