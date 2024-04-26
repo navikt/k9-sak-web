@@ -10,7 +10,14 @@ import { createSelector } from 'reselect';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { BorderBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  BorderBox,
+  FlexColumn,
+  FlexContainer,
+  FlexRow,
+  VerticalSpacer,
+  useSaksbehandlerOppslag,
+} from '@fpsak-frontend/shared-components';
 import { ISO_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { FaktaBegrunnelseTextField } from '@k9-sak-web/fakta-felles';
 
