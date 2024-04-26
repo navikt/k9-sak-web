@@ -28,7 +28,6 @@ const data = {
   readOnly: false,
   onFinished: () => console.log('Aksjonspunkt løst'),
   visFortsettknapp: true,
-  saksbehandlere: {},
   fagsakYtelseType: FagsakYtelseType.PLEIEPENGER,
   behandlingType: BehandlingType.FORSTEGANGSSOKNAD,
   httpErrorHandler: undefined,

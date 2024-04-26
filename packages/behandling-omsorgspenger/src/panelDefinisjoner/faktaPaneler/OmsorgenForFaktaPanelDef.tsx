@@ -14,10 +14,6 @@ class OmsorgenForFaktaPanelDef extends FaktaPanelDef {
 
   getEndepunkter = () => [];
 
-  getData = ({ hentSaksbehandlere }) => ({
-    saksbehandlere: hentSaksbehandlere?.saksbehandlere,
-  });
-
   getKomponent = props => <OmsorgenFor {...props} />;
 
   getOverstyrVisningAvKomponent = () => true;

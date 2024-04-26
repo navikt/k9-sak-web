@@ -37,7 +37,6 @@ const pleiepengerData = [
   { key: PleiepengerSluttfaseBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: PleiepengerSluttfaseBehandlingApiKeys.UTTAK },
   { key: PleiepengerSluttfaseBehandlingApiKeys.OVERLAPPENDE_YTELSER },
-  { key: PleiepengerSluttfaseBehandlingApiKeys.HENT_SAKSBEHANDLERE },
 ];
 
 const cache = createIntlCache();

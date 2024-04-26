@@ -1,5 +1,3 @@
-import Saksbehandlere from './Saksbehandlere';
-
 interface ContainerContract {
   readOnly: boolean;
   endpoints: {
@@ -12,7 +10,6 @@ interface ContainerContract {
   lagreNattevåkvurdering: (data: any) => void;
   harAksjonspunktForBeredskap: boolean;
   harAksjonspunktForNattevåk: boolean;
-  saksbehandlere: Saksbehandlere;
 }
 
 export default ContainerContract;

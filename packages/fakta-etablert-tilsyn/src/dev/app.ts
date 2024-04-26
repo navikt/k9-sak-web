@@ -13,7 +13,6 @@ const data = {
   onFinished: () => console.log('Aksjonspunkt løst'),
   beredskapMåVurderes: true,
   nattevåkMåVurderes: true,
-  saksbehandlere: { test: 'test' },
   httpErrorHandler: undefined,
   lagreBeredskapvurdering: undefined,
   lagreNattevåkvurdering: undefined,
