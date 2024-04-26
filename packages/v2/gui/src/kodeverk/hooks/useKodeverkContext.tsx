@@ -55,3 +55,4 @@ export const useKodeverkContext = () => {
     setKodeverkContext,
     getKodeverkNavnFraKodeFn,
   };
+};
