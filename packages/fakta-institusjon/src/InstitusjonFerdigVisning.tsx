@@ -2,7 +2,7 @@ import React from 'react';
 import { InstitusjonVurderingMedPerioder, Vurderingsresultat } from '@k9-sak-web/types';
 import { Calender } from '@navikt/ds-icons';
 import { AssessedBy, Box, DetailView, LabelledContent, LinkButton, Margin } from '@navikt/ft-plattform-komponenter';
-import { useSaksbehandlerOppslag } from 'shared-components';
+import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import styles from './institusjonFerdigVisning.module.css';
 
 interface OwnProps {

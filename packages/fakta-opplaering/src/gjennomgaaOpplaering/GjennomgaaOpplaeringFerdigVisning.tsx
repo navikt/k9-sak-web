@@ -13,7 +13,7 @@ import {
   LinkButton,
   Margin,
 } from '@navikt/ft-plattform-komponenter';
-import { useSaksbehandlerOppslag } from 'shared-components';
+import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
 import DokumentLink from '../components/DokumentLink';

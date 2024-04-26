@@ -5,7 +5,7 @@ import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
 
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
-import { useSaksbehandlerOppslag } from 'shared-components';
+import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 
 import { Vurderingsresultat } from '@k9-sak-web/types';
 import BeskrivelseFraSoeker from './BeskrivelseFraSoeker';

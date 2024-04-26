@@ -6,7 +6,7 @@ import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSaksbehandlerOppslag } from 'shared-components';
+import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import { FormattedMessage } from 'react-intl';
 import styles from './chatComponent.module.css';
 

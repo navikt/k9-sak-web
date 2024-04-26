@@ -13,7 +13,7 @@ import {
 import React, { useContext } from 'react';
 
 import { useIntl } from 'react-intl';
-import { useSaksbehandlerOppslag } from 'shared-components';
+import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import DokumentLink from '../components/DokumentLink';
 import styles from './noedvendighetFerdigVisning.module.css';
 
