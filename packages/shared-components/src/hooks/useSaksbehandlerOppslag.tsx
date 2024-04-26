@@ -6,7 +6,13 @@ export const useSaksbehandlerOppslag = () => {
   const data = useGlobalStateRestApiData<SaksbehandlereInfo>(K9sakApiKeys.HENT_SAKSBEHANDLERE);
   const saksbehandlere = data?.saksbehandlere;
 
-  const hentSaksbehandlerNavn = (saksbehandler: string): string => saksbehandlere?.[saksbehandler] || saksbehandler;
+  const hentSaksbehandlerNavn = (saksbehandler: string): string => {
+    if (saksbehandlere && saksbehandlere[saksbehandler]) {
+      return saksbehandlere[saksbehandler];
+    }
+    return saksbehandler;
+  };
+
   return { saksbehandlere, hentSaksbehandlerNavn };
 };
 
