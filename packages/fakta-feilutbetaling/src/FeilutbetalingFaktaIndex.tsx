@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
-import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import FeilutbetalingInfoPanel from './components/FeilutbetalingInfoPanel';
 import { FeilutbetalingAarsak, FeilutbetalingFakta } from './types';
 import messages from '../i18n/nb_NO.json';
@@ -47,7 +47,7 @@ const FeilutbetalingFaktaIndex: FC<Props> = ({
   readOnly,
   harApneAksjonspunkter,
 }) => {
-  const { getKodeverkNavnFraKodeFn } = useKodeverkV2();
+  const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
   const kodeverTilbakekNavnFraKode = getKodeverkNavnFraKodeFn('kodeverkTilbake');
   const kodeverkKlageNavnFraKode = getKodeverkNavnFraKodeFn('kodeverkKlage');
   return (

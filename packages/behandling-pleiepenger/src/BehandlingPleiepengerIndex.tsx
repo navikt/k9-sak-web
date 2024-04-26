@@ -15,6 +15,7 @@ import {
 
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import PleiepengerPaneler from './components/PleiepengerPaneler';
 import {
   PleiepengerBehandlingApiKeys,
@@ -52,7 +53,6 @@ interface OwnProps {
   };
   opneSokeside: () => void;
   featureToggles: FeatureToggles;
-  kodeverk?: { [key: string]: KodeverkMedNavn[] };
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setRequestPendingMessage: (message: string) => void;
 }
@@ -61,7 +61,6 @@ const BehandlingPleiepengerIndex = ({
   behandlingEventHandler,
   behandlingId,
   oppdaterBehandlingVersjon,
-  kodeverk,
   fagsak,
   fagsakPerson,
   rettigheter,
@@ -74,7 +73,6 @@ const BehandlingPleiepengerIndex = ({
   featureToggles,
 }: OwnProps) => {
   const forrigeSaksnummer = usePrevious(fagsak.saksnummer);
-
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
     current: undefined,
     previous: undefined,
@@ -193,7 +191,6 @@ const BehandlingPleiepengerIndex = ({
         fetchedData={data}
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
-        alleKodeverk={kodeverk}
         rettigheter={rettigheter}
         valgtProsessSteg={valgtProsessSteg}
         valgtFaktaSteg={valgtFaktaSteg}

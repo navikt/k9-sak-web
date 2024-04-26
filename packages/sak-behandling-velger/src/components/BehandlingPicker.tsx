@@ -10,9 +10,9 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { AddCircle } from '@navikt/ds-icons';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
-import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
 import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import { BehandlingAppKontekst, PerioderMedBehandlingsId } from '@k9-sak-web/types';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
@@ -20,7 +20,7 @@ import { sortBehandlinger } from './behandlingVelgerUtils';
 import styles from './behandlingPicker.module.css';
 
 const getBehandlingNavn = (behandlingTypeKode, intl: IntlShape) => {
-  const { kodeverkNavnFraKode } = useKodeverkV2();
+  const { kodeverkNavnFraKode } = useKodeverkContext();
 
   if (
     [behandlingType.FORSTEGANGSSOKNAD, behandlingType.KLAGE, behandlingType.TILBAKEKREVING].includes(behandlingTypeKode)
@@ -49,7 +49,7 @@ const renderListItems = ({
   alleSøknadsperioder: UseQueryResult<PerioderMedBehandlingsId, unknown>[];
   activeFilters: string[];
 }): ReactElement[] => {
-  const { kodeverkNavnFraKode } = useKodeverkV2();
+  const { kodeverkNavnFraKode } = useKodeverkContext();
   const sorterteOgFiltrerteBehandlinger = sortBehandlinger(behandlinger).filter(behandling => {
     if (activeFilters.length === 0) {
       return true;
@@ -131,7 +131,7 @@ const BehandlingPicker = ({
   sakstypeKode,
 }: OwnProps) => {
   const navigate = useNavigate();
-  const { kodeverkNavnFraKode } = useKodeverkV2();
+  const { kodeverkNavnFraKode } = useKodeverkContext();
   const finnÅpenBehandling = () => {
     const åpenBehandling = behandlinger.find(behandling => behandling.status !== behandlingStatus.AVSLUTTET);
     if (åpenBehandling) {

@@ -21,7 +21,7 @@ import {
   FeatureToggles,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
-
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/FetchedData';
@@ -31,7 +31,6 @@ interface OwnProps {
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;
@@ -131,7 +130,6 @@ const PleiepengerProsess = ({
   fagsak,
   fagsakPerson,
   behandling,
-  alleKodeverk,
   rettigheter,
   valgtProsessSteg,
   valgtFaktaSteg,
@@ -146,6 +144,7 @@ const PleiepengerProsess = ({
   setBeregningErBehandlet,
   lagreOverstyringUttak,
 }: OwnProps) => {
+  const { kodeverk } = useKodeverkContext();
   prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
@@ -183,7 +182,7 @@ const PleiepengerProsess = ({
       getHentFritekstbrevHtmlCallback(hentFriteksbrevHtml, behandling, fagsak, fagsakPerson),
       [behandling.versjon],
     ),
-    alleKodeverk,
+    alleKodeverk: kodeverk,
     featureToggles,
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,
@@ -252,7 +251,7 @@ const PleiepengerProsess = ({
           valgtProsessSteg={valgtPanel}
           fagsak={fagsak}
           behandling={behandling}
-          alleKodeverk={alleKodeverk}
+          alleKodeverk={kodeverk}
           apentFaktaPanelInfo={apentFaktaPanelInfo}
           oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
           lagringSideeffekterCallback={lagringSideeffekterCallback}

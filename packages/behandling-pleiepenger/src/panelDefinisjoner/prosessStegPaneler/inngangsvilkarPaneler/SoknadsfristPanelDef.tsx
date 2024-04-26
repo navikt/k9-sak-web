@@ -1,11 +1,9 @@
 import React from 'react';
 
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import SoknadsfristVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-soknadsfrist';
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import { AlleKodeverk } from '@k9-sak-web/lib/types/AlleKodeverk.js';
 import { Vilkar } from '@k9-sak-web/types';
 
 import { PleiepengerBehandlingApiKeys } from '../../../data/pleiepengerBehandlingApi';
@@ -30,7 +28,6 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
 
   getData = ({
     vilkarForSteg,
-    alleKodeverk,
     overstyrteAksjonspunktKoder,
     prosessStegTekstKode,
     overrideReadOnly,
@@ -38,7 +35,6 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
     toggleOverstyring,
   }: {
     vilkarForSteg: Vilkar[];
-    alleKodeverk: AlleKodeverk;
     overstyrteAksjonspunktKoder: string[];
     prosessStegTekstKode: string;
     overrideReadOnly: boolean;
@@ -47,7 +43,6 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
     };
     toggleOverstyring: () => void;
   }) => ({
-    avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType],
     erOverstyrt: overstyrteAksjonspunktKoder.some(o => this.getAksjonspunktKoder().some(a => a === o)),
     panelTittelKode: this.getTekstKode() ? this.getTekstKode() : prosessStegTekstKode,
     lovReferanse: vilkarForSteg.length > 0 ? vilkarForSteg[0].lovReferanse : undefined,

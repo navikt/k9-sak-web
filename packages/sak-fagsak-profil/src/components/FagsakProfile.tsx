@@ -3,9 +3,8 @@ import { FlexColumn, FlexContainer, FlexRow, Tooltip, VerticalSpacer } from '@fp
 import { BodyShort, Heading, Tag } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
-import { EtikettInfo } from 'nav-frontend-etiketter';
 import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
-import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 
 const visSakDekningsgrad = (saksKode: string, dekningsgrad?: number): boolean => {
   const erForeldrepenger = saksKode === FagsakYtelseType.FORELDREPENGER;
@@ -37,7 +36,7 @@ export const FagsakProfile = ({
   dekningsgrad,
   intl,
 }: OwnProps & WrappedComponentProps) => {
-  const { kodeverkNavnFraKode } = useKodeverkV2();
+  const { kodeverkNavnFraKode } = useKodeverkContext();
   return (
     <>
       <FlexContainer>
@@ -61,7 +60,7 @@ export const FagsakProfile = ({
                     content={intl.formatMessage({ id: 'FagsakProfile.Dekningsgrad' }, { dekningsgrad })}
                     alignBottom
                   >
-                    <EtikettInfo>{`${dekningsgrad}%`}</EtikettInfo>
+                    <Tag variant="info">{`${dekningsgrad}%`}</Tag>
                   </Tooltip>
                 </FlexColumn>
               )}

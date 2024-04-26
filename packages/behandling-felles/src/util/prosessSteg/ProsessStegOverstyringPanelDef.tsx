@@ -43,7 +43,6 @@ class ProsessStegOverstyringPanelDef extends ProsessStegPanelDef {
 
   getData = ({
     vilkarForSteg,
-    alleKodeverk,
     overstyrteAksjonspunktKoder,
     prosessStegTekstKode,
     overrideReadOnly,
@@ -51,14 +50,12 @@ class ProsessStegOverstyringPanelDef extends ProsessStegPanelDef {
     toggleOverstyring,
   }: {
     vilkarForSteg: Vilkar[];
-    alleKodeverk: AlleKodeverk;
     overstyrteAksjonspunktKoder: string[];
     prosessStegTekstKode: string;
     overrideReadOnly: boolean;
     kanOverstyreAccess: boolean;
     toggleOverstyring: () => void;
   }): any => ({
-    avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType],
     erOverstyrt: overstyrteAksjonspunktKoder.some(o => this.getAksjonspunktKoder().some(a => a === o)),
     overstyringApKode: this.getAksjonspunktKoder()[0],
     panelTittelKode: this.getTekstKode() ? this.getTekstKode() : prosessStegTekstKode,

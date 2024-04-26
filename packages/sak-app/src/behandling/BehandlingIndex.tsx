@@ -16,10 +16,14 @@ import {
   FeatureToggles,
   FagsakPerson,
   ArbeidsgiverOpplysningerWrapper,
+  AlleKodeverk,
 } from '@k9-sak-web/types';
 
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import BehandlingPleiepengerSluttfaseIndex from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
+import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
+import { useBehandlingContext } from '@k9-sak-web/gui/behandling/index.js';
+import { KodeverkProvider, useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import getAccessRights from '../app/util/access';
 import {
@@ -73,7 +77,6 @@ const getOppdaterProsessStegOgFaktaPanelIUrl =
   };
 
 interface OwnProps {
-  setBehandlingIdOgVersjon: (behandlingId: number, behandlingVersjon: number) => void;
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
@@ -87,26 +90,32 @@ interface OwnProps {
  * relatert til den valgte behandlingen.
  */
 const BehandlingIndex = ({
-  setBehandlingIdOgVersjon,
   fagsak,
   alleBehandlinger,
   arbeidsgiverOpplysninger,
   setRequestPendingMessage,
 }: OwnProps) => {
+  const { setBehandlingContext, setBehandlingIdOgVersjon } = useBehandlingContext();
+  const { setKodeverkContext } = useKodeverkContext();
   const { selected: behandlingId } = useTrackRouteParam<number>({
     paramName: 'behandlingId',
     parse: behandlingFromUrl => Number.parseInt(behandlingFromUrl, 10),
   });
 
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
-  const behandlingVersjon = behandling?.versjon;
 
   useEffect(() => {
     if (behandling) {
       requestApi.setLinks(behandling.links, LinkCategory.BEHANDLING);
-      setBehandlingIdOgVersjon(behandlingId, behandlingVersjon);
+      setBehandlingContext({
+        behandlingId,
+        behandlingVersjon: behandling?.versjon,
+        behandlingType: BehandlingType[behandling.type],
+      });
     }
   }, [behandling]);
+
+  useEffect(() => {});
 
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
@@ -115,10 +124,12 @@ const BehandlingIndex = ({
     [behandlingId],
   );
 
-  const kodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(K9sakApiKeys.KODEVERK);
-  const klageKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(
-    K9sakApiKeys.KODEVERK_KLAGE,
-  );
+  const kodeverk = restApiHooks.useGlobalStateRestApiData<AlleKodeverk>(K9sakApiKeys.KODEVERK);
+  const klageKodeverk = restApiHooks.useGlobalStateRestApiData<AlleKodeverk>(K9sakApiKeys.KODEVERK_KLAGE);
+
+  useEffect(() => {
+    setKodeverkContext({ kodeverk, klageKodeverk, tilbakeKodeverk: {} });
+  }, [kodeverk, klageKodeverk]);
 
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(K9sakApiKeys.SAK_BRUKER);
   const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(

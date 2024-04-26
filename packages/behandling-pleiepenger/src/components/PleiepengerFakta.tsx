@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import {
-  KodeverkMedNavn,
   Behandling,
   ArbeidsgiverOpplysningerPerId,
   FagsakPerson,
@@ -14,7 +13,7 @@ import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/FetchedData';
 import { restApiPleiepengerHooks, PleiepengerBehandlingApiKeys } from '../data/pleiepengerBehandlingApi';
@@ -26,7 +25,6 @@ interface OwnProps {
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
   hasFetchError: boolean;
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;
@@ -46,7 +44,6 @@ const PleiepengerFakta = ({
   fagsak,
   fagsakPerson,
   rettigheter,
-  alleKodeverk,
   oppdaterProsessStegOgFaktaPanelIUrl,
   valgtFaktaSteg,
   valgtProsessSteg,
@@ -58,6 +55,7 @@ const PleiepengerFakta = ({
   featureToggles,
   beregningErBehandlet,
 }: OwnProps) => {
+  const { kodeverk } = useKodeverkContext();
   const { aksjonspunkter, ...rest } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
@@ -148,7 +146,7 @@ const PleiepengerFakta = ({
               ...faktaData,
               ...faktaDataUtenCaching,
               behandling,
-              alleKodeverk,
+              alleKodeverk: kodeverk,
               featureToggles,
               submitCallback: bekreftAksjonspunktCallback,
               ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
