@@ -23,10 +23,9 @@ class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
 
   getKomponent = props => <Inntektsmelding {...props} />;
 
-  getData = ({ arbeidsgiverOpplysningerPerId, dokumenter, hentSaksbehandlere }) => ({
+  getData = ({ arbeidsgiverOpplysningerPerId, dokumenter }) => ({
     arbeidsgiverOpplysningerPerId,
     dokumenter,
-    saksbehandlere: hentSaksbehandlere?.saksbehandlere,
   });
 
   getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) =>

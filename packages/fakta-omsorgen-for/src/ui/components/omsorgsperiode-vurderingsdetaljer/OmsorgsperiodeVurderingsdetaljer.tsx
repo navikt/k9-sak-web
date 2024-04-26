@@ -1,6 +1,7 @@
 import { Box, Margin, DetailView, LabelledContent, LinkButton, AssessedBy } from '@navikt/ft-plattform-komponenter';
 import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
+import { useSaksbehandlerOppslag } from 'shared-components';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import Relasjon from '../../../types/Relasjon';
 import Ytelsestype from '../../../types/Ytelsestype';
@@ -20,7 +21,8 @@ const OmsorgsperiodeVurderingsdetaljer = ({
   registrertForeldrerelasjon,
 }: OmsorgsperiodeVurderingsdetaljerProps): JSX.Element => {
   const intl = useIntl();
-  const { sakstype, saksbehandlere } = useContext(ContainerContext);
+  const { sakstype } = useContext(ContainerContext);
+  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   const erOMP = sakstype === Ytelsestype.OMP;
   const begrunnelseRenderer = () => {
     let label = intl.formatMessage({ id: 'vurdering.hjemmel' });
@@ -38,10 +40,7 @@ const OmsorgsperiodeVurderingsdetaljer = ({
     return (
       <>
         <LabelledContent label={label} content={begrunnelse} indentContent />
-        <AssessedBy
-          name={saksbehandlere[omsorgsperiode?.vurdertAv] || omsorgsperiode?.vurdertAv}
-          date={omsorgsperiode?.vurdertTidspunkt}
-        />
+        <AssessedBy name={hentSaksbehandlerNavn(omsorgsperiode?.vurdertAv)} date={omsorgsperiode?.vurdertTidspunkt} />
       </>
     );
   };

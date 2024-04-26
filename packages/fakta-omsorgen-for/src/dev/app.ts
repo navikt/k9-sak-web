@@ -16,7 +16,6 @@ const data = {
   onFinished: () => console.log('Klar til å løse aksjonspunkt'),
   sakstype: 'OMP',
   httpErrorHandler: undefined,
-  saksbehandlere: { test: 'test' },
 };
 
 (window as Partial<ExtendedWindow>).renderOmsorgenForApp = async appId => {

@@ -1,7 +1,6 @@
 import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
-import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-data/useGlobalStateRestApiData';
-import { K9sakApiKeys } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import { Kodeverk, SaksbehandlereInfo } from '@k9-sak-web/types';
+import { Kodeverk } from '@k9-sak-web/types';
+import { useSaksbehandlerOppslag } from 'shared-components';
 import {
   CogIcon,
   PersonGavelIcon,
@@ -82,16 +81,14 @@ interface OwnProps {
 }
 
 const SnakkebobleContainer = ({ dato, aktoer, rolleNavn = '', opprettetAv, children }: OwnProps) => {
-  const saksbehandlere = useGlobalStateRestApiData<SaksbehandlereInfo>(K9sakApiKeys.HENT_SAKSBEHANDLERE);
-  const saksbehandlernavn =
-    typeof saksbehandlere?.saksbehandlere === 'object' &&
-    (saksbehandlere?.saksbehandlere[opprettetAv] || saksbehandlere?.saksbehandlere[opprettetAv?.toLowerCase()]);
+  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
+
   return (
     <div className={pilHøyre(aktoer) ? styles.chatRight : styles.chatLeft}>
       <Chat
         timestamp={formatDate(dato)}
         position={pilHøyre(aktoer) ? 'right' : 'left'}
-        name={`${rolleNavn} ${saksbehandlernavn || opprettetAv || ''}`}
+        name={`${rolleNavn} ${hentSaksbehandlerNavn(opprettetAv) || ''}`}
         avatar={getAvatar(aktoer)}
         className={getClassname(aktoer)}
       >

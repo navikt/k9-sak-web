@@ -1,11 +1,11 @@
 import React from 'react';
 import { Box, Margin, BasicList, LabelledContent, AssessedBy } from '@navikt/ft-plattform-komponenter';
+import { useSaksbehandlerOppslag } from 'shared-components';
 import Vurdering from '../../../types/Vurdering';
 import DokumentLink from '../dokument-link/DokumentLink';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import DekketAvInnleggelsesperiodeMelding from '../dekket-av-innleggelsesperiode-melding/DekketAvInnleggelsesperiodeMelding';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
-import ContainerContext from '../../context/ContainerContext';
 
 interface VurderingsoppsummeringForSluttfaseProps {
   vurdering: Vurdering;
@@ -18,10 +18,11 @@ const VurderingsoppsummeringForSluttfase = ({
   redigerVurdering,
   erInnleggelsesperiode,
 }: VurderingsoppsummeringForSluttfaseProps): JSX.Element => {
+  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
+
   const gjeldendeVurdering = vurdering.versjoner[0];
   const { dokumenter, perioder, tekst, resultat } = gjeldendeVurdering;
   const brukerId = gjeldendeVurdering.endretAv;
-  const { saksbehandlere } = React.useContext(ContainerContext);
 
   return (
     <DetailViewVurdering
@@ -59,7 +60,7 @@ const VurderingsoppsummeringForSluttfase = ({
             content={<span>{tekst}</span>}
             indentContent
           />
-          <AssessedBy name={saksbehandlere[brukerId] || brukerId} date={gjeldendeVurdering?.endretTidspunkt} />
+          <AssessedBy name={hentSaksbehandlerNavn(brukerId)} date={gjeldendeVurdering?.endretTidspunkt} />
         </Box>
       </Box>
     </DetailViewVurdering>

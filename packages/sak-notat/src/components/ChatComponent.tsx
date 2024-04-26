@@ -6,6 +6,7 @@ import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSaksbehandlerOppslag } from 'shared-components';
 import { FormattedMessage } from 'react-intl';
 import styles from './chatComponent.module.css';
 
@@ -67,6 +68,8 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
   } = notat;
   const position = opprettetAv === navAnsatt.brukernavn ? ChatPosition.Right : ChatPosition.Left;
 
+  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
+
   const minLength3 = minLength(3);
   const maxLength2000 = maxLength(1500);
 
@@ -97,7 +100,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
     skjulNotat({ skjul: !skjult, id: notatId, saksnummer: fagsakId, versjon });
   };
 
-  const navnPåOppretter = opprettetAv === navAnsatt.brukernavn ? 'Deg' : opprettetAv;
+  const navnPåOppretter = opprettetAv === navAnsatt.brukernavn ? 'Deg' : hentSaksbehandlerNavn(opprettetAv);
 
   const tidspunktStreng = () => {
     const formatertOpprettetTidspunkt = format(new Date(opprettetTidspunkt), 'dd.MM.yy H:mm');
