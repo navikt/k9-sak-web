@@ -1,4 +1,5 @@
 export * from './AlleKodeverk';
+export * from './BehandlingType';
 export * from './KodeverkResponse';
 export * from './KodeverkType';
 export * from './KodeverkKlageType';

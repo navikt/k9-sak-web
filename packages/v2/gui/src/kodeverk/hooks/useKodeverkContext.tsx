@@ -15,6 +15,7 @@ export const useKodeverkContext = () => {
   const { kodeverk, klageKodeverk, tilbakeKodeverk, setKodeverkContext } = kodeverkContext;
 
   const kodeverkNavnFraKode = (kode: string, kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType) => {
+    console.log('oppslag i context', kodeverk);
     if (kodeverk !== undefined) return utledKodeverkNavnFraKode(kode, kodeverkType, kodeverk);
     return 'Ukjent kode';
   };
