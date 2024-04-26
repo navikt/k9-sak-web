@@ -10,7 +10,7 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "date-fns": "2.30.0",
     "dayjs": "1.11.10",
-    "formik": "2.4.5",
+    "formik": "2.4.6",
     "nav-frontend-core": "6.0.1",
     "nav-frontend-lenker": "2.0.2",
     "nav-frontend-lenker-style": "2.0.2",
