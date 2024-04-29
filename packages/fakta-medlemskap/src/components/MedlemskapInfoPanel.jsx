@@ -34,7 +34,6 @@ const MedlemskapInfoPanel = ({
   alleKodeverk,
   medlemskap,
   fagsakPerson,
-  saksbehandlere,
 }) => {
   const avklarStartdatoOverstyring = aksjonspunkter.find(ap => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
   const aksjonspunkterMinusAvklarStartDato = useMemo(
@@ -57,7 +56,6 @@ const MedlemskapInfoPanel = ({
         alleKodeverk={alleKodeverk}
         medlemskap={medlemskap}
         fagsakPerson={fagsakPerson}
-        saksbehandlere={saksbehandlere}
       />
     )
   );
@@ -78,7 +76,6 @@ MedlemskapInfoPanel.propTypes = {
   soknad: medlemskapSoknadPropType,
   alleKodeverk: PropTypes.shape().isRequired,
   medlemskap: medlemskapMedlemskaPropType.isRequired,
-  saksbehandlere: PropTypes.shape(),
 };
 
 export default MedlemskapInfoPanel;

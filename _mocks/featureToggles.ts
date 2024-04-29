@@ -1,4 +1,6 @@
-export default [
+// This must be a "factory" function so that the values are not resoved too early in dev server startup, before vite
+// has resolved the env variables.
+export const featureTogglesFactory = () => [
   {
     key: 'USE_NEW_BACKEND_CLIENT',
     value: process.env.VITE_USE_NEW_BACKEND_CLIENT,

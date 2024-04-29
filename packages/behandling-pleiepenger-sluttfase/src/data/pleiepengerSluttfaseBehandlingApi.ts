@@ -50,7 +50,6 @@ export enum PleiepengerSluttfaseBehandlingApiKeys {
   INNTEKT_OG_YTELSER = 'INNTEKT_OG_YTELSER',
   OVERSTYR_INPUT_BEREGNING = 'OVERSTYR_INPUT_BEREGNING',
   OVERLAPPENDE_YTELSER = 'OVERLAPPENDE_YTELSER',
-  HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
   OM_PLEIETRENGENDE = 'OM_PLEIETRENGENDE',
   BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR = 'BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR',
   BEREGNINGREFERANSER_TIL_VURDERING = 'BEREGNINGREFERANSER_TIL_VURDERING',
@@ -94,7 +93,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('inntekt', PleiepengerSluttfaseBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('overstyr-input-beregning', PleiepengerSluttfaseBehandlingApiKeys.OVERSTYR_INPUT_BEREGNING)
   .withRel('overlappende-ytelser', PleiepengerSluttfaseBehandlingApiKeys.OVERLAPPENDE_YTELSER)
-  .withRel('saksbehandler-info', PleiepengerSluttfaseBehandlingApiKeys.HENT_SAKSBEHANDLERE)
   .withRel('om-pleietrengende', PleiepengerSluttfaseBehandlingApiKeys.OM_PLEIETRENGENDE)
   .withRel('utenlandsopphold', PleiepengerSluttfaseBehandlingApiKeys.UTENLANDSOPPHOLD)
 

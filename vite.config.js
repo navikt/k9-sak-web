@@ -1,10 +1,11 @@
 import react from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
-import { loadEnv } from 'vite';
-import { viteMockServe } from 'vite-plugin-mock';
+import {loadEnv} from 'vite';
 import svgr from 'vite-plugin-svgr';
-import { defineConfig } from 'vitest/config';
+import {defineConfig} from 'vitest/config';
+import {createMockResponder, staticJsonResponse} from "./_mocks/createMockResponder.js";
+import {featureTogglesFactory} from "./_mocks/featureToggles.js";
 
 const createProxy = (target, pathRewrite) => ({
   target,
@@ -75,6 +76,7 @@ export default ({ mode }) => {
             '^/k9/endringslogg': '',
           },
         ),
+        '/k9/feature-toggle/toggles.json': createMockResponder('http://localhost:8080', staticJsonResponse(featureTogglesFactory())),
       },
     },
     base: '/k9/web',
@@ -85,9 +87,6 @@ export default ({ mode }) => {
 
       }),
       svgr(),
-      viteMockServe({
-        mockPath: '_mocks',
-      }),
       excludeMsw()
     ],
     build: {

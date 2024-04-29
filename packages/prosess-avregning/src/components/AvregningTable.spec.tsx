@@ -13,11 +13,14 @@ const mottaker = {
   mottakerNummer: '',
   mottakerType: {
     kode: '',
+    kodeverk: '',
   },
+  mottakerIdentifikator: '',
   resultatPerFagområde: [
     {
       fagOmrådeKode: {
         kode: '',
+        kodeverk: '',
       },
       rader: [
         {
@@ -75,7 +78,7 @@ describe('<AvregningTable>', () => {
     };
     const { container } = renderWithIntl(<AvregningTable {...props} />, { messages });
 
-    expect(container.getElementsByClassName('rowContent').length).toBe(
+    expect(container.getElementsByTagName('tbody')[0].getElementsByTagName('tr').length).toBe(
       props.simuleringResultat.perioderPerMottaker.reduce(
         (acc, obj) => acc + obj.resultatPerFagområde.reduce((acc2, obj2) => acc2 + obj2.rader.length, 0),
         0,
@@ -93,6 +96,7 @@ describe('<AvregningTable>', () => {
       mottakerNummer: '1234567',
       mottakerType: {
         kode: 'ARBG_ORG',
+        kodeverk: '',
       },
     };
     const props = {

@@ -29,11 +29,6 @@ export default {
     kompletthetBeregning: 'tilstand',
   },
   readOnly: false,
-  saksbehandlere: {
-    Z994142: 'F_Z994142 E_Z994142',
-    Z994895: 'F_Z994895 E_Z994895',
-    Z994158: 'F_Z994158 E_Z994158',
-  },
   aksjonspunkter: [
     {
       aksjonspunktType: {
@@ -105,11 +100,6 @@ export const aksjonspunkt9071Props = {
     kompletthetBeregning: 'tilstand',
   },
   readOnly: false,
-  saksbehandlere: {
-    Z994142: 'F_Z994142 E_Z994142',
-    Z994895: 'F_Z994895 E_Z994895',
-    Z994158: 'F_Z994158 E_Z994158',
-  },
   aksjonspunkter: [
     {
       aksjonspunktType: {
@@ -180,11 +170,6 @@ export const aksjonspunkt9071FerdigProps = {
     kompletthetBeregning: 'tilstand',
   },
   readOnly: false,
-  saksbehandlere: {
-    Z994142: 'F_Z994142 E_Z994142',
-    Z994895: 'F_Z994895 E_Z994895',
-    Z994158: 'F_Z994158 E_Z994158',
-  },
   aksjonspunkter: [
     {
       aksjonspunktType: {

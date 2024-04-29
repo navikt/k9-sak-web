@@ -14,6 +14,5 @@ export interface FaktaOpplaeringContextTypes {
     vurderinger: NoedvendighetVurdering[];
     perioder: NoedvendighetPerioder[];
   };
-  saksbehandlere: { [key: string]: string };
   opplaeringDokumenter: Dokument[];
 }

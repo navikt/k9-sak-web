@@ -6,7 +6,7 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { FatterVedtakTotrinnskontrollModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
 
 import { K9sakApiKeys, restApiHooks, requestApi } from '../../data/k9sakApi';
-import { getPathToFplos } from '../../app/paths';
+import { getPathToK9Los } from '../../app/paths';
 
 interface OwnProps {
   behandling: BehandlingAppKontekst;
@@ -27,7 +27,7 @@ const BeslutterModalIndex = ({ behandling, fagsakYtelseType, allAksjonspunktAppr
   );
 
   const goToSearchPage = useCallback(() => {
-    window.location.assign(getPathToFplos() || '/');
+    window.location.assign(getPathToK9Los() || '/');
   }, []);
 
   if (state === RestApiState.LOADING) {
