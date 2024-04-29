@@ -9,16 +9,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Image } from '@fpsak-frontend/shared-components';
 import { dateFormat } from '@fpsak-frontend/utils';
-import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-data/useGlobalStateRestApiData';
-import { K9sakApiKeys } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import {
-  Aksjonspunkt,
-  Behandling,
-  DokumentStatus,
-  SaksbehandlereInfo,
-  SubmitCallback,
-  Vilkar,
-} from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, DokumentStatus, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
@@ -73,7 +64,6 @@ const SoknadsfristVilkarProsessIndex = ({
   visAllePerioder,
   soknadsfristStatus,
 }: SoknadsfristVilkarProsessIndexProps) => {
-  const { saksbehandlere = {} } = useGlobalStateRestApiData<SaksbehandlereInfo>(K9sakApiKeys.HENT_SAKSBEHANDLERE) || {};
   const [activeTab, setActiveTab] = useState(0);
   const [activeVilkår] = vilkar;
   const perioder = hentAktivePerioderFraVilkar(vilkar, visAllePerioder);
@@ -200,7 +190,6 @@ const SoknadsfristVilkarProsessIndex = ({
             alleDokumenter={dokumenterSomSkalVurderes}
             dokumenterIAktivPeriode={dokumenterIAktivPeriode}
             periode={activePeriode}
-            saksbehandlere={saksbehandlere}
           />
         </div>
       </div>

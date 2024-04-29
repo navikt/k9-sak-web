@@ -20,7 +20,6 @@ interface ContainerContract {
   httpErrorHandler: (statusCode: number, locationHeader?: string) => void;
   visFortsettknapp: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  saksbehandlere: any;
   fagsakYtelseType?: FagsakYtelseType;
   behandlingType?: BehandlingType;
 }

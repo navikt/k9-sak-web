@@ -1,11 +1,11 @@
-import React from 'react';
-
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Table } from '@navikt/ds-react';
+import React from 'react';
 
+import { useIntl } from 'react-intl';
 import styles from './fagsakList.module.css';
 
 const headerTextCodes = ['FagsakList.Saksnummer', 'FagsakList.Sakstype', 'FagsakList.Status'];
@@ -45,23 +45,34 @@ interface OwnProps {
  * Presentasjonskomponent. Formaterer fagsak-søkeresultatet for visning i tabell. Sortering av fagsakene blir håndtert her.
  */
 const FagsakList = ({ fagsaker, selectFagsakCallback, alleKodeverk }: OwnProps) => {
+  const intl = useIntl();
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
   return (
-    <Table headerTextCodes={headerTextCodes} classNameTable={styles.table}>
-      {sortFagsaker(fagsaker).map(fagsak => (
-        <TableRow
-          key={fagsak.saksnummer}
-          id={fagsak.saksnummer}
-          model={document}
-          onMouseDown={selectFagsakCallback}
-          onKeyDown={selectFagsakCallback}
-        >
-          <TableColumn>{fagsak.saksnummer}</TableColumn>
-          <TableColumn>{getKodeverknavn(fagsak.sakstype)}</TableColumn>
-          <TableColumn>{getKodeverknavn(fagsak.status)}</TableColumn>
-        </TableRow>
-      ))}
+    <Table className={styles.table}>
+      <Table.Header>
+        <Table.Row shadeOnHover={false}>
+          {headerTextCodes.map(text => (
+            <Table.HeaderCell scope="col" key={text}>
+              {intl.formatMessage({ id: text })}
+            </Table.HeaderCell>
+          ))}
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        {sortFagsaker(fagsaker).map(fagsak => (
+          <Table.Row
+            key={fagsak.saksnummer}
+            id={fagsak.saksnummer}
+            onClick={event => selectFagsakCallback(event, fagsak.saksnummer)}
+            shadeOnHover={false}
+          >
+            <Table.DataCell>{fagsak.saksnummer}</Table.DataCell>
+            <Table.DataCell>{getKodeverknavn(fagsak.sakstype)}</Table.DataCell>
+            <Table.DataCell>{getKodeverknavn(fagsak.status)}</Table.DataCell>
+          </Table.Row>
+        ))}
+      </Table.Body>
     </Table>
   );
 };

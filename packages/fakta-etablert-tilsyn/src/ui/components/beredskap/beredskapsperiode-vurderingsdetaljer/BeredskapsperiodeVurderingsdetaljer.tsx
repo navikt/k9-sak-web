@@ -1,9 +1,9 @@
 import { Box, Margin, DetailView, LabelledContent, LinkButton, AssessedBy } from '@navikt/ft-plattform-komponenter';
-import React, { useContext } from 'react';
+import React from 'react';
+import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import Beskrivelse from '../../../../types/Beskrivelse';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import Vurderingsresultat from '../../../../types/Vurderingsresultat';
-import ContainerContext from '../../../context/ContainerContext';
 import BeskrivelserForPerioden from '../../beskrivelser-for-perioden/BeskrivelserForPerioden';
 import WriteAccessBoundContent from '../../write-access-bound-content/WriteAccessBoundContent';
 import styles from './beredskapsperiodeVurderingsdetaljer.module.css';
@@ -19,7 +19,7 @@ const BeredskapsperiodeVurderingsdetaljer = ({
   onEditClick,
   beskrivelser,
 }: BeredskapsperiodeVurderingsdetaljerProps): JSX.Element => {
-  const { saksbehandlere } = useContext(ContainerContext);
+  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   const { opprettetAv, opprettetTidspunkt } = beredskapsperiode;
   return (
     <DetailView
@@ -43,7 +43,7 @@ const BeredskapsperiodeVurderingsdetaljer = ({
           content={beredskapsperiode.begrunnelse}
           indentContent
         />
-        <AssessedBy name={saksbehandlere[opprettetAv] || opprettetAv} date={opprettetTidspunkt} />
+        <AssessedBy name={hentSaksbehandlerNavn(opprettetAv)} date={opprettetTidspunkt} />
       </Box>
       <Box marginTop={Margin.xLarge}>
         <LabelledContent

@@ -1,7 +1,14 @@
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 import { DatepickerField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  FlexColumn,
+  FlexContainer,
+  FlexRow,
+  Image,
+  VerticalSpacer,
+  useSaksbehandlerOppslag,
+} from '@fpsak-frontend/shared-components';
 import {
   dateAfterOrEqual,
   dateBeforeOrEqual,
@@ -32,7 +39,6 @@ interface SoknadsfristVilkarDokumentProps {
   dokument: DokumentStatus;
   dokumentIndex: number;
   erAktivtDokument: boolean;
-  saksbehandlere: { [key: string]: string };
 }
 
 export const DELVIS_OPPFYLT = 'DELVIS_OPPFYLT';
@@ -50,10 +56,10 @@ export const SoknadsfristVilkarDokument = ({
   dokument,
   erAktivtDokument,
   dokumentIndex,
-  saksbehandlere,
 }: SoknadsfristVilkarDokumentProps) => {
   const intl = useIntl();
-  const opprettetAv = dokument?.avklarteOpplysninger?.opprettetAv;
+  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
+  const opprettetAv = hentSaksbehandlerNavn(dokument?.avklarteOpplysninger?.opprettetAv);
   const opprettetTidspunkt = dokument?.avklarteOpplysninger?.opprettetTidspunkt;
   const minDate = useMemo(
     () =>
@@ -91,7 +97,7 @@ export const SoknadsfristVilkarDokument = ({
             readOnly={readOnly}
             placeholder={intl.formatMessage({ id: 'VilkarBegrunnelse.BegrunnVurdering' })}
           />
-          <AssessedBy name={saksbehandlere[opprettetAv] || opprettetAv} date={opprettetTidspunkt} />
+          <AssessedBy name={opprettetAv} date={opprettetTidspunkt} />
         </>
       )}
       <VerticalSpacer sixteenPx />
