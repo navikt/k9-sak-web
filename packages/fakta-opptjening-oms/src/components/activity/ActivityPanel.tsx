@@ -213,7 +213,7 @@ export const ActivityPanel = ({
     />
     {!shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
       <>
-        <VerticalSpacer twentyPx />
+        <VerticalSpacer eightPx />
         {!initialValues.erManueltOpprettet && (
           <RadioGroupField
             name="erGodkjent"
