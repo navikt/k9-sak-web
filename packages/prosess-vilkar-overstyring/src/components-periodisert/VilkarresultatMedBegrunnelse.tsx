@@ -3,10 +3,8 @@ import { FormattedMessage } from 'react-intl';
 
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { VilkarResultPickerPeriodisert as VilkarResultPicker } from '@k9-sak-web/prosess-felles';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn, SaksbehandlereInfo } from '@k9-sak-web/types';
-import { K9sakApiKeys } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-data/useGlobalStateRestApiData';
+import { VerticalSpacer, useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { CustomVilkarText } from './VilkarresultatMedOverstyringForm';
 import VilkarBegrunnelse from './VilkarBegrunnelse';
@@ -50,13 +48,13 @@ export const VilkarresultatMedBegrunnelse = ({
   valgtPeriodeTom,
   opprettetAv,
 }: VilkarresultatMedBegrunnelseProps) => {
-  const { saksbehandlere = {} } = useGlobalStateRestApiData<SaksbehandlereInfo>(K9sakApiKeys.HENT_SAKSBEHANDLERE) || {};
+  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   return (
     <>
       {skalViseBegrunnelse && (
         <>
           <VilkarBegrunnelse isReadOnly={readOnly} />
-          <AssessedBy name={saksbehandlere[opprettetAv] || opprettetAv} />
+          <AssessedBy name={hentSaksbehandlerNavn(opprettetAv)} />
           <VerticalSpacer eightPx />
         </>
       )}

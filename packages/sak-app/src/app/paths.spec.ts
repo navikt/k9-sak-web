@@ -1,7 +1,7 @@
-import { getPathToFplos } from './paths';
+import { getPathToK9Los } from './paths';
 
 describe('paths', () => {
   it('skal hente url til Fplos gitt Fpsak url', () => {
-    expect(getPathToFplos()).toEqual(null);
+    expect(getPathToK9Los()).toEqual(null);
   });
 });

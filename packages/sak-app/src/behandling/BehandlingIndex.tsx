@@ -26,7 +26,7 @@ import {
   getProsessStegLocation,
   getFaktaLocation,
   getLocationWithDefaultProsessStegAndFakta,
-  getPathToFplos,
+  getPathToK9Los,
 } from '../app/paths';
 import { K9sakApiKeys, requestApi, restApiHooks, LinkCategory } from '../data/k9sakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
@@ -142,7 +142,7 @@ const BehandlingIndex = ({
   const location = useLocation();
   const navigate = useNavigate();
   const opneSokeside = useCallback(() => {
-    window.location.assign(getPathToFplos() || '/');
+    window.location.assign(getPathToK9Los() || '/');
   }, []);
   const oppdaterProsessStegOgFaktaPanelIUrl = useCallback(getOppdaterProsessStegOgFaktaPanelIUrl(location, navigate), [
     location,

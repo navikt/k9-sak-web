@@ -7,20 +7,12 @@ interface OwnProps {
   vurdering: InstitusjonVurderingMedPerioder;
   readOnly: boolean;
   løsAksjonspunkt: (payload: any) => void;
-  saksbehandlere: { [key: string]: string };
 }
 
-const InstitusjonDetails = ({ vurdering, readOnly, løsAksjonspunkt, saksbehandlere }: OwnProps) => {
+const InstitusjonDetails = ({ vurdering, readOnly, løsAksjonspunkt }: OwnProps) => {
   const [redigering, setRedigering] = useState(false);
   if (vurdering.resultat !== Vurderingsresultat.MÅ_VURDERES && !redigering) {
-    return (
-      <InstitusjonFerdigVisning
-        vurdering={vurdering}
-        readOnly={readOnly}
-        rediger={() => setRedigering(true)}
-        saksbehandlere={saksbehandlere}
-      />
-    );
+    return <InstitusjonFerdigVisning vurdering={vurdering} readOnly={readOnly} rediger={() => setRedigering(true)} />;
   }
   return (
     <InstitusjonForm
