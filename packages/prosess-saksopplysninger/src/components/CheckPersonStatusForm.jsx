@@ -64,14 +64,13 @@ export const CheckPersonStatusFormImpl = ({
         name="fortsettBehandling"
         validate={[required]}
         readOnly={readOnly}
-        isTrueOrFalseSelection
         radios={[
           {
-            value: 'false',
+            value: false,
             label: intl.formatMessage({ id: 'CheckPersonStatusForm.HaltBehandling' }),
           },
           {
-            value: 'true',
+            value: true,
             label: intl.formatMessage({ id: 'CheckPersonStatusForm.ContinueBehandling' }),
           },
         ]}

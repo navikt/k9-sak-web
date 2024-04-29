@@ -68,14 +68,13 @@ const VilkarResultPicker = ({
           bredde="XXL"
           isVertical
           readOnly={readOnly}
-          isTrueOrFalseSelection
           radios={[
             {
-              value: 'true',
+              value: true,
               label: <Label input={customVilkarOppfyltText} textOnly />,
             },
             {
-              value: 'false',
+              value: false,
               label: <Label input={customVilkarIkkeOppfyltText} textOnly />,
             },
           ]}

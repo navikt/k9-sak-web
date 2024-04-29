@@ -111,14 +111,13 @@ export const AksjonspunktGodkjenningFieldArray = ({
                 name={`${id}.totrinnskontrollGodkjent`}
                 bredde="M"
                 readOnly={readOnly}
-                isTrueOrFalseSelection
                 radios={[
                   {
-                    value: 'true',
+                    value: true,
                     label: <FormattedMessage id="ApprovalField.Godkjent" />,
                   },
                   {
-                    value: 'false',
+                    value: false,
                     label: <FormattedMessage id="ApprovalField.Vurder" />,
                   },
                 ]}

@@ -114,14 +114,13 @@ export class VarselOmRevurderingFormImpl extends React.Component {
             <RadioGroupField
               name="sendVarsel"
               validate={[required]}
-              isTrueOrFalseSelection
               radios={[
                 {
-                  value: 'true',
+                  value: true,
                   label: intl.formatMessage({ id: 'VarselOmRevurderingForm.SendVarsel' }),
                 },
                 {
-                  value: 'false',
+                  value: false,
                   label: intl.formatMessage({ id: 'VarselOmRevurderingForm.IkkeSendVarsel' }),
                 },
               ]}

@@ -34,14 +34,13 @@ const BelopetMottattIGodTroFormPanel = ({ readOnly, erBelopetIBehold }: OwnProps
       validate={[required]}
       name="erBelopetIBehold"
       readOnly={readOnly}
-      isTrueOrFalseSelection
       radios={[
         {
-          value: 'true',
+          value: true,
           label: <FormattedMessage id="BelopetMottattIGodTroFormPanel.Ja" />,
         },
         {
-          value: 'false',
+          value: false,
           label: <FormattedMessage id="BelopetMottattIGodTroFormPanel.Nei" />,
         },
       ]}

@@ -69,14 +69,13 @@ export const AvklarFaresignalerForm = ({ readOnly, aksjonspunkt, ...formProps }:
             isVertical
             readOnly={readOnly}
             isEdited={!isAksjonspunktOpen(aksjonspunkt.status.kode)}
-            isTrueOrFalseSelection
             radios={[
               {
-                value: 'true',
+                value: true,
                 label: <FormattedMessage id="Risikopanel.Form.Innvirkning" />,
               },
               {
-                value: 'false',
+                value: false,
                 label: <FormattedMessage id="Risikopanel.Form.IngenInnvirkning" />,
               },
             ]}

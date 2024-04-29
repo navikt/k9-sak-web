@@ -220,14 +220,13 @@ export const ActivityPanel = ({
             validate={[required]}
             readOnly={readOnly}
             isEdited={initialValues.erEndret}
-            isTrueOrFalseSelection
             radios={[
               {
-                value: 'true',
+                value: true,
                 label: <FormattedMessage id="ActivityPanel.Godkjent" />,
               },
               {
-                value: 'false',
+                value: false,
                 label: <FormattedMessage id="ActivityPanel.IkkeGodkjent" values={{ b: chunks => <b>{chunks}</b> }} />,
               },
             ]}

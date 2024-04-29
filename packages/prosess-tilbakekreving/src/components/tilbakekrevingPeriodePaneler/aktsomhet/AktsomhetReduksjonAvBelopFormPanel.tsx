@@ -49,14 +49,13 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
           validate={[required]}
           name="harGrunnerTilReduksjon"
           readOnly={readOnly}
-          isTrueOrFalseSelection
           radios={[
             {
-              value: 'true',
+              value: true,
               label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />,
             },
             {
-              value: 'false',
+              value: false,
               label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />,
             },
           ]}
@@ -165,14 +164,13 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
                 validate={[required]}
                 name="skalDetTilleggesRenter"
                 readOnly={readOnly}
-                isTrueOrFalseSelection
                 radios={[
                   {
-                    value: 'true',
+                    value: true,
                     label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />,
                   },
                   {
-                    value: 'false',
+                    value: false,
                     label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />,
                   },
                 ]}

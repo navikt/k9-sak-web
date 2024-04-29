@@ -95,14 +95,13 @@ export const InnsynFormImpl = ({
             readOnly={readOnly}
             isEdited={!isApOpen}
             validate={[required]}
-            isTrueOrFalseSelection
             radios={[
               {
-                value: 'true',
+                value: true,
                 label: <FormattedMessage id="InnsynForm.SettBehandlingPåVent" />,
               },
               {
-                value: 'false',
+                value: false,
                 label: <FormattedMessage id="InnsynForm.ForeslåOgFatteVedtak" />,
               },
             ]}

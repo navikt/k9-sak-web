@@ -91,14 +91,13 @@ export const Tilbaketrekkpanel = ({
           direction="horizontal"
           readOnly={readOnly}
           isEdited={!isAksjonspunktOpen(vurderTilbaketrekkAP.status.kode)}
-          isTrueOrFalseSelection
           radios={[
             {
-              value: 'false',
+              value: false,
               label: <FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Utfør" />,
             },
             {
-              value: 'true',
+              value: true,
               label: <FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Hindre" />,
             },
           ]}

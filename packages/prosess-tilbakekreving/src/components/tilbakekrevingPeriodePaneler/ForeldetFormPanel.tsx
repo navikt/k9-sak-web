@@ -14,8 +14,7 @@ const ForeldetFormPanel = () => (
         name="periodenErForeldet"
         readOnly
         label={<FormattedMessage id="ForeldetPanel.VurderOmPeriodenErForeldet" />}
-        isTrueOrFalseSelection
-        radios={[{ value: 'true', label: <FormattedMessage id="ForeldetPanel.PeriodenErForeldet" /> }]}
+        radios={[{ value: true, label: <FormattedMessage id="ForeldetPanel.PeriodenErForeldet" /> }]}
       />
     </div>
   </HGrid>

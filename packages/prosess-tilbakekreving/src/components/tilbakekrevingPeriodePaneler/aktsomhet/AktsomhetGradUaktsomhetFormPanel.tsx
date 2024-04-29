@@ -71,10 +71,9 @@ const AktsomhetGradUaktsomhetFormPanel = ({
             validate={[required]}
             name="tilbakekrevSelvOmBeloepErUnder4Rettsgebyr"
             readOnly={readOnly}
-            isTrueOrFalseSelection
             radios={[
               {
-                value: 'true',
+                value: true,
                 label: <FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.Ja" />,
                 element: (
                   <div className="my-2">
@@ -93,7 +92,7 @@ const AktsomhetGradUaktsomhetFormPanel = ({
                 ),
               },
               {
-                value: 'false',
+                value: false,
                 label: <FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.Nei" />,
                 element: (
                   <ArrowBox alignOffset={20}>

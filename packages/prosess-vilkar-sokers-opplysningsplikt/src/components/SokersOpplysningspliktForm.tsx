@@ -166,15 +166,14 @@ export const SokersOpplysningspliktFormImpl = ({
           <RadioGroupField
             name="erVilkarOk"
             validate={[required]}
-            isTrueOrFalseSelection
             radios={[
               {
-                value: 'true',
+                value: true,
                 disabled: isVilkarOppfyltDisabled(hasSoknad, inntektsmeldingerSomIkkeKommer),
                 label: <FormattedMessage id={findRadioButtonTextCode(true)} />,
               },
               {
-                value: 'false',
+                value: false,
                 label: getLabel(intl),
               },
             ]}

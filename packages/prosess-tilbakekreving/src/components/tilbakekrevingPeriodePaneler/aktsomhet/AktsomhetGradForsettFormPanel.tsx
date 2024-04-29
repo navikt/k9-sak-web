@@ -30,14 +30,13 @@ const AktsomhetGradForsettFormPanel = ({ readOnly, erValgtResultatTypeForstoBurd
               validate={[required]}
               name="skalDetTilleggesRenter"
               readOnly={readOnly}
-              isTrueOrFalseSelection
               radios={[
                 {
-                  value: 'true',
+                  value: true,
                   label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />,
                 },
                 {
-                  value: 'false',
+                  value: false,
                   label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />,
                 },
               ]}

@@ -252,14 +252,13 @@ const BehandleAnkeFormImpl = ({
                 readOnly={readOnly}
                 className={readOnly ? styles.selectReadOnly : null}
                 direction="horisontal"
-                isTrueOrFalseSelection
                 radios={[
                   {
-                    value: 'true',
+                    value: true,
                     label: intl.formatMessage({ id: 'Ankebehandling.Realitetsbehandles.Ja' }),
                   },
                   {
-                    value: 'false',
+                    value: false,
                     label: intl.formatMessage({ id: 'Ankebehandling.Realitetsbehandles.Nei' }),
                   },
                 ]}

@@ -51,14 +51,13 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
       name="erEosBorger"
       validate={[required]}
       readOnly={readOnly}
-      isTrueOrFalseSelection
       radios={[
         {
-          value: 'true',
+          value: true,
           label: <FormattedMessage id="StatusForBorgerFaktaPanel.CitizenEEA" />,
         },
         {
-          value: 'false',
+          value: false,
           label: <FormattedMessage id="StatusForBorgerFaktaPanel.CitizenOutsideEEA" />,
         },
       ]}
@@ -75,14 +74,13 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
           validate={[required]}
           readOnly={readOnly}
           isEdited={isBorgerAksjonspunktClosed}
-          isTrueOrFalseSelection
           radios={[
             {
-              value: 'true',
+              value: true,
               label: <FormattedMessage id="StatusForBorgerFaktaPanel.HarOppholdsrett" />,
             },
             {
-              value: 'false',
+              value: false,
               label: (
                 <FormattedMessage
                   id="StatusForBorgerFaktaPanel.HarIkkeOppholdsrett"
@@ -107,14 +105,13 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
           validate={[required]}
           readOnly={readOnly}
           isEdited={isBorgerAksjonspunktClosed}
-          isTrueOrFalseSelection
           radios={[
             {
-              value: 'true',
+              value: true,
               label: <FormattedMessage id="StatusForBorgerFaktaPanel.HarLovligOpphold" />,
             },
             {
-              value: 'false',
+              value: false,
               label: (
                 <FormattedMessage
                   id="StatusForBorgerFaktaPanel.HarIkkeLovligOpphold"

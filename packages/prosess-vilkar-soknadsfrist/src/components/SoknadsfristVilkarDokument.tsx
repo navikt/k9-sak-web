@@ -129,7 +129,7 @@ export const SoknadsfristVilkarDokument = ({
           readOnly={readOnly}
           radios={[
             {
-              value: 'true',
+              value: true,
               label: (
                 <FormattedMessage id="SoknadsfristVilkarForm.ErOppfylt" values={{ b: chunks => <b>{chunks}</b> }} />
               ),
@@ -158,7 +158,7 @@ export const SoknadsfristVilkarDokument = ({
               ),
             },
             {
-              value: 'false',
+              value: false,
               label: (
                 <FormattedMessage
                   id="SoknadsfristVilkarForm.VilkarIkkeOppfylt"

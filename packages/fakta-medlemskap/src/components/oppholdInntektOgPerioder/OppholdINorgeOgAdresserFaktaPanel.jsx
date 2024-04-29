@@ -94,14 +94,13 @@ const OppholdINorgeOgAdresserFaktaPanel = ({
               bredde="XXL"
               readOnly={readOnly}
               isEdited={isBosattAksjonspunktClosed}
-              isTrueOrFalseSelection
               radios={[
                 {
-                  value: 'true',
+                  value: true,
                   label: <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.ResidingInNorway" />,
                 },
                 {
-                  value: 'false',
+                  value: false,
                   label: (
                     <FormattedMessage
                       id="OppholdINorgeOgAdresserFaktaPanel.NotResidingInNorway"

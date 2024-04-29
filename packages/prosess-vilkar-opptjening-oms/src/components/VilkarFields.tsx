@@ -91,14 +91,13 @@ export const VilkarFields = ({
           bredde="XXL"
           isVertical
           readOnly={readOnly}
-          isTrueOrFalseSelection={erOmsorgspenger && !skalValgMidlertidigInaktivTypeBVises}
           radios={[
             {
-              value: 'true',
+              value: true,
               label: erOppfyltText,
             },
             {
-              value: 'false',
+              value: false,
               label: erIkkeOppfyltText,
             },
             ...(!erOmsorgspenger

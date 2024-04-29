@@ -126,14 +126,13 @@ export const FormkravKlageForm = ({
                 name="erKlagerPart"
                 validate={[required]}
                 readOnly={readOnly}
-                isTrueOrFalseSelection
                 radios={[
                   {
-                    value: 'true',
+                    value: true,
                     label: intl.formatMessage({ id: 'Klage.Formkrav.Ja' }),
                   },
                   {
-                    value: 'false',
+                    value: false,
                     label: intl.formatMessage({ id: 'Klage.Formkrav.Nei' }),
                   },
                 ]}
@@ -146,14 +145,13 @@ export const FormkravKlageForm = ({
                 name="erKonkret"
                 validate={[required]}
                 readOnly={readOnly}
-                isTrueOrFalseSelection
                 radios={[
                   {
-                    value: 'true',
+                    value: true,
                     label: intl.formatMessage({ id: 'Klage.Formkrav.Ja' }),
                   },
                   {
-                    value: 'false',
+                    value: false,
                     label: intl.formatMessage({ id: 'Klage.Formkrav.Nei' }),
                   },
                 ]}
@@ -168,14 +166,13 @@ export const FormkravKlageForm = ({
                 name="erFristOverholdt"
                 validate={[required]}
                 readOnly={readOnly}
-                isTrueOrFalseSelection
                 radios={[
                   {
-                    value: 'true',
+                    value: true,
                     label: intl.formatMessage({ id: 'Klage.Formkrav.Ja' }),
                   },
                   {
-                    value: 'false',
+                    value: false,
                     label: intl.formatMessage({ id: 'Klage.Formkrav.Nei' }),
                   },
                 ]}
@@ -188,14 +185,13 @@ export const FormkravKlageForm = ({
                 name="erSignert"
                 validate={[required]}
                 readOnly={readOnly}
-                isTrueOrFalseSelection
                 radios={[
                   {
-                    value: 'true',
+                    value: true,
                     label: intl.formatMessage({ id: 'Klage.Formkrav.Ja' }),
                   },
                   {
-                    value: 'false',
+                    value: false,
                     label: intl.formatMessage({ id: 'Klage.Formkrav.Nei' }),
                   },
                 ]}
