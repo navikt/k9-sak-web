@@ -1,4 +1,4 @@
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import { RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
@@ -67,26 +67,42 @@ const AktsomhetGradUaktsomhetFormPanel = ({
             <FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.Tilbakekrev" />
           </Detail>
           <VerticalSpacer eightPx />
-          <RadioGroupField validate={[required]} name="tilbakekrevSelvOmBeloepErUnder4Rettsgebyr" readOnly={readOnly}>
-            <RadioOption label={<FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.Ja" />} value>
-              {sarligGrunnerBegrunnelseDiv(readOnly, intl)}
-              <AktsomhetSarligeGrunnerFormPanel
-                harGrunnerTilReduksjon={harGrunnerTilReduksjon}
-                erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
-                sarligGrunnTyper={sarligGrunnTyper}
-                harMerEnnEnYtelse={harMerEnnEnYtelse}
-                feilutbetalingBelop={feilutbetalingBelop}
-                readOnly={readOnly}
-                handletUaktsomhetGrad={handletUaktsomhetGrad}
-                andelSomTilbakekreves={andelSomTilbakekreves}
-              />
-            </RadioOption>
-            <RadioOption label={<FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.Nei" />} value={false}>
-              <ArrowBox alignOffset={20}>
-                <FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.AllePerioderBehandlesLikt" />
-              </ArrowBox>
-            </RadioOption>
-          </RadioGroupField>
+          <RadioGroupField
+            validate={[required]}
+            name="tilbakekrevSelvOmBeloepErUnder4Rettsgebyr"
+            readOnly={readOnly}
+            isTrueOrFalseSelection
+            radios={[
+              {
+                value: 'true',
+                label: <FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.Ja" />,
+                element: (
+                  <div className="my-2">
+                    {sarligGrunnerBegrunnelseDiv(readOnly, intl)}
+                    <AktsomhetSarligeGrunnerFormPanel
+                      harGrunnerTilReduksjon={harGrunnerTilReduksjon}
+                      erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
+                      sarligGrunnTyper={sarligGrunnTyper}
+                      harMerEnnEnYtelse={harMerEnnEnYtelse}
+                      feilutbetalingBelop={feilutbetalingBelop}
+                      readOnly={readOnly}
+                      handletUaktsomhetGrad={handletUaktsomhetGrad}
+                      andelSomTilbakekreves={andelSomTilbakekreves}
+                    />
+                  </div>
+                ),
+              },
+              {
+                value: 'false',
+                label: <FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.Nei" />,
+                element: (
+                  <ArrowBox alignOffset={20}>
+                    <FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.AllePerioderBehandlesLikt" />
+                  </ArrowBox>
+                ),
+              },
+            ]}
+          />
           <VerticalSpacer eightPx />
         </>
       )}

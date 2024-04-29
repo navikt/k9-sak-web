@@ -1,6 +1,6 @@
 import {
+  Label,
   RadioGroupField,
-  RadioOption,
   behandlingForm,
   behandlingFormValueSelector,
   hasBehandlingFormErrorsOfType,
@@ -60,19 +60,35 @@ export const CheckPersonStatusFormImpl = ({
     )}
     <VerticalSpacer twentyPx />
     <div className={styles.radioGroup}>
-      <RadioGroupField name="fortsettBehandling" validate={[required]} readOnly={readOnly}>
-        <RadioOption label={{ id: 'CheckPersonStatusForm.HaltBehandling' }} value={false} />
-        <RadioOption label={{ id: 'CheckPersonStatusForm.ContinueBehandling' }} value />
-      </RadioGroupField>
+      <RadioGroupField
+        name="fortsettBehandling"
+        validate={[required]}
+        readOnly={readOnly}
+        isTrueOrFalseSelection
+        radios={[
+          {
+            value: 'false',
+            label: intl.formatMessage({ id: 'CheckPersonStatusForm.HaltBehandling' }),
+          },
+          {
+            value: 'true',
+            label: intl.formatMessage({ id: 'CheckPersonStatusForm.ContinueBehandling' }),
+          },
+        ]}
+      />
       {fortsettBehandling === true && (
         <ArrowBox alignOffset={readOnly ? 0 : 198}>
           <Detail>{intl.formatMessage({ id: 'CheckPersonStatusForm.SetPersonStatus' })}</Detail>
           <VerticalSpacer eightPx />
-          <RadioGroupField name="personstatus" validate={[required]} readOnly={readOnly}>
-            {personStatuser.map(d => (
-              <RadioOption key={d.kode} value={d.kode} label={d.navn} />
-            ))}
-          </RadioGroupField>
+          <RadioGroupField
+            name="personstatus"
+            validate={[required]}
+            readOnly={readOnly}
+            radios={personStatuser.map(d => ({
+              value: d.kode,
+              label: <Label input={d.navn} textOnly />,
+            }))}
+          />
         </ArrowBox>
       )}
     </div>

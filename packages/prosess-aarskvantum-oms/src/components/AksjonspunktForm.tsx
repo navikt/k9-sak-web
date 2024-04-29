@@ -19,7 +19,7 @@ import {
 } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
 import { Delete } from '@navikt/ds-icons';
-import { Button, Label, Radio } from '@navikt/ds-react';
+import { Button, Label } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -175,14 +175,17 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
               <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Valg" />
             </Label>
           }
-        >
-          <Radio value={valgValues.reBehandling}>
-            <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.ReBehandling" />
-          </Radio>
-          <Radio value={valgValues.fortsett}>
-            <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fortsett" />
-          </Radio>
-        </RadioGroupField>
+          radios={[
+            {
+              value: valgValues.reBehandling,
+              label: <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.ReBehandling" />,
+            },
+            {
+              value: valgValues.fortsett,
+              label: <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fortsett" />,
+            },
+          ]}
+        />
       )}
       <TextAreaField
         label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.Begrunnelse' }}

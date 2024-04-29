@@ -4,7 +4,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { FaktaGruppe, PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
-import { BodyShort, Detail, HGrid, Radio } from '@navikt/ds-react';
+import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
 import PropTypes from 'prop-types';
@@ -94,19 +94,25 @@ const OppholdINorgeOgAdresserFaktaPanel = ({
               bredde="XXL"
               readOnly={readOnly}
               isEdited={isBosattAksjonspunktClosed}
-            >
-              <Radio value>
-                <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.ResidingInNorway" />
-              </Radio>
-              <Radio value={false}>
-                <FormattedMessage
-                  id="OppholdINorgeOgAdresserFaktaPanel.NotResidingInNorway"
-                  values={{
-                    b: chunks => <b>{chunks}</b>,
-                  }}
-                />
-              </Radio>
-            </RadioGroupField>
+              isTrueOrFalseSelection
+              radios={[
+                {
+                  value: 'true',
+                  label: <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.ResidingInNorway" />,
+                },
+                {
+                  value: 'false',
+                  label: (
+                    <FormattedMessage
+                      id="OppholdINorgeOgAdresserFaktaPanel.NotResidingInNorway"
+                      values={{
+                        b: chunks => <b>{chunks}</b>,
+                      }}
+                    />
+                  ),
+                },
+              ]}
+            />
           </div>
         )}
       </div>

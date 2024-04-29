@@ -27,7 +27,7 @@ import {
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
-import { BodyShort, Button, HGrid, Label, Radio } from '@navikt/ds-react';
+import { BodyShort, Button, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import React, { KeyboardEvent, MouseEvent } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -220,14 +220,18 @@ export const ActivityPanel = ({
             validate={[required]}
             readOnly={readOnly}
             isEdited={initialValues.erEndret}
-          >
-            <Radio value>
-              <FormattedMessage id="ActivityPanel.Godkjent" />
-            </Radio>
-            <Radio value={false}>
-              <FormattedMessage id="ActivityPanel.IkkeGodkjent" values={{ b: chunks => <b>{chunks}</b> }} />
-            </Radio>
-          </RadioGroupField>
+            isTrueOrFalseSelection
+            radios={[
+              {
+                value: 'true',
+                label: <FormattedMessage id="ActivityPanel.Godkjent" />,
+              },
+              {
+                value: 'false',
+                label: <FormattedMessage id="ActivityPanel.IkkeGodkjent" values={{ b: chunks => <b>{chunks}</b> }} />,
+              },
+            ]}
+          />
         )}
       </>
     )}

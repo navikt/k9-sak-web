@@ -1,7 +1,7 @@
 import { DecimalField, InputField, RadioGroupField, SelectField } from '@fpsak-frontend/form';
 import { ArrowBox, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr, maxValue, minValue, required } from '@fpsak-frontend/utils';
-import { BodyShort, Detail, HGrid, Radio } from '@navikt/ds-react';
+import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
@@ -45,14 +45,22 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
           <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.SkalSarligeGrunnerGiReduksjon" />
         </Detail>
         <VerticalSpacer eightPx />
-        <RadioGroupField validate={[required]} name="harGrunnerTilReduksjon" readOnly={readOnly}>
-          <Radio value>
-            <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />
-          </Radio>
-          <Radio value={false}>
-            <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />
-          </Radio>
-        </RadioGroupField>
+        <RadioGroupField
+          validate={[required]}
+          name="harGrunnerTilReduksjon"
+          readOnly={readOnly}
+          isTrueOrFalseSelection
+          radios={[
+            {
+              value: 'true',
+              label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />,
+            },
+            {
+              value: 'false',
+              label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />,
+            },
+          ]}
+        />
       </div>
     </HGrid>
     {harGrunnerTilReduksjon && (
@@ -157,14 +165,18 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
                 validate={[required]}
                 name="skalDetTilleggesRenter"
                 readOnly={readOnly}
-              >
-                <Radio value>
-                  <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />
-                </Radio>
-                <Radio value={false}>
-                  <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />
-                </Radio>
-              </RadioGroupField>
+                isTrueOrFalseSelection
+                radios={[
+                  {
+                    value: 'true',
+                    label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />,
+                  },
+                  {
+                    value: 'false',
+                    label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />,
+                  },
+                ]}
+              />
             </div>
           )}
         </HGrid>

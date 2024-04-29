@@ -4,7 +4,7 @@ import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsa
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
-import { BodyShort, Radio } from '@navikt/ds-react';
+import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -89,40 +89,36 @@ export const VilkarFields = ({
           name={`${fieldPrefix}.erVilkarOk`}
           validate={[required]}
           bredde="XXL"
-          direction="vertical"
+          isVertical
           readOnly={readOnly}
-        >
-          {({ optionProps }) => (
-            <FlexContainer>
-              <FlexColumn>
-                <FlexRow spaceBetween={false}>
-                  <Radio value {...optionProps}>
-                    {erOppfyltText}
-                  </Radio>
-                </FlexRow>
-                <FlexRow spaceBetween={false}>
-                  <Radio value={false} {...optionProps}>
-                    {erIkkeOppfyltText}
-                  </Radio>
-                </FlexRow>
-                {!erOmsorgspenger ? (
-                  <FlexRow spaceBetween={false}>
-                    <Radio value={midlertidigInaktiv.TYPE_A} {...optionProps}>
-                      {intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA' })}
-                    </Radio>
-                  </FlexRow>
-                ) : null}
-                {skalValgMidlertidigInaktivTypeBVises && (
-                  <FlexRow spaceBetween={false}>
-                    <Radio value={midlertidigInaktiv.TYPE_B} {...optionProps}>
-                      {intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' })}
-                    </Radio>
-                  </FlexRow>
-                )}
-              </FlexColumn>
-            </FlexContainer>
-          )}
-        </RadioGroupField>
+          isTrueOrFalseSelection={erOmsorgspenger && !skalValgMidlertidigInaktivTypeBVises}
+          radios={[
+            {
+              value: 'true',
+              label: erOppfyltText,
+            },
+            {
+              value: 'false',
+              label: erIkkeOppfyltText,
+            },
+            ...(!erOmsorgspenger
+              ? [
+                  {
+                    value: midlertidigInaktiv.TYPE_A,
+                    label: intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA' }),
+                  },
+                ]
+              : []),
+            ...(skalValgMidlertidigInaktivTypeBVises
+              ? [
+                  {
+                    value: midlertidigInaktiv.TYPE_B,
+                    label: intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' }),
+                  },
+                ]
+              : []),
+          ]}
+        />
       )}
       <VerticalSpacer sixteenPx />
     </>

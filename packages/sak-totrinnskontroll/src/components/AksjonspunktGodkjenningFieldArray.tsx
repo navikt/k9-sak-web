@@ -3,7 +3,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
-import { BodyShort, Detail, Radio } from '@navikt/ds-react';
+import { BodyShort, Detail } from '@navikt/ds-react';
 import { Location } from 'history';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -107,14 +107,22 @@ export const AksjonspunktGodkjenningFieldArray = ({
                 </div>
               ))}
             <NavFieldGroup>
-              <RadioGroupField name={`${id}.totrinnskontrollGodkjent`} bredde="M" readOnly={readOnly}>
-                <Radio value>
-                  <FormattedMessage id="ApprovalField.Godkjent" />
-                </Radio>
-                <Radio value={false}>
-                  <FormattedMessage id="ApprovalField.Vurder" />
-                </Radio>
-              </RadioGroupField>
+              <RadioGroupField
+                name={`${id}.totrinnskontrollGodkjent`}
+                bredde="M"
+                readOnly={readOnly}
+                isTrueOrFalseSelection
+                radios={[
+                  {
+                    value: 'true',
+                    label: <FormattedMessage id="ApprovalField.Godkjent" />,
+                  },
+                  {
+                    value: 'false',
+                    label: <FormattedMessage id="ApprovalField.Vurder" />,
+                  },
+                ]}
+              />
               {visArsaker && (
                 <ArrowBox alignOffset={erKlageKA ? 1 : 110}>
                   {!visKunBegrunnelse && (

@@ -1,7 +1,7 @@
 import { RadioGroupField } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
-import { Detail, Radio } from '@navikt/ds-react';
+import { Detail } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { FormSection } from 'redux-form';
@@ -85,19 +85,17 @@ const AktsomhetFormPanel = ({
       validate={[required]}
       name="handletUaktsomhetGrad"
       readOnly={readOnly}
+      radios={aktsomhetTyper.map((vrt: KodeverkMedNavn) => ({
+        value: vrt.kode,
+        label: erValgtResultatTypeForstoBurdeForstaatt ? (
+          <FormattedMessage id={forstoBurdeForstattTekster[vrt.kode]} />
+        ) : (
+          vrt.navn
+        ),
+      }))}
       // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
       onChange={resetFields}
-    >
-      {aktsomhetTyper.map((vrt: KodeverkMedNavn) => (
-        <Radio key={vrt.kode} value={vrt.kode}>
-          {erValgtResultatTypeForstoBurdeForstaatt ? (
-            <FormattedMessage id={forstoBurdeForstattTekster[vrt.kode]} />
-          ) : (
-            vrt.navn
-          )}
-        </Radio>
-      ))}
-    </RadioGroupField>
+    />
     {uaktsomhetCodes.includes(handletUaktsomhetGrad) && (
       <FormSection name={handletUaktsomhetGrad} key={handletUaktsomhetGrad}>
         <AktsomhetGradFormPanel

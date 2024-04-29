@@ -1,7 +1,7 @@
 import { RadioGroupField } from '@fpsak-frontend/form';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
-import { BodyShort, Detail, HGrid, Radio } from '@navikt/ds-react';
+import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './aktsomhetReduksjonAvBelopFormPanel.module.css';
@@ -30,14 +30,18 @@ const AktsomhetGradForsettFormPanel = ({ readOnly, erValgtResultatTypeForstoBurd
               validate={[required]}
               name="skalDetTilleggesRenter"
               readOnly={readOnly}
-            >
-              <Radio value>
-                <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />
-              </Radio>
-              <Radio value={false}>
-                <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />
-              </Radio>
-            </RadioGroupField>
+              isTrueOrFalseSelection
+              radios={[
+                {
+                  value: 'true',
+                  label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />,
+                },
+                {
+                  value: 'false',
+                  label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />,
+                },
+              ]}
+            />
           </div>
         </HGrid>
       )}

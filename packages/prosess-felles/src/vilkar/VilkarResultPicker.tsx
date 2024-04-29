@@ -6,7 +6,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort, Radio } from '@navikt/ds-react';
+import { BodyShort } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 
 import getPackageIntl from '../../i18n/getPackageIntl';
@@ -66,16 +66,20 @@ const VilkarResultPicker = ({
           name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}erVilkarOk`}
           validate={[required]}
           bredde="XXL"
-          direction="vertical"
+          isVertical
           readOnly={readOnly}
-        >
-          <Radio value>
-            <Label input={customVilkarOppfyltText} textOnly />
-          </Radio>
-          <Radio value={false}>
-            <Label input={customVilkarIkkeOppfyltText} textOnly />
-          </Radio>
-        </RadioGroupField>
+          isTrueOrFalseSelection
+          radios={[
+            {
+              value: 'true',
+              label: <Label input={customVilkarOppfyltText} textOnly />,
+            },
+            {
+              value: 'false',
+              label: <Label input={customVilkarIkkeOppfyltText} textOnly />,
+            },
+          ]}
+        />
       )}
       {erVilkarOk !== undefined && !erVilkarOk && avslagsarsaker && (
         <>

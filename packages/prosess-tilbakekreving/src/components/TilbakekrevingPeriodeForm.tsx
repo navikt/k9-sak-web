@@ -18,7 +18,7 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort, Button, Label as DSLabel, Detail, HGrid, Radio } from '@navikt/ds-react';
+import { BodyShort, Button, Label as DSLabel, Detail, HGrid } from '@navikt/ds-react';
 import moment from 'moment';
 import React, { Component } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -325,17 +325,15 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                   <RadioGroupField
                     validate={[required]}
                     name="valgtVilkarResultatType"
-                    direction="vertical"
+                    isVertical
                     readOnly={readOnly}
+                    radios={vilkarResultatTyper.map(vrt => ({
+                      value: vrt.kode,
+                      label: <Label input={vrt.navn} textOnly />,
+                    }))}
                     // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
                     onChange={this.resetFields}
-                  >
-                    {vilkarResultatTyper.map(vrt => (
-                      <Radio key={vrt.kode} value={vrt.kode}>
-                        <Label input={vrt.navn} textOnly />
-                      </Radio>
-                    ))}
-                  </RadioGroupField>
+                  />
                 </div>
               </HGrid>
             )}

@@ -18,7 +18,7 @@ import {
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Kodeverk } from '@k9-sak-web/types';
-import { Heading, Radio } from '@navikt/ds-react';
+import { Heading } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -69,14 +69,22 @@ export const BehandleUnntakForm = ({
 
       <VerticalSpacer twentyPx />
 
-      <RadioGroupField name="behandlingsresultat" validate={[required]} direction="horizontal" readOnly={readOnly}>
-        <Radio value={behandlingResultatType.INNVILGET}>
-          <FormattedMessage id="Unntak.Innvilg" />
-        </Radio>
-        <Radio value={behandlingResultatType.AVSLATT}>
-          <FormattedMessage id="Unntak.Avslå" />
-        </Radio>
-      </RadioGroupField>
+      <RadioGroupField
+        name="behandlingsresultat"
+        validate={[required]}
+        direction="horizontal"
+        readOnly={readOnly}
+        radios={[
+          {
+            value: behandlingResultatType.INNVILGET,
+            label: <FormattedMessage id="Unntak.Innvilg" />,
+          },
+          {
+            value: behandlingResultatType.AVSLATT,
+            label: <FormattedMessage id="Unntak.Avslå" />,
+          },
+        ]}
+      />
 
       <FlexColumn>
         <ProsessStegSubmitButton

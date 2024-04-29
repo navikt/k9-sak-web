@@ -11,7 +11,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { hasValidText, hasValidValue, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
-import { Button, Label, Radio } from '@navikt/ds-react';
+import { Button, Label } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -146,26 +146,33 @@ export const FormContent = ({
               <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Valg" />
             </Label>
           }
-        >
-          <Radio value={valgValues.reBehandling}>
-            <FormattedMessage
-              id={
-                erÅF
-                  ? 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling.Fosterbarn'
-                  : 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling'
-              }
-            />
-          </Radio>
-          <Radio value={valgValues.fortsett}>
-            <FormattedMessage
-              id={
-                erÅF
-                  ? 'Årskvantum.Aksjonspunkt.Avslått.Fortsett.Fosterbarn'
-                  : 'Årskvantum.Aksjonspunkt.Avslått.Fortsett'
-              }
-            />
-          </Radio>
-        </RadioGroupField>
+          radios={[
+            {
+              value: valgValues.reBehandling,
+              label: (
+                <FormattedMessage
+                  id={
+                    erÅF
+                      ? 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling.Fosterbarn'
+                      : 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling'
+                  }
+                />
+              ),
+            },
+            {
+              value: valgValues.fortsett,
+              label: (
+                <FormattedMessage
+                  id={
+                    erÅF
+                      ? 'Årskvantum.Aksjonspunkt.Avslått.Fortsett.Fosterbarn'
+                      : 'Årskvantum.Aksjonspunkt.Avslått.Fortsett'
+                  }
+                />
+              ),
+            },
+          ]}
+        />
       )}
       <TextAreaField
         label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.Begrunnelse' }}

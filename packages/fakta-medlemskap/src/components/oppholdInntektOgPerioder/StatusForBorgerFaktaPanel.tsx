@@ -3,7 +3,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { ArrowBox, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
-import { Detail, Radio } from '@navikt/ds-react';
+import { Detail } from '@navikt/ds-react';
 import React, { FunctionComponent } from 'react';
 import { FormattedMessage, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
@@ -47,14 +47,22 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
     titleCode="StatusForBorgerFaktaPanel.ApplicationInformation"
     merknaderFraBeslutter={alleMerknaderFraBeslutter[apKode]}
   >
-    <RadioGroupField name="erEosBorger" validate={[required]} readOnly={readOnly}>
-      <Radio value>
-        <FormattedMessage id="StatusForBorgerFaktaPanel.CitizenEEA" />
-      </Radio>
-      <Radio value={false}>
-        <FormattedMessage id="StatusForBorgerFaktaPanel.CitizenOutsideEEA" />
-      </Radio>
-    </RadioGroupField>
+    <RadioGroupField
+      name="erEosBorger"
+      validate={[required]}
+      readOnly={readOnly}
+      isTrueOrFalseSelection
+      radios={[
+        {
+          value: 'true',
+          label: <FormattedMessage id="StatusForBorgerFaktaPanel.CitizenEEA" />,
+        },
+        {
+          value: 'false',
+          label: <FormattedMessage id="StatusForBorgerFaktaPanel.CitizenOutsideEEA" />,
+        },
+      ]}
+    />
 
     {erEosBorger && (
       <ArrowBox>
@@ -67,19 +75,25 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
           validate={[required]}
           readOnly={readOnly}
           isEdited={isBorgerAksjonspunktClosed}
-        >
-          <Radio value>
-            <FormattedMessage id="StatusForBorgerFaktaPanel.HarOppholdsrett" />
-          </Radio>
-          <Radio value={false}>
-            <FormattedMessage
-              id="StatusForBorgerFaktaPanel.HarIkkeOppholdsrett"
-              values={{
-                b: chunks => <b>{chunks}</b>,
-              }}
-            />
-          </Radio>
-        </RadioGroupField>
+          isTrueOrFalseSelection
+          radios={[
+            {
+              value: 'true',
+              label: <FormattedMessage id="StatusForBorgerFaktaPanel.HarOppholdsrett" />,
+            },
+            {
+              value: 'false',
+              label: (
+                <FormattedMessage
+                  id="StatusForBorgerFaktaPanel.HarIkkeOppholdsrett"
+                  values={{
+                    b: chunks => <b>{chunks}</b>,
+                  }}
+                />
+              ),
+            },
+          ]}
+        />
       </ArrowBox>
     )}
     {erEosBorger === false && (
@@ -93,19 +107,25 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
           validate={[required]}
           readOnly={readOnly}
           isEdited={isBorgerAksjonspunktClosed}
-        >
-          <Radio value>
-            <FormattedMessage id="StatusForBorgerFaktaPanel.HarLovligOpphold" />
-          </Radio>
-          <Radio value={false}>
-            <FormattedMessage
-              id="StatusForBorgerFaktaPanel.HarIkkeLovligOpphold"
-              values={{
-                b: chunks => <b>{chunks}</b>,
-              }}
-            />
-          </Radio>
-        </RadioGroupField>
+          isTrueOrFalseSelection
+          radios={[
+            {
+              value: 'true',
+              label: <FormattedMessage id="StatusForBorgerFaktaPanel.HarLovligOpphold" />,
+            },
+            {
+              value: 'false',
+              label: (
+                <FormattedMessage
+                  id="StatusForBorgerFaktaPanel.HarIkkeLovligOpphold"
+                  values={{
+                    b: chunks => <b>{chunks}</b>,
+                  }}
+                />
+              ),
+            },
+          ]}
+        />
       </ArrowBox>
     )}
   </FaktaGruppe>

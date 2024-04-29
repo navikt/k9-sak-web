@@ -13,7 +13,7 @@ import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsa
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, BeregningsresultatFp, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
-import { HGrid, Label, Radio } from '@navikt/ds-react';
+import { HGrid, Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -91,14 +91,18 @@ export const Tilbaketrekkpanel = ({
           direction="horizontal"
           readOnly={readOnly}
           isEdited={!isAksjonspunktOpen(vurderTilbaketrekkAP.status.kode)}
-        >
-          <Radio value={false}>
-            <FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Utfør" />
-          </Radio>
-          <Radio value>
-            <FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Hindre" />
-          </Radio>
-        </RadioGroupField>
+          isTrueOrFalseSelection
+          radios={[
+            {
+              value: 'false',
+              label: <FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Utfør" />,
+            },
+            {
+              value: 'true',
+              label: <FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Hindre" />,
+            },
+          ]}
+        />
       </HGrid>
       <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
         <TextAreaField

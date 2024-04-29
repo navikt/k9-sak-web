@@ -1,6 +1,6 @@
-import { RadioGroup } from '@navikt/ds-react';
+import { HStack, Radio, RadioGroup } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
-import React from 'react';
+import React, { Fragment, ReactElement, ReactNode } from 'react';
 import { Field, WrappedFieldInputProps } from 'redux-form';
 import LabelType from './LabelType';
 import { RadioOptionProps } from './RadioOption';
@@ -11,6 +11,13 @@ type Direction = 'horizontal' | 'vertical';
 
 interface RenderProp<TChildrenProps, TElement = any> {
   (props: TChildrenProps): React.ReactElement<TElement>;
+}
+
+interface RadioProps {
+  value: string;
+  label: string | ReactNode;
+  disabled?: boolean;
+  element?: ReactElement;
 }
 
 interface RadioGroupFieldProps {
@@ -37,6 +44,10 @@ interface RadioGroupFieldProps {
   isEdited?: boolean;
   dataId?: string;
   error?: string;
+  radios: RadioProps[];
+  parse?: (value: string) => any;
+  isVertical?: boolean;
+  isTrueOrFalseSelection?: boolean;
 }
 
 const classNames = classnames.bind(styles);
@@ -44,24 +55,17 @@ const classNames = classnames.bind(styles);
 const renderRadioGroupField = renderNavField(
   ({
     label,
-    name,
     value,
     onChange,
     bredde,
     readOnly,
     error,
-    children,
-    DOMName,
+    parse = v => v,
+    isTrueOrFalseSelection = false,
+    isVertical = false,
+    radios,
   }: RadioGroupFieldProps & WrappedFieldInputProps) => {
-    const optionProps = {
-      onChange,
-      name: DOMName || name,
-      groupDisabled: readOnly,
-      className: classNames('radio'),
-      actualValue: value,
-    };
-    const childIsRenderFn = typeof children === 'function';
-
+    const parseValue = isTrueOrFalseSelection ? (v: string) => v === 'true' : parse;
     return (
       <RadioGroup
         className={classNames(`input--${bredde}`, 'radioGroup', { readOnly })}
@@ -72,7 +76,36 @@ const renderRadioGroupField = renderNavField(
         value={value}
         disabled={readOnly}
       >
-        {childIsRenderFn ? children({ value, optionProps }) : children}
+        {isVertical &&
+          radios
+            .filter(radio => !readOnly || value === parseValue(radio.value))
+            .map(radio => (
+              <Fragment key={radio.value}>
+                <Radio value={parseValue(radio.value)} disabled={radio.disabled || readOnly}>
+                  {radio.label}
+                </Radio>
+                {value === parseValue(radio.value) && radio.element}
+              </Fragment>
+            ))}
+        {!isVertical && (
+          <>
+            <HStack gap="4">
+              {radios
+                .filter(radio => !readOnly || value === parseValue(radio.value))
+                .map(radio => (
+                  <Radio key={radio.value} value={parseValue(radio.value)} disabled={radio.disabled || readOnly}>
+                    {radio.label}
+                  </Radio>
+                ))}
+            </HStack>
+            {radios
+              .filter(radio => value === parseValue(radio.value))
+              .map(radio => (
+                <React.Fragment key={radio.value}>{radio.element}</React.Fragment>
+              ))}
+          </>
+        )}
+        {/* {childIsRenderFn ? children({ value, optionProps }) : children} */}
       </RadioGroup>
     );
   },
