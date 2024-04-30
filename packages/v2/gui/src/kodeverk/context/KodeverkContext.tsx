@@ -31,6 +31,9 @@ export const KodeverkContext = createContext<KodeverkContextType>(initialValue);
 
 export const KodeverkProvider = ({
   children,
+  kodeverk = undefined,
+  klageKodeverk = undefined,
+  tilbakeKodeverk = undefined,
 }: {
   children: React.ReactNode;
   kodeverk?: AlleKodeverk;
@@ -41,9 +44,9 @@ export const KodeverkProvider = ({
 
   const value = useMemo(
     () => ({
-      kodeverk: kodeverkContext.kodeverk,
-      klageKodeverk: kodeverkContext.klageKodeverk,
-      tilbakeKodeverk: kodeverkContext.tilbakeKodeverk,
+      kodeverk: kodeverk || kodeverkContext.kodeverk,
+      klageKodeverk: klageKodeverk || kodeverkContext.klageKodeverk,
+      tilbakeKodeverk: tilbakeKodeverk || kodeverkContext.tilbakeKodeverk,
       setKodeverkContext,
     }),
     [kodeverkContext],

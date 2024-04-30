@@ -56,7 +56,7 @@ export const konverterKodeverkTilKode = (data: any, erTilbakekreving: boolean, d
           data[key]?.kodeverk === 'BEHANDLING_RESULTAT_TYPE') // Skrive om denne foreløpig, de ekstra attributtene skal fjernes i backend
       ) {
         data[key] = data[key].kode; // eslint-disable-line no-param-reassign
-        debugLogKodeverkData(data[key], key, data);
+        // debugLogKodeverkData(data[key], key, data);
       }
     }
     if (typeof data[key] === 'object' && data[key] !== null) {

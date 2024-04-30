@@ -14,9 +14,15 @@ export const useKodeverkContext = () => {
 
   const { kodeverk, klageKodeverk, tilbakeKodeverk, setKodeverkContext } = kodeverkContext;
 
-  const kodeverkNavnFraKode = (kode: string, kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType) => {
-    console.log('oppslag i context', kodeverk);
-    if (kodeverk !== undefined) return utledKodeverkNavnFraKode(kode, kodeverkType, kodeverk);
+  const kodeverkNavnFraKode = (
+    kode: string,
+    kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType,
+    kilde: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' = 'kodeverk',
+  ) => {
+    if (kodeverk !== undefined) {
+      console.log('oppslag i context', kode, kodeverkType);
+      return utledKodeverkNavnFraKode(kode, kodeverkType, kodeverk);
+    }
     return 'Ukjent kode';
   };
 
@@ -24,7 +30,7 @@ export const useKodeverkContext = () => {
    * Returnerer en funksjon for oppslag i kodeverk som kan sendes ned til eldre komponenter som for eksempel
    * ikke har tilgang til kodeverkContext eller ikke kan bruke hooks
    */
-  const getKodeverkNavnFraKodeFn = (kilde: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage') => {
+  const getKodeverkNavnFraKodeFn = (kilde: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' = 'kodeverk') => {
     let kodeverkForKilde;
     switch (kilde) {
       case 'kodeverkTilbake':

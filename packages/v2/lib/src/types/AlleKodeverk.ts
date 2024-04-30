@@ -5,5 +5,5 @@ export type KodeverkMedUndertype = {
 };
 
 export type AlleKodeverk = {
-  [key in KodeverkType | KodeverkKlageType | KodeverkTilbakeType]?: KodeverkV2[] | KodeverkMedUndertype;
+  [key in KodeverkType | KodeverkKlageType | KodeverkTilbakeType]?: KodeverkV2[] | KodeverkMedUndertype | string[];
 };
