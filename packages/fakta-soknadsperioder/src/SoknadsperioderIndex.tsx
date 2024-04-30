@@ -1,5 +1,3 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
 import BehandlingPerioderårsakMedVilkår from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import { Loader } from '@navikt/ds-react';
 import React from 'react';
@@ -19,19 +17,12 @@ const intlConfig = createIntl(
 
 interface SoknadsperioderIndexProps {
   behandlingPerioderårsakMedVilkår?: BehandlingPerioderårsakMedVilkår;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
-const SoknadsperioderIndex: React.FC<SoknadsperioderIndexProps> = ({
-  behandlingPerioderårsakMedVilkår,
-  alleKodeverk,
-}) => (
+const SoknadsperioderIndex: React.FC<SoknadsperioderIndexProps> = ({ behandlingPerioderårsakMedVilkår }) => (
   <RawIntlProvider value={intlConfig}>
     {behandlingPerioderårsakMedVilkår ? (
-      <SoknadsperioderComponent
-        behandlingPerioderårsakMedVilkår={behandlingPerioderårsakMedVilkår}
-        kodeverk={alleKodeverk[kodeverkTyper.ÅRSAK_TIL_VURDERING]}
-      />
+      <SoknadsperioderComponent behandlingPerioderårsakMedVilkår={behandlingPerioderårsakMedVilkår} />
     ) : (
       <Loader size="2xlarge" />
     )}

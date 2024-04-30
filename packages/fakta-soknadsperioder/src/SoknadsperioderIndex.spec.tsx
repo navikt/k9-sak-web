@@ -1,7 +1,9 @@
+import * as React from 'react';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import * as React from 'react';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import messages from '../i18n/nb_NO.json';
 import SoknadsperioderIndex from './SoknadsperioderIndex';
 
@@ -50,34 +52,27 @@ describe('<SøknadsperioderIndex>', () => {
       periodeMedUtfall: [
         {
           periode: { fom: '2022-01-11', tom: '2022-04-11' },
-          utfall: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          utfall: 'IKKE_VURDERT', // , kodeverk: 'VILKAR_UTFALL_TYPE'
         },
       ],
       forrigeVedtak: [
         {
           periode: { fom: '2022-01-11', tom: '2022-02-11' },
-          utfall: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          utfall: 'OPPFYLT', // , kodeverk: 'VILKAR_UTFALL_TYPE'
         },
         {
           periode: { fom: '2022-02-14', tom: '2022-04-11' },
-          utfall: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          utfall: 'IKKE_OPPFYLT', // , kodeverk: 'VILKAR_UTFALL_TYPE' }
         },
       ],
     };
     renderWithIntl(
-      <SoknadsperioderIndex
-        behandlingPerioderårsakMedVilkår={data}
-        alleKodeverk={{
-          ÅrsakTilVurdering: [
-            {
-              kode: 'FØRSTEGANGSVURDERING',
-              navn: 'Ny periode',
-              kodeverk: 'ÅRSAK_TIL_VURDERING',
-            },
-          ],
-        }}
-      />,
-      { messages },
+      <KodeverkProvider kodeverk={alleKodeverkV2} klageKodeverk={{}} tilbakeKodeverk={{}}>
+        <SoknadsperioderIndex behandlingPerioderårsakMedVilkår={data} />
+      </KodeverkProvider>,
+      {
+        messages,
+      },
     );
   });
 
