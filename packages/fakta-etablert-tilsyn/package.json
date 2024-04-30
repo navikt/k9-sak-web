@@ -44,9 +44,9 @@
     "nav-frontend-tabs-style": "2.0.2",
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
-    "react": "18.2.0",
+    "react": "18.3.1",
     "react-collapse": "5.1.1",
-    "react-dom": "18.2.0",
+    "react-dom": "18.3.1",
     "react-hook-form": "7.51.3",
     "react-popper": "2.3.0"
   },
