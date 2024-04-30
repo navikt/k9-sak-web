@@ -2470,8 +2470,8 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@types/yup": 0.32.0
     date-fns: 2.30.0
-    dayjs: 1.11.10
-    formik: 2.4.5
+    dayjs: 1.11.11
+    formik: 2.4.6
     nav-frontend-core: 6.0.1
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
@@ -2540,7 +2540,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/fakta-felles": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.5.6
-    i18n-iso-countries: 7.11.0
+    i18n-iso-countries: 7.11.1
     moment: 2.30.1
     nav-frontend-core: 6.0.1
     nav-frontend-paneler-style: 2.0.2
@@ -2622,7 +2622,7 @@ __metadata:
     "@navikt/ds-react": 6.5.0
     "@types/yup": 0.32.0
     date-fns: 2.30.0
-    formik: 2.4.5
+    formik: 2.4.6
     nav-datovelger: 12.6.0
     nav-frontend-core: 6.0.1
     nav-frontend-lenker: 2.0.2
@@ -2668,7 +2668,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.5.6
     classnames: 2.5.1
-    formik: 2.4.5
+    formik: 2.4.6
     lodash: 4.17.21
     moment: 2.30.1
     nav-frontend-core: 6.0.1
@@ -3111,7 +3111,7 @@ __metadata:
     css-tree: 2.3.1
     date-fns: 2.30.0
     editorjs-html: 3.4.3
-    formik: 2.4.5
+    formik: 2.4.6
     moment: 2.30.1
     nav-frontend-core: 6.0.1
     nav-frontend-lenker: 2.0.2
@@ -3143,7 +3143,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.5.6
     classnames: 2.5.1
-    dayjs: 1.11.10
+    dayjs: 1.11.11
     lodash: 4.17.21
     moment: 2.30.1
     nav-frontend-core: 6.0.1
@@ -3511,7 +3511,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.5.6
-    dayjs: 1.11.10
+    dayjs: 1.11.11
     moment: 2.30.1
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
@@ -4354,7 +4354,7 @@ __metadata:
     axios: 1.6.8
     classnames: 2.5.1
     cypress: ^13.7.3
-    dayjs: 1.11.10
+    dayjs: 1.11.11
     eslint-plugin-cypress: ^2.15.2
     lodash: 4.17.21
     nav-frontend-chevron: 1.0.30
@@ -4378,7 +4378,7 @@ __metadata:
     react-hook-form: 7.51.3
     react-popper: 2.3.0
     start-server-and-test: ^2.0.3
-    vite: ^5.2.9
+    vite: ^5.2.10
   languageName: unknown
   linkType: soft
 
@@ -4417,7 +4417,7 @@ __metadata:
     axios: 1.6.8
     classnames: 2.5.1
     date-fns: 2.30.0
-    dayjs: 1.11.10
+    dayjs: 1.11.11
     lodash: 4.17.21
     msw: 1.3.3
     msw-storybook-addon: 1.10.0
@@ -4439,7 +4439,7 @@ __metadata:
     react-hook-form: 7.51.3
     react-popper: 2.3.0
     uuid: 9.0.1
-    vite: ^5.2.9
+    vite: ^5.2.10
   languageName: unknown
   linkType: soft
 
@@ -4450,7 +4450,7 @@ __metadata:
     "@fpsak-frontend/form": "*"
     "@k9-sak-web/types": "*"
     "@navikt/ft-plattform-komponenter": 2.5.6
-    formik: 2.4.5
+    formik: 2.4.6
     yup: 0.32.11
   languageName: unknown
   linkType: soft
@@ -4471,7 +4471,7 @@ __metadata:
     axios: 1.6.8
     classnames: 2.5.1
     cypress: ^13.7.3
-    dayjs: 1.11.10
+    dayjs: 1.11.11
     eslint-plugin-cypress: ^2.15.2
     lodash: 4.17.21
     msw: 1.3.3
@@ -4484,7 +4484,7 @@ __metadata:
     react-popper: 2.3.0
     react-query: 3.39.3
     start-server-and-test: ^2.0.3
-    vite: ^5.2.9
+    vite: ^5.2.10
   languageName: unknown
   linkType: soft
 
@@ -4499,7 +4499,7 @@ __metadata:
     "@popperjs/core": 2.11.8
     axios: 1.6.8
     classnames: 2.5.1
-    dayjs: 1.11.10
+    dayjs: 1.11.11
     lodash: 4.17.21
     msw: 1.3.3
     react: 18.2.0
@@ -4508,7 +4508,7 @@ __metadata:
     react-hook-form: 7.51.3
     react-popper: 2.3.0
     tailwindcss: ^3.4.3
-    vite: ^5.2.9
+    vite: ^5.2.10
   languageName: unknown
   linkType: soft
 
@@ -4524,7 +4524,7 @@ __metadata:
     "@popperjs/core": 2.11.8
     axios: 1.6.8
     classnames: 2.5.1
-    dayjs: 1.11.10
+    dayjs: 1.11.11
     lodash: 4.17.21
     msw: 1.3.3
     nav-frontend-chevron: 1.0.30
@@ -4545,7 +4545,7 @@ __metadata:
     react-hook-form: 7.51.3
     react-intl: 6.6.5
     react-popper: 2.3.0
-    vite: ^5.2.9
+    vite: ^5.2.10
   languageName: unknown
   linkType: soft
 
@@ -4560,8 +4560,8 @@ __metadata:
     "@navikt/ds-react": 6.5.0
     "@navikt/ft-plattform-komponenter": 2.5.6
     classnames: 2.5.1
-    dayjs: 1.11.10
-    formik: 2.4.5
+    dayjs: 1.11.11
+    formik: 2.4.6
     nav-frontend-tabs: 2.0.3
     react-intl: 6.6.5
     react-outside-click-handler: 1.3.0
@@ -4711,7 +4711,7 @@ __metadata:
     "@navikt/ds-react": 6.5.0
     "@navikt/fnrvalidator": 2.0.7
     classnames: 2.5.1
-    dayjs: 1.11.10
+    dayjs: 1.11.11
     lodash: 4.17.21
     nav-datovelger: 12.6.0
     nav-frontend-core: 6.0.1
@@ -4727,7 +4727,7 @@ __metadata:
     react-day-picker: 7.4.10
     react-dom: 18.2.0
     react-hook-form: 7.51.3
-    vite: ^5.2.9
+    vite: ^5.2.10
     vitest-axe: ^0.1.0
   languageName: unknown
   linkType: soft
@@ -4784,7 +4784,7 @@ __metadata:
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
     cors: 2.8.5
-    dayjs: 1.11.10
+    dayjs: 1.11.11
     express: 4.19.2
     lodash: 4.17.21
     nav-frontend-chevron: 1.0.30
@@ -4805,7 +4805,7 @@ __metadata:
     react-dom: 18.2.0
     react-hook-form: 7.51.3
     react-popper: 2.3.0
-    vite: ^5.2.9
+    vite: ^5.2.10
     yup: 0.32.11
   languageName: unknown
   linkType: soft
@@ -5072,7 +5072,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ds-react": 6.5.0
-    formik: 2.4.5
+    formik: 2.4.6
     nav-frontend-core: 6.0.1
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
@@ -8723,57 +8723,57 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/expect@npm:1.5.0":
-  version: 1.5.0
-  resolution: "@vitest/expect@npm:1.5.0"
+"@vitest/expect@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@vitest/expect@npm:1.5.2"
   dependencies:
-    "@vitest/spy": 1.5.0
-    "@vitest/utils": 1.5.0
+    "@vitest/spy": 1.5.2
+    "@vitest/utils": 1.5.2
     chai: ^4.3.10
-  checksum: a2a5659fbe7a2b7ff38dc9a43a75e0cf50c1a82ab98d1553ce114f48894937f34b541c620970b5afc5bd90a3c02a900f65f8b811fcd4ad77391cdd26d51285d0
+  checksum: f5a395dc71f83bf1c72876faa8854d992fbbdb5db8a5189576045e2c05589273e9e0857d734a28eb38aab431f3bcc916f5ac66b8b118a9c7ee71ce2b55d61842
   languageName: node
   linkType: hard
 
-"@vitest/runner@npm:1.5.0":
-  version: 1.5.0
-  resolution: "@vitest/runner@npm:1.5.0"
+"@vitest/runner@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@vitest/runner@npm:1.5.2"
   dependencies:
-    "@vitest/utils": 1.5.0
+    "@vitest/utils": 1.5.2
     p-limit: ^5.0.0
     pathe: ^1.1.1
-  checksum: 3680a9d4f16f635208d75aa2f62cdc02bcfe648771812febbe87a79e644e6e8fa58fbbdd0976693096929d59c9d672f5211131ef7103a1e9c250b7a61a9fd4fb
+  checksum: 300ba81ce9b91146aa440f86ba2081f26559b8878c4822ac32309ae329985abe1303b7aa9ae1ae479ec975dfc9ac4c6fbdaebdfa1319e3aadde6c4e88719931d
   languageName: node
   linkType: hard
 
-"@vitest/snapshot@npm:1.5.0":
-  version: 1.5.0
-  resolution: "@vitest/snapshot@npm:1.5.0"
+"@vitest/snapshot@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@vitest/snapshot@npm:1.5.2"
   dependencies:
     magic-string: ^0.30.5
     pathe: ^1.1.1
     pretty-format: ^29.7.0
-  checksum: fcf93d06c7bc781cc85b18120bf5da355d9ed6a44aa0bbaee88dc8aa27a33c51707504b3506dffb1476ad351fe84d47186641f07a6d28c484c7725747cdf0f2c
+  checksum: 803c36ee332d0b60f00aff4542371fd0f1a91cb2b6b14458bb122fe0ecb04ffa68aa9082be9ad4eccfd7cd2ce665f8ff426d7b96c83e4602fba8e020893e6109
   languageName: node
   linkType: hard
 
-"@vitest/spy@npm:1.5.0":
-  version: 1.5.0
-  resolution: "@vitest/spy@npm:1.5.0"
+"@vitest/spy@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@vitest/spy@npm:1.5.2"
   dependencies:
     tinyspy: ^2.2.0
-  checksum: 518c847bb129f266b9cd164c0021a4497c8a1ca8d2f1dd995b3aac55186f41926f7b0d966313b5093b0b32ad02547b58917376e71cd8a6f6b88845be8c8bd26f
+  checksum: 88f0c4732820d3c05e22d8ef50c64c7cb841a89ab3916147d0bbe78f137111600e9b59706fa48d31f36c022be2b76816ad661f4479d8eae60ceef16a903afecb
   languageName: node
   linkType: hard
 
-"@vitest/utils@npm:1.5.0":
-  version: 1.5.0
-  resolution: "@vitest/utils@npm:1.5.0"
+"@vitest/utils@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@vitest/utils@npm:1.5.2"
   dependencies:
     diff-sequences: ^29.6.3
     estree-walker: ^3.0.3
     loupe: ^2.3.7
     pretty-format: ^29.7.0
-  checksum: 07a59b62b4d8110e6af6a709da2c0bb80bf60944186b544b02dfacc08bc26af36f4ec008e1ce7a0df4a8c27fd278938582241ccbd45dd7f4979cf5fec1f9f549
+  checksum: 9c9ead817c13d15fa41f441330df1c8d44df4cd5221502274aaaf3510fa0740b5c5be3bb2fcf3ffc717d35e66cd4e2b8d057495e605ed1cd4693762a9f06bb23
   languageName: node
   linkType: hard
 
@@ -10757,6 +10757,13 @@ __metadata:
   version: 1.11.10
   resolution: "dayjs@npm:1.11.10"
   checksum: a6b5a3813b8884f5cd557e2e6b7fa569f4c5d0c97aca9558e38534af4f2d60daafd3ff8c2000fed3435cfcec9e805bcebd99f90130c6d1c5ef524084ced588c4
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:1.11.11":
+  version: 1.11.11
+  resolution: "dayjs@npm:1.11.11"
+  checksum: 84788275aad8a87fee4f1ce4be08861df29687aae6b7b43dd65350118a37dda56772a3902f802cb2dc651dfed447a5a8df62d88f0fb900dba8333e411190a5d5
   languageName: node
   linkType: hard
 
@@ -12773,9 +12780,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"formik@npm:2.4.5":
-  version: 2.4.5
-  resolution: "formik@npm:2.4.5"
+"formik@npm:2.4.6":
+  version: 2.4.6
+  resolution: "formik@npm:2.4.6"
   dependencies:
     "@types/hoist-non-react-statics": ^3.3.1
     deepmerge: ^2.1.1
@@ -12787,7 +12794,7 @@ __metadata:
     tslib: ^2.0.0
   peerDependencies:
     react: ">=16.8.0"
-  checksum: 316c91fc4e440094655c0d0ba47277a0f84f6082f77ae2ae959e97e2eebb8eab5b866a9e43d93a28efdae07c3f23e779da67922e2f2a1fb47d135b7346e0b5f3
+  checksum: ed0ff8eca11b3c4b5564a6ae5650cb124820d239ece9a7cb3d526ff8ce3d8f9fb992e2f78ef0666e65b7c05c944a91cc98a736e806e424019d6aac8bee313a42
   languageName: node
   linkType: hard
 
@@ -13580,12 +13587,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18n-iso-countries@npm:7.11.0":
-  version: 7.11.0
-  resolution: "i18n-iso-countries@npm:7.11.0"
+"i18n-iso-countries@npm:7.11.1":
+  version: 7.11.1
+  resolution: "i18n-iso-countries@npm:7.11.1"
   dependencies:
     diacritics: 1.3.0
-  checksum: ec598e77af8e8e64b9a1ce5981de8432ad174de24f421ac374a8b9a373ecdfc080de34ef5dbd8d86774792734a6dd2db3a151eba1bc6401cbaa8f4452078dd69
+  checksum: 3ced46ba1d72d2112facce360b4c54cc880d26fa40a854b1fb16f1e8d753b2652585a8f909e599afd562cac840e5c2309f6d35f540359cebcfec572dc7449cd1
   languageName: node
   linkType: hard
 
@@ -14780,7 +14787,7 @@ __metadata:
     eslint-plugin-vitest: ^0.4.1
     history: 5.3.0
     husky: 9.0.11
-    i18n-iso-countries: 7.11.0
+    i18n-iso-countries: 7.11.1
     jsdom: 24.0.0
     lint-staged: 15.2.2
     msw: 1.3.3
@@ -14802,10 +14809,10 @@ __metadata:
     tailwindcss: ^3.4.3
     typed-css-modules: ^0.9.1
     typescript: 5.4.5
-    vite: ^5.2.9
+    vite: ^5.2.10
     vite-plugin-html: ^3.2.2
     vite-plugin-svgr: 4.2.0
-    vitest: 1.5.0
+    vitest: 1.5.2
     vitest-axe: 0.1.0
     webpack-merge: 5.10.0
   languageName: unknown
@@ -20470,9 +20477,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-node@npm:1.5.0":
-  version: 1.5.0
-  resolution: "vite-node@npm:1.5.0"
+"vite-node@npm:1.5.2":
+  version: 1.5.2
+  resolution: "vite-node@npm:1.5.2"
   dependencies:
     cac: ^6.7.14
     debug: ^4.3.4
@@ -20481,7 +20488,7 @@ __metadata:
     vite: ^5.0.0
   bin:
     vite-node: vite-node.mjs
-  checksum: 7313d1f616638959425280e95116e9ca9f7601ac709205fc3847a29a8ec00ecc5933911dab2e4545ea8c5a61b02c84e85a46039afaec684fa74ef5456f1b6bb1
+  checksum: b3e537e119a6d1befd91a0fddd6dcf1998fe6ab7a6b6cb54d04e56815bb8ba354ae0e74fbbb870e803a331ad0941f41ed85afe9207ba8d76aac76191181dba15
   languageName: node
   linkType: hard
 
@@ -20560,9 +20567,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.2.9":
-  version: 5.2.9
-  resolution: "vite@npm:5.2.9"
+"vite@npm:^5.2.10":
+  version: 5.2.10
+  resolution: "vite@npm:5.2.10"
   dependencies:
     esbuild: ^0.20.1
     fsevents: ~2.3.3
@@ -20596,7 +20603,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 7a97f9547af8550c55bc2529cc6827c1ef0a043a09e9686cf20b615e8d59305cbe917954e806c5fdad6c33bfb883c1ce51325a9c474b5aa5bc13c377a74805fd
+  checksum: feb11be2b97259783afe1d0ff4b7ee0bef78fe8934d8b043465e039e4d8318249e2263adc724b719b9e9b45a37e012caeb7746854768f371d1a82bb189f50fe6
   languageName: node
   linkType: hard
 
@@ -20616,15 +20623,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:1.5.0":
-  version: 1.5.0
-  resolution: "vitest@npm:1.5.0"
+"vitest@npm:1.5.2":
+  version: 1.5.2
+  resolution: "vitest@npm:1.5.2"
   dependencies:
-    "@vitest/expect": 1.5.0
-    "@vitest/runner": 1.5.0
-    "@vitest/snapshot": 1.5.0
-    "@vitest/spy": 1.5.0
-    "@vitest/utils": 1.5.0
+    "@vitest/expect": 1.5.2
+    "@vitest/runner": 1.5.2
+    "@vitest/snapshot": 1.5.2
+    "@vitest/spy": 1.5.2
+    "@vitest/utils": 1.5.2
     acorn-walk: ^8.3.2
     chai: ^4.3.10
     debug: ^4.3.4
@@ -20638,13 +20645,13 @@ __metadata:
     tinybench: ^2.5.1
     tinypool: ^0.8.3
     vite: ^5.0.0
-    vite-node: 1.5.0
+    vite-node: 1.5.2
     why-is-node-running: ^2.2.2
   peerDependencies:
     "@edge-runtime/vm": "*"
     "@types/node": ^18.0.0 || >=20.0.0
-    "@vitest/browser": 1.5.0
-    "@vitest/ui": 1.5.0
+    "@vitest/browser": 1.5.2
+    "@vitest/ui": 1.5.2
     happy-dom: "*"
     jsdom: "*"
   peerDependenciesMeta:
@@ -20662,7 +20669,7 @@ __metadata:
       optional: true
   bin:
     vitest: vitest.mjs
-  checksum: 566d81639e89f60893f99ec8adcf051c3a62f51025eeed8cf399e80f4cdf7ef818e3c82bb348aa5ca3a21f7e9fd5ab180d585a3f5d3ffe5c292cfd01700be787
+  checksum: 6fe94ad5c204ce534f19baa212c3310c581c858c254d7eba217b68da126f90ce09f198fb8d766669cba5288c9b1d9307ea7358db858c3311d7d2bb421d3539b3
   languageName: node
   linkType: hard
 
