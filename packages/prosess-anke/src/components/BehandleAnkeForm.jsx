@@ -133,11 +133,6 @@ const buildOption = (b, intl) => {
   );
 };
 
-const SKAL_REALITETSBEHANDLES = {
-  JA: true,
-  NEI: false,
-};
-
 const filtrerKlage = (behandlinger = []) => behandlinger.filter(b => b.type.kode === behandlingType.KLAGE);
 
 /**

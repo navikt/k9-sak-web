@@ -1,6 +1,5 @@
 import { Field } from 'formik';
 import React from 'react';
-import { useIntl } from 'react-intl';
 
 import { Checkbox as NavCheckbox } from '@navikt/ds-react';
 
@@ -26,14 +25,11 @@ export const RenderCheckboxField = ({
   label,
   disabled,
   field: { onChange, value, name },
-}: RenderCheckboxFieldProps) => {
-  const intl = useIntl();
-  return (
-    <NavCheckbox onChange={onChange(name)} checked={value} disabled={disabled} size="small" value={value}>
-      <Label input={label} textOnly />
-    </NavCheckbox>
-  );
-};
+}: RenderCheckboxFieldProps) => (
+  <NavCheckbox onChange={onChange(name)} checked={value} disabled={disabled} size="small" value={value}>
+    <Label input={label} textOnly />
+  </NavCheckbox>
+);
 
 const CheckboxFieldFormik = ({ name, label, disabled, validate = [] }: CheckboxFieldProps) => (
   <Field
