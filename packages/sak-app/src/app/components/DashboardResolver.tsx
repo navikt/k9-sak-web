@@ -7,7 +7,7 @@ import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 import { IS_DEV } from '../../constants';
 import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
-import { getPathToFplos } from '../paths';
+import { getPathToK9Los } from '../paths';
 
 const isDevelopment = () => IS_DEV || process.env.NODE_ENV === 'test';
 
@@ -28,7 +28,7 @@ export const DashboardResolver = ({ intl }: WrappedComponentProps) => {
 
     const gotoLosOrSetErrorMsg = async () => {
       try {
-        const url = getPathToFplos();
+        const url = getPathToK9Los();
         await axios.get(url); // Sjekk om LOS er oppe
         window.location.assign(url);
       } catch (e) {

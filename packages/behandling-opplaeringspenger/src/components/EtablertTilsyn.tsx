@@ -9,7 +9,7 @@ import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { EtablertTilsyn } from '@k9-sak-web/fakta-etablert-tilsyn';
 import React from 'react';
 
-export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbehandlere }) => {
+export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandlerFn(status, addErrorMessage, locationHeader);
@@ -42,7 +42,6 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbeha
         lagreNattevåkvurdering: løsNattevåkAksjonspunkt,
         harAksjonspunktForBeredskap: harUløstAksjonspunktForBeredskap,
         harAksjonspunktForNattevåk: harUløstAksjonspunktForNattevåk,
-        saksbehandlere,
       }}
     />
   );

@@ -23,7 +23,6 @@ class OpplaeringFaktaPanelDef extends FaktaPanelDef {
     OpplaeringspengerBehandlingApiKeys.NØDVENDIG_OPPLÆRING,
     OpplaeringspengerBehandlingApiKeys.REISETID,
     OpplaeringspengerBehandlingApiKeys.OPPLAERING_DOKUMENTER,
-    OpplaeringspengerBehandlingApiKeys.HENT_SAKSBEHANDLERE,
   ];
 
   // eslint-disable-next-line arrow-body-style
@@ -54,7 +53,6 @@ class OpplaeringFaktaPanelDef extends FaktaPanelDef {
       løsAksjonspunktNødvendighet,
       løsAksjonspunktReisetid,
       readOnly: props.readOnly,
-      saksbehandlere: props.hentSaksbehandlere?.saksbehandlere || {},
     };
     return (
       <FaktaOpplaeringContext.Provider value={contextProps}>

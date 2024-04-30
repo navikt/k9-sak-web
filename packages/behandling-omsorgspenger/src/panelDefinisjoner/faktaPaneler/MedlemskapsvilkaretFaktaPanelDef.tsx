@@ -20,20 +20,16 @@ class MedlemskapsvilkaretFaktaPanelDef extends FaktaPanelDef {
     aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
   ];
 
-  getEndepunkter = () => [
-    OmsorgspengerBehandlingApiKeys.MEDLEMSKAP,
-    OmsorgspengerBehandlingApiKeys.HENT_SAKSBEHANDLERE,
-  ];
+  getEndepunkter = () => [OmsorgspengerBehandlingApiKeys.MEDLEMSKAP];
 
   getKomponent = props => <MedlemskapFaktaIndex {...props} />;
 
   getOverstyrVisningAvKomponent = ({ personopplysninger, soknad }) => personopplysninger && soknad;
 
-  getData = ({ fagsakPerson, soknad, personopplysninger, hentSaksbehandlere }) => ({
+  getData = ({ fagsakPerson, soknad, personopplysninger }) => ({
     fagsakPerson,
     soknad,
     personopplysninger,
-    saksbehandlere: hentSaksbehandlere?.saksbehandlere || {},
   });
 }
 

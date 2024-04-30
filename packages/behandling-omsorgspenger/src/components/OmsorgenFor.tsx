@@ -16,10 +16,9 @@ interface OmsorgenForProps {
     omsorgsperioder: any;
     fosterbarnForOmsorgspenger: any;
   }[]) => void;
-  saksbehandlere: { [key: string]: string };
 }
 
-export default ({ behandling, fagsak, readOnly, aksjonspunkter, submitCallback, saksbehandlere }: OmsorgenForProps) => {
+export default ({ behandling, fagsak, readOnly, aksjonspunkter, submitCallback }: OmsorgenForProps) => {
   const { links } = behandling;
   const sakstype = fagsak.sakstype.kode;
 
@@ -53,7 +52,6 @@ export default ({ behandling, fagsak, readOnly, aksjonspunkter, submitCallback, 
         ]),
         readOnly: readOnly || !harAksjonspunkt,
         onFinished: løsAksjonspunkt,
-        saksbehandlere: saksbehandlere || {},
         sakstype,
       }}
     />

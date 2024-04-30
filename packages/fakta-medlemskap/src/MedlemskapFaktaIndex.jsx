@@ -30,7 +30,6 @@ const MedlemskapFaktaIndex = ({
   alleKodeverk,
   submitCallback,
   readOnly,
-  saksbehandlere,
 }) => (
   <RawIntlProvider value={intl}>
     <MedlemskapInfoPanel
@@ -49,7 +48,6 @@ const MedlemskapFaktaIndex = ({
       alleKodeverk={alleKodeverk}
       submitCallback={submitCallback}
       readOnly={readOnly}
-      saksbehandlere={saksbehandlere}
     />
   </RawIntlProvider>
 );
@@ -68,7 +66,6 @@ MedlemskapFaktaIndex.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   harApneAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
-  saksbehandlere: PropTypes.shape(),
 };
 
 export default MedlemskapFaktaIndex;

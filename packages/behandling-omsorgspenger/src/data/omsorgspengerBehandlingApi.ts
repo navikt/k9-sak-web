@@ -42,7 +42,6 @@ export enum OmsorgspengerBehandlingApiKeys {
   HENT_FRITEKSTBREV_HTML = 'HENT_FRITEKSTBREV_HTML',
   ARBEIDSFORHOLD = 'ARBEIDSFORHOLD',
   OVERLAPPENDE_YTELSER = 'OVERLAPPENDE_YTELSER',
-  HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
   FOSTERBARN = 'FOSTERBARN',
   BEREGNINGREFERANSER_TIL_VURDERING = 'BEREGNINGREFERANSER_TIL_VURDERING',
   BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR = 'BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR',
@@ -74,7 +73,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('inntekt', OmsorgspengerBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('tilgjengelige-vedtaksbrev', OmsorgspengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('overlappende-ytelser', OmsorgspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER)
-  .withRel('saksbehandler-info', OmsorgspengerBehandlingApiKeys.HENT_SAKSBEHANDLERE)
   .withRel('fosterbarn', OmsorgspengerBehandlingApiKeys.FOSTERBARN)
   .withRel('beregning-koblinger-til-vurdering', OmsorgspengerBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING)
   .withRel('behandling-perioder-årsak-med-vilkår', OmsorgspengerBehandlingApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR)
