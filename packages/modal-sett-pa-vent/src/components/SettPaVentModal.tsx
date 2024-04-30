@@ -217,6 +217,8 @@ export const SettPaVentModal = ({
                     name="frist"
                     validate={[required, hasValidDate, dateAfterOrEqualToToday]}
                     data-testid="datofelt"
+                    label={getPaVentText(originalVentearsak, hasManualPaVent, frist, originalFrist, showEndreFrist)}
+                    hideLabel
                   />
                 </div>
               )}
