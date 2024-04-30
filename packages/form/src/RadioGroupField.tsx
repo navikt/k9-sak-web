@@ -71,28 +71,25 @@ const renderRadioGroupField = renderNavField(
       size="small"
       value={value}
       disabled={readOnly}
+      readOnly={readOnly}
     >
       {isVertical &&
-        radios
-          .filter(radio => !readOnly || value === parse(radio.value))
-          .map(radio => (
-            <Fragment key={`${radio.value}`}>
-              <Radio value={parse(radio.value)} disabled={radio.disabled || readOnly}>
-                {radio.label}
-              </Radio>
-              {value === parse(radio.value) && radio.element}
-            </Fragment>
-          ))}
+        radios.map(radio => (
+          <Fragment key={`${radio.value}`}>
+            <Radio value={parse(radio.value)} disabled={radio.disabled || readOnly}>
+              {radio.label}
+            </Radio>
+            {value === parse(radio.value) && radio.element}
+          </Fragment>
+        ))}
       {!isVertical && (
         <>
           <HStack gap="4">
-            {radios
-              .filter(radio => !readOnly || value === parse(radio.value))
-              .map(radio => (
-                <Radio key={`${radio.value}`} value={parse(radio.value)} disabled={radio.disabled || readOnly}>
-                  {radio.label}
-                </Radio>
-              ))}
+            {radios.map(radio => (
+              <Radio key={`${radio.value}`} value={parse(radio.value)} disabled={radio.disabled || readOnly}>
+                {radio.label}
+              </Radio>
+            ))}
           </HStack>
           {radios
             .filter(radio => value === parse(radio.value))
@@ -101,7 +98,6 @@ const renderRadioGroupField = renderNavField(
             ))}
         </>
       )}
-      {/* {childIsRenderFn ? children({ value, optionProps }) : children} */}
     </RadioGroup>
   ),
 );
