@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import React from 'react';
+import { aksjonspunkt9071Props } from '../mock/inntektsmeldingPropsMock';
 import { alleErMottatt, manglerInntektsmelding } from '../mock/mockedKompletthetsdata';
 import * as stories from '../src/stories/MainComponent.stories';
 import MainComponent from '../src/ui/MainComponent';
@@ -69,8 +70,8 @@ describe('9071 - Mangler inntektsmelding', () => {
     server.use(rest.get('/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding))));
     // ARRANGE
     const onClickSpy = vi.fn();
-    const data = { onFinished: onClickSpy };
-    render(<Mangler9071 {...data} />);
+    const props = { data: { ...aksjonspunkt9071Props, onFinished: onClickSpy } };
+    render(<Mangler9071 {...props} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
@@ -101,8 +102,8 @@ describe('9071 - Mangler inntektsmelding', () => {
     server.use(rest.get('/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding))));
     // ARRANGE
     const onClickSpy = vi.fn();
-    const data = { onFinished: onClickSpy };
-    render(<Mangler9071 {...data} />);
+    const props = { data: { ...aksjonspunkt9071Props, onFinished: onClickSpy } };
+    render(<Mangler9071 {...props} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
@@ -132,8 +133,8 @@ describe('9071 - Mangler inntektsmelding', () => {
     server.use(rest.get('/tilstand', (req, res, ctx) => res(ctx.json(alleErMottatt))));
     // ARRANGE
     const onClickSpy = vi.fn();
-    const data = { onFinished: onClickSpy };
-    render(<AlleInntektsmeldingerMottatt {...data} />);
+    const props = { data: { ...aksjonspunkt9071Props, onFinished: onClickSpy } };
+    render(<AlleInntektsmeldingerMottatt {...props} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 

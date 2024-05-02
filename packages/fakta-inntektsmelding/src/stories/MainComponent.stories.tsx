@@ -13,16 +13,17 @@ import ferdigvisning, {
   manglerFlereInntektsmeldinger,
   manglerInntektsmelding,
 } from '../../mock/mockedKompletthetsdata';
-import MainComponent from '../ui/MainComponent';
+import MainComponent, { MainComponentProps } from '../ui/MainComponent';
 
 const meta: Meta<typeof MainComponent> = {
+  args: { data: { ...inntektsmeldingPropsMock, onFinished: action('clicked') } },
   title: 'Inntektsmelding',
   component: MainComponent,
 };
 
 export default meta;
 
-const Template = args => <MainComponent {...args} />;
+const Template = (args: MainComponentProps) => <MainComponent {...args} />;
 type Story = StoryObj<typeof MainComponent>;
 
 export const IkkePaakrevd: Story = Template.bind({});
@@ -42,10 +43,6 @@ IkkePaakrevd.parameters = {
   msw: {
     handlers: [rest.get('/tilstand', (req, res, ctx) => res(ctx.json(ikkePaakrevd)))],
   },
-};
-
-Mangler9069.args = {
-  data: { ...inntektsmeldingPropsMock, onFinished: action('button-click') },
 };
 
 Mangler9069.parameters = {

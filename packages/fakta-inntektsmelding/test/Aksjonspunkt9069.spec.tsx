@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import React from 'react';
+import inntektsmeldingPropsMock from '../mock/inntektsmeldingPropsMock';
 import { manglerInntektsmelding } from '../mock/mockedKompletthetsdata';
 import * as stories from '../src/stories/MainComponent.stories';
 import MainComponent from '../src/ui/MainComponent';
@@ -66,9 +67,9 @@ describe('9069 - Mangler inntektsmelding', () => {
   test('Kan sende purring med varsel om avslag', async () => {
     // ARRANGE
     const onClickSpy = vi.fn();
-    const data = { onFinished: onClickSpy };
+    const props = { data: { ...inntektsmeldingPropsMock, onFinished: onClickSpy } };
     // eslint-disable-next-line react/jsx-props-no-spreading
-    render(<Mangler9069 {...data} />);
+    render(<Mangler9069 {...props} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
@@ -97,10 +98,10 @@ describe('9069 - Mangler inntektsmelding', () => {
   test('Kan submitte begrunnelse når man har valgt A-inntekt', async () => {
     // ARRANGE
     const onClickSpy = vi.fn();
-    const data = { onFinished: onClickSpy };
+    const props = { data: { ...inntektsmeldingPropsMock, onFinished: onClickSpy } };
     // eslint-disable-next-line react/jsx-props-no-spreading
 
-    render(<Mangler9069 {...data} />);
+    render(<Mangler9069 {...props} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
