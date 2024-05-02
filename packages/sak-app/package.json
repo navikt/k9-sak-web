@@ -46,7 +46,6 @@
     "@k9-sak-web/prosess-uttak": "1.0.0",
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
-    "@k9-sak-web/sak-aktor": "1.0.0",
     "@k9-sak-web/sak-behandling-velger": "1.0.0",
     "@k9-sak-web/sak-infosider": "1.0.0",
     "@k9-sak-web/sak-meldinger": "1.0.0",
