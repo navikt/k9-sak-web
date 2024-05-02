@@ -1,15 +1,14 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import React from 'react';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
+import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
+import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
+import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 
 import withReduxProvider from '../../../decorators/withRedux';
 
@@ -148,14 +147,12 @@ const merknaderFraBeslutter = {
 export default {
   title: 'fakta/tilbakekreving/fakta-feilutbetaling',
   component: FeilutbetalingFaktaIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visAksjonspunktForFeilutbetaling = () => (
+export const visAksjonspunktForFeilutbetaling = args => (
   <FeilutbetalingFaktaIndex
     behandling={behandling}
-    feilutbetalingFakta={object('feilutbetalingFakta', feilutbetalingFakta)}
-    feilutbetalingAarsak={object('feilutbetalingAarsak', feilutbetalingAarsak)}
     aksjonspunkter={[
       {
         definisjon: {
@@ -171,14 +168,17 @@ export const visAksjonspunktForFeilutbetaling = () => (
     ]}
     alleKodeverk={alleKodeverk}
     fpsakKodeverk={alleKodeverk}
-    alleMerknaderFraBeslutter={{
-      [aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING]: object(
-        'merknaderFraBeslutter',
-        merknaderFraBeslutter,
-      ),
-    }}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    hasOpenAksjonspunkter={boolean('hasOpenAksjonspunkter', true)}
+    {...args}
   />
 );
+
+visAksjonspunktForFeilutbetaling.args = {
+  feilutbetalingFakta,
+  feilutbetalingAarsak,
+  alleMerknaderFraBeslutter: {
+    [aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING]: merknaderFraBeslutter,
+  },
+  readOnly: false,
+  hasOpenAksjonspunkter: true,
+};

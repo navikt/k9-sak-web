@@ -1,13 +1,11 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
 import MenyTaAvVentIndex from '@fpsak-frontend/sak-meny-ta-av-vent';
 
 export default {
   title: 'sak/sak-meny-ta-av-vent',
   component: MenyTaAvVentIndex,
-  decorators: [withKnobs],
 };
 
 export const visMenyForÅTaBehandlingAvVent = () => (

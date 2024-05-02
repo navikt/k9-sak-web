@@ -1,12 +1,11 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import React from 'react';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
 
 import withReduxProvider from '../../../decorators/withRedux';
@@ -43,35 +42,12 @@ const aksjonspunkter = [
 export default {
   title: 'prosess/innsyn/prosess-vedtak-innsyn',
   component: VedtakInnsynProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visPanelForInnvilgetVedtak = () => (
+export const visPanelForInnvilgetVedtak = args => (
   <VedtakInnsynProsessIndex
     behandling={behandling}
-    innsyn={object('innsyn', {
-      dokumenter: [
-        {
-          journalpostId: '2',
-          dokumentId: '3',
-          tittel: 'Dette er et dokument',
-          tidspunkt: '2017-08-02T00:54:25.455',
-          kommunikasjonsretning: kommunikasjonsretning.INN,
-          fikkInnsyn: true,
-        },
-      ],
-      vedtaksdokumentasjon: [
-        {
-          dokumentId: '1',
-          tittel: behandlingType.FORSTEGANGSSOKNAD,
-          opprettetDato: '2019-01-01',
-        },
-      ],
-      innsynResultatType: {
-        kode: innsynResultatType.INNVILGET,
-      },
-      innsynMottattDato: '2019-01-01',
-    })}
     saksnummer={123434}
     aksjonspunkter={aksjonspunkter}
     alleDokumenter={[
@@ -85,36 +61,40 @@ export const visPanelForInnvilgetVedtak = () => (
     ]}
     submitCallback={action('button-click')}
     previewCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    {...args}
   />
 );
 
-export const visPanelForAvvistVedtak = () => (
+visPanelForInnvilgetVedtak.args = {
+  innsyn: {
+    dokumenter: [
+      {
+        journalpostId: '2',
+        dokumentId: '3',
+        tittel: 'Dette er et dokument',
+        tidspunkt: '2017-08-02T00:54:25.455',
+        kommunikasjonsretning: kommunikasjonsretning.INN,
+        fikkInnsyn: true,
+      },
+    ],
+    vedtaksdokumentasjon: [
+      {
+        dokumentId: '1',
+        tittel: behandlingType.FORSTEGANGSSOKNAD,
+        opprettetDato: '2019-01-01',
+      },
+    ],
+    innsynResultatType: {
+      kode: innsynResultatType.INNVILGET,
+    },
+    innsynMottattDato: '2019-01-01',
+  },
+  readOnly: false,
+};
+
+export const visPanelForAvvistVedtak = args => (
   <VedtakInnsynProsessIndex
     behandling={behandling}
-    innsyn={object('innsyn', {
-      dokumenter: [
-        {
-          journalpostId: '2',
-          dokumentId: '3',
-          tittel: 'Dette er et dokument',
-          tidspunkt: '2017-08-02T00:54:25.455',
-          kommunikasjonsretning: kommunikasjonsretning.INN,
-          fikkInnsyn: true,
-        },
-      ],
-      vedtaksdokumentasjon: [
-        {
-          dokumentId: '1',
-          tittel: behandlingType.FORSTEGANGSSOKNAD,
-          opprettetDato: '2019-01-01',
-        },
-      ],
-      innsynResultatType: {
-        kode: innsynResultatType.AVVIST,
-      },
-      innsynMottattDato: '2019-01-01',
-    })}
     saksnummer={123434}
     aksjonspunkter={aksjonspunkter}
     alleDokumenter={[
@@ -128,6 +108,33 @@ export const visPanelForAvvistVedtak = () => (
     ]}
     submitCallback={action('button-click')}
     previewCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    {...args}
   />
 );
+
+visPanelForAvvistVedtak.args = {
+  innsyn: {
+    dokumenter: [
+      {
+        journalpostId: '2',
+        dokumentId: '3',
+        tittel: 'Dette er et dokument',
+        tidspunkt: '2017-08-02T00:54:25.455',
+        kommunikasjonsretning: kommunikasjonsretning.INN,
+        fikkInnsyn: true,
+      },
+    ],
+    vedtaksdokumentasjon: [
+      {
+        dokumentId: '1',
+        tittel: behandlingType.FORSTEGANGSSOKNAD,
+        opprettetDato: '2019-01-01',
+      },
+    ],
+    innsynResultatType: {
+      kode: innsynResultatType.AVVIST,
+    },
+    innsynMottattDato: '2019-01-01',
+  },
+  readOnly: false,
+};

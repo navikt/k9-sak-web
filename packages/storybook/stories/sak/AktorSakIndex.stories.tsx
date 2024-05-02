@@ -1,15 +1,14 @@
 import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
 
-import AktorSakIndex from '@k9-sak-web/sak-aktor';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
+import AktorSakIndex from '@k9-sak-web/sak-aktor';
 import { Fagsak } from '@k9-sak-web/types';
 
-import alleKodeverk from '../mocks/alleKodeverk.json';
 import withRouterProvider from '../../decorators/withRouter';
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const fagsak = {
   saksnummer: '35425245',
@@ -37,7 +36,7 @@ const fagsak = {
 export default {
   title: 'sak/sak-aktor',
   component: AktorSakIndex,
-  decorators: [withKnobs, withRouterProvider],
+  decorators: [withRouterProvider],
 };
 
 export const visSakerOpprettetPaAktor = () => (
