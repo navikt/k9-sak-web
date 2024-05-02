@@ -16,7 +16,7 @@
   "dependencies": {
     "@navikt/ds-css": "6.5.0",
     "@navikt/ds-icons": "3.4.3",
-    "@navikt/ds-react": "6.5.0",
+    "@navikt/ds-react": "6.6.1",
     "@navikt/fnrvalidator": "2.0.7",
     "@navikt/ft-form-hooks": "4.4.3",
     "@navikt/ft-plattform-komponenter": "2.5.6",
