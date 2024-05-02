@@ -4,9 +4,8 @@ import * as Sentry from '@sentry/react';
 
 import { NotFoundPage } from '@k9-sak-web/sak-infosider';
 
-import AktoerIndex from '../../aktoer/AktoerIndex';
 import FagsakIndex from '../../fagsak/FagsakIndex';
-import { aktoerRoutePath, fagsakRoutePath } from '../paths';
+import { fagsakRoutePath } from '../paths';
 import DashboardResolver from './DashboardResolver';
 
 import styles from './home.module.css';
@@ -33,7 +32,6 @@ const Home = ({ headerHeight }: OwnProps) => (
     <SentryRoutes>
       <Route path="/" element={<DashboardResolver />} />
       <Route path={fagsakRoutePath} element={<FagsakIndex />} />
-      <Route path={aktoerRoutePath} element={<AktoerIndex />} />
       <Route path="/close" element={<CloseWindow />} />
       <Route path="*" element={<NotFoundPage />} />
     </SentryRoutes>
