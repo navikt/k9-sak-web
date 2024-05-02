@@ -43,7 +43,6 @@ export enum K9sakApiKeys {
   TOTRINNS_KLAGE_VURDERING = 'TOTRINNS_KLAGE_VURDERING',
   TOTRINNSAKSJONSPUNKT_ARSAKER = 'TOTRINNSAKSJONSPUNKT_ARSAKER',
   TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY = 'TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY',
-  AKTOER_INFO = 'AKTOER_INFO',
   ALL_DOCUMENTS = 'ALL_DOCUMENTS',
   HAR_REVURDERING_SAMME_RESULTAT = 'HAR_REVURDERING_SAMME_RESULTAT',
   SAVE_TOTRINNSAKSJONSPUNKT = 'SAVE_TOTRINNSAKSJONSPUNKT',
@@ -134,7 +133,6 @@ const endpoints = new RestApiConfigBuilder()
   .withAsyncPut('/k9/sak/api/behandlinger', K9sakApiKeys.NEW_BEHANDLING_K9SAK)
   .withAsyncPut('/k9/sak/api/behandlinger/unntak', K9sakApiKeys.NEW_BEHANDLING_UNNTAK)
   .withAsyncPut('/k9/klage/api/behandlinger', K9sakApiKeys.NEW_BEHANDLING_KLAGE)
-  .withGet('/k9/sak/api/aktoer-info', K9sakApiKeys.AKTOER_INFO)
 
   // Formidling
   .withPost('/k9/formidling/api/brev/forhaandsvis', K9sakApiKeys.PREVIEW_MESSAGE_FORMIDLING, { isResponseBlob: true })
