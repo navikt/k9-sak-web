@@ -1,5 +1,5 @@
-import { Story, composeStories } from '@storybook/react';
-import { render, screen, waitFor, act } from '@testing-library/react';
+import { StoryFn, composeStories } from '@storybook/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
@@ -20,7 +20,7 @@ describe('9069 - Mangler inntektsmelding', () => {
   afterAll(() => server.close());
 
   const { Mangler9069 } = composeStories(stories) as {
-    [key: string]: Story<Partial<typeof MainComponent>>;
+    [key: string]: StoryFn<Partial<typeof MainComponent>>;
   };
 
   test('Viser ikke knapp for å sende inn når beslutning ikke er valgt', async () => {
