@@ -22,7 +22,7 @@
   "dependencies": {
     "@fpsak-frontend/form": "1.0.0",
     "@navikt/diagnosekoder": "^1.2024.0",
-    "@navikt/ds-css": "6.5.0",
+    "@navikt/ds-css": "6.6.1",
     "@navikt/ds-icons": "3.4.3",
     "@navikt/ds-react": "6.5.0",
     "@navikt/fnrvalidator": "2.0.7",

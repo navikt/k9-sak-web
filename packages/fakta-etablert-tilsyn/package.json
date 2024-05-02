@@ -19,7 +19,7 @@
     "vite": "^5.2.10"
   },
   "dependencies": {
-    "@navikt/ds-css": "6.5.0",
+    "@navikt/ds-css": "6.6.1",
     "@navikt/ds-icons": "3.4.3",
     "@navikt/ds-react": "6.5.0",
     "@navikt/fnrvalidator": "2.0.7",

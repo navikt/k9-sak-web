@@ -4343,7 +4343,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-etablert-tilsyn@workspace:packages/fakta-etablert-tilsyn"
   dependencies:
-    "@navikt/ds-css": 6.5.0
+    "@navikt/ds-css": 6.6.1
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.5.0
     "@navikt/fnrvalidator": 2.0.7
@@ -4406,7 +4406,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-inntektsmelding@workspace:packages/fakta-inntektsmelding"
   dependencies:
-    "@navikt/ds-css": 6.5.0
+    "@navikt/ds-css": 6.6.1
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.5.0
     "@navikt/fnrvalidator": 2.0.7
@@ -4460,7 +4460,7 @@ __metadata:
   dependencies:
     "@fpsak-frontend/form": 1.0.0
     "@navikt/diagnosekoder": ^1.2024.0
-    "@navikt/ds-css": 6.5.0
+    "@navikt/ds-css": 6.6.1
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.5.0
     "@navikt/fnrvalidator": 2.0.7
@@ -4491,7 +4491,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-om-barnet@workspace:packages/fakta-om-barnet"
   dependencies:
-    "@navikt/ds-css": 6.5.0
+    "@navikt/ds-css": 6.6.1
     "@navikt/ds-react": 6.5.0
     "@navikt/fnrvalidator": 2.0.7
     "@navikt/ft-plattform-komponenter": 2.5.6
@@ -4515,7 +4515,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-omsorgen-for@workspace:packages/fakta-omsorgen-for"
   dependencies:
-    "@navikt/ds-css": 6.5.0
+    "@navikt/ds-css": 6.6.1
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.5.0
     "@navikt/fnrvalidator": 2.0.7
@@ -4706,7 +4706,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/prosess-omsorgsdager@workspace:packages/prosess-omsorgsdager"
   dependencies:
-    "@navikt/ds-css": 6.5.0
+    "@navikt/ds-css": 6.6.1
     "@navikt/ds-react": 6.5.0
     "@navikt/fnrvalidator": 2.0.7
     classnames: 2.5.1
@@ -4774,7 +4774,7 @@ __metadata:
   resolution: "@k9-sak-web/prosess-uttak@workspace:packages/prosess-uttak"
   dependencies:
     "@hookform/resolvers": ^3.3.4
-    "@navikt/ds-css": 6.5.0
+    "@navikt/ds-css": 6.6.1
     "@navikt/ds-react": 6.5.0
     "@navikt/ft-form-hooks": 4.4.3
     "@navikt/ft-form-validators": 2.3.3
@@ -5160,6 +5160,13 @@ __metadata:
   version: 6.5.0
   resolution: "@navikt/ds-css@npm:6.5.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F6.5.0%2F9b13db809fe703b2ccffb6fe9e3fc497c5b1f71b"
   checksum: 133791424f0b8b2da949a3c6e7ab112c9c385354d8aefae5ac909b7d32a4c05f158edd3e49ec0c921307a064af5328fa639f0f68b59b6b7af151e79f6660bbfe
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-css@npm:6.6.1":
+  version: 6.6.1
+  resolution: "@navikt/ds-css@npm:6.6.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F6.6.1%2F9dc8412bbd265411cdd9b6112df1935e758fd106"
+  checksum: 9ba6531ce211358f8ec55c5975338e341838ff01fd3a69d5d4281e711d2329b141b2f34033a5cc201bdd398a05b211e03dd3eac07ed71d157926a763d19ddcd7
   languageName: node
   linkType: hard
 
@@ -14691,7 +14698,7 @@ __metadata:
   dependencies:
     "@hookform/error-message": ^2.0.1
     "@navikt/aksel-icons": 6.5.0
-    "@navikt/ds-css": 6.5.0
+    "@navikt/ds-css": 6.6.1
     "@navikt/ds-react": 6.5.0
     "@navikt/ds-tailwind": ^6.5.0
     "@navikt/familie-endringslogg": 12.0.0
