@@ -2414,1199 +2414,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fpsak-frontend/assets@1.0.0, @fpsak-frontend/assets@workspace:packages/assets":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/assets@workspace:packages/assets"
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/fakta-arbeidsforhold@1.0.0, @fpsak-frontend/fakta-arbeidsforhold@workspace:packages/fakta-arbeidsforhold":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/fakta-arbeidsforhold@workspace:packages/fakta-arbeidsforhold"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    moment: 2.30.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/fakta-bosted-soker@1.0.0, @fpsak-frontend/fakta-bosted-soker@workspace:packages/fakta-bosted-soker":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/fakta-bosted-soker@workspace:packages/fakta-bosted-soker"
-  dependencies:
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/fakta-direkte-overgang@1.0.0, @fpsak-frontend/fakta-direkte-overgang@workspace:packages/fakta-direkte-overgang":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/fakta-direkte-overgang@workspace:packages/fakta-direkte-overgang"
-  dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@types/yup": 0.32.0
-    date-fns: 2.30.0
-    dayjs: 1.11.11
-    formik: 2.4.6
-    nav-frontend-core: 6.0.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-intl: 6.6.5
-    yup: 0.32.11
-  peerDependencies:
-    dayjs: 1.10.7
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/fakta-feilutbetaling@1.0.0, @fpsak-frontend/fakta-feilutbetaling@workspace:packages/fakta-feilutbetaling":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/fakta-feilutbetaling@workspace:packages/fakta-feilutbetaling"
-  dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/fakta-inntekt-og-ytelser@1.0.0, @fpsak-frontend/fakta-inntekt-og-ytelser@workspace:packages/fakta-inntekt-og-ytelser":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/fakta-inntekt-og-ytelser@workspace:packages/fakta-inntekt-og-ytelser"
-  dependencies:
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/fakta-medlemskap@1.0.0, @fpsak-frontend/fakta-medlemskap@workspace:packages/fakta-medlemskap":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/fakta-medlemskap@workspace:packages/fakta-medlemskap"
-  dependencies:
-    "@fpsak-frontend/fakta-bosted-soker": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/fakta-felles": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.6
-    i18n-iso-countries: 7.11.1
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-paneler-style: 2.0.2
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/fakta-opplysninger-fra-soknaden@1.0.0, @fpsak-frontend/fakta-opplysninger-fra-soknaden@workspace:packages/fakta-opplysninger-fra-soknaden":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/fakta-opplysninger-fra-soknaden@workspace:packages/fakta-opplysninger-fra-soknaden"
-  dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    "@types/redux-form": 8.3.10
-    classnames: 2.5.1
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/fakta-opptjening-oms@1.0.0, @fpsak-frontend/fakta-opptjening-oms@workspace:packages/fakta-opptjening-oms":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/fakta-opptjening-oms@workspace:packages/fakta-opptjening-oms"
-  dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/tidslinje": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-js-utils: 1.0.20
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-tabs-style: 2.0.2
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    object-hash: 3.0.0
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-dom: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/fakta-overstyr-beregning@1.0.0, @fpsak-frontend/fakta-overstyr-beregning@workspace:packages/fakta-overstyr-beregning":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/fakta-overstyr-beregning@workspace:packages/fakta-overstyr-beregning"
-  dependencies:
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": "workspace:^"
-    "@k9-sak-web/types": "workspace:^"
-    "@navikt/ds-react": 6.5.0
-    "@types/yup": 0.32.0
-    date-fns: 2.30.0
-    formik: 2.4.6
-    nav-frontend-core: 6.0.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-typografi: 4.0.2
-    react: 18.3.1
-    react-intl: 6.6.5
-    yup: 0.32.11
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/fakta-verge@1.0.0, @fpsak-frontend/fakta-verge@workspace:packages/fakta-verge":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/fakta-verge@workspace:packages/fakta-verge"
-  dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/fakta-felles": 1.0.0
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/form@*, @fpsak-frontend/form@1.0.0, @fpsak-frontend/form@workspace:packages/form":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/form@workspace:packages/form"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.6
-    classnames: 2.5.1
-    formik: 2.4.6
-    lodash: 4.17.21
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-js-utils: 1.0.20
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-lukknapp: 2.0.2
-    nav-frontend-lukknapp-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-hook-form: 7.51.3
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/kodeverk@1.0.0, @fpsak-frontend/kodeverk@workspace:packages/kodeverk":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/kodeverk@workspace:packages/kodeverk"
-  dependencies:
-    "@k9-sak-web/types": 1.0.0
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prop-types@1.0.0, @fpsak-frontend/prop-types@workspace:packages/prop-types":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prop-types@workspace:packages/prop-types"
-  dependencies:
-    "@fpsak-frontend/kodeverk": 1.0.0
-    prop-types: 15.8.1
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-anke-merknader@1.0.0, @fpsak-frontend/prosess-anke-merknader@workspace:packages/prosess-anke-merknader":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-anke-merknader@workspace:packages/prosess-anke-merknader"
-  dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@k9-sak-web/prosess-felles": 1.0.0
-    classnames: 2.5.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-anke-resultat@1.0.0, @fpsak-frontend/prosess-anke-resultat@workspace:packages/prosess-anke-resultat":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-anke-resultat@workspace:packages/prosess-anke-resultat"
-  dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@k9-sak-web/prosess-felles": 1.0.0
-    classnames: 2.5.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-anke@1.0.0, @fpsak-frontend/prosess-anke@workspace:packages/prosess-anke":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-anke@workspace:packages/prosess-anke"
-  dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@k9-sak-web/prosess-felles": 1.0.0
-    classnames: 2.5.1
-    moment: 2.30.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-avregning@1.0.0, @fpsak-frontend/prosess-avregning@workspace:packages/prosess-avregning":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-avregning@workspace:packages/prosess-avregning"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    classnames: 2.5.1
-    moment: 2.30.1
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-foreldelse@1.0.0, @fpsak-frontend/prosess-foreldelse@workspace:packages/prosess-foreldelse":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-foreldelse@workspace:packages/prosess-foreldelse"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/tidslinje": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/prosess-felles": 1.0.0
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-dom: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-formkrav@1.0.0, @fpsak-frontend/prosess-formkrav@workspace:packages/prosess-formkrav":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-formkrav@workspace:packages/prosess-formkrav"
-  dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/prosess-felles": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    moment: 2.30.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-innsyn@1.0.0, @fpsak-frontend/prosess-innsyn@workspace:packages/prosess-innsyn":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-innsyn@workspace:packages/prosess-innsyn"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/prosess-felles": 1.0.0
-    classnames: 2.5.1
-    moment: 2.30.1
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-klagevurdering@1.0.0, @fpsak-frontend/prosess-klagevurdering@workspace:packages/prosess-klagevurdering":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-klagevurdering@workspace:packages/prosess-klagevurdering"
-  dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/prosess-felles": 1.0.0
-    classnames: 2.5.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-saksopplysninger@1.0.0, @fpsak-frontend/prosess-saksopplysninger@workspace:packages/prosess-saksopplysninger":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-saksopplysninger@workspace:packages/prosess-saksopplysninger"
-  dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/prosess-felles": 1.0.0
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-tilbakekreving@1.0.0, @fpsak-frontend/prosess-tilbakekreving@workspace:packages/prosess-tilbakekreving":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-tilbakekreving@workspace:packages/prosess-tilbakekreving"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/tidslinje": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/prosess-felles": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-dom: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-tilkjent-ytelse@1.0.0, @fpsak-frontend/prosess-tilkjent-ytelse@workspace:packages/prosess-tilkjent-ytelse":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-tilkjent-ytelse@workspace:packages/prosess-tilkjent-ytelse"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/tidslinje": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/prosess-felles": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    classnames: 2.5.1
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-tabs-style: 2.0.2
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-dom: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-    xss: 1.0.15
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-varsel-om-revurdering@1.0.0, @fpsak-frontend/prosess-varsel-om-revurdering@workspace:packages/prosess-varsel-om-revurdering":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-varsel-om-revurdering@workspace:packages/prosess-varsel-om-revurdering"
-  dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/modal-sett-pa-vent": 1.0.0
-    classnames: 2.5.1
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-vedtak-innsyn@1.0.0, @fpsak-frontend/prosess-vedtak-innsyn@workspace:packages/prosess-vedtak-innsyn":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-vedtak-innsyn@workspace:packages/prosess-vedtak-innsyn"
-  dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/prosess-felles": 1.0.0
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-vedtak-klage@1.0.0, @fpsak-frontend/prosess-vedtak-klage@workspace:packages/prosess-vedtak-klage":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-vedtak-klage@workspace:packages/prosess-vedtak-klage"
-  dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    classnames: 2.5.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-vedtak-tilbakekreving@1.0.0, @fpsak-frontend/prosess-vedtak-tilbakekreving@workspace:packages/prosess-vedtak-tilbakekreving":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-vedtak-tilbakekreving@workspace:packages/prosess-vedtak-tilbakekreving"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/prosess-felles": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    classnames: 2.5.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-vedtak@1.0.0, @fpsak-frontend/prosess-vedtak@workspace:packages/prosess-vedtak":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-vedtak@workspace:packages/prosess-vedtak"
-  dependencies:
-    "@editorjs/editorjs": 2.29.1
-    "@editorjs/header": 2.8.1
-    "@editorjs/list": 1.9.0
-    "@editorjs/paragraph": 2.11.4
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/behandling-utvidet-rett": 1.0.0
-    "@k9-sak-web/konstanter": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    classnames: 2.5.1
-    css-tree: 2.3.1
-    date-fns: 2.30.0
-    editorjs-html: 3.4.3
-    formik: 2.4.6
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-vilkar-opptjening-oms@1.0.0, @fpsak-frontend/prosess-vilkar-opptjening-oms@workspace:packages/prosess-vilkar-opptjening-oms":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-vilkar-opptjening-oms@workspace:packages/prosess-vilkar-opptjening-oms"
-  dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/tidslinje": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/prosess-felles": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.6
-    classnames: 2.5.1
-    dayjs: 1.11.11
-    lodash: 4.17.21
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-js-utils: 1.0.20
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-tabs-style: 2.0.2
-    nav-frontend-typografi: 4.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-dom: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-vilkar-overstyring@1.0.0, @fpsak-frontend/prosess-vilkar-overstyring@workspace:packages/prosess-vilkar-overstyring":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-vilkar-overstyring@workspace:packages/prosess-vilkar-overstyring"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/prosess-felles": 1.0.0
-    "@k9-sak-web/rest-api-hooks": 1.0.0
-    "@k9-sak-web/sak-app": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.6
-    classnames: 2.5.1
-    moment: 2.30.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt@1.0.0, @fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt@workspace:packages/prosess-vilkar-sokers-opplysningsplikt":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt@workspace:packages/prosess-vilkar-sokers-opplysningsplikt"
-  dependencies:
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/sak-dekorator@1.0.0, @fpsak-frontend/sak-dekorator@workspace:packages/sak-dekorator":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-dekorator@workspace:packages/sak-dekorator"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/konstanter": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.6
-    nav-frontend-core: 6.0.1
-    nav-frontend-js-utils: 1.0.20
-    nav-frontend-lukknapp: 2.0.2
-    nav-frontend-lukknapp-style: 2.0.2
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-intl: 6.6.5
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/sak-dokumenter@1.0.0, @fpsak-frontend/sak-dokumenter@workspace:packages/sak-dokumenter":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-dokumenter@workspace:packages/sak-dokumenter"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/sak-fagsak-profil@1.0.0, @fpsak-frontend/sak-fagsak-profil@workspace:packages/sak-fagsak-profil":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-fagsak-profil@workspace:packages/sak-fagsak-profil"
-  dependencies:
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    react-router-dom: 6.22.3
-    redux-form: 8.3.10
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/sak-historikk@1.0.0, @fpsak-frontend/sak-historikk@workspace:packages/sak-historikk":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-historikk@workspace:packages/sak-historikk"
-  dependencies:
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    classnames: 2.5.1
-    history: 5.3.0
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-router-dom: 6.22.3
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/sak-meny-endre-enhet@1.0.0, @fpsak-frontend/sak-meny-endre-enhet@workspace:packages/sak-meny-endre-enhet":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-meny-endre-enhet@workspace:packages/sak-meny-endre-enhet"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/sak-meny-henlegg@1.0.0, @fpsak-frontend/sak-meny-henlegg@workspace:packages/sak-meny-henlegg":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-meny-henlegg@workspace:packages/sak-meny-henlegg"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/behandling-klage": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/sak-meny-ny-behandling@1.0.0, @fpsak-frontend/sak-meny-ny-behandling@workspace:packages/sak-meny-ny-behandling":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-meny-ny-behandling@workspace:packages/sak-meny-ny-behandling"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/sak-meny-sett-pa-vent@1.0.0, @fpsak-frontend/sak-meny-sett-pa-vent@workspace:packages/sak-meny-sett-pa-vent":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-meny-sett-pa-vent@workspace:packages/sak-meny-sett-pa-vent"
-  dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/modal-sett-pa-vent": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    react-router-dom: 6.22.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/sak-meny-ta-av-vent@1.0.0, @fpsak-frontend/sak-meny-ta-av-vent@workspace:packages/sak-meny-ta-av-vent":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-meny-ta-av-vent@workspace:packages/sak-meny-ta-av-vent"
-  dependencies:
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    react: 18.3.1
-    react-intl: 6.6.5
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/sak-meny-verge@1.0.0, @fpsak-frontend/sak-meny-verge@workspace:packages/sak-meny-verge":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-meny-verge@workspace:packages/sak-meny-verge"
-  dependencies:
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    react: 18.3.1
-    react-intl: 6.6.5
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/sak-meny@1.0.0, @fpsak-frontend/sak-meny@workspace:packages/sak-meny":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-meny@workspace:packages/sak-meny"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.6
-    react: 18.3.1
-    react-intl: 6.6.5
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/sak-risikoklassifisering@1.0.0, @fpsak-frontend/sak-risikoklassifisering@workspace:packages/sak-risikoklassifisering":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-risikoklassifisering@workspace:packages/sak-risikoklassifisering"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-collapse: 5.1.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/sak-sok@1.0.0, @fpsak-frontend/sak-sok@workspace:packages/sak-sok":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-sok@workspace:packages/sak-sok"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    redux-form: 8.3.10
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/sak-totrinnskontroll@1.0.0, @fpsak-frontend/sak-totrinnskontroll@workspace:packages/sak-totrinnskontroll":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-totrinnskontroll@workspace:packages/sak-totrinnskontroll"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/behandling-utvidet-rett": 1.0.0
-    "@k9-sak-web/konstanter": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    history: 5.3.0
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-intl: 6.6.5
-    react-redux: 8.1.3
-    react-router-dom: 6.22.3
-    redux: 4.2.1
-    redux-form: 8.3.10
-    reselect: 4.1.8
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/sak-visittkort@1.0.0, @fpsak-frontend/sak-visittkort@workspace:packages/sak-visittkort":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-visittkort@workspace:packages/sak-visittkort"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@k9-sak-web/sak-app": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-plattform-komponenter": 2.5.6
-    dayjs: 1.11.11
-    moment: 2.30.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-intl: 6.6.5
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/shared-components@1.0.0, @fpsak-frontend/shared-components@workspace:packages/shared-components":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/shared-components@workspace:packages/shared-components"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/fakta-arbeidsforhold": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    "@navikt/aksel-icons": 6.5.0
-    "@navikt/ds-react": 6.5.0
-    "@navikt/fnrvalidator": 2.0.7
-    "@navikt/ft-plattform-komponenter": 2.5.6
-    axios: 1.6.8
-    classnames: 2.5.1
-    date-fns: 2.30.0
-    date-fns-tz: 2.0.1
-    moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-lukknapp: 2.0.2
-    nav-frontend-lukknapp-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.3.1
-    react-day-picker: 7.4.10
-    react-intl: 6.6.5
-    react-modal: 3.16.1
-    react-redux: 8.1.3
-    redux-form: 8.3.10
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/tidslinje@1.0.0, @fpsak-frontend/tidslinje@workspace:packages/tidslinje":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/tidslinje@workspace:packages/tidslinje"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/tidslinje": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    moment: 2.30.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-dom: 18.3.1
-    react-intl: 6.6.5
-    vis-data: 7.1.9
-    vis-timeline: 7.7.3
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/utils-test@1.0.0, @fpsak-frontend/utils-test@workspace:packages/utils-test":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
-  dependencies:
-    "@fpsak-frontend/kodeverk": 1.0.0
-    jest-axe: 8.0.0
-    react: 18.3.1
-    react-intl: 6.6.5
-  languageName: unknown
-  linkType: soft
-
-"@fpsak-frontend/utils@*, @fpsak-frontend/utils@1.0.0, @fpsak-frontend/utils@workspace:^, @fpsak-frontend/utils@workspace:packages/utils":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/utils@workspace:packages/utils"
-  dependencies:
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@k9-sak-web/konstanter": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-types": 2.4.3
-    moment: 2.30.1
-    react: 18.3.1
-    react-intl: 6.6.5
-  languageName: unknown
-  linkType: soft
-
 "@hapi/hoek@npm:^9.0.0, @hapi/hoek@npm:^9.3.0":
   version: 9.3.0
   resolution: "@hapi/hoek@npm:9.3.0"
@@ -3825,6 +2632,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@k9-sak-web/assets@1.0.0, @k9-sak-web/assets@workspace:packages/assets":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/assets@workspace:packages/assets"
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/backend@workspace:^, @k9-sak-web/backend@workspace:packages/v2/backend":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/backend@workspace:packages/v2/backend"
@@ -3837,18 +2650,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/behandling-anke@workspace:packages/behandling-anke"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prosess-anke": 1.0.0
-    "@fpsak-frontend/prosess-anke-merknader": 1.0.0
-    "@fpsak-frontend/prosess-anke-resultat": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
     "@k9-sak-web/behandling-felles": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/prosess-anke": 1.0.0
+    "@k9-sak-web/prosess-anke-merknader": 1.0.0
+    "@k9-sak-web/prosess-anke-resultat": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
     axios-mock-adapter: 1.22.0
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -3866,16 +2679,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/behandling-felles@workspace:packages/behandling-felles"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prosess-vilkar-overstyring": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/modal-sett-pa-vent": 1.0.0
+    "@k9-sak-web/prosess-vilkar-overstyring": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.5.6
     classnames: 2.5.1
     nav-frontend-core: 6.0.1
@@ -3894,24 +2707,24 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/behandling-frisinn@workspace:packages/behandling-frisinn"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/fakta-arbeidsforhold": 1.0.0
-    "@fpsak-frontend/fakta-inntekt-og-ytelser": 1.0.0
-    "@fpsak-frontend/fakta-medlemskap": 1.0.0
-    "@fpsak-frontend/fakta-opplysninger-fra-soknaden": 1.0.0
-    "@fpsak-frontend/fakta-verge": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prosess-avregning": 1.0.0
-    "@fpsak-frontend/prosess-tilkjent-ytelse": 1.0.0
-    "@fpsak-frontend/prosess-vedtak": 1.0.0
-    "@fpsak-frontend/prosess-vilkar-overstyring": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
     "@k9-sak-web/behandling-felles": 1.0.0
+    "@k9-sak-web/fakta-arbeidsforhold": 1.0.0
+    "@k9-sak-web/fakta-inntekt-og-ytelser": 1.0.0
+    "@k9-sak-web/fakta-medlemskap": 1.0.0
+    "@k9-sak-web/fakta-opplysninger-fra-soknaden": 1.0.0
+    "@k9-sak-web/fakta-verge": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/prosess-avregning": 1.0.0
+    "@k9-sak-web/prosess-tilkjent-ytelse": 1.0.0
+    "@k9-sak-web/prosess-vedtak": 1.0.0
+    "@k9-sak-web/prosess-vilkar-overstyring": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.6
     axios-mock-adapter: 1.22.0
@@ -3929,17 +2742,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/behandling-innsyn@workspace:packages/behandling-innsyn"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prosess-innsyn": 1.0.0
-    "@fpsak-frontend/prosess-vedtak-innsyn": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
     "@k9-sak-web/behandling-felles": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/prosess-innsyn": 1.0.0
+    "@k9-sak-web/prosess-vedtak-innsyn": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
     axios-mock-adapter: 1.22.0
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -3957,18 +2770,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/behandling-klage@workspace:packages/behandling-klage"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prosess-formkrav": 1.0.0
-    "@fpsak-frontend/prosess-klagevurdering": 1.0.0
-    "@fpsak-frontend/prosess-vedtak-klage": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
     "@k9-sak-web/behandling-felles": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/prosess-formkrav": 1.0.0
+    "@k9-sak-web/prosess-klagevurdering": 1.0.0
+    "@k9-sak-web/prosess-vedtak-klage": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
     axios-mock-adapter: 1.22.0
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -3986,33 +2799,33 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/behandling-omsorgspenger@workspace:packages/behandling-omsorgspenger"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/fakta-arbeidsforhold": 1.0.0
-    "@fpsak-frontend/fakta-inntekt-og-ytelser": 1.0.0
-    "@fpsak-frontend/fakta-medlemskap": 1.0.0
-    "@fpsak-frontend/fakta-opptjening-oms": 1.0.0
-    "@fpsak-frontend/fakta-verge": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prosess-avregning": 1.0.0
-    "@fpsak-frontend/prosess-saksopplysninger": 1.0.0
-    "@fpsak-frontend/prosess-tilkjent-ytelse": 1.0.0
-    "@fpsak-frontend/prosess-varsel-om-revurdering": 1.0.0
-    "@fpsak-frontend/prosess-vedtak": 1.0.0
-    "@fpsak-frontend/prosess-vilkar-opptjening-oms": 1.0.0
-    "@fpsak-frontend/prosess-vilkar-overstyring": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
     "@k9-sak-web/behandling-felles": 1.0.0
+    "@k9-sak-web/fakta-arbeidsforhold": 1.0.0
     "@k9-sak-web/fakta-barn-og-overfoeringsdager": 1.0.0
     "@k9-sak-web/fakta-barn-oms": 1.0.0
+    "@k9-sak-web/fakta-inntekt-og-ytelser": 1.0.0
     "@k9-sak-web/fakta-inntektsmelding": 1.0.0
+    "@k9-sak-web/fakta-medlemskap": 1.0.0
     "@k9-sak-web/fakta-omsorgen-for": 1.0.0
+    "@k9-sak-web/fakta-opptjening-oms": 1.0.0
+    "@k9-sak-web/fakta-verge": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/prosess-aarskvantum-oms": 1.0.0
+    "@k9-sak-web/prosess-avregning": 1.0.0
+    "@k9-sak-web/prosess-saksopplysninger": 1.0.0
+    "@k9-sak-web/prosess-tilkjent-ytelse": 1.0.0
+    "@k9-sak-web/prosess-varsel-om-revurdering": 1.0.0
+    "@k9-sak-web/prosess-vedtak": 1.0.0
+    "@k9-sak-web/prosess-vilkar-opptjening-oms": 1.0.0
+    "@k9-sak-web/prosess-vilkar-overstyring": 1.0.0
     "@k9-sak-web/prosess-vilkar-soknadsfrist": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.4
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.6
@@ -4032,39 +2845,39 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/behandling-opplaeringspenger@workspace:packages/behandling-opplaeringspenger"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/fakta-arbeidsforhold": 1.0.0
-    "@fpsak-frontend/fakta-direkte-overgang": 1.0.0
-    "@fpsak-frontend/fakta-medlemskap": 1.0.0
-    "@fpsak-frontend/fakta-opptjening-oms": 1.0.0
-    "@fpsak-frontend/fakta-overstyr-beregning": 1.0.0
-    "@fpsak-frontend/fakta-verge": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prosess-avregning": 1.0.0
-    "@fpsak-frontend/prosess-saksopplysninger": 1.0.0
-    "@fpsak-frontend/prosess-tilkjent-ytelse": 1.0.0
-    "@fpsak-frontend/prosess-varsel-om-revurdering": 1.0.0
-    "@fpsak-frontend/prosess-vedtak": 1.0.0
-    "@fpsak-frontend/prosess-vilkar-opptjening-oms": 1.0.0
-    "@fpsak-frontend/prosess-vilkar-overstyring": 1.0.0
-    "@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
     "@k9-sak-web/behandling-felles": 1.0.0
+    "@k9-sak-web/fakta-arbeidsforhold": 1.0.0
+    "@k9-sak-web/fakta-direkte-overgang": 1.0.0
     "@k9-sak-web/fakta-etablert-tilsyn": 1.0.0
     "@k9-sak-web/fakta-inntektsmelding": 1.0.0
     "@k9-sak-web/fakta-institusjon": 1.0.0
     "@k9-sak-web/fakta-medisinsk-vilkar": 1.0.0
+    "@k9-sak-web/fakta-medlemskap": 1.0.0
     "@k9-sak-web/fakta-om-barnet": 1.0.0
     "@k9-sak-web/fakta-omsorgen-for": 1.0.0
+    "@k9-sak-web/fakta-opptjening-oms": 1.0.0
+    "@k9-sak-web/fakta-overstyr-beregning": 1.0.0
+    "@k9-sak-web/fakta-verge": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/prosess-avregning": 1.0.0
+    "@k9-sak-web/prosess-saksopplysninger": 1.0.0
+    "@k9-sak-web/prosess-tilkjent-ytelse": 1.0.0
     "@k9-sak-web/prosess-uttak": 1.0.0
+    "@k9-sak-web/prosess-varsel-om-revurdering": 1.0.0
+    "@k9-sak-web/prosess-vedtak": 1.0.0
+    "@k9-sak-web/prosess-vilkar-opptjening-oms": 1.0.0
+    "@k9-sak-web/prosess-vilkar-overstyring": 1.0.0
+    "@k9-sak-web/prosess-vilkar-sokers-opplysningsplikt": 1.0.0
     "@k9-sak-web/prosess-vilkar-soknadsfrist": 1.0.0
     "@k9-sak-web/prosess-vilkar-sykdom": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.4
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.6
@@ -4084,35 +2897,35 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/behandling-pleiepenger-sluttfase@workspace:packages/behandling-pleiepenger-sluttfase"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/fakta-arbeidsforhold": 1.0.0
-    "@fpsak-frontend/fakta-medlemskap": 1.0.0
-    "@fpsak-frontend/fakta-opptjening-oms": 1.0.0
-    "@fpsak-frontend/fakta-overstyr-beregning": 1.0.0
-    "@fpsak-frontend/fakta-verge": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prosess-avregning": 1.0.0
-    "@fpsak-frontend/prosess-saksopplysninger": 1.0.0
-    "@fpsak-frontend/prosess-tilkjent-ytelse": 1.0.0
-    "@fpsak-frontend/prosess-varsel-om-revurdering": 1.0.0
-    "@fpsak-frontend/prosess-vedtak": 1.0.0
-    "@fpsak-frontend/prosess-vilkar-opptjening-oms": 1.0.0
-    "@fpsak-frontend/prosess-vilkar-overstyring": 1.0.0
-    "@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
     "@k9-sak-web/behandling-felles": 1.0.0
+    "@k9-sak-web/fakta-arbeidsforhold": 1.0.0
     "@k9-sak-web/fakta-inntektsmelding": 1.0.0
     "@k9-sak-web/fakta-medisinsk-vilkar": 1.0.0
+    "@k9-sak-web/fakta-medlemskap": 1.0.0
+    "@k9-sak-web/fakta-opptjening-oms": 1.0.0
+    "@k9-sak-web/fakta-overstyr-beregning": 1.0.0
     "@k9-sak-web/fakta-utenlandsopphold": 1.0.0
+    "@k9-sak-web/fakta-verge": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/prosess-avregning": 1.0.0
+    "@k9-sak-web/prosess-saksopplysninger": 1.0.0
+    "@k9-sak-web/prosess-tilkjent-ytelse": 1.0.0
     "@k9-sak-web/prosess-uttak": 1.0.0
+    "@k9-sak-web/prosess-varsel-om-revurdering": 1.0.0
+    "@k9-sak-web/prosess-vedtak": 1.0.0
+    "@k9-sak-web/prosess-vilkar-opptjening-oms": 1.0.0
+    "@k9-sak-web/prosess-vilkar-overstyring": 1.0.0
+    "@k9-sak-web/prosess-vilkar-sokers-opplysningsplikt": 1.0.0
     "@k9-sak-web/prosess-vilkar-soknadsfrist": 1.0.0
     "@k9-sak-web/prosess-vilkar-sykdom": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.4
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.6
@@ -4133,39 +2946,39 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/behandling-pleiepenger@workspace:packages/behandling-pleiepenger"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/fakta-arbeidsforhold": 1.0.0
-    "@fpsak-frontend/fakta-direkte-overgang": 1.0.0
-    "@fpsak-frontend/fakta-medlemskap": 1.0.0
-    "@fpsak-frontend/fakta-opptjening-oms": 1.0.0
-    "@fpsak-frontend/fakta-overstyr-beregning": 1.0.0
-    "@fpsak-frontend/fakta-verge": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prosess-avregning": 1.0.0
-    "@fpsak-frontend/prosess-saksopplysninger": 1.0.0
-    "@fpsak-frontend/prosess-tilkjent-ytelse": 1.0.0
-    "@fpsak-frontend/prosess-varsel-om-revurdering": 1.0.0
-    "@fpsak-frontend/prosess-vedtak": 1.0.0
-    "@fpsak-frontend/prosess-vilkar-opptjening-oms": 1.0.0
-    "@fpsak-frontend/prosess-vilkar-overstyring": 1.0.0
-    "@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
     "@k9-sak-web/behandling-felles": 1.0.0
+    "@k9-sak-web/fakta-arbeidsforhold": 1.0.0
+    "@k9-sak-web/fakta-direkte-overgang": 1.0.0
     "@k9-sak-web/fakta-etablert-tilsyn": 1.0.0
     "@k9-sak-web/fakta-inntektsmelding": 1.0.0
     "@k9-sak-web/fakta-medisinsk-vilkar": 1.0.0
+    "@k9-sak-web/fakta-medlemskap": 1.0.0
     "@k9-sak-web/fakta-om-barnet": 1.0.0
     "@k9-sak-web/fakta-omsorgen-for": 1.0.0
+    "@k9-sak-web/fakta-opptjening-oms": 1.0.0
+    "@k9-sak-web/fakta-overstyr-beregning": 1.0.0
     "@k9-sak-web/fakta-utenlandsopphold": 1.0.0
+    "@k9-sak-web/fakta-verge": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/prosess-avregning": 1.0.0
+    "@k9-sak-web/prosess-saksopplysninger": 1.0.0
+    "@k9-sak-web/prosess-tilkjent-ytelse": 1.0.0
     "@k9-sak-web/prosess-uttak": 1.0.0
+    "@k9-sak-web/prosess-varsel-om-revurdering": 1.0.0
+    "@k9-sak-web/prosess-vedtak": 1.0.0
+    "@k9-sak-web/prosess-vilkar-opptjening-oms": 1.0.0
+    "@k9-sak-web/prosess-vilkar-overstyring": 1.0.0
+    "@k9-sak-web/prosess-vilkar-sokers-opplysningsplikt": 1.0.0
     "@k9-sak-web/prosess-vilkar-soknadsfrist": 1.0.0
     "@k9-sak-web/prosess-vilkar-sykdom": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
     "@navikt/diagnosekoder": ^1.2024.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.4
@@ -4186,21 +2999,21 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/behandling-tilbakekreving@workspace:packages/behandling-tilbakekreving"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/fakta-feilutbetaling": 1.0.0
-    "@fpsak-frontend/fakta-verge": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prosess-foreldelse": 1.0.0
-    "@fpsak-frontend/prosess-formkrav": 1.0.0
-    "@fpsak-frontend/prosess-klagevurdering": 1.0.0
-    "@fpsak-frontend/prosess-tilbakekreving": 1.0.0
-    "@fpsak-frontend/prosess-vedtak-klage": 1.0.0
-    "@fpsak-frontend/prosess-vedtak-tilbakekreving": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
     "@k9-sak-web/behandling-felles": 1.0.0
+    "@k9-sak-web/fakta-feilutbetaling": 1.0.0
+    "@k9-sak-web/fakta-verge": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/prosess-foreldelse": 1.0.0
+    "@k9-sak-web/prosess-formkrav": 1.0.0
+    "@k9-sak-web/prosess-klagevurdering": 1.0.0
+    "@k9-sak-web/prosess-tilbakekreving": 1.0.0
+    "@k9-sak-web/prosess-vedtak-klage": 1.0.0
+    "@k9-sak-web/prosess-vedtak-tilbakekreving": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-kodeverk": ^2.4.3
     "@navikt/ft-prosess-tilbakekreving-foreldelse": 3.3.3
@@ -4221,30 +3034,30 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/behandling-unntak@workspace:packages/behandling-unntak"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/fakta-arbeidsforhold": 1.0.0
-    "@fpsak-frontend/fakta-inntekt-og-ytelser": 1.0.0
-    "@fpsak-frontend/fakta-medlemskap": 1.0.0
-    "@fpsak-frontend/fakta-opptjening-oms": 1.0.0
-    "@fpsak-frontend/fakta-verge": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prosess-avregning": 1.0.0
-    "@fpsak-frontend/prosess-formkrav": 1.0.0
-    "@fpsak-frontend/prosess-saksopplysninger": 1.0.0
-    "@fpsak-frontend/prosess-tilkjent-ytelse": 1.0.0
-    "@fpsak-frontend/prosess-varsel-om-revurdering": 1.0.0
-    "@fpsak-frontend/prosess-vedtak": 1.0.0
-    "@fpsak-frontend/prosess-vilkar-opptjening-oms": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
     "@k9-sak-web/behandling-felles": 1.0.0
+    "@k9-sak-web/fakta-arbeidsforhold": 1.0.0
     "@k9-sak-web/fakta-barn-og-overfoeringsdager": 1.0.0
     "@k9-sak-web/fakta-barn-oms": 1.0.0
+    "@k9-sak-web/fakta-inntekt-og-ytelser": 1.0.0
+    "@k9-sak-web/fakta-medlemskap": 1.0.0
+    "@k9-sak-web/fakta-opptjening-oms": 1.0.0
+    "@k9-sak-web/fakta-verge": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/prosess-avregning": 1.0.0
+    "@k9-sak-web/prosess-formkrav": 1.0.0
+    "@k9-sak-web/prosess-saksopplysninger": 1.0.0
+    "@k9-sak-web/prosess-tilkjent-ytelse": 1.0.0
     "@k9-sak-web/prosess-unntak": 1.0.0
+    "@k9-sak-web/prosess-varsel-om-revurdering": 1.0.0
+    "@k9-sak-web/prosess-vedtak": 1.0.0
+    "@k9-sak-web/prosess-vilkar-opptjening-oms": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
     axios-mock-adapter: 1.22.0
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -4262,20 +3075,20 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/behandling-utvidet-rett@workspace:packages/behandling-utvidet-rett"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prosess-vedtak": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
     "@k9-sak-web/behandling-felles": 1.0.0
     "@k9-sak-web/fakta-barn-oms": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/prosess-aarskvantum-oms": 1.0.0
     "@k9-sak-web/prosess-omsorgsdager": 1.0.0
+    "@k9-sak-web/prosess-vedtak": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
     axios-mock-adapter: 1.22.0
     react: 18.3.1
     react-intl: 6.6.5
@@ -4288,16 +3101,40 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/fakta-arbeidsforhold@1.0.0, @k9-sak-web/fakta-arbeidsforhold@workspace:packages/fakta-arbeidsforhold":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-arbeidsforhold@workspace:packages/fakta-arbeidsforhold"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    moment: 2.30.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/fakta-barn-og-overfoeringsdager@1.0.0, @k9-sak-web/fakta-barn-og-overfoeringsdager@workspace:packages/fakta-barn-og-overfoeringsdager":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-barn-og-overfoeringsdager@workspace:packages/fakta-barn-og-overfoeringsdager"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
     classnames: 2.5.1
     just-is-empty: 3.4.1
     moment: 2.30.1
@@ -4322,20 +3159,62 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-barn-oms@workspace:packages/fakta-barn-oms"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
     "@k9-sak-web/fakta-barn-og-overfoeringsdager": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
     "@k9-sak-web/prosess-aarskvantum-oms": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
     moment: 2.30.1
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.5
     uuid: 9.0.1
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/fakta-bosted-soker@1.0.0, @k9-sak-web/fakta-bosted-soker@workspace:packages/fakta-bosted-soker":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-bosted-soker@workspace:packages/fakta-bosted-soker"
+  dependencies:
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/fakta-direkte-overgang@1.0.0, @k9-sak-web/fakta-direkte-overgang@workspace:packages/fakta-direkte-overgang":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-direkte-overgang@workspace:packages/fakta-direkte-overgang"
+  dependencies:
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@types/yup": 0.32.0
+    date-fns: 2.30.0
+    dayjs: 1.11.11
+    formik: 2.4.6
+    nav-frontend-core: 6.0.1
+    nav-frontend-lenker: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
+    nav-frontend-skjema: 4.0.6
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
+    yup: 0.32.11
+  peerDependencies:
+    dayjs: 1.10.7
   languageName: unknown
   linkType: soft
 
@@ -4381,16 +3260,40 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/fakta-feilutbetaling@1.0.0, @k9-sak-web/fakta-feilutbetaling@workspace:packages/fakta-feilutbetaling":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-feilutbetaling@workspace:packages/fakta-feilutbetaling"
+  dependencies:
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    moment: 2.30.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/fakta-felles@1.0.0, @k9-sak-web/fakta-felles@workspace:packages/fakta-felles":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-felles@workspace:packages/fakta-felles"
   dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
     nav-frontend-core: 6.0.1
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -4399,6 +3302,23 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/fakta-inntekt-og-ytelser@1.0.0, @k9-sak-web/fakta-inntekt-og-ytelser@workspace:packages/fakta-inntekt-og-ytelser":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-inntekt-og-ytelser@workspace:packages/fakta-inntekt-og-ytelser"
+  dependencies:
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    moment: 2.30.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
   languageName: unknown
   linkType: soft
 
@@ -4446,7 +3366,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-institusjon@workspace:packages/fakta-institusjon"
   dependencies:
-    "@fpsak-frontend/form": "*"
+    "@k9-sak-web/form": "*"
     "@k9-sak-web/types": "*"
     "@navikt/ft-plattform-komponenter": 2.5.6
     formik: 2.4.6
@@ -4458,7 +3378,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår"
   dependencies:
-    "@fpsak-frontend/form": 1.0.0
+    "@k9-sak-web/form": 1.0.0
     "@navikt/diagnosekoder": ^1.2024.0
     "@navikt/ds-css": 6.5.0
     "@navikt/ds-icons": 3.4.3
@@ -4484,6 +3404,35 @@ __metadata:
     react-query: 3.39.3
     start-server-and-test: ^2.0.3
     vite: ^5.2.10
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/fakta-medlemskap@1.0.0, @k9-sak-web/fakta-medlemskap@workspace:packages/fakta-medlemskap":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-medlemskap@workspace:packages/fakta-medlemskap"
+  dependencies:
+    "@k9-sak-web/fakta-bosted-soker": 1.0.0
+    "@k9-sak-web/fakta-felles": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    "@navikt/ft-plattform-komponenter": 2.5.6
+    i18n-iso-countries: 7.11.1
+    moment: 2.30.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-paneler-style: 2.0.2
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
   languageName: unknown
   linkType: soft
 
@@ -4552,9 +3501,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-opplaering@workspace:packages/fakta-opplaering"
   dependencies:
-    "@fpsak-frontend/form": "*"
-    "@fpsak-frontend/utils": "*"
+    "@k9-sak-web/form": "*"
     "@k9-sak-web/types": "*"
+    "@k9-sak-web/utils": "*"
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.5.0
     "@navikt/ft-plattform-komponenter": 2.5.6
@@ -4569,13 +3518,91 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/fakta-opplysninger-fra-soknaden@1.0.0, @k9-sak-web/fakta-opplysninger-fra-soknaden@workspace:packages/fakta-opplysninger-fra-soknaden":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-opplysninger-fra-soknaden@workspace:packages/fakta-opplysninger-fra-soknaden"
+  dependencies:
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@types/redux-form": 8.3.10
+    classnames: 2.5.1
+    moment: 2.30.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-tabs: 2.0.3
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/fakta-opptjening-oms@1.0.0, @k9-sak-web/fakta-opptjening-oms@workspace:packages/fakta-opptjening-oms":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-opptjening-oms@workspace:packages/fakta-opptjening-oms"
+  dependencies:
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/tidslinje": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    moment: 2.30.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-js-utils: 1.0.20
+    nav-frontend-tabs: 2.0.3
+    nav-frontend-tabs-style: 2.0.2
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    object-hash: 3.0.0
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-dom: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/fakta-overstyr-beregning@1.0.0, @k9-sak-web/fakta-overstyr-beregning@workspace:packages/fakta-overstyr-beregning":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-overstyr-beregning@workspace:packages/fakta-overstyr-beregning"
+  dependencies:
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": "workspace:^"
+    "@k9-sak-web/utils": "workspace:^"
+    "@navikt/ds-react": 6.5.0
+    "@types/yup": 0.32.0
+    date-fns: 2.30.0
+    formik: 2.4.6
+    nav-frontend-core: 6.0.1
+    nav-frontend-lenker: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
+    nav-frontend-skjema: 4.0.6
+    nav-frontend-typografi: 4.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
+    yup: 0.32.11
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/fakta-soknadsperioder@workspace:packages/fakta-soknadsperioder":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-soknadsperioder@workspace:packages/fakta-soknadsperioder"
   dependencies:
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
     nav-frontend-core: 6.0.1
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -4589,10 +3616,67 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-utenlandsopphold@workspace:packages/fakta-utenlandsopphold"
   dependencies:
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/fakta-verge@1.0.0, @k9-sak-web/fakta-verge@workspace:packages/fakta-verge":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-verge@workspace:packages/fakta-verge"
+  dependencies:
+    "@k9-sak-web/fakta-felles": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/form@*, @k9-sak-web/form@1.0.0, @k9-sak-web/form@workspace:packages/form":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/form@workspace:packages/form"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    "@navikt/ft-plattform-komponenter": 2.5.6
+    classnames: 2.5.1
+    formik: 2.4.6
+    lodash: 4.17.21
+    moment: 2.30.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-js-utils: 1.0.20
+    nav-frontend-lenker: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
+    nav-frontend-lukknapp: 2.0.2
+    nav-frontend-lukknapp-style: 2.0.2
+    nav-frontend-skjema: 4.0.6
+    nav-frontend-skjema-style: 3.0.3
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-hook-form: 7.51.3
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
   languageName: unknown
   linkType: soft
 
@@ -4614,6 +3698,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/kodeverk@1.0.0, @k9-sak-web/kodeverk@workspace:packages/kodeverk":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/kodeverk@workspace:packages/kodeverk"
+  dependencies:
+    "@k9-sak-web/types": 1.0.0
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/konstanter@1.0.0, @k9-sak-web/konstanter@workspace:packages/konstanter":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/konstanter@workspace:packages/konstanter"
@@ -4624,13 +3716,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/modal-sett-pa-vent@workspace:packages/modal-sett-pa-vent"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
     moment: 2.30.1
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -4643,19 +3735,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/prop-types@1.0.0, @k9-sak-web/prop-types@workspace:packages/prop-types":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prop-types@workspace:packages/prop-types"
+  dependencies:
+    "@k9-sak-web/kodeverk": 1.0.0
+    prop-types: 15.8.1
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/prosess-aarskvantum-oms@1.0.0, @k9-sak-web/prosess-aarskvantum-oms@workspace:packages/prosess-aarskvantum-oms":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/prosess-aarskvantum-oms@workspace:packages/prosess-aarskvantum-oms"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/prosess-omsorgsdager": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
     classnames: 2.5.1
     lodash: 4.17.21
     moment: 2.30.1
@@ -4680,17 +3781,114 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/prosess-anke-merknader@1.0.0, @k9-sak-web/prosess-anke-merknader@workspace:packages/prosess-anke-merknader":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-anke-merknader@workspace:packages/prosess-anke-merknader"
+  dependencies:
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/prosess-felles": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    classnames: 2.5.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/prosess-anke-resultat@1.0.0, @k9-sak-web/prosess-anke-resultat@workspace:packages/prosess-anke-resultat":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-anke-resultat@workspace:packages/prosess-anke-resultat"
+  dependencies:
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/prosess-felles": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    classnames: 2.5.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/prosess-anke@1.0.0, @k9-sak-web/prosess-anke@workspace:packages/prosess-anke":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-anke@workspace:packages/prosess-anke"
+  dependencies:
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/prosess-felles": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    classnames: 2.5.1
+    moment: 2.30.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/prosess-avregning@1.0.0, @k9-sak-web/prosess-avregning@workspace:packages/prosess-avregning":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-avregning@workspace:packages/prosess-avregning"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    classnames: 2.5.1
+    moment: 2.30.1
+    nav-frontend-chevron: 1.0.30
+    nav-frontend-chevron-style: 1.0.4
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/prosess-felles@1.0.0, @k9-sak-web/prosess-felles@workspace:packages/prosess-felles":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/prosess-felles@workspace:packages/prosess-felles"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
     nav-frontend-core: 6.0.1
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -4699,6 +3897,110 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/prosess-foreldelse@1.0.0, @k9-sak-web/prosess-foreldelse@workspace:packages/prosess-foreldelse":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-foreldelse@workspace:packages/prosess-foreldelse"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/prosess-felles": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/tidslinje": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    moment: 2.30.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-dom: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/prosess-formkrav@1.0.0, @k9-sak-web/prosess-formkrav@workspace:packages/prosess-formkrav":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-formkrav@workspace:packages/prosess-formkrav"
+  dependencies:
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/prosess-felles": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    moment: 2.30.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/prosess-innsyn@1.0.0, @k9-sak-web/prosess-innsyn@workspace:packages/prosess-innsyn":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-innsyn@workspace:packages/prosess-innsyn"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/prosess-felles": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    classnames: 2.5.1
+    moment: 2.30.1
+    nav-frontend-chevron: 1.0.30
+    nav-frontend-chevron-style: 1.0.4
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/prosess-klagevurdering@1.0.0, @k9-sak-web/prosess-klagevurdering@workspace:packages/prosess-klagevurdering":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-klagevurdering@workspace:packages/prosess-klagevurdering"
+  dependencies:
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/prosess-felles": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    classnames: 2.5.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
   languageName: unknown
   linkType: soft
 
@@ -4730,18 +4032,103 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/prosess-saksopplysninger@1.0.0, @k9-sak-web/prosess-saksopplysninger@workspace:packages/prosess-saksopplysninger":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-saksopplysninger@workspace:packages/prosess-saksopplysninger"
+  dependencies:
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/prosess-felles": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    moment: 2.30.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/prosess-tilbakekreving@1.0.0, @k9-sak-web/prosess-tilbakekreving@workspace:packages/prosess-tilbakekreving":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-tilbakekreving@workspace:packages/prosess-tilbakekreving"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/prosess-felles": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/tidslinje": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    moment: 2.30.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-dom: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/prosess-tilkjent-ytelse@1.0.0, @k9-sak-web/prosess-tilkjent-ytelse@workspace:packages/prosess-tilkjent-ytelse":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-tilkjent-ytelse@workspace:packages/prosess-tilkjent-ytelse"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prosess-felles": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/tidslinje": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    classnames: 2.5.1
+    moment: 2.30.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-tabs: 2.0.3
+    nav-frontend-tabs-style: 2.0.2
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-dom: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+    xss: 1.0.15
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/prosess-unntak@1.0.0, @k9-sak-web/prosess-unntak@workspace:packages/prosess-unntak":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/prosess-unntak@workspace:packages/prosess-unntak"
   dependencies:
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
     classnames: 2.5.1
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -4759,10 +4146,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/prosess-uttak-antall-dager-sluttfase@workspace:packages/prosess-uttak-antall-dager-sluttfase"
   dependencies:
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/fremdriftslinje": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
     react: 18.3.1
     react-dom: 18.3.1
     react-intl: 6.6.5
@@ -4808,15 +4195,149 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/prosess-varsel-om-revurdering@1.0.0, @k9-sak-web/prosess-varsel-om-revurdering@workspace:packages/prosess-varsel-om-revurdering":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-varsel-om-revurdering@workspace:packages/prosess-varsel-om-revurdering"
+  dependencies:
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/modal-sett-pa-vent": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    classnames: 2.5.1
+    moment: 2.30.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/prosess-vedtak-innsyn@1.0.0, @k9-sak-web/prosess-vedtak-innsyn@workspace:packages/prosess-vedtak-innsyn":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-vedtak-innsyn@workspace:packages/prosess-vedtak-innsyn"
+  dependencies:
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/prosess-felles": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/prosess-vedtak-klage@1.0.0, @k9-sak-web/prosess-vedtak-klage@workspace:packages/prosess-vedtak-klage":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-vedtak-klage@workspace:packages/prosess-vedtak-klage"
+  dependencies:
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    classnames: 2.5.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/prosess-vedtak-tilbakekreving@1.0.0, @k9-sak-web/prosess-vedtak-tilbakekreving@workspace:packages/prosess-vedtak-tilbakekreving":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-vedtak-tilbakekreving@workspace:packages/prosess-vedtak-tilbakekreving"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prosess-felles": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    classnames: 2.5.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/prosess-vedtak@1.0.0, @k9-sak-web/prosess-vedtak@workspace:packages/prosess-vedtak":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-vedtak@workspace:packages/prosess-vedtak"
+  dependencies:
+    "@editorjs/editorjs": 2.29.1
+    "@editorjs/header": 2.8.1
+    "@editorjs/list": 1.9.0
+    "@editorjs/paragraph": 2.11.4
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/behandling-utvidet-rett": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    classnames: 2.5.1
+    css-tree: 2.3.1
+    date-fns: 2.30.0
+    editorjs-html: 3.4.3
+    formik: 2.4.6
+    moment: 2.30.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-lenker: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
+    nav-frontend-skjema: 4.0.6
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/prosess-vilkar-alder@workspace:packages/prosess-vilkar-alder":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/prosess-vilkar-alder@workspace:packages/prosess-vilkar-alder"
   dependencies:
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
     "@navikt/ft-form-hooks": 4.4.3
     "@navikt/ft-form-validators": 2.3.3
     nav-frontend-core: 6.0.1
@@ -4827,21 +4348,105 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/prosess-vilkar-opptjening-oms@1.0.0, @k9-sak-web/prosess-vilkar-opptjening-oms@workspace:packages/prosess-vilkar-opptjening-oms":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-vilkar-opptjening-oms@workspace:packages/prosess-vilkar-opptjening-oms"
+  dependencies:
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prosess-felles": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/tidslinje": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    "@navikt/ft-plattform-komponenter": 2.5.6
+    classnames: 2.5.1
+    dayjs: 1.11.11
+    lodash: 4.17.21
+    moment: 2.30.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-js-utils: 1.0.20
+    nav-frontend-tabs: 2.0.3
+    nav-frontend-tabs-style: 2.0.2
+    nav-frontend-typografi: 4.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-dom: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/prosess-vilkar-overstyring@1.0.0, @k9-sak-web/prosess-vilkar-overstyring@workspace:packages/prosess-vilkar-overstyring":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-vilkar-overstyring@workspace:packages/prosess-vilkar-overstyring"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
+    "@k9-sak-web/prosess-felles": 1.0.0
+    "@k9-sak-web/rest-api-hooks": 1.0.0
+    "@k9-sak-web/sak-app": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    "@navikt/ft-plattform-komponenter": 2.5.6
+    classnames: 2.5.1
+    moment: 2.30.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/prosess-vilkar-sokers-opplysningsplikt@1.0.0, @k9-sak-web/prosess-vilkar-sokers-opplysningsplikt@workspace:packages/prosess-vilkar-sokers-opplysningsplikt":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-vilkar-sokers-opplysningsplikt@workspace:packages/prosess-vilkar-sokers-opplysningsplikt"
+  dependencies:
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    moment: 2.30.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/prosess-vilkar-soknadsfrist@1.0.0, @k9-sak-web/prosess-vilkar-soknadsfrist@workspace:packages/prosess-vilkar-soknadsfrist":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/prosess-vilkar-soknadsfrist@workspace:packages/prosess-vilkar-soknadsfrist"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.5.6
     classnames: 2.5.1
     moment: 2.30.1
@@ -4861,11 +4466,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/prosess-vilkar-sykdom@workspace:packages/prosess-vilkar-sykdom"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.5.6
     classnames: 2.5.1
     lodash: 4.17.21
@@ -4899,27 +4504,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-app@workspace:packages/sak-app"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prop-types": 1.0.0
-    "@fpsak-frontend/sak-dekorator": 1.0.0
-    "@fpsak-frontend/sak-dokumenter": 1.0.0
-    "@fpsak-frontend/sak-fagsak-profil": 1.0.0
-    "@fpsak-frontend/sak-historikk": 1.0.0
-    "@fpsak-frontend/sak-meny": 1.0.0
-    "@fpsak-frontend/sak-meny-endre-enhet": 1.0.0
-    "@fpsak-frontend/sak-meny-henlegg": 1.0.0
-    "@fpsak-frontend/sak-meny-ny-behandling": 1.0.0
-    "@fpsak-frontend/sak-meny-sett-pa-vent": 1.0.0
-    "@fpsak-frontend/sak-meny-ta-av-vent": 1.0.0
-    "@fpsak-frontend/sak-meny-verge": 1.0.0
-    "@fpsak-frontend/sak-risikoklassifisering": 1.0.0
-    "@fpsak-frontend/sak-sok": 1.0.0
-    "@fpsak-frontend/sak-totrinnskontroll": 1.0.0
-    "@fpsak-frontend/sak-visittkort": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
     "@k9-sak-web/behandling-anke": 1.0.0
     "@k9-sak-web/behandling-frisinn": 1.0.0
     "@k9-sak-web/behandling-innsyn": 1.0.0
@@ -4935,19 +4520,39 @@ __metadata:
     "@k9-sak-web/fakta-om-barnet": 1.0.0
     "@k9-sak-web/fakta-omsorgen-for": 1.0.0
     "@k9-sak-web/gui": "workspace:^"
+    "@k9-sak-web/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/modal-sett-pa-vent": 1.0.0
+    "@k9-sak-web/prop-types": 1.0.0
     "@k9-sak-web/prosess-omsorgsdager": 1.0.0
     "@k9-sak-web/prosess-uttak": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-behandling-velger": 1.0.0
+    "@k9-sak-web/sak-dekorator": 1.0.0
+    "@k9-sak-web/sak-dokumenter": 1.0.0
+    "@k9-sak-web/sak-fagsak-profil": 1.0.0
+    "@k9-sak-web/sak-historikk": 1.0.0
     "@k9-sak-web/sak-infosider": 1.0.0
     "@k9-sak-web/sak-meldinger": 1.0.0
+    "@k9-sak-web/sak-meny": 1.0.0
+    "@k9-sak-web/sak-meny-endre-enhet": 1.0.0
+    "@k9-sak-web/sak-meny-henlegg": 1.0.0
     "@k9-sak-web/sak-meny-marker-behandling": 1.0.0
+    "@k9-sak-web/sak-meny-ny-behandling": 1.0.0
+    "@k9-sak-web/sak-meny-sett-pa-vent": 1.0.0
+    "@k9-sak-web/sak-meny-ta-av-vent": 1.0.0
+    "@k9-sak-web/sak-meny-verge": 1.0.0
     "@k9-sak-web/sak-notat": 1.0.0
+    "@k9-sak-web/sak-risikoklassifisering": 1.0.0
+    "@k9-sak-web/sak-sok": 1.0.0
     "@k9-sak-web/sak-soknadsperiodestripe": 1.0.0
+    "@k9-sak-web/sak-totrinnskontroll": 1.0.0
+    "@k9-sak-web/sak-visittkort": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
     "@navikt/ds-react": 6.5.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.3
     "@navikt/ft-form-hooks": 4.4.3
@@ -4983,13 +4588,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-behandling-velger@workspace:packages/sak-behandling-velger"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
@@ -5001,6 +4606,91 @@ __metadata:
     react: 18.3.1
     react-intl: 6.6.5
     react-query: 3.39.3
+    react-router-dom: 6.22.3
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/sak-dekorator@1.0.0, @k9-sak-web/sak-dekorator@workspace:packages/sak-dekorator":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/sak-dekorator@workspace:packages/sak-dekorator"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    "@navikt/ft-plattform-komponenter": 2.5.6
+    nav-frontend-core: 6.0.1
+    nav-frontend-js-utils: 1.0.20
+    nav-frontend-lukknapp: 2.0.2
+    nav-frontend-lukknapp-style: 2.0.2
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/sak-dokumenter@1.0.0, @k9-sak-web/sak-dokumenter@workspace:packages/sak-dokumenter":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/sak-dokumenter@workspace:packages/sak-dokumenter"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/sak-fagsak-profil@1.0.0, @k9-sak-web/sak-fagsak-profil@workspace:packages/sak-fagsak-profil":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/sak-fagsak-profil@workspace:packages/sak-fagsak-profil"
+  dependencies:
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    react-router-dom: 6.22.3
+    redux-form: 8.3.10
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/sak-historikk@1.0.0, @k9-sak-web/sak-historikk@workspace:packages/sak-historikk":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/sak-historikk@workspace:packages/sak-historikk"
+  dependencies:
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    classnames: 2.5.1
+    history: 5.3.0
+    nav-frontend-chevron: 1.0.30
+    nav-frontend-chevron-style: 1.0.4
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
     react-router-dom: 6.22.3
   languageName: unknown
   linkType: soft
@@ -5021,14 +4711,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-meldinger@workspace:packages/sak-meldinger"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
     "@k9-sak-web/gui": "workspace:^"
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
     classnames: 2.5.1
     nav-frontend-core: 6.0.1
     nav-frontend-typografi: 4.0.2
@@ -5041,15 +4731,63 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/sak-meny-endre-enhet@1.0.0, @k9-sak-web/sak-meny-endre-enhet@workspace:packages/sak-meny-endre-enhet":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/sak-meny-endre-enhet@workspace:packages/sak-meny-endre-enhet"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/sak-meny-henlegg@1.0.0, @k9-sak-web/sak-meny-henlegg@workspace:packages/sak-meny-henlegg":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/sak-meny-henlegg@workspace:packages/sak-meny-henlegg"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/behandling-klage": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    nav-frontend-core: 6.0.1
+    nav-frontend-lenker: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
+    nav-frontend-skjema: 4.0.6
+    nav-frontend-skjema-style: 3.0.3
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/sak-meny-marker-behandling@1.0.0, @k9-sak-web/sak-meny-marker-behandling@workspace:packages/sak-meny-marker-behandling":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-meny-marker-behandling@workspace:packages/sak-meny-marker-behandling"
   dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
     "@navikt/ds-react": 6.5.0
     formik: 2.4.6
     nav-frontend-core: 6.0.1
@@ -5064,13 +4802,94 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/sak-meny-ny-behandling@1.0.0, @k9-sak-web/sak-meny-ny-behandling@workspace:packages/sak-meny-ny-behandling":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/sak-meny-ny-behandling@workspace:packages/sak-meny-ny-behandling"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/sak-meny-sett-pa-vent@1.0.0, @k9-sak-web/sak-meny-sett-pa-vent@workspace:packages/sak-meny-sett-pa-vent":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/sak-meny-sett-pa-vent@workspace:packages/sak-meny-sett-pa-vent"
+  dependencies:
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/modal-sett-pa-vent": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    moment: 2.30.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    react-router-dom: 6.22.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/sak-meny-ta-av-vent@1.0.0, @k9-sak-web/sak-meny-ta-av-vent@workspace:packages/sak-meny-ta-av-vent":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/sak-meny-ta-av-vent@workspace:packages/sak-meny-ta-av-vent"
+  dependencies:
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    react: 18.3.1
+    react-intl: 6.6.5
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/sak-meny-verge@1.0.0, @k9-sak-web/sak-meny-verge@workspace:packages/sak-meny-verge":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/sak-meny-verge@workspace:packages/sak-meny-verge"
+  dependencies:
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    react: 18.3.1
+    react-intl: 6.6.5
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/sak-meny@1.0.0, @k9-sak-web/sak-meny@workspace:packages/sak-meny":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/sak-meny@workspace:packages/sak-meny"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    "@navikt/ft-plattform-komponenter": 2.5.6
+    react: 18.3.1
+    react-intl: 6.6.5
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/sak-notat@1.0.0, @k9-sak-web/sak-notat@workspace:packages/sak-notat":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-notat@workspace:packages/sak-notat"
   dependencies:
-    "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
     "@navikt/aksel-icons": 6.5.0
     "@navikt/ds-react": 6.5.0
     "@navikt/ft-form-hooks": 4.4.3
@@ -5082,14 +4901,58 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/sak-risikoklassifisering@1.0.0, @k9-sak-web/sak-risikoklassifisering@workspace:packages/sak-risikoklassifisering":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/sak-risikoklassifisering@workspace:packages/sak-risikoklassifisering"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-collapse: 5.1.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/sak-sok@1.0.0, @k9-sak-web/sak-sok@workspace:packages/sak-sok":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/sak-sok@workspace:packages/sak-sok"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    redux-form: 8.3.10
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/sak-soknadsperiodestripe@1.0.0, @k9-sak-web/sak-soknadsperiodestripe@workspace:packages/sak-soknadsperiodestripe":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-soknadsperiodestripe@workspace:packages/sak-soknadsperiodestripe"
   dependencies:
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -5098,9 +4961,146 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/sak-totrinnskontroll@1.0.0, @k9-sak-web/sak-totrinnskontroll@workspace:packages/sak-totrinnskontroll":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/sak-totrinnskontroll@workspace:packages/sak-totrinnskontroll"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/behandling-utvidet-rett": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    history: 5.3.0
+    moment: 2.30.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-redux: 8.1.3
+    react-router-dom: 6.22.3
+    redux: 4.2.1
+    redux-form: 8.3.10
+    reselect: 4.1.8
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/sak-visittkort@1.0.0, @k9-sak-web/sak-visittkort@workspace:packages/sak-visittkort":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/sak-visittkort@workspace:packages/sak-visittkort"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/sak-app": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@navikt/ft-plattform-komponenter": 2.5.6
+    dayjs: 1.11.11
+    moment: 2.30.1
+    nav-frontend-lenker: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
+    nav-frontend-skjema: 4.0.6
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/shared-components@1.0.0, @k9-sak-web/shared-components@workspace:packages/shared-components":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/shared-components@workspace:packages/shared-components"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/fakta-arbeidsforhold": 1.0.0
+    "@k9-sak-web/form": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    "@k9-sak-web/utils-test": 1.0.0
+    "@navikt/aksel-icons": 6.5.0
+    "@navikt/ds-react": 6.5.0
+    "@navikt/fnrvalidator": 2.0.7
+    "@navikt/ft-plattform-komponenter": 2.5.6
+    axios: 1.6.8
+    classnames: 2.5.1
+    date-fns: 2.30.0
+    date-fns-tz: 2.0.1
+    moment: 2.30.1
+    nav-frontend-core: 6.0.1
+    nav-frontend-lenker: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
+    nav-frontend-lukknapp: 2.0.2
+    nav-frontend-lukknapp-style: 2.0.2
+    nav-frontend-skjema: 4.0.6
+    nav-frontend-skjema-style: 3.0.3
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-day-picker: 7.4.10
+    react-intl: 6.6.5
+    react-modal: 3.16.1
+    react-redux: 8.1.3
+    redux-form: 8.3.10
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/tidslinje@1.0.0, @k9-sak-web/tidslinje@workspace:packages/tidslinje":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/tidslinje@workspace:packages/tidslinje"
+  dependencies:
+    "@k9-sak-web/assets": 1.0.0
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/shared-components": 1.0.0
+    "@k9-sak-web/tidslinje": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@k9-sak-web/utils": 1.0.0
+    moment: 2.30.1
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    prop-types: 15.8.1
+    react: 18.3.1
+    react-dom: 18.3.1
+    react-intl: 6.6.5
+    vis-data: 7.1.9
+    vis-timeline: 7.7.3
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/types@*, @k9-sak-web/types@1.0.0, @k9-sak-web/types@workspace:^, @k9-sak-web/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/types@workspace:packages/types"
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/utils-test@1.0.0, @k9-sak-web/utils-test@workspace:packages/utils-test":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/utils-test@workspace:packages/utils-test"
+  dependencies:
+    "@k9-sak-web/kodeverk": 1.0.0
+    jest-axe: 8.0.0
+    react: 18.3.1
+    react-intl: 6.6.5
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/utils@*, @k9-sak-web/utils@1.0.0, @k9-sak-web/utils@workspace:^, @k9-sak-web/utils@workspace:packages/utils":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/utils@workspace:packages/utils"
+  dependencies:
+    "@k9-sak-web/kodeverk": 1.0.0
+    "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    "@navikt/ft-types": 2.4.3
+    moment: 2.30.1
+    react: 18.3.1
+    react-intl: 6.6.5
   languageName: unknown
   linkType: soft
 

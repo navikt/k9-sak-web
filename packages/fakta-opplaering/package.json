@@ -6,8 +6,8 @@
   "private": true,
   "dependencies": {
     "@k9-sak-web/form": "*",
-    "@k9-sak-web/utils": "*",
     "@k9-sak-web/types": "*",
+    "@k9-sak-web/utils": "*",
     "@navikt/ds-icons": "3.4.3",
     "@navikt/ds-react": "6.5.0",
     "@navikt/ft-plattform-komponenter": "2.5.6",

@@ -7,10 +7,10 @@
   "dependencies": {
     "@k9-sak-web/assets": "1.0.0",
     "@k9-sak-web/kodeverk": "1.0.0",
-    "@k9-sak-web/shared-components": "1.0.0",
-    "@k9-sak-web/utils": "1.0.0",
     "@k9-sak-web/sak-app": "1.0.0",
+    "@k9-sak-web/shared-components": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
+    "@k9-sak-web/utils": "1.0.0",
     "@navikt/ft-plattform-komponenter": "2.5.6",
     "dayjs": "1.11.11",
     "moment": "2.30.1",
