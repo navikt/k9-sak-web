@@ -1,6 +1,5 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
@@ -31,7 +30,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
 
     renderWithIntlAndReduxForm(
       <PerioderMedMedlemskapFaktaPanel.WrappedComponent
-        intl={intlMock}
         hasPeriodeAksjonspunkt
         isPeriodAksjonspunktClosed={false}
         fixedMedlemskapPerioder={periods}
@@ -61,7 +59,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
 
     renderWithIntlAndReduxForm(
       <PerioderMedMedlemskapFaktaPanel.WrappedComponent
-        intl={intlMock}
         hasPeriodeAksjonspunkt
         isPeriodAksjonspunktClosed={false}
         fixedMedlemskapPerioder={periods}
@@ -89,7 +86,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
 
     renderWithIntlAndReduxForm(
       <PerioderMedMedlemskapFaktaPanel.WrappedComponent
-        intl={intlMock}
         hasPeriodeAksjonspunkt
         isPeriodAksjonspunktClosed={false}
         readOnly={false}
@@ -109,7 +105,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
 
     renderWithIntlAndReduxForm(
       <PerioderMedMedlemskapFaktaPanel.WrappedComponent
-        intl={intlMock}
         hasPeriodeAksjonspunkt
         isPeriodAksjonspunktClosed={false}
         fixedMedlemskapPerioder={medlemskapPerioder}

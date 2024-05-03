@@ -11,8 +11,11 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "jsx": "react",
-    "baseUrl": "packages/",
-    "skipLibCheck": true //TODO Fjern denne
+    "skipLibCheck": true, //TODO Fjern denne
+    "paths": {
+      "@fpsak-frontend/*": ["./packages/*/src"],
+      "@k9-sak-web/*": ["./packages/*/src"]
+    }
   },
   "include": ["packages/**/*", "_mocks", "vitest-setup.ts"],
   "exclude": ["packages/**/cypress.config.ts", "packages/**/cypress", "cypress", "node_modules"]
