@@ -1,9 +1,22 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import { decodeHtmlEntity, safeJSONParse } from '@fpsak-frontend/utils';
+import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { isAvslag, isDelvisInnvilget, isInnvilget } from '@k9-sak-web/kodeverk/src/behandlingResultatType';
+import dokumentMalType from '@k9-sak-web/kodeverk/src/dokumentMalType';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import vedtaksbrevtype from '@k9-sak-web/kodeverk/src/vedtaksbrevtype';
+import { dokumentdatatype } from '@k9-sak-web/konstanter';
+import {
+  Aksjonspunkt,
+  ArbeidsgiverOpplysningerPerId,
+  BehandlingStatusType,
+  Behandlingsresultat,
+  Kodeverk,
+  KodeverkMedNavn,
+  Personopplysninger,
+  Vilkar,
+} from '@k9-sak-web/types';
+import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
+import { decodeHtmlEntity, safeJSONParse } from '@k9-sak-web/utils';
 import {
   TilgjengeligeVedtaksbrev,
   TilgjengeligeVedtaksbrevMedMaler,
@@ -18,20 +31,7 @@ import {
   kanHaManueltFritekstbrev,
   kanHindreUtsending,
   kanKunVelge,
-} from '@fpsak-frontend/utils/src/formidlingUtils';
-import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
-import { dokumentdatatype } from '@k9-sak-web/konstanter';
-import {
-  Aksjonspunkt,
-  ArbeidsgiverOpplysningerPerId,
-  BehandlingStatusType,
-  Behandlingsresultat,
-  Kodeverk,
-  KodeverkMedNavn,
-  Personopplysninger,
-  Vilkar,
-} from '@k9-sak-web/types';
-import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
+} from '@k9-sak-web/utils/src/formidlingUtils';
 import { Checkbox, Label } from '@navikt/ds-react';
 import { Formik, FormikProps } from 'formik';
 import React, { useContext, useState } from 'react';

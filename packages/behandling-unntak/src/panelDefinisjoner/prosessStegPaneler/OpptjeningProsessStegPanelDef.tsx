@@ -1,10 +1,10 @@
 import React from 'react';
 
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening-oms';
+import { ProsessStegDef, ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
+import OpptjeningVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-opptjening-oms';
 
 import { UnntakBehandlingApiKeys } from '../../data/unntakBehandlingApi';
 

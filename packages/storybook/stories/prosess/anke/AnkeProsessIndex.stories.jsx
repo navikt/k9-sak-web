@@ -1,11 +1,11 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import { boolean, object, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import AnkeProsessIndex from '@fpsak-frontend/prosess-anke';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import ankeVurdering from '@k9-sak-web/kodeverk/src/ankeVurdering';
+import AnkeProsessIndex from '@k9-sak-web/prosess-anke';
 
 import withReduxProvider from '../../../decorators/withRedux';
 

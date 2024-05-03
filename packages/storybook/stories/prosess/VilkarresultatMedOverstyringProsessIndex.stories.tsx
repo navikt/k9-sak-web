@@ -1,13 +1,13 @@
-import aksjonspunktCode from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
+import aksjonspunktCode from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
+import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/prosess-vilkar-overstyring';
+import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import { action } from '@storybook/addon-actions';
 import { boolean, object, withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
-import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import withReduxProvider from '../../decorators/withRedux';
 
 const avslagsarsaker = [

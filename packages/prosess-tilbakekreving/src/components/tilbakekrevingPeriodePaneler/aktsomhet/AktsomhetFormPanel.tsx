@@ -1,6 +1,6 @@
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
+import { RadioGroupField, RadioOption } from '@k9-sak-web/form';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
+import { decodeHtmlEntity, removeSpacesFromNumber, required } from '@k9-sak-web/utils';
 import { Detail } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

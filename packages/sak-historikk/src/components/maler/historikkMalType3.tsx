@@ -1,11 +1,11 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import { HistorikkInnslagAksjonspunkt } from '@k9-sak-web/types';
 import { BodyShort, Label } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 import { IntlShape, WrappedComponentProps, injectIntl } from 'react-intl';
 
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity } from '@k9-sak-web/utils';
 import HistorikkMal from '../HistorikkMalTsType';
 import Skjermlenke from './felles/Skjermlenke';
 import { findHendelseText } from './felles/historikkUtils';

@@ -1,4 +1,4 @@
-import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
+import CheckboxFieldFormik from '@k9-sak-web/form/src/CheckboxFieldFormik';
 import { CheckboxGruppe } from 'nav-frontend-skjema';
 import PropTypes from 'prop-types';
 import React from 'react';

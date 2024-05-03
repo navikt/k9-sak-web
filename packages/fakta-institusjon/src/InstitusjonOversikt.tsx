@@ -1,10 +1,10 @@
-import * as React from 'react';
-import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
-import { Heading } from '@navikt/ds-react';
 import { InstitusjonPeriode, InstitusjonPerioderMedResultat, InstitusjonVurdering } from '@k9-sak-web/types';
-import { Period } from '@fpsak-frontend/utils';
-import InstitusjonNavigation from './InstitusjonNavigation';
+import { Period } from '@k9-sak-web/utils';
+import { Heading } from '@navikt/ds-react';
+import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
+import * as React from 'react';
 import InstitusjonDetails from './InstitusjonDetails';
+import InstitusjonNavigation from './InstitusjonNavigation';
 
 interface OwnProps {
   perioder: InstitusjonPeriode[];

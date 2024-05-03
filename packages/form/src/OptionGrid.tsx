@@ -1,5 +1,5 @@
-import { EditedIcon, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import { range } from '@fpsak-frontend/utils';
+import { EditedIcon, FlexColumn, FlexContainer, FlexRow } from '@k9-sak-web/shared-components';
+import { range } from '@k9-sak-web/utils';
 import React from 'react';
 import styles from './optionGrid.module.css';
 

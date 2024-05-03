@@ -1,9 +1,9 @@
+import { Period } from '@k9-sak-web/utils';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import duration from 'dayjs/plugin/duration';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { Period } from '@fpsak-frontend/utils';
+import duration from 'dayjs/plugin/duration';
+import utc from 'dayjs/plugin/utc';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
 
 const dateFormats = ['YYYY-MM-DD', 'DD.MM.YYYY'];
 

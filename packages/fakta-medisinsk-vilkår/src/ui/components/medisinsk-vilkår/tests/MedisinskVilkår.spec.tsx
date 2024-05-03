@@ -1,4 +1,4 @@
-import { httpUtils } from '@fpsak-frontend/utils';
+import { httpUtils } from '@k9-sak-web/utils';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';

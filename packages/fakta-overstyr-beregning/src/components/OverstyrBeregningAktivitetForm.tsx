@@ -1,5 +1,5 @@
-import { Datepicker } from '@fpsak-frontend/shared-components';
-import { parseCurrencyInput } from '@fpsak-frontend/utils';
+import { Datepicker } from '@k9-sak-web/shared-components';
+import { parseCurrencyInput } from '@k9-sak-web/utils';
 import { Table, TextField } from '@navikt/ds-react';
 import { Field, useFormikContext } from 'formik';
 import React from 'react';

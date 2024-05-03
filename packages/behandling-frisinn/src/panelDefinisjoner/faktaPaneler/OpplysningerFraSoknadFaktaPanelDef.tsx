@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import OpplysningerFraSoknadenIndex from '@fpsak-frontend/fakta-opplysninger-fra-soknaden';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import OpplysningerFraSoknadenIndex from '@k9-sak-web/fakta-opplysninger-fra-soknaden';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 
 import { FrisinnBehandlingApiKeys } from '../../data/frisinnBehandlingApi';
 

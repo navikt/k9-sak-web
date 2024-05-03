@@ -1,15 +1,15 @@
-import React, { useEffect, useCallback, useMemo } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Aksjonspunkt, NavAnsatt, Risikoklassifisering, Fagsak, BehandlingAppKontekst } from '@k9-sak-web/types';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import RisikoklassifiseringSakIndex from '@k9-sak-web/sak-risikoklassifisering';
+import { Aksjonspunkt, BehandlingAppKontekst, Fagsak, NavAnsatt, Risikoklassifisering } from '@k9-sak-web/types';
 
-import behandlingEventHandler from '../../behandling/BehandlingEventHandler';
-import useTrackRouteParam from '../../app/useTrackRouteParam';
-import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
 import { getRiskPanelLocationCreator } from '../../app/paths';
+import useTrackRouteParam from '../../app/useTrackRouteParam';
 import getAccessRights, { AksessRettigheter } from '../../app/util/access';
+import behandlingEventHandler from '../../behandling/BehandlingEventHandler';
+import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
 
 const getReadOnly = (navAnsatt: NavAnsatt, rettigheter: AksessRettigheter, erPaaVent: boolean) => {
   if (erPaaVent) {

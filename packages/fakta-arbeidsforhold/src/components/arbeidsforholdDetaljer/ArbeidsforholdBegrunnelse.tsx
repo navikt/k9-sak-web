@@ -1,5 +1,5 @@
-import { TextAreaField, behandlingFormValueSelector, isBehandlingFormDirty } from '@fpsak-frontend/form';
-import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { TextAreaField, behandlingFormValueSelector, isBehandlingFormDirty } from '@k9-sak-web/form';
+import { hasValidText, maxLength, minLength, required } from '@k9-sak-web/utils';
 import React from 'react';
 import { connect } from 'react-redux';
 

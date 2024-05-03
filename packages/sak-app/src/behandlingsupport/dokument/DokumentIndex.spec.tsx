@@ -1,6 +1,6 @@
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
+import fagsakStatus from '@k9-sak-web/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import relasjonsRolleType from '@k9-sak-web/kodeverk/src/relasjonsRolleType';
 import { Fagsak } from '@k9-sak-web/types';
 import { render, screen } from '@testing-library/react';
 import React from 'react';

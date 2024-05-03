@@ -1,8 +1,8 @@
+import { isAksjonspunktOpen } from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
 import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
-import getAlleMerknaderFraBeslutter from '../getAlleMerknaderFraBeslutter';
 import Rettigheter from '../../types/rettigheterTsType';
+import getAlleMerknaderFraBeslutter from '../getAlleMerknaderFraBeslutter';
 import readOnlyUtils from '../readOnlyUtils';
 import FaktaPanelDef from './FaktaPanelDef';
 

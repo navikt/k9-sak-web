@@ -1,5 +1,5 @@
-import { DatepickerRHF, RadioGroupPanelRHF } from '@fpsak-frontend/form';
-import { dateConstants } from '@fpsak-frontend/utils';
+import { DatepickerRHF, RadioGroupPanelRHF } from '@k9-sak-web/form';
+import { dateConstants } from '@k9-sak-web/utils';
 import { Box, DetailView, Form, Margin } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';

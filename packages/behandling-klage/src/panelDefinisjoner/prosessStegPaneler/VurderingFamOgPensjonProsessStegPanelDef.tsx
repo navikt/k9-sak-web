@@ -1,9 +1,9 @@
 import React from 'react';
 
-import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import KlagevurderingProsessIndex from '@k9-sak-web/prosess-klagevurdering';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <KlagevurderingProsessIndex {...props} />;

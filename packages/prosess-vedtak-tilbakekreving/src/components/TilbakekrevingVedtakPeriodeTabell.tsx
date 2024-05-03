@@ -1,6 +1,6 @@
-import { PeriodLabel } from '@fpsak-frontend/shared-components';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { PeriodLabel } from '@k9-sak-web/shared-components';
 import { Kodeverk } from '@k9-sak-web/types';
+import { formatCurrencyNoKr } from '@k9-sak-web/utils';
 import { BodyShort, Label, Table } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@k9-sak-web/utils';
 import { BeregningsgrunnlagProsessIndex } from '@navikt/ft-prosess-beregningsgrunnlag';
 
 const mapYtelsesSpesifiktGrunnlagForFrisinn = (beregningsgrunnlag, behandling) =>

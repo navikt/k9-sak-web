@@ -1,11 +1,11 @@
 import React from 'react';
 
+import ArbeidsforholdFaktaIndex from '@k9-sak-web/fakta-arbeidsforhold';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
 import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
 
 class ArbeidsforholdFaktaPanelDef extends FaktaPanelDef {

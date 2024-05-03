@@ -1,4 +1,4 @@
-import checkBlaIkonUrl from '@fpsak-frontend/assets/images/check_blue.svg';
+import checkBlaIkonUrl from '@k9-sak-web/assets/images/check_blue.svg';
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

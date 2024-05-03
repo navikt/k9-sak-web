@@ -1,7 +1,7 @@
-import { CheckboxField, TextAreaField } from '@fpsak-frontend/form';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { CheckboxField, TextAreaField } from '@k9-sak-web/form';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
+import { hasValidText, maxLength, minLength, required } from '@k9-sak-web/utils';
 import { Detail, HGrid } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

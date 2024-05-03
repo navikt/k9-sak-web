@@ -1,7 +1,6 @@
-import { behandlingForm, getBehandlingFormPrefix } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { guid } from '@fpsak-frontend/utils';
+import { behandlingForm, getBehandlingFormPrefix } from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { AksjonspunktHelpText, VerticalSpacer } from '@k9-sak-web/shared-components';
 import {
   Aksjonspunkt,
   ArbeidsgiverOpplysningerPerId,
@@ -9,6 +8,7 @@ import {
   Kodeverk,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
+import { guid } from '@k9-sak-web/utils';
 import moment from 'moment';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

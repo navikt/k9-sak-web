@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import { BodyShort } from '@navikt/ds-react';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import HistorikkMal from '../HistorikkMalTsType';

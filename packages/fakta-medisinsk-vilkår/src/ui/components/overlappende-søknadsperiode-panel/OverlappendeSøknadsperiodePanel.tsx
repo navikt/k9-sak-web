@@ -1,4 +1,4 @@
-import { Period, prettifyPeriodList } from '@fpsak-frontend/utils';
+import { Period, prettifyPeriodList } from '@k9-sak-web/utils';
 import { BodyShort, Button } from '@navikt/ds-react';
 import { InfoPanel } from '@navikt/ft-plattform-komponenter';
 import React from 'react';

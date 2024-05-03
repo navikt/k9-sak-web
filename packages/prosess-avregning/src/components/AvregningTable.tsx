@@ -1,6 +1,6 @@
-import mottakerTyper from '@fpsak-frontend/kodeverk/src/mottakerTyper';
-import { formatCurrencyNoKr, getRangeOfMonths } from '@fpsak-frontend/utils';
+import mottakerTyper from '@k9-sak-web/kodeverk/src/mottakerTyper';
 import { Kodeverk, Periode, SimuleringMottaker, SimuleringResultatRad } from '@k9-sak-web/types';
+import { formatCurrencyNoKr, getRangeOfMonths } from '@k9-sak-web/utils';
 import { BodyShort, Table } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import moment from 'moment/moment';

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingStatusCode from '@k9-sak-web/kodeverk/src/behandlingStatus';
 import { useIntl } from 'react-intl';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Button, ErrorMessage } from '@navikt/ds-react';
 

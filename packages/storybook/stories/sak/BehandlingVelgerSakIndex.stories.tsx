@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
+import fagsakStatus from '@k9-sak-web/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import relasjonsRolleType from '@k9-sak-web/kodeverk/src/relasjonsRolleType';
 import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
 import { Behandling, Fagsak, Kodeverk } from '@k9-sak-web/types';
 import { boolean, number, object, withKnobs } from '@storybook/addon-knobs';

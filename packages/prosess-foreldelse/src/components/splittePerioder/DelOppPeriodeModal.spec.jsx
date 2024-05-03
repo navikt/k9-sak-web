@@ -1,6 +1,6 @@
-import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { intlMock } from '@k9-sak-web/utils-test/intl-test-helper';
+import { reduxFormPropsMock } from '@k9-sak-web/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@k9-sak-web/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';

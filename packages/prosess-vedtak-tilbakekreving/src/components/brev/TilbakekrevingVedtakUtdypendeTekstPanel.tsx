@@ -1,7 +1,7 @@
-import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import { behandlingFormValueSelector, TextAreaField } from '@fpsak-frontend/form';
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import addCircleIcon from '@k9-sak-web/assets/images/add-circle.svg';
+import { behandlingFormValueSelector, TextAreaField } from '@k9-sak-web/form';
+import { Image, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { hasValidText, maxLength, minLength, required } from '@k9-sak-web/utils';
 import { Detail } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';

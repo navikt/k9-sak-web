@@ -1,4 +1,4 @@
-import MenySakIndex, { MenyData } from '@fpsak-frontend/sak-meny';
+import MenySakIndex, { MenyData } from '@k9-sak-web/sak-meny';
 import { Modal } from '@navikt/ds-react';
 import { withKnobs } from '@storybook/addon-knobs';
 import React, { useState } from 'react';

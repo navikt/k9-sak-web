@@ -6,19 +6,19 @@ import {
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
-} from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+} from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import behandlingResultatType from '@k9-sak-web/kodeverk/src/behandlingResultatType';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import {
   AksjonspunktHelpText,
   FlexColumn,
   FlexContainer,
   FlexRow,
   VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
-import { required } from '@fpsak-frontend/utils';
-import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+} from '@k9-sak-web/shared-components';
 import { Kodeverk } from '@k9-sak-web/types';
+import { required } from '@k9-sak-web/utils';
 import { Heading } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

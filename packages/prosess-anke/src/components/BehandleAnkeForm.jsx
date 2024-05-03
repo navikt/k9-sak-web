@@ -9,15 +9,15 @@ import {
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
-} from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
-import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+} from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import ankeVurdering from '@k9-sak-web/kodeverk/src/ankeVurdering';
+import ankeVurderingOmgjoer from '@k9-sak-web/kodeverk/src/ankeVurderingOmgjoer';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, required } from '@k9-sak-web/utils';
 import { BodyShort, HGrid, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';

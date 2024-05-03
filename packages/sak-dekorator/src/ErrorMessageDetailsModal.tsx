@@ -1,5 +1,5 @@
-import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import infoImageUrl from '@k9-sak-web/assets/images/behandle.svg';
+import { Image, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { BodyShort, Button, Detail, HGrid, Heading, Modal } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';

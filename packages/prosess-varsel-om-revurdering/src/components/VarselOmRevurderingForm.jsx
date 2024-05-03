@@ -4,19 +4,13 @@ import {
   TextAreaField,
   behandlingForm,
   behandlingFormValueSelector,
-} from '@fpsak-frontend/form';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { AksjonspunktHelpText, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import {
-  ISO_DATE_FORMAT,
-  getLanguageCodeFromSprakkode,
-  hasValidText,
-  minLength,
-  required,
-} from '@fpsak-frontend/utils';
+} from '@k9-sak-web/form';
+import { isAksjonspunktOpen } from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import BehandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
+import { AksjonspunktHelpText, ArrowBox, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { ISO_DATE_FORMAT, getLanguageCodeFromSprakkode, hasValidText, minLength, required } from '@k9-sak-web/utils';
 import { BodyShort, Button, Detail, Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
 import moment from 'moment';

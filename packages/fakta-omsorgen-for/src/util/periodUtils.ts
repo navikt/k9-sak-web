@@ -1,4 +1,4 @@
-import { Period } from '@fpsak-frontend/utils';
+import { Period } from '@k9-sak-web/utils';
 
 export const getStringMedPerioder = (perioder: Period[]): string => {
   if (perioder.length === 1) {

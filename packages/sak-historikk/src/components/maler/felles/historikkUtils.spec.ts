@@ -1,6 +1,6 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import { getKodeverknavnFn } from '@k9-sak-web/utils';
+import { intlWithMessages } from '@k9-sak-web/utils-test/intl-test-helper';
 
 import messages from '../../../../i18n/nb_NO.json';
 import { findResultatText } from './historikkUtils';

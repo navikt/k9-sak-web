@@ -1,5 +1,5 @@
+import { get } from '@k9-sak-web/utils';
 import { PageContainer } from '@navikt/ft-plattform-komponenter';
-import { get } from '@fpsak-frontend/utils';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import Pleietrengende from '../../types/Pleietrengende';
 import PleietrengendeResponse from '../../types/PleietrengendeResponse';

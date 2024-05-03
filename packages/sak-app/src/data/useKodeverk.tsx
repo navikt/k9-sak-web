@@ -1,6 +1,6 @@
-import { KodeverkMedNavn, Kodeverk } from '@k9-sak-web/types';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import BehandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { K9sakApiKeys, restApiHooks } from './k9sakApi';
 

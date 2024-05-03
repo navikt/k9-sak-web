@@ -1,6 +1,6 @@
-import React from 'react';
-import { Period } from '@fpsak-frontend/utils';
+import { Period } from '@k9-sak-web/utils';
 import { ContentWithTooltip, WarningIcon } from '@navikt/ft-plattform-komponenter';
+import React from 'react';
 import styles from './periodeSomSkalVurderes.module.css';
 
 interface PeriodeSomSkalVurderesProps {

@@ -1,6 +1,6 @@
-import { DecimalField, InputField, RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
-import { ArrowBox, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { formatCurrencyNoKr, maxValue, minValue, required } from '@fpsak-frontend/utils';
+import { DecimalField, InputField, RadioGroupField, RadioOption, SelectField } from '@k9-sak-web/form';
+import { ArrowBox, FlexColumn, FlexRow, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { formatCurrencyNoKr, maxValue, minValue, required } from '@k9-sak-web/utils';
 import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

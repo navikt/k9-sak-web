@@ -1,4 +1,4 @@
-import { FormState } from '@fpsak-frontend/form/index';
+import { FormState } from '@k9-sak-web/form/index';
 import { Omsorgsdager } from '@k9-sak-web/prosess-omsorgsdager';
 import React from 'react';
 import KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend from './KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend';

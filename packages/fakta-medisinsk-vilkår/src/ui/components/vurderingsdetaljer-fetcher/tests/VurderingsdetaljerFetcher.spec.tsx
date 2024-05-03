@@ -1,5 +1,5 @@
-import { httpUtils } from '@fpsak-frontend/utils';
-import { render, waitFor, screen } from '@testing-library/react';
+import { httpUtils } from '@k9-sak-web/utils';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import ContainerContext from '../../../context/ContainerContext';
 import VurderingsdetaljerFetcher from '../VurderingsdetaljerFetcher';

@@ -1,4 +1,4 @@
-import { Period, initializeDate, isSameOrBefore, sortPeriodsByFomDate } from '@fpsak-frontend/utils';
+import { Period, initializeDate, isSameOrBefore, sortPeriodsByFomDate } from '@k9-sak-web/utils';
 
 const checkIfPeriodsAreEdgeToEdge = (period, otherPeriod) => {
   const dayAfterPeriod = initializeDate(period.tom).add(1, 'day');

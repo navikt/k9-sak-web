@@ -1,23 +1,23 @@
 import React, { Component, ReactElement, ReactNode } from 'react';
-import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
+import { Dispatch, bindActionCreators } from 'redux';
 import { change as reduxChange } from 'redux-form';
+import { createSelector } from 'reselect';
 
-import { getBehandlingFormName } from '@fpsak-frontend/form';
+import { getBehandlingFormName } from '@k9-sak-web/form';
 
 const findAllNames = children =>
   children
     ? React.Children.map(children, child => {
-      let all = [];
-      if (child && child.props && child.props.children) {
-        all = findAllNames(child.props.children);
-      }
-      if (child && child.props && child.props.name) {
-        all.push(child.props.name);
-      }
-      return all;
-    })
+        let all = [];
+        if (child && child.props && child.props.children) {
+          all = findAllNames(child.props.children);
+        }
+        if (child && child.props && child.props.name) {
+          all.push(child.props.name);
+        }
+        return all;
+      })
     : [];
 
 interface PureOwnProps {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
-import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
+import tilbakekrevingVidereBehandling from '@k9-sak-web/kodeverk/src/tilbakekrevingVidereBehandling';
 import { HistorikkinnslagEndretFelt } from '@k9-sak-web/types';
 
 import historikkinnslagType from '../../kodeverk/historikkinnslagType';

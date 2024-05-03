@@ -15,10 +15,10 @@ import {
   RadioGroupField,
   RadioOption,
   TextAreaField,
-} from '@fpsak-frontend/form';
-import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { required } from '@fpsak-frontend/utils';
+} from '@k9-sak-web/form';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { required } from '@k9-sak-web/utils';
 
 import PreviewAnkeLink from './PreviewAnkeLink';
 

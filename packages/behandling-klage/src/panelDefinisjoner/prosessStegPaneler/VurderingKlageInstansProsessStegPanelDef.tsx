@@ -1,10 +1,10 @@
 import React from 'react';
 
-import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import KlagevurderingProsessIndex from '@k9-sak-web/prosess-klagevurdering';
 import { Fagsak, FeatureToggles } from '@k9-sak-web/types';
 
 class PanelDef extends ProsessStegPanelDef {

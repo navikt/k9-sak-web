@@ -1,15 +1,15 @@
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { required } from '@fpsak-frontend/utils';
+import { RadioGroupField, RadioOption } from '@k9-sak-web/form';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
+import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
+import { required } from '@k9-sak-web/utils';
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
+import avslattImage from '@k9-sak-web/assets/images/avslaatt.svg';
+import innvilgetImage from '@k9-sak-web/assets/images/check.svg';
 
 import styles from './VilkarFields.module.css';
 

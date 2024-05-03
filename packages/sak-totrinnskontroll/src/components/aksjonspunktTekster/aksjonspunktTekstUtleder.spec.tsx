@@ -1,15 +1,15 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
-import behandlingStatusCodes from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import arbeidsforholdHandlingType from '@k9-sak-web/kodeverk/src/arbeidsforholdHandlingType';
+import behandlingStatusCodes from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import faktaOmBeregningTilfelle from '@k9-sak-web/kodeverk/src/faktaOmBeregningTilfelle';
+import klageVurderingCodes from '@k9-sak-web/kodeverk/src/klageVurdering';
+import klageVurderingOmgjoerCodes from '@k9-sak-web/kodeverk/src/klageVurderingOmgjoer';
 import { KlageVurdering, TotrinnskontrollAksjonspunkt, TotrinnskontrollArbeidsforhold } from '@k9-sak-web/types';
 import { Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import getAksjonspunkttekst, { getFaktaOmArbeidsforholdMessages } from './aksjonspunktTekstUtleder';
 
 const medholdIKlage = {

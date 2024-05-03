@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { OkAvbrytModal } from '@fpsak-frontend/shared-components';
+import { OkAvbrytModal } from '@k9-sak-web/shared-components';
 
 import messages from '../i18n/nb_NO.json';
 

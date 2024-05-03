@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
-import { safeJSONParse } from '@fpsak-frontend/utils';
-import HenleggBehandlingModal from './components/HenleggBehandlingModal';
+import { safeJSONParse } from '@k9-sak-web/utils';
 import HenlagtBehandlingModal from './components/HenlagtBehandlingModal';
+import HenleggBehandlingModal from './components/HenleggBehandlingModal';
 
 import messages from '../i18n/nb_NO.json';
 

@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
-import dayjs from 'dayjs';
-import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
+import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
+import dayjs from 'dayjs';
+import React, { useContext } from 'react';
 
-import { Period } from '@fpsak-frontend/utils';
-import { ReisetidVurdering } from './ReisetidTypes';
-import ReisetidNavigation from './ReisetidNavigation';
+import { Period } from '@k9-sak-web/utils';
 import ReisetidDetails from './ReisetidDetails';
+import ReisetidNavigation from './ReisetidNavigation';
+import { ReisetidVurdering } from './ReisetidTypes';
 
 const mapVurdering = (vurdering, reisetidObj, perioder) => {
   const perioderFraSoeknad = perioder.find(

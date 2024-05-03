@@ -65,7 +65,7 @@
 }
 
 .calendarToggleButton:after {
-  content: url('@fpsak-frontend/assets/images/kalender.svg');
+  content: url('@k9-sak-web/assets/images/kalender.svg');
 }
 
 .calendarToggleButton:hover,
@@ -77,7 +77,7 @@
 
 .calendarToggleButton:hover:after,
 .calendarToggleButton:focus:after {
-  content: url('@fpsak-frontend/assets/images/kalender_hover.svg');
+  content: url('@k9-sak-web/assets/images/kalender_hover.svg');
 }
 
 .calendarToggleButton:disabled {
@@ -87,7 +87,7 @@
 }
 
 .calendarToggleButton:disabled:after {
-  content: url('@fpsak-frontend/assets/images/kalender_disabled.svg');
+  content: url('@k9-sak-web/assets/images/kalender_disabled.svg');
 }
 
 .calendarRoot {

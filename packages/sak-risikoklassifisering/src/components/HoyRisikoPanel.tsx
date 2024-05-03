@@ -1,5 +1,5 @@
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import { AksjonspunktHelpText, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { Aksjonspunkt, Risikoklassifisering } from '@k9-sak-web/types';
 import { Box } from '@navikt/ds-react';
 import React from 'react';

@@ -1,6 +1,6 @@
 import { ProsessStegDef } from '@k9-sak-web/behandling-felles';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import GjennomgaaOpplaeringPanelDef from './opplaeringPaneler/GjennomgaaOpplaeringPanelDef';
 import NoedvendighetPanelDef from './opplaeringPaneler/NoedvendighetPanelDef';

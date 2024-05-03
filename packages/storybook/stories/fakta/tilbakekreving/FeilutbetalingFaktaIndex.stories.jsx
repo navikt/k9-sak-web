@@ -1,15 +1,15 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import { boolean, object, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
+import FeilutbetalingFaktaIndex from '@k9-sak-web/fakta-feilutbetaling';
+import aksjonspunktCodesTilbakekreving from '@k9-sak-web/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import behandlingArsakType from '@k9-sak-web/kodeverk/src/behandlingArsakType';
+import behandlingResultatType from '@k9-sak-web/kodeverk/src/behandlingResultatType';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import konsekvensForYtelsen from '@k9-sak-web/kodeverk/src/konsekvensForYtelsen';
+import tilbakekrevingVidereBehandling from '@k9-sak-web/kodeverk/src/tilbakekrevingVidereBehandling';
 
 import withReduxProvider from '../../../decorators/withRedux';
 

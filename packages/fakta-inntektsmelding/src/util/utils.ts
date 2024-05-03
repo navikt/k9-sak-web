@@ -1,4 +1,4 @@
-import { initializeDate } from '@fpsak-frontend/utils';
+import { initializeDate } from '@k9-sak-web/utils';
 import Aksjonspunkt from '../types/Aksjonspunkt';
 import { Kode, TilstandBeriket } from '../types/KompletthetData';
 import Status from '../types/TilstandStatus';

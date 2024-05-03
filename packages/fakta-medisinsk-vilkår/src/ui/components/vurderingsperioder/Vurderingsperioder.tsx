@@ -1,5 +1,5 @@
+import { Period } from '@k9-sak-web/utils';
 import { ContentWithTooltip, OnePersonIconGray } from '@navikt/ft-plattform-komponenter';
-import { Period } from '@fpsak-frontend/utils';
 import React from 'react';
 import styles from './vurderingsperioder.module.css';
 

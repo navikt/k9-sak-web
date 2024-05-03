@@ -1,8 +1,8 @@
-import React from 'react';
+import { useSaksbehandlerOppslag } from '@k9-sak-web/shared-components';
 import { InstitusjonVurderingMedPerioder, Vurderingsresultat } from '@k9-sak-web/types';
 import { Calender } from '@navikt/ds-icons';
 import { AssessedBy, Box, DetailView, LabelledContent, LinkButton, Margin } from '@navikt/ft-plattform-komponenter';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
+import React from 'react';
 import styles from './institusjonFerdigVisning.module.css';
 
 interface OwnProps {

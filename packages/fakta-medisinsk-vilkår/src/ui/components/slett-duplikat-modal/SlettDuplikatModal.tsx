@@ -1,4 +1,4 @@
-import { post } from '@fpsak-frontend/utils';
+import { post } from '@k9-sak-web/utils';
 import { BodyShort, Button, Modal } from '@navikt/ds-react';
 import { Box, Margin, PageError } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo, useState } from 'react';

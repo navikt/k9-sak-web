@@ -1,6 +1,6 @@
-import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
-import { LoadingPanel, requireProps, usePrevious } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import DokumenterSakIndex from '@k9-sak-web/sak-dokumenter';
+import { LoadingPanel, requireProps, usePrevious } from '@k9-sak-web/shared-components';
 import { Dokument, Fagsak } from '@k9-sak-web/types';
 import React, { useMemo } from 'react';
 import useBehandlingEndret from '../../behandling/useBehandlingEndret';

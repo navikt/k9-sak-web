@@ -1,4 +1,4 @@
-import { Period } from '@fpsak-frontend/utils';
+import { Period } from '@k9-sak-web/utils';
 import BeredskapType from '../types/BeredskapType';
 import EtablertTilsynType from '../types/EtablertTilsynType';
 import NattevåkType from '../types/NattevåkType';

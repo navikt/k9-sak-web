@@ -1,19 +1,17 @@
-import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import MenySakIndex, { MenyData } from '@fpsak-frontend/sak-meny';
-import MenyEndreBehandlendeEnhetIndex, { getMenytekst } from '@fpsak-frontend/sak-meny-endre-enhet';
-import MenyHenleggIndex, { getMenytekst as getHenleggMenytekst } from '@fpsak-frontend/sak-meny-henlegg';
-import MenyNyBehandlingIndex, {
-  getMenytekst as getNyBehandlingMenytekst,
-} from '@fpsak-frontend/sak-meny-ny-behandling';
-import MenySettPaVentIndex, { getMenytekst as getSettPaVentMenytekst } from '@fpsak-frontend/sak-meny-sett-pa-vent';
-import MenyTaAvVentIndex, { getMenytekst as getTaAvVentMenytekst } from '@fpsak-frontend/sak-meny-ta-av-vent';
-import MenyVergeIndex, { getMenytekst as getVergeMenytekst } from '@fpsak-frontend/sak-meny-verge';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
+import BehandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import BehandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import MenySakIndex, { MenyData } from '@k9-sak-web/sak-meny';
+import MenyEndreBehandlendeEnhetIndex, { getMenytekst } from '@k9-sak-web/sak-meny-endre-enhet';
+import MenyHenleggIndex, { getMenytekst as getHenleggMenytekst } from '@k9-sak-web/sak-meny-henlegg';
 import MenyMarkerBehandling, {
   getMenytekst as getMenytekstMarkerBehandling,
 } from '@k9-sak-web/sak-meny-marker-behandling';
+import MenyNyBehandlingIndex, { getMenytekst as getNyBehandlingMenytekst } from '@k9-sak-web/sak-meny-ny-behandling';
+import MenySettPaVentIndex, { getMenytekst as getSettPaVentMenytekst } from '@k9-sak-web/sak-meny-sett-pa-vent';
+import MenyTaAvVentIndex, { getMenytekst as getTaAvVentMenytekst } from '@k9-sak-web/sak-meny-ta-av-vent';
+import MenyVergeIndex, { getMenytekst as getVergeMenytekst } from '@k9-sak-web/sak-meny-verge';
 import {
   ArbeidsgiverOpplysningerPerId,
   BehandlingAppKontekst,
@@ -35,6 +33,8 @@ import BehandlingRettigheter, { VergeBehandlingmenyValg } from '../behandling/be
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import { useVisForhandsvisningAvMelding } from '../data/useVisForhandsvisningAvMelding';
 import SakRettigheter from '../fagsak/sakRettigheterTsType';
+import BehandlingMenuVeiledervisning from './BehandlingMenuVeiledervisning';
+import MenyKodeverk from './MenyKodeverk';
 import {
   fjernVerge,
   nyBehandlendeEnhet,
@@ -43,8 +43,6 @@ import {
   setBehandlingOnHold,
   shelveBehandling,
 } from './behandlingMenuOperations';
-import MenyKodeverk from './MenyKodeverk';
-import BehandlingMenuVeiledervisning from './BehandlingMenuVeiledervisning';
 
 const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
   BehandlingType.FORSTEGANGSSOKNAD,

@@ -1,4 +1,4 @@
-import { prettifyDateString } from '@fpsak-frontend/utils';
+import { prettifyDateString } from '@k9-sak-web/utils';
 import { Button, Label } from '@navikt/ds-react';
 import { Box, DocumentIcon, Margin } from '@navikt/ft-plattform-komponenter';
 import React from 'react';

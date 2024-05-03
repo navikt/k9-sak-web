@@ -1,13 +1,13 @@
 import React from 'react';
 
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import VedtakProsessIndex from '@k9-sak-web/prosess-vedtak';
 
-import findStatusForVedtak from '../vedtakStatusUtlederOmsorgspenger';
 import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
+import findStatusForVedtak from '../vedtakStatusUtlederOmsorgspenger';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <VedtakProsessIndex {...props} />;

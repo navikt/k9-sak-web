@@ -1,7 +1,7 @@
-import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
-import { Tooltip } from '@fpsak-frontend/shared-components';
-import { dateFormat } from '@fpsak-frontend/utils';
+import diskresjonskodeType from '@k9-sak-web/kodeverk/src/diskresjonskodeType';
+import { Tooltip } from '@k9-sak-web/shared-components';
 import { Personopplysninger } from '@k9-sak-web/types';
+import { dateFormat } from '@k9-sak-web/utils';
 import { Tag } from '@navikt/ds-react';
 import moment from 'moment';
 import React, { useMemo } from 'react';

@@ -1,5 +1,5 @@
-import DirekteOvergangFaktaIndex from '@fpsak-frontend/fakta-direkte-overgang';
-import { messages } from '@fpsak-frontend/fakta-direkte-overgang/i18n';
+import DirekteOvergangFaktaIndex from '@k9-sak-web/fakta-direkte-overgang';
+import { messages } from '@k9-sak-web/fakta-direkte-overgang/i18n';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { action } from '@storybook/addon-actions';
 import React from 'react';

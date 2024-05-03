@@ -1,4 +1,4 @@
-import { Period } from '@fpsak-frontend/utils';
+import { Period } from '@k9-sak-web/utils';
 import EtablertTilsynType from '../types/EtablertTilsynType';
 
 const mapTilEtablertTilsynType = v => new EtablertTilsynType(v);

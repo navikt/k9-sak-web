@@ -1,6 +1,6 @@
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
 import { Vilkar } from '@k9-sak-web/types';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { formatereLukketPeriode } from '@fpsak-frontend/utils';
+import { formatereLukketPeriode } from '@k9-sak-web/utils';
 import { InformasjonOmVurdertVilkar } from '../../types/utvidetRettMikrofrontend/InformasjonOmVurdertVilkar';
 
 export const generereInfoForVurdertVilkar = (

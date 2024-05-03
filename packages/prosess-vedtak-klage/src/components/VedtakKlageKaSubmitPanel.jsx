@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import dokumentMalType from '@k9-sak-web/kodeverk/src/dokumentMalType';
+import klageVurderingType from '@k9-sak-web/kodeverk/src/klageVurdering';
 
 import styles from './vedtakKlageSubmitPanel.module.css';
 

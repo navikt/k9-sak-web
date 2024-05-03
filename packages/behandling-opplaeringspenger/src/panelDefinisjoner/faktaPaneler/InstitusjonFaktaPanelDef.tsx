@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import FaktaInstitusjon from '@k9-sak-web/fakta-institusjon';
 import { OpplaeringspengerBehandlingApiKeys } from '@k9-sak-web/behandling-opplaeringspenger/src/data/opplaeringspengerBehandlingApi';
+import FaktaInstitusjon from '@k9-sak-web/fakta-institusjon';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 
 class InstitusjonFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.INSTITUSJON;

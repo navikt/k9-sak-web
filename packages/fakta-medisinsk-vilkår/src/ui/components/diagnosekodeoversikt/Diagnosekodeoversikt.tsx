@@ -1,4 +1,4 @@
-import { httpUtils } from '@fpsak-frontend/utils';
+import { httpUtils } from '@k9-sak-web/utils';
 import { Box, Margin, TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
 
 import { Alert, Loader } from '@navikt/ds-react';

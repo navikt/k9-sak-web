@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, object, boolean } from '@storybook/addon-knobs';
+import { boolean, object, withKnobs } from '@storybook/addon-knobs';
+import React, { useState } from 'react';
 
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
+import fagsakStatus from '@k9-sak-web/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import personstatusType from '@k9-sak-web/kodeverk/src/personstatusType';
+import FagsakSokSakIndex from '@k9-sak-web/sak-sok';
 
 import { Fagsak } from '@k9-sak-web/types';
 import withReduxProvider from '../../decorators/withRedux';

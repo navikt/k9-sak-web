@@ -1,4 +1,4 @@
-import { Period } from '@fpsak-frontend/utils';
+import { Period } from '@k9-sak-web/utils';
 import Link from './Link';
 
 export interface InnleggelsesperiodeResponse {

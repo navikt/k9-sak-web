@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect } from 'react';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { LoadingPanel } from '@k9-sak-web/shared-components';
 
 import { K9sakApiKeys, requestApi, restApiHooks } from '../data/k9sakApi';
 import useHentInitLenker from './useHentInitLenker';

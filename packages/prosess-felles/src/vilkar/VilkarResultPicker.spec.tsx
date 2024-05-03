@@ -1,9 +1,9 @@
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { isRequiredMessage } from '@fpsak-frontend/utils';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
 import { Aksjonspunkt } from '@k9-sak-web/types';
+import { isRequiredMessage } from '@k9-sak-web/utils';
+import { renderWithIntlAndReduxForm } from '@k9-sak-web/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';

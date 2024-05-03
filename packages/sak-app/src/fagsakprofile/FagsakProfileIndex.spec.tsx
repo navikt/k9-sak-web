@@ -3,14 +3,14 @@ import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { MemoryRouter } from 'react-router-dom';
 
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import behandlingResultatType from '@k9-sak-web/kodeverk/src/behandlingResultatType';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import fagsakStatus from '@k9-sak-web/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import kontrollresultatKode from '@k9-sak-web/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';

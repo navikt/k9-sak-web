@@ -1,4 +1,4 @@
-import { Image } from '@fpsak-frontend/shared-components/index';
+import { Image } from '@k9-sak-web/shared-components/index';
 import { Heading } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import React from 'react';

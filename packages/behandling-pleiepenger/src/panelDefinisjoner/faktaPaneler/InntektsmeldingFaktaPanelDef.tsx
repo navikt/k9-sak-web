@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
 import { Fagsak } from '@k9-sak-web/types';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
 import Inntektsmelding from '../../components/Inntektsmelding';
+import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
 
 class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.INNTEKTSMELDING;

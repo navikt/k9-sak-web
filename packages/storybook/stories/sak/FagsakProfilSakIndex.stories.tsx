@@ -1,9 +1,9 @@
 import { withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
+import fagsakStatus from '@k9-sak-web/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import FagsakProfilSakIndex from '@k9-sak-web/sak-fagsak-profil';
 
 import { Button } from '@navikt/ds-react';
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';

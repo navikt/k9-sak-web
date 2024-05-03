@@ -1,10 +1,10 @@
-import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, Personopplysninger } from '@k9-sak-web/types';
-import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import avsenderApplikasjon from '@fpsak-frontend/kodeverk/src/avsenderApplikasjon';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
+import avsenderApplikasjon from '@k9-sak-web/kodeverk/src/avsenderApplikasjon';
+import BehandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import vedtaksbrevtype from '@k9-sak-web/kodeverk/src/vedtaksbrevtype';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
+import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, Personopplysninger } from '@k9-sak-web/types';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
 
 export interface VedtaksbrevMal {
   dokumentMalType: string;

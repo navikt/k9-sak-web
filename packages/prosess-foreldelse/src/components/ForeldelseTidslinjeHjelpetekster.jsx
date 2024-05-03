@@ -1,11 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
 
-import ikkeOppfyltUrl from '@fpsak-frontend/assets/images/ikke_oppfylt.svg';
-import oppfyltUrl from '@fpsak-frontend/assets/images/oppfylt.svg';
-import uavklartUrl from '@fpsak-frontend/assets/images/uavklart.svg';
-import { LegendBox } from '@fpsak-frontend/tidslinje';
+import ikkeOppfyltUrl from '@k9-sak-web/assets/images/ikke_oppfylt.svg';
+import oppfyltUrl from '@k9-sak-web/assets/images/oppfylt.svg';
+import uavklartUrl from '@k9-sak-web/assets/images/uavklart.svg';
+import { LegendBox } from '@k9-sak-web/tidslinje';
 
 const ForeldelseTidslinjeHjelpetekster = ({ intl }) => {
   const legends = [

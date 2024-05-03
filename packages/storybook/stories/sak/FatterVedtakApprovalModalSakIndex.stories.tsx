@@ -1,12 +1,12 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, text } from '@storybook/addon-knobs';
+import { boolean, text, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { FatterVedtakTotrinnskontrollModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
+import behandlingResultatType from '@k9-sak-web/kodeverk/src/behandlingResultatType';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import { FatterVedtakTotrinnskontrollModalSakIndex } from '@k9-sak-web/sak-totrinnskontroll';
 import { Behandling } from '@k9-sak-web/types';
 
 import withReduxProvider from '../../decorators/withRedux';

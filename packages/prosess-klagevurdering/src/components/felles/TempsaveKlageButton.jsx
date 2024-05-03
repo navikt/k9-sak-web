@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import klageVurderingType from '@k9-sak-web/kodeverk/src/klageVurdering';
 
 const transformValues = (values, aksjonspunktCode) => ({
   klageMedholdArsak:

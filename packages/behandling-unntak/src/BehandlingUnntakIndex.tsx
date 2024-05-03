@@ -1,20 +1,20 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
-import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import {
-  Fagsak,
-  Behandling,
-  KodeverkMedNavn,
-  FeatureToggles,
-  FagsakPerson,
-  ArbeidsgiverOpplysningerWrapper,
-} from '@k9-sak-web/types';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { LoadingPanel } from '@k9-sak-web/shared-components';
+import {
+  ArbeidsgiverOpplysningerWrapper,
+  Behandling,
+  Fagsak,
+  FagsakPerson,
+  FeatureToggles,
+  KodeverkMedNavn,
+} from '@k9-sak-web/types';
 
-import FetchedData from './types/fetchedDataTsType';
-import { restApiUnntakHooks, requestUnntakApi, UnntakBehandlingApiKeys } from './data/unntakBehandlingApi';
 import UnntakPaneler from './components/UnntakPaneler';
+import { UnntakBehandlingApiKeys, requestUnntakApi, restApiUnntakHooks } from './data/unntakBehandlingApi';
+import FetchedData from './types/fetchedDataTsType';
 
 const unntakData = [
   { key: UnntakBehandlingApiKeys.AKSJONSPUNKTER },

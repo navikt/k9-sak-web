@@ -1,17 +1,17 @@
-import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
-import { FormState } from '@fpsak-frontend/form/index';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { FormState } from '@k9-sak-web/form/index';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import BehandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
 import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
+import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
+import AvslagskoderAleneOmOmsorgen from '../../../../../types/utvidetRettMikrofrontend/AvslagskoderAleneOmOmsorgen';
 import {
   AleneOmOmsorgenAksjonspunktObjekt,
   AleneOmOmsorgenLosAksjonspunktK9Format,
   AleneOmOmsorgenProps,
 } from '../../../../../types/utvidetRettMikrofrontend/VilkarAleneOmOmsorgenProps';
-import AvslagskoderAleneOmOmsorgen from '../../../../../types/utvidetRettMikrofrontend/AvslagskoderAleneOmOmsorgen';
+import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 
 interface OwnProps {
   behandling: Behandling;

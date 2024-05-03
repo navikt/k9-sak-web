@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity, getLanguageFromSprakkode, hasValidText, maxLength, minLength } from '@fpsak-frontend/utils';
+import TextAreaFormik from '@k9-sak-web/form/src/TextAreaFormik';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
+import { decodeHtmlEntity, getLanguageFromSprakkode, hasValidText, maxLength, minLength } from '@k9-sak-web/utils';
 
 import styles from './vedtakFritekstPanel.module.css';
 

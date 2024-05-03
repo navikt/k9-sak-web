@@ -3,15 +3,15 @@ import { FormikProps, FormikValues } from 'formik';
 import React from 'react';
 import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 
-import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
-import { VerticalSpacer, useFeatureToggles } from '@fpsak-frontend/shared-components';
-import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { TextAreaFormik, TextFieldFormik } from '@k9-sak-web/form';
+import { VerticalSpacer, useFeatureToggles } from '@k9-sak-web/shared-components';
+import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import { hasValidText, maxLength, minLength, required } from '@k9-sak-web/utils';
 import {
   Brevmottaker,
   TilgjengeligeVedtaksbrev,
   kanHaManueltFritekstbrev,
-} from '@fpsak-frontend/utils/src/formidlingUtils';
-import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+} from '@k9-sak-web/utils/src/formidlingUtils';
 
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 

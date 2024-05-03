@@ -1,10 +1,10 @@
-import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import region from '@fpsak-frontend/kodeverk/src/region';
-import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import { renderWithIntl, screen } from '@fpsak-frontend/utils-test/test-utils';
+import diskresjonskodeType from '@k9-sak-web/kodeverk/src/diskresjonskodeType';
+import navBrukerKjonn from '@k9-sak-web/kodeverk/src/navBrukerKjonn';
+import opplysningAdresseType from '@k9-sak-web/kodeverk/src/opplysningAdresseType';
+import personstatusType from '@k9-sak-web/kodeverk/src/personstatusType';
+import region from '@k9-sak-web/kodeverk/src/region';
+import sivilstandType from '@k9-sak-web/kodeverk/src/sivilstandType';
+import { renderWithIntl, screen } from '@k9-sak-web/utils-test/test-utils';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import VisittkortLabels from './VisittkortLabels';

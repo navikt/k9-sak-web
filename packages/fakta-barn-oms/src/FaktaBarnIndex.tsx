@@ -1,19 +1,19 @@
 import React from 'react';
 
-import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
-import BarnDto from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import user from '@k9-sak-web/assets/images/user.svg';
+import users from '@k9-sak-web/assets/images/users.svg';
 import Seksjon from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/components/Seksjon';
-import users from '@fpsak-frontend/assets/images/users.svg';
-import user from '@fpsak-frontend/assets/images/user.svg';
+import FagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import BarnDto from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import { Rammevedtak } from '@k9-sak-web/types';
 import { RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import MidlertidigAlene from './components/MidlertidigAlene';
+import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import BarnSeksjon from './components/BarnSeksjon';
+import MidlertidigAlene from './components/MidlertidigAlene';
+import UidentifiserteRammevedtak from './components/UidentifiserteRammevedtak';
 import BarnMedRammevedtak from './dto/BarnMedRammevedtak';
 import KombinertBarnOgRammevedtak from './dto/KombinertBarnOgRammevedtak';
-import UidentifiserteRammevedtak from './components/UidentifiserteRammevedtak';
 
 const cache = createIntlCache();
 

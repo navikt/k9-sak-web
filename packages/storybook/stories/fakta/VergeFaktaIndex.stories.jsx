@@ -1,10 +1,10 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import { boolean, object, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
+import VergeFaktaIndex from '@k9-sak-web/fakta-verge';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
 
 import withReduxProvider from '../../decorators/withRedux';
 

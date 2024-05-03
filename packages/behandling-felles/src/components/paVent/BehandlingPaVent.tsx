@@ -1,6 +1,6 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { Aksjonspunkt, Behandling, Venteaarsak } from '@k9-sak-web/types';

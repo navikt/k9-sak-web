@@ -1,6 +1,6 @@
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
-import { hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting } from '@fpsak-frontend/form';
+import avslattImage from '@k9-sak-web/assets/images/avslaatt_hover.svg';
+import innvilgetImage from '@k9-sak-web/assets/images/innvilget_hover.svg';
+import { hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting } from '@k9-sak-web/form';
 import {
   AksjonspunktBox,
   FlexColumn,
@@ -8,7 +8,7 @@ import {
   FlexRow,
   Image,
   VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+} from '@k9-sak-web/shared-components';
 import { BodyShort, Detail, Heading, Label } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 import getPackageIntl from '../../i18n/getPackageIntl';

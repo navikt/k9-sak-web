@@ -1,10 +1,10 @@
-import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import { InputField, SelectField } from '@fpsak-frontend/form';
-import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { FlexColumn, FlexRow, Image, PeriodFieldArray } from '@fpsak-frontend/shared-components';
-import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
+import addCircleIcon from '@k9-sak-web/assets/images/add-circle.svg';
+import { InputField, SelectField } from '@k9-sak-web/form';
+import inntektskategorier from '@k9-sak-web/kodeverk/src/inntektskategorier';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import { FlexColumn, FlexRow, Image, PeriodFieldArray } from '@k9-sak-web/shared-components';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import { hasValidDecimal, maxValue, minValue, required } from '@k9-sak-web/utils';
 import React, { useState } from 'react';
 import { WrappedComponentProps } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';

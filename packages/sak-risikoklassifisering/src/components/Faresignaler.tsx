@@ -1,6 +1,6 @@
-import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { FlexColumn, FlexContainer, FlexRow } from '@k9-sak-web/shared-components';
 import { Risikoklassifisering } from '@k9-sak-web/types';
+import { decodeHtmlEntity } from '@k9-sak-web/utils';
 import { BodyShort, Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

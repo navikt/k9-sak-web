@@ -1,11 +1,11 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import { boolean, object, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import VarselOmRevurderingProsessIndex from '@k9-sak-web/prosess-varsel-om-revurdering';
 
 import withReduxProvider from '../../decorators/withRedux';
 

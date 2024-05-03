@@ -1,4 +1,4 @@
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity } from '@k9-sak-web/utils';
 import { BodyShort, Label } from '@navikt/ds-react';
 import React from 'react';
 import { WrappedComponentProps } from 'react-intl';

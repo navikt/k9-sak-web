@@ -1,6 +1,6 @@
-import React from 'react';
-import { Period, getHumanReadablePeriodString } from '@fpsak-frontend/utils';
+import { Period, getHumanReadablePeriodString } from '@k9-sak-web/utils';
 import { Alert } from '@navikt/ds-react';
+import React from 'react';
 
 interface VurderBehovForPerioderMeldingProps {
   vurderingsnavn: string;

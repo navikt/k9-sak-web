@@ -1,8 +1,8 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import klageVurderingCodes from '@k9-sak-web/kodeverk/src/klageVurdering';
+import FormkravProsessIndex from '@k9-sak-web/prosess-formkrav';
 import { action } from '@storybook/addon-actions';
 import { boolean, object, withKnobs } from '@storybook/addon-knobs';
 import React from 'react';

@@ -1,11 +1,11 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import { boolean, object, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening-oms';
+import OpptjeningFaktaIndex from '@k9-sak-web/fakta-opptjening-oms';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import opptjeningAktivitetType from '@k9-sak-web/kodeverk/src/opptjeningAktivitetType';
 import { Aksjonspunkt, Opptjening, OpptjeningBehandling } from '@k9-sak-web/types';
 
 import withReduxProvider from '../../decorators/withRedux';

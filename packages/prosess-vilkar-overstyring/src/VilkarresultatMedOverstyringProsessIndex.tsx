@@ -1,8 +1,8 @@
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
-import { dateFormat } from '@fpsak-frontend/utils';
-import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
+import { useFeatureToggles } from '@k9-sak-web/shared-components';
 import { Aksjonspunkt, Behandling, KodeverkMedNavn, SubmitCallback, Vilkar } from '@k9-sak-web/types';
+import { dateFormat } from '@k9-sak-web/utils';
+import hentAktivePerioderFraVilkar from '@k9-sak-web/utils/src/hentAktivePerioderFraVilkar';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import React, { SetStateAction, useEffect, useState } from 'react';

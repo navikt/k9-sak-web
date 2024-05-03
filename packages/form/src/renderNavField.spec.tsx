@@ -1,5 +1,5 @@
-import { inputMock, metaMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { inputMock, metaMock } from '@k9-sak-web/utils-test/redux-form-test-helper';
+import { renderWithIntl } from '@k9-sak-web/utils-test/test-utils';
 import { TextField } from '@navikt/ds-react';
 import { screen } from '@testing-library/react';
 import React from 'react';

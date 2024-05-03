@@ -1,17 +1,18 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import BehandlingType, { erTilbakekrevingType } from '@k9-sak-web/kodeverk/src/behandlingType';
+import dokumentMalType from '@k9-sak-web/kodeverk/src/dokumentMalType';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import venteArsakType from '@k9-sak-web/kodeverk/src/venteArsakType';
+import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import MeldingerSakIndex, {
   FormValues,
   MessagesModalSakIndex,
   type MeldingerSakIndexBackendApi,
 } from '@k9-sak-web/sak-meldinger';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { LoadingPanel } from '@k9-sak-web/shared-components';
 import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
@@ -21,13 +22,12 @@ import {
   Mottaker,
   Personopplysninger,
 } from '@k9-sak-web/types';
-import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
-import { useFpSakKodeverk } from '../../data/useKodeverk';
-import { useVisForhandsvisningAvMelding } from '../../data/useVisForhandsvisningAvMelding';
 import { setBehandlingOnHold } from '../../behandlingmenu/behandlingMenuOperations';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
+import { useFpSakKodeverk } from '../../data/useKodeverk';
+import { useVisForhandsvisningAvMelding } from '../../data/useVisForhandsvisningAvMelding';
 
 const getSubmitCallback =
   (

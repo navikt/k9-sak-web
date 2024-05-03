@@ -1,5 +1,5 @@
-import { get, Period } from '@fpsak-frontend/utils';
-import { NavigationWithDetailView, PageContainer, Box, Margin } from '@navikt/ft-plattform-komponenter';
+import { get, Period } from '@k9-sak-web/utils';
+import { Box, Margin, NavigationWithDetailView, PageContainer } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo } from 'react';
 import Step, { livetsSluttfaseSteg, StepId } from '../../../types/Step';
 import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
@@ -7,14 +7,14 @@ import Vurderingselement from '../../../types/Vurderingselement';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import { finnNesteStegForLivetsSluttfase } from '../../../util/statusUtils';
 import ContainerContext from '../../context/ContainerContext';
+import Vurderingsdetaljer from '../vurderingsdetaljer/Vurderingsdetaljer';
 import Vurderingsnavigasjon from '../vurderingsnavigasjon/Vurderingsnavigasjon';
 import ActionType from './actionTypes';
 import vilkårsvurderingReducer from './reducer';
-import Vurderingsdetaljer from '../vurderingsdetaljer/Vurderingsdetaljer';
 
-import VurderingsoversiktSluttfaseMessages from '../vurderingsoversikt-sluttfase-messages/VurderingsoversiktSluttfaseMessages';
 import BehandlingType from '../../../constants/BehandlingType';
 import FagsakYtelseType from '../../../constants/FagsakYtelseType';
+import VurderingsoversiktSluttfaseMessages from '../vurderingsoversikt-sluttfase-messages/VurderingsoversiktSluttfaseMessages';
 
 interface VilkårsvurderingAvLivetsSluttfaseProps {
   navigerTilNesteSteg: (steg: Step, ikkeMarkerSteg?: boolean) => void;

@@ -1,8 +1,8 @@
-import chevronDown from '@fpsak-frontend/assets/images/pil_ned.svg';
-import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
-import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
-import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import chevronDown from '@k9-sak-web/assets/images/pil_ned.svg';
+import chevronUp from '@k9-sak-web/assets/images/pil_opp.svg';
+import stjerneImg from '@k9-sak-web/assets/images/stjerne.svg';
+import behandlingArsakType from '@k9-sak-web/kodeverk/src/behandlingArsakType';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
 import {
   DateLabel,
   FlexColumn,
@@ -12,7 +12,7 @@ import {
   TimeLabel,
   Tooltip,
   VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+} from '@k9-sak-web/shared-components';
 import { BehandlingAppKontekst, Kodeverk } from '@k9-sak-web/types';
 import { BodyShort, Box, Detail, Label } from '@navikt/ds-react';
 import classNames from 'classnames';

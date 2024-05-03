@@ -14,9 +14,10 @@ import {
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
-} from '@fpsak-frontend/form';
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
+} from '@k9-sak-web/form';
+import aksjonspunktCodesTilbakekreving from '@k9-sak-web/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import foreldelseVurderingType from '@k9-sak-web/kodeverk/src/foreldelseVurderingType';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import {
   AksjonspunktHelpText,
   FadingPanel,
@@ -24,9 +25,8 @@ import {
   FlexColumn,
   FlexRow,
   VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, decodeHtmlEntity, omit } from '@fpsak-frontend/utils';
-import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+} from '@k9-sak-web/shared-components';
+import { DDMMYYYY_DATE_FORMAT, decodeHtmlEntity, omit } from '@k9-sak-web/utils';
 
 import ForeldelsePeriodeForm, { FORELDELSE_PERIODE_FORM_NAME } from './ForeldelsePeriodeForm';
 import ForeldelseTidslinjeHjelpetekster from './ForeldelseTidslinjeHjelpetekster';

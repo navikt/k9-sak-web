@@ -1,7 +1,7 @@
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import { isAvslag } from '@k9-sak-web/kodeverk/src/behandlingResultatType';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
 
 const hasOnlyClosedAps = (aksjonspunkter, vedtakAksjonspunkter) =>
   aksjonspunkter

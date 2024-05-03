@@ -2,12 +2,12 @@ import { action } from '@storybook/addon-actions';
 import { boolean, withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 
-import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import klageBehandlingArsakType from '@k9-sak-web/kodeverk/src/behandlingArsakType';
+import behandlingResultatType from '@k9-sak-web/kodeverk/src/behandlingResultatType';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
 
-import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
+import VedtakProsessIndex from '@k9-sak-web/prosess-vedtak';
 import withReduxProvider from '../../decorators/withRedux';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 

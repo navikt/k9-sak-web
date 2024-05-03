@@ -1,14 +1,14 @@
-import { TextAreaFormik } from '@fpsak-frontend/form';
+import { TextAreaFormik } from '@k9-sak-web/form';
 import { Calender } from '@navikt/ds-icons';
 import { Box, DetailView, Margin } from '@navikt/ft-plattform-komponenter';
 
-import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
-import { required } from '@fpsak-frontend/utils';
 import {
   FaktaOpplaeringContext,
   FaktaOpplaeringContextTypes,
 } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
+import RadioGroupFormik from '@k9-sak-web/form/src/RadioGroupFormik';
 import { NoedvendighetVurdering, Vurderingsresultat } from '@k9-sak-web/types';
+import { required } from '@k9-sak-web/utils';
 import { Button } from '@navikt/ds-react';
 import { Field, Formik } from 'formik';
 import React, { useContext, useEffect } from 'react';

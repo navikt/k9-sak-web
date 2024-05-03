@@ -1,8 +1,8 @@
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
 import { BehandlingAppKontekst, Fagsak, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Location } from 'history';
 import React from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import messages from '../i18n/nb_NO.json';
 import BehandlingPicker from './components/BehandlingPicker';

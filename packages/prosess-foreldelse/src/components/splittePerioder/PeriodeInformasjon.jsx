@@ -1,4 +1,4 @@
-import { DDMMYYYY_DATE_FORMAT, calcDaysAndWeeks, formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, calcDaysAndWeeks, formatCurrencyNoKr } from '@k9-sak-web/utils';
 import { BodyShort, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';

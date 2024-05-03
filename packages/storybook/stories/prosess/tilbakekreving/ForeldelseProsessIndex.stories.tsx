@@ -1,12 +1,12 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import { boolean, object, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
-import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import ForeldelseProsessIndex from '@fpsak-frontend/prosess-foreldelse';
+import aksjonspunktCodesTilbakekreving from '@k9-sak-web/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import foreldelseVurderingType from '@k9-sak-web/kodeverk/src/foreldelseVurderingType';
+import NavBrukerKjonn from '@k9-sak-web/kodeverk/src/navBrukerKjonn';
+import tilbakekrevingKodeverkTyper from '@k9-sak-web/kodeverk/src/tilbakekrevingKodeverkTyper';
+import ForeldelseProsessIndex from '@k9-sak-web/prosess-foreldelse';
 
 import withReduxProvider from '../../../decorators/withRedux';
 

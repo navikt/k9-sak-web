@@ -1,7 +1,9 @@
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import { DatepickerField, SelectField, TextAreaField } from '@fpsak-frontend/form';
-import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import innvilgetImageUrl from '@k9-sak-web/assets/images/innvilget_valgt.svg';
+import { DatepickerField, SelectField, TextAreaField } from '@k9-sak-web/form';
+import venteArsakType from '@k9-sak-web/kodeverk/src/venteArsakType';
+import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
+import { Image, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
 import {
   ariaCheck,
   dateAfterOrEqualToToday,
@@ -11,9 +13,7 @@ import {
   hasValidText,
   maxLength,
   required,
-} from '@fpsak-frontend/utils';
-import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
-import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
+} from '@k9-sak-web/utils';
 import { BodyShort, Button, Label, Modal } from '@navikt/ds-react';
 import moment from 'moment';
 import { Select as NavSelect } from 'nav-frontend-skjema';

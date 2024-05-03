@@ -1,6 +1,6 @@
-import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import klageVurdering from '@k9-sak-web/kodeverk/src/klageVurdering';
+import { reduxFormPropsMock } from '@k9-sak-web/utils-test/redux-form-test-helper';
+import { renderWithIntl } from '@k9-sak-web/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import { intlMock } from '../../i18n';

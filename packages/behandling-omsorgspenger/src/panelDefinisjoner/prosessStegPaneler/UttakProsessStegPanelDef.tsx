@@ -1,11 +1,11 @@
-import React from 'react';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import ÅrskvantumIndex from '@k9-sak-web/prosess-aarskvantum-oms';
 import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import { UtfallEnum } from '@k9-sak-web/types';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import React from 'react';
 
 import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
 

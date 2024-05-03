@@ -1,5 +1,5 @@
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
+import { ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
 
 class AlderPanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);

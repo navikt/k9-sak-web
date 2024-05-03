@@ -1,17 +1,17 @@
 /* eslint-disable vitest/no-commented-out-tests */
 import React from 'react';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import fagsakStatus from '@k9-sak-web/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import personstatusType from '@k9-sak-web/kodeverk/src/personstatusType';
 import { Behandling, Fagsak, KlageVurdering } from '@k9-sak-web/types';
 
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { renderWithIntl } from '@k9-sak-web/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import KlageProsess from './KlageProsess';

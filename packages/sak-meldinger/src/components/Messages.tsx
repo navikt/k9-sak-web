@@ -1,18 +1,9 @@
-import { behandlingForm, behandlingFormValueSelector, Label, SelectField, TextAreaField } from '@fpsak-frontend/form';
-import InputField from '@fpsak-frontend/form/src/InputField';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import {
-  ariaCheck,
-  getLanguageCodeFromSprakkode,
-  hasValidText,
-  maxLength,
-  minLength,
-  required,
-} from '@fpsak-frontend/utils';
-import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { behandlingForm, behandlingFormValueSelector, Label, SelectField, TextAreaField } from '@k9-sak-web/form';
+import InputField from '@k9-sak-web/form/src/InputField';
 import { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
+import dokumentMalType from '@k9-sak-web/kodeverk/src/dokumentMalType';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import {
   ArbeidsgiverOpplysningerPerId,
   Brevmal,
@@ -23,6 +14,15 @@ import {
   Personopplysninger,
 } from '@k9-sak-web/types';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
+import {
+  ariaCheck,
+  getLanguageCodeFromSprakkode,
+  hasValidText,
+  maxLength,
+  minLength,
+  required,
+} from '@k9-sak-web/utils';
+import { lagVisningsnavnForMottaker } from '@k9-sak-web/utils/src/formidlingUtils';
 import { BodyShort, Button } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { Checkbox } from 'nav-frontend-skjema';

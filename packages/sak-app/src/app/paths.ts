@@ -1,7 +1,7 @@
 import { Location, Search } from 'history';
 
-import { buildPath, formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
+import { buildPath, formatQueryString, parseQueryString } from '@k9-sak-web/utils';
 import { IS_DEV } from '../constants';
 
 export const DEFAULT_FAKTA = 'default';

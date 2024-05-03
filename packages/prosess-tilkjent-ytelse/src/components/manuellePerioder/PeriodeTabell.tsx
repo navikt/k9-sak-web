@@ -1,7 +1,7 @@
-import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
-import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { ariaCheck } from '@fpsak-frontend/utils';
+import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@k9-sak-web/form';
+import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import { ariaCheck } from '@k9-sak-web/utils';
 import React, { useCallback, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';

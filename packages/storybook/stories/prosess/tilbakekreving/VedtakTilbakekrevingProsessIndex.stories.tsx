@@ -1,15 +1,15 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { boolean, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
-import aktsomhet from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/aktsomhet';
+import aksjonspunktCodesTilbakekreving from '@k9-sak-web/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import aktsomhet from '@k9-sak-web/prosess-tilbakekreving/src/kodeverk/aktsomhet';
+import VedtakTilbakekrevingProsessIndex from '@k9-sak-web/prosess-vedtak-tilbakekreving';
 import { Behandling, BeregningsresultatTilbakekreving } from '@k9-sak-web/types';
 
-import vedtakResultatType from './vedtakResultatType';
 import withReduxProvider from '../../../decorators/withRedux';
+import vedtakResultatType from './vedtakResultatType';
 
 const vedtaksbrev = {
   avsnittsliste: [

@@ -1,16 +1,16 @@
-import { httpUtils } from '@fpsak-frontend/utils';
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
+import { httpUtils } from '@k9-sak-web/utils';
 import { Alert } from '@navikt/ds-react';
+import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo } from 'react';
 import FagsakYtelseType from '../../../constants/FagsakYtelseType';
 import Dokument from '../../../types/Dokument';
 import Link from '../../../types/Link';
+import { erFagsakOLPEllerPLS } from '../../../util/utils';
 import scrollUp from '../../../util/viewUtils';
 import ContainerContext from '../../context/ContainerContext';
 import StrukturerDokumentForm from '../strukturer-dokument-form/StrukturerDokumentForm';
-import StrukturerDokumentSluttfaseForm from '../strukturer-dokument-sluttfase-form/StrukturerDokumentSluttfaseForm';
 import StrukturerDokumentOpplaeringspengerForm from '../strukturer-dokument-opplaeringspenger-form/StrukturerDokumentOpplaeringspengerForm';
-import { erFagsakOLPEllerPLS } from '../../../util/utils';
+import StrukturerDokumentSluttfaseForm from '../strukturer-dokument-sluttfase-form/StrukturerDokumentSluttfaseForm';
 
 interface StrukturerDokumentControllerProps {
   strukturerDokumentLink: Link;

@@ -1,4 +1,4 @@
-import { httpUtils } from '@fpsak-frontend/utils';
+import { httpUtils } from '@k9-sak-web/utils';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Tabs } from '@navikt/ds-react';
 import { Box, ChildIcon, Infostripe, Margin, PageContainer } from '@navikt/ft-plattform-komponenter';

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-curly-brace-presence */
-import ytelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import ytelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import { KodeverkMedNavn, UtenlandsoppholdPerioder, UtenlandsoppholdType } from '@k9-sak-web/types';
 import { Alert, Heading, ReadMore } from '@navikt/ds-react';
 import { PeriodList } from '@navikt/ft-plattform-komponenter';

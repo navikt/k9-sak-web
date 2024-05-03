@@ -1,6 +1,6 @@
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import innvilgetImageUrl from '@k9-sak-web/assets/images/innvilget_valgt.svg';
+import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/utils';
 import { BodyShort, Button, Modal } from '@navikt/ds-react';
 import moment from 'moment';
 import React from 'react';

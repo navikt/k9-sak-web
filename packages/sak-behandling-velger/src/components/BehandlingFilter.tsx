@@ -1,5 +1,5 @@
-import xImg from '@fpsak-frontend/assets/images/x.svg';
-import { Image } from '@fpsak-frontend/shared-components';
+import xImg from '@k9-sak-web/assets/images/x.svg';
+import { Image } from '@k9-sak-web/shared-components';
 import { Label } from '@navikt/ds-react';
 import classNames from 'classnames';
 import Chevron from 'nav-frontend-chevron';

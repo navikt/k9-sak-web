@@ -1,4 +1,4 @@
-import manglendeKlassifiseringIkon from '@fpsak-frontend/assets/images/behandle_disable.svg';
+import manglendeKlassifiseringIkon from '@k9-sak-web/assets/images/behandle_disable.svg';
 import { Box } from '@navikt/ds-react';
 import React from 'react';
 import TittelMedDivider from './TittelMedDivider';

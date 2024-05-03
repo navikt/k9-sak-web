@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 import { OpplaeringspengerBehandlingApiKeys } from '@k9-sak-web/behandling-opplaeringspenger/src/data/opplaeringspengerBehandlingApi';
 import FaktaOpplaering from '@k9-sak-web/fakta-opplaering';
-import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 
 class OpplaeringFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.OPPLAERING;

@@ -1,5 +1,5 @@
-import { httpUtils, Period } from '@fpsak-frontend/utils';
-import { NavigationWithDetailView, PageContainer, Box, Margin } from '@navikt/ft-plattform-komponenter';
+import { httpUtils, Period } from '@k9-sak-web/utils';
+import { Box, Margin, NavigationWithDetailView, PageContainer } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo } from 'react';
 import Step, { StepId, toOmsorgspersonerSteg } from '../../../types/Step';
 import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
@@ -7,11 +7,11 @@ import Vurderingselement from '../../../types/Vurderingselement';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import { finnNesteStegForPleiepenger } from '../../../util/statusUtils';
 import ContainerContext from '../../context/ContainerContext';
+import Vurderingsdetaljer from '../vurderingsdetaljer/Vurderingsdetaljer';
 import Vurderingsnavigasjon from '../vurderingsnavigasjon/Vurderingsnavigasjon';
 import VurderingsoversiktMessages from '../vurderingsoversikt-messages/VurderingsoversiktMessages';
 import ActionType from './actionTypes';
 import vilkårsvurderingReducer from './reducer';
-import Vurderingsdetaljer from '../vurderingsdetaljer/Vurderingsdetaljer';
 
 interface VilkårsvurderingAvToOmsorgspersonerProps {
   navigerTilNesteSteg: (steg: Step) => void;

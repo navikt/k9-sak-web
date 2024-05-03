@@ -1,4 +1,4 @@
-import { Period } from '@fpsak-frontend/utils';
+import { Period } from '@k9-sak-web/utils';
 import { Heading } from '@navikt/ds-react';
 import { Box, InteractiveList, Margin } from '@navikt/ft-plattform-komponenter';
 import React, { useEffect } from 'react';

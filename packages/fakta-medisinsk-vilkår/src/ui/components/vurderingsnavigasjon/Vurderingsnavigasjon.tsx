@@ -1,3 +1,4 @@
+import { Period, sortPeriodsByFomDate } from '@k9-sak-web/utils';
 import { BodyShort, Heading, Tag } from '@navikt/ds-react';
 import {
   ContentWithTooltip,
@@ -6,7 +7,6 @@ import {
   InteractiveList,
   WarningIcon,
 } from '@navikt/ft-plattform-komponenter';
-import { Period, sortPeriodsByFomDate } from '@fpsak-frontend/utils';
 import React, { useEffect } from 'react';
 import ManuellVurdering from '../../../types/ManuellVurdering';
 import Vurderingselement from '../../../types/Vurderingselement';

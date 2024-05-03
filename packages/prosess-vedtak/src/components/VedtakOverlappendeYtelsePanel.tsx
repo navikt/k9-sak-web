@@ -1,7 +1,7 @@
-import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import Tidslinje from '@fpsak-frontend/tidslinje/src/components/pleiepenger/Tidslinje';
-import Periode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
-import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
+import { BorderBox, VerticalSpacer } from '@k9-sak-web/shared-components';
+import Tidslinje from '@k9-sak-web/tidslinje/src/components/pleiepenger/Tidslinje';
+import Periode from '@k9-sak-web/tidslinje/src/components/pleiepenger/types/Periode';
+import TidslinjeRad from '@k9-sak-web/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
 import { KodeverkMedNavn, OverlappendePeriode } from '@k9-sak-web/types';
 import { Accordion, Alert, BodyLong, Checkbox, CheckboxGroup, Heading, Tag } from '@navikt/ds-react';
 import { useFormikContext } from 'formik';

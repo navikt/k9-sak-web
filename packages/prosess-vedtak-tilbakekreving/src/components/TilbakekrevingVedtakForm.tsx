@@ -11,12 +11,12 @@ import {
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
-} from '@fpsak-frontend/form';
-import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { omit } from '@fpsak-frontend/utils';
+} from '@k9-sak-web/form';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { omit } from '@k9-sak-web/utils';
 
-import advarselIcon from '@fpsak-frontend/assets/images/advarsel_ny.svg';
+import advarselIcon from '@k9-sak-web/assets/images/advarsel_ny.svg';
 import underavsnittType from '../kodeverk/avsnittType';
 import VedtaksbrevAvsnitt from '../types/vedtaksbrevAvsnittTsType';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';

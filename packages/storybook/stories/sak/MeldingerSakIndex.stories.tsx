@@ -1,18 +1,18 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { object, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
+import ugunstAarsakTyper from '@k9-sak-web/kodeverk/src/ugunstAarsakTyper';
 import MeldingerSakIndex, { MessagesModalSakIndex } from '@k9-sak-web/sak-meldinger';
-import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 
-import { Brevmaler, Kodeverk } from '@k9-sak-web/types';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { BackendApi } from '@k9-sak-web/sak-meldinger/src/MeldingerSakIndex';
 import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
-import arbeidsgivere from '../mocks/arbeidsgivere.json';
-import personopplysninger from '../mocks/personopplysninger';
-import mockedBrevmaler from '../mocks/brevmaler';
+import dokumentMalType from '@k9-sak-web/kodeverk/src/dokumentMalType';
+import { BackendApi } from '@k9-sak-web/sak-meldinger/src/MeldingerSakIndex';
+import { Brevmaler, Kodeverk } from '@k9-sak-web/types';
 import withReduxProvider from '../../decorators/withRedux';
+import arbeidsgivere from '../mocks/arbeidsgivere.json';
+import mockedBrevmaler from '../mocks/brevmaler';
+import personopplysninger from '../mocks/personopplysninger';
 
 export default {
   title: 'sak/sak-meldinger',

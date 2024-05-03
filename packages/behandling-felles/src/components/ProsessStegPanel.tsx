@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { FadingPanel, LoadingPanel } from '@fpsak-frontend/shared-components';
-import { Fagsak, Behandling, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
+import { FadingPanel, LoadingPanel } from '@k9-sak-web/shared-components';
+import { Behandling, Fagsak, FeatureToggles, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { Options, EndpointData, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
+import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
 
-import MargMarkering from './MargMarkering';
-import InngangsvilkarPanel from './InngangsvilkarPanel';
-import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
-import ProsessStegIkkeBehandletPanel from './ProsessStegIkkeBehandletPanel';
-import prosessStegHooks from '../util/prosessSteg/prosessStegHooks';
 import { ProsessStegUtledet } from '../util/prosessSteg/ProsessStegUtledet';
+import prosessStegHooks from '../util/prosessSteg/prosessStegHooks';
+import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
+import InngangsvilkarPanel from './InngangsvilkarPanel';
+import MargMarkering from './MargMarkering';
+import ProsessStegIkkeBehandletPanel from './ProsessStegIkkeBehandletPanel';
 
 interface OwnProps {
   fagsak: Fagsak;

@@ -1,4 +1,4 @@
-import { Period, get } from '@fpsak-frontend/utils';
+import { Period, get } from '@k9-sak-web/utils';
 import { PageContainer } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import ContainerContext from '../context/ContainerContext';

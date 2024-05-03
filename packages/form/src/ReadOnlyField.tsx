@@ -1,4 +1,4 @@
-import { EditedIcon } from '@fpsak-frontend/shared-components';
+import { EditedIcon } from '@k9-sak-web/shared-components';
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 import Label from './Label';

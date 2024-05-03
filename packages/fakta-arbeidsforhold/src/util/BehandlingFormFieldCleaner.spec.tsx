@@ -1,5 +1,5 @@
-import { InputField } from '@fpsak-frontend/form';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { InputField } from '@k9-sak-web/form';
+import { renderWithIntlAndReduxForm } from '@k9-sak-web/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import { BehandlingFormFieldCleaner } from './BehandlingFormFieldCleaner';

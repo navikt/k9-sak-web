@@ -1,5 +1,5 @@
-import { PeriodpickerListRHF } from '@fpsak-frontend/form';
-import { Period } from '@fpsak-frontend/utils';
+import { PeriodpickerListRHF } from '@k9-sak-web/form';
+import { Period } from '@k9-sak-web/utils';
 import { Alert, Button, Label, Modal } from '@navikt/ds-react';
 import { Box, Form, Margin } from '@navikt/ft-plattform-komponenter';
 import React, { useRef } from 'react';

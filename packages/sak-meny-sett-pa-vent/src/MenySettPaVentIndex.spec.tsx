@@ -7,7 +7,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { combineReducers, createStore } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
-import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
+import venteArsakType from '@k9-sak-web/kodeverk/src/venteArsakType';
 import MenySettPaVentIndex from './MenySettPaVentIndex';
 
 vi.mock('react-router-dom', async () => {

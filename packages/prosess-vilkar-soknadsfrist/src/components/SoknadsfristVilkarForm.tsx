@@ -1,8 +1,8 @@
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import advarselIkonUrl from '@k9-sak-web/assets/images/advarsel_ny.svg';
+import { behandlingForm, behandlingFormValueSelector } from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
 import {
   AksjonspunktBox,
   AksjonspunktHelpText,
@@ -12,10 +12,10 @@ import {
   FlexRow,
   Image,
   VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+} from '@k9-sak-web/shared-components';
 import { Aksjonspunkt, DokumentStatus, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
+import { decodeHtmlEntity } from '@k9-sak-web/utils';
 import { BodyShort, Button, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import hash from 'object-hash';

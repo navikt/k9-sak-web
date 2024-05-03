@@ -1,4 +1,4 @@
-import { safeJSONParse } from '@fpsak-frontend/utils';
+import { safeJSONParse } from '@k9-sak-web/utils';
 
 const state = {};
 

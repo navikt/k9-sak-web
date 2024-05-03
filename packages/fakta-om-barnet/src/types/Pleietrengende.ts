@@ -1,4 +1,4 @@
-import { initializeDate, prettifyDate } from '@fpsak-frontend/utils';
+import { initializeDate, prettifyDate } from '@k9-sak-web/utils';
 import PleietrengendeResponse from './PleietrengendeResponse';
 
 class Pleietrengende {

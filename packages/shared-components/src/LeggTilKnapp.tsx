@@ -1,5 +1,5 @@
-import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import Image from '@fpsak-frontend/shared-components/src/Image';
+import addCircleIcon from '@k9-sak-web/assets/images/add-circle.svg';
+import Image from '@k9-sak-web/shared-components/src/Image';
 import { BodyShort, Button } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

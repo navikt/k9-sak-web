@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { LoadingPanel } from '@k9-sak-web/shared-components';
 
 import { IS_DEV } from '../../constants';
 import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';

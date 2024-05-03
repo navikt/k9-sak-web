@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import VilkarresultatMedOverstyringProsessIndex from '@k9-sak-web/prosess-vilkar-overstyring';
 
 import { ProsessStegPanelDef } from './ProsessStegDef';
 
@@ -45,17 +45,17 @@ class ProsessStegOverstyringPanelDef extends ProsessStegPanelDef {
     kanOverstyreAccess,
     toggleOverstyring,
   }): any => ({
-      avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType.kode],
-      erOverstyrt: overstyrteAksjonspunktKoder.some(o => this.getAksjonspunktKoder().some(a => a === o)),
-      overstyringApKode: this.getAksjonspunktKoder()[0],
-      panelTittelKode: this.getTekstKode() ? this.getTekstKode() : prosessStegTekstKode,
-      erMedlemskapsPanel: this.getId() === 'MEDLEMSKAP',
-      visPeriodisering: this.getId() === 'OMSORGENFOR',
-      lovReferanse: vilkarForSteg.length > 0 ? vilkarForSteg[0].lovReferanse : undefined,
-      overrideReadOnly,
-      kanOverstyreAccess,
-      toggleOverstyring,
-    });
+    avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType.kode],
+    erOverstyrt: overstyrteAksjonspunktKoder.some(o => this.getAksjonspunktKoder().some(a => a === o)),
+    overstyringApKode: this.getAksjonspunktKoder()[0],
+    panelTittelKode: this.getTekstKode() ? this.getTekstKode() : prosessStegTekstKode,
+    erMedlemskapsPanel: this.getId() === 'MEDLEMSKAP',
+    visPeriodisering: this.getId() === 'OMSORGENFOR',
+    lovReferanse: vilkarForSteg.length > 0 ? vilkarForSteg[0].lovReferanse : undefined,
+    overrideReadOnly,
+    kanOverstyreAccess,
+    toggleOverstyring,
+  });
 }
 
 export default ProsessStegOverstyringPanelDef;

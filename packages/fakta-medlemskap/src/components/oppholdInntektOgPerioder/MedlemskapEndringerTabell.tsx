@@ -1,5 +1,5 @@
-import { behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { DateLabel } from '@fpsak-frontend/shared-components';
+import { behandlingFormValueSelector } from '@k9-sak-web/form';
+import { DateLabel } from '@k9-sak-web/shared-components';
 import { Table } from '@navikt/ds-react';
 import React from 'react';
 import { useIntl } from 'react-intl';

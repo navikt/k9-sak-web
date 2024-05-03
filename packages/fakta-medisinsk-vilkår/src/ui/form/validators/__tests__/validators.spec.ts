@@ -1,4 +1,4 @@
-import { dateConstants, Period } from '@fpsak-frontend/utils';
+import { dateConstants, Period } from '@k9-sak-web/utils';
 import {
   dateIsNotInTheFuture,
   datoenInngårISøknadsperioden,

@@ -2,8 +2,8 @@ import moment from 'moment';
 import React, { useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
-import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
+import HistorikkSakIndex from '@k9-sak-web/sak-historikk';
+import { LoadingPanel, usePrevious } from '@k9-sak-web/shared-components';
 import { Historikkinnslag, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';

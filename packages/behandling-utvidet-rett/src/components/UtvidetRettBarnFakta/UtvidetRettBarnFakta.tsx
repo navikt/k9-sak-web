@@ -1,8 +1,8 @@
-import React from 'react';
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { Rammevedtak } from '@k9-sak-web/types';
 import FaktaBarnIndex from '@k9-sak-web/fakta-barn-oms';
+import FagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
 import BarnDto, { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import { Rammevedtak } from '@k9-sak-web/types';
+import React from 'react';
 
 interface OwnProps {
   personopplysninger: {
@@ -26,7 +26,7 @@ const UtvidetRettBarnFakta = ({ personopplysninger, rammevedtak, fagsaksType }: 
         fødselsdato: fodselsdato,
         harSammeBosted: undefined,
         barnType: BarnType.VANLIG,
-      } as BarnDto),
+      }) as BarnDto,
   );
 
   return <FaktaBarnIndex rammevedtak={rammevedtak} barn={formateradeBarn} fagsaksType={fagsaksType} />;

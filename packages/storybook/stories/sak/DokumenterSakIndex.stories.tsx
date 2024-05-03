@@ -1,12 +1,12 @@
 import { object, withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 
-import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
+import kommunikasjonsretning from '@k9-sak-web/kodeverk/src/kommunikasjonsretning';
+import DokumenterSakIndex from '@k9-sak-web/sak-dokumenter';
 
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
+import fagsakStatus from '@k9-sak-web/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import relasjonsRolleType from '@k9-sak-web/kodeverk/src/relasjonsRolleType';
 import { Fagsak } from '@k9-sak-web/types';
 import withReduxProvider from '../../decorators/withRedux';
 

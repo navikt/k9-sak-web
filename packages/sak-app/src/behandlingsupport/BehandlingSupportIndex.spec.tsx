@@ -2,11 +2,11 @@ import { screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
-import { renderWithReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithReactQueryClient } from '@k9-sak-web/utils-test/test-utils';
 import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import BehandlingSupportIndex, { hentSynligePaneler, hentValgbarePaneler } from './BehandlingSupportIndex';

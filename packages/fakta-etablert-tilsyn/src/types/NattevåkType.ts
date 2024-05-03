@@ -1,7 +1,7 @@
-import { Period } from '@fpsak-frontend/utils';
+import { Period } from '@k9-sak-web/utils';
 import Beskrivelse from './Beskrivelse';
-import Vurderingsperiode from './Vurderingsperiode';
 import { Nattevåk } from './TilsynResponse';
+import Vurderingsperiode from './Vurderingsperiode';
 
 class NattevåkType {
   beskrivelser: Beskrivelse[];

@@ -1,5 +1,5 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import { useFeatureToggles } from '@k9-sak-web/shared-components';
 import {
   Aksjonspunkt,
   ArbeidsforholdV2,
@@ -8,15 +8,15 @@ import {
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
 import React from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
 import messages from '../i18n/nb_NO.json';
 import AksjonspunktForm from './components/AksjonspunktForm';
 import AksjonspunktForm9014 from './components/AksjonspunktForm9014';
-import SaerligeSmittevernhensynMikrofrontend from './components/saerlige-smittevernhensyn/SaerligeSmittevernhensynMikrofrontend';
 import Uttaksplan from './components/Uttaksplan';
+import SaerligeSmittevernhensynMikrofrontend from './components/saerlige-smittevernhensyn/SaerligeSmittevernhensynMikrofrontend';
 import Aktivitet from './dto/Aktivitet';
 import { fosterbarnDto } from './dto/FosterbarnDto';
 import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';

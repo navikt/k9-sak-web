@@ -7,9 +7,10 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { FaktaBegrunnelseTextField } from '@k9-sak-web/fakta-felles';
+import { behandlingForm, behandlingFormValueSelector } from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
 import {
   BorderBox,
   FlexColumn,
@@ -17,9 +18,8 @@ import {
   FlexRow,
   VerticalSpacer,
   useSaksbehandlerOppslag,
-} from '@fpsak-frontend/shared-components';
-import { ISO_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { FaktaBegrunnelseTextField } from '@k9-sak-web/fakta-felles';
+} from '@k9-sak-web/shared-components';
+import { ISO_DATE_FORMAT, getKodeverknavnFn } from '@k9-sak-web/utils';
 
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';

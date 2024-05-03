@@ -1,8 +1,8 @@
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { useRestApiError } from '@k9-sak-web/rest-api-hooks';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import { Alert } from '@navikt/ds-react';
 
 import {

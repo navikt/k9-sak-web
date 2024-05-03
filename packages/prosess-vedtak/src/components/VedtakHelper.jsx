@@ -1,18 +1,18 @@
-import { createSelector } from 'reselect';
 import moment from 'moment';
+import { createSelector } from 'reselect';
 
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { isBGAksjonspunktSomGirFritekstfelt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { TIDENES_ENDE, getKodeverknavnFn } from '@fpsak-frontend/utils';
-import {erFagytelseTypeUtvidetRett} from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
+import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
+import { isBGAksjonspunktSomGirFritekstfelt } from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import behandlingResultatType from '@k9-sak-web/kodeverk/src/behandlingResultatType';
+import behandlingStatusCode from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import klageVurdering from '@k9-sak-web/kodeverk/src/klageVurdering';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import tilbakekrevingVidereBehandling from '@k9-sak-web/kodeverk/src/tilbakekrevingVidereBehandling';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
+import { TIDENES_ENDE, getKodeverknavnFn } from '@k9-sak-web/utils';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
   tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT &&

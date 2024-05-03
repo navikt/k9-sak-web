@@ -1,17 +1,17 @@
-import React from 'react';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import fagsakStatus from '@k9-sak-web/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
+import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import { BehandlingMenuIndex } from './BehandlingMenuIndex';
-import { requestApi, K9sakApiKeys } from '../data/k9sakApi';
 
 const navAnsatt = {
   brukernavn: 'Test',

@@ -1,7 +1,6 @@
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { ariaCheck, decodeHtmlEntity, isRequiredMessage } from '@fpsak-frontend/utils';
+import { behandlingForm, behandlingFormValueSelector } from '@k9-sak-web/form';
+import vurderPaNyttArsakType from '@k9-sak-web/kodeverk/src/vurderPaNyttArsakType';
+import { AksjonspunktHelpText, VerticalSpacer } from '@k9-sak-web/shared-components';
 import {
   Behandling,
   KlageVurdering,
@@ -10,6 +9,7 @@ import {
   TotrinnskontrollAksjonspunkt,
   TotrinnskontrollSkjermlenkeContext,
 } from '@k9-sak-web/types';
+import { ariaCheck, decodeHtmlEntity, isRequiredMessage } from '@k9-sak-web/utils';
 import { Button } from '@navikt/ds-react';
 import { Location } from 'history';
 import React from 'react';

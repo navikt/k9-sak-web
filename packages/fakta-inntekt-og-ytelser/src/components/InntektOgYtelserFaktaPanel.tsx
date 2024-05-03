@@ -1,5 +1,5 @@
-import { PeriodLabel } from '@fpsak-frontend/shared-components';
-import { ISO_DATE_FORMAT, formatCurrencyWithKr } from '@fpsak-frontend/utils';
+import { PeriodLabel } from '@k9-sak-web/shared-components';
+import { ISO_DATE_FORMAT, formatCurrencyWithKr } from '@k9-sak-web/utils';
 import { BodyShort, Box, Table } from '@navikt/ds-react';
 import moment from 'moment';
 import React from 'react';

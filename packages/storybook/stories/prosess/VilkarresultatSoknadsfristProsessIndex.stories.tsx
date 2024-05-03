@@ -1,12 +1,12 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { boolean, object, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import { DokumentStatus, Behandling, Vilkar } from '@k9-sak-web/types';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
 import SoknadsfristVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-soknadsfrist';
+import { Behandling, DokumentStatus, Vilkar } from '@k9-sak-web/types';
 
 import withReduxProvider from '../../decorators/withRedux';
 

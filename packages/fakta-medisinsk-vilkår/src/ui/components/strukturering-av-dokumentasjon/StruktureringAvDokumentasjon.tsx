@@ -1,4 +1,4 @@
-import { get } from '@fpsak-frontend/utils';
+import { get } from '@k9-sak-web/utils';
 import { Box, Margin, NavigationWithDetailView, PageContainer } from '@navikt/ft-plattform-komponenter';
 import axios from 'axios';
 import React, { useMemo } from 'react';

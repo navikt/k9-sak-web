@@ -1,5 +1,5 @@
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import { renderWithIntl } from '@k9-sak-web/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import moment from 'moment';
 import React from 'react';

@@ -1,13 +1,13 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
-import { VerticalSpacer, useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, useSaksbehandlerOppslag } from '@k9-sak-web/shared-components';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 
-import { CustomVilkarText } from './VilkarresultatMedOverstyringForm';
 import VilkarBegrunnelse from './VilkarBegrunnelse';
+import { CustomVilkarText } from './VilkarresultatMedOverstyringForm';
 
 interface VilkarresultatMedBegrunnelseProps {
   erVilkarOk?: boolean;

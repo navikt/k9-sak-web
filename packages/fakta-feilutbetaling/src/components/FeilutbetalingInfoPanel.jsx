@@ -5,10 +5,10 @@ import {
   behandlingFormValueSelector,
   getBehandlingFormName,
   getBehandlingFormPrefix,
-} from '@fpsak-frontend/form';
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { AksjonspunktHelpText, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
+} from '@k9-sak-web/form';
+import aksjonspunktCodesTilbakekreving from '@k9-sak-web/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import { AksjonspunktHelpText, FaktaGruppe, VerticalSpacer } from '@k9-sak-web/shared-components';
 import {
   DDMMYYYY_DATE_FORMAT,
   decodeHtmlEntity,
@@ -17,7 +17,7 @@ import {
   maxLength,
   minLength,
   required,
-} from '@fpsak-frontend/utils';
+} from '@k9-sak-web/utils';
 import { BodyShort, Button, Detail, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';

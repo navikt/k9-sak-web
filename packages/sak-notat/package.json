@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@fpsak-frontend/utils": "1.0.0",
+    "@k9-sak-web/utils": "1.0.0",
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/aksel-icons": "6.5.0",

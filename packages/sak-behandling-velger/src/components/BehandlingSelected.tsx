@@ -1,9 +1,9 @@
-import calendarImg from '@fpsak-frontend/assets/images/calendar-2.svg';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { DateLabel, Image } from '@fpsak-frontend/shared-components';
+import calendarImg from '@k9-sak-web/assets/images/calendar-2.svg';
+import behandlingResultatType from '@k9-sak-web/kodeverk/src/behandlingResultatType';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
+import { DateLabel, Image } from '@k9-sak-web/shared-components';
 import { Periode } from '@k9-sak-web/types';
 import { BodyShort, Heading, Label } from '@navikt/ds-react';
 import classnames from 'classnames/bind';

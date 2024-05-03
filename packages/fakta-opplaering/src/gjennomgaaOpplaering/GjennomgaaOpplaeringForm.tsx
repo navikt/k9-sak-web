@@ -1,4 +1,4 @@
-import { TextAreaFormik } from '@fpsak-frontend/form';
+import { TextAreaFormik } from '@k9-sak-web/form';
 import { Calender } from '@navikt/ds-icons';
 import { Box, DetailView, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 import dayjs from 'dayjs';
@@ -7,13 +7,13 @@ import { useIntl } from 'react-intl';
 import { v4 } from 'uuid';
 import * as yup from 'yup';
 
-import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
-import { getPeriodDifference, Period, required } from '@fpsak-frontend/utils';
 import {
   FaktaOpplaeringContext,
   FaktaOpplaeringContextTypes,
 } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
+import RadioGroupFormik from '@k9-sak-web/form/src/RadioGroupFormik';
 import { GjennomgaaOpplaeringVurdering, Vurderingsresultat } from '@k9-sak-web/types';
+import { getPeriodDifference, Period, required } from '@k9-sak-web/utils';
 import { Alert, Button, ErrorMessage, Label } from '@navikt/ds-react';
 import { Field, FieldArray, Formik } from 'formik';
 import AddButton from '../components/add-button/AddButton';

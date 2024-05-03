@@ -1,4 +1,4 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
 
 const Tabs = {
   GJENNOMGÅ_OPPLÆRING: {

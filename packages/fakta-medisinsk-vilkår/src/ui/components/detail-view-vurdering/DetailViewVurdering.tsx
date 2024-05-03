@@ -1,12 +1,12 @@
+import { Period } from '@k9-sak-web/utils';
 import { DetailView, DetailViewProps, LinkButton } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
-import { Period } from '@fpsak-frontend/utils';
-import PeriodList from '../period-list/PeriodList';
-import styles from './detailViewVurdering.module.css';
-import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
-import ContainerContext from '../../context/ContainerContext';
 import BehandlingType from '../../../constants/BehandlingType';
 import FagsakYtelseType from '../../../constants/FagsakYtelseType';
+import ContainerContext from '../../context/ContainerContext';
+import PeriodList from '../period-list/PeriodList';
+import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
+import styles from './detailViewVurdering.module.css';
 
 type DetailViewVurderingProps = DetailViewProps & {
   perioder: Period[];

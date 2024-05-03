@@ -5,20 +5,10 @@ import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 
-import { behandlingForm, behandlingFormValueSelector, SelectField, TextAreaField } from '@fpsak-frontend/form';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import {
-  ariaCheck,
-  getLanguageCodeFromSprakkode,
-  hasValidText,
-  maxLength,
-  minLength,
-  required,
-  safeJSONParse,
-} from '@fpsak-frontend/utils';
-import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { behandlingForm, behandlingFormValueSelector, SelectField, TextAreaField } from '@k9-sak-web/form';
+import dokumentMalType from '@k9-sak-web/kodeverk/src/dokumentMalType';
+import ugunstAarsakTyper from '@k9-sak-web/kodeverk/src/ugunstAarsakTyper';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import {
   ArbeidsgiverOpplysningerPerId,
   Brevmal,
@@ -28,8 +18,18 @@ import {
   Mottaker,
   Personopplysninger,
 } from '@k9-sak-web/types';
+import {
+  ariaCheck,
+  getLanguageCodeFromSprakkode,
+  hasValidText,
+  maxLength,
+  minLength,
+  required,
+  safeJSONParse,
+} from '@k9-sak-web/utils';
+import { lagVisningsnavnForMottaker } from '@k9-sak-web/utils/src/formidlingUtils';
 
-import InputField from '@fpsak-frontend/form/src/InputField';
+import InputField from '@k9-sak-web/form/src/InputField';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import { Button } from '@navikt/ds-react';

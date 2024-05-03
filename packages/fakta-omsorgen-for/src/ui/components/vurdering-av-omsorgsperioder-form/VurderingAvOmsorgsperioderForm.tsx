@@ -2,8 +2,8 @@ import React from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 
-import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
-import { Period, getPeriodDifference } from '@fpsak-frontend/utils';
+import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@k9-sak-web/form';
+import { Period, getPeriodDifference } from '@k9-sak-web/utils';
 import { Alert, Label } from '@navikt/ds-react';
 import { Box, DetailView, Form, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 

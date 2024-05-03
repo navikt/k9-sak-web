@@ -1,4 +1,4 @@
-import beregningAvklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+import beregningAvklaringsbehovCodes from '@k9-sak-web/kodeverk/src/beregningAvklaringsbehovCodes';
 import mapTilAksjonspunktkode from './mapAksjonspunktkoderBeregning';
 
 const transformBeregningValues = aksjonspunktData =>

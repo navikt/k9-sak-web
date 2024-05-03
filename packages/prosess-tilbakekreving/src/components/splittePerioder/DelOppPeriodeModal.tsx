@@ -1,4 +1,4 @@
-import { DatepickerField, behandlingForm } from '@fpsak-frontend/form';
+import { DatepickerField, behandlingForm } from '@k9-sak-web/form';
 import {
   DDMMYYYY_DATE_FORMAT,
   ISO_DATE_FORMAT,
@@ -6,7 +6,7 @@ import {
   dateBeforeOrEqual,
   hasValidDate,
   required,
-} from '@fpsak-frontend/utils';
+} from '@k9-sak-web/utils';
 import { Alert, BodyShort, Button, Detail, Label, Modal } from '@navikt/ds-react';
 import moment from 'moment/moment';
 import React from 'react';

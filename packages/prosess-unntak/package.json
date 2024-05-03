@@ -6,11 +6,11 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@fpsak-frontend/form": "1.0.0",
-    "@fpsak-frontend/kodeverk": "1.0.0",
-    "@fpsak-frontend/prop-types": "1.0.0",
-    "@fpsak-frontend/shared-components": "1.0.0",
-    "@fpsak-frontend/utils": "1.0.0",
+    "@k9-sak-web/form": "1.0.0",
+    "@k9-sak-web/kodeverk": "1.0.0",
+    "@k9-sak-web/prop-types": "1.0.0",
+    "@k9-sak-web/shared-components": "1.0.0",
+    "@k9-sak-web/utils": "1.0.0",
     "@k9-sak-web/prosess-felles": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "classnames": "2.5.1",
@@ -25,6 +25,6 @@
     "reselect": "4.1.8"
   },
   "devDependencies": {
-    "@fpsak-frontend/utils-test": "1.0.0"
+    "@k9-sak-web/utils-test": "1.0.0"
   }
 }

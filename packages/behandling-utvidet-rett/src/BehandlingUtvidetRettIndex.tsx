@@ -1,23 +1,23 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { LoadingPanel } from '@k9-sak-web/shared-components';
 import {
+  ArbeidsgiverOpplysningerWrapper,
   Behandling,
-  KodeverkMedNavn,
-  FeatureToggles,
   Fagsak,
   FagsakPerson,
-  ArbeidsgiverOpplysningerWrapper,
+  FeatureToggles,
+  KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import FetchedData from './types/fetchedDataTsType';
 import UtvidetRettPaneler from './components/UtvidetRettPaneler';
 import {
-  restApiUtvidetRettHooks,
-  requestUtvidetRettApi,
   UtvidetRettBehandlingApiKeys,
+  requestUtvidetRettApi,
+  restApiUtvidetRettHooks,
 } from './data/utvidetRettBehandlingApi';
+import FetchedData from './types/fetchedDataTsType';
 
 const utvidetRettData = [
   { key: UtvidetRettBehandlingApiKeys.AKSJONSPUNKTER },

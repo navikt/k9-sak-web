@@ -1,12 +1,12 @@
-import { isDayAfter, Period } from '@fpsak-frontend/utils';
+import { isDayAfter, Period } from '@k9-sak-web/utils';
 import { Table } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import uniq from 'lodash/uniq';
 import React from 'react';
 import EtablertTilsynType from '../../../types/EtablertTilsynType';
+import styles from './etablertTilsynMedSmoring.module.css';
 import EtablertTilsynRowContent from './EtablertTilsynRowContent';
 import PartIkon from './PartIkon';
-import styles from './etablertTilsynMedSmoring.module.css';
 
 interface EtablertTilsynProps {
   etablertTilsynData: EtablertTilsynType[];

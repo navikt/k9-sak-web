@@ -2,12 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { injectIntl } from 'react-intl';
 
-import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
-import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { required } from '@fpsak-frontend/utils';
+import { RadioGroupField, RadioOption, SelectField } from '@k9-sak-web/form';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import klageVurderingType from '@k9-sak-web/kodeverk/src/klageVurdering';
+import klageVurderingOmgjoerType from '@k9-sak-web/kodeverk/src/klageVurderingOmgjoer';
+import { ArrowBox, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { required } from '@k9-sak-web/utils';
 
 import styles from './klageVurderingRadioOptionsNfp.module.css';
 

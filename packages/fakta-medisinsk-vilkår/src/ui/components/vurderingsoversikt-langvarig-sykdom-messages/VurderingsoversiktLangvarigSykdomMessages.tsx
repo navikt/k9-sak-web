@@ -1,6 +1,6 @@
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import { getHumanReadablePeriodString } from '@fpsak-frontend/utils';
+import { getHumanReadablePeriodString } from '@k9-sak-web/utils';
 import { Alert } from '@navikt/ds-react';
+import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import IngenPerioderÅVurdereMelding from '../ingen-perioder-å-vurdere-melding/IngenPerioderÅVurdereMelding';

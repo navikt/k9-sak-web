@@ -1,6 +1,6 @@
+import { httpUtils } from '@k9-sak-web/utils';
 import { render, waitFor } from '@testing-library/react';
 import React from 'react';
-import { httpUtils } from '@fpsak-frontend/utils';
 import ContainerContext from '../../../context/ContainerContext';
 import StruktureringAvDokumentasjon from '../StruktureringAvDokumentasjon';
 

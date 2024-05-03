@@ -1,12 +1,12 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import { boolean, object, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
+import MedlemskapFaktaIndex from '@k9-sak-web/fakta-medlemskap';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
 
 import withReduxProvider from '../../decorators/withRedux';
 

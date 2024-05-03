@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import OverstyrBeregningFaktaIndex from '@fpsak-frontend/fakta-overstyr-beregning';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import OverstyrBeregningFaktaIndex from '@k9-sak-web/fakta-overstyr-beregning';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { OpplaeringspengerBehandlingApiKeys } from '../../data/opplaeringspengerBehandlingApi';
 
 class OverstyrBeregningFaktaPanelDef extends FaktaPanelDef {

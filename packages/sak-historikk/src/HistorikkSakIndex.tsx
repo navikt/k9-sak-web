@@ -1,13 +1,13 @@
+import { Location } from 'history';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { Location } from 'history';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
 import { Historikkinnslag, KodeverkMedNavn } from '@k9-sak-web/types';
+import { getKodeverknavnFn } from '@k9-sak-web/utils';
 
-import History from './components/History';
 import messages from '../i18n/nb_NO.json';
+import History from './components/History';
 
 const cache = createIntlCache();
 

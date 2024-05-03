@@ -1,9 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { bestemAvsenderApp, forhandsvis, getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
 import {
   FatterVedtakStatusModal,
   IverksetterVedtakStatusModal,
@@ -14,6 +10,9 @@ import {
   Rettigheter,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
 import {
   ArbeidsgiverOpplysningerPerId,
   Behandling,
@@ -22,6 +21,7 @@ import {
   FeatureToggles,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
+import { bestemAvsenderApp, forhandsvis, getForhandsvisCallback } from '@k9-sak-web/utils/src/formidlingUtils';
 
 import { restApiUnntakHooks, UnntakBehandlingApiKeys } from '../data/unntakBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPanelDefinisjoner';

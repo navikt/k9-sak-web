@@ -1,9 +1,9 @@
 import React from 'react';
 
-import UnntakProsessIndex from '@k9-sak-web/prosess-unntak';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import UnntakProsessIndex from '@k9-sak-web/prosess-unntak';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <UnntakProsessIndex {...props} />;

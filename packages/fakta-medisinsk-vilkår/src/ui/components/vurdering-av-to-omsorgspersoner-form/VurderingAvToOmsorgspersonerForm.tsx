@@ -1,5 +1,5 @@
-import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
-import { Period } from '@fpsak-frontend/utils';
+import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@k9-sak-web/form';
+import { Period } from '@k9-sak-web/utils';
 import { Alert, Link } from '@navikt/ds-react';
 import { Box, ContentWithTooltip, Form, Margin, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
 import React from 'react';

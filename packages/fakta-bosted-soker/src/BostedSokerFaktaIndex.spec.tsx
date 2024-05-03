@@ -1,7 +1,7 @@
-import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import opplysningAdresseType from '@k9-sak-web/kodeverk/src/opplysningAdresseType';
+import personstatusType from '@k9-sak-web/kodeverk/src/personstatusType';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
+import { renderWithIntl } from '@k9-sak-web/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../i18n/nb_NO.json';

@@ -20,7 +20,7 @@
     "vite": "^5.2.10"
   },
   "dependencies": {
-    "@fpsak-frontend/form": "1.0.0",
+    "@k9-sak-web/form": "1.0.0",
     "@navikt/diagnosekoder": "^1.2024.0",
     "@navikt/ds-css": "6.5.0",
     "@navikt/ds-icons": "3.4.3",

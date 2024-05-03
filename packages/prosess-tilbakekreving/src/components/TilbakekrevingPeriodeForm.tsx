@@ -5,9 +5,10 @@ import {
   TextAreaField,
   behandlingForm,
   behandlingFormValueSelector,
-} from '@fpsak-frontend/form';
-import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
-import { AdvarselModal, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+} from '@k9-sak-web/form';
+import tilbakekrevingKodeverkTyper from '@k9-sak-web/kodeverk/src/tilbakekrevingKodeverkTyper';
+import { AdvarselModal, FlexColumn, FlexRow, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import {
   DDMMYYYY_DATE_FORMAT,
   decodeHtmlEntity,
@@ -16,8 +17,7 @@ import {
   maxLength,
   minLength,
   required,
-} from '@fpsak-frontend/utils';
-import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+} from '@k9-sak-web/utils';
 import { BodyShort, Button, Detail, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import React, { Component } from 'react';

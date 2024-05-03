@@ -1,12 +1,12 @@
 import React from 'react';
 
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import innsynResultatTypeKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import innsynResultatTypeKV from '@k9-sak-web/kodeverk/src/innsynResultatType';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import VedtakInnsynProsessIndex from '@k9-sak-web/prosess-vedtak-innsyn';
 
 const getVedtakStatus = (innsynResultatType, aksjonspunkter) => {
   const harApentAksjonpunkt = aksjonspunkter.some(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET);

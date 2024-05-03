@@ -1,7 +1,7 @@
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import { SelectField, TextAreaField } from '@fpsak-frontend/form';
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
+import innvilgetImageUrl from '@k9-sak-web/assets/images/innvilget_valgt.svg';
+import { SelectField, TextAreaField } from '@k9-sak-web/form';
+import { Image, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { hasValidText, maxLength, required } from '@k9-sak-web/utils';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';

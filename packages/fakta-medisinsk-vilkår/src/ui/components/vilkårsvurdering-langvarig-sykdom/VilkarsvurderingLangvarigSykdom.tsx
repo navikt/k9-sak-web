@@ -1,4 +1,4 @@
-import { get, Period } from '@fpsak-frontend/utils';
+import { get, Period } from '@k9-sak-web/utils';
 import { Box, Margin, NavigationWithDetailView, PageContainer } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo } from 'react';
 import Step, { langvarigSykdomSteg, StepId } from '../../../types/Step';
@@ -7,10 +7,10 @@ import Vurderingselement from '../../../types/Vurderingselement';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import { finnNesteStegForOpplæringspenger } from '../../../util/statusUtils';
 import ContainerContext from '../../context/ContainerContext';
+import Vurderingsdetaljer from '../vurderingsdetaljer/Vurderingsdetaljer';
 import Vurderingsnavigasjon from '../vurderingsnavigasjon/Vurderingsnavigasjon';
 import ActionType from './actionTypes';
 import vilkårsvurderingReducer from './reducer';
-import Vurderingsdetaljer from '../vurderingsdetaljer/Vurderingsdetaljer';
 
 import BehandlingType from '../../../constants/BehandlingType';
 import FagsakYtelseType from '../../../constants/FagsakYtelseType';

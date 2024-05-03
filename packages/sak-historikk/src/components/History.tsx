@@ -1,24 +1,24 @@
-import React from 'react';
 import { Location } from 'history';
+import React from 'react';
 
+import HistorikkAktor from '@k9-sak-web/kodeverk/src/historikkAktor';
 import { Historikkinnslag, Kodeverk } from '@k9-sak-web/types';
-import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
 
 import historikkinnslagType from '../kodeverk/historikkinnslagType';
+import HistorikkMalType10 from './maler/HistorikkMalType10';
+import HistorikkMalType6 from './maler/HistorikkMalType6';
+import HistorikkMalType7 from './maler/HistorikkMalType7';
+import HistorikkMalType8 from './maler/HistorikkMalType8';
+import HistorikkMalType9 from './maler/HistorikkMalType9';
+import HistorikkMalTypeFeilutbetaling from './maler/HistorikkMalTypeFeilutbetaling';
+import HistorikkMalTypeForeldelse from './maler/HistorikkMalTypeForeldelse';
+import HistorikkMalTypeTilbakekreving from './maler/HistorikkMalTypeTilbakekreving';
 import SnakkebobleContainer from './maler/felles/SnakkebobleContainer';
 import HistorikkMalType1 from './maler/historikkMalType1';
 import HistorikkMalType2 from './maler/historikkMalType2';
 import HistorikkMalType3 from './maler/historikkMalType3';
 import HistorikkMalType4 from './maler/historikkMalType4';
 import HistorikkMalType5 from './maler/historikkMalType5';
-import HistorikkMalType6 from './maler/HistorikkMalType6';
-import HistorikkMalType7 from './maler/HistorikkMalType7';
-import HistorikkMalType8 from './maler/HistorikkMalType8';
-import HistorikkMalType9 from './maler/HistorikkMalType9';
-import HistorikkMalType10 from './maler/HistorikkMalType10';
-import HistorikkMalTypeFeilutbetaling from './maler/HistorikkMalTypeFeilutbetaling';
-import HistorikkMalTypeTilbakekreving from './maler/HistorikkMalTypeTilbakekreving';
-import HistorikkMalTypeForeldelse from './maler/HistorikkMalTypeForeldelse';
 import PlaceholderHistorikkMal from './maler/placeholderHistorikkMal';
 
 const velgHistorikkMal = (histType: Kodeverk) => {

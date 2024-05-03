@@ -1,9 +1,9 @@
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
-import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg';
-import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import avslattImage from '@k9-sak-web/assets/images/avslaatt_hover.svg';
+import innvilgetImage from '@k9-sak-web/assets/images/innvilget_hover.svg';
+import keyUtgraetImage from '@k9-sak-web/assets/images/key-1-rotert-utgraet.svg';
+import keyImage from '@k9-sak-web/assets/images/key-1-rotert.svg';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
+import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Detail, Heading, Label } from '@navikt/ds-react';
 import React, { SetStateAction } from 'react';

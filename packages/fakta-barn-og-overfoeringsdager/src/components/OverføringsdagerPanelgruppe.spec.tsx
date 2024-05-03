@@ -1,5 +1,5 @@
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
+import { renderWithIntlAndReduxForm } from '@k9-sak-web/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';

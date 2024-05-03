@@ -1,8 +1,8 @@
-import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import Region from '@fpsak-frontend/kodeverk/src/region';
-import { getAddresses } from '@fpsak-frontend/utils';
+import opplysningAdresseType from '@k9-sak-web/kodeverk/src/opplysningAdresseType';
+import personstatusType from '@k9-sak-web/kodeverk/src/personstatusType';
+import Region from '@k9-sak-web/kodeverk/src/region';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
+import { getAddresses } from '@k9-sak-web/utils';
 import { BodyShort, Detail, HGrid, Label, Tag } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';

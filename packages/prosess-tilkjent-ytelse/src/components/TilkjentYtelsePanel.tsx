@@ -1,4 +1,3 @@
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
   Aksjonspunkt,
   ArbeidsgiverOpplysningerPerId,
@@ -9,12 +8,13 @@ import {
   Personopplysninger,
   Soknad,
 } from '@k9-sak-web/types';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/utils';
 import moment from 'moment';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
-import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes, { hasAksjonspunkt } from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
 import { Heading } from '@navikt/ds-react';
 import TilkjentYtelse, { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
+import HistorikkSakIndex from '@k9-sak-web/sak-historikk';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const history = [

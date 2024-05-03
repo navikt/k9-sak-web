@@ -1,9 +1,9 @@
 import React from 'react';
 
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import FeilutbetalingFaktaIndex from '@k9-sak-web/fakta-feilutbetaling';
+import aksjonspunktCodesTilbakekreving from '@k9-sak-web/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { Fagsak, FeilutbetalingFakta } from '@k9-sak-web/types';
 
 import { TilbakekrevingBehandlingApiKeys } from '../../data/tilbakekrevingBehandlingApi';

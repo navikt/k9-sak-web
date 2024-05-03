@@ -1,55 +1,60 @@
 # dekorator
 
 ```
-yarn add @fpsak-frontend/sak-dekorator
+yarn add @k9-sak-web/sak-dekorator
 ```
 
 ### Header
- Presentasjonskomponent. Viser dekoratør med tittel og navansatt navn
+
+Presentasjonskomponent. Viser dekoratør med tittel og navansatt navn
 
 | navn               | type   | påkrevd | default |
-|--------------------|--------|---------|---------|
+| ------------------ | ------ | ------- | ------- |
 | queryStrings       | object | x       |         |
 | navAnsattName      | string | x       |         |
 | removeErrorMessage | func   | x       |         |
 
- ##### Eksempel
- ```js
- <Header
+##### Eksempel
+
+```js
+<Header
   queryStrings={queryStrings}
   navAnsattName={navAnsattName}
   removeErrorMessage={removeErrorMsg}
   funksjonellTid={funksjonellTid}
 />
- ```
+```
 
- ### ErrorMessagePanel
+### ErrorMessagePanel
+
 | navn                      | type   | påkrevd | default |
-|---------------------------|--------|---------|---------|
+| ------------------------- | ------ | ------- | ------- |
 | intl                      | object | x       |         |
 | showDetailedErrorMessages | bool   | x       |         |
 | errorMessages             | array  | x       |         |
 | removeErrorMessage        | func   | x       |         |
 
- ##### Eksempel
+##### Eksempel
 
- ```js
- <ErrorMessagePanel queryStrings={queryStrings} removeErrorMessage={removeErrorMessage} />
- ```
+```js
+<ErrorMessagePanel queryStrings={queryStrings} removeErrorMessage={removeErrorMessage} />
+```
 
- ### ErrorMessageDetailsModal
+### ErrorMessageDetailsModal
+
 | navn         | type   | påkrevd | default |
-|--------------|--------|---------|---------|
+| ------------ | ------ | ------- | ------- |
 | intl         | object | x       |         |
 | showModal    | bool   | x       |         |
 | closeModalFn | func   | x       |         |
 | errorDetails | object | x       |         |
 
 ##### Eksempel
- ```js
+
+```js
 <ErrorMessageDetailsModal
   showModal={isModalOpen}
   closeModalFn={this.toggleModalOnClick}
   errorDetails={errorMessages[selectedErrorMsgIndex].additionalInfo}
 />
- ```
+```

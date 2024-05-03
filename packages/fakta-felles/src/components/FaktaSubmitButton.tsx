@@ -2,8 +2,8 @@ import React from 'react';
 import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import { connect } from 'react-redux';
 
-import { hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting } from '@fpsak-frontend/form';
-import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
+import { hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting } from '@k9-sak-web/form';
+import { ariaCheck, isRequiredMessage } from '@k9-sak-web/utils';
 
 import { Button } from '@navikt/ds-react';
 import messages from '../../i18n/nb_NO.json';

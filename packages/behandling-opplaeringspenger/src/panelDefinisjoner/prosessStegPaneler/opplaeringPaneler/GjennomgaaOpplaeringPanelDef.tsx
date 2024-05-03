@@ -1,7 +1,7 @@
-import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
 
 class GjennomgaaOpplaeringPanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);

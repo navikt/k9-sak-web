@@ -1,9 +1,9 @@
-import { required } from '@fpsak-frontend/utils';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import React, { useEffect, useState } from 'react';
-import { ArbeidsgiverOpplysningerPerId, Personopplysninger } from '@k9-sak-web/types';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
-import { SelectField } from '@fpsak-frontend/form/index';
+import { SelectField } from '@k9-sak-web/form/index';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
+import { ArbeidsgiverOpplysningerPerId, Personopplysninger } from '@k9-sak-web/types';
+import { required } from '@k9-sak-web/utils';
+import React, { useEffect, useState } from 'react';
 import { WrappedComponentProps } from 'react-intl';
 
 interface OwnProps {

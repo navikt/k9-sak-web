@@ -1,6 +1,6 @@
-import { findEndpointsForMicrofrontend, httpErrorHandler as httpErrorHandlerFn } from '@fpsak-frontend/utils';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Inntektsmelding } from '@k9-sak-web/fakta-inntektsmelding';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { findEndpointsForMicrofrontend, httpErrorHandler as httpErrorHandlerFn } from '@k9-sak-web/utils';
 import React from 'react';
 
 export default ({

@@ -1,5 +1,5 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import { Alert, BodyLong, Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import React from 'react';
 import styles from './VedtakSjekkTilbakekreving.module.css';

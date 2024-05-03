@@ -1,9 +1,9 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import React from 'react';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
 import AldersVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-alder';
 import { Aksjonspunkt, Behandling, FeatureToggles, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
+import React from 'react';
 
 interface AlderProsessStegProps {
   aksjonspunkter: Aksjonspunkt[];

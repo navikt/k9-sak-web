@@ -1,6 +1,6 @@
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import { renderWithIntlAndReduxForm } from '@k9-sak-web/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';

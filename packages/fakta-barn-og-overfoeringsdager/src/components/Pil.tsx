@@ -1,5 +1,5 @@
-import pilHøyre from '@fpsak-frontend/assets/images/pil_hoyre_filled.svg';
-import Image from '@fpsak-frontend/shared-components/src/Image';
+import pilHøyre from '@k9-sak-web/assets/images/pil_hoyre_filled.svg';
+import Image from '@k9-sak-web/shared-components/src/Image';
 import classnames from 'classnames/bind';
 import React from 'react';
 import { Overføringsretning, OverføringsretningEnum } from '../types/Overføring';

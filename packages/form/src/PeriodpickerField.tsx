@@ -1,5 +1,5 @@
-import { Periodpicker } from '@fpsak-frontend/shared-components';
-import { ACCEPTED_DATE_INPUT_FORMATS, DDMMYYYY_DATE_FORMAT, haystack, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { Periodpicker } from '@k9-sak-web/shared-components';
+import { ACCEPTED_DATE_INPUT_FORMATS, DDMMYYYY_DATE_FORMAT, haystack, ISO_DATE_FORMAT } from '@k9-sak-web/utils';
 import moment from 'moment';
 import React from 'react';
 import { injectIntl, IntlShape } from 'react-intl';

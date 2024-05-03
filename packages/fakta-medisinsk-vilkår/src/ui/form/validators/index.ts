@@ -1,4 +1,4 @@
-import { Period, dateConstants, initializeDate } from '@fpsak-frontend/utils';
+import { Period, dateConstants, initializeDate } from '@k9-sak-web/utils';
 import { Dayjs } from 'dayjs';
 import { finnHullIPerioder } from '../../../util/periodUtils';
 

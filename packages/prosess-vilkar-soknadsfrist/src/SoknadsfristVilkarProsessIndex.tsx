@@ -3,16 +3,16 @@ import moment from 'moment';
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 
-import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Image } from '@fpsak-frontend/shared-components';
-import { dateFormat } from '@fpsak-frontend/utils';
+import advarselIcon from '@k9-sak-web/assets/images/advarsel.svg';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
+import { Image } from '@k9-sak-web/shared-components';
 import { Aksjonspunkt, Behandling, DokumentStatus, SubmitCallback, Vilkar } from '@k9-sak-web/types';
+import { dateFormat } from '@k9-sak-web/utils';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
-import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
+import hentAktivePerioderFraVilkar from '@k9-sak-web/utils/src/hentAktivePerioderFraVilkar';
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
 import { utledInnsendtSoknadsfrist } from './utils';

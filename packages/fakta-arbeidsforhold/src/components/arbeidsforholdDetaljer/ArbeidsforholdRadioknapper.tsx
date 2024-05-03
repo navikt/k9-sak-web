@@ -1,11 +1,11 @@
+import { RadioGroupField, RadioOption } from '@k9-sak-web/form';
+import arbeidsforholdHandlingType from '@k9-sak-web/kodeverk/src/arbeidsforholdHandlingType';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
+import { required } from '@k9-sak-web/utils';
 import React from 'react';
-import { required } from '@fpsak-frontend/utils';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
+import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 
 interface OwnProps {
   formName: string;

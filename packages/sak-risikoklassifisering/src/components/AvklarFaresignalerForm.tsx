@@ -1,9 +1,9 @@
-import { RadioGroupField, RadioOption, TextAreaField, behandlingForm } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { ariaCheck, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { RadioGroupField, RadioOption, TextAreaField, behandlingForm } from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { Aksjonspunkt, Risikoklassifisering } from '@k9-sak-web/types';
+import { ariaCheck, hasValidText, maxLength, minLength, required } from '@k9-sak-web/utils';
 import { BodyShort, Button } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

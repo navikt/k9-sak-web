@@ -1,7 +1,7 @@
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { DateLabel } from '@fpsak-frontend/shared-components';
+import { DateLabel } from '@k9-sak-web/shared-components';
 
 const intl = createIntl(
   {

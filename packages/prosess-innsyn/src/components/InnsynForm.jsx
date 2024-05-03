@@ -7,15 +7,15 @@ import {
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
-} from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import innsynResultatTyperKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import { AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { ISO_DATE_FORMAT, hasValidDate, required } from '@fpsak-frontend/utils';
+} from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import innsynResultatTyperKV from '@k9-sak-web/kodeverk/src/innsynResultatType';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import kommunikasjonsretning from '@k9-sak-web/kodeverk/src/kommunikasjonsretning';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { ISO_DATE_FORMAT, hasValidDate, required } from '@k9-sak-web/utils';
 import { Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';

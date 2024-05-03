@@ -1,17 +1,17 @@
+import { boolean, number, object, withKnobs } from '@storybook/addon-knobs';
 import React, { useState } from 'react';
-import { withKnobs, object, number, boolean } from '@storybook/addon-knobs';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
 import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
-import { Behandling, Kodeverk, Fagsak } from '@k9-sak-web/types';
+import { Behandling, Fagsak, Kodeverk } from '@k9-sak-web/types';
 
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import alleKodeverk from '../mocks/alleKodeverk.json';
+import fagsakStatus from '@k9-sak-web/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import relasjonsRolleType from '@k9-sak-web/kodeverk/src/relasjonsRolleType';
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const BEHANDLING_TYPE_KODEVERK = 'BEHANDLING_TYPE';
 const BEHANDLING_STATUS_KODEVERK = 'BEHANDLING_STATUS';

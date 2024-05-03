@@ -1,6 +1,6 @@
-import { FlexRow, Image } from '@fpsak-frontend/shared-components';
-import { Timeline } from '@fpsak-frontend/tidslinje';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { FlexRow, Image } from '@k9-sak-web/shared-components';
+import { Timeline } from '@k9-sak-web/tidslinje';
+import { ISO_DATE_FORMAT } from '@k9-sak-web/utils';
 import { HGrid } from '@navikt/ds-react';
 import moment from 'moment';
 import React, { ReactNode, useEffect, useMemo, useRef } from 'react';

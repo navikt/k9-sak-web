@@ -1,9 +1,11 @@
-import { DatepickerField } from '@fpsak-frontend/form';
-import InputField from '@fpsak-frontend/form/src/InputField';
-import { Label } from '@fpsak-frontend/form/src/Label';
-import TextAreaField from '@fpsak-frontend/form/src/TextAreaField';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form/src/behandlingForm';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { DatepickerField } from '@k9-sak-web/form';
+import InputField from '@k9-sak-web/form/src/InputField';
+import { Label } from '@k9-sak-web/form/src/Label';
+import TextAreaField from '@k9-sak-web/form/src/TextAreaField';
+import { behandlingForm, behandlingFormValueSelector } from '@k9-sak-web/form/src/behandlingForm';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { Aksjonspunkt, Behandling, SubmitCallback } from '@k9-sak-web/types';
+import OpplysningerFraSøknaden, { Måned } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import {
   ISO_DATE_FORMAT,
   dateFormat,
@@ -14,9 +16,7 @@ import {
   maxValue,
   minLength,
   required,
-} from '@fpsak-frontend/utils';
-import { Aksjonspunkt, Behandling, SubmitCallback } from '@k9-sak-web/types';
-import OpplysningerFraSøknaden, { Måned } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
+} from '@k9-sak-web/utils';
 import { Button } from '@navikt/ds-react';
 import moment from 'moment';
 import { TabsPure } from 'nav-frontend-tabs';

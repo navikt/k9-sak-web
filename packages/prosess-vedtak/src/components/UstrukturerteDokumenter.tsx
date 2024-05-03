@@ -1,4 +1,4 @@
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/utils';
 import { BodyShort, Heading, Link } from '@navikt/ds-react';
 import moment from 'moment';
 import React from 'react';

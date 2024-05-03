@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntl } from '@k9-sak-web/utils-test/test-utils';
 // eslint-disable-next-line import/no-relative-packages
 import utenlandsoppholdMock, { utenlandsoppholdÅrsakMock } from '../../mocks/mockdata/utenlandsoppholdMock';
 

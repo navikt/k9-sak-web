@@ -1,8 +1,8 @@
+import { action } from '@storybook/addon-actions';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { action } from '@storybook/addon-actions';
 
-import { OkAvbrytModal } from '@fpsak-frontend/shared-components';
+import { OkAvbrytModal } from '@k9-sak-web/shared-components';
 
 const intl = createIntl(
   {

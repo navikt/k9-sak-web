@@ -5,8 +5,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@fpsak-frontend/form": "*",
-    "@fpsak-frontend/utils": "*",
+    "@k9-sak-web/form": "*",
+    "@k9-sak-web/utils": "*",
     "@k9-sak-web/types": "*",
     "@navikt/ds-icons": "3.4.3",
     "@navikt/ds-react": "6.5.0",

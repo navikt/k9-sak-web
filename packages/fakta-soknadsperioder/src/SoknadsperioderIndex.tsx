@@ -1,4 +1,4 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import BehandlingPerioderårsakMedVilkår from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import { Loader } from '@navikt/ds-react';

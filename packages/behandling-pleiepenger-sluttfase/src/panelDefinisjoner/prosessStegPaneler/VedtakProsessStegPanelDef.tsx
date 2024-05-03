@@ -1,12 +1,12 @@
 import React from 'react';
 
-import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import VedtakProsessIndex from '@k9-sak-web/prosess-vedtak';
 
-import findStatusForVedtak from '../vedtakStatusUtlederPleiepengerSluttfase';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
+import findStatusForVedtak from '../vedtakStatusUtlederPleiepengerSluttfase';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <VedtakProsessIndex {...props} />;

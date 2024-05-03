@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
-import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
+import kontrollresultatKode from '@k9-sak-web/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';

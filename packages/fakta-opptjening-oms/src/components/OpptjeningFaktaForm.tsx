@@ -1,5 +1,5 @@
-import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@k9-sak-web/form';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
 import {
   AksjonspunktHelpText,
   DateLabel,
@@ -7,12 +7,12 @@ import {
   FlexContainer,
   FlexRow,
   VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
-import { TimeLineNavigation } from '@fpsak-frontend/tidslinje';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+} from '@k9-sak-web/shared-components';
+import { TimeLineNavigation } from '@k9-sak-web/tidslinje';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Opptjening } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
+import { ISO_DATE_FORMAT } from '@k9-sak-web/utils';
 import { Alert, BodyShort, Button, Detail, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import { TabsPure } from 'nav-frontend-tabs';

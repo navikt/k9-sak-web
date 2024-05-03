@@ -1,5 +1,5 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import SoknadsperioderIndex from '@k9-sak-web/fakta-soknadsperioder';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
 import { withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 import withReduxProvider from '../../../decorators/withRedux';

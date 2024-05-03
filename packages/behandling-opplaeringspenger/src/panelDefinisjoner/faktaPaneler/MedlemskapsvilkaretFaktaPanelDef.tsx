@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import MedlemskapFaktaIndex from '@k9-sak-web/fakta-medlemskap';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 
 import { OpplaeringspengerBehandlingApiKeys } from '../../data/opplaeringspengerBehandlingApi';
 

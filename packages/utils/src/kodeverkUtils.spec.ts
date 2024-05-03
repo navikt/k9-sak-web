@@ -1,7 +1,7 @@
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
-import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
+import arbeidType from '@k9-sak-web/kodeverk/src/arbeidType';
+import avslagsarsakCodes from '@k9-sak-web/kodeverk/src/avslagsarsakCodes';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
 
 import { getKodeverknavnFn, getKodeverknavnFraKode } from './kodeverkUtils';
 

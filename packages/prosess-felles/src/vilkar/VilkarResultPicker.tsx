@@ -1,11 +1,11 @@
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
-import { DatepickerField, RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
+import avslattImage from '@k9-sak-web/assets/images/avslaatt.svg';
+import innvilgetImage from '@k9-sak-web/assets/images/check.svg';
+import { DatepickerField, RadioGroupField, RadioOption, SelectField } from '@k9-sak-web/form';
+import { isAksjonspunktOpen } from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
+import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
+import { hasValidDate, isRequiredMessage, required } from '@k9-sak-web/utils';
 import { BodyShort } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 

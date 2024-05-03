@@ -1,4 +1,4 @@
-import endretFelt from '@fpsak-frontend/assets/images/endret_felt.svg';
+import endretFelt from '@k9-sak-web/assets/images/endret_felt.svg';
 import classnames from 'classnames/bind';
 import React from 'react';
 import { useIntl } from 'react-intl';

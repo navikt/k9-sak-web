@@ -1,4 +1,4 @@
-import OpplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
+import OpplysningAdresseType from '@k9-sak-web/kodeverk/src/opplysningAdresseType';
 
 import getAddresses from './getAddresses';
 

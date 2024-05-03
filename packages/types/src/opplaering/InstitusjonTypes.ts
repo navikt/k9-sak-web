@@ -1,4 +1,4 @@
-import { Period } from '@fpsak-frontend/utils';
+import { Period } from '@k9-sak-web/utils';
 import Periode from '../periodeTsType';
 
 import Vurderingsresultat from '../Vurderingsresultat';

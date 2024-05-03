@@ -1,9 +1,9 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 
-import { TextAreaField } from '@fpsak-frontend/form';
-import { decodeHtmlEntity, hasValidText, maxLength, minLength, requiredIfNotPristine } from '@fpsak-frontend/utils';
+import { TextAreaField } from '@k9-sak-web/form';
 import { Aksjonspunkt } from '@k9-sak-web/types';
+import { decodeHtmlEntity, hasValidText, maxLength, minLength, requiredIfNotPristine } from '@k9-sak-web/utils';
 
 import styles from './vilkarBegrunnelse.module.css';
 

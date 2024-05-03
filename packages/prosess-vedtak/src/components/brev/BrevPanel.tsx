@@ -1,9 +1,11 @@
-import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { required, safeJSONParse } from '@fpsak-frontend/utils';
+import SelectFieldFormik from '@k9-sak-web/form/src/SelectFieldFormik';
+import dokumentMalType from '@k9-sak-web/kodeverk/src/dokumentMalType';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import vedtaksbrevtype from '@k9-sak-web/kodeverk/src/vedtaksbrevtype';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
+import { ArbeidsgiverOpplysningerPerId, Behandlingsresultat, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
+import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import { required, safeJSONParse } from '@k9-sak-web/utils';
 import {
   Brevmottaker,
   TilgjengeligeVedtaksbrev,
@@ -14,9 +16,7 @@ import {
   kanKunVelge,
   kanOverstyreMottakere,
   lagVisningsnavnForMottaker,
-} from '@fpsak-frontend/utils/src/formidlingUtils';
-import { ArbeidsgiverOpplysningerPerId, Behandlingsresultat, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
-import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+} from '@k9-sak-web/utils/src/formidlingUtils';
 import { Alert, ErrorMessage } from '@navikt/ds-react';
 
 import { FormikProps, setNestedObjectValues, useField } from 'formik';

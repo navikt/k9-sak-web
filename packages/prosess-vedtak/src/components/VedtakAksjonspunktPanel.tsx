@@ -1,5 +1,5 @@
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import behandlingStatusCode from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { HGrid, Heading } from '@navikt/ds-react';
 import React from 'react';

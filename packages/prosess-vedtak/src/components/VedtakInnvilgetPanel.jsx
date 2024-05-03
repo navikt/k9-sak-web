@@ -1,5 +1,5 @@
-import { isDelvisInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { isDelvisInnvilget } from '@k9-sak-web/kodeverk/src/behandlingResultatType';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import { BodyShort, Label } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';

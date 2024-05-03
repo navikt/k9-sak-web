@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react';
 
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { Kodeverk, BehandlingAppKontekst } from '@k9-sak-web/types';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { FatterVedtakTotrinnskontrollModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
+import { FatterVedtakTotrinnskontrollModalSakIndex } from '@k9-sak-web/sak-totrinnskontroll';
+import { LoadingPanel } from '@k9-sak-web/shared-components';
+import { BehandlingAppKontekst, Kodeverk } from '@k9-sak-web/types';
 
-import { K9sakApiKeys, restApiHooks, requestApi } from '../../data/k9sakApi';
 import { getPathToK9Los } from '../../app/paths';
+import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
 
 interface OwnProps {
   behandling: BehandlingAppKontekst;

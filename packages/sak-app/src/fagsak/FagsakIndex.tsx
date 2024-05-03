@@ -1,14 +1,14 @@
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
+import BehandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import { Merknadkode } from '@k9-sak-web/sak-meny-marker-behandling';
+import Soknadsperiodestripe from '@k9-sak-web/sak-soknadsperiodestripe';
+import VisittkortSakIndex from '@k9-sak-web/sak-visittkort';
 import {
   AndreSakerPåSøkerStripe,
   DataFetchPendingModal,
   LoadingPanel,
   Punsjstripe,
-} from '@fpsak-frontend/shared-components';
-import { Merknadkode } from '@k9-sak-web/sak-meny-marker-behandling';
-import Soknadsperiodestripe from '@k9-sak-web/sak-soknadsperiodestripe';
+} from '@k9-sak-web/shared-components';
 import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingPerioderårsakMedVilkår,
@@ -26,8 +26,8 @@ import RelatertFagsak from '@k9-sak-web/types/src/relatertFagsak';
 import React, { useCallback, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import {
   behandlingerRoutePath,
   erBehandlingValgt,

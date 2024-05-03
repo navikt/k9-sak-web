@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { TextAreaField } from '@fpsak-frontend/form';
+import { TextAreaField } from '@k9-sak-web/form';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import {
   decodeHtmlEntity,
   hasValidText,
   requiredIfNotPristine,
   maxLength as validateMaxLength,
   minLength as validateMinLength,
-} from '@fpsak-frontend/utils';
-import { Aksjonspunkt } from '@k9-sak-web/types';
+} from '@k9-sak-web/utils';
 
 import getPackageIntl from '../i18n/getPackageIntl';
 

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import TilkjentYtelseProsessIndex from '@k9-sak-web/prosess-tilkjent-ytelse';
 
 const harIngenAndeler = perioder => {
   const alleAndeler = perioder.flatMap(({ andeler }) => [...andeler]);

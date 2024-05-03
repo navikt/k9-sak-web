@@ -1,19 +1,19 @@
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@k9-sak-web/shared-components';
+import requireProps from '@k9-sak-web/shared-components/src/requireProps';
 import React, { ComponentType } from 'react';
 import { connect } from 'react-redux';
 import {
+  ConfigProps,
+  InjectedFormProps,
   formValueSelector,
   getFormInitialValues,
   getFormSyncErrors,
   getFormValues,
-  InjectedFormProps,
   isDirty,
   isSubmitting,
   reduxForm,
-  ConfigProps,
 } from 'redux-form';
 import { createSelector } from 'reselect';
-import requireProps from '@fpsak-frontend/shared-components/src/requireProps';
 
 export const getBehandlingFormPrefix = (behandlingId: number, behandlingVersjon: number) =>
   `behandling_${behandlingId}_v${behandlingVersjon}`;
@@ -67,34 +67,28 @@ export const behandlingForm = (config: ConfigProps) => (WrappedComponent: Compon
 const getFormName = (formName: string, behandlingId: number, behandlingVersjon: number) =>
   behandlingId && behandlingVersjon ? getBehandlingFormName(behandlingId, behandlingVersjon, formName) : '';
 
-export const behandlingFormValueSelector = (formName: string, behandlingId: number, behandlingVersjon: number) => (
-  state,
-  ...fieldNames
-) => formValueSelector(getFormName(formName, behandlingId, behandlingVersjon))(state, ...fieldNames);
+export const behandlingFormValueSelector =
+  (formName: string, behandlingId: number, behandlingVersjon: number) =>
+  (state, ...fieldNames) =>
+    formValueSelector(getFormName(formName, behandlingId, behandlingVersjon))(state, ...fieldNames);
 
 export const isBehandlingFormDirty = (formName: string, behandlingId: number, behandlingVersjon: number) => state =>
   isDirty(getFormName(formName, behandlingId, behandlingVersjon))(state);
 
-export const isBehandlingFormSubmitting = (
-  formName: string,
-  behandlingId: number,
-  behandlingVersjon: number,
-) => state => isSubmitting(getFormName(formName, behandlingId, behandlingVersjon))(state);
+export const isBehandlingFormSubmitting =
+  (formName: string, behandlingId: number, behandlingVersjon: number) => state =>
+    isSubmitting(getFormName(formName, behandlingId, behandlingVersjon))(state);
 
 export const getBehandlingFormValues = (formName: string, behandlingId: number, behandlingVersjon: number) => state =>
   getFormValues(getFormName(formName, behandlingId, behandlingVersjon))(state);
 
-export const getBehandlingFormInitialValues = (
-  formName: string,
-  behandlingId: number,
-  behandlingVersjon: number,
-) => state => getFormInitialValues(getFormName(formName, behandlingId, behandlingVersjon))(state);
+export const getBehandlingFormInitialValues =
+  (formName: string, behandlingId: number, behandlingVersjon: number) => state =>
+    getFormInitialValues(getFormName(formName, behandlingId, behandlingVersjon))(state);
 
-export const getBehandlingFormSyncErrors = (
-  formName: string,
-  behandlingId: number,
-  behandlingVersjon: number,
-) => state => getFormSyncErrors(getFormName(formName, behandlingId, behandlingVersjon))(state);
+export const getBehandlingFormSyncErrors =
+  (formName: string, behandlingId: number, behandlingVersjon: number) => state =>
+    getFormSyncErrors(getFormName(formName, behandlingId, behandlingVersjon))(state);
 
 const getFormState = state => state.form;
 export const getBehandlingFormRegisteredFields = (formName: string, behandlingId: number, behandlingVersjon: number) =>

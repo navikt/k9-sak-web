@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { Behandling, Fagsak, KodeverkMedNavn, FeatureToggles, FagsakPerson } from '@k9-sak-web/types';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { LoadingPanel } from '@k9-sak-web/shared-components';
+import { Behandling, Fagsak, FagsakPerson, FeatureToggles, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import InnsynPaneler from './components/InnsynPaneler';
+import { InnsynBehandlingApiKeys, requestInnsynApi, restApiInnsynHooks } from './data/innsynBehandlingApi';
 import FetchedData from './types/fetchedDataTsType';
-import { restApiInnsynHooks, requestInnsynApi, InnsynBehandlingApiKeys } from './data/innsynBehandlingApi';
 
 const getInnsynData = saksnummer => [
   { key: InnsynBehandlingApiKeys.AKSJONSPUNKTER },

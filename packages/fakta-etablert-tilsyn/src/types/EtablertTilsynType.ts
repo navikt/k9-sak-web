@@ -1,7 +1,7 @@
-import { Period } from '@fpsak-frontend/utils';
-import { EtablertTilsynPeriode } from './TilsynResponse';
+import { Period } from '@k9-sak-web/utils';
 import { beregnDagerTimer } from '../util/dateUtils';
 import Kilde from './Kilde';
+import { EtablertTilsynPeriode } from './TilsynResponse';
 
 class EtablertTilsynType {
   periode: Period;

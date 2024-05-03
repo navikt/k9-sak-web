@@ -1,6 +1,6 @@
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/utils';
 import { BodyShort, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';

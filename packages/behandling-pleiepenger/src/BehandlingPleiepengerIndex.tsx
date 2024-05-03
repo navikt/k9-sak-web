@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { LoadingPanel, usePrevious } from '@k9-sak-web/shared-components';
 import {
   ArbeidsgiverOpplysningerWrapper,
   Behandling,
@@ -21,7 +21,7 @@ import {
   requestPleiepengerApi,
   restApiPleiepengerHooks,
 } from './data/pleiepengerBehandlingApi';
-import { OverstyringUttakRequest, FetchedData } from './types';
+import { FetchedData, OverstyringUttakRequest } from './types';
 
 const pleiepengerData = [
   { key: PleiepengerBehandlingApiKeys.AKSJONSPUNKTER },

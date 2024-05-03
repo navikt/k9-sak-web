@@ -1,21 +1,14 @@
-import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
-import briefcaseImg from '@fpsak-frontend/assets/images/briefcase.svg';
-import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
-import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
-import {
-  FaktaGruppe,
-  FlexColumn,
-  FlexContainer,
-  FlexRow,
-  Image,
-  VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
-import { arbeidsforholdHarAksjonspunktÅrsak } from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
+import advarselImageUrl from '@k9-sak-web/assets/images/advarsel2.svg';
+import briefcaseImg from '@k9-sak-web/assets/images/briefcase.svg';
+import chevronIkonUrl from '@k9-sak-web/assets/images/pil_ned.svg';
+import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import arbeidsforholdHandlingType from '@k9-sak-web/kodeverk/src/arbeidsforholdHandlingType';
+import { FaktaGruppe, FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import Arbeidsgiver from '@k9-sak-web/types/src/arbeidsgiverTsType';
+import { arbeidsforholdHarAksjonspunktÅrsak } from '@k9-sak-web/utils/src/arbeidsforholdUtils';
 import { BodyShort } from '@navikt/ds-react';
 import React, { Component } from 'react';
 import { WrappedComponentProps } from 'react-intl';

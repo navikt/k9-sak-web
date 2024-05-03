@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, TextAreaField } from '@k9-sak-web/form';
 import { HGrid } from '@navikt/ds-react';
 
 const ForeldetFormPanel = () => (

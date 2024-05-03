@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId, Behandling } from '@k9-sak-web/types';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
 import { Uttak } from '@k9-sak-web/prosess-uttak';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
-import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
+import { useFeatureToggles } from '@k9-sak-web/shared-components';
+import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId, Behandling } from '@k9-sak-web/types';
+import { findEndpointsForMicrofrontend, httpErrorHandler } from '@k9-sak-web/utils';
 import { OverstyringUttakRequest } from '../types';
 
 interface UttakProps {

@@ -1,5 +1,5 @@
-import { InputField, PeriodpickerField } from '@fpsak-frontend/form/index';
-import { FlexRow } from '@fpsak-frontend/shared-components/index';
+import { InputField, PeriodpickerField } from '@k9-sak-web/form/index';
+import { FlexRow } from '@k9-sak-web/shared-components/index';
 import { Label } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import React, { ReactNode } from 'react';

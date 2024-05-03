@@ -1,9 +1,9 @@
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
 import React from 'react';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import UtvidetRettMikrofrontend from './utvidetRettMikrofrontend/UtvidetRettMikrofrontend';
 import { UtvidetRettBehandlingApiKeys } from '../../../data/utvidetRettBehandlingApi';
+import UtvidetRettMikrofrontend from './utvidetRettMikrofrontend/UtvidetRettMikrofrontend';
 
 class UtvidetRettMikrofrontendPanelDef extends ProsessStegPanelDef {
   getKomponent = props => <UtvidetRettMikrofrontend {...props} />;

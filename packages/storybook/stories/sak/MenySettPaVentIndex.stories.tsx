@@ -1,9 +1,9 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import MenySettPaVentIndex from '@fpsak-frontend/sak-meny-sett-pa-vent';
-import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
+import venteArsakType from '@k9-sak-web/kodeverk/src/venteArsakType';
+import MenySettPaVentIndex from '@k9-sak-web/sak-meny-sett-pa-vent';
 
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 

@@ -1,4 +1,4 @@
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
 import { Alert, BodyShort, Button, Label, Table } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import React from 'react';

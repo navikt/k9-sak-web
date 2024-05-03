@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import DirekteOvergangFaktaIndex from '@fpsak-frontend/fakta-direkte-overgang';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import DirekteOvergangFaktaIndex from '@k9-sak-web/fakta-direkte-overgang';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 
 class DirekteOvergangFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.INFOTRYGDMIGRERING;

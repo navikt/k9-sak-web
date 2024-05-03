@@ -1,7 +1,7 @@
-import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
-import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
-import { DatepickerField } from '@fpsak-frontend/form';
-import { FlexColumn, FlexRow, Image } from '@fpsak-frontend/shared-components';
+import removePeriod from '@k9-sak-web/assets/images/remove.svg';
+import removePeriodDisabled from '@k9-sak-web/assets/images/remove_disabled.svg';
+import { DatepickerField } from '@k9-sak-web/form';
+import { FlexColumn, FlexRow, Image } from '@k9-sak-web/shared-components';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Alert, Table } from '@navikt/ds-react';
 import React from 'react';

@@ -1,6 +1,6 @@
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
-import { DatepickerField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import avslattImage from '@k9-sak-web/assets/images/avslaatt.svg';
+import innvilgetImage from '@k9-sak-web/assets/images/check.svg';
+import { DatepickerField, RadioGroupField, RadioOption, TextAreaField } from '@k9-sak-web/form';
 import {
   FlexColumn,
   FlexContainer,
@@ -8,7 +8,8 @@ import {
   Image,
   VerticalSpacer,
   useSaksbehandlerOppslag,
-} from '@fpsak-frontend/shared-components';
+} from '@k9-sak-web/shared-components';
+import { DokumentStatus } from '@k9-sak-web/types';
 import {
   dateAfterOrEqual,
   dateBeforeOrEqual,
@@ -18,8 +19,7 @@ import {
   minLength,
   required,
   requiredIfNotPristine,
-} from '@fpsak-frontend/utils';
-import { DokumentStatus } from '@k9-sak-web/types';
+} from '@k9-sak-web/utils';
 import { BodyShort } from '@navikt/ds-react';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import moment from 'moment';

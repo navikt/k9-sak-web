@@ -1,7 +1,7 @@
-import { InputField } from '@fpsak-frontend/form/index';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidFodselsnummer, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { InputField } from '@k9-sak-web/form/index';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
+import { hasValidFodselsnummer, maxLength, minLength, required } from '@k9-sak-web/utils';
 import { Delete } from '@navikt/ds-icons';
 import { Button, Table } from '@navikt/ds-react';
 import React, { useEffect } from 'react';

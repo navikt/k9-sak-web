@@ -1,3 +1,4 @@
+import { useSaksbehandlerOppslag } from '@k9-sak-web/shared-components';
 import { NavAnsatt, NotatResponse } from '@k9-sak-web/types';
 import { EyeSlashIcon, EyeWithPupilIcon, PencilIcon } from '@navikt/aksel-icons';
 import { BodyLong, Button, Chat, Label, Tag } from '@navikt/ds-react';
@@ -6,7 +7,6 @@ import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import { FormattedMessage } from 'react-intl';
 import styles from './chatComponent.module.css';
 

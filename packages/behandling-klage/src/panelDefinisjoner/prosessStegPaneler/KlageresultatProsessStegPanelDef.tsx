@@ -1,10 +1,10 @@
 import React from 'react';
 
-import VedtakKlageProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import VedtakKlageProsessIndex from '@k9-sak-web/prosess-vedtak-klage';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <VedtakKlageProsessIndex {...props} />;

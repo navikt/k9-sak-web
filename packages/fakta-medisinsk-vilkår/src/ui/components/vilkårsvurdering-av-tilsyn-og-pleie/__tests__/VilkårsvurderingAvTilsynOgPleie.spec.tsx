@@ -1,12 +1,12 @@
 /* eslint-disable max-len */
+import { httpUtils } from '@k9-sak-web/utils';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import { httpUtils } from '@fpsak-frontend/utils';
-import { render, fireEvent, waitFor, screen } from '@testing-library/react';
-import VilkårsvurderingAvTilsynOgPleie from '../VilkårsvurderingAvTilsynOgPleie';
+import { dokumentSteg, toOmsorgspersonerSteg } from '../../../../types/Step';
+import Vurderingstype from '../../../../types/Vurderingstype';
 import ContainerContext from '../../../context/ContainerContext';
 import VurderingContext from '../../../context/VurderingContext';
-import Vurderingstype from '../../../../types/Vurderingstype';
-import { dokumentSteg, toOmsorgspersonerSteg } from '../../../../types/Step';
+import VilkårsvurderingAvTilsynOgPleie from '../VilkårsvurderingAvTilsynOgPleie';
 
 const vurderingsoversiktEndpoint = 'vurderingsoversikt-mock';
 const vurderingsopprettelseEndpoint = 'vurderingsopprettelse-mock';

@@ -1,16 +1,9 @@
-import { CheckboxField, InputField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
-import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpText, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import {
-  hasValidFodselsnummer,
-  hasValidText,
-  hasValidValue,
-  maxLength,
-  minLength,
-  required,
-} from '@fpsak-frontend/utils';
+import { CheckboxField, InputField, RadioGroupField, RadioOption, TextAreaField } from '@k9-sak-web/form/index';
+import { behandlingForm } from '@k9-sak-web/form/src/behandlingForm';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { AksjonspunktHelpText, BorderBox, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
+import { hasValidFodselsnummer, hasValidText, hasValidValue, maxLength, minLength, required } from '@k9-sak-web/utils';
 import { Delete } from '@navikt/ds-icons';
 import { Button, Label, Table } from '@navikt/ds-react';
 import React, { useMemo } from 'react';

@@ -1,7 +1,7 @@
 import { SetStateAction } from 'react';
 
-import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import aksjonspunktStatus, { isAksjonspunktOpen } from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
 import { Aksjonspunkt, UtfallEnum, Uttaksperiode, Vilkar } from '@k9-sak-web/types';
 
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';

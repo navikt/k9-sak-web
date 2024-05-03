@@ -1,6 +1,6 @@
-import { InputField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { formatCurrencyNoKr, minValue, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
+import { InputField, RadioGroupField, RadioOption } from '@k9-sak-web/form';
+import { ArrowBox, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { formatCurrencyNoKr, minValue, removeSpacesFromNumber, required } from '@k9-sak-web/utils';
 import { BodyShort, Detail } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

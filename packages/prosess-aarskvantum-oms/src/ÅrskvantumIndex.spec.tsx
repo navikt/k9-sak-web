@@ -1,6 +1,6 @@
-import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { ArbeidsforholdV2, Behandling } from '@k9-sak-web/types';
+import { renderWithIntl, renderWithIntlAndReduxForm } from '@k9-sak-web/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../i18n/nb_NO.json';

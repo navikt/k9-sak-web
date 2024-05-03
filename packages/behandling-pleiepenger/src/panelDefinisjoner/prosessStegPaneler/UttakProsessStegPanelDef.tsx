@@ -1,8 +1,8 @@
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import React from 'react';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import Uttak from '../../components/Uttak';
 import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
 

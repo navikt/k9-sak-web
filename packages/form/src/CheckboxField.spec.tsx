@@ -1,4 +1,4 @@
-import { renderFieldComponent } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderFieldComponent } from '@k9-sak-web/utils-test/redux-form-test-helper';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';

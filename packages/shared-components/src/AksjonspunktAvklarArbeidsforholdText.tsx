@@ -1,9 +1,9 @@
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
+import advarselIkonUrl from '@k9-sak-web/assets/images/advarsel.svg';
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
-import aksjonspunktÅrsaker from '@fpsak-frontend/fakta-arbeidsforhold/src/kodeverk/aksjonspunktÅrsaker';
+import aksjonspunktÅrsaker from '@k9-sak-web/fakta-arbeidsforhold/src/kodeverk/aksjonspunktÅrsaker';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { FlexColumn, FlexContainer, FlexRow } from './flexGrid';
 import Image from './Image';

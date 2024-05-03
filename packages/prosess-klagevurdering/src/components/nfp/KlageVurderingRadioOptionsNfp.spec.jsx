@@ -1,7 +1,7 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import klageVurdering from '@k9-sak-web/kodeverk/src/klageVurdering';
+import { renderWithIntlAndReduxForm } from '@k9-sak-web/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 
 import React from 'react';

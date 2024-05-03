@@ -1,4 +1,4 @@
-import { DDMMYYYY_DATE_FORMAT, haystack } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, haystack } from '@k9-sak-web/utils';
 import moment from 'moment';
 import { Input } from 'nav-frontend-skjema';
 import React, { Component, ReactNode } from 'react';

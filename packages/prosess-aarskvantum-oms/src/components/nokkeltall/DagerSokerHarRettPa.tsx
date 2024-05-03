@@ -1,5 +1,5 @@
-import { formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import { formatQueryString, parseQueryString } from '@k9-sak-web/utils';
 import { Link } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

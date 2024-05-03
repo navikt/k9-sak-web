@@ -1,4 +1,4 @@
-import { Period } from '@fpsak-frontend/utils';
+import { Period } from '@k9-sak-web/utils';
 import { getPeriodDifference } from './dateUtils';
 
 export const getStringMedPerioder = (perioder: Period[]): string => {

@@ -1,15 +1,15 @@
 {
-  "name": "@fpsak-frontend/sak-meny-verge",
+  "name": "@k9-sak-web/sak-meny-verge",
   "version": "1.0.0",
   "module": "index.ts",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@fpsak-frontend/shared-components": "1.0.0",
+    "@k9-sak-web/shared-components": "1.0.0",
     "react": "18.3.1",
     "react-intl": "6.6.5"
   },
   "devDependencies": {
-    "@fpsak-frontend/utils-test": "1.0.0"
+    "@k9-sak-web/utils-test": "1.0.0"
   }
 }

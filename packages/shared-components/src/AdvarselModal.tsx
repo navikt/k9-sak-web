@@ -1,4 +1,4 @@
-import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
+import advarselImageUrl from '@k9-sak-web/assets/images/advarsel.svg';
 import { BodyShort, Button, HGrid, Heading, Modal } from '@navikt/ds-react';
 import React from 'react';
 import getPackageIntl from '../i18n/getPackageIntl';

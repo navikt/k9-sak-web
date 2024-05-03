@@ -1,7 +1,7 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
 // eslint-disable-next-line import/no-duplicates
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import { kodeverkObjektPropType } from '@k9-sak-web/prop-types';
 // eslint-disable-next-line import/no-duplicates
 import PropTypes from 'prop-types';
 import React, { useMemo } from 'react';

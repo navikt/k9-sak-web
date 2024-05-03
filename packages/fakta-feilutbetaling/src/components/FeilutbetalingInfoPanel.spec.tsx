@@ -1,15 +1,15 @@
 import React from 'react';
 
-import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
-import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
-import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import behandlingArsakType from '@k9-sak-web/kodeverk/src/behandlingArsakType';
+import behandlingResultatType from '@k9-sak-web/kodeverk/src/behandlingResultatType';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import konsekvensForYtelsen from '@k9-sak-web/kodeverk/src/konsekvensForYtelsen';
+import soknadType from '@k9-sak-web/kodeverk/src/soknadType';
+import tilbakekrevingVidereBehandling from '@k9-sak-web/kodeverk/src/tilbakekrevingVidereBehandling';
+import { reduxFormPropsMock } from '@k9-sak-web/utils-test/redux-form-test-helper';
 
-import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { intlMock } from '@k9-sak-web/utils-test/intl-test-helper';
+import { renderWithIntlAndReduxForm } from '@k9-sak-web/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import messages from '../../i18n/nb_NO.json';
 import { FeilutbetalingInfoPanelImpl } from './FeilutbetalingInfoPanel';

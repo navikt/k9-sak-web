@@ -5,12 +5,12 @@ import {
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
-} from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-frontend/utils';
+} from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@k9-sak-web/utils';
 import { Detail, HGrid, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';

@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@fpsak-frontend/form": "*",
+    "@k9-sak-web/form": "*",
     "@k9-sak-web/types": "*",
     "@navikt/ft-plattform-komponenter": "2.5.6",
     "formik": "2.4.6",

@@ -1,8 +1,8 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { findAksjonspunkt, findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
+import { OmBarnet } from '@k9-sak-web/fakta-om-barnet';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Aksjonspunkt, BehandlingAppKontekst } from '@k9-sak-web/types';
-import { OmBarnet } from '@k9-sak-web/fakta-om-barnet';
+import { findAksjonspunkt, findEndpointsForMicrofrontend, httpErrorHandler } from '@k9-sak-web/utils';
 import React from 'react';
 
 interface OmBarnetProps {

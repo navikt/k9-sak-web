@@ -2,8 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Aksjonspunkt, Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
 import Rettigheter from '../../types/rettigheterTsType';

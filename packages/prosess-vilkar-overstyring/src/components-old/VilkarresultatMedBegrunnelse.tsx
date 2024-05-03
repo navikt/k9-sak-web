@@ -2,11 +2,11 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 
-import { CustomVilkarText } from './VilkarresultatMedOverstyringForm';
 import VilkarBegrunnelse from './VilkarBegrunnelse';
+import { CustomVilkarText } from './VilkarresultatMedOverstyringForm';
 
 interface VilkarresultatMedBegrunnelseProps {
   erVilkarOk?: boolean;

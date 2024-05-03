@@ -1,11 +1,11 @@
+import { useSaksbehandlerOppslag } from '@k9-sak-web/shared-components';
+import { AssessedBy, BasicList, Box, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
-import { Box, Margin, BasicList, LabelledContent, AssessedBy } from '@navikt/ft-plattform-komponenter';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import Vurdering from '../../../types/Vurdering';
-import DokumentLink from '../dokument-link/DokumentLink';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import DekketAvInnleggelsesperiodeMelding from '../dekket-av-innleggelsesperiode-melding/DekketAvInnleggelsesperiodeMelding';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
+import DokumentLink from '../dokument-link/DokumentLink';
 
 interface VurderingsoppsummeringForKontinuerligTilsynOgPleieProps {
   vurdering: Vurdering;

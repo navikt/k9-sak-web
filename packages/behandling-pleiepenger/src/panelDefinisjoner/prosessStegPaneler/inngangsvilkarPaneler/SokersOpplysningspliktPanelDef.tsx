@@ -1,10 +1,10 @@
 import React from 'react';
 
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
+import SokersOpplysningspliktVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-sokers-opplysningsplikt';
 
 class SokersOpplysningspliktPanelDef extends ProsessStegPanelDef {
   getId = () => 'SOKERS_OPPLYSNINGSPLIKT';

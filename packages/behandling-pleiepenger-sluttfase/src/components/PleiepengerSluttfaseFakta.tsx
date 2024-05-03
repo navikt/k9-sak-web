@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from 'react';
 
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import {
-  KodeverkMedNavn,
-  Behandling,
-  ArbeidsgiverOpplysningerPerId,
-  FagsakPerson,
-  Fagsak,
-  Dokument,
-  FeatureToggles,
-} from '@k9-sak-web/types';
-import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import ac from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
+import { LoadingPanel } from '@k9-sak-web/shared-components';
+import {
+  ArbeidsgiverOpplysningerPerId,
+  Behandling,
+  Dokument,
+  Fagsak,
+  FagsakPerson,
+  FeatureToggles,
+  KodeverkMedNavn,
+} from '@k9-sak-web/types';
 
+import {
+  PleiepengerSluttfaseBehandlingApiKeys,
+  restApiPleiepengerSluttfaseHooks,
+} from '../data/pleiepengerSluttfaseBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPleiepengerSluttfasePanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
-import {
-  restApiPleiepengerSluttfaseHooks,
-  PleiepengerSluttfaseBehandlingApiKeys,
-} from '../data/pleiepengerSluttfaseBehandlingApi';
 
 const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 

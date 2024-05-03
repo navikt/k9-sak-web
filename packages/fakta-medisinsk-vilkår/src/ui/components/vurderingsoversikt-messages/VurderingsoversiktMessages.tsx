@@ -1,12 +1,12 @@
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import { addYearsToDate, getHumanReadablePeriodString } from '@fpsak-frontend/utils';
+import { addYearsToDate, getHumanReadablePeriodString } from '@k9-sak-web/utils';
 import { Alert } from '@navikt/ds-react';
+import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import Vurderingstype from '../../../types/Vurderingstype';
+import VurderingContext from '../../context/VurderingContext';
 import IngenPerioderÅVurdereMelding from '../ingen-perioder-å-vurdere-melding/IngenPerioderÅVurdereMelding';
 import ManglerGyldigSignaturMelding from '../mangler-gyldig-signatur-melding/ManglerGyldigSignaturMelding';
-import VurderingContext from '../../context/VurderingContext';
 
 interface VurderingsoversiktMessagesProps {
   vurderingsoversikt: Vurderingsoversikt;

@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import BehandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import BehandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import TotrinnskontrollSakIndex from '@k9-sak-web/sak-totrinnskontroll';
+import { LoadingPanel } from '@k9-sak-web/shared-components';
 import {
   BehandlingAppKontekst,
   Fagsak,
@@ -10,11 +10,11 @@ import {
   NavAnsatt,
   TotrinnskontrollSkjermlenkeContext,
 } from '@k9-sak-web/types';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
+import React, { useCallback, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { createLocationForSkjermlenke } from '../../app/paths';
-import { useKodeverk } from '../../data/useKodeverk';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
+import { useKodeverk } from '../../data/useKodeverk';
 import BeslutterModalIndex from './BeslutterModalIndex';
 
 type Values = {

@@ -1,9 +1,9 @@
-import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg';
-import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
-import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
-import { CheckboxField } from '@fpsak-frontend/form';
-import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import { DateTimeLabel, Image } from '@fpsak-frontend/shared-components';
+import internDokumentImageUrl from '@k9-sak-web/assets/images/intern_dokument.svg';
+import mottaDokumentImageUrl from '@k9-sak-web/assets/images/motta_dokument.svg';
+import sendDokumentImageUrl from '@k9-sak-web/assets/images/send_dokument.svg';
+import { CheckboxField } from '@k9-sak-web/form';
+import kommunikasjonsretning from '@k9-sak-web/kodeverk/src/kommunikasjonsretning';
+import { DateTimeLabel, Image } from '@k9-sak-web/shared-components';
 import { BodyShort, Detail, HGrid, Table } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ArrowBox } from '@fpsak-frontend/shared-components';
+import { ArrowBox } from '@k9-sak-web/shared-components';
 
 export default {
   title: 'sharedComponents/ArrowBox',

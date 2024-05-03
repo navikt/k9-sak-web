@@ -1,8 +1,8 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import { FlexColumn, FlexContainer, FlexRow, Tooltip, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Adresser, getAddresses, getKodeverknavnFn, getLanguageFromSprakkode } from '@fpsak-frontend/utils';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import opplysningAdresseType from '@k9-sak-web/kodeverk/src/opplysningAdresseType';
+import { FlexColumn, FlexContainer, FlexRow, Tooltip, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
+import { Adresser, getAddresses, getKodeverknavnFn, getLanguageFromSprakkode } from '@k9-sak-web/utils';
 import { BodyShort, Label, Tag } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';

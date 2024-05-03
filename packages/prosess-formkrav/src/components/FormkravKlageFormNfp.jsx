@@ -1,14 +1,14 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
-import PropTypes from 'prop-types';
+import { createSelector } from 'reselect';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingForm } from '@fpsak-frontend/form';
-import { safeJSONParse } from '@fpsak-frontend/utils';
+import { behandlingForm } from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { safeJSONParse } from '@k9-sak-web/utils';
 
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import BehandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
 import FormkravKlageForm, { getPaklagdVedtak, IKKE_PAKLAGD_VEDTAK } from './FormkravKlageForm';
 
 /**

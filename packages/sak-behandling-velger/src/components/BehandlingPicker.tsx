@@ -1,6 +1,6 @@
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn, PerioderMedBehandlingsId } from '@k9-sak-web/types';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { AddCircle } from '@navikt/ds-icons';

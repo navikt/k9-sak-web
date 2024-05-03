@@ -2,12 +2,12 @@ import { Label } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import arbeidsforholdHandlingType from '@k9-sak-web/kodeverk/src/arbeidsforholdHandlingType';
+import behandlingStatusCode from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import klageVurderingCodes from '@k9-sak-web/kodeverk/src/klageVurdering';
+import klageVurderingOmgjoerCodes from '@k9-sak-web/kodeverk/src/klageVurderingOmgjoer';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import {
   KlageVurdering,
   Kodeverk,

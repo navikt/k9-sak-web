@@ -1,5 +1,4 @@
-import { Period } from '@fpsak-frontend/utils';
-import React from 'react';
+import { Period } from '@k9-sak-web/utils';
 import {
   ContentWithTooltip,
   GreenCheckIconFilled,
@@ -7,6 +6,7 @@ import {
   OnePersonOutlineGray,
   RedCrossIconFilled,
 } from '@navikt/ft-plattform-komponenter';
+import React from 'react';
 import Kilde from '../../../types/Kilde';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import styles from './vurderingsperiodeElement.module.css';

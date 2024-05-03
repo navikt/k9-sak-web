@@ -1,7 +1,7 @@
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 
-import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
-import lagForhåndsvisRequest, { forhandsvis } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { erTilbakekrevingType } from '@k9-sak-web/kodeverk/src/behandlingType';
+import lagForhåndsvisRequest, { forhandsvis } from '@k9-sak-web/utils/src/formidlingUtils';
 import { K9sakApiKeys, restApiHooks } from './k9sakApi';
 
 type ForhandsvisFunksjon = (erHenleggelse: boolean, data: any) => void;

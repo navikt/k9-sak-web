@@ -1,7 +1,7 @@
-import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
-import { Image } from '@fpsak-frontend/shared-components/index';
-import { joinNonNullStrings } from '@fpsak-frontend/utils';
+import kalender from '@k9-sak-web/assets/images/calendar_filled.svg';
+import { Image } from '@k9-sak-web/shared-components/index';
 import { ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import { joinNonNullStrings } from '@k9-sak-web/utils';
 import { Alert, Heading } from '@navikt/ds-react';
 import Tabs from 'nav-frontend-tabs';
 import React, { useState } from 'react';

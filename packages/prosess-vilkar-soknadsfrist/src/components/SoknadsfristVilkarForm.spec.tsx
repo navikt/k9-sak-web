@@ -1,11 +1,11 @@
 import React from 'react';
-// import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+// import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { DokumentStatus } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
+import { reduxFormPropsMock } from '@k9-sak-web/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@k9-sak-web/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import messages from '../../i18n/nb_NO.json';
 import { SoknadsfristVilkarForm } from './SoknadsfristVilkarForm';

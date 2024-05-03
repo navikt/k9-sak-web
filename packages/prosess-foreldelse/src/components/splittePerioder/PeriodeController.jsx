@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
-import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
-import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
-import { EditedIcon, FloatRight, Image } from '@fpsak-frontend/shared-components';
-import { TimeLineButton } from '@fpsak-frontend/tidslinje';
+import splitPeriodImageUrl from '@k9-sak-web/assets/images/splitt.svg';
+import splitPeriodImageHoverUrl from '@k9-sak-web/assets/images/splitt_hover.svg';
+import { EditedIcon, FloatRight, Image } from '@k9-sak-web/shared-components';
+import { TimeLineButton } from '@k9-sak-web/tidslinje';
 
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 

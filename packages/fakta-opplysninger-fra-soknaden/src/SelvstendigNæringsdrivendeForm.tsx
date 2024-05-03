@@ -1,6 +1,6 @@
-import { DatepickerField } from '@fpsak-frontend/form';
-import InputField from '@fpsak-frontend/form/src/InputField';
-import { Label } from '@fpsak-frontend/form/src/Label';
+import { DatepickerField } from '@k9-sak-web/form';
+import InputField from '@k9-sak-web/form/src/InputField';
+import { Label } from '@k9-sak-web/form/src/Label';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import styles from './opplysningerFraSoknadenForm.module.css';

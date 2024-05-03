@@ -1,11 +1,11 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
   findAksjonspunkt,
   findEndpointsForMicrofrontend,
   httpErrorHandler as httpErrorHandlerFn,
-} from '@fpsak-frontend/utils';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+} from '@k9-sak-web/utils';
 import React from 'react';
 
 import { EtablertTilsyn } from '@k9-sak-web/fakta-etablert-tilsyn';

@@ -1,9 +1,9 @@
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, VerticalSpacer } from '@k9-sak-web/shared-components';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';

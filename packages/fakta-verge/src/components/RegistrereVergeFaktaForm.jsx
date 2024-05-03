@@ -2,10 +2,10 @@ import { HGrid } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { DatepickerField, InputField, SelectField } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidDate, hasValidFodselsnummer, hasValidName, required } from '@fpsak-frontend/utils';
+import { DatepickerField, InputField, SelectField } from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { FaktaGruppe, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { hasValidDate, hasValidFodselsnummer, hasValidName, required } from '@k9-sak-web/utils';
 
 import vergeType from '../kodeverk/vergeType';
 

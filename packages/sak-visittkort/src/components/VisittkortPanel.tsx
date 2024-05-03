@@ -1,7 +1,6 @@
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import { dateToday, initializeDate, prettifyDateString } from '@fpsak-frontend/utils';
+import navBrukerKjonn from '@k9-sak-web/kodeverk/src/navBrukerKjonn';
+import personstatusType from '@k9-sak-web/kodeverk/src/personstatusType';
+import { FlexColumn, FlexContainer, FlexRow } from '@k9-sak-web/shared-components';
 import {
   FagsakPerson,
   Kodeverk,
@@ -10,6 +9,7 @@ import {
   RelatertFagsak as RelatertFagsakType,
 } from '@k9-sak-web/types';
 import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
+import { dateToday, initializeDate, prettifyDateString } from '@k9-sak-web/utils';
 import { Gender, PersonCard } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

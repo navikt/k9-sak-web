@@ -1,4 +1,4 @@
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT } from '@k9-sak-web/utils';
 import moment from 'moment';
 import { createGroups, createItems } from './Tidslinje';
 import Periode from './types/Periode';

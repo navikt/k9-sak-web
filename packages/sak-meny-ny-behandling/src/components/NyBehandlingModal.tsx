@@ -1,10 +1,10 @@
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import { CheckboxField, SelectField } from '@fpsak-frontend/form';
-import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { required } from '@fpsak-frontend/utils';
+import innvilgetImageUrl from '@k9-sak-web/assets/images/innvilget_valgt.svg';
+import { CheckboxField, SelectField } from '@k9-sak-web/form';
+import behandlingArsakType from '@k9-sak-web/kodeverk/src/behandlingArsakType';
+import bType from '@k9-sak-web/kodeverk/src/behandlingType';
+import { Image, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { required } from '@k9-sak-web/utils';
 import { Button, HGrid, Label, Modal } from '@navikt/ds-react';
 import React, { ReactElement, useEffect } from 'react';
 import { FormattedMessage, IntlShape, WrappedComponentProps, injectIntl } from 'react-intl';

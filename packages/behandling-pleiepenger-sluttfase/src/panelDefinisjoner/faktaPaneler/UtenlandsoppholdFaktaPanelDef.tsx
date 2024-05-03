@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 
 import Utenlandsopphold from '@k9-sak-web/fakta-utenlandsopphold';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
 
 class UtenlandsoppholdFaktaPanelDef extends FaktaPanelDef {

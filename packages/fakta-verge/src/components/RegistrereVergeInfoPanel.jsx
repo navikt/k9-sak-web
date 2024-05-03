@@ -1,7 +1,7 @@
-import { behandlingForm } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
+import { behandlingForm } from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { AksjonspunktHelpText, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { BodyShort } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -9,7 +9,7 @@ import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity } from '@k9-sak-web/utils';
 import vergeAksjonspunkterPropType from '../propTypes/vergeAksjonspunkterPropType';
 
 /**

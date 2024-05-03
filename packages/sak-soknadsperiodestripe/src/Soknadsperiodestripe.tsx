@@ -1,13 +1,13 @@
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Tidslinje, TidslinjeZoom } from '@fpsak-frontend/shared-components';
-import HorisontalNavigering from '@fpsak-frontend/shared-components/src/tidslinje/HorisontalNavigering';
-import { useSenesteDato } from '@fpsak-frontend/shared-components/src/tidslinje/useTidslinjerader';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
+import { Tidslinje, TidslinjeZoom } from '@k9-sak-web/shared-components';
+import HorisontalNavigering from '@k9-sak-web/shared-components/src/tidslinje/HorisontalNavigering';
+import { useSenesteDato } from '@k9-sak-web/shared-components/src/tidslinje/useTidslinjerader';
 import BehandlingPerioderårsakMedVilkår, {
   Periode,
   PeriodeMedUtfall,
 } from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
-import { Period, getPeriodDifference } from '@fpsak-frontend/utils';
+import { Period, getPeriodDifference } from '@k9-sak-web/utils';
 import dayjs from 'dayjs';
 import 'dayjs/locale/nb';
 import React, { useEffect, useMemo, useState } from 'react';

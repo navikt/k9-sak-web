@@ -1,7 +1,8 @@
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import advarselIkonUrl from '@k9-sak-web/assets/images/advarsel_ny.svg';
+import { behandlingForm, behandlingFormValueSelector } from '@k9-sak-web/form';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import BehandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
 import {
   AksjonspunktBox,
   EditedIcon,
@@ -10,11 +11,10 @@ import {
   FlexRow,
   Image,
   VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
+} from '@k9-sak-web/shared-components';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/utils';
 import { BodyShort, Button, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import React, { SetStateAction, useEffect } from 'react';

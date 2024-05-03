@@ -1,8 +1,8 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import MenyEndreBehandlendeEnhetIndex from '@fpsak-frontend/sak-meny-endre-enhet';
+import MenyEndreBehandlendeEnhetIndex from '@k9-sak-web/sak-meny-endre-enhet';
 
 import withReduxProvider from '../../decorators/withRedux';
 

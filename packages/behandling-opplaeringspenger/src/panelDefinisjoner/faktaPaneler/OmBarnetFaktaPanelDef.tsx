@@ -1,10 +1,10 @@
 import React from 'react';
 
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import { Fagsak, Behandling } from '@k9-sak-web/types';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import OmBarnet from '../../components/OmBarnet';
 
 class OmBarnetFaktaPanelDef extends FaktaPanelDef {

@@ -1,7 +1,7 @@
+import { Period } from '@k9-sak-web/utils';
 import { Dayjs } from 'dayjs';
-import { Period } from '@fpsak-frontend/utils';
-import { dateFromString } from '../../../util/dateUtils';
 import { tomorrow } from '../../../constants/dateConstants';
+import { dateFromString } from '../../../util/dateUtils';
 
 export function required(v: any) {
   if (v === null || v === undefined || v === '') {

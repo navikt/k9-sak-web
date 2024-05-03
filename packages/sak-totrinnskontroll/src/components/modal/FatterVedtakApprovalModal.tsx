@@ -1,10 +1,10 @@
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { Image } from '@fpsak-frontend/shared-components';
+import innvilgetImageUrl from '@k9-sak-web/assets/images/innvilget_valgt.svg';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
+import behandlingResultatType from '@k9-sak-web/kodeverk/src/behandlingResultatType';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import BehandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import FagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import { Image } from '@k9-sak-web/shared-components';
 import { Behandling, Kodeverk } from '@k9-sak-web/types';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
 import React from 'react';

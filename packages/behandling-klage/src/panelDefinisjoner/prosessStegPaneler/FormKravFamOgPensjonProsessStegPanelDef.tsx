@@ -1,10 +1,10 @@
 import React from 'react';
 
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import FormkravProsessIndex from '@k9-sak-web/prosess-formkrav';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <FormkravProsessIndex {...props} />;
@@ -19,14 +19,14 @@ class PanelDef extends ProsessStegPanelDef {
     parterMedKlagerett,
     valgtPartMedKlagerett,
     arbeidsgiverOpplysningerPerId,
-    fagsak
+    fagsak,
   }) => ({
     avsluttedeBehandlinger: alleBehandlinger.filter(b => b.status.kode === behandlingStatus.AVSLUTTET),
     klageVurdering,
     parterMedKlagerett,
     valgtPartMedKlagerett,
     arbeidsgiverOpplysningerPerId,
-    fagsak
+    fagsak,
   });
 }
 

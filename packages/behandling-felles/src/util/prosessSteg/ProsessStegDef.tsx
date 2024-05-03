@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
-import { Aksjonspunkt, Fagsak, Vilkar, Behandling, FeatureToggles } from '@k9-sak-web/types';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import { Aksjonspunkt, Behandling, Fagsak, FeatureToggles, Vilkar } from '@k9-sak-web/types';
 
 /**
  * Definerer en mal for prosess-steg. Et steg kan ha ett eller flere paneler.

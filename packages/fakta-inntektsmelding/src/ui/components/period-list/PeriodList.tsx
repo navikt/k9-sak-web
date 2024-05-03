@@ -1,15 +1,15 @@
-import React from 'react';
-import { Period } from '@fpsak-frontend/utils';
+import { Period } from '@k9-sak-web/utils';
 import { CalendarIcon } from '@navikt/ft-plattform-komponenter';
+import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import styles from './periodList.module.css';
-import FortsettUtenInntektsmeldingForm from '../fortsett-uten-inntektsmelding-form/FortsettUtenInntektsmeldingForm';
-import { TilstandBeriket } from '../../../types/KompletthetData';
-import FortsettUtenInntektsmeldingInfo from './FortsettUtenInntektsmeldingInfo';
-import FortsettUtenInntektsmeldingAvslag from './FortsettUtenInntektsmeldingAvslag';
 import Aksjonspunkt from '../../../types/Aksjonspunkt';
 import AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';
+import { TilstandBeriket } from '../../../types/KompletthetData';
 import { sorterSkjæringstidspunkt } from '../../../util/utils';
+import FortsettUtenInntektsmeldingForm from '../fortsett-uten-inntektsmelding-form/FortsettUtenInntektsmeldingForm';
+import FortsettUtenInntektsmeldingAvslag from './FortsettUtenInntektsmeldingAvslag';
+import FortsettUtenInntektsmeldingInfo from './FortsettUtenInntektsmeldingInfo';
+import styles from './periodList.module.css';
 
 interface PeriodListProps {
   tilstander: TilstandBeriket[];

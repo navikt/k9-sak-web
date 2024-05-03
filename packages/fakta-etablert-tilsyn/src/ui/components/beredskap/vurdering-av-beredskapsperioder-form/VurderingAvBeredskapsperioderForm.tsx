@@ -1,5 +1,5 @@
-import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
-import { Period } from '@fpsak-frontend/utils';
+import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@k9-sak-web/form';
+import { Period } from '@k9-sak-web/utils';
 import { Alert } from '@navikt/ds-react';
 import { Box, DetailView, Form, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 import React from 'react';

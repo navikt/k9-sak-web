@@ -1,10 +1,10 @@
-import React from 'react';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import TotrinnskontrollSakIndex from '@k9-sak-web/sak-totrinnskontroll';
+import { Behandling, KlageVurdering, TotrinnskontrollAksjonspunkt } from '@k9-sak-web/types';
 import { action } from '@storybook/addon-actions';
 import { boolean, withKnobs } from '@storybook/addon-knobs';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
-import { Behandling, KlageVurdering, TotrinnskontrollAksjonspunkt } from '@k9-sak-web/types';
+import React from 'react';
 
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 

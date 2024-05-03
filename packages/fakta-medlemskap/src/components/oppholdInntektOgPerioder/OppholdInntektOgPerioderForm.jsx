@@ -8,14 +8,14 @@ import { bindActionCreators } from 'redux';
 import { formPropTypes, change as reduxFormChange, reset as reduxFormReset } from 'redux-form';
 import { createSelector } from 'reselect';
 
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
-import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@k9-sak-web/form';
+import aksjonspunktCodes, { hasAksjonspunkt } from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import { AksjonspunktHelpText, VerticalSpacer } from '@k9-sak-web/shared-components';
 // eslint-disable-next-line import/no-duplicates
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { guid } from '@fpsak-frontend/utils';
+import { aksjonspunktPropType } from '@k9-sak-web/prop-types';
+import { guid } from '@k9-sak-web/utils';
 
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';
 import OppholdInntektOgPeriodeForm from './OppholdInntektOgPeriodeForm';

@@ -1,8 +1,8 @@
-import aksjonspunktKoder from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import aksjonspunktKoder from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import klageVurdering from '@k9-sak-web/kodeverk/src/klageVurdering';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
 import {
   hasIkkeOppfyltSoknadsfristvilkar,
   hasKlageVurderingSomIkkeErAvvist,

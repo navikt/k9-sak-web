@@ -1,13 +1,13 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { boolean, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
-import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import avslagsarsakCodes from '@k9-sak-web/kodeverk/src/avslagsarsakCodes';
+import dokumentTypeId from '@k9-sak-web/kodeverk/src/dokumentTypeId';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
+import SokersOpplysningspliktVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-sokers-opplysningsplikt';
 import { Aksjonspunkt, Behandling, Soknad } from '@k9-sak-web/types';
 
 import withReduxProvider from '../../decorators/withRedux';

@@ -1,4 +1,4 @@
-import { FlexColumn } from '@fpsak-frontend/shared-components';
+import { FlexColumn } from '@k9-sak-web/shared-components';
 import { Tag } from '@navikt/ds-react';
 import React from 'react';
 import styles from './tagContainer.module.css';

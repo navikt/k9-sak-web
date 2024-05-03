@@ -1,7 +1,7 @@
-import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
-import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
+import CheckboxFieldFormik from '@k9-sak-web/form/src/CheckboxFieldFormik';
+import TextAreaFormik from '@k9-sak-web/form/src/TextAreaFormik';
 import { goToLos, goToSearch } from '@k9-sak-web/sak-app/src/app/paths';
+import { useFeatureToggles } from '@k9-sak-web/shared-components';
 import { MerknadFraLos } from '@k9-sak-web/types';
 import { Alert, BodyShort, Button, ErrorMessage, Heading, Label, Modal, VStack } from '@navikt/ds-react';
 import { Form, Formik, FormikProps } from 'formik';

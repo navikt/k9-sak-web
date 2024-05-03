@@ -1,5 +1,5 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { AksjonspunktHelpText, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { BodyShort, Label } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';

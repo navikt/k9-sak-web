@@ -1,4 +1,4 @@
-import { Datepicker as SharedDatepicker } from '@fpsak-frontend/shared-components';
+import { Datepicker as SharedDatepicker } from '@k9-sak-web/shared-components';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 

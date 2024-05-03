@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import { HistorikkinnslagDel, Kodeverk } from '@k9-sak-web/types';
+import { decodeHtmlEntity } from '@k9-sak-web/utils';
 import { BodyShort } from '@navikt/ds-react';
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';

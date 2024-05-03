@@ -1,12 +1,12 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { boolean, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening-oms';
-import opptjeningAktivitetKlassifisering from '@fpsak-frontend/prosess-vilkar-opptjening-oms/src/kodeverk/opptjeningAktivitetKlassifisering';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
+import OpptjeningVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-opptjening-oms';
+import opptjeningAktivitetKlassifisering from '@k9-sak-web/prosess-vilkar-opptjening-oms/src/kodeverk/opptjeningAktivitetKlassifisering';
 import { Aksjonspunkt, Fagsak, OpptjeningBehandling } from '@k9-sak-web/types';
 
 import withReduxProvider from '../../decorators/withRedux';

@@ -6,13 +6,16 @@ import {
   TextAreaField,
   behandlingForm,
   behandlingFormValueSelector,
-} from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
-import { FaktaGruppe, FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { TimeLineButton } from '@fpsak-frontend/tidslinje';
+} from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import arbeidType from '@k9-sak-web/kodeverk/src/arbeidType';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import opptjeningAktivitetType from '@k9-sak-web/kodeverk/src/opptjeningAktivitetType';
+import { FaktaGruppe, FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { TimeLineButton } from '@k9-sak-web/tidslinje';
+import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
+import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
 import {
   findDifferenceInMonthsAndDays,
   hasValidPeriod,
@@ -24,10 +27,7 @@ import {
   omit,
   required,
   requiredIfCustomFunctionIsTrue,
-} from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
-import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
+} from '@k9-sak-web/utils';
 import { BodyShort, Button, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import React, { KeyboardEvent, MouseEvent } from 'react';

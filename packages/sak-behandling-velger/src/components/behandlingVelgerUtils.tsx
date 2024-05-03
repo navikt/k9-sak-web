@@ -1,7 +1,7 @@
-import avslaattImg from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
-import innvilgetImg from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { DateLabel, Image } from '@fpsak-frontend/shared-components';
+import avslaattImg from '@k9-sak-web/assets/images/avslaatt_valgt.svg';
+import innvilgetImg from '@k9-sak-web/assets/images/innvilget_valgt.svg';
+import behandlingResultatType from '@k9-sak-web/kodeverk/src/behandlingResultatType';
+import { DateLabel, Image } from '@k9-sak-web/shared-components';
 import { BehandlingAppKontekst, Periode } from '@k9-sak-web/types';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import moment from 'moment';

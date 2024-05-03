@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { injectIntl } from 'react-intl';
 
-import { TextAreaField } from '@fpsak-frontend/form';
-import { getLanguageCodeFromSprakkode, hasValidText, required } from '@fpsak-frontend/utils';
+import { TextAreaField } from '@k9-sak-web/form';
+import { getLanguageCodeFromSprakkode, hasValidText, required } from '@k9-sak-web/utils';
 
 import styles from './fritekstAnkeBrevTextField.module.css';
 

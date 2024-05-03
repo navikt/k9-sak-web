@@ -1,13 +1,13 @@
-import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
-import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import region from '@fpsak-frontend/kodeverk/src/region';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
+import diskresjonskodeType from '@k9-sak-web/kodeverk/src/diskresjonskodeType';
+import navBrukerKjonn from '@k9-sak-web/kodeverk/src/navBrukerKjonn';
+import opplysningAdresseType from '@k9-sak-web/kodeverk/src/opplysningAdresseType';
+import personstatusType from '@k9-sak-web/kodeverk/src/personstatusType';
+import region from '@k9-sak-web/kodeverk/src/region';
+import sivilstandType from '@k9-sak-web/kodeverk/src/sivilstandType';
+import VisittkortSakIndex from '@k9-sak-web/sak-visittkort';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
 

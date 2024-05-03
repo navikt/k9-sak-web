@@ -1,8 +1,8 @@
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { SetStateAction } from 'react';
 
-import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import aksjonspunktType from '@k9-sak-web/kodeverk/src/aksjonspunktType';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
 import { Aksjonspunkt, Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';

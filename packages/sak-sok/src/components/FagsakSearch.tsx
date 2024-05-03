@@ -1,4 +1,4 @@
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';

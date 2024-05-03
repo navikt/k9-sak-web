@@ -1,8 +1,8 @@
-import avslattImg from '@fpsak-frontend/assets/images/avslaatt.svg';
-import checkImg from '@fpsak-frontend/assets/images/check.svg';
-import { Image } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import avslattImg from '@k9-sak-web/assets/images/avslaatt.svg';
+import checkImg from '@k9-sak-web/assets/images/check.svg';
+import { Image } from '@k9-sak-web/shared-components';
 import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
+import { decodeHtmlEntity } from '@k9-sak-web/utils';
 import { BodyShort } from '@navikt/ds-react';
 import { Location } from 'history';
 import React, { ReactNode } from 'react';

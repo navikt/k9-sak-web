@@ -1,7 +1,7 @@
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { formatereLukketPeriode, visningsdato } from '@fpsak-frontend/utils';
 import KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
+import { formatereLukketPeriode, visningsdato } from '@k9-sak-web/utils';
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

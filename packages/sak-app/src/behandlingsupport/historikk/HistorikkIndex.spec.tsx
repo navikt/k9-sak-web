@@ -1,4 +1,4 @@
-import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
+import HistorikkAktor from '@k9-sak-web/kodeverk/src/historikkAktor';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router';

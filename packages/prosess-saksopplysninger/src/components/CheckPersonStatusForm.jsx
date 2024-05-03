@@ -6,13 +6,13 @@ import {
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
-} from '@fpsak-frontend/form';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { AksjonspunktHelpText, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-frontend/utils';
+} from '@k9-sak-web/form';
+import { isAksjonspunktOpen } from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import personstatusType from '@k9-sak-web/kodeverk/src/personstatusType';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { AksjonspunktHelpText, ArrowBox, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@k9-sak-web/utils';
 import { BodyShort, Detail, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';

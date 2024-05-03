@@ -1,7 +1,7 @@
 import { withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 
-import HeaderWithErrorPanel from '@fpsak-frontend/sak-dekorator';
+import HeaderWithErrorPanel from '@k9-sak-web/sak-dekorator';
 import { useState } from '@storybook/addons';
 import { MemoryRouter } from 'react-router';
 

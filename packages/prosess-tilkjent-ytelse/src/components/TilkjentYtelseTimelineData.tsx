@@ -1,8 +1,8 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { FloatRight, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
-import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import { FloatRight, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { TimeLineButton, TimeLineDataContainer } from '@k9-sak-web/tidslinje';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@k9-sak-web/utils';
 import { BodyShort, HGrid, Label, Tabs, Tag } from '@navikt/ds-react';
 import moment from 'moment';
 import React, { useEffect } from 'react';

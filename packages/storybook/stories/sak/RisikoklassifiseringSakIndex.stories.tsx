@@ -1,11 +1,11 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { boolean, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
-import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import RisikoklassifiseringSakIndex from '@k9-sak-web/sak-risikoklassifisering';
+import kontrollresultatKode from '@k9-sak-web/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
 
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import withReduxProvider from '../../decorators/withRedux';

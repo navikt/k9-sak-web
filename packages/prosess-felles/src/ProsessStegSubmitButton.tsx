@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
+import { ariaCheck, isRequiredMessage } from '@k9-sak-web/utils';
 
 import { Button } from '@navikt/ds-react';
 import getPackageIntl from '../i18n/getPackageIntl';

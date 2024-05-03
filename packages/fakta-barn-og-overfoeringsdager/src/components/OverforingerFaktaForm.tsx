@@ -1,10 +1,6 @@
-import transferIcon from '@fpsak-frontend/assets/images/data-transfer-horizontal.svg';
-import {
-  behandlingForm,
-  getBehandlingFormPrefix,
-  getBehandlingFormValues,
-} from '@fpsak-frontend/form/src/behandlingForm';
-import { FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
+import transferIcon from '@k9-sak-web/assets/images/data-transfer-horizontal.svg';
+import { behandlingForm, getBehandlingFormPrefix, getBehandlingFormValues } from '@k9-sak-web/form/src/behandlingForm';
+import { FlexRow, VerticalSpacer } from '@k9-sak-web/shared-components/index';
 import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import { Label } from '@navikt/ds-react';
 import isEmpty from 'just-is-empty';

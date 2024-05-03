@@ -1,16 +1,16 @@
 {
-  "name": "@fpsak-frontend/shared-components",
+  "name": "@k9-sak-web/shared-components",
   "version": "1.0.0",
   "main": "index.ts",
   "module": "index.ts",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@fpsak-frontend/assets": "1.0.0",
-    "@fpsak-frontend/fakta-arbeidsforhold": "1.0.0",
-    "@fpsak-frontend/form": "1.0.0",
-    "@fpsak-frontend/kodeverk": "1.0.0",
-    "@fpsak-frontend/utils": "1.0.0",
+    "@k9-sak-web/assets": "1.0.0",
+    "@k9-sak-web/fakta-arbeidsforhold": "1.0.0",
+    "@k9-sak-web/form": "1.0.0",
+    "@k9-sak-web/kodeverk": "1.0.0",
+    "@k9-sak-web/utils": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/aksel-icons": "6.5.0",
     "@navikt/ds-react": "6.5.0",
@@ -38,6 +38,6 @@
     "redux-form": "8.3.10"
   },
   "devDependencies": {
-    "@fpsak-frontend/utils-test": "1.0.0"
+    "@k9-sak-web/utils-test": "1.0.0"
   }
 }

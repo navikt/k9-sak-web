@@ -1,8 +1,8 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import MenyVergeIndex from '@fpsak-frontend/sak-meny-verge';
+import MenyVergeIndex from '@k9-sak-web/sak-meny-verge';
 
 export default {
   title: 'sak/sak-meny-verge',

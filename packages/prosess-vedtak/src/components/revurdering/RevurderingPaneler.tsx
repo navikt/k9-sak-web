@@ -1,12 +1,12 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 
-import BehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import BehandlingArsakType from '@k9-sak-web/kodeverk/src/behandlingArsakType';
+import { isAvslag, isInnvilget, isOpphor } from '@k9-sak-web/kodeverk/src/behandlingResultatType';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
+import { getKodeverknavnFn } from '@k9-sak-web/utils';
 import { HGrid } from '@navikt/ds-react';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';

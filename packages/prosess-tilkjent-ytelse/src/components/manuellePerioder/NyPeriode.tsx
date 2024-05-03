@@ -1,7 +1,7 @@
-import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
+import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@k9-sak-web/form';
+import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Periode } from '@k9-sak-web/types';
+import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@k9-sak-web/utils';
 import { Button, Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

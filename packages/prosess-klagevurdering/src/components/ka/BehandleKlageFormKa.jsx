@@ -4,12 +4,12 @@ import {
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
-} from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+} from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import klageVurderingType from '@k9-sak-web/kodeverk/src/klageVurdering';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { HGrid, Heading } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';

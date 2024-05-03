@@ -1,8 +1,8 @@
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import personstatusType from '@k9-sak-web/kodeverk/src/personstatusType';
+import { reduxFormPropsMock } from '@k9-sak-web/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@k9-sak-web/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 
 import React from 'react';

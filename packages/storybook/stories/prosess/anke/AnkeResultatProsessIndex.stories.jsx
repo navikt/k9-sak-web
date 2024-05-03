@@ -1,12 +1,12 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import { boolean, object, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
-import AnkeResultatProsessIndex from '@fpsak-frontend/prosess-anke-resultat';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import ankeVurdering from '@k9-sak-web/kodeverk/src/ankeVurdering';
+import ankeVurderingOmgjoer from '@k9-sak-web/kodeverk/src/ankeVurderingOmgjoer';
+import AnkeResultatProsessIndex from '@k9-sak-web/prosess-anke-resultat';
 
 import withReduxProvider from '../../../decorators/withRedux';
 

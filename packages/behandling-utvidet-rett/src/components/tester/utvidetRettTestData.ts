@@ -1,11 +1,11 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { Aksjonspunkt, Behandling, Fagsak, FagsakPerson, Vilkar, Rammevedtak } from '@k9-sak-web/types';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import fagsakStatus from '@k9-sak-web/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import personstatusType from '@k9-sak-web/kodeverk/src/personstatusType';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
+import { Aksjonspunkt, Behandling, Fagsak, FagsakPerson, Rammevedtak, Vilkar } from '@k9-sak-web/types';
 import UtvidetRettSoknad from '../../types/UtvidetRettSoknad';
 
 const utvidetRettTestData = {
@@ -35,7 +35,7 @@ const utvidetRettTestData = {
       erPrivatPerson: false,
       identifikator: 'test',
       navn: 'test',
-      arbeidsforholdreferanser: []
+      arbeidsforholdreferanser: [],
     },
   },
   behandling: {

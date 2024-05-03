@@ -1,8 +1,8 @@
-import { messages } from '@fpsak-frontend/utils-test/intl-test-helper';
+import { messages } from '@k9-sak-web/utils-test/intl-test-helper';
 
 import React from 'react';
 
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntlAndReduxForm } from '@k9-sak-web/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import PeriodpickerField from './PeriodpickerField';
 

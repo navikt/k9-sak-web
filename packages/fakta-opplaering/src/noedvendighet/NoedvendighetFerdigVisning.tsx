@@ -12,8 +12,8 @@ import {
 } from '@navikt/ft-plattform-komponenter';
 import React, { useContext } from 'react';
 
+import { useSaksbehandlerOppslag } from '@k9-sak-web/shared-components';
 import { useIntl } from 'react-intl';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import DokumentLink from '../components/DokumentLink';
 import styles from './noedvendighetFerdigVisning.module.css';
 

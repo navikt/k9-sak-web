@@ -1,7 +1,7 @@
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import fagsakStatus from '@k9-sak-web/kodeverk/src/fagsakStatus';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
+import { getKodeverknavnFn } from '@k9-sak-web/utils';
 import { Table } from '@navikt/ds-react';
 import React from 'react';
 

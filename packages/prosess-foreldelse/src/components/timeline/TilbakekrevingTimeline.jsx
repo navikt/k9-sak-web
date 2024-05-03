@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
 
-import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
-import urlMann from '@fpsak-frontend/assets/images/mann.svg';
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { Image } from '@fpsak-frontend/shared-components';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import urlKvinne from '@k9-sak-web/assets/images/kvinne.svg';
+import urlMann from '@k9-sak-web/assets/images/mann.svg';
+import navBrukerKjonn from '@k9-sak-web/kodeverk/src/navBrukerKjonn';
+import { Image } from '@k9-sak-web/shared-components';
+import { ISO_DATE_FORMAT } from '@k9-sak-web/utils';
 
-import { Timeline, TimeLineControl } from '@fpsak-frontend/tidslinje';
+import { Timeline, TimeLineControl } from '@k9-sak-web/tidslinje';
 
 import styles from './tilbakekrevingTimeline.module.css';
 

@@ -1,5 +1,5 @@
-import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import NavFieldGroup from '@fpsak-frontend/form/src/NavFieldGroup';
+import addCircleIcon from '@k9-sak-web/assets/images/add-circle.svg';
+import NavFieldGroup from '@k9-sak-web/form/src/NavFieldGroup';
 import { Detail, HGrid } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';

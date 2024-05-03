@@ -1,5 +1,5 @@
 /* eslint-disable react/no-danger, @typescript-eslint/no-this-alias */
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import { Cancel } from '@navikt/ds-icons';
 import { Alert, Button, HGrid, Heading, Modal } from '@navikt/ds-react';
 import React, { useCallback, useEffect, useState } from 'react';

@@ -1,4 +1,4 @@
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntlAndReduxForm } from '@k9-sak-web/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';

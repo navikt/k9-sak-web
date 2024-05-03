@@ -1,10 +1,10 @@
+import { behandlingForm } from '@k9-sak-web/form/src/behandlingForm';
 import React from 'react';
 import { connect } from 'react-redux';
-import { FieldArray, InjectedFormProps, ConfigProps } from 'redux-form';
-import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
+import { ConfigProps, FieldArray, InjectedFormProps } from 'redux-form';
 import Overføring, { Overføringsretning, Overføringstype } from '../types/Overføring';
-import { overføringerFormName } from './formNames';
 import Overføringsrader from './Overføringsrader';
+import { overføringerFormName } from './formNames';
 
 interface OverføringsraderFormImplProps {
   type: Overføringstype;

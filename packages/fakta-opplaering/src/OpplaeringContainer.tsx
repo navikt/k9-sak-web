@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import TabsPure from 'nav-frontend-tabs';
 import React, { useContext, useState } from 'react';
 
-import { NestedIntlProvider } from '@fpsak-frontend/shared-components';
+import { NestedIntlProvider } from '@k9-sak-web/shared-components';
 import Tabs from './Tabs';
 import GjennomgaaOpplaeringOversikt from './gjennomgaaOpplaering/GjennomgaaOpplaeringOversikt';
 import messages from './i18n/nb_NO.json';

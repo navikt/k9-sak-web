@@ -1,17 +1,17 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { KodeverkMedNavn, Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { LoadingPanel } from '@k9-sak-web/shared-components';
+import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import TilbakekrevingPaneler from './components/TilbakekrevingPaneler';
-import FetchedData from './types/fetchedDataTsType';
 import {
-  restApiTilbakekrevingHooks,
-  requestTilbakekrevingApi,
   TilbakekrevingBehandlingApiKeys,
+  requestTilbakekrevingApi,
+  restApiTilbakekrevingHooks,
 } from './data/tilbakekrevingBehandlingApi';
+import FetchedData from './types/fetchedDataTsType';
 
 const tilbakekrevingData = [
   { key: TilbakekrevingBehandlingApiKeys.AKSJONSPUNKTER },

@@ -1,22 +1,22 @@
 import React from 'react';
 
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntlAndReduxForm } from '@k9-sak-web/utils-test/test-utils';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import behandlingStatuser from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
 import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import BehandlingResultatType from '@k9-sak-web/kodeverk/src/behandlingResultatType';
+import behandlingStatuser from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { intlWithMessages } from '@k9-sak-web/utils-test/intl-test-helper';
 
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import { TilgjengeligeVedtaksbrev, TilgjengeligeVedtaksbrevMedMaler } from '@fpsak-frontend/utils/src/formidlingUtils';
+import dokumentMalType from '@k9-sak-web/kodeverk/src/dokumentMalType';
+import vedtaksbrevtype from '@k9-sak-web/kodeverk/src/vedtaksbrevtype';
 import { Aksjonspunkt, Personopplysninger } from '@k9-sak-web/types';
+import { TilgjengeligeVedtaksbrev, TilgjengeligeVedtaksbrevMedMaler } from '@k9-sak-web/utils/src/formidlingUtils';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakForm } from './VedtakForm';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';

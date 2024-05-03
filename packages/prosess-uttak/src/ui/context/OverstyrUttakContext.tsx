@@ -1,8 +1,8 @@
 import dayjs from 'dayjs';
 import React, { createContext } from 'react';
 
-import { httpUtils } from '@fpsak-frontend/utils';
 import { arbeidstypeTilVisning } from '@k9-sak-web/prosess-uttak/src/constants/Arbeidstype';
+import { httpUtils } from '@k9-sak-web/utils';
 
 import { Arbeidsforhold, OverstyrbareAktiviteterResponse, OverstyringUttak, OverstyrtUttakResponse } from '../../types';
 import ContainerContext from './ContainerContext';

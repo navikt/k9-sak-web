@@ -1,29 +1,29 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
-import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
-import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { LoadingPanel, usePrevious } from '@k9-sak-web/shared-components';
 import {
+  ArbeidsgiverOpplysningerWrapper,
   Behandling,
-  KodeverkMedNavn,
-  FeatureToggles,
+  Dokument,
   Fagsak,
   FagsakPerson,
-  ArbeidsgiverOpplysningerWrapper,
-  Dokument,
+  FeatureToggles,
+  KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
-import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 
-import {
-  restApiPleiepengerSluttfaseHooks,
-  requestPleiepengerSluttfaseApi,
-  PleiepengerSluttfaseBehandlingApiKeys,
-} from './data/pleiepengerSluttfaseBehandlingApi';
 import PleiepengerSluttfasePaneler from './components/PleiepengerSluttfasePaneler';
+import {
+  PleiepengerSluttfaseBehandlingApiKeys,
+  requestPleiepengerSluttfaseApi,
+  restApiPleiepengerSluttfaseHooks,
+} from './data/pleiepengerSluttfaseBehandlingApi';
 import FetchedData from './types/fetchedDataTsType';
 
 const pleiepengerData = [

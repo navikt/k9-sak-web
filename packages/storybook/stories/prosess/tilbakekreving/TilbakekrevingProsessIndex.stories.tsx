@@ -1,18 +1,18 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import { boolean, object, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
-import vilkarResultat from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/vilkarResultat';
-import sarligGrunn from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/sarligGrunn';
-import aktsomhet from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/aktsomhet';
-import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import TilbakekrevingProsessIndex from '@fpsak-frontend/prosess-tilbakekreving';
+import aksjonspunktCodesTilbakekreving from '@k9-sak-web/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import foreldelseVurderingType from '@k9-sak-web/kodeverk/src/foreldelseVurderingType';
+import NavBrukerKjonn from '@k9-sak-web/kodeverk/src/navBrukerKjonn';
+import tilbakekrevingKodeverkTyper from '@k9-sak-web/kodeverk/src/tilbakekrevingKodeverkTyper';
+import TilbakekrevingProsessIndex from '@k9-sak-web/prosess-tilbakekreving';
+import aktsomhet from '@k9-sak-web/prosess-tilbakekreving/src/kodeverk/aktsomhet';
+import sarligGrunn from '@k9-sak-web/prosess-tilbakekreving/src/kodeverk/sarligGrunn';
+import vilkarResultat from '@k9-sak-web/prosess-tilbakekreving/src/kodeverk/vilkarResultat';
+import DetaljerteFeilutbetalingsperioder from '@k9-sak-web/prosess-tilbakekreving/src/types/detaljerteFeilutbetalingsperioderTsType';
+import FeilutbetalingPerioderWrapper from '@k9-sak-web/prosess-tilbakekreving/src/types/feilutbetalingPerioderTsType';
 import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
-import DetaljerteFeilutbetalingsperioder from '@fpsak-frontend/prosess-tilbakekreving/src/types/detaljerteFeilutbetalingsperioderTsType';
-import FeilutbetalingPerioderWrapper from '@fpsak-frontend/prosess-tilbakekreving/src/types/feilutbetalingPerioderTsType';
 
 import withReduxProvider from '../../../decorators/withRedux';
 

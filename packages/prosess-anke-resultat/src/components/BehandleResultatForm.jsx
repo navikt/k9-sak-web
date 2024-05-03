@@ -4,12 +4,12 @@ import {
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
-} from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
-import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
-import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+} from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import ankeVurdering from '@k9-sak-web/kodeverk/src/ankeVurdering';
+import ankeVurderingOmgjoer from '@k9-sak-web/kodeverk/src/ankeVurderingOmgjoer';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { FadingPanel, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { Detail, Heading } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';

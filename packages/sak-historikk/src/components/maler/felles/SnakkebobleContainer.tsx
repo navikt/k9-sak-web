@@ -1,6 +1,6 @@
-import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
+import HistorikkAktor from '@k9-sak-web/kodeverk/src/historikkAktor';
+import { useSaksbehandlerOppslag } from '@k9-sak-web/shared-components';
 import { Kodeverk } from '@k9-sak-web/types';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import {
   CogIcon,
   PersonGavelIcon,

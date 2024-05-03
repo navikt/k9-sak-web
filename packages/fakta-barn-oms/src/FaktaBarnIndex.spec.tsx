@@ -1,6 +1,6 @@
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import FagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
+import { renderWithIntl } from '@k9-sak-web/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../i18n/nb_NO.json';

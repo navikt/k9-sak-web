@@ -1,12 +1,12 @@
 {
-  "name": "@fpsak-frontend/utils",
+  "name": "@k9-sak-web/utils",
   "version": "1.0.0",
   "module": "index.ts",
   "main": "index.ts",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@fpsak-frontend/kodeverk": "1.0.0",
+    "@k9-sak-web/kodeverk": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ft-types": "2.4.3",

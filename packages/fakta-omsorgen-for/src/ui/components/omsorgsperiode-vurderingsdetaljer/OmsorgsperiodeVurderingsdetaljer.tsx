@@ -1,7 +1,7 @@
-import { Box, Margin, DetailView, LabelledContent, LinkButton, AssessedBy } from '@navikt/ft-plattform-komponenter';
+import { useSaksbehandlerOppslag } from '@k9-sak-web/shared-components';
+import { AssessedBy, Box, DetailView, LabelledContent, LinkButton, Margin } from '@navikt/ft-plattform-komponenter';
 import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import Relasjon from '../../../types/Relasjon';
 import Ytelsestype from '../../../types/Ytelsestype';

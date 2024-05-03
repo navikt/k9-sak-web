@@ -1,9 +1,9 @@
-import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
-import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { FaktaGruppe, PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { required } from '@fpsak-frontend/utils';
+import BostedSokerFaktaIndex from '@k9-sak-web/fakta-bosted-soker';
+import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import { FaktaGruppe, PeriodLabel, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { required } from '@k9-sak-web/utils';
 import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';

@@ -1,5 +1,5 @@
-import { TextAreaField } from '@fpsak-frontend/form';
-import { decodeHtmlEntity, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { TextAreaField } from '@k9-sak-web/form';
+import { decodeHtmlEntity, hasValidText, maxLength, minLength, required } from '@k9-sak-web/utils';
 import React from 'react';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 

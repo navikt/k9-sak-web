@@ -1,11 +1,11 @@
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
-import BostedSokerView from './components/BostedSokerView';
 import messages from '../i18n/nb_NO.json';
+import BostedSokerView from './components/BostedSokerView';
 
 const cache = createIntlCache();
 

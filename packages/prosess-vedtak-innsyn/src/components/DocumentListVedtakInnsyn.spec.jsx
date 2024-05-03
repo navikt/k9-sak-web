@@ -1,5 +1,5 @@
-import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import kommunikasjonsretning from '@k9-sak-web/kodeverk/src/kommunikasjonsretning';
+import { renderWithIntl } from '@k9-sak-web/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 
 import React from 'react';

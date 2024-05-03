@@ -1,4 +1,4 @@
-import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
+import behandleImageURL from '@k9-sak-web/assets/images/advarsel.svg';
 import {
   RadioGroupField,
   RadioOption,
@@ -7,13 +7,13 @@ import {
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
-} from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+} from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { Aksjonspunkt, BeregningsresultatFp, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
+import { hasValidText, maxLength, minLength, required } from '@k9-sak-web/utils';
 import { HGrid, Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';

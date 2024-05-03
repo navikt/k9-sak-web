@@ -1,4 +1,4 @@
-import { initializeDate } from '@fpsak-frontend/utils';
+import { initializeDate } from '@k9-sak-web/utils';
 import { Dokument } from '../types/Dokument';
 import {
   StrukturerDokumentFormFieldName as FieldName,

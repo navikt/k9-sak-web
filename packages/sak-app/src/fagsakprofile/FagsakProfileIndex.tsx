@@ -1,8 +1,8 @@
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
-import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
+import FagsakProfilSakIndex from '@k9-sak-web/sak-fagsak-profil';
+import { LoadingPanel, requireProps } from '@k9-sak-web/shared-components';
 import {
   Aksjonspunkt,
   ArbeidsgiverOpplysningerPerId,

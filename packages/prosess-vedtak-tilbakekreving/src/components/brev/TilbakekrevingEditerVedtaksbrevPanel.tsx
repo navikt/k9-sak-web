@@ -1,5 +1,5 @@
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
+import { decodeHtmlEntity } from '@k9-sak-web/utils';
 import { BodyShort, ExpansionCard, Heading, Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

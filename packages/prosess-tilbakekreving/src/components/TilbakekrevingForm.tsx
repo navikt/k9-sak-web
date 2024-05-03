@@ -6,14 +6,14 @@ import {
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
-} from '@fpsak-frontend/form';
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
-import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
-import { AksjonspunktHelpText, FadingPanel, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { omit } from '@fpsak-frontend/utils';
+} from '@k9-sak-web/form';
+import aksjonspunktCodesTilbakekreving from '@k9-sak-web/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import foreldelseVurderingType from '@k9-sak-web/kodeverk/src/foreldelseVurderingType';
+import tilbakekrevingKodeverkTyper from '@k9-sak-web/kodeverk/src/tilbakekrevingKodeverkTyper';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
+import { AksjonspunktHelpText, FadingPanel, FaktaGruppe, VerticalSpacer } from '@k9-sak-web/shared-components';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
+import { omit } from '@k9-sak-web/utils';
 import { Alert, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import React, { Component } from 'react';

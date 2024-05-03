@@ -1,4 +1,4 @@
-import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
+import { FormStateType } from '@k9-sak-web/form/src/types/FormStateType';
 import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
 
 export interface AleneOmOmsorgenProps {

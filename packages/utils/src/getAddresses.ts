@@ -1,5 +1,5 @@
-import OpplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
+import landkoder from '@k9-sak-web/kodeverk/src/landkoder';
+import OpplysningAdresseType from '@k9-sak-web/kodeverk/src/opplysningAdresseType';
 import { PersonopplysningAdresse } from '@k9-sak-web/types';
 
 // TODO (TOR) Flytt ut av util-folder (lag selector)

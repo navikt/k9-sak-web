@@ -1,7 +1,7 @@
-import { prettifyDateString } from '@fpsak-frontend/utils';
-import { RadioGroupPanelRHF } from '@fpsak-frontend/form';
-import { Box, Margin } from '@navikt/ft-plattform-komponenter';
+import { RadioGroupPanelRHF } from '@k9-sak-web/form';
+import { prettifyDateString } from '@k9-sak-web/utils';
 import { Link } from '@navikt/ds-react';
+import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
 import LinkRel from '../../../constants/LinkRel';

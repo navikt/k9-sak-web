@@ -1,6 +1,5 @@
-import { behandlingForm } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { addDaysToDate, omit } from '@fpsak-frontend/utils';
+import { behandlingForm } from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
 import {
   Aksjonspunkt,
   ArbeidsgiverOpplysningerPerId,
@@ -11,6 +10,7 @@ import {
   UtlandDokStatus,
 } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
+import { addDaysToDate, omit } from '@k9-sak-web/utils';
 import moment from 'moment';
 import React from 'react';
 import { connect } from 'react-redux';

@@ -1,4 +1,4 @@
-import { Period } from '@fpsak-frontend/utils';
+import { Period } from '@k9-sak-web/utils';
 import Kilde from './Kilde';
 import { Vurdering } from './TilsynResponse';
 import Vurderingsresultat from './Vurderingsresultat';

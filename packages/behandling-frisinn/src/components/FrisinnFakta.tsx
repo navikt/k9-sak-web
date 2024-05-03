@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import ac from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
+import { LoadingPanel } from '@k9-sak-web/shared-components';
 import {
-  KodeverkMedNavn,
+  ArbeidsgiverOpplysningerPerId,
   Behandling,
   Fagsak,
   FagsakPerson,
-  ArbeidsgiverOpplysningerPerId,
   FeatureToggles,
+  KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
-import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
-import { restApiFrisinnHooks, FrisinnBehandlingApiKeys } from '../data/frisinnBehandlingApi';
+import { FrisinnBehandlingApiKeys, restApiFrisinnHooks } from '../data/frisinnBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaFrisinnPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 

@@ -1,5 +1,5 @@
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import { Image } from '@fpsak-frontend/shared-components';
+import innvilgetImageUrl from '@k9-sak-web/assets/images/innvilget_valgt.svg';
+import { Image } from '@k9-sak-web/shared-components';
 import { Button, HGrid, Label, Modal } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';

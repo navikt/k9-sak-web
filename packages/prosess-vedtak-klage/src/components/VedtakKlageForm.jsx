@@ -1,10 +1,10 @@
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { behandlingForm, behandlingFormValueSelector } from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import klageVurderingCodes from '@k9-sak-web/kodeverk/src/klageVurdering';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { getKodeverknavnFn } from '@k9-sak-web/utils';
 import { BodyShort, Detail, Heading } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import dokumentMalType from '@k9-sak-web/kodeverk/src/dokumentMalType';
 import VedtakKlageKaSubmitPanel from './VedtakKlageKaSubmitPanel';
 import VedtakKlageNkkSubmitPanel from './VedtakKlageNkkSubmitPanel';
 import VedtakKlageSubmitPanel from './VedtakKlageSubmitPanel';

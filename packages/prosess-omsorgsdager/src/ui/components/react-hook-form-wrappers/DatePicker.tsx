@@ -1,4 +1,4 @@
-import { PureDatepicker } from '@fpsak-frontend/form';
+import { PureDatepicker } from '@k9-sak-web/form';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 

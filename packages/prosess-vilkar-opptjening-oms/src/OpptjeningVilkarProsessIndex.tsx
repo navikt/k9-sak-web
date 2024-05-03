@@ -1,9 +1,9 @@
-import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Image } from '@fpsak-frontend/shared-components';
-import { dateFormat } from '@fpsak-frontend/utils';
-import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
+import advarselIcon from '@k9-sak-web/assets/images/advarsel.svg';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
+import { Image } from '@k9-sak-web/shared-components';
 import { Aksjonspunkt, Fagsak, Opptjening, OpptjeningBehandling, SubmitCallback, Vilkar } from '@k9-sak-web/types';
+import { dateFormat } from '@k9-sak-web/utils';
+import hentAktivePerioderFraVilkar from '@k9-sak-web/utils/src/hentAktivePerioderFraVilkar';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import isEqual from 'lodash/isEqual';

@@ -1,4 +1,3 @@
-import { httpErrorHandler } from '@fpsak-frontend/utils';
 import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
 import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
 import { apiPaths } from '@k9-sak-web/rest-api';
@@ -12,6 +11,7 @@ import {
   NotatResponse,
   Personopplysninger,
 } from '@k9-sak-web/types';
+import { httpErrorHandler } from '@k9-sak-web/utils';
 import {
   ArrowUndoIcon,
   ClockDashedIcon,

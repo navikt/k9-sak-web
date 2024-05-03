@@ -1,5 +1,5 @@
-import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
-import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
+import questionHoverUrl from '@k9-sak-web/assets/images/question_hover.svg';
+import questionNormalUrl from '@k9-sak-web/assets/images/question_normal.svg';
 import {
   RadioGroupField,
   RadioOption,
@@ -7,13 +7,13 @@ import {
   behandlingForm,
   behandlingFormValueSelector,
   getBehandlingFormPrefix,
-} from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+} from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import dokumentMalType from '@k9-sak-web/kodeverk/src/dokumentMalType';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import tilbakekrevingVidereBehandling from '@k9-sak-web/kodeverk/src/tilbakekrevingVidereBehandling';
+import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required } from '@k9-sak-web/utils';
 import { BodyShort, Button, Detail, HGrid, Heading, Label } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';

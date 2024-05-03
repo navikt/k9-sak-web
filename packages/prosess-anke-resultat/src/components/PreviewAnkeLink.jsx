@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import ankeVurderingType from '@fpsak-frontend/kodeverk/src/ankeVurdering';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import ankeVurderingType from '@k9-sak-web/kodeverk/src/ankeVurdering';
+import dokumentMalType from '@k9-sak-web/kodeverk/src/dokumentMalType';
 
 import styles from './previewAnkeLink.module.css';
 

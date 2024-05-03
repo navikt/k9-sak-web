@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@k9-sak-web/utils';
 import { BeregningFaktaIndex } from '@navikt/ft-fakta-beregning-redesign';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
 

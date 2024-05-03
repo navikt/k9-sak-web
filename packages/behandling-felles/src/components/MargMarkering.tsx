@@ -1,8 +1,8 @@
 import classnames from 'classnames/bind';
 import React, { useMemo } from 'react';
 
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { isAksjonspunktOpen } from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import BehandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
 import { Aksjonspunkt, Kodeverk } from '@k9-sak-web/types';
 
 import styles from './margMarkering.module.css';

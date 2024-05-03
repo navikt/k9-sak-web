@@ -1,13 +1,13 @@
 import React from 'react';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
-import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/test-utils';
 import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import BehandlingResultatType from '@k9-sak-web/kodeverk/src/behandlingResultatType';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { intlMock } from '@k9-sak-web/utils-test/intl-test-helper';
+import { renderWithIntlAndReduxForm, screen } from '@k9-sak-web/utils-test/test-utils';
 
 import VedtakForm from '../VedtakForm';
 

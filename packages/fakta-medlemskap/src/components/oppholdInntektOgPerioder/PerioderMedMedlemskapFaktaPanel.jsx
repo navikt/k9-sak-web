@@ -1,7 +1,7 @@
-import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
 import {
   DateLabel,
   FaktaGruppe,
@@ -10,8 +10,8 @@ import {
   FlexRow,
   PeriodLabel,
   VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+} from '@k9-sak-web/shared-components';
+import { DDMMYYYY_DATE_FORMAT, required } from '@k9-sak-web/utils';
 import { BodyShort, Table, VStack } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';

@@ -1,13 +1,13 @@
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { VerticalSpacer, ÅpneSakINyttVinduKnapp } from '@fpsak-frontend/shared-components';
-import { safeJSONParse } from '@fpsak-frontend/utils';
+import dokumentMalType from '@k9-sak-web/kodeverk/src/dokumentMalType';
+import { VerticalSpacer, ÅpneSakINyttVinduKnapp } from '@k9-sak-web/shared-components';
+import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import { safeJSONParse } from '@k9-sak-web/utils';
 import {
   Brevmottaker,
   TilgjengeligeVedtaksbrev,
   TilgjengeligeVedtaksbrevMedMaler,
   VedtaksbrevMal,
-} from '@fpsak-frontend/utils/src/formidlingUtils';
-import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+} from '@k9-sak-web/utils/src/formidlingUtils';
 import { Edit } from '@navikt/ds-icons';
 import { Alert, Button, Heading, Modal } from '@navikt/ds-react';
 import React, { useEffect, useRef, useState } from 'react';

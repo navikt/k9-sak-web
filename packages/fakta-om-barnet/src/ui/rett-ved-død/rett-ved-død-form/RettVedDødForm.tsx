@@ -1,4 +1,4 @@
-import { RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
+import { RadioGroupPanelRHF, TextAreaRHF } from '@k9-sak-web/form';
 import { Form } from '@navikt/ft-plattform-komponenter';
 import React, { useContext } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';

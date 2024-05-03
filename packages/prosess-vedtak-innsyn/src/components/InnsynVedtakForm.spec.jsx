@@ -1,9 +1,9 @@
-import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import innsynResultatType from '@k9-sak-web/kodeverk/src/innsynResultatType';
+import { reduxFormPropsMock } from '@k9-sak-web/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@k9-sak-web/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 
-import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
+import { intlWithMessages } from '@k9-sak-web/utils-test/intl-test-helper';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import { InnsynVedtakFormImpl } from './InnsynVedtakForm';

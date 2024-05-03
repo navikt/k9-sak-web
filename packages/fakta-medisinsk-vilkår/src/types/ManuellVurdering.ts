@@ -1,6 +1,6 @@
-import { Period } from '@fpsak-frontend/utils';
-import Vurderingsresultat from './Vurderingsresultat';
+import { Period } from '@k9-sak-web/utils';
 import Link from './Link';
+import Vurderingsresultat from './Vurderingsresultat';
 
 interface ManuellVurdering {
   id: string;

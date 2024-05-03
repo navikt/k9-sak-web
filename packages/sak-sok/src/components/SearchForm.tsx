@@ -4,9 +4,9 @@ import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl'
 import { connect } from 'react-redux';
 import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
 
-import { InputField } from '@fpsak-frontend/form';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidSaksnummerOrFodselsnummerFormat } from '@fpsak-frontend/utils';
+import { InputField } from '@k9-sak-web/form';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
+import { hasValidSaksnummerOrFodselsnummerFormat } from '@k9-sak-web/utils';
 
 import styles from './searchForm.module.css';
 

@@ -1,4 +1,4 @@
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { formatCurrencyNoKr } from '@k9-sak-web/utils';
 import { BodyShort, Table } from '@navikt/ds-react';
 import React from 'react';
 import { useIntl } from 'react-intl';

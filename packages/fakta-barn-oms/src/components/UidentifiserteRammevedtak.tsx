@@ -1,6 +1,6 @@
-import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
-import { joinNonNullStrings } from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@k9-sak-web/shared-components/index';
 import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
+import { joinNonNullStrings } from '@k9-sak-web/utils';
 import { Alert } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';

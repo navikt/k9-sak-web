@@ -1,11 +1,11 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import MenyNyBehandlingIndex from '@fpsak-frontend/sak-meny-ny-behandling';
+import behandlingArsakType from '@k9-sak-web/kodeverk/src/behandlingArsakType';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import MenyNyBehandlingIndex from '@k9-sak-web/sak-meny-ny-behandling';
 
 import withReduxProvider from '../../decorators/withRedux';
 

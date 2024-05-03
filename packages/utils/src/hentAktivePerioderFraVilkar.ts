@@ -1,5 +1,5 @@
 import { Vilkar } from '@k9-sak-web/types';
-import { dateStringSorter } from '@fpsak-frontend/utils';
+import { dateStringSorter } from '@k9-sak-web/utils';
 
 const hentAktivePerioderFraVilkar = (vilkar: Vilkar[], visAllePerioder: boolean) => {
   const [activeVilkår] = vilkar;

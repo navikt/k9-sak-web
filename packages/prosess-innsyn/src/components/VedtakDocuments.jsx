@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { DateLabel, VerticalSpacer } from '@k9-sak-web/shared-components';
 
 /* TODO Ta i bruk fpsakApi - Flytt url ut av komponent */
 const DOCUMENT_SERVER_URL = '/k9/sak/api/vedtak/hent-vedtaksdokument';

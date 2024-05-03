@@ -1,6 +1,6 @@
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import AksjonspunktAvklarArbeidsforholdText from '@fpsak-frontend/shared-components/src/AksjonspunktAvklarArbeidsforholdText';
+import { behandlingForm, behandlingFormValueSelector } from '@k9-sak-web/form';
+import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@k9-sak-web/shared-components';
+import AksjonspunktAvklarArbeidsforholdText from '@k9-sak-web/shared-components/src/AksjonspunktAvklarArbeidsforholdText';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { Button } from '@navikt/ds-react';
 import React from 'react';

@@ -1,4 +1,4 @@
-import { isRequiredMessage } from '@fpsak-frontend/utils';
+import { isRequiredMessage } from '@k9-sak-web/utils';
 import {
   getBehandlingFormPrefix,
   getBehandlingFormRegisteredFields,

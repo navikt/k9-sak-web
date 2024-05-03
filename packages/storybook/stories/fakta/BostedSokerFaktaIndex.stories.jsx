@@ -1,12 +1,12 @@
+import { object, withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
-import { withKnobs, object } from '@storybook/addon-knobs';
 
-import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
-import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import region from '@fpsak-frontend/kodeverk/src/region';
-import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
+import BostedSokerFaktaIndex from '@k9-sak-web/fakta-bosted-soker';
+import landkoder from '@k9-sak-web/kodeverk/src/landkoder';
+import opplysningAdresseType from '@k9-sak-web/kodeverk/src/opplysningAdresseType';
+import personstatusType from '@k9-sak-web/kodeverk/src/personstatusType';
+import region from '@k9-sak-web/kodeverk/src/region';
+import sivilstandType from '@k9-sak-web/kodeverk/src/sivilstandType';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
 

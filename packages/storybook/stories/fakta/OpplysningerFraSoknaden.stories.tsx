@@ -1,7 +1,7 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
+import React from 'react';
 
-import OppgittOpptjeningRevurdering from '@fpsak-frontend/fakta-opplysninger-fra-soknaden';
+import OppgittOpptjeningRevurdering from '@k9-sak-web/fakta-opplysninger-fra-soknaden';
 import { Behandling, OpplysningerFraSøknaden } from '@k9-sak-web/types';
 
 import withReduxProvider from '../../decorators/withRedux';

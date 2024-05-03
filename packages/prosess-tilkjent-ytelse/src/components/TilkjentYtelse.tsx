@@ -1,13 +1,13 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { TimeLineControl, Timeline } from '@fpsak-frontend/tidslinje';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
+import { TimeLineControl, Timeline } from '@k9-sak-web/tidslinje';
+import { ArbeidsgiverOpplysningerPerId, BeregningsresultatPeriode, KodeverkMedNavn } from '@k9-sak-web/types';
 import {
   DDMMYY_DATE_FORMAT,
   ISO_DATE_FORMAT,
   calcDaysAndWeeksWithWeekends,
   getKodeverknavnFn,
-} from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, BeregningsresultatPeriode, KodeverkMedNavn } from '@k9-sak-web/types';
+} from '@k9-sak-web/utils';
 import moment from 'moment';
 import React, { Component, RefObject } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';

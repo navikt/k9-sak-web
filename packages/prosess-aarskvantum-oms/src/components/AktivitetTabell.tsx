@@ -1,8 +1,7 @@
-import hide from '@fpsak-frontend/assets/images/hide.svg';
-import show from '@fpsak-frontend/assets/images/show.svg';
-import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
-import { Image } from '@fpsak-frontend/shared-components/index';
-import { calcDays, convertHoursToDays, formatereLukketPeriode, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
+import hide from '@k9-sak-web/assets/images/hide.svg';
+import show from '@k9-sak-web/assets/images/show.svg';
+import stjerneImg from '@k9-sak-web/assets/images/stjerne.svg';
+import { Image } from '@k9-sak-web/shared-components/index';
 import {
   ArbeidsforholdV2,
   ArbeidsgiverOpplysningerPerId,
@@ -13,6 +12,7 @@ import {
   VilkårEnum,
 } from '@k9-sak-web/types';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
+import { calcDays, convertHoursToDays, formatereLukketPeriode, utledArbeidsforholdNavn } from '@k9-sak-web/utils';
 import { BodyShort, Box, Label, Table } from '@navikt/ds-react';
 import classNames from 'classnames';
 import NavFrontendChevron from 'nav-frontend-chevron';

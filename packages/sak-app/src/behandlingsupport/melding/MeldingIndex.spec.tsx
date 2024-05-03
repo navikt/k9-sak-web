@@ -6,9 +6,9 @@ import { MemoryRouter } from 'react-router-dom';
 import { combineReducers, createStore } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import BehandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import dokumentMalType from '@k9-sak-web/kodeverk/src/dokumentMalType';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
 import type { BehandlingAppKontekst, Brevmaler, Fagsak, Mottaker } from '@k9-sak-web/types';
 
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';

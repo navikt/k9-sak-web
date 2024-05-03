@@ -1,4 +1,4 @@
-import { Image } from '@fpsak-frontend/shared-components';
+import { Image } from '@k9-sak-web/shared-components';
 import React from 'react';
 import TimeLineButton from './TimeLineButton';
 import styles from './legendBox.module.css';

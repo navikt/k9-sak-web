@@ -1,25 +1,25 @@
-import React, { useCallback, useMemo } from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { Location } from 'history';
+import React, { useCallback, useMemo } from 'react';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodesTilbakekreving from '@k9-sak-web/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import BehandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import BehandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import vurderPaNyttArsakType from '@k9-sak-web/kodeverk/src/vurderPaNyttArsakType';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import {
   BehandlingAppKontekst,
-  KodeverkMedNavn,
   KlageVurdering,
+  KodeverkMedNavn,
   TotrinnskontrollSkjermlenkeContext,
 } from '@k9-sak-web/types';
 
-import TotrinnskontrollBeslutterForm, { FormValues } from './components/TotrinnskontrollBeslutterForm';
-import { AksjonspunktGodkjenningData } from './components/AksjonspunktGodkjenningFieldArray';
-import TotrinnskontrollSaksbehandlerPanel from './components/TotrinnskontrollSaksbehandlerPanel';
 import messages from '../i18n/nb_NO.json';
+import { AksjonspunktGodkjenningData } from './components/AksjonspunktGodkjenningFieldArray';
+import TotrinnskontrollBeslutterForm, { FormValues } from './components/TotrinnskontrollBeslutterForm';
+import TotrinnskontrollSaksbehandlerPanel from './components/TotrinnskontrollSaksbehandlerPanel';
 
 const cache = createIntlCache();
 

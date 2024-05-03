@@ -1,4 +1,4 @@
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import faktaOmBeregningTilfelle from '@k9-sak-web/kodeverk/src/faktaOmBeregningTilfelle';
 
 const vurderFaktaOmBeregningTotrinnText = {
   [faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD]:

@@ -1,17 +1,17 @@
 import { screen } from '@testing-library/react';
 import React from 'react';
 
-import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import klageBehandlingArsakType from '@k9-sak-web/kodeverk/src/behandlingArsakType';
+import behandlingResultatType from '@k9-sak-web/kodeverk/src/behandlingResultatType';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import VedtakProsessIndex from '@k9-sak-web/prosess-vedtak';
+import { renderWithIntl } from '@k9-sak-web/utils-test/test-utils';
 
 const behandling = {
   id: 1,

@@ -1,4 +1,4 @@
-import innvilgetIkonUrl from '@fpsak-frontend/assets/images/innvilget.svg';
+import innvilgetIkonUrl from '@k9-sak-web/assets/images/innvilget.svg';
 import { Box } from '@navikt/ds-react';
 import React from 'react';
 import TittelMedDivider from './TittelMedDivider';

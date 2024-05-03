@@ -1,7 +1,7 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import FagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
 import { Behandling } from '@k9-sak-web/types';
 import {
   AksjonspunktInformasjon,

@@ -1,5 +1,5 @@
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/utils';
 import moment from 'moment';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 export const formatDate = dato => moment(dato).format(DDMMYYYY_DATE_FORMAT);
 

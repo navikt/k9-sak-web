@@ -1,6 +1,6 @@
+import vedtaksbrevtype from '@k9-sak-web/kodeverk/src/vedtaksbrevtype';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
-import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import { finnesTilgjengeligeVedtaksbrev, kanHaManueltFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { finnesTilgjengeligeVedtaksbrev, kanHaManueltFritekstbrev } from '@k9-sak-web/utils/src/formidlingUtils';
 
 function lagDokumentdata(aksjonspunktModell) {
   if (

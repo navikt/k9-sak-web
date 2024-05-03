@@ -1,9 +1,9 @@
-import { behandlingForm } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import { omit } from '@fpsak-frontend/utils';
+import { behandlingForm } from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { AksjonspunktHelpText } from '@k9-sak-web/shared-components';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
+import { omit } from '@k9-sak-web/utils';
 import { Box } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';

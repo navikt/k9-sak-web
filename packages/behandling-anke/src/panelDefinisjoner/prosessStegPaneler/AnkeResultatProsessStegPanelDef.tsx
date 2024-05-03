@@ -1,9 +1,9 @@
 import React from 'react';
 
-import AnkeResultatProsessIndex from '@fpsak-frontend/prosess-anke-resultat';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import AnkeResultatProsessIndex from '@k9-sak-web/prosess-anke-resultat';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <AnkeResultatProsessIndex {...props} />;

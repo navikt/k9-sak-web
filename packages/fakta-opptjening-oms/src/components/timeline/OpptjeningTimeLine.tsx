@@ -1,7 +1,7 @@
-import { Timeline } from '@fpsak-frontend/tidslinje';
-import { DDMMYYYY_DATE_FORMAT, isEqual } from '@fpsak-frontend/utils';
+import { Timeline } from '@k9-sak-web/tidslinje';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
+import { DDMMYYYY_DATE_FORMAT, isEqual } from '@k9-sak-web/utils';
 import moment from 'moment';
 import hash from 'object-hash';
 import React, { Component } from 'react';

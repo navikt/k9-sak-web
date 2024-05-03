@@ -2,13 +2,13 @@ import moment from 'moment';
 import React, { Component, MouseEvent, RefObject } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
-import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
-import urlMann from '@fpsak-frontend/assets/images/mann.svg';
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { Image } from '@fpsak-frontend/shared-components';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import urlKvinne from '@k9-sak-web/assets/images/kvinne.svg';
+import urlMann from '@k9-sak-web/assets/images/mann.svg';
+import navBrukerKjonn from '@k9-sak-web/kodeverk/src/navBrukerKjonn';
+import { Image } from '@k9-sak-web/shared-components';
+import { ISO_DATE_FORMAT } from '@k9-sak-web/utils';
 
-import { Timeline, TimeLineControl } from '@fpsak-frontend/tidslinje';
+import { Timeline, TimeLineControl } from '@k9-sak-web/tidslinje';
 
 import { HGrid } from '@navikt/ds-react';
 import TidslinjePeriode from '../../types/tidslinjePeriodeTsType';

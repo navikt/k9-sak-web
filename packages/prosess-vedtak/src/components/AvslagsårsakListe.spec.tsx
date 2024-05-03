@@ -1,4 +1,4 @@
-import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntlAndReduxForm, screen } from '@k9-sak-web/utils-test/test-utils';
 import React from 'react';
 import AvslagsårsakListe from './AvslagsårsakListe';
 

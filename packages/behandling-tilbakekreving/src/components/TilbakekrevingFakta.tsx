@@ -1,9 +1,9 @@
-import React from 'react';
-import { SideMenuWrapper, faktaHooks, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { KodeverkMedNavn, Behandling, Fagsak } from '@k9-sak-web/types';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { faktaHooks, Rettigheter, SideMenuWrapper, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
+import { LoadingPanel } from '@k9-sak-web/shared-components';
+import { Behandling, Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
+import React from 'react';
 
 import { restApiTilbakekrevingHooks, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaTilbakekrevingPanelDefinisjoner';

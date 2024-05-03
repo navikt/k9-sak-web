@@ -1,6 +1,6 @@
-import closedImage from '@fpsak-frontend/assets/images/pil_ned.svg';
-import openImage from '@fpsak-frontend/assets/images/pil_opp.svg';
-import { Image } from '@fpsak-frontend/shared-components';
+import closedImage from '@k9-sak-web/assets/images/pil_ned.svg';
+import openImage from '@k9-sak-web/assets/images/pil_opp.svg';
+import { Image } from '@k9-sak-web/shared-components';
 import { Button } from '@navikt/ds-react';
 import { BoxedListWithSelection, Popover } from '@navikt/ft-plattform-komponenter';
 import React, { useCallback, useEffect, useRef, useState } from 'react';

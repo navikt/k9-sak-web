@@ -1,13 +1,13 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import { boolean, object, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
-import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import behandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import innsynResultatType from '@k9-sak-web/kodeverk/src/innsynResultatType';
+import kommunikasjonsretning from '@k9-sak-web/kodeverk/src/kommunikasjonsretning';
+import VedtakInnsynProsessIndex from '@k9-sak-web/prosess-vedtak-innsyn';
 
 import withReduxProvider from '../../../decorators/withRedux';
 

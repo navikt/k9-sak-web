@@ -4,9 +4,9 @@ import { IntlShape, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import klageBehandlingArsakType from '@k9-sak-web/kodeverk/src/behandlingArsakType';
+import behandlingStatusCode from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';

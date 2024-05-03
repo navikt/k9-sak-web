@@ -1,7 +1,7 @@
-import { useLocation, useParams, Params } from 'react-router-dom';
 import { Location } from 'history';
+import { Params, useLocation, useParams } from 'react-router-dom';
 
-import { parseQueryString } from '@fpsak-frontend/utils';
+import { parseQueryString } from '@k9-sak-web/utils';
 
 const defaultConfig = {
   paramName: '',

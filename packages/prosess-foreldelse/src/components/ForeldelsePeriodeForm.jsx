@@ -1,6 +1,6 @@
-import { RadioGroupField, RadioOption, TextAreaField, behandlingForm } from '@fpsak-frontend/form';
-import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
-import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
+import { RadioGroupField, RadioOption, TextAreaField, behandlingForm } from '@k9-sak-web/form';
+import foreldelseVurderingType from '@k9-sak-web/kodeverk/src/foreldelseVurderingType';
+import tilbakekrevingKodeverkTyper from '@k9-sak-web/kodeverk/src/tilbakekrevingKodeverkTyper';
 import { Button, Detail, HGrid } from '@navikt/ds-react';
 // eslint-disable-next-line import/no-duplicates
 import PropTypes from 'prop-types';
@@ -10,9 +10,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clearFields, formPropTypes } from 'redux-form';
 // eslint-disable-next-line import/no-duplicates
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import { FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { kodeverkObjektPropType } from '@k9-sak-web/prop-types';
+import { FlexColumn, FlexRow, VerticalSpacer } from '@k9-sak-web/shared-components';
+import { hasValidText, maxLength, minLength, required } from '@k9-sak-web/utils';
 import styles from './foreldelsePeriodeForm.module.css';
 import TilbakekrevingTimelineData from './splittePerioder/TilbakekrevingTimelineData';
 

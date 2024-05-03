@@ -1,8 +1,8 @@
-import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import avslagsarsakCodes from '@k9-sak-web/kodeverk/src/avslagsarsakCodes';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
+import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@k9-sak-web/utils';
 import { BodyShort, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';

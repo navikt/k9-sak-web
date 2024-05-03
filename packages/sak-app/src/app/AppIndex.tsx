@@ -2,11 +2,11 @@ import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { parseQueryString } from '@fpsak-frontend/utils';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 import { ForbiddenPage, UnauthorizedPage } from '@k9-sak-web/sak-infosider';
 import { NavAnsatt } from '@k9-sak-web/types';
+import { parseQueryString } from '@k9-sak-web/utils';
 
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import AppConfigResolver from './AppConfigResolver';
@@ -15,7 +15,7 @@ import LanguageProvider from './LanguageProvider';
 import Dekorator from './components/Dekorator';
 import Home from './components/Home';
 
-import '@fpsak-frontend/assets/styles/global.css';
+import '@k9-sak-web/assets/styles/global.css';
 import '@navikt/ft-fakta-beregning-redesign/dist/style.css';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';

@@ -1,5 +1,5 @@
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/utils/src/formats';
 import moment from 'moment';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
 
 const fomDatoBegrensning = søknadsperiodeFom => {
   const march30th = moment('2020-03-30', ISO_DATE_FORMAT);

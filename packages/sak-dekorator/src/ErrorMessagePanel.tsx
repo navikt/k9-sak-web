@@ -1,4 +1,4 @@
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity } from '@k9-sak-web/utils';
 import { Detail, HGrid } from '@navikt/ds-react';
 import Lukknapp from 'nav-frontend-lukknapp';
 import React, { Component } from 'react';

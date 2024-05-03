@@ -1,4 +1,4 @@
-import { prettifyDateString } from '@fpsak-frontend/utils';
+import { prettifyDateString } from '@k9-sak-web/utils';
 import {
   ContentWithTooltip,
   OnePersonIconGray,

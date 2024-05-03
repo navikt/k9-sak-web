@@ -1,9 +1,9 @@
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import fagsakStatus from '@k9-sak-web/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import relasjonsRolleType from '@k9-sak-web/kodeverk/src/relasjonsRolleType';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+import { renderWithIntl } from '@k9-sak-web/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';

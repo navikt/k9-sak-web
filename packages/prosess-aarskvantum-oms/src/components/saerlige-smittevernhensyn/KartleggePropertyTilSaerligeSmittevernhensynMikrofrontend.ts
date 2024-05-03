@@ -1,9 +1,9 @@
-import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { Aksjonspunkt, Behandling, UtfallEnum, Uttaksperiode } from '@k9-sak-web/types';
+import { FormStateType } from '@k9-sak-web/form/src/types/FormStateType';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
 import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
+import { Aksjonspunkt, Behandling, UtfallEnum, Uttaksperiode } from '@k9-sak-web/types';
 import { isAfter, parse } from 'date-fns';
 import Aktivitet from '../../dto/Aktivitet';
 import PeriodeBekreftetStatus from '../../dto/PeriodeBekreftetStatus';

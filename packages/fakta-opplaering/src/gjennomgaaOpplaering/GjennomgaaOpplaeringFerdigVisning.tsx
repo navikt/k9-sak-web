@@ -2,6 +2,7 @@ import {
   FaktaOpplaeringContext,
   FaktaOpplaeringContextTypes,
 } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
+import { useSaksbehandlerOppslag } from '@k9-sak-web/shared-components';
 import { GjennomgaaOpplaeringVurdering, Vurderingsresultat } from '@k9-sak-web/types';
 import { Calender } from '@navikt/ds-icons';
 import {
@@ -13,7 +14,6 @@ import {
   LinkButton,
   Margin,
 } from '@navikt/ft-plattform-komponenter';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
 import DokumentLink from '../components/DokumentLink';

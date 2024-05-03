@@ -1,5 +1,5 @@
 {
-  "name": "@fpsak-frontend/utils-test",
+  "name": "@k9-sak-web/utils-test",
   "version": "1.0.0",
   "type": "module",
   "exports": {
@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@fpsak-frontend/kodeverk": "1.0.0",
+    "@k9-sak-web/kodeverk": "1.0.0",
     "react": "18.3.1",
     "react-intl": "6.6.5"
   },

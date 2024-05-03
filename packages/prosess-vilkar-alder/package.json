@@ -5,9 +5,9 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@fpsak-frontend/kodeverk": "1.0.0",
-    "@fpsak-frontend/shared-components": "1.0.0",
-    "@fpsak-frontend/utils": "1.0.0",
+    "@k9-sak-web/kodeverk": "1.0.0",
+    "@k9-sak-web/shared-components": "1.0.0",
+    "@k9-sak-web/utils": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ft-form-hooks": "4.4.3",
     "@navikt/ft-form-validators": "2.3.3",
@@ -18,6 +18,6 @@
     "react-intl": "6.6.5"
   },
   "devDependencies": {
-    "@fpsak-frontend/utils-test": "1.0.0"
+    "@k9-sak-web/utils-test": "1.0.0"
   }
 }

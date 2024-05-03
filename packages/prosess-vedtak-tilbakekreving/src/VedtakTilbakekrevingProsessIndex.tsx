@@ -1,12 +1,12 @@
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
+import behandlingArsakType from '@k9-sak-web/kodeverk/src/behandlingArsakType';
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
-import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import messages from '../i18n/nb_NO.json';
 import TilbakekrevingVedtak from './components/TilbakekrevingVedtak';
 import BeregningsresultatTilbakekreving from './types/beregningsresultatTilbakekrevingTsType';
 import Vedtaksbrev from './types/vedtaksbrevTsType';
-import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

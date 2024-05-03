@@ -1,7 +1,7 @@
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { visningsdato } from '@fpsak-frontend/utils';
 import KvoteInfo from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/types/KvoteInfo';
 import Fremdriftslinje from '@k9-sak-web/fremdriftslinje';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
+import { visningsdato } from '@k9-sak-web/utils';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';

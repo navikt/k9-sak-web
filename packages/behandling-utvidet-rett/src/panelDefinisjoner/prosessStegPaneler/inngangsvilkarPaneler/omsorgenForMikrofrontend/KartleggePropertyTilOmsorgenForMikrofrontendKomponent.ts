@@ -1,10 +1,10 @@
-import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Behandling } from '@k9-sak-web/types';
+import { FormStateType } from '@k9-sak-web/form/src/types/FormStateType';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
 import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
+import { Behandling } from '@k9-sak-web/types';
 import {
   AksjonspunktInformasjon,
   VilkarInformasjon,

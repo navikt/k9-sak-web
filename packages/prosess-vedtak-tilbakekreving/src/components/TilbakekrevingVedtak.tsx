@@ -1,7 +1,7 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { getKodeverknavnFn } from '@k9-sak-web/utils';
 import { BodyShort, Detail, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

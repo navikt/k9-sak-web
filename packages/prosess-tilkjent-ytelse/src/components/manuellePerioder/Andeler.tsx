@@ -1,6 +1,6 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { getKodeverknavnFn } from '@k9-sak-web/utils';
 import { Alert, BodyShort, Table } from '@navikt/ds-react';
 import React from 'react';
 import { WrappedComponentProps, useIntl } from 'react-intl';

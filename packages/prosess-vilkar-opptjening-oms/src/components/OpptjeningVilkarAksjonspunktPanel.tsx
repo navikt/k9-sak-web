@@ -1,7 +1,7 @@
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { behandlingForm, behandlingFormValueSelector } from '@k9-sak-web/form';
+import { isAksjonspunktOpen } from '@k9-sak-web/kodeverk/src/aksjonspunktStatus';
+import FagsakYtelseType from '@k9-sak-web/kodeverk/src/fagsakYtelseType';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
 import { ProsessPanelTemplate, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
 import { Label } from '@navikt/ds-react';

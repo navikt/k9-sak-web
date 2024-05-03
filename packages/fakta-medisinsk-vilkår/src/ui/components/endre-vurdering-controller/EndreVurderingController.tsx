@@ -1,17 +1,17 @@
-import { httpUtils, Period } from '@fpsak-frontend/utils';
+import { httpUtils, Period } from '@k9-sak-web/utils';
 import { Box, Margin, PageContainer } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo } from 'react';
+import { postEndreVurdering, postEndreVurderingDryRun } from '../../../api/api';
 import Dokument from '../../../types/Dokument';
 import Link from '../../../types/Link';
-import { Vurderingsversjon } from '../../../types/Vurdering';
 import { PeriodeMedEndring, PerioderMedEndringResponse } from '../../../types/PeriodeMedEndring';
+import { Vurderingsversjon } from '../../../types/Vurdering';
+import scrollUp from '../../../util/viewUtils';
+import ContainerContext from '../../context/ContainerContext';
+import LagreVurderingFeiletMelding from '../lagre-vurdering-feilet-melding/LagreVurderingFeiletMelding';
 import OverlappendePeriodeModal from '../overlappende-periode-modal/OverlappendePeriodeModal';
 import ActionType from './actionTypes';
 import vurderingControllerReducer from './reducer';
-import { postEndreVurdering, postEndreVurderingDryRun } from '../../../api/api';
-import ContainerContext from '../../context/ContainerContext';
-import scrollUp from '../../../util/viewUtils';
-import LagreVurderingFeiletMelding from '../lagre-vurdering-feilet-melding/LagreVurderingFeiletMelding';
 
 interface EndreVurderingControllerProps {
   endreVurderingLink: Link;

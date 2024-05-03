@@ -2,7 +2,7 @@ import { Location } from 'history';
 import React, { ReactElement } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import BehandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
 import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import BehandlingPickerItemContentOld from './BehandlingPickerItemContentOld';

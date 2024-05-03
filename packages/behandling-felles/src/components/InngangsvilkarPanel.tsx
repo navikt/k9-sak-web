@@ -1,15 +1,15 @@
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
 import {
   AksjonspunktHelpText,
   FadingPanel,
   LoadingPanel,
   NestedIntlProvider,
   VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
-import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
+} from '@k9-sak-web/shared-components';
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import hentAktivePerioderFraVilkar from '@k9-sak-web/utils/src/hentAktivePerioderFraVilkar';
 import { HGrid } from '@navikt/ds-react';
 import Tabs from 'nav-frontend-tabs';
 import React, { useCallback, useMemo, useState } from 'react';

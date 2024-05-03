@@ -1,12 +1,12 @@
+import { Period } from '@k9-sak-web/utils';
 import { BodyShort, Detail, HelpText, Label } from '@navikt/ds-react';
-import { Period } from '@fpsak-frontend/utils';
 import dayjs from 'dayjs';
 import React from 'react';
 import EtablertTilsynType from '../../../types/EtablertTilsynType';
+import Kilde from '../../../types/Kilde';
+import EtablertTilsynDag from './EtablertTilsynDag';
 import PartIkon from './PartIkon';
 import styles from './etablertTilsynRowContent.module.css';
-import EtablertTilsynDag from './EtablertTilsynDag';
-import Kilde from '../../../types/Kilde';
 
 interface TilsynMappet {
   date: string;

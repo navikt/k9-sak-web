@@ -2,9 +2,9 @@ import React, { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { errorOfType, ErrorTypes, getErrorResponseData } from '@k9-sak-web/rest-api';
-import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
+import FagsakSokSakIndex from '@k9-sak-web/sak-sok';
+import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { pathToFagsak } from '../app/paths';
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';

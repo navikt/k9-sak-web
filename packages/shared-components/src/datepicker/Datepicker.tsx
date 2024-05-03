@@ -1,4 +1,4 @@
-import { DDMMYYYY_DATE_FORMAT, DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/utils';
 import { DatePicker, useDatepicker } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';

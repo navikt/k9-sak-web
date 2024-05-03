@@ -1,4 +1,4 @@
-import { get, Period } from '@fpsak-frontend/utils';
+import { get, Period } from '@k9-sak-web/utils';
 import { Alert } from '@navikt/ds-react';
 import { ChildIcon, Infostripe, PageContainer, WarningIcon } from '@navikt/ft-plattform-komponenter';
 import classnames from 'classnames';

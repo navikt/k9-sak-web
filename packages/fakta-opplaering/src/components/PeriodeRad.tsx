@@ -1,11 +1,11 @@
 import { Vurderingsresultat } from '@k9-sak-web/types';
+import { Period } from '@k9-sak-web/utils';
 import {
   ContentWithTooltip,
   GreenCheckIconFilled,
   RedCrossIconFilled,
   WarningIcon,
 } from '@navikt/ft-plattform-komponenter';
-import { Period } from '@fpsak-frontend/utils';
 import React from 'react';
 import styles from './periodeRad.module.css';
 

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { konverterKodeverkTilKode, transformBeregningValues } from '@fpsak-frontend/utils';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import { konverterKodeverkTilKode, transformBeregningValues } from '@k9-sak-web/utils';
 import { FordelBeregningsgrunnlagFaktaIndex } from '@navikt/ft-fakta-fordel-beregningsgrunnlag';
 import '@navikt/ft-fakta-fordel-beregningsgrunnlag/dist/style.css';
 

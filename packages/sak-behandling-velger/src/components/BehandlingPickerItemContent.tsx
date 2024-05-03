@@ -1,6 +1,6 @@
-import calendarImg from '@fpsak-frontend/assets/images/calendar-2.svg';
-import chevronBlueRightImg from '@fpsak-frontend/assets/images/chevron_blue_right.svg';
-import { DateLabel, Image } from '@fpsak-frontend/shared-components';
+import calendarImg from '@k9-sak-web/assets/images/calendar-2.svg';
+import chevronBlueRightImg from '@k9-sak-web/assets/images/chevron_blue_right.svg';
+import { DateLabel, Image } from '@k9-sak-web/shared-components';
 import { Periode } from '@k9-sak-web/types';
 import { BodyShort, Box, Heading } from '@navikt/ds-react';
 import React from 'react';

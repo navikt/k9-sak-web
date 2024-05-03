@@ -1,4 +1,4 @@
-import { FlexColumn, FlexContainer, FlexRow, Image } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow, Image } from '@k9-sak-web/shared-components';
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';

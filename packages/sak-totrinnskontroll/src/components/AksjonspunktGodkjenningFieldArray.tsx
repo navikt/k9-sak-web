@@ -1,8 +1,8 @@
-import { CheckboxField, NavFieldGroup, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { CheckboxField, NavFieldGroup, RadioGroupField, RadioOption, TextAreaField } from '@k9-sak-web/form';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@k9-sak-web/shared-components';
 import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
+import { hasValidText, maxLength, minLength, required } from '@k9-sak-web/utils';
 import { BodyShort, Detail } from '@navikt/ds-react';
 import { Location } from 'history';
 import React from 'react';

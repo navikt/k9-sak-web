@@ -1,12 +1,12 @@
-import { Tidslinje, TidslinjeZoom } from '@fpsak-frontend/shared-components';
-import HorisontalNavigering from '@fpsak-frontend/shared-components/src/tidslinje/HorisontalNavigering';
-import { useSenesteDato } from '@fpsak-frontend/shared-components/src/tidslinje/useTidslinjerader';
-import { Period, dateStringSorter } from '@fpsak-frontend/utils';
+import { Tidslinje, TidslinjeZoom } from '@k9-sak-web/shared-components';
+import HorisontalNavigering from '@k9-sak-web/shared-components/src/tidslinje/HorisontalNavigering';
+import { useSenesteDato } from '@k9-sak-web/shared-components/src/tidslinje/useTidslinjerader';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import BehandlingPerioderårsakMedVilkår, {
   DokumenterTilBehandling,
 } from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
+import { Period, dateStringSorter } from '@k9-sak-web/utils';
 import { BodyShort } from '@navikt/ds-react';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { useEffect, useState } from 'react';

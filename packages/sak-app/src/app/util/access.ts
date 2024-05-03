@@ -1,7 +1,7 @@
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakStatusCode from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { NavAnsatt, Kodeverk } from '@k9-sak-web/types';
+import behandlingStatusCode from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import BehandlingType from '@k9-sak-web/kodeverk/src/behandlingType';
+import fagsakStatusCode from '@k9-sak-web/kodeverk/src/fagsakStatus';
+import { Kodeverk, NavAnsatt } from '@k9-sak-web/types';
 
 type Aksess = {
   employeeHasAccess: boolean;
@@ -19,40 +19,41 @@ const kanOverstyre = (navAnsatt: NavAnsatt): boolean => kanSaksbehandle(navAnsat
 const isBehandlingAvTilbakekreving = (type: Kodeverk): boolean =>
   type ? type.kode === BehandlingType.TILBAKEKREVING || type.kode === BehandlingType.TILBAKEKREVING_REVURDERING : false;
 
-const accessibleFor = (validNavAnsattPredicates: ((navAnsatt: NavAnsatt) => boolean)[]) => (
-  navAnsatt: NavAnsatt,
-): boolean => validNavAnsattPredicates.some(predicate => predicate(navAnsatt));
+const accessibleFor =
+  (validNavAnsattPredicates: ((navAnsatt: NavAnsatt) => boolean)[]) =>
+  (navAnsatt: NavAnsatt): boolean =>
+    validNavAnsattPredicates.some(predicate => predicate(navAnsatt));
 
-const enabledFor = (validFagsakStauses: string[], validBehandlingStatuses: string[]) => (
-  fagsakStatus: Kodeverk,
-  behandlingStatus: Kodeverk,
-  isTilbakekrevingBehandling: boolean,
-): boolean =>
-  (isTilbakekrevingBehandling || (fagsakStatus && validFagsakStauses.includes(fagsakStatus.kode))) &&
-  behandlingStatus &&
-  validBehandlingStatuses.includes(behandlingStatus.kode);
+const enabledFor =
+  (validFagsakStauses: string[], validBehandlingStatuses: string[]) =>
+  (fagsakStatus: Kodeverk, behandlingStatus: Kodeverk, isTilbakekrevingBehandling: boolean): boolean =>
+    (isTilbakekrevingBehandling || (fagsakStatus && validFagsakStauses.includes(fagsakStatus.kode))) &&
+    behandlingStatus &&
+    validBehandlingStatuses.includes(behandlingStatus.kode);
 
-const accessSelector = (
-  validNavAnsattPredicates: ((navAnsatt: NavAnsatt) => boolean)[],
-  validFagsakStatuses: string[],
-  validBehandlingStatuses: string[],
-) => (navAnsatt: NavAnsatt, fagsakStatus: Kodeverk, behandlingStatus: Kodeverk, behandlingType: Kodeverk): Aksess => {
-  if (kanVeilede(navAnsatt)) {
-    return {
-      employeeHasAccess: true,
-      isEnabled: false,
-    };
-  }
-  const employeeHasAccess = accessibleFor(validNavAnsattPredicates)(navAnsatt);
-  const isEnabled =
-    employeeHasAccess &&
-    enabledFor(validFagsakStatuses, validBehandlingStatuses)(
-      fagsakStatus,
-      behandlingStatus,
-      isBehandlingAvTilbakekreving(behandlingType),
-    );
-  return { employeeHasAccess, isEnabled };
-};
+const accessSelector =
+  (
+    validNavAnsattPredicates: ((navAnsatt: NavAnsatt) => boolean)[],
+    validFagsakStatuses: string[],
+    validBehandlingStatuses: string[],
+  ) =>
+  (navAnsatt: NavAnsatt, fagsakStatus: Kodeverk, behandlingStatus: Kodeverk, behandlingType: Kodeverk): Aksess => {
+    if (kanVeilede(navAnsatt)) {
+      return {
+        employeeHasAccess: true,
+        isEnabled: false,
+      };
+    }
+    const employeeHasAccess = accessibleFor(validNavAnsattPredicates)(navAnsatt);
+    const isEnabled =
+      employeeHasAccess &&
+      enabledFor(validFagsakStatuses, validBehandlingStatuses)(
+        fagsakStatus,
+        behandlingStatus,
+        isBehandlingAvTilbakekreving(behandlingType),
+      );
+    return { employeeHasAccess, isEnabled };
+  };
 
 export const writeAccess = behandlingType =>
   accessSelector(

@@ -1,12 +1,12 @@
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
+import behandlingStatus from '@k9-sak-web/kodeverk/src/behandlingStatus';
+import vilkarType from '@k9-sak-web/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@k9-sak-web/kodeverk/src/vilkarUtfallType';
 import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { formatereLukketPeriode } from '@fpsak-frontend/utils';
+import { formatereLukketPeriode } from '@k9-sak-web/utils';
 import messages from '../i18n/nb_NO.json';
 import AldersVilkarAP from './components/AldersvilkarAP';
 import AldersVilkarStatus from './components/AldersvilkarStatus';

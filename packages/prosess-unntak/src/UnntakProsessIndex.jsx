@@ -1,8 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-// import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+// import aksjonspunktCodes from '@k9-sak-web/kodeverk/src/aksjonspunktCodes';
 
 import messages from '../i18n/nb_NO.json';
 import BehandleUnntak from './components/BehandleUnntakForm';

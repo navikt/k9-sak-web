@@ -1,6 +1,6 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import kodeverkTyper from '@k9-sak-web/kodeverk/src/kodeverkTyper';
+import { VerticalSpacer } from '@k9-sak-web/shared-components';
+import { getKodeverknavnFn } from '@k9-sak-web/utils';
 import { BodyShort, Label } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
