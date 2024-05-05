@@ -1,4 +1,4 @@
-import { Alert, Button, Fieldset, RadioGroup } from '@navikt/ds-react';
+import { Alert, Button, Fieldset, HStack, RadioGroup } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -155,9 +155,12 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                   className={styleRadioknapper.horisontalPlassering}
                   legend={tekst.sporsmålVilkarOppfylt}
                   size="small"
+                  name="erSokerenMidlertidigAleneOmOmsorgen"
                 >
-                  <RadioButtonWithBooleanValue label="Ja" value="true" name="erSokerenMidlertidigAleneOmOmsorgen" />
-                  <RadioButtonWithBooleanValue label="Nei" value="false" name="erSokerenMidlertidigAleneOmOmsorgen" />
+                  <HStack gap="1">
+                    <RadioButtonWithBooleanValue label="Ja" value="true" name="erSokerenMidlertidigAleneOmOmsorgen" />
+                    <RadioButtonWithBooleanValue label="Nei" value="false" name="erSokerenMidlertidigAleneOmOmsorgen" />
+                  </HStack>
                 </RadioGroup>
                 {errors.erSokerenMidlertidigAleneOmOmsorgen && (
                   <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>
@@ -175,19 +178,22 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                       )}
                       legend={tekst.velgArsak}
                       size="small"
+                      name="avslagsArsakErPeriodeErIkkeOverSeksMån"
                     >
-                      <RadioButtonWithBooleanValue
-                        label={tekst.arsakIkkeAleneOmsorg}
-                        value="false"
-                        name="avslagsArsakErPeriodeErIkkeOverSeksMån"
-                        valideringsFunksjoner={erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig}
-                      />
-                      <RadioButtonWithBooleanValue
-                        label={tekst.arsakPeriodeIkkeOverSeksMån}
-                        value="true"
-                        name="avslagsArsakErPeriodeErIkkeOverSeksMån"
-                        valideringsFunksjoner={erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig}
-                      />
+                      <HStack gap="1">
+                        <RadioButtonWithBooleanValue
+                          label={tekst.arsakIkkeAleneOmsorg}
+                          value="false"
+                          name="avslagsArsakErPeriodeErIkkeOverSeksMån"
+                          valideringsFunksjoner={erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig}
+                        />
+                        <RadioButtonWithBooleanValue
+                          label={tekst.arsakPeriodeIkkeOverSeksMån}
+                          value="true"
+                          name="avslagsArsakErPeriodeErIkkeOverSeksMån"
+                          valideringsFunksjoner={erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig}
+                        />
+                      </HStack>
                     </RadioGroup>
                     {errors.avslagsArsakErPeriodeErIkkeOverSeksMån && (
                       <p className="typo-feilmelding">{tekst.feilIngenÅrsak}</p>
