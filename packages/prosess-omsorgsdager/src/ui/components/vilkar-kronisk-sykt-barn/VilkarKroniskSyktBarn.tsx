@@ -1,4 +1,4 @@
-import { Alert, Button, Fieldset, RadioGroup } from '@navikt/ds-react';
+import { Alert, Button, Fieldset, HStack, RadioGroup } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -207,9 +207,12 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                   className={styleRadioknapper.horisontalPlassering}
                   legend={tekst.sporsmalHarDokumentasjonOgFravaerRisiko}
                   size="small"
+                  name="harDokumentasjonOgFravaerRisiko"
                 >
-                  <RadioButtonWithBooleanValue label="Ja" value="true" name="harDokumentasjonOgFravaerRisiko" />
-                  <RadioButtonWithBooleanValue label="Nei" value="false" name="harDokumentasjonOgFravaerRisiko" />
+                  <HStack gap="1">
+                    <RadioButtonWithBooleanValue label="Ja" value="true" name="harDokumentasjonOgFravaerRisiko" />
+                    <RadioButtonWithBooleanValue label="Nei" value="false" name="harDokumentasjonOgFravaerRisiko" />
+                  </HStack>
                 </RadioGroup>
                 {errors.harDokumentasjonOgFravaerRisiko && (
                   <p className="typo-feilmelding">{tekst.feilOppgiHvisDokumentasjonGirRett}</p>
@@ -218,25 +221,32 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
               {harDokumentasjonOgFravaerRisiko.length > 0 && !tekstTilBoolean(harDokumentasjonOgFravaerRisiko) && (
                 <div>
-                  <RadioGroup className={styleRadioknapper.horisontalPlassering} legend={tekst.velgArsak} size="small">
-                    <RadioButtonWithBooleanValue
-                      label={tekst.arsakIkkeSyk}
-                      value={AvslagskoderKroniskSyk.IKKE_KRONISK_SYK_ELLER_FUNKSJONSHEMMET}
-                      name="avslagsårsakKode"
-                      valideringsFunksjoner={erArsakErIkkeRiskioFraFravaer}
-                    />
-                    <RadioButtonWithBooleanValue
-                      label={tekst.arsakIkkeRisikoFraFravaer}
-                      value={AvslagskoderKroniskSyk.IKKE_OKT_RISIKO_FRA_FRAVAER}
-                      name="avslagsårsakKode"
-                      valideringsFunksjoner={erArsakErIkkeRiskioFraFravaer}
-                    />
-                    <RadioButtonWithBooleanValue
-                      label={tekst.arsakManglerDokumentasjon}
-                      value={AvslagskoderKroniskSyk.MANGLENDE_DOKUMENTASJON}
-                      name="avslagsårsakKode"
-                      valideringsFunksjoner={erArsakErIkkeRiskioFraFravaer}
-                    />
+                  <RadioGroup
+                    className={styleRadioknapper.horisontalPlassering}
+                    legend={tekst.velgArsak}
+                    size="small"
+                    name="avslagsårsakKode"
+                  >
+                    <HStack gap="1">
+                      <RadioButtonWithBooleanValue
+                        label={tekst.arsakIkkeSyk}
+                        value={AvslagskoderKroniskSyk.IKKE_KRONISK_SYK_ELLER_FUNKSJONSHEMMET}
+                        name="avslagsårsakKode"
+                        valideringsFunksjoner={erArsakErIkkeRiskioFraFravaer}
+                      />
+                      <RadioButtonWithBooleanValue
+                        label={tekst.arsakIkkeRisikoFraFravaer}
+                        value={AvslagskoderKroniskSyk.IKKE_OKT_RISIKO_FRA_FRAVAER}
+                        name="avslagsårsakKode"
+                        valideringsFunksjoner={erArsakErIkkeRiskioFraFravaer}
+                      />
+                      <RadioButtonWithBooleanValue
+                        label={tekst.arsakManglerDokumentasjon}
+                        value={AvslagskoderKroniskSyk.MANGLENDE_DOKUMENTASJON}
+                        name="avslagsårsakKode"
+                        valideringsFunksjoner={erArsakErIkkeRiskioFraFravaer}
+                      />
+                    </HStack>
                   </RadioGroup>
                   {errors.avslagsårsakKode && <p className="typo-feilmelding">{tekst.feilOppgiÅrsak}</p>}
                 </div>

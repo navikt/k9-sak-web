@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Alert, Button, Fieldset, RadioGroup, Select } from '@navikt/ds-react';
+import { Alert, Button, Fieldset, HStack, RadioGroup, Select } from '@navikt/ds-react';
 import { AleneOmOmsorgenProps } from '../../../types/AleneOmOmsorgenProps';
 import {
   booleanTilTekst,
@@ -162,9 +162,12 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                   className={styleRadioknapper.horisontalPlassering}
                   legend={tekst.sporsmålVilkarOppfylt}
                   size="small"
+                  name="erSokerenAleneOmOmsorgen"
                 >
-                  <RadioButtonWithBooleanValue label="Ja" value="true" name="erSokerenAleneOmOmsorgen" />
-                  <RadioButtonWithBooleanValue label="Nei" value="false" name="erSokerenAleneOmOmsorgen" />
+                  <HStack gap="1">
+                    <RadioButtonWithBooleanValue label="Ja" value="true" name="erSokerenAleneOmOmsorgen" />
+                    <RadioButtonWithBooleanValue label="Nei" value="false" name="erSokerenAleneOmOmsorgen" />
+                  </HStack>
                 </RadioGroup>
                 {errors.erSokerenAleneOmOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
               </div>
