@@ -28,7 +28,7 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    renderWithIntlAndReduxForm(
+    const { container } = renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -46,7 +46,7 @@ describe('<ActivityPanel>', () => {
       { messages },
     );
 
-    expect(screen.getByPlaceholderText('dd.mm.åååå - dd.mm.åååå')).toBeInTheDocument();
+    expect(container.getElementsByClassName('navds-date__field-input').length).toBe(2);
   });
 
   it('skal vise periodevelger som aktiv når aktivitet er manuelt lagt til', () => {
@@ -56,7 +56,7 @@ describe('<ActivityPanel>', () => {
       begrunnelse: 'en begrunnelse',
     };
 
-    renderWithIntlAndReduxForm(
+    const { container } = renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -74,7 +74,7 @@ describe('<ActivityPanel>', () => {
       { messages },
     );
 
-    expect(screen.getByPlaceholderText('dd.mm.åååå - dd.mm.åååå')).toBeInTheDocument();
+    expect(container.getElementsByClassName('navds-date__field-input').length).toBe(2);
   });
 
   it('skal vise periodevelger som aktiv når aktivitet er markert med erEndret', () => {
@@ -84,7 +84,7 @@ describe('<ActivityPanel>', () => {
       erEndret: true,
     };
 
-    renderWithIntlAndReduxForm(
+    const { container } = renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -102,7 +102,7 @@ describe('<ActivityPanel>', () => {
       { messages },
     );
 
-    expect(screen.getByPlaceholderText('dd.mm.åååå - dd.mm.åååå')).toBeInTheDocument();
+    expect(container.getElementsByClassName('navds-date__field-input').length).toBe(2);
   });
 
   it('skal vise periodevelger som disablet når aktivitet er godkjent automatisk og en ikke har aksjonspunkt', () => {
@@ -112,7 +112,7 @@ describe('<ActivityPanel>', () => {
       begrunnelse: undefined,
     };
 
-    renderWithIntlAndReduxForm(
+    const { container } = renderWithIntlAndReduxForm(
       <ActivityPanel
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -130,7 +130,7 @@ describe('<ActivityPanel>', () => {
       { messages },
     );
 
-    expect(screen.queryByPlaceholderText('dd.mm.åååå - dd.mm.åååå')).not.toBeInTheDocument();
+    expect(container.getElementsByClassName('navds-date__field-input').length).toBe(0);
   });
 
   it('skal vise antall månder og dager i valgt periode', () => {

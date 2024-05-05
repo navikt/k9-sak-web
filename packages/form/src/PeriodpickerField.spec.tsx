@@ -15,6 +15,7 @@ describe('<PeriodpickerField>', () => {
         tomDato: '2017-05-11',
       },
     });
-    expect(screen.getByDisplayValue('01.02.2017 - 11.05.2017')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('01.02.2017')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('11.05.2017')).toBeInTheDocument();
   });
 });

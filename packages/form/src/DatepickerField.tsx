@@ -48,7 +48,15 @@ const acceptedFormatToIso = (string: string): string => {
 
 export const RenderDatepickerField = renderNavField(Datepicker);
 
-const DatepickerField = ({ name, label, readOnly, format, parse, isEdited, ...otherProps }: DatepickerFieldProps) => (
+const DatepickerField = ({
+  name,
+  label,
+  readOnly = false,
+  format = value => value,
+  parse = value => value,
+  isEdited = false,
+  ...otherProps
+}: DatepickerFieldProps) => (
   <Field
     name={name}
     component={readOnly ? ReadOnlyField : RenderDatepickerField}
@@ -61,12 +69,5 @@ const DatepickerField = ({ name, label, readOnly, format, parse, isEdited, ...ot
     isEdited={isEdited}
   />
 );
-
-DatepickerField.defaultProps = {
-  readOnly: false,
-  isEdited: false,
-  format: value => value,
-  parse: value => value,
-};
 
 export default DatepickerField;

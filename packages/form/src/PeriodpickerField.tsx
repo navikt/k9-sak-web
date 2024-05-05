@@ -96,20 +96,16 @@ const isoToDdMmYyyy = (string: string) => {
   return parsedDate.isValid() ? parsedDate.format(DDMMYYYY_DATE_FORMAT) : string;
 };
 
-const acceptedFormatToIso = (value: string, name: string, names: string[]): string => {
-  const dates = value.split('-').map(date => date.trim());
-  const date = dates[names.indexOf(name)];
-
-  const validDate = ACCEPTED_DATE_INPUT_FORMATS.map(format => moment(date, format, true)).find(parsedDate =>
+const acceptedFormatToIso = (value: string): string => {
+  const validDate = ACCEPTED_DATE_INPUT_FORMATS.map(format => moment(value, format, true)).find(parsedDate =>
     parsedDate.isValid(),
   );
 
-  return validDate ? validDate.format(ISO_DATE_FORMAT) : date;
+  return validDate ? validDate.format(ISO_DATE_FORMAT) : value;
 };
 
 const formatValue = (format: (value: string) => string) => (value: string) => isoToDdMmYyyy(format(value));
-const parseValue = (parse: (value: string) => string, names: string[]) => (value: string, name: string) =>
-  parse(acceptedFormatToIso(value, name, names));
+const parseValue = (parse: (value: string) => string) => (value: string) => parse(acceptedFormatToIso(value));
 
 const PeriodpickerField = ({
   names,
@@ -126,7 +122,7 @@ const PeriodpickerField = ({
     label={label}
     {...otherProps}
     format={formatValue(format)}
-    parse={parseValue(parse, names)}
+    parse={parseValue(parse)}
     readOnly={readOnly}
   />
 );

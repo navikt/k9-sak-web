@@ -272,11 +272,9 @@ describe('<OpptjeningFaktaForm>', () => {
     );
 
     await userEvent.click(screen.getByRole('radio', { name: 'Aktiviteten godkjennes' }));
-    await userEvent.click(screen.getByTestId('calendarToggleButton'));
-    await userEvent.click(screen.getByRole('gridcell', { name: 'Sun Aug 13 2017' }));
-    await userEvent.click(screen.getByTestId('calendarToggleButton'));
-    await userEvent.click(screen.getByTestId('calendarToggleButton'));
-    await userEvent.click(screen.getByRole('gridcell', { name: 'Mon Aug 14 2017' }));
+    await userEvent.click(screen.getAllByRole('button', { name: 'Åpne datovelger' })[0]);
+    await userEvent.click(screen.getByRole('button', { name: 'søndag 13' }));
+    await userEvent.click(screen.getByRole('button', { name: 'mandag 14' }));
     await userEvent.click(screen.getByRole('button', { name: 'Oppdater' }));
     await userEvent.click(screen.getByRole('button', { name: 'Bekreft og fortsett' }));
 
