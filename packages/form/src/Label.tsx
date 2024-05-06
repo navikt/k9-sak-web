@@ -11,6 +11,7 @@ interface Props {
   input?: LabelType;
   typographyElement?: OverridableComponent<LabelProps | BodyShortProps, HTMLLabelElement | HTMLParagraphElement>;
   readOnly?: boolean;
+  textOnly?: boolean;
 }
 
 export const Label = (props: Props & WrappedComponentProps) => {
@@ -22,9 +23,12 @@ export const Label = (props: Props & WrappedComponentProps) => {
     return label;
   };
 
-  const { input, readOnly, typographyElement: TypoElem } = props;
+  const { input, readOnly, typographyElement: TypoElem, textOnly } = props;
   if (!input) {
     return null;
+  }
+  if (textOnly) {
+    return format(input);
   }
   return (
     <span className={classNames('labelWrapper', { readOnly })}>

@@ -1,4 +1,4 @@
-import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { Label, RadioGroupField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -95,11 +95,11 @@ export const PerioderMedMedlemskapFaktaPanel = ({
                   validate={[required]}
                   readOnly={readOnly}
                   isEdited={isPeriodAksjonspunktClosed}
-                >
-                  {vurderingTypes.map(type => (
-                    <RadioOption key={type.kode} value={type.kode} label={type.navn} />
-                  ))}
-                </RadioGroupField>
+                  radios={vurderingTypes.map(type => ({
+                    value: type.kode,
+                    label: <Label input={type.navn} textOnly />,
+                  }))}
+                />
               </FlexColumn>
             </FlexRow>
           )}

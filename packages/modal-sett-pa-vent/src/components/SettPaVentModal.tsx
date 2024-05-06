@@ -14,9 +14,8 @@ import {
 } from '@fpsak-frontend/utils';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
-import { BodyShort, Button, Label, Modal } from '@navikt/ds-react';
+import { BodyShort, Button, Label, Modal, Select } from '@navikt/ds-react';
 import moment from 'moment';
-import { Select as NavSelect } from 'nav-frontend-skjema';
 import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -230,9 +229,15 @@ export const SettPaVentModal = ({
             {showSelect && (
               <div className={styles.selectContainer}>
                 {erVenterEtterlysInntektsmelding ? (
-                  <NavSelect className={styles.disabledNavSelect} disabled>
+                  <Select
+                    className={styles.disabledNavSelect}
+                    disabled
+                    label="Hva venter vi på?"
+                    hideLabel
+                    size="small"
+                  >
                     <option value="">Inntektsmelding</option>
-                  </NavSelect>
+                  </Select>
                 ) : (
                   <SelectField
                     name="ventearsak"
