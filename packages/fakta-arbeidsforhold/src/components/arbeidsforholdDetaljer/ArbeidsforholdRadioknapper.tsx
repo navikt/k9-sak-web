@@ -1,11 +1,10 @@
-import React from 'react';
-import { required } from '@fpsak-frontend/utils';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { Label, RadioGroupField } from '@fpsak-frontend/form';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
+import { required } from '@fpsak-frontend/utils';
+import React from 'react';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
+import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 
 interface OwnProps {
   formName: string;
@@ -23,31 +22,36 @@ const ArbeidsforholdRadioknapper = ({
   behandlingVersjon,
   formName,
 }: OwnProps & WrappedComponentProps) => (
-  <RadioGroupField name="arbeidsforholdHandlingField" validate={[required]} direction="vertical">
-    <RadioOption
-      label={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt' }}
-      value={arbeidsforholdHandlingType.BASERT_PÅ_INNTEKTSMELDING}
-    >
-      <BehandlingFormFieldCleaner
-        formName={formName}
-        fieldNames={['arbeidsforholdHandlingField']}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-      >
-        <LeggTilArbeidsforholdFelter
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          formName={formName}
-          readOnly={false}
-        />
-      </BehandlingFormFieldCleaner>
-    </RadioOption>
-    <VerticalSpacer eightPx />
-    <RadioOption
-      label={{ id: 'PersonArbeidsforholdDetailForm.FortsettBehandling' }}
-      value={arbeidsforholdHandlingType.BRUK}
-    />
-  </RadioGroupField>
+  <RadioGroupField
+    name="arbeidsforholdHandlingField"
+    validate={[required]}
+    isVertical
+    radios={[
+      {
+        value: arbeidsforholdHandlingType.BASERT_PÅ_INNTEKTSMELDING,
+        label: <Label input={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt' }} textOnly />,
+        element: (
+          <BehandlingFormFieldCleaner
+            formName={formName}
+            fieldNames={['arbeidsforholdHandlingField']}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+          >
+            <LeggTilArbeidsforholdFelter
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              formName={formName}
+              readOnly={false}
+            />
+          </BehandlingFormFieldCleaner>
+        ),
+      },
+      {
+        value: arbeidsforholdHandlingType.BRUK,
+        label: <Label input={{ id: 'PersonArbeidsforholdDetailForm.FortsettBehandling' }} textOnly />,
+      },
+    ]}
+  />
 );
 
 export default injectIntl(ArbeidsforholdRadioknapper);

@@ -1,5 +1,4 @@
-import { Alert, Button } from '@navikt/ds-react';
-import { RadioGruppe } from 'nav-frontend-skjema';
+import { Alert, Button, HStack, RadioGroup } from '@navikt/ds-react';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { OmsorgProps } from '../../../types/OmsorgProps';
@@ -171,10 +170,17 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
               <TextArea label={tekst.begrunnelse} name="begrunnelse" />
 
               <div>
-                <RadioGruppe legend={tekst.sporsmalHarOmsorgen} className={styleRadioknapper.horisontalPlassering}>
-                  <RadioButtonWithBooleanValue label="Ja" value="true" name="harOmsorgen" />
-                  <RadioButtonWithBooleanValue label="Nei" value="false" name="harOmsorgen" />
-                </RadioGruppe>
+                <RadioGroup
+                  legend={tekst.sporsmalHarOmsorgen}
+                  className={styleRadioknapper.horisontalPlassering}
+                  size="small"
+                  name="harOmsorgen"
+                >
+                  <HStack gap="1">
+                    <RadioButtonWithBooleanValue label="Ja" value="true" name="harOmsorgen" />
+                    <RadioButtonWithBooleanValue label="Nei" value="false" name="harOmsorgen" />
+                  </HStack>
+                </RadioGroup>
                 {errors.harOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
               </div>
 

@@ -8,9 +8,8 @@ import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsre
 import { DateTimeLabel, Image, Tooltip } from '@fpsak-frontend/shared-components';
 import { Dokument, FagsakPerson } from '@k9-sak-web/types';
 import { StarFillIcon } from '@navikt/aksel-icons';
-import { BodyShort, Label, Link, Table } from '@navikt/ds-react';
+import { BodyShort, Label, Link, Select, Table } from '@navikt/ds-react';
 import axios from 'axios';
-import { Select } from 'nav-frontend-skjema';
 import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { useQuery } from 'react-query';
@@ -168,7 +167,12 @@ const DocumentList = ({
     <>
       <div className={styles.controlsContainer}>
         {harMerEnnEnBehandlingKnyttetTilDokumenter() && (
-          <Select bredde="m" onChange={event => setSelectedFilter(event.target.value)}>
+          <Select
+            size="small"
+            onChange={event => setSelectedFilter(event.target.value)}
+            label="Hvilke behandlinger skal vises?"
+            hideLabel
+          >
             <option value={alleBehandlinger}>Alle behandlinger</option>
             <option value={behandlingId}>Denne behandlingen</option>
           </Select>
