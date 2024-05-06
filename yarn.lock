@@ -4354,7 +4354,7 @@ __metadata:
     classnames: 2.5.1
     cypress: ^13.7.3
     dayjs: 1.11.11
-    eslint-plugin-cypress: ^2.15.2
+    eslint-plugin-cypress: ^3.1.1
     lodash: 4.17.21
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
@@ -4471,7 +4471,7 @@ __metadata:
     classnames: 2.5.1
     cypress: ^13.7.3
     dayjs: 1.11.11
-    eslint-plugin-cypress: ^2.15.2
+    eslint-plugin-cypress: ^3.1.1
     lodash: 4.17.21
     msw: 1.3.3
     react: 18.3.1
@@ -11884,14 +11884,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-cypress@npm:^2.15.2":
-  version: 2.15.2
-  resolution: "eslint-plugin-cypress@npm:2.15.2"
+"eslint-plugin-cypress@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "eslint-plugin-cypress@npm:3.1.1"
   dependencies:
     globals: ^13.20.0
   peerDependencies:
-    eslint: ">= 3.2.1"
-  checksum: 0ffd8b9b39a22543917e2d9ae0cb7545ce5ea0eea171d947b6e015062f462bf66a208b7e711923d5ad1525f3fb03a3f35c7d978ab88352343302ea885ee98c1b
+    eslint: ">=7 <9"
+  checksum: 3a1a29e620cd13593333c39d7f4052e649f84cb4e8d8b7102a0c98b6373e64e22a663ac49195e8dec57786db9867fe18ecbf247c01ce6a020469f4e200ed551e
   languageName: node
   linkType: hard
 
