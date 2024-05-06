@@ -2540,7 +2540,6 @@ __metadata:
     i18n-iso-countries: 7.11.1
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -4371,7 +4370,6 @@ __metadata:
     msw-storybook-addon: 1.10.0
     nav-frontend-core: 6.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -15643,15 +15641,6 @@ __metadata:
     prop-types: ^15.5.10
     react: ^16.8.0 || ^17.0.0
   checksum: c572c63794715c27eed790911fcb4f0ac71934184813d4b9d3ad33827a5f05164f4563c22aac8d577bbbb7cf9c95e0da2383f247f539da1d4032d831193f915a
-  languageName: node
-  linkType: hard
-
-"nav-frontend-paneler-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-paneler-style@npm:2.0.2"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-  checksum: 7d4b15e3b1a6cc127eca837ae17c42736ef69da9f7f2ca617180809d244c3abda7e4385dd144478c0befc3831c5bec686f5cae281c31235aacba8b79f032cc5d
   languageName: node
   linkType: hard
 
