@@ -2475,7 +2475,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -2626,7 +2625,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     react: 18.3.1
     react-intl: 6.6.5
@@ -2676,8 +2674,6 @@ __metadata:
     nav-frontend-lenker-style: 2.0.2
     nav-frontend-lukknapp: 2.0.2
     nav-frontend-lukknapp-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -3115,7 +3111,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -3332,8 +3327,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -3514,7 +3507,6 @@ __metadata:
     moment: 2.30.1
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -3547,8 +3539,6 @@ __metadata:
     nav-frontend-lenker-style: 2.0.2
     nav-frontend-lukknapp: 2.0.2
     nav-frontend-lukknapp-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -4365,8 +4355,6 @@ __metadata:
     nav-frontend-lenkepanel-style: 2.0.2
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
     nav-frontend-tabs: 2.0.3
     nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -4428,8 +4416,6 @@ __metadata:
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
     nav-frontend-paneler-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -4533,8 +4519,6 @@ __metadata:
     nav-frontend-js-utils: 1.0.20
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     object-hash: 3.0.0
@@ -4717,8 +4701,6 @@ __metadata:
     nav-frontend-js-utils: 1.0.20
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -5055,7 +5037,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -15960,49 +15941,6 @@ __metadata:
     react: ^16.8.0 || ^17.0.0
     react-dom: ^16.8.0 || ^17.0.0
   checksum: 6b374e8fe0ecff3eaeb28668c9ed179abd435f542f117d98fa92d4c59ab7d519b2c4aa27b08581a27ca8dcce0e93ca8cc552a72ade43e31b4bc50da4c446e012
-  languageName: node
-  linkType: hard
-
-"nav-frontend-skjema-style@npm:3.0.3":
-  version: 3.0.3
-  resolution: "nav-frontend-skjema-style@npm:3.0.3"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-    nav-frontend-paneler-style: ^2.0.0
-    nav-frontend-typografi-style: ^2.0.0
-  checksum: c830ade670e012a157908130ceb7325d8c277e63b55365925c756135fbe2a5d978b6117e93b3853365b8fa7504aac41f76e2f861eb493c4fef97b1d6228be546
-  languageName: node
-  linkType: hard
-
-"nav-frontend-skjema@npm:4.0.6":
-  version: 4.0.6
-  resolution: "nav-frontend-skjema@npm:4.0.6"
-  peerDependencies:
-    "@navikt/fnrvalidator": ^1.1.0
-    classnames: ^2.2.5
-    nav-frontend-js-utils: ^1.0.19
-    nav-frontend-lenker: ^2.0.0
-    nav-frontend-skjema-style: ^3.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 1e92d796974224f0ca686c0a94bc45bd40fb7b1e799e74a8e10faa2ce73cb6ae23dc870ecaa487b74d760441840b3c4a707c56f10b1772e096c8cc2d56e9500c
-  languageName: node
-  linkType: hard
-
-"nav-frontend-skjema@patch:nav-frontend-skjema@npm%3A4.0.6#./.yarn/patches/nav-frontend-skjema-npm-4.0.6-34e6189688.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 4.0.6
-  resolution: "nav-frontend-skjema@patch:nav-frontend-skjema@npm%3A4.0.6#./.yarn/patches/nav-frontend-skjema-npm-4.0.6-34e6189688.patch::version=4.0.6&hash=4e0ef7&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    "@navikt/fnrvalidator": ^1.1.0
-    classnames: ^2.2.5
-    nav-frontend-js-utils: ^1.0.19
-    nav-frontend-lenker: ^2.0.0
-    nav-frontend-skjema-style: ^3.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 2aca4d45d39a250725f130cd3d84e80a2b6bce260a7790ad50a70a4c20e3d7e84fdba18de9987634979fd7c06a6aa55f41cf2bd398d8fe190a32e0f0cb216666
   languageName: node
   linkType: hard
 
