@@ -26,7 +26,6 @@ import 'nav-frontend-chevron-style/dist/main.css';
 import 'nav-frontend-core/dist/main.css';
 
 import 'nav-frontend-hjelpetekst-style/dist/main.css';
-import 'nav-frontend-lukknapp-style/dist/main.css';
 import 'nav-frontend-paneler-style/dist/main.css';
 import 'nav-frontend-popover-style/dist/main.css';
 import 'nav-frontend-tabs-style/dist/main.css';

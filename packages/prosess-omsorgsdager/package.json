@@ -23,8 +23,6 @@
     "nav-frontend-core": "6.0.1",
     "nav-frontend-ikoner-assets": "3.0.1",
     "nav-frontend-js-utils": "1.0.20",
-    "nav-frontend-lenker": "2.0.2",
-    "nav-frontend-lenker-style": "2.0.2",
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
     "react": "18.3.1",

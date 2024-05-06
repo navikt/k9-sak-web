@@ -2473,8 +2473,6 @@ __metadata:
     dayjs: 1.11.11
     formik: 2.4.6
     nav-frontend-core: 6.0.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -2623,8 +2621,6 @@ __metadata:
     date-fns: 2.30.0
     formik: 2.4.6
     nav-frontend-core: 6.0.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     react: 18.3.1
     react-intl: 6.6.5
@@ -2670,10 +2666,6 @@ __metadata:
     moment: 2.30.1
     nav-frontend-core: 6.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-lukknapp: 2.0.2
-    nav-frontend-lukknapp-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -3109,8 +3101,6 @@ __metadata:
     formik: 2.4.6
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -3219,8 +3209,6 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.5.6
     nav-frontend-core: 6.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-lukknapp: 2.0.2
-    nav-frontend-lukknapp-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -3325,8 +3313,6 @@ __metadata:
     "@k9-sak-web/behandling-klage": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -3505,8 +3491,6 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.5.6
     dayjs: 1.11.11
     moment: 2.30.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -3535,10 +3519,6 @@ __metadata:
     date-fns-tz: 2.0.1
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-lukknapp: 2.0.2
-    nav-frontend-lukknapp-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -4351,10 +4331,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-lenkepanel: 2.0.2
-    nav-frontend-lenkepanel-style: 2.0.2
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
     nav-frontend-tabs: 2.0.3
     nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -4413,8 +4389,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -4517,8 +4491,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     object-hash: 3.0.0
@@ -4699,8 +4671,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -4943,8 +4913,6 @@ __metadata:
     history: 5.3.0
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-lenkepanel: 2.0.2
-    nav-frontend-lenkepanel-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -5035,8 +5003,6 @@ __metadata:
     "@navikt/ds-react": 6.5.0
     formik: 2.4.6
     nav-frontend-core: 6.0.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -15792,109 +15758,6 @@ __metadata:
     prop-types: ^15.5.10
     react: ^16.8.0 || ^17.0.0
   checksum: c572c63794715c27eed790911fcb4f0ac71934184813d4b9d3ad33827a5f05164f4563c22aac8d577bbbb7cf9c95e0da2383f247f539da1d4032d831193f915a
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lenkepanel-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-lenkepanel-style@npm:2.0.2"
-  peerDependencies:
-    nav-frontend-chevron-style: ^1.0.4
-    nav-frontend-core: ^6.0.0
-    nav-frontend-paneler-style: ^2.0.0
-  checksum: ce4cea4b78d72a5983ded22eaf812f361238aa1637a95f9d40461612ee97c7e7cba24f2a0c3426c7796945679077cb758b715932dda69da8e296d0e81f90f1e7
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lenkepanel@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-lenkepanel@npm:2.0.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-lenkepanel-style: ^2.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 356ccabef918b153bf48fe8bd455a4b252cbe17b3f1511350b2c2db5867b08fdec0819656e7147be334053d4a7032b7834c023724fd0d57eb9755b184317c7dd
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lenkepanel@patch:nav-frontend-lenkepanel@npm%3A2.0.2#./.yarn/patches/nav-frontend-lenkepanel-npm-2.0.2-c191f8e773.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 2.0.2
-  resolution: "nav-frontend-lenkepanel@patch:nav-frontend-lenkepanel@npm%3A2.0.2#./.yarn/patches/nav-frontend-lenkepanel-npm-2.0.2-c191f8e773.patch::version=2.0.2&hash=ad2e24&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-lenkepanel-style: ^2.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: ca7dc38a6642e02c0b24ede88af9cb2f6cdf30c30e44e58aa3485452edd479e9de92b6edc761940f5754a24352f55ae2e339a3e0def6a556a66481eaab5db237
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lenker-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-lenker-style@npm:2.0.2"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-  checksum: d3352a66744afbad6c93a3bc56e5f442bf65efd33a587bf57a1e87a345eaa593214c0cb77575085ebf654c9bc3aea9278446238a2615c58b15f4257d9f713879
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lenker@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-lenker@npm:2.0.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-lenker-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 135fc940765ec6947a594d7b18dd12c0862509646eba77db85386c2b87a695c7b69c72da4dc20e70abcaa06dafca7c4c2c6c6c1a46950727e09a8cade8f4cf60
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lenker@patch:nav-frontend-lenker@npm%3A2.0.2#./.yarn/patches/nav-frontend-lenker-npm-2.0.2-f01a3f3c03.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 2.0.2
-  resolution: "nav-frontend-lenker@patch:nav-frontend-lenker@npm%3A2.0.2#./.yarn/patches/nav-frontend-lenker-npm-2.0.2-f01a3f3c03.patch::version=2.0.2&hash=4b5d67&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-lenker-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 184e7a98a00a0be64683af75ac6209a028f2f914ef92e25434c2a88e697e23933f9741ce7678b253295869eb030bb34b6389f83962a2461c60cf63e0ba7f4ad0
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lukknapp-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-lukknapp-style@npm:2.0.2"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-  checksum: 3bf5da61f61a0f23cec4abf271d5252729da4b57ff62c646c28151c0a55b4e7cf0eebe48645ac6d967d8d99fda318ad8519dc91aafe5cec7dcf16d88342f45ed
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lukknapp@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-lukknapp@npm:2.0.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-lukknapp-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 56adeb220696aea940bd9ca9e20775ccb0d2f3b61513e9dfdaf9044f88cf6f4137fdc4823db2d41a1db59f5d25236482b69664a3424a4e07686e42cca7d3d988
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lukknapp@patch:nav-frontend-lukknapp@npm%3A2.0.2#./.yarn/patches/nav-frontend-lukknapp-npm-2.0.2-fa6e0532f9.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 2.0.2
-  resolution: "nav-frontend-lukknapp@patch:nav-frontend-lukknapp@npm%3A2.0.2#./.yarn/patches/nav-frontend-lukknapp-npm-2.0.2-fa6e0532f9.patch::version=2.0.2&hash=248a4d&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-lukknapp-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 1d041c3576626855bd80871762458c331a91d44be316da4dc3a7dd67000823e3aee68476a17b62c63ba659da0c19694191c43664cd9a22afd501806cb1d66d0c
   languageName: node
   linkType: hard
 

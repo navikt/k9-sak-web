@@ -31,9 +31,15 @@
   font-size: 18px;
   position: absolute;
   right: 16px;
-  top: 8px;
+  top: 10px;
 }
 
 .wordWrap {
   white-space: pre-line;
+}
+
+.closeButton {
+  --ac-button-secondary-border: white;
+
+  color: white;
 }

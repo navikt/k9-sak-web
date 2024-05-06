@@ -15,8 +15,6 @@
     "@navikt/ft-plattform-komponenter": "2.5.6",
     "nav-frontend-core": "6.0.1",
     "nav-frontend-js-utils": "1.0.20",
-    "nav-frontend-lukknapp": "2.0.2",
-    "nav-frontend-lukknapp-style": "2.0.2",
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
     "react": "18.3.1",
