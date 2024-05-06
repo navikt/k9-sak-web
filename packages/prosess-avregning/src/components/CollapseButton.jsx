@@ -1,18 +1,23 @@
-import { NedChevron, OppChevron } from 'nav-frontend-chevron';
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
+import { Button } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-
-import styles from './collapseButton.module.css';
 
 const buttonText = showDetails =>
   showDetails ? 'Avregning.headerText.VisFærreDetaljer' : 'Avregning.headerText.VisFlereDetaljer';
 
 const CollapseButton = ({ toggleDetails, showDetails, mottakerIndex }) => (
-  <button type="button" className={styles.invisibleButton} onClick={() => toggleDetails(mottakerIndex)}>
+  <Button
+    type="button"
+    className="-ml-3 -mt-1"
+    onClick={() => toggleDetails(mottakerIndex)}
+    icon={showDetails ? <ChevronUpIcon /> : <ChevronDownIcon />}
+    iconPosition="right"
+    variant="tertiary"
+  >
     <FormattedMessage id={buttonText(showDetails)} />
-    {showDetails ? <OppChevron /> : <NedChevron />}
-  </button>
+  </Button>
 );
 
 CollapseButton.propTypes = {

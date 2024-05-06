@@ -1,8 +1,8 @@
 import xImg from '@fpsak-frontend/assets/images/x.svg';
 import { Image } from '@fpsak-frontend/shared-components';
-import { Checkbox, CheckboxGroup, Label } from '@navikt/ds-react';
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
+import { Button, Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import classNames from 'classnames';
-import Chevron from 'nav-frontend-chevron';
 import React, { useEffect, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './behandlingFilter.module.css';
@@ -37,12 +37,15 @@ interface BehandlingfilterProps {
 }
 
 const ChevronWithText = ({ chevronDirection, onClick, text }: ChevronWithTextProps): JSX.Element => (
-  <button type="button" className={styles.chevronDropdown__toggleButton} onClick={onClick}>
-    <Label size="small" as="p" className={styles.chevronDropdown__toggleButton__text}>
-      {text}
-    </Label>
-    <Chevron type={chevronDirection} />
-  </button>
+  <Button
+    variant="tertiary"
+    iconPosition="right"
+    icon={chevronDirection === 'opp' ? <ChevronUpIcon /> : <ChevronDownIcon />}
+    type="button"
+    onClick={onClick}
+  >
+    {text}
+  </Button>
 );
 
 const BehandlingFilter = ({ text, filters, activeFilters, onFilterChange }: BehandlingfilterProps): JSX.Element => {

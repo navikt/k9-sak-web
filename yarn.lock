@@ -2778,8 +2778,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     classnames: 2.5.1
     moment: 2.30.1
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -2859,8 +2857,6 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     classnames: 2.5.1
     moment: 2.30.1
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -3269,8 +3265,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
     history: 5.3.0
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -4324,8 +4318,6 @@ __metadata:
     dayjs: 1.11.11
     eslint-plugin-cypress: ^2.15.2
     lodash: 4.17.21
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
@@ -4382,8 +4374,6 @@ __metadata:
     lodash: 4.17.21
     msw: 1.3.3
     msw-storybook-addon: 1.10.0
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
@@ -4484,8 +4474,6 @@ __metadata:
     dayjs: 1.11.11
     lodash: 4.17.21
     msw: 1.3.3
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
@@ -4613,7 +4601,6 @@ __metadata:
     classnames: 2.5.1
     lodash: 4.17.21
     moment: 2.30.1
-    nav-frontend-chevron: 1.0.30
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
@@ -4733,8 +4720,6 @@ __metadata:
     dayjs: 1.11.11
     express: 4.19.2
     lodash: 4.17.21
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
@@ -4937,8 +4922,6 @@ __metadata:
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
@@ -15654,37 +15637,6 @@ __metadata:
   version: 1.4.0
   resolution: "natural-compare@npm:1.4.0"
   checksum: 23ad088b08f898fc9b53011d7bb78ec48e79de7627e01ab5518e806033861bef68d5b0cd0e2205c2f36690ac9571ff6bcb05eb777ced2eeda8d4ac5b44592c3d
-  languageName: node
-  linkType: hard
-
-"nav-frontend-chevron-style@npm:1.0.4":
-  version: 1.0.4
-  resolution: "nav-frontend-chevron-style@npm:1.0.4"
-  checksum: c4c4e8c63a9d9802060fbc451f8d82fa48ced9763b2820c0ff6e0801b5e9c8624a92d83ccb8c914f65cb29ed78dedf7ed92ce8c42c91fc6ffe29421f1a788630
-  languageName: node
-  linkType: hard
-
-"nav-frontend-chevron@npm:1.0.30":
-  version: 1.0.30
-  resolution: "nav-frontend-chevron@npm:1.0.30"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-chevron-style: ^1.0.4
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 3f587f8abc5c2c00e1d14d9e188ca7417d074d024f5ead095b75029bb3a2ffdb157a514e0172d9ce12ce17c87320c2e333cb1f6f7c0d70dca33af0979c006a3d
-  languageName: node
-  linkType: hard
-
-"nav-frontend-chevron@patch:nav-frontend-chevron@npm%3A1.0.30#./.yarn/patches/nav-frontend-chevron-npm-1.0.30-1fbba039a5.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 1.0.30
-  resolution: "nav-frontend-chevron@patch:nav-frontend-chevron@npm%3A1.0.30#./.yarn/patches/nav-frontend-chevron-npm-1.0.30-1fbba039a5.patch::version=1.0.30&hash=34a0b3&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-chevron-style: ^1.0.4
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: ac3fb888cacb6dcb826ee9cdfda7ba0e4acdda55d0d55272c8629264fa922fa8155ef06498159b6bb4850e0088c0192a69bc1c465208fb9b3e944496f97973bc
   languageName: node
   linkType: hard
 

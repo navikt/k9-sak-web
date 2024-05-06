@@ -1,10 +1,10 @@
 import { BodyShort, HGrid } from '@navikt/ds-react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 
 /* TODO Ta i bruk fpsakApi - Flytt url ut av komponent */
 const DOCUMENT_SERVER_URL = '/k9/sak/api/vedtak/hent-vedtaksdokument';
@@ -38,17 +38,12 @@ class VedtakDocuments extends Component {
     return (
       <>
         <a href="" onClick={this.toggleDocuments} className="lenke lenke--frittstaende">
-          <BodyShort size="small">
+          <BodyShort size="small" className="flex">
             <FormattedMessage
               id="DocumentListInnsyn.Vedtaksdokumentasjon"
               values={{ numberOfDocuments: vedtaksdokumenter.length }}
             />
-            <i
-              className={classNames(
-                'nav-frontend-chevron chevronboks ',
-                showDocuments ? 'chevron--ned' : 'chevron--opp',
-              )}
-            />
+            {showDocuments ? <ChevronUpIcon fontSize="1.5rem" /> : <ChevronDownIcon fontSize="1.5rem" />}
           </BodyShort>
         </a>
         {showDocuments && (

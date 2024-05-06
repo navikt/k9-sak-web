@@ -13,9 +13,9 @@ import {
   VilkårEnum,
 } from '@k9-sak-web/types';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
-import { BodyShort, Box, HelpText, Label, Table } from '@navikt/ds-react';
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
+import { BodyShort, Box, Button, HelpText, Label, Table } from '@navikt/ds-react';
 import classNames from 'classnames';
-import NavFrontendChevron from 'nav-frontend-chevron';
 import Tabs from 'nav-frontend-tabs';
 import React, { ReactNode, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -310,15 +310,15 @@ const AktivitetTabell = ({
                   {skalÅrsakVises && <Table.DataCell>{formaterFraværsårsak(fraværÅrsak)}</Table.DataCell>}
                   <Table.DataCell>{`${utbetalingsgrad}%`}</Table.DataCell>
                   <Table.DataCell>
-                    <button
+                    <Button
+                      variant="tertiary"
                       className={styles.utvidelsesknapp}
                       onClick={() => velgPeriode(index)}
                       type="button"
                       aria-expanded={erValgt}
                       aria-label={`Utvid rad for perioden ${formatereLukketPeriode(periode)}`}
-                    >
-                      <NavFrontendChevron type={erValgt ? 'opp' : 'ned'} />
-                    </button>
+                      icon={erValgt ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                    />
                   </Table.DataCell>
                 </Table.Row>
                 {erValgt && (
