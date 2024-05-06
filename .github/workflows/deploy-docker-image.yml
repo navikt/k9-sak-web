@@ -107,7 +107,7 @@ jobs:
               repo: context.issue.repo,
               labels: ['deployment'],
               body: 'Kommenter enten "/promote dev-fss" eller "/promote prod-fss" for å deploye ${{ github.sha }}',
-              title: 'Deploy av ${{ env.steps.docker-push.outputs.tag }}'})
+              title: 'Deploy av ${{ steps.docker-push.outputs.tag }}'})
             .then(response => {
                     core.setOutput('number', response.data.number);
             });
