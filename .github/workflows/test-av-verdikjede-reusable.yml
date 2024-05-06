@@ -83,7 +83,6 @@ jobs:
       issues: write
       packages: read
     uses: navikt/sif-gha-workflows/.github/workflows/verdikjede-test.yml@main
-    if: github.ref_name == 'master'
     needs: deploy-docker-image
     with:
       tag: ${{ needs.deploy-docker-image.outputs.tag }}
