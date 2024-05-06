@@ -13,10 +13,9 @@ import {
   VilkårEnum,
 } from '@k9-sak-web/types';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
-import { BodyShort, Box, Label, Table } from '@navikt/ds-react';
+import { BodyShort, Box, HelpText, Label, Table } from '@navikt/ds-react';
 import classNames from 'classnames';
 import NavFrontendChevron from 'nav-frontend-chevron';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import Tabs from 'nav-frontend-tabs';
 import React, { ReactNode, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -339,9 +338,9 @@ const AktivitetTabell = ({
                               <div className={styles.deaktivertFane}>
                                 <FormattedMessage id="Uttaksplan.Nokkeltall" />
                               </div>
-                              <Hjelpetekst>
+                              <HelpText>
                                 <FormattedMessage id="Nøkkeltall.Deaktivert" />
-                              </Hjelpetekst>
+                              </HelpText>
                             </>
                           )}
                           {valgteDetaljfaner?.[valgtPeriodeIndex] === Fanenavn.NOKKELTALL && (
