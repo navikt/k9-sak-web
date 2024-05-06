@@ -28,6 +28,7 @@ jobs:
       id-token: write
     # needs: [test, lint-tscheck-build]
     outputs:
+      tag: ${{ steps.docker-push.outputs.tag }}
       image: ${{ steps.docker-push.outputs.image }}
     steps:
       - name: Hente kode
@@ -71,6 +72,7 @@ jobs:
       - name: Sett image for nais deploy
         run: |
           echo "IMAGE=${{steps.docker-push.outputs.image}}" >> $GITHUB_OUTPUT
+          echo "TAG=${{steps.docker-push.outputs.tag}}" >> $GITHUB_OUTPUT
 
       - name: Lukk gamle issues
         uses: actions/github-script@v7
@@ -105,24 +107,10 @@ jobs:
               repo: context.issue.repo,
               labels: ['deployment'],
               body: 'Kommenter enten "/promote dev-fss" eller "/promote prod-fss" for å deploye ${{ github.sha }}',
-              title: 'Deploy av ${{ env.DOCKER_METADATA_OUTPUT_VERSION }}'})
+              title: 'Deploy av ${{ env.steps.docker-push.outputs.tag }}'})
             .then(response => {
                     core.setOutput('number', response.data.number);
             });
-
-      - name: Trigger verdikjede test
-        shell: bash
-        run: |
-          curl -XPOST -u "x-access-token:${{secrets.GA_P_TOKEN}}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/navikt/k9-verdikjede/actions/workflows/build.yml/dispatches \
-          -d '{"ref":"master",
-                  "inputs":{
-                      "trigger": "${{ github.repository }}",
-                      "run_id": "${{ github.run_id }}",
-                      "version": "${{ env.DOCKER_METADATA_OUTPUT_VERSION}}",
-                      "issue_number": "${{ steps.createdeployissue.outputs.number }}"
-                  }}'
 
       - name: Trigg deploy til dev-fss
         if: success()
@@ -135,6 +123,18 @@ jobs:
                             issue_number: ${{ steps.createdeployissue.outputs.number }} }
             github.rest.issues.createComment({...issue, body: '/promote dev-fss'})
 
+  verdikjede-tester:
+    name: Verdikjedetester
+    secrets: inherit
+    permissions:
+      id-token: write
+      packages: read
+    uses: navikt/sif-gha-workflows/.github/workflows/verdikjede-test.yml@main
+    if: github.ref_name == 'master'
+    needs: deploy-docker-image
+    with:
+      tag: ${{ needs.deploy-docker-image.outputs.tag }}
+      frontend_only: true
   trivy:
     needs: [deploy-docker-image]
     uses: navikt/sif-gha-workflows/.github/workflows/trivy.yml@main
