@@ -1,4 +1,4 @@
-import { InputField, RadioGroupField } from '@fpsak-frontend/form';
+import { InputField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr, minValue, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 import { BodyShort, Detail } from '@navikt/ds-react';
@@ -30,21 +30,10 @@ const BelopetMottattIGodTroFormPanel = ({ readOnly, erBelopetIBehold }: OwnProps
       <FormattedMessage id="BelopetMottattIGodTroFormPanel.BelopetIBehold" />
     </Detail>
     <VerticalSpacer eightPx />
-    <RadioGroupField
-      validate={[required]}
-      name="erBelopetIBehold"
-      readOnly={readOnly}
-      radios={[
-        {
-          value: true,
-          label: <FormattedMessage id="BelopetMottattIGodTroFormPanel.Ja" />,
-        },
-        {
-          value: false,
-          label: <FormattedMessage id="BelopetMottattIGodTroFormPanel.Nei" />,
-        },
-      ]}
-    />
+    <RadioGroupField validate={[required]} name="erBelopetIBehold" readOnly={readOnly}>
+      <RadioOption label={<FormattedMessage id="BelopetMottattIGodTroFormPanel.Ja" />} value />
+      <RadioOption label={<FormattedMessage id="BelopetMottattIGodTroFormPanel.Nei" />} value={false} />
+    </RadioGroupField>
     <div className={styles.arrowbox}>
       {erBelopetIBehold === true && (
         <ArrowBox alignOffset={25}>

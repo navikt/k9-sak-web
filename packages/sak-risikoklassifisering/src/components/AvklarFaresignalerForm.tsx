@@ -1,4 +1,4 @@
-import { RadioGroupField, TextAreaField, behandlingForm } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, TextAreaField, behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -66,20 +66,13 @@ export const AvklarFaresignalerForm = ({ readOnly, aksjonspunkt, ...formProps }:
           <RadioGroupField
             name={radioFieldName}
             validate={[required]}
-            isVertical
+            direction="vertical"
             readOnly={readOnly}
             isEdited={!isAksjonspunktOpen(aksjonspunkt.status.kode)}
-            radios={[
-              {
-                value: true,
-                label: <FormattedMessage id="Risikopanel.Form.Innvirkning" />,
-              },
-              {
-                value: false,
-                label: <FormattedMessage id="Risikopanel.Form.IngenInnvirkning" />,
-              },
-            ]}
-          />
+          >
+            <RadioOption label={<FormattedMessage id="Risikopanel.Form.Innvirkning" />} value />
+            <RadioOption label={<FormattedMessage id="Risikopanel.Form.IngenInnvirkning" />} value={false} />
+          </RadioGroupField>
         </FlexColumn>
       </FlexRow>
       <FlexRow>

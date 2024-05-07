@@ -6,13 +6,13 @@ import DatepickerField from './DatepickerField';
 
 describe('<DatepickerField>', () => {
   it('skal formatere fra ISO-format til norsk datoformat', () => {
-    renderWithIntlAndReduxForm(<DatepickerField name="testDato" label="test" />, {
+    renderWithIntlAndReduxForm(<DatepickerField name="testDato" />, {
       messages,
       initialValues: { testDato: '2017-02-01' },
     });
 
     expect(screen.getByRole('textbox')).toBeInTheDocument();
-    expect(screen.getByRole('textbox', { name: 'test' })).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('dd.mm.åååå')).toBeInTheDocument();
     expect(screen.getByDisplayValue('01.02.2017')).toBeInTheDocument();
   });
 });

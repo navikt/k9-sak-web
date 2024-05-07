@@ -80,7 +80,7 @@ const StrukturerDokumentSluttfaseForm = ({
               label="Hvilken dato er dokumentet datert?"
               defaultValue=""
               validators={{ required, dateIsNotInTheFuture }}
-              toDate={dateConstants.today.toDate()}
+              limitations={{ maxDate: dateConstants.today.toISOString() }}
               inputId="datertField"
             />
           </Box>

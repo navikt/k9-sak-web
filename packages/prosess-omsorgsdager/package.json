@@ -20,6 +20,7 @@
     "classnames": "2.5.1",
     "dayjs": "1.11.11",
     "lodash": "4.17.21",
+    "nav-datovelger": "12.6.0",
     "nav-frontend-core": "6.0.1",
     "nav-frontend-ikoner-assets": "3.0.1",
     "nav-frontend-js-utils": "1.0.20",
@@ -32,6 +33,6 @@
     "react": "18.3.1",
     "react-day-picker": "7.4.10",
     "react-dom": "18.3.1",
-    "react-hook-form": "7.51.4"
+    "react-hook-form": "7.51.3"
   }
 }

@@ -14,8 +14,9 @@ import {
 } from '@fpsak-frontend/utils';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
-import { BodyShort, Button, Label, Modal, Select } from '@navikt/ds-react';
+import { BodyShort, Button, Label, Modal } from '@navikt/ds-react';
 import moment from 'moment';
+import { Select as NavSelect } from 'nav-frontend-skjema';
 import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -216,8 +217,6 @@ export const SettPaVentModal = ({
                     name="frist"
                     validate={[required, hasValidDate, dateAfterOrEqualToToday]}
                     data-testid="datofelt"
-                    label={getPaVentText(originalVentearsak, hasManualPaVent, frist, originalFrist, showEndreFrist)}
-                    hideLabel
                   />
                 </div>
               )}
@@ -229,15 +228,9 @@ export const SettPaVentModal = ({
             {showSelect && (
               <div className={styles.selectContainer}>
                 {erVenterEtterlysInntektsmelding ? (
-                  <Select
-                    className={styles.disabledNavSelect}
-                    disabled
-                    label="Hva venter vi på?"
-                    hideLabel
-                    size="small"
-                  >
+                  <NavSelect className={styles.disabledNavSelect} disabled>
                     <option value="">Inntektsmelding</option>
-                  </Select>
+                  </NavSelect>
                 ) : (
                   <SelectField
                     name="ventearsak"

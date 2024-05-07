@@ -1,4 +1,4 @@
-import { DecimalField, InputField, RadioGroupField, SelectField } from '@fpsak-frontend/form';
+import { DecimalField, InputField, RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
 import { ArrowBox, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr, maxValue, minValue, required } from '@fpsak-frontend/utils';
 import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
@@ -45,21 +45,10 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
           <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.SkalSarligeGrunnerGiReduksjon" />
         </Detail>
         <VerticalSpacer eightPx />
-        <RadioGroupField
-          validate={[required]}
-          name="harGrunnerTilReduksjon"
-          readOnly={readOnly}
-          radios={[
-            {
-              value: true,
-              label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />,
-            },
-            {
-              value: false,
-              label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />,
-            },
-          ]}
-        />
+        <RadioGroupField validate={[required]} name="harGrunnerTilReduksjon" readOnly={readOnly}>
+          <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />} value />
+          <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />} value={false} />
+        </RadioGroupField>
       </div>
     </HGrid>
     {harGrunnerTilReduksjon && (
@@ -164,17 +153,10 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
                 validate={[required]}
                 name="skalDetTilleggesRenter"
                 readOnly={readOnly}
-                radios={[
-                  {
-                    value: true,
-                    label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />,
-                  },
-                  {
-                    value: false,
-                    label: <FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />,
-                  },
-                ]}
-              />
+              >
+                <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Ja" />} value />
+                <RadioOption label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.Nei" />} value={false} />
+              </RadioGroupField>
             </div>
           )}
         </HGrid>

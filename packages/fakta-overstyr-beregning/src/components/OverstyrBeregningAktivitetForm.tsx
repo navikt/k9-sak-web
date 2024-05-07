@@ -1,7 +1,7 @@
-import { Datepicker } from '@fpsak-frontend/shared-components';
 import { parseCurrencyInput } from '@fpsak-frontend/utils';
 import { Table, TextField } from '@navikt/ds-react';
 import { Field, useFormikContext } from 'formik';
+import { Datepicker } from 'nav-datovelger';
 import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
@@ -48,7 +48,6 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
               value={parseCurrencyInput(field.value)}
               error={meta.touched && meta.error ? meta.error : false}
               disabled={readOnly}
-              hideLabel
             />
           )}
         </Field>
@@ -75,7 +74,6 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
               value={parseCurrencyInput(field.value)}
               error={meta.touched && meta.error ? meta.error : false}
               disabled={readOnly || !skalKunneEndreRefusjon}
-              hideLabel
             />
           )}
         </Field>
@@ -83,17 +81,21 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
       <Table.DataCell>
         <Field name={`perioder.${periodeIndex}.aktivitetliste.${aktivitetIndex}.startdatoRefusjon`}>
           {({ field, meta }) => (
-            <Datepicker
-              label={intl.formatMessage({ id: 'OverstyrInputForm.StartdatoRefusjonPlaceholder' })}
-              hideLabel
-              error={meta.touched && meta.error ? meta.error : ''}
-              value={field.value}
-              onChange={value => {
-                setFieldTouched(field.name, true);
-                setFieldValue(field.name, value);
-              }}
-              disabled={readOnly}
-            />
+            <>
+              <Datepicker
+                inputProps={{
+                  placeholder: intl.formatMessage({ id: 'OverstyrInputForm.StartdatoRefusjonPlaceholder' }),
+                  'aria-invalid': !!(meta.touched && meta.error),
+                }}
+                value={field.value}
+                onChange={value => {
+                  setFieldTouched(field.name, true);
+                  setFieldValue(field.name, value);
+                }}
+                disabled={readOnly}
+              />
+              {meta.touched && meta.error && <p className={styles.errorText}>{meta.error}</p>}
+            </>
           )}
         </Field>
       </Table.DataCell>
@@ -102,17 +104,21 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
           {({ field, meta }) => {
             const tallverdi = values.perioder[periodeIndex].aktivitetliste[aktivitetIndex].refusjonPrAar;
             return (
-              <Datepicker
-                label={intl.formatMessage({ id: 'OverstyrInputForm.OpphorRefusjonPlaceholder' })}
-                hideLabel
-                error={meta.touched && meta.error ? meta.error : ''}
-                value={field.value}
-                onChange={value => {
-                  setFieldTouched(field.name, true);
-                  setFieldValue(field.name, value);
-                }}
-                disabled={(Number(tallverdi) || 0) <= 0 || !Number(tallverdi) || readOnly || !skalKunneEndreRefusjon}
-              />
+              <>
+                <Datepicker
+                  inputProps={{
+                    placeholder: intl.formatMessage({ id: 'OverstyrInputForm.OpphorRefusjonPlaceholder' }),
+                    'aria-invalid': !!(meta.touched && meta.error),
+                  }}
+                  value={field.value}
+                  onChange={value => {
+                    setFieldTouched(field.name, true);
+                    setFieldValue(field.name, value);
+                  }}
+                  disabled={(Number(tallverdi) || 0) <= 0 || !Number(tallverdi) || readOnly || !skalKunneEndreRefusjon}
+                />
+                {meta.touched && meta.error && <p className={styles.errorText}>{meta.error}</p>}
+              </>
             );
           }}
         </Field>

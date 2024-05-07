@@ -26,7 +26,7 @@ describe('<DelOppPeriodeModal>', () => {
       { messages },
     );
     expect(screen.getByRole('dialog')).toBeInTheDocument();
-    expect(screen.getAllByText('Angi t.o.m. dato for første periode')).toHaveLength(2);
+    expect(screen.getByText('Angi t.o.m. dato for første periode')).toBeInTheDocument();
     expect(screen.getByText('01.01.2018 - 01.03.2018')).toBeInTheDocument();
   });
 
