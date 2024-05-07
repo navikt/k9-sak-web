@@ -10,8 +10,7 @@ import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePer
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
-import { HGrid } from '@navikt/ds-react';
-import Tabs from 'nav-frontend-tabs';
+import { HGrid, Tabs } from '@navikt/ds-react';
 import React, { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
@@ -78,6 +77,14 @@ const InngangsvilkarPanel = ({
     panel => hentAktivePerioderFraVilkar(panel.vilkar, true).length > 0,
   );
 
+  const tabs =
+    perioderFraTidligereBehandlinger.length > 0
+      ? [
+          { label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" />, key: 'Vilkarsperioder.DenneBehandling' },
+          { label: <FormattedMessage id="Vilkarsperioder.HittilIÅr" />, key: 'Vilkarsperioder.HittilIÅr' },
+        ]
+      : [{ label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" />, key: 'Vilkarsperioder.DenneBehandling' }];
+
   return (
     <NestedIntlProvider messages={messages}>
       <FadingPanel>
@@ -98,17 +105,18 @@ const InngangsvilkarPanel = ({
             <VerticalSpacer thirtyTwoPx />
           </>
         )}
-        <Tabs
-          tabs={
-            perioderFraTidligereBehandlinger.length > 0
-              ? [
-                  { label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" /> },
-                  { label: <FormattedMessage id="Vilkarsperioder.HittilIÅr" /> },
-                ]
-              : [{ label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" /> }]
-          }
-          onChange={(e, index) => setVisAllePerioder(index === 1)}
-        />
+        <Tabs defaultValue="0">
+          <Tabs.List>
+            {tabs.map((tab, index) => (
+              <Tabs.Tab
+                key={tab.key}
+                value={`${index}`}
+                label={tab.label}
+                onClick={() => setVisAllePerioder(index === 1)}
+              />
+            ))}
+          </Tabs.List>
+        </Tabs>
         <VerticalSpacer thirtyTwoPx />
         <HGrid gap="4" columns={{ xs: '6fr 6fr' }}>
           <div>

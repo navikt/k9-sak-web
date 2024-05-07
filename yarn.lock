@@ -2565,7 +2565,6 @@ __metadata:
     classnames: 2.5.1
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-tabs: 2.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -2591,8 +2590,6 @@ __metadata:
     moment: 2.30.1
     nav-frontend-core: 6.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     object-hash: 3.0.0
@@ -2961,8 +2958,6 @@ __metadata:
     classnames: 2.5.1
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -3127,8 +3122,6 @@ __metadata:
     moment: 2.30.1
     nav-frontend-core: 6.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     prop-types: 15.8.1
     react: 18.3.1
@@ -3842,7 +3835,6 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.5.6
     classnames: 2.5.1
     nav-frontend-core: 6.0.1
-    nav-frontend-tabs: 2.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -4315,8 +4307,6 @@ __metadata:
     lodash: 4.17.21
     nav-frontend-core: 6.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -4494,7 +4484,6 @@ __metadata:
     classnames: 2.5.1
     dayjs: 1.11.11
     formik: 2.4.6
-    nav-frontend-tabs: 2.0.3
     react-intl: 6.6.5
     react-outside-click-handler: 1.3.0
     uuid: 9.0.1
@@ -4594,7 +4583,6 @@ __metadata:
     moment: 2.30.1
     nav-frontend-core: 6.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-tabs: 2.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -4709,8 +4697,6 @@ __metadata:
     lodash: 4.17.21
     nav-frontend-core: 6.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -15641,40 +15627,6 @@ __metadata:
     prop-types: ^15.5.10
     react: ^16.8.0 || ^17.0.0
   checksum: c572c63794715c27eed790911fcb4f0ac71934184813d4b9d3ad33827a5f05164f4563c22aac8d577bbbb7cf9c95e0da2383f247f539da1d4032d831193f915a
-  languageName: node
-  linkType: hard
-
-"nav-frontend-tabs-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-tabs-style@npm:2.0.2"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-    nav-frontend-typografi-style: ^2.0.0
-  checksum: f0b410537deb0e686ef8fae68b41d9024082b877eb3aae46155f86d91d05a71c0c3c07a510e7574113e9cd558bf101f65f48176ae80aaf10ed28d44346abf4ec
-  languageName: node
-  linkType: hard
-
-"nav-frontend-tabs@npm:2.0.3":
-  version: 2.0.3
-  resolution: "nav-frontend-tabs@npm:2.0.3"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-js-utils: ^1.0.19
-    nav-frontend-tabs-style: ^2.0.0
-    react: ^16.8.0 || ^17.0.0
-  checksum: 2f91bad23f1b0ac7082657d722331f581128469a8ba4a363b399bff3ef048d67ea3a553eba65e663ae59930ecc5b85d47177cf4ab97062b545e1d5cfa1f4b874
-  languageName: node
-  linkType: hard
-
-"nav-frontend-tabs@patch:nav-frontend-tabs@npm%3A2.0.3#./.yarn/patches/nav-frontend-tabs-npm-2.0.3-3d1b6739cc.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 2.0.3
-  resolution: "nav-frontend-tabs@patch:nav-frontend-tabs@npm%3A2.0.3#./.yarn/patches/nav-frontend-tabs-npm-2.0.3-3d1b6739cc.patch::version=2.0.3&hash=77026c&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-js-utils: ^1.0.19
-    nav-frontend-tabs-style: ^2.0.0
-    react: ^16.8.0 || ^17.0.0
-  checksum: 1707b05def879afbf061c014749421e255ef3b0f7106fb26f22c17d0fb75dbb94fe1f26df022f419abc920cecb937e557adf2ac04abd365bcad161ae7c348a30
   languageName: node
   linkType: hard
 

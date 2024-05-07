@@ -1,10 +1,10 @@
+import { NestedIntlProvider } from '@fpsak-frontend/shared-components';
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
+import { Aksjonspunkt } from '@k9-sak-web/types';
+import { Tabs as DSTabs } from '@navikt/ds-react';
 import { WarningIcon } from '@navikt/ft-plattform-komponenter';
 import classnames from 'classnames';
-import TabsPure from 'nav-frontend-tabs';
-import React, { useContext, useState } from 'react';
-
-import { NestedIntlProvider } from '@fpsak-frontend/shared-components';
+import React, { useContext } from 'react';
 import Tabs from './Tabs';
 import GjennomgaaOpplaeringOversikt from './gjennomgaaOpplaering/GjennomgaaOpplaeringOversikt';
 import messages from './i18n/nb_NO.json';
@@ -17,10 +17,9 @@ interface TabItemProps {
   showWarningIcon: boolean;
 }
 
-const findInitialTabIndex = aktivtAksjonspunkt => {
+const findInitialTab = (aktivtAksjonspunkt: Aksjonspunkt) => {
   const initialTab = Object.values(Tabs).find(tab => tab.aksjonspunkt === aktivtAksjonspunkt?.definisjon?.kode);
-  const index = Object.values(Tabs).findIndex(tab => initialTab === tab);
-  return index < 0 ? 0 : index;
+  return initialTab ? initialTab.label : Tabs.GJENNOMGÅ_OPPLÆRING.label;
 };
 
 const TabItem = ({ label, showWarningIcon }: TabItemProps) => {
@@ -30,11 +29,7 @@ const TabItem = ({ label, showWarningIcon }: TabItemProps) => {
   return (
     <div className={cls}>
       {label}
-      {showWarningIcon && (
-        <div className={styles.medisinskVilkårTabItem__warningIcon}>
-          <WarningIcon />
-        </div>
-      )}
+      {showWarningIcon && <WarningIcon />}
     </div>
   );
 };
@@ -43,24 +38,35 @@ const OpplaeringContainer = () => {
   const { aksjonspunkter } = useContext(FaktaOpplaeringContext);
 
   const aktivtAksjonspunkt = aksjonspunkter
-    .sort((a, b) => a.definisjon.kode - b.definisjon.kode)
+    .sort((a, b) => a.definisjon.kode.localeCompare(b.definisjon.kode))
     .find(aksjonspunkt => aksjonspunkt.status.kode === 'OPPR');
-  const [activeTab, setActiveTab] = useState(findInitialTabIndex(aktivtAksjonspunkt));
   return (
     <NestedIntlProvider messages={messages}>
-      <TabsPure
-        kompakt
-        tabs={Object.values(Tabs).map((tab, index) => ({
-          label: (
-            <TabItem label={tab.label} showWarningIcon={tab.aksjonspunkt === aktivtAksjonspunkt?.definisjon?.kode} />
-          ),
-          aktiv: activeTab === index,
-        }))}
-        onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
-      />
-      {activeTab === 0 && <GjennomgaaOpplaeringOversikt />}
-      {activeTab === 1 && <ReisetidOversikt />}
-      {activeTab === 2 && <NoedvendighetOversikt />}
+      <DSTabs defaultValue={findInitialTab(aktivtAksjonspunkt)}>
+        <DSTabs.List>
+          {Object.values(Tabs).map(tab => (
+            <DSTabs.Tab
+              key={tab.label}
+              value={tab.label}
+              label={
+                <TabItem
+                  label={tab.label}
+                  showWarningIcon={tab.aksjonspunkt === aktivtAksjonspunkt?.definisjon?.kode}
+                />
+              }
+            />
+          ))}
+        </DSTabs.List>
+        <DSTabs.Panel value={Tabs.GJENNOMGÅ_OPPLÆRING.label}>
+          <GjennomgaaOpplaeringOversikt />
+        </DSTabs.Panel>
+        <DSTabs.Panel value={Tabs.REISETID.label}>
+          <ReisetidOversikt />
+        </DSTabs.Panel>
+        <DSTabs.Panel value={Tabs.NØDVENDIGHET.label}>
+          <NoedvendighetOversikt />
+        </DSTabs.Panel>
+      </DSTabs>
     </NestedIntlProvider>
   );
 };

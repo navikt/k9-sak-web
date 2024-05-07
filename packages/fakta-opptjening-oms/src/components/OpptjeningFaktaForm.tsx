@@ -13,9 +13,8 @@ import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Opptjening } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
-import { Alert, BodyShort, Button, Detail, Heading } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Detail, Heading, Tabs } from '@navikt/ds-react';
 import moment from 'moment';
-import { TabsPure } from 'nav-frontend-tabs';
 import React, { Component, KeyboardEvent, MouseEvent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -299,14 +298,22 @@ export class OpptjeningFaktaFormImpl extends Component<
               <FormattedMessage id="OpptjeningFaktaForm.Opptjeningsperioder" />
             </Heading>
             <VerticalSpacer sixteenPx />
-            <TabsPure
-              tabs={opptjeningList.map((currentOpptjening, currentOpptjeningIndex) => ({
-                aktiv: activeTab === currentOpptjeningIndex,
-                label:
-                  opptjeningList.length <= 8 ? `Periode ${currentOpptjeningIndex + 1}` : currentOpptjeningIndex + 1,
-              }))}
-              onChange={(e, clickedIndex) => this.setActiveTab(clickedIndex)}
-            />
+            <Tabs defaultValue="0">
+              <Tabs.List>
+                {opptjeningList.map((_, currentOpptjeningIndex) => (
+                  <Tabs.Tab
+                    key={
+                      opptjeningList.length <= 8 ? `Periode ${currentOpptjeningIndex + 1}` : currentOpptjeningIndex + 1
+                    }
+                    value={`${currentOpptjeningIndex}`}
+                    label={
+                      opptjeningList.length <= 8 ? `Periode ${currentOpptjeningIndex + 1}` : currentOpptjeningIndex + 1
+                    }
+                    onClick={() => this.setActiveTab(currentOpptjeningIndex)}
+                  />
+                ))}
+              </Tabs.List>
+            </Tabs>
           </>
         )}
         <div className={opptjeningList.length > 1 ? styles.tabContainer : ''}>
