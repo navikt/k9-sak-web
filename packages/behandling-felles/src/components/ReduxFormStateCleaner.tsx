@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { destroy, FormAction } from 'redux-form';
+import { destroy } from 'redux-form';
 import { useDispatch } from 'react-redux';
 import { Action } from 'redux';
 
