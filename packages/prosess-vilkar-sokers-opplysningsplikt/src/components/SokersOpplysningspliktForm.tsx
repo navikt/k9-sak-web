@@ -1,4 +1,4 @@
-import { RadioGroupField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
@@ -168,21 +168,14 @@ export const SokersOpplysningspliktFormImpl = ({
       <>
         <VerticalSpacer sixteenPx />
         <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
-          <RadioGroupField
-            name="erVilkarOk"
-            validate={[required]}
-            radios={[
-              {
-                value: true,
-                disabled: isVilkarOppfyltDisabled(hasSoknad, inntektsmeldingerSomIkkeKommer),
-                label: <FormattedMessage id={findRadioButtonTextCode(true)} />,
-              },
-              {
-                value: false,
-                label: getLabel(intl),
-              },
-            ]}
-          />
+          <RadioGroupField name="erVilkarOk" validate={[required]}>
+            <RadioOption
+              label={<FormattedMessage id={findRadioButtonTextCode(true)} />}
+              value
+              disabled={isVilkarOppfyltDisabled(hasSoknad, inntektsmeldingerSomIkkeKommer)}
+            />
+            <RadioOption label={getLabel(intl)} value={false} />
+          </RadioGroupField>
         </HGrid>
       </>
     )}

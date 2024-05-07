@@ -1,4 +1,4 @@
-import { RadioGroupField } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
@@ -89,35 +89,40 @@ export const VilkarFields = ({
           name={`${fieldPrefix}.erVilkarOk`}
           validate={[required]}
           bredde="XXL"
-          isVertical
+          direction="vertical"
           readOnly={readOnly}
-          radios={[
-            {
-              value: true,
-              label: erOppfyltText,
-            },
-            {
-              value: false,
-              label: erIkkeOppfyltText,
-            },
-            ...(!erOmsorgspenger
-              ? [
-                  {
-                    value: midlertidigInaktiv.TYPE_A,
-                    label: intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA' }),
-                  },
-                ]
-              : []),
-            ...(skalValgMidlertidigInaktivTypeBVises
-              ? [
-                  {
-                    value: midlertidigInaktiv.TYPE_B,
-                    label: intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' }),
-                  },
-                ]
-              : []),
-          ]}
-        />
+        >
+          {({ optionProps }) => (
+            <FlexContainer>
+              <FlexColumn>
+                <FlexRow spaceBetween={false}>
+                  <RadioOption label={erOppfyltText} value {...optionProps} />
+                </FlexRow>
+                <FlexRow spaceBetween={false}>
+                  <RadioOption label={erIkkeOppfyltText} value={false} {...optionProps} />
+                </FlexRow>
+                {!erOmsorgspenger ? (
+                  <FlexRow spaceBetween={false}>
+                    <RadioOption
+                      label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA' }}
+                      value={midlertidigInaktiv.TYPE_A}
+                      {...optionProps}
+                    />
+                  </FlexRow>
+                ) : null}
+                {skalValgMidlertidigInaktivTypeBVises && (
+                  <FlexRow spaceBetween={false}>
+                    <RadioOption
+                      label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' }}
+                      value={midlertidigInaktiv.TYPE_B}
+                      {...optionProps}
+                    />
+                  </FlexRow>
+                )}
+              </FlexColumn>
+            </FlexContainer>
+          )}
+        </RadioGroupField>
       )}
       <VerticalSpacer sixteenPx />
     </>
