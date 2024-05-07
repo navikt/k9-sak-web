@@ -4744,8 +4744,8 @@ __metadata:
     react: 18.3.1
     react-day-picker: 7.4.10
     react-dom: 18.3.1
-    vite: ^5.2.11
     react-hook-form: 7.51.4
+    vite: ^5.2.11
     vitest-axe: ^0.1.0
   languageName: unknown
   linkType: soft
