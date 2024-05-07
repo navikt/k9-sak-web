@@ -4897,6 +4897,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/sak-aktor@1.0.0, @k9-sak-web/sak-aktor@workspace:packages/sak-aktor":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/sak-aktor@workspace:packages/sak-aktor"
+  dependencies:
+    "@fpsak-frontend/kodeverk": 1.0.0
+    "@fpsak-frontend/sak-visittkort": 1.0.0
+    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    nav-frontend-lenkepanel: 2.0.2
+    nav-frontend-lenkepanel-style: 2.0.2
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-router-dom: 6.22.3
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/sak-app@1.0.0, @k9-sak-web/sak-app@workspace:packages/sak-app":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-app@workspace:packages/sak-app"
@@ -4943,6 +4961,7 @@ __metadata:
     "@k9-sak-web/prosess-uttak": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
+    "@k9-sak-web/sak-aktor": 1.0.0
     "@k9-sak-web/sak-behandling-velger": 1.0.0
     "@k9-sak-web/sak-infosider": 1.0.0
     "@k9-sak-web/sak-meldinger": 1.0.0
