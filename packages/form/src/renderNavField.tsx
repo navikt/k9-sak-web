@@ -40,7 +40,7 @@ const renderNavField = WrappedNavFieldComponent => {
     const fieldProps = {
       id: input.name,
       error: formatError(submitFailed, error),
-      label: <Label input={label} readOnly={readOnly} />,
+      label: <Label input={label} readOnly={readOnly} textOnly />,
     };
     if (!readOnly) {
       return <WrappedNavFieldComponent {...fieldProps} {...input} {...otherProps} readOnly={readOnly} />;
