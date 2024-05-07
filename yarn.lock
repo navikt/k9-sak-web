@@ -6565,7 +6565,7 @@ __metadata:
   checksum: ed0ac5468020b71680f59462d1787a87a340fc35b0a6dd71c4af586494c5d41c947eb59bc3c347582a597139b4292f0d3ece4334b39a3da08b28de7cf5098509
   languageName: node
   linkType: hard
-
+  
 "@sentry/cli-darwin@npm:2.31.2":
   version: 2.31.2
   resolution: "@sentry/cli-darwin@npm:2.31.2"
@@ -7694,9 +7694,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/jest-dom@npm:^6.4.2":
-  version: 6.4.2
-  resolution: "@testing-library/jest-dom@npm:6.4.2"
+"@testing-library/jest-dom@npm:^6.4.5":
+  version: 6.4.5
+  resolution: "@testing-library/jest-dom@npm:6.4.5"
   dependencies:
     "@adobe/css-tools": ^4.3.2
     "@babel/runtime": ^7.9.2
@@ -7704,7 +7704,7 @@ __metadata:
     chalk: ^3.0.0
     css.escape: ^1.5.1
     dom-accessibility-api: ^0.6.3
-    lodash: ^4.17.15
+    lodash: ^4.17.21
     redent: ^3.0.0
   peerDependencies:
     "@jest/globals": ">= 28"
@@ -7723,7 +7723,7 @@ __metadata:
       optional: true
     vitest:
       optional: true
-  checksum: 631aeadbf4e738080ae095242cf1a29a0b4ee2f09c8bdd0d3f00a923707da64c1617e088ba9a961d098481afabdc1d19149fb7ef98edf15132348eb222f345ae
+  checksum: 95bd94f1f4ba2110eaaa15174207f74d46481f0f168a4d58c30f92a9285f797f9949c166aa8401bcb46e16edbf14a097013204d65801e9d1361892757e525bd6
   languageName: node
   linkType: hard
 
@@ -14658,7 +14658,7 @@ __metadata:
     "@storybook/theming": 7.6.17
     "@testing-library/cypress": ^10.0.1
     "@testing-library/dom": 9.3.4
-    "@testing-library/jest-dom": ^6.4.2
+    "@testing-library/jest-dom": ^6.4.5
     "@testing-library/react": 14.3.1
     "@testing-library/user-event": 14.5.2
     "@types/history": 5.0.0
