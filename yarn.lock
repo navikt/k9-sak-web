@@ -6565,7 +6565,7 @@ __metadata:
   checksum: ed0ac5468020b71680f59462d1787a87a340fc35b0a6dd71c4af586494c5d41c947eb59bc3c347582a597139b4292f0d3ece4334b39a3da08b28de7cf5098509
   languageName: node
   linkType: hard
-  
+
 "@sentry/cli-darwin@npm:2.31.2":
   version: 2.31.2
   resolution: "@sentry/cli-darwin@npm:2.31.2"
