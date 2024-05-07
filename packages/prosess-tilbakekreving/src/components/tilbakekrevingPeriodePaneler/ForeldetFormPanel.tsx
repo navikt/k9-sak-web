@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import { RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import { HGrid } from '@navikt/ds-react';
 
 const ForeldetFormPanel = () => (
@@ -14,9 +14,8 @@ const ForeldetFormPanel = () => (
         name="periodenErForeldet"
         readOnly
         label={<FormattedMessage id="ForeldetPanel.VurderOmPeriodenErForeldet" />}
-      >
-        {[<RadioOption key={1} label={<FormattedMessage id="ForeldetPanel.PeriodenErForeldet" />} value />]}
-      </RadioGroupField>
+        radios={[{ value: true, label: <FormattedMessage id="ForeldetPanel.PeriodenErForeldet" /> }]}
+      />
     </div>
   </HGrid>
 );

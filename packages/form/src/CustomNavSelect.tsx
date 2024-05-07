@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unused-class-component-methods */
-import { Select as NavSelect } from 'nav-frontend-skjema';
+import { Select } from '@navikt/ds-react';
 import React, { Component } from 'react';
 
 interface CustomNavSelectProps {
@@ -68,11 +68,12 @@ class CustomNavSelect extends Component<CustomNavSelectProps> {
       props: { placeholder, selectValues, value, hideValueOnDisable, disabled, ...otherProps },
     } = this;
     return (
-      <NavSelect
+      <Select
         {...otherProps}
-        selectRef={handleSelectRef}
+        ref={handleSelectRef}
         value={hideValueOnDisable && disabled ? '' : selectedValue(value)}
         disabled={disabled}
+        size="small"
       >
         {placeholder && (
           <option value="" disabled>
@@ -80,7 +81,7 @@ class CustomNavSelect extends Component<CustomNavSelectProps> {
           </option>
         )}
         {selectValues}
-      </NavSelect>
+      </Select>
     );
   }
 }
