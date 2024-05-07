@@ -29,7 +29,7 @@ describe('<SettPaVentModal>', () => {
 
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: 'Lukk' }).length).toBe(2);
-    expect(screen.getByText('Behandlingen er satt på vent med frist:')).toBeInTheDocument();
+    expect(screen.getAllByText('Behandlingen er satt på vent med frist:')).toHaveLength(2);
   });
 
   it('skal ikke disable knapp for lagring når frist er en gyldig fremtidig dato', () => {
@@ -153,7 +153,7 @@ describe('<SettPaVentModal>', () => {
       { messages },
     );
 
-    expect(screen.getByPlaceholderText('dd.mm.åååå')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Behandlingen settes på vent med frist' })).toBeInTheDocument();
   });
 
   it('skal vise årsak-input som readonly når behandling automatisk er satt på vent', () => {

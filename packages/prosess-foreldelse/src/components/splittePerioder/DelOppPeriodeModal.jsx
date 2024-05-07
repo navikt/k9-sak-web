@@ -54,6 +54,8 @@ export const DelOppPeriodeModalImpl = ({
           validate={[required, hasValidDate]}
           disabledDays={{ before: moment(periodeData.fom).toDate(), after: moment(periodeData.tom).toDate() }}
           initialMonth={moment(periodeData.tom).toDate()}
+          label={intl.formatMessage({ id: 'DelOppPeriodeModalImpl.AngiTomDato' })}
+          hideLabel
         />
       </div>
       {finnesBelopMed0Verdi && (
