@@ -184,9 +184,9 @@ describe('<AvregningPanelImpl>', () => {
 
     expect(screen.queryByText('Foreldrepenger nytt beløp')).not.toBeInTheDocument();
     await act(async () => {
-      await userEvent.click(screen.getByRole('button', { name: 'Vis flere detaljer' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Vis flere detaljer Lukket' }));
     });
-    expect(screen.getByRole('button', { name: 'Vis færre detaljer' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Vis færre detaljer Ekspandert' })).toBeInTheDocument();
     expect(screen.getByText('Foreldrepenger nytt beløp')).toBeInTheDocument();
   });
 

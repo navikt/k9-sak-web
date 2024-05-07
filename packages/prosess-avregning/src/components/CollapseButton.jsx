@@ -12,7 +12,7 @@ const CollapseButton = ({ toggleDetails, showDetails, mottakerIndex }) => (
     type="button"
     className="-ml-3 -mt-1"
     onClick={() => toggleDetails(mottakerIndex)}
-    icon={showDetails ? <ChevronUpIcon /> : <ChevronDownIcon />}
+    icon={showDetails ? <ChevronUpIcon title="Ekspandert" /> : <ChevronDownIcon title="Lukket" />}
     iconPosition="right"
     variant="tertiary"
   >
