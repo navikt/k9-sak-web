@@ -23,7 +23,7 @@
     "@popperjs/core": "2.11.8",
     "axios": "1.6.8",
     "classnames": "2.5.1",
-    "date-fns": "2.30.0",
+    "date-fns": "3.6.0",
     "dayjs": "1.11.11",
     "lodash": "4.17.21",
     "msw-storybook-addon": "1.10.0",
@@ -42,7 +42,7 @@
     "react": "18.3.1",
     "react-collapse": "5.1.1",
     "react-dom": "18.3.1",
-    "react-hook-form": "7.51.4",
+    "react-hook-form": "7.51.3",
     "react-popper": "2.3.0",
     "uuid": "9.0.1"
   },
