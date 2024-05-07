@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { destroy } from 'redux-form';
+import { destroy, FormAction } from 'redux-form';
 import { useDispatch } from 'react-redux';
+import { Action } from 'redux';
 
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 
@@ -15,12 +16,12 @@ const ReduxFormStateCleaner = ({ behandlingId, behandlingVersjon }: OwnProps) =>
 
   useEffect(() => {
     if (ref.current && ref.current !== behandlingVersjon) {
-      dispatch(destroy(getBehandlingFormPrefix(behandlingId, ref.current)));
+      dispatch(destroy(getBehandlingFormPrefix(behandlingId, ref.current)) as unknown as Action);
     }
     ref.current = behandlingVersjon;
     return () => {
-      dispatch(destroy(getBehandlingFormPrefix(behandlingId, ref.current)));
-      dispatch(destroy(getBehandlingFormPrefix(behandlingId, behandlingVersjon)));
+      dispatch(destroy(getBehandlingFormPrefix(behandlingId, ref.current)) as unknown as Action);
+      dispatch(destroy(getBehandlingFormPrefix(behandlingId, behandlingVersjon)) as unknown as Action);
     };
   }, [behandlingVersjon]);
 
