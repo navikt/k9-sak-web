@@ -130,7 +130,6 @@
     "postcss": "8.4.38",
     "parse-url": "8.1.0",
     "@types/react": "17",
-    "nav-frontend-typografi@4.0.2": "patch:nav-frontend-typografi@npm%3A4.0.2#./.yarn/patches/nav-frontend-typografi-npm-4.0.2-67ec896090.patch",
     "@editorjs/editorjs": "2.27.2"
   },
   "msw": {

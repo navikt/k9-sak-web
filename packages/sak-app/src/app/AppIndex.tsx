@@ -22,10 +22,6 @@ import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 
-import 'nav-frontend-core/dist/main.css';
-
-import 'nav-frontend-typografi-style/dist/main.css';
-
 const EMPTY_ARRAY = [];
 
 /**
