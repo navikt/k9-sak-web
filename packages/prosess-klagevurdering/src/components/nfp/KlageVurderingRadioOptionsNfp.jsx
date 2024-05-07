@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { injectIntl } from 'react-intl';
 
-import { RadioGroupField, SelectField } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
@@ -74,17 +74,13 @@ export const KlageVurderingRadioOptionsNfp = ({
         validate={[required]}
         readOnly={readOnly}
         className={readOnly ? styles.selectReadOnly : null}
-        radios={[
-          {
-            value: klageVurderingType.MEDHOLD_I_KLAGE,
-            label: intl.formatMessage({ id: 'Klage.ResolveKlage.ChangeVedtak' }),
-          },
-          {
-            value: klageVurderingType.STADFESTE_YTELSESVEDTAK,
-            label: intl.formatMessage({ id: 'Klage.ResolveKlage.KeepVedtakNfp' }),
-          },
-        ]}
-      />
+      >
+        <RadioOption value={klageVurderingType.MEDHOLD_I_KLAGE} label={{ id: 'Klage.ResolveKlage.ChangeVedtak' }} />
+        <RadioOption
+          value={klageVurderingType.STADFESTE_YTELSESVEDTAK}
+          label={{ id: 'Klage.ResolveKlage.KeepVedtakNfp' }}
+        />
+      </RadioGroupField>
       {klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE && (
         <ArrowBox className={readOnly ? styles.selectReadOnly : null}>
           <SelectField
@@ -106,22 +102,21 @@ export const KlageVurderingRadioOptionsNfp = ({
             validate={[required]}
             readOnly={readOnly}
             className={readOnly ? styles.selectReadOnly : null}
-            isVertical
-            radios={[
-              {
-                value: klageVurderingOmgjoerType.GUNST_MEDHOLD_I_KLAGE,
-                label: intl.formatMessage({ id: 'Klage.Behandle.Omgjort' }),
-              },
-              {
-                value: klageVurderingOmgjoerType.UGUNST_MEDHOLD_I_KLAGE,
-                label: intl.formatMessage({ id: 'Klage.Behandle.Ugunst' }),
-              },
-              {
-                value: klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE,
-                label: intl.formatMessage({ id: 'Klage.Behandle.DelvisOmgjort' }),
-              },
-            ]}
-          />
+            direction="vertical"
+          >
+            <RadioOption
+              value={klageVurderingOmgjoerType.GUNST_MEDHOLD_I_KLAGE}
+              label={{ id: 'Klage.Behandle.Omgjort' }}
+            />
+            <RadioOption
+              value={klageVurderingOmgjoerType.UGUNST_MEDHOLD_I_KLAGE}
+              label={{ id: 'Klage.Behandle.Ugunst' }}
+            />
+            <RadioOption
+              value={klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE}
+              label={{ id: 'Klage.Behandle.DelvisOmgjort' }}
+            />
+          </RadioGroupField>
         </ArrowBox>
       )}
       {skalViseHjemler && !erPåklagdBehandlingTilbakekreving && (

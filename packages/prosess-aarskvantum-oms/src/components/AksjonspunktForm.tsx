@@ -1,4 +1,4 @@
-import { CheckboxField, InputField, RadioGroupField, TextAreaField } from '@fpsak-frontend/form/index';
+import { CheckboxField, InputField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
 import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -174,17 +174,10 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
               <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Valg" />
             </Label>
           }
-          radios={[
-            {
-              value: valgValues.reBehandling,
-              label: <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.ReBehandling" />,
-            },
-            {
-              value: valgValues.fortsett,
-              label: <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fortsett" />,
-            },
-          ]}
-        />
+        >
+          <RadioOption value={valgValues.reBehandling} label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling' }} />
+          <RadioOption value={valgValues.fortsett} label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.Fortsett' }} />
+        </RadioGroupField>
       )}
       <TextAreaField
         label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.Begrunnelse' }}

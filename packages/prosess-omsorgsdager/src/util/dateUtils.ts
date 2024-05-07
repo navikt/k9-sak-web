@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
 import utc from 'dayjs/plugin/utc';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { Period } from '../types/Period';
 
 const dateFormats = ['YYYY-MM-DD', 'DD.MM.YYYY'];

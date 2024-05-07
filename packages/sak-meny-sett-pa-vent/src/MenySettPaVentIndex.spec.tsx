@@ -52,12 +52,12 @@ describe('<MenySettPaVentIndex>', () => {
     );
 
     expect(await screen.getByTestId('ventModalForm')).toBeInTheDocument();
-    expect(screen.getAllByText('Behandlingen settes på vent med frist')).toHaveLength(2);
+    expect(screen.queryByText('Behandlingen settes på vent med frist')).toBeInTheDocument();
 
     /**
      * Velg en dato
      */
-    const datoFelt = screen.getByRole('textbox', { name: 'Behandlingen settes på vent med frist' });
+    const datoFelt = screen.getByPlaceholderText('dd.mm.åååå');
     const datoStreng = format(testDato, 'dd.MM.yyyy');
     await userEvent.clear(datoFelt);
     await userEvent.type(datoFelt, datoStreng);

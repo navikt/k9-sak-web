@@ -1,6 +1,6 @@
 import {
-  Label,
   RadioGroupField,
+  RadioOption,
   SelectField,
   TextAreaField,
   behandlingForm,
@@ -18,7 +18,7 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort, Button, Label as DSLabel, Detail, HGrid } from '@navikt/ds-react';
+import { BodyShort, Button, Detail, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import React, { Component } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
@@ -273,9 +273,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
           <>
             <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
               <div>
-                <DSLabel size="small" as="p">
+                <Label size="small" as="p">
                   <FormattedMessage id="TilbakekrevingPeriodeForm.KopierVilkårsvurdering" />
-                </DSLabel>
+                </Label>
                 <SelectField
                   name="perioderForKopi"
                   selectValues={vurdertePerioder.map(per => {
@@ -304,9 +304,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
             {!data.erForeldet && (
               <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
                 <div>
-                  <DSLabel size="small" as="p">
+                  <Label size="small" as="p">
                     <FormattedMessage id="TilbakekrevingPeriodeForm.VilkarForTilbakekreving" />
-                  </DSLabel>
+                  </Label>
                   <VerticalSpacer eightPx />
                   <TextAreaField
                     name="begrunnelse"
@@ -325,15 +325,15 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                   <RadioGroupField
                     validate={[required]}
                     name="valgtVilkarResultatType"
-                    isVertical
+                    direction="vertical"
                     readOnly={readOnly}
-                    radios={vilkarResultatTyper.map(vrt => ({
-                      value: vrt.kode,
-                      label: <Label input={vrt.navn} textOnly />,
-                    }))}
                     // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
                     onChange={this.resetFields}
-                  />
+                  >
+                    {vilkarResultatTyper.map(vrt => (
+                      <RadioOption key={vrt.kode} label={vrt.navn} value={vrt.kode} />
+                    ))}
+                  </RadioGroupField>
                 </div>
               </HGrid>
             )}
@@ -343,7 +343,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
               <div>
                 {valgtVilkarResultatType && (
                   <>
-                    <DSLabel size="small" as="p">
+                    <Label size="small" as="p">
                       <FormattedMessage
                         id={
                           valgtVilkarResultatType === VilkarResultat.GOD_TRO
@@ -351,7 +351,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                             : 'TilbakekrevingPeriodeForm.Aktsomhet'
                         }
                       />
-                    </DSLabel>
+                    </Label>
                     <VerticalSpacer eightPx />
                     <TextAreaField
                       name="vurderingBegrunnelse"

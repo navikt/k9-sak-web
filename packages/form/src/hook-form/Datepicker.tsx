@@ -1,33 +1,46 @@
-import { Datepicker as SharedDatepicker } from '@fpsak-frontend/shared-components';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { DatepickerLimitations } from './pure/DatepickerLimitations';
+import PureDatepicker from './pure/PureDatepicker';
 
 export interface DatepickerProps {
   label?: string;
   name: string;
   validators?: { [key: string]: (v: any) => string | boolean | undefined };
+  ariaLabel?: string;
   defaultValue?: string;
   fromDate?: Date;
   toDate?: Date;
+  /**
+   * @deprecated Bruk disabledDays, fromDate og toDate istedet.
+   */
+  limitations?: DatepickerLimitations;
   error?: string;
   inputId?: string;
   disabled?: boolean;
+  disabledDays?: {
+    from: Date;
+    to?: Date;
+  }[];
 }
 
 const Datepicker = ({
   name,
   validators,
+  limitations,
   label,
+  ariaLabel,
   defaultValue,
   error,
   inputId,
   disabled,
   fromDate,
   toDate,
+  disabledDays,
 }: DatepickerProps): JSX.Element => {
   const { control, formState } = useFormContext();
   const { errors } = formState;
-  const disabledDays = { before: fromDate, after: toDate };
+
   return (
     <Controller
       control={control}
@@ -41,13 +54,17 @@ const Datepicker = ({
       render={({ field }) => {
         const { onChange, value } = field;
         return (
-          <SharedDatepicker
+          <PureDatepicker
             label={label}
             onChange={onChange}
             value={value}
-            error={error || (errors[name]?.message as string)}
+            errorMessage={error || (errors[name]?.message as string)}
+            limitations={limitations}
+            ariaLabel={ariaLabel}
             inputId={inputId}
             disabled={disabled}
+            fromDate={fromDate}
+            toDate={toDate}
             disabledDays={disabledDays}
           />
         );

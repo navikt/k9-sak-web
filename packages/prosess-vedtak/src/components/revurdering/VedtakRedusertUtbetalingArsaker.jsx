@@ -1,5 +1,5 @@
 import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
-import { CheckboxGroup } from '@navikt/ds-react';
+import { CheckboxGruppe } from 'nav-frontend-skjema';
 import PropTypes from 'prop-types';
 import React from 'react';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
@@ -9,14 +9,13 @@ const VedtakRedusertUtbetalingArsaker = ({ intl, readOnly, values, erSendtInnUte
   const ingenArsakErValgt = !Array.from(values.values()).includes(true);
 
   return (
-    <CheckboxGroup
+    <CheckboxGruppe
       className={styles.wrapper}
-      error={
+      feil={
         erSendtInnUtenArsaker &&
         ingenArsakErValgt &&
         intl.formatMessage({ id: 'VedtakForm.RedusertUtbetalingArsaker.IkkeSatt' })
       }
-      size="small"
     >
       {Object.values(redusertUtbetalingArsak).map(name => (
         <CheckboxFieldFormik
@@ -27,7 +26,7 @@ const VedtakRedusertUtbetalingArsaker = ({ intl, readOnly, values, erSendtInnUte
           checked={values[name]}
         />
       ))}
-    </CheckboxGroup>
+    </CheckboxGruppe>
   );
 };
 
