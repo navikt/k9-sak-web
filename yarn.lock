@@ -2702,8 +2702,8 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.6
     react-hook-form: 7.51.4
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -4561,8 +4561,8 @@ __metadata:
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
-    react-intl: 6.6.6
     react-hook-form: 7.51.4
+    react-intl: 6.6.6
     react-popper: 2.3.0
     vite: ^5.2.10
   languageName: unknown
@@ -4842,8 +4842,8 @@ __metadata:
     nav-frontend-core: 6.0.1
     react: 18.3.1
     react-dom: 18.3.1
-    react-intl: 6.6.6
     react-hook-form: 7.51.4
+    react-intl: 6.6.6
   languageName: unknown
   linkType: soft
 
@@ -5097,8 +5097,8 @@ __metadata:
     "@navikt/ft-form-validators": 2.3.3
     date-fns: 2.30.0
     react: 18.3.1
-    react-intl: 6.6.6
     react-hook-form: 7.51.4
+    react-intl: 6.6.6
   languageName: unknown
   linkType: soft
 
