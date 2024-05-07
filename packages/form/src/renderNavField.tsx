@@ -50,6 +50,12 @@ const renderNavField = WrappedNavFieldComponent => {
     );
   };
 
+  // FieldComponent.defaultProps = {
+  //   readOnly: false,
+  //   readOnlyHideEmpty: false,
+  //   isEdited: false,
+  // };
+
   return FieldComponent;
 };
 

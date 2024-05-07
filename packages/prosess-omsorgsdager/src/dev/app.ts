@@ -6,6 +6,7 @@ import renderers from '../util/renderers';
 const state = {};
 
 const getState = key => {
+  console.log(`getState med ${key} gir ${state[key]}`);
   try {
     return JSON.parse(state[key]);
   } catch {
@@ -13,9 +14,11 @@ const getState = key => {
   }
 };
 const deleteState = key => {
+  console.log(`deleteState med ${key}`);
   delete state[key];
 };
 const setState = (key, data) => {
+  console.log(`setState til ${key} med data:`, data);
   state[key] = JSON.stringify(data);
 };
 
@@ -72,15 +75,15 @@ const inputMocks = {
     visKomponent: 'VilkarMidlertidigAlene' as Komponenter.VILKAR_MIDLERTIDIG_ALENE,
     props: {
       behandlingsID: '123',
-      aksjonspunktLost: false,
-      lesemodus: false,
+      aksjonspunktLost: true,
+      lesemodus: true,
       soknadsopplysninger: {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
         periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
         soknadsdato: '2021-04-06',
       },
-      vedtakFattetVilkarOppfylt: false,
+      vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
@@ -136,17 +139,16 @@ const inputMocks = {
     props: {
       behandlingsID: '123',
       aksjonspunktLost: false,
-      lesemodus: false,
+      lesemodus: true,
       fraDatoFraSoknad: '2021-04-06',
-      fraDatoFraVilkar: '2021-04-06',
-      vedtakFattetVilkarOppfylt: false,
+      vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
         vilkar: '§ 9-3 vilkar',
       },
-      erBehandlingstypeRevurdering: false,
+      erBehandlingstypeRevurdering: true,
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
         vilkarOppfylt: true,
@@ -163,5 +165,5 @@ const inputMocks = {
 // test
 (window as any).renderMicrofrontendOmsorgsdagerApp = async appId => {
   const { renderAppInSuccessfulState } = renderers;
-  renderAppInSuccessfulState(appId, inputMocks.vilkarMidlertidigAlene);
+  renderAppInSuccessfulState(appId, inputMocks.korrigerePerioder);
 };
