@@ -2440,7 +2440,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -2506,7 +2506,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -2552,7 +2552,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -2577,7 +2577,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -2607,7 +2607,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -2654,7 +2654,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -2688,7 +2688,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -2728,7 +2728,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -2750,7 +2750,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -2774,7 +2774,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -2802,7 +2802,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -2854,7 +2854,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -2882,7 +2882,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -2906,7 +2906,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -2931,7 +2931,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -2959,7 +2959,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -2990,7 +2990,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
     xss: 1.0.15
   languageName: unknown
   linkType: soft
@@ -3017,7 +3017,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -3039,7 +3039,7 @@ __metadata:
     react-intl: 6.6.5
     react-redux: 8.1.3
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -3061,7 +3061,7 @@ __metadata:
     react-intl: 6.6.5
     react-redux: 8.1.3
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -3085,7 +3085,7 @@ __metadata:
     react-intl: 6.6.5
     react-redux: 8.1.3
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -3125,7 +3125,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -3158,7 +3158,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -3187,7 +3187,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -3209,7 +3209,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -3252,7 +3252,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -3342,7 +3342,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -3365,7 +3365,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -3446,7 +3446,7 @@ __metadata:
     react-intl: 6.6.5
     react-redux: 8.1.3
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -3496,7 +3496,7 @@ __metadata:
     react-router-dom: 6.22.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -3859,7 +3859,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -3887,7 +3887,7 @@ __metadata:
     react-intl: 6.6.5
     react-redux: 8.1.3
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -3922,7 +3922,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -3950,7 +3950,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -3979,7 +3979,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -4025,7 +4025,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -4077,7 +4077,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -4126,7 +4126,7 @@ __metadata:
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
     redux-saga: 1.3.0
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -4179,7 +4179,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -4214,7 +4214,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -4255,7 +4255,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -4285,7 +4285,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -4640,7 +4640,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -4753,7 +4753,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -4855,7 +4855,7 @@ __metadata:
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -4977,7 +4977,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     redux-thunk: 2.4.2
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -5039,7 +5039,7 @@ __metadata:
     react-intl: 6.6.5
     react-redux: 8.1.3
     redux-form: 8.3.10
-    reselect: 4.1.8
+    reselect: 5.1.0
   languageName: unknown
   linkType: soft
 
@@ -18110,10 +18110,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reselect@npm:4.1.8":
-  version: 4.1.8
-  resolution: "reselect@npm:4.1.8"
-  checksum: a4ac87cedab198769a29be92bc221c32da76cfdad6911eda67b4d3e7136dca86208c3b210e31632eae31ebd2cded18596f0dd230d3ccc9e978df22f233b5583e
+"reselect@npm:5.1.0":
+  version: 5.1.0
+  resolution: "reselect@npm:5.1.0"
+  checksum: 5bc9c5d03d7caea00d0c0e24330bf23d91801227346fec1cef6a60988ab8d3dd7cee76e6994ca0915bc1c20845bb2bd929b95753763e0a9db74c0f9dff5cb845
   languageName: node
   linkType: hard
 

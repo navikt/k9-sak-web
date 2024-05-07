@@ -25,7 +25,7 @@
     "react-uuid": "2.0.0",
     "redux": "4.2.1",
     "redux-form": "8.3.10",
-    "reselect": "4.1.8"
+    "reselect": "5.1.0"
   },
   "devDependencies": {
     "axios-mock-adapter": "1.22.0",
