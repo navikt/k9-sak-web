@@ -19,6 +19,10 @@ interface OwnProps {
 }
 
 const Datepicker: React.FC<OwnProps> = props => {
+  const stringToDate = (date: string | Date): Date => {
+    const newDate = dayjs(date, [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT, 'YYYY.MM.DD'], true);
+    return newDate.isValid() ? newDate.toDate() : undefined;
+  };
   const { error, value, onChange, disabled, label, initialMonth, disabledDays, hideLabel, inputId } = props;
 
   const getDefaultMonth = () => {
@@ -43,7 +47,7 @@ const Datepicker: React.FC<OwnProps> = props => {
         }
       }
     },
-    defaultSelected: value ? dayjs(value, [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT], true).toDate() : undefined,
+    defaultSelected: value ? stringToDate(value) : undefined,
     defaultMonth: getDefaultMonth(),
   });
 
