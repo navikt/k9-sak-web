@@ -2414,6 +2414,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formatjs/intl@npm:2.10.2":
+  version: 2.10.2
+  resolution: "@formatjs/intl@npm:2.10.2"
+  dependencies:
+    "@formatjs/ecma402-abstract": 1.18.2
+    "@formatjs/fast-memoize": 2.2.0
+    "@formatjs/icu-messageformat-parser": 2.7.6
+    "@formatjs/intl-displaynames": 6.6.6
+    "@formatjs/intl-listformat": 7.5.5
+    intl-messageformat: 10.5.12
+    tslib: ^2.4.0
+  peerDependencies:
+    typescript: ^4.7 || 5
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 7e4157e148a340fa6c18ba6fe83138b1df3a16fbca01438707d07c1ea3be6e3d492b3bdf229c0c97179fafceae636c9b08e4da445f643fd58f0f06bc8478737a
+  languageName: node
+  linkType: hard
+
 "@fpsak-frontend/assets@1.0.0, @fpsak-frontend/assets@workspace:packages/assets":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/assets@workspace:packages/assets"
@@ -2436,7 +2456,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -2457,7 +2477,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
   languageName: unknown
   linkType: soft
 
@@ -2479,7 +2499,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     yup: 0.32.11
   peerDependencies:
     dayjs: 1.10.7
@@ -2502,7 +2522,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -2523,7 +2543,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
   languageName: unknown
   linkType: soft
 
@@ -2548,7 +2568,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -2573,7 +2593,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -2603,7 +2623,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-dom: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -2629,7 +2649,7 @@ __metadata:
     nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     yup: 0.32.11
   languageName: unknown
   linkType: soft
@@ -2649,7 +2669,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -2683,7 +2703,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-hook-form: 7.51.4
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -2723,7 +2743,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -2745,7 +2765,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -2769,7 +2789,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -2797,7 +2817,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -2825,7 +2845,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-dom: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -2849,7 +2869,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -2877,7 +2897,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -2901,7 +2921,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -2926,7 +2946,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -2954,7 +2974,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-dom: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -2985,7 +3005,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-dom: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -3012,7 +3032,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -3035,7 +3055,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux-form: 8.3.10
     reselect: 4.1.8
@@ -3057,7 +3077,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux-form: 8.3.10
     reselect: 4.1.8
@@ -3081,7 +3101,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux-form: 8.3.10
     reselect: 4.1.8
@@ -3120,7 +3140,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -3153,7 +3173,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-dom: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -3182,7 +3202,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -3204,7 +3224,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -3229,7 +3249,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
   languageName: unknown
   linkType: soft
 
@@ -3247,7 +3267,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -3268,7 +3288,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     react-router-dom: 6.22.3
     redux-form: 8.3.10
@@ -3292,7 +3312,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-router-dom: 6.22.3
   languageName: unknown
   linkType: soft
@@ -3310,7 +3330,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -3337,7 +3357,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -3360,7 +3380,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -3383,7 +3403,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     react-router-dom: 6.22.3
     redux: 4.2.1
@@ -3398,7 +3418,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
   languageName: unknown
   linkType: soft
 
@@ -3409,7 +3429,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
   languageName: unknown
   linkType: soft
 
@@ -3422,7 +3442,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.5.6
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
   languageName: unknown
   linkType: soft
 
@@ -3442,7 +3462,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-collapse: 5.1.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux-form: 8.3.10
     reselect: 4.1.8
@@ -3464,7 +3484,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux-form: 8.3.10
   languageName: unknown
@@ -3490,7 +3510,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     react-router-dom: 6.22.3
     redux: 4.2.1
@@ -3518,7 +3538,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
   languageName: unknown
   linkType: soft
 
@@ -3553,7 +3573,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-day-picker: 7.4.10
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-modal: 3.16.1
     react-redux: 8.1.3
     redux-form: 8.3.10
@@ -3576,7 +3596,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-dom: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     vis-data: 7.1.9
     vis-timeline: 7.7.3
   languageName: unknown
@@ -3589,7 +3609,7 @@ __metadata:
     "@fpsak-frontend/kodeverk": 1.0.0
     jest-axe: 8.0.0
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
   languageName: unknown
   linkType: soft
 
@@ -3603,7 +3623,7 @@ __metadata:
     "@navikt/ft-types": 2.4.3
     moment: 2.30.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
   languageName: unknown
   linkType: soft
 
@@ -3853,7 +3873,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -3883,7 +3903,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux-form: 8.3.10
     reselect: 4.1.8
@@ -3916,7 +3936,7 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.6
     axios-mock-adapter: 1.22.0
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -3944,7 +3964,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -3973,7 +3993,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -4019,7 +4039,7 @@ __metadata:
     axios-mock-adapter: 1.22.0
     nav-frontend-popover: 2.0.4
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -4071,7 +4091,7 @@ __metadata:
     axios: 1.6.8
     axios-mock-adapter: 1.22.0
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -4119,7 +4139,7 @@ __metadata:
     axios: 1.6.8
     axios-mock-adapter: 1.22.0
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -4173,7 +4193,7 @@ __metadata:
     axios: 1.6.8
     axios-mock-adapter: 1.22.0
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -4208,7 +4228,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -4249,7 +4269,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -4278,7 +4298,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     axios-mock-adapter: 1.22.0
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     react-uuid: 2.0.0
     redux: 4.2.1
@@ -4311,7 +4331,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux-form: 8.3.10
     uuid: 9.0.1
@@ -4334,7 +4354,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     uuid: 9.0.1
   languageName: unknown
   linkType: soft
@@ -4395,7 +4415,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -4542,7 +4562,7 @@ __metadata:
     react-collapse: 5.1.1
     react-dom: 18.3.1
     react-hook-form: 7.51.4
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-popper: 2.3.0
     vite: ^5.2.10
   languageName: unknown
@@ -4562,7 +4582,7 @@ __metadata:
     dayjs: 1.11.11
     formik: 2.4.6
     nav-frontend-tabs: 2.0.3
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-outside-click-handler: 1.3.0
     uuid: 9.0.1
     yup: 0.32.11
@@ -4580,7 +4600,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     uuid: 9.0.1
   languageName: unknown
   linkType: soft
@@ -4635,7 +4655,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -4673,7 +4693,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-dom: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     react-router-dom: 6.22.3
     redux-form: 8.3.10
@@ -4695,7 +4715,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -4747,7 +4767,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -4765,7 +4785,7 @@ __metadata:
     "@k9-sak-web/fremdriftslinje": 1.0.0
     react: 18.3.1
     react-dom: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
   languageName: unknown
   linkType: soft
 
@@ -4823,7 +4843,7 @@ __metadata:
     react: 18.3.1
     react-dom: 18.3.1
     react-hook-form: 7.51.4
-    react-intl: 6.6.5
+    react-intl: 6.6.6
   languageName: unknown
   linkType: soft
 
@@ -4849,7 +4869,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     object-hash: 3.0.0
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux: 4.2.1
     redux-form: 8.3.10
@@ -4872,7 +4892,7 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-typografi: 4.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
   languageName: unknown
   linkType: soft
 
@@ -4968,7 +4988,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-dom: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     react-responsive: 10.0.0
     react-router-dom: 6.22.3
@@ -4999,7 +5019,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-query: 3.39.3
     react-router-dom: 6.22.3
   languageName: unknown
@@ -5012,7 +5032,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-router-dom: 6.22.3
   languageName: unknown
   linkType: soft
@@ -5034,7 +5054,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-redux: 8.1.3
     redux-form: 8.3.10
     reselect: 4.1.8
@@ -5059,7 +5079,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     yup: 0.32.11
   languageName: unknown
   linkType: soft
@@ -5078,7 +5098,7 @@ __metadata:
     date-fns: 2.30.0
     react: 18.3.1
     react-hook-form: 7.51.4
-    react-intl: 6.6.5
+    react-intl: 6.6.6
   languageName: unknown
   linkType: soft
 
@@ -5093,7 +5113,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
-    react-intl: 6.6.5
+    react-intl: 6.6.6
     react-router-dom: 6.22.3
   languageName: unknown
   linkType: soft
@@ -13716,6 +13736,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"intl-messageformat@npm:10.5.12":
+  version: 10.5.12
+  resolution: "intl-messageformat@npm:10.5.12"
+  dependencies:
+    "@formatjs/ecma402-abstract": 1.18.2
+    "@formatjs/fast-memoize": 2.2.0
+    "@formatjs/icu-messageformat-parser": 2.7.6
+    tslib: ^2.4.0
+  checksum: 3645a2530351008dd1459bce26de59460fa21c5126e9ccc1fc12d41cc5e1d25f2affd66175d5802576425c05fe03b651e6310406e927627db30024b1760b843b
+  languageName: node
+  linkType: hard
+
 "invariant@npm:^2.2.4":
   version: 2.2.4
   resolution: "invariant@npm:2.2.4"
@@ -17524,6 +17556,30 @@ __metadata:
     typescript:
       optional: true
   checksum: 6f53b293057210edaa3e5d7e29cd8da155425f26988f2407b35969074dc7881fa251fac814ca2735d01e57db0fec4d17adaf740c7ead77e2422693b1ff42cec4
+  languageName: node
+  linkType: hard
+
+"react-intl@npm:6.6.6":
+  version: 6.6.6
+  resolution: "react-intl@npm:6.6.6"
+  dependencies:
+    "@formatjs/ecma402-abstract": 1.18.2
+    "@formatjs/icu-messageformat-parser": 2.7.6
+    "@formatjs/intl": 2.10.2
+    "@formatjs/intl-displaynames": 6.6.6
+    "@formatjs/intl-listformat": 7.5.5
+    "@types/hoist-non-react-statics": ^3.3.1
+    "@types/react": 16 || 17 || 18
+    hoist-non-react-statics: ^3.3.2
+    intl-messageformat: 10.5.12
+    tslib: ^2.4.0
+  peerDependencies:
+    react: ^16.6.0 || 17 || 18
+    typescript: ^4.7 || 5
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: b40aba1560779b2f7846cd3f258b30bcf48fe7bf25e1b3df2e397ef81dd0bea3133a03d16150d2f246d32df010253246abf1a32a166e489e9702d0932bb3576b
   languageName: node
   linkType: hard
 
