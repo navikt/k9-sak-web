@@ -1,4 +1,4 @@
-import { RadioGroupField, RadioOption, TextAreaField, behandlingForm } from '@fpsak-frontend/form';
+import { Label, RadioGroupField, TextAreaField, behandlingForm } from '@fpsak-frontend/form';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 import { Button, Detail, HGrid } from '@navikt/ds-react';
@@ -80,14 +80,14 @@ export class ForeldelsePeriodeFormImpl extends Component {
             <RadioGroupField
               validate={[required]}
               name="foreldet"
-              direction="vertical"
+              isVertical
               readOnly={readOnly}
               onChange={this.resetFields}
-            >
-              {foreldelseVurderingTyper.map(type => (
-                <RadioOption key={type.kode} label={type.navn} value={type.kode} />
-              ))}
-            </RadioGroupField>
+              radios={foreldelseVurderingTyper.map(type => ({
+                value: type.kode,
+                label: <Label input={type.navn} textOnly />,
+              }))}
+            />
           </div>
         </HGrid>
         <VerticalSpacer twentyPx />
