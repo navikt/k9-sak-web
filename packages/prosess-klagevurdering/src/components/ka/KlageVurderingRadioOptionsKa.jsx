@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { injectIntl } from 'react-intl';
 
-import { RadioGroupField, SelectField } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -27,39 +27,26 @@ export const KlageVurderingRadioOptionsKa = ({ readOnly, medholdReasons, klageVu
       />
       <VerticalSpacer sixteenPx />
       <HGrid gap="1" columns={{ xs: '4fr 4fr 4fr' }}>
-        <RadioGroupField
-          name="klageVurdering"
-          validate={[required]}
-          isVertical
-          readOnly={readOnly}
-          radios={[
-            {
-              value: klageVurderingType.STADFESTE_YTELSESVEDTAK,
-              label: intl.formatMessage({ id: 'Klage.ResolveKlage.KeepVedtakNk' }),
-            },
-            {
-              value: klageVurderingType.MEDHOLD_I_KLAGE,
-              label: intl.formatMessage({ id: 'Klage.ResolveKlage.ChangeVedtak' }),
-            },
-          ]}
-        />
+        <RadioGroupField name="klageVurdering" validate={[required]} direction="vertical" readOnly={readOnly}>
+          <RadioOption
+            value={klageVurderingType.STADFESTE_YTELSESVEDTAK}
+            label={{ id: 'Klage.ResolveKlage.KeepVedtakNk' }}
+          />
+          <RadioOption value={klageVurderingType.MEDHOLD_I_KLAGE} label={{ id: 'Klage.ResolveKlage.ChangeVedtak' }} />
+        </RadioGroupField>
         <RadioGroupField
           name="klageVurdering"
           validate={[required]}
           readOnly={readOnly}
           className={readOnly ? styles.selectReadOnly : null}
-          isVertical
-          radios={[
-            {
-              value: klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE,
-              label: intl.formatMessage({ id: 'Klage.Behandle.Hjemsendt' }),
-            },
-            {
-              value: klageVurderingType.OPPHEVE_YTELSESVEDTAK,
-              label: intl.formatMessage({ id: 'Klage.ResolveKlage.NullifyVedtak' }),
-            },
-          ]}
-        />
+          direction="vertical"
+        >
+          <RadioOption value={klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE} label={{ id: 'Klage.Behandle.Hjemsendt' }} />
+          <RadioOption
+            value={klageVurderingType.OPPHEVE_YTELSESVEDTAK}
+            label={{ id: 'Klage.ResolveKlage.NullifyVedtak' }}
+          />
+        </RadioGroupField>
       </HGrid>
       {klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE && (
         <ArrowBox>
@@ -78,22 +65,21 @@ export const KlageVurderingRadioOptionsKa = ({ readOnly, medholdReasons, klageVu
             validate={[required]}
             readOnly={readOnly}
             className={readOnly ? styles.selectReadOnly : null}
-            isVertical
-            radios={[
-              {
-                value: klageVurderingOmgjoerType.GUNST_MEDHOLD_I_KLAGE,
-                label: intl.formatMessage({ id: 'Klage.Behandle.Omgjort' }),
-              },
-              {
-                value: klageVurderingOmgjoerType.UGUNST_MEDHOLD_I_KLAGE,
-                label: intl.formatMessage({ id: 'Klage.Behandle.Ugunst' }),
-              },
-              {
-                value: klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE,
-                label: intl.formatMessage({ id: 'Klage.Behandle.DelvisOmgjort' }),
-              },
-            ]}
-          />
+            direction="vertical"
+          >
+            <RadioOption
+              value={klageVurderingOmgjoerType.GUNST_MEDHOLD_I_KLAGE}
+              label={{ id: 'Klage.Behandle.Omgjort' }}
+            />
+            <RadioOption
+              value={klageVurderingOmgjoerType.UGUNST_MEDHOLD_I_KLAGE}
+              label={{ id: 'Klage.Behandle.Ugunst' }}
+            />
+            <RadioOption
+              value={klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE}
+              label={{ id: 'Klage.Behandle.DelvisOmgjort' }}
+            />
+          </RadioGroupField>
         </ArrowBox>
       )}
       {klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK && (

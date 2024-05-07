@@ -1,4 +1,4 @@
-import { Radio } from '@navikt/ds-react';
+import { Radio } from 'nav-frontend-skjema';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
@@ -19,10 +19,16 @@ const RadioButtonWithBooleanValue: React.FunctionComponent<OwnProps> = ({
   const valideringsValg =
     valideringsFunksjoner !== undefined ? { validate: valideringsFunksjoner } : { required: true };
   const radio = register(name, valideringsValg);
+
   return (
-    <Radio value={value} name={radio.name} onChange={radio.onChange} onBlur={radio.onBlur} ref={radio.ref}>
-      {label}
-    </Radio>
+    <Radio
+      label={label}
+      value={value}
+      name={radio.name}
+      onChange={radio.onChange}
+      onBlur={radio.onBlur}
+      radioRef={radio.ref}
+    />
   );
 };
 

@@ -1,6 +1,6 @@
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
-import { DatepickerField, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
+import { DatepickerField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
   FlexColumn,
   FlexContainer,
@@ -131,49 +131,66 @@ export const SoknadsfristVilkarDokument = ({
           name={`avklarteKrav.${dokumentIndex}.erVilkarOk`}
           validate={[required]}
           bredde="XXL"
-          isVertical
+          direction="vertical"
           readOnly={readOnly}
-          radios={[
-            {
-              value: true,
-              label: (
-                <FormattedMessage id="SoknadsfristVilkarForm.ErOppfylt" values={{ b: chunks => <b>{chunks}</b> }} />
-              ),
-            },
-            {
-              value: DELVIS_OPPFYLT,
-              label: (
-                <FormattedMessage
-                  id="SoknadsfristVilkarForm.ErDelvisOppfylt"
-                  values={{ b: chunks => <b>{chunks}</b> }}
-                />
-              ),
-              element: (
-                <div className="my-2">
-                  <DatepickerField
-                    name={`avklarteKrav.${dokumentIndex}.fraDato`}
-                    label={{ id: 'SoknadsfristVilkarForm.Dato' }}
-                    validate={[required, hasValidDate, isAtleastDate, isAtmostDate]}
-                    readOnly={readOnly}
-                    disabledDays={{
-                      before: moment(minDate, 'YYYY-MM-DD').toDate(),
-                      after: moment(maxDate, 'YYYY-MM-DD').toDate(),
-                    }}
+        >
+          {({ value, optionProps }) => (
+            <FlexContainer>
+              <FlexColumn className={styles.fullBreddeIE}>
+                <FlexRow spaceBetween={false}>
+                  <RadioOption
+                    label={
+                      <FormattedMessage
+                        id="SoknadsfristVilkarForm.ErOppfylt"
+                        values={{ b: chunks => <b>{chunks}</b> }}
+                      />
+                    }
+                    value
+                    {...optionProps}
                   />
-                </div>
-              ),
-            },
-            {
-              value: false,
-              label: (
-                <FormattedMessage
-                  id="SoknadsfristVilkarForm.VilkarIkkeOppfylt"
-                  values={{ b: chunks => <b>{chunks}</b> }}
-                />
-              ),
-            },
-          ]}
-        />
+                </FlexRow>
+                <FlexRow spaceBetween={false}>
+                  <RadioOption
+                    label={
+                      <FormattedMessage
+                        id="SoknadsfristVilkarForm.ErDelvisOppfylt"
+                        values={{ b: chunks => <b>{chunks}</b> }}
+                      />
+                    }
+                    value={DELVIS_OPPFYLT}
+                    {...optionProps}
+                  />
+                </FlexRow>
+                {value === DELVIS_OPPFYLT && (
+                  <FlexRow spaceBetween={false}>
+                    <DatepickerField
+                      name={`avklarteKrav.${dokumentIndex}.fraDato`}
+                      label={{ id: 'SoknadsfristVilkarForm.Dato' }}
+                      validate={[required, hasValidDate, isAtleastDate, isAtmostDate]}
+                      readOnly={readOnly}
+                      disabledDays={{
+                        before: moment(minDate, 'YYYY-MM-DD').toDate(),
+                        after: moment(maxDate, 'YYYY-MM-DD').toDate(),
+                      }}
+                    />
+                  </FlexRow>
+                )}
+                <FlexRow spaceBetween={false}>
+                  <RadioOption
+                    label={
+                      <FormattedMessage
+                        id="SoknadsfristVilkarForm.VilkarIkkeOppfylt"
+                        values={{ b: chunks => <b>{chunks}</b> }}
+                      />
+                    }
+                    value={false}
+                    {...optionProps}
+                  />
+                </FlexRow>
+              </FlexColumn>
+            </FlexContainer>
+          )}
+        </RadioGroupField>
       )}
       <VerticalSpacer eightPx />
     </div>

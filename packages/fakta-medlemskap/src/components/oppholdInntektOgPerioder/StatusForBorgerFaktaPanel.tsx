@@ -1,4 +1,4 @@
-import { RadioGroupField, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { ArrowBox, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -47,21 +47,10 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
     titleCode="StatusForBorgerFaktaPanel.ApplicationInformation"
     merknaderFraBeslutter={alleMerknaderFraBeslutter[apKode]}
   >
-    <RadioGroupField
-      name="erEosBorger"
-      validate={[required]}
-      readOnly={readOnly}
-      radios={[
-        {
-          value: true,
-          label: <FormattedMessage id="StatusForBorgerFaktaPanel.CitizenEEA" />,
-        },
-        {
-          value: false,
-          label: <FormattedMessage id="StatusForBorgerFaktaPanel.CitizenOutsideEEA" />,
-        },
-      ]}
-    />
+    <RadioGroupField name="erEosBorger" validate={[required]} readOnly={readOnly}>
+      <RadioOption label={{ id: 'StatusForBorgerFaktaPanel.CitizenEEA' }} value />
+      <RadioOption label={{ id: 'StatusForBorgerFaktaPanel.CitizenOutsideEEA' }} value={false} />
+    </RadioGroupField>
 
     {erEosBorger && (
       <ArrowBox>
@@ -74,24 +63,20 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
           validate={[required]}
           readOnly={readOnly}
           isEdited={isBorgerAksjonspunktClosed}
-          radios={[
-            {
-              value: true,
-              label: <FormattedMessage id="StatusForBorgerFaktaPanel.HarOppholdsrett" />,
-            },
-            {
-              value: false,
-              label: (
-                <FormattedMessage
-                  id="StatusForBorgerFaktaPanel.HarIkkeOppholdsrett"
-                  values={{
-                    b: chunks => <b>{chunks}</b>,
-                  }}
-                />
-              ),
-            },
-          ]}
-        />
+        >
+          <RadioOption label={{ id: 'StatusForBorgerFaktaPanel.HarOppholdsrett' }} value />
+          <RadioOption
+            label={
+              <FormattedMessage
+                id="StatusForBorgerFaktaPanel.HarIkkeOppholdsrett"
+                values={{
+                  b: chunks => <b>{chunks}</b>,
+                }}
+              />
+            }
+            value={false}
+          />
+        </RadioGroupField>
       </ArrowBox>
     )}
     {erEosBorger === false && (
@@ -105,24 +90,20 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
           validate={[required]}
           readOnly={readOnly}
           isEdited={isBorgerAksjonspunktClosed}
-          radios={[
-            {
-              value: true,
-              label: <FormattedMessage id="StatusForBorgerFaktaPanel.HarLovligOpphold" />,
-            },
-            {
-              value: false,
-              label: (
-                <FormattedMessage
-                  id="StatusForBorgerFaktaPanel.HarIkkeLovligOpphold"
-                  values={{
-                    b: chunks => <b>{chunks}</b>,
-                  }}
-                />
-              ),
-            },
-          ]}
-        />
+        >
+          <RadioOption label={{ id: 'StatusForBorgerFaktaPanel.HarLovligOpphold' }} value />
+          <RadioOption
+            label={
+              <FormattedMessage
+                id="StatusForBorgerFaktaPanel.HarIkkeLovligOpphold"
+                values={{
+                  b: chunks => <b>{chunks}</b>,
+                }}
+              />
+            }
+            value={false}
+          />
+        </RadioGroupField>
       </ArrowBox>
     )}
   </FaktaGruppe>

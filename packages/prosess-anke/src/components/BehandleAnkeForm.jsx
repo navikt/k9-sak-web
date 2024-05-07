@@ -1,6 +1,7 @@
 import {
   CheckboxField,
   RadioGroupField,
+  RadioOption,
   SelectField,
   TextAreaField,
   behandlingForm,
@@ -133,6 +134,11 @@ const buildOption = (b, intl) => {
   );
 };
 
+const SKAL_REALITETSBEHANDLES = {
+  JA: true,
+  NEI: false,
+};
+
 const filtrerKlage = (behandlinger = []) => behandlinger.filter(b => b.type.kode === behandlingType.KLAGE);
 
 /**
@@ -181,39 +187,26 @@ const BehandleAnkeFormImpl = ({
         <FormattedMessage id="Ankebehandling.Resultat" />
       </BodyShort>
       <HGrid gap="1" columns={{ xs: '4fr 4fr 4fr' }}>
-        <RadioGroupField
-          name="ankeVurdering"
-          validate={[required]}
-          isVertical
-          readOnly={readOnly}
-          radios={[
-            {
-              value: ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK,
-              label: intl.formatMessage({ id: 'Ankebehandling.Resultat.Stadfest' }),
-            },
-            {
-              value: ankeVurdering.ANKE_OMGJOER,
-              label: intl.formatMessage({ id: 'Ankebehandling.Resultat.Omgjør' }),
-            },
-          ]}
-        />
+        <RadioGroupField name="ankeVurdering" validate={[required]} direction="vertical" readOnly={readOnly}>
+          <RadioOption
+            value={ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK}
+            label={{ id: 'Ankebehandling.Resultat.Stadfest' }}
+          />
+          <RadioOption value={ankeVurdering.ANKE_OMGJOER} label={{ id: 'Ankebehandling.Resultat.Omgjør' }} />
+        </RadioGroupField>
         <RadioGroupField
           name="ankeVurdering"
           validate={[required]}
           readOnly={readOnly}
           className={readOnly ? styles.selectReadOnly : null}
-          isVertical
-          radios={[
-            {
-              value: ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE,
-              label: intl.formatMessage({ id: 'Ankebehandling.Resultat.OpphevHjemsend' }),
-            },
-            {
-              value: ankeVurdering.ANKE_AVVIS,
-              label: intl.formatMessage({ id: 'Ankebehandling.Resultat.Avvis' }),
-            },
-          ]}
-        />
+          direction="vertical"
+        >
+          <RadioOption
+            value={ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE}
+            label={{ id: 'Ankebehandling.Resultat.OpphevHjemsend' }}
+          />
+          <RadioOption value={ankeVurdering.ANKE_AVVIS} label={{ id: 'Ankebehandling.Resultat.Avvis' }} />
+        </RadioGroupField>
       </HGrid>
       {ankeVurdering.ANKE_AVVIS === formValues.ankeVurdering && (
         <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
@@ -247,17 +240,16 @@ const BehandleAnkeFormImpl = ({
                 readOnly={readOnly}
                 className={readOnly ? styles.selectReadOnly : null}
                 direction="horisontal"
-                radios={[
-                  {
-                    value: true,
-                    label: intl.formatMessage({ id: 'Ankebehandling.Realitetsbehandles.Ja' }),
-                  },
-                  {
-                    value: false,
-                    label: intl.formatMessage({ id: 'Ankebehandling.Realitetsbehandles.Nei' }),
-                  },
-                ]}
-              />
+              >
+                <RadioOption
+                  value={SKAL_REALITETSBEHANDLES.JA}
+                  label={{ id: 'Ankebehandling.Realitetsbehandles.Ja' }}
+                />
+                <RadioOption
+                  value={SKAL_REALITETSBEHANDLES.NEI}
+                  label={{ id: 'Ankebehandling.Realitetsbehandles.Nei' }}
+                />
+              </RadioGroupField>
             </ArrowBox>
           </div>
         </HGrid>
@@ -271,21 +263,24 @@ const BehandleAnkeFormImpl = ({
                 validate={[required]}
                 readOnly={readOnly}
                 className={readOnly ? styles.selectReadOnly : null}
-                radios={[
-                  {
-                    value: ankeVurderingOmgjoer.ANKE_TIL_GUNST,
-                    label: intl.formatMessage({ id: 'Ankebehandling.VurderingOmgjoer.Gunst' }),
-                  },
-                  {
-                    value: ankeVurderingOmgjoer.ANKE_TIL_UGUNST,
-                    label: intl.formatMessage({ id: 'Ankebehandling.VurderingOmgjoer.Ugunst' }),
-                  },
-                  {
-                    value: ankeVurderingOmgjoer.ANKE_DELVIS_OMGJOERING_TIL_GUNST,
-                    label: intl.formatMessage({ id: 'Ankebehandling.VurderingOmgjoer.Delvis' }),
-                  },
-                ]}
-              />
+                direction="horisontal"
+              >
+                <RadioOption
+                  name="a1"
+                  value={ankeVurderingOmgjoer.ANKE_TIL_GUNST}
+                  label={{ id: 'Ankebehandling.VurderingOmgjoer.Gunst' }}
+                />
+                <RadioOption
+                  name="a2"
+                  value={ankeVurderingOmgjoer.ANKE_TIL_UGUNST}
+                  label={{ id: 'Ankebehandling.VurderingOmgjoer.Ugunst' }}
+                />
+                <RadioOption
+                  name="a3"
+                  value={ankeVurderingOmgjoer.ANKE_DELVIS_OMGJOERING_TIL_GUNST}
+                  label={{ id: 'Ankebehandling.VurderingOmgjoer.Delvis' }}
+                />
+              </RadioGroupField>
               <SelectField
                 readOnly={readOnly}
                 name="ankeOmgjoerArsak"

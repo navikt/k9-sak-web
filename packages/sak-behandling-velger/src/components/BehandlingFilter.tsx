@@ -1,8 +1,9 @@
 import xImg from '@fpsak-frontend/assets/images/x.svg';
 import { Image } from '@fpsak-frontend/shared-components';
-import { Checkbox, CheckboxGroup, Label } from '@navikt/ds-react';
+import { Label } from '@navikt/ds-react';
 import classNames from 'classnames';
 import Chevron from 'nav-frontend-chevron';
+import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
 import React, { useEffect, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './behandlingFilter.module.css';
@@ -80,34 +81,29 @@ const BehandlingFilter = ({ text, filters, activeFilters, onFilterChange }: Beha
               <Image src={xImg} />
             </button>
             <div className={styles.chevronDropdown__dropdown__checkbox}>
-              <CheckboxGroup
-                legend={<FormattedMessage id="Behandlingspunkt.BehandlingFilter.CheckboxLegend" />}
-                size="small"
-              >
+              <CheckboxGruppe legend={<FormattedMessage id="Behandlingspunkt.BehandlingFilter.CheckboxLegend" />}>
                 {[...filters].sort(sortFilters).map(({ label, value }) => {
                   if (value === automatiskBehandling) {
                     return (
                       <Checkbox
                         className={styles.automaticCheckbox}
+                        label={label}
                         checked={activeFilters.includes(automatiskBehandling)}
                         onChange={() => onFilterChange(automatiskBehandling)}
                         key={value}
-                      >
-                        {label}
-                      </Checkbox>
+                      />
                     );
                   }
                   return (
                     <Checkbox
                       key={value}
+                      label={label}
                       checked={activeFilters.includes(value)}
                       onChange={() => onFilterChange(value)}
-                    >
-                      {label}
-                    </Checkbox>
+                    />
                   );
                 })}
-              </CheckboxGroup>
+              </CheckboxGruppe>
             </div>
           </div>
         </div>
