@@ -1,12 +1,14 @@
-import { PureDatepicker } from '@fpsak-frontend/form';
+import { Datepicker } from 'nav-datovelger';
+import { DatepickerLimitations } from 'nav-datovelger/lib/types';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import styles from './datePicker.module.css';
 
 interface OwnProps {
   titel: string;
   navn: `${string}`;
   valideringsFunksjoner;
-  begrensningerIKalender?: { invalidDateRanges: { from: string; to: string }[]; minDate: string; maxDate: string };
+  begrensningerIKalender?: DatepickerLimitations;
   disabled?: boolean;
 }
 
@@ -18,13 +20,7 @@ const DatePicker: React.FunctionComponent<OwnProps> = ({
   disabled = false,
 }) => {
   const { control } = useFormContext();
-  const stringToDate = (date: string | Date): Date => new Date(date);
-  const fraDato = begrensningerIKalender?.minDate ? new Date(begrensningerIKalender.minDate) : undefined;
-  const tilDato = begrensningerIKalender?.maxDate ? new Date(begrensningerIKalender.maxDate) : undefined;
-  const disabledDays = begrensningerIKalender?.invalidDateRanges?.map(range => ({
-    from: stringToDate(range.from),
-    to: stringToDate(range.to),
-  }));
+
   return (
     <div>
       <Controller
@@ -34,15 +30,17 @@ const DatePicker: React.FunctionComponent<OwnProps> = ({
           validate: valideringsFunksjoner,
         }}
         render={({ field: { onChange, value } }) => (
-          <PureDatepicker
-            label={titel}
-            onChange={onChange}
-            value={value}
-            disabledDays={disabledDays}
-            fromDate={fraDato}
-            toDate={tilDato}
-            disabled={disabled}
-          />
+          <label htmlFor="datepicker-input">
+            {' '}
+            {titel.length > 0 && <span className={styles.gyldigVedtaksPeriodeTilFra}>{titel}</span>}
+            <Datepicker
+              inputId="datepicker-input"
+              onChange={onChange}
+              value={value}
+              limitations={begrensningerIKalender}
+              disabled={disabled}
+            />
+          </label>
         )}
       />
     </div>
