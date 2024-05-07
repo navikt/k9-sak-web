@@ -1,96 +1,163 @@
-import { DDMMYYYY_DATE_FORMAT, DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { DatePicker, useDatepicker } from '@navikt/ds-react';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import React, { ChangeEvent, ReactNode, useCallback, useState } from 'react';
+import classnames from 'classnames/bind';
+import moment from 'moment';
+import { Input } from 'nav-frontend-skjema';
+import React, { ChangeEvent, Component, ReactNode } from 'react';
 
-dayjs.extend(customParseFormat);
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+
+import CalendarOverlay from './CalendarOverlay';
+import CalendarToggleButton from './CalendarToggleButton';
+
+import styles from './datepicker.module.css';
+
+const classNames = classnames.bind(styles);
 
 interface OwnProps {
   label?: ReactNode;
+  placeholder?: string;
+  feil?: string;
   disabled?: boolean;
   onChange: (dato: string | ChangeEvent) => void;
+  onBlur: () => void;
   value?: string;
   initialMonth?: Date;
-  disabledDays?: { before: Date; after: Date } | { before: Date; after: Date }[];
-  error?: React.Component | string;
-  hideLabel?: boolean;
-  inputId?: string;
+  numberOfMonths?: number;
+  disabledDays?: Date | Date[];
 }
 
-const Datepicker: React.FC<OwnProps> = props => {
-  const { error, value, onChange, disabled, label, initialMonth, disabledDays, hideLabel, inputId } = props;
+interface StateProps {
+  showCalendar?: boolean;
+  inputOffsetTop?: number;
+  inputOffsetWidth?: number;
+}
 
-  const defaultDate = value
-    ? dayjs(value, [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT], true).format(DDMMYYYY_DATE_FORMAT)
-    : '';
-  const [fieldValue, setFieldValue] = useState<string>(defaultDate);
+class Datepicker extends Component<OwnProps, StateProps> {
+  buttonRef: HTMLButtonElement;
 
-  const getDefaultMonth = () => {
-    if (initialMonth) {
-      return initialMonth;
-    }
-    if (!value && disabledDays) {
-      if (Array.isArray(disabledDays)) {
-        return disabledDays[disabledDays.length - 1].after;
-      }
-      return disabledDays.after;
-    }
-    return undefined;
+  inputRef: HTMLDivElement;
+
+  static defaultProps = {
+    label: '',
+    placeholder: 'dd.mm.åååå',
+    value: '',
+    feil: null,
+    disabled: false,
+    initialMonth: new Date(),
+    numberOfMonths: 1,
+    disabledDays: {},
   };
 
-  const { datepickerProps, inputProps } = useDatepicker({
-    onDateChange: date => {
-      if (date !== undefined) {
-        const verdi = dayjs(date).format(ISO_DATE_FORMAT);
-        if (onChange) {
-          onChange(verdi);
-        }
-        setFieldValue(dayjs(verdi, [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT], true).format(DDMMYYYY_DATE_FORMAT));
+  constructor(props: OwnProps) {
+    super(props);
+    this.state = { showCalendar: false };
+    this.handleInputRef = this.handleInputRef.bind(this);
+    this.handleButtonRef = this.handleButtonRef.bind(this);
+    this.handleUpdatedRefs = this.handleUpdatedRefs.bind(this);
+    this.toggleShowCalendar = this.toggleShowCalendar.bind(this);
+    this.hideCalendar = this.hideCalendar.bind(this);
+    this.elementIsCalendarButton = this.elementIsCalendarButton.bind(this);
+    this.handleDayChange = this.handleDayChange.bind(this);
+  }
+
+  handleButtonRef(buttonRef: HTMLButtonElement): void {
+    if (buttonRef) {
+      this.buttonRef = buttonRef;
+      this.handleUpdatedRefs();
+    }
+  }
+
+  handleInputRef(inputRef: HTMLDivElement): void {
+    if (inputRef) {
+      this.inputRef = inputRef;
+      this.handleUpdatedRefs();
+    }
+  }
+
+  handleUpdatedRefs(): void {
+    const { inputRef, buttonRef } = this;
+    if (inputRef) {
+      this.setState({
+        inputOffsetTop: inputRef.offsetTop,
+        inputOffsetWidth: inputRef.offsetWidth,
+      });
+      if (buttonRef) {
+        inputRef.style.paddingRight = `${buttonRef.offsetWidth}px`;
       }
-    },
-    defaultSelected: value ? dayjs(value, [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT], true).toDate() : undefined,
-    defaultMonth: getDefaultMonth(),
-  });
+    }
+  }
 
-  const onChangeInput = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const verdi = dayjs(event.target.value, [DDMMYYYY_DATE_FORMAT, DDMMYY_DATE_FORMAT], true).format(ISO_DATE_FORMAT);
-      const validDate = verdi !== 'Invalid Date';
-
-      setFieldValue(event.target.value);
-      if (onChange) {
-        onChange(validDate ? verdi : event.target.value);
+  handleDayChange(selectedDay: Date, { disabled }): void {
+    if (selectedDay && !disabled) {
+      const parsed = moment(selectedDay);
+      if (parsed.isValid()) {
+        const { onChange } = this.props;
+        onChange(parsed.format(DDMMYYYY_DATE_FORMAT));
+        this.setState({ showCalendar: false });
+        this.inputRef.focus();
       }
-    },
-    [setFieldValue, onChange],
-  );
+    }
+  }
 
-  const dpProps = {
-    ...datepickerProps,
-    fromDate: disabledDays ? (Array.isArray(disabledDays) ? disabledDays[0].before : disabledDays?.before) : undefined,
-    toDate: disabledDays
-      ? Array.isArray(disabledDays)
-        ? disabledDays[disabledDays.length - 1].after
-        : disabledDays?.after
-      : undefined,
-  };
+  toggleShowCalendar(): void {
+    const { showCalendar } = this.state;
+    this.setState({ showCalendar: !showCalendar });
+  }
 
-  return (
-    <DatePicker {...dpProps}>
-      <DatePicker.Input
-        {...inputProps}
-        hideLabel={hideLabel}
-        onChange={onChangeInput}
-        value={fieldValue}
-        size="small"
-        label={label}
-        disabled={disabled}
-        error={error}
-        id={inputId}
-      />
-    </DatePicker>
-  );
-};
+  hideCalendar(): void {
+    this.setState({ showCalendar: false });
+  }
+
+  elementIsCalendarButton(element: EventTarget): boolean {
+    return element === this.buttonRef;
+  }
+
+  render() {
+    const { label, placeholder, onChange, onBlur, value, feil, disabled, disabledDays, initialMonth, numberOfMonths } =
+      this.props;
+    const { inputOffsetTop, inputOffsetWidth, showCalendar } = this.state;
+
+    return (
+      <>
+        <div className={styles.inputWrapper}>
+          <Input
+            className={styles.dateInput}
+            inputRef={this.handleInputRef}
+            autoComplete="off"
+            bredde="S"
+            placeholder={placeholder}
+            label={label}
+            onChange={onChange}
+            onBlur={onBlur}
+            value={value || ''}
+            feil={feil}
+            disabled={disabled}
+          />
+          <CalendarToggleButton
+            inputOffsetTop={inputOffsetTop}
+            inputOffsetWidth={inputOffsetWidth}
+            className={styles.calendarToggleButton}
+            toggleShowCalendar={this.toggleShowCalendar}
+            buttonRef={this.handleButtonRef}
+            disabled={disabled}
+          />
+        </div>
+        {showCalendar && (
+          <CalendarOverlay
+            disabled={disabled}
+            value={value}
+            onDayChange={this.handleDayChange}
+            onClose={this.hideCalendar}
+            elementIsCalendarButton={this.elementIsCalendarButton}
+            className={styles.calendarRoot}
+            dayPickerClassName={classNames(`calendarWrapper calendarWrapper--${numberOfMonths}`)}
+            disabledDays={disabledDays}
+            numberOfMonths={numberOfMonths}
+            initialMonth={initialMonth}
+          />
+        )}
+      </>
+    );
+  }
+}
 
 export default Datepicker;
