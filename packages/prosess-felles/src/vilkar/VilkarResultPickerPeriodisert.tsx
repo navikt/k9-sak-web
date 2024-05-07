@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
-import { DatepickerField, Label, RadioGroupField, SelectField } from '@fpsak-frontend/form';
+import { DatepickerField, RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -101,34 +101,30 @@ const VilkarResultPicker = ({
           name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}erVilkarOk`}
           validate={[required]}
           bredde="XXL"
-          isVertical
+          direction="vertical"
           readOnly={readOnly}
-          radios={[
-            {
-              value: vilkarUtfallPeriodisert.OPPFYLT,
-              label: <Label input={customVilkarOppfyltText} textOnly />,
-            },
-            ...(visPeriodisering
-              ? [
-                  {
-                    value: periodeVilkarStatus
-                      ? vilkarUtfallPeriodisert.DELVIS_IKKE_OPPFYLT
-                      : vilkarUtfallPeriodisert.DELVIS_OPPFYLT,
-                    label: periodeVilkarStatus
-                      ? intl.formatMessage(
-                          { id: 'ProsessPanelTemplate.DelvisIkkeOppfylt' },
-                          { b: chunks => <b>{chunks}</b> },
-                        )
-                      : intl.formatMessage({ id: 'ProsessPanelTemplate.DelvisOppfylt' }),
-                  },
-                ]
-              : []),
-            {
-              value: vilkarUtfallPeriodisert.IKKE_OPPFYLT,
-              label: <Label input={customVilkarIkkeOppfyltText} textOnly />,
-            },
-          ]}
-        />
+        >
+          <RadioOption label={customVilkarOppfyltText} value={vilkarUtfallPeriodisert.OPPFYLT} />
+
+          {visPeriodisering && (
+            <RadioOption
+              label={
+                periodeVilkarStatus
+                  ? intl.formatMessage(
+                      { id: 'ProsessPanelTemplate.DelvisIkkeOppfylt' },
+                      { b: chunks => <b>{chunks}</b> },
+                    )
+                  : intl.formatMessage({ id: 'ProsessPanelTemplate.DelvisOppfylt' })
+              }
+              value={
+                periodeVilkarStatus
+                  ? vilkarUtfallPeriodisert.DELVIS_IKKE_OPPFYLT
+                  : vilkarUtfallPeriodisert.DELVIS_OPPFYLT
+              }
+            />
+          )}
+          <RadioOption label={customVilkarIkkeOppfyltText} value={vilkarUtfallPeriodisert.IKKE_OPPFYLT} />
+        </RadioGroupField>
       )}
 
       {erVilkarOk !== undefined && (

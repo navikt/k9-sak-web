@@ -1,5 +1,6 @@
 import {
   RadioGroupField,
+  RadioOption,
   SelectField,
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
@@ -122,80 +123,36 @@ export const FormkravKlageForm = ({
             <div>
               <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErKlagerPart' })}</Detail>
               <VerticalSpacer sixteenPx />
-              <RadioGroupField
-                name="erKlagerPart"
-                validate={[required]}
-                readOnly={readOnly}
-                radios={[
-                  {
-                    value: true,
-                    label: intl.formatMessage({ id: 'Klage.Formkrav.Ja' }),
-                  },
-                  {
-                    value: false,
-                    label: intl.formatMessage({ id: 'Klage.Formkrav.Nei' }),
-                  },
-                ]}
-              />
+              <RadioGroupField name="erKlagerPart" validate={[required]} readOnly={readOnly}>
+                <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
+                <RadioOption value={false} label={{ id: 'Klage.Formkrav.Nei' }} />
+              </RadioGroupField>
             </div>
             <div>
               <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErKonkret' })}</Detail>
               <VerticalSpacer sixteenPx />
-              <RadioGroupField
-                name="erKonkret"
-                validate={[required]}
-                readOnly={readOnly}
-                radios={[
-                  {
-                    value: true,
-                    label: intl.formatMessage({ id: 'Klage.Formkrav.Ja' }),
-                  },
-                  {
-                    value: false,
-                    label: intl.formatMessage({ id: 'Klage.Formkrav.Nei' }),
-                  },
-                ]}
-              />
+              <RadioGroupField name="erKonkret" validate={[required]} readOnly={readOnly}>
+                <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
+                <RadioOption value={false} label={{ id: 'Klage.Formkrav.Nei' }} />
+              </RadioGroupField>
             </div>
           </HGrid>
           <HGrid gap="1" columns={{ xs: '4fr 8fr' }}>
             <div>
               <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErFristOverholdt' })}</Detail>
               <VerticalSpacer sixteenPx />
-              <RadioGroupField
-                name="erFristOverholdt"
-                validate={[required]}
-                readOnly={readOnly}
-                radios={[
-                  {
-                    value: true,
-                    label: intl.formatMessage({ id: 'Klage.Formkrav.Ja' }),
-                  },
-                  {
-                    value: false,
-                    label: intl.formatMessage({ id: 'Klage.Formkrav.Nei' }),
-                  },
-                ]}
-              />
+              <RadioGroupField name="erFristOverholdt" validate={[required]} readOnly={readOnly}>
+                <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
+                <RadioOption value={false} label={{ id: 'Klage.Formkrav.Nei' }} />
+              </RadioGroupField>
             </div>
             <div>
               <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErSignert' })}</Detail>
               <VerticalSpacer sixteenPx />
-              <RadioGroupField
-                name="erSignert"
-                validate={[required]}
-                readOnly={readOnly}
-                radios={[
-                  {
-                    value: true,
-                    label: intl.formatMessage({ id: 'Klage.Formkrav.Ja' }),
-                  },
-                  {
-                    value: false,
-                    label: intl.formatMessage({ id: 'Klage.Formkrav.Nei' }),
-                  },
-                ]}
-              />
+              <RadioGroupField name="erSignert" validate={[required]} readOnly={readOnly}>
+                <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
+                <RadioOption value={false} label={{ id: 'Klage.Formkrav.Nei' }} />
+              </RadioGroupField>
             </div>
           </HGrid>
         </div>

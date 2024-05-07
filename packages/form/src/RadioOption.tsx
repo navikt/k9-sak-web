@@ -1,5 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
-import { Radio } from '@navikt/ds-react';
+import { BodyShort } from '@navikt/ds-react';
+import { Radio as NavRadio } from 'nav-frontend-skjema';
 import React, { ReactNode, ReactNodeArray } from 'react';
 import Label from './Label';
 import LabelType from './LabelType';
@@ -40,18 +41,17 @@ export const RadioOption = ({
   const checked = stringifiedValue === actualStringifiedValue;
   return (
     <div style={style} className={wrapperClassName}>
-      <Radio
+      <NavRadio
         name={name || ''}
         className={className}
+        label={<Label input={label} typographyElement={BodyShort} />}
         // @ts-ignore TODO Fjern denne. Må fjerna bruken av bolske verdiar som value
         value={value}
+        checked={checked}
         disabled={disabled || groupDisabled}
         onChange={() => onChange?.(value)}
         data-id={dataId}
-        size="small"
-      >
-        <Label input={label} textOnly />
-      </Radio>
+      />
       {(checked || manualHideChildren) && children}
     </div>
   );
