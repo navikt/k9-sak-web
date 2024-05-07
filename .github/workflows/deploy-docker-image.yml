@@ -134,7 +134,7 @@ jobs:
     needs: deploy-docker-image
     with:
       tag: ${{ needs.deploy-docker-image.outputs.tag }}
-      frontend_only: 'false'
+      frontend_only: 'true'
   trivy:
     needs: [deploy-docker-image]
     uses: navikt/sif-gha-workflows/.github/workflows/trivy.yml@main
