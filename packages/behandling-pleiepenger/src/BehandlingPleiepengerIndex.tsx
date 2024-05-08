@@ -10,12 +10,10 @@ import {
   Fagsak,
   FagsakPerson,
   FeatureToggles,
-  KodeverkMedNavn,
 } from '@k9-sak-web/types';
 
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import PleiepengerPaneler from './components/PleiepengerPaneler';
 import {
   PleiepengerBehandlingApiKeys,

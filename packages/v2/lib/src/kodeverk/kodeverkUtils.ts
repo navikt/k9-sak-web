@@ -11,6 +11,7 @@ export const utledKodeverkNavnFraKode = (
   kode: string,
   kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType,
   alleKodeverk: AlleKodeverk,
+  ukjentTekst?: string | undefined,
 ): string => {
   // console.log(`kodeverkNavnFrakode ${kode} (${kodeverkType})`);
 
@@ -19,17 +20,21 @@ export const utledKodeverkNavnFraKode = (
     return '';
   }
 
-  if (kodeverkForType instanceof Array) {
-    const kodeverk = kodeverkForType.find((k: KodeverkV2) => k.kode === kode);
+  if (Array.isArray(kodeverkForType)) {
+    const kodeverk = kodeverkForType.find((k: KodeverkV2) => typeof k !== 'string' && k.kode === kode);
     // console.log(`${kode} => ${kodeverk ? kodeverk.navn : 'Ukjent'} (${kodeverkType})`);
-    return kodeverk ? kodeverk.navn : '';
+    return kodeverk && typeof kodeverk !== 'string' ? kodeverk.navn : ukjentTekst || 'Ukjent kodeverk';
   }
 
-  return 'Ukjent';
+  return ukjentTekst || 'Ukjent kodeverk';
 };
 
-export const utledKodeverkNavnFraUndertypeKode = (undertypeKode: string, kodeverkForUndertype: KodeverkV2[]) => {
-  const kodeverk = kodeverkForUndertype.find((k: KodeverkV2) => k.kode === undertypeKode);
+export const utledKodeverkNavnFraUndertypeKode = (
+  undertypeKode: string,
+  kodeverkForUndertype: KodeverkV2[],
+  ukjentTekst: string | undefined = 'Ukjent kodeverk',
+) => {
+  const kodeverk = kodeverkForUndertype.find((k: KodeverkV2) => typeof k !== 'string' && k.kode === undertypeKode);
   // console.log(`${undertypeKode} (Undertype) => ${kodeverk ? kodeverk.navn : 'Ukjent'}`);
-  return kodeverk ? kodeverk.navn : '';
+  return kodeverk && typeof kodeverk !== 'string' ? kodeverk.navn : ukjentTekst || 'Ukjent kodeverk';
 };

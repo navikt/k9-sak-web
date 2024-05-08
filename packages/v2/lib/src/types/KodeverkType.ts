@@ -78,6 +78,7 @@ export enum KodeverkType {
   HENDELSE_UNDERTYPE = 'HendelseUnderType',
   VURDER_AARSAK = 'VurderÅrsak',
   ÅRSAK_TIL_VURDERING = 'ÅrsakTilVurdering',
+  UTLANDSOPPHOLD_AARSAK = 'UtenlandsoppholdÅrsak',
 }
 
 /*

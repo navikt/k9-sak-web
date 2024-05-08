@@ -1,9 +1,7 @@
-import KodeverkMedNavn from '../kodeverkMedNavnTsType';
-
 export type UtenlandsoppholdType = {
   region: string;
   periode: string;
-  landkode: KodeverkMedNavn;
+  landkode: string;
   årsak?: string;
 };
 

@@ -3,6 +3,8 @@ import { utledKodeverkNavnFraKode } from '@k9-sak-web/lib/kodeverk/kodeverkUtils
 import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import { KodeverkKlageType } from '@k9-sak-web/lib/types/KodeverkKlageType.js';
 import { KodeverkTilbakeType } from '@k9-sak-web/lib/types/KodeverkTilbakeType.js';
+import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/types/AlleKodeverk.js';
 import { KodeverkContext } from '../context/KodeverkContext';
 
 export const useKodeverkContext = () => {
@@ -12,37 +14,71 @@ export const useKodeverkContext = () => {
     throw new Error('useKodeverkContext må brukes innenfor en KodeverkContext.Provider');
   }
 
-  const { kodeverk, klageKodeverk, tilbakeKodeverk, setKodeverkContext } = kodeverkContext;
+  const { behandlingType, kodeverk, klageKodeverk, tilbakeKodeverk, setKodeverkContext } = kodeverkContext;
 
   const kodeverkNavnFraKode = (
     kode: string,
     kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType,
-    kilde: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' = 'kodeverk',
+    kilde: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' | undefined = undefined,
+    ukjentTekst: string | undefined = undefined,
   ) => {
-    if (kodeverk !== undefined) {
-      console.log('oppslag i context', kode, kodeverkType);
-      return utledKodeverkNavnFraKode(kode, kodeverkType, kodeverk);
+    console.log(
+      `Klage, oppslag i context.  --  kode: ${kode}  --  kodeverkType: ${kodeverkType}  --  Behandlingstype: ${behandlingType}`,
+    );
+
+    let kodeverkForKilde: AlleKodeverk | undefined;
+
+    if (kilde !== undefined) {
+      switch (kilde) {
+        case 'kodeverkTilbake':
+          kodeverkForKilde = tilbakeKodeverk;
+          break;
+        case 'kodeverkKlage':
+          kodeverkForKilde = klageKodeverk;
+          break;
+        case 'kodeverk':
+        default:
+          kodeverkForKilde = kodeverk;
+          break;
+      }
     }
-    return 'Ukjent kode';
+    if (kodeverkForKilde === undefined) {
+      kodeverkForKilde = behandlingType === BehandlingType.KLAGE ? klageKodeverk : kodeverk;
+    }
+
+    if (kodeverkForKilde) {
+      return utledKodeverkNavnFraKode(kode, kodeverkType, kodeverkForKilde);
+    }
+
+    return ukjentTekst || 'Ukjent kode';
   };
 
   /*
    * Returnerer en funksjon for oppslag i kodeverk som kan sendes ned til eldre komponenter som for eksempel
    * ikke har tilgang til kodeverkContext eller ikke kan bruke hooks
    */
-  const getKodeverkNavnFraKodeFn = (kilde: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' = 'kodeverk') => {
-    let kodeverkForKilde;
-    switch (kilde) {
-      case 'kodeverkTilbake':
-        kodeverkForKilde = tilbakeKodeverk;
-        break;
-      case 'kodeverkKlage':
-        kodeverkForKilde = klageKodeverk;
-        break;
-      case 'kodeverk':
-      default:
-        kodeverkForKilde = kodeverk;
-        break;
+  const getKodeverkNavnFraKodeFn = (
+    kilde: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' | undefined = undefined,
+  ) => {
+    let kodeverkForKilde: AlleKodeverk | undefined;
+
+    if (kilde !== undefined) {
+      switch (kilde) {
+        case 'kodeverkTilbake':
+          kodeverkForKilde = tilbakeKodeverk;
+          break;
+        case 'kodeverkKlage':
+          kodeverkForKilde = klageKodeverk;
+          break;
+        case 'kodeverk':
+        default:
+          kodeverkForKilde = kodeverk;
+          break;
+      }
+    }
+
+    if (kodeverkForKilde === undefined) {
+      kodeverkForKilde = behandlingType === BehandlingType.KLAGE ? klageKodeverk : kodeverk;
     }
 
     if (kodeverkForKilde === undefined) {
@@ -51,9 +87,13 @@ export const useKodeverkContext = () => {
         return 'Ukjent kodeverk';
       };
     }
-    return (kode: string, kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType) =>
-      utledKodeverkNavnFraKode(kode, kodeverkType, kodeverkForKilde);
+    return (
+      kode: string,
+      kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType,
+      ukjentTekst?: string | undefined,
+    ) => utledKodeverkNavnFraKode(kode, kodeverkType, kodeverkForKilde, ukjentTekst);
   };
+
   return {
     kodeverk,
     klageKodeverk,

@@ -1,6 +1,7 @@
 import { Venteaarsak } from '@k9-sak-web/types';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { AlleKodeverk, KodeverkType } from '@k9-sak-web/lib/types/index.js';
 import messages from '../i18n/nb_NO.json';
 import SettPaVentModal from './components/SettPaVentModal';
 
@@ -18,7 +19,8 @@ interface OwnProps {
   cancelEvent: () => void;
   submitCallback: (formData: any) => void;
   showModal: boolean;
-  ventearsaker: Venteaarsak[];
+  // ventearsaker: Venteaarsak[];
+  ventearsaker: AlleKodeverk[KodeverkType.VENT_AARSAK];
   frist?: string;
   ventearsak?: string;
   visBrevErBestilt?: boolean;

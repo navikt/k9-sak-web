@@ -238,7 +238,7 @@ const FagsakIndex = () => {
   return (
     <>
       <BehandlingProvider>
-        <KodeverkProvider>
+        <KodeverkProvider behandlingType={behandling.type}>
           <FagsakGrid
             behandlingContent={
               <Routes>
