@@ -1,4 +1,3 @@
-import Kodeverk from './kodeverkTsType';
 import Periode from './periodeTsType';
 
 export type SimuleringResultatRad = Readonly<{
