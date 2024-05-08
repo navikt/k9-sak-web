@@ -45,6 +45,7 @@ export { default as Kilde } from './src/Kilde';
 export type { default as PerioderMedAarsak } from './src/PerioderMedAarsak';
 export type { default as PerioderMedBehandlingsId } from './src/PerioderMedBehandlingsId';
 export { default as Vurderingsresultat } from './src/Vurderingsresultat';
+export type { default as Aktor } from './src/aktorTsType';
 export type { default as AnkeVurdering } from './src/ankeVurderingTsType';
 export * from './src/arbeidsgiverOpplysningerTsType';
 export type { default as Arbeidsgiver } from './src/arbeidsgiverTsType';
