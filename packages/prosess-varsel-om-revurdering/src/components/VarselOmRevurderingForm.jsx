@@ -1,4 +1,10 @@
-import { RadioGroupField, TextAreaField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import {
+  RadioGroupField,
+  RadioOption,
+  TextAreaField,
+  behandlingForm,
+  behandlingFormValueSelector,
+} from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -111,20 +117,10 @@ export class VarselOmRevurderingFormImpl extends React.Component {
               {[<FormattedMessage key="1" id="VarselOmRevurderingForm.VarselOmRevurderingVurder" />]}
             </AksjonspunktHelpText>
             <VerticalSpacer twentyPx />
-            <RadioGroupField
-              name="sendVarsel"
-              validate={[required]}
-              radios={[
-                {
-                  value: true,
-                  label: intl.formatMessage({ id: 'VarselOmRevurderingForm.SendVarsel' }),
-                },
-                {
-                  value: false,
-                  label: intl.formatMessage({ id: 'VarselOmRevurderingForm.IkkeSendVarsel' }),
-                },
-              ]}
-            />
+            <RadioGroupField name="sendVarsel" validate={[required]}>
+              <RadioOption label={{ id: 'VarselOmRevurderingForm.SendVarsel' }} value />
+              <RadioOption label={{ id: 'VarselOmRevurderingForm.IkkeSendVarsel' }} value={false} />
+            </RadioGroupField>
             {sendVarsel && (
               <ArrowBox>
                 <TextAreaField

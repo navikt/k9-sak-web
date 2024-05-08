@@ -1,6 +1,7 @@
 import {
   PeriodpickerField,
   RadioGroupField,
+  RadioOption,
   SelectField,
   TextAreaField,
   behandlingForm,
@@ -213,24 +214,20 @@ export const ActivityPanel = ({
     />
     {!shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
       <>
-        <VerticalSpacer eightPx />
+        <VerticalSpacer twentyPx />
         {!initialValues.erManueltOpprettet && (
           <RadioGroupField
             name="erGodkjent"
             validate={[required]}
             readOnly={readOnly}
             isEdited={initialValues.erEndret}
-            radios={[
-              {
-                value: true,
-                label: <FormattedMessage id="ActivityPanel.Godkjent" />,
-              },
-              {
-                value: false,
-                label: <FormattedMessage id="ActivityPanel.IkkeGodkjent" values={{ b: chunks => <b>{chunks}</b> }} />,
-              },
-            ]}
-          />
+          >
+            <RadioOption value label={{ id: 'ActivityPanel.Godkjent' }} />
+            <RadioOption
+              value={false}
+              label={<FormattedMessage id="ActivityPanel.IkkeGodkjent" values={{ b: chunks => <b>{chunks}</b> }} />}
+            />
+          </RadioGroupField>
         )}
       </>
     )}

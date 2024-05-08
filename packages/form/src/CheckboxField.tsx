@@ -1,8 +1,7 @@
-import { Checkbox } from '@navikt/ds-react';
-
+import { BodyShort } from '@navikt/ds-react';
+import { Checkbox as NavCheckbox } from 'nav-frontend-skjema';
 import React from 'react';
 import { Field } from 'redux-form';
-import Label from './Label';
 import LabelType from './LabelType';
 import renderNavField from './renderNavField';
 
@@ -24,14 +23,12 @@ export const RenderCheckboxField = renderNavField(({ onChange, label, ...otherPr
   // eslint-disable-next-line no-param-reassign
   delete otherProps.isEdited;
   return (
-    <Checkbox
+    <NavCheckbox
       onChange={event => onChange(event.target.checked)}
       checked={!!otherProps.value}
-      size="small"
+      label={React.cloneElement(label, { typographyElement: BodyShort })}
       {...otherProps}
-    >
-      <Label input={label} textOnly />
-    </Checkbox>
+    />
   );
 });
 

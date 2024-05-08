@@ -7,7 +7,8 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, required, safeJSONParse } from '@fpsak-frontend/utils';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
-import { Button, Detail, Fieldset, HGrid, Modal } from '@navikt/ds-react';
+import { Button, Detail, HGrid, Modal } from '@navikt/ds-react';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React, { useMemo } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -173,7 +174,7 @@ export const HenleggBehandlingModalImpl = ({
       <Modal.Body>
         <form onSubmit={handleSubmit}>
           <div>
-            <Fieldset legend={intl.formatMessage({ id: 'HenleggBehandlingModal.HenleggBehandling' })} hideLegend>
+            <SkjemaGruppe legend={intl.formatMessage({ id: 'HenleggBehandlingModal.HenleggBehandling' })}>
               <HGrid gap="1" columns={{ xs: '5fr 7fr' }}>
                 <div>
                   <SelectField
@@ -266,7 +267,7 @@ export const HenleggBehandlingModalImpl = ({
                   )}
                 </div>
               </HGrid>
-            </Fieldset>
+            </SkjemaGruppe>
           </div>
         </form>
       </Modal.Body>
