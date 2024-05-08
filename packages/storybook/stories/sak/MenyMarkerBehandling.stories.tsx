@@ -1,6 +1,5 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
 import MenyMarkerBehandling from '@k9-sak-web/sak-meny-marker-behandling';
 
@@ -9,7 +8,7 @@ import withReduxProvider from '../../decorators/withRedux';
 export default {
   title: 'sak/sak-meny-marker-behandling',
   component: MenyMarkerBehandling,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
 export const visMenyMarkerBehandlingHastekø = () => (

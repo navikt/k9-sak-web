@@ -1,10 +1,9 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import React from 'react';
 
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import CheckPersonStatusIndex from '@fpsak-frontend/prosess-saksopplysninger';
 
 import withReduxProvider from '../../decorators/withRedux';
@@ -43,14 +42,11 @@ const personopplysninger = {
 export default {
   title: 'prosess/prosess-saksopplysninger',
   component: CheckPersonStatusIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visÅpentAksjonspunkt = () => (
+export const visÅpentAksjonspunkt = args => (
   <CheckPersonStatusIndex
-    behandling={object('behandling', behandling)}
-    medlemskap={object('medlemskap', medlemskap)}
-    personopplysninger={object('personopplysninger', personopplysninger)}
     aksjonspunkter={[
       {
         definisjon: {
@@ -64,16 +60,20 @@ export const visÅpentAksjonspunkt = () => (
     ]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
-    isReadOnly={boolean('isReadOnly', false)}
-    readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+    {...args}
   />
 );
 
-export const visUtførtAksjonspunkt = () => (
+visÅpentAksjonspunkt.args = {
+  behandling,
+  medlemskap,
+  personopplysninger,
+  isReadOnly: false,
+  readOnlySubmitButton: false,
+};
+
+export const visUtførtAksjonspunkt = args => (
   <CheckPersonStatusIndex
-    behandling={object('behandling', behandling)}
-    medlemskap={object('medlemskap', medlemskap)}
-    personopplysninger={object('personopplysninger', personopplysninger)}
     aksjonspunkter={[
       {
         definisjon: {
@@ -89,5 +89,12 @@ export const visUtførtAksjonspunkt = () => (
     submitCallback={action('button-click')}
     isReadOnly
     readOnlySubmitButton
+    {...args}
   />
 );
+
+visUtførtAksjonspunkt.args = {
+  behandling,
+  medlemskap,
+  personopplysninger,
+};

@@ -1,4 +1,3 @@
-import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
@@ -21,17 +20,12 @@ describe('<VedtakKlageSubmitPanel>', () => {
   });
 
   it('skal rendre submit panel uten medhold i klagevurdering', () => {
-    const klageVurderingResultatNK = {
-      klageVurdering: 'TEST',
-    };
-
     renderWithIntl(
       <VedtakKlageSubmitPanelImpl
         intl={intlMock}
         formProps={reduxFormPropsMock}
         readOnly={false}
         behandlingPaaVent={false}
-        klageVurderingResultatNK={klageVurderingResultatNK}
         previewVedtakCallback={forhandsvisVedtaksbrevFunc}
       />,
       { messages },
@@ -42,17 +36,12 @@ describe('<VedtakKlageSubmitPanel>', () => {
   });
 
   it('skal rendre submit panel med medhold i klagevurdering', () => {
-    const klageVurderingResultatNK = {
-      klageVurdering: klageVurdering.MEDHOLD_I_KLAGE,
-    };
-
     renderWithIntl(
       <VedtakKlageSubmitPanelImpl
         intl={intlMock}
         formProps={reduxFormPropsMock}
         readOnly={false}
         behandlingPaaVent={false}
-        klageVurderingResultatNK={klageVurderingResultatNK}
         previewVedtakCallback={forhandsvisVedtaksbrevFunc}
       />,
       { messages },

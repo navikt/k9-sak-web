@@ -1,12 +1,10 @@
-import React from 'react';
-import { action } from '@storybook/addon-actions';
-import { boolean, object, withKnobs } from '@storybook/addon-knobs';
-
-import { DokumentStatus, Behandling, Vilkar } from '@k9-sak-web/types';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import SoknadsfristVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-soknadsfrist';
+import { Behandling, DokumentStatus, Vilkar } from '@k9-sak-web/types';
+import { action } from '@storybook/addon-actions';
+import React from 'react';
 
 import withReduxProvider from '../../decorators/withRedux';
 
@@ -77,10 +75,10 @@ const soknadsStatus = {
 export default {
   title: 'prosess/prosess-vilkar-soknadsfrist',
   component: SoknadsfristVilkarProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visOverstyringspanelForSoknadsfrist = () => {
+export const visOverstyringspanelForSoknadsfrist = props => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <SoknadsfristVilkarProsessIndex
@@ -96,21 +94,25 @@ export const visOverstyringspanelForSoknadsfrist = () => {
       }
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
-      overrideReadOnly={boolean('overrideReadOnly', false)}
-      kanOverstyreAccess={object('kanOverstyreAccess', {
-        isEnabled: true,
-      })}
       toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
       erOverstyrt={erOverstyrt}
       soknadsfristStatus={soknadsStatus}
       panelTittelKode="Inngangsvilkar.Soknadsfrist"
       vilkar={vilkarSoknadsfrist}
       visAllePerioder
+      {...props}
     />
   );
 };
 
-export const visOverstyringspanelForSoknadsfristUtenDokumenter = () => {
+visOverstyringspanelForSoknadsfrist.args = {
+  overrideReadOnly: false,
+  kanOverstyreAccess: {
+    isEnabled: true,
+  },
+};
+
+export const visOverstyringspanelForSoknadsfristUtenDokumenter = props => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <SoknadsfristVilkarProsessIndex
@@ -126,21 +128,25 @@ export const visOverstyringspanelForSoknadsfristUtenDokumenter = () => {
       }
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
-      overrideReadOnly={boolean('overrideReadOnly', false)}
-      kanOverstyreAccess={object('kanOverstyreAccess', {
-        isEnabled: true,
-      })}
       toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
       erOverstyrt={erOverstyrt}
       soknadsfristStatus={{ dokumentStatus: [] }}
       panelTittelKode="Inngangsvilkar.Soknadsfrist"
       vilkar={vilkarSoknadsfrist}
       visAllePerioder
+      {...props}
     />
   );
 };
 
-export const visSoknadsfristAksjonspunkt5077 = () => {
+visOverstyringspanelForSoknadsfristUtenDokumenter.args = {
+  overrideReadOnly: false,
+  kanOverstyreAccess: {
+    isEnabled: true,
+  },
+};
+
+export const visSoknadsfristAksjonspunkt5077 = props => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <SoknadsfristVilkarProsessIndex
@@ -170,10 +176,6 @@ export const visSoknadsfristAksjonspunkt5077 = () => {
         },
       ]}
       submitCallback={action('button-click')}
-      overrideReadOnly={boolean('overrideReadOnly', false)}
-      kanOverstyreAccess={object('kanOverstyreAccess', {
-        isEnabled: true,
-      })}
       toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
       erOverstyrt={erOverstyrt}
       soknadsfristStatus={{
@@ -224,11 +226,19 @@ export const visSoknadsfristAksjonspunkt5077 = () => {
         },
       ]}
       visAllePerioder={false}
+      {...props}
     />
   );
 };
 
-export const visSoknadsfristAksjonspunkt5077Delvis = () => {
+visSoknadsfristAksjonspunkt5077.args = {
+  overrideReadOnly: false,
+  kanOverstyreAccess: {
+    isEnabled: true,
+  },
+};
+
+export const visSoknadsfristAksjonspunkt5077Delvis = props => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <SoknadsfristVilkarProsessIndex
@@ -263,10 +273,6 @@ export const visSoknadsfristAksjonspunkt5077Delvis = () => {
         },
       ]}
       submitCallback={action('button-click')}
-      overrideReadOnly={boolean('overrideReadOnly', false)}
-      kanOverstyreAccess={object('kanOverstyreAccess', {
-        isEnabled: true,
-      })}
       toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
       erOverstyrt={erOverstyrt}
       soknadsfristStatus={{
@@ -336,6 +342,14 @@ export const visSoknadsfristAksjonspunkt5077Delvis = () => {
         },
       ]}
       visAllePerioder
+      {...props}
     />
   );
+};
+
+visSoknadsfristAksjonspunkt5077Delvis.args = {
+  overrideReadOnly: false,
+  kanOverstyreAccess: {
+    isEnabled: true,
+  },
 };

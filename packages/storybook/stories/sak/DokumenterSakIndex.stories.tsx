@@ -1,4 +1,3 @@
-import { object, withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
@@ -68,10 +67,10 @@ const fagsak = {
 export default {
   title: 'sak/sak-dokumenter',
   component: DokumenterSakIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visMeldingerPanel = () => (
+export const visMeldingerPanel = props => (
   <div
     style={{
       width: '700px',
@@ -80,12 +79,10 @@ export const visMeldingerPanel = () => (
       backgroundColor: 'white',
     }}
   >
-    <DokumenterSakIndex
-      documents={object('documents', dokumenter)}
-      saksnummer={1}
-      behandlingId={behandlingId}
-      behandlingUuid="1"
-      fagsak={fagsak}
-    />
+    <DokumenterSakIndex saksnummer={1} behandlingId={behandlingId} behandlingUuid="1" fagsak={fagsak} {...props} />
   </div>
 );
+
+visMeldingerPanel.args = {
+  documents: dokumenter,
+};

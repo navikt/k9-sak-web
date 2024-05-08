@@ -1,6 +1,5 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
 import MenyEndreBehandlendeEnhetIndex from '@fpsak-frontend/sak-meny-endre-enhet';
 
@@ -9,7 +8,7 @@ import withReduxProvider from '../../decorators/withRedux';
 export default {
   title: 'sak/sak-meny-endre-enhet',
   component: MenyEndreBehandlendeEnhetIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
 export const visMenyForÅEndreBehandlendeEnhet = () => (

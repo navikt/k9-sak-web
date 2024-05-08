@@ -1,18 +1,17 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import React from 'react';
 
-import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
-import vilkarResultat from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/vilkarResultat';
-import sarligGrunn from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/sarligGrunn';
-import aktsomhet from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/aktsomhet';
-import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
+import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 import TilbakekrevingProsessIndex from '@fpsak-frontend/prosess-tilbakekreving';
-import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
+import aktsomhet from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/aktsomhet';
+import sarligGrunn from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/sarligGrunn';
+import vilkarResultat from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/vilkarResultat';
 import DetaljerteFeilutbetalingsperioder from '@fpsak-frontend/prosess-tilbakekreving/src/types/detaljerteFeilutbetalingsperioderTsType';
 import FeilutbetalingPerioderWrapper from '@fpsak-frontend/prosess-tilbakekreving/src/types/feilutbetalingPerioderTsType';
+import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 
 import withReduxProvider from '../../../decorators/withRedux';
 
@@ -150,7 +149,7 @@ const alleKodeverk = {
 export default {
   title: 'prosess/tilbakekreving/prosess-tilbakekreving',
   component: TilbakekrevingProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
 const beregnBelop = params => {
@@ -160,7 +159,7 @@ const beregnBelop = params => {
   });
 };
 
-export const visAksjonspunktForTilbakekreving = () => (
+export const visAksjonspunktForTilbakekreving = args => (
   <TilbakekrevingProsessIndex
     behandling={
       {
@@ -168,16 +167,8 @@ export const visAksjonspunktForTilbakekreving = () => (
         versjon: 1,
       } as Behandling
     }
-    perioderForeldelse={object('perioderForeldelse', perioderForeldelse)}
-    vilkarvurderingsperioder={object('vilkarvurderingsperioder', vilkarvurderingsperioder)}
-    vilkarvurdering={object('vilkarvurdering', vilkarvurdering)}
     submitCallback={action('button-click') as () => Promise<any>}
-    isReadOnly={boolean('readOnly', false)}
-    readOnlySubmitButton={boolean('readOnly', false)}
     navBrukerKjonn={NavBrukerKjonn.KVINNE}
-    alleMerknaderFraBeslutter={{
-      [aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-    }}
     alleKodeverk={alleKodeverk as any}
     beregnBelop={params => beregnBelop(params)}
     aksjonspunkter={
@@ -190,5 +181,17 @@ export const visAksjonspunktForTilbakekreving = () => (
         },
       ] as Aksjonspunkt[]
     }
+    {...args}
   />
 );
+
+visAksjonspunktForTilbakekreving.args = {
+  perioderForeldelse,
+  vilkarvurderingsperioder,
+  vilkarvurdering,
+  isReadOnly: false,
+  readOnlySubmitButton: false,
+  alleMerknaderFraBeslutter: {
+    [aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING]: merknaderFraBeslutter,
+  },
+};
