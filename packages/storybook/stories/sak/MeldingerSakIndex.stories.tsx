@@ -26,7 +26,7 @@ const emptySprakKode = {
 
 interface SendMeldingPanelStoryArgs {
   readonly brevmaler: Brevmaler;
-  readonly sprakKode?: Kodeverk;
+  readonly sprakKode: Kodeverk;
   readonly backendApi?: BackendApi;
 }
 
@@ -45,7 +45,7 @@ const defaultFakeBackend = {
   },
 } satisfies BackendApi;
 
-const sendMeldingTemplate = props => (
+const sendMeldingTemplate = (props: SendMeldingPanelStoryArgs) => (
   <div
     style={{
       width: '600px',
