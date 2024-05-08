@@ -6560,15 +6560,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/csf@npm:^0.1.0":
-  version: 0.1.2
-  resolution: "@storybook/csf@npm:0.1.2"
-  dependencies:
-    type-fest: ^2.19.0
-  checksum: 22038dfd5e46cd9565c3dec615918c0712eb5fc5f56e9ec89cfa75d7b48667b8fcbf7e9d1f46c9f4d440eee074f1d23a84dc56a937add37b28ddf890fdedfb8a
-  languageName: node
-  linkType: hard
-
 "@storybook/csf@npm:^0.1.4":
   version: 0.1.7
   resolution: "@storybook/csf@npm:0.1.7"
@@ -6792,21 +6783,6 @@ __metadata:
     fs-extra: ^11.1.0
     read-pkg-up: ^7.0.1
   checksum: e5f44d32a1d38999012d6c4f6d3c636fd886ce1b4705adcc4506f53c321f7a9a98477497837fd8b90f5156a881d8a7e611c65a909ecff21b95fe9e665aa73940
-  languageName: node
-  linkType: hard
-
-"@storybook/testing-react@npm:2.0.1":
-  version: 2.0.1
-  resolution: "@storybook/testing-react@npm:2.0.1"
-  dependencies:
-    "@storybook/csf": ^0.1.0
-  peerDependencies:
-    "@storybook/client-logger": ^7.0.0-beta.0 || ^7.0.0-rc.0 || ^7.0.0
-    "@storybook/preview-api": ^7.0.0-beta.0 || ^7.0.0-rc.0 || ^7.0.0
-    "@storybook/react": ^7.0.0-beta.0 || ^7.0.0-rc.0 || ^7.0.0
-    "@storybook/types": ^7.0.0-beta.0 || ^7.0.0-rc.0 || ^7.0.0
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: efc32621c0b606409b622887832a2c86bc94f1d1012957f59c4d804d4b9414146dae7e50c8419bba1c85c0fc08feafbc4a4179a21cbda05fdb3ca4b891892dac
   languageName: node
   linkType: hard
 
@@ -13539,7 +13515,6 @@ __metadata:
     "@storybook/react": ^8.0.9
     "@storybook/react-vite": ^8.0.9
     "@storybook/storybook-deployer": 2.8.16
-    "@storybook/testing-react": 2.0.1
     "@storybook/theming": ^8.0.9
     "@testing-library/cypress": ^10.0.1
     "@testing-library/dom": 9.3.4
