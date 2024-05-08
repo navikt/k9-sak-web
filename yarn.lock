@@ -4895,6 +4895,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/sak-aktor@1.0.0, @k9-sak-web/sak-aktor@workspace:packages/sak-aktor":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/sak-aktor@workspace:packages/sak-aktor"
+  dependencies:
+    "@fpsak-frontend/kodeverk": 1.0.0
+    "@fpsak-frontend/sak-visittkort": 1.0.0
+    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+    nav-frontend-lenkepanel: 2.0.2
+    nav-frontend-lenkepanel-style: 2.0.2
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.3.1
+    react-intl: 6.6.5
+    react-router-dom: 6.22.3
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/sak-app@1.0.0, @k9-sak-web/sak-app@workspace:packages/sak-app":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-app@workspace:packages/sak-app"
@@ -4941,6 +4959,7 @@ __metadata:
     "@k9-sak-web/prosess-uttak": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
+    "@k9-sak-web/sak-aktor": 1.0.0
     "@k9-sak-web/sak-behandling-velger": 1.0.0
     "@k9-sak-web/sak-infosider": 1.0.0
     "@k9-sak-web/sak-meldinger": 1.0.0
@@ -6264,6 +6283,13 @@ __metadata:
   version: 1.2.1
   resolution: "@redux-saga/types@npm:1.2.1"
   checksum: 754f183bd1bdd589a29d2b976f666e9ee9e6d28e88268538c11f679d019334999676d5425af14d2a99d5c91c0c87a01e7ac1c4d81a656d93dd529df315bbd0c7
+  languageName: node
+  linkType: hard
+
+"@remix-run/router@npm:1.15.3":
+  version: 1.15.3
+  resolution: "@remix-run/router@npm:1.15.3"
+  checksum: 9e70bd334d99fdf9285f0885c10353d7e25f66369080f551d997e3ce204e1af3a12d6f12b091f94a2dc9a54c80598bbe3c5194b57cbae17b7b40ab815dcd49a0
   languageName: node
   linkType: hard
 
@@ -17602,6 +17628,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-router-dom@npm:6.22.3":
+  version: 6.22.3
+  resolution: "react-router-dom@npm:6.22.3"
+  dependencies:
+    "@remix-run/router": 1.15.3
+    react-router: 6.22.3
+  peerDependencies:
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: 5ae3759a70e4123cd4b8efbb82199a69f5d8c4a7a434d186d2ec7b532b6ef3302df2a98e5c27db977d3f0d725c7a279010a16ae77a3bf6257f1fee96123d8b77
+  languageName: node
+  linkType: hard
+
 "react-router-dom@npm:6.23.0":
   version: 6.23.0
   resolution: "react-router-dom@npm:6.23.0"
@@ -17612,6 +17651,17 @@ __metadata:
     react: ">=16.8"
     react-dom: ">=16.8"
   checksum: 071b4859fa97d501e4de68fdcf46bd7c88138e65149dadd9557559e4acc7ca31d091af24844c7f305625969cc20a1970450a7cde229642c4e654ca14346a982b
+  languageName: node
+  linkType: hard
+
+"react-router@npm:6.22.3":
+  version: 6.22.3
+  resolution: "react-router@npm:6.22.3"
+  dependencies:
+    "@remix-run/router": 1.15.3
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 1f7d9a5a849761ff69ef8f3d3131b4c1c25d18b76317ba5ad6f0d9421192c0b8b71ab0cc818c57aad7b81ada725559e513307d0ab43296a460262f0358602672
   languageName: node
   linkType: hard
 
