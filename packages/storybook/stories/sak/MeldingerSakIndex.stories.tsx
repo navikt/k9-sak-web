@@ -1,23 +1,22 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { object, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import MeldingerSakIndex, { MessagesModalSakIndex } from '@k9-sak-web/sak-meldinger';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
+import MeldingerSakIndex, { MessagesModalSakIndex } from '@k9-sak-web/sak-meldinger';
 
-import { Brevmaler, Kodeverk } from '@k9-sak-web/types';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { BackendApi } from '@k9-sak-web/sak-meldinger/src/MeldingerSakIndex';
 import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
-import arbeidsgivere from '../mocks/arbeidsgivere.json';
-import personopplysninger from '../mocks/personopplysninger';
-import mockedBrevmaler from '../mocks/brevmaler';
+import { BackendApi } from '@k9-sak-web/sak-meldinger/src/MeldingerSakIndex';
+import { Brevmaler, Kodeverk } from '@k9-sak-web/types';
 import withReduxProvider from '../../decorators/withRedux';
+import arbeidsgivere from '../mocks/arbeidsgivere.json';
+import mockedBrevmaler from '../mocks/brevmaler';
+import personopplysninger from '../mocks/personopplysninger';
 
 export default {
   title: 'sak/sak-meldinger',
   component: MeldingerSakIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
 const emptySprakKode = {
@@ -27,7 +26,7 @@ const emptySprakKode = {
 
 interface SendMeldingPanelStoryArgs {
   readonly brevmaler: Brevmaler;
-  readonly sprakKode?: Kodeverk;
+  readonly sprakKode: Kodeverk;
   readonly backendApi?: BackendApi;
 }
 
@@ -46,7 +45,7 @@ const defaultFakeBackend = {
   },
 } satisfies BackendApi;
 
-const sendMeldingTemplate = ({ brevmaler, sprakKode = emptySprakKode }: SendMeldingPanelStoryArgs) => (
+const sendMeldingTemplate = (props: SendMeldingPanelStoryArgs) => (
   <div
     style={{
       width: '600px',
@@ -57,8 +56,6 @@ const sendMeldingTemplate = ({ brevmaler, sprakKode = emptySprakKode }: SendMeld
   >
     <MeldingerSakIndex
       submitCallback={action('button-click')}
-      templates={object('templates', brevmaler)}
-      sprakKode={object('sprakKode', sprakKode)}
       previewCallback={action('button-click')}
       behandlingId={1}
       behandlingVersjon={1}
@@ -79,6 +76,7 @@ const sendMeldingTemplate = ({ brevmaler, sprakKode = emptySprakKode }: SendMeld
       ]}
       erTilbakekreving={false}
       backendApi={defaultFakeBackend}
+      {...props}
     />
   </div>
 );
@@ -86,28 +84,36 @@ const sendMeldingTemplate = ({ brevmaler, sprakKode = emptySprakKode }: SendMeld
 /**
  * Eit vanleg tilfelle (pleiepenger sykt barn), med mockdata kopiert frå Q
  */
-export const SendMeldingPanel = () => sendMeldingTemplate({ brevmaler: mockedBrevmaler });
+export const SendMeldingPanel = props => sendMeldingTemplate(props);
+
+SendMeldingPanel.args = {
+  templates: mockedBrevmaler,
+  sprakKode: emptySprakKode,
+};
 
 /**
  * Viser kva som skjer viss ein berre sende inn ein brevmal til panelet
  */
-export const SendMeldingPanelEnMal = () => {
-  const enBrevmal: Brevmaler = {
+export const SendMeldingPanelEnMal = props => sendMeldingTemplate(props);
+
+SendMeldingPanelEnMal.args = {
+  templates: {
     [dokumentMalType.INNHENT_DOK]: mockedBrevmaler.INNHEN,
-  };
-  return sendMeldingTemplate({ brevmaler: enBrevmal });
+  },
+  sprakKode: emptySprakKode,
 };
 
 /**
  * Viser meldingspanel med engelsk språk kode input
  */
-export const SendMeldingPanelEngelsk = () => {
-  const sprakKode: Kodeverk = {
+export const SendMeldingPanelEngelsk = props => sendMeldingTemplate(props);
+
+SendMeldingPanelEngelsk.args = {
+  templates: mockedBrevmaler,
+  sprakKode: {
     kode: 'EN',
     kodeverk: 'Engelsk',
-  };
-
-  return sendMeldingTemplate({ brevmaler: mockedBrevmaler, sprakKode });
+  },
 };
 
 export const visMeldingModal = () => <MessagesModalSakIndex showModal closeEvent={action('button-click')} />;

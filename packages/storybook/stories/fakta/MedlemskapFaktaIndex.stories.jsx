@@ -1,12 +1,11 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import React from 'react';
 
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import withReduxProvider from '../../decorators/withRedux';
 
@@ -225,15 +224,11 @@ const merknaderFraBeslutter = {
 export default {
   title: 'fakta/fakta-medlemskap',
   component: MedlemskapFaktaIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = () => (
+export const visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = args => (
   <MedlemskapFaktaIndex
-    behandling={object('behandling', behandling)}
-    medlemskap={object('medlemskap', medlemskap)}
-    soknad={object('soknad', soknad)}
-    arbeidsforhold={object('arbeidsforhold', arbeidsforhold)}
     aksjonspunkter={[
       {
         definisjon: {
@@ -247,29 +242,30 @@ export const visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = (
         erAktivt: true,
       },
     ]}
-    fagsakPerson={object('fagsakPerson', fagsakPerson)}
-    isForeldrepengerFagsak={boolean('isForeldrepengerFagsak', true)}
     alleKodeverk={alleKodeverk}
-    alleMerknaderFraBeslutter={{
-      [aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN]: object(
-        'merknaderFraBeslutter',
-        merknaderFraBeslutter,
-      ),
-    }}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    readOnlyBehandling={boolean('readOnly', false)}
-    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
-    submittable={boolean('submittable', true)}
+    {...args}
   />
 );
 
-export const visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = () => (
+visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden.args = {
+  behandling,
+  medlemskap,
+  soknad,
+  arbeidsforhold,
+  fagsakPerson,
+  alleMerknaderFraBeslutter: {
+    [aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN]: merknaderFraBeslutter,
+  },
+  isForeldrepengerFagsak: true,
+  readOnly: false,
+  readOnlyBehandling: false,
+  harApneAksjonspunkter: true,
+  submittable: true,
+};
+
+export const visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = args => (
   <MedlemskapFaktaIndex
-    behandling={object('behandling', behandling)}
-    medlemskap={object('medlemskap', medlemskap)}
-    soknad={object('soknad', soknad)}
-    arbeidsforhold={object('arbeidsforhold', arbeidsforhold)}
     aksjonspunkter={[
       {
         definisjon: {
@@ -316,19 +312,27 @@ export const visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = () => (
         erAktivt: true,
       },
     ]}
-    fagsakPerson={object('fagsakPerson', fagsakPerson)}
-    isForeldrepengerFagsak={boolean('isForeldrepengerFagsak', true)}
     alleKodeverk={alleKodeverk}
-    alleMerknaderFraBeslutter={{
-      [aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-      [aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-      [aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-      [aksjonspunktCodes.AVKLAR_OPPHOLDSRETT]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-    }}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    readOnlyBehandling={boolean('readOnly', false)}
-    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
-    submittable={boolean('submittable', true)}
+    {...args}
   />
 );
+
+visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter.args = {
+  behandling,
+  medlemskap,
+  soknad,
+  arbeidsforhold,
+  fagsakPerson,
+  isForeldrepengerFagsak: true,
+  alleMerknaderFraBeslutter: {
+    [aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]: merknaderFraBeslutter,
+    [aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP]: merknaderFraBeslutter,
+    [aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE]: merknaderFraBeslutter,
+    [aksjonspunktCodes.AVKLAR_OPPHOLDSRETT]: merknaderFraBeslutter,
+  },
+  readOnly: false,
+  readOnlyBehandling: false,
+  harApneAksjonspunkter: true,
+  submittable: true,
+};

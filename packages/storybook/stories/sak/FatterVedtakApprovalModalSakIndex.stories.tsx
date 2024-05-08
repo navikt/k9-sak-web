@@ -1,11 +1,10 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, text } from '@storybook/addon-knobs';
+import React from 'react';
 
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { FatterVedtakTotrinnskontrollModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
 import { Behandling } from '@k9-sak-web/types';
 
@@ -14,10 +13,10 @@ import withReduxProvider from '../../decorators/withRedux';
 export default {
   title: 'sak/sak-totrinnskontroll-fatter-vedtak-modal',
   component: FatterVedtakTotrinnskontrollModalSakIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visModalEtterGodkjenning = () => (
+export const visModalEtterGodkjenning = props => (
   <FatterVedtakTotrinnskontrollModalSakIndex
     behandling={
       {
@@ -32,23 +31,24 @@ export const visModalEtterGodkjenning = () => (
         },
         behandlingsresultat: {
           type: {
-            kode: text('behandlingResultatType', behandlingResultatType.OPPHOR),
+            kode: behandlingResultatType.OPPHOR,
           },
         },
       } as Behandling
     }
     closeEvent={action('button-click')}
     allAksjonspunktApproved
-    fagsakYtelseType={{
-      kode: text('Fagsakytelsetype', fagsakYtelseType.FORELDREPENGER),
-      kodeverk: '',
-    }}
     erKlageWithKA={false}
-    harSammeResultatSomOriginalBehandling={boolean('Har samme resultat som original behandling', false)}
+    {...props}
   />
 );
 
-export const visModalEtterGodkjenningAvKlage = () => (
+visModalEtterGodkjenning.args = {
+  fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: '' },
+  harSammeResultatSomOriginalBehandling: false,
+};
+
+export const visModalEtterGodkjenningAvKlage = props => (
   <FatterVedtakTotrinnskontrollModalSakIndex
     behandling={
       {
@@ -63,23 +63,24 @@ export const visModalEtterGodkjenningAvKlage = () => (
         },
         behandlingsresultat: {
           type: {
-            kode: text('behandlingResultatType', behandlingResultatType.OPPHOR),
+            kode: behandlingResultatType.OPPHOR,
           },
         },
       } as Behandling
     }
     closeEvent={action('button-click')}
     allAksjonspunktApproved
-    fagsakYtelseType={{
-      kode: text('Fagsakytelsetype', fagsakYtelseType.FORELDREPENGER),
-      kodeverk: '',
-    }}
-    erKlageWithKA={boolean('erKlageWithKA', false)}
-    harSammeResultatSomOriginalBehandling={boolean('Har samme resultat som original behandling', false)}
+    {...props}
   />
 );
 
-export const visModalEtterTilbakesendingTilSaksbehandler = () => (
+visModalEtterGodkjenningAvKlage.args = {
+  fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: '' },
+  erKlageWithKA: false,
+  harSammeResultatSomOriginalBehandling: false,
+};
+
+export const visModalEtterTilbakesendingTilSaksbehandler = props => (
   <FatterVedtakTotrinnskontrollModalSakIndex
     behandling={
       {
@@ -94,7 +95,7 @@ export const visModalEtterTilbakesendingTilSaksbehandler = () => (
         },
         behandlingsresultat: {
           type: {
-            kode: text('behandlingResultatType', behandlingResultatType.OPPHOR),
+            kode: behandlingResultatType.OPPHOR,
           },
         },
       } as Behandling
@@ -106,6 +107,8 @@ export const visModalEtterTilbakesendingTilSaksbehandler = () => (
       kodeverk: '',
     }}
     erKlageWithKA={false}
-    harSammeResultatSomOriginalBehandling={boolean('Har samme resultat som original behandling', false)}
+    {...props}
   />
 );
+
+visModalEtterTilbakesendingTilSaksbehandler.args = { harSammeResultatSomOriginalBehandling: false };

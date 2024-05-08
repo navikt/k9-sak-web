@@ -1,10 +1,9 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import React from 'react';
 
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 
 import withReduxProvider from '../../decorators/withRedux';
@@ -74,26 +73,30 @@ const aksjonspunkter = [
 export default {
   title: 'prosess/prosess-varsel-om-revurdering',
   component: VarselOmRevurderingProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visForFørstegangsbehandling = () => (
+export const visForFørstegangsbehandling = args => (
   <VarselOmRevurderingProsessIndex
     behandling={behandling}
-    familiehendelse={object('familieHendelse', familieHendelse)}
-    soknad={object('soknad', soknad)}
-    soknadOriginalBehandling={object('soknadOriginalBehandling', soknadOriginalBehandling)}
-    familiehendelseOriginalBehandling={object('familiehendelseOriginalBehandling', familiehendelseOriginalBehandling)}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
     previewCallback={action('button-click')}
     dispatchSubmitFailed={action('button-click')}
-    isReadOnly={boolean('isReadOnly', false)}
     alleKodeverk={alleKodeverk}
+    {...args}
   />
 );
 
-export const visForRevurdering = () => (
+visForFørstegangsbehandling.args = {
+  familieHendelse,
+  soknad,
+  soknadOriginalBehandling,
+  familiehendelseOriginalBehandling,
+  isReadOnly: false,
+};
+
+export const visForRevurdering = args => (
   <VarselOmRevurderingProsessIndex
     behandling={{
       ...behandling,
@@ -101,15 +104,19 @@ export const visForRevurdering = () => (
         kode: behandlingType.REVURDERING,
       },
     }}
-    familiehendelse={object('familieHendelse', familieHendelse)}
-    soknad={object('soknad', soknad)}
-    soknadOriginalBehandling={object('soknadOriginalBehandling', soknadOriginalBehandling)}
-    familiehendelseOriginalBehandling={object('familiehendelseOriginalBehandling', familiehendelseOriginalBehandling)}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
     previewCallback={action('button-click')}
     dispatchSubmitFailed={action('button-click')}
-    isReadOnly={boolean('isReadOnly', false)}
     alleKodeverk={alleKodeverk}
+    {...args}
   />
 );
+
+visForRevurdering.args = {
+  familieHendelse,
+  soknad,
+  soknadOriginalBehandling,
+  familiehendelseOriginalBehandling,
+  isReadOnly: false,
+};

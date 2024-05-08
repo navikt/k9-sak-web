@@ -1,11 +1,10 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import React from 'react';
 
-import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 
 import withReduxProvider from '../../../decorators/withRedux';
@@ -33,22 +32,12 @@ const aksjonspunkter = [
 export default {
   title: 'prosess/innsyn/prosess-innsyn',
   component: InnsynProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visPanelForVurderingAvInnsyn = () => (
+export const visPanelForVurderingAvInnsyn = args => (
   <InnsynProsessIndex
     behandling={behandling}
-    innsyn={object('innsyn', {
-      dokumenter: [],
-      vedtaksdokumentasjon: [
-        {
-          dokumentId: '1',
-          tittel: behandlingType.FORSTEGANGSSOKNAD,
-          opprettetDato: '2019-01-01',
-        },
-      ],
-    })}
     saksnummer={123434}
     aksjonspunkter={aksjonspunkter}
     alleDokumenter={[
@@ -62,7 +51,21 @@ export const visPanelForVurderingAvInnsyn = () => (
     ]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    isSubmittable={boolean('isSubmittable', true)}
+    {...args}
   />
 );
+
+visPanelForVurderingAvInnsyn.args = {
+  innsyn: {
+    dokumenter: [],
+    vedtaksdokumentasjon: [
+      {
+        dokumentId: '1',
+        tittel: behandlingType.FORSTEGANGSSOKNAD,
+        opprettetDato: '2019-01-01',
+      },
+    ],
+  },
+  readOnly: false,
+  isSubmittable: true,
+};

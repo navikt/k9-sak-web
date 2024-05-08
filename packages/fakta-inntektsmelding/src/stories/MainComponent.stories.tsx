@@ -1,4 +1,5 @@
-import { ComponentStory } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
+import { Meta, StoryObj } from '@storybook/react';
 import { rest } from 'msw';
 import React from 'react';
 import inntektsmeldingPropsMock, {
@@ -12,27 +13,32 @@ import ferdigvisning, {
   manglerFlereInntektsmeldinger,
   manglerInntektsmelding,
 } from '../../mock/mockedKompletthetsdata';
-import MainComponent from '../ui/MainComponent';
+import MainComponent, { MainComponentProps } from '../ui/MainComponent';
 
-export default {
-  args: inntektsmeldingPropsMock,
-  argTypes: { onFinished: { action: 'clicked' } },
+const meta: Meta<typeof MainComponent> = {
+  args: { data: { ...inntektsmeldingPropsMock, onFinished: action('clicked') } },
   title: 'Inntektsmelding',
   component: MainComponent,
 };
 
-const Template: ComponentStory<typeof MainComponent> = (args: any) => <MainComponent data={args} />;
+export default meta;
 
-export const IkkePaakrevd = Template.bind({});
-export const Mangler9069 = Template.bind({});
-export const Mangler9071 = Template.bind({});
-export const ManglerFlere9071 = Template.bind({});
-export const IkkePaakrevdOgMangler9071 = Template.bind({});
-export const FerdigVisning9069 = Template.bind({});
-export const FerdigVisning9071 = Template.bind({});
-export const AlleInntektsmeldingerMottatt = Template.bind({});
+const Template = (args: MainComponentProps) => <MainComponent {...args} />;
+type Story = StoryObj<typeof MainComponent>;
 
-IkkePaakrevd.args = inntektsmeldingPropsMock;
+export const IkkePaakrevd: Story = Template.bind({});
+export const Mangler9069: Story = Template.bind({});
+export const Mangler9071: Story = Template.bind({});
+export const ManglerFlere9071: Story = Template.bind({});
+export const IkkePaakrevdOgMangler9071: Story = Template.bind({});
+export const FerdigVisning9069: Story = Template.bind({});
+export const FerdigVisning9071: Story = Template.bind({});
+export const AlleInntektsmeldingerMottatt: Story = Template.bind({});
+
+IkkePaakrevd.args = {
+  data: { ...inntektsmeldingPropsMock, onFinished: action('button-click') },
+};
+
 IkkePaakrevd.parameters = {
   msw: {
     handlers: [rest.get('/tilstand', (req, res, ctx) => res(ctx.json(ikkePaakrevd)))],
@@ -44,14 +50,19 @@ Mangler9069.parameters = {
     handlers: [rest.get('/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding)))],
   },
 };
-Mangler9071.args = aksjonspunkt9071Props;
+Mangler9071.args = {
+  data: { ...aksjonspunkt9071Props, onFinished: action('button-click') },
+};
+
 Mangler9071.parameters = {
   msw: {
     handlers: [rest.get('/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding)))],
   },
 };
 
-ManglerFlere9071.args = aksjonspunkt9071Props;
+ManglerFlere9071.args = {
+  data: { ...aksjonspunkt9071Props, onFinished: action('button-click') },
+};
 ManglerFlere9071.parameters = {
   msw: {
     handlers: [rest.get('/tilstand', (req, res, ctx) => res(ctx.json(manglerFlereInntektsmeldinger)))],
@@ -67,14 +78,18 @@ FerdigVisning9069.parameters = {
     handlers: [rest.get('/tilstand', (req, res, ctx) => res(ctx.json(ferdigvisning)))],
   },
 };
-FerdigVisning9071.args = aksjonspunkt9071FerdigProps;
+FerdigVisning9071.args = {
+  data: { ...aksjonspunkt9071FerdigProps, onFinished: action('button-click') },
+};
 FerdigVisning9071.parameters = {
   msw: {
     handlers: [rest.get('/tilstand', (req, res, ctx) => res(ctx.json(ferdigvisning)))],
   },
 };
 
-AlleInntektsmeldingerMottatt.args = aksjonspunkt9071Props;
+AlleInntektsmeldingerMottatt.args = {
+  data: { ...aksjonspunkt9071Props, onFinished: action('button-click') },
+};
 AlleInntektsmeldingerMottatt.parameters = {
   msw: {
     handlers: [rest.get('/tilstand', (req, res, ctx) => res(ctx.json(alleErMottatt)))],

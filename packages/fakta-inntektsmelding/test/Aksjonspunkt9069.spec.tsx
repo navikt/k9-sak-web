@@ -1,9 +1,10 @@
-import { Story, composeStories } from '@storybook/react';
-import { render, screen, waitFor, act } from '@testing-library/react';
+import { StoryFn, composeStories } from '@storybook/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import React from 'react';
+import inntektsmeldingPropsMock from '../mock/inntektsmeldingPropsMock';
 import { manglerInntektsmelding } from '../mock/mockedKompletthetsdata';
 import * as stories from '../src/stories/MainComponent.stories';
 import MainComponent from '../src/ui/MainComponent';
@@ -20,7 +21,7 @@ describe('9069 - Mangler inntektsmelding', () => {
   afterAll(() => server.close());
 
   const { Mangler9069 } = composeStories(stories) as {
-    [key: string]: Story<Partial<typeof MainComponent>>;
+    [key: string]: StoryFn<Partial<typeof MainComponent>>;
   };
 
   test('Viser ikke knapp for å sende inn når beslutning ikke er valgt', async () => {
@@ -66,9 +67,9 @@ describe('9069 - Mangler inntektsmelding', () => {
   test('Kan sende purring med varsel om avslag', async () => {
     // ARRANGE
     const onClickSpy = vi.fn();
-    const data = { onFinished: onClickSpy };
+    const props = { data: { ...inntektsmeldingPropsMock, onFinished: onClickSpy } };
     // eslint-disable-next-line react/jsx-props-no-spreading
-    render(<Mangler9069 {...data} />);
+    render(<Mangler9069 {...props} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
@@ -97,10 +98,10 @@ describe('9069 - Mangler inntektsmelding', () => {
   test('Kan submitte begrunnelse når man har valgt A-inntekt', async () => {
     // ARRANGE
     const onClickSpy = vi.fn();
-    const data = { onFinished: onClickSpy };
+    const props = { data: { ...inntektsmeldingPropsMock, onFinished: onClickSpy } };
     // eslint-disable-next-line react/jsx-props-no-spreading
 
-    render(<Mangler9069 {...data} />);
+    render(<Mangler9069 {...props} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
