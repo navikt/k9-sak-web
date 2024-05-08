@@ -1,10 +1,9 @@
-export type KodeverkV2 = Readonly<
-  | {
-      kode: string;
-      kodeverk: string;
-      navn: string;
-    }
-  | string
->;
+export type KodeverkObject = Readonly<{
+  kode: string;
+  kodeverk: string;
+  navn: string;
+}>;
+
+export type KodeverkV2 = KodeverkObject | string;
 
 export default KodeverkV2;

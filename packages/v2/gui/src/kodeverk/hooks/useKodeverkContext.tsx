@@ -94,6 +94,38 @@ export const useKodeverkContext = () => {
     ) => utledKodeverkNavnFraKode(kode, kodeverkType, kodeverkForKilde, ukjentTekst);
   };
 
+  const hentKodeverkFraKode = (
+    kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType,
+    kilde: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' | undefined = undefined,
+  ) => {
+    let kodeverkForKilde: AlleKodeverk | undefined;
+
+    if (kilde !== undefined) {
+      switch (kilde) {
+        case 'kodeverkTilbake':
+          kodeverkForKilde = tilbakeKodeverk;
+          break;
+        case 'kodeverkKlage':
+          kodeverkForKilde = klageKodeverk;
+          break;
+        case 'kodeverk':
+        default:
+          kodeverkForKilde = kodeverk;
+          break;
+      }
+    }
+
+    if (kodeverkForKilde === undefined) {
+      kodeverkForKilde = behandlingType === BehandlingType.KLAGE ? klageKodeverk : kodeverk;
+    }
+
+    if (kodeverkForKilde && kodeverkForKilde[kodeverkType]) {
+      return kodeverkForKilde[kodeverkType];
+    }
+
+    return [];
+  };
+
   return {
     kodeverk,
     klageKodeverk,
@@ -101,5 +133,6 @@ export const useKodeverkContext = () => {
     kodeverkNavnFraKode,
     setKodeverkContext,
     getKodeverkNavnFraKodeFn,
+    hentKodeverkFraKode,
   };
 };

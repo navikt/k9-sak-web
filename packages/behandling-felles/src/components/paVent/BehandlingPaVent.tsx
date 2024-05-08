@@ -2,9 +2,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
-import { Aksjonspunkt, Behandling, Venteaarsak } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { AlleKodeverk, KodeverkType } from '@k9-sak-web/lib/types/index.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 import SettPaVentParams from '../../types/settPaVentParamsTsType';
 
 interface BehandlingPaVentProps {
@@ -66,7 +66,6 @@ const BehandlingPaVent = ({
       frist={behandling.fristBehandlingPaaVent}
       ventearsak={behandling.venteArsakKode}
       hasManualPaVent={erManueltSattPaVent}
-      ventearsaker={kodeverk[KodeverkType.VENT_AARSAK]}
       erTilbakekreving={erTilbakekreving}
       ventearsakVariant={ventearsakVariant}
       showModal
