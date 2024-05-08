@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
-import { rest } from 'msw';
+import { HttpResponse, http } from 'msw';
 import React from 'react';
 import inntektsmeldingPropsMock, {
   aksjonspunkt9071FerdigProps,
@@ -41,13 +41,13 @@ IkkePaakrevd.args = {
 
 IkkePaakrevd.parameters = {
   msw: {
-    handlers: [rest.get('/tilstand', (req, res, ctx) => res(ctx.json(ikkePaakrevd)))],
+    handlers: [http.get('/tilstand', () => HttpResponse.json(ikkePaakrevd))],
   },
 };
 
 Mangler9069.parameters = {
   msw: {
-    handlers: [rest.get('/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding)))],
+    handlers: [http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding))],
   },
 };
 Mangler9071.args = {
@@ -56,7 +56,7 @@ Mangler9071.args = {
 
 Mangler9071.parameters = {
   msw: {
-    handlers: [rest.get('/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding)))],
+    handlers: [http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding))],
   },
 };
 
@@ -65,17 +65,17 @@ ManglerFlere9071.args = {
 };
 ManglerFlere9071.parameters = {
   msw: {
-    handlers: [rest.get('/tilstand', (req, res, ctx) => res(ctx.json(manglerFlereInntektsmeldinger)))],
+    handlers: [http.get('/tilstand', () => HttpResponse.json(manglerFlereInntektsmeldinger))],
   },
 };
 IkkePaakrevdOgMangler9071.parameters = {
   msw: {
-    handlers: [rest.get('/tilstand', (req, res, ctx) => res(ctx.json(ikkePaakrevdOgManglerInntektsmelding)))],
+    handlers: [http.get('/tilstand', () => HttpResponse.json(ikkePaakrevdOgManglerInntektsmelding))],
   },
 };
 FerdigVisning9069.parameters = {
   msw: {
-    handlers: [rest.get('/tilstand', (req, res, ctx) => res(ctx.json(ferdigvisning)))],
+    handlers: [http.get('/tilstand', () => HttpResponse.json(ferdigvisning))],
   },
 };
 FerdigVisning9071.args = {
@@ -83,7 +83,7 @@ FerdigVisning9071.args = {
 };
 FerdigVisning9071.parameters = {
   msw: {
-    handlers: [rest.get('/tilstand', (req, res, ctx) => res(ctx.json(ferdigvisning)))],
+    handlers: [http.get('/tilstand', () => HttpResponse.json(ferdigvisning))],
   },
 };
 
@@ -92,6 +92,6 @@ AlleInntektsmeldingerMottatt.args = {
 };
 AlleInntektsmeldingerMottatt.parameters = {
   msw: {
-    handlers: [rest.get('/tilstand', (req, res, ctx) => res(ctx.json(alleErMottatt)))],
+    handlers: [http.get('/tilstand', () => HttpResponse.json(alleErMottatt))],
   },
 };
