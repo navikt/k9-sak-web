@@ -10,12 +10,9 @@ import messages from '../../i18n/nb_NO.json';
 import VilkarResultPicker from './VilkarResultPicker';
 
 describe('<VilkarResultPicker>', () => {
-  const avslagsarsaker = [{ kode: 'TEST', navn: 'test', kodeverk: '' }];
-
   it('skal vise komponent med radioknapper', () => {
     renderWithIntlAndReduxForm(
       <VilkarResultPicker
-        avslagsarsaker={avslagsarsaker}
         erVilkarOk
         readOnly={false}
         customVilkarIkkeOppfyltText="Ikke oppfylt"
@@ -31,7 +28,6 @@ describe('<VilkarResultPicker>', () => {
     const textId = 'Test';
     renderWithIntlAndReduxForm(
       <VilkarResultPicker
-        avslagsarsaker={avslagsarsaker}
         erVilkarOk={false}
         customVilkarIkkeOppfyltText={textId}
         customVilkarOppfyltText="Oppfylt"
@@ -46,7 +42,6 @@ describe('<VilkarResultPicker>', () => {
   it('skal ikke vise nedtrekksliste når vilkårsresultat ikke er valgt', () => {
     renderWithIntlAndReduxForm(
       <VilkarResultPicker
-        avslagsarsaker={avslagsarsaker}
         erVilkarOk
         readOnly={false}
         customVilkarIkkeOppfyltText="Ikke oppfylt"
@@ -61,7 +56,6 @@ describe('<VilkarResultPicker>', () => {
   it('skal ikke vise nedtrekksliste når vilkårsresultat er OK', () => {
     renderWithIntlAndReduxForm(
       <VilkarResultPicker
-        avslagsarsaker={avslagsarsaker}
         erVilkarOk
         readOnly={false}
         customVilkarIkkeOppfyltText="Ikke oppfylt"
@@ -76,7 +70,6 @@ describe('<VilkarResultPicker>', () => {
   it('skal vise nedtrekksliste når vilkårsresultat er valgt', () => {
     renderWithIntlAndReduxForm(
       <VilkarResultPicker
-        avslagsarsaker={avslagsarsaker}
         erVilkarOk={false}
         readOnly={false}
         customVilkarIkkeOppfyltText="Ikke oppfylt"
@@ -108,12 +101,8 @@ describe('<VilkarResultPicker>', () => {
   it('skal sette opp initielle verdier', () => {
     const aksjonspunkter = [
       {
-        status: {
-          kode: aksjonspunktStatus.UTFORT,
-        },
-        vilkarType: {
-          kode: vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
-        },
+        status: aksjonspunktStatus.UTFORT,
+        vilkarType: vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
       },
     ] as Aksjonspunkt[];
     const intielleVerdier = VilkarResultPicker.buildInitialValues(

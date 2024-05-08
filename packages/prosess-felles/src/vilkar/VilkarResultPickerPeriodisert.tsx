@@ -7,7 +7,9 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, KodeverkMedNavn, Vilkarperiode, vilkarUtfallPeriodisert } from '@k9-sak-web/types';
+import { Aksjonspunkt, Vilkarperiode, vilkarUtfallPeriodisert } from '@k9-sak-web/types';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkType, KodeverkObject } from '@k9-sak-web/lib/types/index.js';
 import { BodyShort } from '@navikt/ds-react';
 import { parse } from 'date-fns';
 import getPackageIntl from '../../i18n/getPackageIntl';
@@ -24,7 +26,6 @@ type FormValues = {
 };
 
 interface OwnProps {
-  avslagsarsaker?: KodeverkMedNavn[];
   erVilkarOk?: string;
   periodeVilkarStatus?: boolean;
   customVilkarIkkeOppfyltText: string | ReactNode;
@@ -45,7 +46,6 @@ interface OwnProps {
  * Presentasjonskomponent. Lar NAV-ansatt velge om vilkåret skal oppfylles eller avvises.
  */
 const VilkarResultPicker = ({
-  avslagsarsaker,
   erVilkarOk,
   periodeVilkarStatus,
   customVilkarIkkeOppfyltText,
@@ -59,6 +59,8 @@ const VilkarResultPicker = ({
   valgtPeriodeFom,
   valgtPeriodeTom,
 }: OwnProps) => {
+  const { hentKodeverkFraKode } = useKodeverkContext();
+  const avslagsarsaker = hentKodeverkFraKode(KodeverkType.AVSLAGSARSAK) as KodeverkObject[];
   const intl = getPackageIntl();
 
   const gyldigFomDatoer = () => ({
@@ -215,7 +217,7 @@ VilkarResultPicker.buildInitialValues = (
   status: string,
   periode: Vilkarperiode,
 ): FormValues => {
-  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status));
   let erVilkarOk;
 
   if (status === vilkarUtfallType.OPPFYLT) {
