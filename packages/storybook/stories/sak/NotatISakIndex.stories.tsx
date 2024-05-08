@@ -1,5 +1,5 @@
 import NotatISakIndex from '@k9-sak-web/sak-notat';
-import { rest } from 'msw';
+import { HttpResponse, delay, http } from 'msw';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
@@ -73,12 +73,24 @@ const notater = [
   },
 ];
 
+type LeggTilNotatRequestBody = {
+  id: number;
+  notatTekst: string;
+  endretAv: string;
+  notatGjelderType: { navn: string };
+  fagsakId: number;
+  opprettetAv: string;
+};
+
 VisNotatISakPanel.parameters = {
   msw: {
     handlers: [
-      rest.get('/k9/sak/api/notat', (req, res, ctx) => res(ctx.delay(250), ctx.json(notater))),
-      rest.post('/k9/sak/api/notat', async (req, res, ctx) => {
-        const nyttNotat = await req.json();
+      http.get('/k9/sak/api/notat', async () => {
+        await delay(250);
+        return HttpResponse.json(notater, { status: 200 });
+      }),
+      http.post<undefined, LeggTilNotatRequestBody>('/k9/sak/api/notat', async ({ request }) => {
+        const nyttNotat = await request.json();
         const redigertNotatIndex = notater.findIndex(notat => notat.id === nyttNotat.id);
         if (redigertNotatIndex >= 0) {
           notater[redigertNotatIndex] = {
@@ -105,7 +117,7 @@ VisNotatISakPanel.parameters = {
             kanRedigere: true,
           });
         }
-        return res(ctx.status(201));
+        return new HttpResponse('done', { status: 201 });
       }),
     ],
   },

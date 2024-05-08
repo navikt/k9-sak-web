@@ -1,7 +1,7 @@
 import { StoryFn, composeStories } from '@storybook/react';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { rest } from 'msw';
+import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import React from 'react';
 import inntektsmeldingPropsMock from '../mock/inntektsmeldingPropsMock';
@@ -10,7 +10,7 @@ import * as stories from '../src/stories/MainComponent.stories';
 import MainComponent from '../src/ui/MainComponent';
 
 const server = setupServer(
-  rest.get('http://localhost:3000/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding))),
+    http.get('http://localhost:3000/tilstand', () => HttpResponse.json(manglerInntektsmelding)),
 );
 
 describe('9069 - Mangler inntektsmelding', () => {
