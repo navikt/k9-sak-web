@@ -23,7 +23,7 @@
     "@popperjs/core": "2.11.8",
     "axios": "1.6.8",
     "classnames": "2.5.1",
-    "date-fns": "2.30.0",
+    "date-fns": "3.6.0",
     "dayjs": "1.11.11",
     "lodash": "4.17.21",
     "msw-storybook-addon": "1.10.0",
