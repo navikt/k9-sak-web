@@ -3,13 +3,13 @@ import { ACCEPTED_DATE_INPUT_FORMATS, DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } fr
 import moment from 'moment';
 import React from 'react';
 import { Field } from 'redux-form';
-import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import renderNavField from './renderNavField';
+import LabelType from './LabelType';
 
 interface DatepickerFieldProps {
   name: string;
-  label: LabelType;
+  label?: LabelType;
   readOnly?: boolean;
   format?: (value: string) => string;
   parse?: (value: string) => string;
@@ -25,7 +25,6 @@ interface DatepickerFieldProps {
     after: Date;
   };
   dataId?: string;
-  hideLabel?: boolean;
 }
 
 const isoToDdMmYyyy = (string: string): string => {
@@ -63,6 +62,7 @@ const DatepickerField = ({ name, label, readOnly, format, parse, isEdited, ...ot
 );
 
 DatepickerField.defaultProps = {
+  label: '',
   readOnly: false,
   isEdited: false,
   format: value => value,
