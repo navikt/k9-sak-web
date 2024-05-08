@@ -1,5 +1,6 @@
 import {
   RadioGroupField,
+  RadioOption,
   behandlingForm,
   behandlingFormValueSelector,
   hasBehandlingFormErrorsOfType,
@@ -69,22 +70,10 @@ export const BehandleUnntakForm = ({
 
       <VerticalSpacer twentyPx />
 
-      <RadioGroupField
-        name="behandlingsresultat"
-        validate={[required]}
-        direction="horizontal"
-        readOnly={readOnly}
-        radios={[
-          {
-            value: behandlingResultatType.INNVILGET,
-            label: <FormattedMessage id="Unntak.Innvilg" />,
-          },
-          {
-            value: behandlingResultatType.AVSLATT,
-            label: <FormattedMessage id="Unntak.Avslå" />,
-          },
-        ]}
-      />
+      <RadioGroupField name="behandlingsresultat" validate={[required]} direction="horizontal" readOnly={readOnly}>
+        <RadioOption value={behandlingResultatType.INNVILGET} label={{ id: 'Unntak.Innvilg' }} />
+        <RadioOption value={behandlingResultatType.AVSLATT} label={{ id: 'Unntak.Avslå' }} />
+      </RadioGroupField>
 
       <FlexColumn>
         <ProsessStegSubmitButton

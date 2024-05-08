@@ -3,25 +3,15 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { screen } from '@testing-library/react';
 import React from 'react';
 import RadioGroupField from './RadioGroupField';
+import RadioOption from './RadioOption';
 
 describe('<RadioGroupField>', () => {
   it('Skal rendre radio inputs', () => {
     renderWithIntlAndReduxForm(
-      <RadioGroupField
-        label="label"
-        columns={4}
-        name="name"
-        radios={[
-          {
-            value: true,
-            label: 'label',
-          },
-          {
-            value: false,
-            label: 'label',
-          },
-        ]}
-      />,
+      <RadioGroupField label="label" columns={4} name="name">
+        <RadioOption label="label" value />
+        <RadioOption label="label" value={false} />
+      </RadioGroupField>,
       { messages },
     );
     expect(screen.getAllByRole('radio').length).toBe(2);
@@ -29,23 +19,12 @@ describe('<RadioGroupField>', () => {
 
   it('Skal rendre med fullbredde', () => {
     const { container } = renderWithIntlAndReduxForm(
-      <RadioGroupField
-        label="label"
-        bredde="fullbredde"
-        name="name"
-        radios={[
-          {
-            value: true,
-            label: 'label',
-          },
-          {
-            value: false,
-            label: 'label',
-          },
-        ]}
-      />,
+      <RadioGroupField label="label" bredde="fullbredde" name="name">
+        <RadioOption label="label" value />
+        <RadioOption label="label" value={false} />
+      </RadioGroupField>,
       { messages },
     );
-    expect(container.getElementsByClassName('input--fullbredde radioGroup').length).toBeGreaterThan(0);
+    expect(container.getElementsByClassName('skjemagruppe input--fullbredde radioGroup').length).toBeGreaterThan(0);
   });
 });
