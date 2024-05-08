@@ -35,6 +35,7 @@ export default {
 export const visPanelForResultatVedStadfestYtelsesvedtak = () => (
   <AnkeProsessIndex
     behandling={behandling}
+    behandlinger={[behandling]}
     ankeVurdering={object('ankeVurdering', {
       ankeVurderingResultat: {
         ankeVurdering: ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK,
