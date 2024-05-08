@@ -5,6 +5,7 @@ import { goToLos, goToSearch } from '@k9-sak-web/sak-app/src/app/paths';
 import { MerknadFraLos } from '@k9-sak-web/types';
 import { Alert, BodyShort, Button, ErrorMessage, Heading, Label, Modal, VStack } from '@navikt/ds-react';
 import { Form, Formik, FormikProps } from 'formik';
+import { CheckboxGruppe } from 'nav-frontend-skjema';
 import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import * as Yup from 'yup';
@@ -136,18 +137,37 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
           {formikProps => (
             <Form>
               {brukVanskeligKøMarkering && (
-                <CheckboxFieldFormik name="markerSomVanskelig" label={{ id: 'MenyMarkerBehandling.VanskeligÅLøse' }} />
+                <CheckboxGruppe
+                  feil={
+                    formikProps.errors.markerSomVanskelig
+                      ? intl.formatMessage({ id: formikProps.errors.markerSomVanskelig })
+                      : false
+                  }
+                >
+                  <CheckboxFieldFormik
+                    name="markerSomVanskelig"
+                    label={{ id: 'MenyMarkerBehandling.VanskeligÅLøse' }}
+                  />
+                </CheckboxGruppe>
               )}
               {brukHastekøMarkering && (
                 <VStack gap="4">
                   <Alert variant="warning">
                     Hastesaker skal følges opp fra Gosys inntil videre, og kan derfor ikke endres her.
                   </Alert>
-                  <CheckboxFieldFormik
-                    name="markerSomHastesak"
-                    label={{ id: 'MenyMarkerBehandling.MarkerSomHastesak' }}
-                    disabled={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT}
-                  />
+                  <CheckboxGruppe
+                    feil={
+                      formikProps.errors.markerSomHastesak
+                        ? intl.formatMessage({ id: formikProps.errors.markerSomHastesak })
+                        : false
+                    }
+                  >
+                    <CheckboxFieldFormik
+                      name="markerSomHastesak"
+                      label={{ id: 'MenyMarkerBehandling.MarkerSomHastesak' }}
+                      disabled={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT}
+                    />
+                  </CheckboxGruppe>
                 </VStack>
               )}
               {formikProps.values.markerSomVanskelig && (

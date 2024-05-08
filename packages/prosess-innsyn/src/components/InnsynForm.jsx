@@ -1,7 +1,7 @@
 import {
   DatepickerField,
-  Label,
   RadioGroupField,
+  RadioOption,
   behandlingForm,
   behandlingFormValueSelector,
   hasBehandlingFormErrorsOfType,
@@ -78,34 +78,27 @@ export const InnsynFormImpl = ({
         readOnly={readOnly}
         label={<FormattedMessage id="InnsynForm.Resultat" key="1" />}
         isEdited={!isApOpen}
-        radios={innsynResultatTyper
+      >
+        {innsynResultatTyper
           .filter(irt => irt.kode !== '-')
-          .map(irt => ({
-            value: irt.kode,
-            label: <Label input={irt.navn} textOnly />,
-          }))}
-      />
+          .map(irt => (
+            <RadioOption key={irt.kode} value={irt.kode} label={irt.navn} />
+          ))}
+      </RadioGroupField>
       {(innsynResultatType === innsynResultatTyperKV.INNVILGET ||
         innsynResultatType === innsynResultatTyperKV.DELVISTINNVILGET) && (
         <ArrowBox alignOffset={innsynResultatType === innsynResultatTyperKV.INNVILGET ? 28 : 176}>
           <RadioGroupField
             name="sattPaVent"
             label={<FormattedMessage id="InnsynForm.VelgVidereAksjon" key="1" />}
-            isVertical
+            direction="vertical"
             readOnly={readOnly}
             isEdited={!isApOpen}
             validate={[required]}
-            radios={[
-              {
-                value: true,
-                label: <FormattedMessage id="InnsynForm.SettBehandlingPåVent" />,
-              },
-              {
-                value: false,
-                label: <FormattedMessage id="InnsynForm.ForeslåOgFatteVedtak" />,
-              },
-            ]}
-          />
+          >
+            <RadioOption label={{ id: 'InnsynForm.SettBehandlingPåVent' }} value />
+            <RadioOption label={{ id: 'InnsynForm.ForeslåOgFatteVedtak' }} value={false} />
+          </RadioGroupField>
           {sattPaVent && (
             <DatepickerField
               name="fristDato"

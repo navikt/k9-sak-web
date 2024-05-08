@@ -4,7 +4,6 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
 import { action } from '@storybook/addon-actions';
-import { boolean, object, withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 
 import withReduxProvider from '../../../decorators/withRedux';
@@ -39,31 +38,13 @@ const fagsak = {
 export default {
   title: 'prosess/klage/prosess-formkrav',
   component: FormkravProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visFormkravPanelForAksjonspunktNfp = () => (
+export const visFormkravPanelForAksjonspunktNfp = args => (
   <FormkravProsessIndex
     behandling={behandling}
-    klageVurdering={object('klageVurdering', {
-      klageVurderingResultatNK: {
-        klageVurdertAv: 'NK',
-        klageVurdering: klageVurderingCodes.AVVIS_KLAGE,
-        fritekstTilBrev: 'test',
-        klageMedholdArsakNavn: 'TEST',
-        godkjentAvMedunderskriver: false,
-      },
-      klageFormkravResultatKA: {
-        avvistArsaker: [
-          {
-            navn: 'Denne er avvist fordi...',
-          },
-        ],
-      },
-    })}
     submitCallback={action('button-click')}
-    isReadOnly={boolean('readOnly', false)}
-    readOnlySubmitButton={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
     avsluttedeBehandlinger={avsluttedeBehandlinger}
     aksjonspunkter={[
@@ -74,31 +55,35 @@ export const visFormkravPanelForAksjonspunktNfp = () => (
       },
     ]}
     fagsak={fagsak}
+    {...args}
   />
 );
 
-export const visFormkravPanelForAksjonspunktKa = () => (
+visFormkravPanelForAksjonspunktNfp.args = {
+  klageVurdering: {
+    klageVurderingResultatNK: {
+      klageVurdertAv: 'NK',
+      klageVurdering: klageVurderingCodes.AVVIS_KLAGE,
+      fritekstTilBrev: 'test',
+      klageMedholdArsakNavn: 'TEST',
+      godkjentAvMedunderskriver: false,
+    },
+    klageFormkravResultatKA: {
+      avvistArsaker: [
+        {
+          navn: 'Denne er avvist fordi...',
+        },
+      ],
+    },
+  },
+  isReadOnly: false,
+  readOnlySubmitButton: false,
+};
+
+export const visFormkravPanelForAksjonspunktKa = args => (
   <FormkravProsessIndex
     behandling={behandling}
-    klageVurdering={object('klageVurdering', {
-      klageVurderingResultatNK: {
-        klageVurdertAv: 'NK',
-        klageVurdering: klageVurderingCodes.AVVIS_KLAGE,
-        fritekstTilBrev: 'test',
-        klageMedholdArsakNavn: 'TEST',
-        godkjentAvMedunderskriver: false,
-      },
-      klageFormkravResultatKA: {
-        avvistArsaker: [
-          {
-            navn: 'Denne er avvist fordi...',
-          },
-        ],
-      },
-    })}
     submitCallback={action('button-click')}
-    isReadOnly={boolean('readOnly', false)}
-    readOnlySubmitButton={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
     avsluttedeBehandlinger={avsluttedeBehandlinger}
     aksjonspunkter={[
@@ -109,5 +94,27 @@ export const visFormkravPanelForAksjonspunktKa = () => (
       },
     ]}
     fagsak={fagsak}
+    {...args}
   />
 );
+
+visFormkravPanelForAksjonspunktKa.args = {
+  klageVurdering: {
+    klageVurderingResultatNK: {
+      klageVurdertAv: 'NK',
+      klageVurdering: klageVurderingCodes.AVVIS_KLAGE,
+      fritekstTilBrev: 'test',
+      klageMedholdArsakNavn: 'TEST',
+      godkjentAvMedunderskriver: false,
+    },
+    klageFormkravResultatKA: {
+      avvistArsaker: [
+        {
+          navn: 'Denne er avvist fordi...',
+        },
+      ],
+    },
+  },
+  isReadOnly: false,
+  readOnlySubmitButton: false,
+};

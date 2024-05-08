@@ -33,6 +33,7 @@ const Home = ({ headerHeight }: OwnProps) => (
     <SentryRoutes>
       <Route path="/" element={<DashboardResolver />} />
       <Route path={fagsakRoutePath} element={<FagsakIndex />} />
+      {/* OBS: AktoerRoutePath brukes av NKS fra Salesforce til K9-sak-web. Kanskje andre også */}
       <Route path={aktoerRoutePath} element={<AktoerIndex />} />
       <Route path="/close" element={<CloseWindow />} />
       <Route path="*" element={<NotFoundPage />} />

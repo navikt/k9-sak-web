@@ -1,4 +1,4 @@
-import { CheckboxField, NavFieldGroup, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
+import { CheckboxField, NavFieldGroup, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
@@ -107,21 +107,10 @@ export const AksjonspunktGodkjenningFieldArray = ({
                 </div>
               ))}
             <NavFieldGroup>
-              <RadioGroupField
-                name={`${id}.totrinnskontrollGodkjent`}
-                bredde="M"
-                readOnly={readOnly}
-                radios={[
-                  {
-                    value: true,
-                    label: <FormattedMessage id="ApprovalField.Godkjent" />,
-                  },
-                  {
-                    value: false,
-                    label: <FormattedMessage id="ApprovalField.Vurder" />,
-                  },
-                ]}
-              />
+              <RadioGroupField name={`${id}.totrinnskontrollGodkjent`} bredde="M" readOnly={readOnly}>
+                <RadioOption label={{ id: 'ApprovalField.Godkjent' }} value />
+                <RadioOption label={{ id: 'ApprovalField.Vurder' }} value={false} />
+              </RadioGroupField>
               {visArsaker && (
                 <ArrowBox alignOffset={erKlageKA ? 1 : 110}>
                   {!visKunBegrunnelse && (

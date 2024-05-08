@@ -13,6 +13,7 @@ import {
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
   RadioGroupField,
+  RadioOption,
   TextAreaField,
 } from '@fpsak-frontend/form';
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -45,22 +46,10 @@ const AnkeMerknader = ({
       <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
         <div>
           <FormattedMessage id="Ankebehandling.Merknad.Merknader" />
-          <RadioGroupField
-            name="erMerknaderMottatt"
-            validate={[required]}
-            direction="horisontal"
-            readOnly={readOnly}
-            radios={[
-              {
-                value: 'ja',
-                label: <FormattedMessage id="Ankebehandling.Merknad.Merknader.Ja" />,
-              },
-              {
-                value: 'nei',
-                label: <FormattedMessage id="Ankebehandling.Merknad.Merknader.Nei" />,
-              },
-            ]}
-          />
+          <RadioGroupField name="erMerknaderMottatt" validate={[required]} direction="horisontal" readOnly={readOnly}>
+            <RadioOption value="ja" label={{ id: 'Ankebehandling.Merknad.Merknader.Ja' }} />
+            <RadioOption value="nei" label={{ id: 'Ankebehandling.Merknad.Merknader.Nei' }} />
+          </RadioGroupField>
         </div>
       </HGrid>
 

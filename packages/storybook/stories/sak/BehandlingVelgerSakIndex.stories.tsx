@@ -4,8 +4,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
-import { Behandling, Fagsak, Kodeverk } from '@k9-sak-web/types';
-import { boolean, number, object, withKnobs } from '@storybook/addon-knobs';
+import { Fagsak, Kodeverk } from '@k9-sak-web/types';
 import React, { useState } from 'react';
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 import alleKodeverk from '../mocks/alleKodeverk.json';
@@ -292,24 +291,28 @@ const getKodeverkFn = (kodeverk: Kodeverk) => {
 export default {
   title: 'sak/sak-behandling-velger',
   component: BehandlingVelgerSakIndex,
-  decorators: [withKnobs, withReduxAndRouterProvider],
+  decorators: [withReduxAndRouterProvider],
 };
 
-export const visPanelForValgAvBehandlinger = () => {
+export const visPanelForValgAvBehandlinger = props => {
   const [visAlle, toggleVisAlle] = useState(false);
   return (
     <div style={{ width: '600px' }}>
       <BehandlingVelgerSakIndex
-        behandlinger={object('behandlinger', behandlinger as Behandling[])}
         getBehandlingLocation={() => locationMock}
-        noExistingBehandlinger={boolean('noExistingBehandlinger', false)}
-        behandlingId={number('behandlingId', 1)}
         showAll={visAlle}
         toggleShowAll={() => toggleVisAlle(!visAlle)}
         getKodeverkFn={getKodeverkFn}
         fagsak={fagsak}
         createLocationForSkjermlenke={() => locationMock}
+        {...props}
       />
     </div>
   );
+};
+
+visPanelForValgAvBehandlinger.args = {
+  behandlinger,
+  noExistingBehandlinger: false,
+  behandlingId: 1,
 };

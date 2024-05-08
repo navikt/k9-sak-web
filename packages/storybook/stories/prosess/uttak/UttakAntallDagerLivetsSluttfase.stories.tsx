@@ -1,12 +1,10 @@
-import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
-import AntallDagerLivetsSluttfaseIndex from '@k9-sak-web/prosess-uttak-antall-dager-sluttfase/src/AntallDagerLivetsSluttfaseIndex';
 import KvoteInfo from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/types/KvoteInfo';
+import AntallDagerLivetsSluttfaseIndex from '@k9-sak-web/prosess-uttak-antall-dager-sluttfase/src/AntallDagerLivetsSluttfaseIndex';
+import React from 'react';
 
 export default {
   title: 'prosess/antall-dager-livets-sluttfase',
   component: AntallDagerLivetsSluttfaseIndex,
-  decorators: [withKnobs],
 };
 
 const kvoteInfo: KvoteInfo = {
@@ -14,22 +12,16 @@ const kvoteInfo: KvoteInfo = {
   totaltForbruktKvote: 20,
 };
 
-export const antallDagerLivetsSluttfaseIndex = () =>
+export const antallDagerLivetsSluttfaseIndex = () => (
   <>
     <hr />
     <h3>Forbruk: 20 dager</h3>
-    <AntallDagerLivetsSluttfaseIndex
-      kvoteInfo={kvoteInfo}
-    />
+    <AntallDagerLivetsSluttfaseIndex kvoteInfo={kvoteInfo} />
     <hr />
     <h3>Forbruk: 60 dager</h3>
-    <AntallDagerLivetsSluttfaseIndex
-      kvoteInfo={{ ...kvoteInfo, totaltForbruktKvote: 60 }}
-    />
+    <AntallDagerLivetsSluttfaseIndex kvoteInfo={{ ...kvoteInfo, totaltForbruktKvote: 60 }} />
     <hr />
     <h3>Forbruk: 70 dager</h3>
-    <AntallDagerLivetsSluttfaseIndex
-      kvoteInfo={{ ...kvoteInfo, totaltForbruktKvote: 70 }}
-    />
+    <AntallDagerLivetsSluttfaseIndex kvoteInfo={{ ...kvoteInfo, totaltForbruktKvote: 70 }} />
   </>
-  ;
+);

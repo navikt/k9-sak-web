@@ -1,10 +1,9 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import React from 'react';
 
+import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
 
 import withReduxProvider from '../../decorators/withRedux';
 
@@ -38,21 +37,25 @@ const merknaderFraBeslutter = {
 export default {
   title: 'fakta/fakta-verge',
   component: VergeFaktaIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visAksjonspunktForAvklaringAvVerge = () => (
+export const visAksjonspunktForAvklaringAvVerge = args => (
   <VergeFaktaIndex
     behandling={behandling}
     verge={verge}
     aksjonspunkter={aksjonspunkter}
     alleKodeverk={alleKodeverk}
-    alleMerknaderFraBeslutter={{
-      [aksjonspunktCodes.AVKLAR_VERGE]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-    }}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
-    submittable={boolean('submittable', true)}
+    {...args}
   />
 );
+
+visAksjonspunktForAvklaringAvVerge.args = {
+  alleMerknaderFraBeslutter: {
+    [aksjonspunktCodes.AVKLAR_VERGE]: merknaderFraBeslutter,
+  },
+  readOnly: false,
+  harApneAksjonspunkter: true,
+  submittable: true,
+};

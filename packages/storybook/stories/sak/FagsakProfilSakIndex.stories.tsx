@@ -1,4 +1,3 @@
-import { withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -11,7 +10,7 @@ import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 export default {
   title: 'sak/sak-fagsak-profil',
   component: FagsakProfilSakIndex,
-  decorators: [withKnobs, withReduxAndRouterProvider],
+  decorators: [withReduxAndRouterProvider],
 };
 
 const FAGSAK_STATUS_KODEVERK = 'FAGSAK_STATUS';
