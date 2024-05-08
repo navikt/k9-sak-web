@@ -23,7 +23,7 @@ import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/
 import BehandlingPleiepengerSluttfaseIndex from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
 import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
 import { useBehandlingContext } from '@k9-sak-web/gui/behandling/index.js';
-import { KodeverkProvider, useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import getAccessRights from '../app/util/access';
 import {
@@ -128,7 +128,12 @@ const BehandlingIndex = ({
   const klageKodeverk = restApiHooks.useGlobalStateRestApiData<AlleKodeverk>(K9sakApiKeys.KODEVERK_KLAGE);
 
   useEffect(() => {
-    setKodeverkContext({ kodeverk, klageKodeverk, tilbakeKodeverk: {} });
+    setKodeverkContext({
+      kodeverk,
+      klageKodeverk,
+      tilbakeKodeverk: {},
+      behandlingType: BehandlingType[behandling?.type],
+    });
   }, [kodeverk, klageKodeverk]);
 
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(K9sakApiKeys.SAK_BRUKER);
