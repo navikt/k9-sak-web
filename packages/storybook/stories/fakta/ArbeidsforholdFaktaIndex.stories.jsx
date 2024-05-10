@@ -1,11 +1,10 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import React from 'react';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import arbeidsforholdKilder from '@fpsak-frontend/fakta-arbeidsforhold/src/kodeverk/arbeidsforholdKilder';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import withReduxProvider from '../../decorators/withRedux';
 
@@ -60,26 +59,12 @@ const merknaderFraBeslutter = {
 export default {
   title: 'fakta/fakta-arbeidsforhold',
   component: ArbeidsforholdFaktaIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visAksjonspunktForAvklaringAvArbeidsforhold = () => (
+export const visAksjonspunktForAvklaringAvArbeidsforhold = args => (
   <ArbeidsforholdFaktaIndex
     behandling={behandling}
-    arbeidsforhold={object('arbeidsforhold', [
-      {
-        ...arbeidsforhold,
-        tilVurdering: true,
-        mottattDatoInntektsmelding: undefined,
-      },
-      {
-        ...arbeidsforhold,
-        navn: 'NSB',
-        id: '2',
-        tilVurdering: true,
-        mottattDatoInntektsmelding: undefined,
-      },
-    ])}
     aksjonspunkter={[
       {
         definisjon: {
@@ -95,19 +80,36 @@ export const visAksjonspunktForAvklaringAvArbeidsforhold = () => (
     ]}
     alleKodeverk={alleKodeverk}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
-    alleMerknaderFraBeslutter={{
-      [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-    }}
-    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    {...args}
   />
 );
 
-export const visAksjonspunktForIngenArbeidsforholdRegistrert = () => (
+visAksjonspunktForAvklaringAvArbeidsforhold.args = {
+  arbeidsforhold: [
+    {
+      ...arbeidsforhold,
+      tilVurdering: true,
+      mottattDatoInntektsmelding: undefined,
+    },
+    {
+      ...arbeidsforhold,
+      navn: 'NSB',
+      id: '2',
+      tilVurdering: true,
+      mottattDatoInntektsmelding: undefined,
+    },
+  ],
+  alleMerknaderFraBeslutter: {
+    [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: merknaderFraBeslutter,
+  },
+  harApneAksjonspunkter: true,
+  readOnly: false,
+};
+
+export const visAksjonspunktForIngenArbeidsforholdRegistrert = args => (
   <ArbeidsforholdFaktaIndex
     behandling={behandling}
-    arbeidsforhold={object('arbeidsforhold', [])}
     aksjonspunkter={[
       {
         definisjon: {
@@ -123,50 +125,41 @@ export const visAksjonspunktForIngenArbeidsforholdRegistrert = () => (
     ]}
     alleKodeverk={alleKodeverk}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
-    alleMerknaderFraBeslutter={{
-      [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-    }}
     submitCallback={action('button-click')}
-    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
-    readOnly={boolean('readOnly', false)}
+    {...args}
   />
 );
 
-export const visPanelUtenAksjonspunkter = () => (
+visAksjonspunktForIngenArbeidsforholdRegistrert.args = {
+  arbeidsforhold: [],
+  alleMerknaderFraBeslutter: {
+    [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: merknaderFraBeslutter,
+  },
+  harApneAksjonspunkter: true,
+  readOnly: false,
+};
+
+export const visPanelUtenAksjonspunkter = args => (
   <ArbeidsforholdFaktaIndex
     behandling={behandling}
-    arbeidsforhold={object('arbeidsforhold', [arbeidsforhold])}
     aksjonspunkter={[]}
     alleKodeverk={alleKodeverk}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
     alleMerknaderFraBeslutter={{}}
     submitCallback={action('button-click')}
-    harApneAksjonspunkter={boolean('harApneAksjonspunkter', false)}
-    readOnly={boolean('readOnly', false)}
+    {...args}
   />
 );
 
-export const visPanelForPermisjon = () => (
+visPanelUtenAksjonspunkter.args = {
+  arbeidsforhold: [arbeidsforhold],
+  harApneAksjonspunkter: false,
+  readOnly: false,
+};
+
+export const visPanelForPermisjon = args => (
   <ArbeidsforholdFaktaIndex
     behandling={behandling}
-    arbeidsforhold={object('arbeidsforhold', [
-      {
-        ...arbeidsforhold,
-        mottattDatoInntektsmelding: undefined,
-        tilVurdering: true,
-        permisjoner: [
-          {
-            type: {
-              kode: 'PERMISJON',
-            },
-            permisjonFom: '2018-10-10',
-            permisjonTom: '2019-10-10',
-            permisjonsprosent: 100,
-            permisjonsÅrsak: 'aarsak',
-          },
-        ],
-      },
-    ])}
     aksjonspunkter={[
       {
         definisjon: {
@@ -182,44 +175,40 @@ export const visPanelForPermisjon = () => (
     ]}
     alleKodeverk={alleKodeverk}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
-    alleMerknaderFraBeslutter={{
-      [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-    }}
-    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    {...args}
   />
 );
 
-export const visPanelForFlerePermisjoner = () => (
+visPanelForPermisjon.args = {
+  arbeidsforhold: [
+    {
+      ...arbeidsforhold,
+      mottattDatoInntektsmelding: undefined,
+      tilVurdering: true,
+      permisjoner: [
+        {
+          type: {
+            kode: 'PERMISJON',
+          },
+          permisjonFom: '2018-10-10',
+          permisjonTom: '2019-10-10',
+          permisjonsprosent: 100,
+          permisjonsÅrsak: 'aarsak',
+        },
+      ],
+    },
+  ],
+  alleMerknaderFraBeslutter: {
+    [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: merknaderFraBeslutter,
+  },
+  harApneAksjonspunkter: true,
+  readOnly: false,
+};
+
+export const visPanelForFlerePermisjoner = args => (
   <ArbeidsforholdFaktaIndex
     behandling={behandling}
-    arbeidsforhold={object('arbeidsforhold', [
-      {
-        ...arbeidsforhold,
-        tilVurdering: true,
-        permisjoner: [
-          {
-            type: {
-              kode: 'PERMISJON',
-            },
-            permisjonFom: '2015-01-01',
-            permisjonTom: undefined,
-            permisjonsprosent: 100,
-            permisjonsÅrsak: 'aarsak',
-          },
-          {
-            type: {
-              kode: 'PERMISJON',
-            },
-            permisjonFom: '2017-01-01',
-            permisjonTom: '2019-01-01',
-            permisjonsprosent: 100,
-            permisjonsÅrsak: 'aarsak',
-          },
-        ],
-      },
-    ])}
     aksjonspunkter={[
       {
         definisjon: {
@@ -235,11 +224,41 @@ export const visPanelForFlerePermisjoner = () => (
     ]}
     alleKodeverk={alleKodeverk}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
-    alleMerknaderFraBeslutter={{
-      [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-    }}
-    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    {...args}
   />
 );
+
+visPanelForFlerePermisjoner.args = {
+  arbeidsforhold: [
+    {
+      ...arbeidsforhold,
+      tilVurdering: true,
+      permisjoner: [
+        {
+          type: {
+            kode: 'PERMISJON',
+          },
+          permisjonFom: '2015-01-01',
+          permisjonTom: undefined,
+          permisjonsprosent: 100,
+          permisjonsÅrsak: 'aarsak',
+        },
+        {
+          type: {
+            kode: 'PERMISJON',
+          },
+          permisjonFom: '2017-01-01',
+          permisjonTom: '2019-01-01',
+          permisjonsprosent: 100,
+          permisjonsÅrsak: 'aarsak',
+        },
+      ],
+    },
+  ],
+  alleMerknaderFraBeslutter: {
+    [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: merknaderFraBeslutter,
+  },
+  harApneAksjonspunkter: true,
+  readOnly: false,
+};

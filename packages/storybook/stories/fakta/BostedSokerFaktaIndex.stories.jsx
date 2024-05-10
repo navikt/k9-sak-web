@@ -1,9 +1,8 @@
 import React from 'react';
-import { withKnobs, object } from '@storybook/addon-knobs';
 
-import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
+import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
+import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import region from '@fpsak-frontend/kodeverk/src/region';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
@@ -40,14 +39,14 @@ const personopplysninger = {
 export default {
   title: 'fakta/fakta-bosted-soker',
   component: BostedSokerFaktaIndex,
-  decorators: [withKnobs],
 };
 
-export const visPanelForInformasjonOmSøkersBosted = () => (
+export const visPanelForInformasjonOmSøkersBosted = args => (
   <div style={{ padding: '50px' }}>
-    <BostedSokerFaktaIndex
-      personopplysninger={object('personopplysninger', personopplysninger)}
-      alleKodeverk={alleKodeverk}
-    />
+    <BostedSokerFaktaIndex alleKodeverk={alleKodeverk} {...args} />
   </div>
 );
+
+visPanelForInformasjonOmSøkersBosted.args = {
+  personopplysninger,
+};

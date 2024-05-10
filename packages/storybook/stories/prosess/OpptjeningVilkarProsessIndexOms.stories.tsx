@@ -1,10 +1,9 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { boolean, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening-oms';
 import opptjeningAktivitetKlassifisering from '@fpsak-frontend/prosess-vilkar-opptjening-oms/src/kodeverk/opptjeningAktivitetKlassifisering';
 import { Aksjonspunkt, Fagsak, OpptjeningBehandling } from '@k9-sak-web/types';
@@ -176,10 +175,10 @@ const opptjeninger = { opptjeninger: [opptjening, opptjening2] };
 export default {
   title: 'prosess/prosess-vilkar-opptjening-oms',
   component: OpptjeningVilkarProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visPanelForÅpentAksjonspunkt = () => (
+export const visPanelForÅpentAksjonspunkt = args => (
   <OpptjeningVilkarProsessIndex
     fagsak={{
       ...fagsak,
@@ -247,13 +246,17 @@ export const visPanelForÅpentAksjonspunkt = () => (
     status={vilkarUtfallType.IKKE_VURDERT}
     lovReferanse="§§Dette er en lovreferanse"
     submitCallback={action('button-click')}
-    isReadOnly={boolean('isReadOnly', false)}
-    isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
-    readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+    {...args}
   />
 );
 
-export const visPanelForPSBÅpentAksjonspunktUten847B = () => (
+visPanelForÅpentAksjonspunkt.args = {
+  isReadOnly: false,
+  isAksjonspunktOpen: true,
+  readOnlySubmitButton: false,
+};
+
+export const visPanelForPSBÅpentAksjonspunktUten847B = args => (
   <OpptjeningVilkarProsessIndex
     fagsak={fagsak}
     behandling={
@@ -311,13 +314,17 @@ export const visPanelForPSBÅpentAksjonspunktUten847B = () => (
     status={vilkarUtfallType.IKKE_VURDERT}
     lovReferanse="§§Dette er en lovreferanse"
     submitCallback={action('button-click')}
-    isReadOnly={boolean('isReadOnly', false)}
-    isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
-    readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+    {...args}
   />
 );
 
-export const visPanelForPSBÅpentAksjonspunktMed847B = () => (
+visPanelForPSBÅpentAksjonspunktUten847B.args = {
+  isReadOnly: false,
+  isAksjonspunktOpen: true,
+  readOnlySubmitButton: false,
+};
+
+export const visPanelForPSBÅpentAksjonspunktMed847B = args => (
   <OpptjeningVilkarProsessIndex
     fagsak={fagsak}
     behandling={
@@ -375,13 +382,17 @@ export const visPanelForPSBÅpentAksjonspunktMed847B = () => (
     status={vilkarUtfallType.IKKE_VURDERT}
     lovReferanse="§§Dette er en lovreferanse"
     submitCallback={action('button-click')}
-    isReadOnly={boolean('isReadOnly', false)}
-    isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
-    readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+    {...args}
   />
 );
 
-export const visPanelForNårEnIkkeHarAksjonspunkt = () => (
+visPanelForPSBÅpentAksjonspunktMed847B.args = {
+  isReadOnly: false,
+  isAksjonspunktOpen: true,
+  readOnlySubmitButton: false,
+};
+
+export const visPanelForNårEnIkkeHarAksjonspunkt = args => (
   <OpptjeningVilkarProsessIndex
     fagsak={{
       ...fagsak,
@@ -437,8 +448,12 @@ export const visPanelForNårEnIkkeHarAksjonspunkt = () => (
     status={vilkarUtfallType.OPPFYLT}
     lovReferanse="§§Dette er en lovreferanse"
     submitCallback={action('button-click')}
-    isReadOnly={boolean('isReadOnly', true)}
-    isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
-    readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+    {...args}
   />
 );
+
+visPanelForNårEnIkkeHarAksjonspunkt.args = {
+  isReadOnly: true,
+  isAksjonspunktOpen: false,
+  readOnlySubmitButton: false,
+};

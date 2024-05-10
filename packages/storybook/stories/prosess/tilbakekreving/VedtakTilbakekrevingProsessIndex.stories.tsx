@@ -1,15 +1,14 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import React from 'react';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aktsomhet from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/aktsomhet';
+import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
 import { Behandling, BeregningsresultatTilbakekreving } from '@k9-sak-web/types';
 
-import vedtakResultatType from './vedtakResultatType';
 import withReduxProvider from '../../../decorators/withRedux';
+import vedtakResultatType from './vedtakResultatType';
 
 const vedtaksbrev = {
   avsnittsliste: [
@@ -208,10 +207,10 @@ const alleKodeverk = {
 export default {
   title: 'prosess/tilbakekreving/prosess-vedtak-tilbakekreving',
   component: VedtakTilbakekrevingProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visVedtakspanel = () => (
+export const visVedtakspanel = args => (
   <VedtakTilbakekrevingProsessIndex
     behandling={
       {
@@ -222,9 +221,13 @@ export const visVedtakspanel = () => (
     beregningsresultat={beregningsresultat}
     vedtaksbrev={vedtaksbrev}
     submitCallback={action('button-click') as () => Promise<any>}
-    isReadOnly={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
     fetchPreviewVedtaksbrev={action('button-click') as () => Promise<any>}
     aksjonspunktKodeForeslaVedtak={aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK}
+    {...args}
   />
 );
+
+visVedtakspanel.args = {
+  isReadOnly: false,
+};

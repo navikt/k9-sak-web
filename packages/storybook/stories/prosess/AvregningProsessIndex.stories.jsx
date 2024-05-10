@@ -1,10 +1,9 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, object, boolean, array } from '@storybook/addon-knobs';
+import React from 'react';
 
-import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 
 import withReduxProvider from '../../decorators/withRedux';
@@ -169,49 +168,57 @@ const toggles = {
 export default {
   title: 'prosess/prosess-avregning',
   component: AvregningProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visAksjonspunktVurderFeilutbetaling = () => (
+export const visAksjonspunktVurderFeilutbetaling = args => (
   <AvregningProsessIndex
-    fagsak={object('fagsak', fagsak)}
     behandling={behandling}
-    aksjonspunkter={object('aksjonspunkter', [
-      {
-        definisjon: {
-          kode: aksjonspunktCodes.VURDER_FEILUTBETALING,
-        },
-        begrunnelse: undefined,
-      },
-    ])}
-    simuleringResultat={object('simuleringResultat', simuleringResultat)}
     submitCallback={action('button-click')}
     previewFptilbakeCallback={action('button-click')}
-    isReadOnly={boolean('isReadOnly', false)}
-    isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
-    readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     featureToggles={toggles}
+    {...args}
   />
 );
 
-export const visSimuleringspanelUtenAksjonspunkt = () => (
+visAksjonspunktVurderFeilutbetaling.args = {
+  fagsak,
+  aksjonspunkter: [
+    {
+      definisjon: {
+        kode: aksjonspunktCodes.VURDER_FEILUTBETALING,
+      },
+      begrunnelse: undefined,
+    },
+  ],
+  simuleringResultat,
+  isReadOnly: false,
+  isAksjonspunktOpen: true,
+  readOnlySubmitButton: false,
+};
+
+export const visSimuleringspanelUtenAksjonspunkt = args => (
   <AvregningProsessIndex
-    fagsak={object('fagsak', fagsak)}
     behandling={behandling}
     aksjonspunkter={[]}
-    simuleringResultat={object('simuleringResultat', simuleringResultat)}
-    tilbakekrevingvalg={object('tilbakekrevingvalg', {
-      videreBehandling: {
-        kode: tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
-      },
-      varseltekst: 'varsel-eksempel',
-    })}
     submitCallback={action('button-click')}
     previewFptilbakeCallback={action('button-click')}
-    isReadOnly={boolean('isReadOnly', false)}
-    isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
-    readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
-    apCodes={array('apCodes', [])}
     featureToggles={toggles}
+    {...args}
   />
 );
+
+visSimuleringspanelUtenAksjonspunkt.args = {
+  fagsak,
+  simuleringResultat,
+  tilbakekrevingvalg: {
+    videreBehandling: {
+      kode: tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
+    },
+    varseltekst: 'varsel-eksempel',
+  },
+  isReadOnly: false,
+  isAksjonspunktOpen: true,
+  readOnlySubmitButton: false,
+  apCodes: [],
+};

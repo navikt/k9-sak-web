@@ -1,5 +1,4 @@
 import { action } from '@storybook/addon-actions';
-import { boolean, withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
@@ -50,10 +49,10 @@ const behandling = {
 
 export default {
   title: 'prosess/prosess-vedtak',
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visSjekkTilbakekreving = () => {
+export const visSjekkTilbakekreving = args => {
   const aksjonspunkt5085 = {
     aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
     begrunnelse: null,
@@ -91,14 +90,18 @@ export const visSjekkTilbakekreving = () => {
         },
       }}
       vilkar={[]}
-      sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
       medlemskap={{ fom: '2019-01-01' }}
       aksjonspunkter={[aksjonspunkt5085]}
-      employeeHasAccess={boolean('employeeHasAccess', false)}
-      isReadOnly={boolean('isReadOnly', false)}
       previewCallback={action('button-click')}
       submitCallback={action('button-click')}
       alleKodeverk={alleKodeverk}
+      {...args}
     />
   );
+};
+
+visSjekkTilbakekreving.args = {
+  sendVarselOmRevurdering: false,
+  employeeHasAccess: false,
+  isReadOnly: false,
 };
