@@ -2343,6 +2343,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formatjs/intl@npm:2.10.2":
+  version: 2.10.2
+  resolution: "@formatjs/intl@npm:2.10.2"
+  dependencies:
+    "@formatjs/ecma402-abstract": 1.18.2
+    "@formatjs/fast-memoize": 2.2.0
+    "@formatjs/icu-messageformat-parser": 2.7.6
+    "@formatjs/intl-displaynames": 6.6.6
+    "@formatjs/intl-listformat": 7.5.5
+    intl-messageformat: 10.5.12
+    tslib: ^2.4.0
+  peerDependencies:
+    typescript: ^4.7 || 5
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 7e4157e148a340fa6c18ba6fe83138b1df3a16fbca01438707d07c1ea3be6e3d492b3bdf229c0c97179fafceae636c9b08e4da445f643fd58f0f06bc8478737a
+  languageName: node
+  linkType: hard
+
 "@fpsak-frontend/assets@1.0.0, @fpsak-frontend/assets@workspace:packages/assets":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/assets@workspace:packages/assets"
@@ -3851,7 +3871,7 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning-redesign": 1.2.3
+    "@navikt/ft-fakta-beregning-redesign": 1.2.4
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.6
     axios-mock-adapter: 1.22.0
     react: 18.3.1
@@ -3952,7 +3972,7 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning-redesign": 1.2.3
+    "@navikt/ft-fakta-beregning-redesign": 1.2.4
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.4
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.6
     axios-mock-adapter: 1.22.0
@@ -4004,7 +4024,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning-redesign": 1.2.3
+    "@navikt/ft-fakta-beregning-redesign": 1.2.4
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.4
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.6
     axios: 1.6.8
@@ -4052,7 +4072,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning-redesign": 1.2.3
+    "@navikt/ft-fakta-beregning-redesign": 1.2.4
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.4
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.6
     axios: 1.6.8
@@ -4106,7 +4126,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/diagnosekoder": ^1.2024.0
-    "@navikt/ft-fakta-beregning-redesign": 1.2.3
+    "@navikt/ft-fakta-beregning-redesign": 1.2.4
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.4
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.6
     axios: 1.6.8
@@ -4915,7 +4935,7 @@ __metadata:
     "@k9-sak-web/sak-soknadsperiodestripe": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ds-react": 6.5.0
-    "@navikt/ft-fakta-beregning-redesign": 1.2.3
+    "@navikt/ft-fakta-beregning-redesign": 1.2.4
     "@navikt/ft-form-hooks": 4.4.3
     "@navikt/ft-plattform-komponenter": 2.5.6
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.6
@@ -5110,6 +5130,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/aksel-icons@npm:6.7.0, @navikt/aksel-icons@npm:^6.7.0":
+  version: 6.7.0
+  resolution: "@navikt/aksel-icons@npm:6.7.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F6.7.0%2F71fc29560824c564b8781c81ef9e9dec7d96df3d"
+  checksum: da08b53636c85377a27f4dc6953fe0fe95a17fca344720b081879881d7b5a31c7c3c78a7a3fae3dfd984c55526bd1048b954550ad34fe61452e2c907b05d6067
+  languageName: node
+  linkType: hard
+
 "@navikt/diagnosekoder@npm:^1.2024.0":
   version: 1.2024.0
   resolution: "@navikt/diagnosekoder@npm:1.2024.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fdiagnosekoder%2F1.2024.0%2F2d990449f3bb8d5231f2e9b583ba30f8bebbeccb"
@@ -5121,6 +5148,13 @@ __metadata:
   version: 6.5.0
   resolution: "@navikt/ds-css@npm:6.5.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F6.5.0%2F9b13db809fe703b2ccffb6fe9e3fc497c5b1f71b"
   checksum: 133791424f0b8b2da949a3c6e7ab112c9c385354d8aefae5ac909b7d32a4c05f158edd3e49ec0c921307a064af5328fa639f0f68b59b6b7af151e79f6660bbfe
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-css@npm:6.7.0":
+  version: 6.7.0
+  resolution: "@navikt/ds-css@npm:6.7.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F6.7.0%2Ff39089c9265fa888b98a5b541aa0a517e2f9bf07"
+  checksum: d40746463b6990a283fc4a0a02f5821171e8fdd24e1bbd92d66da63506e44e28113d31fe955e3e35a0bee943e6a40bdb237e3d2091c8e256654e5670e3ddb4b1
   languageName: node
   linkType: hard
 
@@ -5151,6 +5185,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ds-react@npm:6.7.0":
+  version: 6.7.0
+  resolution: "@navikt/ds-react@npm:6.7.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-react%2F6.7.0%2F02f9d4fa8deb80f3dc1a0b7880f74c85cc40c45b"
+  dependencies:
+    "@floating-ui/react": 0.25.4
+    "@navikt/aksel-icons": ^6.7.0
+    "@navikt/ds-tokens": ^6.7.0
+    clsx: ^2.1.0
+    date-fns: ^3.0.0
+    react-day-picker: 8.10.0
+  peerDependencies:
+    "@types/react": ^17.0.30 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  checksum: da8ac33c774a59f7b2a0d038df0b4289013fab1b9770cecd6143dfb7f9068cd79079a00e115bfbe12c9617a08e5c1a6c2a727bca29b8f20f8925e0b2d4f881c5
+  languageName: node
+  linkType: hard
+
 "@navikt/ds-tailwind@npm:^6.5.0":
   version: 6.5.0
   resolution: "@navikt/ds-tailwind@npm:6.5.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tailwind%2F6.5.0%2F0cfbf367620163f3f2dedbdc225875432efca36a"
@@ -5162,6 +5213,13 @@ __metadata:
   version: 6.5.0
   resolution: "@navikt/ds-tokens@npm:6.5.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tokens%2F6.5.0%2F5ceb4651fcc5a8a5cfd13909340421de6c9fe2a1"
   checksum: a4df7a2ade507e068f85e4e42c89961bcc29e1b390accd36362b55085853c28db026df977b37c00bf1c4d50c553a54100f038ed9e8de5d3f0284d0a690f7911f
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-tokens@npm:^6.7.0":
+  version: 6.7.0
+  resolution: "@navikt/ds-tokens@npm:6.7.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tokens%2F6.7.0%2F4057ee64836af7942a5e792370a676ec4ec59080"
+  checksum: 4b92cbf323400e811ba44973f170fbb5b81ea6ea0f952cbc4f124a796be98d43ce8400eefabf47969da88a0e8979da10deb4b6c4be39283c713cb91d66ca4bc5
   languageName: node
   linkType: hard
 
@@ -5190,27 +5248,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-fakta-beregning-redesign@npm:1.2.3":
-  version: 1.2.3
-  resolution: "@navikt/ft-fakta-beregning-redesign@npm:1.2.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-beregning-redesign%2F1.2.3%2Fc5d660522482f461faaec9600302722de5c1c3ad"
+"@navikt/ft-fakta-beregning-redesign@npm:1.2.4":
+  version: 1.2.4
+  resolution: "@navikt/ft-fakta-beregning-redesign@npm:1.2.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-beregning-redesign%2F1.2.4%2Fefe79f5b577b407b0b7f5c43c08c228665998b01"
   dependencies:
-    "@navikt/aksel-icons": 6.5.0
-    "@navikt/ds-css": 6.5.0
-    "@navikt/ds-react": 6.5.0
-    "@navikt/ft-form-hooks": ^4.4.3
-    "@navikt/ft-form-validators": ^2.3.3
-    "@navikt/ft-kodeverk": ^2.4.3
-    "@navikt/ft-konstanter": ^2.3.3
-    "@navikt/ft-types": ^2.4.3
-    "@navikt/ft-ui-komponenter": ^2.3.3
-    "@navikt/ft-utils": ^2.3.3
-    core-js: 3.36.1
-    dayjs: 1.11.10
+    "@navikt/aksel-icons": 6.7.0
+    "@navikt/ds-css": 6.7.0
+    "@navikt/ds-react": 6.7.0
+    "@navikt/ft-form-hooks": ^4.4.4
+    "@navikt/ft-form-validators": ^2.3.4
+    "@navikt/ft-kodeverk": ^2.4.4
+    "@navikt/ft-konstanter": ^2.3.4
+    "@navikt/ft-types": ^2.4.4
+    "@navikt/ft-ui-komponenter": ^2.3.4
+    "@navikt/ft-utils": ^2.3.4
+    core-js: 3.37.0
+    dayjs: 1.11.11
     dayjs-plugin-utc: 0.1.2
-    react: 18.2.0
-    react-dom: 18.2.0
-    react-hook-form: 7.51.3
-    react-intl: 6.6.5
+    react: 18.3.1
+    react-dom: 18.3.1
+    react-hook-form: 7.51.4
+    react-intl: 6.6.6
   peerDependencies:
     "@navikt/aksel-icons": 2.9.5
     "@navikt/ds-css": 2.9.5
@@ -5229,7 +5287,7 @@ __metadata:
     react-dom: 18.2.0
     react-hook-form: 7.43.9
     react-intl: 6.4.2
-  checksum: 623170e045cdde13029a810c0b4251114c7fcfe4ed56347b24581b31029043a961909e64c74b64ffb646a724f9349548906395cea5a98dcfda69f37dadaa3258
+  checksum: fbf5a15a29159bae128b69c0c71e8bcf94b92f7fd65acae8894750ae77d63a8bad4544fe9f5a4cfd6a9f350885081326553b8c09afaef72582e098c45c7075be
   languageName: node
   linkType: hard
 
@@ -5306,6 +5364,39 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ft-form-hooks@npm:^4.4.4":
+  version: 4.4.4
+  resolution: "@navikt/ft-form-hooks@npm:4.4.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F4.4.4%2F4a7814c396a15ce703d6745cad3cffda5a9886f2"
+  dependencies:
+    "@navikt/aksel-icons": 6.7.0
+    "@navikt/ds-css": 6.7.0
+    "@navikt/ds-react": 6.7.0
+    "@navikt/ft-form-validators": ^2.3.4
+    "@navikt/ft-types": ^2.4.4
+    "@navikt/ft-ui-komponenter": ^2.3.4
+    "@navikt/ft-utils": ^2.3.4
+    classnames: 2.5.1
+    dayjs: 1.11.11
+    lodash.throttle: 4.1.1
+    react: 18.3.1
+    react-hook-form: 7.51.4
+  peerDependencies:
+    "@navikt/aksel-icons": 3.1.2
+    "@navikt/ds-css": 2.8.11
+    "@navikt/ds-react": 2.8.11
+    "@navikt/ft-form-validators": 2.x
+    "@navikt/ft-types": 2.x
+    "@navikt/ft-ui-komponenter": 2.x
+    "@navikt/ft-utils": 2.x
+    classnames: 2.3.2
+    dayjs: 1.11.7
+    lodash.throttle: 4.1.1
+    react: 18.2.0
+    react-hook-form: 7.43.9
+  checksum: a6b1f6a6d3f4b3cc762b621aa589630805d55645eb471c21244d3714e4a92956e6f92d50d1868c3801802216f46c55c9e988c159c9f9cde9c4363276dfe490db
+  languageName: node
+  linkType: hard
+
 "@navikt/ft-form-validators@npm:2.3.3, @navikt/ft-form-validators@npm:^2.3.3":
   version: 2.3.3
   resolution: "@navikt/ft-form-validators@npm:2.3.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F2.3.3%2F65179534a154f4fceb0fe9dce92d088e8b82f107"
@@ -5319,6 +5410,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ft-form-validators@npm:^2.3.4":
+  version: 2.3.4
+  resolution: "@navikt/ft-form-validators@npm:2.3.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F2.3.4%2F5588e77737d04b15972035402d574f73021601fe"
+  dependencies:
+    "@navikt/ft-utils": ^2.3.4
+    moment: 2.30.1
+  peerDependencies:
+    "@navikt/ft-utils": 2.x
+    moment: 2.29.4
+  checksum: 74f12e1d08b4bf6bcf18180971af044819c5086a0dc84f6c7b4fcf6fcb84b9413d84aacb290e9e0261dc79847b71adbdf82543caf0c1a262e671ec8df33b2016
+  languageName: node
+  linkType: hard
+
 "@navikt/ft-kodeverk@npm:^2.4.3":
   version: 2.4.3
   resolution: "@navikt/ft-kodeverk@npm:2.4.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F2.4.3%2F1dbe86ff3273c3befe37536766438b8c67499011"
@@ -5326,10 +5430,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-konstanter@npm:^2.3.3":
-  version: 2.3.3
-  resolution: "@navikt/ft-konstanter@npm:2.3.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-konstanter%2F2.3.3%2Fbd3a8005b6fd4bd69ca72bb5830424f37608a375"
-  checksum: 91e3578e6787dea44d3f2923e04a9ef56b54ea8c3f0291f48510661186939fa3036631b0af7e06fc5cf06bbe9f9a75898dbc91759955a632c6da0af5a838ff16
+"@navikt/ft-kodeverk@npm:^2.4.4":
+  version: 2.4.4
+  resolution: "@navikt/ft-kodeverk@npm:2.4.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F2.4.4%2F71bb594b32080c81e8dbf42340b673124a6b9b97"
+  checksum: fb2dc40efd2d6d3ce29132374dfc0e00c38d4589c8152bfc8d973db4a5d94378210fe8893510ed7e6f61feaee6e7bea6fa2d31f09a8ea0112e15a4726b39bf72
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-konstanter@npm:^2.3.4":
+  version: 2.3.4
+  resolution: "@navikt/ft-konstanter@npm:2.3.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-konstanter%2F2.3.4%2Fc1ed13b2a1af0956209ce54e86981efd4a426ec0"
+  checksum: 8de51f4c5f32f7ac270258f94ae7dba05630c3d9decb099257317b2bbd48464b43e7b870b1ab6325e4cf773692b6ff670979d5b22a4ee75c57f0b7e8ea8f4147
   languageName: node
   linkType: hard
 
@@ -5447,6 +5558,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ft-types@npm:^2.4.4":
+  version: 2.4.4
+  resolution: "@navikt/ft-types@npm:2.4.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-types%2F2.4.4%2Fbaea8cfa8f5e9d1701f4637991d037491a1dfa26"
+  dependencies:
+    "@navikt/ft-kodeverk": ^2.4.4
+  peerDependencies:
+    "@navikt/ft-kodeverk": 2.x
+  checksum: 2566a8244049f339a658931f142e72bf2c7b9e610ef9feabf5e447c74956f019dea277594581f72ae540a7eff73f3fc3b6d296c69ea6a2f88b063743a9a8308d
+  languageName: node
+  linkType: hard
+
 "@navikt/ft-ui-komponenter@npm:2.3.3, @navikt/ft-ui-komponenter@npm:^2.3.3":
   version: 2.3.3
   resolution: "@navikt/ft-ui-komponenter@npm:2.3.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F2.3.3%2F497dbebf0b1cc93d7bded5c805b931615749d44d"
@@ -5472,6 +5594,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ft-ui-komponenter@npm:^2.3.4":
+  version: 2.3.4
+  resolution: "@navikt/ft-ui-komponenter@npm:2.3.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F2.3.4%2F73f6936413d5bdb68d0cb161530033dfbba7c212"
+  dependencies:
+    "@navikt/aksel-icons": 6.7.0
+    "@navikt/ds-css": 6.7.0
+    "@navikt/ds-react": 6.7.0
+    "@navikt/ft-utils": ^2.3.4
+    classnames: 2.5.1
+    react: 18.3.1
+    react-intl: 6.6.6
+    react-modal: 3.16.1
+  peerDependencies:
+    "@navikt/aksel-icons": 3.1.2
+    "@navikt/ds-css": 2.8.11
+    "@navikt/ds-react": 2.8.11
+    "@navikt/ft-utils": 2.x
+    classnames: 2.3.2
+    react: 18.2.0
+    react-intl: 6.3.2
+    react-modal: 3.16.1
+  checksum: 08ef4a031e0785ef2079171ec2367c81dc92e8573abfbae2a19622c2ebd4afe27c9dd4d4d22be148b6be0f419e2afa5f8a74717b536177b44afcefd35fcc704e
+  languageName: node
+  linkType: hard
+
 "@navikt/ft-utils@npm:^2.3.3":
   version: 2.3.3
   resolution: "@navikt/ft-utils@npm:2.3.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-utils%2F2.3.3%2F357ab82ab84126f57f8408c6d2553f0eb4cd0091"
@@ -5486,6 +5633,23 @@ __metadata:
     dayjs: 1.11.7
     react-intl: 6.3.2
   checksum: 30f8659b1d0d5e20f0b79956ecbcb20a9dfb2162e073b7a1794c8a14590430afa39661e0603b71e006ab849590bf6c2d1c4e5c6a699958009909b4bad8e2505a
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-utils@npm:^2.3.4":
+  version: 2.3.4
+  resolution: "@navikt/ft-utils@npm:2.3.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-utils%2F2.3.4%2Fde68df12c076d57c2767b8881144cfdbb6199b84"
+  dependencies:
+    "@navikt/ft-kodeverk": ^2.4.4
+    "@navikt/ft-types": ^2.4.4
+    dayjs: 1.11.11
+    react-intl: 6.6.6
+  peerDependencies:
+    "@navikt/ft-kodeverk": 2.x
+    "@navikt/ft-types": 2.x
+    dayjs: 1.11.7
+    react-intl: 6.3.2
+  checksum: c20f94d9a3cae9208ed1b4d31a7c4064a7e30fd5f885e235f3b85abc5b2800edf1852181818d6a64510dfa61fae0f95adfbba9ee2b607a9c009269a7d6197af3
   languageName: node
   linkType: hard
 
@@ -9683,6 +9847,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"core-js@npm:3.37.0":
+  version: 3.37.0
+  resolution: "core-js@npm:3.37.0"
+  checksum: 212c3e9b3fc277dbb63739ef58a61c5709ccd0b36f09c3ce6946aa91fa180c60f57f976d4a5fdb9cda0c6cb55417379ba5a008fc3a1384ec94ec8ec61826469d
+  languageName: node
+  linkType: hard
+
 "core-util-is@npm:1.0.2":
   version: 1.0.2
   resolution: "core-util-is@npm:1.0.2"
@@ -12962,6 +13133,18 @@ __metadata:
     "@formatjs/icu-messageformat-parser": 2.7.6
     tslib: ^2.4.0
   checksum: b5574447a0d938170049042ec807344d57c72e9aabb2e72be0d5197baabeb763e05680b19b7607df93fadeec0e13c9bfcb450e9ba2fe7464b4f06600b612bf5e
+  languageName: node
+  linkType: hard
+
+"intl-messageformat@npm:10.5.12":
+  version: 10.5.12
+  resolution: "intl-messageformat@npm:10.5.12"
+  dependencies:
+    "@formatjs/ecma402-abstract": 1.18.2
+    "@formatjs/fast-memoize": 2.2.0
+    "@formatjs/icu-messageformat-parser": 2.7.6
+    tslib: ^2.4.0
+  checksum: 3645a2530351008dd1459bce26de59460fa21c5126e9ccc1fc12d41cc5e1d25f2affd66175d5802576425c05fe03b651e6310406e927627db30024b1760b843b
   languageName: node
   linkType: hard
 
@@ -16708,18 +16891,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.2.0":
-  version: 18.2.0
-  resolution: "react-dom@npm:18.2.0"
-  dependencies:
-    loose-envify: ^1.1.0
-    scheduler: ^0.23.0
-  peerDependencies:
-    react: ^18.2.0
-  checksum: 7d323310bea3a91be2965f9468d552f201b1c27891e45ddc2d6b8f717680c95a75ae0bc1e3f5cf41472446a2589a75aed4483aee8169287909fcd59ad149e8cc
-  languageName: node
-  linkType: hard
-
 "react-dom@npm:18.3.1, react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0":
   version: 18.3.1
   resolution: "react-dom@npm:18.3.1"
@@ -16769,6 +16940,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:7.51.4":
+  version: 7.51.4
+  resolution: "react-hook-form@npm:7.51.4"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: b3587c23425025cc4ab9d4de71420aeb9b28809a9183691584ecbbf5bb3d85ab8c232afb01424efed11a761c9c726521a230d4e092c7ad6bb70a011a7ba0acf7
+  languageName: node
+  linkType: hard
+
 "react-intl@npm:6.6.5":
   version: 6.6.5
   resolution: "react-intl@npm:6.6.5"
@@ -16790,6 +16970,30 @@ __metadata:
     typescript:
       optional: true
   checksum: 6f53b293057210edaa3e5d7e29cd8da155425f26988f2407b35969074dc7881fa251fac814ca2735d01e57db0fec4d17adaf740c7ead77e2422693b1ff42cec4
+  languageName: node
+  linkType: hard
+
+"react-intl@npm:6.6.6":
+  version: 6.6.6
+  resolution: "react-intl@npm:6.6.6"
+  dependencies:
+    "@formatjs/ecma402-abstract": 1.18.2
+    "@formatjs/icu-messageformat-parser": 2.7.6
+    "@formatjs/intl": 2.10.2
+    "@formatjs/intl-displaynames": 6.6.6
+    "@formatjs/intl-listformat": 7.5.5
+    "@types/hoist-non-react-statics": ^3.3.1
+    "@types/react": 16 || 17 || 18
+    hoist-non-react-statics: ^3.3.2
+    intl-messageformat: 10.5.12
+    tslib: ^2.4.0
+  peerDependencies:
+    react: ^16.6.0 || 17 || 18
+    typescript: ^4.7 || 5
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: b40aba1560779b2f7846cd3f258b30bcf48fe7bf25e1b3df2e397ef81dd0bea3133a03d16150d2f246d32df010253246abf1a32a166e489e9702d0932bb3576b
   languageName: node
   linkType: hard
 
@@ -17692,15 +17896,6 @@ __metadata:
   dependencies:
     xmlchars: ^2.2.0
   checksum: d3fa3e2aaf6c65ed52ee993aff1891fc47d5e47d515164b5449cbf5da2cbdc396137e55590472e64c5c436c14ae64a8a03c29b9e7389fc6f14035cf4e982ef3b
-  languageName: node
-  linkType: hard
-
-"scheduler@npm:^0.23.0":
-  version: 0.23.0
-  resolution: "scheduler@npm:0.23.0"
-  dependencies:
-    loose-envify: ^1.1.0
-  checksum: d79192eeaa12abef860c195ea45d37cbf2bbf5f66e3c4dcd16f54a7da53b17788a70d109ee3d3dde1a0fd50e6a8fc171f4300356c5aee4fc0171de526bf35f8a
   languageName: node
   linkType: hard
 
