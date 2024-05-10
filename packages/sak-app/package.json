@@ -57,7 +57,7 @@
     "@navikt/ds-react": "6.5.0",
     "@navikt/ft-fakta-beregning-redesign": "1.2.3",
     "@navikt/ft-form-hooks": "4.4.3",
-    "@navikt/ft-plattform-komponenter": "2.5.6",
+    "@navikt/ft-plattform-komponenter": "2.5.7",
     "@navikt/ft-prosess-beregningsgrunnlag": "6.5.6",
     "@navikt/ft-ui-komponenter": "2.3.3",
     "@sentry/browser": "7.113.0",
