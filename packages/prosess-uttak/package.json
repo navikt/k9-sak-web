@@ -17,7 +17,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@navikt/ds-css": "6.5.0",
     "@navikt/ds-react": "6.5.0",
-    "@navikt/ft-form-hooks": "4.4.3",
+    "@navikt/ft-form-hooks": "4.4.4",
     "@navikt/ft-form-validators": "2.3.3",
     "@navikt/ft-plattform-komponenter": "2.5.6",
     "@popperjs/core": "2.11.8",
