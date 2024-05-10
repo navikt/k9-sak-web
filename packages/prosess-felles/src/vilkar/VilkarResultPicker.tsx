@@ -1,6 +1,6 @@
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
-import { DatepickerField, RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
+import { DatepickerField, Label, RadioGroupField, SelectField } from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -66,12 +66,19 @@ const VilkarResultPicker = ({
           name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}erVilkarOk`}
           validate={[required]}
           bredde="XXL"
-          direction="vertical"
+          isVertical
           readOnly={readOnly}
-        >
-          <RadioOption label={customVilkarOppfyltText} value />
-          <RadioOption label={customVilkarIkkeOppfyltText} value={false} />
-        </RadioGroupField>
+          radios={[
+            {
+              value: true,
+              label: <Label input={customVilkarOppfyltText} textOnly />,
+            },
+            {
+              value: false,
+              label: <Label input={customVilkarIkkeOppfyltText} textOnly />,
+            },
+          ]}
+        />
       )}
       {erVilkarOk !== undefined && !erVilkarOk && avslagsarsaker && (
         <>
