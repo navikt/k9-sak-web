@@ -1,5 +1,8 @@
-name: Build and Publish Storybook to GitHub Pages TEST
+name: Build and Publish Storybook to GitHub Pages
 on:
+  push:
+    branches:
+      - master
   workflow_dispatch:
 
 permissions:
@@ -32,5 +35,5 @@ jobs:
         with:
           install_command: HUSKY=0 yarn install --immutable
           build_command: yarn build-storybook
-          path: storybook-static
+          path: static_storybook
           checkout: false
