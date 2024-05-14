@@ -15,7 +15,7 @@
     "@k9-sak-web/modal-sett-pa-vent": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "2.5.7",
+    "@navikt/ft-plattform-komponenter": "2.5.8",
     "classnames": "2.5.1",
     "nav-frontend-core": "6.0.1",
     "nav-frontend-tabs": "2.0.3",

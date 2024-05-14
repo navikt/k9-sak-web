@@ -12,7 +12,7 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "2.5.7",
+    "@navikt/ft-plattform-komponenter": "2.5.8",
     "nav-frontend-core": "6.0.1",
     "nav-frontend-js-utils": "1.0.20",
     "nav-frontend-lukknapp": "2.0.2",
