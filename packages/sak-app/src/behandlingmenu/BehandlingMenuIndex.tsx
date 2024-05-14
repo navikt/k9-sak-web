@@ -35,6 +35,8 @@ import BehandlingRettigheter, { VergeBehandlingmenyValg } from '../behandling/be
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import { useVisForhandsvisningAvMelding } from '../data/useVisForhandsvisningAvMelding';
 import SakRettigheter from '../fagsak/sakRettigheterTsType';
+import BehandlingMenuVeiledervisning from './BehandlingMenuVeiledervisning';
+import MenyKodeverk from './MenyKodeverk';
 import {
   fjernVerge,
   nyBehandlendeEnhet,
@@ -43,14 +45,11 @@ import {
   setBehandlingOnHold,
   shelveBehandling,
 } from './behandlingMenuOperations';
-import MenyKodeverk from './MenyKodeverk';
-import BehandlingMenuVeiledervisning from './BehandlingMenuVeiledervisning';
 
 const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
   BehandlingType.FORSTEGANGSSOKNAD,
   BehandlingType.KLAGE,
   BehandlingType.REVURDERING,
-  BehandlingType.DOKUMENTINNSYN,
   BehandlingType.ANKE,
   BehandlingType.TILBAKEKREVING,
   BehandlingType.TILBAKEKREVING_REVURDERING,
