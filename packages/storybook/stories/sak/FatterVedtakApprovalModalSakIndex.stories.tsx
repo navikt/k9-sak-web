@@ -21,18 +21,10 @@ export const visModalEtterGodkjenning = props => (
     behandling={
       {
         id: 1,
-        status: {
-          kode: behandlingStatus.FATTER_VEDTAK,
-          kodeverk: '',
-        },
-        type: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        },
+        status: behandlingStatus.FATTER_VEDTAK,
+        type: behandlingType.FORSTEGANGSSOKNAD,
         behandlingsresultat: {
-          type: {
-            kode: behandlingResultatType.OPPHOR,
-          },
+          type: behandlingResultatType.OPPHOR,
         },
       } as Behandling
     }
@@ -53,19 +45,9 @@ export const visModalEtterGodkjenningAvKlage = props => (
     behandling={
       {
         id: 1,
-        status: {
-          kode: behandlingStatus.FATTER_VEDTAK,
-          kodeverk: '',
-        },
-        type: {
-          kode: behandlingType.KLAGE,
-          kodeverk: '',
-        },
-        behandlingsresultat: {
-          type: {
-            kode: behandlingResultatType.OPPHOR,
-          },
-        },
+        status: behandlingStatus.FATTER_VEDTAK,
+        type: behandlingType.KLAGE,
+        behandlingsresultat: { type: behandlingResultatType.OPPHOR },
       } as Behandling
     }
     closeEvent={action('button-click')}
@@ -85,27 +67,14 @@ export const visModalEtterTilbakesendingTilSaksbehandler = props => (
     behandling={
       {
         id: 1,
-        status: {
-          kode: behandlingStatus.FATTER_VEDTAK,
-          kodeverk: '',
-        },
-        type: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        },
-        behandlingsresultat: {
-          type: {
-            kode: behandlingResultatType.OPPHOR,
-          },
-        },
+        status: behandlingStatus.FATTER_VEDTAK,
+        type: behandlingType.FORSTEGANGSSOKNAD,
+        behandlingsresultat: { type: behandlingResultatType.OPPHOR },
       } as Behandling
     }
     closeEvent={action('button-click')}
     allAksjonspunktApproved={false}
-    fagsakYtelseType={{
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: '',
-    }}
+    fagsakYtelseType={fagsakYtelseType.FORELDREPENGER}
     erKlageWithKA={false}
     {...props}
   />

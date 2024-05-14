@@ -12,14 +12,16 @@ import {
   maxLength,
   required,
 } from '@fpsak-frontend/utils';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
-import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
 import { BodyShort, Button, Label, Modal, Select } from '@navikt/ds-react';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
+import { KodeverkObject, KodeverkType } from '@k9-sak-web/lib/types/index.js';
 import styles from './settPaVentModal.module.css';
 
 const initFrist = (): string => {
@@ -106,7 +108,6 @@ type FormValues = {
 interface PureOwnProps {
   cancelEvent: () => void;
   showModal: boolean;
-  ventearsaker: Venteaarsak[];
   erTilbakekreving: boolean;
   visBrevErBestilt?: boolean;
   hasManualPaVent: boolean;
@@ -130,7 +131,6 @@ export const SettPaVentModal = ({
   handleSubmit,
   cancelEvent,
   showModal,
-  ventearsaker,
   erTilbakekreving,
   frist,
   originalFrist,
@@ -141,6 +141,9 @@ export const SettPaVentModal = ({
   ventearsakVariant,
   originalVentearsakVariant,
 }: PureOwnProps & Partial<MappedOwnProps> & WrappedComponentProps & InjectedFormProps) => {
+  const { hentKodeverkFraKode } = useKodeverkContext();
+  const ventearsaker = hentKodeverkFraKode(KodeverkType.VENT_AARSAK) as KodeverkObject[];
+
   const venteArsakHasChanged = !(originalVentearsak === ventearsak || (!ventearsak && !originalVentearsak));
   const ventearsakVariantHasChanged =
     (!originalVentearsakVariant && !!ventearsakVariant) ||
@@ -162,6 +165,9 @@ export const SettPaVentModal = ({
   const showFristenTekst = erTilbakekreving && erFristenUtløpt && erVenterPaKravgrunnlag;
   const showSelect = erVenterEtterlysInntektsmelding ? !showEndreFrist : true;
   const showKommentarInput = venterårsakerMedKommentarmulighet.includes(ventearsak);
+
+  // TODO: #KODEVERK Må finne ut hvordan vi vet hvilke venteårsaker som kan velges
+  const venteArsakerSomKanVelges = [...ventearsaker.map(va => va.kode)];
 
   const toggleEndreFrist = () => setShowEndreFrist(!showEndreFrist);
 
@@ -246,14 +252,22 @@ export const SettPaVentModal = ({
                     }
                     placeholder={intl.formatMessage({ id: 'SettPaVentModal.SelectPlaceholder' })}
                     validate={[required]}
-                    selectValues={ventearsaker
-                      .filter(va => (erTilbakekreving ? inkluderVentearsak(va, ventearsak) : va.kanVelges === 'true'))
-                      .sort((v1, v2) => v1.navn.localeCompare(v2.navn))
-                      .map(va => (
-                        <option key={va.kode} value={va.kode}>
-                          {va.navn}
-                        </option>
-                      ))}
+                    selectValues={
+                      Array.isArray(ventearsaker)
+                        ? ventearsaker
+                            .filter(va =>
+                              erTilbakekreving
+                                ? inkluderVentearsak(va, ventearsak)
+                                : venteArsakerSomKanVelges.includes(va.kode),
+                            )
+                            .sort((v1, v2) => v1.navn.localeCompare(v2.navn))
+                            .map(va => (
+                              <option key={va.kode} value={va.kode}>
+                                {va.navn}
+                              </option>
+                            ))
+                        : []
+                    }
                     bredde="xxl"
                     readOnly={!hasManualPaVent}
                   />

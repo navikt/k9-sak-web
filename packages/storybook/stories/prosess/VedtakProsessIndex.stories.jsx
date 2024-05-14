@@ -38,9 +38,7 @@ const behandling = {
     vedtaksbrev: {
       kode: 'FRITEKST',
     },
-    type: {
-      kode: behandlingResultatType.INNVILGET,
-    },
+    type: behandlingResultatType.INNVILGET,
   },
   behandlingPaaVent: false,
   behandlingHenlagt: false,
@@ -108,9 +106,7 @@ export const visDelvisInnvilgetForOmsorgspenger = args => (
         vedtaksbrev: {
           kode: 'FRITEKST',
         },
-        type: {
-          kode: behandlingResultatType.DELVIS_INNVILGET,
-        },
+        type: behandlingResultatType.DELVIS_INNVILGET,
       },
     }}
     vilkar={vilkar}
@@ -140,9 +136,7 @@ export const visAvslagForForeldrepenger = args => (
         vedtaksbrev: {
           kode: 'FRITEKST',
         },
-        type: {
-          kode: behandlingResultatType.AVSLATT,
-        },
+        type: behandlingResultatType.AVSLATT,
         avslagsarsak: {
           kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
           kodeverk: kodeverkTyper.AVSLAGSARSAK,
@@ -353,9 +347,7 @@ export const visInnvilgetForForeldrepengerRevurdering = args => (
         vedtaksbrev: {
           kode: 'FRITEKST',
         },
-        type: {
-          kode: behandlingResultatType.INNVILGET,
-        },
+        type: behandlingResultatType.INNVILGET,
       },
     }}
     vilkar={vilkar}
@@ -406,9 +398,7 @@ export const visOpphørtForForeldrepengerRevurdering = args => (
         vedtaksbrev: {
           kode: 'FRITEKST',
         },
-        type: {
-          kode: behandlingResultatType.OPPHOR,
-        },
+        type: behandlingResultatType.OPPHOR,
       },
     }}
     vilkar={vilkar}
@@ -468,9 +458,7 @@ export const visAvslåttForEngangsstønadRevurdering = args => (
         vedtaksbrev: {
           kode: 'FRITEKST',
         },
-        type: {
-          kode: behandlingResultatType.AVSLATT,
-        },
+        type: behandlingResultatType.AVSLATT,
         avslagsarsak: {
           kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
           kodeverk: kodeverkTyper.AVSLAGSARSAK,
@@ -621,9 +609,7 @@ export const visOverlappendeYtelser = args => {
             vedtaksbrev: {
               kode: 'FRITEKST',
             },
-            type: {
-              kode: behandlingResultatType.INNVILGET,
-            },
+            type: behandlingResultatType.INNVILGET,
             avslagsarsak: {
               kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
               kodeverk: kodeverkTyper.AVSLAGSARSAK,

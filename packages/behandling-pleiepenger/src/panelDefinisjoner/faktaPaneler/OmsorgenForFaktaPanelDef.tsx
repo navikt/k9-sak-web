@@ -19,7 +19,7 @@ class OmsorgenForFaktaPanelDef extends FaktaPanelDef {
   getKomponent = props => <OmsorgenFor {...props} />;
 
   getOverstyrVisningAvKomponent = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => {
-    const erPleiepengesak = fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;
+    const erPleiepengesak = fagsak.sakstype === fagsakYtelseType.PLEIEPENGER;
     const søknadsfristErIkkeUnderVurdering = behandling.stegTilstand?.stegType?.kode !== 'VURDER_SØKNADSFRIST';
     return erPleiepengesak && søknadsfristErIkkeUnderVurdering;
   };

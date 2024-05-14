@@ -1,8 +1,8 @@
-import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort } from '@navikt/ds-react';
-import { Location } from 'history';
 import React, { ReactElement } from 'react';
+import { Location } from 'history';
 import { FormattedMessage } from 'react-intl';
+import { BehandlingAppKontekst } from '@k9-sak-web/types';
+import { BodyShort } from '@navikt/ds-react';
 import BehandlingPickerItem from './BehandlingPickerItem';
 import styles from './behandlingPickerOld.module.css';
 import { sortBehandlinger } from './behandlingVelgerUtils';
@@ -12,7 +12,6 @@ const renderListItems = (
   getBehandlingLocation: (behandlingId: number) => Location,
   showAll: boolean,
   toggleShowAll: () => void,
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
   behandlingId?: number,
 ): ReactElement[] =>
   sortBehandlinger(behandlinger)
@@ -26,7 +25,6 @@ const renderListItems = (
           isActive={behandling.id === behandlingId}
           showAll={showAll}
           toggleShowAll={toggleShowAll}
-          getKodeverkFn={getKodeverkFn}
         />
       </li>
     ));
@@ -38,7 +36,6 @@ interface OwnProps {
   behandlingId?: number;
   showAll: boolean;
   toggleShowAll: () => void;
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
 }
 
 /**
@@ -53,7 +50,6 @@ const BehandlingPicker = ({
   behandlingId,
   showAll,
   toggleShowAll,
-  getKodeverkFn,
 }: OwnProps) => (
   <ul className={styles.behandlingList}>
     {noExistingBehandlinger && (
@@ -62,7 +58,7 @@ const BehandlingPicker = ({
       </BodyShort>
     )}
     {!noExistingBehandlinger &&
-      renderListItems(behandlinger, getBehandlingLocation, showAll, toggleShowAll, getKodeverkFn, behandlingId)}
+      renderListItems(behandlinger, getBehandlingLocation, showAll, toggleShowAll, behandlingId)}
   </ul>
 );
 

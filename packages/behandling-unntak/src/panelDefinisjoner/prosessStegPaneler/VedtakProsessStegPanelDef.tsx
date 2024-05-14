@@ -3,6 +3,7 @@ import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { Aksjonspunkt, Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 
 import findStatusForVedtak from '../vedtakStatusUtleder';
 import { UnntakBehandlingApiKeys } from '../../data/unntakBehandlingApi';
@@ -32,8 +33,17 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getOverstyrtStatus = ({ vilkar, aksjonspunkter, behandling, aksjonspunkterForSteg }) =>
-    findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg, behandling.behandlingsresultat);
+  getOverstyrtStatus = ({
+    vilkar,
+    aksjonspunkter,
+    behandling,
+    aksjonspunkterForSteg,
+  }: {
+    vilkar: Vilkar[];
+    aksjonspunkter: Aksjonspunkt[];
+    behandling: Behandling;
+    aksjonspunkterForSteg: Aksjonspunkt[];
+  }) => findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg, behandling.behandlingsresultat);
 
   getData = ({
     previewCallback,
@@ -46,13 +56,24 @@ class PanelDef extends ProsessStegPanelDef {
     personopplysninger,
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,
+  }: {
+    previewCallback: () => void;
+    hentFritekstbrevHtmlCallback: () => void;
+    rettigheter: any;
+    aksjonspunkter: Aksjonspunkt[];
+    vilkar: Vilkar[];
+    simuleringResultat: any;
+    fagsak: Fagsak;
+    personopplysninger: any;
+    arbeidsgiverOpplysningerPerId: any;
+    lagreDokumentdata: () => void;
   }) => ({
     previewCallback,
     hentFritekstbrevHtmlCallback,
     aksjonspunkter,
     vilkar,
     simuleringResultat,
-    ytelseTypeKode: fagsak.sakstype.kode,
+    ytelseTypeKode: fagsak.sakstype,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     personopplysninger,
     arbeidsgiverOpplysningerPerId,

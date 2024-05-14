@@ -2,7 +2,6 @@ import { Tidslinje, TidslinjeZoom } from '@fpsak-frontend/shared-components';
 import HorisontalNavigering from '@fpsak-frontend/shared-components/src/tidslinje/HorisontalNavigering';
 import { useSenesteDato } from '@fpsak-frontend/shared-components/src/tidslinje/useTidslinjerader';
 import { Period, dateStringSorter } from '@fpsak-frontend/utils';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
 import BehandlingPerioderårsakMedVilkår, {
   DokumenterTilBehandling,
 } from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
@@ -11,6 +10,8 @@ import { BodyShort } from '@navikt/ds-react';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import CheckIcon from './icons/CheckIcon';
 import RejectedIcon from './icons/RejectedIcon';
 import SaksbehandlerIcon from './icons/SaksbehandlerIcon';
@@ -67,11 +68,12 @@ const getExpanderbarRadStyles = (flag: boolean) =>
 
 interface SoknadsperioderComponentProps {
   behandlingPerioderårsakMedVilkår: BehandlingPerioderårsakMedVilkår;
-  kodeverk: KodeverkMedNavn[];
 }
 
 const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
-  const { behandlingPerioderårsakMedVilkår, kodeverk } = props;
+  const { kodeverkNavnFraKode } = useKodeverkContext();
+
+  const { behandlingPerioderårsakMedVilkår } = props;
   const [tidslinjeSkala, setTidslinjeSkala] = useState<Tidslinjeskala>(6);
   const [expandPerioderTilBehandling, setExpandPerioderTilBehandling] = useState(true);
   const [expandSøknaderOmNyPeriode, setExpandSøknaderOmNyPeriode] = useState(false);
@@ -79,8 +81,6 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
   const [expandTrukketKrav, setExpandTrukketKrav] = useState(false);
   const [navigasjonFomDato, setNavigasjonFomDato] = useState(undefined);
   const intl = useIntl();
-
-  const getNavnFraKodeverk = (kode: string) => kodeverk.find(kv => kv.kode === kode)?.navn;
 
   /** TODO: Hallvard: Denne bør refaktoreres */
   const getPerioderGruppertPåÅrsak = (): {
@@ -99,8 +99,8 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       radLabel: vedtakshistorikkLabel,
       perioder: behandlingPerioderårsakMedVilkår.forrigeVedtak.map(periode => ({
         periode: periode.periode,
-        status: periode.utfall.kode === 'OPPFYLT' ? ('suksess' as PeriodStatus) : 'feil',
-        classname: `${periode.utfall.kode === 'OPPFYLT' ? styles.suksess : styles.feil}`,
+        status: periode.utfall === 'OPPFYLT' ? ('suksess' as PeriodStatus) : 'feil',
+        classname: `${periode.utfall === 'OPPFYLT' ? styles.suksess : styles.feil}`,
       })),
       radClassname: styles.vedtakhistorikkRad,
     };
@@ -122,7 +122,7 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     const hasSøknaderTilhørendeFørstegangsvurderinger = søknaderTilhørendeFørstegangsvurderinger.length > 0;
     const søknadOmNyPeriode = [
       {
-        radLabel: getNavnFraKodeverk('FØRSTEGANGSVURDERING'),
+        radLabel: kodeverkNavnFraKode('FØRSTEGANGSVURDERING', KodeverkType.ÅRSAK_TIL_VURDERING),
         perioder: førstegangsvurderingsperioder,
         onClick: hasSøknaderTilhørendeFørstegangsvurderinger
           ? () => setExpandSøknaderOmNyPeriode(!expandSøknaderOmNyPeriode)
@@ -144,7 +144,7 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
 
     const endringerFraSøker = [
       {
-        radLabel: getNavnFraKodeverk('ENDRING_FRA_BRUKER'),
+        radLabel: kodeverkNavnFraKode('ENDRING_FRA_BRUKER', KodeverkType.ÅRSAK_TIL_VURDERING),
         perioder: endringerFraSøkerPerioder,
         onClick: hasSøknaderTilhørendeEringerFraSøker
           ? () => setExpandEndringerFraSøker(!expandEndringerFraSøker)
@@ -155,12 +155,15 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     ];
 
     const revurdererEndringerPgaAnnenPart = {
-      radLabel: getNavnFraKodeverk('REVURDERER_ENDRING_FRA_ANNEN_PART'),
+      radLabel: kodeverkNavnFraKode('REVURDERER_ENDRING_FRA_ANNEN_PART', KodeverkType.ÅRSAK_TIL_VURDERING),
       perioder: getPerioderMedÅrsak('REVURDERER_ENDRING_FRA_ANNEN_PART', behandlingPerioderårsakMedVilkår),
     };
 
     const revurdererEtablertTilsynEndringFraAnnenOmsorgsperson = {
-      radLabel: getNavnFraKodeverk('REVURDERER_ETABLERT_TILSYN_ENDRING_FRA_ANNEN_OMSORGSPERSON'),
+      radLabel: kodeverkNavnFraKode(
+        'REVURDERER_ETABLERT_TILSYN_ENDRING_FRA_ANNEN_OMSORGSPERSON',
+        KodeverkType.ÅRSAK_TIL_VURDERING,
+      ),
       perioder: getPerioderMedÅrsak(
         'REVURDERER_ETABLERT_TILSYN_ENDRING_FRA_ANNEN_OMSORGSPERSON',
         behandlingPerioderårsakMedVilkår,
@@ -168,7 +171,10 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     };
 
     const revurdererSykdomEndringFraAnnenOmsorgsperson = {
-      radLabel: getNavnFraKodeverk('REVURDERER_SYKDOM_ENDRING_FRA_ANNEN_OMSORGSPERSON'),
+      radLabel: kodeverkNavnFraKode(
+        'REVURDERER_SYKDOM_ENDRING_FRA_ANNEN_OMSORGSPERSON',
+        KodeverkType.ÅRSAK_TIL_VURDERING,
+      ),
       perioder: getPerioderMedÅrsak(
         'REVURDERER_SYKDOM_ENDRING_FRA_ANNEN_OMSORGSPERSON',
         behandlingPerioderårsakMedVilkår,
@@ -176,7 +182,10 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     };
 
     const revurdererNattevåkBeredskapEndringFraAnnenOmsorgsperson = {
-      radLabel: getNavnFraKodeverk('REVURDERER_NATTEVÅKBEREDSKAP_ENDRING_FRA_ANNEN_OMSORGSPERSON'),
+      radLabel: kodeverkNavnFraKode(
+        'REVURDERER_NATTEVÅKBEREDSKAP_ENDRING_FRA_ANNEN_OMSORGSPERSON',
+        KodeverkType.ÅRSAK_TIL_VURDERING,
+      ),
       perioder: getPerioderMedÅrsak(
         'REVURDERER_NATTEVÅKBEREDSKAP_ENDRING_FRA_ANNEN_OMSORGSPERSON',
         behandlingPerioderårsakMedVilkår,
@@ -184,12 +193,12 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     };
 
     const revurdererNyInntektsmelding = {
-      radLabel: getNavnFraKodeverk('REVURDERER_NY_INNTEKTSMELDING'),
+      radLabel: kodeverkNavnFraKode('REVURDERER_NY_INNTEKTSMELDING', KodeverkType.ÅRSAK_TIL_VURDERING),
       perioder: getPerioderMedÅrsak('REVURDERER_NY_INNTEKTSMELDING', behandlingPerioderårsakMedVilkår),
     };
 
     const revurdererBerørtPeriode = {
-      radLabel: getNavnFraKodeverk('REVURDERER_BERØRT_PERIODE'),
+      radLabel: kodeverkNavnFraKode('REVURDERER_BERØRT_PERIODE', KodeverkType.ÅRSAK_TIL_VURDERING),
       perioder: getPerioderMedÅrsak('REVURDERER_BERØRT_PERIODE', behandlingPerioderårsakMedVilkår),
     };
 
@@ -203,7 +212,7 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
 
     const trukketKrav = [
       {
-        radLabel: getNavnFraKodeverk('TRUKKET_KRAV'),
+        radLabel: kodeverkNavnFraKode('TRUKKET_KRAV', KodeverkType.ÅRSAK_TIL_VURDERING),
         perioder: trukketKravPerioder,
         onClick: hasSøknaderTilhørendeTrukketKrav ? () => setExpandTrukketKrav(!expandTrukketKrav) : undefined,
         radClassname: hasSøknaderTilhørendeTrukketKrav ? getExpanderbarRadStyles(expandTrukketKrav) : '',
@@ -212,21 +221,21 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     ];
 
     const gRegulering = {
-      radLabel: getNavnFraKodeverk('G_REGULERING'),
+      radLabel: kodeverkNavnFraKode('G_REGULERING', KodeverkType.ÅRSAK_TIL_VURDERING),
       perioder: getPerioderMedÅrsak('G_REGULERING', behandlingPerioderårsakMedVilkår),
     };
     const revurdererManuellRevurdering = {
-      radLabel: getNavnFraKodeverk('MANUELT_REVURDERER_PERIODE'),
+      radLabel: kodeverkNavnFraKode('MANUELT_REVURDERER_PERIODE', KodeverkType.ÅRSAK_TIL_VURDERING),
       perioder: getPerioderMedÅrsak('MANUELT_REVURDERER_PERIODE', behandlingPerioderårsakMedVilkår),
     };
 
     const utsattBehandling = {
-      radLabel: getNavnFraKodeverk('UTSATT_BEHANDLING'),
+      radLabel: kodeverkNavnFraKode('UTSATT_BEHANDLING', KodeverkType.ÅRSAK_TIL_VURDERING),
       perioder: getPerioderMedÅrsak('UTSATT_BEHANDLING', behandlingPerioderårsakMedVilkår),
     };
 
     const gjenopptarUtsattBehandling = {
-      radLabel: getNavnFraKodeverk('GJENOPPTAR_UTSATT_BEHANDLING'),
+      radLabel: kodeverkNavnFraKode('GJENOPPTAR_UTSATT_BEHANDLING', KodeverkType.ÅRSAK_TIL_VURDERING),
       perioder: getPerioderMedÅrsak('GJENOPPTAR_UTSATT_BEHANDLING', behandlingPerioderårsakMedVilkår),
     };
 

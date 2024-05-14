@@ -65,23 +65,30 @@ export class ErrorMessagePanel extends Component<OwnProps & WrappedComponentProp
 
     return (
       <div className={styles.container}>
-        {errorMessages.map((message, index) => (
-          <HGrid gap="1" columns={{ xs: '11fr 1fr' }} key={message.message}>
-            <Detail className={styles.wordWrap}>{`${decodeHtmlEntity(message.message)} `}</Detail>
-            {message.additionalInfo && (
-              <Detail>
-                <a
-                  href=""
-                  onClick={event => this.toggleModalOnClick(event, index)}
-                  onKeyDown={event => this.toggleModalOnKeyDown(event, index)}
-                  className={styles.link}
-                >
-                  <FormattedMessage id="ErrorMessagePanel.ErrorDetails" />
-                </a>
-              </Detail>
-            )}
-          </HGrid>
-        ))}
+        {errorMessages
+          .reduce((acc, cur) => {
+            // Dedupe errorMessages
+            if (acc.find(m => m.message === cur.message)) return acc;
+            acc.push(cur);
+            return acc;
+          }, [])
+          .map((message, index) => (
+            <HGrid gap="1" columns={{ xs: '11fr 1fr' }} key={message.message}>
+              <Detail className={styles.wordWrap}>{`${decodeHtmlEntity(message.message)} `}</Detail>
+              {message.additionalInfo && (
+                <Detail>
+                  <a
+                    href=""
+                    onClick={event => this.toggleModalOnClick(event, index)}
+                    onKeyDown={event => this.toggleModalOnKeyDown(event, index)}
+                    className={styles.link}
+                  >
+                    <FormattedMessage id="ErrorMessagePanel.ErrorDetails" />
+                  </a>
+                </Detail>
+              )}
+            </HGrid>
+          ))}
         <div className={styles.lukkContainer}>
           <Lukknapp hvit onClick={removeErrorMessage}>
             {intl.formatMessage({ id: 'ErrorMessagePanel.Close' })}

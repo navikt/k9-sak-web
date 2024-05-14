@@ -1,3 +1,9 @@
+import React, { SetStateAction, useEffect } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
+import moment from 'moment';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -13,15 +19,9 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import VilkarResultPicker from '@k9-sak-web/prosess-felles/src/vilkar/VilkarResultPickerPeriodisert';
-import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, SubmitCallback } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandlingsresultat, KodeverkMedNavn, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { BodyShort, Button, Label } from '@navikt/ds-react';
-import moment from 'moment';
-import React, { SetStateAction, useEffect } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import styles from './vilkarresultatMedOverstyringForm.module.css';
@@ -40,15 +40,35 @@ export const vilkarUtfallPeriodisert = {
   DELVIS_IKKE_OPPFYLT: 'DELVIS_IKKE_OPPFYLT',
 };
 
+interface ownProps {
+  behandlingId: number;
+  behandlingVersjon: number;
+  aksjonspunkter: Aksjonspunkt[];
+  erOverstyrt?: boolean;
+  overrideReadOnly?: boolean;
+  behandlingType: string;
+  behandlingsresultat: Behandlingsresultat;
+  medlemskapFom: string;
+  submitCallback: (props: SubmitCallback[]) => void;
+  toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
+  avslagsarsaker: KodeverkMedNavn[];
+  status: string;
+  overstyringApKode: string;
+  lovReferanse: string;
+  erMedlemskapsPanel: boolean;
+  visPeriodisering: boolean;
+  avslagKode: string;
+  periode: Vilkarperiode;
+}
 interface VilkarresultatMedOverstyringFormProps {
   aksjonspunkter: Aksjonspunkt[];
   avslagsarsaker: KodeverkMedNavn[];
   behandlingsresultat: {
-    type: Kodeverk;
+    type: string;
   };
   behandlingId: number;
   behandlingVersjon: number;
-  behandlingType: Kodeverk;
+  behandlingType: string;
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
   erMedlemskapsPanel: boolean;
@@ -212,7 +232,7 @@ const buildInitialValues = createSelector(
     (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.periode,
   ],
   (avslagKode, aksjonspunkter, status, overstyringApKode, periode) => {
-    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
+    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === overstyringApKode);
     return {
       isOverstyrt: aksjonspunkt !== undefined,
       ...VilkarresultatMedBegrunnelse.buildInitialValues(
@@ -226,10 +246,9 @@ const buildInitialValues = createSelector(
   },
 );
 
-const getCustomVilkarText = (medlemskapFom: string, behandlingType: Kodeverk, erOppfylt: boolean) => {
+const getCustomVilkarText = (medlemskapFom: string, behandlingType: string, erOppfylt: boolean) => {
   const customVilkarText = { id: '', values: null };
-  const isBehandlingRevurderingFortsattMedlemskap =
-    behandlingType.kode === BehandlingType.REVURDERING && !!medlemskapFom;
+  const isBehandlingRevurderingFortsattMedlemskap = behandlingType === BehandlingType.REVURDERING && !!medlemskapFom;
   if (isBehandlingRevurderingFortsattMedlemskap) {
     customVilkarText.id = erOppfylt
       ? 'VilkarResultPicker.VilkarOppfyltRevurderingFom'
@@ -256,7 +275,10 @@ const transformValues = (values, overstyringApKode, periodeFom, periodeTom) => (
 
 const validate = values => VilkarresultatMedBegrunnelse.validate(values);
 
-const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMedOverstyringFormProps) => {
+const mapStateToPropsFactory = (
+  _initialState,
+  initialOwnProps: ownProps,
+): ((state: any, ownProps: VilkarresultatMedOverstyringFormProps) => any) => {
   const { overstyringApKode, submitCallback, periode } = initialOwnProps;
   const periodeFom = periode?.periode?.fom;
   const periodeTom = periode?.periode?.tom;
@@ -267,10 +289,10 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMe
   return (state, ownProps) => {
     const { behandlingId, behandlingVersjon, aksjonspunkter, erOverstyrt, overrideReadOnly } = ownProps;
 
-    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
+    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === overstyringApKode);
     const isSolvable =
       aksjonspunkt !== undefined
-        ? !(aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses)
+        ? !(aksjonspunkt.status === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses)
         : false;
 
     const initialValues = buildInitialValues(ownProps);

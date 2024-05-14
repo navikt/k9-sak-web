@@ -13,9 +13,9 @@ export const VedtakInnvilgetPanelImpl = ({ intl, behandlingsresultat, ytelseType
     </Label>
     <BodyShort size="small">
       {intl.formatMessage({
-        id: isDelvisInnvilget(behandlingsresultat.type.kode)
-          ? findDelvisInnvilgetResultatText(behandlingsresultat.type.kode, ytelseTypeKode)
-          : findInnvilgetResultatText(behandlingsresultat.type.kode, ytelseTypeKode),
+        id: isDelvisInnvilget(behandlingsresultat.type)
+          ? findDelvisInnvilgetResultatText(behandlingsresultat.type, ytelseTypeKode)
+          : findInnvilgetResultatText(behandlingsresultat.type, ytelseTypeKode),
       })}
       {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
     </BodyShort>

@@ -23,7 +23,6 @@ import {
   ArbeidsgiverOpplysningerPerId,
   Brevmal,
   Brevmaler,
-  Kodeverk,
   KodeverkMedNavn,
   Mottaker,
   Personopplysninger,
@@ -69,7 +68,7 @@ interface PureOwnProps {
     fritekstbrev?: Fritekstbrev,
   ) => void;
   templates: Brevmaler | Brevmal[];
-  sprakKode?: Kodeverk;
+  sprakKode?: string;
   revurderingVarslingArsak: KodeverkMedNavn[];
   isKontrollerRevurderingApOpen?: boolean;
   personopplysninger?: Personopplysninger;

@@ -6,10 +6,13 @@
   "version": "1.0.0",
   "exports": {
     "./app/*": "./src/app/*",
-    "./sak/meldinger/*": "./src/sak/meldinger/*"
+    "./sak/meldinger/*": "./src/sak/meldinger/*",
+    "./kodeverk/*": "./src/kodeverk/*",
+    "./behandling/*": "./src/behandling/*"
   },
   "dependencies": {
     "@k9-sak-web/backend": "workspace:^",
-    "react": "18.3.1"
+    "react": "18.3.1",
+    "@k9-sak-web/lib": "1.0.0"
   }
 }

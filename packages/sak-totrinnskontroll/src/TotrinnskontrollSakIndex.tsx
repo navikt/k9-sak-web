@@ -77,8 +77,7 @@ const TotrinnskontrollSakIndex = ({
   createLocationForSkjermlenke,
 }: OwnProps) => {
   const erTilbakekreving =
-    BehandlingType.TILBAKEKREVING === behandling.type.kode ||
-    BehandlingType.TILBAKEKREVING_REVURDERING === behandling.type.kode;
+    BehandlingType.TILBAKEKREVING === behandling.type || BehandlingType.TILBAKEKREVING_REVURDERING === behandling.type;
 
   const submitHandler = useCallback(
     (values: FormValues) => {
@@ -120,7 +119,7 @@ const TotrinnskontrollSakIndex = ({
     [location],
   );
 
-  const erStatusFatterVedtak = behandling.status.kode === BehandlingStatus.FATTER_VEDTAK;
+  const erStatusFatterVedtak = behandling.status === BehandlingStatus.FATTER_VEDTAK;
   const skjemalenkeTyper = alleKodeverk[kodeverkTyper.SKJERMLENKE_TYPE];
   const arbeidsforholdHandlingTyper = alleKodeverk[kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE];
   const vurderArsaker = alleKodeverk[kodeverkTyper.VURDER_AARSAK];

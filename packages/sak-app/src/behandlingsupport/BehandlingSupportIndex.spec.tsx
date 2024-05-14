@@ -30,14 +30,8 @@ describe('<BehandlingSupportIndex>', () => {
 
   const behandling = {
     id: 1,
-    type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: '',
-    },
-    status: {
-      kode: behandlingStatus.OPPRETTET,
-      kodeverk: '',
-    },
+    type: behandlingType.FORSTEGANGSSOKNAD,
+    status: behandlingStatus.OPPRETTET,
   };
 
   it('skal vise godkjennings-panelet', () => {

@@ -1,3 +1,8 @@
+import React, { KeyboardEvent, MouseEvent } from 'react';
+import { InjectedFormProps } from 'redux-form';
+import { connect } from 'react-redux';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import moment from 'moment';
 import {
   PeriodpickerField,
   RadioGroupField,
@@ -28,11 +33,6 @@ import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sa
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
 import { BodyShort, Button, HGrid, Label } from '@navikt/ds-react';
-import moment from 'moment';
-import React, { KeyboardEvent, MouseEvent } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
 import ActivityDataSubPanel from './ActivityDataSubPanel';
 import styles from './activityPanel.module.css';
 
@@ -122,7 +122,7 @@ interface StateProps {
   opptjeningFom: string;
   opptjeningTom: string;
   initialValues: Partial<OpptjeningAktivitet>;
-  selectedActivityType: Kodeverk;
+  selectedActivityType: string;
   activityId: number;
 }
 
@@ -192,7 +192,7 @@ export const ActivityPanel = ({
         </FlexRow>
       </FlexContainer>
       <SelectField
-        name="aktivitetType.kode"
+        name="aktivitetType"
         label={intl.formatMessage({ id: 'ActivityPanel.Activity' })}
         validate={[required]}
         placeholder={intl.formatMessage({ id: 'ActivityPanel.VelgAktivitet' })}

@@ -24,12 +24,12 @@ import PleiepengerSluttfaseFakta from './PleiepengerSluttfaseFakta';
 describe('<PleiepengerSluttfaseFakta>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelseType.PLEIEPENGER_SLUTTFASE, kodeverk: 'test' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+    sakstype: fagsakYtelseType.PLEIEPENGER_SLUTTFASE,
+    status: fagsakStatus.UNDER_BEHANDLING,
   } as Fagsak;
   const fagsakPerson = {
     alder: 30,
-    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    personstatusType: personstatusType.BOSATT,
     erDod: false,
     erKvinne: true,
     navn: 'Espen Utvikler',
@@ -38,8 +38,8 @@ describe('<PleiepengerSluttfaseFakta>', () => {
   const behandling = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -64,8 +64,8 @@ describe('<PleiepengerSluttfaseFakta>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+      definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
@@ -80,50 +80,22 @@ describe('<PleiepengerSluttfaseFakta>', () => {
   const soker = {
     navn: 'Espen Utvikler',
     aktoerId: '1',
-    personstatus: {
-      kode: 'BOSA',
-      kodeverk: 'Bosatt',
-    },
+    personstatus: 'BOSA',
     avklartPersonstatus: {
-      overstyrtPersonstatus: {
-        kode: personstatusType.BOSATT,
-        kodeverk: 'Bosatt',
-      },
-      orginalPersonstatus: {
-        kode: personstatusType.DOD,
-        kodeverk: 'Bosatt',
-      },
+      overstyrtPersonstatus: personstatusType.BOSATT,
+      orginalPersonstatus: personstatusType.DOD,
     },
-    navBrukerKjonn: {
-      kode: '',
-      kodeverk: '',
-    },
-    statsborgerskap: {
-      kode: '',
-      kodeverk: '',
-      navn: '',
-    },
-    diskresjonskode: {
-      kode: '',
-      kodeverk: '',
-    },
-    sivilstand: {
-      kode: sivilstandType.UGIFT,
-      kodeverk: 'Ugift',
-    },
-    region: {
-      kode: 'NORDEN',
-      kodeverk: 'Norden',
-    },
+    navBrukerKjonn: '',
+    statsborgerskap: '',
+    diskresjonskode: '',
+    sivilstand: sivilstandType.UGIFT,
+    region: 'NORDEN',
     adresser: [
       {
         adresselinje1: 'Vei 1',
         postNummer: '1000',
         poststed: 'Oslo',
-        adresseType: {
-          kode: opplysningAdresseType.POSTADRESSE,
-          kodeverk: 'Bostedsadresse',
-        },
+        adresseType: opplysningAdresseType.POSTADRESSE,
       },
     ],
     barn: [],

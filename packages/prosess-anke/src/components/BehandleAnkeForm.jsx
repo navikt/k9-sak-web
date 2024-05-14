@@ -12,7 +12,6 @@ import {
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
@@ -25,6 +24,8 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
+import { KodeverkType } from '@k9-sak-web/lib/types/index.js';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 
 import ankeOmgjorArsak from '../kodeverk/ankeOmgjorArsak';
 import FritekstBrevTextField from './FritekstAnkeBrevTextField';
@@ -53,53 +54,13 @@ const canSubmit = formValues => {
   return formValues.ankeVurdering != null && formValues.vedtak != null;
 };
 
-// TODO (TOR) Dette skal ikkje hardkodast!!! Hent fra kodeverk
-const formatBehandlingType = kode => {
-  switch (kode) {
-    case behandlingType.FORSTEGANGSSOKNAD:
-      return 'Førstegangssøknad';
-    case behandlingType.KLAGE:
-      return 'Klage';
-    case behandlingType.ANKE:
-      return 'Anke';
-    case behandlingType.REVURDERING:
-      return 'Revurdering';
-    case behandlingType.SOKNAD:
-      return 'Søknad';
-    case behandlingType.DOKUMENTINNSYN:
-      return 'Dokumentinnsyn';
-    case behandlingType.TILBAKEKREVING:
-      return 'Tilbakekreving';
-    default:
-      return null;
-  }
-};
-
-// TODO (TOR) Dette skal ikkje hardkodast!!! Hent fra kodeverk
-const formatBehandlingStatus = status => {
-  switch (status) {
-    case behandlingStatus.OPPRETTET:
-      return 'Opprettet';
-    case behandlingStatus.BEHANDLING_UTREDES:
-      return 'Behandling utredes';
-    case behandlingStatus.AVSLUTTET:
-      return 'Avsluttet';
-    case behandlingStatus.IVERKSETTER_VEDTAK:
-      return 'Iverksetter vedtak';
-    case behandlingStatus.FATTER_VEDTAK:
-      return 'Fatter vedtak';
-    default:
-      return null;
-  }
-};
-
 const IKKE_PAA_ANKET_BEHANDLING_ID = '0';
 
 const canPreview = (begrunnelse, fritekstTilBrev) =>
   begrunnelse && begrunnelse.length > 0 && fritekstTilBrev && fritekstTilBrev.length > 0;
+
 const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
-const formatBehandling = b =>
-  `${formatDate(b.opprettet)} - ${formatBehandlingType(b.type.kode)} - ${formatBehandlingStatus(b.status.kode)}`;
+
 const formatId = b => {
   if (b === null) {
     return IKKE_PAA_ANKET_BEHANDLING_ID;
@@ -107,33 +68,10 @@ const formatId = b => {
   return `${b}`;
 };
 
-const leggTilUkjent = (behandlinger = []) => {
-  const arr = [].concat(behandlinger);
-  arr.unshift({
-    id: IKKE_PAA_ANKET_BEHANDLING_ID,
-    opprettet: null,
-    type: {},
-    status: {},
-  });
-  return arr;
+const SKAL_REALITETSBEHANDLES = {
+  JA: true,
+  NEI: false,
 };
-
-const buildOption = (b, intl) => {
-  if (b.id === IKKE_PAA_ANKET_BEHANDLING_ID) {
-    return (
-      <option key={formatId(b.id)} value={formatId(b.id)}>
-        {intl.formatMessage({ id: 'Ankebehandling.Resultat.IkkePaaAnketVedtak' })}
-      </option>
-    );
-  }
-  return (
-    <option key={formatId(b.id)} value={formatId(b.id)}>
-      {formatBehandling(b)}
-    </option>
-  );
-};
-
-const filtrerKlage = (behandlinger = []) => behandlinger.filter(b => b.type.kode === behandlingType.KLAGE);
 
 /**
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling.
@@ -152,200 +90,233 @@ const BehandleAnkeFormImpl = ({
   behandlinger,
   intl,
   ...formProps
-}) => (
-  <form onSubmit={handleSubmit}>
-    <FadingPanel>
-      <Heading size="small" level="2">
-        <FormattedMessage id="Ankebehandling.Title" />
-      </Heading>
-      <VerticalSpacer fourPx />
-      <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
-        {[<FormattedMessage id="Ankebehandling.HelpText" key={aksjonspunktCode} />]}
-      </AksjonspunktHelpText>
-      <VerticalSpacer sixteenPx />
-      <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
-        <div>
-          <SelectField
-            readOnly={readOnly}
-            name="vedtak"
-            selectValues={leggTilUkjent(filtrerKlage(behandlinger)).map(b => buildOption(b, intl))}
-            className={readOnly ? styles.selectReadOnly : null}
-            label={intl.formatMessage({ id: 'Ankebehandling.Resultat.Vedtak' })}
-            validate={[required]}
-            bredde="xl"
-          />
-        </div>
-      </HGrid>
+}) => {
+  const { kodeverkNavnFraKode } = useKodeverkContext();
 
-      <BodyShort size="small">
-        <FormattedMessage id="Ankebehandling.Resultat" />
-      </BodyShort>
-      <HGrid gap="1" columns={{ xs: '4fr 4fr 4fr' }}>
-        <RadioGroupField
-          name="ankeVurdering"
-          validate={[required]}
-          isVertical
-          readOnly={readOnly}
-          radios={[
-            {
-              value: ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK,
-              label: intl.formatMessage({ id: 'Ankebehandling.Resultat.Stadfest' }),
-            },
-            {
-              value: ankeVurdering.ANKE_OMGJOER,
-              label: intl.formatMessage({ id: 'Ankebehandling.Resultat.Omgjør' }),
-            },
-          ]}
-        />
-        <RadioGroupField
-          name="ankeVurdering"
-          validate={[required]}
-          readOnly={readOnly}
-          className={readOnly ? styles.selectReadOnly : null}
-          isVertical
-          radios={[
-            {
-              value: ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE,
-              label: intl.formatMessage({ id: 'Ankebehandling.Resultat.OpphevHjemsend' }),
-            },
-            {
-              value: ankeVurdering.ANKE_AVVIS,
-              label: intl.formatMessage({ id: 'Ankebehandling.Resultat.Avvis' }),
-            },
-          ]}
-        />
-      </HGrid>
-      {ankeVurdering.ANKE_AVVIS === formValues.ankeVurdering && (
+  const leggTilUkjent = (behandlingerArray = []) => {
+    const arr = [].concat(behandlingerArray);
+    arr.unshift({
+      id: IKKE_PAA_ANKET_BEHANDLING_ID,
+      opprettet: null,
+      type: {},
+      status: {},
+    });
+    return arr;
+  };
+
+  const filtrerKlage = behandlinger?.filter(b => b.type === behandlingType.KLAGE);
+
+  const buildOption = b => {
+    if (b.id === IKKE_PAA_ANKET_BEHANDLING_ID) {
+      return (
+        <option key={formatId(b.id)} value={formatId(b.id)}>
+          {intl.formatMessage({ id: 'Ankebehandling.Resultat.IkkePaaAnketVedtak' })}
+        </option>
+      );
+    }
+    return (
+      <option key={formatId(b.id)} value={formatId(b.id)}>
+        {formatDate(b.opprettet)} - {kodeverkNavnFraKode(KodeverkType.BEHANDLING_TYPE)} -{' '}
+        {kodeverkNavnFraKode(KodeverkType.BEHANDLING_STATUS)}
+      </option>
+    );
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <FadingPanel>
+        <Heading size="small" level="2">
+          <FormattedMessage id="Ankebehandling.Title" />
+        </Heading>
+        <VerticalSpacer fourPx />
+        <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
+          {[<FormattedMessage id="Ankebehandling.HelpText" key={aksjonspunktCode} />]}
+        </AksjonspunktHelpText>
+        <VerticalSpacer sixteenPx />
         <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
           <div>
-            <ArrowBox>
-              <BodyShort size="small">
-                <FormattedMessage id="Ankebehandling.Avvisning" />
-              </BodyShort>
-              <CheckboxField
-                name="erAnkerIkkePart"
-                label={<FormattedMessage id="Ankebehandling.Avvisning.IkkePart" />}
-              />
-              <CheckboxField
-                name="erIkkeKonkret"
-                label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeKonkret" />}
-              />
-              <CheckboxField
-                name="erFristIkkeOverholdt"
-                label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeFrist" />}
-              />
-              <CheckboxField
-                name="erIkkeSignert"
-                label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeSignert" />}
-              />
-              <BodyShort size="small">
-                <FormattedMessage id="Ankebehandling.Realitetsbehandles" />
-              </BodyShort>
-              <RadioGroupField
-                name="erSubsidiartRealitetsbehandles"
-                validate={[required]}
-                readOnly={readOnly}
-                className={readOnly ? styles.selectReadOnly : null}
-                direction="horisontal"
-                radios={[
-                  {
-                    value: true,
-                    label: intl.formatMessage({ id: 'Ankebehandling.Realitetsbehandles.Ja' }),
-                  },
-                  {
-                    value: false,
-                    label: intl.formatMessage({ id: 'Ankebehandling.Realitetsbehandles.Nei' }),
-                  },
-                ]}
-              />
-            </ArrowBox>
-          </div>
-        </HGrid>
-      )}
-      {ankeVurdering.ANKE_OMGJOER === formValues.ankeVurdering && (
-        <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
-          <div>
-            <ArrowBox>
-              <RadioGroupField
-                name="ankeVurderingOmgjoer"
-                validate={[required]}
-                readOnly={readOnly}
-                className={readOnly ? styles.selectReadOnly : null}
-                radios={[
-                  {
-                    value: ankeVurderingOmgjoer.ANKE_TIL_GUNST,
-                    label: intl.formatMessage({ id: 'Ankebehandling.VurderingOmgjoer.Gunst' }),
-                  },
-                  {
-                    value: ankeVurderingOmgjoer.ANKE_TIL_UGUNST,
-                    label: intl.formatMessage({ id: 'Ankebehandling.VurderingOmgjoer.Ugunst' }),
-                  },
-                  {
-                    value: ankeVurderingOmgjoer.ANKE_DELVIS_OMGJOERING_TIL_GUNST,
-                    label: intl.formatMessage({ id: 'Ankebehandling.VurderingOmgjoer.Delvis' }),
-                  },
-                ]}
-              />
-              <SelectField
-                readOnly={readOnly}
-                name="ankeOmgjoerArsak"
-                selectValues={omgjorArsakValues.map(arsak => (
-                  <option key={arsak.kode} value={arsak.kode}>
-                    {intl.formatMessage({ id: arsak.navn })}
-                  </option>
-                ))}
-                className={readOnly ? styles.selectReadOnly : null}
-                label={intl.formatMessage({ id: 'Ankebehandling.OmgjoeringArsak' })}
-                validate={[required]}
-                bredde="xl"
-              />
-            </ArrowBox>
-          </div>
-        </HGrid>
-      )}
-
-      <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
-        <TextAreaField label="Begrunnelse" name="begrunnelse" readOnly={readOnly} />
-      </HGrid>
-
-      <div className={styles.confirmVilkarForm}>
-        <VerticalSpacer sixteenPx />
-        <FritekstBrevTextField sprakkode={sprakkode} readOnly={readOnly} intl={intl} />
-        <VerticalSpacer sixteenPx />
-        <HGrid gap="1" columns={{ xs: '8fr 2fr 2fr' }}>
-          <div>
-            <ProsessStegSubmitButton
-              formName={formProps.form}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              isReadOnly={readOnly}
-              isSubmittable={!readOnly && canSubmit(formValues)}
-              hasEmptyRequiredFields={false}
-              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-              isBehandlingFormDirty={isBehandlingFormDirty}
-              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-            />
-            <PreviewAnkeLink
-              readOnly={!canPreview(formValues.begrunnelse, formValues.fritekstTilBrev)}
-              previewCallback={previewCallback}
-              fritekstTilBrev={formValues.fritekstTilBrev}
-              ankeVurdering={formValues.ankeVurdering}
-              aksjonspunktCode={aksjonspunktCode}
-            />
-          </div>
-          <div>
-            <TempsaveAnkeButton
-              formValues={formValues}
-              saveAnke={saveAnke}
+            <SelectField
               readOnly={readOnly}
-              aksjonspunktCode={aksjonspunktCode}
+              name="vedtak"
+              selectValues={leggTilUkjent(filtrerKlage).map(b => buildOption(b))}
+              className={readOnly ? styles.selectReadOnly : null}
+              label={intl.formatMessage({ id: 'Ankebehandling.Resultat.Vedtak' })}
+              validate={[required]}
+              bredde="xl"
             />
           </div>
         </HGrid>
-      </div>
-    </FadingPanel>
-  </form>
-);
+
+        <BodyShort size="small">
+          <FormattedMessage id="Ankebehandling.Resultat" />
+        </BodyShort>
+        <HGrid gap="1" columns={{ xs: '4fr 4fr 4fr' }}>
+          <RadioGroupField
+            name="ankeVurdering"
+            validate={[required]}
+            isVertical
+            readOnly={readOnly}
+            radios={[
+              {
+                value: ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK,
+                label: intl.formatMessage({ id: 'Ankebehandling.Resultat.Stadfest' }),
+              },
+              {
+                value: ankeVurdering.ANKE_OMGJOER,
+                label: intl.formatMessage({ id: 'Ankebehandling.Resultat.Omgjør' }),
+              },
+            ]}
+          />
+          <RadioGroupField
+            name="ankeVurdering"
+            validate={[required]}
+            readOnly={readOnly}
+            className={readOnly ? styles.selectReadOnly : null}
+            isVertical
+            radios={[
+              {
+                value: ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE,
+                label: intl.formatMessage({ id: 'Ankebehandling.Resultat.OpphevHjemsend' }),
+              },
+              {
+                value: ankeVurdering.ANKE_AVVIS,
+                label: intl.formatMessage({ id: 'Ankebehandling.Resultat.Avvis' }),
+              },
+            ]}
+          />
+        </HGrid>
+        {ankeVurdering.ANKE_AVVIS === formValues.ankeVurdering && (
+          <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+            <div>
+              <ArrowBox>
+                <BodyShort size="small">
+                  <FormattedMessage id="Ankebehandling.Avvisning" />
+                </BodyShort>
+                <CheckboxField
+                  name="erAnkerIkkePart"
+                  label={<FormattedMessage id="Ankebehandling.Avvisning.IkkePart" />}
+                />
+                <CheckboxField
+                  name="erIkkeKonkret"
+                  label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeKonkret" />}
+                />
+                <CheckboxField
+                  name="erFristIkkeOverholdt"
+                  label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeFrist" />}
+                />
+                <CheckboxField
+                  name="erIkkeSignert"
+                  label={<FormattedMessage id="Ankebehandling.Avvisning.IkkeSignert" />}
+                />
+                <BodyShort size="small">
+                  <FormattedMessage id="Ankebehandling.Realitetsbehandles" />
+                </BodyShort>
+                <RadioGroupField
+                  name="erSubsidiartRealitetsbehandles"
+                  validate={[required]}
+                  readOnly={readOnly}
+                  className={readOnly ? styles.selectReadOnly : null}
+                  direction="horisontal"
+                  radios={[
+                    {
+                      value: true,
+                      label: intl.formatMessage({ id: 'Ankebehandling.Realitetsbehandles.Ja' }),
+                    },
+                    {
+                      value: false,
+                      label: intl.formatMessage({ id: 'Ankebehandling.Realitetsbehandles.Nei' }),
+                    },
+                  ]}
+                />
+              </ArrowBox>
+            </div>
+          </HGrid>
+        )}
+        {ankeVurdering.ANKE_OMGJOER === formValues.ankeVurdering && (
+          <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+            <div>
+              <ArrowBox>
+                <RadioGroupField
+                  name="ankeVurderingOmgjoer"
+                  validate={[required]}
+                  readOnly={readOnly}
+                  className={readOnly ? styles.selectReadOnly : null}
+                  radios={[
+                    {
+                      value: ankeVurderingOmgjoer.ANKE_TIL_GUNST,
+                      label: intl.formatMessage({ id: 'Ankebehandling.VurderingOmgjoer.Gunst' }),
+                    },
+                    {
+                      value: ankeVurderingOmgjoer.ANKE_TIL_UGUNST,
+                      label: intl.formatMessage({ id: 'Ankebehandling.VurderingOmgjoer.Ugunst' }),
+                    },
+                    {
+                      value: ankeVurderingOmgjoer.ANKE_DELVIS_OMGJOERING_TIL_GUNST,
+                      label: intl.formatMessage({ id: 'Ankebehandling.VurderingOmgjoer.Delvis' }),
+                    },
+                  ]}
+                />
+                <SelectField
+                  readOnly={readOnly}
+                  name="ankeOmgjoerArsak"
+                  selectValues={omgjorArsakValues.map(arsak => (
+                    <option key={arsak.kode} value={arsak.kode}>
+                      {intl.formatMessage({ id: arsak.navn })}
+                    </option>
+                  ))}
+                  className={readOnly ? styles.selectReadOnly : null}
+                  label={intl.formatMessage({ id: 'Ankebehandling.OmgjoeringArsak' })}
+                  validate={[required]}
+                  bredde="xl"
+                />
+              </ArrowBox>
+            </div>
+          </HGrid>
+        )}
+
+        <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+          <TextAreaField label="Begrunnelse" name="begrunnelse" readOnly={readOnly} />
+        </HGrid>
+
+        <div className={styles.confirmVilkarForm}>
+          <VerticalSpacer sixteenPx />
+          <FritekstBrevTextField sprakkode={sprakkode} readOnly={readOnly} intl={intl} />
+          <VerticalSpacer sixteenPx />
+          <HGrid gap="1" columns={{ xs: '8fr 2fr 2fr' }}>
+            <div>
+              <ProsessStegSubmitButton
+                formName={formProps.form}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                isReadOnly={readOnly}
+                isSubmittable={!readOnly && canSubmit(formValues)}
+                hasEmptyRequiredFields={false}
+                isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+                isBehandlingFormDirty={isBehandlingFormDirty}
+                hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+              />
+              <PreviewAnkeLink
+                readOnly={!canPreview(formValues.begrunnelse, formValues.fritekstTilBrev)}
+                previewCallback={previewCallback}
+                fritekstTilBrev={formValues.fritekstTilBrev}
+                ankeVurdering={formValues.ankeVurdering}
+                aksjonspunktCode={aksjonspunktCode}
+              />
+            </div>
+            <div>
+              <TempsaveAnkeButton
+                formValues={formValues}
+                saveAnke={saveAnke}
+                readOnly={readOnly}
+                aksjonspunktCode={aksjonspunktCode}
+              />
+            </div>
+          </HGrid>
+        </div>
+      </FadingPanel>
+    </form>
+  );
+};
 
 BehandleAnkeFormImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
@@ -360,12 +331,8 @@ BehandleAnkeFormImpl.propTypes = {
     PropTypes.shape({
       id: PropTypes.number,
       opprettet: PropTypes.string,
-      type: PropTypes.shape({
-        kode: PropTypes.string,
-      }),
-      status: PropTypes.shape({
-        kode: PropTypes.string,
-      }),
+      type: PropTypes.string, // kodeverk
+      status: PropTypes.string, // kodeverk
     }),
   ).isRequired,
   ...formPropTypes,
@@ -421,7 +388,7 @@ export const transformValues = (values, aksjonspunktCode) => ({
 const formName = 'BehandleAnkeForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const aksjonspunktCode = initialOwnProps.aksjonspunkter[0].definisjon.kode;
+  const aksjonspunktCode = initialOwnProps.aksjonspunkter[0].definisjon;
   const onSubmit = values => initialOwnProps.submitCallback([transformValues(values, aksjonspunktCode)]);
   return (state, ownProps) => ({
     aksjonspunktCode,

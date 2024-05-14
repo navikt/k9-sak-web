@@ -25,14 +25,8 @@ vi.mock('react-router-dom', async () => {
 describe('<FagsakSearchIndex>', () => {
   const fagsak: Partial<Fagsak> = {
     saksnummer: '12345',
-    sakstype: {
-      kode: 'ES',
-      kodeverk: 'test',
-    },
-    status: {
-      kode: 'OPPR',
-      kodeverk: 'test',
-    },
+    sakstype: 'ES',
+    status: 'OPPR',
     barnFodt: '10.10.2017',
     antallBarn: 1,
     opprettet: '13‎.‎02‎.‎2017‎ ‎09‎:‎54‎:‎22',

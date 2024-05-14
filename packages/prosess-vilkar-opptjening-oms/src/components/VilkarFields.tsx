@@ -1,16 +1,14 @@
 import { RadioGroupField } from '@fpsak-frontend/form';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
-
 import styles from './VilkarFields.module.css';
 
 export const midlertidigInaktiv = {
@@ -134,9 +132,9 @@ VilkarFields.buildInitialValues = (
     ? vilkårPerioder.map(periode => ({
         begrunnelse: periode.begrunnelse,
         vurderesIBehandlingen: periode.vurderesIBehandlingen,
-        erVilkarOk: Object.values(midlertidigInaktiv).includes(periode.merknad?.kode)
-          ? periode.merknad.kode
-          : periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
+        erVilkarOk: Object.values(midlertidigInaktiv).includes(periode.merknad)
+          ? periode.merknad
+          : periode.vilkarStatus === vilkarUtfallType.OPPFYLT,
       }))
     : [],
 });

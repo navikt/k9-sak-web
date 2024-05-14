@@ -30,10 +30,7 @@ const behandling = {
       kode: 'FRITEKST',
       kodeverk: '',
     },
-    type: {
-      kode: behandlingResultatType.IKKE_FASTSATT,
-      kodeverk: '',
-    },
+    type: behandlingResultatType.IKKE_FASTSATT,
   },
   behandlingPaaVent: false,
   behandlingHenlagt: false,
@@ -84,9 +81,7 @@ export const visSjekkTilbakekreving = args => {
           vedtaksbrev: {
             kode: 'FRITEKST',
           },
-          type: {
-            kode: behandlingResultatType.IKKE_FASTSATT,
-          },
+          type: behandlingResultatType.IKKE_FASTSATT,
         },
       }}
       vilkar={[]}

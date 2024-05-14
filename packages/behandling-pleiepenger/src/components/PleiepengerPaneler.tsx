@@ -14,10 +14,10 @@ import {
   Fagsak,
   FagsakPerson,
   FeatureToggles,
-  KodeverkMedNavn,
 } from '@k9-sak-web/types';
 import moment from 'moment';
 import React, { useState } from 'react';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { Arbeidstype } from '../types';
 import FetchedData from '../types/FetchedData';
 import ArbeidsgiverMedManglendePerioderListe from './ArbeidsgiverMedManglendePerioderListe';
@@ -31,7 +31,6 @@ interface OwnProps {
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;
@@ -68,7 +67,6 @@ const PleiepengerPaneler = ({
   fagsak,
   fagsakPerson,
   behandling,
-  alleKodeverk,
   rettigheter,
   valgtProsessSteg,
   oppdaterProsessStegOgFaktaPanelIUrl,
@@ -83,6 +81,7 @@ const PleiepengerPaneler = ({
   dokumenter,
   lagreOverstyringUttak,
 }: OwnProps) => {
+  const { kodeverk } = useKodeverkContext();
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
   const [beregningErBehandlet, setBeregningErBehandlet] = useState<boolean>(false);
   const harOpprettetAksjonspunkt9203 = harOpprettetAksjonspunkt(fetchedData?.aksjonspunkter || [], 9203);
@@ -94,7 +93,7 @@ const PleiepengerPaneler = ({
       <BehandlingPaVent
         behandling={behandling}
         aksjonspunkter={fetchedData?.aksjonspunkter}
-        kodeverk={alleKodeverk}
+        kodeverk={kodeverk}
         settPaVent={settPaVent}
       />
       {harOpprettetAksjonspunkt9203 && (
@@ -142,7 +141,6 @@ const PleiepengerPaneler = ({
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
         behandling={behandling}
-        alleKodeverk={alleKodeverk}
         rettigheter={rettigheter}
         valgtProsessSteg={valgtProsessSteg}
         valgtFaktaSteg={valgtFaktaSteg}
@@ -162,7 +160,6 @@ const PleiepengerPaneler = ({
         data={fetchedData}
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
-        alleKodeverk={alleKodeverk}
         rettigheter={rettigheter}
         hasFetchError={hasFetchError}
         valgtFaktaSteg={valgtFaktaSteg}

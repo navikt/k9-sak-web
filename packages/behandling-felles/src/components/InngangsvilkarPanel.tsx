@@ -14,13 +14,14 @@ import { HGrid } from '@navikt/ds-react';
 import Tabs from 'nav-frontend-tabs';
 import React, { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 import messages from '../i18n/nb_NO.json';
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import styles from './inngangsvilkarPanel.module.css';
 
 interface OwnProps {
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: AlleKodeverk;
   prosessStegData: ProsessStegPanelUtledet[];
   submitCallback: (data: any) => Promise<any>;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };

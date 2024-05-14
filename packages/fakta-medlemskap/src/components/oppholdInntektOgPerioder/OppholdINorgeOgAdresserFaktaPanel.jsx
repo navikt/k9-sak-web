@@ -1,3 +1,9 @@
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import countries from 'i18n-iso-countries';
+import norwegianLocale from 'i18n-iso-countries/langs/no.json';
 import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
 import { RadioGroupField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -5,12 +11,6 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { FaktaGruppe, PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
-import countries from 'i18n-iso-countries';
-import norwegianLocale from 'i18n-iso-countries/langs/no.json';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
 
 import styles from './oppholdINorgeOgAdresserFaktaPanel.module.css';
 
@@ -181,13 +181,13 @@ OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (soknad, periode, aksjons
       periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT) ||
       (periode.aksjonspunkter.length > 0 &&
         periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT) &&
-        ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
+        ap.definisjon === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
   );
 
   return {
     opphold,
     hasBosattAksjonspunkt: filteredAp.length > 0,
-    isBosattAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status.kode)),
+    isBosattAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status)),
     foreldre: parents,
     bosattVurdering: periode.bosattVurdering || periode.bosattVurdering === false ? periode.bosattVurdering : undefined,
   };

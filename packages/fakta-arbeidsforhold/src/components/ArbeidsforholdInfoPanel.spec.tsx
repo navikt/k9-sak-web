@@ -1,37 +1,25 @@
+import React from 'react';
+import { screen } from '@testing-library/react';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../../i18n/nb_NO.json';
 import ArbeidsforholdInfoPanel from './ArbeidsforholdInfoPanel';
+import messages from '../../i18n/nb_NO.json';
 
 const ap5080 = {
-  aksjonspunktType: {
-    kode: 'MANU',
-    kodeverk: 'AKSJONSPUNKT_TYPE',
-  },
+  aksjonspunktType: 'MANU',
   begrunnelse: null,
   besluttersBegrunnelse: null,
-  definisjon: {
-    kode: '5080',
-    kodeverk: 'AKSJONSPUNKT_DEF',
-  },
+  definisjon: '5080',
   erAktivt: true,
   fristTid: null,
   kanLoses: true,
-  status: {
-    kode: 'OPPR',
-    kodeverk: 'AKSJONSPUNKT_STATUS',
-  },
+  status: 'OPPR',
   toTrinnsBehandling: false,
   toTrinnsBehandlingGodkjent: null,
   vilkarType: null,
   vurderPaNyttArsaker: null,
-  venteårsak: {
-    kode: '-',
-    kodeverk: 'VENT_AARSAK',
-  },
+  venteårsak: '-',
 };
 
 const submitCallback = vi.fn();
@@ -48,7 +36,6 @@ describe('<ArbeidsforholdInfoPanel>', () => {
         hasOpenAksjonspunkter
         behandlingId={1}
         behandlingVersjon={1}
-        alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
         alleMerknaderFraBeslutter={{}}
         {...reduxFormPropsMock}
@@ -72,7 +59,6 @@ describe('<ArbeidsforholdInfoPanel>', () => {
         hasOpenAksjonspunkter={false}
         behandlingId={1}
         behandlingVersjon={1}
-        alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
         alleMerknaderFraBeslutter={{}}
         {...reduxFormPropsMock}
