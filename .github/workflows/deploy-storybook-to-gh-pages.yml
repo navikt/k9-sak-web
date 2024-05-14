@@ -35,5 +35,5 @@ jobs:
         with:
           install_command: HUSKY=0 yarn install --immutable
           build_command: yarn build-storybook
-          path: static_storybook
+          path: .static_storybook
           checkout: false
