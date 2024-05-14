@@ -2,13 +2,7 @@ import { behandlingForm, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { guid } from '@fpsak-frontend/utils';
-import {
-  Aksjonspunkt,
-  ArbeidsgiverOpplysningerPerId,
-  BeregningsresultatUtbetalt,
-  Kodeverk,
-  KodeverkMedNavn,
-} from '@k9-sak-web/types';
+import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
 import moment from 'moment';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -25,8 +19,8 @@ interface OwnProps {
   aksjonspunkter: Aksjonspunkt[];
   behandlingId: number;
   behandlingVersjon: number;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  behandlingStatus: Kodeverk;
+  // alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  behandlingStatus: string;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   vilkarForSykdomExists: boolean;
   beregningsresultat: BeregningsresultatUtbetalt[];
@@ -41,7 +35,6 @@ export const TilkjentYtelseForm = ({
   aksjonspunkter,
   behandlingId,
   behandlingVersjon,
-  alleKodeverk,
   ...formProps
 }: Partial<OwnProps> & InjectedFormProps) => (
   <>
@@ -68,7 +61,6 @@ export const TilkjentYtelseForm = ({
         submitting={formProps.submitting}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
-        alleKodeverk={alleKodeverk}
       />
       {formProps.error && <span>{formProps.error}</span>}
     </form>

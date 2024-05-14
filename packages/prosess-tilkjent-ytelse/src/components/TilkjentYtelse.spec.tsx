@@ -2,11 +2,27 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { BeregningsresultatPeriodeAndel } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
+import { KodeverkType } from '@k9-sak-web/lib/types/index.js';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { PeriodeMedId, TilkjentYtelse } from './TilkjentYtelse';
 
 describe('<TilkjentYtelse>', () => {
+  // mock
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const kodeverkNavnFraKode = (kodeverk: string, kodeverkType: KodeverkType) => {
+    if (kodeverk === 'AT') {
+      return 'Arbeidstaker';
+    }
+    if (kodeverk === 'SN') {
+      return 'Selvstendig næringsdrivende';
+    }
+    if (kodeverk === 'FL') {
+      return 'Frilans';
+    }
+    return '';
+  };
+
   it('skall innehålla korrekt antal felter', () => {
     renderWithIntl(
       <TilkjentYtelse
@@ -18,22 +34,13 @@ describe('<TilkjentYtelse>', () => {
               dagsats: 10000,
               andeler: [
                 {
-                  inntektskategori: {
-                    kode: 'ARBEIDSTAKER',
-                    kodeverk: 'INNTEKTSKATEGORI',
-                  },
+                  inntektskategori: 'ARBEIDSTAKER', // 'INNTEKTSKATEGORI',
                   aktørId: '',
-                  arbeidsforholdType: {
-                    kode: '',
-                    kodeverk: '',
-                  },
+                  arbeidsforholdType: '',
                   stillingsprosent: 100,
                   arbeidsgiver: '973861778',
                   arbeidsgiverOrgnr: '',
-                  aktivitetStatus: {
-                    kode: '',
-                    kodeverk: '',
-                  },
+                  aktivitetStatus: '',
                   arbeidsforholdId: '',
                   eksternArbeidsforholdId: '',
                   arbeidsgiverNavn: '',
@@ -55,8 +62,8 @@ describe('<TilkjentYtelse>', () => {
         }
         groups={[]}
         intl={intlMock}
-        alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
       />,
       { messages },
     );
