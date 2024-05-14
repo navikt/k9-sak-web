@@ -4586,8 +4586,8 @@ __metadata:
   resolution: "@k9-sak-web/gui@workspace:packages/v2/gui"
   dependencies:
     "@k9-sak-web/backend": "workspace:^"
-    react: 18.3.1
     "@k9-sak-web/lib": 1.0.0
+    react: 18.3.1
   languageName: unknown
   linkType: soft
 
@@ -4875,8 +4875,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/rest-api@workspace:packages/rest-api"
   dependencies:
-    "@sentry/browser": 8.0.0
     "@k9-sak-web/lib": 1.0.0
+    "@sentry/browser": 8.0.0
     axios: 1.6.8
     node-cache: 5.1.2
   languageName: unknown
