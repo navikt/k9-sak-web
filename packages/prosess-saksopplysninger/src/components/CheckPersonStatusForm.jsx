@@ -11,12 +11,14 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { AksjonspunktHelpText, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { BodyShort, Detail, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
@@ -129,7 +131,7 @@ CheckPersonStatusFormImpl.defaultProps = {
 
 const getValgtOpplysning = avklartPersonstatus => {
   if (avklartPersonstatus && avklartPersonstatus.overstyrtPersonstatus) {
-    const statusKode = avklartPersonstatus.overstyrtPersonstatus.kode;
+    const statusKode = avklartPersonstatus.overstyrtPersonstatus;
     if (
       statusKode === personstatusType.DOD ||
       statusKode === personstatusType.BOSATT ||
@@ -148,17 +150,17 @@ export const buildInitialValues = createSelector(
     (state, ownProps) => ownProps.personopplysninger,
     (state, ownProps) => ownProps.alleKodeverk,
   ],
-  (behandlingHenlagt, aksjonspunkter, personopplysning, alleKodeverk) => {
+  (behandlingHenlagt, aksjonspunkter, personopplysning, kodeverkNavnFraKode) => {
     const shouldContinueBehandling = !behandlingHenlagt;
     const { avklartPersonstatus, personstatus } = personopplysning;
     const aksjonspunkt = aksjonspunkter[0];
-    const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
     return {
       originalPersonstatusName:
         avklartPersonstatus && avklartPersonstatus.orginalPersonstatus
-          ? getKodeverknavn(avklartPersonstatus.orginalPersonstatus)
-          : getKodeverknavn(personstatus),
-      fortsettBehandling: isAksjonspunktOpen(aksjonspunkt.status.kode) ? undefined : shouldContinueBehandling,
+          ? kodeverkNavnFraKode(avklartPersonstatus.orginalPersonstatus, KodeverkType.PERSONSTATUS_TYPE)
+          : kodeverkNavnFraKode(personstatus, KodeverkType.PERSONSTATUS_TYPE),
+
+      fortsettBehandling: isAksjonspunktOpen(aksjonspunkt.status) ? undefined : shouldContinueBehandling,
       personstatus: getValgtOpplysning(avklartPersonstatus),
       ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
     };
@@ -179,7 +181,7 @@ const getFilteredKodeverk = createSelector(
 const transformValues = (values, aksjonspunkter) => ({
   fortsettBehandling: values.fortsettBehandling,
   personstatus: values.personstatus,
-  kode: aksjonspunkter[0].definisjon.kode,
+  kode: aksjonspunkter[0].definisjon,
   ...ProsessStegBegrunnelseTextField.transformValues(values),
 });
 
