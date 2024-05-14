@@ -147,7 +147,8 @@
     "nav-frontend-tabs@2.0.3": "patch:nav-frontend-tabs@npm%3A2.0.3#./.yarn/patches/nav-frontend-tabs-npm-2.0.3-3d1b6739cc.patch",
     "nav-frontend-typografi@4.0.2": "patch:nav-frontend-typografi@npm%3A4.0.2#./.yarn/patches/nav-frontend-typografi-npm-4.0.2-67ec896090.patch",
     "nav-datovelger@12.6.0": "patch:nav-datovelger@npm%3A12.6.0#./.yarn/patches/nav-datovelger-npm-12.6.0-36eb0faa79.patch",
-    "@editorjs/editorjs": "2.27.2"
+    "@editorjs/editorjs": "2.27.2",
+    "@navikt/k9-sak-typescript-client": "portal:/Users/navjostein/devel/k9-sak/web/target/ts-client"
   },
   "msw": {
     "workerDirectory": "public"

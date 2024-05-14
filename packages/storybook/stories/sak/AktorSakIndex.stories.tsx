@@ -2,27 +2,24 @@ import React from 'react';
 
 import AktorSakIndex from '@k9-sak-web/sak-aktor';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import { Fagsak } from '@k9-sak-web/types';
 
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 import withRouterProvider from '../../decorators/withRouter';
 
 const fagsak = {
   saksnummer: '35425245',
-  sakstype: {
-    kode: fagsakYtelseType.FORELDREPENGER,
-    kodeverk: '',
-  },
+  sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
   relasjonsRolleType: {
     kode: relasjonsRolleType.MOR,
     kodeverk: '',
   },
   status: {
     kode: fagsakStatus.UNDER_BEHANDLING,
-    kodeverk: '',
+    kodeverk: 'FAGSAK_STATUS',
   },
   barnFodt: '2020-01-01',
   opprettet: '2020-01-01',

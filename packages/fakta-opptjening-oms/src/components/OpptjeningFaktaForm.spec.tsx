@@ -3,6 +3,7 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import type { OpptjeningAktivitetType } from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType.js';
 import messages from '../../i18n/nb_NO.json';
 import { OpptjeningFaktaFormImpl as OpptjeningFaktaForm } from './OpptjeningFaktaForm';
 
@@ -32,7 +33,7 @@ describe('<OpptjeningFaktaForm>', () => {
     },
     {
       id: 2,
-      aktivitetType: { kode: OAType.NARING, navn: 'NARING' },
+      aktivitetType: { kode: OAType.NÆRING, navn: 'NARING' },
       opptjeningFom: '2017-08-15',
       opptjeningTom: '2017-08-15',
       arbeidsgiver: 'Andersen Transport AS',
@@ -55,16 +56,16 @@ describe('<OpptjeningFaktaForm>', () => {
     },
   ];
 
-  const opptjeningAktivitetTypes = [
+  const opptjeningAktivitetTypes: OpptjeningAktivitetType[] = [
     {
       kode: OAType.ARBEID,
       navn: 'Arbeid',
-      kodeverk: '',
+      kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
     },
     {
-      kode: OAType.NARING,
+      kode: OAType.NÆRING,
       navn: 'Næring',
-      kodeverk: '',
+      kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
     },
   ];
   const opptjeningList = [

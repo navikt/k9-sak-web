@@ -1,11 +1,12 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { Aksjonspunkt, Behandling, Fagsak, FagsakPerson, Vilkar, Rammevedtak } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Fagsak, FagsakPerson, Rammevedtak, Vilkar } from '@k9-sak-web/types';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import UtvidetRettSoknad from '../../types/UtvidetRettSoknad';
 
 const utvidetRettTestData = {
@@ -35,14 +36,14 @@ const utvidetRettTestData = {
       erPrivatPerson: false,
       identifikator: 'test',
       navn: 'test',
-      arbeidsforholdreferanser: []
+      arbeidsforholdreferanser: [],
     },
   },
   behandling: {
     id: 995,
     versjon: 22,
     status: { kode: behandlingStatus.AVSLUTTET, kodeverk: 'tilTest' },
-    type: { kode: 'BT-002', kodeverk: 'tilTest' },
+    type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -52,8 +53,8 @@ const utvidetRettTestData = {
   } as Behandling,
   fagsak: {
     saksnummer: '111111',
-    sakstype: { kode: fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN, kodeverk: 'tilTest' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'tilTest' },
+    sakstype: { kode: fagsakYtelsesType.OMP_KS, kodeverk: 'FAGSAK_YTELSE' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
   } as Fagsak,
   fagsakPerson: {
     alder: 25,

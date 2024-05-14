@@ -23,7 +23,7 @@ yarn link for å bruke den lokale versjonen medan ein utvikler frontend. Meir in
 Med working directory i samme katalog som denne readme, bruk ein slik kommando for å få dette til:
 
 ```shell
-yarn link ~/devel/k9-sak-typescript-client
+yarn link ~/devel/k9-sak/web/target/ts-client
 ```
 
 Juster filstien slik at den stemmer med der du har klona k9-sak-typescript-client til.

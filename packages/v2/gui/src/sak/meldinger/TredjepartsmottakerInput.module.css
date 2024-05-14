@@ -1,13 +1,22 @@
 .container {
-  display: flex;
-  flex-flow: row wrap;
-  gap: 0.5rem;
+  display: grid;
+  grid-template-areas:
+    'orgnr name'
+    'error error';
+  grid-template-columns: 15ex 1fr;
+  grid-template-rows: auto;
+  gap: var(--a-spacing-2, 0.5rem);
+  align-items: flex-start;
 }
 
 .orgnumField {
-  width: 12ex;
+  grid-area: orgnr;
 }
 
 .orgnameField {
-  flex-grow: 3;
+  grid-area: name;
+}
+
+.errorField {
+  grid-area: error;
 }

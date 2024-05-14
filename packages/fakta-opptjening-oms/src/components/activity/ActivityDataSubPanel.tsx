@@ -92,7 +92,7 @@ const ActivityDataSubPanel = ({
   arbeidsgiverOpplysningerPerId,
 }: ActivityDataSubPanelProps) => (
   <>
-    {isOfType(selectedActivityType, ...[OAType.ARBEID, OAType.NARING, ...ytelseTypes]) && (
+    {isOfType(selectedActivityType, ...[OAType.ARBEID, OAType.NÆRING, ...ytelseTypes]) && (
       <Row>
         <Column xs="7">
           {!isManuallyAdded && (
@@ -141,7 +141,7 @@ const ActivityDataSubPanel = ({
       </Row>
     )}
     <VerticalSpacer eightPx />
-    {isOfType(selectedActivityType, OAType.NARING) && (
+    {isOfType(selectedActivityType, OAType.NÆRING) && (
       <Row>
         <Column xs="8">
           <DatepickerField name="naringRegistreringsdato" label={{ id: 'ActivityPanel.Registreringsdato' }} readOnly />

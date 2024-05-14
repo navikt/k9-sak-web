@@ -63,6 +63,8 @@ const config = {
     // Want to be able to use for ... of loops:
     'no-restricted-syntax': ['off', 'ForOfStatement'],
     'no-restricted-exports': OFF,
+    // This rule got triggered even if the constructor was useful:
+    'no-useless-constructor': OFF,
     'import/no-extraneous-dependencies': [
       'error',
       { devDependencies: ['**/*.spec.ts', '**/*.spec.tsx', '**/*.stories.tsx'] },

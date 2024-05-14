@@ -1,6 +1,5 @@
 import aksjonspunktCode from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
@@ -8,6 +7,7 @@ import { action } from '@storybook/addon-actions';
 import { boolean, object, withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import withReduxProvider from '../../decorators/withRedux';
 
 const avslagsarsaker = [
@@ -64,20 +64,17 @@ export default {
   decorators: [withKnobs, withReduxProvider],
 };
 
+const behandling = {
+  id: 1,
+  versjon: 1,
+  type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
+} as Behandling;
+
 export const visOverstyringspanelForOpptjening = () => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <VilkarresultatMedOverstyringProsessIndex
-      behandling={
-        {
-          id: 1,
-          versjon: 1,
-          type: {
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          },
-        } as Behandling
-      }
+      behandling={behandling}
       medlemskap={{
         fom: '2019-01-01',
       }}
@@ -105,16 +102,7 @@ export const visOverstyringspanelForMedlemskap = () => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <VilkarresultatMedOverstyringProsessIndex
-      behandling={
-        {
-          id: 1,
-          versjon: 1,
-          type: {
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          },
-        } as Behandling
-      }
+      behandling={behandling}
       medlemskap={{
         fom: '2019-01-01',
       }}
@@ -142,12 +130,7 @@ export const visOverstyrtAksjonspunktSomErBekreftet = () => (
   <VilkarresultatMedOverstyringProsessIndex
     behandling={
       {
-        id: 1,
-        versjon: 1,
-        type: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        },
+        ...behandling,
         behandlingsresultat: {
           avslagsarsak: {
             kode: 'AVSLAG_TEST_1',

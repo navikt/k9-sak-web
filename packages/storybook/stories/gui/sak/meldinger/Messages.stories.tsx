@@ -1,46 +1,83 @@
-import React, { ReactNode } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Messages, { BackendApi } from '@k9-sak-web/gui/sak/meldinger/Messages.tsx'
-import { withKnobs } from "@storybook/addon-knobs";
-import { FritekstbrevDokumentdata } from "@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js";
-import ytelseTyper from "@k9-sak-web/backend/k9sak/extra/ytelseTyper.js";
-import { templates } from "../../../mocks/brevmaler.js";
+import Messages, { tredjepartsmottakerValg } from '@k9-sak-web/gui/sak/meldinger/Messages.tsx';
+import { userEvent, within } from '@storybook/testing-library';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
+import { templates } from '../../../mocks/brevmaler.js';
 import arbeidsgivere from '../../../mocks/arbeidsgivere.json';
 import personopplysninger from '../../../mocks/personopplysninger';
+import withMaxWidth from '../../../../decorators/withMaxWidth.js';
+import { FakeMessagesBackendApi } from './FakeMessagesBackendApi.js';
 
 const meta: Meta<typeof Messages> = {
   title: 'gui/sak/meldinger/Messages.tsx',
   component: Messages,
-  decorators: [withKnobs],
-}
-export default meta
+  decorators: [withMaxWidth(420)],
+};
+export default meta;
 
-type Story = StoryObj<typeof Messages>
-
-const WidthLimit = ({maxWidthPx, children}: {maxWidthPx: number, children: ReactNode}) => <div style={{maxWidth: maxWidthPx}}>{children}</div>
-
-const api: BackendApi = {
-  async hentInnholdBrevmal(sakstype: string, eksternReferanse: string, maltype: string): Promise<FritekstbrevDokumentdata[]> {
-    if(sakstype === ytelseTyper.OMP && maltype === "VARSEL_FRITEKST") {
-      return [
-        {tittel: "Varsel nr 1", fritekst: "Hei, du må sende inn ditt og datt før frist."},
-        {tittel: "Varsel nr 2", fritekst: "Brev tekst forslag nr 2."},
-      ]
-    }
-    return []
-  }
-}
-
+type Story = StoryObj<typeof Messages>;
+const api = new FakeMessagesBackendApi();
 export const DefaultStory: Story = {
   args: {
-    sakstype: "OMP",
-    eksternReferanse: "xxx-uuuu-iiii--dddd",
+    fagsak: {
+      saksnummer: '100',
+      sakstype: { kode: fagsakYtelsesType.PSB, kodeverk: 'FAGSAK_YTELSE' },
+      status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
+      person: {
+        aktørId: 'person-aktørid-1',
+      },
+    },
+    behandling: {
+      id: 101,
+      uuid: 'XUYPS4',
+      type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
+      sprakkode: {
+        kode: 'NB',
+        kodeverk: 'SPRAAK_KODE',
+      },
+    },
     maler: templates,
     personopplysninger,
     arbeidsgiverOpplysningerPerId: arbeidsgivere,
     api,
   },
-  render: args =>
-    <WidthLimit maxWidthPx={420}><Messages {...args} /></WidthLimit>
-}
+};
+
+export const MedFritekstTittel: Story = {
+  args: {
+    ...DefaultStory.args,
+  },
+  play: async ({ canvasElement }) => {
+    await userEvent.click(canvasElement);
+    const canvas = within(canvasElement);
+    const malSelectBox = canvas.getByLabelText('Mal');
+    await userEvent.selectOptions(malSelectBox, 'GENERELT_FRITEKSTBREV');
+  },
+};
+
+export const FritekstValg: Story = {
+  args: {
+    ...DefaultStory.args,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvasElement); // Nødvendig for at selectOptions kall under skal fungere. Må ha fokus på sida.
+    const selectBox = canvas.getByLabelText('Mal');
+    await userEvent.selectOptions(selectBox, 'VARSEL_FRITEKST');
+  },
+};
+
+export const TilTredjepartsmottaker: Story = {
+  args: {
+    ...DefaultStory.args,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvasElement); // Nødvendig for at selectOptions kall under skal fungere. Må ha fokus på sida.
+    const selectBox = canvas.getByLabelText('Mottaker');
+    await userEvent.selectOptions(selectBox, tredjepartsmottakerValg);
+  },
+};

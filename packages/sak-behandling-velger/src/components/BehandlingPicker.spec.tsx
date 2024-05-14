@@ -1,12 +1,12 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import messages from '../../i18n/nb_NO.json';
 import BehandlingVelgerSakIndex from '../BehandlingVelgerSakIndex';
 import { sortBehandlinger } from './behandlingVelgerUtils';
@@ -44,8 +44,8 @@ describe('<BehandlingPicker>', () => {
   const fagsak = {
     saksnummer: '35425245',
     sakstype: {
-      kode: fagsakYtelseType.PLEIEPENGER,
-      kodeverk: '',
+      kode: fagsakYtelsesType.PSB,
+      kodeverk: 'FAGSAK_YTELSE',
     },
     relasjonsRolleType: {
       kode: relasjonsRolleType.MOR,
@@ -53,7 +53,7 @@ describe('<BehandlingPicker>', () => {
     },
     status: {
       kode: fagsakStatus.UNDER_BEHANDLING,
-      kodeverk: '',
+      kodeverk: 'FAGSAK_STATUS',
     },
     barnFodt: '2020-01-01',
     opprettet: '2020-01-01',

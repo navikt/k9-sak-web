@@ -2,12 +2,12 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { boolean, object, withKnobs } from '@storybook/addon-knobs';
 
-import { DokumentStatus, Behandling, Vilkar } from '@k9-sak-web/types';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { Behandling, DokumentStatus, Vilkar } from '@k9-sak-web/types';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import SoknadsfristVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-soknadsfrist';
 
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import withReduxProvider from '../../decorators/withRedux';
 
 const vilkarSoknadsfrist = [
@@ -79,21 +79,17 @@ export default {
   component: SoknadsfristVilkarProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };
+const behandling = {
+  id: 1,
+  versjon: 1,
+  type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
+} as Behandling;
 
 export const visOverstyringspanelForSoknadsfrist = () => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <SoknadsfristVilkarProsessIndex
-      behandling={
-        {
-          id: 1,
-          versjon: 1,
-          type: {
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          },
-        } as Behandling
-      }
+      behandling={behandling}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       overrideReadOnly={boolean('overrideReadOnly', false)}
@@ -114,16 +110,7 @@ export const visOverstyringspanelForSoknadsfristUtenDokumenter = () => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <SoknadsfristVilkarProsessIndex
-      behandling={
-        {
-          id: 1,
-          versjon: 1,
-          type: {
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          },
-        } as Behandling
-      }
+      behandling={behandling}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       overrideReadOnly={boolean('overrideReadOnly', false)}
@@ -144,16 +131,7 @@ export const visSoknadsfristAksjonspunkt5077 = () => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <SoknadsfristVilkarProsessIndex
-      behandling={
-        {
-          id: 1,
-          versjon: 1,
-          type: {
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          },
-        } as Behandling
-      }
+      behandling={behandling}
       aksjonspunkter={[
         {
           aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
@@ -232,16 +210,7 @@ export const visSoknadsfristAksjonspunkt5077Delvis = () => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <SoknadsfristVilkarProsessIndex
-      behandling={
-        {
-          id: 1,
-          versjon: 1,
-          type: {
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          },
-        } as Behandling
-      }
+      behandling={behandling}
       aksjonspunkter={[
         {
           aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },

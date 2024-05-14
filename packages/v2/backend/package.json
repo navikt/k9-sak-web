@@ -5,11 +5,16 @@
   "type": "module",
   "version": "1.0.0",
   "exports": {
+    "./shared/*": "./src/shared/*",
+    "./combined/*": "./src/combined/*",
     "./k9sak/generated": "./src/k9sak/generated/index.js",
-    "./k9sak/extra/*": "./src/k9sak/extra/*",
-    "./k9formidling/*": "./src/k9formidling/*"
+    "./k9sak/kodeverk/*": "./src/k9sak/kodeverk/*",
+    "./k9formidling/*": "./src/k9formidling/*",
+    "./k9klage/generated": "./src/k9klage/generated/index.js",
+    "./k9klage/kodeverk/*": "./src/k9klage/kodeverk/*"
   },
   "dependencies": {
-    "@navikt/k9-sak-typescript-client": "0.0.3-alpha"
+    "@navikt/k9-klage-typescript-client": "1.0.20240513162434-997f3da",
+    "@navikt/k9-sak-typescript-client": "1.0.20240508143702-829b73c"
   }
 }

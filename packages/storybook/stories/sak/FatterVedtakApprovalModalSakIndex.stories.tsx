@@ -2,13 +2,13 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { FatterVedtakTotrinnskontrollModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
 import { Behandling } from '@k9-sak-web/types';
 
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus.js';
+import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import withReduxProvider from '../../decorators/withRedux';
 
 export default {
@@ -17,26 +17,26 @@ export default {
   decorators: [withKnobs, withReduxProvider],
 };
 
+const behandling = {
+  id: 1,
+  status: {
+    kode: behandlingStatus.FATTER_VEDTAK,
+    kodeverk: '',
+  },
+  type: {
+    kode: behandlingType.FØRSTEGANGSSØKNAD,
+    kodeverk: 'BEHANDLING_TYPE',
+  },
+  behandlingsresultat: {
+    type: {
+      kode: text('behandlingResultatType', behandlingResultatType.OPPHOR),
+    },
+  },
+} as Behandling;
+
 export const visModalEtterGodkjenning = () => (
   <FatterVedtakTotrinnskontrollModalSakIndex
-    behandling={
-      {
-        id: 1,
-        status: {
-          kode: behandlingStatus.FATTER_VEDTAK,
-          kodeverk: '',
-        },
-        type: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        },
-        behandlingsresultat: {
-          type: {
-            kode: text('behandlingResultatType', behandlingResultatType.OPPHOR),
-          },
-        },
-      } as Behandling
-    }
+    behandling={behandling}
     closeEvent={action('button-click')}
     allAksjonspunktApproved
     fagsakYtelseType={{
@@ -52,19 +52,10 @@ export const visModalEtterGodkjenningAvKlage = () => (
   <FatterVedtakTotrinnskontrollModalSakIndex
     behandling={
       {
-        id: 1,
-        status: {
-          kode: behandlingStatus.FATTER_VEDTAK,
-          kodeverk: '',
-        },
+        ...behandling,
         type: {
           kode: behandlingType.KLAGE,
-          kodeverk: '',
-        },
-        behandlingsresultat: {
-          type: {
-            kode: text('behandlingResultatType', behandlingResultatType.OPPHOR),
-          },
+          kodeverk: 'BEHANDLING_TYPE',
         },
       } as Behandling
     }
@@ -81,24 +72,7 @@ export const visModalEtterGodkjenningAvKlage = () => (
 
 export const visModalEtterTilbakesendingTilSaksbehandler = () => (
   <FatterVedtakTotrinnskontrollModalSakIndex
-    behandling={
-      {
-        id: 1,
-        status: {
-          kode: behandlingStatus.FATTER_VEDTAK,
-          kodeverk: '',
-        },
-        type: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        },
-        behandlingsresultat: {
-          type: {
-            kode: text('behandlingResultatType', behandlingResultatType.OPPHOR),
-          },
-        },
-      } as Behandling
-    }
+    behandling={behandling}
     closeEvent={action('button-click')}
     allAksjonspunktApproved={false}
     fagsakYtelseType={{
