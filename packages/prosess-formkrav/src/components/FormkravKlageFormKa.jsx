@@ -22,7 +22,6 @@ export const FormkravKlageFormKa = ({
   handleSubmit,
   readOnly,
   readOnlySubmitButton,
-  alleKodeverk,
   fagsakPerson,
   arbeidsgiverOpplysningerPerId,
   avsluttedeBehandlinger,
@@ -37,7 +36,6 @@ export const FormkravKlageFormKa = ({
       readOnlySubmitButton={readOnlySubmitButton}
       aksjonspunktCode={aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA}
       formProps={formProps}
-      alleKodeverk={alleKodeverk}
       fagsakPerson={fagsakPerson}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       avsluttedeBehandlinger={avsluttedeBehandlinger}

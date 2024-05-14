@@ -22,7 +22,6 @@ export const FormkravKlageFormNfpImpl = ({
   handleSubmit,
   readOnly,
   readOnlySubmitButton,
-  alleKodeverk,
   fagsakPerson,
   arbeidsgiverOpplysningerPerId,
   avsluttedeBehandlinger,
@@ -37,7 +36,6 @@ export const FormkravKlageFormNfpImpl = ({
       readOnlySubmitButton={readOnlySubmitButton}
       aksjonspunktCode={aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP}
       formProps={formProps}
-      alleKodeverk={alleKodeverk}
       fagsakPerson={fagsakPerson}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       avsluttedeBehandlinger={avsluttedeBehandlinger}
@@ -69,8 +67,7 @@ const getPåklagdBehandling = (avsluttedeBehandlinger, påklagdVedtak) =>
 export const erTilbakekreving = (avsluttedeBehandlinger, påklagdVedtak) => {
   const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
   return (
-    behandling?.type.kode === BehandlingType.TILBAKEKREVING ||
-    behandling?.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
+    behandling?.type === BehandlingType.TILBAKEKREVING || behandling?.type === BehandlingType.TILBAKEKREVING_REVURDERING
   );
 };
 export const påklagdBehandlingInfo = (avsluttedeBehandlinger, påklagdVedtak) => {
@@ -79,7 +76,7 @@ export const påklagdBehandlingInfo = (avsluttedeBehandlinger, påklagdVedtak) =
     ? {
         påklagBehandlingUuid: behandling.uuid,
         påklagBehandlingVedtakDato: behandling.avsluttet,
-        påklagBehandlingType: behandling.type.kode,
+        påklagBehandlingType: behandling.type,
       }
     : null;
 };

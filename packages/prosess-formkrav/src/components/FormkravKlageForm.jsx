@@ -7,15 +7,16 @@ import {
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Detail, HGrid, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import lagVisningsnavnForKlagepart from '../utils/lagVisningsnavnForKlagepart';
 
 import styles from './formkravKlageForm.module.css';
@@ -27,21 +28,6 @@ export const getPaklagdVedtak = (klageFormkravResultat, avsluttedeBehandlinger) 
     Array.isArray(avsluttedeBehandlinger) &&
     avsluttedeBehandlinger.find(b => b.uuid === klageFormkravResultat.påklagdBehandlingRef)?.uuid;
   return behandlingid ? `${behandlingid}` : IKKE_PAKLAGD_VEDTAK;
-};
-
-const getKlagbareVedtak = (avsluttedeBehandlinger, intl, getKodeverknavn) => {
-  const klagBareVedtak = [
-    <option key="formkrav" value={IKKE_PAKLAGD_VEDTAK}>
-      {intl.formatMessage({ id: 'Klage.Formkrav.IkkePåklagdVedtak' })}
-    </option>,
-  ];
-  return klagBareVedtak.concat(
-    avsluttedeBehandlinger.map(behandling => (
-      <option key={behandling.uuid} value={`${behandling.uuid}`}>
-        {`${getKodeverknavn(behandling.type)} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
-      </option>
-    )),
-  );
 };
 
 const getLovHjemmeler = aksjonspunktCode =>
@@ -61,14 +47,29 @@ export const FormkravKlageForm = ({
   avsluttedeBehandlinger,
   intl,
   formProps,
-  alleKodeverk,
   fagsakPerson,
   arbeidsgiverOpplysningerPerId,
   parterMedKlagerett,
   skalKunneVelgeKlagepart,
 }) => {
-  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-  const klagbareVedtakOptions = getKlagbareVedtak(avsluttedeBehandlinger, intl, getKodeverknavn);
+  const { kodeverkNavnFraKode } = useKodeverkContext();
+
+  const getKlagbareVedtak = () => {
+    const klagBareVedtak = [
+      <option key="formkrav" value={IKKE_PAKLAGD_VEDTAK}>
+        {intl.formatMessage({ id: 'Klage.Formkrav.IkkePåklagdVedtak' })}
+      </option>,
+    ];
+    return klagBareVedtak.concat(
+      avsluttedeBehandlinger.map(behandling => (
+        <option key={behandling.uuid} value={`${behandling.uuid}`}>
+          {`${kodeverkNavnFraKode(behandling.type, KodeverkType.BEHANDLING_TYPE)} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
+        </option>
+      )),
+    );
+  };
+
+  const klagbareVedtakOptions = getKlagbareVedtak();
 
   return (
     <FadingPanel>
@@ -180,9 +181,7 @@ FormkravKlageForm.propTypes = {
   avsluttedeBehandlinger: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      type: PropTypes.shape({
-        kode: PropTypes.string.isRequired,
-      }).isRequired,
+      type: PropTypes.string.isRequired,
       avsluttet: PropTypes.string,
       uuid: PropTypes.string.isRequired,
     }),
@@ -192,7 +191,6 @@ FormkravKlageForm.propTypes = {
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
   intl: PropTypes.shape().isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
   fagsakPerson: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()),

@@ -2865,6 +2865,11 @@
       "kode": "BT-002",
       "navn": "Førstegangsbehandling",
       "kodeverk": "BEHANDLING_TYPE"
+    },
+    {
+      "kode": "BT-007",
+      "navn": "Tilbakekreving",
+      "kodeverk": "BEHANDLING_TYPE"
     }
   ],
   "VedtakResultatType": [
