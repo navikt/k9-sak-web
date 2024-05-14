@@ -31,7 +31,7 @@
     "down": "docker-compose down",
     "preview": "vite preview",
     "storybook": "storybook dev -p 9001",
-    "build-storybook": "storybook build -o .static_storybook",
+    "build-storybook": "storybook build -o .storybook-static",
     "prepare": "husky install",
     "sentry-release": "(SENTRY_RELEASE=$(git rev-parse --short HEAD); node ./scripts/sentry-release.cjs)"
   },

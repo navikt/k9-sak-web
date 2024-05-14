@@ -7,6 +7,7 @@
 /.happypack/
 /.nyc_output/
 /.static_storybook/
+/.storybook-static/
 /.eslint_loader_cache/
 /.uglify_plugin_cache/
 .env
