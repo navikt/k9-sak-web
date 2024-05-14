@@ -5109,11 +5109,6 @@
       "kodeverk": "BEHANDLING_TYPE"
     },
     {
-      "kode": "BT-006",
-      "navn": "Dokumentinnsyn",
-      "kodeverk": "BEHANDLING_TYPE"
-    },
-    {
       "kode": "BT-004",
       "navn": "Revurdering",
       "kodeverk": "BEHANDLING_TYPE"
