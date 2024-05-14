@@ -4,7 +4,7 @@ export type ForeldelsePerioder = Readonly<{
   fom: string;
   tom: string;
   belop: number;
-  foreldelseVurderingType: Kodeverk;
+  foreldelseVurderingType: string;
   begrunnelse: string;
 }>;
 

@@ -164,19 +164,10 @@ describe('<TilbakekrevingForm>', () => {
 
   it('skal lage initial values til form der en har lagret en periode og den andre er foreldet', () => {
     const arsak = {
-      hendelseType: {
-        kode: 'MORS_AKTIVITET_TYPE',
-        kodeverk: 'MORS_AKTIVITET_KRAV',
-      },
-      hendelseUndertype: {
-        kodeverk: 'MORS_AKTIVITET_TYPE',
-        kode: 'IKKE_ARBEIDET_HELTID',
-      },
+      hendelseType: 'MORS_AKTIVITET_TYPE', // 'MORS_AKTIVITET_KRAV'
+      hendelseUndertype: 'MORS_AKTIVITET_TYPE', // 'IKKE_ARBEIDET_HELTID',
     };
-    const oppfyltValg = {
-      kode: '-',
-      kodeverk: 'VILKAAR_RESULTAT',
-    };
+    const oppfyltValg = '-'; // 'VILKAAR_RESULTAT',
     const ytelser = [
       {
         aktivitet: 'Arbeidstakar',
@@ -212,11 +203,7 @@ describe('<TilbakekrevingForm>', () => {
           begrunnelse: '3434',
           fom: '2016-05-02',
           tom: '2016-05-26',
-          vilkarResultat: {
-            kode: VilkarResultat.GOD_TRO,
-            kodeverk: 'VILKAAR_RESULTAT',
-            navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
-          },
+          vilkarResultat: VilkarResultat.GOD_TRO, // 'VILKAAR_RESULTAT',
           vilkarResultatInfo: {
             begrunnelse: '34344',
             erBelopetIBehold: true,
@@ -253,11 +240,7 @@ describe('<TilbakekrevingForm>', () => {
       ytelser,
       årsak: arsak,
       begrunnelse: '3434',
-      vilkarResultat: {
-        kode: VilkarResultat.GOD_TRO,
-        kodeverk: 'VILKAAR_RESULTAT',
-        navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
-      },
+      vilkarResultat: VilkarResultat.GOD_TRO, // 'VILKAAR_RESULTAT', 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)'
       vilkarResultatInfo: {
         begrunnelse: '34344',
         erBelopetIBehold: true,
@@ -269,19 +252,11 @@ describe('<TilbakekrevingForm>', () => {
 
   it('skal lage initial values til form der en har splittet en periode i to', () => {
     const arsak = {
-      hendelseType: {
-        kode: 'MORS_AKTIVITET_TYPE',
-        kodeverk: 'MORS_AKTIVITET_KRAV',
-      },
-      hendelseUndertype: {
-        kodeverk: 'MORS_AKTIVITET_TYPE',
-        kode: 'IKKE_ARBEIDET_HELTID',
-      },
+      hendelseType: 'MORS_AKTIVITET_TYPE', // 'MORS_AKTIVITET_KRAV'
+      hendelseUndertype: 'MORS_AKTIVITET_TYPE', // 'IKKE_ARBEIDET_HELTID'
     };
-    const oppfyltValg = {
-      kode: '-',
-      kodeverk: 'VILKAAR_RESULTAT',
-    };
+    const oppfyltValg = '-'; // 'VILKAAR_RESULTAT'
+
     const ytelser = [
       {
         aktivitet: 'Arbeidstakar',
@@ -307,11 +282,7 @@ describe('<TilbakekrevingForm>', () => {
           fom: '2016-03-16',
           tom: '2016-04-03',
           feilutbetalingBelop: 10000,
-          vilkarResultat: {
-            kode: VilkarResultat.GOD_TRO,
-            kodeverk: 'VILKAAR_RESULTAT',
-            navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
-          },
+          vilkarResultat: VilkarResultat.GOD_TRO, // 'VILKAAR_RESULTAT','Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
           vilkarResultatInfo: {
             begrunnelse: '34344',
             erBelopetIBehold: true,
@@ -323,11 +294,7 @@ describe('<TilbakekrevingForm>', () => {
           fom: '2016-04-04',
           tom: '2016-05-26',
           feilutbetalingBelop: 22000,
-          vilkarResultat: {
-            kode: VilkarResultat.GOD_TRO,
-            kodeverk: 'VILKAAR_RESULTAT',
-            navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
-          },
+          vilkarResultat: VilkarResultat.GOD_TRO, // 'VILKAAR_RESULTAT', 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
           vilkarResultatInfo: {
             begrunnelse: '34344',
             erBelopetIBehold: true,
@@ -352,11 +319,7 @@ describe('<TilbakekrevingForm>', () => {
       ytelser,
       årsak: arsak,
       begrunnelse: '3434',
-      vilkarResultat: {
-        kode: VilkarResultat.GOD_TRO,
-        kodeverk: 'VILKAAR_RESULTAT',
-        navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
-      },
+      vilkarResultat: VilkarResultat.GOD_TRO, // 'VILKAAR_RESULTAT', 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
       vilkarResultatInfo: {
         begrunnelse: '34344',
         erBelopetIBehold: true,
@@ -375,11 +338,7 @@ describe('<TilbakekrevingForm>', () => {
       ytelser,
       årsak: arsak,
       begrunnelse: 'test',
-      vilkarResultat: {
-        kode: VilkarResultat.GOD_TRO,
-        kodeverk: 'VILKAAR_RESULTAT',
-        navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
-      },
+      vilkarResultat: VilkarResultat.GOD_TRO, // 'VILKAAR_RESULTAT', 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
       vilkarResultatInfo: {
         begrunnelse: '34344',
         erBelopetIBehold: true,
