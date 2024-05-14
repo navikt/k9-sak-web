@@ -186,9 +186,9 @@ const buildInitialValues = createSelector(
   ],
   (innsynMottattDato, innsynResultatType, fristBehandlingPaaVent, dokumenter, aksjonspunkter) => ({
     mottattDato: innsynMottattDato,
-    innsynResultatType: innsynResultatType ? innsynResultatType.kode : undefined,
+    innsynResultatType: innsynResultatType || undefined,
     fristDato: moment().add(3, 'days').format(ISO_DATE_FORMAT),
-    sattPaVent: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : !!fristBehandlingPaaVent,
+    sattPaVent: isAksjonspunktOpen(aksjonspunkter[0].status) ? undefined : !!fristBehandlingPaaVent,
     ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
     ...hentDokumenterMedNavnOgFikkInnsyn(dokumenter || []),
   }),
