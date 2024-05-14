@@ -27,7 +27,6 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/behandling-anke": "1.0.0",
     "@k9-sak-web/behandling-frisinn": "1.0.0",
-    "@k9-sak-web/behandling-innsyn": "1.0.0",
     "@k9-sak-web/behandling-klage": "1.0.0",
     "@k9-sak-web/behandling-omsorgspenger": "1.0.0",
     "@k9-sak-web/behandling-pleiepenger": "1.0.0",
