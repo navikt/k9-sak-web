@@ -11,10 +11,7 @@ import messages from '../../../i18n/nb_NO.json';
 import { BehandleKlageFormNfpImpl } from './BehandleKlageFormNfp';
 
 describe('<BehandleKlageFormNfpImpl>', () => {
-  const sprakkode = {
-    kode: 'NO',
-    navn: 'Norsk',
-  };
+  const sprakkode = 'NO';
   const formValues1 = {
     fritekstTilBrev: '123',
     klageVurdering: klageVurdering.STADFESTE_YTELSESVEDTAK,
@@ -23,7 +20,7 @@ describe('<BehandleKlageFormNfpImpl>', () => {
   it('skal vise lenke til forhåndsvis brev når fritekst er fylt, og klagevurdering valgt', () => {
     renderWithIntlAndReduxForm(
       <BehandleKlageFormNfpImpl
-        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
+        fagsak={{ sakstype: fagsakYtelseType.OMSORGSPENGER }}
         readOnly={false}
         readOnlySubmitButton
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
@@ -47,7 +44,7 @@ describe('<BehandleKlageFormNfpImpl>', () => {
   it('skal ikke vise lenke til forhåndsvis brev når fritekst fylt, og klagevurdering ikke valgt', () => {
     renderWithIntlAndReduxForm(
       <BehandleKlageFormNfpImpl
-        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
+        fagsak={{ sakstype: fagsakYtelseType.OMSORGSPENGER }}
         readOnly={false}
         readOnlySubmitButton
         formValues={formValues2}
@@ -71,7 +68,7 @@ describe('<BehandleKlageFormNfpImpl>', () => {
   it('skal ikke vise lenke til forhåndsvis brev når fritekst ikke fylt, og klagevurdering valgt', () => {
     renderWithIntlAndReduxForm(
       <BehandleKlageFormNfpImpl
-        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
+        fagsak={{ sakstype: fagsakYtelseType.OMSORGSPENGER }}
         readOnly={false}
         readOnlySubmitButton
         formValues={formValues3}

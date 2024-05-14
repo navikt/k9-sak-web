@@ -10,10 +10,7 @@ import messages from '../../../i18n/nb_NO.json';
 import { BehandleKlageFormKaImpl } from './BehandleKlageFormKa';
 
 describe('<BehandleKlageFormKaImpl>', () => {
-  const sprakkode = {
-    kode: 'NO',
-    navn: 'Norsk',
-  };
+  const sprakkode = 'NO';
   const formValues1 = {
     fritekstTilBrev: '123',
     klageVurdering: klageVurdering.STADFESTE_YTELSESVEDTAK,
