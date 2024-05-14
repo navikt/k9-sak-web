@@ -1,5 +1,5 @@
 import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
-import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { RadioGroupField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { FaktaGruppe, PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -94,20 +94,24 @@ const OppholdINorgeOgAdresserFaktaPanel = ({
               bredde="XXL"
               readOnly={readOnly}
               isEdited={isBosattAksjonspunktClosed}
-            >
-              <RadioOption label={{ id: 'OppholdINorgeOgAdresserFaktaPanel.ResidingInNorway' }} value />
-              <RadioOption
-                label={
-                  <FormattedMessage
-                    id="OppholdINorgeOgAdresserFaktaPanel.NotResidingInNorway"
-                    values={{
-                      b: chunks => <b>{chunks}</b>,
-                    }}
-                  />
-                }
-                value={false}
-              />
-            </RadioGroupField>
+              radios={[
+                {
+                  value: true,
+                  label: <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.ResidingInNorway" />,
+                },
+                {
+                  value: false,
+                  label: (
+                    <FormattedMessage
+                      id="OppholdINorgeOgAdresserFaktaPanel.NotResidingInNorway"
+                      values={{
+                        b: chunks => <b>{chunks}</b>,
+                      }}
+                    />
+                  ),
+                },
+              ]}
+            />
           </div>
         )}
       </div>

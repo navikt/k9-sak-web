@@ -1,9 +1,8 @@
 import { pathToFagsak } from '@k9-sak-web/sak-app/src/app/paths';
 import { RelatertFagsak as RelatertFagsakType } from '@k9-sak-web/types';
 import { LockedFilled, UnlockedFilled } from '@navikt/ds-icons';
-import { BodyShort, Link } from '@navikt/ds-react';
+import { BodyShort, Link, Select } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Select as NavSelect } from 'nav-frontend-skjema';
 import React from 'react';
 import RelatertSøkerIcon from './RelatertSøkerIcon';
 import styles from './relatertFagsak.module.css';
@@ -40,17 +39,18 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
       );
     }
     return (
-      <NavSelect
+      <Select
         label="Velg relatert søker"
         onChange={e => setValgtSøkerIdent(e.target.value)}
         className={styles.relatertFagsak__søkerSelect}
+        size="small"
       >
         {relaterteSøkere.map(søker => (
           <option key={søker.søkerIdent} value={søker.søkerIdent}>
             {søker.søkerNavn} {behandlingsstatus(søker)}
           </option>
         ))}
-      </NavSelect>
+      </Select>
     );
   };
 

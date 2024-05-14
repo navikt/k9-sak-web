@@ -1,6 +1,5 @@
-import { Alert, Button } from '@navikt/ds-react';
+import { Alert, Button, Fieldset, HStack, RadioGroup } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { RadioGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { VilkarMidlertidigAleneProps } from '../../../types/VilkarMidlertidigAleneProps';
@@ -152,10 +151,17 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
               <TextArea label={tekst.begrunnelse} name="begrunnelse" />
 
               <div>
-                <RadioGruppe className={styleRadioknapper.horisontalPlassering} legend={tekst.sporsmålVilkarOppfylt}>
-                  <RadioButtonWithBooleanValue label="Ja" value="true" name="erSokerenMidlertidigAleneOmOmsorgen" />
-                  <RadioButtonWithBooleanValue label="Nei" value="false" name="erSokerenMidlertidigAleneOmOmsorgen" />
-                </RadioGruppe>
+                <RadioGroup
+                  className={styleRadioknapper.horisontalPlassering}
+                  legend={tekst.sporsmålVilkarOppfylt}
+                  size="small"
+                  name="erSokerenMidlertidigAleneOmOmsorgen"
+                >
+                  <HStack gap="1">
+                    <RadioButtonWithBooleanValue label="Ja" value="true" name="erSokerenMidlertidigAleneOmOmsorgen" />
+                    <RadioButtonWithBooleanValue label="Nei" value="false" name="erSokerenMidlertidigAleneOmOmsorgen" />
+                  </HStack>
+                </RadioGroup>
                 {errors.erSokerenMidlertidigAleneOmOmsorgen && (
                   <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>
                 )}
@@ -165,26 +171,30 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                 sokerenMidlertidigAleneOmOmsorgen.length > 0 &&
                 !tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen) && (
                   <div>
-                    <RadioGruppe
+                    <RadioGroup
                       className={classNames(
                         styleRadioknapper.horisontalPlassering,
                         styles.avslagsArsakErPeriodeErIkkeOverSeksMån,
                       )}
                       legend={tekst.velgArsak}
+                      size="small"
+                      name="avslagsArsakErPeriodeErIkkeOverSeksMån"
                     >
-                      <RadioButtonWithBooleanValue
-                        label={tekst.arsakIkkeAleneOmsorg}
-                        value="false"
-                        name="avslagsArsakErPeriodeErIkkeOverSeksMån"
-                        valideringsFunksjoner={erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig}
-                      />
-                      <RadioButtonWithBooleanValue
-                        label={tekst.arsakPeriodeIkkeOverSeksMån}
-                        value="true"
-                        name="avslagsArsakErPeriodeErIkkeOverSeksMån"
-                        valideringsFunksjoner={erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig}
-                      />
-                    </RadioGruppe>
+                      <HStack gap="1">
+                        <RadioButtonWithBooleanValue
+                          label={tekst.arsakIkkeAleneOmsorg}
+                          value="false"
+                          name="avslagsArsakErPeriodeErIkkeOverSeksMån"
+                          valideringsFunksjoner={erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig}
+                        />
+                        <RadioButtonWithBooleanValue
+                          label={tekst.arsakPeriodeIkkeOverSeksMån}
+                          value="true"
+                          name="avslagsArsakErPeriodeErIkkeOverSeksMån"
+                          valideringsFunksjoner={erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig}
+                        />
+                      </HStack>
+                    </RadioGroup>
                     {errors.avslagsArsakErPeriodeErIkkeOverSeksMån && (
                       <p className="typo-feilmelding">{tekst.feilIngenÅrsak}</p>
                     )}
@@ -192,10 +202,10 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                 )}
 
               {tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen) && (
-                <SkjemaGruppe
+                <Fieldset
                   className={styles.gyldigVedtaksPeriode}
                   legend={tekst.sporsmalPeriodeVedtakGyldig}
-                  feil={
+                  error={
                     (errors.fraDato && errors.fraDato.type === 'erDatoFyltUt' && tekst.feilmedlingManglerFraDato) ||
                     (errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato) ||
                     (errors.tilDato && errors.tilDato.type === 'erDatoFyltUt' && tekst.feilmeldingManglerTilDato) ||
@@ -211,7 +221,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                     valideringsFunksjoner={{ erDatoFyltUt, erDatoGyldig, erDatoSisteDagenIÅret }}
                     begrensningerIKalender={hanteringAvDatoForDatoVelger(soknadsopplysninger.soknadsdato)}
                   />
-                </SkjemaGruppe>
+                </Fieldset>
               )}
 
               <Button size="small" variant="primary" className={styles.bekreftKnapp} type="submit">
