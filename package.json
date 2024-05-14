@@ -31,7 +31,7 @@
     "down": "docker-compose down",
     "preview": "vite preview",
     "storybook": "storybook dev -p 9001",
-    "deploy-storybook": "storybook build -o .static_storybook && storybook-to-ghpages --existing-output-dir=.static_storybook",
+    "build-storybook": "storybook build -o .static_storybook",
     "prepare": "husky install",
     "sentry-release": "(SENTRY_RELEASE=$(git rev-parse --short HEAD); node ./scripts/sentry-release.cjs)"
   },
@@ -72,7 +72,6 @@
     "@storybook/cli": "^8.0.10",
     "@storybook/react": "^8.0.10",
     "@storybook/react-vite": "^8.0.10",
-    "@storybook/storybook-deployer": "2.8.16",
     "@storybook/theming": "^8.0.10",
     "@testing-library/cypress": "^10.0.1",
     "@testing-library/dom": "9.3.4",
