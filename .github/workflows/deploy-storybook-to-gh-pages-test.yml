@@ -1,8 +1,5 @@
 name: Build and Publish Storybook to GitHub Pages TEST
 on:
-  push:
-    branches:
-      - master
   workflow_dispatch:
 
 permissions:
