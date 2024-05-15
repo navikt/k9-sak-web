@@ -1,6 +1,7 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { useField } from 'formik';
 import React from 'react';
+import Label from './Label';
 import { validateAll } from './formikUtils';
 
 interface Checkbox {
@@ -28,7 +29,7 @@ const CheckboxGroupFormik = ({ name, legend, checkboxes, hideLegend, validate = 
     >
       {checkboxes.map(checkbox => (
         <Checkbox key={checkbox.value} value={checkbox.value}>
-          {checkbox.label}
+          <Label input={checkbox.label} textOnly />
         </Checkbox>
       ))}
     </CheckboxGroup>

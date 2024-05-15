@@ -1,7 +1,6 @@
 import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
 import {
   RadioGroupField,
-  RadioOption,
   TextAreaField,
   behandlingForm,
   hasBehandlingFormErrorsOfType,
@@ -92,10 +91,17 @@ export const Tilbaketrekkpanel = ({
           direction="horizontal"
           readOnly={readOnly}
           isEdited={!isAksjonspunktOpen(vurderTilbaketrekkAP.status.kode)}
-        >
-          <RadioOption label={<FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Utfør" />} value={false} />
-          <RadioOption label={<FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Hindre" />} value />
-        </RadioGroupField>
+          radios={[
+            {
+              value: false,
+              label: <FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Utfør" />,
+            },
+            {
+              value: true,
+              label: <FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Hindre" />,
+            },
+          ]}
+        />
       </HGrid>
       <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
         <TextAreaField

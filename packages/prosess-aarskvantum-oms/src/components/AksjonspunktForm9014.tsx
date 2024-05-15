@@ -1,4 +1,4 @@
-import { CheckboxField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
+import { CheckboxField, RadioGroupField, TextAreaField } from '@fpsak-frontend/form/index';
 import { behandlingForm, getBehandlingFormName } from '@fpsak-frontend/form/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -139,24 +139,33 @@ export const FormContent = ({
               <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Valg" />
             </Label>
           }
-        >
-          <RadioOption
-            value={valgValues.reBehandling}
-            label={{
-              id: erÅF
-                ? 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling.Fosterbarn'
-                : 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling',
-            }}
-          />
-          <RadioOption
-            value={valgValues.fortsett}
-            label={{
-              id: erÅF
-                ? 'Årskvantum.Aksjonspunkt.Avslått.Fortsett.Fosterbarn'
-                : 'Årskvantum.Aksjonspunkt.Avslått.Fortsett',
-            }}
-          />
-        </RadioGroupField>
+          radios={[
+            {
+              value: valgValues.reBehandling,
+              label: (
+                <FormattedMessage
+                  id={
+                    erÅF
+                      ? 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling.Fosterbarn'
+                      : 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling'
+                  }
+                />
+              ),
+            },
+            {
+              value: valgValues.fortsett,
+              label: (
+                <FormattedMessage
+                  id={
+                    erÅF
+                      ? 'Årskvantum.Aksjonspunkt.Avslått.Fortsett.Fosterbarn'
+                      : 'Årskvantum.Aksjonspunkt.Avslått.Fortsett'
+                  }
+                />
+              ),
+            },
+          ]}
+        />
       )}
       <TextAreaField
         label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.Begrunnelse' }}
