@@ -8,7 +8,12 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 
-initialize({ onUnhandledRequest: 'bypass' });
+initialize({
+  onUnhandledRequest: 'bypass',
+  serviceWorker: {
+    url: '/public/mockServiceWorker.js',
+  },
+});
 
 export const loaders = [mswLoader];
 const preview: Preview = {
