@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { utledKodeverkNavnFraKode } from '@k9-sak-web/lib/kodeverk/kodeverkUtils.js';
+import { utledKodeverkNavnFraKode, utledKodeverkNavnFraUndertypeKode } from '@k9-sak-web/lib/kodeverk/kodeverkUtils.js';
 import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import { KodeverkKlageType } from '@k9-sak-web/lib/types/KodeverkKlageType.js';
 import { KodeverkTilbakeType } from '@k9-sak-web/lib/types/KodeverkTilbakeType.js';
@@ -16,16 +16,10 @@ export const useKodeverkContext = () => {
 
   const { behandlingType, kodeverk, klageKodeverk, tilbakeKodeverk, setKodeverkContext } = kodeverkContext;
 
-  const kodeverkNavnFraKode = (
-    kode: string,
+  const hentKodeverkForKode = (
     kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType,
     kilde: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' | undefined = undefined,
-    ukjentTekst: string | undefined = undefined,
   ) => {
-    console.log(
-      `Klage, oppslag i context.  --  kode: ${kode}  --  kodeverkType: ${kodeverkType}  --  Behandlingstype: ${behandlingType}`,
-    );
-
     let kodeverkForKilde: AlleKodeverk | undefined;
 
     if (kilde !== undefined) {
@@ -42,14 +36,44 @@ export const useKodeverkContext = () => {
           break;
       }
     }
-    if (kodeverkForKilde === undefined) {
+
+    if (kodeverkForKilde === undefined)
       kodeverkForKilde = behandlingType === BehandlingType.KLAGE ? klageKodeverk : kodeverk;
-    }
 
-    if (kodeverkForKilde) {
-      return utledKodeverkNavnFraKode(kode, kodeverkType, kodeverkForKilde);
-    }
+    if (kodeverkForKilde && kodeverkForKilde[kodeverkType]) return kodeverkForKilde[kodeverkType];
 
+    return [];
+  };
+
+  const kodeverkNavnFraKode = (
+    kode: string,
+    kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType,
+    kilde: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' | undefined = undefined,
+    ukjentTekst: string | undefined = undefined,
+  ) => {
+    console.log(
+      `Oppslag i context.  --  kode: ${kode}  --  kodeverkType: ${kodeverkType}  --  Behandlingstype: ${behandlingType}`,
+    );
+    const kodeverkForType = hentKodeverkForKode(kodeverkType, kilde);
+    if (kodeverkForType) return utledKodeverkNavnFraKode(kode, kodeverkForType);
+    return ukjentTekst || 'Ukjent kode';
+  };
+
+  const kodeverkNavnFraUndertypeKode = (
+    kode: string,
+    undertypeKode: string,
+    kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType,
+    kilde: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' | undefined = undefined,
+    ukjentTekst: string | undefined = undefined,
+  ) => {
+    console.log(
+      `Undertype, oppslag i context.  --  kode: ${kode}  --  kodeverkType: ${kodeverkType} -- undertypeKode: ${undertypeKode}  --  Behandlingstype: ${behandlingType}`,
+    );
+
+    const kodeverkForType = hentKodeverkForKode(kodeverkType, kilde);
+    if (kodeverkForType) {
+      return utledKodeverkNavnFraUndertypeKode(undertypeKode, kodeverkForType);
+    }
     return ukjentTekst || 'Ukjent kode';
   };
 
@@ -90,40 +114,12 @@ export const useKodeverkContext = () => {
     return (
       kode: string,
       kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType,
-      ukjentTekst?: string | undefined,
-    ) => utledKodeverkNavnFraKode(kode, kodeverkType, kodeverkForKilde, ukjentTekst);
-  };
-
-  const hentKodeverkFraKode = (
-    kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType,
-    kilde: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' | undefined = undefined,
-  ) => {
-    let kodeverkForKilde: AlleKodeverk | undefined;
-
-    if (kilde !== undefined) {
-      switch (kilde) {
-        case 'kodeverkTilbake':
-          kodeverkForKilde = tilbakeKodeverk;
-          break;
-        case 'kodeverkKlage':
-          kodeverkForKilde = klageKodeverk;
-          break;
-        case 'kodeverk':
-        default:
-          kodeverkForKilde = kodeverk;
-          break;
-      }
-    }
-
-    if (kodeverkForKilde === undefined) {
-      kodeverkForKilde = behandlingType === BehandlingType.KLAGE ? klageKodeverk : kodeverk;
-    }
-
-    if (kodeverkForKilde && kodeverkForKilde[kodeverkType]) {
-      return kodeverkForKilde[kodeverkType];
-    }
-
-    return [];
+      ukjentTekst: string | undefined = undefined,
+    ) => {
+      const kodeverkForType = kodeverkForKilde[kodeverkType];
+      if (kodeverkForType) return utledKodeverkNavnFraKode(kode, kodeverkForType, ukjentTekst);
+      return ukjentTekst || 'Ukjent kodeverk';
+    };
   };
 
   return {
@@ -131,8 +127,9 @@ export const useKodeverkContext = () => {
     klageKodeverk,
     tilbakeKodeverk,
     kodeverkNavnFraKode,
+    kodeverkNavnFraUndertypeKode,
     setKodeverkContext,
     getKodeverkNavnFraKodeFn,
-    hentKodeverkFraKode,
+    hentKodeverkForKode,
   };
 };

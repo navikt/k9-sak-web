@@ -141,8 +141,8 @@ export const SettPaVentModal = ({
   ventearsakVariant,
   originalVentearsakVariant,
 }: PureOwnProps & Partial<MappedOwnProps> & WrappedComponentProps & InjectedFormProps) => {
-  const { hentKodeverkFraKode } = useKodeverkContext();
-  const ventearsaker = hentKodeverkFraKode(KodeverkType.VENT_AARSAK) as KodeverkObject[];
+  const { hentKodeverkForKode } = useKodeverkContext();
+  const ventearsaker = hentKodeverkForKode(KodeverkType.VENT_AARSAK) as KodeverkObject[];
 
   const venteArsakHasChanged = !(originalVentearsak === ventearsak || (!ventearsak && !originalVentearsak));
   const ventearsakVariantHasChanged =

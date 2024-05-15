@@ -59,8 +59,8 @@ const VilkarResultPicker = ({
   valgtPeriodeFom,
   valgtPeriodeTom,
 }: OwnProps) => {
-  const { hentKodeverkFraKode } = useKodeverkContext();
-  const avslagsarsaker = hentKodeverkFraKode(KodeverkType.AVSLAGSARSAK) as KodeverkObject[];
+  const { hentKodeverkForKode } = useKodeverkContext();
+  const avslagsarsaker = hentKodeverkForKode(KodeverkType.AVSLAGSARSAK) as KodeverkObject[];
   const intl = getPackageIntl();
 
   const gyldigFomDatoer = () => ({
