@@ -1,5 +1,4 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 // eslint-disable-next-line import/no-relative-packages
 import alleKodeverk from '../../storybook/stories/mocks/alleKodeverk.json';
 import HistorikkSakIndex from './HistorikkSakIndex';
@@ -159,20 +158,18 @@ export const visHistorikk = () => (
       padding: '30px',
     }}
   >
-    <Router>
-      <div className="grid gap-5">
-        {history.map(h => (
-          <HistorikkSakIndex
-            key={h.behandlingId}
-            historikkinnslag={h}
-            saksnummer="2"
-            getBehandlingLocation={() => locationMock}
-            alleKodeverk={alleKodeverk as any}
-            createLocationForSkjermlenke={() => locationMock}
-            erTilbakekreving={false}
-          />
-        ))}
-      </div>
-    </Router>
+    <div className="grid gap-5">
+      {history.map(h => (
+        <HistorikkSakIndex
+          key={h.behandlingId}
+          historikkinnslag={h}
+          saksnummer="2"
+          getBehandlingLocation={() => locationMock}
+          alleKodeverk={alleKodeverk as any}
+          createLocationForSkjermlenke={() => locationMock}
+          erTilbakekreving={false}
+        />
+      ))}
+    </div>
   </div>
 );
