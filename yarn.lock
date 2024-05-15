@@ -3536,12 +3536,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hookform/resolvers@npm:^3.3.4":
-  version: 3.3.4
-  resolution: "@hookform/resolvers@npm:3.3.4"
+"@hookform/resolvers@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@hookform/resolvers@npm:3.4.0"
   peerDependencies:
     react-hook-form: ^7.0.0
-  checksum: 7761e3340d23acd092dec4023344678e62b0c0ea0ed5aa3687cd315fc339b3b965e11124d643811292e6962683357423e6fe646fffabf9b96f8322f41903924d
+  checksum: 57d1e680ea6600a23bfa5407eb7b2709db72a048a4321174c9c6b2c59847f1c5a070f046946d46d367cd4dc69c13afb97273b26f6ae9e1786092b56a0a96fc1f
   languageName: node
   linkType: hard
 
@@ -4663,7 +4663,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/prosess-uttak@workspace:packages/prosess-uttak"
   dependencies:
-    "@hookform/resolvers": ^3.3.4
+    "@hookform/resolvers": ^3.4.0
     "@navikt/ds-css": 6.7.1
     "@navikt/ds-react": 6.7.1
     "@navikt/ft-form-hooks": 4.4.5
