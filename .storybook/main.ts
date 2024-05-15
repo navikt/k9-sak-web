@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/react-vite';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 const config: StorybookConfig = {
   stories: ['../packages/**/*.stories.@(j|t)s?(x)'],
@@ -14,19 +15,28 @@ const config: StorybookConfig = {
     '@storybook/addon-controls',
     '@storybook/addon-a11y',
   ],
-  staticDirs: [
-    {
-      from: '../public',
-      to: '/assets',
-    },
-  ],
-
   docs: {
     autodocs: true,
   },
   framework: {
     name: '@storybook/react-vite',
     options: {},
+  },
+  async viteFinal(config) {
+    const { mergeConfig } = await import('vite');
+
+    return mergeConfig(config, {
+      plugins: [
+        viteStaticCopy({
+          targets: [
+            {
+              src: 'public/mockServiceWorker.js',
+              dest: '.',
+            },
+          ],
+        }),
+      ],
+    });
   },
 };
 

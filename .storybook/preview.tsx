@@ -10,6 +10,9 @@ import { MemoryRouter } from 'react-router-dom';
 
 initialize({
   onUnhandledRequest: 'bypass',
+  serviceWorker: {
+    url: '/k9-sak-web/mockServiceWorker.js',
+  },
 });
 
 const preview: Preview = {
