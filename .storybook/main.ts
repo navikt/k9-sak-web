@@ -13,7 +13,12 @@ const config: StorybookConfig = {
     },
     '@storybook/addon-controls',
   ],
-  staticDirs: ['../public'],
+  staticDirs: [
+    {
+      from: '../public',
+      to: '/public',
+    },
+  ],
 
   docs: {
     autodocs: true,
