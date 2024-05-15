@@ -7,7 +7,7 @@ import { injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
 import ErrorFormatter from '../feilhandtering/ErrorFormatter';
 import ErrorMessage from '../feilhandtering/ErrorMessage';
-import { getPathToFplos, getPathToK9Punsj } from '../paths';
+import { getPathToK9Los, getPathToK9Punsj } from '../paths';
 
 type QueryStrings = {
   errorcode?: string;
@@ -95,7 +95,7 @@ const Dekorator = ({
       removeErrorMessage={removeErrorMessages}
       errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
       setSiteHeight={setSiteHeight}
-      getPathToFplos={getPathToFplos}
+      getPathToFplos={getPathToK9Los}
       getPathToK9Punsj={getPathToK9Punsj}
       ainntektPath={getAinntektPath()}
       aaregPath={getAaregPath()}

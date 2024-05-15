@@ -1,13 +1,11 @@
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Aksjonspunkt, Risikoklassifisering } from '@k9-sak-web/types';
+import { Box } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import Panel from 'nav-frontend-paneler';
-
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Risikoklassifisering, Aksjonspunkt } from '@k9-sak-web/types';
-
-import Faresignaler from './Faresignaler';
 import AvklarFaresignalerForm, { VuderFaresignalerAp } from './AvklarFaresignalerForm';
+import Faresignaler from './Faresignaler';
 
 interface OwnProps {
   behandlingId: number;
@@ -31,12 +29,12 @@ const HoyRisikoPanel = ({
   readOnly,
   submitCallback,
 }: OwnProps) => (
-  <Panel>
+  <Box background="surface-default" padding="4">
     {aksjonspunkt && aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && (
       <>
-        <AksjonspunktHelpTextHTML>
+        <AksjonspunktHelpText isAksjonspunktOpen>
           <FormattedMessage id="Risikopanel.Panel.Tittel" />
-        </AksjonspunktHelpTextHTML>
+        </AksjonspunktHelpText>
         <VerticalSpacer sixteenPx />
       </>
     )}
@@ -51,7 +49,7 @@ const HoyRisikoPanel = ({
         risikoklassifisering={risikoklassifisering}
       />
     )}
-  </Panel>
+  </Box>
 );
 
 export default HoyRisikoPanel;

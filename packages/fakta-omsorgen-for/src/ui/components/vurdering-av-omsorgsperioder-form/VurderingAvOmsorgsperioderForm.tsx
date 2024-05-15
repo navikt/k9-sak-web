@@ -1,22 +1,21 @@
 import React from 'react';
-import { useIntl } from 'react-intl';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { useIntl } from 'react-intl';
 
-import { getPeriodDifference, Period } from '@fpsak-frontend/utils';
-import { Box, Margin, DetailView, Form, LabelledContent } from '@navikt/ft-plattform-komponenter';
 import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
-import { Label } from '@navikt/ds-react';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Period, getPeriodDifference } from '@fpsak-frontend/utils';
+import { Alert, Label } from '@navikt/ds-react';
+import { Box, DetailView, Form, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import Relasjon from '../../../types/Relasjon';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
+import Ytelsestype from '../../../types/Ytelsestype';
 import ContainerContext from '../../context/ContainerContext';
 import { required } from '../../form/validators/index';
 import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
 import styles from './vurderingAvOmsorgsperioderForm.module.css';
-import Ytelsestype from '../../../types/Ytelsestype';
 
 export enum FieldName {
   BEGRUNNELSE = 'begrunnelse',
@@ -133,6 +132,7 @@ const VurderingAvOmsorgsperioderForm = ({
             buttonLabel="Bekreft og fortsett"
             onAvbryt={onAvbryt}
             shouldShowSubmitButton={!readOnly}
+            smallButtons
           >
             <Box marginTop={Margin.xLarge}>
               <Label htmlFor={FieldName.BEGRUNNELSE}>{intl.formatMessage({ id: 'vurdering.hjemmel' })}</Label>
@@ -214,7 +214,7 @@ const VurderingAvOmsorgsperioderForm = ({
             )}
             {resterendePerioder.length > 0 && (
               <Box marginTop={Margin.xLarge}>
-                <AlertStripeInfo>
+                <Alert size="small" variant="info">
                   <LabelledContent
                     label="Resterende perioder har søkeren ikke omsorgen for barnet:"
                     content={resterendePerioder.map(periode => (
@@ -223,7 +223,7 @@ const VurderingAvOmsorgsperioderForm = ({
                       </p>
                     ))}
                   />
-                </AlertStripeInfo>
+                </Alert>
               </Box>
             )}
           </Form>

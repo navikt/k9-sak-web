@@ -1,16 +1,12 @@
 /* eslint-disable react/jsx-curly-brace-presence */
-import React from 'react';
-
-import { Alert, Heading } from '@navikt/ds-react';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-
+import ytelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { KodeverkMedNavn, UtenlandsoppholdPerioder, UtenlandsoppholdType } from '@k9-sak-web/types';
+import { Alert, Heading, ReadMore } from '@navikt/ds-react';
 import { PeriodList } from '@navikt/ft-plattform-komponenter';
-import ytelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
+import React from 'react';
 import styles from './utenlandsopphold.module.css';
 
 countries.registerLocale(norwegianLocale);
@@ -67,10 +63,7 @@ const Utenlandsopphold = ({
         Utenlandsopphold
       </Heading>
       <Alert variant="info" className={styles.alertstripe}>
-        <Ekspanderbartpanel
-          tittel="Hvor lenge har søker rett på pleiepenger i utlandet?"
-          className={styles.utenlandsopphold__info}
-        >
+        <ReadMore header="Hvor lenge har søker rett på pleiepenger i utlandet?" size="small">
           <ul>
             <li>
               Opphold innenfor EØS likestilles med opphold i Norge, og det er ingen tidsbegrensning på hvor lenge søker
@@ -98,7 +91,7 @@ const Utenlandsopphold = ({
               </li>
             )}
           </ul>
-        </Ekspanderbartpanel>
+        </ReadMore>
       </Alert>
       <VerticalSpacer fourtyPx />
       {harUtenlandsopphold ? (

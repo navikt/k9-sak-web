@@ -1,19 +1,18 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
-import { reduxForm, reducer as formReducer } from 'redux-form';
+import React from 'react';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import { combineReducers, createStore } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 
-import { Fagsak } from '@k9-sak-web/types';
 import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
+import { Fagsak } from '@k9-sak-web/types';
 
-import { requestApi, K9sakApiKeys } from '../data/k9sakApi';
+import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import FagsakSearchIndex from './FagsakSearchIndex';
 
 const mockNavigate = vi.fn();
-const MockForm = reduxForm({ form: 'mock' })(({ children }) => <div>{children}</div>);
 
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');

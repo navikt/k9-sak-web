@@ -31,20 +31,25 @@ export const VedtakSjekkTilbakekreving: React.FC<Props> = ({
     <>
       <Alert className={styles.aksjonspunktAlert} variant="warning" size="medium">
         <Heading spacing size="small" level="3">
-          Har åpen tilbakekrevingssak som kan bli påvirket
+          Saken har en åpen ytelsesbehandling og en tilbakekrevingssak. Ytelsesbehandlingen kan påvirke resultatet av
+          den åpne tilbakekrevingssaken.
         </Heading>
         <BodyLong>Vurder om tilbakekrevingssaken skal behandles først.</BodyLong>
         <VerticalSpacer twentyPx />
-        <RadioGroup legend="Behandle tilbakekrevingssaken først?" onChange={handleChange} disabled={readOnly}>
-          <Radio value="ja">Ja</Radio>
-          <Radio value="nei">Nei</Radio>
+        <RadioGroup
+          legend="Ønsker du å behandle tilbakekrevingssaken først?"
+          onChange={handleChange}
+          disabled={readOnly}
+        >
+          <Radio value="ja">Ja, sett denne behandlingen på vent (må gjøres via behandlingsmenyen)</Radio>
+          <Radio value="nei">Nei, behandle denne behandlingen videre</Radio>
         </RadioGroup>
         <VerticalSpacer twentyPx />
-        <Button variant="primary" onClick={handleSubmit} type="button" disabled={deaktiverBekreftKnapp}>
+        <Button size="small" variant="primary" onClick={handleSubmit} type="button" disabled={deaktiverBekreftKnapp}>
           Bekreft
         </Button>
         {redigerSjekkTilbakekreving && (
-          <Button className="ml-2" variant="secondary" onClick={() => toggleSjekkTilbakekreving()}>
+          <Button size="small" className="ml-2" variant="secondary" onClick={() => toggleSjekkTilbakekreving()}>
             Avbryt
           </Button>
         )}
@@ -53,7 +58,10 @@ export const VedtakSjekkTilbakekreving: React.FC<Props> = ({
         <>
           <VerticalSpacer twentyPx />
           <Alert className={styles.aksjonspunktAlert} variant="error" size="small">
-            <BodyLong>Sett behandlingen på vent og behandle tilbakekrevingssaken først</BodyLong>
+            <BodyLong>
+              Denne behandlingen har hatt aksjonspunkt om tilbakekrevingssaken skal behandles før ytelsessaken. Det er
+              mulig å endre valget.
+            </BodyLong>
           </Alert>
         </>
       )}

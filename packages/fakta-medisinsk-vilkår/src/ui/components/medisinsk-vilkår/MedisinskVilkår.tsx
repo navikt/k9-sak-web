@@ -1,6 +1,7 @@
-import { Tabs } from '@navikt/ds-react';
-import { Box, ChildIcon, Infostripe, Margin, PageContainer, WarningIcon } from '@navikt/ft-plattform-komponenter';
 import { httpUtils } from '@fpsak-frontend/utils';
+import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
+import { Tabs } from '@navikt/ds-react';
+import { Box, ChildIcon, Infostripe, Margin, PageContainer } from '@navikt/ft-plattform-komponenter';
 import classnames from 'classnames';
 import React, { useMemo } from 'react';
 import { useQuery } from 'react-query';
@@ -9,9 +10,9 @@ import { DiagnosekodeResponse } from '../../../types/DiagnosekodeResponse';
 import Dokument from '../../../types/Dokument';
 import { NyeDokumenterResponse } from '../../../types/NyeDokumenterResponse';
 import Step, {
+  StepId,
   langvarigSykdomSteg,
   livetsSluttfaseSteg,
-  StepId,
   tilsynOgPleieSteg,
   toOmsorgspersonerSteg,
 } from '../../../types/Step';
@@ -54,7 +55,10 @@ const TabItem = ({ label, showWarningIcon }: TabItemProps) => {
       {label}
       {showWarningIcon && (
         <div className={styles.medisinskVilkårTabItem__warningIcon}>
-          <WarningIcon />
+          <ExclamationmarkTriangleFillIcon
+            fontSize="1.5rem"
+            style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))', fontSize: '1.5rem' }}
+          />
         </div>
       )}
     </div>

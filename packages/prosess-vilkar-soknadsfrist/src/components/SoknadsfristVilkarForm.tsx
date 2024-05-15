@@ -5,7 +5,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
   AksjonspunktBox,
-  AksjonspunktHelpTextTemp,
+  AksjonspunktHelpText,
   EditedIcon,
   FlexColumn,
   FlexContainer,
@@ -49,7 +49,6 @@ interface SoknadsfristVilkarFormProps {
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   alleDokumenter?: DokumentStatus[];
   dokumenterIAktivPeriode?: DokumentStatus[];
-  saksbehandlere: { [key: string]: string };
 }
 
 interface StateProps {
@@ -78,7 +77,6 @@ export const SoknadsfristVilkarForm = ({
   invalid,
   alleDokumenter,
   dokumenterIAktivPeriode,
-  saksbehandlere,
 }: SoknadsfristVilkarFormProps & StateProps & InjectedFormProps) => {
   const toggleAv = () => {
     reset();
@@ -101,7 +99,6 @@ export const SoknadsfristVilkarForm = ({
                 erVilkarOk={erVilkarOk}
                 dokumentIndex={index}
                 dokument={dokument}
-                saksbehandlere={saksbehandlere}
               />
             );
           })}
@@ -118,9 +115,9 @@ export const SoknadsfristVilkarForm = ({
         >
           {!isReadOnly &&
             (harÅpentAksjonspunkt ? (
-              <AksjonspunktHelpTextTemp isAksjonspunktOpen>
+              <AksjonspunktHelpText isAksjonspunktOpen>
                 {[<FormattedMessage key={1} id="SoknadsfristVilkarForm.AvklarVurdering" />]}
-              </AksjonspunktHelpTextTemp>
+              </AksjonspunktHelpText>
             ) : (
               <Label size="small" as="p">
                 <FormattedMessage id="SoknadsfristVilkarForm.AutomatiskVurdering" />
@@ -139,7 +136,6 @@ export const SoknadsfristVilkarForm = ({
                   erVilkarOk={erVilkarOk}
                   dokumentIndex={index}
                   dokument={dokument}
-                  saksbehandlere={saksbehandlere}
                 />
               );
             })
@@ -186,6 +182,7 @@ export const SoknadsfristVilkarForm = ({
                 </FlexColumn>
                 <FlexColumn>
                   <Button
+                    size="small"
                     variant="secondary"
                     type="button"
                     loading={submitting}

@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
-import { Form } from '@navikt/ft-plattform-komponenter';
 import { RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
+import { Form } from '@navikt/ft-plattform-komponenter';
+import React, { useContext } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { RettVedDød } from '../../../types/RettVedDød';
+import RettVedDødUtfallType from '../../../types/RettVedDødType';
 import required from '../../../validators/required';
 import ContainerContext from '../../context/ContainerContext';
-import RettVedDødUtfallType from '../../../types/RettVedDødType';
-import { RettVedDød } from '../../../types/RettVedDød';
 
 export enum FieldName {
   RETT_VED_DØD_TYPE = 'rettVedDødType',
@@ -52,6 +52,7 @@ const RettVedDødForm = ({ rettVedDød, onCancelClick }: RettVedDødFormProps): 
           submitButtonDisabled={isSubmitting}
           shouldShowSubmitButton={!readOnly}
           onAvbryt={onCancelClick}
+          smallButtons
         >
           <div className="hide-legend">
             <RadioGroupPanelRHF

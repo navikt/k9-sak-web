@@ -1,12 +1,3 @@
-import moment from 'moment';
-import AlertStripe from 'nav-frontend-alertstriper';
-import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { InjectedFormProps, change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
-import { createSelector } from 'reselect';
-
 import {
   behandlingForm,
   behandlingFormValueSelector,
@@ -19,12 +10,18 @@ import {
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
-import { AksjonspunktHelpTextTemp, FadingPanel, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, FadingPanel, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
-
-import { Heading } from '@navikt/ds-react';
+import { Alert, Heading } from '@navikt/ds-react';
+import moment from 'moment';
+import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { InjectedFormProps, change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
+import { createSelector } from 'reselect';
 import DataForPeriode from '../types/dataForPeriodeTsType';
 import DetaljerteFeilutbetalingsperioder, {
   DetaljertFeilutbetalingPeriode,
@@ -257,9 +254,9 @@ export class TilbakekrevingFormImpl extends Component<OwnProps & DispatchProps &
               <FormattedMessage id="Behandlingspunkt.Tilbakekreving" />
             </Heading>
             <VerticalSpacer twentyPx />
-            <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
+            <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
               {[<FormattedMessage key="AksjonspunktHjelpetekst" id="TilbakekrevingForm.AksjonspunktHjelpetekst" />]}
-            </AksjonspunktHelpTextTemp>
+            </AksjonspunktHelpText>
             <VerticalSpacer twentyPx />
             {vilkarsVurdertePerioder && (
               <>
@@ -297,9 +294,9 @@ export class TilbakekrevingFormImpl extends Component<OwnProps & DispatchProps &
             <VerticalSpacer twentyPx />
             {formProps.error && (
               <>
-                <AlertStripe type="feil">
+                <Alert size="small" variant="error">
                   <FormattedMessage id={formProps.error} />
-                </AlertStripe>
+                </Alert>
                 <VerticalSpacer twentyPx />
               </>
             )}

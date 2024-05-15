@@ -1,8 +1,7 @@
 import { RadioGroupField, RadioOption, TextAreaField, behandlingForm } from '@fpsak-frontend/form';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
-import { Button, Detail } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { Button, Detail, HGrid } from '@navikt/ds-react';
 // eslint-disable-next-line import/no-duplicates
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -62,8 +61,8 @@ export class ForeldelsePeriodeFormImpl extends Component {
           beregnBelop={beregnBelop}
         />
         <VerticalSpacer twentyPx />
-        <Row>
-          <Column md="6">
+        <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+          <div>
             <TextAreaField
               name="begrunnelse"
               label={{ id: 'ForeldelsePeriodeForm.Vurdering' }}
@@ -72,8 +71,8 @@ export class ForeldelsePeriodeFormImpl extends Component {
               readOnly={readOnly}
               id="foreldelseVurdering"
             />
-          </Column>
-          <Column md="6">
+          </div>
+          <div>
             <Detail>
               <FormattedMessage id="ForeldelsePeriodeForm.RadioGroup.Foreldet" />
             </Detail>
@@ -89,8 +88,8 @@ export class ForeldelsePeriodeFormImpl extends Component {
                 <RadioOption key={type.kode} label={type.navn} value={type.kode} />
               ))}
             </RadioGroupField>
-          </Column>
-        </Row>
+          </div>
+        </HGrid>
         <VerticalSpacer twentyPx />
         <FlexRow>
           <FlexColumn>

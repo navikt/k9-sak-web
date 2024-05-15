@@ -1,20 +1,20 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
-import moment from 'moment';
-import { InjectedFormProps } from 'redux-form';
+import { behandlingForm, getBehandlingFormPrefix } from '@fpsak-frontend/form';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { guid } from '@fpsak-frontend/utils';
 import {
   Aksjonspunkt,
-  Kodeverk,
-  BeregningsresultatUtbetalt,
   ArbeidsgiverOpplysningerPerId,
+  BeregningsresultatUtbetalt,
+  Kodeverk,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { getBehandlingFormPrefix, behandlingForm } from '@fpsak-frontend/form';
-import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { guid } from '@fpsak-frontend/utils';
+import moment from 'moment';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
 import PeriodeTabell from './PeriodeTabell';
 
 interface OwnProps {
@@ -48,14 +48,14 @@ export const TilkjentYtelseForm = ({
     {aksjonspunkter.length > 0 && (
       <>
         <VerticalSpacer twentyPx />
-        <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
+        <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
           {[
             <FormattedMessage
               id="TilkjentYtelse.AksjonspunktHelpText"
               key={aksjonspunktCodes.MANUELL_TILKJENT_YTELSE}
             />,
           ]}
-        </AksjonspunktHelpTextTemp>
+        </AksjonspunktHelpText>
         <VerticalSpacer twentyPx />
       </>
     )}

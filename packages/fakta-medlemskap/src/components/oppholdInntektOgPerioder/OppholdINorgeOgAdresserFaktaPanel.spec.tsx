@@ -2,7 +2,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
@@ -113,7 +112,6 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
   it('skal vise info om opphold', () => {
     renderWithIntlAndReduxForm(
       <OppholdINorgeOgAdresserFaktaPanel.WrappedComponent
-        intl={intlMock}
         readOnly={false}
         hasBosattAksjonspunkt={false}
         isBosattAksjonspunktClosed={false}
@@ -131,7 +129,6 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
   it('skal rendre form som viser bosatt informasjon', () => {
     renderWithIntlAndReduxForm(
       <OppholdINorgeOgAdresserFaktaPanel.WrappedComponent
-        intl={intlMock}
         readOnly={false}
         hasBosattAksjonspunkt={false}
         isBosattAksjonspunktClosed={false}
@@ -175,7 +172,6 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
 
     renderWithIntlAndReduxForm(
       <OppholdINorgeOgAdresserFaktaPanel.WrappedComponent
-        intl={intlMock}
         readOnly={false}
         hasBosattAksjonspunkt
         isBosattAksjonspunktClosed={false}

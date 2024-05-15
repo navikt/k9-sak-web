@@ -9,13 +9,11 @@
     "@fpsak-frontend/utils": "1.0.0",
     "moment": "2.30.1",
     "nav-frontend-core": "6.0.1",
-    "nav-frontend-paneler": "3.0.2",
-    "nav-frontend-paneler-style": "2.0.2",
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
     "prop-types": "15.8.1",
-    "react": "18.2.0",
-    "react-intl": "6.6.2"
+    "react": "18.3.1",
+    "react-intl": "6.6.5"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0"

@@ -14,8 +14,7 @@ import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsa
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, BeregningsresultatFp, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
-import { Label } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { HGrid, Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -86,33 +85,29 @@ export const Tilbaketrekkpanel = ({
     </div>
     <VerticalSpacer twentyPx />
     <form onSubmit={formProps.handleSubmit}>
-      <Row>
-        <Column xs="9">
-          <RadioGroupField
-            name={radioFieldName}
-            validate={[required]}
-            direction="horizontal"
-            readOnly={readOnly}
-            isEdited={!isAksjonspunktOpen(vurderTilbaketrekkAP.status.kode)}
-          >
-            <RadioOption label={<FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Utfør" />} value={false} />
-            <RadioOption label={<FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Hindre" />} value />
-          </RadioGroupField>
-        </Column>
-      </Row>
-      <Row>
-        <Column xs="6">
-          <TextAreaField
-            name={begrunnelseFieldName}
-            label={<FormattedMessage id="Beregningsgrunnlag.Forms.Vurdering" />}
-            validate={[required, maxLength1500, minLength3, hasValidText]}
-            maxLength={1500}
-            readOnly={readOnly}
-          />
-        </Column>
-      </Row>
-      <Row>
-        <Column xs="1">
+      <HGrid gap="1" columns={{ xs: '9fr 3fr' }}>
+        <RadioGroupField
+          name={radioFieldName}
+          validate={[required]}
+          direction="horizontal"
+          readOnly={readOnly}
+          isEdited={!isAksjonspunktOpen(vurderTilbaketrekkAP.status.kode)}
+        >
+          <RadioOption label={<FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Utfør" />} value={false} />
+          <RadioOption label={<FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Hindre" />} value />
+        </RadioGroupField>
+      </HGrid>
+      <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+        <TextAreaField
+          name={begrunnelseFieldName}
+          label={<FormattedMessage id="Beregningsgrunnlag.Forms.Vurdering" />}
+          validate={[required, maxLength1500, minLength3, hasValidText]}
+          maxLength={1500}
+          readOnly={readOnly}
+        />
+      </HGrid>
+      <HGrid gap="1" columns={{ xs: '2fr 10fr' }}>
+        <div>
           <VerticalSpacer eightPx />
           <ProsessStegSubmitButton
             formName={formProps.form}
@@ -124,8 +119,8 @@ export const Tilbaketrekkpanel = ({
             isBehandlingFormDirty={isBehandlingFormDirty}
             hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
           />
-        </Column>
-      </Row>
+        </div>
+      </HGrid>
     </form>
   </div>
 );

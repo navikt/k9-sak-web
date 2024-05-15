@@ -18,7 +18,7 @@ import {
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import {
-  AksjonspunktHelpTextTemp,
+  AksjonspunktHelpText,
   FadingPanel,
   FaktaGruppe,
   FlexColumn,
@@ -205,9 +205,7 @@ export class ForeldelseForm extends Component {
             )}
             {foreldelsesresultatActivity && apCodes[0] && (
               <>
-                <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
-                  {getApTekst(apCodes[0])}
-                </AksjonspunktHelpTextTemp>
+                <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>{getApTekst(apCodes[0])}</AksjonspunktHelpText>
                 <VerticalSpacer twentyPx />
                 <TilbakekrevingTimelinePanel
                   perioder={perioderFormatertForTidslinje}

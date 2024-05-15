@@ -1,7 +1,7 @@
-import { Period } from '@fpsak-frontend/utils';
-import { Box, Margin, DetailView, LabelledContent, Form } from '@navikt/ft-plattform-komponenter';
 import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Period } from '@fpsak-frontend/utils';
+import { Alert } from '@navikt/ds-react';
+import { Box, DetailView, Form, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Beskrivelse from '../../../../types/Beskrivelse';
@@ -125,6 +125,7 @@ const VurderingAvBeredskapsperioderForm = ({
           cancelButtonDisabled={isSubmitting}
           submitButtonDisabled={isSubmitting}
           shouldShowSubmitButton={!readOnly}
+          smallButtons
         >
           <Box marginTop={Margin.large}>
             <BeskrivelserForPerioden periodebeskrivelser={beskrivelser} />
@@ -197,7 +198,7 @@ const VurderingAvBeredskapsperioderForm = ({
           )}
           {perioderUtenBehovForBeredskap.length > 0 && (
             <Box marginTop={Margin.xLarge}>
-              <AlertStripeInfo>
+              <Alert size="small" variant="info">
                 <LabelledContent
                   label="Resterende perioder har søkeren ikke behov for beredskap:"
                   content={perioderUtenBehovForBeredskap.map(periode => (
@@ -206,7 +207,7 @@ const VurderingAvBeredskapsperioderForm = ({
                     </p>
                   ))}
                 />
-              </AlertStripeInfo>
+              </Alert>
             </Box>
           )}
         </Form>

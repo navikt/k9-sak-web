@@ -8,7 +8,7 @@ import SideMenuWrapper from './SideMenuWrapper';
 describe('<SideMenuWrapper>', () => {
   it('skal rendre komponent med sidemeny med ett menyinnslag med aktivt aksjonspunkt', () => {
     const velgPanelCallback = vi.fn();
-    renderWithIntl(
+    const { container } = renderWithIntl(
       <SideMenuWrapper.WrappedComponent
         intl={intlMock}
         paneler={[
@@ -26,7 +26,7 @@ describe('<SideMenuWrapper>', () => {
 
     expect(screen.getByRole('button', { name: /Omsorg/i })).toBeInTheDocument();
     expect(screen.getByText('Saksopplysninger')).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: 'Aksjonspunkt' })).toBeInTheDocument();
+    expect(container.getElementsByTagName('svg')).toHaveLength(1);
   });
 
   it('skal rendre komponent med sidemeny med ett menyinnslag med inaktivt aksjonspunkt', () => {

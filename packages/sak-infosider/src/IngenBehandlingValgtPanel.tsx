@@ -1,7 +1,6 @@
-import { BodyShort } from '@navikt/ds-react';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Alert, BodyShort } from '@navikt/ds-react';
 import React from 'react';
-import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
+import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 
 import styles from './ingenBehandlingValgtPanel.module.css';
@@ -33,11 +32,11 @@ interface OwnProps {
 const IngenBehandlingValgtPanel = ({ numBehandlinger }: OwnProps) => (
   <RawIntlProvider value={intl}>
     <div className={styles.noSelectedBehandlingPanel} data-testid="IngenBehandlingValgtPanel">
-      <AlertStripeInfo>
+      <Alert size="small" variant="info">
         <BodyShort size="small">
           <FormattedMessage id={getMessage(numBehandlinger)} />
         </BodyShort>
-      </AlertStripeInfo>
+      </Alert>
     </div>
   </RawIntlProvider>
 );

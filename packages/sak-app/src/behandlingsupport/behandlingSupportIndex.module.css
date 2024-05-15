@@ -1,32 +1,27 @@
 .container {
-  margin-top: 1.875rem;
+  margin-top: 1.4375rem;
   min-width: 100%;
   padding-bottom: 12px;
   padding-left: 24px;
   padding-right: 24px;
-  padding-top: 12px;
   width: 100%;
 }
 
 .containerHistorikk {
   margin-top: 10px;
   min-width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding-bottom: 12px;
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-top: 12px;
+  overflow: hidden auto;
+  padding: 12px 24px;
   width: 100%;
 }
 
-@media screen and (max-width: 1349px) {
+@media screen and (width <= 1349px) {
   .containerHistorikk {
     max-height: 1130px;
   }
 }
 
-@media screen and (min-width: 1350px) {
+@media screen and (width >= 1350px) {
   .containerHistorikk {
     height: 1200px;
   }
@@ -44,4 +39,35 @@
 
 .meny {
   width: 100%;
+}
+
+.tablistWrapper {
+  margin: 0 1rem;
+}
+
+.tablist[role='tablist'] {
+  width: 100%;
+  justify-content: space-around;
+}
+
+.tabButton {
+  flex: 1 1 auto;
+}
+
+.pencilSvgContainer {
+  position: relative;
+}
+
+.ulesteNotater {
+  position: absolute;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 9999px;
+  background-color: #c30000;
+  left: calc(50% + 7px);
+  top: -0.4375rem;
+  color: white;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
 }

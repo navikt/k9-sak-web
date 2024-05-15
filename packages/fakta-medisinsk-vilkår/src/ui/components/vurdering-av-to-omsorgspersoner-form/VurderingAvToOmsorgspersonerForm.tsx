@@ -1,11 +1,13 @@
-import { Alert, Link } from '@navikt/ds-react';
-import { Box, ContentWithTooltip, Form, Margin, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
 import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
+import { Alert, Link } from '@navikt/ds-react';
+import { Box, ContentWithTooltip, Form, Margin, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
 import { Vurderingsversjon } from '../../../types/Vurdering';
+import Vurderingsresultat from '../../../types/Vurderingsresultat';
+import { finnBenyttedeDokumenter } from '../../../util/dokumentUtils';
 import {
   finnHullIPerioder,
   finnMaksavgrensningerForPerioder,
@@ -18,8 +20,6 @@ import DeleteButton from '../delete-button/DeleteButton';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
 import DokumentLink from '../dokument-link/DokumentLink';
 import styles from '../vurdering-av-form/vurderingForm.module.css';
-import { finnBenyttedeDokumenter } from '../../../util/dokumentUtils';
-import Vurderingsresultat from '../../../types/Vurderingsresultat';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyType = any;
@@ -128,6 +128,7 @@ const VurderingAvToOmsorgspersonerForm = ({
           submitButtonDisabled={isSubmitting}
           cancelButtonDisabled={isSubmitting}
           shouldShowSubmitButton={!readOnly}
+          smallButtons
         >
           {dokumenter?.length > 0 && (
             <Box marginTop={Margin.large}>

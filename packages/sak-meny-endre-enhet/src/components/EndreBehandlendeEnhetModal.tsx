@@ -2,8 +2,7 @@ import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
-import { BodyShort, Button, Modal } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -58,26 +57,26 @@ export const EndreBehandlendeEnhetModal = ({
     >
       <form onSubmit={handleSubmit}>
         <Modal.Header closeButton={false}>
-          <Row>
-            <Column xs="1">
+          <HGrid gap="1" columns={{ xs: '1fr 11fr' }}>
+            <div className="relative">
               <Image
                 className={styles.image}
                 alt={intl.formatMessage({ id: 'EndreBehandlendeEnhetModal.Endre' })}
                 src={innvilgetImageUrl}
               />
               <div className={styles.divider} />
-            </Column>
-            <Column xs="11">
+            </div>
+            <div>
               <BodyShort size="small" className={styles.infotekstBeskrivelse}>
                 <FormattedMessage id="EndreBehandlendeEnhetModal.EndreEnhet" />
               </BodyShort>
-            </Column>
-          </Row>
+            </div>
+          </HGrid>
         </Modal.Header>
         <Modal.Body>
-          <Row>
-            <Column xs="1" />
-            <Column xs="5">
+          <HGrid gap="1" columns={{ xs: '1fr 5fr 6fr' }}>
+            <div />
+            <div>
               <SelectField
                 name="nyEnhet"
                 label={intl.formatMessage({ id: 'EndreBehandlendeEnhetModal.NyEnhetField' })}
@@ -86,11 +85,11 @@ export const EndreBehandlendeEnhetModal = ({
                 selectValues={selectOptions()}
                 bredde="xl"
               />
-            </Column>
-          </Row>
-          <Row>
-            <Column xs="1" />
-            <Column xs="8">
+            </div>
+          </HGrid>
+          <HGrid gap="1" columns={{ xs: '1fr 8fr 3fr' }}>
+            <div />
+            <div>
               <VerticalSpacer eightPx />
               <TextAreaField
                 name="begrunnelse"
@@ -98,11 +97,11 @@ export const EndreBehandlendeEnhetModal = ({
                 validate={[required, maxLength400, hasValidText]}
                 maxLength={400}
               />
-            </Column>
-          </Row>
-          <Row>
-            <Column xs="1" />
-            <Column xs="8">
+            </div>
+          </HGrid>
+          <HGrid gap="1" columns={{ xs: '1fr 8fr 3fr' }}>
+            <div />
+            <div>
               <VerticalSpacer sixteenPx />
               <div className={styles.floatButtons}>
                 <Button variant="primary" size="small" className={styles.button} disabled={!(nyEnhet && begrunnelse)}>
@@ -112,8 +111,8 @@ export const EndreBehandlendeEnhetModal = ({
                   {intl.formatMessage({ id: 'EndreBehandlendeEnhetModal.Avbryt' })}
                 </Button>
               </div>
-            </Column>
-          </Row>
+            </div>
+          </HGrid>
         </Modal.Body>
       </form>
     </Modal>

@@ -1,15 +1,12 @@
-import moment from 'moment';
-import React, { ReactNode, useEffect, useMemo, useRef } from 'react';
-
 import { FlexRow, Image } from '@fpsak-frontend/shared-components';
 import { Timeline } from '@fpsak-frontend/tidslinje';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { Column, Row } from 'nav-frontend-grid';
-
+import { HGrid } from '@navikt/ds-react';
+import moment from 'moment';
+import React, { ReactNode, useEffect, useMemo, useRef } from 'react';
+import styles from './tidslinje.module.css';
 import Periode from './types/Periode';
 import TidslinjeRad from './types/TidslinjeRad';
-
-import styles from './tidslinje.module.css';
 
 const momentDate = dateString => moment(dateString, ISO_DATE_FORMAT);
 
@@ -135,16 +132,15 @@ const Tidslinje = ({
 
   return (
     <div className={`${styles.timelineContainer} ${withBorder ? styles['timelineContainer--border'] : ''}`}>
-      <Row>
-        <Column xs="1">
-          <div className={styles.timelineIkonContainer}>
-            {rader.map(({ ikon, id }) => (
-              <Image key={id} src={ikon.src} alt={ikon.imageText} tooltip={ikon.title} />
-            ))}
-          </div>
-        </Column>
-        <Column xs="11">{timeline}</Column>
-      </Row>
+      <HGrid gap="1" columns={{ xs: '1fr 11fr' }}>
+        <div className={styles.timelineIkonContainer}>
+          {rader.map(({ ikon, id }) => (
+            <Image key={id} src={ikon.src} alt={ikon.imageText} tooltip={ikon.title} />
+          ))}
+        </div>
+
+        <div>{timeline}</div>
+      </HGrid>
     </div>
   );
 };

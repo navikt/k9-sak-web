@@ -1,6 +1,6 @@
-import { Box, Margin, TitleWithUnderline, GreenCheckIcon, WarningIcon } from '@navikt/ft-plattform-komponenter';
+import { Alert } from '@navikt/ds-react';
+import { Box, Margin, TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
-import IconWithText from '../icon-with-text/IconWithText';
 
 interface SignertSeksjonProps {
   harGyldigSignatur: boolean;
@@ -11,16 +11,14 @@ const SignertSeksjon = ({ harGyldigSignatur }: SignertSeksjonProps): JSX.Element
     <TitleWithUnderline>Godkjent signatur</TitleWithUnderline>
     <Box marginTop={Margin.medium}>
       {harGyldigSignatur && (
-        <IconWithText
-          iconRenderer={() => <GreenCheckIcon />}
-          text="Det finnes dokumentasjon som er signert av sykehuslege eller lege fra spesialisthelsetjenesten."
-        />
+        <Alert inline variant="success">
+          Det finnes dokumentasjon som er signert av sykehuslege eller lege fra spesialisthelsetjenesten.
+        </Alert>
       )}
       {!harGyldigSignatur && (
-        <IconWithText
-          iconRenderer={() => <WarningIcon />}
-          text="Ingen legeerklæring fra sykehuslege/spesialisthelsetjenesten registrert."
-        />
+        <Alert inline variant="warning">
+          Ingen legeerklæring fra sykehuslege/spesialisthelsetjenesten registrert.
+        </Alert>
       )}
     </Box>
   </div>

@@ -1,11 +1,9 @@
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { Table, TableColumn } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort } from '@navikt/ds-react';
-import AlertStripe from 'nav-frontend-alertstriper';
+import { Alert, BodyShort, Table } from '@navikt/ds-react';
 import React from 'react';
-import { WrappedComponentProps } from 'react-intl';
+import { WrappedComponentProps, useIntl } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import { createVisningsnavnForAndel, getInntektskategori } from '../TilkjentYteleseUtils';
 
@@ -35,39 +33,59 @@ const headerTextCodes = [
 ];
 
 const Andeler = ({ fields, meta, alleKodeverk, arbeidsgivere }: Partial<OwnProps> & WrappedComponentProps) => {
+  const intl = useIntl();
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
   return (
     <div>
-      {meta.error && <AlertStripe type="feil">{meta.error}</AlertStripe>}
-      {meta.warning && <AlertStripe type="info">{meta.warning}</AlertStripe>}
+      {meta.error && (
+        <Alert size="small" variant="error">
+          {meta.error}
+        </Alert>
+      )}
+      {meta.warning && (
+        <Alert size="small" variant="info">
+          {meta.warning}
+        </Alert>
+      )}
 
-      <Table headerTextCodes={headerTextCodes}>
-        {fields.map((fieldId: string, index: number, field: FieldArrayFieldsProps<any>) => {
-          const andel = field.get(index);
-          const inntektskategori = getInntektskategori(andel.inntektskategori, getKodeverknavn);
-          const arbeidsgiver = createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgivere);
+      <Table>
+        <Table.Header>
+          <Table.Row>
+            {headerTextCodes.map(textCode => (
+              <Table.HeaderCell scope="col" key={textCode}>
+                {intl.formatMessage({ id: textCode })}
+              </Table.HeaderCell>
+            ))}
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {fields.map((fieldId: string, index: number, field: FieldArrayFieldsProps<any>) => {
+            const andel = field.get(index);
+            const inntektskategori = getInntektskategori(andel.inntektskategori, getKodeverknavn);
+            const arbeidsgiver = createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgivere);
 
-          return (
-            <tr>
-              <TableColumn>
-                <BodyShort size="small">{inntektskategori}</BodyShort>
-              </TableColumn>
-              <TableColumn>
-                <BodyShort size="small">{arbeidsgiver}</BodyShort>
-              </TableColumn>
-              <TableColumn>
-                <BodyShort size="small">{andel.tilSoker}</BodyShort>
-              </TableColumn>
-              <TableColumn>
-                <BodyShort size="small">{andel.refusjon}</BodyShort>
-              </TableColumn>
-              <TableColumn>
-                <BodyShort size="small">{andel.utbetalingsgrad}</BodyShort>
-              </TableColumn>
-            </tr>
-          );
-        })}
+            return (
+              <Table.Row key={fieldId}>
+                <Table.DataCell>
+                  <BodyShort size="small">{inntektskategori}</BodyShort>
+                </Table.DataCell>
+                <Table.DataCell>
+                  <BodyShort size="small">{arbeidsgiver}</BodyShort>
+                </Table.DataCell>
+                <Table.DataCell>
+                  <BodyShort size="small">{andel.tilSoker}</BodyShort>
+                </Table.DataCell>
+                <Table.DataCell>
+                  <BodyShort size="small">{andel.refusjon}</BodyShort>
+                </Table.DataCell>
+                <Table.DataCell>
+                  <BodyShort size="small">{andel.utbetalingsgrad}</BodyShort>
+                </Table.DataCell>
+              </Table.Row>
+            );
+          })}
+        </Table.Body>
       </Table>
     </div>
   );

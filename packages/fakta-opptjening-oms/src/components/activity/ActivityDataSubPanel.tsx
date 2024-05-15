@@ -11,9 +11,8 @@ import {
 } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
-import { BodyShort, Detail } from '@navikt/ds-react';
+import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './activityDataSubPanel.module.css';
@@ -93,8 +92,8 @@ const ActivityDataSubPanel = ({
 }: ActivityDataSubPanelProps) => (
   <>
     {isOfType(selectedActivityType, ...[OAType.ARBEID, OAType.NÆRING, ...ytelseTypes]) && (
-      <Row>
-        <Column xs="7">
+      <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+        <div>
           {!isManuallyAdded && (
             <>
               <Detail>
@@ -123,30 +122,26 @@ const ActivityDataSubPanel = ({
               htmlSize={40}
             />
           )}
-        </Column>
+        </div>
         {isOfType(selectedActivityType, OAType.ARBEID) && (
-          <Column xs="5">
-            <DecimalField
-              name="stillingsandel"
-              label={{ id: 'ActivityPanel.Stillingsandel' }}
-              validate={[required, minValue0, maxValue200, hasValidDecimal]}
-              readOnly={readOnly || !isManuallyAdded}
-              htmlSize={14}
-              format={value => (readOnly || !isManuallyAdded ? `${value} %` : value)}
-              // @ts-ignore TODO Fiks denne!
-              normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
-            />
-          </Column>
+          <DecimalField
+            name="stillingsandel"
+            label={{ id: 'ActivityPanel.Stillingsandel' }}
+            validate={[required, minValue0, maxValue200, hasValidDecimal]}
+            readOnly={readOnly || !isManuallyAdded}
+            htmlSize={14}
+            format={value => (readOnly || !isManuallyAdded ? `${value} %` : value)}
+            // @ts-ignore TODO Fiks denne!
+            normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+          />
         )}
-      </Row>
+      </HGrid>
     )}
     <VerticalSpacer eightPx />
     {isOfType(selectedActivityType, OAType.NÆRING) && (
-      <Row>
-        <Column xs="8">
-          <DatepickerField name="naringRegistreringsdato" label={{ id: 'ActivityPanel.Registreringsdato' }} readOnly />
-        </Column>
-      </Row>
+      <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+        <DatepickerField name="naringRegistreringsdato" label={{ id: 'ActivityPanel.Registreringsdato' }} readOnly />
+      </HGrid>
     )}
   </>
 );

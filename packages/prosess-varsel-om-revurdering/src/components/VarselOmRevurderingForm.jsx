@@ -8,7 +8,7 @@ import {
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   ISO_DATE_FORMAT,
   getLanguageCodeFromSprakkode,
@@ -113,9 +113,9 @@ export class VarselOmRevurderingFormImpl extends React.Component {
         <VerticalSpacer eightPx />
         {!readOnly && isAksjonspunktOpen(aksjonspunktStatus) && (
           <div>
-            <AksjonspunktHelpTextTemp isAksjonspunktOpen>
+            <AksjonspunktHelpText isAksjonspunktOpen>
               {[<FormattedMessage key="1" id="VarselOmRevurderingForm.VarselOmRevurderingVurder" />]}
-            </AksjonspunktHelpTextTemp>
+            </AksjonspunktHelpText>
             <VerticalSpacer twentyPx />
             <RadioGroupField name="sendVarsel" validate={[required]}>
               <RadioOption label={{ id: 'VarselOmRevurderingForm.SendVarsel' }} value />
@@ -124,7 +124,7 @@ export class VarselOmRevurderingFormImpl extends React.Component {
             {sendVarsel && (
               <ArrowBox>
                 <TextAreaField
-                  badges={[{ textId: languageCode, type: 'fokus', title: 'Malform.Beskrivelse' }]}
+                  badges={[{ textId: languageCode, type: 'warning', title: 'Malform.Beskrivelse' }]}
                   name="fritekst"
                   label={intl.formatMessage({ id: 'VarselOmRevurderingForm.FritekstIBrev' })}
                   validate={[required, minLength3, hasValidText]}

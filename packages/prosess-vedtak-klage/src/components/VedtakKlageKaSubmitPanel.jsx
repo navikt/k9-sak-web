@@ -1,6 +1,5 @@
-import { Button } from '@navikt/ds-react';
+import { Button, HGrid } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Column, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -61,8 +60,8 @@ export const VedtakKlageKaSubmitPanelImpl = ({
   const previewBrev = getPreviewCallback(formProps, begrunnelse, previewVedtakCallback, klageResultat);
 
   return (
-    <Row>
-      <Column xs="8">
+    <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+      <div>
         {!readOnly && (
           <Button
             variant="primary"
@@ -95,8 +94,8 @@ export const VedtakKlageKaSubmitPanelImpl = ({
         >
           <FormattedMessage id="VedtakKlageForm.ForhandvisBrev" />
         </a>
-      </Column>
-    </Row>
+      </div>
+    </HGrid>
   );
 };
 

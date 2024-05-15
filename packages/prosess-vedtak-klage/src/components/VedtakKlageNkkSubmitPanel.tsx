@@ -1,8 +1,7 @@
-import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 
-import { Button } from '@navikt/ds-react';
+import { Button, HGrid } from '@navikt/ds-react';
 import styles from './vedtakKlageSubmitPanel.module.css';
 
 interface Props {
@@ -34,8 +33,8 @@ const VedtakKlageNkkSubmitPanel = ({
   readOnly,
   behandlingPaaVent,
 }: Props & WrappedComponentProps) => (
-  <Row>
-    <Column xs="8">
+  <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+    <div>
       {!readOnly && (
         <Button
           variant="primary"
@@ -47,8 +46,8 @@ const VedtakKlageNkkSubmitPanel = ({
           {intl.formatMessage({ id: 'VedtakKlageForm.FattVedtak' })}
         </Button>
       )}
-    </Column>
-  </Row>
+    </div>
+  </HGrid>
 );
 
 export default injectIntl(VedtakKlageNkkSubmitPanel);

@@ -18,9 +18,8 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort, Button, Detail, Label } from '@navikt/ds-react';
+import { BodyShort, Button, Detail, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
 import React, { Component } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -272,8 +271,8 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
         <VerticalSpacer twentyPx />
         {!readOnly && !data.erForeldet && vurdertePerioder.length > 0 && (
           <>
-            <Row>
-              <Column md="10">
+            <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
+              <div>
                 <Label size="small" as="p">
                   <FormattedMessage id="TilbakekrevingPeriodeForm.KopierVilkårsvurdering" />
                 </Label>
@@ -294,21 +293,17 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                   bredde="m"
                   label=""
                 />
-              </Column>
-            </Row>
+              </div>
+            </HGrid>
             <VerticalSpacer twentyPx />
           </>
         )}
-        <Row>
-          <Column md={data.erForeldet ? '12' : '6'}>
-            <Row>
-              {data.erForeldet && (
-                <Column md="12">
-                  <ForeldetFormPanel />
-                </Column>
-              )}
-              {!data.erForeldet && (
-                <Column md="10">
+        <HGrid gap="1" columns={{ xs: data.erForeldet ? '12fr' : '6fr 6fr' }}>
+          <div>
+            {data.erForeldet && <ForeldetFormPanel />}
+            {!data.erForeldet && (
+              <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
+                <div>
                   <Label size="small" as="p">
                     <FormattedMessage id="TilbakekrevingPeriodeForm.VilkarForTilbakekreving" />
                   </Label>
@@ -339,13 +334,13 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                       <RadioOption key={vrt.kode} label={vrt.navn} value={vrt.kode} />
                     ))}
                   </RadioGroupField>
-                </Column>
-              )}
-            </Row>
-          </Column>
-          <Column md="6">
-            <Row>
-              <Column md="10">
+                </div>
+              </HGrid>
+            )}
+          </div>
+          <div>
+            <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
+              <div>
                 {valgtVilkarResultatType && (
                   <>
                     <Label size="small" as="p">
@@ -396,10 +391,10 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                     </FormSection>
                   </>
                 )}
-              </Column>
-            </Row>
-          </Column>
-        </Row>
+              </div>
+            </HGrid>
+          </div>
+        </HGrid>
         <VerticalSpacer twentyPx />
         <FlexRow>
           <FlexColumn>

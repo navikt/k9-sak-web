@@ -3,9 +3,8 @@ import { FloatRight, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
 import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
-import { BodyShort, Label, Tabs, Tag } from '@navikt/ds-react';
+import { BodyShort, HGrid, Label, Tabs, Tag } from '@navikt/ds-react';
 import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
 import React, { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -75,13 +74,13 @@ const TilkjentYtelseTimeLineData = ({
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
     <TimeLineDataContainer>
-      <Row>
-        <Column xs="10">
+      <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
+        <div>
           <Label size="small" as="p">
             <FormattedMessage id="TilkjentYtelse.PeriodeData.Detaljer" />
           </Label>
-        </Column>
-        <Column xs="2">
+        </div>
+        <div>
           <FloatRight>
             <TimeLineButton
               text={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
@@ -94,8 +93,8 @@ const TilkjentYtelseTimeLineData = ({
               callback={callbackForward}
             />
           </FloatRight>
-        </Column>
-      </Row>
+        </div>
+      </HGrid>
       <VerticalSpacer eightPx />
 
       <div className={styles.detailsPeriode}>
@@ -151,9 +150,9 @@ const TilkjentYtelseTimeLineData = ({
         </div>
         {(andeler || []).length > 1 &&
           andeler.map((andel, index) => (
-            <div key={`index${index + 1}`} className="mt-2">
+            <div key={`index${index + 1}`} className="flex flex-col gap-3">
               {!!andel.refusjon && (
-                <div className="flex gap-2">
+                <div className="flex justify-between items-start">
                   <BodyShort size="small" className="inline-block">
                     <FormattedMessage
                       id="Timeline.tooltip.dagsatsPerAndel"
@@ -170,7 +169,7 @@ const TilkjentYtelseTimeLineData = ({
                 </div>
               )}
               {!!andel.tilSoker && (
-                <div className="flex gap-2">
+                <div className="flex justify-between items-start">
                   <BodyShort size="small" className="inline-block">
                     <FormattedMessage
                       id="Timeline.tooltip.dagsatsPerAndel"

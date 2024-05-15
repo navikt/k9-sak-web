@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Delete } from '@navikt/ds-icons';
-import { Button, Heading, Panel, Table, TextField } from '@navikt/ds-react';
+import { Button, Box as DSBox, Heading, Table, TextField } from '@navikt/ds-react';
 import validator from '@navikt/fnrvalidator';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import React, { useContext, useEffect } from 'react';
@@ -32,7 +32,7 @@ const Fosterbarn = ({ setFosterbarn }: FosterbarnProps) => {
 
   return (
     <Box marginBottom={Margin.large}>
-      <Panel border>
+      <DSBox background="surface-default" padding="4" borderWidth="1" borderColor="border-subtle" borderRadius="medium">
         <Box marginBottom={Margin.medium}>
           <Heading level="2" size="medium">
             Fosterbarn
@@ -81,6 +81,7 @@ const Fosterbarn = ({ setFosterbarn }: FosterbarnProps) => {
                     </Table.DataCell>
                     <Table.DataCell>
                       <Button
+                        size="small"
                         variant="tertiary"
                         onClick={() => remove(index)}
                         disabled={readOnly}
@@ -98,7 +99,7 @@ const Fosterbarn = ({ setFosterbarn }: FosterbarnProps) => {
         <Button variant="secondary" onClick={() => append({ fødselsnummer: '' })} size="small">
           Legg til fosterbarn
         </Button>
-      </Panel>
+      </DSBox>
     </Box>
   );
 };

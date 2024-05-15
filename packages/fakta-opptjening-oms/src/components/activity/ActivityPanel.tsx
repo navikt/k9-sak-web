@@ -28,9 +28,8 @@ import {
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import type { OpptjeningAktivitetType } from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
-import { BodyShort, Button, Label } from '@navikt/ds-react';
+import { BodyShort, Button, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
 import React, { KeyboardEvent, MouseEvent } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -157,13 +156,11 @@ export const ActivityPanel = ({
     className={styles.panel}
     merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]}
   >
-    <Row>
-      <Column xs="10">
-        <Label size="small" as="p">
-          <FormattedMessage id={initialValues.id ? 'ActivityPanel.Details' : 'ActivityPanel.NewActivity'} />
-        </Label>
-      </Column>
-      <Column xs="2">
+    <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
+      <Label size="small" as="p">
+        <FormattedMessage id={initialValues.id ? 'ActivityPanel.Details' : 'ActivityPanel.NewActivity'} />
+      </Label>
+      <div>
         <TimeLineButton
           text={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
           type="prev"
@@ -174,44 +171,40 @@ export const ActivityPanel = ({
           type="next"
           callback={selectNextPeriod}
         />
-      </Column>
-    </Row>
-    <Row>
-      <Column xs="7">
-        <FlexContainer>
-          <FlexRow>
-            <FlexColumn>
-              <PeriodpickerField
-                key={activityId}
-                names={['opptjeningFom', 'opptjeningTom']}
-                label={{ id: 'ActivityPanel.Period' }}
-                readOnly={readOnly || shouldDisablePeriodpicker(hasAksjonspunkt, initialValues)}
-                disabledDays={{ before: moment(opptjeningFomDato).toDate(), after: moment(opptjeningTomDato).toDate() }}
-              />
-            </FlexColumn>
-            <FlexColumn>
-              <BodyShort size="small" className={styles.period}>
-                {findInYearsMonthsAndDays(opptjeningFom, opptjeningTom)}
-              </BodyShort>
-            </FlexColumn>
-          </FlexRow>
-        </FlexContainer>
-      </Column>
-      <Column xs="5">
-        <SelectField
-          name="aktivitetType.kode"
-          label={intl.formatMessage({ id: 'ActivityPanel.Activity' })}
-          validate={[required]}
-          placeholder={intl.formatMessage({ id: 'ActivityPanel.VelgAktivitet' })}
-          selectValues={opptjeningAktivitetTypes.map(oat => (
-            <option key={oat.kode} value={oat.kode}>
-              {oat.navn}
-            </option>
-          ))}
-          readOnly={readOnly || !initialValues.erManueltOpprettet}
-        />
-      </Column>
-    </Row>
+      </div>
+    </HGrid>
+    <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
+      <FlexContainer>
+        <FlexRow>
+          <FlexColumn>
+            <PeriodpickerField
+              key={activityId}
+              names={['opptjeningFom', 'opptjeningTom']}
+              label={{ id: 'ActivityPanel.Period' }}
+              readOnly={readOnly || shouldDisablePeriodpicker(hasAksjonspunkt, initialValues)}
+              disabledDays={{ before: moment(opptjeningFomDato).toDate(), after: moment(opptjeningTomDato).toDate() }}
+            />
+          </FlexColumn>
+          <FlexColumn>
+            <BodyShort size="small" className={styles.period}>
+              {findInYearsMonthsAndDays(opptjeningFom, opptjeningTom)}
+            </BodyShort>
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+      <SelectField
+        name="aktivitetType.kode"
+        label={intl.formatMessage({ id: 'ActivityPanel.Activity' })}
+        validate={[required]}
+        placeholder={intl.formatMessage({ id: 'ActivityPanel.VelgAktivitet' })}
+        selectValues={opptjeningAktivitetTypes.map(oat => (
+          <option key={oat.kode} value={oat.kode}>
+            {oat.navn}
+          </option>
+        ))}
+        readOnly={readOnly || !initialValues.erManueltOpprettet}
+      />
+    </HGrid>
     <ActivityDataSubPanel
       initialValues={initialValues}
       readOnly={readOnly}

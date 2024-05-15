@@ -1,10 +1,11 @@
-import { dateConstants } from '@fpsak-frontend/utils';
 import { DatepickerRHF, RadioGroupPanelRHF } from '@fpsak-frontend/form';
+import { dateConstants } from '@fpsak-frontend/utils';
 import { Box, DetailView, Form, Margin } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import LinkRel from '../../../constants/LinkRel';
 import { Dokumenttype } from '../../../types/Dokument';
+import StrukturerDokumentFormProps from '../../../types/StrukturerDokumentFormProps';
 import {
   StrukturerDokumentFormFieldName as FieldName,
   StrukturerDokumentFormState,
@@ -15,7 +16,6 @@ import ContainerContext from '../../context/ContainerContext';
 import { dateIsNotInTheFuture, required } from '../../form/validators';
 import DokumentKnapp from '../dokument-knapp/DokumentKnapp';
 import DuplikatRadiobuttons from '../duplikat-radiobuttons/DuplikatRadiobuttons';
-import StrukturerDokumentFormProps from '../../../types/StrukturerDokumentFormProps';
 
 const StrukturerDokumentForm = ({
   dokument,
@@ -50,6 +50,7 @@ const StrukturerDokumentForm = ({
           onSubmit={formMethods.handleSubmit(lagNyttStrukturertDokument)}
           submitButtonDisabled={isSubmitting}
           shouldShowSubmitButton={!readOnly}
+          smallButtons
         >
           <Box marginTop={Margin.xLarge}>
             <DokumentKnapp href={dokumentLink.href} />

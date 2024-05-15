@@ -1,6 +1,5 @@
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, HGrid } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Column, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -56,11 +55,9 @@ class VedtakDocuments extends Component {
           <>
             <VerticalSpacer fourPx />
             {vedtaksdokumenter.map(document => (
-              <Row key={document.dokumentId}>
-                <Column xs="2">
-                  <DateLabel dateString={document.opprettetDato} />
-                </Column>
-                <Column xs="10">
+              <HGrid gap="1" columns={{ xs: '2fr 10fr' }} key={document.dokumentId}>
+                <DateLabel dateString={document.opprettetDato} />
+                <div>
                   <a
                     href={getLink(document)}
                     className="lenke lenke--frittstaende"
@@ -69,8 +66,8 @@ class VedtakDocuments extends Component {
                   >
                     {behandlingTypes.find(bt => bt.kode === document.tittel).navn}
                   </a>
-                </Column>
-              </Row>
+                </div>
+              </HGrid>
             ))}
           </>
         )}

@@ -4,7 +4,6 @@ import { RestApiHooks } from '@k9-sak-web/rest-api-hooks';
 // NB! ALDRI BRUK DETTE UTENFOR DENNE BEHANDLINGSPAKKEN
 
 export enum UnntakBehandlingApiKeys {
-  HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
   BEHANDLING_UNNTAK = 'BEHANDLING_UNNTAK',
   UPDATE_ON_HOLD = 'UPDATE_ON_HOLD',
   SAVE_AKSJONSPUNKT = 'SAVE_AKSJONSPUNKT',
@@ -45,7 +44,6 @@ export enum UnntakBehandlingApiKeys {
 const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/k9/sak/api/behandlinger', UnntakBehandlingApiKeys.BEHANDLING_UNNTAK)
 
-  .withRel('saksbehandler-info', UnntakBehandlingApiKeys.HENT_SAKSBEHANDLERE)
   .withRel('beregningsresultat-utbetalt', UnntakBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING) // behandlingsdata
   .withRel('aksjonspunkter', UnntakBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('vilkar-v3', UnntakBehandlingApiKeys.VILKAR)

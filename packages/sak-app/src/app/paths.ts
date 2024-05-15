@@ -69,13 +69,13 @@ export const getRiskPanelLocationCreator =
 export const getLocationWithDefaultProsessStegAndFakta = (location: Location): Location =>
   getLocationWithQueryParams(location, { punkt: DEFAULT_PROSESS_STEG, fakta: DEFAULT_FAKTA });
 
-export const getPathToFplos = (): string | null => {
+export const getPathToK9Los = (): string | null => {
   const { host } = window.location;
   if (host === 'app-q1.adeo.no' || host === 'k9.dev.intern.nav.no') {
-    return 'https://k9-los-web.dev.adeo.no/';
+    return 'https://k9-los-web.intern.dev.nav.no';
   }
   if (host === 'app.adeo.no' || host === 'k9.intern.nav.no') {
-    return 'https://k9-los-web.nais.adeo.no/';
+    return 'https://k9-los-web.intern.nav.no';
   }
   return null;
 };
@@ -83,10 +83,10 @@ export const getPathToFplos = (): string | null => {
 export const getPathToK9Punsj = (): string | null => {
   const { host } = window.location;
   if (host === 'app-q1.adeo.no' || host === 'k9.dev.intern.nav.no') {
-    return 'https://k9-punsj-frontend.dev.adeo.no/';
+    return 'https://k9-punsj-frontend.intern.dev.nav.no/';
   }
   if (host === 'app.adeo.no' || host === 'k9.intern.nav.no') {
-    return 'https://k9-punsj-frontend.nais.adeo.no/';
+    return 'https://k9-punsj-frontend.intern.nav.no/';
   }
   return null;
 };
@@ -111,7 +111,7 @@ export const redirectToLogin = () => {
 };
 
 export const goToLos = () => {
-  const path = getPathToFplos();
+  const path = getPathToK9Los();
   window.location.assign(path);
 };
 

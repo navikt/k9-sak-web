@@ -1,7 +1,8 @@
+/* eslint-disable no-console */
+import '@navikt/ds-css';
+import '@navikt/ft-plattform-komponenter/dist/style.css';
 import { ContainerContract } from '../types/ContainerContract';
 import renderers from '../util/renderers';
-import '@navikt/ft-plattform-komponenter/dist/style.css';
-import '@navikt/ds-css';
 
 interface ExtendedWindow extends Window {
   renderOmsorgenForApp: (id: string, contract: ContainerContract) => void;
@@ -15,7 +16,6 @@ const data = {
   onFinished: () => console.log('Klar til å løse aksjonspunkt'),
   sakstype: 'OMP',
   httpErrorHandler: undefined,
-  saksbehandlere: { test: 'test' },
 };
 
 (window as Partial<ExtendedWindow>).renderOmsorgenForApp = async appId => {

@@ -3,10 +3,10 @@
 }
 
 .container {
-  background-color: rgba(204, 225, 243, 0.26);
+  background-color: rgb(204 225 243 / 26%);
   border: 1px solid var(--a-lightblue-700);
   border-radius: 4px;
-  padding: 1rem 1rem 0 1rem;
+  padding: 1rem 1rem 0;
 }
 
 .rad {

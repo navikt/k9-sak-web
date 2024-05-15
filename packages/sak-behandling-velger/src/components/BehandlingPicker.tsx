@@ -249,6 +249,7 @@ const BehandlingPicker = ({
     <div className={styles.behandlingPicker} data-testid="BehandlingPicker">
       {valgtBehandlingId && (
         <Button
+          size="small"
           variant="tertiary"
           icon={<ChevronLeftIcon fontSize="1.5rem" />}
           iconPosition="left"

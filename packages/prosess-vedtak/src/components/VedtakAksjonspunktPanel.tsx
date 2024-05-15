@@ -1,10 +1,9 @@
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
-import { Heading } from '@navikt/ds-react';
-import { Column, Row } from 'nav-frontend-grid';
+import { HGrid, Heading } from '@navikt/ds-react';
 import React from 'react';
-import { injectIntl, IntlShape } from 'react-intl';
+import { IntlShape, injectIntl } from 'react-intl';
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
 import VedtakOverlappendeYtelsePanel from './VedtakOverlappendeYtelsePanel';
 
@@ -41,33 +40,31 @@ export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
 }) => {
   const harOverlappendeYtelser = overlappendeYtelser && overlappendeYtelser.length > 0;
   return (
-    <Row>
-      <Column xs="8">
+    <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
+      <div>
         <Heading level="2" size="medium" data-testid="vedtakAksjonspunktPanel">
           {intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}
         </Heading>
         <VerticalSpacer twentyPx />
-        <>
-          {!harOverlappendeYtelser && (
-            <VedtakHelpTextPanel
-              aksjonspunktKoder={aksjonspunktKoder}
-              readOnly={readOnly}
-              viseFlereSjekkbokserForBrev={viseFlereSjekkbokserForBrev}
-            />
-          )}
-          {harOverlappendeYtelser && (
-            <VedtakOverlappendeYtelsePanel
-              alleKodeverk={alleKodeverk}
-              overlappendeYtelser={overlappendeYtelser}
-              harVurdertOverlappendeYtelse={harVurdertOverlappendeYtelse}
-              setHarVurdertOverlappendeYtelse={setHarVurdertOverlappendeYtelse}
-            />
-          )}
-          <VerticalSpacer twentyPx />
-          {children}
-        </>
-      </Column>
-    </Row>
+        {!harOverlappendeYtelser && (
+          <VedtakHelpTextPanel
+            aksjonspunktKoder={aksjonspunktKoder}
+            readOnly={readOnly}
+            viseFlereSjekkbokserForBrev={viseFlereSjekkbokserForBrev}
+          />
+        )}
+        {harOverlappendeYtelser && (
+          <VedtakOverlappendeYtelsePanel
+            alleKodeverk={alleKodeverk}
+            overlappendeYtelser={overlappendeYtelser}
+            harVurdertOverlappendeYtelse={harVurdertOverlappendeYtelse}
+            setHarVurdertOverlappendeYtelse={setHarVurdertOverlappendeYtelse}
+          />
+        )}
+        <VerticalSpacer twentyPx />
+        {children}
+      </div>
+    </HGrid>
   );
 };
 

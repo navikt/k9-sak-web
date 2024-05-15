@@ -1,9 +1,8 @@
-import { SideMenu } from '@navikt/ft-plattform-komponenter';
+import { SideMenu, WarningIcon } from '@navikt/ft-plattform-komponenter';
 import React, { ReactNode } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
-import { FlexColumn, FlexContainer, FlexRow, Image } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 
 import FaktaPanelMenyRad from '../types/faktaPanelMenyRadTsType';
 
@@ -26,7 +25,7 @@ const SideMenuWrapper = ({ intl, paneler, onClick, children }: OwnProps & Wrappe
               label: intl.formatMessage({ id: panel.tekstKode }),
               active: panel.erAktiv,
               icon: panel.harAksjonspunkt ? (
-                <Image src={advarselIkonUrl} alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })} />
+                <WarningIcon alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })} />
               ) : undefined,
             }))}
             onClick={onClick}

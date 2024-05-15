@@ -1,16 +1,12 @@
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { AksjonspunktHelpText, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Alert, Button, Table, Tag, Textarea } from '@navikt/ds-react';
 import { Field, FieldArray, Form, Formik } from 'formik';
 import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import * as Yup from 'yup';
-
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { AksjonspunktHelpTextTemp, BorderBox, Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { Button, Textarea } from '@navikt/ds-react';
-import { isDate } from 'date-fns';
-import AlertStripe from 'nav-frontend-alertstriper';
-import { EtikettFokus, EtikettInfo } from 'nav-frontend-etiketter';
 import { OverstyrInputBeregningDto } from '../types/OverstyrInputBeregningDto';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
 import OverstyrBeregningAktivitetForm from './OverstyrBeregningAktivitetForm';
@@ -38,52 +34,6 @@ const OverstyrBeregningFaktaForm = ({
   aksjonspunkter,
   intl,
 }: Props & WrappedComponentProps) => {
-  const aktivitetSchema = Yup.object().shape({
-    arbiedsgiverAktørId: Yup.string(),
-    arbeidsgiverOrgnr: Yup.string(),
-    inntektPrAar: Yup.number()
-      .typeError(intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltTypeFeil' }))
-      .required(intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltPakrevdFeil' }))
-      .min(0, intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltMin' }))
-      .max(100000000, intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltMax' })),
-    refusjonPrAar: Yup.number()
-      .typeError(intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltTypeFeil' }))
-      .when('skalKunneEndreRefusjon', {
-        is: true,
-        then: schema => schema.required(intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltPakrevdFeil' })),
-      })
-      .min(0, intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltMin' }))
-      .max(100000000, intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltMax' })),
-    startdatoRefusjon: Yup.date()
-      .typeError(intl.formatMessage({ id: 'OverstyrInputForm.StartdatoFeltDato' }))
-      .when('opphørRefusjon', (opphørRefusjon, schema) => {
-        if (opphørRefusjon != null && isDate(opphørRefusjon)) {
-          return schema.max(
-            opphørRefusjon,
-            intl.formatMessage({ id: 'OverstyrInputForm.StartdatoRefusjonFørSluttdato' }),
-          );
-        }
-        return schema;
-      }),
-    opphørRefusjon: Yup.date()
-      .typeError(intl.formatMessage({ id: 'OverstyrInputForm.OpphorFeltDato' }))
-      .when('refusjonPrAar', (refusjonPrAar, schema) => {
-        if (!Number.isNaN(refusjonPrAar) && refusjonPrAar > 0) {
-          return schema.test(
-            'dato',
-            intl.formatMessage({ id: 'OverstyrInputForm.MaVareDato' }),
-            value => (value ? isDate(value) : true), // dato skal ikke være påkrevd
-          );
-        }
-        return schema;
-      }),
-  });
-
-  const periodeSchema = Yup.object().shape({
-    skjaeringstudspunkt: Yup.string(),
-    aktivitetliste: Yup.array().of(aktivitetSchema),
-  });
-
   const validationSchema = Yup.object().shape({
     kode: Yup.string().required(),
     begrunnelse: Yup.string().required(intl.formatMessage({ id: 'OverstyrInputForm.BegrunnelseErPåkrevd' })),
@@ -115,6 +65,14 @@ const OverstyrBeregningFaktaForm = ({
       aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).status.kode,
     );
 
+  const headerTextCodes = [
+    'OverstyrInputForm.FirmaHeader',
+    'OverstyrInputForm.InntektPrAar',
+    'OverstyrInputForm.RefusjonPrAar',
+    'OverstyrInputForm.StartdatoRefusjon',
+    'OverstyrInputForm.OpphorRefusjon',
+  ];
+
   /**
    * Formik liker ikke null i value feltene, null verdier kan forekomme fra backend.
    * "Oversetter" null verdier i skjemafeltene til en tom streng
@@ -143,9 +101,9 @@ const OverstyrBeregningFaktaForm = ({
   return (
     <div className={styles.container}>
       <VerticalSpacer thirtyTwoPx />
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={erAksjonspunktÅpent()}>
+      <AksjonspunktHelpText isAksjonspunktOpen={erAksjonspunktÅpent()}>
         {[<FormattedMessage id="OverstyrInputForm.Aksjonspunkt" key="aksjonspunktText" />]}
-      </AksjonspunktHelpTextTemp>
+      </AksjonspunktHelpText>
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
@@ -166,54 +124,56 @@ const OverstyrBeregningFaktaForm = ({
                     return (
                       <div key={skjaeringstidspunkt}>
                         <BorderBox>
-                          <EtikettInfo className="skjaeringstidspunkt">
+                          <Tag variant="info" className="skjaeringstidspunkt">
                             Skjæringstidspunkt: {formaterDatoString(skjaeringstidspunkt)}
-                          </EtikettInfo>
+                          </Tag>
                           {harKategoriNæring && (
                             <div>
                               <VerticalSpacer twentyPx />
-                              <EtikettFokus>
+                              <Tag variant="warning">
                                 <FormattedMessage id="OverstyrInputForm.HarKategoriNæring" />
-                              </EtikettFokus>
+                              </Tag>
                             </div>
                           )}
                           {harKategoriFrilans && (
                             <div>
                               <VerticalSpacer twentyPx />
-                              <EtikettFokus>
+                              <Tag variant="warning">
                                 <FormattedMessage id="OverstyrInputForm.HarKategoriFrilans" />
-                              </EtikettFokus>
+                              </Tag>
                             </div>
                           )}
                           <VerticalSpacer twentyPx />
                           {aktivitetliste.length > 0 && (
                             <FieldArray name={`perioder[${periodeIndex}].aktivitetliste`}>
                               {() => (
-                                <Table
-                                  stripet
-                                  headerTextCodes={[
-                                    'OverstyrInputForm.FirmaHeader',
-                                    'OverstyrInputForm.InntektPrAar',
-                                    'OverstyrInputForm.RefusjonPrAar',
-                                    'OverstyrInputForm.StartdatoRefusjon',
-                                    'OverstyrInputForm.OpphorRefusjon',
-                                  ]}
-                                >
-                                  {aktivitetliste.map((aktivitet, aktivitetIndex) => {
-                                    const { arbeidsgiverAktørId, arbeidsgiverOrgnr, skalKunneEndreRefusjon } =
-                                      aktivitet;
-                                    const firmaNavn = utledFirmaNavn(arbeidsgiverAktørId || arbeidsgiverOrgnr);
-                                    return (
-                                      <OverstyrBeregningAktivitetForm
-                                        key=""
-                                        periodeIndex={periodeIndex}
-                                        aktivitetIndex={aktivitetIndex}
-                                        firmaNavn={firmaNavn}
-                                        skalKunneEndreRefusjon={skalKunneEndreRefusjon !== false}
-                                        readOnly={readOnly}
-                                      />
-                                    );
-                                  })}
+                                <Table zebraStripes>
+                                  <Table.Header>
+                                    <Table.Row shadeOnHover={false}>
+                                      {headerTextCodes.map(text => (
+                                        <Table.HeaderCell scope="col" key={text}>
+                                          <FormattedMessage id={text} />
+                                        </Table.HeaderCell>
+                                      ))}
+                                    </Table.Row>
+                                  </Table.Header>
+                                  <Table.Body>
+                                    {aktivitetliste.map((aktivitet, aktivitetIndex) => {
+                                      const { arbeidsgiverAktørId, arbeidsgiverOrgnr, skalKunneEndreRefusjon } =
+                                        aktivitet;
+                                      const firmaNavn = utledFirmaNavn(arbeidsgiverAktørId || arbeidsgiverOrgnr);
+                                      return (
+                                        <OverstyrBeregningAktivitetForm
+                                          key={firmaNavn}
+                                          periodeIndex={periodeIndex}
+                                          aktivitetIndex={aktivitetIndex}
+                                          firmaNavn={firmaNavn}
+                                          skalKunneEndreRefusjon={skalKunneEndreRefusjon !== false}
+                                          readOnly={readOnly}
+                                        />
+                                      );
+                                    })}
+                                  </Table.Body>
                                 </Table>
                               )}
                             </FieldArray>
@@ -243,14 +203,15 @@ const OverstyrBeregningFaktaForm = ({
             {(readOnly || !submittable) && (
               <>
                 <VerticalSpacer sixteenPx />
-                <AlertStripe type="advarsel">
+                <Alert size="small" variant="warning">
                   <FormattedMessage id="OverstyrInputForm.KanIkkeBekreftes" />
-                </AlertStripe>
+                </Alert>
               </>
             )}
             <VerticalSpacer sixteenPx />
             <div className={styles.buttonBar}>
               <Button
+                size="small"
                 className={styles.button}
                 loading={isSubmitting}
                 disabled={readOnly || !submittable || !isValid}
@@ -259,7 +220,7 @@ const OverstyrBeregningFaktaForm = ({
               >
                 <FormattedMessage id="OverstyrInputForm.LagreAksjonspunkt" />
               </Button>
-              <Button className={styles.button} disabled={isValid} variant="tertiary" type="submit">
+              <Button size="small" className={styles.button} disabled={isValid} variant="tertiary" type="submit">
                 <FormattedMessage id="OverstyrInputForm.KontrollerSkjema" />
               </Button>
             </div>

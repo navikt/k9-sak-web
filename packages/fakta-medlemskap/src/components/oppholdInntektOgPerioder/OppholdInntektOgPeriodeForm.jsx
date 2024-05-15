@@ -10,7 +10,14 @@ import { createSelector } from 'reselect';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { BorderBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  BorderBox,
+  FlexColumn,
+  FlexContainer,
+  FlexRow,
+  VerticalSpacer,
+  useSaksbehandlerOppslag,
+} from '@fpsak-frontend/shared-components';
 import { ISO_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { FaktaBegrunnelseTextField } from '@k9-sak-web/fakta-felles';
 
@@ -32,77 +39,76 @@ export const OppholdInntektOgPeriodeForm = ({
   alleMerknaderFraBeslutter,
   behandlingId,
   behandlingVersjon,
-  saksbehandlere,
   ...formProps
-}) => (
-  <BorderBox>
-    <OppholdINorgeOgAdresserFaktaPanel
-      readOnly={readOnly}
-      id={valgtPeriode.id}
-      alleKodeverk={alleKodeverk}
-      behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
-      alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-    />
-    <VerticalSpacer twentyPx />
-    <PerioderMedMedlemskapFaktaPanel
-      readOnly={readOnly}
-      id={valgtPeriode.id}
-      behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
-      alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-      alleKodeverk={alleKodeverk}
-    />
-    {(hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, valgtPeriode.aksjonspunkter) ||
-      hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, valgtPeriode.aksjonspunkter)) && (
-      <StatusForBorgerFaktaPanel
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
+}) => {
+  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
+  return (
+    <BorderBox>
+      <OppholdINorgeOgAdresserFaktaPanel
         readOnly={readOnly}
         id={valgtPeriode.id}
+        alleKodeverk={alleKodeverk}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
         alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       />
-    )}
-    <VerticalSpacer twentyPx />
-    {valgtPeriode.aksjonspunkter && valgtPeriode.aksjonspunkter.length > 0 && (
-      <>
-        <FaktaBegrunnelseTextField
-          isReadOnly={readOnly}
-          isSubmittable={submittable}
-          hasBegrunnelse={!!initialValues.begrunnelse}
+      <VerticalSpacer twentyPx />
+      <PerioderMedMedlemskapFaktaPanel
+        readOnly={readOnly}
+        id={valgtPeriode.id}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+        alleKodeverk={alleKodeverk}
+      />
+      {(hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, valgtPeriode.aksjonspunkter) ||
+        hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, valgtPeriode.aksjonspunkter)) && (
+        <StatusForBorgerFaktaPanel
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          readOnly={readOnly}
+          id={valgtPeriode.id}
+          alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
         />
-        {!!initialValues.begrunnelse && (
-          <AssessedBy
-            name={saksbehandlere[valgtPeriode?.vurdertAv] || valgtPeriode?.vurdertAv}
-            date={valgtPeriode?.vurdertTidspunkt}
+      )}
+      <VerticalSpacer twentyPx />
+      {valgtPeriode.aksjonspunkter && valgtPeriode.aksjonspunkter.length > 0 && (
+        <>
+          <FaktaBegrunnelseTextField
+            isReadOnly={readOnly}
+            isSubmittable={submittable}
+            hasBegrunnelse={!!initialValues.begrunnelse}
           />
-        )}
-      </>
-    )}
+          {!!initialValues.begrunnelse && (
+            <AssessedBy name={hentSaksbehandlerNavn(valgtPeriode?.vurdertAv)} date={valgtPeriode?.vurdertTidspunkt} />
+          )}
+        </>
+      )}
 
-    <VerticalSpacer twentyPx />
-    <FlexContainer fluid>
-      <FlexRow>
-        <FlexColumn>
-          <Button
-            variant="primary"
-            size="small"
-            type="button"
-            onClick={formProps.handleSubmit}
-            disabled={formProps.pristine}
-          >
-            <FormattedMessage id="OppholdInntektOgPeriode.Oppdater" />
-          </Button>
-        </FlexColumn>
-        <FlexColumn>
-          <Button variant="secondary" type="button" size="small" onClick={periodeResetCallback}>
-            <FormattedMessage id="OppholdInntektOgPeriode.Avbryt" />
-          </Button>
-        </FlexColumn>
-      </FlexRow>
-    </FlexContainer>
-  </BorderBox>
-);
+      <VerticalSpacer twentyPx />
+      <FlexContainer fluid>
+        <FlexRow>
+          <FlexColumn>
+            <Button
+              variant="primary"
+              size="small"
+              type="button"
+              onClick={formProps.handleSubmit}
+              disabled={formProps.pristine}
+            >
+              <FormattedMessage id="OppholdInntektOgPeriode.Oppdater" />
+            </Button>
+          </FlexColumn>
+          <FlexColumn>
+            <Button variant="secondary" type="button" size="small" onClick={periodeResetCallback}>
+              <FormattedMessage id="OppholdInntektOgPeriode.Avbryt" />
+            </Button>
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+    </BorderBox>
+  );
+};
 
 OppholdInntektOgPeriodeForm.propTypes = {
   selectedId: PropTypes.string,
@@ -118,7 +124,6 @@ OppholdInntektOgPeriodeForm.propTypes = {
   }).isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-  saksbehandlere: PropTypes.shape(),
 };
 
 OppholdInntektOgPeriodeForm.defaultProps = {

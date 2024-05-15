@@ -15,12 +15,6 @@ const perioder = [
   },
 ];
 
-const headerTextCodes = [
-  'FeilutbetalingInfoPanel.Period',
-  'FeilutbetalingInfoPanel.Hendelse',
-  'FeilutbetalingInfoPanel.Beløp',
-];
-
 const mockProps = {
   perioder,
   årsaker: [],
@@ -35,9 +29,8 @@ const mockProps = {
 describe('<FeilutbetalingPerioderTable>', () => {
   it('skal rendre FeilutbetalingInfoPanel', () => {
     renderWithIntlAndReduxForm(<FeilutbetalingPerioderTable {...mockProps} />, { messages });
-
-    expect(screen.getByRole('cell', { name: 'Period' })).toBeInTheDocument();
-    expect(screen.getByRole('cell', { name: 'Hendelse' })).toBeInTheDocument();
-    expect(screen.getByRole('cell', { name: 'Feilutbetalt beløp' })).toBeInTheDocument();
+    expect(screen.getByRole('columnheader', { name: 'Period' })).toBeInTheDocument();
+    expect(screen.getByRole('columnheader', { name: 'Hendelse' })).toBeInTheDocument();
+    expect(screen.getByRole('columnheader', { name: 'Feilutbetalt beløp' })).toBeInTheDocument();
   });
 });

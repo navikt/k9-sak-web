@@ -10,7 +10,6 @@ export default ({
   submitCallback,
   aksjonspunkter,
   readOnly,
-  saksbehandlere,
   fagsakYtelseType,
   behandlingType,
 }) => {
@@ -50,7 +49,6 @@ export default ({
         onFinished: løsAksjonspunkt,
         readOnly: readOnly || !harAksjonspunkt,
         visFortsettknapp,
-        saksbehandlere: saksbehandlere || {},
         fagsakYtelseType,
         behandlingType,
       }}

@@ -1,14 +1,13 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 
-import { Column, Row } from 'nav-frontend-grid';
-
 import BehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
+import { HGrid } from '@navikt/ds-react';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
@@ -94,8 +93,8 @@ const RevurderingPaneler = ({
     getKodeverknavnFn(alleKodeverk, kodeverkTyper),
   );
   return (
-    <Row>
-      <Column xs={ytelseTypeKode === fagsakYtelseType.FRISINN ? '4' : '12'}>
+    <HGrid gap="1" columns={{ xs: ytelseTypeKode === fagsakYtelseType.FRISINN ? '4fr 8fr' : '12fr' }}>
+      <div>
         {isInnvilget(behandlingresultat.type.kode) && (
           <VedtakInnvilgetRevurderingPanel
             ytelseTypeKode={ytelseTypeKode}
@@ -136,18 +135,18 @@ const RevurderingPaneler = ({
             vedtakVarsel={vedtakVarsel}
           />
         )}
-      </Column>
+      </div>
       {harRedusertUtbetaling && (
-        <Column xs="8">
+        <div>
           <VedtakRedusertUtbetalingArsaker
             intl={intl}
             readOnly={readOnly}
             values={new Map(Object.values(redusertUtbetalingArsak).map(key => [key, formikValues[key]]))}
             erSendtInnUtenArsaker={erSendtInnUtenArsaker}
           />
-        </Column>
+        </div>
       )}
-    </Row>
+    </HGrid>
   );
 };
 

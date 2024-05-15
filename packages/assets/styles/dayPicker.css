@@ -206,7 +206,7 @@
   color: var(--a-nav-red);
 }
 
-.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled, .DayPicker-Day--outside) {
   background-color: var(--a-deepblue-500);
   color: var(--a-white);
 }

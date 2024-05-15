@@ -20,7 +20,6 @@ import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Alert, ErrorMessage } from '@navikt/ds-react';
 
 import { FormikProps, setNestedObjectValues, useField } from 'formik';
-import { Column, Row } from 'nav-frontend-grid';
 import React, { useState } from 'react';
 import { IntlShape, injectIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
@@ -284,28 +283,26 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
   return (
     <div data-testid="brevpanel">
       {harAlternativeMottakere && (
-        <Row>
-          <Column xs="12">
-            <SelectFieldFormik
-              readOnly={readOnly}
-              name="overstyrtMottaker"
-              selectValues={tilgjengeligeVedtaksbrev.alternativeMottakere.map(mottaker => (
-                <option value={JSON.stringify(mottaker)} key={mottaker.id}>
-                  {lagVisningsnavnForMottaker(mottaker.id, personopplysninger, arbeidsgiverOpplysningerPerId)}
-                </option>
-              ))}
-              className={readOnly ? styles.selectReadOnly : null}
-              label={intl.formatMessage({ id: 'VedtakForm.Fritekst.OverstyrtMottaker' })}
-              validate={[required]}
-              bredde="xl"
-            />
+        <div>
+          <SelectFieldFormik
+            readOnly={readOnly}
+            name="overstyrtMottaker"
+            selectValues={tilgjengeligeVedtaksbrev.alternativeMottakere.map(mottaker => (
+              <option value={JSON.stringify(mottaker)} key={mottaker.id}>
+                {lagVisningsnavnForMottaker(mottaker.id, personopplysninger, arbeidsgiverOpplysningerPerId)}
+              </option>
+            ))}
+            className={readOnly ? styles.selectReadOnly : null}
+            label={intl.formatMessage({ id: 'VedtakForm.Fritekst.OverstyrtMottaker' })}
+            validate={[required]}
+            bredde="xl"
+          />
 
-            {meta.error ? (
-              <ErrorMessage>{intl.formatMessage(meta.error as unknown as { id: string })}</ErrorMessage>
-            ) : null}
-            <VerticalSpacer sixteenPx />
-          </Column>
-        </Row>
+          {meta.error ? (
+            <ErrorMessage>{intl.formatMessage(meta.error as unknown as { id: string })}</ErrorMessage>
+          ) : null}
+          <VerticalSpacer sixteenPx />
+        </div>
       )}
       {finnesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev) ? (
         brevpanel

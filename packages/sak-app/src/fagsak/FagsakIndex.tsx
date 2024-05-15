@@ -32,7 +32,7 @@ import {
   behandlingerRoutePath,
   erBehandlingValgt,
   erUrlUnderBehandling,
-  getPathToFplos,
+  getPathToK9Los,
   pathToMissingPage,
 } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
@@ -318,7 +318,7 @@ const FagsakIndex = () => {
 
               {behandling && !erTilbakekreving(behandling.type) && (
                 <>
-                  {showPunsjStripe && <Punsjstripe behandlingUuid={behandling.uuid} pathToLos={getPathToFplos()} />}
+                  {showPunsjStripe && <Punsjstripe behandlingUuid={behandling.uuid} pathToLos={getPathToK9Los()} />}
                   {showFagsakPåSøkerStripe && (
                     <AndreSakerPåSøkerStripe
                       søkerIdent={fagsakPerson.personnummer}

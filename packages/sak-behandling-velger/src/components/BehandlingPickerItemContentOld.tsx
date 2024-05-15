@@ -14,9 +14,8 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { BehandlingAppKontekst, Kodeverk } from '@k9-sak-web/types';
-import { BodyShort, Detail, Label } from '@navikt/ds-react';
+import { BodyShort, Box, Detail, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
-import Panel from 'nav-frontend-paneler';
 import React, { ReactElement } from 'react';
 import { FormattedMessage } from 'react-intl';
 
@@ -133,7 +132,7 @@ const BehandlingPickerItemContent = ({
   førsteÅrsak,
   behandlingTypeKode,
 }: OwnProps) => (
-  <Panel border>
+  <Box background="surface-default" padding="4" borderWidth="1" borderColor="border-subtle" borderRadius="medium">
     <FlexContainer>
       <FlexRow>
         <FlexColumn className={styles.arsakPadding}>
@@ -255,7 +254,7 @@ const BehandlingPickerItemContent = ({
       </FlexRow>
     </FlexContainer>
     <VerticalSpacer fourPx />
-  </Panel>
+  </Box>
 );
 
 export default BehandlingPickerItemContent;

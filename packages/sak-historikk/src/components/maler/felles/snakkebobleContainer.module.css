@@ -27,7 +27,7 @@
   margin-left: auto;
 }
 
-@media screen and (min-width: 1350px) {
+@media screen and (width >= 1350px) {
   .chatLeft,
   .chatRight {
     max-width: calc(100% - 40px);

@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
+import '@navikt/ds-css';
 import Komponenter from '../types/Komponenter';
 import renderers from '../util/renderers';
-import '@navikt/ds-css';
 
 const state = {};
 
