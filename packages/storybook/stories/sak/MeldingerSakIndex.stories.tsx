@@ -3,8 +3,6 @@ import { action } from '@storybook/addon-actions';
 
 import MeldingerSakIndex, { MessagesModalSakIndex } from '@k9-sak-web/sak-meldinger';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
-
-import { Brevmaler, Kodeverk } from '@k9-sak-web/types';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import { BackendApi } from '@k9-sak-web/sak-meldinger/src/MeldingerSakIndex';
 import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
@@ -36,12 +34,6 @@ const emptySprakKode = {
   kode: '',
   kodeverk: '',
 };
-
-interface SendMeldingPanelStoryArgs {
-  readonly brevmaler: Brevmaler;
-  readonly sprakKode?: Kodeverk;
-  readonly backendApi?: BackendApi;
-}
 
 const defaultFakeBackend = {
   async getBrevMottakerinfoEreg(orgnr: string): Promise<EregOrganizationLookupResponse> {

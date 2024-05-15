@@ -50,6 +50,7 @@ export class FakeMessagesBackendApi implements BackendApi {
   }
 
   async forhåndsvis(data: ForhåndsvisDto): Promise<Blob> {
+    action('lag pdf data')(data);
     await sleep(1_000);
     return fakePdf();
   }

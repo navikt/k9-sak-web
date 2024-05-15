@@ -171,9 +171,8 @@ const Messages = ({
       }
       setShowValidation(false);
       fritekstInputRef.current?.reset();
-    } else {
-      console.info('Message submit NOT done. Form has validation error(s)');
     }
+    // else: validation failed, error message should be displayed in the input field(s)
   };
 
   const previewHandler = async () => {
@@ -200,9 +199,8 @@ const Messages = ({
       } else {
         throw new Error(`fagsak.person.aktørId was undefined. Saksnummer: ${fagsak.saksnummer}`);
       }
-    } else {
-      console.info('Message preview NOT done. Form has validation error(s)');
     }
+    // else: validation failed, error message should be displayed in the input field(s)
   };
 
   return (

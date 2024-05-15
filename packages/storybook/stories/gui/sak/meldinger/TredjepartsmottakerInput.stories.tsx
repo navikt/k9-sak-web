@@ -38,7 +38,6 @@ export const Default: StoryObj<typeof TredjepartsmottakerInput> = {
       setValue(v);
     }, []);
     const onSimulateSubmit = useCallback(() => {
-      console.debug('onSimulateSubmit', value);
       const valueStr = value && value.navn && value.organisasjonsnr ? `${value.navn} (${value.organisasjonsnr})` : '';
       action('onSimulateSubmit')(valueStr);
       setShowError(true);
