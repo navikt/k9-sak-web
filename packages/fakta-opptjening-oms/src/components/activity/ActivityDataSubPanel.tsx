@@ -131,7 +131,6 @@ const ActivityDataSubPanel = ({
             readOnly={readOnly || !isManuallyAdded}
             htmlSize={14}
             format={value => (readOnly || !isManuallyAdded ? `${value} %` : value)}
-            // @ts-ignore TODO Fiks denne!
             normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
           />
         )}
