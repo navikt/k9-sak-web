@@ -15,7 +15,7 @@ export interface InformasjonsbehovVedtaksbrev {
 
 interface Props {
   intl: IntlShape;
-  sprakkode: Kodeverk;
+  sprakkode: string;
   readOnly: boolean;
   begrunnelse: string;
   informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;

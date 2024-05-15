@@ -74,18 +74,18 @@ const VedtakPanels = ({
 
   const skalViseSjekkTilbakekreving = !!aksjonspunkter.find(
     ap =>
-      ap.definisjon.kode === aksjonspunktCodes.SJEKK_TILBAKEKREVING &&
+      ap.definisjon === aksjonspunktCodes.SJEKK_TILBAKEKREVING &&
       ap.erAktivt &&
       ap.kanLoses &&
-      ap.status.kode === aksjonspunktStatus.OPPRETTET,
+      ap.status === aksjonspunktStatus.OPPRETTET,
   );
 
   const skalKunneRedigereSjekkTilbakekreving = !!aksjonspunkter.find(
     ap =>
-      ap.definisjon.kode === aksjonspunktCodes.SJEKK_TILBAKEKREVING &&
+      ap.definisjon === aksjonspunktCodes.SJEKK_TILBAKEKREVING &&
       ap.erAktivt &&
       ap.kanLoses &&
-      ap.status.kode === aksjonspunktStatus.UTFORT,
+      ap.status === aksjonspunktStatus.UTFORT,
   );
 
   if (skalViseSjekkTilbakekreving || redigerSjekkTilbakekreving)
@@ -152,7 +152,7 @@ VedtakPanels.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   behandlingresultat: PropTypes.shape().isRequired,
-  sprakkode: kodeverkObjektPropType.isRequired,
+  sprakkode: PropTypes.string.isRequired,
   behandlingStatus: kodeverkObjektPropType.isRequired,
   behandlingPaaVent: PropTypes.bool.isRequired,
   behandlingArsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,

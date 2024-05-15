@@ -17,7 +17,7 @@ export const VedtakInnvilgetPanelImpl = ({ intl, behandlingsresultat, ytelseType
           ? findDelvisInnvilgetResultatText(behandlingsresultat.type, ytelseTypeKode)
           : findInnvilgetResultatText(behandlingsresultat.type, ytelseTypeKode),
       })}
-      {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
+      {tilbakekrevingText && `. ${tilbakekrevingText}`}
     </BodyShort>
     <VerticalSpacer eightPx />
   </>

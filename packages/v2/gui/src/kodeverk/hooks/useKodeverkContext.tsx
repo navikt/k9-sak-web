@@ -4,7 +4,8 @@ import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import { KodeverkKlageType } from '@k9-sak-web/lib/types/KodeverkKlageType.js';
 import { KodeverkTilbakeType } from '@k9-sak-web/lib/types/KodeverkTilbakeType.js';
 import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
-import { AlleKodeverk } from '@k9-sak-web/lib/types/AlleKodeverk.js';
+import { AlleKodeverk, KodeverkMedUndertype } from '@k9-sak-web/lib/types/AlleKodeverk.js';
+import { KodeverkV2 } from '@k9-sak-web/lib/types/index.js';
 import { KodeverkContext } from '../context/KodeverkContext';
 
 export const useKodeverkContext = () => {
@@ -42,8 +43,11 @@ export const useKodeverkContext = () => {
 
     if (kodeverkForKilde && kodeverkForKilde[kodeverkType]) return kodeverkForKilde[kodeverkType];
 
+    console.error('Har ikke kodeverk å slå opp i (DEV, fjern denne før ferdig');
     return [];
   };
+
+  const hentKodeverkForUndertype = (kode: string, kodeverkForType: KodeverkMedUndertype) => kodeverkForType[kode] || [];
 
   const kodeverkNavnFraKode = (
     kode: string,
@@ -71,8 +75,9 @@ export const useKodeverkContext = () => {
     );
 
     const kodeverkForType = hentKodeverkForKode(kodeverkType, kilde);
-    if (kodeverkForType) {
-      return utledKodeverkNavnFraUndertypeKode(undertypeKode, kodeverkForType);
+    if (kodeverkForType && typeof kodeverkForType === 'object') {
+      const kodeverkForUndertype = hentKodeverkForUndertype(kode, kodeverkForType as KodeverkMedUndertype);
+      return utledKodeverkNavnFraUndertypeKode(undertypeKode, kodeverkForUndertype);
     }
     return ukjentTekst || 'Ukjent kode';
   };

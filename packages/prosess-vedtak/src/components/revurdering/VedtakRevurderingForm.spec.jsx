@@ -18,30 +18,15 @@ const createBehandling = (behandlingResultatType, behandlingHenlagt) => ({
   aksjonspunkter: [],
   behandlingPaaVent: false,
   behandlingHenlagt,
-  sprakkode: {
-    kode: 'NO',
-    kodeverk: '',
-  },
+  sprakkode: 'NO',
   behandlingsresultat: {
     id: 1,
     type: behandlingResultatType,
-    avslagsarsak:
-      behandlingResultatType === BehandlingResultatType.AVSLATT
-        ? {
-            kode: '1019',
-            navn: 'Manglende dokumentasjon',
-          }
-        : null,
+    avslagsarsak: behandlingResultatType === BehandlingResultatType.AVSLATT ? '1019' : null,
     avslagsarsakFritekst: null,
   },
-  status: {
-    kode: behandlingStatus.BEHANDLING_UTREDES,
-    navn: 'test',
-  },
-  type: {
-    kode: 'test',
-    navn: 'test',
-  },
+  status: behandlingStatus.BEHANDLING_UTREDES,
+  type: 'test',
   opprettet: '16‎.‎07‎.‎2004‎ ‎17‎:‎35‎:‎21',
 });
 
@@ -61,21 +46,12 @@ describe('<VedtakRevurderingForm>', () => {
     const previewCallback = vi.fn();
     const revurdering = createBehandlingAvslag();
 
-    revurdering.type = {
-      kode: 'BT-004',
-      navn: 'Revurdering',
-    };
+    revurdering.type = 'BT-004';
 
     revurdering.aksjonspunkter.push({
       id: 0,
-      definisjon: {
-        navn: 'Foreslå vedtak',
-        kode: aksjonspunktCodes.FORESLA_VEDTAK,
-      },
-      status: {
-        navn: 'Opprettet',
-        kode: '',
-      },
+      definisjon: 'Foreslå vedtak',
+      status: 'Opprettet',
       kanLoses: true,
       erAktivt: true,
     });
@@ -122,14 +98,8 @@ describe('<VedtakRevurderingForm>', () => {
     };
     revurdering.aksjonspunkter.push({
       id: 0,
-      definisjon: {
-        navn: 'Foreslå vedtak',
-        kode: aksjonspunktCodes.FORESLA_VEDTAK,
-      },
-      status: {
-        navn: 'Opprettet',
-        kode: '',
-      },
+      definisjon: 'Foreslå vedtak',
+      status: 'Opprettet',
       kanLoses: true,
       erAktivt: true,
       toTrinnsBehandling: true,

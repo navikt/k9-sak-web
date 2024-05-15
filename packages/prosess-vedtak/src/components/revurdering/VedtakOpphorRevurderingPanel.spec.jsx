@@ -13,24 +13,15 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
   it('skal rendre opphørpanel med avslagsårsak', () => {
     const vilkar = [
       {
-        vilkarType: {
-          kode: vilkarType.MEDLEMSKAPSVILKARET,
-          navn: 'Medlemskapsvilkåret',
-        },
-        vilkarStatus: {
-          kode: vilkarUtfallType.IKKE_OPPFYLT,
-          navn: 'test',
-        },
+        vilkarType: vilkarType.MEDLEMSKAPSVILKARET,
+        vilkarStatus: vilkarUtfallType.IKKE_OPPFYLT,
         lovReferanse: '§ 22-13, 2. ledd',
       },
     ];
     const behandlingsresultat = {
       id: 1,
       type: 'test',
-      avslagsarsak: {
-        kode: '1019',
-        navn: 'Manglende dokumentasjon',
-      },
+      avslagsarsak: '1019',
       avslagsarsakFritekst: null,
     };
     renderWithIntl(
@@ -53,24 +44,15 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
   it('skal rendre opphørpanel med avslagsårsak før svangerskapspenger', () => {
     const vilkar = [
       {
-        vilkarType: {
-          kode: vilkarType.MEDLEMSKAPSVILKARET,
-          navn: 'Medlemskapsvilkåret',
-        },
-        vilkarStatus: {
-          kode: vilkarUtfallType.IKKE_OPPFYLT,
-          navn: 'test',
-        },
+        vilkarType: vilkarType.MEDLEMSKAPSVILKARET,
+        vilkarStatus: vilkarUtfallType.IKKE_OPPFYLT,
         lovReferanse: '§ 22-13, 2. ledd',
       },
     ];
     const behandlingsresultat = {
       id: 1,
       type: 'test',
-      avslagsarsak: {
-        kode: '1019',
-        navn: 'Manglende dokumentasjon',
-      },
+      avslagsarsak: '1019',
       avslagsarsakFritekst: null,
     };
     renderWithIntl(

@@ -125,7 +125,7 @@ export { findEndpointsForMicrofrontend } from './src/micro-frontends/findEndpoin
 export { httpErrorHandler } from './src/micro-frontends/httpErrorHandler';
 export { findAksjonspunkt } from './src/micro-frontends/findAksjonspunkt';
 
-export { getKodeverknavnFn, konverterKodeverkTilKode } from './src/kodeverkUtils';
+// export { getKodeverknavnFn, konverterKodeverkTilKode } from './src/kodeverkUtils';
 export { joinNonNullStrings, safeJSONParse } from './src/stringUtils';
 export type { Adresser } from './src/getAddresses';
 export { default as mapVilkar } from './src/beregning/VilkarMapper';

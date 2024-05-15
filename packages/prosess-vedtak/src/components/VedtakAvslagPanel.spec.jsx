@@ -23,67 +23,36 @@ describe('<VedtakAvslagPanel>', () => {
     aksjonspunkter: [],
     behandlingPaaVent: false,
     behandlingHenlagt: false,
-    sprakkode: {
-      kode: 'NO',
-      navn: 'norsk',
-    },
+    sprakkode: 'NO',
     behandlingsresultat: {
       id: 1,
       type: 'test',
-      avslagsarsak: {
-        kode: '1019',
-        navn: 'Manglende dokumentasjon',
-      },
+      avslagsarsak: '1019',
       avslagsarsakFritekst: null,
     },
     vilkar: [
       {
-        vilkarType: {
-          kode: vilkarType.MEDLEMSKAPSVILKARET,
-          navn: 'Medlemskapsvilkåret',
-        },
+        vilkarType: vilkarType.MEDLEMSKAPSVILKARET, // 'Medlemskapsvilkåret'
         lovReferanse: '§ 22-13, 2. ledd',
         perioder: [
           {
-            vilkarStatus: {
-              kode: vilkarUtfallType.IKKE_OPPFYLT,
-              navn: 'test',
-            },
+            vilkarStatus: vilkarUtfallType.IKKE_OPPFYLT,
           },
         ],
       },
     ],
-    status: {
-      kode: behandlingStatus.BEHANDLING_UTREDES,
-      navn: 'test',
-    },
-    type: {
-      kode: 'test',
-      navn: 'test',
-    },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: 'test',
     opprettet: '16‎.‎07‎.‎2004‎ ‎17‎:‎35‎:‎21',
   };
 
-  const sprakkode = {
-    kode: 'NO',
-    navn: 'norsk',
-  };
+  const sprakkode = 'NO';
 
   const vilkarUtenSoknadsfrist = [
     {
-      vilkarType: {
-        kode: vilkarType.MEDLEMSKAPSVILKARET,
-        navn: 'Medlemskapsvilkåret',
-      },
+      vilkarType: vilkarType.MEDLEMSKAPSVILKARET,
       lovReferanse: '§ 22-13, 2. ledd',
-      perioder: [
-        {
-          vilkarStatus: {
-            kode: vilkarUtfallType.IKKE_OPPFYLT,
-            navn: 'test',
-          },
-        },
-      ],
+      perioder: [{ vilkarStatus: vilkarUtfallType.IKKE_OPPFYLT }],
     },
   ];
 

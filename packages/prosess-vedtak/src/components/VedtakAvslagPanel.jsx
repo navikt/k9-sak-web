@@ -1,6 +1,4 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { BodyShort, Label } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -9,36 +7,26 @@ import { connect } from 'react-redux';
 import AvslagsårsakListe from './AvslagsårsakListe';
 import { findAvslagResultatText, findTilbakekrevingText } from './VedtakHelper';
 
-export const VedtakAvslagPanelImpl = ({
-  intl,
-  vilkar,
-  behandlingsresultat,
-  ytelseTypeKode,
-  tilbakekrevingText,
-  alleKodeverk,
-}) => {
-  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-  return (
-    <div>
-      <Label size="small" as="p" data-testid="avslaatt">
-        {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
-      </Label>
-      <BodyShort size="small">
-        {intl.formatMessage({ id: findAvslagResultatText(behandlingsresultat.type, ytelseTypeKode) })}
-        {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
-      </BodyShort>
-      <VerticalSpacer sixteenPx />
+export const VedtakAvslagPanelImpl = ({ intl, vilkar, behandlingsresultat, ytelseTypeKode, tilbakekrevingText }) => (
+  <div>
+    <Label size="small" as="p" data-testid="avslaatt">
+      {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
+    </Label>
+    <BodyShort size="small">
+      {intl.formatMessage({ id: findAvslagResultatText(behandlingsresultat.type, ytelseTypeKode) })}
+      {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
+    </BodyShort>
+    <VerticalSpacer sixteenPx />
 
-      <div>
-        <Label size="small" as="p">
-          {intl.formatMessage({ id: 'VedtakForm.ArsakTilAvslag' })}
-        </Label>
-        <AvslagsårsakListe vilkar={vilkar} getKodeverknavn={getKodeverknavn} />
-        <VerticalSpacer sixteenPx />
-      </div>
+    <div>
+      <Label size="small" as="p">
+        {intl.formatMessage({ id: 'VedtakForm.ArsakTilAvslag' })}
+      </Label>
+      <AvslagsårsakListe vilkar={vilkar} />
+      <VerticalSpacer sixteenPx />
     </div>
-  );
-};
+  </div>
+);
 
 VedtakAvslagPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
@@ -46,7 +34,7 @@ VedtakAvslagPanelImpl.propTypes = {
   behandlingsresultat: PropTypes.shape().isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
   tilbakekrevingText: PropTypes.string,
-  alleKodeverk: PropTypes.shape().isRequired,
+  kodeverkNavnFraKode: PropTypes.func.isRequired,
 };
 
 VedtakAvslagPanelImpl.defaultProps = {
