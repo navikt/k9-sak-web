@@ -13800,6 +13800,7 @@ __metadata:
     typescript: 5.4.5
     vite: ^5.2.11
     vite-plugin-html: ^3.2.2
+    vite-plugin-static-copy: ^1.0.4
     vite-plugin-svgr: 4.2.0
     vitest: 1.6.0
     vitest-axe: 0.1.0
@@ -19389,6 +19390,20 @@ __metadata:
   peerDependencies:
     vite: ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
   checksum: 923379f0205911d13ffdcdc841a6565a191a6fe199eb7c0d38b6ea1f53bbdf3d42ad12a9ae8d5f49c14e3f4e2cb56fc7ea8c24a51eeedfbe64c6ebbca4a2966a
+  languageName: node
+  linkType: hard
+
+"vite-plugin-static-copy@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "vite-plugin-static-copy@npm:1.0.4"
+  dependencies:
+    chokidar: ^3.5.3
+    fast-glob: ^3.2.11
+    fs-extra: ^11.1.0
+    picocolors: ^1.0.0
+  peerDependencies:
+    vite: ^5.0.0
+  checksum: e0c9bd3d6443ee3c38d9c79d8764630a34bc70a411c1db136562c121f6f31116d6f7439229591b645d73818cf6472f661d956b12a6afb4bc1d73c427c2ae4dbb
   languageName: node
   linkType: hard
 
