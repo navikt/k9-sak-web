@@ -66,6 +66,7 @@
   },
   "devDependencies": {
     "@sentry/cli": "2.31.2",
+    "@storybook/addon-a11y": "^8.1.0",
     "@storybook/addon-actions": "^8.0.10",
     "@storybook/addon-docs": "^8.0.10",
     "@storybook/addon-essentials": "^8.0.10",

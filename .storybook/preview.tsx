@@ -10,12 +10,8 @@ import { MemoryRouter } from 'react-router-dom';
 
 initialize({
   onUnhandledRequest: 'bypass',
-  serviceWorker: {
-    url: '/public/mockServiceWorker.js',
-  },
 });
 
-export const loaders = [mswLoader];
 const preview: Preview = {
   decorators: [
     Story => {
@@ -31,6 +27,7 @@ const preview: Preview = {
       );
     },
   ],
+  loaders: [mswLoader],
 };
 
 export default preview;

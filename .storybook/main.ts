@@ -12,6 +12,7 @@ const config: StorybookConfig = {
       },
     },
     '@storybook/addon-controls',
+    '@storybook/addon-a11y',
   ],
   staticDirs: [
     {
