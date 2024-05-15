@@ -16,7 +16,7 @@ import TredjepartsmottakerInput, {
   type TredjepartsmottakerError,
   type TredjepartsmottakerValue,
 } from './TredjepartsmottakerInput.js';
-import MottakerSelect from './MottakerSelect.js';
+import MottakerSelect, { tredjepartsmottakerValg } from './MottakerSelect.js';
 import FritekstForslagSelect from './FritekstForslagSelect.js';
 import FritekstInput, {
   type FritekstInputInvalid,
@@ -45,8 +45,6 @@ type MessagesProps = {
   readonly arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
   readonly api: BackendApi;
 };
-
-export const tredjepartsmottakerValg = 'inputTredjepartsmottaker';
 
 const Messages = ({
   maler,

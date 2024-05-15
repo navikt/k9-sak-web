@@ -6,7 +6,6 @@ import {
   lagVisningsnavnForMottaker,
   type Personopplysninger,
 } from '../../utils/formidling.js';
-import { tredjepartsmottakerValg } from './Messages.js';
 
 type MottakerSelectProps = {
   readonly valgtMal: Template | undefined;
@@ -15,6 +14,8 @@ type MottakerSelectProps = {
   readonly arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId | undefined;
   readonly onChange?: (valgtMottakerId: string) => void;
 };
+
+export const tredjepartsmottakerValg = 'inputTredjepartsmottaker';
 
 const MottakerSelect = ({
   valgtMal,
