@@ -24,7 +24,6 @@ describe('<InnsynVedtakForm>', () => {
         saksNr={123}
         sprakkode={{}}
         documents={[]}
-        innsynResultatTyper={[{ kode: 'kodeTest', navn: 'navnTest' }]}
       />,
       { messages },
     );
@@ -43,7 +42,6 @@ describe('<InnsynVedtakForm>', () => {
         sprakkode={{}}
         saksNr={123}
         documents={[]}
-        innsynResultatTyper={[{ kode: 'kodeTest', navn: 'navnTest' }]}
       />,
       { messages },
     );
@@ -63,7 +61,6 @@ describe('<InnsynVedtakForm>', () => {
         saksNr={123}
         sprakkode={{}}
         documents={[]}
-        innsynResultatTyper={[{ kode: 'kodeTest', navn: 'navnTest' }]}
       />,
       { messages },
     );
@@ -82,7 +79,6 @@ describe('<InnsynVedtakForm>', () => {
         sprakkode={{}}
         saksNr={123}
         documents={[]}
-        innsynResultatTyper={[{ kode: 'kodeTest', navn: 'navnTest' }]}
       />,
       { messages },
     );
@@ -102,7 +98,6 @@ describe('<InnsynVedtakForm>', () => {
         saksNr={123}
         sprakkode={{}}
         documents={[]}
-        innsynResultatTyper={[{ kode: 'kodeTest', navn: 'navnTest' }]}
       />,
       { messages },
     );
@@ -121,7 +116,6 @@ describe('<InnsynVedtakForm>', () => {
         saksNr={123}
         sprakkode={{}}
         documents={[]}
-        innsynResultatTyper={[{ kode: 'kodeTest', navn: 'navnTest' }]}
       />,
       { messages },
     );
@@ -140,7 +134,6 @@ describe('<InnsynVedtakForm>', () => {
         sprakkode={{}}
         saksNr={123}
         documents={[]}
-        innsynResultatTyper={[{ kode: 'kodeTest', navn: 'navnTest' }]}
       />,
       { messages },
     );
@@ -168,7 +161,6 @@ describe('<InnsynVedtakForm>', () => {
             fikkInnsyn: true,
           },
         ]}
-        innsynResultatTyper={[{ kode: 'kodeTest', navn: 'navnTest' }]}
       />,
       { messages },
     );
@@ -195,7 +187,6 @@ describe('<InnsynVedtakForm>', () => {
             fikkInnsyn: true,
           },
         ]}
-        innsynResultatTyper={[{ kode: 'kodeTest', navn: 'navnTest' }]}
       />,
       { messages },
     );
@@ -214,7 +205,6 @@ describe('<InnsynVedtakForm>', () => {
         sprakkode={{}}
         saksNr={123}
         documents={[]}
-        innsynResultatTyper={[{ kode: 'kodeTest', navn: 'navnTest' }]}
       />,
       { messages },
     );
@@ -235,7 +225,6 @@ describe('<InnsynVedtakForm>', () => {
         sprakkode={{}}
         saksNr={123}
         documents={[]}
-        innsynResultatTyper={[{ kode: 'kodeTest', navn: 'navnTest' }]}
       />,
       { messages },
     );
@@ -253,7 +242,6 @@ describe('<InnsynVedtakForm>', () => {
         sprakkode={{}}
         saksNr={123}
         documents={[]}
-        innsynResultatTyper={[{ kode: 'kodeTest', navn: 'navnTest' }]}
       />,
       { messages },
     );
@@ -272,7 +260,6 @@ describe('<InnsynVedtakForm>', () => {
         sprakkode={{}}
         saksNr={123}
         documents={[]}
-        innsynResultatTyper={[{ kode: 'kodeTest', navn: 'navnTest' }]}
       />,
       { messages },
     );
