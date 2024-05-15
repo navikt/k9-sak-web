@@ -8,10 +8,13 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 
+// @ts-ignore
+const { VITE_LOCAL_STORYBOOK } = import.meta.env;
+
 initialize({
   onUnhandledRequest: 'bypass',
   serviceWorker: {
-    url: '/k9-sak-web/mockServiceWorker.js',
+    url: VITE_LOCAL_STORYBOOK ? '/mockServiceWorker.js' : '/k9-sak-web/mockServiceWorker.js',
   },
 });
 

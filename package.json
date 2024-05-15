@@ -30,7 +30,7 @@
     "up": "docker-compose up -d --remove-orphans --build",
     "down": "docker-compose down",
     "preview": "vite preview",
-    "storybook": "storybook dev -p 9001",
+    "storybook": "VITE_LOCAL_STORYBOOK=true storybook dev -p 9001",
     "build-storybook": "storybook build -o .static_storybook",
     "prepare": "husky install",
     "sentry-release": "(SENTRY_RELEASE=$(git rev-parse --short HEAD); node ./scripts/sentry-release.cjs)"
@@ -119,7 +119,6 @@
     "typescript": "5.4.5",
     "vite": "^5.2.11",
     "vite-plugin-html": "^3.2.2",
-    "vite-plugin-static-copy": "^1.0.4",
     "vitest": "1.6.0",
     "vitest-axe": "0.1.0",
     "webpack-merge": "5.10.0"
