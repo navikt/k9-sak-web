@@ -59,7 +59,7 @@
     "@navikt/ft-plattform-komponenter": "2.5.8",
     "@navikt/ft-prosess-beregningsgrunnlag": "6.5.8",
     "@navikt/ft-ui-komponenter": "2.3.5",
-    "@sentry/browser": "8.0.0",
+    "@sentry/browser": "8.1.0",
     "@sentry/react": "^8.0.0",
     "axios": "1.6.8",
     "classnames": "2.5.1",
