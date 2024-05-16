@@ -4864,7 +4864,7 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.8
     "@navikt/ft-ui-komponenter": 2.3.5
     "@sentry/browser": 8.0.0
-    "@sentry/react": ^8.0.0
+    "@sentry/react": ^8.1.0
     axios: 1.6.8
     classnames: 2.5.1
     history: 5.3.0
@@ -5908,6 +5908,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sentry-internal/browser-utils@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@sentry-internal/browser-utils@npm:8.1.0"
+  dependencies:
+    "@sentry/core": 8.1.0
+    "@sentry/types": 8.1.0
+    "@sentry/utils": 8.1.0
+  checksum: a0bfa670d26ff94932f683dffad84317c68895dc05795e7ebdf175f814a37a6a0b757cf314966ed9ed530be2a7fc837a0583a907217b6fb31eaa38e9ba60f4c4
+  languageName: node
+  linkType: hard
+
 "@sentry-internal/feedback@npm:8.0.0":
   version: 8.0.0
   resolution: "@sentry-internal/feedback@npm:8.0.0"
@@ -5916,6 +5927,17 @@ __metadata:
     "@sentry/types": 8.0.0
     "@sentry/utils": 8.0.0
   checksum: ebe21df8ae6280aa92cd45f29affec0d81a85d51b16fa8d095981cba199dc16896ad4924baafefe1802e08c407121dbe750b95036af266864ce3e16e23c8270f
+  languageName: node
+  linkType: hard
+
+"@sentry-internal/feedback@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@sentry-internal/feedback@npm:8.1.0"
+  dependencies:
+    "@sentry/core": 8.1.0
+    "@sentry/types": 8.1.0
+    "@sentry/utils": 8.1.0
+  checksum: 23b1fee35f3c0f9b418b8a029d30f60f87a4747bf90a8120f74cd37192d6a161de34a0713548211b5b4624ce6d2726ef92540289b528dee9c342d0fb33bf9704
   languageName: node
   linkType: hard
 
@@ -5931,6 +5953,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sentry-internal/replay-canvas@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@sentry-internal/replay-canvas@npm:8.1.0"
+  dependencies:
+    "@sentry-internal/replay": 8.1.0
+    "@sentry/core": 8.1.0
+    "@sentry/types": 8.1.0
+    "@sentry/utils": 8.1.0
+  checksum: 2ce04ca729de3728261a3cd47df282a85773718b55874c6a0f749f3e0e7223c9ac31e816904fcd916bb726302971cacd59c922175759e001d675a6446025ec18
+  languageName: node
+  linkType: hard
+
 "@sentry-internal/replay@npm:8.0.0":
   version: 8.0.0
   resolution: "@sentry-internal/replay@npm:8.0.0"
@@ -5940,6 +5974,18 @@ __metadata:
     "@sentry/types": 8.0.0
     "@sentry/utils": 8.0.0
   checksum: 02ce83b9c980a81f43ff87c8bacb293245383ac58288a26cba732b552e0595c8a5e002f6abe7ee85b29d1c05d48bdc11ccd9133a75c29891bf8409a00e45ded3
+  languageName: node
+  linkType: hard
+
+"@sentry-internal/replay@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@sentry-internal/replay@npm:8.1.0"
+  dependencies:
+    "@sentry-internal/browser-utils": 8.1.0
+    "@sentry/core": 8.1.0
+    "@sentry/types": 8.1.0
+    "@sentry/utils": 8.1.0
+  checksum: 3a2f4ba6d6c5565a8a47c731dd8362ea95e28bf9d608f75b51c936e84f15c0eab8c5a7eef6dc8d5a6652b4a287fec5bbbd271bb0915382f765debc68c8495152
   languageName: node
   linkType: hard
 
@@ -5955,6 +6001,21 @@ __metadata:
     "@sentry/types": 8.0.0
     "@sentry/utils": 8.0.0
   checksum: 40664877d4a75148dabf2ebc47fa1d33a03f1aaf70cdfe025f59e4803d5ff673ab76a9142ad029c84332cf67fd97b80797aead682b2222e01a5baef05224d573
+  languageName: node
+  linkType: hard
+
+"@sentry/browser@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@sentry/browser@npm:8.1.0"
+  dependencies:
+    "@sentry-internal/browser-utils": 8.1.0
+    "@sentry-internal/feedback": 8.1.0
+    "@sentry-internal/replay": 8.1.0
+    "@sentry-internal/replay-canvas": 8.1.0
+    "@sentry/core": 8.1.0
+    "@sentry/types": 8.1.0
+    "@sentry/utils": 8.1.0
+  checksum: f5aa4ce91e26894559858ac82aa190edd7afab1c5eacebeb676b9c2e38a133aaf2253ae0cefae745a75304e2fb0754afb69109f9b6d1aa974e6b9766756ed58f
   languageName: node
   linkType: hard
 
@@ -6054,18 +6115,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/react@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "@sentry/react@npm:8.0.0"
+"@sentry/core@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@sentry/core@npm:8.1.0"
   dependencies:
-    "@sentry/browser": 8.0.0
-    "@sentry/core": 8.0.0
-    "@sentry/types": 8.0.0
-    "@sentry/utils": 8.0.0
+    "@sentry/types": 8.1.0
+    "@sentry/utils": 8.1.0
+  checksum: 81f40bcef0b33f84a959808200785723e235c0bd14fcbf1835e470b135eea097998cf4c4d32623277774c56a315bf977e78fd9b9ad7243bfb280a7479f647663
+  languageName: node
+  linkType: hard
+
+"@sentry/react@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "@sentry/react@npm:8.1.0"
+  dependencies:
+    "@sentry/browser": 8.1.0
+    "@sentry/core": 8.1.0
+    "@sentry/types": 8.1.0
+    "@sentry/utils": 8.1.0
     hoist-non-react-statics: ^3.3.2
   peerDependencies:
     react: 16.x || 17.x || 18.x
-  checksum: 9ed48b77865b2234a33cfdd7de4666f427037fe147ee31905561d0a35f069d67541ffc7759c812da6ad01e0d3e8f5e288ee6545f4d9fe46c38196da417d574ce
+  checksum: 8d5c066686ec2d6e765601245f6eb2c16bec409964130ccbe44101d83f280af0e133afae8cbf1e72437540ba4753d56343b8d95a9aa8d90ad2c46c17f71c09ed
   languageName: node
   linkType: hard
 
@@ -6076,12 +6147,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sentry/types@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@sentry/types@npm:8.1.0"
+  checksum: 1675321a1bc81c8d19f526a4dd902ba83ac365365e5dfb1bc6875ec814ca726d9b6fd4f8f40693841a6365458dabfd170b0bcbfd69af107bda360af1b2b02eba
+  languageName: node
+  linkType: hard
+
 "@sentry/utils@npm:8.0.0":
   version: 8.0.0
   resolution: "@sentry/utils@npm:8.0.0"
   dependencies:
     "@sentry/types": 8.0.0
   checksum: 5e3b46243c68b934970dcb0811f2571d2cd3bdfd5d446f738f772947f4a50a72b40e253f56107582ca01ad49970058c92c495ae33d1a05bfe5595e54aef449a1
+  languageName: node
+  linkType: hard
+
+"@sentry/utils@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@sentry/utils@npm:8.1.0"
+  dependencies:
+    "@sentry/types": 8.1.0
+  checksum: 59293f7d4101b75bb459504608ecf923ba156740bf5d35e0031f708bc0a3ee72447b0a29ea0f189bf6d5edc5e1630d9aa847825eb907df974885d820bf94bfc1
   languageName: node
   linkType: hard
 
@@ -13708,7 +13795,7 @@ __metadata:
     "@popperjs/core": 2.11.8
     "@sentry/browser": 8.0.0
     "@sentry/cli": 2.31.2
-    "@sentry/react": ^8.0.0
+    "@sentry/react": ^8.1.0
     "@storybook/addon-actions": ^8.0.10
     "@storybook/addon-docs": ^8.0.10
     "@storybook/addon-essentials": ^8.0.10
