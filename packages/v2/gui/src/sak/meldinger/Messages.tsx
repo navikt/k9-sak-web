@@ -34,7 +34,7 @@ export interface BackendApi extends TredjepartsmottakerBackendApi {
     maltype: string,
   ): Promise<FritekstbrevDokumentdata[]>;
   bestillDokument(bestilling: BestillBrevDto): Promise<void>;
-  forhåndsvis(data: ForhåndsvisDto): Promise<Blob>;
+  lagForhåndsvisningPdf(data: ForhåndsvisDto): Promise<Blob>;
 }
 
 type MessagesProps = {
@@ -192,7 +192,7 @@ const Messages = ({
           aktørId: fagsak.person.aktørId,
           avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
         };
-        const pdfBlob = await api.forhåndsvis(forhåndsvisDto);
+        const pdfBlob = await api.lagForhåndsvisningPdf(forhåndsvisDto);
         window.open(URL.createObjectURL(pdfBlob));
       } else {
         throw new Error(`fagsak.person.aktørId was undefined. Saksnummer: ${fagsak.saksnummer}`);

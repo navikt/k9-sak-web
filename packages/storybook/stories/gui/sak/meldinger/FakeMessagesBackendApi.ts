@@ -49,7 +49,7 @@ export class FakeMessagesBackendApi implements BackendApi {
     action('bestillDokument')(bestilling);
   }
 
-  async forhåndsvis(data: ForhåndsvisDto): Promise<Blob> {
+  async lagForhåndsvisningPdf(data: ForhåndsvisDto): Promise<Blob> {
     action('lag pdf data')(data);
     await sleep(1_000);
     return fakePdf();
