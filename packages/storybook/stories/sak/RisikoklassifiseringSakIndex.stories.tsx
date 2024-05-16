@@ -1,8 +1,8 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
+import React from 'react';
 
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
 import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
 
@@ -17,18 +17,22 @@ export default {
   decorators: [withReduxProvider, withWidthProvider],
 };
 
-export const visPanelUtenInformasjon = () => (
+export const visPanelUtenInformasjon = props => (
   <RisikoklassifiseringSakIndex
     behandlingId={1}
     behandlingVersjon={1}
-    isPanelOpen={false}
-    readOnly={false}
     submitAksjonspunkt={action('button-click') as () => Promise<any>}
     toggleRiskPanel={action('button-click')}
+    {...props}
   />
 );
 
-export const visPanelForLavRisikoklassifisering = () => (
+visPanelUtenInformasjon.args = {
+  isPanelOpen: false,
+  readOnly: false,
+};
+
+export const visPanelForLavRisikoklassifisering = props => (
   <RisikoklassifiseringSakIndex
     behandlingId={1}
     behandlingVersjon={1}
@@ -38,14 +42,18 @@ export const visPanelForLavRisikoklassifisering = () => (
         kodeverk: '',
       },
     }}
-    isPanelOpen={false}
-    readOnly={false}
     submitAksjonspunkt={action('button-click') as () => Promise<any>}
     toggleRiskPanel={action('button-click')}
+    {...props}
   />
 );
 
-export const visPanelForHøyRisikoklassifisering = () => (
+visPanelForLavRisikoklassifisering.args = {
+  isPanelOpen: false,
+  readOnly: false,
+};
+
+export const visPanelForHøyRisikoklassifisering = props => (
   <RisikoklassifiseringSakIndex
     behandlingId={1}
     behandlingVersjon={1}
@@ -78,9 +86,13 @@ export const visPanelForHøyRisikoklassifisering = () => (
         ],
       },
     }}
-    readOnly={false}
     submitAksjonspunkt={action('button-click') as () => Promise<any>}
     isPanelOpen
     toggleRiskPanel={action('button-click')}
+    {...props}
   />
 );
+
+visPanelForHøyRisikoklassifisering.args = {
+  readOnly: false,
+};

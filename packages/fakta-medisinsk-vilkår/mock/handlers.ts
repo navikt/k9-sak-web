@@ -1,6 +1,8 @@
 /* eslint-disable import/prefer-default-export */
-import { rest } from 'msw';
-import { Dokumenttype } from '../src/types/Dokument';
+import { Period } from '@fpsak-frontend/utils';
+import { http, HttpResponse } from 'msw';
+import Dokument, { Dokumenttype } from '../src/types/Dokument';
+import NyVurderingsversjon from '../src/types/NyVurderingsversjon';
 import Vurderingstype from '../src/types/Vurderingstype';
 import { createKontinuerligTilsynVurdering, createToOmsorgspersonerVurdering } from './apiUtils';
 import createMockedVurderingselementLinks from './mocked-data/createMockedVurderingselementLinks';
@@ -17,8 +19,22 @@ import mockedToOmsorgspersonerVurderingsoversikt from './mocked-data/mockedToOms
 
 let mockedNyeDokumenter = [...mockedNyeDokumenterList];
 
+type EndreVurderingRequestBody = NyVurderingsversjon & {
+  endretAv: string;
+  endretTidspunkt: string;
+};
+
+type EndreDiagnosekoderRequestBody = {
+  diagnosekoder: string[];
+};
+
+type EndreInnleggelsesperioderRequestBody = {
+  dryRun: boolean;
+  perioder: Period[];
+};
+
 export const handlers = [
-  rest.get('http://localhost:8082/mock/status', (req, res, ctx) => {
+  http.get('http://localhost:8082/mock/status', () => {
     const harUklassifiserteDokumenter = mockedDokumentoversikt.dokumenter.some(
       ({ type }) => type === Dokumenttype.UKLASSIFISERT,
     );
@@ -35,9 +51,8 @@ export const handlers = [
     const nyttDokumentHarIkkekontrollertEksisterendeVurderinger = mockedNyeDokumenter.length > 0;
     const harDataSomIkkeHarBlittTattMedIBehandling = true;
 
-    return res(
-      ctx.status(200),
-      ctx.json({
+    return HttpResponse.json(
+      {
         kanLøseAksjonspunkt:
           !harUklassifiserteDokumenter &&
           !manglerDiagnosekode &&
@@ -52,23 +67,24 @@ export const handlers = [
         manglerVurderingAvToOmsorgspersoner,
         harDataSomIkkeHarBlittTattMedIBehandling,
         nyttDokumentHarIkkekontrollertEksisterendeVurderinger,
-      }),
+      },
+      { status: 200 },
     );
   }),
 
-  rest.get('http://localhost:8082/mock/vurdering', (req, res, ctx) => {
-    const vurderingId = req.url.searchParams.get('sykdomVurderingId');
+  http.get('http://localhost:8082/mock/vurdering', ({ request }) => {
+    const url = new URL(request.url);
+    const vurderingId = url.searchParams.get('sykdomVurderingId');
     const alleVurderinger = [...mockedTilsynsbehovVurderinger, ...mockedToOmsorgspersonerVurderinger];
     const vurdering = alleVurderinger.find(({ id }) => id === vurderingId);
-    return res(ctx.status(200), ctx.json(vurdering));
+    return HttpResponse.json(vurdering, { status: 200 });
   }),
 
-  rest.post('http://localhost:8082/mock/opprett-vurdering', async (req, res, ctx) => {
-    const body = await req.json();
+  http.post<undefined, NyVurderingsversjon>('http://localhost:8082/mock/opprett-vurdering', async ({ request }) => {
+    const body = await request.json();
     if (body.dryRun === true) {
-      return res(
-        ctx.status(200),
-        ctx.json({
+      return HttpResponse.json(
+        {
           perioderMedEndringer: [
             {
               periode: {
@@ -79,7 +95,8 @@ export const handlers = [
               endrerAnnenVurdering: false,
             },
           ],
-        }),
+        },
+        { status: 200 },
       );
     }
     if (body.type === Vurderingstype.KONTINUERLIG_TILSYN_OG_PLEIE) {
@@ -87,15 +104,14 @@ export const handlers = [
     } else {
       createToOmsorgspersonerVurdering(body);
     }
-    return res(ctx.status(201));
+    return HttpResponse.json(null, { status: 201 });
   }),
 
-  rest.post('http://localhost:8082/mock/endre-vurdering', async (req, res, ctx) => {
-    const body = await req.json();
+  http.post<undefined, EndreVurderingRequestBody>('http://localhost:8082/mock/endre-vurdering', async ({ request }) => {
+    const body = await request.json();
     if (body.dryRun === true) {
-      return res(
-        ctx.status(201),
-        ctx.json({
+      return HttpResponse.json(
+        {
           perioderMedEndringer: [
             {
               periode: {
@@ -106,7 +122,8 @@ export const handlers = [
               endrerAnnenVurdering: false,
             },
           ],
-        }),
+        },
+        { status: 201 },
       );
     }
     const { id } = body;
@@ -137,82 +154,86 @@ export const handlers = [
         endretTidspunkt: body.endretTidspunkt,
       });
     }
-    return res(ctx.status(201));
+    return HttpResponse.json(null, { status: 201 });
   }),
 
-  rest.get('http://localhost:8082/mock/kontinuerlig-tilsyn-og-pleie/vurderingsoversikt', (req, res, ctx) => {
+  http.get('http://localhost:8082/mock/kontinuerlig-tilsyn-og-pleie/vurderingsoversikt', () => {
     const harGyldigSignatur = mockedDokumentoversikt.dokumenter.some(({ type }) => type === Dokumenttype.LEGEERKLÆRING);
-    return res(
-      ctx.status(200),
-      ctx.json({
+    return HttpResponse.json(
+      {
         ...mockedTilsynsbehovVurderingsoversikt,
         harGyldigSignatur,
         resterendeVurderingsperioder: !harGyldigSignatur
           ? []
           : mockedTilsynsbehovVurderingsoversikt.resterendeVurderingsperioder,
-      }),
+      },
+      { status: 200 },
     );
   }),
 
-  rest.get('http://localhost:8082/mock/to-omsorgspersoner/vurderingsoversikt', (req, res, ctx) => {
+  http.get('http://localhost:8082/mock/to-omsorgspersoner/vurderingsoversikt', () => {
     const harGyldigSignatur = mockedDokumentoversikt.dokumenter.some(({ type }) => type === Dokumenttype.LEGEERKLÆRING);
-    return res(
-      ctx.status(200),
-      ctx.json({
+    return HttpResponse.json(
+      {
         ...mockedToOmsorgspersonerVurderingsoversikt,
         harGyldigSignatur,
         resterendeVurderingsperioder: !harGyldigSignatur
           ? []
           : mockedToOmsorgspersonerVurderingsoversikt.resterendeVurderingsperioder,
-      }),
+      },
+      { status: 200 },
     );
   }),
 
-  rest.get('http://localhost:8082/mock/dokumentoversikt', (req, res, ctx) =>
-    res(ctx.status(200), ctx.json(mockedDokumentoversikt)),
+  http.get('http://localhost:8082/mock/dokumentoversikt', () =>
+    HttpResponse.json(mockedDokumentoversikt, { status: 200 }),
   ),
 
-  rest.post('http://localhost:8082/mock/endre-dokument', async (req, res, ctx) => {
-    const body = await req.json();
+  http.post<undefined, Dokument>('http://localhost:8082/mock/endre-dokument', async ({ request }) => {
+    const body = await request.json();
     createStrukturertDokument(body);
-    return res(ctx.status(201), ctx.json(mockedDokumentoversikt));
+    return HttpResponse.json(mockedDokumentoversikt, { status: 201 });
   }),
 
-  rest.get('http://localhost:8082/mock/data-til-vurdering', (req, res, ctx) =>
-    res(ctx.status(200), ctx.json(mockedDokumentliste)),
+  http.get('http://localhost:8082/mock/data-til-vurdering', () =>
+    HttpResponse.json(mockedDokumentliste, { status: 200 }),
   ),
 
-  rest.get('http://localhost:8082/mock/diagnosekoder', (req, res, ctx) =>
-    res(ctx.status(200), ctx.json(mockedDiagnosekoderesponse)),
+  http.get('http://localhost:8082/mock/diagnosekoder', () =>
+    HttpResponse.json(mockedDiagnosekoderesponse, { status: 200 }),
   ),
 
-  rest.post('http://localhost:8082/mock/endre-diagnosekoder', async (req, res, ctx) => {
-    const body = await req.json();
-    mockedDiagnosekoderesponse.diagnosekoder = body.diagnosekoder || [];
-    return res(ctx.status(201), ctx.json({}));
-  }),
-
-  rest.get('http://localhost:8082/mock/innleggelsesperioder', (req, res, ctx) =>
-    res(ctx.status(200), ctx.json(mockedInnleggelsesperioder)),
+  http.post<undefined, EndreDiagnosekoderRequestBody>(
+    'http://localhost:8082/mock/endre-diagnosekoder',
+    async ({ request }) => {
+      const body = await request.json();
+      mockedDiagnosekoderesponse.diagnosekoder = body.diagnosekoder || [];
+      return HttpResponse.json({}, { status: 201 });
+    },
   ),
 
-  rest.post('http://localhost:8082/mock/endre-innleggelsesperioder', async (req, res, ctx) => {
-    const body = await req.json();
-    if (body.dryRun === true) {
-      return res(ctx.status(200), ctx.json({ førerTilRevurdering: true }));
-    }
-    mockedInnleggelsesperioder.perioder = body.perioder || [];
-    return res(ctx.status(200), ctx.json({}));
-  }),
-
-  rest.get('http://localhost:8082/mock/nye-dokumenter', (req, res, ctx) =>
-    res(ctx.status(200), ctx.json(mockedNyeDokumenter)),
+  http.get('http://localhost:8082/mock/innleggelsesperioder', () =>
+    HttpResponse.json(mockedInnleggelsesperioder, { status: 200 }),
   ),
 
-  rest.post('http://localhost:8082/mock/nye-dokumenter', (req, res, ctx) => {
+  http.post<undefined, EndreInnleggelsesperioderRequestBody>(
+    'http://localhost:8082/mock/endre-innleggelsesperioder',
+    async ({ request }) => {
+      const body = await request.json();
+      if (body.dryRun === true) {
+        return HttpResponse.json({ førerTilRevurdering: true }, { status: 200 });
+      }
+      mockedInnleggelsesperioder.perioder = body.perioder || [];
+      return HttpResponse.json({}, { status: 200 });
+    },
+  ),
+
+  http.get('http://localhost:8082/mock/nye-dokumenter', () => HttpResponse.json(mockedNyeDokumenter, { status: 200 })),
+
+  http.post('http://localhost:8082/mock/nye-dokumenter', () => {
     mockedNyeDokumenter = [];
-    return res(ctx.status(201), ctx.json({}));
+    return HttpResponse.json({}, { status: 201 });
   }),
 
-  rest.get('/', (req, res, ctx) => res(ctx.status(200))),
+  http.get('/', () => HttpResponse.json(null, { status: 200 })),
 ];

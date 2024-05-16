@@ -1,5 +1,4 @@
 import { action } from '@storybook/addon-actions';
-import { boolean, withKnobs } from '@storybook/addon-knobs';
 import React, { useMemo, useState } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -76,28 +75,32 @@ const resultatstrukturOriginalBehandling = {};
 export default {
   title: 'prosess/prosess-vedtak',
   component: VedtakProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visÅpentAksjonspunktOgInnvilgetForForeldrepenger = () => (
+export const visÅpentAksjonspunktOgInnvilgetForForeldrepenger = args => (
   <VedtakProsessIndex
     behandling={behandling}
     vilkar={vilkar}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[]}
     ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
-    employeeHasAccess={boolean('employeeHasAccess', false)}
-    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
+    {...args}
   />
 );
 
-export const visDelvisInnvilgetForOmsorgspenger = () => (
+visÅpentAksjonspunktOgInnvilgetForForeldrepenger.args = {
+  sendVarselOmRevurdering: false,
+  employeeHasAccess: false,
+  isReadOnly: false,
+};
+
+export const visDelvisInnvilgetForOmsorgspenger = args => (
   <VedtakProsessIndex
     behandling={{
       ...behandling,
@@ -112,20 +115,24 @@ export const visDelvisInnvilgetForOmsorgspenger = () => (
     }}
     vilkar={vilkar}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[]}
     ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
-    employeeHasAccess={boolean('employeeHasAccess', false)}
-    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
+    {...args}
   />
 );
 
-export const visAvslagForForeldrepenger = () => (
+visDelvisInnvilgetForOmsorgspenger.args = {
+  sendVarselOmRevurdering: false,
+  employeeHasAccess: false,
+  isReadOnly: false,
+};
+
+export const visAvslagForForeldrepenger = args => (
   <VedtakProsessIndex
     behandling={{
       ...behandling,
@@ -151,25 +158,28 @@ export const visAvslagForForeldrepenger = () => (
       },
     ]}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[]}
     ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
-    employeeHasAccess={boolean('employeeHasAccess', false)}
-    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
+    {...args}
   />
 );
 
-export const visÅpentAksjonspunktForSvangerskapspenger = () => (
+visAvslagForForeldrepenger.args = {
+  sendVarselOmRevurdering: false,
+  employeeHasAccess: false,
+  isReadOnly: false,
+};
+
+export const visÅpentAksjonspunktForSvangerskapspenger = args => (
   <VedtakProsessIndex
     behandling={behandling}
     vilkar={vilkar}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[
@@ -186,15 +196,20 @@ export const visÅpentAksjonspunktForSvangerskapspenger = () => (
       },
     ]}
     ytelseType={{ kode: fagsakYtelseType.SVANGERSKAPSPENGER }}
-    employeeHasAccess={boolean('employeeHasAccess', false)}
-    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
+    {...args}
   />
 );
 
-export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = () => {
+visÅpentAksjonspunktForSvangerskapspenger.args = {
+  sendVarselOmRevurdering: false,
+  employeeHasAccess: false,
+  isReadOnly: false,
+};
+
+export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = args => {
   const [vedtakFormState, setVedtakFormState] = useState(null);
   const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
 
@@ -225,7 +240,6 @@ export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = () => {
           },
         ]}
         beregningresultatForeldrepenger={resultatstruktur}
-        sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[
@@ -242,22 +256,26 @@ export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = () => {
           },
         ]}
         ytelseType={{ kode: fagsakYtelseType.SVANGERSKAPSPENGER }}
-        employeeHasAccess={boolean('employeeHasAccess', false)}
-        isReadOnly={boolean('isReadOnly', false)}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
+        {...args}
       />
     </VedtakFormContext.Provider>
   );
 };
 
-export const visÅpentAksjonspunktForEngangsstønad = () => (
+visModalForObligatoriskFritekstbrevForSvangerskapspenger.args = {
+  sendVarselOmRevurdering: false,
+  employeeHasAccess: false,
+  isReadOnly: false,
+};
+
+export const visÅpentAksjonspunktForEngangsstønad = args => (
   <VedtakProsessIndex
     behandling={behandling}
     vilkar={vilkar}
     beregningresultatEngangsstonad={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[
@@ -274,15 +292,20 @@ export const visÅpentAksjonspunktForEngangsstønad = () => (
       },
     ]}
     ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
-    employeeHasAccess={boolean('employeeHasAccess', false)}
-    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
+    {...args}
   />
 );
 
-export const visAtBehandlingErHenlagt = () => (
+visÅpentAksjonspunktForEngangsstønad.args = {
+  sendVarselOmRevurdering: false,
+  employeeHasAccess: false,
+  isReadOnly: false,
+};
+
+export const visAtBehandlingErHenlagt = args => (
   <VedtakProsessIndex
     behandling={{
       ...behandling,
@@ -290,7 +313,6 @@ export const visAtBehandlingErHenlagt = () => (
     }}
     vilkar={vilkar}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[
@@ -307,15 +329,20 @@ export const visAtBehandlingErHenlagt = () => (
       },
     ]}
     ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
-    employeeHasAccess={boolean('employeeHasAccess', false)}
-    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
+    {...args}
   />
 );
 
-export const visInnvilgetForForeldrepengerRevurdering = () => (
+visAtBehandlingErHenlagt.args = {
+  sendVarselOmRevurdering: false,
+  employeeHasAccess: false,
+  isReadOnly: false,
+};
+
+export const visInnvilgetForForeldrepengerRevurdering = args => (
   <VedtakProsessIndex
     behandling={{
       ...behandling,
@@ -333,7 +360,6 @@ export const visInnvilgetForForeldrepengerRevurdering = () => (
     }}
     vilkar={vilkar}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[
@@ -356,15 +382,20 @@ export const visInnvilgetForForeldrepengerRevurdering = () => (
       },
     }}
     ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
-    employeeHasAccess={boolean('employeeHasAccess', false)}
-    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
+    {...args}
   />
 );
 
-export const visOpphørtForForeldrepengerRevurdering = () => (
+visInnvilgetForForeldrepengerRevurdering.args = {
+  sendVarselOmRevurdering: false,
+  employeeHasAccess: false,
+  isReadOnly: false,
+};
+
+export const visOpphørtForForeldrepengerRevurdering = args => (
   <VedtakProsessIndex
     behandling={{
       ...behandling,
@@ -382,20 +413,24 @@ export const visOpphørtForForeldrepengerRevurdering = () => (
     }}
     vilkar={vilkar}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[]}
     ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
-    employeeHasAccess={boolean('employeeHasAccess', false)}
-    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
+    {...args}
   />
 );
 
-export const visInnvilgetForEngangsstønadRevurdering = () => (
+visOpphørtForForeldrepengerRevurdering.args = {
+  sendVarselOmRevurdering: false,
+  employeeHasAccess: false,
+  isReadOnly: false,
+};
+
+export const visInnvilgetForEngangsstønadRevurdering = args => (
   <VedtakProsessIndex
     behandling={{
       ...behandling,
@@ -405,20 +440,24 @@ export const visInnvilgetForEngangsstønadRevurdering = () => (
     }}
     vilkar={vilkar}
     beregningresultatEngangsstonad={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[]}
     ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
-    employeeHasAccess={boolean('employeeHasAccess', false)}
-    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
+    {...args}
   />
 );
 
-export const visAvslåttForEngangsstønadRevurdering = () => (
+visInnvilgetForEngangsstønadRevurdering.args = {
+  sendVarselOmRevurdering: false,
+  employeeHasAccess: false,
+  isReadOnly: false,
+};
+
+export const visAvslåttForEngangsstønadRevurdering = args => (
   <VedtakProsessIndex
     behandling={{
       ...behandling,
@@ -447,20 +486,24 @@ export const visAvslåttForEngangsstønadRevurdering = () => (
       },
     ]}
     beregningresultatEngangsstonad={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[]}
     ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
-    employeeHasAccess={boolean('employeeHasAccess', false)}
-    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
+    {...args}
   />
 );
 
-export const visOverlappendeYtelser = () => {
+visAvslåttForEngangsstønadRevurdering.args = {
+  sendVarselOmRevurdering: false,
+  employeeHasAccess: false,
+  isReadOnly: false,
+};
+
+export const visOverlappendeYtelser = args => {
   const [vedtakFormState, setVedtakFormState] = useState(null);
   const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
 
@@ -596,23 +639,27 @@ export const visOverlappendeYtelser = () => {
           },
         ]}
         beregningresultatEngangsstonad={resultatstruktur}
-        sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[aksjonspunkt5040]}
         ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
-        employeeHasAccess={boolean('employeeHasAccess', false)}
-        isReadOnly={boolean('isReadOnly', false)}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
         overlappendeYtelser={overlappendeYtelser}
+        {...args}
       />
     </VedtakFormContext.Provider>
   );
 };
 
-export const brevMedFritekstfelt = () => {
+visOverlappendeYtelser.args = {
+  sendVarselOmRevurdering: false,
+  employeeHasAccess: false,
+  isReadOnly: false,
+};
+
+export const brevMedFritekstfelt = args => {
   const [vedtakFormState, setVedtakFormState] = useState(null);
   const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
 
@@ -622,13 +669,10 @@ export const brevMedFritekstfelt = () => {
         behandling={behandling}
         vilkar={[]}
         beregningresultatEngangsstonad={resultatstruktur}
-        sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
         ytelseType={{ kode: fagsakYtelseType.PLEIEPENGER }}
-        employeeHasAccess={boolean('employeeHasAccess', true)}
-        isReadOnly={boolean('isReadOnly', false)}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -662,7 +706,14 @@ export const brevMedFritekstfelt = () => {
             INGEN: null,
           },
         }}
+        {...args}
       />
     </VedtakFormContext.Provider>
   );
+};
+
+brevMedFritekstfelt.args = {
+  sendVarselOmRevurdering: false,
+  employeeHasAccess: true,
+  isReadOnly: false,
 };

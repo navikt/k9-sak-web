@@ -4,7 +4,6 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 import { action } from '@storybook/addon-actions';
-import { boolean, object, withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
@@ -61,7 +60,7 @@ const vilkarMedlemskap = [
 export default {
   title: 'prosess/prosess-vilkar-overstyring',
   component: VilkarresultatMedOverstyringProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
 const behandling = {
@@ -70,7 +69,7 @@ const behandling = {
   type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
 } as Behandling;
 
-export const visOverstyringspanelForOpptjening = () => {
+export const visOverstyringspanelForOpptjening = args => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <VilkarresultatMedOverstyringProsessIndex
@@ -80,10 +79,6 @@ export const visOverstyringspanelForOpptjening = () => {
       }}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
-      overrideReadOnly={boolean('overrideReadOnly', false)}
-      kanOverstyreAccess={object('kanOverstyreAccess', {
-        isEnabled: true,
-      })}
       toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
       erOverstyrt={erOverstyrt}
       avslagsarsaker={avslagsarsaker}
@@ -94,11 +89,19 @@ export const visOverstyringspanelForOpptjening = () => {
       vilkar={vilkarOpptjening}
       visAllePerioder
       erMedlemskapsPanel={false}
+      {...args}
     />
   );
 };
 
-export const visOverstyringspanelForMedlemskap = () => {
+visOverstyringspanelForOpptjening.args = {
+  overrideReadOnly: false,
+  kanOverstyreAccess: {
+    isEnabled: true,
+  },
+};
+
+export const visOverstyringspanelForMedlemskap = args => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <VilkarresultatMedOverstyringProsessIndex
@@ -108,10 +111,6 @@ export const visOverstyringspanelForMedlemskap = () => {
       }}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
-      overrideReadOnly={boolean('overrideReadOnly', false)}
-      kanOverstyreAccess={object('kanOverstyreAccess', {
-        isEnabled: true,
-      })}
       toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
       erOverstyrt={erOverstyrt}
       avslagsarsaker={avslagsarsaker}
@@ -122,11 +121,19 @@ export const visOverstyringspanelForMedlemskap = () => {
       vilkar={vilkarMedlemskap}
       visAllePerioder
       erMedlemskapsPanel={false}
+      {...args}
     />
   );
 };
 
-export const visOverstyrtAksjonspunktSomErBekreftet = () => (
+visOverstyringspanelForMedlemskap.args = {
+  overrideReadOnly: false,
+  kanOverstyreAccess: {
+    isEnabled: true,
+  },
+};
+
+export const visOverstyrtAksjonspunktSomErBekreftet = args => (
   <VilkarresultatMedOverstyringProsessIndex
     behandling={
       {
@@ -158,12 +165,7 @@ export const visOverstyrtAksjonspunktSomErBekreftet = () => (
       ] as Aksjonspunkt[]
     }
     submitCallback={action('button-click')}
-    overrideReadOnly={boolean('overrideReadOnly', false)}
-    kanOverstyreAccess={object('kanOverstyreAccess', {
-      isEnabled: true,
-    })}
     toggleOverstyring={action('button-click')}
-    erOverstyrt={boolean('erOverstyrt', false)}
     avslagsarsaker={avslagsarsaker}
     panelTittelKode="Inngangsvilkar.Opptjeningsvilkaret"
     lovReferanse="§§ Dette er en lovreferanse"
@@ -172,5 +174,14 @@ export const visOverstyrtAksjonspunktSomErBekreftet = () => (
     vilkar={vilkarOpptjening}
     visAllePerioder
     erMedlemskapsPanel={false}
+    {...args}
   />
 );
+
+visOverstyrtAksjonspunktSomErBekreftet.args = {
+  overrideReadOnly: false,
+  kanOverstyreAccess: {
+    isEnabled: true,
+  },
+  erOverstyrt: false,
+};

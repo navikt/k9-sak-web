@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import HeaderWithErrorPanel from '@fpsak-frontend/sak-dekorator';
-import { useState } from '@storybook/addons';
 import { MemoryRouter } from 'react-router';
 
 export default {

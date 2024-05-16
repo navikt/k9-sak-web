@@ -1,12 +1,10 @@
 import MenySakIndex, { MenyData } from '@fpsak-frontend/sak-meny';
 import { Modal } from '@navikt/ds-react';
-import { withKnobs } from '@storybook/addon-knobs';
 import React, { useState } from 'react';
 
 export default {
   title: 'sak/sak-meny',
   component: MenySakIndex,
-  decorators: [withKnobs],
 };
 
 export const visMenyMedToHandlinger = () => {

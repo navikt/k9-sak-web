@@ -25,7 +25,7 @@ function initKompletthetsdata({ tilstand }: KompletthetResponse): KompletthetDat
   };
 }
 
-interface MainComponentProps {
+export interface MainComponentProps {
   data: ContainerContract;
 }
 

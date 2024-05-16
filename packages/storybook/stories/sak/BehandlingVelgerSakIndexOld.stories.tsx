@@ -7,10 +7,9 @@ import { BehandlingAppKontekst, Fagsak, Kodeverk } from '@k9-sak-web/types';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import { deprecatedBehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import alleKodeverk from '../mocks/alleKodeverk.json';
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const BEHANDLING_TYPE_KODEVERK = 'BEHANDLING_TYPE';
 const BEHANDLING_STATUS_KODEVERK = 'BEHANDLING_STATUS';
@@ -55,7 +54,7 @@ const behandlinger: BehandlingAppKontekst[] = [
     uuid: 'dummy-uuid-behandling-2',
     versjon: 2,
     type: {
-      kode: deprecatedBehandlingType.DOKUMENTINNSYN,
+      kode: behandlingType.FØRSTEGANGSSØKNAD,
       kodeverk: BEHANDLING_TYPE_KODEVERK,
     },
     status: {
@@ -190,7 +189,7 @@ export default {
   decorators: [withReduxAndRouterProvider],
 };
 
-export const visPanelForValgAvBehandlinger = () => {
+export const visPanelForValgAvBehandlinger = props => {
   const [visAlle, toggleVisAlle] = useState(false);
   return (
     <div style={{ width: '600px' }}>
@@ -204,7 +203,14 @@ export const visPanelForValgAvBehandlinger = () => {
         getKodeverkFn={getKodeverkFn}
         fagsak={fagsak}
         createLocationForSkjermlenke={() => locationMock}
+        {...props}
       />
     </div>
   );
+};
+
+visPanelForValgAvBehandlinger.args = {
+  behandlinger,
+  noExistingBehandlinger: false,
+  behandlingId: 1,
 };

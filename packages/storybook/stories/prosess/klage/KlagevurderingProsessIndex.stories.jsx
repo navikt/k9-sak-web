@@ -1,10 +1,9 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import React from 'react';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
 
 import withReduxProvider from '../../../decorators/withRedux';
@@ -22,28 +21,12 @@ const behandling = {
 export default {
   title: 'prosess/klage/prosess-klagevurdering',
   component: KlagevurderingProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visPanelForKlagevurderingMedAksjonspunktNk = () => (
+export const visPanelForKlagevurderingMedAksjonspunktNk = args => (
   <KlagevurderingProsessIndex
     behandling={behandling}
-    klageVurdering={object('klageVurdering', {
-      klageVurderingResultatNK: {
-        klageVurdertAv: 'NK',
-        klageVurdering: klageVurderingCodes.AVVIS_KLAGE,
-        fritekstTilBrev: 'test',
-        klageMedholdArsakNavn: 'TEST',
-        godkjentAvMedunderskriver: false,
-      },
-      klageFormkravResultatKA: {
-        avvistArsaker: [
-          {
-            navn: 'Denne er avvist fordi...',
-          },
-        ],
-      },
-    })}
     aksjonspunkter={[
       {
         definisjon: {
@@ -53,34 +36,38 @@ export const visPanelForKlagevurderingMedAksjonspunktNk = () => (
     ]}
     saveKlage={action('button-click')}
     submitCallback={action('button-click')}
-    isReadOnly={boolean('readOnly', false)}
     previewCallback={action('button-click')}
-    readOnlySubmitButton={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
+    {...args}
   />
 );
 
-export const visPanelForKlagevurderingMedAksjonspunktNfp = () => (
+visPanelForKlagevurderingMedAksjonspunktNk.args = {
+  klageVurdering: {
+    klageVurderingResultatNK: {
+      klageVurdertAv: 'NK',
+      klageVurdering: klageVurderingCodes.AVVIS_KLAGE,
+      fritekstTilBrev: 'test',
+      klageMedholdArsakNavn: 'TEST',
+      godkjentAvMedunderskriver: false,
+    },
+    klageFormkravResultatKA: {
+      avvistArsaker: [
+        {
+          navn: 'Denne er avvist fordi...',
+        },
+      ],
+    },
+  },
+  isReadOnly: false,
+  readOnlySubmitButton: false,
+};
+
+export const visPanelForKlagevurderingMedAksjonspunktNfp = args => (
   <KlagevurderingProsessIndex
     behandling={behandling}
     // fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
     fagsak={{ sakstype: { kode: fagsakYtelseType.PLEIEPENGER } }}
-    klageVurdering={object('klageVurdering', {
-      klageVurderingResultatNK: {
-        klageVurdertAv: 'NK',
-        klageVurdering: klageVurderingCodes.AVVIS_KLAGE,
-        fritekstTilBrev: 'test',
-        klageMedholdArsakNavn: 'TEST',
-        godkjentAvMedunderskriver: false,
-      },
-      klageFormkravResultatKA: {
-        avvistArsaker: [
-          {
-            navn: 'Denne er avvist fordi...',
-          },
-        ],
-      },
-    })}
     aksjonspunkter={[
       {
         definisjon: {
@@ -90,9 +77,29 @@ export const visPanelForKlagevurderingMedAksjonspunktNfp = () => (
     ]}
     saveKlage={action('button-click')}
     submitCallback={action('button-click')}
-    isReadOnly={boolean('readOnly', false)}
     previewCallback={action('button-click')}
-    readOnlySubmitButton={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
+    {...args}
   />
 );
+
+visPanelForKlagevurderingMedAksjonspunktNfp.args = {
+  klageVurdering: {
+    klageVurderingResultatNK: {
+      klageVurdertAv: 'NK',
+      klageVurdering: klageVurderingCodes.AVVIS_KLAGE,
+      fritekstTilBrev: 'test',
+      klageMedholdArsakNavn: 'TEST',
+      godkjentAvMedunderskriver: false,
+    },
+    klageFormkravResultatKA: {
+      avvistArsaker: [
+        {
+          navn: 'Denne er avvist fordi...',
+        },
+      ],
+    },
+  },
+  isReadOnly: false,
+  readOnlySubmitButton: false,
+};

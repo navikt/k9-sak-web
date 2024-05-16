@@ -121,15 +121,6 @@ describe('<HenleggBehandlingModal>', () => {
     ]);
   });
 
-  it('skal bruke behandlingsresultat-typer for innsyn', () => {
-    const behandlingsType = { kode: behandlingType.DOKUMENTINNSYN, kodeverk: 'BEHANDLING_TYPE' };
-    const resultat = getHenleggArsaker(behandlingResultatTyper, behandlingsType, ytelseType);
-    expect(resultat.map(r => r.kode)).toEqual([
-      behandlingResultatType.HENLAGT_INNSYN_TRUKKET,
-      behandlingResultatType.HENLAGT_FEILOPPRETTET,
-    ]);
-  });
-
   it('skal bruke behandlingsresultat-typer for tilbakekreving', () => {
     const behandlingsType = { kode: behandlingType.TILBAKEKREVING, kodeverk: 'BEHANDLING_TYPE' };
     const resultat = getHenleggArsaker(behandlingResultatTyper, behandlingsType, ytelseType);

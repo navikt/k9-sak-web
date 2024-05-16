@@ -1,6 +1,5 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, text } from '@storybook/addon-knobs';
+import React from 'react';
 
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -14,7 +13,7 @@ import withReduxProvider from '../../decorators/withRedux';
 export default {
   title: 'sak/sak-totrinnskontroll-fatter-vedtak-modal',
   component: FatterVedtakTotrinnskontrollModalSakIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
 const behandling = {
@@ -40,11 +39,11 @@ export const visModalEtterGodkjenning = () => (
     closeEvent={action('button-click')}
     allAksjonspunktApproved
     fagsakYtelseType={{
-      kode: text('Fagsakytelsetype', fagsakYtelseType.FORELDREPENGER),
+      kode: fagsakYtelseType.FORELDREPENGER,
       kodeverk: '',
     }}
     erKlageWithKA={false}
-    harSammeResultatSomOriginalBehandling={boolean('Har samme resultat som original behandling', false)}
+    harSammeResultatSomOriginalBehandling={false}
   />
 );
 
@@ -62,11 +61,11 @@ export const visModalEtterGodkjenningAvKlage = () => (
     closeEvent={action('button-click')}
     allAksjonspunktApproved
     fagsakYtelseType={{
-      kode: text('Fagsakytelsetype', fagsakYtelseType.FORELDREPENGER),
+      kode: fagsakYtelseType.FORELDREPENGER,
       kodeverk: '',
     }}
-    erKlageWithKA={boolean('erKlageWithKA', false)}
-    harSammeResultatSomOriginalBehandling={boolean('Har samme resultat som original behandling', false)}
+    erKlageWithKA={false}
+    harSammeResultatSomOriginalBehandling={false}
   />
 );
 
@@ -80,6 +79,6 @@ export const visModalEtterTilbakesendingTilSaksbehandler = () => (
       kodeverk: '',
     }}
     erKlageWithKA={false}
-    harSammeResultatSomOriginalBehandling={boolean('Har samme resultat som original behandling', false)}
+    harSammeResultatSomOriginalBehandling={false}
   />
 );

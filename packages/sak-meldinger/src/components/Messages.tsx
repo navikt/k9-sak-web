@@ -23,9 +23,8 @@ import {
   Personopplysninger,
 } from '@k9-sak-web/types';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
-import { BodyShort, Button } from '@navikt/ds-react';
+import { BodyShort, Button, Checkbox } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Checkbox } from 'nav-frontend-skjema';
 import React, { useEffect, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
@@ -262,57 +261,60 @@ export const MessagesImpl = ({
     <form onSubmit={handleSubmit} data-testid="MessagesForm">
       {tmpls.length ? (
         <>
-          <SelectField
-            name="brevmalkode"
-            readOnly={tmpls.length === 1 && brevmalkode && brevmalkode === tmpls[0].kode}
-            label={intl.formatMessage({ id: 'Messages.Template' })}
-            validate={[required]}
-            placeholder={intl.formatMessage({ id: 'Messages.ChooseTemplate' })}
-            selectValues={tmpls.map(template => (
-              <option key={template.kode} value={template.kode} disabled={template.tilgjengelig === false}>
-                {template.navn}
-              </option>
-            ))}
-            bredde="xxl"
-          />
+          <div className="input--xxl">
+            <SelectField
+              name="brevmalkode"
+              readOnly={tmpls.length === 1 && brevmalkode && brevmalkode === tmpls[0].kode}
+              label={intl.formatMessage({ id: 'Messages.Template' })}
+              validate={[required]}
+              placeholder={intl.formatMessage({ id: 'Messages.ChooseTemplate' })}
+              selectValues={tmpls.map(template => (
+                <option key={template.kode} value={template.kode} disabled={template.tilgjengelig === false}>
+                  {template.navn}
+                </option>
+              ))}
+            />
+          </div>
           {valgtBrevmal?.linker?.length > 0 && fritekstforslagTyper && (
             <>
               <VerticalSpacer eightPx />
-              <SelectField
-                name="fritekstforslag"
-                label={intl.formatMessage({ id: 'Messages.TypeAvDokumentasjon' })}
-                validate={[]}
-                placeholder={intl.formatMessage({ id: 'Messages.VelgTypeAvDokumentasjon' })}
-                selectValues={fritekstforslagTyper.map(alternativ => (
-                  <option key={alternativ.tittel} value={alternativ.tittel}>
-                    {alternativ.tittel}
-                  </option>
-                ))}
-                bredde="xxl"
-              />
+              <div className="input--xxl">
+                <SelectField
+                  name="fritekstforslag"
+                  label={intl.formatMessage({ id: 'Messages.TypeAvDokumentasjon' })}
+                  validate={[]}
+                  placeholder={intl.formatMessage({ id: 'Messages.VelgTypeAvDokumentasjon' })}
+                  selectValues={fritekstforslagTyper.map(alternativ => (
+                    <option key={alternativ.tittel} value={alternativ.tittel}>
+                      {alternativ.tittel}
+                    </option>
+                  ))}
+                />
+              </div>
             </>
           )}
           {recipients.length > 0 && (
             <>
-              <VerticalSpacer eightPx />
-              <SelectField
-                key={brevmalkode}
-                name="overstyrtMottaker"
-                readOnly={
-                  recipients.length === 1 && overstyrtMottaker && overstyrtMottaker === JSON.stringify(recipients[0])
-                }
-                disabled={visTredjepartsmottakerInput}
-                hideValueOnDisable
-                label={intl.formatMessage({ id: 'Messages.Recipient' })}
-                validate={visTredjepartsmottakerInput ? [] : [createValidateRecipient(recipients)]}
-                placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
-                selectValues={recipients.map(recipient => (
-                  <option key={recipient.id} value={JSON.stringify(recipient)}>
-                    {lagVisningsnavnForMottaker(recipient.id, personopplysninger, arbeidsgiverOpplysningerPerId)}
-                  </option>
-                ))}
-                bredde="xxl"
-              />
+              <VerticalSpacer sixteenPx />
+              <div className="input--xxl">
+                <SelectField
+                  key={brevmalkode}
+                  name="overstyrtMottaker"
+                  readOnly={
+                    recipients.length === 1 && overstyrtMottaker && overstyrtMottaker === JSON.stringify(recipients[0])
+                  }
+                  disabled={visTredjepartsmottakerInput}
+                  hideValueOnDisable
+                  label={intl.formatMessage({ id: 'Messages.Recipient' })}
+                  validate={visTredjepartsmottakerInput ? [] : [createValidateRecipient(recipients)]}
+                  placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
+                  selectValues={recipients.map(recipient => (
+                    <option key={recipient.id} value={JSON.stringify(recipient)}>
+                      {lagVisningsnavnForMottaker(recipient.id, personopplysninger, arbeidsgiverOpplysningerPerId)}
+                    </option>
+                  ))}
+                />
+              </div>
             </>
           )}
           {valgtBrevmal?.støtterTredjepartsmottaker ? (
@@ -321,8 +323,10 @@ export const MessagesImpl = ({
               <Checkbox
                 checked={visTredjepartsmottakerInput}
                 onChange={() => setVisTredjepartsmottakerInput(!visTredjepartsmottakerInput)}
-                label={intl.formatMessage({ id: 'Messages.SendToThirdparty' })}
-              />
+                size="small"
+              >
+                {intl.formatMessage({ id: 'Messages.SendToThirdparty' })}
+              </Checkbox>
             </>
           ) : null}
           {visTredjepartsmottakerInput ? (
@@ -348,7 +352,7 @@ export const MessagesImpl = ({
 
           {valgtBrevmal?.støtterFritekst && (
             <>
-              <VerticalSpacer eightPx />
+              <VerticalSpacer sixteenPx />
               <div className="input--xxl">
                 <TextAreaField
                   name="fritekst"
@@ -362,7 +366,7 @@ export const MessagesImpl = ({
           )}
           {valgtBrevmal?.støtterTittelOgFritekst && (
             <div className="input--xxl">
-              <VerticalSpacer eightPx />
+              <VerticalSpacer sixteenPx />
               <InputField
                 name="fritekstbrev.overskrift"
                 label={intl.formatMessage({ id: 'Messages.FritekstTittel' })}

@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Story, composeStories } from '@storybook/react';
+import { StoryFn, composeStories } from '@storybook/react';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { rest } from 'msw';
+import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import React from 'react';
+import { aksjonspunkt9071Props } from '../mock/inntektsmeldingPropsMock';
 import { alleErMottatt, manglerInntektsmelding } from '../mock/mockedKompletthetsdata';
 import * as stories from '../src/stories/MainComponent.stories';
 import MainComponent from '../src/ui/MainComponent';
@@ -19,11 +20,11 @@ describe('9071 - Mangler inntektsmelding', () => {
   afterAll(() => server.close());
 
   const { Mangler9071, AlleInntektsmeldingerMottatt } = composeStories(stories) as {
-    [key: string]: Story<Partial<typeof MainComponent>>;
+    [key: string]: StoryFn<Partial<typeof MainComponent>>;
   };
 
   test('Viser ikke knapp for å sende inn når beslutning ikke er valgt', async () => {
-    server.use(rest.get('/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding))));
+    server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     render(<Mangler9071 />);
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
@@ -35,7 +36,7 @@ describe('9071 - Mangler inntektsmelding', () => {
   });
 
   test('Viser riktig knapp når purring er valgt', async () => {
-    server.use(rest.get('/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding))));
+    server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     render(<Mangler9071 />);
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
@@ -51,7 +52,7 @@ describe('9071 - Mangler inntektsmelding', () => {
   });
 
   test('Må skrive begrunnelse når man har valgt A-inntekt', async () => {
-    server.use(rest.get('/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding))));
+    server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     render(<Mangler9071 />);
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
@@ -66,11 +67,11 @@ describe('9071 - Mangler inntektsmelding', () => {
   });
 
   test('Kan sende purring med varsel om avslag', async () => {
-    server.use(rest.get('/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding))));
+    server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     const onClickSpy = vi.fn();
-    const data = { onFinished: onClickSpy };
-    render(<Mangler9071 {...data} />);
+    const props = { data: { ...aksjonspunkt9071Props, onFinished: onClickSpy } };
+    render(<Mangler9071 {...props} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
@@ -98,11 +99,11 @@ describe('9071 - Mangler inntektsmelding', () => {
   });
 
   test('Kan submitte begrunnelse når man har valgt A-inntekt', async () => {
-    server.use(rest.get('/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding))));
+    server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     const onClickSpy = vi.fn();
-    const data = { onFinished: onClickSpy };
-    render(<Mangler9071 {...data} />);
+    const props = { data: { ...aksjonspunkt9071Props, onFinished: onClickSpy } };
+    render(<Mangler9071 {...props} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
@@ -129,11 +130,11 @@ describe('9071 - Mangler inntektsmelding', () => {
     });
   });
   test('Hvis det tidligere er blitt gjort en vurdering og behandlingen har hoppet tilbake må man kunne løse aksjonspunktet', async () => {
-    server.use(rest.get('/tilstand', (req, res, ctx) => res(ctx.json(alleErMottatt))));
+    server.use(http.get('/tilstand', () => HttpResponse.json(alleErMottatt)));
     // ARRANGE
     const onClickSpy = vi.fn();
-    const data = { onFinished: onClickSpy };
-    render(<AlleInntektsmeldingerMottatt {...data} />);
+    const props = { data: { ...aksjonspunkt9071Props, onFinished: onClickSpy } };
+    render(<AlleInntektsmeldingerMottatt {...props} />);
 
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 

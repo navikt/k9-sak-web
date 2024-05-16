@@ -3,9 +3,7 @@ import dayjs from 'dayjs';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { RadioGruppe, Select, SkjemaGruppe } from 'nav-frontend-skjema';
-
-import { Alert, Button } from '@navikt/ds-react';
+import { Alert, Button, Fieldset, HStack, RadioGroup, Select } from '@navikt/ds-react';
 import { AleneOmOmsorgenProps } from '../../../types/AleneOmOmsorgenProps';
 import {
   booleanTilTekst,
@@ -160,22 +158,29 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
               <TextArea label={tekst.begrunnelse} name="begrunnelse" />
 
               <div>
-                <RadioGruppe className={styleRadioknapper.horisontalPlassering} legend={tekst.sporsmålVilkarOppfylt}>
-                  <RadioButtonWithBooleanValue label="Ja" value="true" name="erSokerenAleneOmOmsorgen" />
-                  <RadioButtonWithBooleanValue label="Nei" value="false" name="erSokerenAleneOmOmsorgen" />
-                </RadioGruppe>
+                <RadioGroup
+                  className={styleRadioknapper.horisontalPlassering}
+                  legend={tekst.sporsmålVilkarOppfylt}
+                  size="small"
+                  name="erSokerenAleneOmOmsorgen"
+                >
+                  <HStack gap="1">
+                    <RadioButtonWithBooleanValue label="Ja" value="true" name="erSokerenAleneOmOmsorgen" />
+                    <RadioButtonWithBooleanValue label="Nei" value="false" name="erSokerenAleneOmOmsorgen" />
+                  </HStack>
+                </RadioGroup>
                 {errors.erSokerenAleneOmOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
               </div>
 
               {tekstTilBoolean(erSokerAleneOmOmsorgen) && (
-                <SkjemaGruppe
+                <Fieldset
                   className={
                     erBehandlingstypeRevurdering
                       ? styles.gyldigVedtaksPeriode
                       : styles.gyldigVedtaksPeriode_forstegangsbehandling_aleneOmOmsorgen
                   }
                   legend={tekst.sporsmalPeriodeVedtakGyldig}
-                  feil={
+                  error={
                     (errors.fraDato && errors.fraDato.type === 'erDatoFyltUt' && tekst.feilmedlingManglerFraDato) ||
                     (errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato) ||
                     (erBehandlingstypeRevurdering &&
@@ -202,6 +207,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                       defaultValue={
                         informasjonTilLesemodus.tilDato ? dayjs(informasjonTilLesemodus.tilDato).year() : '0'
                       }
+                      size="small"
                     >
                       {utledTilgjengeligeÅr(fraDatoFraVilkar).map(år => (
                         <option key={år.value} value={år.value} disabled={år.disabled}>
@@ -210,7 +216,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                       ))}
                     </Select>
                   )}
-                </SkjemaGruppe>
+                </Fieldset>
               )}
               <Button size="small" variant="primary" className={styles.bekreftKnapp} type="submit">
                 {' '}

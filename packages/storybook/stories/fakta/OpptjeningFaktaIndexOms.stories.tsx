@@ -1,11 +1,10 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import React from 'react';
 
-import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
+import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening-oms';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening-oms';
+import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { Aksjonspunkt, Opptjening, OpptjeningBehandling } from '@k9-sak-web/types';
 
 import withReduxProvider from '../../decorators/withRedux';
@@ -160,13 +159,12 @@ const merknaderFraBeslutter = {
 export default {
   title: 'fakta/fakta-opptjening-oms',
   component: OpptjeningFaktaIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visAksjonspunktForOpptjeningsvilkåret = () => (
+export const visAksjonspunktForOpptjeningsvilkåret = args => (
   <OpptjeningFaktaIndex
     behandling={behandling}
-    opptjening={object('opptjening', opptjeningNårEnHarAksjonspunkt)}
     aksjonspunkter={
       [
         {
@@ -184,27 +182,36 @@ export const visAksjonspunktForOpptjeningsvilkåret = () => (
     }
     alleKodeverk={alleKodeverk as any}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
-    alleMerknaderFraBeslutter={{
-      [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-    }}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
-    submittable={boolean('submittable', true)}
+    {...args}
   />
 );
 
-export const visPanelUtenAksjonpunkt = () => (
+visAksjonspunktForOpptjeningsvilkåret.args = {
+  opptjening: opptjeningNårEnHarAksjonspunkt,
+  alleMerknaderFraBeslutter: {
+    [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]: merknaderFraBeslutter,
+  },
+  readOnly: false,
+  harApneAksjonspunkter: true,
+  submittable: true,
+};
+
+export const visPanelUtenAksjonpunkt = args => (
   <OpptjeningFaktaIndex
     behandling={behandling}
-    opptjening={object('opptjening', opptjeningUtenAksjonspunkt)}
     aksjonspunkter={[]}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
     alleKodeverk={alleKodeverk as any}
     alleMerknaderFraBeslutter={{}}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    harApneAksjonspunkter={boolean('harApneAksjonspunkter', false)}
-    submittable={boolean('submittable', true)}
+    {...args}
   />
 );
+
+visPanelUtenAksjonpunkt.args = {
+  opptjening: opptjeningUtenAksjonspunkt,
+  readOnly: false,
+  harApneAksjonspunkter: false,
+  submittable: true,
+};

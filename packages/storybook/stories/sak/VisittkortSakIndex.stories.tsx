@@ -1,12 +1,11 @@
 import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
 
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import region from '@fpsak-frontend/kodeverk/src/region';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import region from '@fpsak-frontend/kodeverk/src/region';
+import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
@@ -14,7 +13,6 @@ import alleKodeverk from '../mocks/alleKodeverk.json';
 export default {
   title: 'sak/sak-visittkort',
   component: VisittkortSakIndex,
-  decorators: [withKnobs],
 };
 
 const fagsakPerson = {

@@ -1,8 +1,7 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Alert, Button, HelpText } from '@navikt/ds-react';
-import { RadioGruppe } from 'nav-frontend-skjema';
+import { Alert, Button, HStack, HelpText, RadioGroup } from '@navikt/ds-react';
 
 import { KorrigerePerioderProps } from '../../../types/KorrigerePerioderProps';
 import { booleanTilTekst } from '../../../util/stringUtils';
@@ -189,20 +188,24 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
             label={konfliktMedArbeidsgiver ? tekstKonfliktMedArbeidsgiver.begrunnelse : tekst.begrunnelse}
             name="begrunnelse"
           />
-          <RadioGruppe
+          <RadioGroup
             legend={
               konfliktMedArbeidsgiver ? tekstKonfliktMedArbeidsgiver.sporsmalErInnvilget : tekst.sporsmalErInnvilget
             }
             className={styleRadioknapper.horisontalPlassering}
+            size="small"
+            name="fravaerGrunnetSmittevernhensynEllerStengt"
           >
-            <RadioButtonWithBooleanValue label="Ja" value="true" name="fravaerGrunnetSmittevernhensynEllerStengt" />
-            <RadioButtonWithBooleanValue label="Nei" value="false" name="fravaerGrunnetSmittevernhensynEllerStengt" />
-            <RadioButtonWithBooleanValue
-              label="Delvis"
-              value="delvis"
-              name="fravaerGrunnetSmittevernhensynEllerStengt"
-            />
-          </RadioGruppe>
+            <HStack gap="1">
+              <RadioButtonWithBooleanValue label="Ja" value="true" name="fravaerGrunnetSmittevernhensynEllerStengt" />
+              <RadioButtonWithBooleanValue label="Nei" value="false" name="fravaerGrunnetSmittevernhensynEllerStengt" />
+              <RadioButtonWithBooleanValue
+                label="Delvis"
+                value="delvis"
+                name="fravaerGrunnetSmittevernhensynEllerStengt"
+              />
+            </HStack>
+          </RadioGroup>
 
           {errors.fravaerGrunnetSmittevernhensynEllerStengt && (
             <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>
