@@ -38,8 +38,9 @@ export const useKodeverkContext = () => {
       }
     }
 
-    if (kodeverkForKilde === undefined)
+    if (kodeverkForKilde === undefined) {
       kodeverkForKilde = behandlingType === BehandlingType.KLAGE ? klageKodeverk : kodeverk;
+    }
 
     if (kodeverkForKilde && kodeverkForKilde[kodeverkType]) return kodeverkForKilde[kodeverkType];
 
