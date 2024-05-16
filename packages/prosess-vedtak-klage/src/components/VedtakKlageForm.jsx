@@ -2,9 +2,9 @@ import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/for
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkKlageType } from '@k9-sak-web/lib/types/index.js';
 import { BodyShort, Detail, Heading } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -42,13 +42,11 @@ export const VedtakKlageFormImpl = ({
   behandlingsResultatTekst,
   klageresultat,
   behandlingPaaVent,
-  alleKodeverk,
   åpneAksjonspunktKoder,
   ...formProps
 }) => {
   const intl = useIntl();
-  const kodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-
+  const { kodeverkNavnFraKode } = useKodeverkContext();
   return (
     <FadingPanel>
       <Heading size="small" level="2">
@@ -75,8 +73,8 @@ export const VedtakKlageFormImpl = ({
           <div>
             <Detail>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilAvvisning' })}</Detail>
             {avvistArsaker.map(arsak => (
-              <BodyShort size="small" key={arsak.kode}>
-                {kodeverknavn(arsak)}
+              <BodyShort size="small" key={arsak}>
+                {kodeverkNavnFraKode(arsak, KodeverkKlageType.KLAGE_AVVIST_AARSAK)}
               </BodyShort>
             ))}
             <VerticalSpacer sixteenPx />
@@ -141,7 +139,7 @@ VedtakKlageFormImpl.propTypes = {
   behandlingsResultatTekst: PropTypes.string,
   klageVurdering: PropTypes.shape().isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
-  avvistArsaker: PropTypes.arrayOf(PropTypes.shape()),
+  avvistArsaker: PropTypes.arrayOf(PropTypes.string),
   omgjortAarsak: PropTypes.string,
   fritekstTilBrev: PropTypes.string,
   behandlingsresultat: PropTypes.shape(),
@@ -231,16 +229,14 @@ export const getIsOpphevOgHjemsend = createSelector(
 
 const getÅpneAksjonspunktKoder = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter =>
   Array.isArray(aksjonspunkter)
-    ? aksjonspunkter
-        .filter(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET && ap.kanLoses)
-        .map(ap => ap.definisjon.kode)
+    ? aksjonspunkter.filter(ap => ap.status === aksjonspunktStatus.OPPRETTET && ap.kanLoses).map(ap => ap.definisjon)
     : [],
 );
 
 export const getFritekstTilBrev = createSelector([getKlageresultat], klageresultat => klageresultat.fritekstTilBrev);
 
 export const buildInitialValues = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter => {
-  const behandlingAksjonspunktCodes = aksjonspunkter.map(ap => ap.definisjon.kode);
+  const behandlingAksjonspunktCodes = aksjonspunkter.map(ap => ap.definisjon);
   return {
     aksjonspunktKoder: behandlingAksjonspunktCodes,
   };
