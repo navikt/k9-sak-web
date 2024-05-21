@@ -15,7 +15,7 @@
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "2.5.8",
+    "@navikt/ft-plattform-komponenter": "2.5.10",
     "classnames": "2.5.1",
     "moment": "2.30.1",
     "nav-frontend-typografi": "4.0.2",
