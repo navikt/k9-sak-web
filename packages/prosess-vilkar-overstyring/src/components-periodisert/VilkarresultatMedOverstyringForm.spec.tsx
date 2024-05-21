@@ -18,10 +18,6 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         erVilkarOk={vilkarUtfallPeriodisert.OPPFYLT}
         isReadOnly
         overstyringApKode="5011"
-        avslagsarsaker={[
-          { kode: 'test1', navn: 'test1', kodeverk: 'test' },
-          { kode: 'test2', navn: 'test1', kodeverk: 'test' },
-        ]}
         lovReferanse="§23"
         hasAksjonspunkt
         overrideReadOnly={false}

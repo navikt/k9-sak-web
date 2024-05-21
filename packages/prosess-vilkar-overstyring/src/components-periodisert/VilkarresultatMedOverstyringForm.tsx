@@ -51,7 +51,6 @@ interface ownProps {
   medlemskapFom: string;
   submitCallback: (props: SubmitCallback[]) => void;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
-  avslagsarsaker: KodeverkMedNavn[];
   status: string;
   overstyringApKode: string;
   lovReferanse: string;
@@ -62,7 +61,6 @@ interface ownProps {
 }
 interface VilkarresultatMedOverstyringFormProps {
   aksjonspunkter: Aksjonspunkt[];
-  avslagsarsaker: KodeverkMedNavn[];
   behandlingsresultat: {
     type: string;
   };
@@ -116,7 +114,6 @@ export const VilkarresultatMedOverstyringForm = ({
   erMedlemskapsPanel,
   visPeriodisering,
   hasAksjonspunkt,
-  avslagsarsaker,
   overrideReadOnly,
   toggleOverstyring,
   reset,
@@ -157,7 +154,6 @@ export const VilkarresultatMedOverstyringForm = ({
             customVilkarOppfyltText={customVilkarOppfyltText}
             erMedlemskapsPanel={erMedlemskapsPanel}
             visPeriodisering={visPeriodisering}
-            avslagsarsaker={avslagsarsaker}
             periodeFom={periodeFom}
             periodeTom={periodeTom}
             valgtPeriodeFom={valgtPeriodeFom}

@@ -35,7 +35,6 @@ export interface CustomVilkarText {
 
 interface VilkarresultatMedOverstyringFormProps {
   aksjonspunkter: Aksjonspunkt[];
-  avslagsarsaker: KodeverkMedNavn[];
   behandlingsresultat: {
     type: string;
   };
@@ -82,7 +81,6 @@ export const VilkarresultatMedOverstyringForm = ({
   customVilkarOppfyltText,
   erMedlemskapsPanel,
   hasAksjonspunkt,
-  avslagsarsaker,
   overrideReadOnly,
   toggleOverstyring,
   reset,
@@ -119,7 +117,6 @@ export const VilkarresultatMedOverstyringForm = ({
             customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
             customVilkarOppfyltText={customVilkarOppfyltText}
             erMedlemskapsPanel={erMedlemskapsPanel}
-            avslagsarsaker={avslagsarsaker}
           />
           <VerticalSpacer sixteenPx />
           {!erOverstyrt && erVilkarOk !== undefined && (
