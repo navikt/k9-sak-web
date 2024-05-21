@@ -4085,7 +4085,7 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-kodeverk": ^2.4.4
+    "@navikt/ft-kodeverk": ^2.4.6
     "@navikt/ft-prosess-tilbakekreving-foreldelse": 3.3.5
     axios-mock-adapter: 1.22.0
     nav-frontend-typografi: 4.0.2
@@ -5267,6 +5267,13 @@ __metadata:
   version: 2.4.4
   resolution: "@navikt/ft-kodeverk@npm:2.4.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F2.4.4%2F71bb594b32080c81e8dbf42340b673124a6b9b97"
   checksum: fb2dc40efd2d6d3ce29132374dfc0e00c38d4589c8152bfc8d973db4a5d94378210fe8893510ed7e6f61feaee6e7bea6fa2d31f09a8ea0112e15a4726b39bf72
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-kodeverk@npm:^2.4.6":
+  version: 2.4.6
+  resolution: "@navikt/ft-kodeverk@npm:2.4.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F2.4.6%2F965175daeae9ffe6cb8da87511a883b544456705"
+  checksum: 9047b55dd9ef053d247b9eb5d8804bfb2ac792ea2c0e23deaada1fd6dcd907e71e997215cfb769623fda3963f5a741b7e6dfd49322393a581f19d0ff047228c6
   languageName: node
   linkType: hard
 
