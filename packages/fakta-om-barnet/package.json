@@ -18,7 +18,7 @@
     "@navikt/ds-css": "6.8.0",
     "@navikt/ds-react": "6.8.0",
     "@navikt/fnrvalidator": "2.0.7",
-    "@navikt/ft-plattform-komponenter": "2.5.9",
+    "@navikt/ft-plattform-komponenter": "2.5.10",
     "@popperjs/core": "2.11.8",
     "axios": "1.7.1",
     "classnames": "2.5.1",
