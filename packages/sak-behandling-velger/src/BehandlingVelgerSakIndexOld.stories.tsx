@@ -182,6 +182,10 @@ const getKodeverkFn = (kodeverk: Kodeverk) => {
   return kodeverkForType.find(k => k.kode === kodeverk.kode);
 };
 
+/**
+ * Dette er den gamle behandlingsvelgeren. Brukes fremdeles for Frisinn og Omsorgspenger
+ */
+
 export default {
   title: 'sak/sak-behandling-velger-old',
   component: BehandlingVelgerSakIndex,
