@@ -3502,7 +3502,7 @@ __metadata:
     "@fpsak-frontend/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-types": 2.4.4
+    "@navikt/ft-types": 2.4.6
     moment: 2.30.1
     react: 18.3.1
     react-intl: 6.6.6
@@ -5270,6 +5270,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ft-kodeverk@npm:^2.4.6":
+  version: 2.4.6
+  resolution: "@navikt/ft-kodeverk@npm:2.4.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F2.4.6%2F965175daeae9ffe6cb8da87511a883b544456705"
+  checksum: 9047b55dd9ef053d247b9eb5d8804bfb2ac792ea2c0e23deaada1fd6dcd907e71e997215cfb769623fda3963f5a741b7e6dfd49322393a581f19d0ff047228c6
+  languageName: node
+  linkType: hard
+
 "@navikt/ft-konstanter@npm:^2.3.4":
   version: 2.3.4
   resolution: "@navikt/ft-konstanter@npm:2.3.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-konstanter%2F2.3.4%2Fc1ed13b2a1af0956209ce54e86981efd4a426ec0"
@@ -5380,7 +5387,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-types@npm:2.4.4, @navikt/ft-types@npm:^2.4.4":
+"@navikt/ft-types@npm:2.4.6":
+  version: 2.4.6
+  resolution: "@navikt/ft-types@npm:2.4.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-types%2F2.4.6%2F7e19869f1e96949854a8d0922e8179f59fb9d695"
+  dependencies:
+    "@navikt/ft-kodeverk": ^2.4.6
+  peerDependencies:
+    "@navikt/ft-kodeverk": 2.x
+  checksum: 3f4cc323f8a0c356ad4227a91627f85b2035a32f296b9577ec2f808ae04ac2ffd30e53c621cf5a4135df62cf8bbffdee7851e79644c676166b8a57cf07d9db1d
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-types@npm:^2.4.4":
   version: 2.4.4
   resolution: "@navikt/ft-types@npm:2.4.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-types%2F2.4.4%2Fbaea8cfa8f5e9d1701f4637991d037491a1dfa26"
   dependencies:
