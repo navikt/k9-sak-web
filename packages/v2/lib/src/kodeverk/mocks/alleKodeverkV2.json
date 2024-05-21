@@ -5668,5 +5668,22 @@
       "navn": "Ikke relevant periode",
       "kodeverk": "MEDLEMSKAP_MANUELL_VURD"
     }
+  ],
+  "Aktsomhet": [
+    {
+      "kode": "FORSETT",
+      "navn": "Forsett",
+      "kodeverk": "AKTSOMHET"
+    },
+    {
+      "kode": "GROVT_UAKTSOM",
+      "navn": "Grovt uaktsom",
+      "kodeverk": "AKTSOMHET"
+    },
+    {
+      "kode": "SIMPEL_UAKTSOM",
+      "navn": "Simpel uaktsom",
+      "kodeverk": "AKTSOMHET"
+    }
   ]
 }

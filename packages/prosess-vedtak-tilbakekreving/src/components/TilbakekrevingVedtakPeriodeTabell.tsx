@@ -1,9 +1,10 @@
 import { PeriodLabel } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { Kodeverk } from '@k9-sak-web/types';
 import { BodyShort, Label, Table } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
 
 import styles from './tilbakekrevingVedtakPeriodeTabell.module.css';
@@ -20,10 +21,10 @@ const headerTextCodes = [
 
 interface OwnProps {
   perioder: BeregningResultatPeriode[];
-  getKodeverknavn: (kodeverk: Kodeverk) => string;
 }
 
-const TilbakekrevingVedtakPeriodeTabell = ({ perioder, getKodeverknavn }: OwnProps) => {
+const TilbakekrevingVedtakPeriodeTabell = ({ perioder }: OwnProps) => {
+  const { kodeverkNavnFraKode } = useKodeverkContext();
   const rader = perioder
     .map(periode => (
       <Table.Row key={periode.periode.fom} shadeOnHover={false}>
@@ -36,7 +37,7 @@ const TilbakekrevingVedtakPeriodeTabell = ({ perioder, getKodeverknavn }: OwnPro
           <BodyShort size="small">{formatCurrencyNoKr(periode.feilutbetaltBeløp)}</BodyShort>
         </Table.DataCell>
         <Table.DataCell>
-          <BodyShort size="small">{getKodeverknavn(periode.vurdering)}</BodyShort>
+          <BodyShort size="small">{kodeverkNavnFraKode(periode.vurdering, KodeverkType.AKTSOMHET)}</BodyShort>
         </Table.DataCell>
         <Table.DataCell>
           <BodyShort size="small">

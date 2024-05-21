@@ -1,7 +1,6 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import { BodyShort, Detail, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -13,9 +12,8 @@ import TilbakekrevingVedtakPeriodeTabell from './TilbakekrevingVedtakPeriodeTabe
 interface OwnProps {
   submitCallback: (aksjonspunktData: { kode: string }[]) => Promise<any>;
   readOnly: boolean;
-  resultat: Kodeverk;
+  resultat: string;
   perioder: BeregningResultatPeriode[];
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   behandlingId: number;
   behandlingUuid: string;
   behandlingVersjon: number;
@@ -31,7 +29,6 @@ const TilbakekrevingVedtak = ({
   readOnly,
   resultat,
   perioder,
-  alleKodeverk,
   behandlingId,
   behandlingUuid,
   behandlingVersjon,
@@ -41,7 +38,7 @@ const TilbakekrevingVedtak = ({
   erRevurderingTilbakekrevingKlage,
   erRevurderingTilbakekrevingFeilBeløpBortfalt,
 }: OwnProps) => {
-  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+  const { kodeverkNavnFraKode } = useKodeverkContext();
   return (
     <>
       <Heading size="small" level="2">
@@ -51,9 +48,9 @@ const TilbakekrevingVedtak = ({
       <Detail>
         <FormattedMessage id="TilbakekrevingVedtak.Resultat" />
       </Detail>
-      <BodyShort size="small">{getKodeverknavn(resultat)}</BodyShort>
+      <BodyShort size="small">{kodeverkNavnFraKode(resultat, KodeverkType.VEDTAK_RESULTAT_TYPE)}</BodyShort>
       <VerticalSpacer sixteenPx />
-      <TilbakekrevingVedtakPeriodeTabell perioder={perioder} getKodeverknavn={getKodeverknavn} />
+      <TilbakekrevingVedtakPeriodeTabell perioder={perioder} />
       <VerticalSpacer sixteenPx />
       <TilbakekrevingVedtakForm
         submitCallback={submitCallback}
