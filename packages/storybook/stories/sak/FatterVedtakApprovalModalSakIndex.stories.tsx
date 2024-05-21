@@ -28,7 +28,7 @@ const behandling = {
   },
   behandlingsresultat: {
     type: {
-      kode: text('behandlingResultatType', behandlingResultatType.OPPHOR),
+      kode: behandlingResultatType.OPPHOR,
     },
   },
 } as Behandling;
