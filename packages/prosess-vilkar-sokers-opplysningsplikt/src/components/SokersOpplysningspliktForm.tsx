@@ -7,7 +7,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, isObject, required } from '@fpsak-frontend/utils';
 import { ProsessPanelTemplate, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
-import { Aksjonspunkt, Behandling, Kodeverk, KodeverkMedNavn, ManglendeVedleggSoknad, Soknad } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, KodeverkMedNavn, ManglendeVedleggSoknad, Soknad } from '@k9-sak-web/types';
 import { BodyShort, HGrid, Table } from '@navikt/ds-react';
 import moment from 'moment';
 import React from 'react';
@@ -15,8 +15,8 @@ import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl'
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
 import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 
 const formName = 'SokersOpplysningspliktForm';
 
@@ -86,7 +86,6 @@ interface PureOwnProps {
 }
 
 interface MappedOwnProps {
-  getKodeverknavn: (kodeverk: Kodeverk, undertype?: string) => string;
   hasSoknad: boolean;
   originalErVilkarOk: boolean;
   dokumentTypeIds: KodeverkMedNavn[];
@@ -118,7 +117,7 @@ export const SokersOpplysningspliktFormImpl = ({
   behandlingVersjon,
   ...formProps
 }: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
-  const { kodeverkNavnFraKode } = useKodeverkV2();
+  const { kodeverkNavnFraUndertypeKode } = useKodeverkContext();
   return (
     <ProsessPanelTemplate
       title={intl.formatMessage({ id: 'SokersOpplysningspliktForm.SokersOpplysningsplikt' })}
@@ -194,10 +193,10 @@ export const SokersOpplysningspliktFormImpl = ({
             <>
               <VerticalSpacer sixteenPx />
               <BodyShort size="small">
-                {kodeverkNavnFraKode(
+                {kodeverkNavnFraUndertypeKode(
                   behandlingsresultat.avslagsarsak,
-                  KodeverkType.AVSLAGSARSAK,
                   vilkarType.SOKERSOPPLYSNINGSPLIKT,
+                  KodeverkType.AVSLAGSARSAK,
                 )}
               </BodyShort>
             </>

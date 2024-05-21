@@ -7,9 +7,6 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { Behandling, ManglendeVedleggSoknad, Soknad } from '@k9-sak-web/types';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import alleKodeverk from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
-
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import {
@@ -19,10 +16,7 @@ import {
 } from './SokersOpplysningspliktForm';
 
 describe('<SokersOpplysningspliktForm>', () => {
-  const getKodeverknavn = () => undefined;
-
   it('skal vise tabell med manglende vedlegg', () => {
-    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
     const manglendeVedlegg = [
       {
         dokumentType: dokumentTypeId.INNTEKTSMELDING,
@@ -65,7 +59,6 @@ describe('<SokersOpplysningspliktForm>', () => {
         manglendeVedlegg={manglendeVedlegg}
         dokumentTypeIds={dokumentTypeIds}
         inntektsmeldingerSomIkkeKommer={undefined}
-        getKodeverknavn={getKodeverknavn}
         behandlingId={1}
         behandlingVersjon={1}
         soknad={{} as Soknad}
@@ -85,7 +78,6 @@ describe('<SokersOpplysningspliktForm>', () => {
   });
 
   it('skal ikke vise tabell når ingen vedlegg mangler', () => {
-    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
     const manglendeVedlegg = [];
     const dokumentTypeIds = [];
 
@@ -102,7 +94,6 @@ describe('<SokersOpplysningspliktForm>', () => {
         manglendeVedlegg={manglendeVedlegg}
         dokumentTypeIds={dokumentTypeIds}
         inntektsmeldingerSomIkkeKommer={undefined}
-        getKodeverknavn={getKodeverknavn}
         behandlingId={1}
         behandlingVersjon={1}
         soknad={{} as Soknad}

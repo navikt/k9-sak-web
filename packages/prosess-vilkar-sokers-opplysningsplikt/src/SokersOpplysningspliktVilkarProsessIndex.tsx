@@ -3,8 +3,9 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { Soknad } from '@k9-sak-web/types';
 import { StandardProsessFormProps } from '@k9-sak-web/prosess-felles';
-import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
 import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { KodeverkObject } from '@k9-sak-web/lib/types/KodeverkV2.js';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 
 import SokersOpplysningspliktForm from './components/SokersOpplysningspliktForm';
 
@@ -33,7 +34,7 @@ const SokersOpplysningspliktVilkarProsessIndex = ({
   isReadOnly,
   readOnlySubmitButton,
 }: OwnProps & StandardProsessFormProps) => {
-  const { hentKodeverkForType } = useKodeverkV2();
+  const { hentKodeverkForKode } = useKodeverkContext();
   return (
     <RawIntlProvider value={intl}>
       <SokersOpplysningspliktForm
@@ -46,7 +47,7 @@ const SokersOpplysningspliktVilkarProsessIndex = ({
         submitCallback={submitCallback}
         readOnly={isReadOnly}
         readOnlySubmitButton={readOnlySubmitButton}
-        dokumentTypeIds={hentKodeverkForType(KodeverkType.DOKUMENT_TYPE_ID)}
+        dokumentTypeIds={hentKodeverkForKode(KodeverkType.DOKUMENT_TYPE_ID) as KodeverkObject[]}
       />
     </RawIntlProvider>
   );
