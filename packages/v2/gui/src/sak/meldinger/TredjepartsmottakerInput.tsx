@@ -84,12 +84,6 @@ const TredjepartsmottakerInput = ({
       }
     }
   };
-  /*
-  useEffect(() => {
-  TODO Check if this is needed, cause loop
-    handleInputOnChange(defaultValue ?? '')
-  }, [defaultValue, required, onChange]);
-   */
 
   const errorMessage =
     tredjepartsmottaker === undefined && required
@@ -114,7 +108,7 @@ const TredjepartsmottakerInput = ({
         <TextField
           label="Navn"
           readOnly
-          defaultValue={tredjepartsmottaker?.name ?? ''}
+          value={tredjepartsmottaker?.name ?? ''}
           size="small"
           className={styles.orgnameField}
         />

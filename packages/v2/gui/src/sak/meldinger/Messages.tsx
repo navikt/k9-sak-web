@@ -221,6 +221,7 @@ const Messages = ({
         showValidation={showValidation}
         required
         api={api}
+        defaultValue={tredjepartsMottaker?.organisasjonsnr}
         onChange={setTredjepartsMottaker}
       />
       <FritekstInput
