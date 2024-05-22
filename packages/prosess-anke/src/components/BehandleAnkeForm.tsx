@@ -19,13 +19,11 @@ import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, required } from '@fpsak-frontend
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { BodyShort, HGrid, Heading } from '@navikt/ds-react';
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { formPropTypes } from 'redux-form';
+import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-
 import ankeOmgjorArsak from '../kodeverk/ankeOmgjorArsak';
 import FritekstBrevTextField from './FritekstAnkeBrevTextField';
 import PreviewAnkeLink from './PreviewAnkeLink';
@@ -133,24 +131,43 @@ const buildOption = (b, intl) => {
 
 const filtrerKlage = (behandlinger = []) => behandlinger.filter(b => b.type.kode === behandlingType.KLAGE);
 
+interface BehandleAnkeFormImplProps {
+  behandlingId: number;
+  behandlingVersjon: number;
+  previewCallback: (...args: unknown[]) => unknown;
+  saveAnke: (...args: unknown[]) => unknown;
+  aksjonspunktCode: string;
+  readOnly?: boolean;
+  readOnlySubmitButton?: boolean;
+  behandlinger: {
+    id?: number;
+    opprettet?: string;
+    type?: {
+      kode?: string;
+    };
+    status?: {
+      kode?: string;
+    };
+  }[];
+}
+
 /**
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling.
  */
 const BehandleAnkeFormImpl = ({
   behandlingId,
   behandlingVersjon,
-  readOnly,
+  readOnly = true,
   handleSubmit,
   saveAnke,
   previewCallback,
-  readOnlySubmitButton,
+  readOnlySubmitButton = true,
   aksjonspunktCode,
   sprakkode,
-  formValues,
   behandlinger,
   intl,
   ...formProps
-}) => (
+}: BehandleAnkeFormImplProps & WrappedComponentProps & InjectedFormProps) => (
   <form onSubmit={handleSubmit}>
     <FadingPanel>
       <Heading size="small" level="2">
@@ -167,7 +184,7 @@ const BehandleAnkeFormImpl = ({
             readOnly={readOnly}
             name="vedtak"
             selectValues={leggTilUkjent(filtrerKlage(behandlinger)).map(b => buildOption(b, intl))}
-            className={readOnly ? styles.selectReadOnly : null}
+            className={readOnly ? styles.selectReadOnly : ''}
             label={intl.formatMessage({ id: 'Ankebehandling.Resultat.Vedtak' })}
             validate={[required]}
             bredde="xl"
@@ -344,36 +361,6 @@ const BehandleAnkeFormImpl = ({
     </FadingPanel>
   </form>
 );
-
-BehandleAnkeFormImpl.propTypes = {
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  previewCallback: PropTypes.func.isRequired,
-  saveAnke: PropTypes.func.isRequired,
-  aksjonspunktCode: PropTypes.string.isRequired,
-  formValues: PropTypes.shape(),
-  readOnly: PropTypes.bool,
-  readOnlySubmitButton: PropTypes.bool,
-  behandlinger: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      opprettet: PropTypes.string,
-      type: PropTypes.shape({
-        kode: PropTypes.string,
-      }),
-      status: PropTypes.shape({
-        kode: PropTypes.string,
-      }),
-    }),
-  ).isRequired,
-  ...formPropTypes,
-};
-
-BehandleAnkeFormImpl.defaultProps = {
-  formValues: {},
-  readOnly: true,
-  readOnlySubmitButton: true,
-};
 
 // TODO (TOR) Her ligg det masse som ikkje er felt i forma! Rydd
 export const buildInitialValues = createSelector([ownProps => ownProps.ankeVurderingResultat], resultat => ({
