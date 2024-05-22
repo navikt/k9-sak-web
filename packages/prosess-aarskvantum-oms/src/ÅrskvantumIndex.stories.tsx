@@ -1,3 +1,4 @@
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   Aksjonspunkt,
   ArbeidsforholdV2,
@@ -13,7 +14,6 @@ import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksper
 import { action } from '@storybook/addon-actions';
 import React from 'react';
 // eslint-disable-next-line import/no-relative-packages
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import alleKodeverk from '../../storybook/stories/mocks/alleKodeverk.json';
 import Aktivitet from './dto/Aktivitet';
 import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
