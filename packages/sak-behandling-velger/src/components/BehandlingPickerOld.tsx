@@ -44,7 +44,7 @@ interface OwnProps {
 /**
  * BehandlingPicker
  *
- * Viser behandlinger knyttet til fagsak,
+ * Dette er den gamle behandlingsvelgeren. Brukes fremdeles for Frisinn og Omsorgspenger
  */
 const BehandlingPicker = ({
   noExistingBehandlinger,
