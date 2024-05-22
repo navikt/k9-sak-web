@@ -1,11 +1,19 @@
 import { DDMMYYYY_DATE_FORMAT, calcDaysAndWeeks, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { BodyShort, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import styles from './periodeInformasjon.module.css';
+
+interface PeriodeInformasjonProps {
+  fom: string;
+  tom: string;
+  feilutbetaling: number;
+  arsak?: {
+    årsak: string;
+  };
+}
 
 /**
  * PeriodeInformasjon
@@ -14,7 +22,7 @@ import styles from './periodeInformasjon.module.css';
  *
  * Presentationskomponent
  */
-const PeriodeInformasjon = ({ fom, tom, feilutbetaling, arsak }) => {
+const PeriodeInformasjon = ({ fom, tom, feilutbetaling, arsak }: PeriodeInformasjonProps) => {
   const daysAndWeeks = calcDaysAndWeeks(moment(fom.toString()), moment(tom.toString()));
   return (
     <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
@@ -53,19 +61,6 @@ const PeriodeInformasjon = ({ fom, tom, feilutbetaling, arsak }) => {
       </div>
     </HGrid>
   );
-};
-
-PeriodeInformasjon.propTypes = {
-  fom: PropTypes.string.isRequired,
-  tom: PropTypes.string.isRequired,
-  feilutbetaling: PropTypes.number.isRequired,
-  arsak: PropTypes.shape({
-    årsak: PropTypes.string.isRequired,
-  }),
-};
-
-PeriodeInformasjon.defaultProsp = {
-  arsak: undefined,
 };
 
 export default PeriodeInformasjon;

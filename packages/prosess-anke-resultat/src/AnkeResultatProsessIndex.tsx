@@ -1,12 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import BehandleResultatForm from './components/BehandleResultatForm';
+import { Aksjonspunkt, AnkeVurdering, Behandling } from '@k9-sak-web/types';
 import messages from '../i18n/nb_NO.json';
-import ankeResultatBehandlingPropType from './propTypes/ankeResultatBehandlingPropType';
-import ankeResultatAksjonspunkterPropType from './propTypes/ankeResultatAksjonspunkterPropType';
-import ankeVurderingPropType from './propTypes/ankeVurderingPropType';
+import BehandleResultatForm from './components/BehandleResultatForm';
 
 const cache = createIntlCache();
 
@@ -18,6 +15,18 @@ const intl = createIntl(
   cache,
 );
 
+interface AnkeResultatProsessIndexProps {
+  behandling: Behandling;
+  ankeVurdering: AnkeVurdering;
+  aksjonspunkter: Aksjonspunkt[];
+  submitCallback(...args: unknown[]): unknown;
+  isReadOnly: boolean;
+  readOnlySubmitButton: boolean;
+  saveAnke(...args: unknown[]): unknown;
+  previewCallback(...args: unknown[]): unknown;
+  previewVedtakCallback(...args: unknown[]): unknown;
+}
+
 const AnkeResultatProsessIndex = ({
   behandling,
   ankeVurdering,
@@ -28,7 +37,7 @@ const AnkeResultatProsessIndex = ({
   saveAnke,
   previewCallback,
   previewVedtakCallback,
-}) => (
+}: AnkeResultatProsessIndexProps) => (
   <RawIntlProvider value={intl}>
     <BehandleResultatForm
       behandlingId={behandling.id}
@@ -44,17 +53,5 @@ const AnkeResultatProsessIndex = ({
     />
   </RawIntlProvider>
 );
-
-AnkeResultatProsessIndex.propTypes = {
-  behandling: ankeResultatBehandlingPropType.isRequired,
-  ankeVurdering: ankeVurderingPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(ankeResultatAksjonspunkterPropType).isRequired,
-  submitCallback: PropTypes.func.isRequired,
-  isReadOnly: PropTypes.bool.isRequired,
-  readOnlySubmitButton: PropTypes.bool.isRequired,
-  saveAnke: PropTypes.func.isRequired,
-  previewCallback: PropTypes.func.isRequired,
-  previewVedtakCallback: PropTypes.func.isRequired,
-};
 
 export default AnkeResultatProsessIndex;

@@ -2,18 +2,33 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { BodyShort, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import styles from './avregningSummary.module.css';
+
+interface AvregningSummaryProps {
+  fom: string;
+  tom: string;
+  feilutbetaling: number;
+  etterbetaling: number;
+  inntrekk?: number;
+  ingenPerioderMedAvvik: boolean;
+}
 
 /**
  * Avregning oppsummering
  *
  * Presentationskomponent
  */
-const AvregningSummary = ({ fom, tom, feilutbetaling, etterbetaling, inntrekk, ingenPerioderMedAvvik }) => (
+const AvregningSummary = ({
+  fom,
+  tom,
+  feilutbetaling,
+  etterbetaling,
+  inntrekk = null,
+  ingenPerioderMedAvvik,
+}: AvregningSummaryProps) => (
   <>
     <BodyShort size="small" className={styles.summaryTitle}>
       <FormattedMessage id="Avregning.bruker" />
@@ -67,18 +82,5 @@ const AvregningSummary = ({ fom, tom, feilutbetaling, etterbetaling, inntrekk, i
     </div>
   </>
 );
-
-AvregningSummary.propTypes = {
-  fom: PropTypes.string.isRequired,
-  tom: PropTypes.string.isRequired,
-  feilutbetaling: PropTypes.number.isRequired,
-  etterbetaling: PropTypes.number.isRequired,
-  inntrekk: PropTypes.number,
-  ingenPerioderMedAvvik: PropTypes.bool.isRequired,
-};
-
-AvregningSummary.defaultProps = {
-  inntrekk: null,
-};
 
 export default AvregningSummary;

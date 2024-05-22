@@ -1,12 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import BehandleMerknaderForm from './components/BehandleMerknaderForm';
+import { Aksjonspunkt, AnkeVurdering, Behandling } from '@k9-sak-web/types';
 import messages from '../i18n/nb_NO.json';
-import ankeMerknaderBehandlingPropType from './propTypes/ankeMerknaderBehandlingPropType';
-import ankeMerknaderAksjonspunkterPropType from './propTypes/ankeMerknaderAksjonspunkterPropType';
-import ankeVurderingPropType from './propTypes/ankeVurderingPropType';
+import BehandleMerknaderForm from './components/BehandleMerknaderForm';
 
 const cache = createIntlCache();
 
@@ -18,6 +15,18 @@ const intl = createIntl(
   cache,
 );
 
+interface AnkeMerknaderProsessIndexProps {
+  behandling: Behandling;
+  ankeVurdering: AnkeVurdering;
+  aksjonspunkter: Aksjonspunkt[];
+  submitCallback(...args: unknown[]): unknown;
+  isReadOnly: boolean;
+  readOnlySubmitButton: boolean;
+  saveAnke(...args: unknown[]): unknown;
+  previewCallback(...args: unknown[]): unknown;
+  previewVedtakCallback(...args: unknown[]): unknown;
+}
+
 const AnkeMerknaderProsessIndex = ({
   behandling,
   ankeVurdering,
@@ -28,7 +37,7 @@ const AnkeMerknaderProsessIndex = ({
   saveAnke,
   previewCallback,
   previewVedtakCallback,
-}) => (
+}: AnkeMerknaderProsessIndexProps) => (
   <RawIntlProvider value={intl}>
     <BehandleMerknaderForm
       behandlingId={behandling.id}
@@ -44,17 +53,5 @@ const AnkeMerknaderProsessIndex = ({
     />
   </RawIntlProvider>
 );
-
-AnkeMerknaderProsessIndex.propTypes = {
-  behandling: ankeMerknaderBehandlingPropType.isRequired,
-  ankeVurdering: ankeVurderingPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(ankeMerknaderAksjonspunkterPropType).isRequired,
-  submitCallback: PropTypes.func.isRequired,
-  isReadOnly: PropTypes.bool.isRequired,
-  readOnlySubmitButton: PropTypes.bool.isRequired,
-  saveAnke: PropTypes.func.isRequired,
-  previewCallback: PropTypes.func.isRequired,
-  previewVedtakCallback: PropTypes.func.isRequired,
-};
 
 export default AnkeMerknaderProsessIndex;

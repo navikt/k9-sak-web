@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
@@ -24,7 +23,21 @@ const getBrevData = (ankeVurdering, aksjonspunktCode, fritekstTilBrev) => ({
   dokumentMal: getBrevKode(ankeVurdering),
 });
 
-const PreviewAnkeLink = ({ previewCallback, fritekstTilBrev, ankeVurdering, aksjonspunktCode, readOnly }) => {
+interface PreviewAnkeLinkProps {
+  previewCallback(...args: unknown[]): unknown;
+  aksjonspunktCode: string;
+  fritekstTilBrev?: string;
+  ankeVurdering?: string;
+  readOnly?: boolean;
+}
+
+const PreviewAnkeLink = ({
+  previewCallback,
+  fritekstTilBrev = null,
+  ankeVurdering = null,
+  aksjonspunktCode,
+  readOnly = false,
+}: PreviewAnkeLinkProps) => {
   const previewMessage = e => {
     e.preventDefault();
     previewCallback(getBrevData(ankeVurdering, aksjonspunktCode, fritekstTilBrev));
@@ -48,20 +61,6 @@ const PreviewAnkeLink = ({ previewCallback, fritekstTilBrev, ankeVurdering, aksj
       <FormattedMessage id="PreviewAnkeLink.ForhandvisBrev" />
     </a>
   );
-};
-
-PreviewAnkeLink.propTypes = {
-  previewCallback: PropTypes.func.isRequired,
-  aksjonspunktCode: PropTypes.string.isRequired,
-  fritekstTilBrev: PropTypes.string,
-  ankeVurdering: PropTypes.string,
-  readOnly: PropTypes.bool,
-};
-
-PreviewAnkeLink.defaultProps = {
-  ankeVurdering: null,
-  fritekstTilBrev: null,
-  readOnly: false,
 };
 
 export default PreviewAnkeLink;

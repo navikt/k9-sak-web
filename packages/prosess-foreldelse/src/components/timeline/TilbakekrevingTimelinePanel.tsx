@@ -1,11 +1,39 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import TilbakekrevingTimeline from './TilbakekrevingTimeline';
 
+interface ValgtPeriode {
+  fom: string;
+  tom: string;
+  isAksjonspunktOpen: boolean;
+  isGodkjent: boolean;
+}
+
+interface TilbakekrevingTimelinePanelProps {
+  perioder: {
+    id: number;
+    fom: string;
+    tom: string;
+    isAksjonspunktOpen: boolean;
+    isGodkjent: boolean;
+  }[];
+  valgtPeriode?: ValgtPeriode;
+  setPeriode(...args: unknown[]): unknown;
+  toggleDetaljevindu(...args: unknown[]): unknown;
+  kjonn: string;
+  hjelpetekstKomponent: React.ReactNode;
+}
+
+interface TilbakekrevingTimelinePanelState {
+  valgtPeriode: ValgtPeriode | null;
+}
+
 // TODO (TOR) Slå saman med TilbakekrevingTimeline.jsx
 
-class TilbakekrevingTimelinePanel extends Component {
+class TilbakekrevingTimelinePanel extends Component<
+  TilbakekrevingTimelinePanelProps,
+  TilbakekrevingTimelinePanelState
+> {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,31 +77,5 @@ class TilbakekrevingTimelinePanel extends Component {
     );
   }
 }
-
-TilbakekrevingTimelinePanel.propTypes = {
-  perioder: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      fom: PropTypes.string.isRequired,
-      tom: PropTypes.string.isRequired,
-      isAksjonspunktOpen: PropTypes.bool.isRequired,
-      isGodkjent: PropTypes.bool.isRequired,
-    }),
-  ).isRequired,
-  valgtPeriode: PropTypes.shape({
-    fom: PropTypes.string.isRequired,
-    tom: PropTypes.string.isRequired,
-    isAksjonspunktOpen: PropTypes.bool.isRequired,
-    isGodkjent: PropTypes.bool.isRequired,
-  }),
-  setPeriode: PropTypes.func.isRequired,
-  toggleDetaljevindu: PropTypes.func.isRequired,
-  kjonn: PropTypes.string.isRequired,
-  hjelpetekstKomponent: PropTypes.node.isRequired,
-};
-
-TilbakekrevingTimelinePanel.defaultProps = {
-  valgtPeriode: undefined,
-};
 
 export default TilbakekrevingTimelinePanel;
