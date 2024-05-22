@@ -51,6 +51,10 @@ const vilkarMedlemskap = [
     perioder: [
       {
         vilkarStatus: { kode: vilkarUtfallType.OPPFYLT, kodeverk: 'test' },
+        periode: {
+          fom: '2020-01-30',
+          tom: '2020-02-29',
+        },
       },
     ],
   } as Vilkar,

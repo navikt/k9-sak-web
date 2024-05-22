@@ -36,7 +36,6 @@ const fagsak = {
 export default {
   title: 'prosess/klage/prosess-formkrav',
   component: FormkravProsessIndex,
-  decorators: [withReduxProvider],
 };
 
 export const visFormkravPanelForAksjonspunktNfp = args => (

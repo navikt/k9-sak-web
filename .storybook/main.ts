@@ -13,6 +13,7 @@ const config: StorybookConfig = {
     },
     '@storybook/addon-controls',
     '@storybook/addon-a11y',
+    '@storybook/addon-interactions',
   ],
   staticDirs: ['../public'],
 
