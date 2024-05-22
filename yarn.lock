@@ -6218,6 +6218,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/addon-interactions@npm:=8.0.10":
+  version: 8.0.10
+  resolution: "@storybook/addon-interactions@npm:8.0.10"
+  dependencies:
+    "@storybook/global": ^5.0.0
+    "@storybook/instrumenter": 8.0.10
+    "@storybook/test": 8.0.10
+    "@storybook/types": 8.0.10
+    polished: ^4.2.2
+    ts-dedent: ^2.2.0
+  checksum: f257a6fd9ea62350b7580fafdcc59b9bdd9cedc3eb5b258318ad10e2d265a6d8a87abcf90c671ddfc39cd35ba58cf2c88016b0c12b35df963516380d30250006
+  languageName: node
+  linkType: hard
+
 "@storybook/addon-measure@npm:8.0.10":
   version: 8.0.10
   resolution: "@storybook/addon-measure@npm:8.0.10"
@@ -6366,19 +6380,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/channels@npm:8.1.1":
-  version: 8.1.1
-  resolution: "@storybook/channels@npm:8.1.1"
-  dependencies:
-    "@storybook/client-logger": 8.1.1
-    "@storybook/core-events": 8.1.1
-    "@storybook/global": ^5.0.0
-    telejson: ^7.2.0
-    tiny-invariant: ^1.3.1
-  checksum: ee34ffa485a41a22036717377fc5b6948a09c5d45111ef5c6b4b10681bfe869b20596cf51a80c156ea62a73d1200f7ddbcb8d83b7b180048f60635c2e7fe8dda
-  languageName: node
-  linkType: hard
-
 "@storybook/cli@npm:8.0.10, @storybook/cli@npm:^8.0.10":
   version: 8.0.10
   resolution: "@storybook/cli@npm:8.0.10"
@@ -6432,15 +6433,6 @@ __metadata:
   dependencies:
     "@storybook/global": ^5.0.0
   checksum: b9aad55dd6550ed060f5a1e4dcc8608a5968907189e63c39b48918fc47abc0dbd3e86ca517df44338096aa4dbabaa6bd4be283ee0e23e67a765c0688230d661b
-  languageName: node
-  linkType: hard
-
-"@storybook/client-logger@npm:8.1.1":
-  version: 8.1.1
-  resolution: "@storybook/client-logger@npm:8.1.1"
-  dependencies:
-    "@storybook/global": ^5.0.0
-  checksum: 69a942896d73520d20a6d5a4aa4b8c3d4d811bf9ab60e1b87cdb2ce494c35a8e4d92f1c22bf83cdeb1d6e43cf356ce9563ff9816470206d2c3f2682b60d77190
   languageName: node
   linkType: hard
 
@@ -6532,16 +6524,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/core-events@npm:8.1.1":
-  version: 8.1.1
-  resolution: "@storybook/core-events@npm:8.1.1"
-  dependencies:
-    "@storybook/csf": ^0.1.7
-    ts-dedent: ^2.0.0
-  checksum: 6ee283eaafe10ec1253f72a5b33fe554acc32d8e3872b036c6f8a8ade8a300cd4f44bed29a55a02fa5ee45b3fdd93f84fcf77d67413bcf864435daeb5cb5007c
-  languageName: node
-  linkType: hard
-
 "@storybook/core-server@npm:8.0.10":
   version: 8.0.10
   resolution: "@storybook/core-server@npm:8.0.10"
@@ -6629,7 +6611,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/csf@npm:^0.1.4, @storybook/csf@npm:^0.1.7":
+"@storybook/csf@npm:^0.1.4":
   version: 0.1.7
   resolution: "@storybook/csf@npm:0.1.7"
   dependencies:
@@ -6678,18 +6660,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/instrumenter@npm:8.1.1":
-  version: 8.1.1
-  resolution: "@storybook/instrumenter@npm:8.1.1"
+"@storybook/instrumenter@npm:8.0.10":
+  version: 8.0.10
+  resolution: "@storybook/instrumenter@npm:8.0.10"
   dependencies:
-    "@storybook/channels": 8.1.1
-    "@storybook/client-logger": 8.1.1
-    "@storybook/core-events": 8.1.1
+    "@storybook/channels": 8.0.10
+    "@storybook/client-logger": 8.0.10
+    "@storybook/core-events": 8.0.10
     "@storybook/global": ^5.0.0
-    "@storybook/preview-api": 8.1.1
+    "@storybook/preview-api": 8.0.10
     "@vitest/utils": ^1.3.1
     util: ^0.12.4
-  checksum: ecf89b3f189d80bcd6e7ec982224e7b6cf514cba33d1f754aa5026ba86026740b1fe95e2f8d23d198d826344a8218b311e9869f24925086bfdd3a26064997740
+  checksum: b18e25edaa34f6ad77ad708707151ed3014e5209dc5bdec1c2fd0f18b46e9c9018eaee8dc80dbac292094cda345ee810d46c946179935ce919f404754bca7b3c
   languageName: node
   linkType: hard
 
@@ -6749,28 +6731,6 @@ __metadata:
     ts-dedent: ^2.0.0
     util-deprecate: ^1.0.2
   checksum: 612d671f490d61b44ddcbd3e8099134637788b6ab4ac55297a1b66c6a5dd8a573be380ee5a623a05cbda135c0c3aae85f06053a201d81a51a58d54ddbc60c8f4
-  languageName: node
-  linkType: hard
-
-"@storybook/preview-api@npm:8.1.1":
-  version: 8.1.1
-  resolution: "@storybook/preview-api@npm:8.1.1"
-  dependencies:
-    "@storybook/channels": 8.1.1
-    "@storybook/client-logger": 8.1.1
-    "@storybook/core-events": 8.1.1
-    "@storybook/csf": ^0.1.7
-    "@storybook/global": ^5.0.0
-    "@storybook/types": 8.1.1
-    "@types/qs": ^6.9.5
-    dequal: ^2.0.2
-    lodash: ^4.17.21
-    memoizerific: ^1.11.3
-    qs: ^6.10.0
-    tiny-invariant: ^1.3.1
-    ts-dedent: ^2.0.0
-    util-deprecate: ^1.0.2
-  checksum: 55b88e2d66523161a3d6528ef5f6517deee206ad14cb51c57cbe96c21bdcadd8f6b714411a46157808f2236777790a39bf89884f5ee3a01c946c5134eae5d6e4
   languageName: node
   linkType: hard
 
@@ -6876,21 +6836,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/test@npm:^8.1.1":
-  version: 8.1.1
-  resolution: "@storybook/test@npm:8.1.1"
+"@storybook/test@npm:8.0.10, @storybook/test@npm:=8.0.10":
+  version: 8.0.10
+  resolution: "@storybook/test@npm:8.0.10"
   dependencies:
-    "@storybook/client-logger": 8.1.1
-    "@storybook/core-events": 8.1.1
-    "@storybook/instrumenter": 8.1.1
-    "@storybook/preview-api": 8.1.1
+    "@storybook/client-logger": 8.0.10
+    "@storybook/core-events": 8.0.10
+    "@storybook/instrumenter": 8.0.10
+    "@storybook/preview-api": 8.0.10
     "@testing-library/dom": ^9.3.4
     "@testing-library/jest-dom": ^6.4.2
     "@testing-library/user-event": ^14.5.2
     "@vitest/expect": 1.3.1
     "@vitest/spy": ^1.3.1
     util: ^0.12.4
-  checksum: 6bbce00ffa240a3b9721f5b8a2f13b067a65799b6b336eba80ee2e615be488db11ebb979198e8e2d16349793d5a3c3af4385d0ce0c8404ccc9b7bc4713cce013
+  checksum: 41b5045a83aace267f87914c7d325928c1edf71332274ed92c7e76bbcc5aa2f0ed1bd58a5e9fd5a2dc7a26909d9294a340c9cf1f3ba4de1042af342063bce898
   languageName: node
   linkType: hard
 
@@ -6922,17 +6882,6 @@ __metadata:
     "@types/express": ^4.7.0
     file-system-cache: 2.3.0
   checksum: 59a1128913a2743c122413586c20d4d11def565bf52b7365301806bc4d898a2d78eb3b9636cec9b115c8d37f97e2841427b5a3524aa6b52bcd0433fd8761e2bb
-  languageName: node
-  linkType: hard
-
-"@storybook/types@npm:8.1.1":
-  version: 8.1.1
-  resolution: "@storybook/types@npm:8.1.1"
-  dependencies:
-    "@storybook/channels": 8.1.1
-    "@types/express": ^4.7.0
-    file-system-cache: 2.3.0
-  checksum: f3b9bac528d80d714f2d510c5e71c78e1ade9bb9034a0ed0868c1b4f1685eda37cba9cf9cf43bf68845501c677fcd16d0f4b94e5a133b8ba0f76f1f43f9b6d86
   languageName: node
   linkType: hard
 
@@ -13850,10 +13799,11 @@ __metadata:
     "@storybook/addon-actions": ^8.0.10
     "@storybook/addon-docs": ^8.0.10
     "@storybook/addon-essentials": ^8.0.10
+    "@storybook/addon-interactions": =8.0.10
     "@storybook/cli": ^8.0.10
     "@storybook/react": ^8.0.10
     "@storybook/react-vite": ^8.0.10
-    "@storybook/test": ^8.1.1
+    "@storybook/test": =8.0.10
     "@storybook/theming": ^8.0.10
     "@testing-library/cypress": ^10.0.1
     "@testing-library/dom": 9.3.4

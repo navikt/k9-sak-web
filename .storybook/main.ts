@@ -6,6 +6,7 @@ const config: StorybookConfig = {
     '@storybook/addon-actions',
     '@storybook/addon-interactions',
     '@storybook/addon-controls',
+    '@storybook/addon-interactions',
     {
       name: '@storybook/addon-docs',
       options: {
@@ -13,7 +14,6 @@ const config: StorybookConfig = {
         csfPluginOptions: null,
       },
     },
-    '@storybook/addon-controls',
   ],
   staticDirs: ['../public'],
 
