@@ -4,7 +4,7 @@ export * from './GetKodeverkNavnFraKodeFnType';
 export * from './HentKodeverkForKodeType';
 export * from './KodeverkKlageType';
 export * from './KodeverkNavnFraKodeType';
-export * from './kodeverkNavnFraUndertypeKodeType';
+export * from './KodeverkNavnFraUndertypeKodeType';
 export * from './KodeverkResponse';
 export * from './KodeverkTilbakeType';
 export * from './KodeverkType';

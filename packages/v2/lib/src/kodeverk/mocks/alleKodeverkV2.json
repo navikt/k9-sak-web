@@ -158,6 +158,11 @@
   ],
   "HistorikkinnslagType": [
     {
+      "kode": "INNSYN_OPPR",
+      "navn": "Innsyn opprettet",
+      "kodeverk": "HISTORIKKINNSLAG_TYPE"
+    },
+    {
       "kode": "BEH_MAN_GJEN",
       "navn": "Gjenoppta behandling",
       "kodeverk": "HISTORIKKINNSLAG_TYPE"
