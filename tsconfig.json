@@ -18,5 +18,5 @@
     }
   },
   "include": ["packages/**/*", "_mocks", "vitest-setup.ts"],
-  "exclude": ["packages/**/cypress.config.ts", "packages/**/cypress", "cypress", "node_modules"]
+  "exclude": ["node_modules"]
 }
