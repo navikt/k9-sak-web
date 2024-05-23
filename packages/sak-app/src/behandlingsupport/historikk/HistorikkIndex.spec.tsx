@@ -2,6 +2,8 @@ import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import HistorikkIndex from './HistorikkIndex';
 
@@ -58,7 +60,9 @@ describe('<HistorikkIndex>', () => {
 
     render(
       <MemoryRouter>
-        <HistorikkIndex saksnummer="12345" behandlingId={1} behandlingVersjon={2} />
+        <KodeverkProvider behandlingType={BehandlingType.FORSTEGANGSSOKNAD}>
+          <HistorikkIndex saksnummer="12345" behandlingId={1} behandlingVersjon={2} />
+        </KodeverkProvider>
       </MemoryRouter>,
     );
 

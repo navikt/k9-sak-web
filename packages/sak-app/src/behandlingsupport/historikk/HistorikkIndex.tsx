@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
 import { Historikkinnslag, KodeverkMedNavn } from '@k9-sak-web/types';
-
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
 import ApplicationContextPath from '../../app/ApplicationContextPath';
 import { createLocationForSkjermlenke, pathToBehandling } from '../../app/paths';
@@ -50,6 +50,7 @@ interface OwnProps {
  */
 const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProps) => {
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
+  const { setKodeverkContext, behandlingType, getKodeverkNavnFraKodeFn } = useKodeverkContext();
 
   const alleKodeverkK9Sak = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
     K9sakApiKeys.KODEVERK,
@@ -60,6 +61,13 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
   const alleKodeverkKlage = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
     K9sakApiKeys.KODEVERK_KLAGE,
   );
+
+  setKodeverkContext({
+    behandlingType,
+    kodeverk: alleKodeverkK9Sak,
+    klageKodeverk: alleKodeverkKlage,
+    tilbakeKodeverk: alleKodeverkTilbake,
+  });
 
   const location = useLocation();
   const getBehandlingLocation = useCallback(
@@ -119,22 +127,18 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
   return (
     <div className="grid gap-5">
       {historikkInnslag.map(innslag => {
-        let alleKodeverk = alleKodeverkK9Sak;
-        if (innslag.erTilbakekreving) {
-          alleKodeverk = alleKodeverkTilbake;
-        }
-        if (innslag.erKlage) {
-          alleKodeverk = alleKodeverkKlage;
-        }
+        let kodeverkNavnFraKodeFn = getKodeverkNavnFraKodeFn();
+        if (innslag.erTilbakekreving) kodeverkNavnFraKodeFn = getKodeverkNavnFraKodeFn('kodeverkTilbake');
+        if (innslag.erKlage) kodeverkNavnFraKodeFn = getKodeverkNavnFraKodeFn('kodeverkKlage');
         return (
           <HistorikkSakIndex
             key={innslag.opprettetTidspunkt + innslag.type}
             historikkinnslag={innslag}
             saksnummer={saksnummer}
-            alleKodeverk={alleKodeverk}
             erTilbakekreving={!!innslag.erTilbakekreving}
             getBehandlingLocation={getBehandlingLocation}
             createLocationForSkjermlenke={createLocationForSkjermlenke}
+            kodeverkNavnFraKodeFn={kodeverkNavnFraKodeFn}
           />
         );
       })}

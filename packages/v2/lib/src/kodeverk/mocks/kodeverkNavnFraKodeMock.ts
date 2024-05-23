@@ -1,4 +1,10 @@
-import { AlleKodeverk, KodeverkKlageType, KodeverkTilbakeType, KodeverkType } from '../../types';
+import {
+  AlleKodeverk,
+  KodeverkKlageType,
+  KodeverkNavnFraKodeType,
+  KodeverkTilbakeType,
+  KodeverkType,
+} from '../../types';
 import { utledKodeverkNavnFraKode } from '../kodeverkUtils';
 
 export const kodeverkNavnFraKodeMock = (
@@ -7,19 +13,12 @@ export const kodeverkNavnFraKodeMock = (
   alleKodeverk: AlleKodeverk,
   ukjentTekst?: string | undefined,
 ) => {
-  console.log(`MOCK: kodeverkoppslag, kode: ${kode}, kodeverkType: ${kodeverkType}`, alleKodeverk[kodeverkType]);
-  return utledKodeverkNavnFraKode(
-    kode,
-    alleKodeverk[kodeverkType] || [],
-    `${ukjentTekst || 'Ukjent kodeverk'}: ${kode} (${kodeverkType})`,
-  );
+  console.log(`MOCK: kodeverkoppslag, kode: ${kode}, kodeverkType: ${kodeverkType}`);
+  const navn = utledKodeverkNavnFraKode(kode, alleKodeverk[kodeverkType] || [], ukjentTekst || 'Ukjent kodeverk');
+  return navn;
 };
 
 export const getKodeverkNavnFraKodeFnMock =
-  (allekodeverk: AlleKodeverk) =>
-  (
-    kode: string,
-    kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType,
-    ukjentTekst?: string | undefined,
-  ) =>
+  (allekodeverk: AlleKodeverk): KodeverkNavnFraKodeType =>
+  (kode, kodeverkType, ukjentTekst?) =>
     kodeverkNavnFraKodeMock(kode, kodeverkType, allekodeverk, ukjentTekst);
