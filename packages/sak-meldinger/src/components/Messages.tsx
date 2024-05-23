@@ -269,7 +269,7 @@ export const MessagesImpl = ({
               validate={[required]}
               placeholder={intl.formatMessage({ id: 'Messages.ChooseTemplate' })}
               selectValues={tmpls.map(template => (
-                <option key={template.kode} value={template.kode} disabled={template.tilgjengelig === false}>
+                <option key={template.kode} value={template.kode}>
                   {template.navn}
                 </option>
               ))}
