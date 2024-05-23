@@ -4,11 +4,10 @@ import { Aktor, KodeverkMedNavn } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import AktorSakIndex from '@k9-sak-web/sak-aktor';
-
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import { restApiHooks, K9sakApiKeys } from '../data/k9sakApi';
 import { pathToFagsak } from '../app/paths';
-import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 
 /**
  * AktoerIndex
