@@ -12,7 +12,7 @@ export interface Dokumentdata {
 }
 
 /**
- * Oppretta ut frå ForhpndsvisDto.kt i k9-formidling
+ * Oppretta ut frå ForhåndsvisDto.kt i k9-formidling
  */
 export interface ForhåndsvisDto {
   eksternReferanse: string;
