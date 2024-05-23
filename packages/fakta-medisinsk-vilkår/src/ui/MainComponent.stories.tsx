@@ -81,6 +81,27 @@ export const MedisinskVilkår: Story = {
       await userEvent.click(canvas.getByText('Sykehus/spesialist. 16.01.2020'));
       await userEvent.type(canvas.getAllByRole('textbox')[0], 'test');
       await userEvent.click(canvas.getByLabelText('Ja'));
+      await userEvent.clear(canvas.getByRole('textbox', { name: 'til' }));
+      await userEvent.type(canvas.getByRole('textbox', { name: 'til' }), '020322');
+      await userEvent.click(canvas.getByRole('textbox', { name: 'fra' }));
+      await expect(canvas.getByText('Du har valgt en dato som er utenfor gyldig periode.')).toBeInTheDocument();
+      await userEvent.clear(canvas.getByRole('textbox', { name: 'til' }));
+      await userEvent.type(canvas.getByRole('textbox', { name: 'til' }), '280222');
+      await userEvent.click(canvas.getByRole('textbox', { name: 'fra' }));
+      await expect(canvas.queryByText('Du har valgt en dato som er utenfor gyldig periode.')).not.toBeInTheDocument();
+      await expect(
+        canvas.getByText(
+          'Du har ikke vurdert alle periodene som må vurderes. Resterende perioder vurderer du etter at du har lagret denne.',
+        ),
+      ).toBeInTheDocument();
+      await userEvent.clear(canvas.getByRole('textbox', { name: 'til' }));
+      await userEvent.type(canvas.getByRole('textbox', { name: 'til' }), '010322');
+      await userEvent.click(canvas.getByRole('textbox', { name: 'fra' }));
+      await expect(
+        canvas.queryByText(
+          'Du har ikke vurdert alle periodene som må vurderes. Resterende perioder vurderer du etter at du har lagret denne.',
+        ),
+      ).not.toBeInTheDocument();
       await userEvent.click(canvas.getByRole('button', { name: 'Bekreft' }));
       await waitFor(async () => {
         await expect(canvas.getByText('Overlappende periode')).toBeInTheDocument();
@@ -106,6 +127,11 @@ export const MedisinskVilkår: Story = {
         await expect(canvas.getByText('Overlappende periode')).toBeInTheDocument();
       });
       await userEvent.click(canvas.getAllByRole('button', { name: 'Bekreft' })[1]);
+      await waitFor(async () => {
+        await expect(
+          canvas.getByText('Sykdom er ferdig vurdert og du kan gå videre i behandlingen.'),
+        ).toBeInTheDocument();
+      });
     });
   },
 };
