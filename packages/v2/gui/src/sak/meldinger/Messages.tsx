@@ -88,7 +88,7 @@ const Messages = ({
     loadFritekstForslag();
   }, [valgtMalkode]);
 
-  const valgtMal = maler.filter(mal => mal.kode === valgtMalkode)[0];
+  const valgtMal = maler.find(mal => mal.kode === valgtMalkode);
   useEffect(() => {
     setValgtMottakerId(valgtMal?.mottakere[0]?.id);
   }, [valgtMal]);
