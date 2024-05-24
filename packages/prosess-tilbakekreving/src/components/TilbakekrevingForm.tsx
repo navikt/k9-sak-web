@@ -379,7 +379,7 @@ export const slaSammenOriginaleOgLagredePeriode = createSelector(
       const originalPeriode = finnOriginalPeriode(lagretPeriode, perioder);
       return {
         ...originalPeriode,
-        harMerEnnEnYtelse: originalPeriode.ytelser.length > 1,
+        harMerEnnEnYtelse: originalPeriode?.ytelser?.length > 1,
         ...omit(lagretPeriode, 'feilutbetalingBelop'),
         feilutbetaling: lagretPeriode.feilutbetalingBelop,
         erTotalBelopUnder4Rettsgebyr,
