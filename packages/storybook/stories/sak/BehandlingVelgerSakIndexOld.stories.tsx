@@ -54,7 +54,7 @@ const behandlinger = [
     id: 2,
     versjon: 2,
     type: {
-      kode: behandlingType.DOKUMENTINNSYN,
+      kode: behandlingType.FORSTEGANGSSOKNAD,
       kodeverk: BEHANDLING_TYPE_KODEVERK,
     },
     status: {

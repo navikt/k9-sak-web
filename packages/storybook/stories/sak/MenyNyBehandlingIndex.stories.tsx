@@ -31,11 +31,6 @@ const behandlingstyper = [
     navn: 'Klage',
   },
   {
-    kode: behandlingType.DOKUMENTINNSYN,
-    kodeverk: 'BEHANDLING_TYPE',
-    navn: 'Dokumentinnsyn',
-  },
-  {
     kode: behandlingType.TILBAKEKREVING,
     kodeverk: 'BEHANDLING_TYPE',
     navn: 'Tilbakekreving',
