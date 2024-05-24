@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 import React, { useEffect } from 'react';
 import { handlers } from '../../mock/api-mock';
+import { mockUrlPrepend } from '../../mock/constants';
 import MainComponent from './MainComponent';
 
 const meta: Meta<typeof MainComponent> = {
@@ -12,9 +13,9 @@ const meta: Meta<typeof MainComponent> = {
     data: {
       readOnly: false,
       endpoints: {
-        tilsyn: 'http://localhost:8082/mock/tilsyn',
-        sykdom: 'http://localhost:8082/mock/sykdom',
-        sykdomInnleggelse: 'http://localhost:8082/mock/sykdomInnleggelse',
+        tilsyn: `${mockUrlPrepend}/mock/tilsyn`,
+        sykdom: `${mockUrlPrepend}/mock/sykdom`,
+        sykdomInnleggelse: `${mockUrlPrepend}/mock/sykdomInnleggelse`,
       },
       httpErrorHandler: undefined,
       lagreBeredskapvurdering: undefined,
