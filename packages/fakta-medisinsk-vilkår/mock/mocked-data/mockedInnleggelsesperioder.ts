@@ -10,7 +10,7 @@ export default {
     {
       rel: LinkRel.ENDRE_INNLEGGELSESPERIODER,
       type: 'POST',
-      href: 'http://localhost:8082/mock/endre-innleggelsesperioder',
+      href: '/mock/endre-innleggelsesperioder',
       requestPayload: {
         behandlingUuid: 'HER_ER_BEHANDLINGSID',
         versjon: null,

@@ -13,16 +13,15 @@ const meta: Meta<typeof MainComponent> = {
   args: {
     data: {
       endpoints: {
-        vurderingsoversiktKontinuerligTilsynOgPleie:
-          'http://localhost:8082/mock/kontinuerlig-tilsyn-og-pleie/vurderingsoversikt',
-        vurderingsoversiktBehovForToOmsorgspersoner: 'http://localhost:8082/mock/to-omsorgspersoner/vurderingsoversikt',
-        dokumentoversikt: 'http://localhost:8082/mock/dokumentoversikt',
-        dataTilVurdering: 'http://localhost:8082/mock/data-til-vurdering',
-        innleggelsesperioder: 'http://localhost:8082/mock/innleggelsesperioder',
-        diagnosekoder: 'http://localhost:8082/mock/diagnosekoder',
-        status: 'http://localhost:8082/mock/status',
-        nyeDokumenter: 'http://localhost:8082/mock/nye-dokumenter',
-        vurderingsoversiktLivetsSluttfase: 'http://localhost:8082/mock/livets-sluttfase/vurderingsoversikt',
+        vurderingsoversiktKontinuerligTilsynOgPleie: '/mock/kontinuerlig-tilsyn-og-pleie/vurderingsoversikt',
+        vurderingsoversiktBehovForToOmsorgspersoner: '/mock/to-omsorgspersoner/vurderingsoversikt',
+        dokumentoversikt: '/mock/dokumentoversikt',
+        dataTilVurdering: '/mock/data-til-vurdering',
+        innleggelsesperioder: '/mock/innleggelsesperioder',
+        diagnosekoder: '/mock/diagnosekoder',
+        status: '/mock/status',
+        nyeDokumenter: '/mock/nye-dokumenter',
+        vurderingsoversiktLivetsSluttfase: '/mock/livets-sluttfase/vurderingsoversikt',
       },
       behandlingUuid: '123',
       readOnly: false,

@@ -6,7 +6,7 @@ export default {
     {
       rel: LinkRel.ENDRE_DIAGNOSEKODER,
       type: 'POST',
-      href: 'http://localhost:8082/mock/endre-diagnosekoder',
+      href: '/mock/endre-diagnosekoder',
       behandlingUuid: 'HER_ER_BEHANDLINGSID',
       versjon: null,
     },

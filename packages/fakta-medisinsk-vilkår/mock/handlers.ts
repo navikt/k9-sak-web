@@ -34,7 +34,7 @@ type EndreInnleggelsesperioderRequestBody = {
 };
 
 export const handlers = [
-  http.get('http://localhost:8082/mock/status', () => {
+  http.get('/mock/status', () => {
     const harUklassifiserteDokumenter = mockedDokumentoversikt.dokumenter.some(
       ({ type }) => type === Dokumenttype.UKLASSIFISERT,
     );
@@ -72,7 +72,7 @@ export const handlers = [
     );
   }),
 
-  http.get('http://localhost:8082/mock/vurdering', ({ request }) => {
+  http.get('/mock/vurdering', ({ request }) => {
     const url = new URL(request.url);
     const vurderingId = url.searchParams.get('sykdomVurderingId');
     const alleVurderinger = [...mockedTilsynsbehovVurderinger, ...mockedToOmsorgspersonerVurderinger];
@@ -80,7 +80,7 @@ export const handlers = [
     return HttpResponse.json(vurdering, { status: 200 });
   }),
 
-  http.post<undefined, NyVurderingsversjon>('http://localhost:8082/mock/opprett-vurdering', async ({ request }) => {
+  http.post<undefined, NyVurderingsversjon>('/mock/opprett-vurdering', async ({ request }) => {
     const body = await request.json();
     if (body.dryRun === true) {
       return HttpResponse.json(
@@ -107,7 +107,7 @@ export const handlers = [
     return HttpResponse.json(null, { status: 201 });
   }),
 
-  http.post<undefined, EndreVurderingRequestBody>('http://localhost:8082/mock/endre-vurdering', async ({ request }) => {
+  http.post<undefined, EndreVurderingRequestBody>('/mock/endre-vurdering', async ({ request }) => {
     const body = await request.json();
     if (body.dryRun === true) {
       return HttpResponse.json(
@@ -157,7 +157,7 @@ export const handlers = [
     return HttpResponse.json(null, { status: 201 });
   }),
 
-  http.get('http://localhost:8082/mock/kontinuerlig-tilsyn-og-pleie/vurderingsoversikt', () => {
+  http.get('/mock/kontinuerlig-tilsyn-og-pleie/vurderingsoversikt', () => {
     const harGyldigSignatur = mockedDokumentoversikt.dokumenter.some(({ type }) => type === Dokumenttype.LEGEERKLÆRING);
     return HttpResponse.json(
       {
@@ -171,7 +171,7 @@ export const handlers = [
     );
   }),
 
-  http.get('http://localhost:8082/mock/to-omsorgspersoner/vurderingsoversikt', () => {
+  http.get('/mock/to-omsorgspersoner/vurderingsoversikt', () => {
     const harGyldigSignatur = mockedDokumentoversikt.dokumenter.some(({ type }) => type === Dokumenttype.LEGEERKLÆRING);
     return HttpResponse.json(
       {
@@ -185,39 +185,28 @@ export const handlers = [
     );
   }),
 
-  http.get('http://localhost:8082/mock/dokumentoversikt', () =>
-    HttpResponse.json(mockedDokumentoversikt, { status: 200 }),
-  ),
+  http.get('/mock/dokumentoversikt', () => HttpResponse.json(mockedDokumentoversikt, { status: 200 })),
 
-  http.post<undefined, Dokument>('http://localhost:8082/mock/endre-dokument', async ({ request }) => {
+  http.post<undefined, Dokument>('/mock/endre-dokument', async ({ request }) => {
     const body = await request.json();
     createStrukturertDokument(body);
     return HttpResponse.json(mockedDokumentoversikt, { status: 201 });
   }),
 
-  http.get('http://localhost:8082/mock/data-til-vurdering', () =>
-    HttpResponse.json(mockedDokumentliste, { status: 200 }),
-  ),
+  http.get('/mock/data-til-vurdering', () => HttpResponse.json(mockedDokumentliste, { status: 200 })),
 
-  http.get('http://localhost:8082/mock/diagnosekoder', () =>
-    HttpResponse.json(mockedDiagnosekoderesponse, { status: 200 }),
-  ),
+  http.get('/mock/diagnosekoder', () => HttpResponse.json(mockedDiagnosekoderesponse, { status: 200 })),
 
-  http.post<undefined, EndreDiagnosekoderRequestBody>(
-    'http://localhost:8082/mock/endre-diagnosekoder',
-    async ({ request }) => {
-      const body = await request.json();
-      mockedDiagnosekoderesponse.diagnosekoder = body.diagnosekoder || [];
-      return HttpResponse.json({}, { status: 201 });
-    },
-  ),
+  http.post<undefined, EndreDiagnosekoderRequestBody>('/mock/endre-diagnosekoder', async ({ request }) => {
+    const body = await request.json();
+    mockedDiagnosekoderesponse.diagnosekoder = body.diagnosekoder || [];
+    return HttpResponse.json({}, { status: 201 });
+  }),
 
-  http.get('http://localhost:8082/mock/innleggelsesperioder', () =>
-    HttpResponse.json(mockedInnleggelsesperioder, { status: 200 }),
-  ),
+  http.get('/mock/innleggelsesperioder', () => HttpResponse.json(mockedInnleggelsesperioder, { status: 200 })),
 
   http.post<undefined, EndreInnleggelsesperioderRequestBody>(
-    'http://localhost:8082/mock/endre-innleggelsesperioder',
+    '/mock/endre-innleggelsesperioder',
     async ({ request }) => {
       const body = await request.json();
       if (body.dryRun === true) {
@@ -228,9 +217,9 @@ export const handlers = [
     },
   ),
 
-  http.get('http://localhost:8082/mock/nye-dokumenter', () => HttpResponse.json(mockedNyeDokumenter, { status: 200 })),
+  http.get('/mock/nye-dokumenter', () => HttpResponse.json(mockedNyeDokumenter, { status: 200 })),
 
-  http.post('http://localhost:8082/mock/nye-dokumenter', () => {
+  http.post('/mock/nye-dokumenter', () => {
     mockedNyeDokumenter = [];
     return HttpResponse.json({}, { status: 201 });
   }),
