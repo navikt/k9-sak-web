@@ -2,6 +2,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 import React, { useEffect } from 'react';
+import { mockUrlPrepend } from '../../mock/constants';
 import { handlers } from '../../mock/handlers';
 import BehandlingType from '../constants/BehandlingType';
 import FagsakYtelseType from '../constants/FagsakYtelseType';
@@ -13,15 +14,15 @@ const meta: Meta<typeof MainComponent> = {
   args: {
     data: {
       endpoints: {
-        vurderingsoversiktKontinuerligTilsynOgPleie: '/mock/kontinuerlig-tilsyn-og-pleie/vurderingsoversikt',
-        vurderingsoversiktBehovForToOmsorgspersoner: '/mock/to-omsorgspersoner/vurderingsoversikt',
-        dokumentoversikt: '/mock/dokumentoversikt',
-        dataTilVurdering: '/mock/data-til-vurdering',
-        innleggelsesperioder: '/mock/innleggelsesperioder',
-        diagnosekoder: '/mock/diagnosekoder',
-        status: '/mock/status',
-        nyeDokumenter: '/mock/nye-dokumenter',
-        vurderingsoversiktLivetsSluttfase: '/mock/livets-sluttfase/vurderingsoversikt',
+        vurderingsoversiktKontinuerligTilsynOgPleie: `${mockUrlPrepend}/mock/kontinuerlig-tilsyn-og-pleie/vurderingsoversikt`,
+        vurderingsoversiktBehovForToOmsorgspersoner: `${mockUrlPrepend}/mock/to-omsorgspersoner/vurderingsoversikt`,
+        dokumentoversikt: `${mockUrlPrepend}/mock/dokumentoversikt`,
+        dataTilVurdering: `${mockUrlPrepend}/mock/data-til-vurdering`,
+        innleggelsesperioder: `${mockUrlPrepend}/mock/innleggelsesperioder`,
+        diagnosekoder: `${mockUrlPrepend}/mock/diagnosekoder`,
+        status: `${mockUrlPrepend}/mock/status`,
+        nyeDokumenter: `${mockUrlPrepend}/mock/nye-dokumenter`,
+        vurderingsoversiktLivetsSluttfase: `${mockUrlPrepend}/mock/livets-sluttfase/vurderingsoversikt`,
       },
       behandlingUuid: '123',
       readOnly: false,
