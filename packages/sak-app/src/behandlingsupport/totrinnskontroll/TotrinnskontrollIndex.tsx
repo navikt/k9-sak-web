@@ -1,7 +1,6 @@
-import React, { useCallback, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import {
   BehandlingAppKontekst,
@@ -10,11 +9,11 @@ import {
   NavAnsatt,
   TotrinnskontrollSkjermlenkeContext,
 } from '@k9-sak-web/types';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
+import React, { useCallback, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { createLocationForSkjermlenke } from '../../app/paths';
-import { useKodeverk } from '../../data/useKodeverk';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
+import { useKodeverk } from '../../data/useKodeverk';
 import BeslutterModalIndex from './BeslutterModalIndex';
 
 type Values = {
@@ -67,14 +66,12 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
 
   const alleKodeverk = useKodeverk(behandling.type);
 
-  const erInnsynBehandling = behandling.type.kode === BehandlingType.DOKUMENTINNSYN;
-
   const { data: totrinnArsaker } = restApiHooks.useRestApi<TotrinnskontrollSkjermlenkeContext[]>(
     K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER,
     undefined,
     {
       updateTriggers: [behandlingId, behandling.status.kode],
-      suspendRequest: !!erInnsynBehandling || behandling.status.kode !== BehandlingStatus.FATTER_VEDTAK,
+      suspendRequest: behandling.status.kode !== BehandlingStatus.FATTER_VEDTAK,
     },
   );
   const { data: totrinnArsakerReadOnly } = restApiHooks.useRestApi<TotrinnskontrollSkjermlenkeContext[]>(
@@ -82,7 +79,7 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
     undefined,
     {
       updateTriggers: [behandlingId, behandling.status.kode],
-      suspendRequest: !!erInnsynBehandling || behandling.status.kode !== BehandlingStatus.BEHANDLING_UTREDES,
+      suspendRequest: behandling.status.kode !== BehandlingStatus.BEHANDLING_UTREDES,
     },
   );
 

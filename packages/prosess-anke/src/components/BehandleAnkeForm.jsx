@@ -66,8 +66,6 @@ const formatBehandlingType = kode => {
       return 'Revurdering';
     case behandlingType.SOKNAD:
       return 'Søknad';
-    case behandlingType.DOKUMENTINNSYN:
-      return 'Dokumentinnsyn';
     case behandlingType.TILBAKEKREVING:
       return 'Tilbakekreving';
     default:

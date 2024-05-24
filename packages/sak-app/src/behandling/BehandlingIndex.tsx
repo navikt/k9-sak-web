@@ -1,40 +1,39 @@
-import React, { Suspense, useEffect, useCallback, useMemo } from 'react';
-import { useNavigate, useLocation, NavigateFunction } from 'react-router-dom';
 import { Location } from 'history';
+import React, { Suspense, useCallback, useEffect, useMemo } from 'react';
+import { NavigateFunction, useLocation, useNavigate } from 'react-router-dom';
 
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { replaceNorwegianCharacters, parseQueryString } from '@fpsak-frontend/utils';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/utils';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
+  ArbeidsgiverOpplysningerWrapper,
+  BehandlingAppKontekst,
+  Fagsak,
+  FagsakPerson,
+  FeatureToggles,
   KodeverkMedNavn,
   NavAnsatt,
-  Fagsak,
-  BehandlingAppKontekst,
-  FeatureToggles,
-  FagsakPerson,
-  ArbeidsgiverOpplysningerWrapper,
 } from '@k9-sak-web/types';
 
-import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import BehandlingPleiepengerSluttfaseIndex from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
-import useTrackRouteParam from '../app/useTrackRouteParam';
-import getAccessRights from '../app/util/access';
+import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
+import ErrorBoundary from '../app/ErrorBoundary';
 import {
-  getProsessStegLocation,
   getFaktaLocation,
   getLocationWithDefaultProsessStegAndFakta,
   getPathToK9Los,
+  getProsessStegLocation,
 } from '../app/paths';
-import { K9sakApiKeys, requestApi, restApiHooks, LinkCategory } from '../data/k9sakApi';
+import useTrackRouteParam from '../app/useTrackRouteParam';
+import getAccessRights from '../app/util/access';
+import { K9sakApiKeys, LinkCategory, requestApi, restApiHooks } from '../data/k9sakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
-import ErrorBoundary from '../app/ErrorBoundary';
 
 const BehandlingPleiepengerIndex = React.lazy(() => import('@k9-sak-web/behandling-pleiepenger'));
 const BehandlingOmsorgspengerIndex = React.lazy(() => import('@k9-sak-web/behandling-omsorgspenger'));
-const BehandlingInnsynIndex = React.lazy(() => import('@k9-sak-web/behandling-innsyn'));
 const BehandlingKlageIndex = React.lazy(() => import('@k9-sak-web/behandling-klage'));
 const BehandlingTilbakekrevingIndex = React.lazy(() => import('@k9-sak-web/behandling-tilbakekreving'));
 const BehandlingAnkeIndex = React.lazy(() => import('@k9-sak-web/behandling-anke'));
@@ -186,19 +185,6 @@ const BehandlingIndex = ({
 
   if (!behandlingId) {
     return <LoadingPanel />;
-  }
-
-  if (behandlingTypeKode === BehandlingType.DOKUMENTINNSYN) {
-    return (
-      <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary errorMessageCallback={addErrorMessage}>
-          <BehandlingInnsynIndex
-            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-            {...defaultProps}
-          />
-        </ErrorBoundary>
-      </Suspense>
-    );
   }
 
   if (behandlingTypeKode === BehandlingType.KLAGE) {
