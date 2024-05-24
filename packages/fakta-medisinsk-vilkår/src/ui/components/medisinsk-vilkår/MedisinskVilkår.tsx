@@ -3,7 +3,7 @@ import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Tabs } from '@navikt/ds-react';
 import { Box, ChildIcon, Infostripe, Margin, PageContainer } from '@navikt/ft-plattform-komponenter';
 import classnames from 'classnames';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import FagsakYtelseType from '../../../constants/FagsakYtelseType';
 import { DiagnosekodeResponse } from '../../../types/DiagnosekodeResponse';
@@ -79,15 +79,12 @@ const sykdomTittel = (fagsakYtelseType: FagsakYtelseType) => {
 
 const MedisinskVilkår = (): JSX.Element => {
   const [state, dispatch] = React.useReducer(medisinskVilkårReducer, {
-    isLoading: true,
-    hasError: null,
     activeStep: null,
     markedStep: null,
-    sykdomsstegStatus: null,
     nyeDokumenterSomIkkeErVurdert: [],
   });
 
-  const { isLoading, hasError, activeStep, markedStep, sykdomsstegStatus, nyeDokumenterSomIkkeErVurdert } = state;
+  const { activeStep, markedStep, nyeDokumenterSomIkkeErVurdert } = state;
   const { endpoints, httpErrorHandler, visFortsettknapp, fagsakYtelseType } = React.useContext(ContainerContext);
 
   const dokumentStegForSakstype = stegForSakstype(fagsakYtelseType).find(stepObj => stepObj.id === StepId.Dokument);
@@ -110,36 +107,40 @@ const MedisinskVilkår = (): JSX.Element => {
       .get<DiagnosekodeResponse>(endpoints.diagnosekoder, httpErrorHandler)
       .then((response: DiagnosekodeResponse) => response);
 
+  const hentStatus = () =>
+    httpUtils.get<SykdomsstegStatusResponse>(endpoints.status, httpErrorHandler, {
+      signal: controller.signal,
+    });
+
   const { isLoading: diagnosekoderLoading, data: diagnosekoderData } = useQuery(
     'diagnosekodeResponse',
     hentDiagnosekoder,
     { enabled: !erFagsakOLPEllerPLS(fagsakYtelseType) },
   );
 
+  const {
+    isLoading: statusLoading,
+    data: sykdomstegStatus,
+    error: hasError,
+    refetch: refetchSykdomstegStatus,
+  } = useQuery('status', hentStatus);
+
   const diagnosekoder = endpoints.diagnosekoder ? diagnosekoderData?.diagnosekoder : [];
   const diagnosekoderTekst = diagnosekoder?.length > 0 ? `${diagnosekoder?.join(', ')}` : 'Kode mangler';
 
-  const hentSykdomsstegStatus = async () => {
-    try {
-      const status = await httpUtils.get<SykdomsstegStatusResponse>(endpoints.status, httpErrorHandler, {
-        signal: controller.signal,
-      });
-      const nesteSteg = finnNesteStegFn(status);
+  useEffect(() => {
+    if (!statusLoading) {
+      const nesteSteg = finnNesteStegFn(sykdomstegStatus);
       dispatch({
         type: ActionType.UPDATE_STATUS,
-        sykdomsstegStatus: status,
         step: nesteSteg,
       });
-      return status;
-    } catch (error) {
-      dispatch({
-        type: ActionType.SHOW_ERROR,
-      });
-      throw new Error(error);
     }
-  };
+  }, [sykdomstegStatus, statusLoading]);
 
-  const hentNyeDokumenterSomIkkeErVurdertHvisNødvendig = (status): Promise<[SykdomsstegStatusResponse, Dokument[]]> =>
+  const hentNyeDokumenterSomIkkeErVurdertHvisNødvendig = (
+    status: SykdomsstegStatusResponse,
+  ): Promise<[SykdomsstegStatusResponse, Dokument[]]> =>
     new Promise((resolve, reject) => {
       if (status.nyttDokumentHarIkkekontrollertEksisterendeVurderinger) {
         httpUtils
@@ -155,11 +156,11 @@ const MedisinskVilkår = (): JSX.Element => {
       }
     });
 
-  React.useEffect(() => {
-    hentSykdomsstegStatus()
-      .then(hentNyeDokumenterSomIkkeErVurdertHvisNødvendig)
-      .then(([sykdomsstegStatusResponse, nyeDokumenterSomIkkeErVurdertResponse]) => {
-        const step = finnNesteStegFn(sykdomsstegStatusResponse, true);
+  useEffect(() => {
+    refetchSykdomstegStatus()
+      .then(res => hentNyeDokumenterSomIkkeErVurdertHvisNødvendig(res.data))
+      .then(([status, nyeDokumenterSomIkkeErVurdertResponse]) => {
+        const step = finnNesteStegFn(status, true);
         if (step !== null) {
           dispatch({
             type: ActionType.MARK_AND_ACTIVATE_STEP,
@@ -181,12 +182,12 @@ const MedisinskVilkår = (): JSX.Element => {
   }, []);
 
   const navigerTilNesteSteg = () => {
-    const nesteSteg = finnNesteStegFn(sykdomsstegStatus);
+    const nesteSteg = finnNesteStegFn(sykdomstegStatus);
     dispatch({ type: ActionType.NAVIGATE_TO_STEP, step: nesteSteg });
   };
 
   const navigerTilSteg = (nesteSteg: Step, ikkeMarkerSteg?: boolean) => {
-    if (sykdomsstegStatus.kanLøseAksjonspunkt || ikkeMarkerSteg) {
+    if (sykdomstegStatus.kanLøseAksjonspunkt || ikkeMarkerSteg) {
       dispatch({ type: ActionType.ACTIVATE_STEP_AND_CLEAR_MARKING, step: nesteSteg });
     } else {
       dispatch({ type: ActionType.NAVIGATE_TO_STEP, step: nesteSteg });
@@ -195,27 +196,26 @@ const MedisinskVilkår = (): JSX.Element => {
 
   const afterEndringerUtifraNyeDokumenterRegistrert = () => {
     dispatch({ type: ActionType.ENDRINGER_UTIFRA_NYE_DOKUMENTER_REGISTRERT });
-    hentSykdomsstegStatus().then(
-      ({
+    refetchSykdomstegStatus().then(({ data }) => {
+      const {
         kanLøseAksjonspunkt,
         manglerVurderingAvKontinuerligTilsynOgPleie,
         manglerVurderingAvToOmsorgspersoner,
         manglerVurderingAvLangvarigSykdom,
-      }) => {
-        if (kanLøseAksjonspunkt) {
-          navigerTilSteg(toOmsorgspersonerSteg, true);
-        } else if (!manglerVurderingAvKontinuerligTilsynOgPleie && manglerVurderingAvToOmsorgspersoner) {
-          navigerTilSteg(toOmsorgspersonerSteg);
-        } else if (manglerVurderingAvLangvarigSykdom) {
-          navigerTilSteg(langvarigSykdomSteg);
-        }
-      },
-    );
+      } = data;
+      if (kanLøseAksjonspunkt) {
+        navigerTilSteg(toOmsorgspersonerSteg, true);
+      } else if (!manglerVurderingAvKontinuerligTilsynOgPleie && manglerVurderingAvToOmsorgspersoner) {
+        navigerTilSteg(toOmsorgspersonerSteg);
+      } else if (manglerVurderingAvLangvarigSykdom) {
+        navigerTilSteg(langvarigSykdomSteg);
+      }
+    });
   };
 
-  const kanLøseAksjonspunkt = sykdomsstegStatus?.kanLøseAksjonspunkt;
-  const harDataSomIkkeHarBlittTattMedIBehandling = sykdomsstegStatus?.harDataSomIkkeHarBlittTattMedIBehandling;
-  const manglerVurderingAvNyeDokumenter = sykdomsstegStatus?.nyttDokumentHarIkkekontrollertEksisterendeVurderinger;
+  const kanLøseAksjonspunkt = sykdomstegStatus?.kanLøseAksjonspunkt;
+  const harDataSomIkkeHarBlittTattMedIBehandling = sykdomstegStatus?.harDataSomIkkeHarBlittTattMedIBehandling;
+  const manglerVurderingAvNyeDokumenter = sykdomstegStatus?.nyttDokumentHarIkkekontrollertEksisterendeVurderinger;
 
   const steps: Step[] = stegForSakstype(fagsakYtelseType);
 
@@ -235,7 +235,7 @@ const MedisinskVilkår = (): JSX.Element => {
     return {};
   }, [activeStep]);
   return (
-    <PageContainer isLoading={isLoading} hasError={hasError}>
+    <PageContainer isLoading={statusLoading} hasError={hasError}>
       <Infostripe
         element={
           !erFagsakOLPEllerPLS(fagsakYtelseType) ? (
@@ -314,8 +314,8 @@ const MedisinskVilkår = (): JSX.Element => {
               <StruktureringAvDokumentasjon
                 navigerTilNesteSteg={navigerTilNesteSteg}
                 hentSykdomsstegStatus={() =>
-                  hentSykdomsstegStatus()
-                    .then(hentNyeDokumenterSomIkkeErVurdertHvisNødvendig)
+                  refetchSykdomstegStatus()
+                    .then(res => hentNyeDokumenterSomIkkeErVurdertHvisNødvendig(res.data))
                     .then(([status, dokumenter]) => {
                       dispatch({
                         type: ActionType.UPDATE_NYE_DOKUMENTER_SOM_IKKE_ER_VURDERT,
@@ -324,15 +324,15 @@ const MedisinskVilkår = (): JSX.Element => {
                       return [status, dokumenter];
                     })
                 }
-                sykdomsstegStatus={sykdomsstegStatus}
+                sykdomsstegStatus={sykdomstegStatus}
               />
             )}
             {activeStep === tilsynOgPleieSteg && (
               <VurderingContext.Provider value={contextValue}>
                 <VilkårsvurderingAvTilsynOgPleie
                   navigerTilNesteSteg={navigerTilSteg}
-                  hentSykdomsstegStatus={hentSykdomsstegStatus}
-                  sykdomsstegStatus={sykdomsstegStatus}
+                  hentSykdomsstegStatus={() => refetchSykdomstegStatus().then(({ data }) => data)}
+                  sykdomsstegStatus={sykdomstegStatus}
                 />
               </VurderingContext.Provider>
             )}
@@ -340,8 +340,8 @@ const MedisinskVilkår = (): JSX.Element => {
               <VurderingContext.Provider value={contextValue}>
                 <VilkårsvurderingLangvarigSykdom
                   navigerTilNesteSteg={navigerTilSteg}
-                  hentSykdomsstegStatus={hentSykdomsstegStatus}
-                  sykdomsstegStatus={sykdomsstegStatus}
+                  hentSykdomsstegStatus={() => refetchSykdomstegStatus().then(({ data }) => data)}
+                  sykdomsstegStatus={sykdomstegStatus}
                 />
               </VurderingContext.Provider>
             )}
@@ -349,8 +349,8 @@ const MedisinskVilkår = (): JSX.Element => {
               <VurderingContext.Provider value={contextValue}>
                 <VilkarsvurderingAvLivetsSluttfase
                   navigerTilNesteSteg={navigerTilSteg}
-                  hentSykdomsstegStatus={hentSykdomsstegStatus}
-                  sykdomsstegStatus={sykdomsstegStatus}
+                  hentSykdomsstegStatus={() => refetchSykdomstegStatus().then(({ data }) => data)}
+                  sykdomsstegStatus={sykdomstegStatus}
                 />
               </VurderingContext.Provider>
             )}
@@ -358,8 +358,8 @@ const MedisinskVilkår = (): JSX.Element => {
               <VurderingContext.Provider value={contextValue}>
                 <VilkårsvurderingAvToOmsorgspersoner
                   navigerTilNesteSteg={navigerTilSteg}
-                  hentSykdomsstegStatus={hentSykdomsstegStatus}
-                  sykdomsstegStatus={sykdomsstegStatus}
+                  hentSykdomsstegStatus={() => refetchSykdomstegStatus().then(({ data }) => data)}
+                  sykdomsstegStatus={sykdomstegStatus}
                 />
               </VurderingContext.Provider>
             )}

@@ -1,14 +1,11 @@
-import ActionType from './actionTypes';
+import Dokument from '../../../types/Dokument';
 import Step, { dokumentSteg } from '../../../types/Step';
 import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
-import Dokument from '../../../types/Dokument';
+import ActionType from './actionTypes';
 
 interface State {
-  isLoading: boolean;
-  hasError: boolean;
   activeStep: Step;
   markedStep: Step;
-  sykdomsstegStatus: SykdomsstegStatusResponse;
   nyeDokumenterSomIkkeErVurdert: Dokument[];
 }
 
@@ -27,7 +24,6 @@ const medisinskVilkårReducer = (state: State, action: Action): State => {
         nyeDokumenterSomIkkeErVurdert: action.nyeDokumenterSomIkkeErVurdert || [],
         activeStep: action.step || dokumentSteg,
         markedStep: action.step,
-        isLoading: false,
       };
     }
     case ActionType.ACTIVATE_STEP: {
@@ -48,7 +44,6 @@ const medisinskVilkårReducer = (state: State, action: Action): State => {
         ...state,
         nyeDokumenterSomIkkeErVurdert: action.nyeDokumenterSomIkkeErVurdert || [],
         activeStep: dokumentSteg,
-        isLoading: false,
       };
     }
     case ActionType.NAVIGATE_TO_STEP: {
@@ -61,14 +56,7 @@ const medisinskVilkårReducer = (state: State, action: Action): State => {
     case ActionType.UPDATE_STATUS: {
       return {
         ...state,
-        sykdomsstegStatus: action.sykdomsstegStatus,
         markedStep: action.step,
-      };
-    }
-    case ActionType.SHOW_ERROR: {
-      return {
-        ...state,
-        hasError: true,
       };
     }
     case ActionType.ENDRINGER_UTIFRA_NYE_DOKUMENTER_REGISTRERT: {
