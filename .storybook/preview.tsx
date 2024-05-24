@@ -3,7 +3,7 @@ import configureStore from '@k9-sak-web/sak-app/src/configureStore';
 import '@navikt/ds-css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import { Preview } from '@storybook/react';
-import { initialize, mswLoader } from 'msw-storybook-addon';
+import { getWorker, initialize, mswLoader } from 'msw-storybook-addon';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
@@ -33,7 +33,7 @@ const preview: Preview = {
       );
     },
   ],
-  loaders: [mswLoader],
+  loaders: [mswLoader, () => getWorker().start()],
 };
 
 export default preview;
