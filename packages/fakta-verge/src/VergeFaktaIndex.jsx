@@ -1,23 +1,26 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
+import messages from '../i18n/nb_NO.json';
 import RegistrereVergeInfoPanel from './components/RegistrereVergeInfoPanel';
 import vergeAksjonspunkterPropType from './propTypes/vergeAksjonspunkterPropType';
-import vergeVergePropType from './propTypes/vergeVergePropType';
 import vergeBehandlingPropType from './propTypes/vergeBehandlingPropType';
-import messages from '../i18n/nb_NO.json';
+import vergeVergePropType from './propTypes/vergeVergePropType';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const VergeFaktaIndex = ({
   behandling,
-  verge,
+  verge = {},
   aksjonspunkter,
   alleMerknaderFraBeslutter,
   alleKodeverk,
@@ -52,10 +55,6 @@ VergeFaktaIndex.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   harApneAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
-};
-
-VergeFaktaIndex.defaultProps = {
-  verge: {},
 };
 
 export default VergeFaktaIndex;

@@ -98,7 +98,7 @@ export class AvregningPanelImpl extends Component {
     const { showDetails, feilutbetaling } = this.state;
     const {
       intl,
-      simuleringResultat,
+      simuleringResultat = null,
       isApOpen,
       apCodes,
       readOnly,
@@ -269,10 +269,6 @@ AvregningPanelImpl.propTypes = {
   previewCallback: PropTypes.func.isRequired,
   hasOpenTilbakekrevingsbehandling: PropTypes.bool.isRequired,
   ...formPropTypes,
-};
-
-AvregningPanelImpl.defaultProps = {
-  simuleringResultat: null,
 };
 
 export const transformValues = (values, ap) => {

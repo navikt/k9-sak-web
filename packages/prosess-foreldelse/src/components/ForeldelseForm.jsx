@@ -162,7 +162,7 @@ export class ForeldelseForm extends Component {
       foreldelsesresultatActivity,
       behandlingFormPrefix,
       navBrukerKjonn,
-      apCodes,
+      apCodes = [],
       readOnlySubmitButton,
       readOnly,
       merknaderFraBeslutter,
@@ -268,12 +268,6 @@ ForeldelseForm.propTypes = {
   beregnBelop: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-};
-
-ForeldelseForm.defaultProps = {
-  foreldelsesresultatActivity: undefined,
-  apCodes: [],
-  merknaderFraBeslutter: undefined,
 };
 
 export const transformValues = (values, apCode) => {

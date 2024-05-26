@@ -67,8 +67,8 @@ const AktsomhetFormPanel = ({
   resetFields,
   handletUaktsomhetGrad,
   harGrunnerTilReduksjon,
-  erSerligGrunnAnnetValgt,
-  erValgtResultatTypeForstoBurdeForstaatt,
+  erSerligGrunnAnnetValgt = false,
+  erValgtResultatTypeForstoBurdeForstaatt = false,
   aktsomhetTyper,
   sarligGrunnTyper,
   antallYtelser,
@@ -114,11 +114,6 @@ const AktsomhetFormPanel = ({
     )}
   </>
 );
-
-AktsomhetFormPanel.defaultProps = {
-  erSerligGrunnAnnetValgt: false,
-  erValgtResultatTypeForstoBurdeForstaatt: false,
-};
 
 const parseIntAndelSomTilbakekreves = (andelSomTilbakekreves: string, harGrunnerTilReduksjon: boolean) => {
   const parsedValue = parseInt(andelSomTilbakekreves, 10);

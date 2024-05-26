@@ -47,7 +47,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   intl,
   ytelseTypeKode,
   konsekvenserForYtelsen,
-  tilbakekrevingText,
+  tilbakekrevingText = null,
   alleKodeverk,
   bgPeriodeMedAvslagsårsak,
 }) => {
@@ -87,10 +87,6 @@ VedtakInnvilgetRevurderingPanelImpl.propTypes = {
   tilbakekrevingText: PropTypes.string,
   alleKodeverk: PropTypes.shape().isRequired,
   bgPeriodeMedAvslagsårsak: PropTypes.shape(),
-};
-
-VedtakInnvilgetRevurderingPanelImpl.defaultProps = {
-  tilbakekrevingText: null,
 };
 
 const mapStateToProps = (state, ownProps) => ({

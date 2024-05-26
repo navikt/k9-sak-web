@@ -1,8 +1,8 @@
-import React, { ReactNode } from 'react';
 import { Field } from 'formik';
+import React, { ReactNode } from 'react';
+import CustomNavSelect from './CustomNavSelect';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
-import CustomNavSelect from './CustomNavSelect';
 import { validateAll } from './formikUtils';
 
 interface SelectFieldProps {
@@ -33,7 +33,16 @@ const renderNavSelect = ({ label, selectValues, field, ...props }) => (
   <CustomNavSelect selectValues={selectValues} label={label} {...field} {...props} />
 );
 
-const SelectFieldFormik = ({ name, label, selectValues, validate, readOnly, ...otherProps }: SelectFieldProps) => (
+const SelectFieldFormik = ({
+  name,
+  label,
+  selectValues,
+  validate = null,
+  readOnly = false,
+  placeholder = ' ',
+  hideValueOnDisable = false,
+  ...otherProps
+}: SelectFieldProps) => (
   <Field
     name={name}
     validate={value => validateAll(validate, value)}
@@ -44,14 +53,9 @@ const SelectFieldFormik = ({ name, label, selectValues, validate, readOnly, ...o
     {...otherProps}
     readOnly={readOnly}
     readOnlyHideEmpty
+    placeholder={placeholder}
+    hideValueOnDisable={hideValueOnDisable}
   />
 );
-
-SelectFieldFormik.defaultProps = {
-  validate: null,
-  readOnly: false,
-  placeholder: ' ',
-  hideValueOnDisable: false,
-};
 
 export default SelectFieldFormik;

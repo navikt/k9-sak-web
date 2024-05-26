@@ -10,7 +10,14 @@ import styles from './vedtakFritekstPanel.module.css';
 const maxLength100000 = maxLength(100000);
 const minLength3 = minLength(3);
 
-const VedtakFritekstPanelImpl = ({ begrunnelse, begrunnelseFieldName, sprakkode, readOnly, label, intl }) => (
+const VedtakFritekstPanelImpl = ({
+  begrunnelse = null,
+  begrunnelseFieldName = 'begrunnelse',
+  sprakkode,
+  readOnly,
+  label,
+  intl,
+}) => (
   <>
     {!readOnly && (
       <div>
@@ -40,11 +47,6 @@ const VedtakFritekstPanelImpl = ({ begrunnelse, begrunnelseFieldName, sprakkode,
     )}
   </>
 );
-
-VedtakFritekstPanelImpl.defaultProps = {
-  begrunnelse: null,
-  begrunnelseFieldName: 'begrunnelse',
-};
 
 VedtakFritekstPanelImpl.propTypes = {
   begrunnelse: PropTypes.string,

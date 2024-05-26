@@ -47,7 +47,14 @@ const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges
   );
 };
 
-const TextAreaFormik = ({ name, readOnly, formik, label, validate = [], ...otherProps }: TextAreaFieldProps) => {
+const TextAreaFormik = ({
+  name,
+  readOnly = false,
+  formik,
+  label,
+  validate = [],
+  ...otherProps
+}: TextAreaFieldProps) => {
   const intl = useIntl();
   return (
     <FormikField
@@ -65,11 +72,6 @@ const TextAreaFormik = ({ name, readOnly, formik, label, validate = [], ...other
       intl={intl}
     />
   );
-};
-
-TextAreaFormik.defaultProps = {
-  validate: null,
-  readOnly: false,
 };
 
 export default connect(TextAreaFormik);

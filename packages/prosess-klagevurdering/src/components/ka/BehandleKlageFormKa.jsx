@@ -33,14 +33,14 @@ import styles from './behandleKlageFormKa.module.css';
 export const BehandleKlageFormKaImpl = ({
   behandlingId,
   behandlingVersjon,
-  readOnly,
+  readOnly = true,
   handleSubmit,
   saveKlage,
   valgtPartMedKlagerett,
   previewCallback,
-  readOnlySubmitButton,
+  readOnlySubmitButton = true,
   sprakkode,
-  formValues,
+  formValues = {},
   intl,
   alleKodeverk,
   ...formProps
@@ -113,12 +113,6 @@ BehandleKlageFormKaImpl.propTypes = {
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
   ...formPropTypes,
-};
-
-BehandleKlageFormKaImpl.defaultProps = {
-  formValues: {},
-  readOnly: true,
-  readOnlySubmitButton: true,
 };
 
 export const buildInitialValues = createSelector(
