@@ -15185,6 +15185,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nav-frontend-lenkepanel@patch:nav-frontend-lenkepanel@npm%3A2.0.2#./.yarn/patches/nav-frontend-lenkepanel-npm-2.0.2-c191f8e773.patch::locator=k9-sak-web%40workspace%3A.":
+  version: 2.0.2
+  resolution: "nav-frontend-lenkepanel@patch:nav-frontend-lenkepanel@npm%3A2.0.2#./.yarn/patches/nav-frontend-lenkepanel-npm-2.0.2-c191f8e773.patch::version=2.0.2&hash=ad2e24&locator=k9-sak-web%40workspace%3A."
+  peerDependencies:
+    classnames: ^2.2.5
+    nav-frontend-lenkepanel-style: ^2.0.0
+    nav-frontend-typografi: ^4.0.0
+    prop-types: ^15.5.10
+    react: ^16.8.0 || ^17.0.0
+  checksum: ca7dc38a6642e02c0b24ede88af9cb2f6cdf30c30e44e58aa3485452edd479e9de92b6edc761940f5754a24352f55ae2e339a3e0def6a556a66481eaab5db237
+  languageName: node
+  linkType: hard
+
 "nav-frontend-paneler-style@npm:2.0.2":
   version: 2.0.2
   resolution: "nav-frontend-paneler-style@npm:2.0.2"
