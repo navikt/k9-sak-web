@@ -4648,10 +4648,6 @@ __metadata:
     "@fpsak-frontend/sak-visittkort": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    nav-frontend-lenkepanel: 2.0.2
-    nav-frontend-lenkepanel-style: 2.0.2
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-router-dom: 6.23.1
@@ -14817,59 +14813,6 @@ __metadata:
   version: 1.4.0
   resolution: "natural-compare@npm:1.4.0"
   checksum: 23ad088b08f898fc9b53011d7bb78ec48e79de7627e01ab5518e806033861bef68d5b0cd0e2205c2f36690ac9571ff6bcb05eb777ced2eeda8d4ac5b44592c3d
-  languageName: node
-  linkType: hard
-
-"nav-frontend-core@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "nav-frontend-core@npm:6.0.1"
-  checksum: 7673f42a2a93a08fa6952d2c32d8e5d424de437910b76d84363d7cb86a7c0691e5f475a3623c8964366b3bbd33a6defb8e3907bc61b41c3434b4619aab7567d2
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lenkepanel-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-lenkepanel-style@npm:2.0.2"
-  peerDependencies:
-    nav-frontend-chevron-style: ^1.0.4
-    nav-frontend-core: ^6.0.0
-    nav-frontend-paneler-style: ^2.0.0
-  checksum: ce4cea4b78d72a5983ded22eaf812f361238aa1637a95f9d40461612ee97c7e7cba24f2a0c3426c7796945679077cb758b715932dda69da8e296d0e81f90f1e7
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lenkepanel@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-lenkepanel@npm:2.0.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-lenkepanel-style: ^2.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 356ccabef918b153bf48fe8bd455a4b252cbe17b3f1511350b2c2db5867b08fdec0819656e7147be334053d4a7032b7834c023724fd0d57eb9755b184317c7dd
-  languageName: node
-  linkType: hard
-
-"nav-frontend-typografi-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-typografi-style@npm:2.0.2"
-  dependencies:
-    nav-frontend-core: ^6.0.1
-  checksum: ca3f1ce19ad9b6009021bd9f27ccc5db32fe63988e734b647adfa229d2ab8a091efcc8de23ef9cbad7db0f1c8ef7e2c1ad1a01e062a8f8565271b8333645618e
-  languageName: node
-  linkType: hard
-
-"nav-frontend-typografi@npm:4.0.2":
-  version: 4.0.2
-  resolution: "nav-frontend-typografi@npm:4.0.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-core: ^6.0.0
-    nav-frontend-typografi-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: e41f89c1676c81fb6042583462a0533bab239c9acc0c66b205e56cfc39ae145424aa62779c9e0cc5c217fe47dee1db3d849aa3845b9987c850a4ead059e1993c
   languageName: node
   linkType: hard
 

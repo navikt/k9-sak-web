@@ -1,7 +1,6 @@
-import Lenkepanel from 'nav-frontend-lenkepanel';
+import { LinkPanel } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
@@ -28,20 +27,13 @@ const AktoerGrid = ({ aktorInfo, alleKodeverk, finnPathToFagsak }: OwnProps) => 
       <div className={styles.list}>
         {aktorInfo.fagsaker.length ? (
           aktorInfo.fagsaker.map(fagsak => (
-            <Lenkepanel
-              linkCreator={props => (
-                <Link to={finnPathToFagsak(fagsak.saksnummer)} className={props.className}>
-                  {props.children}
-                </Link>
-              )}
-              key={fagsak.saksnummer}
-              href="#"
-              tittelProps="normaltekst"
-            >
-              {getKodeverknavn(fagsak.sakstype)}
-              {` (${fagsak.saksnummer}) `}
-              {getKodeverknavn(fagsak.status)}
-            </Lenkepanel>
+            <LinkPanel key={fagsak.saksnummer} href={finnPathToFagsak(fagsak.saksnummer)}>
+              <LinkPanel.Description>
+                {getKodeverknavn(fagsak.sakstype)}
+                {` (${fagsak.saksnummer}) `}
+                {getKodeverknavn(fagsak.status)}
+              </LinkPanel.Description>
+            </LinkPanel>
           ))
         ) : (
           <FormattedMessage id="AktoerGrid.IngenFagsaker" />
