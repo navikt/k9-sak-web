@@ -15161,6 +15161,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nav-frontend-lenkepanel-style@npm:2.0.2":
+  version: 2.0.2
+  resolution: "nav-frontend-lenkepanel-style@npm:2.0.2"
+  peerDependencies:
+    nav-frontend-chevron-style: ^1.0.4
+    nav-frontend-core: ^6.0.0
+    nav-frontend-paneler-style: ^2.0.0
+  checksum: ce4cea4b78d72a5983ded22eaf812f361238aa1637a95f9d40461612ee97c7e7cba24f2a0c3426c7796945679077cb758b715932dda69da8e296d0e81f90f1e7
+  languageName: node
+  linkType: hard
+
+"nav-frontend-lenkepanel@npm:2.0.2":
+  version: 2.0.2
+  resolution: "nav-frontend-lenkepanel@npm:2.0.2"
+  peerDependencies:
+    classnames: ^2.2.5
+    nav-frontend-lenkepanel-style: ^2.0.0
+    nav-frontend-typografi: ^4.0.0
+    prop-types: ^15.5.10
+    react: ^16.8.0 || ^17.0.0
+  checksum: 356ccabef918b153bf48fe8bd455a4b252cbe17b3f1511350b2c2db5867b08fdec0819656e7147be334053d4a7032b7834c023724fd0d57eb9755b184317c7dd
+  languageName: node
+  linkType: hard
+
 "nav-frontend-paneler-style@npm:2.0.2":
   version: 2.0.2
   resolution: "nav-frontend-paneler-style@npm:2.0.2"
