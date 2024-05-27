@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, object, boolean } from '@storybook/addon-knobs';
+import React, { useState } from 'react';
 
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
-import { Fagsak } from '@k9-sak-web/types';
 import withReduxProvider from '../../decorators/withRedux';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
@@ -72,33 +70,41 @@ const fagsaker = [
 export default {
   title: 'sak/sak-sok',
   component: FagsakSokSakIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visMeldingerPanel = () => {
+export const visMeldingerPanel = props => {
   const [visResultat, toggleResultat] = useState(false);
   return (
     <FagsakSokSakIndex
-      fagsaker={visResultat ? object('fagsaker', fagsaker as Fagsak[]) : []}
+      fagsaker={visResultat ? fagsaker : []}
       searchFagsakCallback={() => toggleResultat(true)}
-      searchResultReceived={boolean('searchResultReceived', false)}
       selectFagsakCallback={action('button-click')}
-      searchStarted={boolean('searchStarted', false)}
       alleKodeverk={alleKodeverk as any}
+      {...props}
     />
   );
 };
 
-export const visSøkDerEnIkkeHarAdgang = () => (
+visMeldingerPanel.args = {
+  searchResultReceived: false,
+  searchStarted: false,
+};
+
+export const visSøkDerEnIkkeHarAdgang = props => (
   <FagsakSokSakIndex
     fagsaker={[]}
     searchFagsakCallback={action('button-click')}
-    searchResultReceived={boolean('searchResultReceived', false)}
     selectFagsakCallback={action('button-click')}
-    searchStarted={boolean('searchStarted', false)}
-    searchResultAccessDenied={object('searchResultAccessDenied', {
-      feilmelding: 'Har ikke adgang',
-    })}
     alleKodeverk={alleKodeverk as any}
+    {...props}
   />
 );
+
+visSøkDerEnIkkeHarAdgang.args = {
+  searchResultReceived: false,
+  searchStarted: false,
+  searchResultAccessDenied: {
+    feilmelding: 'Har ikke adgang',
+  },
+};

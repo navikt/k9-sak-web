@@ -16,11 +16,14 @@ type QueryParams = {
 
 const DEV_LOGIN_URL = 'http://localhost:8080/k9/sak/jetty/login';
 
+export const aktoerRoutePath = '/aktoer/:aktoerId';
+
 export const fagsakRoutePath = '/fagsak/:saksnummer//*';
 export const behandlingerRoutePath = `behandling//*`;
 export const behandlingRoutePath = `/:behandlingId/`;
 
 export const fagsakPath = '/fagsak/:saksnummer/';
+export const aktoerPath = '/aktoer/:aktoerId(.*)';
 export const behandlingerPath = `${fagsakPath}behandling/`;
 export const behandlingPath = `${behandlingerPath}:behandlingId(\\d+)/`;
 

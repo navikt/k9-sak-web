@@ -1,10 +1,9 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import React from 'react';
 
-import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
 import AnkeResultatProsessIndex from '@fpsak-frontend/prosess-anke-resultat';
 
@@ -41,80 +40,96 @@ const ankeVurderingResultat = {
 export default {
   title: 'prosess/anke/prosess-anke-resultat',
   component: AnkeResultatProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visPanelForResultatVedStadfestYtelsesvedtak = () => (
+export const visPanelForResultatVedStadfestYtelsesvedtak = args => (
   <AnkeResultatProsessIndex
     behandling={behandling}
-    ankeVurdering={object('ankeVurdering', {
-      ankeVurderingResultat: {
-        ...ankeVurderingResultat,
-        ankeVurdering: ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK,
-      },
-    })}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     saveAnke={action('button-click')}
     previewCallback={action('button-click')}
     previewVedtakCallback={action('button-click')}
+    {...args}
   />
 );
 
-export const visPanelForResultatVedOppheveOgHjemsende = () => (
+visPanelForResultatVedStadfestYtelsesvedtak.args = {
+  ankeVurdering: {
+    ankeVurderingResultat: {
+      ...ankeVurderingResultat,
+      ankeVurdering: ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK,
+    },
+  },
+  readOnly: false,
+  readOnlySubmitButton: false,
+};
+
+export const visPanelForResultatVedOppheveOgHjemsende = args => (
   <AnkeResultatProsessIndex
     behandling={behandling}
-    ankeVurdering={object('ankeVurdering', {
-      ankeVurderingResultat: {
-        ...ankeVurderingResultat,
-        ankeVurdering: ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE,
-      },
-    })}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     saveAnke={action('button-click')}
     previewCallback={action('button-click')}
     previewVedtakCallback={action('button-click')}
+    {...args}
   />
 );
 
-export const visPanelForResultatVedOmgjør = () => (
+visPanelForResultatVedOppheveOgHjemsende.args = {
+  ankeVurdering: {
+    ankeVurderingResultat: {
+      ...ankeVurderingResultat,
+      ankeVurdering: ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE,
+    },
+  },
+  readOnly: false,
+  readOnlySubmitButton: false,
+};
+
+export const visPanelForResultatVedOmgjør = args => (
   <AnkeResultatProsessIndex
     behandling={behandling}
-    ankeVurdering={object('ankeVurdering', {
-      ankeVurderingResultat: {
-        ...ankeVurderingResultat,
-        ankeVurdering: ankeVurdering.ANKE_OMGJOER,
-        ankeVurderingOmgjoer: ankeVurderingOmgjoer.ANKE_TIL_UGUNST,
-        ankeOmgjoerArsakNavn: 'Testårsak',
-      },
-    })}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     saveAnke={action('button-click')}
     previewCallback={action('button-click')}
     previewVedtakCallback={action('button-click')}
+    {...args}
   />
 );
 
-export const visPanelForResultatVedAvvis = () => (
+visPanelForResultatVedOmgjør.args = {
+  ankeVurdering: {
+    ankeVurderingResultat: {
+      ...ankeVurderingResultat,
+      ankeVurdering: ankeVurdering.ANKE_OMGJOER,
+      ankeVurderingOmgjoer: ankeVurderingOmgjoer.ANKE_TIL_UGUNST,
+      ankeOmgjoerArsakNavn: 'Testårsak',
+    },
+  },
+  readOnly: false,
+  readOnlySubmitButton: false,
+};
+
+export const visPanelForResultatVedAvvis = args => (
   <AnkeResultatProsessIndex
     behandling={behandling}
-    ankeVurdering={object('ankeVurdering', {
-      ankeVurderingResultat,
-    })}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     saveAnke={action('button-click')}
     previewCallback={action('button-click')}
     previewVedtakCallback={action('button-click')}
+    {...args}
   />
 );
+
+visPanelForResultatVedAvvis.args = {
+  ankeVurdering: {
+    ankeVurderingResultat,
+  },
+  readOnly: false,
+  readOnlySubmitButton: false,
+};

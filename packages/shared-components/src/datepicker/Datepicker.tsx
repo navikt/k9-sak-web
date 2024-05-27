@@ -1,8 +1,8 @@
-import { DDMMYYYY_DATE_FORMAT, DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { DatePicker, useDatepicker } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import React, { ChangeEvent, ReactNode, useCallback, useState } from 'react';
+import React, { ChangeEvent, ReactNode } from 'react';
 
 dayjs.extend(customParseFormat);
 
@@ -19,12 +19,11 @@ interface OwnProps {
 }
 
 const Datepicker: React.FC<OwnProps> = props => {
+  const stringToDate = (date: string | Date): Date => {
+    const newDate = dayjs(date, [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT, 'YYYY.MM.DD'], true);
+    return newDate.isValid() ? newDate.toDate() : undefined;
+  };
   const { error, value, onChange, disabled, label, initialMonth, disabledDays, hideLabel, inputId } = props;
-
-  const defaultDate = value
-    ? dayjs(value, [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT], true).format(DDMMYYYY_DATE_FORMAT)
-    : '';
-  const [fieldValue, setFieldValue] = useState<string>(defaultDate);
 
   const getDefaultMonth = () => {
     if (initialMonth) {
@@ -46,25 +45,11 @@ const Datepicker: React.FC<OwnProps> = props => {
         if (onChange) {
           onChange(verdi);
         }
-        setFieldValue(dayjs(verdi, [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT], true).format(DDMMYYYY_DATE_FORMAT));
       }
     },
-    defaultSelected: value ? dayjs(value, [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT], true).toDate() : undefined,
+    defaultSelected: value ? stringToDate(value) : undefined,
     defaultMonth: getDefaultMonth(),
   });
-
-  const onChangeInput = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const verdi = dayjs(event.target.value, [DDMMYYYY_DATE_FORMAT, DDMMYY_DATE_FORMAT], true).format(ISO_DATE_FORMAT);
-      const validDate = verdi !== 'Invalid Date';
-
-      setFieldValue(event.target.value);
-      if (onChange) {
-        onChange(validDate ? verdi : event.target.value);
-      }
-    },
-    [setFieldValue, onChange],
-  );
 
   const dpProps = {
     ...datepickerProps,
@@ -81,8 +66,6 @@ const Datepicker: React.FC<OwnProps> = props => {
       <DatePicker.Input
         {...inputProps}
         hideLabel={hideLabel}
-        onChange={onChangeInput}
-        value={fieldValue}
         size="small"
         label={label}
         disabled={disabled}
