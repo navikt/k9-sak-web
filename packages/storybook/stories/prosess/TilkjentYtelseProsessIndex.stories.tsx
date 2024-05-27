@@ -1,10 +1,9 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { boolean, object, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
 import { Aksjonspunkt, Behandling, BeregningsresultatUtbetalt, Fagsak } from '@k9-sak-web/types';
 
@@ -190,26 +189,29 @@ const arbeidsgiverOpplysningerPerId = {
 export default {
   title: 'prosess/prosess-tilkjent-ytelse',
   component: TilkjentYtelseProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visUtenAksjonspunkt = () => (
+export const visUtenAksjonspunkt = args => (
   <TilkjentYtelseProsessIndex
-    behandling={object('behandling', behandling)}
     beregningsresultat={beregningsresultat}
     fagsak={fagsak}
     aksjonspunkter={[]}
     alleKodeverk={alleKodeverk as any}
-    isReadOnly={boolean('isReadOnly', false)}
     submitCallback={action('button-click')}
-    readOnlySubmitButton={boolean('readOnly', true)}
     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+    {...args}
   />
 );
 
-export const visÅpentAksjonspunkt = () => (
+visUtenAksjonspunkt.args = {
+  behandling,
+  isReadOnly: false,
+  readOnlySubmitButton: true,
+};
+
+export const visÅpentAksjonspunkt = args => (
   <TilkjentYtelseProsessIndex
-    behandling={object('behandling', behandling)}
     beregningsresultat={beregningsresultat}
     fagsak={fagsak}
     aksjonspunkter={
@@ -227,9 +229,14 @@ export const visÅpentAksjonspunkt = () => (
       ] as Aksjonspunkt[]
     }
     alleKodeverk={alleKodeverk as any}
-    isReadOnly={boolean('isReadOnly', false)}
     submitCallback={action('button-click')}
-    readOnlySubmitButton={boolean('readOnly', true)}
     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+    {...args}
   />
 );
+
+visÅpentAksjonspunkt.args = {
+  behandling,
+  isReadOnly: false,
+  readOnlySubmitButton: true,
+};

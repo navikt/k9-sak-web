@@ -1,11 +1,10 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import React from 'react';
 
-import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
-import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
+import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 import ForeldelseProsessIndex from '@fpsak-frontend/prosess-foreldelse';
 
 import withReduxProvider from '../../../decorators/withRedux';
@@ -55,7 +54,7 @@ const merknaderFraBeslutter = {
 export default {
   title: 'prosess/tilbakekreving/prosess-foreldelse',
   component: ForeldelseProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
 const beregnBelop = params => {
@@ -65,15 +64,13 @@ const beregnBelop = params => {
   });
 };
 
-export const visAksjonspunktForForeldelse = () => (
+export const visAksjonspunktForForeldelse = args => (
   <ForeldelseProsessIndex
     behandling={{
       id: 1,
       versjon: 1,
     }}
-    perioderForeldelse={object('perioderForeldelse', perioderForeldelse)}
     submitCallback={action('button-click')}
-    isReadOnly={boolean('readOnly', false)}
     aksjonspunkter={[
       {
         definisjon: {
@@ -82,12 +79,18 @@ export const visAksjonspunktForForeldelse = () => (
         },
       },
     ]}
-    readOnlySubmitButton={boolean('readOnly', false)}
     navBrukerKjonn={NavBrukerKjonn.KVINNE}
-    alleMerknaderFraBeslutter={{
-      [aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-    }}
     alleKodeverk={alleKodeverk}
     beregnBelop={params => beregnBelop(params)}
+    {...args}
   />
 );
+
+visAksjonspunktForForeldelse.args = {
+  perioderForeldelse,
+  isReadOnly: false,
+  readOnlySubmitButton: false,
+  alleMerknaderFraBeslutter: {
+    [aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE]: merknaderFraBeslutter,
+  },
+};

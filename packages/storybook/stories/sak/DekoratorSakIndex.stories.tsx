@@ -1,14 +1,11 @@
-import { withKnobs } from '@storybook/addon-knobs';
-import React from 'react';
+import React, { useState } from 'react';
 
 import HeaderWithErrorPanel from '@fpsak-frontend/sak-dekorator';
-import { useState } from '@storybook/addons';
 import { MemoryRouter } from 'react-router';
 
 export default {
   title: 'sak/sak-dekoratør',
   component: HeaderWithErrorPanel,
-  decorators: [withKnobs],
 };
 
 export const visDekoratorUtenFeilmeldinger = () => (

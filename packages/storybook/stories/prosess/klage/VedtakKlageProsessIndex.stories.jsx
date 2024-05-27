@@ -1,5 +1,4 @@
 import { action } from '@storybook/addon-actions';
-import { boolean, object, withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -36,85 +35,76 @@ const aksjonspunkter = [
 export default {
   title: 'prosess/klage/prosess-vedtak-klage',
   component: VedtakKlageProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withReduxProvider],
 };
 
-export const visVedtakspanelDerKlageErVurdertAvNk = () => (
+export const visVedtakspanelDerKlageErVurdertAvNk = args => (
   <VedtakKlageProsessIndex
     behandling={behandling}
-    klageVurdering={object('klageVurdering', {
-      klageVurderingResultatNK: {
-        klageVurdertAv: 'NK',
-        klageVurdering: klageVurderingCodes.AVVIS_KLAGE,
-        fritekstTilBrev: 'test',
-        klageMedholdArsakNavn: 'TEST',
-        godkjentAvMedunderskriver: false,
-      },
-      klageFormkravResultatKA: {
-        avvistArsaker: [
-          {
-            kode: 'IKKE_KONKRET',
-            kodeverk: 'KLAGE_AVVIST_AARSAK',
-          },
-        ],
-      },
-    })}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
     previewVedtakCallback={action('button-click')}
-    isReadOnly={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
+    {...args}
   />
 );
 
-export const visVedtakspanelDerKlageErVurdertAvNfp = () => (
+visVedtakspanelDerKlageErVurdertAvNk.args = {
+  klageVurdering: {
+    klageVurderingResultatNK: {
+      klageVurdertAv: 'NK',
+      klageVurdering: klageVurderingCodes.AVVIS_KLAGE,
+      fritekstTilBrev: 'test',
+      klageMedholdArsakNavn: 'TEST',
+      godkjentAvMedunderskriver: false,
+    },
+    klageFormkravResultatKA: {
+      avvistArsaker: [
+        {
+          kode: 'IKKE_KONKRET',
+          kodeverk: 'KLAGE_AVVIST_AARSAK',
+        },
+      ],
+    },
+  },
+  isReadOnly: false,
+};
+
+export const visVedtakspanelDerKlageErVurdertAvNfp = args => (
   <VedtakKlageProsessIndex
     behandling={behandling}
-    klageVurdering={object('klageVurdering', {
-      klageVurderingResultatNK: {
-        klageVurdertAv: 'NAY',
-        klageVurdering: klageVurderingCodes.AVVIS_KLAGE,
-        fritekstTilBrev: 'test',
-        klageMedholdArsakNavn: 'TEST',
-        godkjentAvMedunderskriver: false,
-      },
-      klageFormkravResultatKA: {
-        avvistArsaker: [
-          {
-            kode: 'IKKE_KONKRET',
-            kodeverk: 'KLAGE_AVVIST_AARSAK',
-          },
-        ],
-      },
-    })}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
     previewVedtakCallback={action('button-click')}
-    isReadOnly={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
+    {...args}
   />
 );
 
-export const visVedtakspanelDerKlageErVurdertAvNfpVurder5034 = () => (
+visVedtakspanelDerKlageErVurdertAvNfp.args = {
+  klageVurdering: {
+    klageVurderingResultatNK: {
+      klageVurdertAv: 'NAY',
+      klageVurdering: klageVurderingCodes.AVVIS_KLAGE,
+      fritekstTilBrev: 'test',
+      klageMedholdArsakNavn: 'TEST',
+      godkjentAvMedunderskriver: false,
+    },
+    klageFormkravResultatKA: {
+      avvistArsaker: [
+        {
+          kode: 'IKKE_KONKRET',
+          kodeverk: 'KLAGE_AVVIST_AARSAK',
+        },
+      ],
+    },
+  },
+  isReadOnly: false,
+};
+
+export const visVedtakspanelDerKlageErVurdertAvNfpVurder5034 = args => (
   <VedtakKlageProsessIndex
     behandling={behandling}
-    klageVurdering={object('klageVurdering', {
-      klageVurderingResultatNK: {
-        klageVurdertAv: 'NAY',
-        klageVurdering: klageVurderingCodes.AVVIS_KLAGE,
-        fritekstTilBrev: 'test',
-        klageMedholdArsakNavn: 'TEST',
-        godkjentAvMedunderskriver: false,
-      },
-      klageFormkravResultatKA: {
-        avvistArsaker: [
-          {
-            kode: 'IKKE_KONKRET',
-            kodeverk: 'KLAGE_AVVIST_AARSAK',
-          },
-        ],
-      },
-    })}
     aksjonspunkter={aksjonspunkter.concat([
       {
         definisjon: {
@@ -129,7 +119,28 @@ export const visVedtakspanelDerKlageErVurdertAvNfpVurder5034 = () => (
     ])}
     submitCallback={action('button-click')}
     previewVedtakCallback={action('button-click')}
-    isReadOnly={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
+    {...args}
   />
 );
+
+visVedtakspanelDerKlageErVurdertAvNfpVurder5034.args = {
+  klageVurdering: {
+    klageVurderingResultatNK: {
+      klageVurdertAv: 'NAY',
+      klageVurdering: klageVurderingCodes.AVVIS_KLAGE,
+      fritekstTilBrev: 'test',
+      klageMedholdArsakNavn: 'TEST',
+      godkjentAvMedunderskriver: false,
+    },
+    klageFormkravResultatKA: {
+      avvistArsaker: [
+        {
+          kode: 'IKKE_KONKRET',
+          kodeverk: 'KLAGE_AVVIST_AARSAK',
+        },
+      ],
+    },
+  },
+  isReadOnly: false,
+};

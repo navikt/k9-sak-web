@@ -9,7 +9,7 @@ import renderNavField from './renderNavField';
 
 interface DatepickerFieldProps {
   name: string;
-  label?: LabelType;
+  label: LabelType;
   readOnly?: boolean;
   format?: (value: string) => string;
   parse?: (value: string) => string;
@@ -25,6 +25,7 @@ interface DatepickerFieldProps {
     after: Date;
   };
   dataId?: string;
+  hideLabel?: boolean;
 }
 
 const isoToDdMmYyyy = (string: string): string => {

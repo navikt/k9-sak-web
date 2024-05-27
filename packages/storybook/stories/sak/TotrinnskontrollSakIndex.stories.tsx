@@ -1,10 +1,9 @@
-import React from 'react';
-import { action } from '@storybook/addon-actions';
-import { boolean, withKnobs } from '@storybook/addon-knobs';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
 import { Behandling, KlageVurdering, TotrinnskontrollAksjonspunkt } from '@k9-sak-web/types';
+import { action } from '@storybook/addon-actions';
+import React from 'react';
 
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 
@@ -148,10 +147,10 @@ const behandling = {
 export default {
   title: 'sak/sak-totrinnskontroll',
   component: TotrinnskontrollSakIndex,
-  decorators: [withKnobs, withReduxAndRouterProvider],
+  decorators: [withReduxAndRouterProvider],
 };
 
-export const visTotrinnskontrollForBeslutter = () => (
+export const visTotrinnskontrollForBeslutter = props => (
   <div
     style={{
       width: '600px',
@@ -164,7 +163,6 @@ export const visTotrinnskontrollForBeslutter = () => (
       behandling={behandling}
       totrinnskontrollSkjermlenkeContext={data}
       location={location}
-      readOnly={boolean('readOnly', false)}
       onSubmit={action('button-click')}
       behandlingKlageVurdering={
         {
@@ -175,9 +173,14 @@ export const visTotrinnskontrollForBeslutter = () => (
       }
       alleKodeverk={alleKodeverk as any}
       createLocationForSkjermlenke={() => location}
+      {...props}
     />
   </div>
 );
+
+visTotrinnskontrollForBeslutter.args = {
+  readOnly: false,
+};
 
 export const visTotrinnskontrollForSaksbehandler = () => (
   <div

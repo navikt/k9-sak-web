@@ -1,13 +1,12 @@
 import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
 
-import { ForbiddenPage, NotFoundPage, UnauthorizedPage, IngenBehandlingValgtPanel } from '@k9-sak-web/sak-infosider';
+import { ForbiddenPage, IngenBehandlingValgtPanel, NotFoundPage, UnauthorizedPage } from '@k9-sak-web/sak-infosider';
 
 import withRouterProvider from '../../decorators/withRouter';
 
 export default {
   title: 'sak/sak-infosider',
-  decorators: [withKnobs, withRouterProvider],
+  decorators: [withRouterProvider],
 };
 
 export const visPanelForHarIkkeTilgang = () => <ForbiddenPage />;
