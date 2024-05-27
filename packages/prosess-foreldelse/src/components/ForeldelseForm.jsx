@@ -65,6 +65,12 @@ const formaterPerioderForTidslinje = (perioder = []) =>
   }));
 
 export class ForeldelseForm extends Component {
+  static defaultProps = {
+    foreldelsesresultatActivity: undefined,
+    apCodes: [],
+    merknaderFraBeslutter: undefined,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -162,7 +168,7 @@ export class ForeldelseForm extends Component {
       foreldelsesresultatActivity,
       behandlingFormPrefix,
       navBrukerKjonn,
-      apCodes = [],
+      apCodes,
       readOnlySubmitButton,
       readOnly,
       merknaderFraBeslutter,

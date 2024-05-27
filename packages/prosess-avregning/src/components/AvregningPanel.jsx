@@ -45,6 +45,10 @@ const getSimuleringResult = (simuleringResultat, feilutbetaling) => {
 };
 
 export class AvregningPanelImpl extends Component {
+  static defaultProps = {
+    simuleringResultat: null,
+  };
+
   constructor() {
     super();
     this.toggleDetails = this.toggleDetails.bind(this);
@@ -98,7 +102,7 @@ export class AvregningPanelImpl extends Component {
     const { showDetails, feilutbetaling } = this.state;
     const {
       intl,
-      simuleringResultat = null,
+      simuleringResultat,
       isApOpen,
       apCodes,
       readOnly,
