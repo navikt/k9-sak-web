@@ -8,7 +8,8 @@
     "./app/*": "./src/app/*",
     "./sak/*": "./src/sak/*",
     "./utils/*": "./src/utils/*",
-    "./kodeverk/*": "./src/kodeverk/*"
+    "./kodeverk/*": "./src/kodeverk/*",
+    "./storybook/*": "./src/storybook/*"
   },
   "dependencies": {
     "@k9-sak-web/backend": "workspace:^",

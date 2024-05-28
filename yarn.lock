@@ -6514,6 +6514,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/addon-a11y@npm:^8.1.3":
+  version: 8.1.4
+  resolution: "@storybook/addon-a11y@npm:8.1.4"
+  dependencies:
+    "@storybook/addon-highlight": 8.1.4
+    axe-core: ^4.2.0
+  checksum: 59dffe6135b6444ef78f970d47f28d6b76360395cc4644b5ecddaa60b100fc9dbb40389c6a512a1e3f301defcca19d9324ad6cacc0b32d2ad02143ab00c710a5
+  languageName: node
+  linkType: hard
+
 "@storybook/addon-actions@npm:8.1.3, @storybook/addon-actions@npm:^8.1.3":
   version: 8.1.3
   resolution: "@storybook/addon-actions@npm:8.1.3"
@@ -6607,6 +6617,15 @@ __metadata:
   dependencies:
     "@storybook/global": ^5.0.0
   checksum: bf1b4aea2d8a2e73d227c5daddc7cd16e0ff0a860a0ba7f1939c330c6b57540f0ada540282adbc0d4f700dfa90d36a51f2aa2085f2f4da26d5c07a65cdb1f35e
+  languageName: node
+  linkType: hard
+
+"@storybook/addon-highlight@npm:8.1.4":
+  version: 8.1.4
+  resolution: "@storybook/addon-highlight@npm:8.1.4"
+  dependencies:
+    "@storybook/global": ^5.0.0
+  checksum: e188649dad742ea181483e351a8442ce901108049c55ec5ab0185fdfd0f85ede7311eba65c9ba60d70878b2c60fd0ec2684bcceeb50754c12a4f701abe052647
   languageName: node
   linkType: hard
 
@@ -9055,6 +9074,13 @@ __metadata:
   version: 4.7.0
   resolution: "axe-core@npm:4.7.0"
   checksum: f086bcab42be1761ba2b0b127dec350087f4c3a853bba8dd58f69d898cefaac31a1561da23146f6f3c07954c76171d1f2ce460e555e052d2b02cd79af628fa4a
+  languageName: node
+  linkType: hard
+
+"axe-core@npm:^4.2.0":
+  version: 4.9.1
+  resolution: "axe-core@npm:4.9.1"
+  checksum: 41d9227871781f96c2952e2a777fca73624959dd0e98864f6d82806a77602f82b4fc490852082a7e524d8cd864e50d8b4d9931819b4a150112981d8c932110c5
   languageName: node
   linkType: hard
 
@@ -14309,6 +14335,7 @@ __metadata:
     "@sentry/browser": 8.2.1
     "@sentry/cli": 2.31.2
     "@sentry/react": ^8.2.1
+    "@storybook/addon-a11y": ^8.1.3
     "@storybook/addon-actions": ^8.1.3
     "@storybook/addon-docs": ^8.1.3
     "@storybook/addon-essentials": ^8.1.3
