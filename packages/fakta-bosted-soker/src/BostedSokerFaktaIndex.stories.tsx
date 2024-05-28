@@ -4,8 +4,7 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import region from '@fpsak-frontend/kodeverk/src/region';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import React from 'react';
-// eslint-disable-next-line import/no-relative-packages
-import alleKodeverk from '../../storybook/stories/mocks/alleKodeverk.json';
+import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import BostedSokerFaktaIndex from './BostedSokerFaktaIndex';
 
 const personopplysninger = {

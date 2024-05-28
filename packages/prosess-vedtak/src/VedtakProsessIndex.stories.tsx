@@ -14,8 +14,7 @@ import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbake
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
-// eslint-disable-next-line import/no-relative-packages
-import alleKodeverk from '../../storybook/stories/mocks/alleKodeverk.json';
+import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import VedtakProsessIndex from './VedtakProsessIndex';
 
 const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';
@@ -55,7 +54,7 @@ const vilkar = [
   {
     lovReferanse: '§§Dette er en lovreferanse',
     vilkarType: {
-      kode: vilkarType.FODSELSVILKARET_MOR,
+      kode: vilkarType.OMSORGENFORVILKARET,
       kodeverk: kodeverkTyper.VILKAR_TYPE,
     },
     vilkarStatus: {
@@ -612,7 +611,7 @@ export const visOverlappendeYtelser = args => {
         behandling={{
           ...behandling,
           type: {
-            kode: behandlingType.OMSORGSPENGER,
+            kode: behandlingType.FORSTEGANGSSOKNAD,
           },
           behandlingsresultat: {
             vedtaksbrev: {
