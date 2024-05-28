@@ -24,7 +24,7 @@ describe('9071 - Mangler inntektsmelding', () => {
   };
 
   test('Viser ikke knapp for å sende inn når beslutning ikke er valgt', async () => {
-      server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
+    server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     render(<Mangler9071 />);
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
@@ -36,7 +36,7 @@ describe('9071 - Mangler inntektsmelding', () => {
   });
 
   test('Viser riktig knapp når purring er valgt', async () => {
-      server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
+    server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     render(<Mangler9071 />);
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
@@ -52,7 +52,7 @@ describe('9071 - Mangler inntektsmelding', () => {
   });
 
   test('Må skrive begrunnelse når man har valgt A-inntekt', async () => {
-      server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
+    server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     render(<Mangler9071 />);
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
@@ -67,7 +67,7 @@ describe('9071 - Mangler inntektsmelding', () => {
   });
 
   test('Kan sende purring med varsel om avslag', async () => {
-      server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
+    server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     const onClickSpy = vi.fn();
     const props = { data: { ...aksjonspunkt9071Props, onFinished: onClickSpy } };
@@ -99,7 +99,7 @@ describe('9071 - Mangler inntektsmelding', () => {
   });
 
   test('Kan submitte begrunnelse når man har valgt A-inntekt', async () => {
-      server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
+    server.use(http.get('/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
     // ARRANGE
     const onClickSpy = vi.fn();
     const props = { data: { ...aksjonspunkt9071Props, onFinished: onClickSpy } };
@@ -130,7 +130,7 @@ describe('9071 - Mangler inntektsmelding', () => {
     });
   });
   test('Hvis det tidligere er blitt gjort en vurdering og behandlingen har hoppet tilbake må man kunne løse aksjonspunktet', async () => {
-      server.use(http.get('/tilstand', () => HttpResponse.json(alleErMottatt)));
+    server.use(http.get('/tilstand', () => HttpResponse.json(alleErMottatt)));
     // ARRANGE
     const onClickSpy = vi.fn();
     const props = { data: { ...aksjonspunkt9071Props, onFinished: onClickSpy } };
