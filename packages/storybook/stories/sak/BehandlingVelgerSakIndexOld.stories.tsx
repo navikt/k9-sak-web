@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
 
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
-import { Fagsak, Kodeverk } from '@k9-sak-web/types';
-
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { BehandlingAppKontekst, Fagsak, Kodeverk } from '@k9-sak-web/types';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const BEHANDLING_TYPE_KODEVERK = 'BEHANDLING_TYPE';
 const BEHANDLING_STATUS_KODEVERK = 'BEHANDLING_STATUS';
 
-const behandlinger = [
+const behandlinger: BehandlingAppKontekst[] = [
   {
     id: 1,
+    uuid: 'dummy-uuid-behandling-1',
     versjon: 2,
     type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
+      kode: behandlingType.FØRSTEGANGSSØKNAD,
       kodeverk: BEHANDLING_TYPE_KODEVERK,
     },
     status: {
@@ -29,11 +29,10 @@ const behandlinger = [
     },
     sprakkode: {
       kode: 'NB',
-      kodeverk: '',
+      kodeverk: 'SPRAAK_KODE',
     },
     opprettet: '2017-08-02T00:54:25.455',
     avsluttet: '2017-08-03T00:54:25.455',
-    endret: '2017-08-03T00:54:25.455',
     behandlendeEnhetId: '4812',
     behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
     links: [],
@@ -52,9 +51,10 @@ const behandlinger = [
   },
   {
     id: 2,
+    uuid: 'dummy-uuid-behandling-2',
     versjon: 2,
     type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
+      kode: behandlingType.FØRSTEGANGSSØKNAD,
       kodeverk: BEHANDLING_TYPE_KODEVERK,
     },
     status: {
@@ -63,11 +63,10 @@ const behandlinger = [
     },
     sprakkode: {
       kode: 'NB',
-      kodeverk: '',
+      kodeverk: 'SPRAAK_KODE',
     },
     opprettet: '2017-08-02T00:54:25.455',
     avsluttet: '2017-08-03T00:54:25.455',
-    endret: '2017-08-03T00:54:25.455',
     behandlendeEnhetId: '4812',
     behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
     links: [],
@@ -76,7 +75,7 @@ const behandlinger = [
     behandlingHenlagt: false,
     behandlingKoet: false,
     toTrinnsBehandling: false,
-    behandlingArsaker: [],
+    behandlingÅrsaker: [],
     behandlingsresultat: {
       type: {
         kode: 'INNVILGET',
@@ -86,6 +85,7 @@ const behandlinger = [
   },
   {
     id: 3,
+    uuid: 'dummy-uuid-behandling-3',
     versjon: 2,
     type: {
       kode: behandlingType.REVURDERING,
@@ -97,7 +97,7 @@ const behandlinger = [
     },
     sprakkode: {
       kode: 'NB',
-      kodeverk: '',
+      kodeverk: 'SPRAAK_KODE',
     },
     opprettet: '2017-08-02T00:54:25.455',
     behandlendeEnhetId: '4812',
@@ -108,13 +108,14 @@ const behandlinger = [
     behandlingHenlagt: false,
     behandlingKoet: false,
     toTrinnsBehandling: false,
-    behandlingArsaker: [],
+    behandlingÅrsaker: [],
   },
   {
     id: 4,
+    uuid: 'dummy-uuid-behandling-4',
     versjon: 2,
     type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
+      kode: behandlingType.FØRSTEGANGSSØKNAD,
       kodeverk: BEHANDLING_TYPE_KODEVERK,
     },
     status: {
@@ -123,11 +124,10 @@ const behandlinger = [
     },
     sprakkode: {
       kode: 'NB',
-      kodeverk: '',
+      kodeverk: 'SPRAAK_KODE',
     },
     opprettet: '2017-08-02T00:54:25.455',
     avsluttet: '2017-08-03T00:54:25.455',
-    endret: '2017-08-03T00:54:25.455',
     behandlendeEnhetId: '4812',
     behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
     links: [],
@@ -136,7 +136,7 @@ const behandlinger = [
     behandlingHenlagt: false,
     behandlingKoet: false,
     toTrinnsBehandling: false,
-    behandlingArsaker: [],
+    behandlingÅrsaker: [],
     behandlingsresultat: {
       type: {
         kode: 'HENLAGT_SØKNAD_TRUKKET',
@@ -157,8 +157,8 @@ const locationMock = {
 const fagsak = {
   saksnummer: '35425245',
   sakstype: {
-    kode: fagsakYtelseType.FRISINN,
-    kodeverk: '',
+    kode: fagsakYtelsesType.FRISINN,
+    kodeverk: 'FAGSAK_YTELSE',
   },
   relasjonsRolleType: {
     kode: relasjonsRolleType.MOR,
@@ -166,7 +166,7 @@ const fagsak = {
   },
   status: {
     kode: fagsakStatus.UNDER_BEHANDLING,
-    kodeverk: '',
+    kodeverk: 'FAGSAK_STATUS',
   },
   barnFodt: '2020-01-01',
   opprettet: '2020-01-01',
@@ -194,7 +194,10 @@ export const visPanelForValgAvBehandlinger = props => {
   return (
     <div style={{ width: '600px' }}>
       <BehandlingVelgerSakIndex
+        behandlinger={behandlinger}
         getBehandlingLocation={() => locationMock}
+        noExistingBehandlinger={false}
+        behandlingId={1}
         showAll={visAlle}
         toggleShowAll={() => toggleVisAlle(!visAlle)}
         getKodeverkFn={getKodeverkFn}

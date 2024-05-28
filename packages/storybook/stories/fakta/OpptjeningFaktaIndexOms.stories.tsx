@@ -32,7 +32,7 @@ const opptjeningNårEnHarAksjonspunkt = {
       opptjeningAktivitetList: [
         {
           aktivitetType: {
-            kode: opptjeningAktivitetType.NARING,
+            kode: opptjeningAktivitetType.NÆRING,
           },
           originalFom: null,
           originalTom: null,

@@ -72,5 +72,13 @@ export default {
       '%',
       'fr', // Other
     ],
+    'declaration-block-no-redundant-longhand-properties': [
+      true,
+      {
+        ignoreShorthands: [
+          'grid-template'
+        ]
+      }
+    ]
   },
 };

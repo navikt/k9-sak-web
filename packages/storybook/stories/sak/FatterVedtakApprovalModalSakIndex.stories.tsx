@@ -2,12 +2,12 @@ import { action } from '@storybook/addon-actions';
 import React from 'react';
 
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { FatterVedtakTotrinnskontrollModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
 import { Behandling } from '@k9-sak-web/types';
 
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus.js';
+import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import withReduxProvider from '../../decorators/withRedux';
 
 export default {
@@ -16,90 +16,62 @@ export default {
   decorators: [withReduxProvider],
 };
 
-export const visModalEtterGodkjenning = props => (
+const behandling = {
+  id: 1,
+  status: {
+    kode: behandlingStatus.FATTER_VEDTAK,
+    kodeverk: '',
+  },
+  type: {
+    kode: behandlingType.FØRSTEGANGSSØKNAD,
+    kodeverk: 'BEHANDLING_TYPE',
+  },
+  behandlingsresultat: {
+    type: {
+      kode: behandlingResultatType.OPPHOR,
+    },
+  },
+} as Behandling;
+
+export const visModalEtterGodkjenning = () => (
   <FatterVedtakTotrinnskontrollModalSakIndex
-    behandling={
-      {
-        id: 1,
-        status: {
-          kode: behandlingStatus.FATTER_VEDTAK,
-          kodeverk: '',
-        },
-        type: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        },
-        behandlingsresultat: {
-          type: {
-            kode: behandlingResultatType.OPPHOR,
-          },
-        },
-      } as Behandling
-    }
+    behandling={behandling}
     closeEvent={action('button-click')}
     allAksjonspunktApproved
+    fagsakYtelseType={{
+      kode: fagsakYtelseType.FORELDREPENGER,
+      kodeverk: '',
+    }}
     erKlageWithKA={false}
-    {...props}
+    harSammeResultatSomOriginalBehandling={false}
   />
 );
 
-visModalEtterGodkjenning.args = {
-  fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: '' },
-  harSammeResultatSomOriginalBehandling: false,
-};
-
-export const visModalEtterGodkjenningAvKlage = props => (
+export const visModalEtterGodkjenningAvKlage = () => (
   <FatterVedtakTotrinnskontrollModalSakIndex
     behandling={
       {
-        id: 1,
-        status: {
-          kode: behandlingStatus.FATTER_VEDTAK,
-          kodeverk: '',
-        },
+        ...behandling,
         type: {
           kode: behandlingType.KLAGE,
-          kodeverk: '',
-        },
-        behandlingsresultat: {
-          type: {
-            kode: behandlingResultatType.OPPHOR,
-          },
+          kodeverk: 'BEHANDLING_TYPE',
         },
       } as Behandling
     }
     closeEvent={action('button-click')}
     allAksjonspunktApproved
-    {...props}
+    fagsakYtelseType={{
+      kode: fagsakYtelseType.FORELDREPENGER,
+      kodeverk: '',
+    }}
+    erKlageWithKA={false}
+    harSammeResultatSomOriginalBehandling={false}
   />
 );
 
-visModalEtterGodkjenningAvKlage.args = {
-  fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: '' },
-  erKlageWithKA: false,
-  harSammeResultatSomOriginalBehandling: false,
-};
-
-export const visModalEtterTilbakesendingTilSaksbehandler = props => (
+export const visModalEtterTilbakesendingTilSaksbehandler = () => (
   <FatterVedtakTotrinnskontrollModalSakIndex
-    behandling={
-      {
-        id: 1,
-        status: {
-          kode: behandlingStatus.FATTER_VEDTAK,
-          kodeverk: '',
-        },
-        type: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        },
-        behandlingsresultat: {
-          type: {
-            kode: behandlingResultatType.OPPHOR,
-          },
-        },
-      } as Behandling
-    }
+    behandling={behandling}
     closeEvent={action('button-click')}
     allAksjonspunktApproved={false}
     fagsakYtelseType={{
@@ -107,8 +79,6 @@ export const visModalEtterTilbakesendingTilSaksbehandler = props => (
       kodeverk: '',
     }}
     erKlageWithKA={false}
-    {...props}
+    harSammeResultatSomOriginalBehandling={false}
   />
 );
-
-visModalEtterTilbakesendingTilSaksbehandler.args = { harSammeResultatSomOriginalBehandling: false };

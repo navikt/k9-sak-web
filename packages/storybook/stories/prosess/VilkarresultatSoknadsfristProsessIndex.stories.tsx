@@ -1,11 +1,12 @@
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import React from 'react';
+
+import { DokumentStatus, Behandling, Vilkar } from '@k9-sak-web/types';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import SoknadsfristVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-soknadsfrist';
-import { Behandling, DokumentStatus, Vilkar } from '@k9-sak-web/types';
 import { action } from '@storybook/addon-actions';
-import React from 'react';
 
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import withReduxProvider from '../../decorators/withRedux';
 
 const vilkarSoknadsfrist = [
@@ -77,21 +78,17 @@ export default {
   component: SoknadsfristVilkarProsessIndex,
   decorators: [withReduxProvider],
 };
+const behandling = {
+  id: 1,
+  versjon: 1,
+  type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
+} as Behandling;
 
 export const visOverstyringspanelForSoknadsfrist = props => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <SoknadsfristVilkarProsessIndex
-      behandling={
-        {
-          id: 1,
-          versjon: 1,
-          type: {
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          },
-        } as Behandling
-      }
+      behandling={behandling}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
@@ -116,16 +113,7 @@ export const visOverstyringspanelForSoknadsfristUtenDokumenter = props => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <SoknadsfristVilkarProsessIndex
-      behandling={
-        {
-          id: 1,
-          versjon: 1,
-          type: {
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          },
-        } as Behandling
-      }
+      behandling={behandling}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
@@ -150,16 +138,7 @@ export const visSoknadsfristAksjonspunkt5077 = props => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <SoknadsfristVilkarProsessIndex
-      behandling={
-        {
-          id: 1,
-          versjon: 1,
-          type: {
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          },
-        } as Behandling
-      }
+      behandling={behandling}
       aksjonspunkter={[
         {
           aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
@@ -242,16 +221,7 @@ export const visSoknadsfristAksjonspunkt5077Delvis = props => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <SoknadsfristVilkarProsessIndex
-      behandling={
-        {
-          id: 1,
-          versjon: 1,
-          type: {
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          },
-        } as Behandling
-      }
+      behandling={behandling}
       aksjonspunkter={[
         {
           aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },

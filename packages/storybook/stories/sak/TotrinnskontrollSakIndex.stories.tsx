@@ -1,10 +1,10 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
 import { Behandling, KlageVurdering, TotrinnskontrollAksjonspunkt } from '@k9-sak-web/types';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
 
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
@@ -137,8 +137,8 @@ const behandling = {
     kodeverk: '',
   },
   type: {
-    kode: behandlingType.FORSTEGANGSSOKNAD,
-    kodeverk: '',
+    kode: behandlingType.FØRSTEGANGSSØKNAD,
+    kodeverk: 'BEHANDLING_TYPE',
   },
   behandlingÅrsaker: [],
   toTrinnsBehandling: true,

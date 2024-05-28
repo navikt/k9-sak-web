@@ -4,6 +4,8 @@ const config: StorybookConfig = {
   stories: ['../packages/**/stories/**/*.stories.@(j|t)s?(x)'],
   addons: [
     '@storybook/addon-actions',
+    '@storybook/addon-controls',
+    '@storybook/addon-interactions',
     {
       name: '@storybook/addon-docs',
       options: {
@@ -11,7 +13,6 @@ const config: StorybookConfig = {
         csfPluginOptions: null,
       },
     },
-    '@storybook/addon-controls',
   ],
   staticDirs: ['../public'],
 

@@ -1,34 +1,39 @@
-import { action } from '@storybook/addon-actions';
 import React from 'react';
+import { action } from '@storybook/addon-actions';
 
-import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import MeldingerSakIndex, { MessagesModalSakIndex } from '@k9-sak-web/sak-meldinger';
-
+import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
 import { BackendApi } from '@k9-sak-web/sak-meldinger/src/MeldingerSakIndex';
-import { Brevmaler, Kodeverk } from '@k9-sak-web/types';
-import withReduxProvider from '../../decorators/withRedux';
+import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
+import { Meta, StoryObj } from '@storybook/react';
 import arbeidsgivere from '../mocks/arbeidsgivere.json';
-import mockedBrevmaler from '../mocks/brevmaler';
 import personopplysninger from '../mocks/personopplysninger';
+import mockedBrevmaler from '../mocks/brevmaler';
+import withReduxProvider from '../../decorators/withRedux';
+import withMaxWidth from '../../decorators/withMaxWidth.js';
 
-export default {
+const meta: Meta<typeof MeldingerSakIndex> = {
   title: 'sak/sak-meldinger',
   component: MeldingerSakIndex,
-  decorators: [withReduxProvider],
+  decorators: [withMaxWidth(500), withReduxProvider],
+  argTypes: {
+    submitCallback: {
+      action: 'submitCallback',
+    },
+    previewCallback: {
+      action: 'previewCallback',
+    },
+  },
 };
+export default meta;
+
+type Story = StoryObj<typeof MeldingerSakIndex>;
 
 const emptySprakKode = {
   kode: '',
   kodeverk: '',
 };
-
-interface SendMeldingPanelStoryArgs {
-  readonly brevmaler: Brevmaler;
-  readonly sprakKode: Kodeverk;
-  readonly backendApi?: BackendApi;
-}
 
 const defaultFakeBackend = {
   async getBrevMottakerinfoEreg(orgnr: string): Promise<EregOrganizationLookupResponse> {
@@ -45,74 +50,59 @@ const defaultFakeBackend = {
   },
 } satisfies BackendApi;
 
-const sendMeldingTemplate = (props: SendMeldingPanelStoryArgs) => (
-  <div
-    style={{
-      width: '600px',
-      margin: '50px',
-      padding: '20px',
-      backgroundColor: 'white',
-    }}
-  >
-    <MeldingerSakIndex
-      submitCallback={action('button-click')}
-      previewCallback={action('button-click')}
-      behandlingId={1}
-      behandlingVersjon={1}
-      isKontrollerRevurderingApOpen={false}
-      personopplysninger={personopplysninger}
-      arbeidsgiverOpplysningerPerId={arbeidsgivere}
-      revurderingVarslingArsak={[
-        {
-          kode: ugunstAarsakTyper.BARN_IKKE_REGISTRERT_FOLKEREGISTER,
-          navn: 'Barn ikke registrert i folkeregisteret',
-          kodeverk: 'UGUNST',
-        },
-        {
-          kode: ugunstAarsakTyper.ANNET,
-          navn: 'Annet',
-          kodeverk: 'UGUNST',
-        },
-      ]}
-      erTilbakekreving={false}
-      backendApi={defaultFakeBackend}
-      {...props}
-    />
-  </div>
-);
+const revurderingVarslingArsak = [
+  {
+    kode: ugunstAarsakTyper.BARN_IKKE_REGISTRERT_FOLKEREGISTER,
+    navn: 'Barn ikke registrert i folkeregisteret',
+    kodeverk: 'UGUNST',
+  },
+  {
+    kode: ugunstAarsakTyper.ANNET,
+    navn: 'Annet',
+    kodeverk: 'UGUNST',
+  },
+];
 
 /**
  * Eit vanleg tilfelle (pleiepenger sykt barn), med mockdata kopiert frå Q
  */
-export const SendMeldingPanel = props => sendMeldingTemplate(props);
-
-SendMeldingPanel.args = {
-  templates: mockedBrevmaler,
-  sprakKode: emptySprakKode,
+export const SendMeldingPanel: Story = {
+  args: {
+    templates: mockedBrevmaler,
+    sprakKode: emptySprakKode,
+    behandlingId: 1,
+    behandlingVersjon: 1,
+    isKontrollerRevurderingApOpen: false,
+    personopplysninger,
+    arbeidsgiverOpplysningerPerId: arbeidsgivere,
+    revurderingVarslingArsak,
+    erTilbakekreving: false,
+    backendApi: defaultFakeBackend,
+  },
 };
 
 /**
  * Viser kva som skjer viss ein berre sende inn ein brevmal til panelet
  */
-export const SendMeldingPanelEnMal = props => sendMeldingTemplate(props);
-
-SendMeldingPanelEnMal.args = {
-  templates: {
-    [dokumentMalType.INNHENT_DOK]: mockedBrevmaler.INNHEN,
+export const SendMeldingPanelEnMal: Story = {
+  args: {
+    ...SendMeldingPanel.args,
+    templates: {
+      [dokumentMalType.INNHENT_DOK]: mockedBrevmaler.INNHEN,
+    },
   },
-  sprakKode: emptySprakKode,
 };
 
 /**
  * Viser meldingspanel med engelsk språk kode input
  */
-export const SendMeldingPanelEngelsk = props => sendMeldingTemplate(props);
-
-SendMeldingPanelEngelsk.args = {
-  templates: mockedBrevmaler,
-  sprakKode: {
-    kode: 'EN',
-    kodeverk: 'Engelsk',
+export const SendMeldingPanelEngelsk: Story = {
+  args: {
+    ...SendMeldingPanel.args,
+    sprakKode: {
+      kode: 'EN',
+      kodeverk: 'Engelsk',
+    },
   },
 };
 
