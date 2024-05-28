@@ -3,10 +3,10 @@ import React from 'react';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import AktorSakIndex from '@k9-sak-web/sak-aktor';
 import { Fagsak } from '@k9-sak-web/types';
 // eslint-disable-next-line import/no-relative-packages
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import alleKodeverk from '../../storybook/stories/mocks/alleKodeverk.json';
 
 const fagsak = {

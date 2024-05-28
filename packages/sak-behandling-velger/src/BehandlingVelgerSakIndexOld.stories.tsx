@@ -4,10 +4,10 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { BehandlingAppKontekst, Fagsak, Kodeverk } from '@k9-sak-web/types';
 // eslint-disable-next-line import/no-relative-packages
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import alleKodeverk from '../../storybook/stories/mocks/alleKodeverk.json';
 import BehandlingVelgerSakIndex from './BehandlingVelgerSakIndex';
 
