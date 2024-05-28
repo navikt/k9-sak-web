@@ -3,7 +3,6 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
@@ -15,6 +14,7 @@ import { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import messages from '../../i18n/nb_NO.json';
 import {
   PleiepengerSluttfaseBehandlingApiKeys,
@@ -26,8 +26,8 @@ import PleiepengerSluttfaseProsess from './PleiepengerSluttfaseProsess';
 describe('< PleiepengerSluttfaseProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+    sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
   } as Fagsak;
 
   const fagsakPerson = {

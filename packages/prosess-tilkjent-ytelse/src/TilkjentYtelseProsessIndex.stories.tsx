@@ -3,17 +3,17 @@ import React from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { Aksjonspunkt, Behandling, BeregningsresultatUtbetalt, Fagsak } from '@k9-sak-web/types';
 // eslint-disable-next-line import/no-relative-packages
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import alleKodeverk from '../../storybook/stories/mocks/alleKodeverk.json';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
 
 const fagsak = {
-  sakstype: {
-    kode: fagsakYtelseType.FORELDREPENGER,
-    kodeverk: '',
-  },
+  saksnummer: '123456',
+  sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
+  status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
 } as Fagsak;
 
 const behandling = {

@@ -4,6 +4,8 @@ const config: StorybookConfig = {
   stories: ['../packages/**/*.stories.@(j|t)s?(x)'],
   addons: [
     '@storybook/addon-actions',
+    '@storybook/addon-controls',
+    '@storybook/addon-interactions',
     {
       name: '@storybook/addon-docs',
       options: {

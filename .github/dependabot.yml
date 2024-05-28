@@ -24,6 +24,7 @@ updates:
           - 'react*'
           - '@types/react'
           - '@navikt*'
+          - 'storybook'
       react:
         patterns:
           - 'react'
@@ -35,6 +36,7 @@ updates:
       storybook:
         patterns:
           - '@storybook/*'
+          - 'storybook'
         exclude-patterns:
           - '@storybook/storybook-deployer'
           - '@storybook/testing-react'

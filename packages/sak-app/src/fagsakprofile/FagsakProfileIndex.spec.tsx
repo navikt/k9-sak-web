@@ -6,13 +6,13 @@ import { MemoryRouter } from 'react-router-dom';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
 
@@ -66,7 +66,7 @@ describe('<FagsakProfileIndex>', () => {
     ],
     [kodeverkTyper.BEHANDLING_TYPE]: [
       {
-        kode: behandlingType.FORSTEGANGSSOKNAD,
+        kode: behandlingType.FØRSTEGANGSSØKNAD,
         kodeverk: 'BEHANDLING_TYPE',
         navn: 'Førstegangsbehandling',
       },
@@ -104,9 +104,11 @@ describe('<FagsakProfileIndex>', () => {
     ],
   };
 
-  const behandling = {
+  const behandling: BehandlingAppKontekst = {
+    id: 1,
+    uuid: 'uuid-1',
     type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
+      kode: behandlingType.FØRSTEGANGSSØKNAD,
       kodeverk: 'BEHANDLING_TYPE',
     },
     status: {

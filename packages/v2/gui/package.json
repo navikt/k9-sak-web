@@ -6,7 +6,9 @@
   "version": "1.0.0",
   "exports": {
     "./app/*": "./src/app/*",
-    "./sak/meldinger/*": "./src/sak/meldinger/*"
+    "./sak/*": "./src/sak/*",
+    "./utils/*": "./src/utils/*",
+    "./kodeverk/*": "./src/kodeverk/*"
   },
   "dependencies": {
     "@k9-sak-web/backend": "workspace:^",

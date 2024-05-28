@@ -1,6 +1,5 @@
 import '@fpsak-frontend/assets/styles/global.css';
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
-import '@navikt/ds-css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import { Preview } from '@storybook/react';
 import { initialize, mswLoader } from 'msw-storybook-addon';
@@ -11,6 +10,8 @@ import { MemoryRouter } from 'react-router-dom';
 // @ts-ignore
 const { VITE_LOCAL_STORYBOOK } = import.meta.env;
 
+// NB: Viss omgåelse av service worker er aktivert i devtools og devtools er opna når ein laster storybook, så oppstår
+// evig loop på grunn av dette kallet.
 initialize({
   onUnhandledRequest: 'bypass',
   serviceWorker: {
