@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-pascal-case */
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { DatePicker, useDatepicker } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -54,14 +55,17 @@ const PureDatepicker = ({
   ariaLabel,
   hideLabel,
 }: PureDatepickerProps): JSX.Element => {
-  const stringToDate = (date: string | Date): Date => new Date(date);
+  const stringToDate = (date: string | Date): Date => {
+    const newDate = dayjs(date, [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT, 'YYYY.MM.DD'], true);
+    return newDate.isValid() ? newDate.toDate() : undefined;
+  };
   const [ugyldigDatoError, setUgyldigDatoError] = React.useState(false);
 
   const { datepickerProps, inputProps } = useDatepicker({
     fromDate: limitations && limitations.minDate ? new Date(limitations.minDate) : fromDate,
     toDate: limitations && limitations.maxDate ? new Date(limitations.maxDate) : toDate,
     defaultMonth: initialMonth ? new Date(initialMonth) : undefined,
-    defaultSelected: value ? stringToDate(stringToDate(value)) : undefined,
+    defaultSelected: value ? stringToDate(value) : undefined,
     disabled:
       limitations && limitations.invalidDateRanges
         ? limitations.invalidDateRanges.map(range => ({

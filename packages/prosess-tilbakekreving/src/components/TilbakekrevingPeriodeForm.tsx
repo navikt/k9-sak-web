@@ -569,7 +569,7 @@ export const periodeFormBuildInitialValues = (
   const initialValues = {
     valgtVilkarResultatType: vilkarResultatKode,
     begrunnelse: decodeHtmlEntity(begrunnelse),
-    harMerEnnEnYtelse: periode.ytelser.length > 1,
+    harMerEnnEnYtelse: periode?.ytelser?.length > 1,
     ...foreldetData,
   };
 

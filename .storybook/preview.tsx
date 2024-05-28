@@ -1,5 +1,4 @@
 import '@fpsak-frontend/assets/styles/global.css';
-import '@navikt/ds-css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import { Preview } from '@storybook/react';
 import { initialize, mswLoader } from 'msw-storybook-addon';
