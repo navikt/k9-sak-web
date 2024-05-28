@@ -1,6 +1,6 @@
 /* eslint-disable import/no-relative-packages */
 import { type Meta, type StoryObj } from '@storybook/react';
-import withMaxWidth from '../../../../../storybook/decorators/withMaxWidth.js';
+import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import FritekstInput from './FritekstInput.js';
 
 const meta: Meta<typeof FritekstInput> = {

@@ -7,8 +7,7 @@ import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType'
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { BehandlingAppKontekst, Fagsak, Kodeverk } from '@k9-sak-web/types';
-// eslint-disable-next-line import/no-relative-packages
-import alleKodeverk from '../../storybook/stories/mocks/alleKodeverk.json';
+import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import BehandlingVelgerSakIndex from './BehandlingVelgerSakIndex';
 
 const BEHANDLING_TYPE_KODEVERK = 'BEHANDLING_TYPE';

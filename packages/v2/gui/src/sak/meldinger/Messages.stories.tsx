@@ -5,11 +5,11 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { userEvent, within } from '@storybook/test';
-import withMaxWidth from '../../../../../storybook/decorators/withMaxWidth.js';
-import { FakeMessagesBackendApi } from '../../../../../storybook/stories/mocks/FakeMessagesBackendApi.js';
-import arbeidsgivere from '../../../../../storybook/stories/mocks/arbeidsgivere.json';
-import { templates } from '../../../../../storybook/stories/mocks/brevmaler';
-import personopplysninger from '../../../../../storybook/stories/mocks/personopplysninger';
+import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
+import { FakeMessagesBackendApi } from '@k9-sak-web/gui/storybook/mocks/FakeMessagesBackendApi.js';
+import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
+import { templates } from '@k9-sak-web/gui/storybook/mocks/brevmaler.js';
+import personopplysninger from '@k9-sak-web/gui/storybook/mocks/personopplysninger.js';
 import Messages from './Messages.js';
 import { tredjepartsmottakerValg } from './MottakerSelect.js';
 

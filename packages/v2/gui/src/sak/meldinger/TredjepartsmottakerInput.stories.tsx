@@ -8,8 +8,8 @@ import { Button, VStack } from '@navikt/ds-react';
 import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useCallback, useState } from 'react';
-import withMaxWidth from '../../../../../storybook/decorators/withMaxWidth';
-import { FakeMessagesBackendApi } from '../../../../../storybook/stories/mocks/FakeMessagesBackendApi';
+import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
+import { FakeMessagesBackendApi } from '@k9-sak-web/gui/storybook/mocks/FakeMessagesBackendApi.js';
 import TredjepartsmottakerInput from './TredjepartsmottakerInput.js';
 
 const meta: Meta<typeof TredjepartsmottakerInput> = {
