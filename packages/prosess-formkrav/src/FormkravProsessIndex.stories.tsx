@@ -2,9 +2,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
-import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import FormkravProsessIndex from './FormkravProsessIndex';
 
 const behandling = {
@@ -35,7 +35,6 @@ const fagsak = {
 export default {
   title: 'prosess/klage/prosess-formkrav',
   component: FormkravProsessIndex,
-  decorators: [withReduxProvider],
 };
 
 export const visFormkravPanelForAksjonspunktNfp = args => (
