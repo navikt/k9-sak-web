@@ -5,8 +5,8 @@ import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAkti
 import { Aksjonspunkt, Opptjening, OpptjeningBehandling } from '@k9-sak-web/types';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
-import alleKodeverk from '../../storybook/stories/mocks/alleKodeverk.json';
-import arbeidsgivere from '../../storybook/stories/mocks/arbeidsgivere.json';
+import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
+import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
 import OpptjeningFaktaIndex from './OpptjeningFaktaIndex';
 
 const behandling = {

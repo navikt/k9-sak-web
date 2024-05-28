@@ -5,12 +5,12 @@ import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/melding
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import withMaxWidth from '../../storybook/decorators/withMaxWidth';
-import arbeidsgivere from '../../storybook/stories/mocks/arbeidsgivere.json';
+import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
+import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
 import mockedBrevmaler from '../../storybook/stories/mocks/brevmaler';
-import personopplysninger from '../../storybook/stories/mocks/personopplysninger';
 import MeldingerSakIndex, { BackendApi } from './MeldingerSakIndex';
 import MessagesModalSakIndex from './MessagesModalSakIndex';
+import personopplysninger from '../../storybook/stories/mocks/personopplysninger.js';
 
 const meta: Meta<typeof MeldingerSakIndex> = {
   title: 'sak/sak-meldinger',

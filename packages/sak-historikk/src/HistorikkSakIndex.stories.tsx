@@ -1,6 +1,5 @@
 import React from 'react';
-// eslint-disable-next-line import/no-relative-packages
-import alleKodeverk from '../../storybook/stories/mocks/alleKodeverk.json';
+import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import HistorikkSakIndex from './HistorikkSakIndex';
 
 const history = [

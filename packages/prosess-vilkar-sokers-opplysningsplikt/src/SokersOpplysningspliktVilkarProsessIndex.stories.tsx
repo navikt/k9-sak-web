@@ -7,8 +7,7 @@ import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Aksjonspunkt, Behandling, Soknad } from '@k9-sak-web/types';
-// eslint-disable-next-line import/no-relative-packages
-import alleKodeverk from '../../storybook/stories/mocks/alleKodeverk.json';
+import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import SokersOpplysningspliktVilkarProsessIndex from './SokersOpplysningspliktVilkarProsessIndex';
 
 const soknad = {

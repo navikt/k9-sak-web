@@ -1,14 +1,14 @@
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
-import { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
+import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
+import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
 import type { BackendApi } from '@k9-sak-web/gui/sak/meldinger/Messages.js';
 import { action } from '@storybook/addon-actions';
 import { fakePdf } from './fakePdf.js';
 
 // XXX Should be moved out somewhere so other fake implementations can use it
-const sleep = timeMs =>
+const sleep = (timeMs: number) =>
   new Promise(resolve => {
     setTimeout(resolve, timeMs);
   });
@@ -19,6 +19,9 @@ export class FakeMessagesBackendApi implements BackendApi {
     eksternReferanse: string,
     maltype: string,
   ): Promise<FritekstbrevDokumentdata[]> {
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const x = eksternReferanse;
     if (sakstype === fagsakYtelsesType.OMP && maltype === 'VARSEL_FRITEKST') {
       return [
         { tittel: 'Varsel nr 1', fritekst: 'Hei, du må sende inn ditt og datt før frist.' },
@@ -29,7 +32,7 @@ export class FakeMessagesBackendApi implements BackendApi {
   }
 
   async getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse> {
-    abort.addEventListener('abort', () => {
+    abort?.addEventListener('abort', () => {
       throw abort.reason;
     });
     if (orgnr.length === 9) {

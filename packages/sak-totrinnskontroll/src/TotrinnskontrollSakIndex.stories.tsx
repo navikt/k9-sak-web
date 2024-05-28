@@ -3,8 +3,7 @@ import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Be
 import { Behandling, KlageVurdering, TotrinnskontrollAksjonspunkt } from '@k9-sak-web/types';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
-// eslint-disable-next-line import/no-relative-packages
-import alleKodeverk from '../../storybook/stories/mocks/alleKodeverk.json';
+import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import TotrinnskontrollSakIndex from './TotrinnskontrollSakIndex';
 
 const data = [

@@ -4,8 +4,7 @@ import React, { useState } from 'react';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-// eslint-disable-next-line import/no-relative-packages
-import alleKodeverk from '../../storybook/stories/mocks/alleKodeverk.json';
+import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import FagsakSokSakIndex from './FagsakSokSakIndex';
 
 const FAGSAK_STATUS_KODEVERK = 'FAGSAK_STATUS';
