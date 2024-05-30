@@ -91,7 +91,7 @@ const ActivityDataSubPanel = ({
   arbeidsgiverOpplysningerPerId,
 }: ActivityDataSubPanelProps) => (
   <>
-    {isOfType(selectedActivityType, ...[OAType.ARBEID, OAType.NARING, ...ytelseTypes]) && (
+    {isOfType(selectedActivityType, ...[OAType.ARBEID, OAType.NÆRING, ...ytelseTypes]) && (
       <HGrid gap="1" columns={{ xs: '7fr 5fr' }}>
         <div>
           {!isManuallyAdded && (
@@ -131,14 +131,13 @@ const ActivityDataSubPanel = ({
             readOnly={readOnly || !isManuallyAdded}
             htmlSize={14}
             format={value => (readOnly || !isManuallyAdded ? `${value} %` : value)}
-            // @ts-ignore TODO Fiks denne!
             normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
           />
         )}
       </HGrid>
     )}
     <VerticalSpacer eightPx />
-    {isOfType(selectedActivityType, OAType.NARING) && (
+    {isOfType(selectedActivityType, OAType.NÆRING) && (
       <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
         <DatepickerField name="naringRegistreringsdato" label={{ id: 'ActivityPanel.Registreringsdato' }} readOnly />
       </HGrid>

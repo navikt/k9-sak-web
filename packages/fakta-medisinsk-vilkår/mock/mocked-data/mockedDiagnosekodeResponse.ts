@@ -1,4 +1,5 @@
 import LinkRel from '../../src/constants/LinkRel';
+import { mockUrlPrepend } from '../constants';
 
 export default {
   diagnosekoder: ['A001', 'B04'],
@@ -6,7 +7,7 @@ export default {
     {
       rel: LinkRel.ENDRE_DIAGNOSEKODER,
       type: 'POST',
-      href: 'http://localhost:8082/mock/endre-diagnosekoder',
+      href: `${mockUrlPrepend}/mock/endre-diagnosekoder`,
       behandlingUuid: 'HER_ER_BEHANDLINGSID',
       versjon: null,
     },

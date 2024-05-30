@@ -84,7 +84,7 @@ describe('<ActivityDataSubPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly={false}
         isManuallyAdded={false}
-        selectedActivityType={{ kode: OAType.NARING, kodeverk: OAType.NARING }}
+        selectedActivityType={{ kode: OAType.NÆRING, kodeverk: OAType.NÆRING }}
       />,
       { messages },
     );
@@ -101,7 +101,7 @@ describe('<ActivityDataSubPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly={false}
         isManuallyAdded={false}
-        selectedActivityType={{ kode: OAType.VARTPENGER, kodeverk: 'VARTPENGER' }}
+        selectedActivityType={{ kode: OAType.SYKEPENGER, kodeverk: OAType.SYKEPENGER }}
       />,
       { messages },
     );

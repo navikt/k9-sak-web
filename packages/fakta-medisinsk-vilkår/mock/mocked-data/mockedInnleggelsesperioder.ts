@@ -1,4 +1,5 @@
 import LinkRel from '../../src/constants/LinkRel';
+import { mockUrlPrepend } from '../constants';
 
 export default {
   perioder: [
@@ -10,7 +11,7 @@ export default {
     {
       rel: LinkRel.ENDRE_INNLEGGELSESPERIODER,
       type: 'POST',
-      href: 'http://localhost:8082/mock/endre-innleggelsesperioder',
+      href: `${mockUrlPrepend}/mock/endre-innleggelsesperioder`,
       requestPayload: {
         behandlingUuid: 'HER_ER_BEHANDLINGSID',
         versjon: null,
