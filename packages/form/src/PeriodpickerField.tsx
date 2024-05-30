@@ -109,11 +109,12 @@ const parseValue = (parse: (value: string) => string) => (value: string) => pars
 
 const PeriodpickerField = ({
   names,
-  label,
-  readOnly,
-  format,
-  parse,
+  label = '',
+  readOnly = false,
+  format = value => value,
+  parse = value => value,
   hideLabel,
+  renderIfMissingDateOnReadOnly = false,
   ...otherProps
 }: PeriodpickerFieldProps) => (
   <Fields
@@ -124,15 +125,8 @@ const PeriodpickerField = ({
     format={formatValue(format)}
     parse={parseValue(parse)}
     readOnly={readOnly}
+    renderIfMissingDateOnReadOnly={renderIfMissingDateOnReadOnly}
   />
 );
-
-PeriodpickerField.defaultProps = {
-  label: '',
-  readOnly: false,
-  renderIfMissingDateOnReadOnly: false,
-  format: value => value,
-  parse: value => value,
-};
 
 export default PeriodpickerField;

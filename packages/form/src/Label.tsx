@@ -23,7 +23,7 @@ export const Label = (props: Props & WrappedComponentProps) => {
     return label;
   };
 
-  const { input, readOnly, typographyElement: TypoElem, textOnly } = props;
+  const { input = null, readOnly = false, typographyElement: TypoElem = DSLabel, textOnly } = props;
   if (!input) {
     return null;
   }
@@ -37,12 +37,6 @@ export const Label = (props: Props & WrappedComponentProps) => {
       </TypoElem>
     </span>
   );
-};
-
-Label.defaultProps = {
-  input: null,
-  typographyElement: DSLabel,
-  readOnly: false,
 };
 
 export default injectIntl(Label);

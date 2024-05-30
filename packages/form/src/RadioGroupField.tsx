@@ -102,16 +102,25 @@ const renderRadioGroupField = renderNavField(
   ),
 );
 
-export const RadioGroupField = (props: RadioGroupFieldProps) => <Field component={renderRadioGroupField} {...props} />;
-
-RadioGroupField.defaultProps = {
-  columns: 0,
-  rows: 0,
-  label: '',
-  bredde: 'fullbredde',
-  spaceBetween: false,
-  direction: 'horizontal',
-  DOMName: undefined,
-};
+export const RadioGroupField = ({
+  columns = 0,
+  rows = 0,
+  label = '',
+  bredde = 'fullbredde',
+  spaceBetween = false,
+  direction = 'horizontal',
+  ...otherProps
+}: RadioGroupFieldProps) => (
+  <Field
+    component={renderRadioGroupField}
+    columns={columns}
+    rows={rows}
+    label={label}
+    bredde={bredde}
+    spaceBetween={spaceBetween}
+    direction={direction}
+    {...otherProps}
+  />
+);
 
 export default RadioGroupField;

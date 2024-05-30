@@ -7,7 +7,7 @@ import { getLanguageCodeFromSprakkode, hasValidText, required } from '@fpsak-fro
 
 import styles from './fritekstAnkeBrevTextField.module.css';
 
-const FritekstAnkeBrevTextField = ({ sprakkode, readOnly, intl }) => (
+const FritekstAnkeBrevTextField = ({ sprakkode, readOnly = false, intl }) => (
   <div className={styles.fritekstTilBrevTextArea}>
     <TextAreaField
       name="fritekstTilBrev"
@@ -31,10 +31,6 @@ FritekstAnkeBrevTextField.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool,
-};
-
-FritekstAnkeBrevTextField.defaultProps = {
-  readOnly: true,
 };
 
 export default injectIntl(FritekstAnkeBrevTextField);

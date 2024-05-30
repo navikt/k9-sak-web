@@ -20,7 +20,7 @@ const transformValues = (values, aksjonspunktCode) => ({
   kode: aksjonspunktCode,
 });
 
-export const TempsaveAnkeButton = ({ formValues, saveAnke, spinner, aksjonspunktCode, readOnly }) => {
+export const TempsaveAnkeButton = ({ formValues, saveAnke, spinner = false, aksjonspunktCode, readOnly = false }) => {
   const tempSave = event => {
     event.preventDefault();
     saveAnke(transformValues(formValues, aksjonspunktCode));
@@ -51,11 +51,6 @@ TempsaveAnkeButton.propTypes = {
   saveAnke: PropTypes.func.isRequired,
   spinner: PropTypes.bool,
   readOnly: PropTypes.bool,
-};
-
-TempsaveAnkeButton.defaultProps = {
-  spinner: false,
-  readOnly: false,
 };
 
 export default TempsaveAnkeButton;

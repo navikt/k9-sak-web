@@ -123,10 +123,6 @@ CheckPersonStatusFormImpl.propTypes = {
   ...formPropTypes,
 };
 
-CheckPersonStatusFormImpl.defaultProps = {
-  gjeldeneFom: undefined,
-};
-
 const getValgtOpplysning = avklartPersonstatus => {
   if (avklartPersonstatus && avklartPersonstatus.overstyrtPersonstatus) {
     const statusKode = avklartPersonstatus.overstyrtPersonstatus.kode;

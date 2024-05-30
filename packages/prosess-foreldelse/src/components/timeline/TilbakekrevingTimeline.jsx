@@ -217,8 +217,4 @@ TilbakekrevingTimeline.propTypes = {
   kjonn: PropTypes.string.isRequired,
 };
 
-TilbakekrevingTimeline.defaultProps = {
-  selectedPeriod: undefined,
-};
-
 export default injectIntl(TilbakekrevingTimeline);

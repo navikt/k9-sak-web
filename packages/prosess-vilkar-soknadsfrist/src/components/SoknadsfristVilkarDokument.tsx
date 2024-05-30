@@ -52,7 +52,7 @@ export const DELVIS_OPPFYLT = 'DELVIS_OPPFYLT';
 export const SoknadsfristVilkarDokument = ({
   erVilkarOk,
   readOnly,
-  skalViseBegrunnelse,
+  skalViseBegrunnelse = true,
   dokument,
   erAktivtDokument,
   dokumentIndex,
@@ -178,11 +178,6 @@ export const SoknadsfristVilkarDokument = ({
       <VerticalSpacer eightPx />
     </div>
   );
-};
-
-SoknadsfristVilkarDokument.defaultProps = {
-  erVilkarOk: undefined,
-  skalViseBegrunnelse: true,
 };
 
 export default SoknadsfristVilkarDokument;

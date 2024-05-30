@@ -21,17 +21,17 @@ export interface RadioOptionProps {
 }
 
 export const RadioOption = ({
-  name,
-  className,
+  name = '',
+  className = '',
   label,
   value,
   actualValue,
-  disabled,
-  groupDisabled,
-  onChange,
+  disabled = false,
+  groupDisabled = false,
+  onChange = () => undefined,
   children,
   style,
-  manualHideChildren,
+  manualHideChildren = false,
   dataId,
   wrapperClassName,
 }: RadioOptionProps) => {
@@ -55,16 +55,6 @@ export const RadioOption = ({
       {(checked || manualHideChildren) && children}
     </div>
   );
-};
-
-RadioOption.defaultProps = {
-  name: '',
-  className: '',
-  disabled: false,
-  groupDisabled: false,
-  actualValue: undefined,
-  onChange: () => undefined,
-  manualHideChildren: false,
 };
 
 RadioOption.displayName = 'RadioOption';

@@ -145,8 +145,4 @@ const ActivityDataSubPanel = ({
   </>
 );
 
-ActivityDataSubPanel.defaultProps = {
-  selectedActivityType: {},
-};
-
 export default ActivityDataSubPanel;
