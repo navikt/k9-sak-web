@@ -11,9 +11,11 @@ describe('<AvregningProsessIndex>', () => {
     saksnummer: '123',
     sakstype: {
       kode: fagsakYtelseType.FORELDREPENGER,
+      kodeverk: '',
     },
     fagsakYtelseType: {
       kode: fagsakYtelseType.FORELDREPENGER,
+      kodeverk: '',
     },
   };
 
@@ -22,6 +24,7 @@ describe('<AvregningProsessIndex>', () => {
     versjon: 1,
     sprakkode: {
       kode: 'NO',
+      kodeverk: '',
     },
   };
 
@@ -29,6 +32,7 @@ describe('<AvregningProsessIndex>', () => {
     {
       definisjon: {
         kode: aksjonspunktCodes.VURDER_FEILUTBETALING,
+        kodeverk: '',
       },
       begrunnelse: 'test',
     },
