@@ -12,7 +12,7 @@ import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 
 import styles from './klageVurderingRadioOptionsKa.module.css';
 
-export const KlageVurderingRadioOptionsKa = ({ readOnly, medholdReasons, klageVurdering, intl }) => {
+export const KlageVurderingRadioOptionsKa = ({ readOnly = true, medholdReasons, klageVurdering = null, intl }) => {
   const medholdOptions = medholdReasons.map(mo => (
     <option key={mo.kode} value={mo.kode}>
       {mo.navn}
@@ -122,11 +122,6 @@ KlageVurderingRadioOptionsKa.propTypes = {
   ).isRequired,
   klageVurdering: PropTypes.string,
   intl: PropTypes.shape().isRequired,
-};
-
-KlageVurderingRadioOptionsKa.defaultProps = {
-  readOnly: true,
-  klageVurdering: null,
 };
 
 export default injectIntl(KlageVurderingRadioOptionsKa);

@@ -109,9 +109,4 @@ VedtakKlageKaSubmitPanelImpl.propTypes = {
   formProps: PropTypes.shape().isRequired,
 };
 
-VedtakKlageKaSubmitPanelImpl.defaultProps = {
-  begrunnelse: undefined,
-  klageResultat: undefined,
-};
-
 export default injectIntl(VedtakKlageKaSubmitPanelImpl);

@@ -33,6 +33,17 @@ const minLength3 = minLength(3);
  * Presentasjonskomponent. Setter opp aksjonspunktet for avklaring av varsel om revurdering i søknad.
  */
 export class VarselOmRevurderingFormImpl extends React.Component {
+  static defaultProps = {
+    sendVarsel: false,
+    fritekst: null,
+    begrunnelse: null,
+    languageCode: null,
+    erAutomatiskRevurdering: false,
+    ventearsaker: [],
+    avklartBarn: undefined,
+    termindato: undefined,
+  };
+
   constructor(props) {
     super(props);
     this.previewMessage = this.previewMessage.bind(this);
@@ -214,17 +225,6 @@ VarselOmRevurderingFormImpl.propTypes = {
   soknadOriginalBehandling: revurderingSoknadPropType.isRequired,
   familiehendelseOriginalBehandling: revurderingFamilieHendelsePropType.isRequired,
   ...formPropTypes,
-};
-
-VarselOmRevurderingFormImpl.defaultProps = {
-  sendVarsel: false,
-  fritekst: null,
-  begrunnelse: null,
-  languageCode: null,
-  erAutomatiskRevurdering: false,
-  ventearsaker: [],
-  avklartBarn: undefined,
-  termindato: undefined,
 };
 
 export const buildInitialValues = createSelector([(state, ownProps) => ownProps.aksjonspunkter], aksjonspunkter => ({

@@ -36,7 +36,7 @@ export const PerioderMedMedlemskapFaktaPanel = ({
   readOnly,
   hasPeriodeAksjonspunkt,
   isPeriodAksjonspunktClosed,
-  fixedMedlemskapPerioder,
+  fixedMedlemskapPerioder = [],
   fodselsdato,
   vurderingTypes,
   alleMerknaderFraBeslutter,
@@ -130,11 +130,6 @@ PerioderMedMedlemskapFaktaPanel.propTypes = {
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }).isRequired,
-};
-
-PerioderMedMedlemskapFaktaPanel.defaultProps = {
-  fodselsdato: undefined,
-  fixedMedlemskapPerioder: [],
 };
 
 export const getAksjonspunkter = createSelector([ownProps => ownProps.alleKodeverk], alleKodeverk => {

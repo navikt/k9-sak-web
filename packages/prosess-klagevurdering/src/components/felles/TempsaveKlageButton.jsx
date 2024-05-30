@@ -19,7 +19,7 @@ const transformValues = (values, aksjonspunktCode) => ({
   kode: aksjonspunktCode,
 });
 
-const TempsaveKlageButton = ({ formValues, saveKlage, spinner, aksjonspunktCode, readOnly }) => {
+const TempsaveKlageButton = ({ formValues, saveKlage, spinner = false, aksjonspunktCode, readOnly = false }) => {
   const tempSave = event => {
     event.preventDefault();
     saveKlage(transformValues(formValues, aksjonspunktCode));
@@ -42,11 +42,6 @@ TempsaveKlageButton.propTypes = {
   saveKlage: PropTypes.func.isRequired,
   spinner: PropTypes.bool,
   readOnly: PropTypes.bool,
-};
-
-TempsaveKlageButton.defaultProps = {
-  spinner: false,
-  readOnly: false,
 };
 
 export default TempsaveKlageButton;

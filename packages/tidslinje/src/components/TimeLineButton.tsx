@@ -62,7 +62,7 @@ interface TimeLineButtonProps {
   type: keyof ButtonTypes;
 }
 
-const TimeLineButton = ({ callback, inverted, text, type }: TimeLineButtonProps) => (
+const TimeLineButton = ({ callback, inverted = false, text, type }: TimeLineButtonProps) => (
   <Image
     {...buttonTypes[type]}
     tabIndex={0}
@@ -74,9 +74,5 @@ const TimeLineButton = ({ callback, inverted, text, type }: TimeLineButtonProps)
     alignTooltipLeft
   />
 );
-
-TimeLineButton.defaultProps = {
-  inverted: false,
-};
 
 export default TimeLineButton;

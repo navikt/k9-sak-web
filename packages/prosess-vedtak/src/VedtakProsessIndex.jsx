@@ -31,7 +31,7 @@ const VedtakProsessIndex = ({
   simuleringResultat,
   beregningsgrunnlag,
   vilkar,
-  sendVarselOmRevurdering,
+  sendVarselOmRevurdering = false,
   beregningsresultatOriginalBehandling,
   medlemskap,
   aksjonspunkter,
@@ -121,17 +121,6 @@ VedtakProsessIndex.propTypes = {
   overlappendeYtelser: PropTypes.arrayOf(PropTypes.shape()),
   featureToggles: PropTypes.shape(),
   hentFritekstbrevHtmlCallback: PropTypes.func.isRequired,
-};
-
-VedtakProsessIndex.defaultProps = {
-  beregningresultatForeldrepenger: undefined,
-  beregningsresultatOriginalBehandling: undefined,
-  simuleringResultat: undefined,
-  tilbakekrevingvalg: undefined,
-  sendVarselOmRevurdering: false,
-  beregningsgrunnlag: undefined,
-  tilgjengeligeVedtaksbrev: undefined,
-  informasjonsbehovVedtaksbrev: undefined,
 };
 
 export default VedtakProsessIndex;

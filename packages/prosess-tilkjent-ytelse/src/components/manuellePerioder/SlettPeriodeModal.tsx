@@ -14,7 +14,7 @@ interface OwnProps {
   cancelEvent: (...args: any[]) => any;
 }
 
-export const SlettPeriodeModal = ({ showModal, periode, closeEvent, cancelEvent }: OwnProps) => {
+export const SlettPeriodeModal = ({ showModal = false, periode, closeEvent, cancelEvent }: OwnProps) => {
   const intl = useIntl();
 
   const fom = moment(periode.fom).format(DDMMYYYY_DATE_FORMAT);
@@ -54,10 +54,6 @@ export const SlettPeriodeModal = ({ showModal, periode, closeEvent, cancelEvent 
       </Modal.Body>
     </Modal>
   );
-};
-
-SlettPeriodeModal.defaultProps = {
-  showModal: false,
 };
 
 export default SlettPeriodeModal;

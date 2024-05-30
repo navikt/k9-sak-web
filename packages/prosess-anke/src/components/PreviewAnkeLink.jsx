@@ -24,7 +24,13 @@ const getBrevData = (ankeVurdering, aksjonspunktCode, fritekstTilBrev) => ({
   dokumentMal: getBrevKode(ankeVurdering),
 });
 
-const PreviewAnkeLink = ({ previewCallback, fritekstTilBrev, ankeVurdering, aksjonspunktCode, readOnly }) => {
+const PreviewAnkeLink = ({
+  previewCallback,
+  fritekstTilBrev = null,
+  ankeVurdering = null,
+  aksjonspunktCode,
+  readOnly = false,
+}) => {
   const previewMessage = e => {
     e.preventDefault();
     previewCallback(getBrevData(ankeVurdering, aksjonspunktCode, fritekstTilBrev));
@@ -56,12 +62,6 @@ PreviewAnkeLink.propTypes = {
   fritekstTilBrev: PropTypes.string,
   ankeVurdering: PropTypes.string,
   readOnly: PropTypes.bool,
-};
-
-PreviewAnkeLink.defaultProps = {
-  ankeVurdering: null,
-  fritekstTilBrev: null,
-  readOnly: false,
 };
 
 export default PreviewAnkeLink;
