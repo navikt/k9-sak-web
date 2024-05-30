@@ -9,9 +9,7 @@ import { manglerInntektsmelding } from '../mock/mockedKompletthetsdata';
 import * as stories from '../src/stories/MainComponent.stories';
 import MainComponent from '../src/ui/MainComponent';
 
-const server = setupServer(
-    http.get('http://localhost:3000/tilstand', () => HttpResponse.json(manglerInntektsmelding)),
-);
+const server = setupServer(http.get('http://localhost:3000/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
 
 describe('9069 - Mangler inntektsmelding', () => {
   beforeAll(() => {

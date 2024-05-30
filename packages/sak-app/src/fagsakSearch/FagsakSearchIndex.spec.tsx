@@ -27,11 +27,11 @@ describe('<FagsakSearchIndex>', () => {
     saksnummer: '12345',
     sakstype: {
       kode: 'ES',
-      kodeverk: 'test',
+      kodeverk: 'FAGSAK_YTELSE',
     },
     status: {
       kode: 'OPPR',
-      kodeverk: 'test',
+      kodeverk: 'FAGSAK_STATUS',
     },
     barnFodt: '10.10.2017',
     antallBarn: 1,

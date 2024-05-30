@@ -7,7 +7,7 @@ import { getLanguageCodeFromSprakkode, hasValidText, required } from '@fpsak-fro
 
 import styles from './fritekstTextField.module.css';
 
-const FritekstTextField = ({ sprakkode, readOnly, intl }) => (
+const FritekstTextField = ({ sprakkode, readOnly = true, intl }) => (
   <div className={styles.fritekstTextArea}>
     <TextAreaField
       name="begrunnelse"
@@ -31,10 +31,6 @@ FritekstTextField.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool,
-};
-
-FritekstTextField.defaultProps = {
-  readOnly: true,
 };
 
 export default injectIntl(FritekstTextField);

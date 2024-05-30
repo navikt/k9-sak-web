@@ -59,7 +59,7 @@ const TextAreaWithBadge = ({
 
 const renderNavTextArea = renderNavField(injectIntl(TextAreaWithBadge));
 
-const TextAreaField = ({ name, label, validate, readOnly, ...otherProps }: TextAreaFieldProps) => (
+const TextAreaField = ({ name, label, validate = null, readOnly = false, ...otherProps }: TextAreaFieldProps) => (
   <Field
     name={name}
     validate={validate}
@@ -72,10 +72,5 @@ const TextAreaField = ({ name, label, validate, readOnly, ...otherProps }: TextA
     type="textarea"
   />
 );
-
-TextAreaField.defaultProps = {
-  validate: null,
-  readOnly: false,
-};
 
 export default TextAreaField;

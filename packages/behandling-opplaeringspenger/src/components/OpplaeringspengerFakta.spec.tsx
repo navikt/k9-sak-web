@@ -5,7 +5,6 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 
@@ -15,6 +14,7 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import {
   OpplaeringspengerBehandlingApiKeys,
   requestOpplaeringspengerApi,
@@ -25,8 +25,8 @@ import OpplaeringspengerFakta from './OpplaeringspengerFakta';
 describe('<OpplaeringspengerFakta>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelseType.PLEIEPENGER, kodeverk: 'test' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+    sakstype: { kode: fagsakYtelsesType.PSB, kodeverk: 'FAGSAK_YTELSE' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
   } as Fagsak;
   const fagsakPerson = {
     alder: 30,

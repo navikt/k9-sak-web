@@ -71,13 +71,16 @@ interface PeriodFieldArrayProps {
 const PeriodFieldArray = ({
   intl,
   fields,
-  readOnly,
+  readOnly = true,
   meta,
   titleTextCode,
-  textCode,
-  emptyPeriodTemplate,
-  shouldShowAddButton,
-  createAddButtonInsteadOfImageLink,
+  textCode = 'PeriodFieldArray.LeggTilPeriode',
+  emptyPeriodTemplate = {
+    periodeFom: '',
+    periodeTom: '',
+  },
+  shouldShowAddButton = true,
+  createAddButtonInsteadOfImageLink = false,
   children,
   fieldGroupClassName,
 }: PeriodFieldArrayProps) => (
@@ -116,17 +119,5 @@ const PeriodFieldArray = ({
     )}
   </NavFieldGroup>
 );
-
-PeriodFieldArray.defaultProps = {
-  readOnly: true,
-  titleTextCode: undefined,
-  textCode: 'PeriodFieldArray.LeggTilPeriode',
-  emptyPeriodTemplate: {
-    periodeFom: '',
-    periodeTom: '',
-  },
-  shouldShowAddButton: true,
-  createAddButtonInsteadOfImageLink: false,
-};
 
 export default injectIntl(PeriodFieldArray);

@@ -50,7 +50,7 @@ export const RenderDatepickerField = renderNavField(Datepicker);
 
 const DatepickerField = ({
   name,
-  label,
+  label = '',
   readOnly = false,
   format = value => value,
   parse = value => value,

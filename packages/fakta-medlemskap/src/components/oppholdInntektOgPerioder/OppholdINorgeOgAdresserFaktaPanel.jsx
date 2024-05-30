@@ -53,8 +53,8 @@ const OppholdINorgeOgAdresserFaktaPanel = ({
   readOnly,
   hasBosattAksjonspunkt,
   isBosattAksjonspunktClosed,
-  opphold,
-  foreldre,
+  opphold = {},
+  foreldre = [],
   alleKodeverk,
   alleMerknaderFraBeslutter,
 }) => (
@@ -129,11 +129,6 @@ OppholdINorgeOgAdresserFaktaPanel.propTypes = {
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }).isRequired,
-};
-
-OppholdINorgeOgAdresserFaktaPanel.defaultProps = {
-  opphold: {},
-  foreldre: [],
 };
 
 const mapStateToProps = (state, ownProps) => {

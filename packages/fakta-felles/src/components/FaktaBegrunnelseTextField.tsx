@@ -45,8 +45,8 @@ const FaktaBegrunnelseTextField = ({
   isSubmittable,
   hasBegrunnelse,
   label,
-  hasVurderingText,
-  name,
+  hasVurderingText = false,
+  name = 'begrunnelse',
 }: OwnProps) => {
   const code = hasVurderingText ? 'FaktaBegrunnelseTextField.Vurdering' : 'FaktaBegrunnelseTextField.BegrunnEndringene';
   const textAreaLabel = label || { id: code };
@@ -66,11 +66,6 @@ const FaktaBegrunnelseTextField = ({
       )}
     </RawIntlProvider>
   );
-};
-
-FaktaBegrunnelseTextField.defaultProps = {
-  name: 'begrunnelse',
-  hasVurderingText: false,
 };
 
 const getBegrunnelse = (aksjonspunkt: Aksjonspunkt[] | Aksjonspunkt): string => {

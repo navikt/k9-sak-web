@@ -22,7 +22,7 @@ const ytelseNavnMap = kode => {
   }
 };
 
-export const VedtakOpphorRevurderingPanelImpl = ({ intl, opphoersdato, ytelseTypeKode }) => (
+export const VedtakOpphorRevurderingPanelImpl = ({ intl, opphoersdato = '', ytelseTypeKode }) => (
   <div data-testid="opphorRevurdering">
     <Label size="small" as="p">
       {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
@@ -55,10 +55,6 @@ VedtakOpphorRevurderingPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   opphoersdato: PropTypes.string,
   ytelseTypeKode: PropTypes.string.isRequired,
-};
-
-VedtakOpphorRevurderingPanelImpl.defaultProps = {
-  opphoersdato: '',
 };
 
 const getOpphorsdato = createSelector(
