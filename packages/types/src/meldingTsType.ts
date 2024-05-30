@@ -1,24 +1,7 @@
-import { Link } from '@k9-sak-web/rest-api';
-
-export type Mottaker = {
-  id: string;
-  type: string;
-  harVarsel?: boolean;
-};
-
-export interface Brevmal {
-  navn: string;
-  kode?: string;
-  støtterFritekst?: boolean;
-  støtterTittelOgFritekst?: boolean;
-  tilgjengelig?: boolean;
-  linker?: Link[];
-  mottakere?: Mottaker[];
-  støtterTredjepartsmottaker?: boolean;
-}
+import { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 
 export interface Brevmaler {
-  [index: string]: Brevmal;
+  [index: string]: Template;
 }
 
 export default Brevmaler;

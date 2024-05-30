@@ -15,11 +15,9 @@ import { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/Er
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
   ArbeidsgiverOpplysningerPerId,
-  Brevmal,
   Brevmaler,
   Kodeverk,
   KodeverkMedNavn,
-  Mottaker,
   Personopplysninger,
 } from '@k9-sak-web/types';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
@@ -29,6 +27,8 @@ import React, { useEffect, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
+import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
+import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 import styles from './messages.module.css';
 
@@ -50,7 +50,7 @@ export type FormValues = {
 };
 
 export interface BackendApi {
-  getBrevMottakerinfoEreg(orgnr: string): Promise<EregOrganizationLookupResponse>;
+  getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse>;
 }
 
 interface PureOwnProps {
@@ -58,7 +58,7 @@ interface PureOwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   previewCallback: (
-    overstyrtMottaker: Mottaker,
+    overstyrtMottaker: MottakerDto,
     brevmalkode: string,
     fritekst: string,
     fritekstbrev?: Fritekstbrev,
@@ -83,7 +83,7 @@ interface MappedOwnProps {
 }
 
 const formName = 'Messages';
-const RECIPIENT: Mottaker = { id: 'Bruker', type: '' };
+const RECIPIENT: MottakerDto = { id: 'Bruker', type: '' };
 
 const createValidateRecipient = recipients => value =>
   value === JSON.stringify(RECIPIENT) ||
@@ -91,19 +91,19 @@ const createValidateRecipient = recipients => value =>
     ? undefined
     : [{ id: 'ValidationMessage.InvalidRecipient' }];
 
-const createTredjepartsmottaker = (orgnr: string): Mottaker => ({
+const createTredjepartsmottaker = (orgnr: string): MottakerDto => ({
   id: orgnr,
   type: 'ORGNR',
 });
 
 const resolveOverstyrtMottaker = (
   overstyrtMottaker: string,
-  recipients: Mottaker[],
+  recipients: MottakerDto[],
   visTredjepartsmottaker: boolean,
   tredjepartsmottakerOrgnr: string | undefined,
   eregLookupResponse: EregOrganizationLookupResponse,
   forPreview: boolean,
-): Mottaker | undefined => {
+): MottakerDto | undefined => {
   // Viss sending til tredjepartsmottaker er valgt skal tredjepartsmottakerOrgnr brukast (viss gyldig)
   if (visTredjepartsmottaker) {
     if (
@@ -166,13 +166,13 @@ export const MessagesImpl = ({
 
   const valgtBrevmal = templates[brevmalkode];
 
-  const recipients: Mottaker[] = templates[brevmalkode]?.mottakere ?? [];
+  const recipients: MottakerDto[] = templates[brevmalkode]?.mottakere ?? [];
 
-  const tmpls: Brevmal[] = Object.keys(templates).map(key => ({ ...templates[key], kode: key }));
+  const tmpls: Template[] = Object.keys(templates).map(key => ({ ...templates[key], kode: key }));
 
   const previewMessage = e => {
     e?.preventDefault();
-    const resolvedOverstyrtMottaker: Mottaker | undefined = resolveOverstyrtMottaker(
+    const resolvedOverstyrtMottaker: MottakerDto | undefined = resolveOverstyrtMottaker(
       overstyrtMottaker,
       recipients,
       visTredjepartsmottakerInput,
@@ -192,7 +192,7 @@ export const MessagesImpl = ({
   // Tilbakestill valgt mottaker hvis brukeren skifter mal og valgt mottakere ikke er tilgjengelig på ny mal, eller
   // viss tredjepartsmottaker input er aktivert og orgnr blir endra.
   useEffect(() => {
-    const resolvedOverstyrtMottaker: Mottaker | undefined = resolveOverstyrtMottaker(
+    const resolvedOverstyrtMottaker: MottakerDto | undefined = resolveOverstyrtMottaker(
       overstyrtMottaker,
       recipients,
       visTredjepartsmottakerInput,

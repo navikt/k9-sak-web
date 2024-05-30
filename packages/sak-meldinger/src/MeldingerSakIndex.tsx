@@ -4,16 +4,20 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import {
   ArbeidsgiverOpplysningerPerId,
   Brevmaler,
+  FeatureToggles,
   Kodeverk,
   KodeverkMedNavn,
-  Mottaker,
   Personopplysninger,
 } from '@k9-sak-web/types';
 
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
-import messages from '../i18n/nb_NO.json';
-import Messages, { type BackendApi as MessagesBackendApi, type FormValues } from './components/Messages';
+import V2Messages, { type BackendApi as V2MessagesBackendApi } from '@k9-sak-web/gui/sak/meldinger/Messages.js';
+import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
+import { BehandlingInfo } from '@k9-sak-web/gui/sak/BehandlingInfo.js';
+import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
 import MessagesTilbakekreving from './components/MessagesTilbakekreving';
+import Messages, { type BackendApi as MessagesBackendApi, type FormValues } from './components/Messages';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
@@ -25,25 +29,28 @@ const intl = createIntl(
   cache,
 );
 
-export interface BackendApi extends MessagesBackendApi {}
+export interface BackendApi extends MessagesBackendApi, V2MessagesBackendApi {}
 
 interface OwnProps {
   submitCallback: (values: FormValues) => void;
-  templates?: Brevmaler;
-  sprakKode: Kodeverk;
+  templates: Brevmaler;
+  sprakKode: Kodeverk; // TODO Erstatt med behandling
   previewCallback: (
-    mottaker: string | Mottaker,
+    mottaker: string | MottakerDto,
     brevmalkode: string,
     fritekst: string,
     fritekstbrev?: Fritekstbrev,
   ) => void;
-  behandlingId: number;
+  behandlingId: number; // TODO Erstatt med behandling
   behandlingVersjon: number;
   isKontrollerRevurderingApOpen?: boolean;
   revurderingVarslingArsak: KodeverkMedNavn[];
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
   erTilbakekreving: boolean;
+  readonly featureToggles: FeatureToggles;
+  readonly fagsak: Fagsak;
+  readonly behandling: BehandlingInfo;
   readonly backendApi: BackendApi;
 }
 
@@ -59,38 +66,56 @@ const MeldingerSakIndex = ({
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
   erTilbakekreving,
+  featureToggles,
+  fagsak,
+  behandling,
   backendApi,
-}: OwnProps) => (
-  <RawIntlProvider value={intl}>
-    {erTilbakekreving ? (
-      <MessagesTilbakekreving
-        submitCallback={submitCallback}
-        templates={templates}
-        sprakKode={sprakKode}
-        previewCallback={previewCallback}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        isKontrollerRevurderingApOpen={isKontrollerRevurderingApOpen}
-        revurderingVarslingArsak={revurderingVarslingArsak}
+}: OwnProps) => {
+  if (!erTilbakekreving && featureToggles.BRUK_V2_MELDINGER) {
+    return (
+      <V2Messages
+        fagsak={fagsak}
+        behandling={behandling}
         personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        maler={Object.values(templates)}
+        api={backendApi}
       />
-    ) : (
-      <Messages
-        submitCallback={submitCallback}
-        templates={templates}
-        sprakKode={sprakKode}
-        previewCallback={previewCallback}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        isKontrollerRevurderingApOpen={isKontrollerRevurderingApOpen}
-        revurderingVarslingArsak={revurderingVarslingArsak}
-        personopplysninger={personopplysninger}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        backendApi={backendApi}
-      />
-    )}
-  </RawIntlProvider>
-);
+    );
+  }
+
+  return (
+    <RawIntlProvider value={intl}>
+      {erTilbakekreving ? (
+        <MessagesTilbakekreving
+          submitCallback={submitCallback}
+          templates={templates}
+          sprakKode={sprakKode}
+          previewCallback={previewCallback}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          isKontrollerRevurderingApOpen={isKontrollerRevurderingApOpen}
+          revurderingVarslingArsak={revurderingVarslingArsak}
+          personopplysninger={personopplysninger}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        />
+      ) : (
+        <Messages
+          submitCallback={submitCallback}
+          templates={templates}
+          sprakKode={sprakKode}
+          previewCallback={previewCallback}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          isKontrollerRevurderingApOpen={isKontrollerRevurderingApOpen}
+          revurderingVarslingArsak={revurderingVarslingArsak}
+          personopplysninger={personopplysninger}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          backendApi={backendApi}
+        />
+      )}
+    </RawIntlProvider>
+  );
+};
 
 export default MeldingerSakIndex;

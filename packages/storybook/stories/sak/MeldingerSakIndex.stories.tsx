@@ -7,6 +7,10 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import { BackendApi } from '@k9-sak-web/sak-meldinger/src/MeldingerSakIndex';
 import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
 import { Meta, StoryObj } from '@storybook/react';
+import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import arbeidsgivere from '../mocks/arbeidsgivere.json';
 import personopplysninger from '../mocks/personopplysninger';
 import mockedBrevmaler from '../mocks/brevmaler';
@@ -36,6 +40,7 @@ const emptySprakKode = {
 };
 
 const defaultFakeBackend = {
+  /* eslint-disable @typescript-eslint/no-unused-vars -- Fordi alt er ikkje implementert i fake backend */
   async getBrevMottakerinfoEreg(orgnr: string): Promise<EregOrganizationLookupResponse> {
     if (orgnr.length === 9) {
       if (Number.isFinite(Number(orgnr))) {
@@ -48,7 +53,24 @@ const defaultFakeBackend = {
     }
     return { invalidOrgnum: true };
   },
+
+  async bestillDokument(bestilling: BestillBrevDto): Promise<void> {
+    throw new Error('Not implemented for test');
+  },
+
+  async lagForhåndsvisningPdf(data: ForhåndsvisDto): Promise<Blob> {
+    throw new Error('Not implemented for test');
+  },
+
+  async hentInnholdBrevmal(
+    fagsakYtelsestype: FagsakYtelsesType,
+    eksternReferanse: string,
+    maltype: string,
+  ): Promise<FritekstbrevDokumentdata[]> {
+    throw new Error('Not implemented for test');
+  },
 } satisfies BackendApi;
+/* eslint-enable */
 
 const revurderingVarslingArsak = [
   {

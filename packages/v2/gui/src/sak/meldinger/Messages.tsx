@@ -6,6 +6,7 @@ import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/Fagsa
 import { FilePdfIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import type { BestillBrevDto, MottakerDto, FritekstbrevinnholdDto } from '@k9-sak-web/backend/k9sak/generated';
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
+import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.ts';
 import {
   type ArbeidsgiverOpplysningerPerId,
   bestemAvsenderApp,
@@ -30,7 +31,8 @@ import type { Fagsak } from '../Fagsak.ts';
 export interface BackendApi extends TredjepartsmottakerBackendApi {
   hentInnholdBrevmal(
     fagsakYtelsestype: FagsakYtelsesType,
-    eksternReferanse: string | undefined,
+    eksternReferanse: string,
+    avsenderApplikasjon: AvsenderApplikasjon,
     maltype: string,
   ): Promise<FritekstbrevDokumentdata[]>;
   bestillDokument(bestilling: BestillBrevDto): Promise<void>;
@@ -80,7 +82,12 @@ const Messages = ({
   useEffect(() => {
     const loadFritekstForslag = async () => {
       if (valgtMalkode !== undefined) {
-        const innhold = await api.hentInnholdBrevmal(fagsak.sakstype.kode, behandling.uuid, valgtMalkode);
+        const innhold = await api.hentInnholdBrevmal(
+          fagsak.sakstype.kode,
+          behandling.uuid,
+          bestemAvsenderApp(behandling.type.kode),
+          valgtMalkode,
+        );
         setFritekstForslag(innhold);
         setValgtFritekst(innhold[0]);
       }
@@ -225,7 +232,7 @@ const Messages = ({
         onChange={setTredjepartsMottaker}
       />
       <FritekstInput
-        språk={behandling.sprakkode.kodeverk}
+        språk={behandling.sprakkode}
         defaultValue={valgtFritekstInputValue}
         ref={fritekstInputRef}
         show={showFritekstInput}

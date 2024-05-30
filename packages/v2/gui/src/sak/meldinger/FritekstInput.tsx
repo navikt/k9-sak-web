@@ -1,14 +1,18 @@
 import React, { type ForwardedRef, forwardRef, useEffect, useImperativeHandle, useReducer } from 'react';
-import { Tag, Textarea, TextField } from '@navikt/ds-react';
+import { Tag, type TagProps, Textarea, TextField } from '@navikt/ds-react';
 import { $FritekstbrevinnholdDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { Språkkode } from '@k9-sak-web/backend/k9sak/kodeverk/Språkkode.js';
+import { validateTextCharacters } from '../../utils/validation/validateTextCharacters.js';
 
 type Valid = {
-  readonly valid: string;
+  readonly input: string;
+  readonly valid: true;
   readonly error?: never;
 };
 type Error = {
+  readonly input: string;
   readonly error: string;
-  readonly valid?: never;
+  readonly valid: false;
 };
 
 export interface FritekstInputValue {
@@ -23,7 +27,7 @@ export interface FritekstInputInvalid {
 }
 
 type FritekstInputProps = {
-  readonly språk: string;
+  readonly språk: Språkkode;
   readonly show: boolean;
   readonly showTitle: boolean;
   readonly showValidation: boolean;
@@ -41,31 +45,57 @@ const fritekstMaxLength = $FritekstbrevinnholdDto.properties.brødtekst.maxLengt
 const tittelMaxLength = $FritekstbrevinnholdDto.properties.overskrift.maxLength;
 
 const validateTittel = (newValue: string | undefined): Valid | Error => {
+  const input = newValue || '';
   const len = newValue?.trim().length || 0;
   if (len > 0 && len <= tittelMaxLength) {
-    return { valid: newValue || '' };
+    return { valid: true, input };
   }
   if (len === 0) {
-    return { error: `Tittel må fylles ut` };
+    return { valid: false, input, error: `Tittel må fylles ut` };
   }
-  return { error: `Tittel kan være maks ${tittelMaxLength} tegn` };
+  return { valid: false, input, error: `Tittel kan være maks ${tittelMaxLength} tegn` };
 };
 
 const tittelReducer = (_: Valid | Error, newValue: string | undefined): Valid | Error => validateTittel(newValue);
 
 const validateTekst = (newValue: string | undefined): Valid | Error => {
+  const input = newValue || '';
   const len = newValue?.trim().length || 0;
-  if (len > 0 && len <= fritekstMaxLength) {
-    // validation ok
-    return { valid: newValue || '' };
+  if (newValue !== undefined && len > 0 && len <= fritekstMaxLength) {
+    const charValidationResult = validateTextCharacters(newValue);
+    if (charValidationResult.ok) {
+      // validation ok
+      return { valid: true, input };
+    }
+    const joinChars = (chars: string[] | never): string => chars.join(' ');
+    const invalids: string = joinChars(charValidationResult.invalidCharacters);
+    return { valid: false, input, error: `Ugyldige tegn: ${invalids}` };
   }
   if (len === 0) {
-    return { error: `Fritekst må fylles ut` };
+    return { valid: false, input, error: `Fritekst må fylles ut` };
   }
-  return { error: `Fritekst kan være maks ${fritekstMaxLength} tegn` };
+  return { valid: false, input, error: `Fritekst kan være maks ${fritekstMaxLength} tegn` };
 };
 
 const tekstReducer = (_: Valid | Error, newValue: string | undefined): Valid | Error => validateTekst(newValue);
+
+const resolveLanguageName = (språk: Språkkode): string => {
+  switch (språk.kode.toUpperCase()) {
+    case 'NB':
+      return 'Bokmål';
+    case 'NO':
+      return 'Norsk';
+    case 'NN':
+      return 'Nynorsk';
+    case 'EN':
+      return 'Engelsk';
+    default:
+      return 'Ukjent';
+  }
+};
+
+const resolveLanguageTagVariant = (språk: Språkkode): TagProps['variant'] =>
+  resolveLanguageName(språk) === 'Ukjent' ? 'warning-moderate' : 'info-moderate';
 
 /**
  * Denne komponent er for at bruker skal kunne skrive inn tekst og evt tittel i brev som har fritekstinnhold.
@@ -84,12 +114,12 @@ const FritekstInput = forwardRef(
     const [tekst, setTekst] = useReducer(tekstReducer, validateTekst(defaultValue?.tekst));
 
     const getValue = (): FritekstInputValue | FritekstInputInvalid => {
-      if (tekst?.valid) {
+      if (tekst.valid) {
         if (!showTitle) {
-          return { tittel: undefined, tekst: tekst.valid };
+          return { tittel: undefined, tekst: tekst.input };
         }
-        if (tittel?.valid) {
-          return { tittel: tittel.valid, tekst: tekst.valid };
+        if (tittel.valid) {
+          return { tittel: tittel.input, tekst: tekst.input };
         }
       }
       return { invalid: true };
@@ -115,7 +145,7 @@ const FritekstInput = forwardRef(
           {
             showTitle ? (
               <TextField
-                value={tittel.valid || ''}
+                value={tittel.input}
                 size="small"
                 label="Tittel"
                 maxLength={tittelMaxLength}
@@ -126,13 +156,13 @@ const FritekstInput = forwardRef(
             ) : null /* Not displaying tittel input */
           }
           <Textarea
-            value={tekst.valid || ''}
+            value={tekst.input}
             size="small"
             label={
               <span>
                 Fritekst&nbsp;&nbsp;{' '}
-                <Tag size="xsmall" variant="info-moderate">
-                  {språk}
+                <Tag size="xsmall" variant={resolveLanguageTagVariant(språk)}>
+                  {resolveLanguageName(språk)}
                 </Tag>
               </span>
             }

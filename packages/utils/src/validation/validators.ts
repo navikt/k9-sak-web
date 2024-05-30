@@ -138,6 +138,7 @@ export const hasValidText = text => {
   const { invalidCharacters } = validateTextCharacters(text);
   if (invalidCharacters?.length > 0) {
     const invalidCharacterString: string = invalidCharacters
+      // denne replace har nok ingen hensikt, noverande regex vil ikkje tolke tabulator som ugyldig teikn.
       .map(invalidChar => invalidChar.replace(/[\t]/, 'Tabulatortegn'))
       .join('');
     return invalidTextMessage(invalidCharacterString);
