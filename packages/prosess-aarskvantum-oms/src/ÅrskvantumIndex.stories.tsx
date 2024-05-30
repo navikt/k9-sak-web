@@ -1,3 +1,5 @@
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import {
   Aksjonspunkt,
   ArbeidsforholdV2,
@@ -12,7 +14,6 @@ import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenge
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
-import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import Aktivitet from './dto/Aktivitet';
 import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
 import ÅrskvantumIndex from './ÅrskvantumIndex';
@@ -193,6 +194,7 @@ export const aksjonspunktUidentifiserteRammevedtak = () => (
     arbeidsforhold={arbeidsforhold}
     fullUttaksplan={{ aktiviteter: [] }}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    fosterbarn={[]}
   />
 );
 
@@ -203,10 +205,15 @@ export const behandletAksjonspunkt = () => (
     behandling={behandling}
     isAksjonspunktOpen={false}
     submitCallback={action('bekreft')}
-    aksjonspunkterForSteg={[{ begrunnelse: 'fordi' }] as Aksjonspunkt[]}
+    aksjonspunkterForSteg={
+      [
+        { begrunnelse: 'fordi', status: { kode: aksjonspunktStatus.UTFORT }, definisjon: { kode: '9003' } },
+      ] as Aksjonspunkt[]
+    }
     arbeidsforhold={arbeidsforhold}
     fullUttaksplan={{ aktiviteter: [] }}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    fosterbarn={[]}
   />
 );
 
@@ -221,6 +228,7 @@ export const aksjonspunktAvslåttePerioder = () => (
     arbeidsforhold={arbeidsforhold}
     fullUttaksplan={{ aktiviteter: [] }}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    fosterbarn={[]}
   />
 );
 
@@ -268,5 +276,6 @@ export const aksjonspunktOverlappendePerioderIInfotrygd = () => (
     arbeidsforhold={arbeidsforhold}
     fullUttaksplan={{ aktiviteter: [] }}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    fosterbarn={[]}
   />
 );

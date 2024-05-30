@@ -121,4 +121,7 @@ VisNotatISakPanel.parameters = {
       }),
     ],
   },
+  screenshot: {
+    mask: '.navds-chat__top-text',
+  },
 };

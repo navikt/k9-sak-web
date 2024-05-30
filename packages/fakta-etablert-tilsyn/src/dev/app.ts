@@ -1,14 +1,15 @@
 /* eslint-disable no-console */
 import '@navikt/ds-css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
+import { mockUrlPrepend } from '../../mock/constants';
 import renderers from '../util/renderers';
 
 const data = {
   readOnly: false,
   endpoints: {
-    tilsyn: 'http://localhost:8082/mock/tilsyn',
-    sykdom: 'http://localhost:8082/mock/sykdom',
-    sykdomInnleggelse: 'http://localhost:8082/mock/sykdomInnleggelse',
+    tilsyn: `${mockUrlPrepend}/mock/tilsyn`,
+    sykdom: `${mockUrlPrepend}/mock/sykdom`,
+    sykdomInnleggelse: `${mockUrlPrepend}/mock/sykdomInnleggelse`,
   },
   onFinished: () => console.log('Aksjonspunkt løst'),
   beredskapMåVurderes: true,

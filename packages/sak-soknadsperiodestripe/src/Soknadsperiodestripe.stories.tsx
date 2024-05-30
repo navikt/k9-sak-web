@@ -1,5 +1,15 @@
 import React from 'react';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
+import messages from '../i18n/nb_NO.json';
 import SoknadsperiodestripeIndex from './Soknadsperiodestripe';
+
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages: { ...messages },
+  },
+  createIntlCache(),
+);
 
 export default {
   title: 'sak/sak-soknadsperiodestripe',
@@ -45,4 +55,8 @@ const data = {
   ],
 };
 
-export const visSoknadsperiodestripe = () => <SoknadsperiodestripeIndex behandlingPerioderMedVilkår={data} />;
+export const visSoknadsperiodestripe = () => (
+  <RawIntlProvider value={intl}>
+    <SoknadsperiodestripeIndex behandlingPerioderMedVilkår={data} />
+  </RawIntlProvider>
+);

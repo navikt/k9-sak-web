@@ -2,7 +2,6 @@
 *Dockerfile*
 *docker-compose*
 **/node_modules
-cypress
 coverage
 .nyc_output
 packages
