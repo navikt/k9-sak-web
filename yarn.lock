@@ -2055,9 +2055,6 @@ __metadata:
     dayjs: 1.11.11
     formik: 2.4.6
     nav-frontend-core: 6.0.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -2206,9 +2203,6 @@ __metadata:
     date-fns: 3.6.0
     formik: 2.4.6
     nav-frontend-core: 6.0.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     react: 18.3.1
     react-intl: 6.6.8
@@ -2254,12 +2248,6 @@ __metadata:
     moment: 2.30.1
     nav-frontend-core: 6.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-lukknapp: 2.0.2
-    nav-frontend-lukknapp-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2645,9 +2633,6 @@ __metadata:
     formik: 2.4.6
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -2756,8 +2741,6 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.5.10
     nav-frontend-core: 6.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-lukknapp: 2.0.2
-    nav-frontend-lukknapp-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -2862,10 +2845,6 @@ __metadata:
     "@k9-sak-web/behandling-klage": 1.0.0
     "@k9-sak-web/types": 1.0.0
     nav-frontend-core: 6.0.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -3044,9 +3023,6 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.5.10
     dayjs: 1.11.11
     moment: 2.30.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -3075,12 +3051,6 @@ __metadata:
     date-fns-tz: 3.1.3
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-lukknapp: 2.0.2
-    nav-frontend-lukknapp-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -4094,12 +4064,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-lenkepanel: 2.0.2
-    nav-frontend-lenkepanel-style: 2.0.2
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
     nav-frontend-tabs: 2.0.3
     nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
@@ -4159,11 +4123,7 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
     nav-frontend-paneler-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -4265,10 +4225,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     object-hash: 3.0.0
@@ -4450,10 +4406,6 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-ikoner-assets: 3.0.1
     nav-frontend-js-utils: 1.0.20
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -4716,8 +4668,6 @@ __metadata:
     history: 5.3.0
     moment: 2.30.1
     nav-frontend-core: 6.0.1
-    nav-frontend-lenkepanel: 2.0.2
-    nav-frontend-lenkepanel-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
@@ -4808,9 +4758,6 @@ __metadata:
     "@navikt/ds-react": 6.8.0
     formik: 2.4.6
     nav-frontend-core: 6.0.1
-    nav-frontend-lenker: 2.0.2
-    nav-frontend-lenker-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
@@ -15687,72 +15634,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-lenker-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-lenker-style@npm:2.0.2"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-  checksum: d3352a66744afbad6c93a3bc56e5f442bf65efd33a587bf57a1e87a345eaa593214c0cb77575085ebf654c9bc3aea9278446238a2615c58b15f4257d9f713879
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lenker@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-lenker@npm:2.0.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-lenker-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 135fc940765ec6947a594d7b18dd12c0862509646eba77db85386c2b87a695c7b69c72da4dc20e70abcaa06dafca7c4c2c6c6c1a46950727e09a8cade8f4cf60
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lenker@patch:nav-frontend-lenker@npm%3A2.0.2#./.yarn/patches/nav-frontend-lenker-npm-2.0.2-f01a3f3c03.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 2.0.2
-  resolution: "nav-frontend-lenker@patch:nav-frontend-lenker@npm%3A2.0.2#./.yarn/patches/nav-frontend-lenker-npm-2.0.2-f01a3f3c03.patch::version=2.0.2&hash=4b5d67&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-lenker-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 184e7a98a00a0be64683af75ac6209a028f2f914ef92e25434c2a88e697e23933f9741ce7678b253295869eb030bb34b6389f83962a2461c60cf63e0ba7f4ad0
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lukknapp-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-lukknapp-style@npm:2.0.2"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-  checksum: 3bf5da61f61a0f23cec4abf271d5252729da4b57ff62c646c28151c0a55b4e7cf0eebe48645ac6d967d8d99fda318ad8519dc91aafe5cec7dcf16d88342f45ed
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lukknapp@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-lukknapp@npm:2.0.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-lukknapp-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 56adeb220696aea940bd9ca9e20775ccb0d2f3b61513e9dfdaf9044f88cf6f4137fdc4823db2d41a1db59f5d25236482b69664a3424a4e07686e42cca7d3d988
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lukknapp@patch:nav-frontend-lukknapp@npm%3A2.0.2#./.yarn/patches/nav-frontend-lukknapp-npm-2.0.2-fa6e0532f9.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 2.0.2
-  resolution: "nav-frontend-lukknapp@patch:nav-frontend-lukknapp@npm%3A2.0.2#./.yarn/patches/nav-frontend-lukknapp-npm-2.0.2-fa6e0532f9.patch::version=2.0.2&hash=248a4d&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-lukknapp-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 1d041c3576626855bd80871762458c331a91d44be316da4dc3a7dd67000823e3aee68476a17b62c63ba659da0c19694191c43664cd9a22afd501806cb1d66d0c
-  languageName: node
-  linkType: hard
-
 "nav-frontend-paneler-style@npm:2.0.2":
   version: 2.0.2
   resolution: "nav-frontend-paneler-style@npm:2.0.2"
@@ -15796,49 +15677,6 @@ __metadata:
     react: ^16.8.0 || ^17.0.0
     react-dom: ^16.8.0 || ^17.0.0
   checksum: 6b374e8fe0ecff3eaeb28668c9ed179abd435f542f117d98fa92d4c59ab7d519b2c4aa27b08581a27ca8dcce0e93ca8cc552a72ade43e31b4bc50da4c446e012
-  languageName: node
-  linkType: hard
-
-"nav-frontend-skjema-style@npm:3.0.3":
-  version: 3.0.3
-  resolution: "nav-frontend-skjema-style@npm:3.0.3"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-    nav-frontend-paneler-style: ^2.0.0
-    nav-frontend-typografi-style: ^2.0.0
-  checksum: c830ade670e012a157908130ceb7325d8c277e63b55365925c756135fbe2a5d978b6117e93b3853365b8fa7504aac41f76e2f861eb493c4fef97b1d6228be546
-  languageName: node
-  linkType: hard
-
-"nav-frontend-skjema@npm:4.0.6":
-  version: 4.0.6
-  resolution: "nav-frontend-skjema@npm:4.0.6"
-  peerDependencies:
-    "@navikt/fnrvalidator": ^1.1.0
-    classnames: ^2.2.5
-    nav-frontend-js-utils: ^1.0.19
-    nav-frontend-lenker: ^2.0.0
-    nav-frontend-skjema-style: ^3.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 1e92d796974224f0ca686c0a94bc45bd40fb7b1e799e74a8e10faa2ce73cb6ae23dc870ecaa487b74d760441840b3c4a707c56f10b1772e096c8cc2d56e9500c
-  languageName: node
-  linkType: hard
-
-"nav-frontend-skjema@patch:nav-frontend-skjema@npm%3A4.0.6#./.yarn/patches/nav-frontend-skjema-npm-4.0.6-34e6189688.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 4.0.6
-  resolution: "nav-frontend-skjema@patch:nav-frontend-skjema@npm%3A4.0.6#./.yarn/patches/nav-frontend-skjema-npm-4.0.6-34e6189688.patch::version=4.0.6&hash=4e0ef7&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    "@navikt/fnrvalidator": ^1.1.0
-    classnames: ^2.2.5
-    nav-frontend-js-utils: ^1.0.19
-    nav-frontend-lenker: ^2.0.0
-    nav-frontend-skjema-style: ^3.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 2aca4d45d39a250725f130cd3d84e80a2b6bce260a7790ad50a70a4c20e3d7e84fdba18de9987634979fd7c06a6aa55f41cf2bd398d8fe190a32e0f0cb216666
   languageName: node
   linkType: hard
 
