@@ -39,15 +39,8 @@
   background: #c9c9c9;
   border: none;
   cursor: pointer;
-  display: flex;
   margin-right: 0.5rem;
   padding: 0.3125rem 0.5625rem;
-}
-
-.fjernFilterKnapp svg {
-  margin-left: 0.5rem;
-  height: 0.75rem;
-  width: 0.75rem;
 }
 
 .filterKnappContainer {

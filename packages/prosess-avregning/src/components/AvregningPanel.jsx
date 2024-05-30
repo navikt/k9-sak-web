@@ -244,7 +244,7 @@ export class AvregningPanelImpl extends Component {
                   </div>
                 )}
               </HGrid>
-              <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+              <HGrid className="mt-4" gap="1" columns={{ xs: '6fr 6fr' }}>
                 <div>
                   <Button
                     variant="primary"

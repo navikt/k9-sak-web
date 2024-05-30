@@ -1,10 +1,8 @@
 import classNames from 'classnames/bind';
 import * as React from 'react';
 
-import { Label, Tag } from '@navikt/ds-react';
+import { HelpText, Label, Tag } from '@navikt/ds-react';
 import { ContentWithTooltip, GreenCheckIcon, OnePersonIconBlue } from '@navikt/ft-plattform-komponenter';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { PopoverOrientering } from 'nav-frontend-popover';
 import { arbeidstypeTilVisning } from '../../../constants/Arbeidstype';
 import BarnetsDødsfallÅrsakerMedTekst from '../../../constants/BarnetsDødsfallÅrsakerMedTekst';
 import IkkeOppfylteÅrsakerMedTekst from '../../../constants/IkkeOppfylteÅrsakerMedTekst';
@@ -105,11 +103,11 @@ const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn, pleieb
             <span className={cx('uttakDetaljer__data--utnullet', 'uttakDetaljer__data--margin-left')}>
               {etablertTilsyn} %
             </span>
-            <Hjelpetekst className={styles.uttakDetaljer__data__questionMark} type={PopoverOrientering.Hoyre}>
+            <HelpText className={styles.uttakDetaljer__data__questionMark} placement="right">
               {utnullingPåGrunnAvBeredskapEllerNattevåk
                 ? beredskapEllerNattevåkÅrsakTekst
                 : 'Etablert tilsyn under 10 % blir ikke medregnet.'}
-            </Hjelpetekst>
+            </HelpText>
           </>
         ) : (
           `${etablertTilsyn} %`
@@ -165,9 +163,9 @@ const formatAvkortingMotArbeid = (
               </span>
               <span>{`${faktiskOverstigerNormal ? beregnetNormalArbeidstid : ''} timer`}</span>
               {faktiskOverstigerNormal && (
-                <Hjelpetekst className={styles.uttakDetaljer__data__questionMark} type={PopoverOrientering.Hoyre}>
+                <HelpText className={styles.uttakDetaljer__data__questionMark} placement="right">
                   Overstigende timer tas ikke hensyn til, faktisk arbeidstid settes lik normal arbeidstid
-                </Hjelpetekst>
+                </HelpText>
               )}
             </span>
             <hr />
@@ -241,9 +239,9 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
             highlight={shouldHighlight(Årsaker.GRADERT_MOT_TILSYN, årsaker)}
             headingPostContent={
               harBarnetsDødsfallÅrsak(årsaker) && (
-                <Hjelpetekst className={styles.uttakDetaljer__data__questionMark} type={PopoverOrientering.Hoyre}>
+                <HelpText className={styles.uttakDetaljer__data__questionMark} placement="right">
                   Gradering mot tilsyn blir ikke medregnet på grunn av barnets dødsfall.
-                </Hjelpetekst>
+                </HelpText>
               )
             }
           >

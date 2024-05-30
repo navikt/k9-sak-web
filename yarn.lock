@@ -2014,8 +2014,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -2034,9 +2032,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -2054,9 +2049,6 @@ __metadata:
     date-fns: 3.6.0
     dayjs: 1.11.11
     formik: 2.4.6
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     yup: 0.32.11
@@ -2076,9 +2068,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -2097,9 +2086,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -2121,10 +2107,6 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.5.10
     i18n-iso-countries: 7.11.2
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-paneler-style: 2.0.2
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -2147,10 +2129,6 @@ __metadata:
     "@types/redux-form": 8.3.10
     classnames: 2.5.1
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -2172,12 +2150,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-js-utils: 1.0.20
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-tabs-style: 2.0.2
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     object-hash: 3.0.0
     prop-types: 15.8.1
     react: 18.3.1
@@ -2202,8 +2174,6 @@ __metadata:
     "@types/yup": 0.32.0
     date-fns: 3.6.0
     formik: 2.4.6
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
     react: 18.3.1
     react-intl: 6.6.8
     yup: 0.32.11
@@ -2221,8 +2191,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/fakta-felles": 1.0.0
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -2246,10 +2214,6 @@ __metadata:
     formik: 2.4.6
     lodash: 4.17.21
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-js-utils: 1.0.20
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-hook-form: 7.51.4
@@ -2289,8 +2253,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     classnames: 2.5.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -2311,8 +2273,6 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     classnames: 2.5.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -2335,8 +2295,6 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     classnames: 2.5.1
     moment: 2.30.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -2360,11 +2318,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     classnames: 2.5.1
     moment: 2.30.1
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -2389,9 +2342,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-dom: 18.3.1
@@ -2415,8 +2365,6 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -2439,8 +2387,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     classnames: 2.5.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -2463,9 +2409,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -2491,9 +2434,6 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-dom: 18.3.1
     react-intl: 6.6.8
@@ -2519,11 +2459,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-tabs-style: 2.0.2
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-dom: 18.3.1
@@ -2549,9 +2484,6 @@ __metadata:
     "@k9-sak-web/modal-sett-pa-vent": 1.0.0
     classnames: 2.5.1
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -2573,8 +2505,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     classnames: 2.5.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -2597,9 +2527,6 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -2632,9 +2559,6 @@ __metadata:
     editorjs-html: 3.4.3
     formik: 2.4.6
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -2662,11 +2586,6 @@ __metadata:
     dayjs: 1.11.11
     lodash: 4.17.21
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-js-utils: 1.0.20
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-tabs-style: 2.0.2
-    nav-frontend-typografi: 4.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-dom: 18.3.1
@@ -2696,8 +2615,6 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.5.10
     classnames: 2.5.1
     moment: 2.30.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -2717,9 +2634,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -2739,10 +2653,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.5.10
-    nav-frontend-core: 6.0.1
-    nav-frontend-js-utils: 1.0.20
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -2758,9 +2668,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -2779,9 +2686,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -2801,11 +2705,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
     history: 5.3.0
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-router-dom: 6.23.1
@@ -2821,9 +2720,6 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -2844,9 +2740,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/behandling-klage": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -2867,9 +2760,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -2890,9 +2780,6 @@ __metadata:
     "@k9-sak-web/modal-sett-pa-vent": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -2948,9 +2835,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-collapse: 5.1.1
     react-intl: 6.6.8
@@ -2971,9 +2855,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -2996,9 +2877,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     history: 5.3.0
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -3023,8 +2901,6 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.5.10
     dayjs: 1.11.11
     moment: 2.30.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -3050,9 +2926,6 @@ __metadata:
     date-fns: 3.6.0
     date-fns-tz: 3.1.3
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-day-picker: 7.4.10
     react-intl: 6.6.8
@@ -3073,8 +2946,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-dom: 18.3.1
@@ -3584,8 +3455,6 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     axios-mock-adapter: 1.22.0
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -3612,10 +3481,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.5.10
     classnames: 2.5.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -3676,8 +3541,6 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     axios-mock-adapter: 1.22.0
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -3723,7 +3586,6 @@ __metadata:
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.8
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.11
     axios-mock-adapter: 1.22.0
-    nav-frontend-popover: 2.0.4
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -3911,8 +3773,6 @@ __metadata:
     "@navikt/ft-kodeverk": ^2.4.6
     "@navikt/ft-prosess-tilbakekreving-foreldelse": 3.3.7
     axios-mock-adapter: 1.22.0
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -3952,8 +3812,6 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     axios-mock-adapter: 1.22.0
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -4007,15 +3865,6 @@ __metadata:
     classnames: 2.5.1
     just-is-empty: 3.4.1
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-hjelpetekst: 3.1.3
-    nav-frontend-hjelpetekst-style: 3.0.2
-    nav-frontend-ikoner-assets: 3.0.1
-    nav-frontend-js-utils: 1.0.20
-    nav-frontend-popover: 2.0.4
-    nav-frontend-popover-style: 2.0.2
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -4037,8 +3886,6 @@ __metadata:
     "@k9-sak-web/prosess-aarskvantum-oms": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     uuid: 9.0.1
@@ -4059,15 +3906,6 @@ __metadata:
     classnames: 2.5.1
     dayjs: 1.11.11
     lodash: 4.17.21
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
-    nav-frontend-core: 6.0.1
-    nav-frontend-ikoner-assets: 3.0.1
-    nav-frontend-js-utils: 1.0.20
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-tabs-style: 2.0.2
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
@@ -4089,9 +3927,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -4118,14 +3953,6 @@ __metadata:
     lodash: 4.17.21
     msw: 2.3.0
     msw-storybook-addon: 2.0.2
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
-    nav-frontend-core: 6.0.1
-    nav-frontend-ikoner-assets: 3.0.1
-    nav-frontend-js-utils: 1.0.20
-    nav-frontend-paneler-style: 2.0.2
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
@@ -4220,13 +4047,6 @@ __metadata:
     dayjs: 1.11.11
     lodash: 4.17.21
     msw: 2.3.0
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
-    nav-frontend-core: 6.0.1
-    nav-frontend-ikoner-assets: 3.0.1
-    nav-frontend-js-utils: 1.0.20
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     object-hash: 3.0.0
     react: 18.3.1
     react-collapse: 5.1.1
@@ -4252,7 +4072,6 @@ __metadata:
     classnames: 2.5.1
     dayjs: 1.11.11
     formik: 2.4.6
-    nav-frontend-tabs: 2.0.3
     react-intl: 6.6.8
     react-outside-click-handler: 1.3.0
     uuid: 9.0.1
@@ -4267,9 +4086,6 @@ __metadata:
     "@fpsak-frontend/kodeverk": 1.0.0
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     uuid: 9.0.1
@@ -4323,8 +4139,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -4350,17 +4164,6 @@ __metadata:
     classnames: 2.5.1
     lodash: 4.17.21
     moment: 2.30.1
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-core: 6.0.1
-    nav-frontend-hjelpetekst: 3.1.3
-    nav-frontend-hjelpetekst-style: 3.0.2
-    nav-frontend-ikoner-assets: 3.0.1
-    nav-frontend-js-utils: 1.0.20
-    nav-frontend-popover: 2.0.4
-    nav-frontend-popover-style: 2.0.2
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-dom: 18.3.1
@@ -4382,9 +4185,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -4403,11 +4203,6 @@ __metadata:
     classnames: 2.5.1
     dayjs: 1.11.11
     lodash: 4.17.21
-    nav-frontend-core: 6.0.1
-    nav-frontend-ikoner-assets: 3.0.1
-    nav-frontend-js-utils: 1.0.20
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-day-picker: 7.4.10
     react-dom: 18.3.1
@@ -4431,8 +4226,6 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -4473,19 +4266,6 @@ __metadata:
     dayjs: 1.11.11
     express: 4.19.2
     lodash: 4.17.21
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
-    nav-frontend-core: 6.0.1
-    nav-frontend-hjelpetekst: 3.1.3
-    nav-frontend-hjelpetekst-style: 3.0.2
-    nav-frontend-ikoner-assets: 3.0.1
-    nav-frontend-js-utils: 1.0.20
-    nav-frontend-popover: 2.0.4
-    nav-frontend-popover-style: 2.0.2
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-tabs-style: 2.0.2
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
@@ -4508,7 +4288,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-form-hooks": 4.4.7
     "@navikt/ft-form-validators": 2.3.6
-    nav-frontend-core: 6.0.1
     react: 18.3.1
     react-dom: 18.3.1
     react-hook-form: 7.51.4
@@ -4534,8 +4313,6 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.5.10
     classnames: 2.5.1
     moment: 2.30.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     object-hash: 3.0.0
     react: 18.3.1
     react-intl: 6.6.8
@@ -4558,8 +4335,6 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.5.10
     classnames: 2.5.1
     lodash: 4.17.21
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -4592,10 +4367,6 @@ __metadata:
     "@fpsak-frontend/sak-visittkort": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    nav-frontend-lenkepanel: 2.0.2
-    nav-frontend-lenkepanel-style: 2.0.2
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-router-dom: 6.23.1
@@ -4667,9 +4438,6 @@ __metadata:
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.3.1
     react-dom: 18.3.1
@@ -4698,11 +4466,6 @@ __metadata:
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-query: 3.39.3
@@ -4714,8 +4477,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-infosider@workspace:packages/sak-infosider"
   dependencies:
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-router-dom: 6.23.1
@@ -4735,9 +4496,6 @@ __metadata:
     "@k9-sak-web/gui": "workspace:^"
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
@@ -4757,9 +4515,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ds-react": 6.8.0
     formik: 2.4.6
-    nav-frontend-core: 6.0.1
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     yup: 0.32.11
@@ -4792,8 +4547,6 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
     react: 18.3.1
     react-intl: 6.6.8
     react-router-dom: 6.23.1
@@ -14843,7 +14596,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.throttle@npm:4.1.1, lodash.throttle@npm:^4.1.1":
+"lodash.throttle@npm:4.1.1":
   version: 4.1.1
   resolution: "lodash.throttle@npm:4.1.1"
   checksum: 129c0a28cee48b348aef146f638ef8a8b197944d4e9ec26c1890c19d9bf5a5690fe11b655c77a4551268819b32d27f4206343e30c78961f60b561b8608c8c805
@@ -15496,256 +15249,6 @@ __metadata:
   version: 1.4.0
   resolution: "natural-compare@npm:1.4.0"
   checksum: 23ad088b08f898fc9b53011d7bb78ec48e79de7627e01ab5518e806033861bef68d5b0cd0e2205c2f36690ac9571ff6bcb05eb777ced2eeda8d4ac5b44592c3d
-  languageName: node
-  linkType: hard
-
-"nav-frontend-chevron-style@npm:1.0.4":
-  version: 1.0.4
-  resolution: "nav-frontend-chevron-style@npm:1.0.4"
-  checksum: c4c4e8c63a9d9802060fbc451f8d82fa48ced9763b2820c0ff6e0801b5e9c8624a92d83ccb8c914f65cb29ed78dedf7ed92ce8c42c91fc6ffe29421f1a788630
-  languageName: node
-  linkType: hard
-
-"nav-frontend-chevron@npm:1.0.30":
-  version: 1.0.30
-  resolution: "nav-frontend-chevron@npm:1.0.30"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-chevron-style: ^1.0.4
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 3f587f8abc5c2c00e1d14d9e188ca7417d074d024f5ead095b75029bb3a2ffdb157a514e0172d9ce12ce17c87320c2e333cb1f6f7c0d70dca33af0979c006a3d
-  languageName: node
-  linkType: hard
-
-"nav-frontend-chevron@patch:nav-frontend-chevron@npm%3A1.0.30#./.yarn/patches/nav-frontend-chevron-npm-1.0.30-1fbba039a5.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 1.0.30
-  resolution: "nav-frontend-chevron@patch:nav-frontend-chevron@npm%3A1.0.30#./.yarn/patches/nav-frontend-chevron-npm-1.0.30-1fbba039a5.patch::version=1.0.30&hash=34a0b3&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-chevron-style: ^1.0.4
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: ac3fb888cacb6dcb826ee9cdfda7ba0e4acdda55d0d55272c8629264fa922fa8155ef06498159b6bb4850e0088c0192a69bc1c465208fb9b3e944496f97973bc
-  languageName: node
-  linkType: hard
-
-"nav-frontend-core@npm:6.0.1, nav-frontend-core@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "nav-frontend-core@npm:6.0.1"
-  checksum: 7673f42a2a93a08fa6952d2c32d8e5d424de437910b76d84363d7cb86a7c0691e5f475a3623c8964366b3bbd33a6defb8e3907bc61b41c3434b4619aab7567d2
-  languageName: node
-  linkType: hard
-
-"nav-frontend-hjelpetekst-style@npm:3.0.2":
-  version: 3.0.2
-  resolution: "nav-frontend-hjelpetekst-style@npm:3.0.2"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-    nav-frontend-typografi-style: ^2.0.0
-  checksum: a27c99fff89109b937eb54f66306908c6e8a9857c63beae05d0b47aee43473bb4daa1c5d900f8d4a955f175ec0394e06eecf9001126690a6435acbeeeda519b0
-  languageName: node
-  linkType: hard
-
-"nav-frontend-hjelpetekst@npm:3.1.3":
-  version: 3.1.3
-  resolution: "nav-frontend-hjelpetekst@npm:3.1.3"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-hjelpetekst-style: ^3.0.0
-    nav-frontend-ikoner-assets: ^3.0.0
-    nav-frontend-js-utils: ^1.0.19
-    nav-frontend-popover: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 186e1b1e1acf55abeac6a7c3764de2ae98c80717c2fb9682a8e924d370b7ec177dc96002b8af6203930def578cb78948551f9e6e7f8b251c21b9d9fec01510cc
-  languageName: node
-  linkType: hard
-
-"nav-frontend-hjelpetekst@patch:nav-frontend-hjelpetekst@npm%3A3.1.3#./.yarn/patches/nav-frontend-hjelpetekst-npm-3.1.3-f2edad701c.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 3.1.3
-  resolution: "nav-frontend-hjelpetekst@patch:nav-frontend-hjelpetekst@npm%3A3.1.3#./.yarn/patches/nav-frontend-hjelpetekst-npm-3.1.3-f2edad701c.patch::version=3.1.3&hash=d8ea4a&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-hjelpetekst-style: ^3.0.0
-    nav-frontend-ikoner-assets: ^3.0.0
-    nav-frontend-js-utils: ^1.0.19
-    nav-frontend-popover: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 3d9512394a7a7a6ed926452063e5710573b56f7aa3cf54e74284580dcaf1f6d845fd424f1017c76777ebf7a900034d9eaf59a5a3eb083b03353fcf03ef29b432
-  languageName: node
-  linkType: hard
-
-"nav-frontend-ikoner-assets@npm:3.0.1":
-  version: 3.0.1
-  resolution: "nav-frontend-ikoner-assets@npm:3.0.1"
-  checksum: 6d6bce01b95555d56333cd11cbadc715e5a4021a62a5981c30c4a8ba3d5807267cb04f6410bad2bc7804f377c0e020eb79e6d389c8bb19942a2b9d1f70b551d9
-  languageName: node
-  linkType: hard
-
-"nav-frontend-js-utils@npm:1.0.20":
-  version: 1.0.20
-  resolution: "nav-frontend-js-utils@npm:1.0.20"
-  dependencies:
-    lodash.throttle: ^4.1.1
-  peerDependencies:
-    lodash.throttle: ^4.1.1
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: c572c63794715c27eed790911fcb4f0ac71934184813d4b9d3ad33827a5f05164f4563c22aac8d577bbbb7cf9c95e0da2383f247f539da1d4032d831193f915a
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lenkepanel-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-lenkepanel-style@npm:2.0.2"
-  peerDependencies:
-    nav-frontend-chevron-style: ^1.0.4
-    nav-frontend-core: ^6.0.0
-    nav-frontend-paneler-style: ^2.0.0
-  checksum: ce4cea4b78d72a5983ded22eaf812f361238aa1637a95f9d40461612ee97c7e7cba24f2a0c3426c7796945679077cb758b715932dda69da8e296d0e81f90f1e7
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lenkepanel@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-lenkepanel@npm:2.0.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-lenkepanel-style: ^2.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: 356ccabef918b153bf48fe8bd455a4b252cbe17b3f1511350b2c2db5867b08fdec0819656e7147be334053d4a7032b7834c023724fd0d57eb9755b184317c7dd
-  languageName: node
-  linkType: hard
-
-"nav-frontend-lenkepanel@patch:nav-frontend-lenkepanel@npm%3A2.0.2#./.yarn/patches/nav-frontend-lenkepanel-npm-2.0.2-c191f8e773.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 2.0.2
-  resolution: "nav-frontend-lenkepanel@patch:nav-frontend-lenkepanel@npm%3A2.0.2#./.yarn/patches/nav-frontend-lenkepanel-npm-2.0.2-c191f8e773.patch::version=2.0.2&hash=ad2e24&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-lenkepanel-style: ^2.0.0
-    nav-frontend-typografi: ^4.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: ca7dc38a6642e02c0b24ede88af9cb2f6cdf30c30e44e58aa3485452edd479e9de92b6edc761940f5754a24352f55ae2e339a3e0def6a556a66481eaab5db237
-  languageName: node
-  linkType: hard
-
-"nav-frontend-paneler-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-paneler-style@npm:2.0.2"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-  checksum: 7d4b15e3b1a6cc127eca837ae17c42736ef69da9f7f2ca617180809d244c3abda7e4385dd144478c0befc3831c5bec686f5cae281c31235aacba8b79f032cc5d
-  languageName: node
-  linkType: hard
-
-"nav-frontend-popover-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-popover-style@npm:2.0.2"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-  checksum: 9d49bbf850bceb7b87798b10af047436016961c29bc1b65959df5701b495465e922e45a2fdf20456dd9c6a4ed209025d06545f98c342889b1ccf2673732805a1
-  languageName: node
-  linkType: hard
-
-"nav-frontend-popover@npm:2.0.4":
-  version: 2.0.4
-  resolution: "nav-frontend-popover@npm:2.0.4"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-js-utils: ^1.0.19
-    nav-frontend-popover-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-    react-dom: ^16.8.0 || ^17.0.0
-  checksum: 94b5c81104666aa706f703d4a7ffa80862ad8992632e12eec73f30d239e219f26df773e6f03feb3b7207e9df81274349e4dcb40cdd7adb5d8efec7f6561eec82
-  languageName: node
-  linkType: hard
-
-"nav-frontend-popover@patch:nav-frontend-popover@npm%3A2.0.4#./.yarn/patches/nav-frontend-popover-npm-2.0.4-5118064ee1.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 2.0.4
-  resolution: "nav-frontend-popover@patch:nav-frontend-popover@npm%3A2.0.4#./.yarn/patches/nav-frontend-popover-npm-2.0.4-5118064ee1.patch::version=2.0.4&hash=b6ef46&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-js-utils: ^1.0.19
-    nav-frontend-popover-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-    react-dom: ^16.8.0 || ^17.0.0
-  checksum: 6b374e8fe0ecff3eaeb28668c9ed179abd435f542f117d98fa92d4c59ab7d519b2c4aa27b08581a27ca8dcce0e93ca8cc552a72ade43e31b4bc50da4c446e012
-  languageName: node
-  linkType: hard
-
-"nav-frontend-tabs-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-tabs-style@npm:2.0.2"
-  peerDependencies:
-    nav-frontend-core: ^6.0.0
-    nav-frontend-typografi-style: ^2.0.0
-  checksum: f0b410537deb0e686ef8fae68b41d9024082b877eb3aae46155f86d91d05a71c0c3c07a510e7574113e9cd558bf101f65f48176ae80aaf10ed28d44346abf4ec
-  languageName: node
-  linkType: hard
-
-"nav-frontend-tabs@npm:2.0.3":
-  version: 2.0.3
-  resolution: "nav-frontend-tabs@npm:2.0.3"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-js-utils: ^1.0.19
-    nav-frontend-tabs-style: ^2.0.0
-    react: ^16.8.0 || ^17.0.0
-  checksum: 2f91bad23f1b0ac7082657d722331f581128469a8ba4a363b399bff3ef048d67ea3a553eba65e663ae59930ecc5b85d47177cf4ab97062b545e1d5cfa1f4b874
-  languageName: node
-  linkType: hard
-
-"nav-frontend-tabs@patch:nav-frontend-tabs@npm%3A2.0.3#./.yarn/patches/nav-frontend-tabs-npm-2.0.3-3d1b6739cc.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 2.0.3
-  resolution: "nav-frontend-tabs@patch:nav-frontend-tabs@npm%3A2.0.3#./.yarn/patches/nav-frontend-tabs-npm-2.0.3-3d1b6739cc.patch::version=2.0.3&hash=77026c&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-js-utils: ^1.0.19
-    nav-frontend-tabs-style: ^2.0.0
-    react: ^16.8.0 || ^17.0.0
-  checksum: 1707b05def879afbf061c014749421e255ef3b0f7106fb26f22c17d0fb75dbb94fe1f26df022f419abc920cecb937e557adf2ac04abd365bcad161ae7c348a30
-  languageName: node
-  linkType: hard
-
-"nav-frontend-typografi-style@npm:2.0.2":
-  version: 2.0.2
-  resolution: "nav-frontend-typografi-style@npm:2.0.2"
-  dependencies:
-    nav-frontend-core: ^6.0.1
-  checksum: ca3f1ce19ad9b6009021bd9f27ccc5db32fe63988e734b647adfa229d2ab8a091efcc8de23ef9cbad7db0f1c8ef7e2c1ad1a01e062a8f8565271b8333645618e
-  languageName: node
-  linkType: hard
-
-"nav-frontend-typografi@npm:4.0.2":
-  version: 4.0.2
-  resolution: "nav-frontend-typografi@npm:4.0.2"
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-core: ^6.0.0
-    nav-frontend-typografi-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: e41f89c1676c81fb6042583462a0533bab239c9acc0c66b205e56cfc39ae145424aa62779c9e0cc5c217fe47dee1db3d849aa3845b9987c850a4ead059e1993c
-  languageName: node
-  linkType: hard
-
-"nav-frontend-typografi@patch:nav-frontend-typografi@npm%3A4.0.2#./.yarn/patches/nav-frontend-typografi-npm-4.0.2-67ec896090.patch::locator=k9-sak-web%40workspace%3A.":
-  version: 4.0.2
-  resolution: "nav-frontend-typografi@patch:nav-frontend-typografi@npm%3A4.0.2#./.yarn/patches/nav-frontend-typografi-npm-4.0.2-67ec896090.patch::version=4.0.2&hash=4d9d16&locator=k9-sak-web%40workspace%3A."
-  peerDependencies:
-    classnames: ^2.2.5
-    nav-frontend-core: ^6.0.0
-    nav-frontend-typografi-style: ^2.0.0
-    prop-types: ^15.5.10
-    react: ^16.8.0 || ^17.0.0
-  checksum: d4de4beb8819c1adfe5e60e51dc08aa638b628458f887ff5ba270e570bf24251ed45ac9260a1c2873acd1ec2dc3a84b51d26b7d70e837b7799e89deab2a03ade
   languageName: node
   linkType: hard
 

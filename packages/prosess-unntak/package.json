@@ -14,8 +14,6 @@
     "@k9-sak-web/prosess-felles": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "classnames": "2.5.1",
-    "nav-frontend-typografi": "4.0.2",
-    "nav-frontend-typografi-style": "2.0.2",
     "prop-types": "15.8.1",
     "react": "18.3.1",
     "react-intl": "6.6.8",
