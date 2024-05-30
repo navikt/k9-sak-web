@@ -6,7 +6,6 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { Behandling, Fagsak, KlageVurdering } from '@k9-sak-web/types';
 
@@ -14,13 +13,14 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import KlageProsess from './KlageProsess';
 
 describe('<KlageProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+    sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
+    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
   } as Fagsak;
 
   const fagsakPerson = {
@@ -110,7 +110,7 @@ describe('<KlageProsess>', () => {
     renderWithIntl(
       <KlageProsess
         data={{ aksjonspunkter, klageVurdering }}
-        fagsak={{ ...fagsak, sakstype: { kode: fagsakYtelseType.FRISINN, kodeverk: 'test' } }}
+        fagsak={{ ...fagsak, sakstype: { kode: fagsakYtelsesType.FRISINN, kodeverk: 'FAGSAK_YTELSE' } }}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
@@ -139,7 +139,7 @@ describe('<KlageProsess>', () => {
     renderWithIntl(
       <KlageProsess
         data={{ aksjonspunkter, klageVurdering }}
-        fagsak={{ ...fagsak, sakstype: { kode: fagsakYtelseType.FRISINN, kodeverk: 'test' } }}
+        fagsak={{ ...fagsak, sakstype: { kode: fagsakYtelsesType.FRISINN, kodeverk: 'FAGSAK_YTELSE' } }}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}

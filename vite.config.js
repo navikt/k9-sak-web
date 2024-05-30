@@ -1,11 +1,11 @@
 import react from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
-import {loadEnv} from 'vite';
+import { loadEnv } from 'vite';
 import svgr from 'vite-plugin-svgr';
-import {defineConfig} from 'vitest/config';
-import {createMockResponder, staticJsonResponse} from "./_mocks/createMockResponder.js";
-import {featureTogglesFactory} from "./_mocks/featureToggles.js";
+import { defineConfig } from 'vitest/config';
+import { createMockResponder, staticJsonResponse } from "./_mocks/createMockResponder.js";
+import { featureTogglesFactory } from "./_mocks/featureToggles.js";
 
 const createProxy = (target, pathRewrite) => ({
   target,
@@ -32,8 +32,10 @@ function excludeMsw() {
     },
     renderStart(outputOptions, _inputOptions) {
       const outDir = outputOptions.dir;
-      const msWorker = path.resolve(outDir, "mockServiceWorker.js");
-      fs.rm(msWorker, () => console.log(`Deleted ${msWorker}`));
+      if (!outDir.includes('storybook')) {
+        const msWorker = path.resolve(outDir, "mockServiceWorker.js");
+        fs.rm(msWorker, () => console.log(`Deleted ${msWorker}`));
+      }
     },
   };
 }

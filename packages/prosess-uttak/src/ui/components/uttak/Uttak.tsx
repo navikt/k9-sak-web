@@ -50,7 +50,10 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
     <>
       <Table.Row className={`${erValgt ? styles.uttak__expandedRow : ''} ${styles.uttak__row}`} onClick={velgPeriode}>
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} ${styles.borderLeft}`}>
-          <BodyShort size="small">
+          {periode.getFirstAndLastWeek()}
+        </Table.DataCell>
+        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
+          <BodyShort>
             {periode.prettifyPeriod()}
             {manueltOverstyrt && (
               <>

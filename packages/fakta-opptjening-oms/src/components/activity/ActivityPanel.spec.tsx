@@ -4,20 +4,21 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-h
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
+import type { OpptjeningAktivitetType } from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType.js';
 import messages from '../../../i18n/nb_NO.json';
 import { ActivityPanel } from './ActivityPanel';
 
 describe('<ActivityPanel>', () => {
-  const opptjeningAktivitetTypes = [
+  const opptjeningAktivitetTypes: OpptjeningAktivitetType[] = [
     {
       kode: OAType.ARBEID,
       navn: 'Arbeid',
-      kodeverk: '',
+      kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
     },
     {
-      kode: OAType.NARING,
+      kode: OAType.NÆRING,
       navn: 'Næring',
-      kodeverk: '',
+      kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
     },
   ];
 

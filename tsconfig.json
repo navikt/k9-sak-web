@@ -11,7 +11,7 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "jsx": "react",
-    "skipLibCheck": true, //TODO Fjern denne
+    "skipLibCheck": true,
     "paths": {
       "@fpsak-frontend/*": ["./packages/*/src"],
       "@k9-sak-web/*": ["./packages/*/src"]

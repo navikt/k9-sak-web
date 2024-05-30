@@ -1,9 +1,9 @@
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import { Fagsak } from '@k9-sak-web/types';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import { DokumentIndex } from './DokumentIndex';
 
@@ -34,17 +34,14 @@ describe('<DokumentIndex>', () => {
 
   const fagsak = {
     saksnummer: '35425245',
-    sakstype: {
-      kode: fagsakYtelseType.PLEIEPENGER,
-      kodeverk: '',
-    },
+    sakstype: { kode: fagsakYtelsesType.PSB, kodeverk: 'FAGSAK_YTELSE' },
     relasjonsRolleType: {
       kode: relasjonsRolleType.MOR,
       kodeverk: '',
     },
     status: {
       kode: fagsakStatus.UNDER_BEHANDLING,
-      kodeverk: '',
+      kodeverk: 'FAGSAK_STATUS',
     },
     barnFodt: '2020-01-01',
     opprettet: '2020-01-01',
