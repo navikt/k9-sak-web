@@ -7,14 +7,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "vite serve",
-    "cypress:headless": "cypress run",
-    "test:e2e": "start-server-and-test dev http://localhost:5173 cypress:headless"
+    "dev": "vite serve"
   },
   "devDependencies": {
-    "@testing-library/cypress": "^10.0.1",
-    "cypress": "^13.10.0",
-    "eslint-plugin-cypress": "^2.15.2",
     "msw": "2.3.0",
     "start-server-and-test": "^2.0.3",
     "vite": "^5.2.12",

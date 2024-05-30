@@ -8,15 +8,15 @@ import {
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
 import React from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import messages from '../i18n/nb_NO.json';
 import AksjonspunktForm from './components/AksjonspunktForm';
 import AksjonspunktForm9014 from './components/AksjonspunktForm9014';
-import SaerligeSmittevernhensynMikrofrontend from './components/saerlige-smittevernhensyn/SaerligeSmittevernhensynMikrofrontend';
 import Uttaksplan from './components/Uttaksplan';
+import SaerligeSmittevernhensynMikrofrontend from './components/saerlige-smittevernhensyn/SaerligeSmittevernhensynMikrofrontend';
 import Aktivitet from './dto/Aktivitet';
 import { fosterbarnDto } from './dto/FosterbarnDto';
 import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
@@ -84,7 +84,7 @@ const ÅrskvantumIndex = ({
 
   return (
     <RawIntlProvider value={årskvantumIntl}>
-      {aksjonspunkter.length > 0 && featureToggles.AKSJONSPUNKT_9014 && (
+      {aksjonspunkter.length > 0 && featureToggles?.AKSJONSPUNKT_9014 && (
         <AksjonspunktForm9014
           aktiviteter={sisteUttaksplan?.aktiviteter}
           behandlingId={behandling.id}
@@ -95,7 +95,7 @@ const ÅrskvantumIndex = ({
           fosterbarn={fosterbarn}
         />
       )}
-      {aksjonspunkter.length > 0 && !featureToggles.AKSJONSPUNKT_9014 && (
+      {aksjonspunkter.length > 0 && !featureToggles?.AKSJONSPUNKT_9014 && (
         <AksjonspunktForm
           aktiviteter={sisteUttaksplan?.aktiviteter}
           behandlingId={behandling.id}

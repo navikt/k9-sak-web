@@ -14,6 +14,7 @@ import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbake
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
+// eslint-disable-next-line import/no-relative-packages
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import VedtakProsessIndex from './VedtakProsessIndex';
 
@@ -74,21 +75,28 @@ export default {
   component: VedtakProsessIndex,
 };
 
-export const visÅpentAksjonspunktOgInnvilgetForForeldrepenger = args => (
-  <VedtakProsessIndex
-    behandling={behandling}
-    vilkar={vilkar}
-    beregningresultatForeldrepenger={resultatstruktur}
-    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-    medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[]}
-    ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
-    previewCallback={action('button-click')}
-    submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
-    {...args}
-  />
-);
+export const visÅpentAksjonspunktOgInnvilgetForForeldrepenger = args => {
+  const [vedtakFormState, setVedtakFormState] = useState(null);
+  const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
+
+  return (
+    <VedtakFormContext.Provider value={value}>
+      <VedtakProsessIndex
+        behandling={behandling}
+        vilkar={vilkar}
+        beregningresultatForeldrepenger={resultatstruktur}
+        resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+        medlemskap={{ fom: '2019-01-01' }}
+        aksjonspunkter={[]}
+        ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+        previewCallback={action('button-click')}
+        submitCallback={action('button-click')}
+        alleKodeverk={alleKodeverk}
+        {...args}
+      />
+    </VedtakFormContext.Provider>
+  );
+};
 
 visÅpentAksjonspunktOgInnvilgetForForeldrepenger.args = {
   sendVarselOmRevurdering: false,
@@ -96,31 +104,38 @@ visÅpentAksjonspunktOgInnvilgetForForeldrepenger.args = {
   isReadOnly: false,
 };
 
-export const visDelvisInnvilgetForOmsorgspenger = args => (
-  <VedtakProsessIndex
-    behandling={{
-      ...behandling,
-      behandlingsresultat: {
-        vedtaksbrev: {
-          kode: 'FRITEKST',
-        },
-        type: {
-          kode: behandlingResultatType.DELVIS_INNVILGET,
-        },
-      },
-    }}
-    vilkar={vilkar}
-    beregningresultatForeldrepenger={resultatstruktur}
-    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-    medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[]}
-    ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
-    previewCallback={action('button-click')}
-    submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
-    {...args}
-  />
-);
+export const visDelvisInnvilgetForOmsorgspenger = args => {
+  const [vedtakFormState, setVedtakFormState] = useState(null);
+  const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
+
+  return (
+    <VedtakFormContext.Provider value={value}>
+      <VedtakProsessIndex
+        behandling={{
+          ...behandling,
+          behandlingsresultat: {
+            vedtaksbrev: {
+              kode: 'FRITEKST',
+            },
+            type: {
+              kode: behandlingResultatType.DELVIS_INNVILGET,
+            },
+          },
+        }}
+        vilkar={vilkar}
+        beregningresultatForeldrepenger={resultatstruktur}
+        resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+        medlemskap={{ fom: '2019-01-01' }}
+        aksjonspunkter={[]}
+        ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
+        previewCallback={action('button-click')}
+        submitCallback={action('button-click')}
+        alleKodeverk={alleKodeverk}
+        {...args}
+      />
+    </VedtakFormContext.Provider>
+  );
+};
 
 visDelvisInnvilgetForOmsorgspenger.args = {
   sendVarselOmRevurdering: false,
@@ -128,42 +143,49 @@ visDelvisInnvilgetForOmsorgspenger.args = {
   isReadOnly: false,
 };
 
-export const visAvslagForForeldrepenger = args => (
-  <VedtakProsessIndex
-    behandling={{
-      ...behandling,
-      behandlingsresultat: {
-        vedtaksbrev: {
-          kode: 'FRITEKST',
-        },
-        type: {
-          kode: behandlingResultatType.AVSLATT,
-        },
-        avslagsarsak: {
-          kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-          kodeverk: kodeverkTyper.AVSLAGSARSAK,
-        },
-      },
-    }}
-    vilkar={[
-      {
-        ...vilkar[0],
-        vilkarStatus: {
-          kode: vilkarUtfallType.IKKE_OPPFYLT,
-        },
-      },
-    ]}
-    beregningresultatForeldrepenger={resultatstruktur}
-    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-    medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[]}
-    ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
-    previewCallback={action('button-click')}
-    submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
-    {...args}
-  />
-);
+export const visAvslagForForeldrepenger = args => {
+  const [vedtakFormState, setVedtakFormState] = useState(null);
+  const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
+
+  return (
+    <VedtakFormContext.Provider value={value}>
+      <VedtakProsessIndex
+        behandling={{
+          ...behandling,
+          behandlingsresultat: {
+            vedtaksbrev: {
+              kode: 'FRITEKST',
+            },
+            type: {
+              kode: behandlingResultatType.AVSLATT,
+            },
+            avslagsarsak: {
+              kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
+              kodeverk: kodeverkTyper.AVSLAGSARSAK,
+            },
+          },
+        }}
+        vilkar={[
+          {
+            ...vilkar[0],
+            vilkarStatus: {
+              kode: vilkarUtfallType.IKKE_OPPFYLT,
+            },
+          },
+        ]}
+        beregningresultatForeldrepenger={resultatstruktur}
+        resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+        medlemskap={{ fom: '2019-01-01' }}
+        aksjonspunkter={[]}
+        ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+        previewCallback={action('button-click')}
+        submitCallback={action('button-click')}
+        alleKodeverk={alleKodeverk}
+        {...args}
+      />
+    </VedtakFormContext.Provider>
+  );
+};
 
 visAvslagForForeldrepenger.args = {
   sendVarselOmRevurdering: false,
@@ -171,33 +193,40 @@ visAvslagForForeldrepenger.args = {
   isReadOnly: false,
 };
 
-export const visÅpentAksjonspunktForSvangerskapspenger = args => (
-  <VedtakProsessIndex
-    behandling={behandling}
-    vilkar={vilkar}
-    beregningresultatForeldrepenger={resultatstruktur}
-    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-    medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[
-      {
-        definisjon: {
-          kode: aksjonspunktCodes.FORESLA_VEDTAK,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      },
-    ]}
-    ytelseType={{ kode: fagsakYtelseType.SVANGERSKAPSPENGER }}
-    previewCallback={action('button-click')}
-    submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
-    {...args}
-  />
-);
+export const visÅpentAksjonspunktForSvangerskapspenger = args => {
+  const [vedtakFormState, setVedtakFormState] = useState(null);
+  const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
+
+  return (
+    <VedtakFormContext.Provider value={value}>
+      <VedtakProsessIndex
+        behandling={behandling}
+        vilkar={vilkar}
+        beregningresultatForeldrepenger={resultatstruktur}
+        resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+        medlemskap={{ fom: '2019-01-01' }}
+        aksjonspunkter={[
+          {
+            definisjon: {
+              kode: aksjonspunktCodes.FORESLA_VEDTAK,
+            },
+            status: {
+              kode: aksjonspunktStatus.OPPRETTET,
+            },
+            begrunnelse: undefined,
+            kanLoses: true,
+            erAktivt: true,
+          },
+        ]}
+        ytelseType={{ kode: fagsakYtelseType.SVANGERSKAPSPENGER }}
+        previewCallback={action('button-click')}
+        submitCallback={action('button-click')}
+        alleKodeverk={alleKodeverk}
+        {...args}
+      />
+    </VedtakFormContext.Provider>
+  );
+};
 
 visÅpentAksjonspunktForSvangerskapspenger.args = {
   sendVarselOmRevurdering: false,
@@ -267,33 +296,40 @@ visModalForObligatoriskFritekstbrevForSvangerskapspenger.args = {
   isReadOnly: false,
 };
 
-export const visÅpentAksjonspunktForEngangsstønad = args => (
-  <VedtakProsessIndex
-    behandling={behandling}
-    vilkar={vilkar}
-    beregningresultatEngangsstonad={resultatstruktur}
-    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-    medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[
-      {
-        definisjon: {
-          kode: aksjonspunktCodes.FORESLA_VEDTAK,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      },
-    ]}
-    ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
-    previewCallback={action('button-click')}
-    submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
-    {...args}
-  />
-);
+export const visÅpentAksjonspunktForEngangsstønad = args => {
+  const [vedtakFormState, setVedtakFormState] = useState(null);
+  const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
+
+  return (
+    <VedtakFormContext.Provider value={value}>
+      <VedtakProsessIndex
+        behandling={behandling}
+        vilkar={vilkar}
+        beregningresultatEngangsstonad={resultatstruktur}
+        resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+        medlemskap={{ fom: '2019-01-01' }}
+        aksjonspunkter={[
+          {
+            definisjon: {
+              kode: aksjonspunktCodes.FORESLA_VEDTAK,
+            },
+            status: {
+              kode: aksjonspunktStatus.OPPRETTET,
+            },
+            begrunnelse: undefined,
+            kanLoses: true,
+            erAktivt: true,
+          },
+        ]}
+        ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
+        previewCallback={action('button-click')}
+        submitCallback={action('button-click')}
+        alleKodeverk={alleKodeverk}
+        {...args}
+      />
+    </VedtakFormContext.Provider>
+  );
+};
 
 visÅpentAksjonspunktForEngangsstønad.args = {
   sendVarselOmRevurdering: false,
@@ -301,36 +337,43 @@ visÅpentAksjonspunktForEngangsstønad.args = {
   isReadOnly: false,
 };
 
-export const visAtBehandlingErHenlagt = args => (
-  <VedtakProsessIndex
-    behandling={{
-      ...behandling,
-      behandlingHenlagt: true,
-    }}
-    vilkar={vilkar}
-    beregningresultatForeldrepenger={resultatstruktur}
-    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-    medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[
-      {
-        definisjon: {
-          kode: aksjonspunktCodes.FORESLA_VEDTAK,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      },
-    ]}
-    ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
-    previewCallback={action('button-click')}
-    submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
-    {...args}
-  />
-);
+export const visAtBehandlingErHenlagt = args => {
+  const [vedtakFormState, setVedtakFormState] = useState(null);
+  const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
+
+  return (
+    <VedtakFormContext.Provider value={value}>
+      <VedtakProsessIndex
+        behandling={{
+          ...behandling,
+          behandlingHenlagt: true,
+        }}
+        vilkar={vilkar}
+        beregningresultatForeldrepenger={resultatstruktur}
+        resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+        medlemskap={{ fom: '2019-01-01' }}
+        aksjonspunkter={[
+          {
+            definisjon: {
+              kode: aksjonspunktCodes.FORESLA_VEDTAK,
+            },
+            status: {
+              kode: aksjonspunktStatus.OPPRETTET,
+            },
+            begrunnelse: undefined,
+            kanLoses: true,
+            erAktivt: true,
+          },
+        ]}
+        ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+        previewCallback={action('button-click')}
+        submitCallback={action('button-click')}
+        alleKodeverk={alleKodeverk}
+        {...args}
+      />
+    </VedtakFormContext.Provider>
+  );
+};
 
 visAtBehandlingErHenlagt.args = {
   sendVarselOmRevurdering: false,
@@ -338,52 +381,59 @@ visAtBehandlingErHenlagt.args = {
   isReadOnly: false,
 };
 
-export const visInnvilgetForForeldrepengerRevurdering = args => (
-  <VedtakProsessIndex
-    behandling={{
-      ...behandling,
-      type: {
-        kode: behandlingType.REVURDERING,
-      },
-      behandlingsresultat: {
-        vedtaksbrev: {
-          kode: 'FRITEKST',
-        },
-        type: {
-          kode: behandlingResultatType.INNVILGET,
-        },
-      },
-    }}
-    vilkar={vilkar}
-    beregningresultatForeldrepenger={resultatstruktur}
-    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-    medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[
-      {
-        definisjon: {
-          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      },
-    ]}
-    tilbakekrevingvalg={{
-      videreBehandling: {
-        kode: tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
-        kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
-      },
-    }}
-    ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
-    previewCallback={action('button-click')}
-    submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
-    {...args}
-  />
-);
+export const visInnvilgetForForeldrepengerRevurdering = args => {
+  const [vedtakFormState, setVedtakFormState] = useState(null);
+  const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
+
+  return (
+    <VedtakFormContext.Provider value={value}>
+      <VedtakProsessIndex
+        behandling={{
+          ...behandling,
+          type: {
+            kode: behandlingType.REVURDERING,
+          },
+          behandlingsresultat: {
+            vedtaksbrev: {
+              kode: 'FRITEKST',
+            },
+            type: {
+              kode: behandlingResultatType.INNVILGET,
+            },
+          },
+        }}
+        vilkar={vilkar}
+        beregningresultatForeldrepenger={resultatstruktur}
+        resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+        medlemskap={{ fom: '2019-01-01' }}
+        aksjonspunkter={[
+          {
+            definisjon: {
+              kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+            },
+            status: {
+              kode: aksjonspunktStatus.OPPRETTET,
+            },
+            begrunnelse: undefined,
+            kanLoses: true,
+            erAktivt: true,
+          },
+        ]}
+        tilbakekrevingvalg={{
+          videreBehandling: {
+            kode: tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
+            kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
+          },
+        }}
+        ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+        previewCallback={action('button-click')}
+        submitCallback={action('button-click')}
+        alleKodeverk={alleKodeverk}
+        {...args}
+      />
+    </VedtakFormContext.Provider>
+  );
+};
 
 visInnvilgetForForeldrepengerRevurdering.args = {
   sendVarselOmRevurdering: false,
@@ -391,34 +441,41 @@ visInnvilgetForForeldrepengerRevurdering.args = {
   isReadOnly: false,
 };
 
-export const visOpphørtForForeldrepengerRevurdering = args => (
-  <VedtakProsessIndex
-    behandling={{
-      ...behandling,
-      type: {
-        kode: behandlingType.REVURDERING,
-      },
-      behandlingsresultat: {
-        vedtaksbrev: {
-          kode: 'FRITEKST',
-        },
-        type: {
-          kode: behandlingResultatType.OPPHOR,
-        },
-      },
-    }}
-    vilkar={vilkar}
-    beregningresultatForeldrepenger={resultatstruktur}
-    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-    medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[]}
-    ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
-    previewCallback={action('button-click')}
-    submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
-    {...args}
-  />
-);
+export const visOpphørtForForeldrepengerRevurdering = args => {
+  const [vedtakFormState, setVedtakFormState] = useState(null);
+  const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
+
+  return (
+    <VedtakFormContext.Provider value={value}>
+      <VedtakProsessIndex
+        behandling={{
+          ...behandling,
+          type: {
+            kode: behandlingType.REVURDERING,
+          },
+          behandlingsresultat: {
+            vedtaksbrev: {
+              kode: 'FRITEKST',
+            },
+            type: {
+              kode: behandlingResultatType.OPPHOR,
+            },
+          },
+        }}
+        vilkar={vilkar}
+        beregningresultatForeldrepenger={resultatstruktur}
+        resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+        medlemskap={{ fom: '2019-01-01' }}
+        aksjonspunkter={[]}
+        ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+        previewCallback={action('button-click')}
+        submitCallback={action('button-click')}
+        alleKodeverk={alleKodeverk}
+        {...args}
+      />
+    </VedtakFormContext.Provider>
+  );
+};
 
 visOpphørtForForeldrepengerRevurdering.args = {
   sendVarselOmRevurdering: false,
@@ -426,26 +483,33 @@ visOpphørtForForeldrepengerRevurdering.args = {
   isReadOnly: false,
 };
 
-export const visInnvilgetForEngangsstønadRevurdering = args => (
-  <VedtakProsessIndex
-    behandling={{
-      ...behandling,
-      type: {
-        kode: behandlingType.REVURDERING,
-      },
-    }}
-    vilkar={vilkar}
-    beregningresultatEngangsstonad={resultatstruktur}
-    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-    medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[]}
-    ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
-    previewCallback={action('button-click')}
-    submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
-    {...args}
-  />
-);
+export const visInnvilgetForEngangsstønadRevurdering = args => {
+  const [vedtakFormState, setVedtakFormState] = useState(null);
+  const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
+
+  return (
+    <VedtakFormContext.Provider value={value}>
+      <VedtakProsessIndex
+        behandling={{
+          ...behandling,
+          type: {
+            kode: behandlingType.REVURDERING,
+          },
+        }}
+        vilkar={vilkar}
+        beregningresultatEngangsstonad={resultatstruktur}
+        resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+        medlemskap={{ fom: '2019-01-01' }}
+        aksjonspunkter={[]}
+        ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
+        previewCallback={action('button-click')}
+        submitCallback={action('button-click')}
+        alleKodeverk={alleKodeverk}
+        {...args}
+      />
+    </VedtakFormContext.Provider>
+  );
+};
 
 visInnvilgetForEngangsstønadRevurdering.args = {
   sendVarselOmRevurdering: false,
@@ -453,45 +517,52 @@ visInnvilgetForEngangsstønadRevurdering.args = {
   isReadOnly: false,
 };
 
-export const visAvslåttForEngangsstønadRevurdering = args => (
-  <VedtakProsessIndex
-    behandling={{
-      ...behandling,
-      type: {
-        kode: behandlingType.REVURDERING,
-      },
-      behandlingsresultat: {
-        vedtaksbrev: {
-          kode: 'FRITEKST',
-        },
-        type: {
-          kode: behandlingResultatType.AVSLATT,
-        },
-        avslagsarsak: {
-          kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-          kodeverk: kodeverkTyper.AVSLAGSARSAK,
-        },
-      },
-    }}
-    vilkar={[
-      {
-        ...vilkar[0],
-        vilkarStatus: {
-          kode: vilkarUtfallType.IKKE_OPPFYLT,
-        },
-      },
-    ]}
-    beregningresultatEngangsstonad={resultatstruktur}
-    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-    medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[]}
-    ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
-    previewCallback={action('button-click')}
-    submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
-    {...args}
-  />
-);
+export const visAvslåttForEngangsstønadRevurdering = args => {
+  const [vedtakFormState, setVedtakFormState] = useState(null);
+  const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
+
+  return (
+    <VedtakFormContext.Provider value={value}>
+      <VedtakProsessIndex
+        behandling={{
+          ...behandling,
+          type: {
+            kode: behandlingType.REVURDERING,
+          },
+          behandlingsresultat: {
+            vedtaksbrev: {
+              kode: 'FRITEKST',
+            },
+            type: {
+              kode: behandlingResultatType.AVSLATT,
+            },
+            avslagsarsak: {
+              kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
+              kodeverk: kodeverkTyper.AVSLAGSARSAK,
+            },
+          },
+        }}
+        vilkar={[
+          {
+            ...vilkar[0],
+            vilkarStatus: {
+              kode: vilkarUtfallType.IKKE_OPPFYLT,
+            },
+          },
+        ]}
+        beregningresultatEngangsstonad={resultatstruktur}
+        resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+        medlemskap={{ fom: '2019-01-01' }}
+        aksjonspunkter={[]}
+        ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
+        previewCallback={action('button-click')}
+        submitCallback={action('button-click')}
+        alleKodeverk={alleKodeverk}
+        {...args}
+      />
+    </VedtakFormContext.Provider>
+  );
+};
 
 visAvslåttForEngangsstønadRevurdering.args = {
   sendVarselOmRevurdering: false,
