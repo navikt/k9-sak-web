@@ -151,6 +151,4 @@ const FritekstBrevPanel = ({
   );
 };
 
-FritekstBrevPanel.defaultProps = {};
-
 export default injectIntl(FritekstBrevPanel);

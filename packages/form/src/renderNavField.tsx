@@ -28,9 +28,9 @@ const renderNavField = WrappedNavFieldComponent => {
       input,
       meta: { submitFailed, error },
       label,
-      readOnly,
-      isEdited,
-      readOnlyHideEmpty,
+      readOnly = false,
+      isEdited = false,
+      readOnlyHideEmpty = false,
       ...otherProps
     } = props;
     const isEmpty = input.value === null || input.value === undefined || input.value === '';

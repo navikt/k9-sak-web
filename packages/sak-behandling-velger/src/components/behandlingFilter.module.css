@@ -31,23 +31,6 @@
   margin: 0.625rem 0;
 }
 
-.chevronDropdown__toggleButton {
-  background: none;
-  border: none;
-  color: var(--a-blue-500);
-  padding: unset;
-}
-
-.chevronDropdown__toggleButton__text {
-  display: inline;
-  line-height: 1.1875rem;
-  margin-right: 0.375rem;
-}
-
-.chevronDropdown__hidden {
-  visibility: hidden;
-}
-
 .closeButton {
   align-items: center;
   background: none;

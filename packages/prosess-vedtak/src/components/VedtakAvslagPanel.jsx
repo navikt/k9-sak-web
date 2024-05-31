@@ -14,7 +14,7 @@ export const VedtakAvslagPanelImpl = ({
   vilkar,
   behandlingsresultat,
   ytelseTypeKode,
-  tilbakekrevingText,
+  tilbakekrevingText = null,
   alleKodeverk,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
@@ -47,10 +47,6 @@ VedtakAvslagPanelImpl.propTypes = {
   ytelseTypeKode: PropTypes.string.isRequired,
   tilbakekrevingText: PropTypes.string,
   alleKodeverk: PropTypes.shape().isRequired,
-};
-
-VedtakAvslagPanelImpl.defaultProps = {
-  tilbakekrevingText: null,
 };
 
 const mapStateToProps = (state, ownProps) => ({

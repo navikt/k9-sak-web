@@ -1,11 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
-import PropTypes from 'prop-types';
+import { createSelector } from 'reselect';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from '@fpsak-frontend/form';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { safeJSONParse } from '@fpsak-frontend/utils';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -20,8 +20,8 @@ export const FormkravKlageFormNfpImpl = ({
   behandlingId,
   behandlingVersjon,
   handleSubmit,
-  readOnly,
-  readOnlySubmitButton,
+  readOnly = true,
+  readOnlySubmitButton = true,
   alleKodeverk,
   fagsakPerson,
   arbeidsgiverOpplysningerPerId,
@@ -56,11 +56,6 @@ FormkravKlageFormNfpImpl.propTypes = {
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
   ...formPropTypes,
-};
-
-FormkravKlageFormNfpImpl.defaultProps = {
-  readOnly: true,
-  readOnlySubmitButton: true,
 };
 
 const getPåklagdBehandling = (avsluttedeBehandlinger, påklagdVedtak) =>

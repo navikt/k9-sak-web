@@ -6,7 +6,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { findDelvisInnvilgetResultatText, findInnvilgetResultatText, findTilbakekrevingText } from './VedtakHelper';
 
-export const VedtakInnvilgetPanelImpl = ({ intl, behandlingsresultat, ytelseTypeKode, tilbakekrevingText }) => (
+export const VedtakInnvilgetPanelImpl = ({ intl, behandlingsresultat, ytelseTypeKode, tilbakekrevingText = null }) => (
   <>
     <Label size="small" as="p" data-testid="innvilget">
       {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
@@ -28,10 +28,6 @@ VedtakInnvilgetPanelImpl.propTypes = {
   behandlingsresultat: PropTypes.shape().isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
   tilbakekrevingText: PropTypes.string,
-};
-
-VedtakInnvilgetPanelImpl.defaultProps = {
-  tilbakekrevingText: null,
 };
 
 const mapStateToProps = (state, ownProps) => ({

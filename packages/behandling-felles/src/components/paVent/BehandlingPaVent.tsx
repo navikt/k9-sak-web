@@ -20,7 +20,7 @@ const BehandlingPaVent = ({
   aksjonspunkter,
   kodeverk,
   settPaVent,
-  erTilbakekreving,
+  erTilbakekreving = false,
 }: BehandlingPaVentProps) => {
   const [skalViseModal, setVisModal] = useState(behandling.behandlingPaaVent);
   const skjulModal = useCallback(() => setVisModal(false), []);
@@ -72,10 +72,6 @@ const BehandlingPaVent = ({
       showModal
     />
   );
-};
-
-BehandlingPaVent.defaultProps = {
-  erTilbakekreving: false,
 };
 
 export default BehandlingPaVent;

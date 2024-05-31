@@ -1,8 +1,7 @@
 import { get, Period } from '@fpsak-frontend/utils';
-import { Alert } from '@navikt/ds-react';
+import { Alert, Tabs } from '@navikt/ds-react';
 import { ChildIcon, Infostripe, PageContainer, WarningIcon } from '@navikt/ft-plattform-komponenter';
 import classnames from 'classnames';
-import { TabsPure } from 'nav-frontend-tabs';
 import React, { useMemo } from 'react';
 import ContainerContract from '../types/ContainerContract';
 import { InnleggelsesperiodeResponse, SykdomResponse, TilsynResponse } from '../types/TilsynResponse';
@@ -32,23 +31,19 @@ const TabItem = ({ label, showWarningIcon }: TabItemProps) => {
   return (
     <div className={cls}>
       {label}
-      {showWarningIcon && (
-        <div className={styles.tabItem__warningIcon}>
-          <WarningIcon />
-        </div>
-      )}
+      {showWarningIcon && <WarningIcon />}
     </div>
   );
 };
 
-const setDefaultActiveTabIndex = ({ harAksjonspunktForBeredskap, harAksjonspunktForNattevåk }: ContainerContract) => {
+const getDefaultActiveTab = ({ harAksjonspunktForBeredskap, harAksjonspunktForNattevåk }: ContainerContract) => {
   if (harAksjonspunktForBeredskap) {
-    return 1;
+    return tabs[1];
   }
   if (harAksjonspunktForNattevåk) {
-    return 2;
+    return tabs[2];
   }
-  return 0;
+  return tabs[0];
 };
 
 const MainComponent = ({ data }: MainComponentProps) => {
@@ -70,7 +65,6 @@ const MainComponent = ({ data }: MainComponentProps) => {
     sykdomHarFeilet,
   } = state;
   const { endpoints, httpErrorHandler, harAksjonspunktForBeredskap, harAksjonspunktForNattevåk } = data;
-  const [activeTab, setActiveTab] = React.useState(setDefaultActiveTabIndex(data));
   const [innleggelsesperioder, setInnleggelsesperioder] = React.useState<Period[]>([]);
   const [innleggelserFeilet, setInnleggelserFeilet] = React.useState(false);
   const controller = useMemo(() => new AbortController(), []);
@@ -147,35 +141,42 @@ const MainComponent = ({ data }: MainComponentProps) => {
         iconRenderer={() => <ChildIcon />}
       />
       <div className={styles.mainComponent}>
-        <TabsPure
-          kompakt
-          tabs={tabs.map((tabName, index) => ({
-            label: (
-              <TabItem
-                label={tabName}
-                showWarningIcon={
-                  (index === 1 && harAksjonspunktForBeredskap) || (index === 2 && harAksjonspunktForNattevåk)
+        <Tabs defaultValue={getDefaultActiveTab(data)}>
+          <Tabs.List>
+            {tabs.map((tabName, index) => (
+              <Tabs.Tab
+                key={tabName}
+                value={tabName}
+                label={
+                  <TabItem
+                    label={tabName}
+                    showWarningIcon={
+                      (index === 1 && harAksjonspunktForBeredskap) || (index === 2 && harAksjonspunktForNattevåk)
+                    }
+                  />
                 }
               />
-            ),
-            aktiv: activeTab === index,
-          }))}
-          onChange={(event, clickedIndex) => setActiveTab(clickedIndex)}
-        />
-        <PageContainer isLoading={isLoading}>
-          <div className={styles.mainComponent__contentContainer}>
-            {activeTab === 0 && (
-              <EtablertTilsyn
-                etablertTilsynData={etablertTilsyn}
-                smurtEtablertTilsynPerioder={smurtEtablertTilsynPerioder}
-                sykdomsperioderSomIkkeErOppfylt={sykdomsperioderSomIkkeErOppfylt}
-                perioderSomOverstyrerTilsyn={perioderSomOverstyrerTilsyn}
-              />
-            )}
-            {activeTab === 1 && <Beredskapsperiodeoversikt beredskapData={beredskap} />}
-            {activeTab === 2 && <Nattevåksperiodeoversikt nattevåkData={nattevåk} />}
-          </div>
-        </PageContainer>
+            ))}
+          </Tabs.List>
+          <PageContainer isLoading={isLoading}>
+            <div className={styles.mainComponent__contentContainer}>
+              <Tabs.Panel value={tabs[0]}>
+                <EtablertTilsyn
+                  etablertTilsynData={etablertTilsyn}
+                  smurtEtablertTilsynPerioder={smurtEtablertTilsynPerioder}
+                  sykdomsperioderSomIkkeErOppfylt={sykdomsperioderSomIkkeErOppfylt}
+                  perioderSomOverstyrerTilsyn={perioderSomOverstyrerTilsyn}
+                />
+              </Tabs.Panel>
+              <Tabs.Panel value={tabs[1]}>
+                <Beredskapsperiodeoversikt beredskapData={beredskap} />
+              </Tabs.Panel>
+              <Tabs.Panel value={tabs[2]}>
+                <Nattevåksperiodeoversikt nattevåkData={nattevåk} />
+              </Tabs.Panel>
+            </div>
+          </PageContainer>
+        </Tabs>
       </div>
     </ContainerContext.Provider>
   );

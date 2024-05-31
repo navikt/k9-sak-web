@@ -54,9 +54,9 @@ const utledHjemler = fagsak => {
 
 export const KlageVurderingRadioOptionsNfp = ({
   fagsak,
-  readOnly,
+  readOnly = true,
   medholdReasons,
-  klageVurdering,
+  klageVurdering = null,
   erPåklagdBehandlingTilbakekreving,
   intl,
 }) => {
@@ -157,11 +157,6 @@ KlageVurderingRadioOptionsNfp.propTypes = {
   ).isRequired,
   klageVurdering: PropTypes.string,
   intl: PropTypes.shape().isRequired,
-};
-
-KlageVurderingRadioOptionsNfp.defaultProps = {
-  readOnly: true,
-  klageVurdering: null,
 };
 
 export default injectIntl(KlageVurderingRadioOptionsNfp);

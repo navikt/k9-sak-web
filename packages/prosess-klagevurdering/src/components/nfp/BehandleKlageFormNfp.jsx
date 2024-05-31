@@ -37,14 +37,14 @@ export const BehandleKlageFormNfpImpl = ({
   fagsak,
   behandlingId,
   behandlingVersjon,
-  readOnly,
+  readOnly = true,
   handleSubmit,
   valgtPartMedKlagerett,
   previewCallback,
   saveKlage,
-  readOnlySubmitButton,
+  readOnlySubmitButton = true,
   sprakkode,
-  formValues,
+  formValues = {},
   erPåklagdBehandlingTilbakekreving,
   intl,
   alleKodeverk,
@@ -126,12 +126,6 @@ BehandleKlageFormNfpImpl.propTypes = {
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
   ...formPropTypes,
-};
-
-BehandleKlageFormNfpImpl.defaultProps = {
-  formValues: {},
-  readOnly: true,
-  readOnlySubmitButton: true,
 };
 
 export const buildInitialValues = createSelector(
