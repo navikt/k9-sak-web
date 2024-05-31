@@ -40,13 +40,13 @@ const MottakerSelect = ({
             </option>
           ))}
         </optgroup>
-        <optgroup label="Tredjepartsmottaker">
-          {valgtMal?.støtterTredjepartsmottaker && (
+        {valgtMal?.støtterTredjepartsmottaker && (
+          <optgroup label="Tredjepartsmottaker">
             <option style={{ color: 'red' }} key={tredjepartsmottakerValg} value={tredjepartsmottakerValg}>
               (skriv inn organisasjonsnr)
             </option>
-          )}
-        </optgroup>
+          </optgroup>
+        )}
       </Select>
     );
   }
