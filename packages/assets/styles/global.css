@@ -213,6 +213,22 @@ som fra core/og muligen import fra alla andra komponenter
   border-radius: 6px;
 }
 
+.vis-item.vis-range.avvistPeriode {
+  background-color: rgb(186 58 38 / 50%);
+  border-color: rgb(201 201 201 / 50%);
+  border-radius: 8px;
+}
+
+.vis-item.vis-range.laastPeriode {
+  border-radius: 8px;
+}
+
+.vis-item.vis-range.godkjentPeriode {
+  background-color: rgb(6 137 58 / 50%);
+  border-color: rgb(201 201 201 / 50%);
+  border-radius: 8px;
+}
+
 .avvistPeriode:active {
   background-color: #ba3a26;
   border-color: #c9c9c9;
