@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import type { Meta, StoryObj } from '@storybook/react';
 import { AnnenPart, Utfall, Årsaker } from '../constants';
 import { Endringsstatus } from '../types';
