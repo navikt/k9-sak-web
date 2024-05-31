@@ -188,7 +188,7 @@ const Messages = ({
         // Koden her har store likheter med lagForhåndsvisRequest i formidlingUtils.tsx
         const forhåndsvisDto: ForhåndsvisDto = {
           eksternReferanse: behandling.uuid,
-          ytelsesType: fagsak.sakstype,
+          ytelseType: fagsak.sakstype,
           saksnummer: fagsak.saksnummer,
           overstyrtMottaker: values.overstyrtMottaker,
           dokumentMal: values.brevmalkode,

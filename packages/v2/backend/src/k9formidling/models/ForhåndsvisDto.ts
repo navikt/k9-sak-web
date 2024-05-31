@@ -16,7 +16,7 @@ export interface Dokumentdata {
  */
 export interface ForhåndsvisDto {
   eksternReferanse: string;
-  ytelsesType: FagsakYtelsesTypeKodeverk;
+  ytelseType: FagsakYtelsesTypeKodeverk;
   saksnummer: string;
   aktørId: string;
   overstyrtMottaker?: MottakerDto; // Bruker denne type frå k9-sak, av same grunn som over, reknar med dei må vere like.
