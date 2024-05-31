@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import useStoryReload from '@k9-sak-web/gui/storybook/decorators/useStoryReload.js';
+import withStoryReload from '@k9-sak-web/gui/storybook/decorators/useStoryReload.js';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 import { mockUrlPrepend } from '../../mock/constants';
@@ -38,7 +38,7 @@ const meta: Meta<typeof MainComponent> = {
       dangerouslyIgnoreUnhandledErrors: true,
     },
   },
-  decorators: [useStoryReload()],
+  decorators: [withStoryReload()],
 };
 
 export default meta;

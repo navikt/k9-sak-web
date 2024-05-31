@@ -9,9 +9,9 @@ import React, { useEffect } from 'react';
  * @returns Story component
  */
 
-const useStoryReload = (): Decorator => Story => {
+const withStoryReload = (): Decorator => Story => {
   useEffect(() => () => window.location.reload(), []);
   return <Story />;
 };
 
-export default useStoryReload;
+export default withStoryReload;
