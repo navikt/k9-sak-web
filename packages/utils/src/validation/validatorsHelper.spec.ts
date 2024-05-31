@@ -8,8 +8,6 @@ import {
   nameGyldigRegex,
   nameRegex,
   saksnummerOrFodselsnummerPattern,
-  textGyldigRegex,
-  textRegex,
   tomorrow,
   yesterday,
 } from './validatorsHelper';
@@ -41,19 +39,6 @@ describe('validatorsHelper', () => {
     it('Skal sjekke om saksnummer er i riktig format', () => {
       expect(saksnummerOrFodselsnummerPattern.test('123456789012345678')).toBe(true);
       expect(saksnummerOrFodselsnummerPattern.test('X123456789012345678')).toBe(false);
-    });
-  });
-
-  describe('textRegex', () => {
-    it('Skal sjekke om input er tekst', () => {
-      expect(textRegex.test('text')).toBe(true);
-      expect(textRegex.test('3434')).toBe(true);
-    });
-  });
-
-  describe('textGyldigRegex', () => {
-    it('Skal sjekke om input er i gyldig tekst format', () => {
-      expect(textGyldigRegex.test('Text')).toBe(true);
     });
   });
 
