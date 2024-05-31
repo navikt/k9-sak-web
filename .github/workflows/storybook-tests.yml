@@ -20,7 +20,7 @@ jobs:
       - name: Sette opp Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20.12.2'
           cache: 'yarn'
 
       - name: Installere dependencies
