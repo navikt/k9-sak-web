@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
-import React, { useEffect } from 'react';
 import { handlers } from '../../mock/api-mock';
 import { mockUrlPrepend } from '../../mock/constants';
 import MainComponent from './MainComponent';
@@ -29,12 +28,6 @@ const meta: Meta<typeof MainComponent> = {
       dangerouslyIgnoreUnhandledErrors: true,
     },
   },
-  decorators: [
-    Story => {
-      useEffect(() => () => window.location.reload(), []);
-      return <Story />;
-    },
-  ],
 };
 
 export default meta;
