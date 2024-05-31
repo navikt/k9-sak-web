@@ -20,7 +20,7 @@ interface OwnProps {
 }
 
 export const NyArbeidsgiverModal = ({
-  showModal,
+  showModal = false,
   closeEvent,
   cancelEvent,
   intl,
@@ -74,10 +74,6 @@ export const NyArbeidsgiverModal = ({
     </Modal.Body>
   </Modal>
 );
-
-NyArbeidsgiverModal.defaultProps = {
-  showModal: false,
-};
 
 interface PureOwnProps {
   closeEvent: (...args: any[]) => any;

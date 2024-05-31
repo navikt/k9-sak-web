@@ -78,11 +78,11 @@ const NormalizeOnBlurField = createNormalizeOnBlurField(reduxFormField);
 
 const DecimalField = ({
   name,
-  type,
-  label,
-  validate,
-  readOnly,
-  isEdited,
+  type = 'number',
+  label = '',
+  validate = null,
+  readOnly = false,
+  isEdited = false,
   normalizeOnBlur,
   ...otherProps
 }: DecimalFieldProps) => (
@@ -101,13 +101,5 @@ const DecimalField = ({
     autoComplete="off"
   />
 );
-
-DecimalField.defaultProps = {
-  type: 'number',
-  validate: null,
-  readOnly: false,
-  label: '',
-  isEdited: false,
-};
 
 export default DecimalField;

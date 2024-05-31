@@ -3,6 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import { Dokumenttype } from '../src/types/Dokument';
 import { createLivetsSluttfaseVurdering } from './apiUtils';
+import { mockUrlPrepend } from './constants';
 import createMockedVurderingselementLinks from './mocked-data/createMockedVurderingselementLinks';
 import createStrukturertDokument from './mocked-data/createStrukturertDokument';
 import mockedDokumentliste from './mocked-data/mockedDokumentliste';
@@ -23,7 +24,7 @@ app.use(
 
 let mockedNyeDokumenter = [...mockedNyeDokumenterList];
 
-app.use('/mock/status', (req, res) => {
+app.use(`${mockUrlPrepend}/mock/status`, (req, res) => {
   const harUklassifiserteDokumenter = mockedDokumentoversikt.dokumenter.some(
     ({ type }) => type === Dokumenttype.UKLASSIFISERT,
   );
@@ -47,14 +48,14 @@ app.use('/mock/status', (req, res) => {
   });
 });
 
-app.use('/mock/vurdering', (req, res) => {
+app.use(`${mockUrlPrepend}/mock/vurdering`, (req, res) => {
   const vurderingId = req.query.sykdomVurderingId;
   const alleVurderinger = [...livetsSluttfaseVurderingerMock];
   const vurdering = alleVurderinger.find(({ id }) => id === vurderingId);
   res.send(vurdering);
 });
 
-app.use('/mock/opprett-vurdering', (req, res) => {
+app.use(`${mockUrlPrepend}/mock/opprett-vurdering`, (req, res) => {
   if (req.body.dryRun === true) {
     res.send({
       perioderMedEndringer: [
@@ -74,7 +75,7 @@ app.use('/mock/opprett-vurdering', (req, res) => {
   }
 });
 
-app.use('/mock/endre-vurdering', (req, res) => {
+app.use(`${mockUrlPrepend}/mock/endre-vurdering`, (req, res) => {
   if (req.body.dryRun === true) {
     res.send({
       perioderMedEndringer: [
@@ -120,7 +121,7 @@ app.use('/mock/endre-vurdering', (req, res) => {
   }
 });
 
-app.use('/mock/livets-sluttfase/vurderingsoversikt', (req, res) => {
+app.use(`${mockUrlPrepend}/mock/livets-sluttfase/vurderingsoversikt`, (req, res) => {
   const harGyldigSignatur = mockedDokumentoversikt.dokumenter.some(({ type }) => type === Dokumenttype.LEGEERKLÆRING);
   res.send({
     ...livetsSluttfaseVurderingsoversiktMock,
@@ -131,24 +132,24 @@ app.use('/mock/livets-sluttfase/vurderingsoversikt', (req, res) => {
   });
 });
 
-app.use('/mock/dokumentoversikt', (req, res) => {
+app.use(`${mockUrlPrepend}/mock/dokumentoversikt`, (req, res) => {
   res.send(mockedDokumentoversikt);
 });
 
-app.use('/mock/endre-dokument', (req, res) => {
+app.use(`${mockUrlPrepend}/mock/endre-dokument`, (req, res) => {
   createStrukturertDokument(req.body);
   res.send(mockedDokumentoversikt);
 });
 
-app.use('/mock/data-til-vurdering', (req, res) => {
+app.use(`${mockUrlPrepend}/mock/data-til-vurdering`, (req, res) => {
   res.send(mockedDokumentliste);
 });
 
-app.get('/mock/nye-dokumenter', (req, res) => {
+app.get(`${mockUrlPrepend}/mock/nye-dokumenter`, (req, res) => {
   res.send(mockedNyeDokumenter);
 });
 
-app.post('/mock/nye-dokumenter', (req, res) => {
+app.post(`${mockUrlPrepend}/mock/nye-dokumenter`, (req, res) => {
   mockedNyeDokumenter = [];
   res.send({});
 });

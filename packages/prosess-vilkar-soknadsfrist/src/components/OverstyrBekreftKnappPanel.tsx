@@ -9,7 +9,7 @@ interface OwnProps {
   overrideReadOnly: boolean;
 }
 
-const OverstyrBekreftKnappPanel = ({ disabled, submitting, pristine, overrideReadOnly }: OwnProps) => {
+const OverstyrBekreftKnappPanel = ({ disabled = false, submitting, pristine, overrideReadOnly }: OwnProps) => {
   if (overrideReadOnly) {
     return null;
   }
@@ -18,10 +18,6 @@ const OverstyrBekreftKnappPanel = ({ disabled, submitting, pristine, overrideRea
       <FormattedMessage id="OverstyrBekreftKnappPanel.ConfirmInformation" />
     </Button>
   );
-};
-
-OverstyrBekreftKnappPanel.defaultProps = {
-  disabled: false,
 };
 
 export default OverstyrBekreftKnappPanel;

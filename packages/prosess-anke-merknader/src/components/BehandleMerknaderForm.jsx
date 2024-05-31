@@ -22,12 +22,12 @@ import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import PreviewAnkeLink from './PreviewAnkeLink';
 
 const AnkeMerknader = ({
-  readOnly,
+  readOnly = true,
   handleSubmit,
   previewCallback,
-  readOnlySubmitButton,
+  readOnlySubmitButton = true,
   aksjonspunktCode,
-  formValues,
+  formValues = {},
   behandlingId,
   behandlingVersjon,
   ...formProps
@@ -109,12 +109,6 @@ AnkeMerknader.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,
-};
-
-AnkeMerknader.defaultProps = {
-  formValues: {},
-  readOnly: true,
-  readOnlySubmitButton: true,
 };
 
 const ankeMerknaderFormName = 'ankeMerknaderForm';

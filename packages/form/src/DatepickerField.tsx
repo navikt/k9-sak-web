@@ -3,13 +3,13 @@ import { ACCEPTED_DATE_INPUT_FORMATS, DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } fr
 import moment from 'moment';
 import React from 'react';
 import { Field } from 'redux-form';
+import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import renderNavField from './renderNavField';
-import LabelType from './LabelType';
 
 interface DatepickerFieldProps {
   name: string;
-  label?: LabelType;
+  label: LabelType;
   readOnly?: boolean;
   format?: (value: string) => string;
   parse?: (value: string) => string;
@@ -25,6 +25,7 @@ interface DatepickerFieldProps {
     after: Date;
   };
   dataId?: string;
+  hideLabel?: boolean;
 }
 
 const isoToDdMmYyyy = (string: string): string => {
@@ -47,7 +48,15 @@ const acceptedFormatToIso = (string: string): string => {
 
 export const RenderDatepickerField = renderNavField(Datepicker);
 
-const DatepickerField = ({ name, label, readOnly, format, parse, isEdited, ...otherProps }: DatepickerFieldProps) => (
+const DatepickerField = ({
+  name,
+  label = '',
+  readOnly = false,
+  format = value => value,
+  parse = value => value,
+  isEdited = false,
+  ...otherProps
+}: DatepickerFieldProps) => (
   <Field
     name={name}
     component={readOnly ? ReadOnlyField : RenderDatepickerField}
@@ -60,13 +69,5 @@ const DatepickerField = ({ name, label, readOnly, format, parse, isEdited, ...ot
     isEdited={isEdited}
   />
 );
-
-DatepickerField.defaultProps = {
-  label: '',
-  readOnly: false,
-  isEdited: false,
-  format: value => value,
-  parse: value => value,
-};
 
 export default DatepickerField;

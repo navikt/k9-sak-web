@@ -1,216 +1,152 @@
-import { DDMMYYYY_DATE_FORMAT, haystack } from '@fpsak-frontend/utils';
-import moment from 'moment';
-import { Input } from 'nav-frontend-skjema';
-import React, { Component, ReactNode } from 'react';
-import { DateUtils, Modifier } from 'react-day-picker';
-import CalendarToggleButton from '../datepicker/CalendarToggleButton';
-import PeriodCalendarOverlay from './PeriodCalendarOverlay';
+import { ReadOnlyField } from '@fpsak-frontend/form';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, haystack } from '@fpsak-frontend/utils';
+import { DatePicker, HStack, Label, VStack, useDatepicker } from '@navikt/ds-react';
+import dayjs from 'dayjs';
+import React, { FunctionComponent, ReactNode } from 'react';
+import { useIntl } from 'react-intl';
+import { FieldArrayMetaProps, WrappedFieldInputProps } from 'redux-form';
 
-import styles from './periodpicker.module.css';
+interface FieldComponentProps {
+  input: WrappedFieldInputProps;
+  meta: FieldArrayMetaProps;
+}
 
-interface OwnProps {
+interface PeriodpickerProps {
   names: string[];
   label?: ReactNode;
-  placeholder?: string;
   feil?: string;
   disabled?: boolean;
-  disabledDays?: Modifier | Modifier[];
-  hideLabel?: boolean;
+  disabledDays?: { before: Date; after: Date } | { before: Date; after: Date }[];
+  readOnly?: boolean;
 }
 
-interface StateProps {
-  showCalendar: boolean;
-  period: string;
-  inputOffsetTop?: number;
-  inputOffsetWidth?: number;
-}
+const getStartDateFormField = (props: PeriodpickerProps): FieldComponentProps => haystack(props, props.names[0]);
+const getEndDateFormField = (props: PeriodpickerProps): FieldComponentProps => haystack(props, props.names[1]);
 
-const getStartDateInput = (props: OwnProps) => haystack(props, props.names[0]).input;
-const getEndDateInput = (props: OwnProps) => haystack(props, props.names[1]).input;
-const isValidDate = (date: Date): boolean => moment(date, DDMMYYYY_DATE_FORMAT, true).isValid();
-const createPeriod = (startDay: Date, endDay: Date): string =>
-  `${moment(startDay).format(DDMMYYYY_DATE_FORMAT)} - ${moment(endDay).format(DDMMYYYY_DATE_FORMAT)}`;
-
-class Periodpicker extends Component<OwnProps, StateProps> {
-  buttonRef: HTMLButtonElement;
-
-  inputRef: HTMLDivElement;
-
-  static defaultProps = {
-    label: '',
-    placeholder: 'dd.mm.åååå - dd.mm.åååå',
-    feil: null,
-    disabled: false,
+const Periodpicker: FunctionComponent<PeriodpickerProps> = (props): JSX.Element => {
+  const stringToDate = (date: string | Date): Date => {
+    const newDate = dayjs(date, [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT, 'YYYY.MM.DD'], true);
+    return newDate.isValid() ? newDate.toDate() : undefined;
   };
 
-  constructor(props: OwnProps) {
-    super(props);
-    this.handleInputRef = this.handleInputRef.bind(this);
-    this.handleButtonRef = this.handleButtonRef.bind(this);
-    this.handleUpdatedRefs = this.handleUpdatedRefs.bind(this);
-    this.toggleShowCalendar = this.toggleShowCalendar.bind(this);
-    this.hideCalendar = this.hideCalendar.bind(this);
-    this.elementIsCalendarButton = this.elementIsCalendarButton.bind(this);
-    this.handleDayChange = this.handleDayChange.bind(this);
-    this.onBlur = this.onBlur.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.parseToDate = this.parseToDate.bind(this);
+  const intl = useIntl();
+  const { label, disabled = false, disabledDays, readOnly, feil } = props;
+  const fomFormField = getStartDateFormField(props);
+  const tomFormField = getEndDateFormField(props);
 
-    const startDate = getStartDateInput(props).value;
-    const endDate = getEndDateInput(props).value;
-    let period = '';
-    if (startDate) {
-      period = endDate ? `${startDate} - ${endDate}` : startDate;
+  const getDefaultMonth = () => {
+    if (tomFormField.input.value) {
+      return dayjs(tomFormField.input.value, [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT], true).toDate();
     }
-
-    this.state = {
-      showCalendar: false,
-      period,
-    };
-  }
-
-  handleButtonRef(buttonRef: HTMLButtonElement): void {
-    if (buttonRef) {
-      this.buttonRef = buttonRef;
-      this.handleUpdatedRefs();
-    }
-  }
-
-  handleInputRef(inputRef: HTMLDivElement): void {
-    if (inputRef) {
-      this.inputRef = inputRef;
-      this.handleUpdatedRefs();
-    }
-  }
-
-  handleUpdatedRefs(): void {
-    const { inputRef, buttonRef } = this;
-    if (inputRef) {
-      this.setState({
-        inputOffsetTop: inputRef.offsetTop,
-        inputOffsetWidth: inputRef.offsetWidth,
-      });
-      if (buttonRef) {
-        inputRef.style.paddingRight = `${buttonRef.offsetWidth}px`;
+    if (disabledDays) {
+      if (Array.isArray(disabledDays)) {
+        return disabledDays[disabledDays.length - 1].after;
       }
+      return disabledDays.after;
     }
-  }
-
-  handleDayChange(selectedDay: Date): void {
-    if (!isValidDate(selectedDay)) {
-      return;
+    if (fomFormField.input.value) {
+      return dayjs(fomFormField.input.value, [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT], true).toDate();
     }
-    const startInput = getStartDateInput(this.props);
-    const endInput = getEndDateInput(this.props);
-    const currentStartDate = startInput.value;
-    const currentEndDate = endInput.value;
+    return undefined;
+  };
 
-    if (isValidDate(currentStartDate)) {
-      const range = {
-        from: moment(currentStartDate, DDMMYYYY_DATE_FORMAT).toDate(),
-        to: moment(currentEndDate, DDMMYYYY_DATE_FORMAT).toDate(),
-      };
-
-      // @ts-ignore https://github.com/gpbl/react-day-picker/issues/1009
-      const newRange = DateUtils.addDayToRange(selectedDay, range);
-      const period = createPeriod(newRange.from, newRange.to);
-      this.setState({ period });
-
-      if (newRange.from === selectedDay) {
-        startInput.onChange(period);
-        if (isValidDate(currentEndDate)) {
-          this.setState({ showCalendar: false });
-          this.inputRef.focus();
+  const { datepickerProps: datepickerPropsFom, inputProps: inputPropsFom } = useDatepicker({
+    onDateChange: date => {
+      if (date !== undefined) {
+        const verdi = dayjs(date).format(ISO_DATE_FORMAT);
+        if (fomFormField.input.onChange) {
+          fomFormField.input.onChange(verdi);
         }
-      } else {
-        endInput.onChange(period);
-        this.setState({ showCalendar: false });
-        this.inputRef.focus();
       }
-    } else {
-      const period = createPeriod(selectedDay, selectedDay);
-      this.setState({ period });
-      startInput.onChange(period);
-      endInput.onChange(period);
+    },
+    defaultSelected: fomFormField.input.value ? stringToDate(fomFormField.input.value) : undefined,
+    defaultMonth: getDefaultMonth(),
+  });
+
+  const { datepickerProps: datepickerPropsTom, inputProps: inputPropsTom } = useDatepicker({
+    onDateChange: date => {
+      if (date !== undefined) {
+        const verdi = dayjs(date).format(ISO_DATE_FORMAT);
+        if (tomFormField.input.onChange) {
+          tomFormField.input.onChange(verdi);
+        }
+      }
+    },
+    defaultSelected: tomFormField.input.value ? stringToDate(tomFormField.input.value) : undefined,
+    defaultMonth: getDefaultMonth(),
+  });
+
+  if (readOnly) {
+    const fom = fomFormField.input.value
+      ? dayjs(fomFormField.input.value, ISO_DATE_FORMAT, true).format(DDMMYYYY_DATE_FORMAT)
+      : undefined;
+    const tom = tomFormField.input.value
+      ? dayjs(tomFormField.input.value, ISO_DATE_FORMAT, true).format(DDMMYYYY_DATE_FORMAT)
+      : undefined;
+    const readOnlyValues = {
+      value: `${fom} - ${tom || ''}`,
+    };
+    return <ReadOnlyField input={readOnlyValues} label={label} />;
+  }
+
+  const dpPropsFom = {
+    ...datepickerPropsFom,
+    fromDate: disabledDays ? (Array.isArray(disabledDays) ? disabledDays[0].before : disabledDays?.before) : undefined,
+    toDate: disabledDays
+      ? Array.isArray(disabledDays)
+        ? disabledDays[disabledDays.length - 1].after
+        : disabledDays?.after
+      : undefined,
+  };
+
+  const dpPropsTom = {
+    ...datepickerPropsTom,
+    fromDate: disabledDays ? (Array.isArray(disabledDays) ? disabledDays[0].before : disabledDays?.before) : undefined,
+    toDate: disabledDays
+      ? Array.isArray(disabledDays)
+        ? disabledDays[disabledDays.length - 1].after
+        : disabledDays?.after
+      : undefined,
+  };
+
+  const getError = (errors: { id: string }[]) => {
+    if (!errors || errors.length === 0) {
+      return undefined;
     }
-  }
+    return intl.formatMessage(errors[0]);
+  };
 
-  onChange(e: React.ChangeEvent): void {
-    // @ts-ignore Fiks
-    this.setState({ period: e.target.value });
-    getStartDateInput(this.props).onChange(e);
-    getEndDateInput(this.props).onChange(e);
-  }
-
-  onBlur(e: React.FocusEvent): void {
-    getStartDateInput(this.props).onBlur(e);
-    getEndDateInput(this.props).onBlur(e);
-  }
-
-  parseToDate(name: string): Date {
-    const nameFromProps = haystack(this.props, name);
-    const day = nameFromProps.input.value;
-    return isValidDate(day) ? moment(day, DDMMYYYY_DATE_FORMAT).toDate() : null;
-  }
-
-  toggleShowCalendar(): void {
-    const { showCalendar } = this.state;
-    this.setState({ showCalendar: !showCalendar });
-  }
-
-  hideCalendar(): void {
-    this.setState({ showCalendar: false });
-  }
-
-  elementIsCalendarButton(element: EventTarget): boolean {
-    return element === this.buttonRef;
-  }
-
-  render() {
-    const { label, placeholder, feil, names, disabled, disabledDays } = this.props;
-    const { period, inputOffsetTop, inputOffsetWidth, showCalendar } = this.state;
-
-    return (
-      <>
-        <div className={styles.inputWrapper}>
-          <Input
-            className={styles.dateInput}
-            inputRef={this.handleInputRef}
-            autoComplete="off"
-            bredde="L"
-            placeholder={placeholder}
-            label={label}
-            value={period}
-            feil={feil}
-            disabled={disabled}
-            onBlur={this.onBlur}
-            onChange={this.onChange}
-          />
-          <CalendarToggleButton
-            inputOffsetTop={inputOffsetTop}
-            inputOffsetWidth={inputOffsetWidth}
-            className={styles.calendarToggleButton}
-            toggleShowCalendar={this.toggleShowCalendar}
-            buttonRef={this.handleButtonRef}
-            disabled={disabled}
-          />
-        </div>
-        {showCalendar && (
-          <PeriodCalendarOverlay
-            disabled={disabled}
-            startDate={this.parseToDate(names[0])}
-            endDate={this.parseToDate(names[1])}
-            onDayChange={this.handleDayChange}
-            elementIsCalendarButton={this.elementIsCalendarButton}
-            className={styles.calendarRoot}
-            dayPickerClassName={styles.calendarWrapper}
-            onClose={this.hideCalendar}
-            disabledDays={disabledDays}
-          />
-        )}
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Label size="small">{label}</Label>
+      <HStack gap="4">
+        <DatePicker {...dpPropsFom}>
+          <VStack gap="2">
+            <DatePicker.Input
+              {...inputPropsFom}
+              size="small"
+              hideLabel
+              label="Fra"
+              disabled={disabled}
+              error={getError(fomFormField?.meta?.error) || feil}
+            />
+          </VStack>
+        </DatePicker>
+        <DatePicker {...dpPropsTom}>
+          <VStack gap="2">
+            <DatePicker.Input
+              {...inputPropsTom}
+              size="small"
+              hideLabel
+              label="Til"
+              disabled={disabled}
+              error={getError(tomFormField?.meta?.error) || feil}
+            />
+          </VStack>
+        </DatePicker>
+      </HStack>
+    </>
+  );
+};
 
 export default Periodpicker;

@@ -54,8 +54,8 @@ const getLovHjemmeler = aksjonspunktCode =>
 export const FormkravKlageForm = ({
   behandlingId,
   behandlingVersjon,
-  readOnly,
-  readOnlySubmitButton,
+  readOnly = true,
+  readOnlySubmitButton = true,
   aksjonspunktCode,
   avsluttedeBehandlinger,
   intl,
@@ -64,7 +64,7 @@ export const FormkravKlageForm = ({
   fagsakPerson,
   arbeidsgiverOpplysningerPerId,
   parterMedKlagerett,
-  skalKunneVelgeKlagepart,
+  skalKunneVelgeKlagepart = true,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   const klagbareVedtakOptions = getKlagbareVedtak(avsluttedeBehandlinger, intl, getKodeverknavn);
@@ -240,12 +240,6 @@ FormkravKlageForm.propTypes = {
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()),
   skalKunneVelgeKlagepart: PropTypes.bool,
-};
-
-FormkravKlageForm.defaultProps = {
-  readOnly: true,
-  readOnlySubmitButton: true,
-  skalKunneVelgeKlagepart: true,
 };
 
 export default injectIntl(FormkravKlageForm);

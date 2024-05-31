@@ -2,8 +2,7 @@ import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
 import { Image } from '@fpsak-frontend/shared-components/index';
 import { joinNonNullStrings } from '@fpsak-frontend/utils';
 import { ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
-import { Alert, Heading } from '@navikt/ds-react';
-import Tabs from 'nav-frontend-tabs';
+import { Alert, Heading, Tabs } from '@navikt/ds-react';
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Aktivitet from '../dto/Aktivitet';
@@ -60,7 +59,10 @@ const Uttaksplan = ({
   arbeidsgiverOpplysningerPerId,
 }: UttaksplanProps) => {
   const [valgtTabIndex, setValgtTabIndex] = useState<number>(0);
-
+  const tabs = [
+    { label: <FormattedMessage id="Uttaksplan.DenneBehandling" />, key: 'Uttaksplan.DenneBehandling' },
+    { label: <FormattedMessage id="Uttaksplan.HittilIÅr" />, key: 'Uttaksplan.HittilIÅr' },
+  ];
   return (
     <div className={styles.uttaksboks}>
       <div className={styles.overskrift}>
@@ -74,13 +76,13 @@ const Uttaksplan = ({
           <FormattedMessage id="Uttaksplan.Heading" />
         </Heading>
       </div>
-      <Tabs
-        tabs={[
-          { label: <FormattedMessage id="Uttaksplan.DenneBehandling" /> },
-          { label: <FormattedMessage id="Uttaksplan.HittilIÅr" /> },
-        ]}
-        onChange={(e, valgtIndex) => setValgtTabIndex(valgtIndex)}
-      />
+      <Tabs defaultValue="0">
+        <Tabs.List>
+          {tabs.map((tab, index) => (
+            <Tabs.Tab key={tab.key} value={`${index}`} label={tab.label} onClick={() => setValgtTabIndex(index)} />
+          ))}
+        </Tabs.List>
+      </Tabs>
       {valgtTabIndex === 0 &&
         mapAktiviteterTilTabell(
           behandlingUuid,

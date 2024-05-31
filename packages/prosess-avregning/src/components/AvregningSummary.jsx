@@ -13,7 +13,7 @@ import styles from './avregningSummary.module.css';
  *
  * Presentationskomponent
  */
-const AvregningSummary = ({ fom, tom, feilutbetaling, etterbetaling, inntrekk, ingenPerioderMedAvvik }) => (
+const AvregningSummary = ({ fom, tom, feilutbetaling, etterbetaling, inntrekk = null, ingenPerioderMedAvvik }) => (
   <>
     <BodyShort size="small" className={styles.summaryTitle}>
       <FormattedMessage id="Avregning.bruker" />
@@ -75,10 +75,6 @@ AvregningSummary.propTypes = {
   etterbetaling: PropTypes.number.isRequired,
   inntrekk: PropTypes.number,
   ingenPerioderMedAvvik: PropTypes.bool.isRequired,
-};
-
-AvregningSummary.defaultProps = {
-  inntrekk: null,
 };
 
 export default AvregningSummary;

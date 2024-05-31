@@ -8,7 +8,7 @@ const transformValues = (values, aksjonspunktCode) => ({
   kode: aksjonspunktCode,
 });
 
-const TempsaveButton = ({ formValues, saveUnntak, spinner, aksjonspunktCode, readOnly }) => {
+const TempsaveButton = ({ formValues, saveUnntak, spinner = false, aksjonspunktCode, readOnly = false }) => {
   const tempSave = event => {
     event.preventDefault();
     saveUnntak(transformValues(formValues, aksjonspunktCode));
@@ -31,11 +31,6 @@ TempsaveButton.propTypes = {
   saveUnntak: PropTypes.func.isRequired,
   spinner: PropTypes.bool,
   readOnly: PropTypes.bool,
-};
-
-TempsaveButton.defaultProps = {
-  spinner: false,
-  readOnly: false,
 };
 
 export default TempsaveButton;

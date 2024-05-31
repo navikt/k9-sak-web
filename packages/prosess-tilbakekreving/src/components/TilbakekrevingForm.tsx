@@ -379,7 +379,7 @@ export const slaSammenOriginaleOgLagredePeriode = createSelector(
       const originalPeriode = finnOriginalPeriode(lagretPeriode, perioder);
       return {
         ...originalPeriode,
-        harMerEnnEnYtelse: originalPeriode.ytelser.length > 1,
+        harMerEnnEnYtelse: originalPeriode?.ytelser?.length > 1,
         ...omit(lagretPeriode, 'feilutbetalingBelop'),
         feilutbetaling: lagretPeriode.feilutbetalingBelop,
         erTotalBelopUnder4Rettsgebyr,
@@ -390,7 +390,7 @@ export const slaSammenOriginaleOgLagredePeriode = createSelector(
       .filter((periode: DetaljertFeilutbetalingPeriode) => erIkkeLagret(periode, lagredePerioder))
       .map((periode: DetaljertFeilutbetalingPeriode) => ({
         ...periode,
-        harMerEnnEnYtelse: periode.ytelser.length > 1,
+        harMerEnnEnYtelse: periode?.ytelser?.length > 1,
         erTotalBelopUnder4Rettsgebyr,
       }));
 

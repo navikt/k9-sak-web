@@ -148,12 +148,6 @@ VedtakKlageFormImpl.propTypes = {
   ...formPropTypes,
 };
 
-VedtakKlageFormImpl.defaultProps = {
-  omgjortAarsak: undefined,
-  avvistArsaker: undefined,
-  fritekstTilBrev: undefined,
-};
-
 const transformValues = values =>
   values.aksjonspunktKoder.map(apCode => ({
     kode: apCode,

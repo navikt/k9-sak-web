@@ -1,5 +1,5 @@
-import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
-import Ikon from 'nav-frontend-ikoner-assets';
+import { XMarkIcon } from '@navikt/aksel-icons';
+import { Button, Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import React, { useState } from 'react';
 
 import DokumentLink from './DokumentLink';
@@ -78,15 +78,17 @@ const DokumenterIVurderingen = ({ dokumenter, onChange, onBlur, error, valgteDok
           {dokumentFilter.map(filter => {
             const { label } = vurderingDokumentfilterOptions.find(option => option.attributtNavn === filter);
             return (
-              <button
+              <Button
                 key={label}
                 onClick={() => updateDokumentFilter(filter)}
                 type="button"
                 className={styles.fjernFilterKnapp}
+                variant="tertiary"
+                iconPosition="right"
+                icon={<XMarkIcon />}
               >
                 {label}
-                <Ikon kind="x" />
-              </button>
+              </Button>
             );
           })}
         </div>

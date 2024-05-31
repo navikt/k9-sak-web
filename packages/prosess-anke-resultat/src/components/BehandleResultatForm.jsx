@@ -187,9 +187,9 @@ const AnkeResultatForm = ({
   handleSubmit,
   previewCallback,
   aksjonspunktCode,
-  formValues,
-  ankeVurderingResultat,
-  readOnly,
+  formValues = {},
+  ankeVurderingResultat = {},
+  readOnly = true,
   behandlingId,
   behandlingVersjon,
   ...formProps
@@ -253,13 +253,6 @@ AnkeResultatForm.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,
-};
-
-AnkeResultatForm.defaultProps = {
-  formValues: {},
-  readOnly: true,
-  readOnlySubmitButton: true,
-  ankevurderingresultat: {},
 };
 
 // TODO (TOR) Her ligg det masse som ikkje er felt i forma! Rydd

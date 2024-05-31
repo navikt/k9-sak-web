@@ -14,10 +14,10 @@ describe('<CollapseButton>', () => {
       ...mockProps,
       showDetails: true,
     };
-    const { container } = renderWithIntl(<CollapseButton {...props} />, { messages });
+    renderWithIntl(<CollapseButton {...props} />, { messages });
 
-    expect(screen.getByRole('button', { name: 'Vis færre detaljer' })).toBeInTheDocument();
-    expect(container.getElementsByClassName('chevron--opp').length).toBe(1);
+    expect(screen.getByRole('button', { name: 'Vis færre detaljer Ekspandert' })).toBeInTheDocument();
+    expect(screen.getByTitle('Ekspandert')).toBeInTheDocument();
   });
 
   it('skal vise CollapseButton med NedChevron og tilsvarende tekst når showDetails er false', () => {
@@ -25,8 +25,8 @@ describe('<CollapseButton>', () => {
       ...mockProps,
       showDetails: false,
     };
-    const { container } = renderWithIntl(<CollapseButton {...props} />, { messages });
-    expect(screen.getByRole('button', { name: 'Vis flere detaljer' })).toBeInTheDocument();
-    expect(container.getElementsByClassName('chevron--ned').length).toBe(1);
+    renderWithIntl(<CollapseButton {...props} />, { messages });
+    expect(screen.getByRole('button', { name: 'Vis flere detaljer Lukket' })).toBeInTheDocument();
+    expect(screen.getByTitle('Lukket')).toBeInTheDocument();
   });
 });
