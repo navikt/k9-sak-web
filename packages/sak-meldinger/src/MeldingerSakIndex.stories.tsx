@@ -8,9 +8,12 @@ import React from 'react';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
 import { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
-import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import type { Språkkode } from '@k9-sak-web/backend/k9sak/kodeverk/Språkkode.js';
 import mockedBrevmaler from '../../storybook/stories/mocks/brevmaler';
 import MeldingerSakIndex, { BackendApi } from './MeldingerSakIndex';
 import MessagesModalSakIndex from './MessagesModalSakIndex';
@@ -33,9 +36,9 @@ export default meta;
 
 type Story = StoryObj<typeof MeldingerSakIndex>;
 
-const emptySprakKode = {
-  kode: '',
-  kodeverk: '',
+const bokmål: Språkkode = {
+  kode: 'NB',
+  kodeverk: 'SPRAAK_KODE',
 };
 
 const defaultFakeBackend = {
@@ -90,7 +93,7 @@ const revurderingVarslingArsak = [
 export const SendMeldingPanel: Story = {
   args: {
     templates: mockedBrevmaler,
-    sprakKode: emptySprakKode,
+    sprakKode: bokmål,
     behandlingId: 1,
     behandlingVersjon: 1,
     isKontrollerRevurderingApOpen: false,
@@ -98,6 +101,21 @@ export const SendMeldingPanel: Story = {
     arbeidsgiverOpplysningerPerId: arbeidsgivere,
     revurderingVarslingArsak,
     erTilbakekreving: false,
+    featureToggles: { BRUK_V2_MELDINGER: false },
+    fagsak: {
+      saksnummer: '100',
+      sakstype: { kode: fagsakYtelsesType.PSB, kodeverk: 'FAGSAK_YTELSE' },
+      status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
+      person: {
+        aktørId: 'person-aktørid-1',
+      },
+    },
+    behandling: {
+      id: 1,
+      uuid: 'XUYPS4',
+      type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
+      sprakkode: bokmål,
+    },
     backendApi: defaultFakeBackend,
   },
 };
