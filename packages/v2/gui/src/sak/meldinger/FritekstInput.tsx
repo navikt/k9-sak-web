@@ -95,7 +95,7 @@ const resolveLanguageName = (språk: Språkkode): string => {
 };
 
 const resolveLanguageTagVariant = (språk: Språkkode): TagProps['variant'] =>
-  resolveLanguageName(språk) === 'Ukjent' ? 'warning-moderate' : 'info-moderate';
+  resolveLanguageName(språk) === 'Ukjent' ? 'warning' : 'info';
 
 /**
  * Denne komponent er for at bruker skal kunne skrive inn tekst og evt tittel i brev som har fritekstinnhold.
