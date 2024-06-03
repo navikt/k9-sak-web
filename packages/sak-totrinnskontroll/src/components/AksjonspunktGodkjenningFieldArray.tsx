@@ -39,7 +39,7 @@ interface OwnProps {
   behandlingStatus: Kodeverk;
   arbeidsforholdHandlingTyper: KodeverkMedNavn[];
   erTilbakekreving: boolean;
-  skjemalenkeTyper: KodeverkMedNavn[];
+  skjermlenkeTyper: KodeverkMedNavn[];
   lagLenke: (skjermlenkeCode: string) => Location;
 }
 
@@ -53,7 +53,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
   behandlingStatus,
   arbeidsforholdHandlingTyper,
   erTilbakekreving,
-  skjemalenkeTyper,
+  skjermlenkeTyper,
   lagLenke,
 }: OwnProps) => (
   <>
@@ -80,8 +80,8 @@ export const AksjonspunktGodkjenningFieldArray = ({
         totrinnskontrollAksjonspunkt,
       );
 
-      const skjermlenkeTypeKodeverk = skjemalenkeTyper.find(
-        skjemalenkeType => skjemalenkeType.kode === context.skjermlenkeType,
+      const skjermlenkeTypeKodeverk = skjermlenkeTyper.find(
+        skjermlenkeType => skjermlenkeType.kode === context.skjermlenkeType,
       );
 
       const hentSkjermlenkeTypeKodeverkNavn = () => {
@@ -93,7 +93,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
         } catch (err) {
           Sentry.captureEvent({
             message: 'Kunne ikke hente skjermlenkeTypeKodeverk.navn',
-            extra: { skjemalenkeTyper, skjermlenkeTypeKodeverk, skjermlenkeTypeContext: context.skjermlenkeType },
+            extra: { skjermlenkeTyper, skjermlenkeTypeKodeverk, skjermlenkeTypeContext: context.skjermlenkeType },
           });
           return '';
         }
