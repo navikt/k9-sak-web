@@ -12,7 +12,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/prosess-felles": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "2.5.10",
+    "@navikt/ft-plattform-komponenter": "2.5.11",
     "classnames": "2.5.1",
     "dayjs": "1.11.11",
     "lodash": "4.17.21",
@@ -24,7 +24,7 @@
     "react-redux": "9.1.2",
     "redux": "5.0.1",
     "redux-form": "8.3.10",
-    "reselect": "5.1.0"
+    "reselect": "5.1.1"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0"

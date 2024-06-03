@@ -33,7 +33,7 @@ interface PureOwnProps {
   readOnly: boolean;
   erTilbakekreving: boolean;
   arbeidsforholdHandlingTyper: KodeverkMedNavn[];
-  skjemalenkeTyper: KodeverkMedNavn[];
+  skjermlenkeTyper: KodeverkMedNavn[];
   lagLenke: (skjermlenkeCode: string) => Location;
 }
 
@@ -52,7 +52,7 @@ export const TotrinnskontrollBeslutterForm = ({
   readOnly,
   behandlingKlageVurdering,
   arbeidsforholdHandlingTyper,
-  skjemalenkeTyper,
+  skjermlenkeTyper,
   erTilbakekreving,
   aksjonspunktGodkjenning,
   totrinnskontrollSkjermlenkeContext,
@@ -83,7 +83,7 @@ export const TotrinnskontrollBeslutterForm = ({
         readOnly={readOnly}
         klageKA={!!behandlingKlageVurdering?.klageVurderingResultatNK}
         totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
-        skjemalenkeTyper={skjemalenkeTyper}
+        skjermlenkeTyper={skjermlenkeTyper}
         lagLenke={lagLenke}
       />
       <div className={styles.buttonRow}>
