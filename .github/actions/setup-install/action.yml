@@ -8,7 +8,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: ../setup-yarnrc
+    - uses: ./.github/actions/setup-yarnrc
       with:
         npmAuthToken: ${{ inputs.npmAuthToken }}
 
