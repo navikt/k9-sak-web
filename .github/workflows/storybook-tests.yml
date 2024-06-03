@@ -26,8 +26,26 @@ jobs:
       - name: Installere dependencies
         run: HUSKY=0 yarn install --immutable
 
-      - name: Installere Playwright
+      - name: Finn Playwright versjon
+        run: |
+          PLAYWRIGHT_VERSION=$(YARN_ENABLE_COLORS=false yarn info @playwright/test | grep @playwright | sed 's/.*://')
+          echo "Playwright's Version: $PLAYWRIGHT_VERSION"
+          echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_ENV
+
+      - name: Cache Playwright Browsers for Playwright versjon
+        id: cache-playwright-browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-browsers-${{ env.PLAYWRIGHT_VERSION }}
+
+      - name: Install Playwright with dependencies
+        if: steps.cache-playwright-browsers.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
+
+      - name: Install Playwright's dependencies
+        if: steps.cache-playwright-browsers.outputs.cache-hit == 'true'
+        run: npx playwright install-deps
 
       - name: Build Storybook
         run: yarn build-storybook-test --quiet
