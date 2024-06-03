@@ -30,7 +30,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Build Storybook
-        run: yarn build-storybook --quiet
+        run: yarn build-storybook-test --quiet
 
       - name: Serve Storybook and run tests
         run: |
