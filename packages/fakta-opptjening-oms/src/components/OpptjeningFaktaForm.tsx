@@ -376,6 +376,7 @@ export class OpptjeningFaktaFormImpl extends Component<
                 alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
                 alleKodeverk={alleKodeverk}
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+                erGodkjent={selectedOpptjeningActivity.erGodkjent}
               />
               <VerticalSpacer twentyPx />
             </>
