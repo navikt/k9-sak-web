@@ -1,9 +1,6 @@
 name: Lint, typescript-sjekk og bygg
 
 on:
-  push:
-    branches:
-      - 'TSFF-271-reusable-actions'
   workflow_call:
     inputs:
       run-build:
