@@ -33,7 +33,7 @@
     "preview": "vite preview",
     "storybook": "VITE_LOCAL_STORYBOOK=true storybook dev -p 9001",
     "build-storybook": "storybook build -o .static_storybook",
-    "build-storybook-test": "storybook build -c .storybook/test-config -o .static_storybook",
+    "build-storybook-test": "storybook build -o .static_storybook",
     "prepare": "husky install",
     "sentry-release": "(SENTRY_RELEASE=$(git rev-parse --short HEAD); node ./scripts/sentry-release.cjs)"
   },

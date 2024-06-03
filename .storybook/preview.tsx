@@ -10,14 +10,26 @@ import { MemoryRouter } from 'react-router-dom';
 // @ts-ignore
 const { VITE_LOCAL_STORYBOOK } = import.meta.env;
 
-initialize({
-  onUnhandledRequest: 'bypass',
-  serviceWorker: {
-    url: VITE_LOCAL_STORYBOOK ? '/mockServiceWorker.js' : '/k9-sak-web/mockServiceWorker.js',
-  },
-});
+let mswOptions = {};
+if (VITE_LOCAL_STORYBOOK || location.hostname === 'username.github.io') {
+  mswOptions = {
+    onUnhandledRequest: 'bypass',
+    serviceWorker: {
+      url: '/mockServiceWorker.js',
+    },
+  };
+} else {
+  mswOptions = {
+    onUnhandledRequest: 'bypass',
+    serviceWorker: {
+      url: '/k9-sak-web/mockServiceWorker.js',
+    },
+  };
+}
 
-const preview: Preview = {
+initialize(mswOptions);
+
+export const preview: Preview = {
   decorators: [
     Story => {
       const store = configureStore();
