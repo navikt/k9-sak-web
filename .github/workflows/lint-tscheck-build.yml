@@ -19,18 +19,10 @@ jobs:
       - name: Hente kode
         uses: actions/checkout@v4
 
-      - uses: ./.github/actions/setup-yarnrc
+      - name: Setup + install
+        uses: ./.github/actions/setup-install
         with:
           npmAuthToken: ${{ secrets.READER_TOKEN }}
-
-      - name: Sette opp Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'yarn'
-
-      - name: Installere dependencies
-        run: HUSKY=0 yarn install --immutable
 
       - name: Typescript-sjekk
         run: yarn ts-check
