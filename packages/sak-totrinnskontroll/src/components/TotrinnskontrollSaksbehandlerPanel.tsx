@@ -19,7 +19,7 @@ interface OwnProps {
   behandlingStatus: Kodeverk;
   erTilbakekreving: boolean;
   arbeidsforholdHandlingTyper: KodeverkMedNavn[];
-  skjemalenkeTyper: KodeverkMedNavn[];
+  skjermlenkeTyper: KodeverkMedNavn[];
   vurderArsaker: KodeverkMedNavn[];
   lagLenke: (skjermlenkeCode: string) => Location;
 }
@@ -30,7 +30,7 @@ const TotrinnskontrollSaksbehandlerPanel = ({
   behandlingStatus,
   arbeidsforholdHandlingTyper,
   erTilbakekreving,
-  skjemalenkeTyper,
+  skjermlenkeTyper,
   vurderArsaker,
   lagLenke,
 }: OwnProps) => (
@@ -45,8 +45,8 @@ const TotrinnskontrollSaksbehandlerPanel = ({
     </div>
     {totrinnskontrollSkjermlenkeContext.map(context => {
       const aksjonspunkter = context.totrinnskontrollAksjonspunkter;
-      const skjermlenkeTypeKodeverk = skjemalenkeTyper.find(
-        skjemalenkeType => skjemalenkeType.kode === context.skjermlenkeType,
+      const skjermlenkeTypeKodeverk = skjermlenkeTyper.find(
+        skjermlenkeType => skjermlenkeType.kode === context.skjermlenkeType,
       );
 
       if (aksjonspunkter.length > 0) {

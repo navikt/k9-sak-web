@@ -4,6 +4,7 @@ import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/sh
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
 import { BodyShort, Detail } from '@navikt/ds-react';
+import * as Sentry from '@sentry/browser';
 import { Location } from 'history';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -38,7 +39,7 @@ interface OwnProps {
   behandlingStatus: Kodeverk;
   arbeidsforholdHandlingTyper: KodeverkMedNavn[];
   erTilbakekreving: boolean;
-  skjemalenkeTyper: KodeverkMedNavn[];
+  skjermlenkeTyper: KodeverkMedNavn[];
   lagLenke: (skjermlenkeCode: string) => Location;
 }
 
@@ -52,7 +53,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
   behandlingStatus,
   arbeidsforholdHandlingTyper,
   erTilbakekreving,
-  skjemalenkeTyper,
+  skjermlenkeTyper,
   lagLenke,
 }: OwnProps) => (
   <>
@@ -79,15 +80,23 @@ export const AksjonspunktGodkjenningFieldArray = ({
         totrinnskontrollAksjonspunkt,
       );
 
-      const skjermlenkeTypeKodeverk = skjemalenkeTyper.find(
-        skjemalenkeType => skjemalenkeType.kode === context.skjermlenkeType,
+      const skjermlenkeTypeKodeverk = skjermlenkeTyper.find(
+        skjermlenkeType => skjermlenkeType.kode === context.skjermlenkeType,
       );
 
       const hentSkjermlenkeTypeKodeverkNavn = () => {
-        if (skjermlenkeTypeKodeverk.navn === 'Vedtak') {
-          return <FormattedMessage id="ToTrinnsForm.Vedtak.Brev" />;
+        try {
+          if (skjermlenkeTypeKodeverk.navn === 'Vedtak') {
+            return <FormattedMessage id="ToTrinnsForm.Vedtak.Brev" />;
+          }
+          return skjermlenkeTypeKodeverk.navn;
+        } catch (err) {
+          Sentry.captureEvent({
+            message: 'Kunne ikke hente skjermlenkeTypeKodeverk.navn',
+            extra: { skjermlenkeTyper, skjermlenkeTypeKodeverk, skjermlenkeTypeContext: context.skjermlenkeType },
+          });
+          return '';
         }
-        return skjermlenkeTypeKodeverk.navn;
       };
 
       return (
