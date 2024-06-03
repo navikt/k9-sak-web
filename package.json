@@ -33,6 +33,7 @@
     "preview": "vite preview",
     "storybook": "VITE_LOCAL_STORYBOOK=true storybook dev -p 9001",
     "build-storybook": "storybook build -o .static_storybook",
+    "build-storybook-test": "VITE_LOCAL_STORYBOOK=true storybook build --test -o .static_storybook",
     "prepare": "husky install",
     "sentry-release": "(SENTRY_RELEASE=$(git rev-parse --short HEAD); node ./scripts/sentry-release.cjs)"
   },
@@ -66,6 +67,7 @@
     "vite-plugin-svgr": "4.2.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.44.1",
     "@sentry/cli": "2.32.1",
     "@storybook/addon-a11y": "^8.1.5",
     "@storybook/addon-actions": "^8.1.5",

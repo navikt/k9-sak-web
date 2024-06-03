@@ -5,6 +5,10 @@ jobs:
     uses: ./.github/workflows/test.yml
     secrets: inherit
 
+  storybook-test:
+    uses: ./.github/workflows/storybook-tests.yml
+    secrets: inherit
+
   lint-tscheck-build:
     uses: ./.github/workflows/lint-tscheck-build.yml
     secrets: inherit

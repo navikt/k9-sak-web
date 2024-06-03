@@ -1,0 +1,57 @@
+name: 'Storybook Tests'
+on:
+  workflow_call:
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hente kode
+        uses: actions/checkout@v4
+
+      - name: Setup .yarnrc.yml
+        run: |
+          yarn config set npmScopes.navikt.npmRegistryServer "https://npm.pkg.github.com"
+          yarn config set npmScopes.navikt.npmAlwaysAuth true
+          yarn config set npmScopes.navikt.npmAuthToken $NPM_AUTH_TOKEN
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+
+      - name: Sette opp Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.12.2'
+          cache: 'yarn'
+
+      - name: Installere dependencies
+        run: HUSKY=0 yarn install --immutable
+
+      - name: Finn Playwright versjon
+        run: |
+          PLAYWRIGHT_VERSION=$(YARN_ENABLE_COLORS=false yarn info @playwright/test | grep @playwright | sed 's/.*://')
+          echo "Playwright's Version: $PLAYWRIGHT_VERSION"
+          echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_ENV
+
+      - name: Cache Playwright Browsers for Playwright versjon
+        id: cache-playwright-browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-browsers-${{ env.PLAYWRIGHT_VERSION }}
+
+      - name: Installer Playwright med avhengigheter
+        if: steps.cache-playwright-browsers.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps
+
+      - name: Installer Playwrights avhengigheter
+        if: steps.cache-playwright-browsers.outputs.cache-hit == 'true'
+        run: npx playwright install-deps
+
+      - name: Build Storybook
+        run: yarn build-storybook-test --quiet
+
+      - name: Serve Storybook and run tests
+        run: |
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "npx http-server .static_storybook --port 9001 --silent" \
+            "npx wait-on tcp:9001 && yarn test-storybook"
