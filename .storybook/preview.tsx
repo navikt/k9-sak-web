@@ -11,7 +11,7 @@ import { MemoryRouter } from 'react-router-dom';
 const { VITE_LOCAL_STORYBOOK } = import.meta.env;
 
 let mswOptions = {};
-if (VITE_LOCAL_STORYBOOK || location.hostname === 'username.github.io') {
+if (VITE_LOCAL_STORYBOOK || location.hostname === 'navikt.github.io') {
   mswOptions = {
     onUnhandledRequest: 'bypass',
     serviceWorker: {
