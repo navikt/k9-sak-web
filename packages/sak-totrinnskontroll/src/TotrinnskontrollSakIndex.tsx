@@ -121,7 +121,7 @@ const TotrinnskontrollSakIndex = ({
   );
 
   const erStatusFatterVedtak = behandling.status.kode === BehandlingStatus.FATTER_VEDTAK;
-  const skjemalenkeTyper = alleKodeverk[kodeverkTyper.SKJERMLENKE_TYPE];
+  const skjermlenkeTyper = alleKodeverk[kodeverkTyper.SKJERMLENKE_TYPE];
   const arbeidsforholdHandlingTyper = alleKodeverk[kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE];
   const vurderArsaker = alleKodeverk[kodeverkTyper.VURDER_AARSAK];
 
@@ -137,7 +137,7 @@ const TotrinnskontrollSakIndex = ({
           onSubmit={submitHandler}
           behandlingKlageVurdering={behandlingKlageVurdering}
           arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
-          skjemalenkeTyper={skjemalenkeTyper}
+          skjermlenkeTyper={skjermlenkeTyper}
           erTilbakekreving={erTilbakekreving}
           lagLenke={lagLenke}
         />
@@ -149,7 +149,7 @@ const TotrinnskontrollSakIndex = ({
           behandlingStatus={behandling.status}
           erTilbakekreving={erTilbakekreving}
           arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
-          skjemalenkeTyper={skjemalenkeTyper}
+          skjermlenkeTyper={skjermlenkeTyper}
           lagLenke={lagLenke}
           vurderArsaker={vurderArsaker}
         />
