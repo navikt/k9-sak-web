@@ -19,7 +19,7 @@ jobs:
       - name: Hente kode
         uses: actions/checkout@v4
 
-      - name: Setup + install
+      - name: Setup + Install
         uses: ./.github/actions/setup-install
         with:
           npmAuthToken: ${{ secrets.READER_TOKEN }}
