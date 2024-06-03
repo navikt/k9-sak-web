@@ -63,7 +63,7 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
         erTilbakekreving
         lagLenke={() => location}
         arbeidsforholdHandlingTyper={[]}
-        skjemalenkeTyper={[]}
+        skjermlenkeTyper={[]}
         aksjonspunktGodkjenning={[]}
       />,
       { messages },
