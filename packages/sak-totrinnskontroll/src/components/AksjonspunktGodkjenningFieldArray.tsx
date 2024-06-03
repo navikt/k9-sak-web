@@ -4,6 +4,7 @@ import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/sh
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
 import { BodyShort, Detail } from '@navikt/ds-react';
+import * as Sentry from '@sentry/browser';
 import { Location } from 'history';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -84,10 +85,18 @@ export const AksjonspunktGodkjenningFieldArray = ({
       );
 
       const hentSkjermlenkeTypeKodeverkNavn = () => {
-        if (skjermlenkeTypeKodeverk.navn === 'Vedtak') {
-          return <FormattedMessage id="ToTrinnsForm.Vedtak.Brev" />;
+        try {
+          if (skjermlenkeTypeKodeverk.navn === 'Vedtak') {
+            return <FormattedMessage id="ToTrinnsForm.Vedtak.Brev" />;
+          }
+          return skjermlenkeTypeKodeverk.navn;
+        } catch (err) {
+          Sentry.captureEvent({
+            message: 'Kunne ikke hente skjermlenkeTypeKodeverk.navn',
+            extra: { skjemalenkeTyper, skjermlenkeTypeKodeverk, skjermlenkeTypeContext: context.skjermlenkeType },
+          });
+          return '';
         }
-        return skjermlenkeTypeKodeverk.navn;
       };
 
       return (
