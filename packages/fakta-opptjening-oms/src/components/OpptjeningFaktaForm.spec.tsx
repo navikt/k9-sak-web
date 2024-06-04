@@ -5,10 +5,13 @@ import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import alleKodeverk from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { getKodeverkNavnFraKodeFnMock } from '@k9-sak-web/lib/kodeverk/mocks/kodeverkNavnFraKodeMock.js';
 import { OpptjeningFaktaFormImpl as OpptjeningFaktaForm } from './OpptjeningFaktaForm';
 import messages from '../../i18n/nb_NO.json';
 
 describe('<OpptjeningFaktaForm>', () => {
+  const kodeverkNavnFraKode = getKodeverkNavnFraKodeFnMock(alleKodeverk);
+
   const opptjeningActivities = [
     {
       id: 1,
@@ -109,6 +112,7 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningList={opptjeningList}
         arbeidsgiverOpplysningerPerId={undefined}
         dokStatus="test"
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
       />,
       { messages },
     );
@@ -140,6 +144,7 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningList={opptjeningList}
         arbeidsgiverOpplysningerPerId={undefined}
         dokStatus="test"
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
       />,
       { messages },
     );
@@ -170,6 +175,7 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningList={opptjeningList}
         arbeidsgiverOpplysningerPerId={undefined}
         dokStatus="test"
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
       />,
       { messages },
     );
@@ -212,6 +218,7 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningList={updatedOpptjeningList}
         arbeidsgiverOpplysningerPerId={undefined}
         dokStatus="test"
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
       />,
       { messages },
     );
@@ -244,6 +251,7 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningList={opptjeningList}
         arbeidsgiverOpplysningerPerId={undefined}
         dokStatus="test"
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
       />,
       { messages },
     );
@@ -275,6 +283,7 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningList={opptjeningList}
         arbeidsgiverOpplysningerPerId={undefined}
         dokStatus="test"
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
       />,
       { messages },
     );
@@ -336,6 +345,7 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningList={opptjeningList}
         arbeidsgiverOpplysningerPerId={undefined}
         dokStatus="test"
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
       />,
       { messages },
     );
@@ -371,6 +381,7 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningList={opptjeningList}
         arbeidsgiverOpplysningerPerId={undefined}
         dokStatus="test"
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
       />,
       { messages },
     );

@@ -5,11 +5,9 @@ import { Timeline } from '@fpsak-frontend/tidslinje';
 import { DDMMYYYY_DATE_FORMAT, isEqual } from '@fpsak-frontend/utils';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
-import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
 import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import DateContainer from './DateContainer';
 import styles from './opptjeningTimeLine.module.css';
-
 // Desse må alltid vare med for rett skala av tidslinjen då den alltid skall vare 10 månader fra skjæringstidpunkten
 const standardItems = (opptjeningFomDato: string, opptjeningTomDato: string): any[] => {
   const items = [
@@ -70,8 +68,10 @@ const createItems = (
   return items.concat(standardItems(opptjeningFomDato, opptjeningTomDato));
 };
 
-const createGroups = (opptjeningPeriods: OpptjeningAktivitet[]) => {
-  const { kodeverkNavnFraKode } = useKodeverkV2();
+const createGroups = (
+  opptjeningPeriods: OpptjeningAktivitet[],
+  kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string,
+) => {
   const duplicatesRemoved = opptjeningPeriods.reduce((accPeriods: OpptjeningAktivitet[], period) => {
     const hasPeriod = accPeriods.some(
       p =>
@@ -116,6 +116,7 @@ interface OpptjeningTimeLineProps {
   opptjeningFomDato: string;
   opptjeningTomDato: string;
   harApneAksjonspunkter: boolean;
+  kodeverkNavnFraKode: (kode: string, kodeverk: KodeverkType) => string;
 }
 
 interface OpptjeningTimeLineState {
@@ -145,8 +146,9 @@ class OpptjeningTimeLine extends Component<OpptjeningTimeLineProps, OpptjeningTi
 
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
-    const { opptjeningPeriods, opptjeningFomDato, opptjeningTomDato, harApneAksjonspunkter } = this.props;
-    const groups = createGroups(opptjeningPeriods);
+    const { opptjeningPeriods, opptjeningFomDato, opptjeningTomDato, harApneAksjonspunkter, kodeverkNavnFraKode } =
+      this.props;
+    const groups = createGroups(opptjeningPeriods, kodeverkNavnFraKode);
     const items = createItems(opptjeningPeriods, groups, opptjeningFomDato, opptjeningTomDato, harApneAksjonspunkter);
     this.setState({
       groups,
@@ -156,9 +158,9 @@ class OpptjeningTimeLine extends Component<OpptjeningTimeLineProps, OpptjeningTi
 
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(nextProps) {
-    const { opptjeningPeriods, harApneAksjonspunkter } = this.props;
+    const { opptjeningPeriods, harApneAksjonspunkter, kodeverkNavnFraKode } = this.props;
     if (!isEqual(opptjeningPeriods, nextProps.opptjeningPeriods)) {
-      const groups = createGroups(nextProps.opptjeningPeriods);
+      const groups = createGroups(nextProps.opptjeningPeriods, kodeverkNavnFraKode);
       const items = createItems(
         nextProps.opptjeningPeriods,
         groups,

@@ -21,6 +21,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
+import { KodeverkType } from '@k9-sak-web/lib/types/index.js';
 import ActivityPanel, { activityPanelNameFormName } from './activity/ActivityPanel';
 import styles from './opptjeningFaktaForm.module.css';
 import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';
@@ -79,6 +80,7 @@ interface OpptjeningFaktaFormImplProps {
   isDirty: boolean;
   hasAksjonspunkt: boolean;
   opptjeningList: Opptjening[];
+  kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string;
 }
 
 interface StateProps {
@@ -280,6 +282,7 @@ export class OpptjeningFaktaFormImpl extends Component<
       alleMerknaderFraBeslutter,
       alleKodeverk,
       arbeidsgiverOpplysningerPerId,
+      kodeverkNavnFraKode,
     } = this.props;
     if (!opptjeningList || opptjeningList.length === 0) {
       return <BodyShort size="small">Fant ingen opptjeningsaktiviteter</BodyShort>;
@@ -347,6 +350,7 @@ export class OpptjeningFaktaFormImpl extends Component<
             opptjeningTomDato={opptjeningTom}
             selectedPeriod={selectedOpptjeningActivity}
             harApneAksjonspunkter={harApneAksjonspunkter}
+            kodeverkNavnFraKode={kodeverkNavnFraKode}
           />
           <TimeLineNavigation openPeriodInfo={this.openPeriodInfo} className={styles.timelineNavigationContainer} />
           <VerticalSpacer eightPx />

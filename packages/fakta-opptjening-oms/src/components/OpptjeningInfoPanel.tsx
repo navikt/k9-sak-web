@@ -6,6 +6,7 @@ import moment from 'moment';
 import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { addDaysToDate, omit } from '@fpsak-frontend/utils';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import {
   Aksjonspunkt,
   ArbeidsgiverOpplysningerPerId,
@@ -64,25 +65,30 @@ export const OpptjeningInfoPanel = ({
   submitting,
   dirty,
   handleSubmit,
-}: Partial<OpptjeningInfoPanelProps> & InjectedFormProps & StateProps) => (
-  <form onSubmit={handleSubmit}>
-    <OpptjeningFaktaForm
-      behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
-      opptjeningList={opptjeningList}
-      dokStatus={dokStatus}
-      readOnly={readOnly}
-      harApneAksjonspunkter={harApneAksjonspunkter}
-      hasAksjonspunkt={aksjonspunkt !== undefined}
-      formName={formName}
-      submitting={submitting}
-      isDirty={dirty}
-      alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-      alleKodeverk={alleKodeverk}
-      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-    />
-  </form>
-);
+}: Partial<OpptjeningInfoPanelProps> & InjectedFormProps & StateProps) => {
+  const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
+  const kodeverkNavnFraKode = getKodeverkNavnFraKodeFn();
+  return (
+    <form onSubmit={handleSubmit}>
+      <OpptjeningFaktaForm
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        opptjeningList={opptjeningList}
+        dokStatus={dokStatus}
+        readOnly={readOnly}
+        harApneAksjonspunkter={harApneAksjonspunkter}
+        hasAksjonspunkt={aksjonspunkt !== undefined}
+        formName={formName}
+        submitting={submitting}
+        isDirty={dirty}
+        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+        alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
+      />
+    </form>
+  );
+};
 
 const addDay = (date: string) => addDaysToDate(date, 1);
 const getOpptjeningsperiodeIfEqual = (activityDate: string, opptjeningsperiodeDate: string) =>
