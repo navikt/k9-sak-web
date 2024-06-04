@@ -34,3 +34,8 @@ jobs:
           build_command: yarn build-storybook
           path: .static_storybook
           checkout: false
+
+      - name: Oppdater Playwright install cache for Storybook-tester
+        uses: ./.github/actions/setup-playwright
+        with:
+          cacheOnly: 'true'
