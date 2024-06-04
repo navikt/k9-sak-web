@@ -12,7 +12,14 @@ interface OptionGridProps {
   rows?: number;
 }
 
-export const OptionGrid = ({ columns, rows, options, spaceBetween, isEdited, direction }: OptionGridProps) => {
+export const OptionGrid = ({
+  columns = 0,
+  rows = 0,
+  options,
+  spaceBetween = false,
+  isEdited = false,
+  direction = 'horizontal',
+}: OptionGridProps) => {
   if (direction === 'vertical') {
     const numRows = rows || options.length;
     return (
@@ -41,14 +48,6 @@ export const OptionGrid = ({ columns, rows, options, spaceBetween, isEdited, dir
       </FlexRow>
     </FlexContainer>
   );
-};
-
-OptionGrid.defaultProps = {
-  columns: 0,
-  rows: 0,
-  spaceBetween: false,
-  isEdited: false,
-  direction: 'horizontal',
 };
 
 export default OptionGrid;

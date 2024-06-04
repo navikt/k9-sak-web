@@ -23,7 +23,7 @@ const behandling = {
   },
 };
 
-const familieHendelse = {
+const familiehendelse = {
   register: {
     avklartBarn: [
       {
@@ -85,7 +85,7 @@ export const visForFørstegangsbehandling = args => (
 );
 
 visForFørstegangsbehandling.args = {
-  familieHendelse,
+  familiehendelse,
   soknad,
   soknadOriginalBehandling,
   familiehendelseOriginalBehandling,
@@ -110,7 +110,7 @@ export const visForRevurdering = args => (
 );
 
 visForRevurdering.args = {
-  familieHendelse,
+  familiehendelse,
   soknad,
   soknadOriginalBehandling,
   familiehendelseOriginalBehandling,

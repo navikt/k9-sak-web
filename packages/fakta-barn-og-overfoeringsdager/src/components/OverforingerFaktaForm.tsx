@@ -6,9 +6,8 @@ import {
 } from '@fpsak-frontend/form/src/behandlingForm';
 import { FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
-import { Label } from '@navikt/ds-react';
+import { HelpText, Label } from '@navikt/ds-react';
 import isEmpty from 'just-is-empty';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -81,9 +80,9 @@ export const OverforingerFaktaFormImpl = ({
                 },
               ]}
             />
-            <Hjelpetekst>
+            <HelpText>
               <FormattedMessage id="FaktaRammevedtak.Overføringer.Hjelpetekst" values={{ br: <br /> }} />
-            </Hjelpetekst>
+            </HelpText>
           </FlexRow>
           <OverføringsdagerPanelgruppe
             overføringer={overføringFår}

@@ -13,14 +13,6 @@
   margin-bottom: 8rem;
 }
 
-.mainComponent :global .nav-frontend-tabs__tab-label {
-  padding-bottom: 0.1rem;
-}
-
-.mainComponent :global .nav-frontend-tabs__tab-inner--aktiv .nav-frontend-tabs__tab-label {
-  border-bottom: 2px solid #0067c5;
-}
-
 .mainComponent :global .alertstripe {
   padding-top: 0.4375rem;
   padding-bottom: 0.4375rem;
@@ -30,12 +22,8 @@
   position: relative;
 }
 
-.tabItem__warningIcon {
-  position: absolute;
-  right: 0;
-  bottom: -4px;
-}
-
 .tabItemExtended {
-  padding-right: 2rem;
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
 }

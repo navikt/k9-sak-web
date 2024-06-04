@@ -1,7 +1,7 @@
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { FilterFilled } from '@navikt/ds-icons';
-import { BodyShort, Checkbox } from '@navikt/ds-react';
+import { Button, Checkbox } from '@navikt/ds-react';
 import classNames from 'classnames';
-import Chevron from 'nav-frontend-chevron';
 import React, { useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import styles from './filterList.module.css';
@@ -22,10 +22,15 @@ interface FilterListProps {
 }
 
 const ChevronWithText = ({ chevronDirection, onClick, text }: ChevronWithTextProps): JSX.Element => (
-  <button type="button" className={styles.chevronDropdown__toggleButton} onClick={onClick}>
-    <BodyShort className={styles.chevronDropdown__toggleButton__text}>{text}</BodyShort>
-    <Chevron type={chevronDirection} />
-  </button>
+  <Button
+    type="button"
+    onClick={onClick}
+    icon={chevronDirection === 'opp' ? <ChevronUpIcon /> : <ChevronDownIcon />}
+    iconPosition="right"
+    variant="tertiary"
+  >
+    {text}
+  </Button>
 );
 
 const FilterList = ({ text, activeFilters, onFilterChange, filterOptions }: FilterListProps): JSX.Element => {

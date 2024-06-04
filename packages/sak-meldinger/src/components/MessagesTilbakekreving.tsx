@@ -21,11 +21,9 @@ import {
 import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidlingUtils';
 import {
   ArbeidsgiverOpplysningerPerId,
-  Brevmal,
   Brevmaler,
   Kodeverk,
   KodeverkMedNavn,
-  Mottaker,
   Personopplysninger,
 } from '@k9-sak-web/types';
 
@@ -33,6 +31,8 @@ import InputField from '@fpsak-frontend/form/src/InputField';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import { Button } from '@navikt/ds-react';
+import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
+import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 import styles from './messages.module.css';
 
@@ -63,12 +63,12 @@ interface PureOwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   previewCallback: (
-    overstyrtMottaker: Mottaker,
+    overstyrtMottaker: MottakerDto,
     brevmalkode: string,
     fritekst: string,
     fritekstbrev?: Fritekstbrev,
   ) => void;
-  templates: Brevmaler | Brevmal[];
+  templates: Brevmaler | Template[];
   sprakKode?: Kodeverk;
   revurderingVarslingArsak: KodeverkMedNavn[];
   isKontrollerRevurderingApOpen?: boolean;
@@ -145,12 +145,12 @@ export const MessagesTilbakekrevingImpl = ({
 
   const languageCode = getLanguageCodeFromSprakkode(sprakKode);
 
-  const recipients: Mottaker[] =
+  const recipients: MottakerDto[] =
     templates && brevmalkode && templates[brevmalkode] && Array.isArray(templates[brevmalkode].mottakere)
       ? templates[brevmalkode].mottakere
       : [];
 
-  const tmpls: Brevmal[] = transformTemplates(templates);
+  const tmpls: Template[] = transformTemplates(templates);
 
   const { startRequest: hentFritekstMaler, data: fritekstMaler } = restApiMessagesHooks.useRestApiRunner<
     { tittel: string; fritekst: string }[]
@@ -214,7 +214,7 @@ export const MessagesTilbakekrevingImpl = ({
             validate={[required]}
             placeholder={intl.formatMessage({ id: 'Messages.ChooseTemplate' })}
             selectValues={tmpls.map(template => (
-              <option key={template.kode} value={template.kode} disabled={template.tilgjengelig === false}>
+              <option key={template.kode} value={template.kode}>
                 {template.navn}
               </option>
             ))}
@@ -341,7 +341,7 @@ export const MessagesTilbakekrevingImpl = ({
   );
 };
 
-const buildInitalValues = (templates: Brevmaler | Brevmal[], isKontrollerRevurderingApOpen?: boolean): FormValues => {
+const buildInitalValues = (templates: Brevmaler | Template[], isKontrollerRevurderingApOpen?: boolean): FormValues => {
   let brevmalkode = Array.isArray(templates) ? templates[0].kode : null;
   let overstyrtMottaker = JSON.stringify(RECIPIENT);
 

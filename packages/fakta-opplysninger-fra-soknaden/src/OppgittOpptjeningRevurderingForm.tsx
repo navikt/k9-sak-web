@@ -17,9 +17,8 @@ import {
 } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Behandling, SubmitCallback } from '@k9-sak-web/types';
 import OpplysningerFraSøknaden, { Måned } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
-import { Button } from '@navikt/ds-react';
+import { Button, Tabs } from '@navikt/ds-react';
 import moment from 'moment';
-import { TabsPure } from 'nav-frontend-tabs';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -143,15 +142,22 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
         </Button>
       )}
       <div className={styles.tabsContainer}>
-        <TabsPure
-          tabs={oppgittOpptjening.måneder.map((currentOppgittOpptjening, currentOppgittOpptjeningIndex) => ({
-            aktiv: activeTab === currentOppgittOpptjeningIndex,
-            label: `${dateFormat(currentOppgittOpptjening.måned.fom)} - ${dateFormat(
-              currentOppgittOpptjening.måned.tom,
-            )}`,
-          }))}
-          onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
-        />
+        <Tabs defaultValue="0">
+          <Tabs.List>
+            {oppgittOpptjening.måneder.map((currentOppgittOpptjening, currentOppgittOpptjeningIndex) => (
+              <Tabs.Tab
+                key={`${dateFormat(currentOppgittOpptjening.måned.fom)} - ${dateFormat(
+                  currentOppgittOpptjening.måned.tom,
+                )}`}
+                value={`${currentOppgittOpptjeningIndex}`}
+                label={`${dateFormat(currentOppgittOpptjening.måned.fom)} - ${dateFormat(
+                  currentOppgittOpptjening.måned.tom,
+                )}`}
+                onClick={() => setActiveTab(currentOppgittOpptjeningIndex)}
+              />
+            ))}
+          </Tabs.List>
+        </Tabs>
       </div>
       <div className={styles.tabContent}>
         <FieldArray

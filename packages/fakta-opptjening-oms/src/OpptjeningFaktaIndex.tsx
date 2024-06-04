@@ -1,14 +1,14 @@
 import {
   Aksjonspunkt,
+  ArbeidsgiverOpplysningerPerId,
   Opptjening,
   OpptjeningBehandling,
   SubmitCallback,
   UtlandDokStatus,
-  ArbeidsgiverOpplysningerPerId,
 } from '@k9-sak-web/types';
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import React from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import OpptjeningInfoPanel from './components/OpptjeningInfoPanel';
 
@@ -66,10 +66,5 @@ const OpptjeningFaktaIndex = ({
     />
   </RawIntlProvider>
 );
-
-OpptjeningFaktaIndex.defaultProps = {
-  opptjening: undefined,
-  utlandDokStatus: undefined,
-};
 
 export default OpptjeningFaktaIndex;

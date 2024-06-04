@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { validateTextCharacters } from '@k9-sak-web/gui/utils/validation/validateTextCharacters.js';
 import { removeSpacesFromNumber } from '../currencyUtils';
 import { fodselsnummerPattern, isValidFodselsnummer } from '../fodselsnummerUtils';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '../formats';
@@ -46,8 +47,6 @@ import {
   nameRegex,
   numberRegex,
   saksnummerOrFodselsnummerPattern,
-  textGyldigRegex,
-  textRegex,
   tomorrow,
   yesterday,
 } from './validatorsHelper';
@@ -133,9 +132,15 @@ export const hasValidFodselsnummerFormat = text =>
 export const hasValidFodselsnummer = text => (!isValidFodselsnummer(text) ? invalidFodselsnummerMessage() : null);
 
 export const hasValidText = text => {
-  if (!textRegex.test(text)) {
-    const illegalChars = text.replace(textGyldigRegex, '');
-    return invalidTextMessage(illegalChars.replace(/[\t]/g, 'Tabulatortegn'));
+  if (text === undefined || text === null) {
+    return null;
+  }
+  const { invalidCharacters } = validateTextCharacters(text);
+  if (invalidCharacters?.length > 0) {
+    const invalidCharacterString: string = invalidCharacters
+      .map(invalidChar => invalidChar.replace(/[\t]/, 'Tabulatortegn'))
+      .join('');
+    return invalidTextMessage(invalidCharacterString);
   }
   return null;
 };

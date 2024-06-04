@@ -1,11 +1,12 @@
-import Link from '../../src/types/Link';
 import LinkRel from '../../src/constants/LinkRel';
+import Link from '../../src/types/Link';
+import { mockUrlPrepend } from '../constants';
 
 const links: Link[] = [
   {
     rel: LinkRel.OPPRETT_VURDERING,
     type: 'POST',
-    href: 'http://localhost:8082/mock/opprett-vurdering',
+    href: `${mockUrlPrepend}/mock/opprett-vurdering`,
     versjon: null,
     requestPayload: {
       behandlingUuid: 'HER_ER_BEHANDLINGSID',
@@ -14,7 +15,7 @@ const links: Link[] = [
   {
     rel: LinkRel.DATA_TIL_VURDERING,
     type: 'GET',
-    href: 'http://localhost:8082/mock/data-til-vurdering',
+    href: `${mockUrlPrepend}/mock/data-til-vurdering`,
     versjon: null,
   },
 ];

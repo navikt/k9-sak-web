@@ -79,7 +79,9 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
     const raden: TidslinjeRad<OverlappendePeriode> = rader.find(rad =>
       rad.perioder.find(periode => periode.id === eventProps.items[0]),
     );
-    setValgtPeriode(raden.perioder.find(periode => periode.id === eventProps.items[0]));
+    if (raden) {
+      setValgtPeriode(raden.perioder.find(periode => periode.id === eventProps.items[0]));
+    }
   };
 
   const getTidslinje = () =>

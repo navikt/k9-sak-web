@@ -22,7 +22,7 @@ interface MedlemskapEndringerTabellProps {
 }
 
 const MedlemskapEndringerTabellImpl = ({
-  perioder,
+  perioder = [],
   velgPeriodeCallback,
   selectedId,
 }: MedlemskapEndringerTabellProps) => {
@@ -79,10 +79,5 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
 };
 
 const MedlemskapEndringerTabell = connect(mapStateToPropsFactory)(MedlemskapEndringerTabellImpl);
-
-MedlemskapEndringerTabellImpl.defaultProps = {
-  perioder: [],
-  selectedId: undefined,
-};
 
 export default MedlemskapEndringerTabell;

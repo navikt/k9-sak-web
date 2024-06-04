@@ -14,7 +14,7 @@ const getHendelseUndertyper = (årsakNavn, årsaker) => {
 
 export const FeilutbetalingPerioderFormImpl = ({
   periode,
-  årsak,
+  årsak = null,
   elementId,
   årsaker,
   readOnly,
@@ -60,10 +60,6 @@ export const FeilutbetalingPerioderFormImpl = ({
       <Table.DataCell className={styles.redText}>{periode.belop}</Table.DataCell>
     </Table.Row>
   );
-};
-
-FeilutbetalingPerioderFormImpl.defaultProps = {
-  årsak: null,
 };
 
 FeilutbetalingPerioderFormImpl.propTypes = {

@@ -13,11 +13,9 @@ import {
   VilkårEnum,
 } from '@k9-sak-web/types';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
-import { BodyShort, Box, Label, Table } from '@navikt/ds-react';
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
+import { BodyShort, Box, Button, HelpText, Label, Table, Tabs } from '@navikt/ds-react';
 import classNames from 'classnames';
-import NavFrontendChevron from 'nav-frontend-chevron';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import Tabs from 'nav-frontend-tabs';
 import React, { ReactNode, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Utfall from './Utfall';
@@ -311,15 +309,15 @@ const AktivitetTabell = ({
                   {skalÅrsakVises && <Table.DataCell>{formaterFraværsårsak(fraværÅrsak)}</Table.DataCell>}
                   <Table.DataCell>{`${utbetalingsgrad}%`}</Table.DataCell>
                   <Table.DataCell>
-                    <button
+                    <Button
+                      variant="tertiary"
                       className={styles.utvidelsesknapp}
                       onClick={() => velgPeriode(index)}
                       type="button"
                       aria-expanded={erValgt}
                       aria-label={`Utvid rad for perioden ${formatereLukketPeriode(periode)}`}
-                    >
-                      <NavFrontendChevron type={erValgt ? 'opp' : 'ned'} />
-                    </button>
+                      icon={erValgt ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                    />
                   </Table.DataCell>
                 </Table.Row>
                 {erValgt && (
@@ -327,21 +325,26 @@ const AktivitetTabell = ({
                     <Table.Row className={styles.fanerad} shadeOnHover={false}>
                       <Table.DataCell colSpan={antallKolonner}>
                         <div className={styles.fanewrapper}>
-                          <Tabs
-                            tabs={faner.map(id => ({ label: <FormattedMessage id={id} /> }))}
-                            onChange={(e, i) => velgDetaljfane(i)}
-                            kompakt
-                            defaultAktiv={valgteDetaljfaner?.[index]}
-                          />
+                          <Tabs defaultValue={`${valgteDetaljfaner?.[index]}`} size="small">
+                            <Tabs.List>
+                              {faner.map((id, idx) => (
+                                <Tabs.Tab
+                                  key={id}
+                                  value={id}
+                                  label={<FormattedMessage id={id} />}
+                                  onClick={() => velgDetaljfane(idx)}
+                                />
+                              ))}
+                            </Tabs.List>
+                          </Tabs>
                           {!nøkkeltall && (
                             <>
-                              {/* Nav-frontend-tabs støtter ikke deaktiverte faner */}
-                              <div className={styles.deaktivertFane}>
+                              <BodyShort size="small" className={styles.deaktivertFane}>
                                 <FormattedMessage id="Uttaksplan.Nokkeltall" />
-                              </div>
-                              <Hjelpetekst>
+                              </BodyShort>
+                              <HelpText>
                                 <FormattedMessage id="Nøkkeltall.Deaktivert" />
-                              </Hjelpetekst>
+                              </HelpText>
                             </>
                           )}
                           {valgteDetaljfaner?.[valgtPeriodeIndex] === Fanenavn.NOKKELTALL && (

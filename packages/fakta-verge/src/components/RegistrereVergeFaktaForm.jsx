@@ -14,7 +14,13 @@ import vergeType from '../kodeverk/vergeType';
  *
  * Formkomponent. Registrering og oppdatering av verge.
  */
-export const RegistrereVergeFaktaForm = ({ intl, readOnly, vergetyper, alleMerknaderFraBeslutter, valgtVergeType }) => (
+export const RegistrereVergeFaktaForm = ({
+  intl,
+  readOnly,
+  vergetyper = [],
+  alleMerknaderFraBeslutter,
+  valgtVergeType,
+}) => (
   <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_VERGE]}>
     <div>
       <HGrid gap="1" columns={{ xs: '5fr 7fr' }}>
@@ -96,11 +102,6 @@ RegistrereVergeFaktaForm.propTypes = {
     notAccepted: PropTypes.bool,
   }).isRequired,
   valgtVergeType: PropTypes.string,
-};
-
-RegistrereVergeFaktaForm.defaultProps = {
-  vergetyper: [],
-  valgtVergeType: undefined,
 };
 
 RegistrereVergeFaktaForm.buildInitialValues = verge => ({

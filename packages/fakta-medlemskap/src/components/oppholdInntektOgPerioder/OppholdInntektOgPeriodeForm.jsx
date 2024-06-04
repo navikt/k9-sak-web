@@ -126,10 +126,6 @@ OppholdInntektOgPeriodeForm.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
 };
 
-OppholdInntektOgPeriodeForm.defaultProps = {
-  selectedId: undefined,
-};
-
 const transformValues = values => ({
   begrunnelse: values.begrunnelse || '---',
   ...values,

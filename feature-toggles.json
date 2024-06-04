@@ -1,7 +1,7 @@
 [
   {
-    "key": "USE_NEW_BACKEND_CLIENT",
-    "value": "${USE_NEW_BACKEND_CLIENT}"
+    "key": "BRUK_V2_MELDINGER",
+    "value": "${BRUK_V2_MELDINGER}"
   },
   {
     "key": "KLAGE_KABAL",

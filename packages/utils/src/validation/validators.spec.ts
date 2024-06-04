@@ -1,5 +1,6 @@
 import moment from 'moment';
 
+import { expect } from 'vitest';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '../formats';
 import {
   dateAfterOrEqual,
@@ -434,11 +435,26 @@ describe('Validators', () => {
       expect(result).toBeNull();
     });
 
-    it('skal feile når fødselsnummer har ugyldige tegn', () => {
+    it('skal feile når tekst har ugyldige tegn', () => {
       const result = hasValidText('Hei {}*');
       expect(result).toHaveLength(2);
       expect(result[0]).toEqual({ id: 'ValidationMessage.InvalidText' });
       expect(result[1]).toEqual({ text: '{}' });
+    });
+
+    it('skal feile når tekst har [] tegn (brukt til placeholder i maltekst)', () => {
+      const result = hasValidText('Hei [] der');
+      expect(result).toHaveLength(2);
+      expect(result[0]).toEqual({ id: 'ValidationMessage.InvalidText' });
+      expect(result[1]).toEqual({ text: '[]' });
+    });
+
+    it('skal ikke feile når tekst er tom, null eller undefined', () => {
+      const inputs = ['', null, undefined];
+      for (const input of inputs) {
+        const result = hasValidText(input);
+        expect(result).toBeNull();
+      }
     });
   });
 

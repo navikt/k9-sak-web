@@ -45,10 +45,11 @@ const SelectField = ({
   name,
   label,
   selectValues,
-  validate,
-  readOnly,
-  hideValueOnDisable,
+  validate = null,
+  readOnly = false,
+  hideValueOnDisable = false,
   disabled,
+  placeholder = ' ',
   ...otherProps
 }: SelectFieldProps) => (
   <Field
@@ -63,14 +64,8 @@ const SelectField = ({
     readOnly={readOnly}
     // @ts-ignore TODO Fiks
     readOnlyHideEmpty
+    placeholder={placeholder}
   />
 );
-
-SelectField.defaultProps = {
-  validate: null,
-  readOnly: false,
-  placeholder: ' ',
-  hideValueOnDisable: false,
-};
 
 export default SelectField;

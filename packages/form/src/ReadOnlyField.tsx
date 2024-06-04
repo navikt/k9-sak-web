@@ -19,7 +19,7 @@ const hasValue = (value: string | number) => value !== undefined && value !== nu
 export const ReadOnlyField = ({
   label,
   input,
-  isEdited,
+  isEdited = false,
   type,
   field,
   renderReadOnlyValue,
@@ -40,11 +40,6 @@ export const ReadOnlyField = ({
       </div>
     </div>
   );
-};
-
-ReadOnlyField.defaultProps = {
-  label: undefined,
-  isEdited: false,
 };
 
 export default ReadOnlyField;

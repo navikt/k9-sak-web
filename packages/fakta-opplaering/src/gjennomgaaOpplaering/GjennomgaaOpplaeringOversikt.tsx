@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
-import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
-import { GjennomgaaOpplaeringPeriode, GjennomgaaOpplaeringVurdering } from '@k9-sak-web/types';
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
+import { GjennomgaaOpplaeringPeriode, GjennomgaaOpplaeringVurdering } from '@k9-sak-web/types';
+import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
+import React, { useContext } from 'react';
 
 import { Period } from '@fpsak-frontend/utils';
-import GjennomgaaOpplaeringNavigation from './GjennomgaaOpplaeringNavigation';
 import GjennomgaaOpplaeringDetails from './GjennomgaaOpplaeringDetails';
+import GjennomgaaOpplaeringNavigation from './GjennomgaaOpplaeringNavigation';
 
 const GjennomgaaOpplaeringOversikt = () => {
   const { gjennomgåttOpplæring } = useContext(FaktaOpplaeringContext);
