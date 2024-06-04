@@ -2,5 +2,5 @@ import { KodeverkKlageType, KodeverkMedUndertype, KodeverkTilbakeType, KodeverkT
 
 export type HentKodeverkForKodeType = (
   kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType,
-  kilde: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' | undefined,
+  kilde?: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' | undefined,
 ) => KodeverkV2[] | KodeverkMedUndertype | undefined;
