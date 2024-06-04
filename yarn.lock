@@ -2045,7 +2045,6 @@ __metadata:
     "@fpsak-frontend/form": 1.0.0
     "@fpsak-frontend/kodeverk": 1.0.0
     "@fpsak-frontend/shared-components": 1.0.0
-    "@types/yup": 0.32.0
     date-fns: 3.6.0
     dayjs: 1.11.11
     formik: 2.4.6
@@ -2171,7 +2170,6 @@ __metadata:
     "@fpsak-frontend/utils": "workspace:^"
     "@k9-sak-web/types": "workspace:^"
     "@navikt/ds-react": 6.10.0
-    "@types/yup": 0.32.0
     date-fns: 3.6.0
     formik: 2.4.6
     react: 18.3.1
@@ -7571,15 +7569,6 @@ __metadata:
   dependencies:
     "@types/yargs-parser": "*"
   checksum: 4505bdebe8716ff383640c6e928f855b5d337cb3c68c81f7249fc6b983d0aa48de3eee26062b84f37e0d75a5797bc745e0c6e76f42f81771252a758c638f36ba
-  languageName: node
-  linkType: hard
-
-"@types/yup@npm:0.32.0":
-  version: 0.32.0
-  resolution: "@types/yup@npm:0.32.0"
-  dependencies:
-    yup: "*"
-  checksum: 5b30f1118bca288d949bcd4c7e17d1425ffa320eddd751a78c895b158fae0b6cbf242ced45ad47e9e70643c9475da09a7ad004192fb6f2111791d37e6a627e73
   languageName: node
   linkType: hard
 
@@ -20272,7 +20261,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yup@npm:*, yup@npm:1.4.0":
+"yup@npm:1.4.0":
   version: 1.4.0
   resolution: "yup@npm:1.4.0"
   dependencies:

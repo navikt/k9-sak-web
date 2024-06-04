@@ -15,9 +15,6 @@
     "react-intl": "6.6.8",
     "yup": "1.4.0"
   },
-  "devDependencies": {
-    "@types/yup": "0.32.0"
-  },
   "peerDependencies": {
     "dayjs": "1.10.7"
   }
