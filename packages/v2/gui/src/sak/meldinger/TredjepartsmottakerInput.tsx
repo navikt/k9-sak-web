@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { ErrorMessage, TextField } from '@navikt/ds-react';
+import { RequestIntentionallyAborted } from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
 import styles from './TredjepartsmottakerInput.module.css';
 import type { EregOrganizationLookupResponse } from './EregOrganizationLookupResponse.js';
 
@@ -53,10 +54,10 @@ const TredjepartsmottakerInput = ({
   const lookupAborterRef = useRef<AbortController | undefined>(undefined);
 
   const handleInputOnChange = async (orgnr: string) => {
-    const prevTredjepartsmottaker = tredjepartsmottaker;
-    lookupAborterRef.current?.abort();
-    lookupAborterRef.current = new AbortController();
     try {
+      const prevTredjepartsmottaker = tredjepartsmottaker;
+      lookupAborterRef.current?.abort(new RequestIntentionallyAborted());
+      lookupAborterRef.current = new AbortController();
       const newTredjepartsmottaker =
         orgnr.length > 0 ? await api.getBrevMottakerinfoEreg(orgnr, lookupAborterRef.current?.signal) : undefined;
       setTredjepartsmottaker(newTredjepartsmottaker);
@@ -76,19 +77,13 @@ const TredjepartsmottakerInput = ({
         }
       }
     } catch (e) {
-      if (e instanceof DOMException && e.name === 'AbortError') {
+      if (e instanceof RequestIntentionallyAborted) {
         // Do nothing, the request was aborted because of new input
       } else {
         throw e;
       }
     }
   };
-  /*
-  useEffect(() => {
-  TODO Check if this is needed, cause loop
-    handleInputOnChange(defaultValue ?? '')
-  }, [defaultValue, required, onChange]);
-   */
 
   const errorMessage =
     tredjepartsmottaker === undefined && required
@@ -113,7 +108,7 @@ const TredjepartsmottakerInput = ({
         <TextField
           label="Navn"
           readOnly
-          defaultValue={tredjepartsmottaker?.name ?? ''}
+          value={tredjepartsmottaker?.name ?? ''}
           size="small"
           className={styles.orgnameField}
         />

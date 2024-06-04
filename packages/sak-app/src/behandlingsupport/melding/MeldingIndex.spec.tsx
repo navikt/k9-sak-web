@@ -9,10 +9,15 @@ import { reducer as formReducer } from 'redux-form';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import type { BehandlingAppKontekst, Brevmaler, Fagsak, Mottaker } from '@k9-sak-web/types';
+import type { BehandlingAppKontekst, Brevmaler, Fagsak, FeatureToggles } from '@k9-sak-web/types';
+import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
 
-import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
+import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
+import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
+import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import MeldingIndex, { type BackendApi } from './MeldingIndex';
+import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 
 const mockHistoryPush = vi.fn();
 
@@ -40,11 +45,29 @@ interface ExtendedWindow {
 }
 
 describe('<MeldingIndex>', () => {
+  /* eslint-disable @typescript-eslint/no-unused-vars -- Fordi alt er ikkje implementert i fake backend */
   const meldingBackend = {
-    async getBrevMottakerinfoEreg(orgnr: string) {
+    async getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal) {
       return { name: `Test Org navn (${orgnr})` };
     },
+
+    async bestillDokument(bestilling: BestillBrevDto): Promise<void> {
+      throw new Error('Not implemented for test');
+    },
+
+    async lagForhåndsvisningPdf(data: ForhåndsvisDto): Promise<Blob> {
+      throw new Error('Not implemented for test');
+    },
+
+    async hentInnholdBrevmal(
+      fagsakYtelsestype: FagsakYtelsesType,
+      eksternReferanse: string,
+      maltype: string,
+    ): Promise<FritekstbrevDokumentdata[]> {
+      throw new Error('Not implemented for test');
+    },
   } satisfies BackendApi;
+  /* eslint-enable */
 
   const meldingMal: SendMeldingPayload = {
     behandlingId: 1,
@@ -81,12 +104,40 @@ describe('<MeldingIndex>', () => {
       mottakere: aktorer,
       linker: [],
       støtterFritekst: true,
+      støtterTittelOgFritekst: false,
       støtterTredjepartsmottaker: true,
+      kode: dokumentMalType.INNHENT_DOK,
     },
-    [dokumentMalType.REVURDERING_DOK]: { navn: 'Revurdering Dok', mottakere: aktorer, linker: [] },
-    [dokumentMalType.AVSLAG]: { navn: 'Avslag', mottakere: aktorer, linker: [] },
-    [dokumentMalType.FORLENGET_DOK]: { navn: 'Forlenget', mottakere: aktorer, linker: [] },
+    [dokumentMalType.REVURDERING_DOK]: {
+      navn: 'Revurdering Dok',
+      mottakere: aktorer,
+      linker: [],
+      støtterFritekst: true,
+      støtterTittelOgFritekst: false,
+      støtterTredjepartsmottaker: true,
+      kode: dokumentMalType.REVURDERING_DOK,
+    },
+    [dokumentMalType.AVSLAG]: {
+      navn: 'Avslag',
+      mottakere: aktorer,
+      linker: [],
+      støtterFritekst: false,
+      støtterTittelOgFritekst: false,
+      støtterTredjepartsmottaker: false,
+      kode: dokumentMalType.AVSLAG,
+    },
+    [dokumentMalType.FORLENGET_DOK]: {
+      navn: 'Forlenget',
+      mottakere: aktorer,
+      linker: [],
+      støtterFritekst: false,
+      støtterTittelOgFritekst: false,
+      støtterTredjepartsmottaker: true,
+      kode: dokumentMalType.FORLENGET_DOK,
+    },
   } satisfies Brevmaler;
+
+  const featureToggles = { BRUK_V2_MELDINGER: false } satisfies FeatureToggles;
 
   const assignMock = vi.fn();
   delete (window as Partial<ExtendedWindow>).location;
@@ -111,6 +162,7 @@ describe('<MeldingIndex>', () => {
             alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
             behandlingId={1}
             behandlingVersjon={123}
+            featureToggles={featureToggles}
             backendApi={meldingBackend}
           />
         </MemoryRouter>
@@ -135,6 +187,7 @@ describe('<MeldingIndex>', () => {
             alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
             behandlingId={1}
             behandlingVersjon={123}
+            featureToggles={featureToggles}
             backendApi={meldingBackend}
           />
         </MemoryRouter>
@@ -165,6 +218,7 @@ describe('<MeldingIndex>', () => {
             alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
             behandlingId={1}
             behandlingVersjon={123}
+            featureToggles={featureToggles}
             backendApi={meldingBackend}
           />
         </MemoryRouter>
@@ -206,6 +260,7 @@ describe('<MeldingIndex>', () => {
             alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
             behandlingId={1}
             behandlingVersjon={123}
+            featureToggles={featureToggles}
             backendApi={meldingBackend}
           />
         </MemoryRouter>
@@ -226,7 +281,7 @@ describe('<MeldingIndex>', () => {
     const tredjepartsMottaker = {
       type: 'ORGNR',
       id: '974652269',
-    } satisfies Mottaker;
+    } satisfies MottakerDto;
 
     await act(async () => {
       const orgnrInput = screen.getByLabelText('Org.nr');
@@ -259,6 +314,7 @@ describe('<MeldingIndex>', () => {
             alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
             behandlingId={1}
             behandlingVersjon={123}
+            featureToggles={featureToggles}
             backendApi={meldingBackend}
           />
         </MemoryRouter>
@@ -281,8 +337,8 @@ describe('<MeldingIndex>', () => {
       await userEvent.click(screen.getByRole('button', { name: 'Send brev' }));
     });
 
-    expect(await screen.queryByTestId('MessagesModal')).toBeInTheDocument();
-    expect(await screen.queryByTestId('SettPaVentModal')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('MessagesModal')).toBeInTheDocument();
+    expect(screen.queryByTestId('SettPaVentModal')).not.toBeInTheDocument();
 
     const reqData = requestApi.getRequestMockData(K9sakApiKeys.SUBMIT_MESSAGE);
     expect(reqData).toHaveLength(1);
@@ -304,6 +360,7 @@ describe('<MeldingIndex>', () => {
             alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
             behandlingId={1}
             behandlingVersjon={123}
+            featureToggles={featureToggles}
             backendApi={meldingBackend}
           />
         </MemoryRouter>
@@ -351,6 +408,7 @@ describe('<MeldingIndex>', () => {
             alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
             behandlingId={1}
             behandlingVersjon={123}
+            featureToggles={featureToggles}
             backendApi={meldingBackend}
           />
         </MemoryRouter>

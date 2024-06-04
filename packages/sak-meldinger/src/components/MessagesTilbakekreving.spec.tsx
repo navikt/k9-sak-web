@@ -1,9 +1,10 @@
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
+import { Brevmaler, KodeverkMedNavn } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType.js';
 import { intlMock } from '../../i18n/index';
 import messages from '../../i18n/nb_NO.json';
 import { MessagesTilbakekrevingImpl as MessagesTilbakekreving } from './MessagesTilbakekreving';
@@ -26,43 +27,48 @@ describe('<MessagesTilbakekreving>', () => {
     kodeverk: 'Engelsk',
   };
 
+  const aktorer = [
+    { id: '00000000', type: 'AKTØRID' },
+    { id: '123456789', type: 'ORGNR' },
+  ];
   const templates = {
-    INNHEN: {
+    [dokumentMalType.INNHENT_DOK]: {
       navn: 'Innhent dokumentasjon',
-      mottakere: [
-        {
-          id: '00000000',
-          type: 'AKTØRID',
-        },
-        {
-          id: '123456789',
-          type: 'ORGNR',
-        },
-      ],
+      mottakere: aktorer,
+      linker: [],
+      støtterFritekst: true,
+      støtterTittelOgFritekst: false,
+      støtterTredjepartsmottaker: true,
+      kode: dokumentMalType.INNHENT_DOK,
     },
-    REVURD: {
+    [dokumentMalType.REVURDERING_DOK]: {
       navn: 'Innhent dokumentasjon',
-      mottakere: [
-        {
-          id: '00000000',
-          type: 'AKTØRID',
-        },
-        {
-          id: '123456789',
-          type: 'ORGNR',
-        },
-      ],
+      mottakere: aktorer,
+      linker: [],
+      støtterFritekst: true,
+      støtterTittelOgFritekst: false,
+      støtterTredjepartsmottaker: true,
+      kode: dokumentMalType.REVURDERING_DOK,
     },
-    ETTERLYS_INNTEKTSMELDING_DOK: {
+    [dokumentMalType.INNOPP]: {
       navn: 'Etterlys inntektsmelding',
-      mottakere: [
-        {
-          id: '123456789',
-          type: 'ORGNR',
-        },
-      ],
+      mottakere: [aktorer[1]],
+      linker: [],
+      støtterFritekst: true,
+      støtterTittelOgFritekst: false,
+      støtterTredjepartsmottaker: true,
+      kode: dokumentMalType.INNOPP,
     },
-  };
+    [dokumentMalType.VARSEL_OM_TILBAKEKREVING]: {
+      navn: 'Varsel om tilbakekreving',
+      mottakere: [aktorer[1]],
+      linker: [],
+      støtterFritekst: true,
+      støtterTittelOgFritekst: false,
+      støtterTredjepartsmottaker: true,
+      kode: dokumentMalType.VARSEL_OM_TILBAKEKREVING,
+    },
+  } satisfies Brevmaler;
 
   const causes = [{ kode: 'kode', navn: 'Årsak 1', kodeverk: 'kode' }];
 
@@ -70,10 +76,7 @@ describe('<MessagesTilbakekreving>', () => {
     renderWithIntlAndReduxForm(
       <MessagesTilbakekreving
         {...mockProps}
-        templates={[
-          { kode: 'INNHEN', navn: 'Innhent dokumentasjon', tilgjengelig: true },
-          { kode: 'VARS', navn: 'Varsel om tilbakekreving', tilgjengelig: true },
-        ]}
+        templates={[templates[dokumentMalType.INNHENT_DOK], templates[dokumentMalType.VARSEL_OM_TILBAKEKREVING]]}
         sprakKode={sprakkode}
         brevmalkode="INNHEN"
         causes={causes}

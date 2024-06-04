@@ -64,8 +64,8 @@ export const templates = [
     navn: 'Varselsbrev fritekst',
     mottakere: [
       {
-        id: '2821629142423',
-        type: 'AKTØRID',
+        id: '123456789',
+        type: 'ORGNR',
       },
     ],
     linker: [],
