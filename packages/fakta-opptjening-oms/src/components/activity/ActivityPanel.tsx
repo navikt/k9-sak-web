@@ -88,8 +88,8 @@ const findApproverDeclinedText = erGodkjent => {
       </Tag>
     );
   return (
-    <Tag variant="error" icon={<XMarkOctagonIcon title="Avvist" fontSize="1rem" />} size="xsmall">
-      Avvist
+    <Tag variant="error" icon={<XMarkOctagonIcon title="Ikke Oppfylt" fontSize="1rem" />} size="xsmall">
+      Ikke oppfylt
     </Tag>
   );
 };
