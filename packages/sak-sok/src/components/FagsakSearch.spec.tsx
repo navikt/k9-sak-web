@@ -7,18 +7,9 @@ import FagsakSearch from './FagsakSearch';
 describe('<FagsakSearch>', () => {
   const fagsak = {
     saksnummer: '12345',
-    sakstype: {
-      kode: 'TEST',
-      kodeverk: '',
-    },
-    relasjonsRolleType: {
-      kode: 'TEST',
-      kodeverk: '',
-    },
-    status: {
-      kode: 'UBEH',
-      kodeverk: '',
-    },
+    sakstype: 'TEST',
+    relasjonsRolleType: 'TEST',
+    status: 'UBEH',
     barnFodt: '13‎.‎02‎.‎2017‎',
     opprettet: '13‎.‎02‎.‎2017‎ ‎09‎:‎54‎:‎22',
     endret: '13‎.‎02‎.‎2017‎',
@@ -31,10 +22,7 @@ describe('<FagsakSearch>', () => {
       alder: 44,
       personnummer: '0405198632231',
       erKvinne: true,
-      personstatusType: {
-        kode: 'TEST',
-        kodeverk: '',
-      },
+      personstatusType: 'TEST',
     },
     dekningsgrad: 100,
   };
@@ -49,7 +37,6 @@ describe('<FagsakSearch>', () => {
         searchResultReceived={false}
         selectFagsakCallback={vi.fn()}
         searchStarted
-        alleKodeverk={{}}
       />,
       { messages },
     );
@@ -65,7 +52,6 @@ describe('<FagsakSearch>', () => {
         searchResultReceived
         selectFagsakCallback={vi.fn()}
         searchStarted
-        alleKodeverk={{}}
       />,
       { messages },
     );
@@ -83,7 +69,6 @@ describe('<FagsakSearch>', () => {
         searchResultReceived
         selectFagsakCallback={selectFagsakFunction}
         searchStarted
-        alleKodeverk={{}}
       />,
       { messages },
     );
