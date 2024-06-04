@@ -13,8 +13,9 @@ class BeredskapType {
       ...beskrivelse,
       periode: new Period(beskrivelse.periode.fom, beskrivelse.periode.tom),
     }));
-
-    this.vurderinger = vurderinger.map(vurdering => new Vurderingsperiode(vurdering));
+    this.vurderinger = vurderinger
+      .map(vurdering => new Vurderingsperiode(vurdering))
+      .sort((a, b) => (a.periode.startsBefore(b.periode) ? 1 : -1));
   }
 
   finnPerioderTilVurdering() {
