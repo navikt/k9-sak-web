@@ -3,6 +3,7 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import type { OpptjeningAktivitetType } from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType.js';
 import messages from '../../i18n/nb_NO.json';
 import { OpptjeningFaktaFormImpl as OpptjeningFaktaForm } from './OpptjeningFaktaForm';
 
@@ -32,7 +33,7 @@ describe('<OpptjeningFaktaForm>', () => {
     },
     {
       id: 2,
-      aktivitetType: { kode: OAType.NARING, navn: 'NARING' },
+      aktivitetType: { kode: OAType.NÆRING, navn: 'NARING' },
       opptjeningFom: '2017-08-15',
       opptjeningTom: '2017-08-15',
       arbeidsgiver: 'Andersen Transport AS',
@@ -55,16 +56,16 @@ describe('<OpptjeningFaktaForm>', () => {
     },
   ];
 
-  const opptjeningAktivitetTypes = [
+  const opptjeningAktivitetTypes: OpptjeningAktivitetType[] = [
     {
       kode: OAType.ARBEID,
       navn: 'Arbeid',
-      kodeverk: '',
+      kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
     },
     {
-      kode: OAType.NARING,
+      kode: OAType.NÆRING,
       navn: 'Næring',
-      kodeverk: '',
+      kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
     },
   ];
   const opptjeningList = [
@@ -272,11 +273,9 @@ describe('<OpptjeningFaktaForm>', () => {
     );
 
     await userEvent.click(screen.getByRole('radio', { name: 'Aktiviteten godkjennes' }));
-    await userEvent.click(screen.getByTestId('calendarToggleButton'));
-    await userEvent.click(screen.getByRole('gridcell', { name: 'Sun Aug 13 2017' }));
-    await userEvent.click(screen.getByTestId('calendarToggleButton'));
-    await userEvent.click(screen.getByTestId('calendarToggleButton'));
-    await userEvent.click(screen.getByRole('gridcell', { name: 'Mon Aug 14 2017' }));
+    await userEvent.click(screen.getAllByRole('button', { name: 'Åpne datovelger' })[0]);
+    await userEvent.click(screen.getByRole('button', { name: 'søndag 13' }));
+    await userEvent.click(screen.getByRole('button', { name: 'mandag 14' }));
     await userEvent.click(screen.getByRole('button', { name: 'Oppdater' }));
     await userEvent.click(screen.getByRole('button', { name: 'Bekreft og fortsett' }));
 

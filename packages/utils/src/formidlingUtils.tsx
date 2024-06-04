@@ -1,10 +1,13 @@
 import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, Personopplysninger } from '@k9-sak-web/types';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import avsenderApplikasjon from '@fpsak-frontend/kodeverk/src/avsenderApplikasjon';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import {
+  bestemAvsenderApp as v2BestemAvsenderApp,
+  lagVisningsnavnForMottaker as v2LagvisningsnavnForMottaker,
+} from '@k9-sak-web/gui/utils/formidling.js';
+import { isBehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 
 export interface VedtaksbrevMal {
   dokumentMalType: string;
@@ -28,7 +31,10 @@ export type Brevmottaker = Readonly<{
 }>;
 
 export function bestemAvsenderApp(type: string): string {
-  return type === BehandlingType.KLAGE ? avsenderApplikasjon.K9KLAGE : avsenderApplikasjon.K9SAK;
+  if (isBehandlingType(type)) {
+    return v2BestemAvsenderApp(type);
+  }
+  throw new Error(`Kan ikke bestemme avsender app. Ukjent behandling type: ${type}`);
 }
 
 export function lagVisningsnavnForMottaker(
@@ -36,19 +42,7 @@ export function lagVisningsnavnForMottaker(
   personopplysninger?: Personopplysninger,
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId,
 ): string {
-  if (
-    arbeidsgiverOpplysningerPerId &&
-    arbeidsgiverOpplysningerPerId[mottakerId] &&
-    arbeidsgiverOpplysningerPerId[mottakerId].navn
-  ) {
-    return `${arbeidsgiverOpplysningerPerId[mottakerId].navn} (${mottakerId})`;
-  }
-
-  if (personopplysninger && personopplysninger.aktoerId === mottakerId && personopplysninger.navn) {
-    return `${personopplysninger.navn} (${personopplysninger.fnr || personopplysninger.nummer || mottakerId})`;
-  }
-
-  return mottakerId;
+  return v2LagvisningsnavnForMottaker(mottakerId, personopplysninger, arbeidsgiverOpplysningerPerId);
 }
 
 function vedtaksbrevmaler(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev) {

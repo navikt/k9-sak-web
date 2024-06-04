@@ -1,6 +1,4 @@
 import { httpErrorHandler } from '@fpsak-frontend/utils';
-import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
-import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
 import { apiPaths } from '@k9-sak-web/rest-api';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
@@ -29,13 +27,15 @@ import axios from 'axios';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
+import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
+import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
 import HistorikkIndex from './historikk/HistorikkIndex';
-import MeldingBackendClient from './melding/MeldingBackendClient';
 import MeldingIndex from './melding/MeldingIndex';
 import NotaterIndex from './notater/NotaterIndex';
 import SupportTabs from './supportTabs';
@@ -163,12 +163,8 @@ const BehandlingSupportIndex = ({
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
 
   const k9SakClient = useContext(K9SakClientContext);
-  const meldingerBackendClientFactory = useCallback(() => {
-    if (featureToggles?.USE_NEW_BACKEND_CLIENT === true) {
-      return new MeldingerBackendClient(k9SakClient);
-    }
-    return new MeldingBackendClient();
-  }, [k9SakClient, featureToggles]);
+  const formidlingClient = useContext(FormidlingClientContext);
+  const meldingerBackendClient = new MeldingerBackendClient(k9SakClient, formidlingClient);
 
   const getNotater = (signal: AbortSignal) =>
     axios
@@ -305,7 +301,8 @@ const BehandlingSupportIndex = ({
                 behandlingVersjon={behandlingVersjon}
                 personopplysninger={personopplysninger}
                 arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-                backendApi={meldingerBackendClientFactory()}
+                featureToggles={featureToggles}
+                backendApi={meldingerBackendClient}
               />
             )}
           </Tabs.Panel>

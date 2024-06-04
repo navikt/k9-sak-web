@@ -26,13 +26,14 @@ import {
 } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
-import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
-import { BodyShort, Button, HGrid, Label } from '@navikt/ds-react';
+import type { OpptjeningAktivitetType } from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
+import { BodyShort, Button, HGrid, Label, Tag } from '@navikt/ds-react';
 import moment from 'moment';
 import React, { KeyboardEvent, MouseEvent } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
+import { CheckmarkCircleIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import ActivityDataSubPanel from './ActivityDataSubPanel';
 import styles from './activityPanel.module.css';
 
@@ -78,6 +79,21 @@ const findInYearsMonthsAndDays = (opptjeningFom: string, opptjeningTom: string) 
   );
 };
 
+const findApproverDeclinedText = erGodkjent => {
+  if (erGodkjent === undefined || erGodkjent === null) return '';
+  if (erGodkjent)
+    return (
+      <Tag variant="success" icon={<CheckmarkCircleIcon title="Godkjent" fontSize="1rem" />} size="xsmall">
+        Godkjent
+      </Tag>
+    );
+  return (
+    <Tag variant="error" icon={<XMarkOctagonIcon title="Ikke Oppfylt" fontSize="1rem" />} size="xsmall">
+      Ikke oppfylt
+    </Tag>
+  );
+};
+
 const isBegrunnelseRequired = (allValues, props) => {
   if (props.pristine) {
     return false;
@@ -113,6 +129,7 @@ interface ActivityPanelProps {
   opptjeningFomDato: string;
   opptjeningTomDato: string;
   readOnly: boolean;
+  erGodkjent?: boolean;
   selectNextPeriod?: (event: MouseEvent | KeyboardEvent) => void;
   selectPrevPeriod?: (event: MouseEvent | KeyboardEvent) => void;
   updateActivity: (values: string) => void;
@@ -150,6 +167,7 @@ export const ActivityPanel = ({
   handleSubmit,
   pristine,
   arbeidsgiverOpplysningerPerId,
+  erGodkjent,
 }: Partial<ActivityPanelProps> & WrappedComponentProps & StateProps & InjectedFormProps) => (
   <FaktaGruppe
     className={styles.panel}
@@ -184,9 +202,13 @@ export const ActivityPanel = ({
               disabledDays={{ before: moment(opptjeningFomDato).toDate(), after: moment(opptjeningTomDato).toDate() }}
             />
           </FlexColumn>
+
           <FlexColumn>
             <BodyShort size="small" className={styles.period}>
-              {findInYearsMonthsAndDays(opptjeningFom, opptjeningTom)}
+              <FlexRow>
+                <FlexColumn className="mt-1.5">{findInYearsMonthsAndDays(opptjeningFom, opptjeningTom)}</FlexColumn>
+                <FlexColumn className="mt-1.5">{findApproverDeclinedText(erGodkjent)}</FlexColumn>
+              </FlexRow>
             </BodyShort>
           </FlexColumn>
         </FlexRow>

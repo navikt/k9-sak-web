@@ -3,6 +3,7 @@ import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi'
 import { Behandling } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import messages from '../i18n/nb_NO.json';
 import VilkarresultatMedOverstyringProsessIndex from './VilkarresultatMedOverstyringProsessIndex';
 
@@ -17,7 +18,8 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
             id: 1,
             versjon: 1,
             type: {
-              kode: '',
+              kode: behandlingType.FØRSTEGANGSSØKNAD,
+              kodeverk: 'BEHANDLING_TYPE',
             },
           } as Behandling
         }

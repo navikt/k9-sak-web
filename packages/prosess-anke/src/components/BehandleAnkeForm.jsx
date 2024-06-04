@@ -66,8 +66,6 @@ const formatBehandlingType = kode => {
       return 'Revurdering';
     case behandlingType.SOKNAD:
       return 'Søknad';
-    case behandlingType.DOKUMENTINNSYN:
-      return 'Dokumentinnsyn';
     case behandlingType.TILBAKEKREVING:
       return 'Tilbakekreving';
     default:
@@ -141,14 +139,14 @@ const filtrerKlage = (behandlinger = []) => behandlinger.filter(b => b.type.kode
 const BehandleAnkeFormImpl = ({
   behandlingId,
   behandlingVersjon,
-  readOnly,
+  readOnly = false,
   handleSubmit,
   saveAnke,
   previewCallback,
-  readOnlySubmitButton,
+  readOnlySubmitButton = false,
   aksjonspunktCode,
   sprakkode,
-  formValues,
+  formValues = {},
   behandlinger,
   intl,
   ...formProps
@@ -369,12 +367,6 @@ BehandleAnkeFormImpl.propTypes = {
     }),
   ).isRequired,
   ...formPropTypes,
-};
-
-BehandleAnkeFormImpl.defaultProps = {
-  formValues: {},
-  readOnly: true,
-  readOnlySubmitButton: true,
 };
 
 // TODO (TOR) Her ligg det masse som ikkje er felt i forma! Rydd

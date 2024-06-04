@@ -20,9 +20,9 @@ import vergeAksjonspunkterPropType from '../propTypes/vergeAksjonspunkterPropTyp
 export const RegistrereVergeInfoPanelImpl = ({
   intl,
   hasOpenAksjonspunkter,
-  submittable,
+  submittable = true,
   readOnly,
-  initialValues,
+  initialValues = {},
   aksjonspunkt,
   behandlingId,
   behandlingVersjon,
@@ -70,11 +70,6 @@ RegistrereVergeInfoPanelImpl.propTypes = {
   initialValues: PropTypes.shape(),
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-};
-
-RegistrereVergeInfoPanelImpl.defaultProps = {
-  initialValues: {},
-  submittable: true,
 };
 
 const buildInitialValues = createSelector(

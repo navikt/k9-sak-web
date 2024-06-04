@@ -5,19 +5,19 @@ import PropTypes from 'prop-types';
 import { Alert, Button } from '@navikt/ds-react';
 
 // eslint-disable-next-line import/no-duplicates
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 import vedtakAksjonspunkterPropType from '../propTypes/vedtakAksjonspunkterPropType';
-import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
+import vedtakBeregningsgrunnlagPropType from '../propTypes/vedtakBeregningsgrunnlagPropType';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
+import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
+import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import VedtakForm from './VedtakForm';
 import { finnSistePeriodeMedAvslagsårsakBeregning } from './VedtakHelper';
-import vedtakBeregningsgrunnlagPropType from '../propTypes/vedtakBeregningsgrunnlagPropType';
-import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
 import VedtakSjekkTilbakekreving from './VedtakSjekkTilbakekreving';
 
 /*
@@ -183,12 +183,6 @@ VedtakPanels.propTypes = {
   lagreDokumentdata: PropTypes.func.isRequired,
   overlappendeYtelser: PropTypes.arrayOf(PropTypes.shape()),
   hentFritekstbrevHtmlCallback: PropTypes.func.isRequired,
-};
-
-VedtakPanels.defaultProps = {
-  tilbakekrevingvalg: undefined,
-  simuleringResultat: undefined,
-  resultatstruktur: undefined,
 };
 
 export default VedtakPanels;

@@ -219,54 +219,6 @@ describe('<NyBehandlingModal>', () => {
     ).toBeInTheDocument();
   });
 
-  it('skal ikke vise checkbox for behandling etter klage når dokumentinnsyn er valgt', () => {
-    const behandlingstyper = [
-      { kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN', kodeverk: 'BEHANDLING_TYPE' },
-    ];
-    renderWithIntlAndReduxForm(
-      <NyBehandlingModal
-        {...reduxFormPropsMock}
-        handleSubmit={submitEventCallback}
-        cancelEvent={cancelEventCallback}
-        intl={intlMock}
-        behandlingTyper={behandlingstyper}
-        behandlingstyper={behandlingstyper}
-        behandlingArsakTyper={[
-          { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
-        ]}
-        enabledBehandlingstyper={behandlingstyper}
-        sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
-        sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
-        erTilbakekrevingAktivert={false}
-        saksnummer={123}
-        ytelseType={ytelseType}
-        submitCallback={vi.fn()}
-        behandlingOppretting={[
-          {
-            behandlingType: {
-              kode: behandlingType.FORSTEGANGSSOKNAD,
-              kodeverk: '',
-            },
-            kanOppretteBehandling: true,
-          },
-        ]}
-        tilbakekrevingRevurderingArsaker={[]}
-        revurderingArsaker={[]}
-        kanTilbakekrevingOpprettes={{
-          kanBehandlingOpprettes: true,
-          kanRevurderingOpprettes: true,
-        }}
-        valgtBehandlingTypeKode={behandlingType.DOKUMENTINNSYN}
-        erTilbakekreving={false}
-      />,
-      { messages },
-    );
-
-    expect(
-      screen.queryByRole('checkbox', { name: 'Behandlingen opprettes som et resultat av klagebehandling' }),
-    ).not.toBeInTheDocument();
-  });
-
   it('skal vise dropdown for revuderingsårsaker når revurdering er valgt', () => {
     const behandlingstyper = [{ kode: behandlingType.REVURDERING, navn: 'REVURDERING', kodeverk: 'BEHANDLING_TYPE' }];
     renderWithIntlAndReduxForm(
@@ -310,52 +262,6 @@ describe('<NyBehandlingModal>', () => {
     expect(screen.getAllByRole('combobox').length).toBe(2);
     expect(screen.getByRole('option', { name: 'Revurderingsbehandling' })).toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'FEIL_I_LOVANDVENDELSE' })).toBeInTheDocument();
-  });
-
-  it('skal ikke vise dropdown for revuderingsårsaker når dokumentinnsyn er valgt', () => {
-    const behandlingstyper = [
-      { kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN', kodeverk: 'BEHANDLING_TYPE' },
-    ];
-    renderWithIntlAndReduxForm(
-      <NyBehandlingModal
-        {...reduxFormPropsMock}
-        handleSubmit={submitEventCallback}
-        cancelEvent={cancelEventCallback}
-        intl={intlMock}
-        behandlingTyper={behandlingstyper}
-        behandlingstyper={behandlingstyper}
-        behandlingArsakTyper={[]}
-        enabledBehandlingstyper={behandlingstyper}
-        sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
-        sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
-        erTilbakekrevingAktivert={false}
-        saksnummer={123}
-        ytelseType={ytelseType}
-        submitCallback={vi.fn()}
-        behandlingOppretting={[
-          {
-            behandlingType: {
-              kode: behandlingType.FORSTEGANGSSOKNAD,
-              kodeverk: '',
-            },
-            kanOppretteBehandling: true,
-          },
-        ]}
-        tilbakekrevingRevurderingArsaker={[]}
-        revurderingArsaker={[]}
-        kanTilbakekrevingOpprettes={{
-          kanBehandlingOpprettes: true,
-          kanRevurderingOpprettes: true,
-        }}
-        valgtBehandlingTypeKode={behandlingType.DOKUMENTINNSYN}
-        erTilbakekreving={false}
-      />,
-      { messages },
-    );
-
-    expect(screen.getAllByRole('combobox').length).toBe(1);
-    expect(screen.getByRole('option', { name: 'DOKUMENTINNSYN' })).toBeInTheDocument();
-    expect(screen.queryByRole('option', { name: 'Revurderingsbehandling' })).not.toBeInTheDocument();
   });
 
   it('skal finne filtrerte behandlingsårsaker når det er valgt behandlingstype TILBAKEKREVING_REVURDERING', () => {

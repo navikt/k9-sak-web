@@ -1,8 +1,8 @@
-import { NedChevron, OppChevron } from 'nav-frontend-chevron';
 import React, { useCallback, useState } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 
-import { BodyShort } from '@navikt/ds-react';
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
+import { BodyShort, Button } from '@navikt/ds-react';
 import styles from './bubbleText.module.css';
 
 const truncateText = (tekst: string, cutOffLength: number): string =>
@@ -44,16 +44,16 @@ const BubbleText = ({ intl, cutOffLength = 83, bodyText = '' }: OwnProps & Wrapp
           {truncateText(bodyText, cutOffLength)}
         </BodyShort>
       )}
-      <button
+      <Button
         type="button"
         onClick={handleOnClick}
         onKeyDown={handleKeyDown}
         className={styles.clickableArea}
         aria-label={intl.formatMessage({ id: expanded ? 'BubbleText.LukkeTekstfelt' : 'BubbleText.ApneTekstfelt' })}
         aria-expanded={expanded}
-      >
-        {expanded ? <OppChevron /> : <NedChevron />}
-      </button>
+        icon={expanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
+        variant="tertiary"
+      />
     </>
   );
 };

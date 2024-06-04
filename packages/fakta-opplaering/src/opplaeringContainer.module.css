@@ -12,14 +12,6 @@
   }
 }
 
-.medisinskVilkår :global .nav-frontend-tabs__tab-label {
-  padding-bottom: 0.1rem;
-}
-
-.medisinskVilkår :global .nav-frontend-tabs__tab-inner--aktiv .nav-frontend-tabs__tab-label {
-  border-bottom: 2px solid var(--a-blue-500);
-}
-
 .medisinskVilkår :global .alertstripe {
   padding-top: 0.4375rem;
   padding-bottom: 0.4375rem;
@@ -42,15 +34,10 @@
   position: relative;
 }
 
-.medisinskVilkårTabItem__warningIcon {
-  position: absolute;
-  right: 0;
-  bottom: -2px;
-  height: 1.5rem;
-}
-
 .medisinskVilkårTabItemExtended {
-  padding-right: 2rem;
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
 }
 
 .infostripe__diagnosekode__tittel {

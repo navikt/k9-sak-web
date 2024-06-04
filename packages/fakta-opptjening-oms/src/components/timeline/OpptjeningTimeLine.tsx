@@ -32,15 +32,17 @@ const standardItems = (opptjeningFomDato: string, opptjeningTomDato: string): an
 };
 
 const classNameGenerator = (ap: OpptjeningAktivitet, harApneAksjonspunkter: boolean) => {
+  let className = '';
   if (!harApneAksjonspunkter) {
-    return 'laastPeriode';
+    className += ' laastPeriode';
   }
   if (ap.erGodkjent === false) {
-    return 'avvistPeriode';
+    className += ' avvistPeriode';
   }
   if (ap.erGodkjent === true) {
-    return 'godkjentPeriode';
+    className += ' godkjentPeriode';
   }
+  if (className.length > 0) return className.trim();
   return 'undefined';
 };
 

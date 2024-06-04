@@ -1,0 +1,36 @@
+name: Build and Publish Storybook to GitHub Pages
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hente kode
+        uses: actions/checkout@v4
+
+      - name: Setup yarnrc
+        uses: ./.github/actions/setup-yarnrc
+        with:
+          npmAuthToken: ${{ secrets.READER_TOKEN }}
+
+      - name: Sette opp Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'yarn'
+
+      - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+        with:
+          install_command: HUSKY=0 yarn install --immutable
+          build_command: yarn build-storybook
+          path: .static_storybook
+          checkout: false

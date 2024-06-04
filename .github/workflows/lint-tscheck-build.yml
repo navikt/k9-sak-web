@@ -16,22 +16,10 @@ jobs:
       - name: Hente kode
         uses: actions/checkout@v4
 
-      - name: Setup .yarnrc.yml
-        run: |
-          yarn config set npmScopes.navikt.npmRegistryServer "https://npm.pkg.github.com"
-          yarn config set npmScopes.navikt.npmAlwaysAuth true
-          yarn config set npmScopes.navikt.npmAuthToken $NPM_AUTH_TOKEN
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-
-      - name: Sette opp Node
-        uses: actions/setup-node@v4
+      - name: Setup + Install
+        uses: ./.github/actions/setup-install
         with:
-          node-version: '18'
-          cache: 'yarn'
-
-      - name: Installere dependencies
-        run: HUSKY=0 yarn install --immutable
+          npmAuthToken: ${{ secrets.READER_TOKEN }}
 
       - name: Typescript-sjekk
         run: yarn ts-check

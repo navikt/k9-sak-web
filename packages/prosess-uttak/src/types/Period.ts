@@ -62,4 +62,15 @@ export default class Period {
     const tomDate = dateFromString(this.tom);
     return fomDate.isBefore(tomDate) || fomDate.isSame(tomDate);
   }
+
+  getFirstAndLastWeek(): number | string {
+    const fomWeek = dateFromString(this.fom).week();
+    const tomWeek = dateFromString(this.tom).week();
+
+    if (fomWeek === tomWeek) {
+      return fomWeek;
+    }
+
+    return `${fomWeek}-${tomWeek}`;
+  }
 }

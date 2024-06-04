@@ -17,7 +17,13 @@ interface NavFieldGroupProps {
   className?: string;
 }
 
-const NavFieldGroup = ({ errorMessageName, errorMessage, title, children, className }: NavFieldGroupProps) => {
+const NavFieldGroup = ({
+  errorMessageName = null,
+  errorMessage = null,
+  title = '',
+  children,
+  className = '',
+}: NavFieldGroupProps) => {
   if (!errorMessageName) {
     return (
       <Fieldset legend={title} hideLegend description={title} className={className} error={errorMessage}>
@@ -34,13 +40,6 @@ const NavFieldGroup = ({ errorMessageName, errorMessage, title, children, classN
       className={className}
     />
   );
-};
-
-NavFieldGroup.defaultProps = {
-  errorMessageName: null,
-  errorMessage: null,
-  title: '',
-  className: '',
 };
 
 export default NavFieldGroup;

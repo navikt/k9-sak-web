@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 import TilbakekrevingTimeline from './TilbakekrevingTimeline';
 
@@ -70,10 +70,6 @@ TilbakekrevingTimelinePanel.propTypes = {
   toggleDetaljevindu: PropTypes.func.isRequired,
   kjonn: PropTypes.string.isRequired,
   hjelpetekstKomponent: PropTypes.node.isRequired,
-};
-
-TilbakekrevingTimelinePanel.defaultProps = {
-  valgtPeriode: undefined,
 };
 
 export default TilbakekrevingTimelinePanel;

@@ -50,7 +50,7 @@ interface VilkarresultatMedOverstyringProsessIndexProps {
 
 const VilkarresultatMedOverstyringProsessIndex = ({
   behandling,
-  medlemskap,
+  medlemskap = { fom: '' },
   aksjonspunkter,
   submitCallback,
   overrideReadOnly,
@@ -60,7 +60,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   erOverstyrt,
   panelTittelKode,
   overstyringApKode,
-  lovReferanse,
+  lovReferanse = '',
   erMedlemskapsPanel,
   visPeriodisering,
   vilkar,
@@ -176,11 +176,6 @@ const VilkarresultatMedOverstyringProsessIndex = ({
       </div>
     </RawIntlProvider>
   );
-};
-
-VilkarresultatMedOverstyringProsessIndex.defaultProps = {
-  lovReferanse: '',
-  medlemskap: {},
 };
 
 export default VilkarresultatMedOverstyringProsessIndex;

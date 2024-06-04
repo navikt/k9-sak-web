@@ -1,6 +1,6 @@
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { Detail, HGrid } from '@navikt/ds-react';
-import Lukknapp from 'nav-frontend-lukknapp';
+import { XMarkIcon } from '@navikt/aksel-icons';
+import { Button, Detail, HGrid } from '@navikt/ds-react';
 import React, { Component } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
@@ -83,9 +83,13 @@ export class ErrorMessagePanel extends Component<OwnProps & WrappedComponentProp
           </HGrid>
         ))}
         <div className={styles.lukkContainer}>
-          <Lukknapp hvit onClick={removeErrorMessage}>
-            {intl.formatMessage({ id: 'ErrorMessagePanel.Close' })}
-          </Lukknapp>
+          <Button
+            variant="secondary"
+            icon={<XMarkIcon title={intl.formatMessage({ id: 'ErrorMessagePanel.Close' })} />}
+            onClick={removeErrorMessage}
+            size="small"
+            className={styles.closeButton}
+          />
         </div>
         {isModalOpen && (
           <ErrorMessageDetailsModal

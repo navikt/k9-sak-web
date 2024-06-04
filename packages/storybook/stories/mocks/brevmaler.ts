@@ -1,85 +1,10 @@
 import { Brevmaler } from '@k9-sak-web/types';
+import { templates } from '@k9-sak-web/gui/storybook/mocks/brevmaler.js';
 
-const brevmaler = {
-  INNHEN: {
-    navn: 'Innhent dokumentasjon',
-    mottakere: [
-      {
-        id: '2821629142423',
-        type: 'AKTØRID',
-        harVarsel: false,
-      },
-      {
-        id: '123456789',
-        type: 'ORGNR',
-        harVarsel: false,
-      },
-      {
-        id: '987654321',
-        type: 'ORGNR',
-        harVarsel: false,
-      },
-    ],
-    støtterTredjepartsmottaker: true,
-    linker: [],
-    støtterFritekst: true,
-    støtterTittelOgFritekst: false,
-    kode: 'INNHEN',
-  },
-  GENERELT_FRITEKSTBREV: {
-    navn: 'Fritekst generelt brev',
-    mottakere: [
-      {
-        id: '2821629142423',
-        type: 'AKTØRID',
-        harVarsel: false,
-      },
-      {
-        id: '123456789',
-        type: 'ORGNR',
-        harVarsel: false,
-      },
-      {
-        id: '987654321',
-        type: 'ORGNR',
-        harVarsel: false,
-      },
-    ],
-    støtterTredjepartsmottaker: true,
-    linker: [],
-    støtterFritekst: false,
-    støtterTittelOgFritekst: true,
-    kode: 'GENERELT_FRITEKSTBREV',
-  },
-  INNHENT_MEDISINSKE_OPPLYSNINGER: {
-    navn: 'Innhent medisinske opplysninger fritekstbrev',
-    mottakere: [
-      {
-        id: '2821629142423',
-        type: 'AKTØRID',
-        harVarsel: false,
-      },
-    ],
-    støtterTredjepartsmottaker: true,
-    linker: [],
-    støtterFritekst: true,
-    støtterTittelOgFritekst: false,
-    kode: 'INNHENT_MEDISINSKE_OPPLYSNINGER',
-  },
-  VARSEL_FRITEKST: {
-    navn: 'Varselsbrev fritekst',
-    mottakere: [
-      {
-        id: '2821629142423',
-        type: 'AKTØRID',
-        harVarsel: false,
-      },
-    ],
-    linker: [],
-    støtterFritekst: true,
-    støtterTittelOgFritekst: false,
-    kode: 'VARSEL_FRITEKST',
-  },
-} satisfies Brevmaler;
+// Dette er den gamle typen brukt i gamle stories.
+const brevmaler: Brevmaler = {};
+for (const mal of templates) {
+  brevmaler[mal.kode] = mal;
+}
 
 export default brevmaler;

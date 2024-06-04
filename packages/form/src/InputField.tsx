@@ -27,11 +27,12 @@ interface InputFieldProps {
 
 const InputField = ({
   name,
-  type,
-  label,
-  validate,
-  readOnly,
-  isEdited,
+  type = 'text',
+  label = '',
+  validate = null,
+  readOnly = false,
+  isEdited = false,
+  size = 'small',
   ...otherProps
 }: InputFieldProps & (TextFieldProps | ReadOnlyFieldProps)) => (
   <Field
@@ -46,16 +47,8 @@ const InputField = ({
     readOnlyHideEmpty
     isEdited={isEdited}
     autoComplete="off"
+    size={size}
   />
 );
-
-InputField.defaultProps = {
-  type: 'text',
-  validate: null,
-  readOnly: false,
-  label: '',
-  isEdited: false,
-  size: 'small',
-};
 
 export default InputField;
