@@ -9,11 +9,12 @@ class NattevåkType {
   vurderinger: Vurderingsperiode[];
 
   constructor({ beskrivelser, vurderinger }: Nattevåk) {
-    this.beskrivelser = beskrivelser.map(beskrivelse => ({
-      ...beskrivelse,
-      periode: new Period(beskrivelse.periode.fom, beskrivelse.periode.tom),
-    }));
-
+    this.beskrivelser = beskrivelser
+      .map(beskrivelse => ({
+        ...beskrivelse,
+        periode: new Period(beskrivelse.periode.fom, beskrivelse.periode.tom),
+      }))
+      .sort((a, b) => (a.periode.startsBefore(b.periode) ? 1 : -1));
     this.vurderinger = vurderinger.map(vurdering => new Vurderingsperiode(vurdering));
   }
 
