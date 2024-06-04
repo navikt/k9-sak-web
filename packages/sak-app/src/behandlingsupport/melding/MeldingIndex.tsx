@@ -17,13 +17,14 @@ import {
   BehandlingAppKontekst,
   Brevmaler,
   Fagsak,
+  FeatureToggles,
   Kodeverk,
-  Mottaker,
   Personopplysninger,
 } from '@k9-sak-web/types';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
+import type { MottakerDto } from '@k9-sak-web/backend/k9sak/generated';
 import { useFpSakKodeverk } from '../../data/useKodeverk';
 import { useVisForhandsvisningAvMelding } from '../../data/useVisForhandsvisningAvMelding';
 import { setBehandlingOnHold } from '../../behandlingmenu/behandlingMenuOperations';
@@ -77,7 +78,7 @@ const getPreviewCallback =
     fagsakYtelseType: Kodeverk,
     fetchPreview: (erHenleggelse: boolean, data: any) => void,
   ) =>
-  (overstyrtMottaker: Mottaker, dokumentMal: string, fritekst: string, fritekstbrev?: Fritekstbrev) => {
+  (overstyrtMottaker: MottakerDto, dokumentMal: string, fritekst: string, fritekstbrev?: Fritekstbrev) => {
     const data = erTilbakekrevingType({ kode: behandlingTypeKode })
       ? {
           fritekst: fritekst || ' ',
@@ -105,6 +106,7 @@ interface OwnProps {
   behandlingVersjon?: number;
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
+  readonly featureToggles?: FeatureToggles;
   readonly backendApi: BackendApi;
 }
 
@@ -122,6 +124,7 @@ const MeldingIndex = ({
   behandlingVersjon,
   personopplysninger,
   arbeidsgiverOpplysninger,
+  featureToggles,
   backendApi,
 }: OwnProps) => {
   const [showSettPaVentModal, setShowSettPaVentModal] = useState(false);
@@ -237,6 +240,9 @@ const MeldingIndex = ({
           behandling.type.kode === BehandlingType.TILBAKEKREVING ||
           behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
         }
+        featureToggles={featureToggles}
+        fagsak={fagsak}
+        behandling={behandling}
         backendApi={backendApi}
       />
 

@@ -98,5 +98,5 @@ spec:
       value: "true"
     - name: "OVERSTYRING_UTTAK"
       value: "true"
-    - name: USE_NEW_BACKEND_CLIENT
-      value: "true"
+    - name: "BRUK_V2_MELDINGER"
+      value: "false"

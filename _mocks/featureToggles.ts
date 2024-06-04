@@ -2,8 +2,8 @@
 // has resolved the env variables.
 export const featureTogglesFactory = () => [
   {
-    key: 'USE_NEW_BACKEND_CLIENT',
-    value: process.env.VITE_USE_NEW_BACKEND_CLIENT,
+    key: 'BRUK_V2_MELDINGER',
+    value: process.env.VITE_BRUK_V2_MELDINGER,
   },
   {
     key: 'KLAGE_KABAL',

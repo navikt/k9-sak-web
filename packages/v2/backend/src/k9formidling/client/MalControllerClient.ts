@@ -9,6 +9,9 @@ export class MalControllerClient {
   }
 
   private newUrl(path: string): URL {
+    if (path.startsWith('/')) {
+      throw new Error(`newUrl path must be relative so that baseUrl is prepended.`);
+    }
     return new URL(path, this.baseUrl);
   }
 
@@ -22,7 +25,7 @@ export class MalControllerClient {
     eksternReferanse?: string,
     avsenderApplikasjon?: AvsenderApplikasjon,
   ): Promise<Map<string, Template>> {
-    const url = this.newUrl('/api/brev/maler');
+    const url = this.newUrl('brev/maler');
     url.searchParams.set('sakstype', sakstype);
     if (behandlingUuid !== undefined) {
       url.searchParams.set('behandlingUuid', behandlingUuid);
@@ -58,7 +61,7 @@ export class MalControllerClient {
     avsenderApplikasjon: AvsenderApplikasjon,
     maltype: string,
   ): Promise<FritekstbrevDokumentdata[]> {
-    const url = this.newUrl(`/api/brev/maler/${encodeURIComponent(maltype)}`);
+    const url = this.newUrl(`brev/maler/${encodeURIComponent(maltype)}`);
     url.searchParams.set('sakstype', sakstype);
     url.searchParams.set('eksternReferanse', eksternReferanse);
     url.searchParams.set('avsenderApplikasjon', avsenderApplikasjon);

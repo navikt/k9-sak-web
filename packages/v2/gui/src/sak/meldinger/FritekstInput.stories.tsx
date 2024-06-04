@@ -1,7 +1,6 @@
-/* eslint-disable import/no-relative-packages */
-import { type Meta, type StoryObj } from '@storybook/react';
+import FritekstInput from '@k9-sak-web/gui/sak/meldinger/FritekstInput.js';
+import type { Meta, StoryObj } from '@storybook/react';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
-import FritekstInput from './FritekstInput.js';
 
 const meta: Meta<typeof FritekstInput> = {
   title: 'gui/sak/meldinger/FritekstInput.tsx',
@@ -18,7 +17,7 @@ export default meta;
 
 export const Default: StoryObj<typeof FritekstInput> = {
   args: {
-    språk: 'Bokmål',
+    språk: { kode: 'NB', kodeverk: 'SPRAAK_KODE' },
     show: true,
     showTitle: true,
     showValidation: true,

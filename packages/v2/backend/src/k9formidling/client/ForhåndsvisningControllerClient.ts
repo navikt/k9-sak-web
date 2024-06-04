@@ -9,11 +9,14 @@ export class ForhåndsvisningControllerClient {
   }
 
   private newUrl(path: string): URL {
+    if (path.startsWith('/')) {
+      throw new Error(`newUrl path must be relative so that baseUrl is prepended.`);
+    }
     return new URL(path, this.baseUrl);
   }
 
   async lagPdf(forhåndsvisDto: ForhåndsvisDto): Promise<Blob> {
-    const resp = await fetch(this.newUrl('/brev/forhaandsvis'), {
+    const resp = await fetch(this.newUrl('brev/forhaandsvis'), {
       method: 'POST',
       headers: {
         Accept: 'application/pdf, application/json, text/plain',
