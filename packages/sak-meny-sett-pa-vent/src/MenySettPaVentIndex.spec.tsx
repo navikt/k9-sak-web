@@ -6,6 +6,9 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { combineReducers, createStore } from 'redux';
 import { reducer as formReducer } from 'redux-form';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { BehandlingType } from '@k9-sak-web/lib/types/index.js';
 
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import MenySettPaVentIndex from './MenySettPaVentIndex';
@@ -20,15 +23,6 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-const ventearsaker = [
-  {
-    kode: venteArsakType.UTV_FRIST,
-    kodeverk: 'VENT_ARSAK_TYPE',
-    navn: 'Utvid frist',
-    kanVelges: 'true',
-  },
-];
-
 const testDato = add(new Date(), { months: 2, days: 1 });
 
 describe('<MenySettPaVentIndex>', () => {
@@ -38,16 +32,22 @@ describe('<MenySettPaVentIndex>', () => {
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
-        <MemoryRouter>
-          <MenySettPaVentIndex
-            behandlingId={3}
-            behandlingVersjon={1}
-            settBehandlingPaVent={settBehandlingPaVent}
-            ventearsaker={ventearsaker}
-            lukkModal={lukkModalCallback}
-            erTilbakekreving={false}
-          />
-        </MemoryRouter>
+        <KodeverkProvider
+          behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+          kodeverk={alleKodeverkV2}
+          klageKodeverk={{}}
+          tilbakeKodeverk={{}}
+        >
+          <MemoryRouter>
+            <MenySettPaVentIndex
+              behandlingId={3}
+              behandlingVersjon={1}
+              settBehandlingPaVent={settBehandlingPaVent}
+              lukkModal={lukkModalCallback}
+              erTilbakekreving={false}
+            />
+          </MemoryRouter>
+        </KodeverkProvider>
       </Provider>,
     );
 
