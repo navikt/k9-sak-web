@@ -85,8 +85,6 @@ describe('<TotrinnskontrollIndex>', () => {
       />,
     );
 
-    screen.debug();
-
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     await act(async () => {
       await userEvent.click(screen.getByRole('button', { name: 'Godkjenn vedtaket' }));
