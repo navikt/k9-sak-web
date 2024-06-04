@@ -19,6 +19,6 @@
     "react-redux": "9.1.2",
     "redux": "5.0.1",
     "redux-form": "8.3.10",
-    "reselect": "5.1.0"
+    "reselect": "5.1.1"
   }
 }
