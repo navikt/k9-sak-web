@@ -16,7 +16,7 @@ interface OwnProps {
   arbeidsforhold: ArbeidsforholdV2;
 }
 
-const utledAksjonspunktText = (arbeidsforhold, imUtenArbeidsforhold) => {
+const utledAksjonspunktText = (arbeidsforhold: ArbeidsforholdV2, imUtenArbeidsforhold) => {
   if (imUtenArbeidsforhold) {
     return (
       <FormattedMessage
@@ -32,9 +32,7 @@ const utledAksjonspunktText = (arbeidsforhold, imUtenArbeidsforhold) => {
     );
   }
   if (
-    arbeidsforhold.aksjonspunktÅrsaker.some(
-      a => a.kode === aksjonspunktÅrsaker.OVERGANG_ARBEIDSFORHOLDS_ID_UNDER_YTELSE,
-    )
+    arbeidsforhold.aksjonspunktÅrsaker.some(a => a === aksjonspunktÅrsaker.OVERGANG_ARBEIDSFORHOLDS_ID_UNDER_YTELSE)
   ) {
     return <FormattedMessage id="HelpText.OvergangAbedsforholdsId" />;
   }
