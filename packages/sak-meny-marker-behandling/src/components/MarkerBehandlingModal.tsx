@@ -48,10 +48,11 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
     markerSomVanskelig: brukVanskeligKøMarkering ? Yup.boolean() : undefined,
     begrunnelse: Yup.string().when(['markerSomHastesak', 'markerSomVanskelig'], {
       is: (markerSomHastesak, markerSomVanskelig) => markerSomHastesak === true || markerSomVanskelig === true,
-      then: Yup.string()
-        .required({ id: 'ValidationMessage.NotEmpty' })
-        .min(3, { id: 'ValidationMessage.Min3Char' })
-        .max(100000, { id: 'ValidationMessage.Max100000Char' }),
+      then: schema =>
+        schema
+          .required({ id: 'ValidationMessage.NotEmpty' })
+          .min(3, { id: 'ValidationMessage.Min3Char' })
+          .max(100000, { id: 'ValidationMessage.Max100000Char' }),
     }),
   });
   const formRef = useRef<FormikProps<FormValues>>();
