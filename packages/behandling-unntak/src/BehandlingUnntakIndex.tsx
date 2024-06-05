@@ -11,7 +11,7 @@ import {
 } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-
+import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 import FetchedData from './types/fetchedDataTsType';
 import { restApiUnntakHooks, requestUnntakApi, UnntakBehandlingApiKeys } from './data/unntakBehandlingApi';
 import UnntakPaneler from './components/UnntakPaneler';
@@ -41,7 +41,7 @@ interface OwnProps {
   };
   opneSokeside: () => void;
   featureToggles: FeatureToggles;
-  kodeverk?: { [key: string]: KodeverkMedNavn[] };
+  kodeverk?: AlleKodeverk;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setRequestPendingMessage: (message: string) => void;
 }

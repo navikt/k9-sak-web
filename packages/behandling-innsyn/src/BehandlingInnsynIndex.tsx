@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 
 import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { Behandling, Fagsak, KodeverkMedNavn, FeatureToggles, FagsakPerson } from '@k9-sak-web/types';
+import { Behandling, Fagsak, FeatureToggles, FagsakPerson } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 
 import InnsynPaneler from './components/InnsynPaneler';
 import FetchedData from './types/fetchedDataTsType';
@@ -20,7 +21,7 @@ interface OwnProps {
   behandlingId: number;
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
-  kodeverk: { [key: string]: KodeverkMedNavn[] };
+  kodeverk: AlleKodeverk;
   rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { BehandlingPaVent, SettPaVentParams, Rettigheter } from '@k9-sak-web/behandling-felles';
 import { Fagsak, Behandling, KodeverkMedNavn, FagsakPerson } from '@k9-sak-web/types';
-
+import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 import AnkeProsess from './AnkeProsess';
 import FetchedData from '../types/fetchedDataTsType';
 
@@ -12,7 +12,7 @@ interface OwnProps {
   behandling: Behandling;
   fetchedData: FetchedData;
   rettigheter: Rettigheter;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: AlleKodeverk;
   valgtProsessSteg?: string;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;

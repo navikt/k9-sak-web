@@ -9,6 +9,7 @@ import {
   ArbeidsgiverOpplysningerPerId,
   FeatureToggles,
 } from '@k9-sak-web/types';
+import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 
 import KlageProsess from './KlageProsess';
 import FetchedData from '../types/fetchedDataTsType';
@@ -18,7 +19,7 @@ interface OwnProps {
   fagsakPerson: FagsakPerson;
   behandling: Behandling;
   fetchedData: FetchedData;
-  kodeverk: { [key: string]: KodeverkMedNavn[] };
+  kodeverk: AlleKodeverk;
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;

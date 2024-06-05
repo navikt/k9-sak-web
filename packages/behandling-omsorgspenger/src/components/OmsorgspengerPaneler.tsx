@@ -10,7 +10,7 @@ import {
   ArbeidsgiverOpplysningerPerId,
   Dokument,
 } from '@k9-sak-web/types';
-
+import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 import OmsorgspengerProsess from './OmsorgspengerProsess';
 import OmsorgspengerFakta from './OmsorgspengerFakta';
 import FetchedData from '../types/fetchedDataTsType';
@@ -20,7 +20,7 @@ interface OwnProps {
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: AlleKodeverk;
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;
