@@ -61,7 +61,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
       />,
       { messages },
     );
-    expect(screen.getByRole('link', { name: 'Lagre og forhåndsvis brev' })).toBeInTheDocument();
+    expect(screen.getByTestId('previewLink')).toBeInTheDocument();
   });
   const formValues2 = {
     fritekstTilBrev: '123',

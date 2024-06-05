@@ -42,7 +42,7 @@ test('<TilbakekrevingVedtakForm> skal vise tekstfelt for begrunnelse og godkjenn
 
   expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Vedtaksbrev');
   expect(screen.getByText('Til godkjenning')).not.toBeDisabled();
-  expect(screen.getByRole('link')).toHaveTextContent('Forhåndsvis brev');
+  expect(screen.getByText('Forhåndsvis brev')).toBeInTheDocument();
 });
 
 test('<TilbakekrevingVedtakForm> skal formatere data for forhåndsvisning av vedtaksbrevet', async () => {
@@ -81,7 +81,7 @@ test('<TilbakekrevingVedtakForm> skal formatere data for forhåndsvisning av ved
     { messages },
   );
 
-  await userEvent.click(screen.getByRole('link'));
+  await userEvent.click(screen.getByTestId('previewLink'));
   expect(fetchPreview.mock.calls.length).toBe(1);
   expect(fetchPreview.mock.calls[0][0]).toEqual({
     uuid: 'uuid',

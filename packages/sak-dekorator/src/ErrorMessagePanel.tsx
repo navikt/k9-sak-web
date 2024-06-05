@@ -75,6 +75,7 @@ export class ErrorMessagePanel extends Component<OwnProps & WrappedComponentProp
                   onClick={event => this.toggleModalOnClick(event, index)}
                   onKeyDown={event => this.toggleModalOnKeyDown(event, index)}
                   className={styles.link}
+                  data-testid="errorDetailsLink"
                 >
                   <FormattedMessage id="ErrorMessagePanel.ErrorDetails" />
                 </a>

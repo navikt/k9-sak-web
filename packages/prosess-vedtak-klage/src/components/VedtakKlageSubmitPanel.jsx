@@ -47,6 +47,7 @@ export const VedtakKlageSubmitPanelImpl = ({ intl, behandlingPaaVent, previewVed
           onClick={previewBrev}
           onKeyDown={e => (e.keyCode === 13 ? previewBrev(e) : null)}
           className={classNames('lenke lenke--frittstaende')}
+          data-testid="previewLink"
         >
           <FormattedMessage id="VedtakKlageForm.ForhandvisBrev" />
         </a>

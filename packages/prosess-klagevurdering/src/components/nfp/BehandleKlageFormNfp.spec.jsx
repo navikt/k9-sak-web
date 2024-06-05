@@ -38,7 +38,7 @@ describe('<BehandleKlageFormNfpImpl>', () => {
       />,
       { messages },
     );
-    expect(screen.getByRole('link', { name: 'Lagre og forhåndsvis brev' })).toBeInTheDocument();
+    expect(screen.getByTestId('previewLink')).toBeInTheDocument();
   });
   const formValues2 = {
     fritekstTilBrev: '123',
@@ -62,7 +62,7 @@ describe('<BehandleKlageFormNfpImpl>', () => {
       />,
       { messages },
     );
-    expect(screen.queryByRole('link', { name: 'Lagre og forhåndsvis brev' })).not.toBeInTheDocument();
+    expect(screen.queryByTestId('previewLink')).not.toBeInTheDocument();
   });
   const formValues3 = {
     klageVurdering: klageVurdering.STADFESTE_YTELSESVEDTAK,
@@ -86,6 +86,6 @@ describe('<BehandleKlageFormNfpImpl>', () => {
       />,
       { messages },
     );
-    expect(screen.queryByRole('link', { name: 'Lagre og forhåndsvis brev' })).not.toBeInTheDocument();
+    expect(screen.queryByTestId('previewLink')).not.toBeInTheDocument();
   });
 });
