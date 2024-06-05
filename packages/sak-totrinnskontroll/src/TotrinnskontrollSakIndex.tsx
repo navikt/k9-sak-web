@@ -9,17 +9,15 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import {
-  BehandlingAppKontekst,
-  KodeverkMedNavn,
-  KlageVurdering,
-  TotrinnskontrollSkjermlenkeContext,
-} from '@k9-sak-web/types';
+import { BehandlingAppKontekst, KlageVurdering, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 
 import TotrinnskontrollBeslutterForm, { FormValues } from './components/TotrinnskontrollBeslutterForm';
 import { AksjonspunktGodkjenningData } from './components/AksjonspunktGodkjenningFieldArray';
 import TotrinnskontrollSaksbehandlerPanel from './components/TotrinnskontrollSaksbehandlerPanel';
 import messages from '../i18n/nb_NO.json';
+import KodeverkV2 from '@k9-sak-web/lib/types/KodeverkV2.js';
 
 const cache = createIntlCache();
 
@@ -60,7 +58,6 @@ interface OwnProps {
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
   location: Location;
   behandlingKlageVurdering?: KlageVurdering;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   readOnly: boolean;
   onSubmit: (...args: any[]) => any;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
@@ -73,9 +70,9 @@ const TotrinnskontrollSakIndex = ({
   readOnly,
   onSubmit,
   behandlingKlageVurdering,
-  alleKodeverk,
   createLocationForSkjermlenke,
 }: OwnProps) => {
+  const { hentKodeverkForKode } = useKodeverkContext();
   const erTilbakekreving =
     BehandlingType.TILBAKEKREVING === behandling.type || BehandlingType.TILBAKEKREVING_REVURDERING === behandling.type;
 
@@ -120,9 +117,9 @@ const TotrinnskontrollSakIndex = ({
   );
 
   const erStatusFatterVedtak = behandling.status === BehandlingStatus.FATTER_VEDTAK;
-  const skjemalenkeTyper = alleKodeverk[kodeverkTyper.SKJERMLENKE_TYPE];
-  const arbeidsforholdHandlingTyper = alleKodeverk[kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE];
-  const vurderArsaker = alleKodeverk[kodeverkTyper.VURDER_AARSAK];
+  const skjemalenkeTyper = hentKodeverkForKode(KodeverkType.SKJERMLENKE_TYPE);
+  const arbeidsforholdHandlingTyper = hentKodeverkForKode(KodeverkType.ARBEIDSFORHOLD_HANDLING_TYPE);
+  const vurderArsaker = hentKodeverkForKode(KodeverkType.VURDER_AARSAK);
 
   return (
     <RawIntlProvider value={intl}>
@@ -135,8 +132,8 @@ const TotrinnskontrollSakIndex = ({
           readOnly={readOnly}
           onSubmit={submitHandler}
           behandlingKlageVurdering={behandlingKlageVurdering}
-          arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
-          skjemalenkeTyper={skjemalenkeTyper}
+          arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper as KodeverkV2[]}
+          skjemalenkeTyper={skjemalenkeTyper as KodeverkV2[]}
           erTilbakekreving={erTilbakekreving}
           lagLenke={lagLenke}
         />

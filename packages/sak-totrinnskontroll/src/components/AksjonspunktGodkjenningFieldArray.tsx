@@ -9,6 +9,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { FieldArrayFieldsProps } from 'redux-form';
+import { KodeverkObject } from '@k9-sak-web/lib/types/index.js';
 
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 
@@ -36,9 +37,9 @@ interface OwnProps {
   erForeldrepengerFagsak: boolean;
   klagebehandlingVurdering?: KlageVurdering;
   behandlingStatus: string;
-  arbeidsforholdHandlingTyper: KodeverkMedNavn[];
+  arbeidsforholdHandlingTyper: KodeverkObject[];
   erTilbakekreving: boolean;
-  skjemalenkeTyper: KodeverkMedNavn[];
+  skjemalenkeTyper: KodeverkObject[];
   lagLenke: (skjermlenkeCode: string) => Location;
 }
 

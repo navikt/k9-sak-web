@@ -4,14 +4,14 @@ import { NavLink } from 'react-router-dom';
 
 import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import { BehandlingAppKontekst } from '@k9-sak-web/types';
-import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 
 import BehandlingPickerItemContentOld from './BehandlingPickerItemContentOld';
 
 import styles from './behandlingPickerItem.module.css';
 
 const getContentProps = (behandling: BehandlingAppKontekst) => {
-  const { kodeverkNavnFraKode } = useKodeverkV2();
+  const { kodeverkNavnFraKode } = useKodeverkContext();
   return {
     behandlingId: behandling.id,
     behandlingTypeNavn: kodeverkNavnFraKode(behandling.type, KodeverkType.BEHANDLING_TYPE),

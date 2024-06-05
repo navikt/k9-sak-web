@@ -5,7 +5,6 @@ import { ariaCheck, decodeHtmlEntity, isRequiredMessage } from '@fpsak-frontend/
 import {
   Behandling,
   KlageVurdering,
-  KodeverkMedNavn,
   TotrinnskontrollAksjonspunkt,
   TotrinnskontrollSkjermlenkeContext,
 } from '@k9-sak-web/types';
@@ -16,6 +15,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
+import { KodeverkV2, KodeverkObject } from '@k9-sak-web/lib/types/index.js';
 import AksjonspunktGodkjenningFieldArray, { AksjonspunktGodkjenningData } from './AksjonspunktGodkjenningFieldArray';
 import styles from './totrinnskontrollBeslutterForm.module.css';
 
@@ -31,8 +31,8 @@ interface PureOwnProps {
   behandlingKlageVurdering?: KlageVurdering;
   readOnly: boolean;
   erTilbakekreving: boolean;
-  arbeidsforholdHandlingTyper: KodeverkMedNavn[];
-  skjemalenkeTyper: KodeverkMedNavn[];
+  arbeidsforholdHandlingTyper: KodeverkV2[];
+  skjemalenkeTyper: KodeverkV2[];
   lagLenke: (skjermlenkeCode: string) => Location;
 }
 
@@ -78,11 +78,11 @@ export const TotrinnskontrollBeslutterForm = ({
         klagebehandlingVurdering={behandlingKlageVurdering}
         behandlingStatus={behandling.status}
         erTilbakekreving={erTilbakekreving}
-        arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
+        arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper as KodeverkObject[]}
         readOnly={readOnly}
         klageKA={!!behandlingKlageVurdering?.klageVurderingResultatNK}
         totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
-        skjemalenkeTyper={skjemalenkeTyper}
+        skjemalenkeTyper={skjemalenkeTyper as KodeverkObject[]}
         lagLenke={lagLenke}
       />
       <div className={styles.buttonRow}>

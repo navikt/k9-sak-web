@@ -12,7 +12,9 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
-
+import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
 
@@ -150,17 +152,24 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, {});
 
     render(
-      <MemoryRouter>
-        <IntlProvider locale="nb-NO">
-          <FagsakProfileIndex
-            fagsak={fagsak as Fagsak}
-            alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
-            harHentetBehandlinger
-            oppfriskBehandlinger={vi.fn()}
-            fagsakRettigheter={fagsakRettigheter}
-          />
-        </IntlProvider>
-      </MemoryRouter>,
+      <KodeverkProvider
+        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <MemoryRouter>
+          <IntlProvider locale="nb-NO">
+            <FagsakProfileIndex
+              fagsak={fagsak as Fagsak}
+              alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
+              harHentetBehandlinger
+              oppfriskBehandlinger={vi.fn()}
+              fagsakRettigheter={fagsakRettigheter}
+            />
+          </IntlProvider>
+        </MemoryRouter>
+      </KodeverkProvider>,
     );
 
     expect(await screen.findByRole('button', { name: 'Behandlingsmeny' })).toBeInTheDocument();
@@ -186,18 +195,25 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, {});
 
     render(
-      <MemoryRouter>
-        <IntlProvider locale="nb-NO">
-          <FagsakProfileIndex
-            fagsak={fagsak as Fagsak}
-            alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
-            harHentetBehandlinger
-            oppfriskBehandlinger={vi.fn()}
-            behandlingId={1}
-            fagsakRettigheter={fagsakRettigheter}
-          />
-        </IntlProvider>
-      </MemoryRouter>,
+      <KodeverkProvider
+        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <MemoryRouter>
+          <IntlProvider locale="nb-NO">
+            <FagsakProfileIndex
+              fagsak={fagsak as Fagsak}
+              alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
+              harHentetBehandlinger
+              oppfriskBehandlinger={vi.fn()}
+              behandlingId={1}
+              fagsakRettigheter={fagsakRettigheter}
+            />
+          </IntlProvider>
+        </MemoryRouter>
+      </KodeverkProvider>,
     );
 
     expect(await screen.findByRole('button', { name: 'Behandlingsmeny' })).toBeInTheDocument();

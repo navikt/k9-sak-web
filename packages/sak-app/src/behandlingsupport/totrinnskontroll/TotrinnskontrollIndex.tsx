@@ -13,7 +13,6 @@ import {
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
 import { createLocationForSkjermlenke } from '../../app/paths';
-import { useKodeverk } from '../../data/useKodeverk';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
 import BeslutterModalIndex from './BeslutterModalIndex';
 
@@ -64,8 +63,6 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
   const location = useLocation();
 
   const { brukernavn, kanVeilede } = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
-
-  const alleKodeverk = useKodeverk(behandling.type);
 
   const erInnsynBehandling = behandling.type === BehandlingType.DOKUMENTINNSYN;
 
@@ -128,7 +125,6 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
         location={location}
         readOnly={brukernavn === behandling.ansvarligSaksbehandler || kanVeilede}
         onSubmit={onSubmit}
-        alleKodeverk={alleKodeverk}
         behandlingKlageVurdering={totrinnsKlageVurdering}
         createLocationForSkjermlenke={createLocationForSkjermlenke}
       />
