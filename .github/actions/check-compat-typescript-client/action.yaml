@@ -1,0 +1,27 @@
+name: Check compat typescript client
+description: Check if current k9-sak-web compiles with new typescript client package.
+inputs:
+  readerToken:
+    description: The secrets.READER_TOKEN allowing read of internal packages.
+    required: true
+  newClientPath:
+    description: The filepath to where the new client package has been put
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Sjekk ut k9-sak-web
+      uses: actions/checkout@v4
+      with:
+        repository: navikt/k9-sak-web
+      # Klargjer for kompilering
+    - uses: ./.github/actions/setup-install
+      with:
+        npmAuthToken: ${{ inputs.readerToken }}
+      # Link inn ny klient pakke (allereie på plass frå steg før denne action blir kalla)
+    - run: yarn link ${{ inputs.newClientPath }}
+      shell: bash
+      # Køyr ts-check
+    - run: yarn ts-check
+      shell: bash
