@@ -58,6 +58,7 @@ export const TempSaveAndPreviewKlageLink = ({
           onClick={tempSave}
           onKeyDown={e => (e.keyCode === 13 ? tempSave(e) : null)}
           className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
+          data-testid="previewLink"
         >
           <FormattedMessage id="Klage.ResolveKlage.TempSaveAndPreviewButton" />
         </a>

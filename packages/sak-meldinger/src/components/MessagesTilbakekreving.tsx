@@ -28,11 +28,11 @@ import {
 } from '@k9-sak-web/types';
 
 import InputField from '@fpsak-frontend/form/src/InputField';
+import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import { Button } from '@navikt/ds-react';
 import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
-import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 import styles from './messages.module.css';
 
@@ -328,6 +328,7 @@ export const MessagesTilbakekrevingImpl = ({
                 onClick={previewMessage}
                 onKeyDown={e => (e.keyCode === 13 ? previewMessage(e) : null)}
                 className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
+                data-testid="previewLink"
               >
                 {intl.formatMessage({ id: 'Messages.Preview' })}
               </a>

@@ -302,9 +302,9 @@ describe('<HenleggBehandlingModal>', () => {
       { messages },
     );
 
-    expect(screen.getByRole('link', { name: 'Forhåndsvis brev' })).toBeInTheDocument();
+    expect(screen.getByTestId('previewLink')).toBeInTheDocument();
     await act(async () => {
-      await userEvent.click(screen.getByRole('link', { name: 'Forhåndsvis brev' }));
+      await userEvent.click(screen.getByTestId('previewLink'));
     });
     expect(previewEventCallback.mock.calls.length).toBeGreaterThan(0);
   });
@@ -335,9 +335,9 @@ describe('<HenleggBehandlingModal>', () => {
       { messages },
     );
 
-    expect(screen.getByRole('link', { name: 'Forhåndsvis brev' })).toBeInTheDocument();
+    expect(screen.getByTestId('previewLink')).toBeInTheDocument();
     await act(async () => {
-      await userEvent.click(screen.getByRole('link', { name: 'Forhåndsvis brev' }));
+      await userEvent.click(screen.getByTestId('previewLink'));
     });
     expect(previewEventCallback.mock.calls.length).toBeGreaterThan(0);
   });
