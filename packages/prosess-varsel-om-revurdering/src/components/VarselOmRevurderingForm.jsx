@@ -150,6 +150,7 @@ export class VarselOmRevurderingFormImpl extends React.Component {
                     this.previewMessage(e, previewCallback);
                   }}
                   className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
+                  data-testid="previewLink"
                 >
                   <FormattedMessage id="VarselOmRevurderingForm.Preview" />
                 </a>

@@ -11,6 +11,7 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidlingUtils';
+import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
@@ -22,13 +23,12 @@ import {
 } from '@k9-sak-web/types';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import { BodyShort, Button, Checkbox } from '@navikt/ds-react';
+import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
-import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
-import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 import styles from './messages.module.css';
 
@@ -401,6 +401,7 @@ export const MessagesImpl = ({
                 onClick={previewMessage}
                 onKeyDown={e => (e.keyCode === 13 ? previewMessage(e) : null)}
                 className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
+                data-testid="previewLink"
               >
                 {intl.formatMessage({ id: 'Messages.Preview' })}
               </a>

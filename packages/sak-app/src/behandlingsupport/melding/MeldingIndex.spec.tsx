@@ -12,12 +12,12 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import type { BehandlingAppKontekst, Brevmaler, Fagsak, FeatureToggles } from '@k9-sak-web/types';
 import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
 
-import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated';
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
+import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import MeldingIndex, { type BackendApi } from './MeldingIndex';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
+import MeldingIndex, { type BackendApi } from './MeldingIndex';
 
 const mockHistoryPush = vi.fn();
 
@@ -196,7 +196,7 @@ describe('<MeldingIndex>', () => {
 
     expect(await screen.findByTestId('MessagesForm')).toBeInTheDocument();
 
-    await userEvent.click(screen.getByRole('link', { name: 'Forhåndsvis' }));
+    await userEvent.click(screen.getByTestId('previewLink'));
 
     const reqData = requestApi.getRequestMockData(K9sakApiKeys.PREVIEW_MESSAGE_FORMIDLING);
     expect(reqData).toHaveLength(1);

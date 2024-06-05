@@ -1,10 +1,10 @@
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType.js';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { Brevmaler, KodeverkMedNavn } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType.js';
 import { intlMock } from '../../i18n/index';
 import messages from '../../i18n/nb_NO.json';
 import { MessagesTilbakekrevingImpl as MessagesTilbakekreving } from './MessagesTilbakekreving';
@@ -135,7 +135,7 @@ describe('<MessagesTilbakekreving>', () => {
       { messages },
     );
     await act(async () => {
-      await userEvent.click(screen.getByRole('link', { name: 'Forhåndsvis' }));
+      await userEvent.click(screen.getByTestId('previewLink'));
     });
 
     expect(previewEventCallback.mock.calls.length).toBeGreaterThan(0);
