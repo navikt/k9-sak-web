@@ -252,11 +252,7 @@ describe('<faktaUtils>', () => {
       lagreOverstyrteAksjonspunkter,
     );
 
-    const aksjonspunkter = [
-      {
-        kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
-      },
-    ];
+    const aksjonspunkter = [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
 
     await callback(aksjonspunkter);
 
@@ -299,12 +295,8 @@ describe('<faktaUtils>', () => {
     );
 
     const aksjonspunkter = [
-      {
-        kode: aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
-      },
-      {
-        kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
-      },
+      aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
+      aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
     ];
 
     await callback(aksjonspunkter);

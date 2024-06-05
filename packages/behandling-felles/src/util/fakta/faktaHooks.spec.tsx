@@ -154,11 +154,7 @@ describe('<faktaHooks>', () => {
     expect(opppdaterKall[0][0]).toEqual(DEFAULT_FAKTA_KODE);
     expect(opppdaterKall[0][1]).toEqual('arbeidsforhold');
 
-    const aksjonspunkterSomSkalLagres = [
-      {
-        kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
-      },
-    ];
+    const aksjonspunkterSomSkalLagres = [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
     bekreftAksjonspunktCallback(aksjonspunkterSomSkalLagres);
 
     const requestKall = lagreAksjonspunkter.mock.calls;
