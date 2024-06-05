@@ -5,7 +5,7 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import Region from '@fpsak-frontend/kodeverk/src/region';
 import { getAddresses } from '@fpsak-frontend/utils';
-import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import { BostedSokerPersonopplysninger } from '../BostedSokerFaktaIndex';
 import styles from './bostedSokerView.module.css';
@@ -35,7 +35,7 @@ const getPersonstatus = (personopplysning: BostedSokerPersonopplysninger) =>
     : personopplysning.personstatus;
 
 export const BostedSokerView = ({ intl, personopplysninger, sokerTypeTextId }: OwnProps & WrappedComponentProps) => {
-  const { kodeverkNavnFraKode } = useKodeverkV2();
+  const { kodeverkNavnFraKode } = useKodeverkContext();
   return (
     <div className={styles.defaultBostedSoker}>
       <HGrid gap="4" columns={{ xs: '8fr 4fr' }}>
@@ -61,24 +61,24 @@ export const BostedSokerView = ({ intl, personopplysninger, sokerTypeTextId }: O
                 variant="warning"
                 size="small"
                 className={getPersonstatus(personopplysninger) === personstatusType.DOD ? styles.dodEtikett : ''}
-                title={intl.formatMessage({ id: 'Personstatus.Hjelpetekst' })}
+                title="Personstatus"
               >
                 {getPersonstatus(personopplysninger) === personstatusType.UDEFINERT
-                  ? intl.formatMessage({ id: 'Personstatus.Ukjent' })
+                  ? 'Ukjent'
                   : kodeverkNavnFraKode(getPersonstatus(personopplysninger), KodeverkType.PERSONSTATUS_TYPE)}
               </Tag>
             </div>
           )}
           {personopplysninger.sivilstand && (
             <div className={styles.etikettMargin}>
-              <Tag variant="warning" size="small" title={intl.formatMessage({ id: 'Sivilstand.Hjelpetekst' })}>
+              <Tag variant="warning" size="small" title="Sivilstand">
                 {kodeverkNavnFraKode(personopplysninger.sivilstand, KodeverkType.SIVILSTAND_TYPE)}
               </Tag>
             </div>
           )}
           {personopplysninger.region && personopplysninger.region !== Region.UDEFINERT && (
             <div className={styles.etikettMargin}>
-              <Tag variant="warning" size="small" title={intl.formatMessage({ id: 'BostedSokerView.Region' })}>
+              <Tag variant="warning" size="small" title="Region">
                 {kodeverkNavnFraKode(personopplysninger.region, KodeverkType.REGION)}
               </Tag>
             </div>
