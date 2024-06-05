@@ -255,6 +255,7 @@ export const HenleggBehandlingModalImpl = ({
                           valgtMottaker,
                         )}
                         className="lenke lenke--frittstaende"
+                        data-testid="previewLink"
                       >
                         {intl.formatMessage({ id: 'HenleggBehandlingModal.ForhandsvisBrev' })}
                       </a>

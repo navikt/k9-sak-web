@@ -52,7 +52,7 @@ describe('<VarselOmRevurderingFormImpl>', () => {
     );
 
     expect(screen.getByRole('textbox', { name: 'Begrunnelse' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Forhåndsvis' })).toBeInTheDocument();
+    expect(screen.getByTestId('previewLink')).toBeInTheDocument();
   });
 
   it('skal ikke vise fritekst og forhåndsvis av brev når varsel ikke skal sendes', () => {

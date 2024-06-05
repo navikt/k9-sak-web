@@ -32,7 +32,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
     );
 
     expect(screen.getByRole('button', { name: 'Til godkjenning' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Forhåndsvis vedtaksbrev' })).toBeInTheDocument();
+    expect(screen.getByTestId('previewLink')).toBeInTheDocument();
   });
 
   it('skal rendre submit panel med medhold i klagevurdering', () => {
@@ -48,7 +48,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
     );
 
     expect(screen.getByRole('button', { name: 'Til godkjenning' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Forhåndsvis vedtaksbrev' })).toBeInTheDocument();
+    expect(screen.getByTestId('previewLink')).toBeInTheDocument();
   });
 
   it('skal rendre submit panel med behandling på vent', () => {
@@ -65,6 +65,6 @@ describe('<VedtakKlageSubmitPanel>', () => {
 
     expect(screen.getByRole('button', { name: 'Til godkjenning' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Til godkjenning' })).toBeDisabled();
-    expect(screen.getByRole('link', { name: 'Forhåndsvis vedtaksbrev' })).toBeInTheDocument();
+    expect(screen.getByTestId('previewLink')).toBeInTheDocument();
   });
 });

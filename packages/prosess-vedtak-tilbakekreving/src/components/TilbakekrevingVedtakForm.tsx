@@ -119,6 +119,7 @@ export const TilbakekrevingVedtakFormImpl = ({
                   e.keyCode === 13 ? fetchPreview(fetchPreviewVedtaksbrev, behandlingUuid, formVerdier)(e) : null
                 }
                 className={classNames(styles.buttonLink, 'lenke lenke--frittstaende')}
+                data-testid="previewLink"
               >
                 <FormattedMessage id="TilbakekrevingVedtakForm.ForhandvisBrev" />
               </a>
