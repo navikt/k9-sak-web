@@ -9,19 +9,17 @@ import { replaceNorwegianCharacters, parseQueryString } from '@fpsak-frontend/ut
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {
-  KodeverkMedNavn,
   NavAnsatt,
   Fagsak,
   BehandlingAppKontekst,
   FeatureToggles,
   FagsakPerson,
   ArbeidsgiverOpplysningerWrapper,
-  AlleKodeverk,
 } from '@k9-sak-web/types';
+import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import BehandlingPleiepengerSluttfaseIndex from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
-import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
 import { useBehandlingContext } from '@k9-sak-web/gui/behandling/index.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import useTrackRouteParam from '../app/useTrackRouteParam';
