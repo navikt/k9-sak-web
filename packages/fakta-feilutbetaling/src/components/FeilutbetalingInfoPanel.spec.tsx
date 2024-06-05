@@ -44,7 +44,7 @@ const feilutbetalingFakta = {
   ],
   behandlingsresultat: {
     type: behandlingResultatType.INNVILGET,
-    konsekvenserForYtelsen: [konsekvensForYtelsen.FORELDREPENGER_OPPHØRER, konsekvensForYtelsen.ENDRING_I_BEREGNING],
+    konsekvenserForYtelsen: [konsekvensForYtelsen.YTELSE_OPPHØRER, konsekvensForYtelsen.ENDRING_I_BEREGNING],
   },
   tilbakekrevingValg: {
     videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
@@ -58,10 +58,10 @@ describe('<FeilutbetalingInfoPanel>', () => {
 
     const kodeverkKlageNavnFraKode = vi
       .fn()
-      .mockImplementation((kode, kodeverkType) => utledKodeverkNavnFraKode(kode, kodeverkType, alleKodeverkV2));
+      .mockImplementation((kode, kodeverkType) => utledKodeverkNavnFraKode(kode, alleKodeverkV2[kodeverkType]));
     const kodeverkTilbakekNavnFraKode = vi
       .fn()
-      .mockImplementation((kode, kodeverkType) => utledKodeverkNavnFraKode(kode, kodeverkType, alleKodeverkV2));
+      .mockImplementation((kode, kodeverkType) => utledKodeverkNavnFraKode(kode, alleKodeverkV2[kodeverkType]));
 
     renderWithIntlAndReduxForm(
       <FeilutbetalingInfoPanelImpl
@@ -91,7 +91,7 @@ describe('<FeilutbetalingInfoPanel>', () => {
     expect(screen.getByText('Feil lovanvendelse')).toBeInTheDocument();
     expect(screen.getByText('01.01.2019')).toBeInTheDocument();
     expect(screen.getByText('Innvilget')).toBeInTheDocument();
-    expect(screen.getByText('Foreldrepenger opphører, Endring i beregning')).toBeInTheDocument();
+    expect(screen.getByText('Ytelsen opphører, Endring i beregning')).toBeInTheDocument();
     expect(screen.getByText('Feilutbetaling hvor inntrekk dekker hele beløpet')).toBeInTheDocument();
   });
 });
