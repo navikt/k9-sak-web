@@ -67,8 +67,8 @@ export default ({ mode }) => {
           },
         },
         '/k9/oppdrag': createProxy(process.env.APP_URL_K9OPPDRAG || 'http://localhost:8070'),
-        'k9/klage': createProxy(process.env.APP_URL_KLAGE || 'http://localhost:8701'),
-        'k9/tilbake': createProxy(process.env.APP_URL_K9TILBAKE || 'http://localhost:8030'),
+        '/k9/klage': createProxy(process.env.APP_URL_KLAGE || 'http://localhost:8701'),
+        '/k9/tilbake': createProxy(process.env.APP_URL_K9TILBAKE || 'http://localhost:8030'),
         'k9/diagnosekoder/': createProxy(process.env.APP_URL_DIAGNOSEKODER || 'http://localhost:8300', {
           '^/k9/diagnosekoder/': '/diagnosekoder',
         }),
