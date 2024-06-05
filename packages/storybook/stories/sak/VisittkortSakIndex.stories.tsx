@@ -7,7 +7,9 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import region from '@fpsak-frontend/kodeverk/src/region';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
-
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 
 export default {
@@ -21,183 +23,153 @@ const fagsakPerson = {
   alder: 41,
   personnummer: '1234567',
   erKvinne: false,
-  personstatusType: {
-    kode: personstatusType.BOSATT,
-    kodeverk: 'PERSONSTATUS_TYPE',
-  },
+  personstatusType: personstatusType.BOSATT, // PERSONSTATUS_TYPE
 };
 
 const personopplysningerSoker = {
-  navBrukerKjonn: {
-    kode: navBrukerKjonn.KVINNE,
-    kodeverk: 'NAV_BRUKER_KJONN',
-  },
-  statsborgerskap: {
-    kode: 'NORSK',
-    kodeverk: 'STATSBORGERSKAP',
-    navn: 'NORSK',
-  },
+  navBrukerKjonn: navBrukerKjonn.KVINNE, // NAV_BRUKER_KJONN
+  statsborgerskap: 'NORSK', // STATSBORGERSKAP
   avklartPersonstatus: {
-    orginalPersonstatus: {
-      kode: personstatusType.BOSATT,
-      kodeverk: 'PERSONSTATUS_TYPE',
-    },
-    overstyrtPersonstatus: {
-      kode: personstatusType.BOSATT,
-      kodeverk: 'PERSONSTATUS_TYPE',
-    },
+    orginalPersonstatus: personstatusType.BOSATT, // 'PERSONSTATUS_TYPE
+    overstyrtPersonstatus: personstatusType.BOSATT, // PERSONSTATUS_TYPE
   },
-  personstatus: {
-    kode: personstatusType.BOSATT,
-    kodeverk: 'PERSONSTATUS_TYPE',
-  },
-  diskresjonskode: {
-    kode: diskresjonskodeType.KLIENT_ADRESSE,
-    kodeverk: 'DISKRESJONSKODE_TYPE',
-  },
-  sivilstand: {
-    kode: sivilstandType.SAMBOER,
-    kodeverk: 'SIVILSTAND_TYPE',
-  },
+  personstatus: personstatusType.BOSATT, // PERSONSTATUS_TYPE
+  diskresjonskode: diskresjonskodeType.KLIENT_ADRESSE, // DISKRESJONSKODE_TYPE
+  sivilstand: sivilstandType.SAMBOER, // SIVILSTAND_TYPE
   aktoerId: '24sedfs32',
   navn: 'Olga Utvikler',
   adresser: [
     {
-      adresseType: {
-        kode: opplysningAdresseType.BOSTEDSADRESSE,
-        kodeverk: 'ADRESSE_TYPE',
-      },
+      adresseType: opplysningAdresseType.BOSTEDSADRESSE, // ADRESSE_TYPE
       adresselinje1: 'Oslo',
     },
   ],
   fnr: '98773895',
-  region: {
-    kode: region.NORDEN,
-    kodeverk: 'REGION',
-  },
+  region: region.NORDEN, // REGION
   barn: [],
 };
 
 const personopplysningerAnnenPart = {
-  navBrukerKjonn: {
-    kode: navBrukerKjonn.MANN,
-    kodeverk: 'NAV_BRUKER_KJONN',
-  },
-  statsborgerskap: {
-    kode: 'NORSK',
-    kodeverk: 'STATSBORGERSKAP',
-    navn: 'NORSK',
-  },
+  navBrukerKjonn: navBrukerKjonn.MANN, // NAV_BRUKER_KJONN
+  statsborgerskap: 'NORSK', // STATSBORGERSKAP
   avklartPersonstatus: {
-    orginalPersonstatus: {
-      kode: personstatusType.BOSATT,
-      kodeverk: 'PERSONSTATUS_TYPE',
-    },
-    overstyrtPersonstatus: {
-      kode: personstatusType.BOSATT,
-      kodeverk: 'PERSONSTATUS_TYPE',
-    },
+    orginalPersonstatus: personstatusType.BOSATT, // PERSONSTATUS_TYPE
+    overstyrtPersonstatus: personstatusType.BOSATT, // PERSONSTATUS_TYPE
   },
-  personstatus: {
-    kode: personstatusType.BOSATT,
-    kodeverk: 'PERSONSTATUS_TYPE',
-  },
-  diskresjonskode: {
-    kode: diskresjonskodeType.KLIENT_ADRESSE,
-    kodeverk: 'DISKRESJONSKODE_TYPE',
-  },
-  sivilstand: {
-    kode: sivilstandType.SAMBOER,
-    kodeverk: 'SIVILSTAND_TYPE',
-  },
+  personstatus: personstatusType.BOSATT, // PERSONSTATUS_TYPE
+  diskresjonskode: diskresjonskodeType.KLIENT_ADRESSE, // DISKRESJONSKODE_TYPE
+  sivilstand: sivilstandType.SAMBOER, // SIVILSTAND_TYPE
   aktoerId: '23rwerfwegwerg',
   navn: 'Tusse Trolls Gasse Avle Sønvis Eggert Offer Tønne Sjønning',
   adresser: [
     {
-      adresseType: {
-        kode: opplysningAdresseType.BOSTEDSADRESSE,
-        kodeverk: 'ADRESSE_TYPE',
-      },
+      adresseType: opplysningAdresseType.BOSTEDSADRESSE, // ADRESSE_TYPE
       adresselinje1: 'Oslo',
     },
   ],
   fnr: '1234567',
-  region: {
-    kode: region.NORDEN,
-    kodeverk: 'REGION',
-  },
+  region: region.NORDEN, // REGION
   barn: [],
 };
 
 export const visVisittkortNårEnHarBegrensetMedInformasjon = () => (
-  <VisittkortSakIndex
-    fagsakPerson={fagsakPerson}
-    alleKodeverk={alleKodeverk as any}
-    sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
-  />
+  <KodeverkProvider
+    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    kodeverk={alleKodeverkV2}
+    klageKodeverk={{}}
+    tilbakeKodeverk={{}}
+  >
+    <VisittkortSakIndex fagsakPerson={fagsakPerson} sprakkode="NN" />
+  </KodeverkProvider>
 );
 
 export const visVisittkortNårEnHarPersonopplysninger = () => (
-  <VisittkortSakIndex
-    fagsakPerson={fagsakPerson}
-    personopplysninger={personopplysningerSoker}
-    alleKodeverk={alleKodeverk as any}
-    sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
-  />
+  <KodeverkProvider
+    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    kodeverk={alleKodeverkV2}
+    klageKodeverk={{}}
+    tilbakeKodeverk={{}}
+  >
+    <VisittkortSakIndex fagsakPerson={fagsakPerson} personopplysninger={personopplysningerSoker} sprakkode="NN" />
+  </KodeverkProvider>
 );
 
 export const visVisittkortNårEnHarPersonopplysningerForBeggeParter = () => (
-  <VisittkortSakIndex
-    fagsakPerson={fagsakPerson}
-    personopplysninger={{
-      ...personopplysningerSoker,
-      annenPart: personopplysningerAnnenPart,
-    }}
-    alleKodeverk={alleKodeverk as any}
-    sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
-  />
+  <KodeverkProvider
+    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    kodeverk={alleKodeverkV2}
+    klageKodeverk={{}}
+    tilbakeKodeverk={{}}
+  >
+    <VisittkortSakIndex
+      fagsakPerson={fagsakPerson}
+      personopplysninger={{
+        ...personopplysningerSoker,
+        annenPart: personopplysningerAnnenPart,
+      }}
+      sprakkode="NN"
+    />
+  </KodeverkProvider>
 );
 
 export const visVisittkortForAnnenPartDerAktørIdErUkjent = () => (
-  <VisittkortSakIndex
-    fagsakPerson={fagsakPerson}
-    personopplysninger={{
-      ...personopplysningerSoker,
-      annenPart: {
-        ...personopplysningerAnnenPart,
-        aktoerId: undefined,
-      },
-    }}
-    alleKodeverk={alleKodeverk as any}
-    sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
-  />
+  <KodeverkProvider
+    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    kodeverk={alleKodeverkV2}
+    klageKodeverk={{}}
+    tilbakeKodeverk={{}}
+  >
+    <VisittkortSakIndex
+      fagsakPerson={fagsakPerson}
+      personopplysninger={{
+        ...personopplysningerSoker,
+        annenPart: {
+          ...personopplysningerAnnenPart,
+          aktoerId: undefined,
+        },
+      }}
+      sprakkode="NN"
+    />
+  </KodeverkProvider>
 );
 
 export const visVisittkortNårEnHarEnRelatertFagsak = () => (
-  <VisittkortSakIndex
-    fagsakPerson={fagsakPerson}
-    personopplysninger={personopplysningerSoker}
-    alleKodeverk={alleKodeverk as any}
-    sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
-    relaterteFagsaker={{
-      relaterteSøkere: [
-        { søkerIdent: '17499944012', søkerNavn: 'SJØLØVE ANINE', saksnummer: '5YD0i', åpenBehandling: true },
-      ],
-    }}
-  />
+  <KodeverkProvider
+    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    kodeverk={alleKodeverkV2}
+    klageKodeverk={{}}
+    tilbakeKodeverk={{}}
+  >
+    <VisittkortSakIndex
+      fagsakPerson={fagsakPerson}
+      personopplysninger={personopplysningerSoker}
+      sprakkode="NN"
+      relaterteFagsaker={{
+        relaterteSøkere: [
+          { søkerIdent: '17499944012', søkerNavn: 'SJØLØVE ANINE', saksnummer: '5YD0i', åpenBehandling: true },
+        ],
+      }}
+    />
+  </KodeverkProvider>
 );
 
 export const visVisittkortNårEnHarFlereRelaterteFagsaker = () => (
-  <VisittkortSakIndex
-    fagsakPerson={fagsakPerson}
-    personopplysninger={personopplysningerSoker}
-    alleKodeverk={alleKodeverk as any}
-    sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
-    relaterteFagsaker={{
-      relaterteSøkere: [
-        { søkerIdent: '12345678910', søkerNavn: 'Sjøløve Anine', saksnummer: '5YD0i', åpenBehandling: true },
-        { søkerIdent: '10987654321', søkerNavn: 'Kreps Svein', saksnummer: '5YD1W', åpenBehandling: true },
-      ],
-    }}
-  />
+  <KodeverkProvider
+    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    kodeverk={alleKodeverkV2}
+    klageKodeverk={{}}
+    tilbakeKodeverk={{}}
+  >
+    <VisittkortSakIndex
+      fagsakPerson={fagsakPerson}
+      personopplysninger={personopplysningerSoker}
+      sprakkode="NN"
+      relaterteFagsaker={{
+        relaterteSøkere: [
+          { søkerIdent: '12345678910', søkerNavn: 'Sjøløve Anine', saksnummer: '5YD0i', åpenBehandling: true },
+          { søkerIdent: '10987654321', søkerNavn: 'Kreps Svein', saksnummer: '5YD1W', åpenBehandling: true },
+        ],
+      }}
+    />
+  </KodeverkProvider>
 );

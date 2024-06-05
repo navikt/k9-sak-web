@@ -2,7 +2,6 @@ import React, { useCallback, useMemo } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { Location } from 'history';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -12,12 +11,12 @@ import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjon
 import { BehandlingAppKontekst, KlageVurdering, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import KodeverkV2, { KodeverkObject } from '@k9-sak-web/lib/types/KodeverkV2.js';
 
 import TotrinnskontrollBeslutterForm, { FormValues } from './components/TotrinnskontrollBeslutterForm';
 import { AksjonspunktGodkjenningData } from './components/AksjonspunktGodkjenningFieldArray';
 import TotrinnskontrollSaksbehandlerPanel from './components/TotrinnskontrollSaksbehandlerPanel';
 import messages from '../i18n/nb_NO.json';
-import KodeverkV2 from '@k9-sak-web/lib/types/KodeverkV2.js';
 
 const cache = createIntlCache();
 
@@ -144,10 +143,10 @@ const TotrinnskontrollSakIndex = ({
           behandlingKlageVurdering={behandlingKlageVurdering}
           behandlingStatus={behandling.status}
           erTilbakekreving={erTilbakekreving}
-          arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
-          skjemalenkeTyper={skjemalenkeTyper}
+          arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper as KodeverkObject[]}
+          skjemalenkeTyper={skjemalenkeTyper as KodeverkObject[]}
           lagLenke={lagLenke}
-          vurderArsaker={vurderArsaker}
+          vurderArsaker={vurderArsaker as KodeverkObject[]}
         />
       )}
     </RawIntlProvider>
