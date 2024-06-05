@@ -5,8 +5,8 @@ import { Personopplysninger } from '@k9-sak-web/types';
 import { BodyShort, Label, Tag } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-import { useKodeverkV2 } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverk.js';
 import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import styles from './visittkortDetaljerPopup.module.css';
 
 const borSokerMedBarnet = (adresser: Adresser, personopplysningerForBarn: Personopplysninger[] = []): boolean =>
@@ -29,7 +29,7 @@ interface OwnProps {
 }
 
 const VisittkortDetaljerPopup = ({ intl, personopplysninger, sprakkode }: OwnProps & WrappedComponentProps) => {
-  const { kodeverkNavnFraKode } = useKodeverkV2();
+  const { kodeverkNavnFraKode } = useKodeverkContext();
 
   const adresser = useMemo(() => getAddresses(personopplysninger.adresser), [personopplysninger.adresser]);
   const borMedBarnet = useMemo(() => borSokerMedBarnet(adresser, personopplysninger.barnSoktFor), [personopplysninger]);

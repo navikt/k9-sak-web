@@ -2,10 +2,10 @@
 import PropTypes from 'prop-types';
 
 const saksopplysningPersonsopplysningerPropType = PropTypes.shape({
-  personstatus: PropTypes.styring.isRequired,
+  personstatus: PropTypes.string.isRequired,
   avklartPersonstatus: PropTypes.shape({
-    orginalPersonstatus: PropTypes.styring.isRequired,
-    overstyrtPersonstatus: PropTypes.styring.isRequired,
+    orginalPersonstatus: PropTypes.string.isRequired,
+    overstyrtPersonstatus: PropTypes.string.isRequired,
   }).isRequired,
 });
 

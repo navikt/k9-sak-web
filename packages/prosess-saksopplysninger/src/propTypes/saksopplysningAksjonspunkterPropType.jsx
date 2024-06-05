@@ -2,8 +2,8 @@
 import PropTypes from 'prop-types';
 
 const saksopplysningAksjonspunkterPropType = PropTypes.shape({
-  definisjon: PropTypes.styring.isRequired,
-  status: PropTypes.styring.isRequired,
+  definisjon: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
   begrunnelse: PropTypes.string,
 });
 
