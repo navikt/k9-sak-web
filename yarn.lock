@@ -2915,7 +2915,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/aksel-icons": 6.10.0
+    "@navikt/aksel-icons": 6.10.1
     "@navikt/ds-react": 6.10.0
     "@navikt/fnrvalidator": 2.0.7
     "@navikt/ft-plattform-komponenter": 2.5.11
@@ -4524,7 +4524,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/aksel-icons": 6.10.0
+    "@navikt/aksel-icons": 6.10.1
     "@navikt/ds-react": 6.10.0
     "@navikt/ft-form-hooks": 4.4.8
     "@navikt/ft-form-validators": 2.3.7
@@ -4592,6 +4592,13 @@ __metadata:
   version: 6.10.0
   resolution: "@navikt/aksel-icons@npm:6.10.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F6.10.0%2Fd832911d79939b408fddfa1b4da7bac3527f6fe4"
   checksum: dabafd616a01520193d9dd6f55a8eb70f31883821d8fda08c9382049651219420ce0b77001bf175ce75a174ce31289ad8bcc5b5c590298cff07e385410df235c
+  languageName: node
+  linkType: hard
+
+"@navikt/aksel-icons@npm:6.10.1":
+  version: 6.10.1
+  resolution: "@navikt/aksel-icons@npm:6.10.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F6.10.1%2F9ed7d24b6ecdea45f30e98fb86ca64cb91caaab5"
+  checksum: a73b0f620e7841e3e05702ee5ae0f58102b00815977219efe726635df128d4e40bd2b50136aa69452bfed2e0528ef123ae94950042b752f5404132ad2720ec83
   languageName: node
   linkType: hard
 
@@ -14288,7 +14295,7 @@ __metadata:
   resolution: "k9-sak-web@workspace:."
   dependencies:
     "@hookform/error-message": ^2.0.1
-    "@navikt/aksel-icons": 6.10.0
+    "@navikt/aksel-icons": 6.10.1
     "@navikt/ds-css": 6.10.0
     "@navikt/ds-react": 6.10.0
     "@navikt/ds-tailwind": ^6.10.0
