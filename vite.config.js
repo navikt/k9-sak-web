@@ -16,6 +16,11 @@ const createProxy = (target, pathRewrite) => ({
     pathRewrite ? p.replace(new RegExp(Object.keys(pathRewrite)[0]), pathRewrite[Object.keys(pathRewrite)[0]]) : p,
   configure: proxy => {
     proxy.on('proxyRes', (proxyRes, req, res) => {
+      // Nødvendig for at task polling redirecter til riktig host når frontend venter på taskprosess
+      if (proxyRes.headers.location && proxyRes.headers.location.startsWith(target)) {
+        // eslint-disable-next-line no-param-reassign, prefer-destructuring
+        proxyRes.headers.location = proxyRes.headers.location.split(target)[1];
+      }
       if (proxyRes.statusCode === 401) {
         // eslint-disable-next-line no-param-reassign
         proxyRes.headers.location = `/k9/sak/resource/login?original=${req.originalUrl}`;
@@ -48,24 +53,7 @@ export default ({ mode }) => {
       proxy: {
         '/k9/formidling/dokumentdata': createProxy(process.env.APP_URL_K9FORMIDLING_DD || 'http://localhost:8294'),
         '/k9/formidling': createProxy(process.env.APP_URL_K9FORMIDLING || 'http://localhost:8290'),
-        '/k9/sak': {
-          target: process.env.APP_URL_SAK || 'http://localhost:8080',
-          changeOrigin: !!process.env.APP_URL_SAK,
-          ws: false,
-          secure: false,
-          configure: proxy => {
-            proxy.on('proxyRes', (proxyRes, req, res) => {
-              if (proxyRes.headers.location && proxyRes.headers.location.startsWith(process.env.APP_URL_SAK)) {
-                // eslint-disable-next-line no-param-reassign, prefer-destructuring
-                proxyRes.headers.location = proxyRes.headers.location.split(process.env.APP_URL_SAK)[1];
-              }
-              if (proxyRes.statusCode === 401) {
-                // eslint-disable-next-line no-param-reassign
-                proxyRes.headers.location = '/k9/sak/resource/login';
-              }
-            });
-          },
-        },
+        '/k9/sak': createProxy(process.env.APP_URL_SAK || 'http://localhost:8080'),
         '/k9/oppdrag': createProxy(process.env.APP_URL_K9OPPDRAG || 'http://localhost:8070'),
         '/k9/klage': createProxy(process.env.APP_URL_KLAGE || 'http://localhost:8701'),
         '/k9/tilbake': createProxy(process.env.APP_URL_K9TILBAKE || 'http://localhost:8030'),
