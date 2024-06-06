@@ -3908,7 +3908,7 @@ __metadata:
     react-dom: 18.3.1
     react-hook-form: 7.51.5
     react-popper: 2.3.0
-    start-server-and-test: ^2.0.3
+    start-server-and-test: ^2.0.4
     vite: ^5.2.12
     vite-plugin-node-polyfills: ^0.22.0
   languageName: unknown
@@ -3998,7 +3998,7 @@ __metadata:
     react-outside-click-handler: 1.3.0
     react-popper: 2.3.0
     react-query: 3.39.3
-    start-server-and-test: ^2.0.3
+    start-server-and-test: ^2.0.4
     vite: ^5.2.12
     vite-plugin-node-polyfills: ^0.22.0
   languageName: unknown
@@ -4023,7 +4023,7 @@ __metadata:
     react-dom: 18.3.1
     react-hook-form: 7.51.5
     react-popper: 2.3.0
-    tailwindcss: ^3.4.3
+    tailwindcss: ^3.4.4
     vite: ^5.2.12
     vite-plugin-node-polyfills: ^0.22.0
   languageName: unknown
@@ -10126,7 +10126,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:4.3.4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.4, debug@npm:~4.3.4":
+"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.4, debug@npm:~4.3.4":
   version: 4.3.4
   resolution: "debug@npm:4.3.4"
   dependencies:
@@ -10135,6 +10135,18 @@ __metadata:
     supports-color:
       optional: true
   checksum: 3dbad3f94ea64f34431a9cbf0bafb61853eda57bff2880036153438f50fb5a84f27683ba0d8e5426bf41a8c6ff03879488120cf5b3a761e77953169c0600a708
+  languageName: node
+  linkType: hard
+
+"debug@npm:4.3.5":
+  version: 4.3.5
+  resolution: "debug@npm:4.3.5"
+  dependencies:
+    ms: 2.1.2
+  peerDependenciesMeta:
+    supports-color:
+      optional: true
+  checksum: 7c002b51e256257f936dda09eb37167df952758c57badf6bf44bdc40b89a4bcb8e5a0a2e4c7b53f97c69e2970dd5272d33a757378a12c8f8e64ea7bf99e8e86e
   languageName: node
   linkType: hard
 
@@ -14472,7 +14484,7 @@ __metadata:
     node-cache: 5.1.2
     postcss: ^8.4.38
     postcss-import: ^16.1.0
-    prettier: 3.3.0
+    prettier: 3.3.1
     react: 18.3.1
     react-dom: 18.3.1
     react-modal: 3.16.1
@@ -14483,7 +14495,7 @@ __metadata:
     stylelint: 16.6.1
     stylelint-config-standard: ^36.0.0
     stylelint-order: 6.0.4
-    tailwindcss: ^3.4.3
+    tailwindcss: ^3.4.4
     typed-css-modules: ^0.9.1
     typescript: 5.4.5
     vite: ^5.2.12
@@ -16478,12 +16490,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:3.3.0":
-  version: 3.3.0
-  resolution: "prettier@npm:3.3.0"
+"prettier@npm:3.3.1":
+  version: 3.3.1
+  resolution: "prettier@npm:3.3.1"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 0d3a7fca9cab29828e189fefc10e8f6025d1208c84cd1e94def8a8f8a04eea341aa21d0af8c01253527632f8225b0b8482a62b64cafa26e9988cd6f9ff16a38b
+  checksum: 10987ff39e23d9359a76a441431dfe3ee26cc444540dc1577e8109e31394231fc1187d47a1e4ebc98bd605885c50ec681e9f2674e489c3313708c30b6ef5e119
   languageName: node
   linkType: hard
 
@@ -18268,14 +18280,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"start-server-and-test@npm:^2.0.3":
-  version: 2.0.3
-  resolution: "start-server-and-test@npm:2.0.3"
+"start-server-and-test@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "start-server-and-test@npm:2.0.4"
   dependencies:
     arg: ^5.0.2
     bluebird: 3.7.2
     check-more-types: 2.24.0
-    debug: 4.3.4
+    debug: 4.3.5
     execa: 5.1.1
     lazy-ass: 1.6.0
     ps-tree: 1.2.0
@@ -18284,7 +18296,7 @@ __metadata:
     server-test: src/bin/start.js
     start-server-and-test: src/bin/start.js
     start-test: src/bin/start.js
-  checksum: 8e2844a1fab631e1ad83e58d903e8425cd6d2c2cbbc79f71b72a15dbc7d90e6e340bb9133c910d8f3da8b55c737cf579afb581b4551ae7a2392450a78180fa53
+  checksum: 081dead161ebc425cef5807fd27ea24a883033937be88089de51d12c7e091f33b256312ce15df13db05a62f4c69a879770a95fa11c13a690be0bfc4fdb752065
   languageName: node
   linkType: hard
 
@@ -18771,9 +18783,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.4.3":
-  version: 3.4.3
-  resolution: "tailwindcss@npm:3.4.3"
+"tailwindcss@npm:^3.4.4":
+  version: 3.4.4
+  resolution: "tailwindcss@npm:3.4.4"
   dependencies:
     "@alloc/quick-lru": ^5.2.0
     arg: ^5.0.2
@@ -18800,7 +18812,7 @@ __metadata:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: 7d181a6aafb520c5760d23d0a199444a324dfa36538edd31934daa253ed9a7ac4bde18c4205aaa89c1269bc2ff11781efda04d2e27ded535a9a2547667a344b1
+  checksum: 743639b6a5c827b6f91ad8cff22ad296e25f4478202200a6f41ae49fbb28c4c6f8120e742a85e09987e33352fbc52c6a34c4ed33ce000b3810d4edf632142bac
   languageName: node
   linkType: hard
 
