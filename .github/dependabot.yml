@@ -41,6 +41,10 @@ updates:
           - '@storybook/storybook-deployer'
           - '@storybook/testing-react'
           - '@storybook/testing-library'
+      designsystem:
+        patterns:
+          - '@navikt/aksel-icons'
+          - '@navikt/ds-*'
 
   - package-ecosystem: github-actions
     directory: '/'
