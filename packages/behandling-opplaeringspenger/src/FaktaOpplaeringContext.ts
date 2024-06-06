@@ -10,7 +10,7 @@ import {
 } from '@k9-sak-web/types';
 import Dokument from '@k9-sak-web/types/src/sykdom/Dokument';
 
-export const FaktaOpplaeringContext = React.createContext<FaktaOpplaeringContextTypes>(null);
+export const FaktaOpplaeringContext = React.createContext<FaktaOpplaeringContextTypes | null>(null);
 
 export interface FaktaOpplaeringContextTypes {
   aksjonspunkter: Aksjonspunkt[];

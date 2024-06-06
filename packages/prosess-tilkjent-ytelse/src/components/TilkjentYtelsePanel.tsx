@@ -16,6 +16,8 @@ import { connect } from 'react-redux';
 
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Heading } from '@navikt/ds-react';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import TilkjentYtelse, { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
@@ -68,9 +70,10 @@ export const TilkjentYtelsePanelImpl = ({
   behandlingVersjon,
   aksjonspunkter,
   readOnly,
-  alleKodeverk,
   arbeidsgiverOpplysningerPerId,
 }: Partial<PureOwnProps> & MappedOwnProps) => {
+  const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
+  const kodeverkNavnFraKode = getKodeverkNavnFraKodeFn();
   const opphoersdato = beregningresultat?.opphoersdato;
   return (
     <>
@@ -90,8 +93,8 @@ export const TilkjentYtelsePanelImpl = ({
           // @ts-ignore
           items={formatPerioder(beregningresultat.perioder)}
           groups={groups}
-          alleKodeverk={alleKodeverk}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          kodeverkNavnFraKode={kodeverkNavnFraKode}
         />
       )}
 
@@ -102,7 +105,6 @@ export const TilkjentYtelsePanelImpl = ({
           beregningsresultat={beregningresultat}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           aksjonspunkter={aksjonspunkter}
-          alleKodeverk={alleKodeverk}
           readOnly={readOnly}
           submitCallback={submitCallback}
           readOnlySubmitButton={readOnlySubmitButton}
@@ -118,6 +120,7 @@ export const TilkjentYtelsePanelImpl = ({
           submitCallback={submitCallback}
           readOnlySubmitButton={readOnlySubmitButton}
           beregningsresultat={beregningresultat}
+          kodeverkNavnfraKode={kodeverkNavnFraKode}
         />
       )}
     </>
@@ -126,7 +129,7 @@ export const TilkjentYtelsePanelImpl = ({
 
 const finnTilbaketrekkAksjonspunkt = (alleAksjonspunkter: Aksjonspunkt[]): Aksjonspunkt | undefined =>
   alleAksjonspunkter
-    ? alleAksjonspunkter.find(ap => ap.definisjon?.kode === aksjonspunktCodes.VURDER_TILBAKETREKK)
+    ? alleAksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.VURDER_TILBAKETREKK)
     : undefined;
 
 const mapStateToProps = (state, ownProps) => ({

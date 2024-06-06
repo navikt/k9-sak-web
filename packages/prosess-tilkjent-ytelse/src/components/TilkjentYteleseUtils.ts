@@ -1,14 +1,16 @@
-export const getAktivitet = (aktivitetStatus, getKodeverknavn) =>
-  // hvis valgtAndel ikke satt ennå return tom string.
-  aktivitetStatus === undefined ? '' : getKodeverknavn(aktivitetStatus);
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 
-export const getInntektskategori = (inntektkategori, getKodeverknavn) =>
+export const getAktivitet = (aktivitetStatus, kodeverkNavnFraKode) =>
   // hvis valgtAndel ikke satt ennå return tom string.
-  inntektkategori === undefined ? '' : getKodeverknavn(inntektkategori);
+  aktivitetStatus === undefined ? '' : kodeverkNavnFraKode(aktivitetStatus, KodeverkType.AKTIVITET_STATUS);
+
+export const getInntektskategori = (inntektkategori, kodeverkNavnFraKode) =>
+  // hvis valgtAndel ikke satt ennå return tom string.
+  inntektkategori === undefined ? '' : kodeverkNavnFraKode(inntektkategori, KodeverkType.INNTEKTSKATEGORI);
 
 const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
-export const createVisningsnavnForAndel = (andel, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
+export const createVisningsnavnForAndel = (andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId) => {
   if (!andel) return '';
 
   let identifikator;
@@ -21,7 +23,7 @@ export const createVisningsnavnForAndel = (andel, getKodeverknavn, arbeidsgiverO
   }
 
   if (!identifikator) {
-    return andel.aktivitetStatus ? getKodeverknavn(andel.aktivitetStatus) : '';
+    return andel.aktivitetStatus ? kodeverkNavnFraKode(andel.aktivitetStatus, KodeverkType.AKTIVITET_STATUS) : '';
   }
 
   const navn =

@@ -14,7 +14,7 @@ import styles from './klageVurderingRadioOptionsNfp.module.css';
 export const TILBAKEKREVING_HJEMMEL = '22-15';
 
 const utledHjemler = fagsak => {
-  switch (fagsak.sakstype.kode) {
+  switch (fagsak.sakstype) {
     case fagsakYtelseType.PLEIEPENGER:
       return [
         { kode: '9-2', navn: '§ 9-2' },
@@ -63,7 +63,7 @@ export const KlageVurderingRadioOptionsNfp = ({
   const hjemler = utledHjemler(fagsak);
 
   const skalViseHjemler =
-    fagsak.sakstype.kode !== fagsakYtelseType.FRISINN &&
+    fagsak.sakstype !== fagsakYtelseType.FRISINN &&
     klageVurdering === klageVurderingType.STADFESTE_YTELSESVEDTAK &&
     hjemler.length > 0;
 

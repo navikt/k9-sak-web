@@ -8,10 +8,7 @@ export interface UtvidetRettSoknad {
   oppgittStartdato: string;
   oppgittTilknytning: string;
   soknadsdato: string;
-  spraakkode: {
-    kode: string;
-    kodeverk: string;
-  };
+  spraakkode: string;
   tilleggsopplysninger: string;
   søknadsperiode: {
     fom: string;

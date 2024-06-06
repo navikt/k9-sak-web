@@ -79,7 +79,7 @@ const buildInitialValues = createSelector(
       verge && verge.begrunnelse
         ? decodeHtmlEntity(verge.begrunnelse)
         : FaktaBegrunnelseTextField.buildInitialValues(
-            aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VERGE)[0],
+            aksjonspunkter.filter(ap => ap.definisjon === aksjonspunktCodes.AVKLAR_VERGE)[0],
           ).begrunnelse,
   }),
 );

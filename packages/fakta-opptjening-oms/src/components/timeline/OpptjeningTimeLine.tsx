@@ -1,13 +1,13 @@
+import React, { Component } from 'react';
+import moment from 'moment';
+import hash from 'object-hash';
 import { Timeline } from '@fpsak-frontend/tidslinje';
 import { DDMMYYYY_DATE_FORMAT, isEqual } from '@fpsak-frontend/utils';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
-import moment from 'moment';
-import hash from 'object-hash';
-import React, { Component } from 'react';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import DateContainer from './DateContainer';
 import styles from './opptjeningTimeLine.module.css';
-
 // Desse må alltid vare med for rett skala av tidslinjen då den alltid skall vare 10 månader fra skjæringstidpunkten
 const standardItems = (opptjeningFomDato: string, opptjeningTomDato: string): any[] => {
   const items = [
@@ -59,7 +59,7 @@ const createItems = (
     end: moment(`${ap.opptjeningTom} 23:59`),
     group: groups.find(
       g =>
-        g.aktivitetTypeKode === ap.aktivitetType.kode &&
+        g.aktivitetTypeKode === ap.aktivitetType &&
         g.arbeidsforholdRef === ap.arbeidsforholdRef &&
         g.oppdragsgiverOrg === ap.oppdragsgiverOrg,
     ).id,
@@ -70,11 +70,14 @@ const createItems = (
   return items.concat(standardItems(opptjeningFomDato, opptjeningTomDato));
 };
 
-const createGroups = (opptjeningPeriods: OpptjeningAktivitet[], opptjeningAktivitetTypes) => {
+const createGroups = (
+  opptjeningPeriods: OpptjeningAktivitet[],
+  kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string,
+) => {
   const duplicatesRemoved = opptjeningPeriods.reduce((accPeriods: OpptjeningAktivitet[], period) => {
     const hasPeriod = accPeriods.some(
       p =>
-        p.aktivitetType.kode === period.aktivitetType.kode &&
+        p.aktivitetType === period.aktivitetType &&
         p.arbeidsforholdRef === period.arbeidsforholdRef &&
         p.oppdragsgiverOrg === period.oppdragsgiverOrg,
     );
@@ -83,8 +86,8 @@ const createGroups = (opptjeningPeriods: OpptjeningAktivitet[], opptjeningAktivi
   }, []);
   return duplicatesRemoved.map((activity, index) => ({
     id: index + 1,
-    content: opptjeningAktivitetTypes.find(oat => oat.kode === activity.aktivitetType.kode).navn,
-    aktivitetTypeKode: activity.aktivitetType.kode,
+    content: kodeverkNavnFraKode(activity.aktivitetType, KodeverkType.OPPTJENING_AKTIVITET_TYPE),
+    aktivitetTypeKode: activity.aktivitetType,
     arbeidsforholdRef: activity.arbeidsforholdRef,
     oppdragsgiverOrg: activity.oppdragsgiverOrg,
   }));
@@ -115,6 +118,7 @@ interface OpptjeningTimeLineProps {
   opptjeningFomDato: string;
   opptjeningTomDato: string;
   harApneAksjonspunkter: boolean;
+  kodeverkNavnFraKode: (kode: string, kodeverk: KodeverkType) => string;
 }
 
 interface OpptjeningTimeLineState {
@@ -144,9 +148,9 @@ class OpptjeningTimeLine extends Component<OpptjeningTimeLineProps, OpptjeningTi
 
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
-    const { opptjeningAktivitetTypes, opptjeningPeriods, opptjeningFomDato, opptjeningTomDato, harApneAksjonspunkter } =
+    const { opptjeningPeriods, opptjeningFomDato, opptjeningTomDato, harApneAksjonspunkter, kodeverkNavnFraKode } =
       this.props;
-    const groups = createGroups(opptjeningPeriods, opptjeningAktivitetTypes);
+    const groups = createGroups(opptjeningPeriods, kodeverkNavnFraKode);
     const items = createItems(opptjeningPeriods, groups, opptjeningFomDato, opptjeningTomDato, harApneAksjonspunkter);
     this.setState({
       groups,
@@ -156,9 +160,9 @@ class OpptjeningTimeLine extends Component<OpptjeningTimeLineProps, OpptjeningTi
 
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(nextProps) {
-    const { opptjeningPeriods, harApneAksjonspunkter } = this.props;
+    const { opptjeningPeriods, harApneAksjonspunkter, kodeverkNavnFraKode } = this.props;
     if (!isEqual(opptjeningPeriods, nextProps.opptjeningPeriods)) {
-      const groups = createGroups(nextProps.opptjeningPeriods, nextProps.opptjeningAktivitetTypes);
+      const groups = createGroups(nextProps.opptjeningPeriods, kodeverkNavnFraKode);
       const items = createItems(
         nextProps.opptjeningPeriods,
         groups,

@@ -19,15 +19,9 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
     id: 1234,
     uuid: 'uuid-1234',
     versjon: 123,
-    type: {
-      kode: 'BT-002',
-      kodeverk: 'BEHANDLING_TYPE',
-    },
+    type: 'BT-001',
     opprettet: '‎29.08.‎2017‎ ‎09‎:‎54‎:‎22',
-    status: {
-      kode: 'FVED',
-      kodeverk: '',
-    },
+    status: 'FVED',
     behandlingHenlagt: false,
     behandlingPaaVent: false,
     gjeldendeVedtak: false,

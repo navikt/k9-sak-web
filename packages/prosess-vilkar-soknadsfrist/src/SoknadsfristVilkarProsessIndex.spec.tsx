@@ -1,9 +1,9 @@
+import React from 'react';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { Behandling } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../i18n/nb_NO.json';
 import SoknadsfristVilkarProsessIndex from './SoknadsfristVilkarProsessIndex';
+import messages from '../i18n/nb_NO.json';
 
 const soknadsfristStatus = {
   dokumentStatus: [],
@@ -36,10 +36,7 @@ describe('<SoknadsfristVilkarForm>', () => {
                   fom: '2020-03-01',
                   tom: '2020-04-01',
                 },
-                vilkarStatus: {
-                  kode: 'test',
-                  kodeverk: 'test',
-                },
+                vilkarStatus: 'test',
                 avslagKode: 'test',
                 vurderesIBehandlingen: true,
                 merknadParametere: {
@@ -48,10 +45,7 @@ describe('<SoknadsfristVilkarForm>', () => {
               },
             ],
             overstyrbar: true,
-            vilkarType: {
-              kode: 'test',
-              kodeverk: 'test',
-            },
+            vilkarType: 'test',
           },
         ]}
         soknadsfristStatus={soknadsfristStatus}

@@ -58,12 +58,10 @@ const OverstyrBeregningFaktaForm = ({
   };
 
   const utledBegrunnelse = () =>
-    aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).begrunnelse || '';
+    aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).begrunnelse || '';
 
   const erAksjonspunktÅpent = () =>
-    isAksjonspunktOpen(
-      aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).status.kode,
-    );
+    isAksjonspunktOpen(aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).status);
 
   const headerTextCodes = [
     'OverstyrInputForm.FirmaHeader',

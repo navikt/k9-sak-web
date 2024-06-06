@@ -1,7 +1,7 @@
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Fagsak } from '@k9-sak-web/types';
 
 import FagsakSearch from './components/FagsakSearch';
 import messages from '../i18n/nb_NO.json';
@@ -25,7 +25,6 @@ interface OwnProps {
   searchResultAccessDenied?: {
     feilmelding: string;
   };
-  alleKodeverk: { [key: string]: [KodeverkMedNavn] };
 }
 
 /*
@@ -38,7 +37,6 @@ const FagsakSokSakIndex = ({
   selectFagsakCallback,
   searchStarted = false,
   searchResultAccessDenied,
-  alleKodeverk,
 }: OwnProps) => (
   <RawIntlProvider value={intl}>
     <FagsakSearch
@@ -48,7 +46,6 @@ const FagsakSokSakIndex = ({
       selectFagsakCallback={selectFagsakCallback}
       searchStarted={searchStarted}
       searchResultAccessDenied={searchResultAccessDenied}
-      alleKodeverk={alleKodeverk}
     />
   </RawIntlProvider>
 );

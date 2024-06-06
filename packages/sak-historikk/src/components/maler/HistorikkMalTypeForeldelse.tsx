@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { BodyShort } from '@navikt/ds-react';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import HistorikkMal from '../HistorikkMalTsType';
 import Skjermlenke from './felles/Skjermlenke';
@@ -10,7 +11,7 @@ import Skjermlenke from './felles/Skjermlenke';
 export const HistorikkMalTypeForeldelse = ({
   historikkinnslag,
   behandlingLocation,
-  getKodeverknavn,
+  kodeverkNavnFraKodeFn,
   createLocationForSkjermlenke,
 }: HistorikkMal) => {
   const { historikkinnslagDeler } = historikkinnslag;
@@ -22,17 +23,17 @@ export const HistorikkMalTypeForeldelse = ({
       <Skjermlenke
         skjermlenke={historikkinnslagDeler[0].skjermlenke}
         behandlingLocation={behandlingLocation}
-        getKodeverknavn={getKodeverknavn}
+        kodeverkNavnFraKodeFn={kodeverkNavnFraKodeFn}
         scrollUpOnClick
         createLocationForSkjermlenke={createLocationForSkjermlenke}
       />
       {historikkinnslagDeler.map(historikkinnslagDel => {
         const { begrunnelseFritekst, opplysninger, endredeFelter } = historikkinnslagDel;
         const periodeFom = opplysninger.find(
-          o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_FOM.kode,
+          o => o.opplysningType === historikkOpplysningTypeCodes.PERIODE_FOM.kode,
         ).tilVerdi;
         const periodeTom = opplysninger.find(
-          o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode,
+          o => o.opplysningType === historikkOpplysningTypeCodes.PERIODE_TOM.kode,
         ).tilVerdi;
 
         return (
@@ -48,7 +49,7 @@ export const HistorikkMalTypeForeldelse = ({
                 const { endretFeltNavn, fraVerdi, tilVerdi } = felt;
 
                 return (
-                  <React.Fragment key={endretFeltNavn.kode}>
+                  <React.Fragment key={endretFeltNavn}>
                     <BodyShort size="small">
                       <FormattedMessage
                         id={
@@ -57,7 +58,7 @@ export const HistorikkMalTypeForeldelse = ({
                             : 'Historikk.Template.Tilbakekreving.FieldSetTo'
                         }
                         values={{
-                          navn: getKodeverknavn(endretFeltNavn),
+                          navn: kodeverkNavnFraKodeFn(endretFeltNavn, KodeverkType.HISTORIKK_ENDRET_FELT_TYPE),
                           fraVerdi,
                           tilVerdi,
                           b: chunks => <b>{chunks}</b>,

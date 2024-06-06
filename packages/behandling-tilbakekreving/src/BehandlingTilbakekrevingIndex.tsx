@@ -4,7 +4,7 @@ import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '
 import { KodeverkMedNavn, Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-
+import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 import TilbakekrevingPaneler from './components/TilbakekrevingPaneler';
 import FetchedData from './types/fetchedDataTsType';
 import {
@@ -35,7 +35,7 @@ interface OwnProps {
   };
   opneSokeside: () => void;
   harApenRevurdering: boolean;
-  kodeverk: { [key: string]: KodeverkMedNavn[] };
+  kodeverk: AlleKodeverk;
   setRequestPendingMessage: (message: string) => void;
 }
 

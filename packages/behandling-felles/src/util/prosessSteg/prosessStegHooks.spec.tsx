@@ -8,7 +8,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { renderHook } from '@testing-library/react';
 import React from 'react';
@@ -20,15 +20,15 @@ import prosessStegHooks from './prosessStegHooks';
 describe('<prosessStegHooks>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
-  } as Fagsak;
+    sakstype: fagsakYtelsesType.OMP,
+    status: fagsakStatus.UNDER_BEHANDLING,
+  };
 
   const behandling = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -39,8 +39,8 @@ describe('<prosessStegHooks>', () => {
 
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU, kodeverk: 'BEHANDLING_DEF' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
+      definisjon: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
@@ -48,11 +48,11 @@ describe('<prosessStegHooks>', () => {
 
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.SOKERSOPPLYSNINGSPLIKT, kodeverk: 'test' },
+      vilkarType: vilkarType.SOKERSOPPLYSNINGSPLIKT,
       overstyrbar: false,
       perioder: [
         {
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           merknadParametere: {
             antattGodkjentArbeid: 'P0D',
             antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',
@@ -277,8 +277,8 @@ describe('<prosessStegHooks>', () => {
       behandlingVersjon: behandling.versjon,
       bekreftedeAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[0].definisjon.kode,
-          kode: aksjonspunkter[0].definisjon.kode,
+          '@type': aksjonspunkter[0].definisjon,
+          kode: aksjonspunkter[0].definisjon,
         },
       ],
     });

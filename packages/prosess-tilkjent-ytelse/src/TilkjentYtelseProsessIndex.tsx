@@ -8,6 +8,8 @@ import {
   Fagsak,
 } from '@k9-sak-web/types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import messages from '../i18n/nb_NO.json';
 
@@ -49,7 +51,7 @@ const TilkjentYtelseProsessIndex = ({
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       beregningsresultat={beregningsresultat}
-      fagsakYtelseTypeKode={fagsak.sakstype?.kode}
+      fagsakYtelseTypeKode={fagsak.sakstype}
       aksjonspunkter={aksjonspunkter}
       alleKodeverk={alleKodeverk}
       readOnly={isReadOnly}
@@ -59,5 +61,4 @@ const TilkjentYtelseProsessIndex = ({
     />
   </RawIntlProvider>
 );
-
 export default TilkjentYtelseProsessIndex;

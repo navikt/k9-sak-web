@@ -8,27 +8,23 @@ import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import {
-  ArbeidsgiverOpplysningerWrapper,
-  BehandlingAppKontekst,
-  Fagsak,
-  FagsakPerson,
-  FeatureToggles,
-  KodeverkMedNavn,
-  NavAnsatt,
-} from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerWrapper, FagsakPerson, FeatureToggles, NavAnsatt } from '@k9-sak-web/types';
+import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 
 import BehandlingPleiepengerSluttfaseIndex from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
+import { useBehandlingContext } from '@k9-sak-web/gui/behandling/index.js';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import ErrorBoundary from '../app/ErrorBoundary';
+import useTrackRouteParam from '../app/useTrackRouteParam';
+import getAccessRights from '../app/util/access';
 import {
   getFaktaLocation,
   getLocationWithDefaultProsessStegAndFakta,
   getPathToK9Los,
   getProsessStegLocation,
 } from '../app/paths';
-import useTrackRouteParam from '../app/useTrackRouteParam';
-import getAccessRights from '../app/util/access';
 import { K9sakApiKeys, LinkCategory, requestApi, restApiHooks } from '../data/k9sakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
 
@@ -72,7 +68,6 @@ const getOppdaterProsessStegOgFaktaPanelIUrl =
   };
 
 interface OwnProps {
-  setBehandlingIdOgVersjon: (behandlingId: number, behandlingVersjon: number) => void;
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
@@ -86,26 +81,32 @@ interface OwnProps {
  * relatert til den valgte behandlingen.
  */
 const BehandlingIndex = ({
-  setBehandlingIdOgVersjon,
   fagsak,
   alleBehandlinger,
   arbeidsgiverOpplysninger,
   setRequestPendingMessage,
 }: OwnProps) => {
+  const { setBehandlingContext, setBehandlingIdOgVersjon } = useBehandlingContext();
+  const { setKodeverkContext } = useKodeverkContext();
   const { selected: behandlingId } = useTrackRouteParam<number>({
     paramName: 'behandlingId',
     parse: behandlingFromUrl => Number.parseInt(behandlingFromUrl, 10),
   });
 
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
-  const behandlingVersjon = behandling?.versjon;
 
   useEffect(() => {
     if (behandling) {
       requestApi.setLinks(behandling.links, LinkCategory.BEHANDLING);
-      setBehandlingIdOgVersjon(behandlingId, behandlingVersjon);
+      setBehandlingContext({
+        behandlingId,
+        behandlingVersjon: behandling?.versjon,
+        behandlingType: BehandlingType[behandling.type],
+      });
     }
   }, [behandling]);
+
+  useEffect(() => {});
 
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
@@ -114,10 +115,17 @@ const BehandlingIndex = ({
     [behandlingId],
   );
 
-  const kodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(K9sakApiKeys.KODEVERK);
-  const klageKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(
-    K9sakApiKeys.KODEVERK_KLAGE,
-  );
+  const kodeverk = restApiHooks.useGlobalStateRestApiData<AlleKodeverk>(K9sakApiKeys.KODEVERK);
+  const klageKodeverk = restApiHooks.useGlobalStateRestApiData<AlleKodeverk>(K9sakApiKeys.KODEVERK_KLAGE);
+
+  useEffect(() => {
+    setKodeverkContext({
+      kodeverk,
+      klageKodeverk,
+      tilbakeKodeverk: {},
+      behandlingType: BehandlingType[behandling?.type],
+    });
+  }, [kodeverk, klageKodeverk]);
 
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(K9sakApiKeys.SAK_BRUKER);
   const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
@@ -150,7 +158,7 @@ const BehandlingIndex = ({
 
   const query = parseQueryString(location.search);
 
-  const behandlingTypeKode = behandling?.type ? behandling.type.kode : undefined;
+  const behandlingTypeKode = behandling?.type ? behandling.type : undefined;
 
   const defaultProps = {
     key: behandlingId,
@@ -236,7 +244,7 @@ const BehandlingIndex = ({
           <BehandlingTilbakekrevingIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             harApenRevurdering={fagsakBehandlingerInfo.some(
-              b => b.type.kode === BehandlingType.REVURDERING && b.status.kode !== BehandlingStatus.AVSLUTTET,
+              b => b.type === BehandlingType.REVURDERING && b.status !== BehandlingStatus.AVSLUTTET,
             )}
             valgtFaktaSteg={query.fakta}
             {...defaultProps}
@@ -246,7 +254,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype.kode === FagsakYtelseType.OMSORGSPENGER) {
+  if (fagsak.sakstype === FagsakYtelseType.OMSORGSPENGER) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -260,7 +268,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+  if (fagsak.sakstype === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -274,7 +282,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (erFagytelseTypeUtvidetRett(fagsak.sakstype.kode)) {
+  if (erFagytelseTypeUtvidetRett(fagsak.sakstype)) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -288,7 +296,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype.kode === FagsakYtelseType.FRISINN) {
+  if (fagsak.sakstype === FagsakYtelseType.FRISINN) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -302,7 +310,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype.kode === FagsakYtelseType.OPPLAERINGSPENGER) {
+  if (fagsak.sakstype === FagsakYtelseType.OPPLAERINGSPENGER) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>

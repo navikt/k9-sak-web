@@ -6,13 +6,14 @@ import BubbleText from './felles/bubbleText';
 import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
 import { findHendelseText, findIdForOpplysningCode, findResultatText } from './felles/historikkUtils';
 import Skjermlenke from './felles/Skjermlenke';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 
 // TODO Kan denne slettast?
 const HistorikkMalFelles7og8 = ({
   intl,
   historikkinnslag,
   behandlingLocation,
-  getKodeverknavn,
+  kodeverkNavnFraKodeFn,
   createLocationForSkjermlenke,
   saksnummer,
 }: HistorikkMal & WrappedComponentProps) => {
@@ -28,20 +29,20 @@ const HistorikkMalFelles7og8 = ({
           <Skjermlenke
             skjermlenke={historikkinnslagDel.skjermlenke}
             behandlingLocation={behandlingLocation}
-            getKodeverknavn={getKodeverknavn}
+            kodeverkNavnFraKodeFn={kodeverkNavnFraKodeFn}
             scrollUpOnClick={false}
             createLocationForSkjermlenke={createLocationForSkjermlenke}
           />
 
           {historikkinnslagDel.hendelse && (
             <Label size="small" as="p">
-              {findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}
+              {findHendelseText(historikkinnslagDel.hendelse, kodeverkNavnFraKodeFn)}
             </Label>
           )}
 
           {historikkinnslagDel.resultat && (
             <Label size="small" as="p">
-              {findResultatText(historikkinnslagDel.resultat, intl, getKodeverknavn)}
+              {findResultatText(historikkinnslagDel.resultat, intl, kodeverkNavnFraKodeFn)}
             </Label>
           )}
 
@@ -56,7 +57,9 @@ const HistorikkMalFelles7og8 = ({
             ))}
 
           {historikkinnslagDel.aarsak && (
-            <BodyShort size="small">{getKodeverknavn(historikkinnslagDel.aarsak)}</BodyShort>
+            <BodyShort size="small">
+              {kodeverkNavnFraKodeFn(historikkinnslagDel.aarsak, KodeverkType.HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE)}
+            </BodyShort>
           )}
           {historikkinnslagDel.begrunnelse && <BubbleText bodyText="" />}
           {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />}

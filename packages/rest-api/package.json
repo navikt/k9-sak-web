@@ -7,6 +7,7 @@
   "dependencies": {
     "@sentry/browser": "8.7.0",
     "axios": "1.7.2",
+    "@k9-sak-web/lib": "1.0.0",
     "node-cache": "5.1.2"
   }
 }

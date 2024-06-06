@@ -27,6 +27,7 @@
     "@k9-sak-web/fakta-inntektsmelding": "1.0.0",
     "@k9-sak-web/fakta-omsorgen-for": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
+    "@k9-sak-web/lib": "1.0.0",
     "@k9-sak-web/prosess-aarskvantum-oms": "1.0.0",
     "@k9-sak-web/prosess-vilkar-soknadsfrist": "1.0.0",
     "@k9-sak-web/rest-api": "1.0.0",

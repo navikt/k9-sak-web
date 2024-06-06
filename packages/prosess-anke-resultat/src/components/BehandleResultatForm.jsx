@@ -301,7 +301,7 @@ const buildInitialValues = createSelector([ownProps => ownProps.ankeVurderingRes
 const formName = 'ankeResultatForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const aksjonspunktCode = initialOwnProps.aksjonspunkter[0].definisjon.kode;
+  const aksjonspunktCode = initialOwnProps.aksjonspunkter[0].definisjon;
   const onSubmit = values => initialOwnProps.submitCallback([transformValues(values, aksjonspunktCode)]);
   return (state, ownProps) => ({
     aksjonspunktCode,

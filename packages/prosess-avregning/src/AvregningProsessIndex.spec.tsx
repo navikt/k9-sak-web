@@ -9,31 +9,19 @@ import AvregningProsessIndex from './AvregningProsessIndex';
 describe('<AvregningProsessIndex>', () => {
   const fagsak = {
     saksnummer: '123',
-    sakstype: {
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: '',
-    },
-    fagsakYtelseType: {
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: '',
-    },
+    sakstype: fagsakYtelseType.FORELDREPENGER,
+    fagsakYtelseType: fagsakYtelseType.FORELDREPENGER,
   };
 
   const behandling = {
     id: 1,
     versjon: 1,
-    sprakkode: {
-      kode: 'NO',
-      kodeverk: '',
-    },
+    sprakkode: 'NO',
   };
 
   const aksjonspunkter = [
     {
-      definisjon: {
-        kode: aksjonspunktCodes.VURDER_FEILUTBETALING,
-        kodeverk: '',
-      },
+      definisjon: aksjonspunktCodes.VURDER_FEILUTBETALING,
       begrunnelse: 'test',
     },
   ];

@@ -17,15 +17,13 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { TilgjengeligeVedtaksbrev, TilgjengeligeVedtaksbrevMedMaler } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { Aksjonspunkt, Personopplysninger } from '@k9-sak-web/types';
+
 import messages from '../../i18n/nb_NO.json';
 import { VedtakForm } from './VedtakForm';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
 
 describe('<VedtakForm>', () => {
-  const sprakkode = {
-    kode: 'NO',
-    kodeverk: '',
-  };
+  const sprakkode = 'NO';
 
   const ingenTilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler = {
     begrunnelse: 'begrunnelse',
@@ -45,7 +43,7 @@ describe('<VedtakForm>', () => {
     maler: [],
   };
 
-  const behandlingStatusUtredes = { kode: behandlingStatuser.BEHANDLING_UTREDES };
+  const behandlingStatusUtredes = behandlingStatuser.BEHANDLING_UTREDES;
 
   // This is an incorrect initialization to satisfy typescript during rewrite from jsx to tsx. Should probably be fixed.
   const personopplysninger = {} as Personopplysninger;
@@ -55,23 +53,14 @@ describe('<VedtakForm>', () => {
     mangler: [],
   };
   const aksjonspunktBase: Aksjonspunkt = {
-    definisjon: {
-      kodeverk: 'annen ytelse',
-      kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-    },
-    status: {
-      kodeverk: 'Opprettet',
-      kode: aksjonspunktStatus.OPPRETTET,
-    },
+    definisjon: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+    status: aksjonspunktStatus.OPPRETTET,
     toTrinnsBehandling: true,
     kanLoses: true,
     erAktivt: true,
   };
   const vedtakVarselBase = {
-    avslagsarsak: {
-      kode: '1019',
-      navn: 'Søkt for sent',
-    },
+    avslagsarsak: '1019',
     avslagsarsakFritekst: null,
     id: 0,
     overskrift: 'overskrift',
@@ -93,10 +82,7 @@ describe('<VedtakForm>', () => {
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
 
     renderWithIntlAndReduxForm(
@@ -112,10 +98,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: 'tilbakekrevingskode' }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -147,21 +132,12 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.AVSLATT,
-        navn: 'test',
-      },
+      type: BehandlingResultatType.AVSLATT,
     };
     const aksjonspunkter: Aksjonspunkt[] = [
       {
-        definisjon: {
-          kodeverk: 'annen ytelse',
-          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-        },
-        status: {
-          kodeverk: 'Opprettet',
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: 'annen ytelse',
+        status: 'Opprettet',
         kanLoses: true,
         erAktivt: true,
       },
@@ -179,10 +155,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: 'tilbakekrevingskode' }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -213,10 +188,7 @@ describe('<VedtakForm>', () => {
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter: Aksjonspunkt[] = [aksjonspunktBase];
     const vedtakVarsel = {
@@ -236,10 +208,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: 'tilbakekrevingskode' }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -269,15 +240,12 @@ describe('<VedtakForm>', () => {
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter: Aksjonspunkt[] = [aksjonspunktBase];
     const vedtakVarsel = {
       ...vedtakVarselBase,
-      avslagsarsak: { kode: '1099', navn: 'xoxo' },
+      avslagsarsak: '1099',
     };
     renderWithIntlAndReduxForm(
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
@@ -292,10 +260,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: 'tilbakekrevingskode' }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -327,10 +294,7 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.AVSLATT,
-        navn: 'test',
-      },
+      type: BehandlingResultatType.AVSLATT,
     };
     const aksjonspunkter: Aksjonspunkt[] = [
       {
@@ -340,10 +304,7 @@ describe('<VedtakForm>', () => {
     ];
     const vedtakVarsel = {
       ...vedtakVarselBase,
-      avslagsarsak: {
-        kode: '1019',
-        navn: 'Manglende dokumentasjon',
-      },
+      avslagsarsak: '1019',
     };
     renderWithIntlAndReduxForm(
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
@@ -358,10 +319,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: 'tilbakekrevingskode' }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -393,10 +353,7 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter: Aksjonspunkt[] = [
       {
@@ -413,7 +370,7 @@ describe('<VedtakForm>', () => {
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
-          behandlingStatus={{ kode: behandlingStatuser.AVSLUTTET }}
+          behandlingStatus={behandlingStatuser.AVSLUTTET}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
           behandlingPaaVent={false}
@@ -422,10 +379,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: 'tilbakekrevingskode' }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -455,10 +411,7 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter: Aksjonspunkt[] = [
       {
@@ -476,7 +429,7 @@ describe('<VedtakForm>', () => {
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
-          behandlingStatus={{ kode: behandlingStatuser.IVERKSETTER_VEDTAK }}
+          behandlingStatus={behandlingStatuser.IVERKSETTER_VEDTAK}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
           behandlingPaaVent={false}
@@ -485,10 +438,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: 'tilbakekrevingskode' }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -520,10 +472,7 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter: Aksjonspunkt[] = [
       {
@@ -539,7 +488,7 @@ describe('<VedtakForm>', () => {
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
-          behandlingStatus={{ kode: behandlingStatuser.FATTER_VEDTAK }}
+          behandlingStatus={behandlingStatuser.FATTER_VEDTAK}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
           behandlingPaaVent={false}
@@ -548,10 +497,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: 'tilbakekrevingskode' }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -580,10 +528,7 @@ describe('<VedtakForm>', () => {
   const previewCallback = vi.fn();
   const behandlingsresultat = {
     id: 1,
-    type: {
-      kode: BehandlingResultatType.INNVILGET,
-      navn: 'test',
-    },
+    type: BehandlingResultatType.INNVILGET,
   };
   const aksjonspunkter: Aksjonspunkt[] = [
     {
@@ -625,10 +570,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: 'tilbakekrevingskode' }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -669,10 +613,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: 'tilbakekrevingskode' }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -714,10 +657,9 @@ describe('<VedtakForm>', () => {
           readOnly
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: 'tilbakekrevingskode' }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -768,10 +710,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: 'tilbakekrevingskode' }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={vedtaksbrevmalerUtenAutomatisk}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}

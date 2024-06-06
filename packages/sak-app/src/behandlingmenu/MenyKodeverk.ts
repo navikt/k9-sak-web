@@ -2,7 +2,7 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 
 class MenyKodeverk {
-  $$behandlingType: Kodeverk;
+  $$behandlingType: string;
 
   $$k9SakKodeverk: { [key: string]: KodeverkMedNavn[] };
 
@@ -10,7 +10,7 @@ class MenyKodeverk {
 
   $$klagekodeverk: { [key: string]: KodeverkMedNavn[] };
 
-  constructor(behandlingType: Kodeverk) {
+  constructor(behandlingType: string) {
     this.$$behandlingType = behandlingType;
   }
 
@@ -43,7 +43,7 @@ class MenyKodeverk {
   }
 
   getKodeverkForValgtBehandling(kodeverkType: string): KodeverkMedNavn[] {
-    return this.getKodeverkForBehandlingstype(this.$$behandlingType.kode, kodeverkType);
+    return this.getKodeverkForBehandlingstype(this.$$behandlingType, kodeverkType);
   }
 
   getKodeverkForBehandlingstyper(behandlingTypeKoder: string[], kodeverkType: string): KodeverkMedNavn[] {
