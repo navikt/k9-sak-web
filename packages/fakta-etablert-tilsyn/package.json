@@ -10,7 +10,6 @@
     "dev": "vite serve"
   },
   "devDependencies": {
-    "start-server-and-test": "^2.0.4",
     "vite": "^5.2.12",
     "vite-plugin-node-polyfills": "^0.22.0"
   },
@@ -18,10 +17,8 @@
     "@navikt/ds-css": "6.10.0",
     "@navikt/ds-icons": "3.4.3",
     "@navikt/ds-react": "6.10.0",
-    "@navikt/fnrvalidator": "2.0.7",
     "@navikt/ft-plattform-komponenter": "2.5.11",
     "@popperjs/core": "2.11.8",
-    "axios": "1.7.2",
     "classnames": "2.5.1",
     "dayjs": "1.11.11",
     "lodash": "4.17.21",

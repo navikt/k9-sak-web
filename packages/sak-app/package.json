@@ -7,7 +7,6 @@
   "dependencies": {
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
-    "@fpsak-frontend/prop-types": "1.0.0",
     "@fpsak-frontend/sak-dekorator": "1.0.0",
     "@fpsak-frontend/sak-dokumenter": "1.0.0",
     "@fpsak-frontend/sak-fagsak-profil": "1.0.0",
@@ -33,16 +32,9 @@
     "@k9-sak-web/behandling-tilbakekreving": "1.0.0",
     "@k9-sak-web/behandling-unntak": "1.0.0",
     "@k9-sak-web/behandling-utvidet-rett": "1.0.0",
-    "@k9-sak-web/fakta-etablert-tilsyn": "1.0.0",
-    "@k9-sak-web/fakta-inntektsmelding": "1.0.0",
-    "@k9-sak-web/fakta-medisinsk-vilkar": "1.0.0",
-    "@k9-sak-web/fakta-om-barnet": "1.0.0",
-    "@k9-sak-web/fakta-omsorgen-for": "1.0.0",
     "@k9-sak-web/gui": "workspace:^",
     "@k9-sak-web/konstanter": "1.0.0",
     "@k9-sak-web/modal-sett-pa-vent": "1.0.0",
-    "@k9-sak-web/prosess-omsorgsdager": "1.0.0",
-    "@k9-sak-web/prosess-uttak": "1.0.0",
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/sak-aktor": "1.0.0",
@@ -70,12 +62,10 @@
     "react-dom": "18.3.1",
     "react-intl": "6.6.8",
     "react-redux": "9.1.2",
-    "react-responsive": "10.0.0",
     "react-router-dom": "6.23.1",
     "redux": "5.0.1",
     "redux-form": "8.3.10",
-    "redux-thunk": "3.1.0",
-    "reselect": "5.1.1"
+    "redux-thunk": "3.1.0"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0"
