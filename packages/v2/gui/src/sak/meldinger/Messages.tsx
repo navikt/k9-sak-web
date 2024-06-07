@@ -3,7 +3,7 @@ import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { FilePdfIcon, PaperplaneIcon } from '@navikt/aksel-icons';
+import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import type { BestillBrevDto, MottakerDto, FritekstbrevinnholdDto } from '@k9-sak-web/backend/k9sak/generated';
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.ts';
@@ -244,7 +244,7 @@ const Messages = ({
           Send brev
         </Button>
         <Spacer />
-        <Button size="small" variant="secondary" icon={<FilePdfIcon />} loading={isBusy} onClick={previewHandler}>
+        <Button size="small" variant="secondary" icon={<FileSearchIcon />} loading={isBusy} onClick={previewHandler}>
           Forhåndsvis
         </Button>
       </HStack>
