@@ -16,6 +16,9 @@ const tekst = {
   arsakPeriodeIkkeOverSeksMån: 'Avslagsårsak',
   feilIngenVurdering: 'Resultat må oppgis.',
   feilIngenÅrsak: 'Årsak må oppgis.',
+  foreldreBorSammen: 'Foreldre bor sammen',
+  avltaleOmDeltBosted: 'Avtale om delt bosted gjelder barnet',
+  annet: 'Annet'
 };
 
 export default tekst;

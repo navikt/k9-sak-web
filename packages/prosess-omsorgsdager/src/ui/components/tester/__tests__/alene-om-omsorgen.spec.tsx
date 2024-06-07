@@ -21,6 +21,7 @@ describe('<AleneOmOmsorgen>', () => {
       },
       informasjonTilLesemodus: {
         begrunnelse: '',
+        avslagårsakKode: '',
         vilkarOppfylt: true,
         fraDato: '',
         tilDato: '22.12.2020',
