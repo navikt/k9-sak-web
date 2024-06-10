@@ -29,7 +29,7 @@ import AvslagskoderAleneOmOmsorgen
 
 type FormData = {
   begrunnelse: string;
-  avslagsårsakKode: string;
+  avslagårsakKode: string;
   fraDato: string;
   tilDato: string;
   erSokerenAleneOmOmsorgen: string;
@@ -62,7 +62,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     reValidateMode: 'onSubmit',
     defaultValues: {
       begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
-      avslagsårsakKode: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.avslagårsakKode : '',
+      avslagårsakKode: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.avslagårsakKode : '',
       fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : 'dd.mm.åååå',
       tilDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.tilDato) : 'dd.mm.åååå',
       erSokerenAleneOmOmsorgen: harAksjonspunktOgVilkarLostTidligere
@@ -104,7 +104,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     getValues,
   );
 
-  const bekreftAksjonspunkt = ({ begrunnelse, avslagårsaksKode, erSokerenAleneOmOmsorgen, fraDato, tilDato }) => {
+  const bekreftAksjonspunkt = ({ begrunnelse, avslagårsakKode: avslagårsakKode, erSokerenAleneOmOmsorgen, fraDato, tilDato }) => {
     if (
       (!errors.begrunnelse && !errors.fraDato && !errors.erSokerenAleneOmOmsorgen && !erBehandlingstypeRevurdering) ||
       (!errors.begrunnelse &&
@@ -115,7 +115,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     ) {
       losAksjonspunkt({
         begrunnelse,
-        avslagårsaksKode,
+        avslagårsakKode: avslagårsakKode,
         vilkarOppfylt: tekstTilBoolean(erSokerenAleneOmOmsorgen),
         fraDato: tekstTilBoolean(erSokerenAleneOmOmsorgen) ? fraDato.replaceAll('.', '-') : '',
         tilDato: tilDato.replaceAll('.', '-'),
