@@ -1,10 +1,10 @@
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
 import type { BackendApi } from '@k9-sak-web/gui/sak/meldinger/Messages.js';
 import { action } from '@storybook/addon-actions';
+import type { AvsenderApplikasjon } from "@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.ts";
 import { fakePdf } from './fakePdf.js';
 
 // XXX Should be moved out somewhere so other fake implementations can use it
@@ -17,12 +17,11 @@ export class FakeMessagesBackendApi implements BackendApi {
   async hentInnholdBrevmal(
     sakstype: string,
     eksternReferanse: string,
+    avsenderApplikasjon: AvsenderApplikasjon,
     maltype: string,
   ): Promise<FritekstbrevDokumentdata[]> {
-    // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const x = eksternReferanse;
-    if (sakstype === fagsakYtelsesType.OMP && maltype === 'VARSEL_FRITEKST') {
+    const x = eksternReferanse + sakstype + avsenderApplikasjon; // For å unngå unused variable feil
+    if (x !== null && maltype === 'INNHENT_MEDISINSKE_OPPLYSNINGER') {
       return [
         { tittel: 'Varsel nr 1', fritekst: 'Hei, du må sende inn ditt og datt før frist.' },
         { tittel: 'Varsel nr 2', fritekst: 'Brev tekst forslag nr 2.' },

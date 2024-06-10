@@ -67,7 +67,7 @@ export const FritekstValg: Story = {
     const canvas = within(canvasElement);
     await userEvent.click(canvasElement); // Nødvendig for at selectOptions kall under skal fungere. Må ha fokus på sida.
     const selectBox = canvas.getByLabelText('Mal');
-    await userEvent.selectOptions(selectBox, 'VARSEL_FRITEKST');
+    await userEvent.selectOptions(selectBox, 'INNHENT_MEDISINSKE_OPPLYSNINGER');
   },
 };
 
