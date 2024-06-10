@@ -24,8 +24,6 @@ import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 import styles from '../vilkar-midlertidig-alene/vilkarMidlertidigAlene.module.css';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import tekst from './alene-om-omsorgen-tekst';
-import AvslagskoderAleneOmOmsorgen
-  from "@k9-sak-web/behandling-utvidet-rett/src/types/utvidetRettMikrofrontend/AvslagskoderAleneOmOmsorgen";
 
 type FormData = {
   begrunnelse: string;
@@ -62,7 +60,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     reValidateMode: 'onSubmit',
     defaultValues: {
       begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
-      avslagårsakKode: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.avslagårsakKode : '',
+      avslagsårsakKode: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.avslagårsakKode : '',
       fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : 'dd.mm.åååå',
       tilDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.tilDato) : 'dd.mm.åååå',
       erSokerenAleneOmOmsorgen: harAksjonspunktOgVilkarLostTidligere
@@ -104,7 +102,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     getValues,
   );
 
-  const bekreftAksjonspunkt = ({ begrunnelse, avslagårsakKode: avslagårsakKode, erSokerenAleneOmOmsorgen, fraDato, tilDato }) => {
+  const bekreftAksjonspunkt = ({ begrunnelse, avslagårsakKode, erSokerenAleneOmOmsorgen, fraDato, tilDato }) => {
     if (
       (!errors.begrunnelse && !errors.fraDato && !errors.erSokerenAleneOmOmsorgen && !erBehandlingstypeRevurdering) ||
       (!errors.begrunnelse &&
@@ -115,7 +113,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     ) {
       losAksjonspunkt({
         begrunnelse,
-        avslagårsakKode: avslagårsakKode,
+        avslagårsakKode,
         vilkarOppfylt: tekstTilBoolean(erSokerenAleneOmOmsorgen),
         fraDato: tekstTilBoolean(erSokerenAleneOmOmsorgen) ? fraDato.replaceAll('.', '-') : '',
         tilDato: tilDato.replaceAll('.', '-'),
@@ -204,7 +202,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                       />
                       <RadioButtonWithBooleanValue
                         label={tekst.annet}
-                        value={"1077"}
+                        value="1077"
                         name="avslagårsakKode"
                       />
                     </HStack>
