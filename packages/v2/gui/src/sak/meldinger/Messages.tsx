@@ -98,8 +98,9 @@ const Messages = ({
 
   const valgtMal = maler.find(mal => mal.kode === valgtMalkode);
   useEffect(() => {
+    setTredjepartsmottakerAktivert(tredjepartsmottakerAktivert && (valgtMal?.støtterTredjepartsmottaker || false))
     setValgtMottakerId(valgtMal?.mottakere[0]?.id);
-  }, [valgtMal]);
+  }, [valgtMal, valgtMalkode]);
 
   const showFritekstInput = (valgtMal?.støtterFritekst || valgtMal?.støtterTittelOgFritekst) ?? false;
 
@@ -174,6 +175,7 @@ const Messages = ({
         await api.bestillDokument(bestillBrevDto);
         // Reset form to initial default values:
         setShowValidation(false);
+        setValgtMalkode(maler[0]?.kode)
         fritekstInputRef.current?.reset();
       } finally {
         setIsBusy(false);
@@ -230,6 +232,7 @@ const Messages = ({
         checked={tredjepartsmottakerAktivert}
         onChange={() => setTredjepartsmottakerAktivert(!tredjepartsmottakerAktivert)}
         size="small"
+        disabled={!valgtMal?.støtterTredjepartsmottaker}
         >Send til tredjepart</Checkbox>
       <TredjepartsmottakerInput
         show={tredjepartsmottakerAktivert}
