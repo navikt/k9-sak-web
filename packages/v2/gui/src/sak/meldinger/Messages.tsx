@@ -94,7 +94,7 @@ const Messages = ({
       }
     };
     loadFritekstForslag();
-  }, [valgtMalkode]);
+  }, [valgtMalkode, fagsak, behandling]);
 
   const valgtMal = maler.find(mal => mal.kode === valgtMalkode);
   useEffect(() => {
@@ -172,11 +172,12 @@ const Messages = ({
       try {
         setIsBusy(true);
         await api.bestillDokument(bestillBrevDto);
+        // Reset form to initial default values:
+        setShowValidation(false);
+        fritekstInputRef.current?.reset();
       } finally {
         setIsBusy(false);
       }
-      setShowValidation(false);
-      fritekstInputRef.current?.reset();
     }
     // else: validation failed, error message should be displayed in the input field(s)
   };
