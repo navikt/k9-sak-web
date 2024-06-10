@@ -13,9 +13,8 @@ type MottakerSelectProps = {
   readonly personopplysninger: Personopplysninger | undefined;
   readonly arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId | undefined;
   readonly onChange?: (valgtMottakerId: string) => void;
+  readonly disabled?: boolean;
 };
-
-export const tredjepartsmottakerValg = 'inputTredjepartsmottaker';
 
 const MottakerSelect = ({
   valgtMal,
@@ -23,6 +22,7 @@ const MottakerSelect = ({
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
   onChange,
+  disabled,
 }: MottakerSelectProps) => {
   if ((valgtMal?.mottakere?.length ?? 0) > 0) {
     return (
@@ -32,21 +32,13 @@ const MottakerSelect = ({
         placeholder="Velg mottaker"
         defaultValue={valgtMottakerId}
         onChange={e => onChange?.(e.target.value)}
+        disabled={disabled}
       >
-        <optgroup label="Saksparter">
           {valgtMal?.mottakere.map(mottaker => (
             <option key={mottaker.id} value={mottaker.id}>
               {lagVisningsnavnForMottaker(mottaker.id, personopplysninger, arbeidsgiverOpplysningerPerId)}
             </option>
           ))}
-        </optgroup>
-        {valgtMal?.støtterTredjepartsmottaker && (
-          <optgroup label="Tredjepartsmottaker">
-            <option style={{ color: 'red' }} key={tredjepartsmottakerValg} value={tredjepartsmottakerValg}>
-              (skriv inn organisasjonsnr)
-            </option>
-          </optgroup>
-        )}
       </Select>
     );
   }

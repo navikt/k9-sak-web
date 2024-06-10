@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';
+import { Button, Checkbox, HStack, Spacer, VStack } from '@navikt/ds-react';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
@@ -17,7 +17,7 @@ import TredjepartsmottakerInput, {
   type TredjepartsmottakerError,
   type TredjepartsmottakerValue,
 } from './TredjepartsmottakerInput.js';
-import MottakerSelect, { tredjepartsmottakerValg } from './MottakerSelect.js';
+import MottakerSelect from './MottakerSelect.js';
 import FritekstForslagSelect from './FritekstForslagSelect.js';
 import FritekstInput, {
   type FritekstInputInvalid,
@@ -60,7 +60,8 @@ const Messages = ({
   const [fritekstForslag, setFritekstForslag] = useState<FritekstbrevDokumentdata[]>([]);
   const [valgtFritekst, setValgtFritekst] = useState<FritekstbrevDokumentdata | undefined>(undefined);
   const [valgtMottakerId, setValgtMottakerId] = useState<string | undefined>(undefined);
-  const [tredjepartsMottaker, setTredjepartsMottaker] = useState<
+  const [tredjepartsmottakerAktivert, setTredjepartsmottakerAktivert] = useState(false)
+  const [tredjepartsmottaker, setTredjepartsmottaker] = useState<
     TredjepartsmottakerValue | TredjepartsmottakerError | undefined
   >(undefined);
   const fritekstInputRef = useRef<FritekstInputMethods>(null);
@@ -118,12 +119,12 @@ const Messages = ({
   // overstyrtMottaker skal vere valgt mottaker frå MottakerSelect, viss ikkje tredjepartsmottaker alternativ er valgt der.
   // Viss sending til tredjepartsmottaker er aktivert skal den settast til inntasta orgnr.
   const resolveOvertyrtMottaker = (): MottakerDto | undefined => {
-    if (valgtMottakerId !== undefined && valgtMottakerId !== tredjepartsmottakerValg) {
+    if (valgtMottakerId !== undefined && !tredjepartsmottakerAktivert) {
       return valgtMal?.mottakere.filter(m => m.id === valgtMottakerId)[0];
     }
-    if (valgtMottakerId === tredjepartsmottakerValg && tredjepartsMottaker?.organisasjonsnr !== undefined) {
+    if (tredjepartsmottakerAktivert && tredjepartsmottaker?.organisasjonsnr !== undefined) {
       return {
-        id: tredjepartsMottaker.organisasjonsnr,
+        id: tredjepartsmottaker.organisasjonsnr,
         type: 'ORGNR',
       };
     }
@@ -145,7 +146,7 @@ const Messages = ({
     const fritekst = fritekstInputValue?.tekst;
     const overstyrtMottaker = resolveOvertyrtMottaker();
     // Viss valg for sending til tredjepartsmottaker er aktivt må overstyrtMottaker vere definert
-    if (valgtMottakerId === tredjepartsmottakerValg && overstyrtMottaker === undefined) {
+    if (tredjepartsmottakerAktivert && overstyrtMottaker === undefined) {
       return undefined; // Valideringsfeil
     }
     return {
@@ -222,14 +223,20 @@ const Messages = ({
         valgtMal={valgtMal}
         valgtMottakerId={valgtMottakerId}
         onChange={setValgtMottakerId}
+        disabled={tredjepartsmottakerAktivert}
       />
+      <Checkbox
+        checked={tredjepartsmottakerAktivert}
+        onChange={() => setTredjepartsmottakerAktivert(!tredjepartsmottakerAktivert)}
+        size="small"
+        >Send til tredjepart</Checkbox>
       <TredjepartsmottakerInput
-        show={valgtMottakerId === tredjepartsmottakerValg}
+        show={tredjepartsmottakerAktivert}
         showValidation={showValidation}
         required
         api={api}
-        defaultValue={tredjepartsMottaker?.organisasjonsnr}
-        onChange={setTredjepartsMottaker}
+        defaultValue={tredjepartsmottaker?.organisasjonsnr}
+        onChange={setTredjepartsmottaker}
       />
       <FritekstInput
         språk={behandling.sprakkode}

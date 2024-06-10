@@ -11,7 +11,6 @@ import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
 import { templates } from '@k9-sak-web/gui/storybook/mocks/brevmaler.js';
 import personopplysninger from '@k9-sak-web/gui/storybook/mocks/personopplysninger.js';
 import Messages from './Messages.js';
-import { tredjepartsmottakerValg } from './MottakerSelect.js';
 
 const meta: Meta<typeof Messages> = {
   title: 'gui/sak/meldinger/Messages.tsx',
@@ -78,8 +77,8 @@ export const TilTredjepartsmottaker: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(canvasElement); // Nødvendig for at selectOptions kall under skal fungere. Må ha fokus på sida.
-    const selectBox = canvas.getByLabelText('Mottaker');
-    await userEvent.selectOptions(selectBox, tredjepartsmottakerValg);
+    await userEvent.click(canvasElement); // Nødvendig for at tredjepartsmottakerCheckbox kall under skal fungere. Må ha fokus på sida.
+    const tredjepartsmottakerCheckbox = canvas.getByLabelText('Send til tredjepart');
+    await userEvent.click(tredjepartsmottakerCheckbox) // Aktiver sending til tredjepartsmottaker
   },
 };
