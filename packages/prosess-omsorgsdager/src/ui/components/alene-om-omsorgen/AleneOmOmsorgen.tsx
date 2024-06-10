@@ -37,8 +37,8 @@ type FormData = {
 };
 
 export enum AvlsagskoderAleneOmOmsorgen {
-  FORELDRE_BOR_SAMMEN = "1077",
-  AVTALE_OM_DELT_OMSROG = "1077",
+  FORELDRE_BOR_SAMMEN = "1078",
+  AVTALE_OM_DELT_BOSTED = "1079",
   ANNET = "1077"
 }
 
@@ -199,7 +199,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                       />
                       <RadioButtonWithBooleanValue
                         label={tekst.avltaleOmDeltBosted}
-                        value={AvlsagskoderAleneOmOmsorgen.AVTALE_OM_DELT_OMSROG}
+                        value={AvlsagskoderAleneOmOmsorgen.AVTALE_OM_DELT_BOSTED}
                         name="avslagårsakKode"
                       />
                       <RadioButtonWithBooleanValue

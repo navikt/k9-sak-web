@@ -69,6 +69,7 @@ describe('<AleneOmOmsorgen>', () => {
       },
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
+        avslagårsakKode: '1077',
         vilkarOppfylt: true,
         fraDato: '22.12.1994',
         tilDato: '22.12.2020',
@@ -105,6 +106,7 @@ describe('<AleneOmOmsorgen>', () => {
       },
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
+        avslagårsakKode: '1077',
         vilkarOppfylt: true,
         fraDato: '22.12.1994',
         tilDato: '22.12.2020',
@@ -144,6 +146,7 @@ describe('<AleneOmOmsorgen>', () => {
       },
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
+        avslagårsakKode: '1077',
         vilkarOppfylt: true,
         fraDato: '1994-12-12',
         tilDato: '2020-12-12',
@@ -196,6 +199,7 @@ describe('<AleneOmOmsorgen>', () => {
       },
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
+        avslagårsakKode: '1077',
         vilkarOppfylt: true,
         fraDato: '1993.02.02',
         tilDato: '1994.02.02',
@@ -248,6 +252,7 @@ describe('<AleneOmOmsorgen>', () => {
       },
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
+        avslagårsakKode: '1077',
         vilkarOppfylt: true,
         fraDato: '22.12.1994',
         tilDato: '22.12.2020',
@@ -280,6 +285,7 @@ describe('<AleneOmOmsorgen>', () => {
       },
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
+        avslagårsakKode: '1077',
         vilkarOppfylt: true,
         fraDato: '22.12.1994',
         tilDato: '22.12.2020',
@@ -321,6 +327,7 @@ describe('<AleneOmOmsorgen>', () => {
       },
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
+        avslagårsakKode: '1077',
         vilkarOppfylt: false,
         fraDato: '22.12.1994',
         tilDato: '22.12.2020',
@@ -359,6 +366,7 @@ describe('<AleneOmOmsorgen>', () => {
       },
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
+        avslagårsakKode: '1077',
         vilkarOppfylt: true,
         fraDato: '22.12.1994',
         tilDato: '22.12.2020',
