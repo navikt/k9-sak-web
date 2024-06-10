@@ -6,12 +6,7 @@ import type { BackendApi } from '@k9-sak-web/gui/sak/meldinger/Messages.js';
 import { action } from '@storybook/addon-actions';
 import type { AvsenderApplikasjon } from "@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.ts";
 import { fakePdf } from './fakePdf.js';
-
-// XXX Should be moved out somewhere so other fake implementations can use it
-const sleep = (timeMs: number) =>
-  new Promise(resolve => {
-    setTimeout(resolve, timeMs);
-  });
+import { delay } from "../../utils/delay.ts";
 
 export class FakeMessagesBackendApi implements BackendApi {
   async hentInnholdBrevmal(
@@ -47,13 +42,13 @@ export class FakeMessagesBackendApi implements BackendApi {
   }
 
   async bestillDokument(bestilling: BestillBrevDto): Promise<void> {
-    await sleep(1_400);
+    await delay(1_400);
     action('bestillDokument')(bestilling);
   }
 
   async lagForhåndsvisningPdf(data: ForhåndsvisDto): Promise<Blob> {
     action('lag pdf data')(data);
-    await sleep(1_000);
+    await delay(1_000);
     return fakePdf();
   }
 }
