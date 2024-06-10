@@ -27,7 +27,7 @@ import tekst from './alene-om-omsorgen-tekst';
 
 type FormData = {
   begrunnelse: string;
-  avslagårsakKode: string;
+  avslagsårsakKode: string;
   fraDato: string;
   tilDato: string;
   erSokerenAleneOmOmsorgen: string;
@@ -60,7 +60,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     reValidateMode: 'onSubmit',
     defaultValues: {
       begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
-      avslagsårsakKode: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.avslagårsakKode : '',
+      avslagsårsakKode: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.avslagsårsakKode : '',
       fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : 'dd.mm.åååå',
       tilDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.tilDato) : 'dd.mm.åååå',
       erSokerenAleneOmOmsorgen: harAksjonspunktOgVilkarLostTidligere
@@ -102,7 +102,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     getValues,
   );
 
-  const bekreftAksjonspunkt = ({ begrunnelse, avslagårsakKode, erSokerenAleneOmOmsorgen, fraDato, tilDato }) => {
+  const bekreftAksjonspunkt = ({ begrunnelse, avslagsårsakKode, erSokerenAleneOmOmsorgen, fraDato, tilDato }) => {
     if (
       (!errors.begrunnelse && !errors.fraDato && !errors.erSokerenAleneOmOmsorgen && !erBehandlingstypeRevurdering) ||
       (!errors.begrunnelse &&
@@ -113,7 +113,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     ) {
       losAksjonspunkt({
         begrunnelse,
-        avslagårsakKode,
+        avslagsårsakKode,
         vilkarOppfylt: tekstTilBoolean(erSokerenAleneOmOmsorgen),
         fraDato: tekstTilBoolean(erSokerenAleneOmOmsorgen) ? fraDato.replaceAll('.', '-') : '',
         tilDato: tilDato.replaceAll('.', '-'),
@@ -187,23 +187,23 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                     className={styleRadioknapper.horisontalPlassering}
                     legend={tekst.velgArsak}
                     size="small"
-                    name="avslagårsakKode"
+                    name="avslagsårsakKode"
                   >
                     <HStack gap="1">
                       <RadioButtonWithBooleanValue
                         label={tekst.foreldreBorSammen}
                         value={AvlsagskoderAleneOmOmsorgen.FORELDRE_BOR_SAMMEN}
-                        name="avslagårsakKode"
+                        name="avslagsårsakKode"
                       />
                       <RadioButtonWithBooleanValue
                         label={tekst.avltaleOmDeltBosted}
                         value={AvlsagskoderAleneOmOmsorgen.AVTALE_OM_DELT_BOSTED}
-                        name="avslagårsakKode"
+                        name="avslagsårsakKode"
                       />
                       <RadioButtonWithBooleanValue
                         label={tekst.annet}
                         value="1077"
-                        name="avslagårsakKode"
+                        name="avslagsårsakKode"
                       />
                     </HStack>
                   </RadioGroup>
