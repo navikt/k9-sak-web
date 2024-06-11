@@ -12,6 +12,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@adobe/css-tools@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "@adobe/css-tools@npm:4.4.0"
+  checksum: 1f08fb49bf17fc7f2d1a86d3e739f29ca80063d28168307f1b0a962ef37501c5667271f6771966578897f2e94e43c4770fd802728a6e6495b812da54112d506a
+  languageName: node
+  linkType: hard
+
 "@alloc/quick-lru@npm:^5.2.0":
   version: 5.2.0
   resolution: "@alloc/quick-lru@npm:5.2.0"
@@ -3774,7 +3781,7 @@ __metadata:
     react-dom: 18.3.1
     react-hook-form: 7.51.5
     react-popper: 2.3.0
-    vite: ^5.2.12
+    vite: ^5.2.13
     vite-plugin-node-polyfills: ^0.22.0
   languageName: unknown
   linkType: soft
@@ -3812,7 +3819,7 @@ __metadata:
     react-dom: 18.3.1
     react-hook-form: 7.51.5
     react-popper: 2.3.0
-    vite: ^5.2.12
+    vite: ^5.2.13
     vite-plugin-node-polyfills: ^0.22.0
   languageName: unknown
   linkType: soft
@@ -3851,7 +3858,7 @@ __metadata:
     react-outside-click-handler: 1.3.0
     react-popper: 2.3.0
     react-query: 3.39.3
-    vite: ^5.2.12
+    vite: ^5.2.13
     vite-plugin-node-polyfills: ^0.22.0
   languageName: unknown
   linkType: soft
@@ -3872,7 +3879,7 @@ __metadata:
     react-hook-form: 7.51.5
     react-popper: 2.3.0
     tailwindcss: ^3.4.4
-    vite: ^5.2.12
+    vite: ^5.2.13
     vite-plugin-node-polyfills: ^0.22.0
   languageName: unknown
   linkType: soft
@@ -3897,7 +3904,7 @@ __metadata:
     react-hook-form: 7.51.5
     react-intl: 6.6.8
     react-popper: 2.3.0
-    vite: ^5.2.12
+    vite: ^5.2.13
     vite-plugin-node-polyfills: ^0.22.0
   languageName: unknown
   linkType: soft
@@ -4042,7 +4049,7 @@ __metadata:
     react: 18.3.1
     react-dom: 18.3.1
     react-hook-form: 7.51.5
-    vite: ^5.2.12
+    vite: ^5.2.13
     vite-plugin-node-polyfills: ^0.22.0
     vitest-axe: ^0.1.0
   languageName: unknown
@@ -4100,7 +4107,7 @@ __metadata:
     react-dom: 18.3.1
     react-hook-form: 7.51.5
     react-popper: 2.3.0
-    vite: ^5.2.12
+    vite: ^5.2.13
     vite-plugin-node-polyfills: ^0.22.0
     yup: 1.4.0
   languageName: unknown
@@ -6879,7 +6886,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/jest-dom@npm:^6.4.2, @testing-library/jest-dom@npm:^6.4.5":
+"@testing-library/jest-dom@npm:^6.4.2":
   version: 6.4.5
   resolution: "@testing-library/jest-dom@npm:6.4.5"
   dependencies:
@@ -6909,6 +6916,39 @@ __metadata:
     vitest:
       optional: true
   checksum: 95bd94f1f4ba2110eaaa15174207f74d46481f0f168a4d58c30f92a9285f797f9949c166aa8401bcb46e16edbf14a097013204d65801e9d1361892757e525bd6
+  languageName: node
+  linkType: hard
+
+"@testing-library/jest-dom@npm:^6.4.6":
+  version: 6.4.6
+  resolution: "@testing-library/jest-dom@npm:6.4.6"
+  dependencies:
+    "@adobe/css-tools": ^4.4.0
+    "@babel/runtime": ^7.9.2
+    aria-query: ^5.0.0
+    chalk: ^3.0.0
+    css.escape: ^1.5.1
+    dom-accessibility-api: ^0.6.3
+    lodash: ^4.17.21
+    redent: ^3.0.0
+  peerDependencies:
+    "@jest/globals": ">= 28"
+    "@types/bun": "*"
+    "@types/jest": ">= 28"
+    jest: ">= 28"
+    vitest: ">= 0.32"
+  peerDependenciesMeta:
+    "@jest/globals":
+      optional: true
+    "@types/bun":
+      optional: true
+    "@types/jest":
+      optional: true
+    jest:
+      optional: true
+    vitest:
+      optional: true
+  checksum: d70acbfc5d842065292dc1b4113ac2b4c2a2b83f9868e454d7f24d97ee92fddf7852e0e079b6eecaf21154bfe6e9ad03eb32e72f16854f64d7ce1ff42288828b
   languageName: node
   linkType: hard
 
@@ -7716,9 +7756,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-react@npm:^4.3.0":
-  version: 4.3.0
-  resolution: "@vitejs/plugin-react@npm:4.3.0"
+"@vitejs/plugin-react@npm:^4.3.1":
+  version: 4.3.1
+  resolution: "@vitejs/plugin-react@npm:4.3.1"
   dependencies:
     "@babel/core": ^7.24.5
     "@babel/plugin-transform-react-jsx-self": ^7.24.5
@@ -7727,7 +7767,7 @@ __metadata:
     react-refresh: ^0.14.2
   peerDependencies:
     vite: ^4.2.0 || ^5.0.0
-  checksum: e4642c081e74e701fc07f03f505b44eb428d7105461b8026e7364ecd30dcf7785126bf272767a3bc36899b6abe85479af444612ef6d09509d9bc7d6025cac925
+  checksum: 57872e0193c7e545c5ef4852cbe1adf17a6b35406a2aba4b3acce06c173a9dabbf6ff4c72701abc11bb3cbe24a056f5054f39018f7034c9aa57133a3a7770237
   languageName: node
   linkType: hard
 
@@ -14094,7 +14134,7 @@ __metadata:
     "@storybook/test-runner": ^0.18.2
     "@storybook/theming": ^8.1.6
     "@testing-library/dom": 10.1.0
-    "@testing-library/jest-dom": ^6.4.5
+    "@testing-library/jest-dom": ^6.4.6
     "@testing-library/react": 16.0.0
     "@testing-library/user-event": 14.5.2
     "@types/history": 5.0.0
@@ -14105,7 +14145,7 @@ __metadata:
     "@types/redux-form": 8.3.10
     "@typescript-eslint/eslint-plugin": 7.12.0
     "@typescript-eslint/parser": ^7.12.0
-    "@vitejs/plugin-react": ^4.3.0
+    "@vitejs/plugin-react": ^4.3.1
     autoprefixer: ^10.4.19
     axios: 1.7.2
     axios-mock-adapter: 1.22.0
@@ -14132,7 +14172,7 @@ __metadata:
     node-cache: 5.1.2
     postcss: ^8.4.38
     postcss-import: ^16.1.0
-    prettier: 3.3.1
+    prettier: 3.3.2
     react: 18.3.1
     react-dom: 18.3.1
     react-popper: 2.3.0
@@ -14145,7 +14185,7 @@ __metadata:
     tailwindcss: ^3.4.4
     typed-css-modules: ^0.9.1
     typescript: 5.4.5
-    vite: ^5.2.12
+    vite: ^5.2.13
     vite-plugin-html: ^3.2.2
     vite-plugin-svgr: 4.2.0
     vitest: 1.6.0
@@ -16105,12 +16145,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:3.3.1":
-  version: 3.3.1
-  resolution: "prettier@npm:3.3.1"
+"prettier@npm:3.3.2":
+  version: 3.3.2
+  resolution: "prettier@npm:3.3.2"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 10987ff39e23d9359a76a441431dfe3ee26cc444540dc1577e8109e31394231fc1187d47a1e4ebc98bd605885c50ec681e9f2674e489c3313708c30b6ef5e119
+  checksum: 5557d8caed0b182f68123c2e1e370ef105251d1dd75800fadaece3d061daf96b1389141634febf776050f9d732c7ae8fd444ff0b4a61b20535e7610552f32c69
   languageName: node
   linkType: hard
 
@@ -19309,7 +19349,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.0.0, vite@npm:^5.2.12":
+"vite@npm:^5.0.0":
   version: 5.2.12
   resolution: "vite@npm:5.2.12"
   dependencies:
@@ -19346,6 +19386,46 @@ __metadata:
   bin:
     vite: bin/vite.js
   checksum: 908b8a09460c031fe94c2038a46743a73a70fe76fd1991ae8b51a56eb88dec75128bc7da7ab37d8f84c0e1e3063ce268bdd81cc27d79229f8ea756e752bc83d9
+  languageName: node
+  linkType: hard
+
+"vite@npm:^5.2.13":
+  version: 5.2.13
+  resolution: "vite@npm:5.2.13"
+  dependencies:
+    esbuild: ^0.20.1
+    fsevents: ~2.3.3
+    postcss: ^8.4.38
+    rollup: ^4.13.0
+  peerDependencies:
+    "@types/node": ^18.0.0 || >=20.0.0
+    less: "*"
+    lightningcss: ^1.21.0
+    sass: "*"
+    stylus: "*"
+    sugarss: "*"
+    terser: ^5.4.0
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  peerDependenciesMeta:
+    "@types/node":
+      optional: true
+    less:
+      optional: true
+    lightningcss:
+      optional: true
+    sass:
+      optional: true
+    stylus:
+      optional: true
+    sugarss:
+      optional: true
+    terser:
+      optional: true
+  bin:
+    vite: bin/vite.js
+  checksum: 79620413e45804494bedb81f2b78b48ca1d26fb026894a114a2f40cb1a3ad9b6783e777bc8969a51f8711e168b4db93a9563a5af027c80eecf000ef9b675a3be
   languageName: node
   linkType: hard
 
