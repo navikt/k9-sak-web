@@ -15,6 +15,7 @@ import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import {
   OpplaeringspengerBehandlingApiKeys,
   requestOpplaeringspengerApi,
@@ -25,7 +26,7 @@ import OpplaeringspengerFakta from './OpplaeringspengerFakta';
 describe('<OpplaeringspengerFakta>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: fagsakYtelsesType.OMP,
+    sakstype: fagsakYtelsesType.PSB,
     status: fagsakStatus.UNDER_BEHANDLING,
   };
 
@@ -128,7 +129,7 @@ describe('<OpplaeringspengerFakta>', () => {
         <OpplaeringspengerFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
-          fagsak={fagsak}
+          fagsak={fagsak as Fagsak}
           fagsakPerson={fagsakPerson}
           rettigheter={rettigheter}
           alleKodeverk={{}}
@@ -169,7 +170,7 @@ describe('<OpplaeringspengerFakta>', () => {
         <OpplaeringspengerFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
-          fagsak={fagsak}
+          fagsak={fagsak as Fagsak}
           fagsakPerson={fagsakPerson}
           rettigheter={rettigheter}
           alleKodeverk={{}}

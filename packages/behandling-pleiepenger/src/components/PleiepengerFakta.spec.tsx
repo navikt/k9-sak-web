@@ -12,6 +12,7 @@ import { Behandling } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { PleiepengerBehandlingApiKeys, requestPleiepengerApi } from '../data/pleiepengerBehandlingApi';
 import FetchedData from '../types/FetchedData';
@@ -20,7 +21,7 @@ import ForeldrepengerFakta from './PleiepengerFakta';
 describe('<PleiepengerFakta>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: fagsakYtelsesType.OMP,
+    sakstype: fagsakYtelsesType.PSB,
     status: fagsakStatus.UNDER_BEHANDLING,
   };
 
@@ -120,7 +121,7 @@ describe('<PleiepengerFakta>', () => {
         <ForeldrepengerFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
-          fagsak={fagsak}
+          fagsak={fagsak as Fagsak}
           fagsakPerson={fagsakPerson}
           rettigheter={rettigheter}
           oppdaterProsessStegOgFaktaPanelIUrl={vi.fn()}
@@ -161,7 +162,7 @@ describe('<PleiepengerFakta>', () => {
         <ForeldrepengerFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
-          fagsak={fagsak}
+          fagsak={fagsak as Fagsak}
           fagsakPerson={fagsakPerson}
           rettigheter={rettigheter}
           oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
