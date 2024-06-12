@@ -60,7 +60,6 @@ const ProsessStegBegrunnelseTextField = ({
           !maxLength ? validateMaxLength1500 : validateMaxLength(maxLength),
           hasValidText,
         ]}
-        textareaClass={styles.explanationTextarea}
         maxLength={maxLength || 1500}
         readOnly={readOnly}
         placeholder={placeholderText || intl.formatMessage({ id: 'ProsessStegBegrunnelseTextField.BegrunnVurdering' })}
