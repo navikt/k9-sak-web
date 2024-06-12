@@ -10,13 +10,13 @@
     "dev": "vite serve"
   },
   "devDependencies": {
-    "vite": "^5.2.12",
+    "vite": "^5.2.13",
     "vite-plugin-node-polyfills": "^0.22.0",
     "vitest-axe": "^0.1.0"
   },
   "dependencies": {
-    "@navikt/ds-css": "6.10.0",
-    "@navikt/ds-react": "6.10.0",
+    "@navikt/ds-css": "6.10.1",
+    "@navikt/ds-react": "6.10.1",
     "classnames": "2.5.1",
     "dayjs": "1.11.11",
     "lodash": "4.17.21",
