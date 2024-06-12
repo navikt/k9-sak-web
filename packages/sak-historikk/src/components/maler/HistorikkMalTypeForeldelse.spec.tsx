@@ -41,7 +41,6 @@ describe('HistorikkMalTypeForeldelse', () => {
         return 'testing';
       }
       if (kode === 'Anna feltkode') {
-        console.log('returnerer testing 2');
         return 'testing 2';
       }
       return '';

@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { utledKodeverkNavnFraKode, utledKodeverkNavnFraUndertypeKode } from '@k9-sak-web/lib/kodeverk/kodeverkUtils.js';
 import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
-import { AlleKodeverk, KodeverkMedUndertype } from '@k9-sak-web/lib/types/AlleKodeverk.js';
-import {
+import type { AlleKodeverk, KodeverkMedUndertype } from '@k9-sak-web/lib/types/AlleKodeverk.js';
+import type {
   GetKodeverkNavnFraKodeFnType,
   HentKodeverkForKodeType,
   KodeverkNavnFraKodeType,
@@ -43,7 +43,6 @@ export const useKodeverkContext = () => {
 
     if (kodeverkForKilde && kodeverkForKilde[kodeverkType]) return kodeverkForKilde[kodeverkType];
 
-    console.error('Har ikke kodeverk å slå opp i (DEV, fjern denne før ferdig');
     return [];
   };
 
@@ -55,9 +54,6 @@ export const useKodeverkContext = () => {
     kilde = undefined,
     ukjentTekst = undefined,
   ) => {
-    console.log(
-      `Oppslag i context.  --  kode: ${kode}  --  kodeverkType: ${kodeverkType}  --  Behandlingstype: ${behandlingType}`,
-    );
     const kodeverkForType = hentKodeverkForKode(kodeverkType, kilde);
     if (kodeverkForType) return utledKodeverkNavnFraKode(kode, kodeverkForType);
     return ukjentTekst || 'Ukjent kode';
@@ -70,10 +66,6 @@ export const useKodeverkContext = () => {
     kilde = undefined,
     ukjentTekst = undefined,
   ) => {
-    console.log(
-      `Undertype, oppslag i context.  --  kode: ${kode}  --  kodeverkType: ${kodeverkType} -- undertypeKode: ${undertypeKode}  --  Behandlingstype: ${behandlingType}`,
-    );
-
     const kodeverkForType = hentKodeverkForKode(kodeverkType, kilde);
     if (kodeverkForType && typeof kodeverkForType === 'object') {
       const kodeverkForUndertype = hentKodeverkForUndertype(kode, kodeverkForType as KodeverkMedUndertype);

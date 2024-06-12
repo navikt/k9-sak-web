@@ -1,4 +1,4 @@
-import {
+import type {
   AlleKodeverk,
   KodeverkKlageType,
   KodeverkNavnFraKodeType,
@@ -13,7 +13,6 @@ export const kodeverkNavnFraKodeMock = (
   alleKodeverk: AlleKodeverk,
   ukjentTekst?: string | undefined,
 ) => {
-  console.log(`MOCK: kodeverkoppslag, kode: ${kode}, kodeverkType: ${kodeverkType}`);
   const navn = utledKodeverkNavnFraKode(kode, alleKodeverk[kodeverkType] || [], ukjentTekst || 'Ukjent kodeverk');
   return navn;
 };

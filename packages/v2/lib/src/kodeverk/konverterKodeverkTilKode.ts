@@ -27,8 +27,7 @@ export const identifiserKodeverk = (data: any, erTilbakekreving: boolean) => {
         !ignorerKodeverkKonvertering.includes(data[key]?.kodeverk) &&
         ((data[key]?.kodeverk && antallAttr === lengdeKodeverkObjekt) || antallAttr === 1)
       ) {
-        // data[key] = data[key].kode; // eslint-disable-line no-param-reassign
-        console.log('Kodeverk: ', data[key]);
+        // eslint-disable-line no-param-reassign
         debugLogKodeverkData(data[key], key, data);
       }
     }
@@ -56,7 +55,6 @@ export const konverterKodeverkTilKode = (data: any, erTilbakekreving: boolean, d
           data[key]?.kodeverk === 'BEHANDLING_RESULTAT_TYPE') // Skrive om denne foreløpig, de ekstra attributtene skal fjernes i backend
       ) {
         data[key] = data[key].kode; // eslint-disable-line no-param-reassign
-        // debugLogKodeverkData(data[key], key, data);
       }
     }
     if (typeof data[key] === 'object' && data[key] !== null) {

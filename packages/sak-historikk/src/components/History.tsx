@@ -132,7 +132,6 @@ const History = ({
   const aktorIsVL = historikkinnslag.aktoer === HistorikkAktor.VEDTAKSLOSNINGEN;
   const aktorIsSOKER = historikkinnslag.aktoer === HistorikkAktor.SOKER;
   const aktorIsArbeidsgiver = historikkinnslag.aktoer === HistorikkAktor.ARBEIDSGIVER;
-  console.log('vi er her');
   return (
     <SnakkebobleContainer
       aktoer={historikkinnslag.aktoer}

@@ -51,20 +51,5 @@ export const BehandlingProvider = ({ children }: { children: React.ReactNode }) 
     [behandlingContext],
   );
 
-  /*
-   * Just for dev/test purposed Remove
-   */
-  useEffect(() => {
-    console.log('UPDATE: behanlingId:', behandlingContext.behandlingId);
-  }, [behandlingContext.behandlingId]);
-
-  useEffect(() => {
-    console.log('UPDATE: behandlingVersjon:', behandlingContext.behandlingVersjon);
-  }, [behandlingContext.behandlingVersjon]);
-
-  useEffect(() => {
-    console.log('UPDATE: behandlingType:', behandlingContext.behandlingType);
-  }, [behandlingContext.behandlingType]);
-
   return <BehandlingContext.Provider value={value}>{children}</BehandlingContext.Provider>;
 };

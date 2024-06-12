@@ -59,20 +59,5 @@ export const KodeverkProvider = ({
     [kodeverkContext],
   );
 
-  /*
-   * Just for dev/test purposed Remove
-   */
-  useEffect(() => {
-    console.log('UPDATE: kodeverk:', kodeverkContext.kodeverk);
-  }, [kodeverkContext.kodeverk]);
-
-  useEffect(() => {
-    console.log('UPDATE: klageKodeverk:', kodeverkContext.klageKodeverk);
-  }, [kodeverkContext.klageKodeverk]);
-
-  useEffect(() => {
-    console.log('UPDATE: tilbakeKodeverk:', kodeverkContext.tilbakeKodeverk);
-  }, [kodeverkContext.tilbakeKodeverk]);
-
   return <KodeverkContext.Provider value={value}>{children}</KodeverkContext.Provider>;
 };
