@@ -20,7 +20,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Definerer hvordan feilmeldinger vises.
  */
-const ErrorMessagePanel = (props: OwnProps & WrappedComponentProps) => {
+export const ErrorMessagePanel = (props: OwnProps & WrappedComponentProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedErrorMsgIndex, setSelectedErrorMsgIndex] = useState<number>(undefined);
 
