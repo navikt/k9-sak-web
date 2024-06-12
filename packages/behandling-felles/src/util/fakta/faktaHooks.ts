@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
-import { Aksjonspunkt, Behandling, Fagsak, FeatureToggles } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, FeatureToggles } from '@k9-sak-web/types';
+import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 
 import FaktaPanelMenyRad from '../../types/faktaPanelMenyRadTsType';
 import Rettigheter from '../../types/rettigheterTsType';

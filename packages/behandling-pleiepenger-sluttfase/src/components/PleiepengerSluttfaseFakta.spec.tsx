@@ -2,16 +2,17 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
 import { Behandling } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import messages from '../../i18n/nb_NO.json';
 import {
@@ -22,10 +23,11 @@ import FetchedData from '../types/fetchedDataTsType';
 import PleiepengerSluttfaseFakta from './PleiepengerSluttfaseFakta';
 
 describe('<PleiepengerSluttfaseFakta>', () => {
-  const fagsak = {
+  const fagsak: Partial<Fagsak> = {
     saksnummer: '123456',
-    sakstype: fagsakYtelsesType.OMP,
+    sakstype: fagsakYtelsesType.PPN,
     status: fagsakStatus.UNDER_BEHANDLING,
+    // fagsakStatus.UNDER_BEHANDLING,
   };
 
   const fagsakPerson = {
@@ -125,7 +127,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
         <PleiepengerSluttfaseFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
-          fagsak={fagsak}
+          fagsak={fagsak as Fagsak}
           fagsakPerson={fagsakPerson}
           rettigheter={rettigheter}
           alleKodeverk={{}}
@@ -159,12 +161,12 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       vilkar,
     };
 
-    renderWithIntl(
+    renderWithIntlAndReduxForm(
       <RestApiErrorProvider>
         <PleiepengerSluttfaseFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
-          fagsak={fagsak}
+          fagsak={fagsak as Fagsak}
           fagsakPerson={fagsakPerson}
           rettigheter={rettigheter}
           alleKodeverk={{}}
