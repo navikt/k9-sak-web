@@ -4193,7 +4193,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/rest-api@workspace:packages/rest-api"
   dependencies:
-    "@sentry/browser": 8.7.0
+    "@k9-sak-web/lib": 1.0.0
     axios: 1.7.2
     node-cache: 5.1.2
   languageName: unknown
@@ -14119,7 +14119,7 @@ __metadata:
     "@testing-library/user-event": 14.5.2
     "@types/history": 5.0.0
     "@types/prop-types": 15.7.12
-    "@types/react": ^18.3.3
+    "@types/react": 18.3.3
     "@types/react-collapse": 5.0.4
     "@types/react-router-dom": 5.3.3
     "@types/redux-form": 8.3.10
