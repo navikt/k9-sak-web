@@ -3,12 +3,14 @@ import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Be
 import { Behandling, KlageVurdering, TotrinnskontrollAksjonspunkt } from '@k9-sak-web/types';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
-import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import TotrinnskontrollSakIndex from './TotrinnskontrollSakIndex';
 
 const data = [
   {
-    skjermlenkeType: 'FORMKRAV_KLAGE_NFP',
+    skjermlenkeType: 'FAKTA_OM_ARBEIDSFORHOLD',
     totrinnskontrollAksjonspunkter: [
       {
         aksjonspunktKode: '5082',
@@ -76,8 +78,8 @@ const data = [
           {
             fastsattVarigEndringNaering: null,
             faktaOmBeregningTilfeller: [
-              { kode: 'VURDER_LØNNSENDRING', kodeverk: 'FAKTA_OM_BEREGNING_TILFELLE' },
-              { kode: 'VURDER_MOTTAR_YTELSE', kodeverk: 'FAKTA_OM_BEREGNING_TILFELLE' },
+              'VURDER_LØNNSENDRING', // FAKTA_OM_BEREGNING_TILFELLE
+              'VURDER_MOTTAR_YTELSE', // FAKTA_OM_BEREGNING_TILFELLE
             ],
             skjæringstidspunkt: '2020-01-01',
           },
@@ -93,7 +95,7 @@ const data = [
 
 const dataReadOnly = [
   {
-    skjermlenkeType: 'FORMKRAV_KLAGE_NFP',
+    skjermlenkeType: 'FAKTA_OM_VERGE',
     totrinnskontrollAksjonspunkter: [
       {
         aksjonspunktKode: '5082',
@@ -101,16 +103,7 @@ const dataReadOnly = [
         beregningDtoer: [],
         besluttersBegrunnelse: 'asdfa',
         totrinnskontrollGodkjent: false,
-        vurderPaNyttArsaker: [
-          {
-            kode: 'FEIL_REGEL',
-            kodeverk: '',
-          },
-          {
-            kode: 'FEIL_FAKTA',
-            kodeverk: '',
-          },
-        ],
+        vurderPaNyttArsaker: ['FEIL_REGEL', 'FEIL_FAKTA'],
         uttakPerioder: [],
         arbeidsforholdDtos: [],
       },
@@ -129,14 +122,8 @@ const location = {
 const behandling = {
   id: 1,
   versjon: 2,
-  status: {
-    kode: behandlingStatus.FATTER_VEDTAK,
-    kodeverk: '',
-  },
-  type: {
-    kode: behandlingType.FØRSTEGANGSSØKNAD,
-    kodeverk: 'BEHANDLING_TYPE',
-  },
+  status: behandlingStatus.FATTER_VEDTAK,
+  type: behandlingType.FORSTEGANGSSOKNAD,
   behandlingÅrsaker: [],
   toTrinnsBehandling: true,
 } as Behandling;
@@ -147,31 +134,37 @@ export default {
 };
 
 export const visTotrinnskontrollForBeslutter = props => (
-  <div
-    style={{
-      width: '600px',
-      margin: '50px',
-      padding: '20px',
-      backgroundColor: 'white',
-    }}
+  <KodeverkProvider
+    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    kodeverk={alleKodeverkV2}
+    klageKodeverk={{}}
+    tilbakeKodeverk={{}}
   >
-    <TotrinnskontrollSakIndex
-      behandling={behandling}
-      totrinnskontrollSkjermlenkeContext={data}
-      location={location}
-      onSubmit={action('button-click')}
-      behandlingKlageVurdering={
-        {
-          klageVurderingResultatNFP: {
-            klageVurdering: 'STADFESTE_YTELSESVEDTAK',
-          },
-        } as KlageVurdering
-      }
-      alleKodeverk={alleKodeverk as any}
-      createLocationForSkjermlenke={() => location}
-      {...props}
-    />
-  </div>
+    <div
+      style={{
+        width: '600px',
+        margin: '50px',
+        padding: '20px',
+        backgroundColor: 'white',
+      }}
+    >
+      <TotrinnskontrollSakIndex
+        behandling={behandling}
+        totrinnskontrollSkjermlenkeContext={data}
+        location={location}
+        onSubmit={action('button-click')}
+        behandlingKlageVurdering={
+          {
+            klageVurderingResultatNFP: {
+              klageVurdering: 'STADFESTE_YTELSESVEDTAK',
+            },
+          } as KlageVurdering
+        }
+        createLocationForSkjermlenke={() => location}
+        {...props}
+      />
+    </div>
+  </KodeverkProvider>
 );
 
 visTotrinnskontrollForBeslutter.args = {
@@ -179,35 +172,38 @@ visTotrinnskontrollForBeslutter.args = {
 };
 
 export const visTotrinnskontrollForSaksbehandler = () => (
-  <div
-    style={{
-      width: '600px',
-      margin: '50px',
-      padding: '20px',
-      backgroundColor: 'white',
-    }}
+  <KodeverkProvider
+    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    kodeverk={alleKodeverkV2}
+    klageKodeverk={{}}
+    tilbakeKodeverk={{}}
   >
-    <TotrinnskontrollSakIndex
-      behandling={{
-        ...behandling,
-        status: {
-          kode: behandlingStatus.BEHANDLING_UTREDES,
-          kodeverk: '',
-        },
+    <div
+      style={{
+        width: '600px',
+        margin: '50px',
+        padding: '20px',
+        backgroundColor: 'white',
       }}
-      totrinnskontrollSkjermlenkeContext={dataReadOnly}
-      location={location}
-      readOnly
-      onSubmit={action('button-click')}
-      behandlingKlageVurdering={
-        {
-          klageVurderingResultatNFP: {
-            klageVurdering: 'STADFESTE_YTELSESVEDTAK',
-          },
-        } as KlageVurdering
-      }
-      alleKodeverk={alleKodeverk as any}
-      createLocationForSkjermlenke={() => location}
-    />
-  </div>
+    >
+      <TotrinnskontrollSakIndex
+        behandling={{
+          ...behandling,
+          status: behandlingStatus.BEHANDLING_UTREDES,
+        }}
+        totrinnskontrollSkjermlenkeContext={dataReadOnly}
+        location={location}
+        readOnly
+        onSubmit={action('button-click')}
+        behandlingKlageVurdering={
+          {
+            klageVurderingResultatNFP: {
+              klageVurdering: 'STADFESTE_YTELSESVEDTAK',
+            },
+          } as KlageVurdering
+        }
+        createLocationForSkjermlenke={() => location}
+      />
+    </div>
+  </KodeverkProvider>
 );

@@ -1,11 +1,11 @@
 import { initializeDate } from '@fpsak-frontend/utils';
-import Aksjonspunkt from '../types/Aksjonspunkt';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Kode, TilstandBeriket } from '../types/KompletthetData';
 import Status from '../types/TilstandStatus';
 
 // eslint-disable-next-line import/prefer-default-export
 export const finnAktivtAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]): Aksjonspunkt =>
-  aksjonspunkter.find(aksjonspunkt => aksjonspunkt.status.kode === 'OPPR');
+  aksjonspunkter.find(aksjonspunkt => aksjonspunkt.status === 'OPPR');
 
 export const skalVurderes = (tilstand: TilstandBeriket): boolean =>
   tilstand?.tilVurdering &&

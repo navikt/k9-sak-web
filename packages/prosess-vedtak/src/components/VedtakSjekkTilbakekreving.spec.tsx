@@ -16,57 +16,36 @@ import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
 const behandling = {
   id: 1,
   versjon: 1,
-  type: {
-    kode: behandlingType.FORSTEGANGSSOKNAD,
-    kodeverk: '',
-  },
-  status: {
-    kode: behandlingStatus.BEHANDLING_UTREDES,
-    kodeverk: '',
-  },
-  sprakkode: {
-    kode: 'NO',
-    kodeverk: '',
-  },
+  type: behandlingType.FORSTEGANGSSOKNAD,
+  status: behandlingStatus.BEHANDLING_UTREDES,
+  sprakkode: 'NO',
   behandlingsresultat: {
     vedtaksbrev: {
+      // #kodeverk: usikker på denne må sjekke med formidling
       kode: 'FRITEKST',
       kodeverk: '',
     },
-    type: {
-      kode: behandlingResultatType.IKKE_FASTSATT,
-      kodeverk: '',
-    },
+    type: behandlingResultatType.IKKE_FASTSATT,
   },
   behandlingHenlagt: false,
   behandlingPaaVent: false,
-  behandlingÅrsaker: [
-    {
-      behandlingArsakType: {
-        kode: klageBehandlingArsakType.ETTER_KLAGE,
-        kodeverk: '',
-      },
-    },
-  ],
+  behandlingÅrsaker: [{ behandlingArsakType: klageBehandlingArsakType.ETTER_KLAGE }],
 };
 
 const aksjonspunkt5085 = {
-  aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
+  aksjonspunktType: 'MANU',
   begrunnelse: null,
   besluttersBegrunnelse: null,
-  definisjon: {
-    kode: '5085',
-    kodeverk: 'AKSJONSPUNKT_DEF',
-  },
+  definisjon: '5085',
   erAktivt: true,
   fristTid: null,
   kanLoses: true,
-  status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
+  status: 'OPPR',
   toTrinnsBehandling: false,
   toTrinnsBehandlingGodkjent: null,
   vilkarType: null,
   vurderPaNyttArsaker: null,
-  venteårsak: { kode: '-', kodeverk: 'VENT_AARSAK' },
+  venteårsak: '-',
 };
 
 const alleKodeverk = {};
@@ -80,17 +59,12 @@ describe('<AvslagårsakListe>', () => {
         <VedtakProsessIndex
           behandling={{
             ...behandling,
-            type: {
-              kode: behandlingType.SOKNAD,
-              kodeverk: '',
-            },
+            type: behandlingType.SOKNAD,
             behandlingsresultat: {
               vedtaksbrev: {
                 kode: 'FRITEKST',
               },
-              type: {
-                kode: behandlingResultatType.IKKE_FASTSATT,
-              },
+              type: behandlingResultatType.IKKE_FASTSATT,
             },
           }}
           vilkar={[]}
@@ -126,17 +100,12 @@ describe('<AvslagårsakListe>', () => {
         <VedtakProsessIndex
           behandling={{
             ...behandling,
-            type: {
-              kode: behandlingType.SOKNAD,
-              kodeverk: '',
-            },
+            type: behandlingType.SOKNAD,
             behandlingsresultat: {
               vedtaksbrev: {
                 kode: 'FRITEKST',
               },
-              type: {
-                kode: behandlingResultatType.IKKE_FASTSATT,
-              },
+              type: behandlingResultatType.IKKE_FASTSATT,
             },
           }}
           vilkar={[]}
@@ -144,10 +113,7 @@ describe('<AvslagårsakListe>', () => {
           medlemskap={{ fom: '2019-01-01' }}
           aksjonspunkter={[
             {
-              definisjon: {
-                kode: aksjonspunktCodes.FORESLA_VEDTAK,
-                kodeverk: '',
-              },
+              definisjon: aksjonspunktCodes.FORESLA_VEDTAK,
               begrunnelse: undefined,
               kanLoses: true,
               erAktivt: true,

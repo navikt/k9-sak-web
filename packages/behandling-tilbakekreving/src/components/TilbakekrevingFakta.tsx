@@ -4,7 +4,7 @@ import { KodeverkMedNavn, Behandling, Fagsak } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
-
+import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 import { restApiTilbakekrevingHooks, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaTilbakekrevingPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -15,8 +15,8 @@ interface OwnProps {
   data: FetchedData;
   fagsak: Fagsak;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  fpsakKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: AlleKodeverk;
+  fpsakKodeverk: AlleKodeverk;
   rettigheter: Rettigheter;
   hasFetchError: boolean;
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;

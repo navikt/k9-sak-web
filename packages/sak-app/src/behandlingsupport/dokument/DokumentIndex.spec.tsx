@@ -1,9 +1,9 @@
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
-import { Fagsak } from '@k9-sak-web/types';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import { DokumentIndex } from './DokumentIndex';
 
@@ -34,15 +34,9 @@ describe('<DokumentIndex>', () => {
 
   const fagsak = {
     saksnummer: '35425245',
-    sakstype: { kode: fagsakYtelsesType.PSB, kodeverk: 'FAGSAK_YTELSE' },
-    relasjonsRolleType: {
-      kode: relasjonsRolleType.MOR,
-      kodeverk: '',
-    },
-    status: {
-      kode: fagsakStatus.UNDER_BEHANDLING,
-      kodeverk: 'FAGSAK_STATUS',
-    },
+    sakstype: fagsakYtelsesType.PSB,
+    relasjonsRolleType: relasjonsRolleType.MOR,
+    status: fagsakStatus.UNDER_BEHANDLING,
     barnFodt: '2020-01-01',
     opprettet: '2020-01-01',
     endret: '2020-01-01',
@@ -50,7 +44,7 @@ describe('<DokumentIndex>', () => {
     kanRevurderingOpprettes: false,
     skalBehandlesAvInfotrygd: false,
     dekningsgrad: 100,
-  } as Fagsak;
+  } as Partial<Fagsak>;
 
   it('skal vise liste med sorterte dokumenter', () => {
     requestApi.mock(K9sakApiKeys.ALL_DOCUMENTS, documents);

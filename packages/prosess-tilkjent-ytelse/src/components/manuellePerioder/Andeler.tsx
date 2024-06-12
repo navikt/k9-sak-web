@@ -1,8 +1,7 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Kodeverk } from '@k9-sak-web/types';
 import { Alert, BodyShort, Table } from '@navikt/ds-react';
 import React from 'react';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { WrappedComponentProps, useIntl } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import { createVisningsnavnForAndel, getInntektskategori } from '../TilkjentYteleseUtils';
@@ -20,7 +19,6 @@ interface OwnProps {
   behandlingVersjon: number;
   behandlingId: number;
   behandlingStatus: Kodeverk;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
 }
 
@@ -32,9 +30,9 @@ const headerTextCodes = [
   'TilkjentYtelse.NyPeriode.Ubetalingsgrad',
 ];
 
-const Andeler = ({ fields, meta, alleKodeverk, arbeidsgivere }: Partial<OwnProps> & WrappedComponentProps) => {
+const Andeler = ({ fields, meta, arbeidsgivere }: Partial<OwnProps> & WrappedComponentProps) => {
   const intl = useIntl();
-  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+  const { kodeverkNavnFraKode } = useKodeverkContext();
 
   return (
     <div>
@@ -62,8 +60,8 @@ const Andeler = ({ fields, meta, alleKodeverk, arbeidsgivere }: Partial<OwnProps
         <Table.Body>
           {fields.map((fieldId: string, index: number, field: FieldArrayFieldsProps<any>) => {
             const andel = field.get(index);
-            const inntektskategori = getInntektskategori(andel.inntektskategori, getKodeverknavn);
-            const arbeidsgiver = createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgivere);
+            const inntektskategori = getInntektskategori(andel.inntektskategori, kodeverkNavnFraKode);
+            const arbeidsgiver = createVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgivere);
 
             return (
               <Table.Row key={fieldId}>

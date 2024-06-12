@@ -21,10 +21,7 @@ describe('<NyBehandlingModal>', () => {
   const submitEventCallback = vi.fn();
   const cancelEventCallback = vi.fn();
 
-  const ytelseType = {
-    kode: fagsakYtelseType.FORELDREPENGER,
-    kodeverk: '',
-  };
+  const ytelseType = fagsakYtelseType.FORELDREPENGER;
 
   it('skal rendre komponent korrekt', () => {
     const behandlingstyper = [
@@ -50,10 +47,7 @@ describe('<NyBehandlingModal>', () => {
         submitCallback={vi.fn()}
         behandlingOppretting={[
           {
-            behandlingType: {
-              kode: behandlingType.FORSTEGANGSSOKNAD,
-              kodeverk: '',
-            },
+            behandlingType: behandlingType.FORSTEGANGSSOKNAD,
             kanOppretteBehandling: true,
           },
         ]}
@@ -98,10 +92,7 @@ describe('<NyBehandlingModal>', () => {
         submitCallback={vi.fn()}
         behandlingOppretting={[
           {
-            behandlingType: {
-              kode: behandlingType.FORSTEGANGSSOKNAD,
-              kodeverk: '',
-            },
+            behandlingType: behandlingType.FORSTEGANGSSOKNAD,
             kanOppretteBehandling: true,
           },
         ]}
@@ -147,10 +138,7 @@ describe('<NyBehandlingModal>', () => {
         submitCallback={vi.fn()}
         behandlingOppretting={[
           {
-            behandlingType: {
-              kode: behandlingType.FORSTEGANGSSOKNAD,
-              kodeverk: '',
-            },
+            behandlingType: behandlingType.FORSTEGANGSSOKNAD,
             kanOppretteBehandling: true,
           },
         ]}
@@ -196,10 +184,7 @@ describe('<NyBehandlingModal>', () => {
         submitCallback={vi.fn()}
         behandlingOppretting={[
           {
-            behandlingType: {
-              kode: behandlingType.FORSTEGANGSSOKNAD,
-              kodeverk: '',
-            },
+            behandlingType: behandlingType.FORSTEGANGSSOKNAD,
             kanOppretteBehandling: true,
           },
         ]}
@@ -241,10 +226,7 @@ describe('<NyBehandlingModal>', () => {
         submitCallback={vi.fn()}
         behandlingOppretting={[
           {
-            behandlingType: {
-              kode: behandlingType.FORSTEGANGSSOKNAD,
-              kodeverk: '',
-            },
+            behandlingType: behandlingType.FORSTEGANGSSOKNAD,
             kanOppretteBehandling: true,
           },
         ]}
@@ -400,24 +382,15 @@ describe('<NyBehandlingModal>', () => {
 
     const behandlingOppretting = [
       {
-        behandlingType: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.FORSTEGANGSSOKNAD,
         kanOppretteBehandling: true,
       },
       {
-        behandlingType: {
-          kode: behandlingType.REVURDERING,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.REVURDERING,
         kanOppretteBehandling: true,
       },
       {
-        behandlingType: {
-          kode: behandlingType.KLAGE,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.KLAGE,
         kanOppretteBehandling: true,
       },
     ];
@@ -466,24 +439,15 @@ describe('<NyBehandlingModal>', () => {
 
     const behandlingOppretting = [
       {
-        behandlingType: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.FORSTEGANGSSOKNAD,
         kanOppretteBehandling: true,
       },
       {
-        behandlingType: {
-          kode: behandlingType.REVURDERING,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.REVURDERING,
         kanOppretteBehandling: true,
       },
       {
-        behandlingType: {
-          kode: behandlingType.KLAGE,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.KLAGE,
         kanOppretteBehandling: true,
       },
     ];
@@ -532,24 +496,15 @@ describe('<NyBehandlingModal>', () => {
 
     const behandlingOppretting = [
       {
-        behandlingType: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.FORSTEGANGSSOKNAD,
         kanOppretteBehandling: false,
       },
       {
-        behandlingType: {
-          kode: behandlingType.REVURDERING,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.REVURDERING,
         kanOppretteBehandling: true,
       },
       {
-        behandlingType: {
-          kode: behandlingType.KLAGE,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.KLAGE,
         kanOppretteBehandling: true,
       },
     ];
@@ -593,24 +548,15 @@ describe('<NyBehandlingModal>', () => {
 
     const behandlingOppretting = [
       {
-        behandlingType: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.FORSTEGANGSSOKNAD,
         kanOppretteBehandling: true,
       },
       {
-        behandlingType: {
-          kode: behandlingType.REVURDERING,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.REVURDERING,
         kanOppretteBehandling: false,
       },
       {
-        behandlingType: {
-          kode: behandlingType.KLAGE,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.KLAGE,
         kanOppretteBehandling: true,
       },
     ];

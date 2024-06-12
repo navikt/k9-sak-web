@@ -7,21 +7,16 @@ import { screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import messages from '../../i18n/nb_NO.json';
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import BehandlingVelgerSakIndex from '../BehandlingVelgerSakIndex';
 import { sortBehandlinger } from './behandlingVelgerUtils';
+import messages from '../../i18n/nb_NO.json';
 
 describe('<BehandlingPicker>', () => {
   const behandlingTemplate = {
     versjon: 123,
-    type: {
-      kode: '',
-      kodeverk: '',
-    },
-    status: {
-      kode: behandlingStatus.AVSLUTTET,
-      kodeverk: 'BEHANDLING_STATUS',
-    },
+    type: '',
+    status: behandlingStatus.AVSLUTTET,
     opprettet: '15.10.2017',
     behandlendeEnhetId: '1242424',
     behandlendeEnhetNavn: 'test',
@@ -43,18 +38,9 @@ describe('<BehandlingPicker>', () => {
 
   const fagsak = {
     saksnummer: '35425245',
-    sakstype: {
-      kode: fagsakYtelsesType.PSB,
-      kodeverk: 'FAGSAK_YTELSE',
-    },
-    relasjonsRolleType: {
-      kode: relasjonsRolleType.MOR,
-      kodeverk: '',
-    },
-    status: {
-      kode: fagsakStatus.UNDER_BEHANDLING,
-      kodeverk: 'FAGSAK_STATUS',
-    },
+    sakstype: fagsakYtelsesType.PSB,
+    relasjonsRolleType: relasjonsRolleType.MOR,
+    status: fagsakStatus.UNDER_BEHANDLING,
     barnFodt: '2020-01-01',
     opprettet: '2020-01-01',
     endret: '2020-01-01',
@@ -73,13 +59,13 @@ describe('<BehandlingPicker>', () => {
   };
 
   it('skal vise forklarende tekst når det ikke finnes behandlinger', async () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, []);
     renderWithIntl(
       <MemoryRouter>
         <BehandlingVelgerSakIndex
           noExistingBehandlinger
           behandlinger={[]}
           getBehandlingLocation={() => locationMock}
-          getKodeverkFn={vi.fn()}
           createLocationForSkjermlenke={() => locationMock}
           fagsak={fagsak}
           showAll={false}
@@ -95,6 +81,7 @@ describe('<BehandlingPicker>', () => {
   });
 
   it('skal vise alle behandlinger', async () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, []);
     const behandlinger = [
       {
         ...behandlingTemplate,
@@ -119,7 +106,6 @@ describe('<BehandlingPicker>', () => {
           noExistingBehandlinger={false}
           behandlinger={behandlinger as BehandlingAppKontekst[]}
           getBehandlingLocation={() => locationMock}
-          getKodeverkFn={vi.fn()}
           createLocationForSkjermlenke={() => locationMock}
           fagsak={fagsak}
           showAll={false}
@@ -137,6 +123,7 @@ describe('<BehandlingPicker>', () => {
   });
 
   it('skal sortere behandlingene gitt avsluttet og opprettet datoer', () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, []);
     const behandlinger = [
       {
         opprettet: '2019-08-13T13:32:57',
@@ -175,6 +162,7 @@ describe('<BehandlingPicker>', () => {
   });
 
   it('skal vise BehandlingSelected dersom en behandling er valgt', async () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, []);
     const behandlinger = [
       {
         ...behandlingTemplate,
@@ -209,7 +197,6 @@ describe('<BehandlingPicker>', () => {
           noExistingBehandlinger={false}
           behandlinger={behandlinger as BehandlingAppKontekst[]}
           getBehandlingLocation={() => locationMock}
-          getKodeverkFn={() => ({ navn: 'test', kode: 'test', kodeverk: 'test' })}
           behandlingId={1}
           createLocationForSkjermlenke={() => locationMock}
           fagsak={fagsak}

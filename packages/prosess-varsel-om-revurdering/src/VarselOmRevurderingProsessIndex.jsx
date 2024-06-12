@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-
 import revurderingBehandlingPropType from './propTypes/revurderingBehandlingPropType';
 import revurderingAksjonspunkterPropType from './propTypes/revurderingAksjonspunkterPropType';
 import revurderingFamilieHendelsePropType from './propTypes/revurderingFamilieHendelsePropType';
@@ -29,7 +28,6 @@ const VarselOmRevurderingProsessIndex = ({
   submitCallback,
   previewCallback,
   isReadOnly,
-  alleKodeverk,
 }) => (
   <RawIntlProvider value={intl}>
     <VarselOmRevurderingForm
@@ -46,7 +44,6 @@ const VarselOmRevurderingProsessIndex = ({
       submitCallback={submitCallback}
       previewCallback={previewCallback}
       readOnly={isReadOnly}
-      alleKodeverk={alleKodeverk}
     />
   </RawIntlProvider>
 );
@@ -61,7 +58,6 @@ VarselOmRevurderingProsessIndex.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   previewCallback: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 export default VarselOmRevurderingProsessIndex;

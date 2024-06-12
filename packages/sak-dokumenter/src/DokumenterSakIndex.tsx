@@ -34,7 +34,7 @@ const DokumenterSakIndex = ({ documents, behandlingId, fagsak, saksnummer, behan
         fagsakPerson={fagsak.person}
         saksnummer={saksnummer}
         behandlingUuid={behandlingUuid}
-        sakstype={fagsak?.sakstype?.kode}
+        sakstype={fagsak?.sakstype}
       />
     </QueryClientProvider>
   </RawIntlProvider>

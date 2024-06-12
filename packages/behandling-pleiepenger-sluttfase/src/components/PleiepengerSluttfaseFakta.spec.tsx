@@ -2,16 +2,17 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import messages from '../../i18n/nb_NO.json';
 import {
@@ -22,14 +23,16 @@ import FetchedData from '../types/fetchedDataTsType';
 import PleiepengerSluttfaseFakta from './PleiepengerSluttfaseFakta';
 
 describe('<PleiepengerSluttfaseFakta>', () => {
-  const fagsak = {
+  const fagsak: Partial<Fagsak> = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelsesType.PPN, kodeverk: 'FAGSAK_YTELSE' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
-  } as Fagsak;
+    sakstype: fagsakYtelsesType.PPN,
+    status: fagsakStatus.UNDER_BEHANDLING,
+    // fagsakStatus.UNDER_BEHANDLING,
+  };
+
   const fagsakPerson = {
     alder: 30,
-    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    personstatusType: personstatusType.BOSATT,
     erDod: false,
     erKvinne: true,
     navn: 'Espen Utvikler',
@@ -38,8 +41,8 @@ describe('<PleiepengerSluttfaseFakta>', () => {
   const behandling = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -64,8 +67,8 @@ describe('<PleiepengerSluttfaseFakta>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+      definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
@@ -80,50 +83,22 @@ describe('<PleiepengerSluttfaseFakta>', () => {
   const soker = {
     navn: 'Espen Utvikler',
     aktoerId: '1',
-    personstatus: {
-      kode: 'BOSA',
-      kodeverk: 'Bosatt',
-    },
+    personstatus: 'BOSA',
     avklartPersonstatus: {
-      overstyrtPersonstatus: {
-        kode: personstatusType.BOSATT,
-        kodeverk: 'Bosatt',
-      },
-      orginalPersonstatus: {
-        kode: personstatusType.DOD,
-        kodeverk: 'Bosatt',
-      },
+      overstyrtPersonstatus: personstatusType.BOSATT,
+      orginalPersonstatus: personstatusType.DOD,
     },
-    navBrukerKjonn: {
-      kode: '',
-      kodeverk: '',
-    },
-    statsborgerskap: {
-      kode: '',
-      kodeverk: '',
-      navn: '',
-    },
-    diskresjonskode: {
-      kode: '',
-      kodeverk: '',
-    },
-    sivilstand: {
-      kode: sivilstandType.UGIFT,
-      kodeverk: 'Ugift',
-    },
-    region: {
-      kode: 'NORDEN',
-      kodeverk: 'Norden',
-    },
+    navBrukerKjonn: '',
+    statsborgerskap: '',
+    diskresjonskode: '',
+    sivilstand: sivilstandType.UGIFT,
+    region: 'NORDEN',
     adresser: [
       {
         adresselinje1: 'Vei 1',
         postNummer: '1000',
         poststed: 'Oslo',
-        adresseType: {
-          kode: opplysningAdresseType.POSTADRESSE,
-          kodeverk: 'Bostedsadresse',
-        },
+        adresseType: opplysningAdresseType.POSTADRESSE,
       },
     ],
     barn: [],
@@ -152,7 +127,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
         <PleiepengerSluttfaseFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
-          fagsak={fagsak}
+          fagsak={fagsak as Fagsak}
           fagsakPerson={fagsakPerson}
           rettigheter={rettigheter}
           alleKodeverk={{}}
@@ -186,12 +161,12 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       vilkar,
     };
 
-    renderWithIntl(
+    renderWithIntlAndReduxForm(
       <RestApiErrorProvider>
         <PleiepengerSluttfaseFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
-          fagsak={fagsak}
+          fagsak={fagsak as Fagsak}
           fagsakPerson={fagsakPerson}
           rettigheter={rettigheter}
           alleKodeverk={{}}

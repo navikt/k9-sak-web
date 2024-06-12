@@ -15,9 +15,7 @@ export const beregningsresultatPeriodeAndelPropType = PropTypes.shape({
   sisteUtbetalingsdato: PropTypes.string,
   uttaksgrad: PropTypes.number,
   uttak: uttakPropType.isRequired,
-  aktivitetStatus: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
+  aktivitetStatus: PropTypes.string.isRequired, // kodeverk
 });
 
 export const beregningsresultatPeriodePropType = PropTypes.shape({

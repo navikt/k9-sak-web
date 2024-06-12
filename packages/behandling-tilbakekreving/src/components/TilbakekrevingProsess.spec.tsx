@@ -7,26 +7,26 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import { Behandling, Fagsak, FeilutbetalingPerioderWrapper } from '@k9-sak-web/types';
+import { Behandling, FeilutbetalingPerioderWrapper } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import { requestTilbakekrevingApi, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
+import { TilbakekrevingBehandlingApiKeys, requestTilbakekrevingApi } from '../data/tilbakekrevingBehandlingApi';
 import vedtakResultatType from '../kodeverk/vedtakResultatType';
 import TilbakekrevingProsess from './TilbakekrevingProsess';
 
 describe('<TilbakekrevingProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
-  } as Fagsak;
+    sakstype: fagsakYtelsesType.OMP,
+    status: fagsakStatus.UNDER_BEHANDLING,
+  };
 
   const fagsakPerson = {
     alder: 30,
-    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    personstatusType: personstatusType.BOSATT,
     erDod: false,
     erKvinne: true,
     navn: 'Espen Utvikler',
@@ -35,8 +35,8 @@ describe('<TilbakekrevingProsess>', () => {
   const behandling: Partial<Behandling> = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FØRSTEGANGSSØKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -56,8 +56,8 @@ describe('<TilbakekrevingProsess>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+      definisjon: aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
@@ -68,19 +68,13 @@ describe('<TilbakekrevingProsess>', () => {
         fom: '2019-01-01',
         tom: '2019-04-01',
         belop: 1212,
-        foreldelseVurderingType: {
-          kode: foreldelseVurderingType.FORELDET,
-          kodeverk: 'FORELDRE_VURDERING_TYPE',
-        },
+        foreldelseVurderingType: foreldelseVurderingType.FORELDET,
       },
     ],
   } as FeilutbetalingPerioderWrapper;
   const beregningsresultat = {
     beregningResultatPerioder: [],
-    vedtakResultatType: {
-      kode: vedtakResultatType.INGEN_TILBAKEBETALING,
-      kodeverk: 'VEDTAK_RESULTAT_TYPE',
-    },
+    vedtakResultatType: vedtakResultatType.INGEN_TILBAKEBETALING,
   };
 
   const feilutbetalingFakta = {
@@ -97,18 +91,12 @@ describe('<TilbakekrevingProsess>', () => {
         },
       ],
       behandlingsresultat: {
-        type: {
-          kode: 'TEST',
-          kodeverk: 'BEHANDLINGSRESULTAT',
-        },
+        type: 'TEST',
         konsekvenserForYtelsen: [],
       },
       behandlingÅrsaker: [
         {
-          behandlingArsakType: {
-            kode: '',
-            kodeverk: '',
-          },
+          behandlingArsakType: '',
         },
       ],
     },
@@ -120,6 +108,7 @@ describe('<TilbakekrevingProsess>', () => {
       perioder: [{ vilkarResultat: undefined, begrunnelse: '', vilkarResultatInfo: undefined, ytelser: [] }],
     });
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VILKARVURDERING, { vilkarsVurdertePerioder: [] });
+    requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VEDTAKSBREV, []);
     renderWithIntlAndReduxForm(
       <TilbakekrevingProsess.WrappedComponent
         intl={intlMock}
@@ -155,6 +144,8 @@ describe('<TilbakekrevingProsess>', () => {
       perioder: [{ vilkarResultat: undefined, begrunnelse: '', vilkarResultatInfo: undefined, ytelser: [] }],
     });
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VILKARVURDERING, { vilkarsVurdertePerioder: [] });
+    requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VEDTAKSBREV, []);
+
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
 
     renderWithIntlAndReduxForm(

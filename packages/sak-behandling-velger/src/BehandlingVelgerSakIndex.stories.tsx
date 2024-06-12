@@ -26,15 +26,7 @@ const behandlinger = [
     behandlingsfristTid: '2022-01-31',
     behandlingsresultat: {
       erRevurderingMedUendretUtfall: false,
-      type: {
-        kode: 'INNVILGET',
-        erHenleggelse: false,
-        behandlingsresultatHenlagt: false,
-        behandlingsresultatOpphørt: false,
-        behandlingsresultatIkkeEndret: false,
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-        behandlingHenlagt: false,
-      },
+      type: 'INNVILGET',
       vilkårResultat: {
         MEDLEMSKAPSVILKÅRET: [
           {
@@ -95,22 +87,14 @@ const behandlinger = [
       },
       vedtaksdato: '2021-12-20',
     },
-    behandlingResultatType: {
-      kode: 'INNVILGET',
-      erHenleggelse: false,
-      behandlingsresultatHenlagt: false,
-      behandlingsresultatOpphørt: false,
-      behandlingsresultatIkkeEndret: false,
-      kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      behandlingHenlagt: false,
-    },
+    behandlingResultatType: 'INNVILGET',
     endret: '2021-12-20T09:23:01.248',
     endretAvBrukernavn: 'vtp',
     erPaaVent: false,
     fagsakId: 999951,
     førsteÅrsak: {
       erAutomatiskRevurdering: false,
-      behandlingArsakType: { kode: 'RE-END-INNTEKTSMELD', kodeverk: 'BEHANDLING_AARSAK' },
+      behandlingArsakType: 'RE-END-INNTEKTSMELD',
       manueltOpprettet: false,
     },
     gjeldendeVedtak: true,
@@ -148,15 +132,7 @@ const behandlinger = [
     behandlingsfristTid: '2022-01-31',
     behandlingsresultat: {
       erRevurderingMedUendretUtfall: false,
-      type: {
-        kode: 'INNVILGET',
-        erHenleggelse: false,
-        behandlingsresultatHenlagt: false,
-        behandlingsresultatOpphørt: false,
-        behandlingsresultatIkkeEndret: false,
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-        behandlingHenlagt: false,
-      },
+      type: 'INNVILGET',
       vilkårResultat: {
         MEDLEMSKAPSVILKÅRET: [
           {
@@ -217,22 +193,14 @@ const behandlinger = [
       },
       vedtaksdato: '2021-12-20',
     },
-    behandlingResultatType: {
-      kode: 'INNVILGET',
-      erHenleggelse: false,
-      behandlingsresultatHenlagt: false,
-      behandlingsresultatOpphørt: false,
-      behandlingsresultatIkkeEndret: false,
-      kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      behandlingHenlagt: false,
-    },
+    behandlingResultatType: 'INNVILGET',
     endret: '2021-12-20T09:22:36.118',
     endretAvBrukernavn: 'vtp',
     erPaaVent: false,
     fagsakId: 999951,
     førsteÅrsak: {
       erAutomatiskRevurdering: false,
-      behandlingArsakType: { kode: 'RE-END-INNTEKTSMELD', kodeverk: 'BEHANDLING_AARSAK' },
+      behandlingArsakType: 'RE-END-INNTEKTSMELD',
       manueltOpprettet: false,
     },
     gjeldendeVedtak: false,

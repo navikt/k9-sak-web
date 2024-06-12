@@ -4,16 +4,16 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import {
   BehandlingAppKontekst,
-  Fagsak,
   KlageVurdering,
   NavAnsatt,
   TotrinnskontrollSkjermlenkeContext,
 } from '@k9-sak-web/types';
 import React, { useCallback, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
+import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import { createLocationForSkjermlenke } from '../../app/paths';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
-import { useKodeverk } from '../../data/useKodeverk';
 import BeslutterModalIndex from './BeslutterModalIndex';
 
 type Values = {
@@ -64,22 +64,22 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
 
   const { brukernavn, kanVeilede } = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
 
-  const alleKodeverk = useKodeverk(behandling.type);
+  const erInnsynBehandling = behandling.type === BehandlingType.DOKUMENTINNSYN;
 
   const { data: totrinnArsaker } = restApiHooks.useRestApi<TotrinnskontrollSkjermlenkeContext[]>(
     K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER,
     undefined,
     {
-      updateTriggers: [behandlingId, behandling.status.kode],
-      suspendRequest: behandling.status.kode !== BehandlingStatus.FATTER_VEDTAK,
+      updateTriggers: [behandlingId, behandling.status],
+      suspendRequest: !!erInnsynBehandling || behandling.status !== BehandlingStatus.FATTER_VEDTAK,
     },
   );
   const { data: totrinnArsakerReadOnly } = restApiHooks.useRestApi<TotrinnskontrollSkjermlenkeContext[]>(
     K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY,
     undefined,
     {
-      updateTriggers: [behandlingId, behandling.status.kode],
-      suspendRequest: behandling.status.kode !== BehandlingStatus.BEHANDLING_UTREDES,
+      updateTriggers: [behandlingId, behandling.status],
+      suspendRequest: !!erInnsynBehandling || behandling.status !== BehandlingStatus.BEHANDLING_UTREDES,
     },
   );
 
@@ -125,7 +125,6 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
         location={location}
         readOnly={brukernavn === behandling.ansvarligSaksbehandler || kanVeilede}
         onSubmit={onSubmit}
-        alleKodeverk={alleKodeverk}
         behandlingKlageVurdering={totrinnsKlageVurdering}
         createLocationForSkjermlenke={createLocationForSkjermlenke}
       />

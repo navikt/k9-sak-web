@@ -19,13 +19,7 @@ import {
   safeJSONParse,
 } from '@fpsak-frontend/utils';
 import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidlingUtils';
-import {
-  ArbeidsgiverOpplysningerPerId,
-  Brevmaler,
-  Kodeverk,
-  KodeverkMedNavn,
-  Personopplysninger,
-} from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Brevmaler, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 
 import InputField from '@fpsak-frontend/form/src/InputField';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
@@ -69,7 +63,7 @@ interface PureOwnProps {
     fritekstbrev?: Fritekstbrev,
   ) => void;
   templates: Brevmaler | Template[];
-  sprakKode?: Kodeverk;
+  sprakKode?: string;
   revurderingVarslingArsak: KodeverkMedNavn[];
   isKontrollerRevurderingApOpen?: boolean;
   personopplysninger?: Personopplysninger;

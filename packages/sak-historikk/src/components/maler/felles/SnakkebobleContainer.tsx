@@ -1,5 +1,4 @@
 import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
-import { Kodeverk } from '@k9-sak-web/types';
 import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import {
   CogIcon,
@@ -13,15 +12,14 @@ import { Chat } from '@navikt/ds-react';
 import React from 'react';
 import styles from './snakkebobleContainer.module.css';
 
-const pilHøyre = (aktoer: Kodeverk): boolean =>
-  aktoer.kode !== HistorikkAktor.SOKER && aktoer.kode !== HistorikkAktor.ARBEIDSGIVER;
+const pilHøyre = (aktoer: string): boolean => aktoer !== HistorikkAktor.SOKER && aktoer !== HistorikkAktor.ARBEIDSGIVER;
 
 const formatDate = (date: string): string =>
   `${date.substring(8, 10)}.${date.substring(5, 7)}.${date.substring(0, 4)} - ${date.substring(11, 16)}`;
 
-const getAvatar = (aktoer: Kodeverk): React.JSX.Element => {
+const getAvatar = (aktoer: string): React.JSX.Element => {
   let avatar;
-  switch (aktoer.kode) {
+  switch (aktoer) {
     case HistorikkAktor.SAKSBEHANDLER:
       avatar = <PersonPencilIcon title="Saksbehandler" fontSize="1.5rem" />;
       break;
@@ -45,9 +43,9 @@ const getAvatar = (aktoer: Kodeverk): React.JSX.Element => {
   return avatar;
 };
 
-const getClassname = (aktoer: Kodeverk): string => {
+const getClassname = (aktoer: string): string => {
   let classname;
-  switch (aktoer.kode) {
+  switch (aktoer) {
     case HistorikkAktor.SAKSBEHANDLER:
       classname = styles.saksbehandler;
       break;
@@ -73,8 +71,8 @@ const getClassname = (aktoer: Kodeverk): string => {
 
 interface OwnProps {
   dato: string;
-  aktoer: Kodeverk;
-  kjoenn?: Kodeverk;
+  aktoer: string;
+  kjoenn?: string;
   rolleNavn?: string;
   opprettetAv: string;
   children: React.ReactElement;

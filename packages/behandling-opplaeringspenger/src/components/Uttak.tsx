@@ -32,11 +32,11 @@ export default ({
   const [featureToggles] = useFeatureToggles();
   const relevanteAksjonspunkter = [aksjonspunktCodes.VENT_ANNEN_PSB_SAK, aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK];
   const funnedeRelevanteAksjonspunkter = aksjonspunkter.filter(aksjonspunkt =>
-    relevanteAksjonspunkter.some(relevantAksjonspunkt => relevantAksjonspunkt === aksjonspunkt.definisjon.kode),
+    relevanteAksjonspunkter.some(relevantAksjonspunkt => relevantAksjonspunkt === aksjonspunkt.definisjon),
   );
   const funnedeRelevanteAksjonspunktkoder = funnedeRelevanteAksjonspunkter
-    .filter(aksjonspunkt => aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET)
-    .map(aksjonspunkt => aksjonspunkt.definisjon.kode);
+    .filter(aksjonspunkt => aksjonspunkt.status === aksjonspunktStatus.OPPRETTET)
+    .map(aksjonspunkt => aksjonspunkt.definisjon);
 
   const løsAksjonspunktVurderDatoNyRegelUttak = ({ begrunnelse, virkningsdato }) =>
     submitCallback([{ kode: aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK, begrunnelse, virkningsdato }]);

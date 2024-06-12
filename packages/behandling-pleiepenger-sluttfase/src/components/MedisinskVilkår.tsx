@@ -18,8 +18,8 @@ export default ({
     httpErrorHandler(status, addErrorMessage, locationHeader);
 
   const medisinskVilkårAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.MEDISINSK_VILKAAR);
-  const medisinskVilkårAksjonspunktkode = medisinskVilkårAksjonspunkt?.definisjon.kode;
-  const medisinskVilkårAksjonspunktstatus = medisinskVilkårAksjonspunkt?.status.kode;
+  const medisinskVilkårAksjonspunktkode = medisinskVilkårAksjonspunkt?.definisjon;
+  const medisinskVilkårAksjonspunktstatus = medisinskVilkårAksjonspunkt?.status;
   const visFortsettknapp = medisinskVilkårAksjonspunktstatus === aksjonspunktStatus.OPPRETTET;
 
   const løsAksjonspunkt = aksjonspunktArgs =>

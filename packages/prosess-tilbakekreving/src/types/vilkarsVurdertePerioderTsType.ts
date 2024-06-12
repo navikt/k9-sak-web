@@ -1,7 +1,5 @@
-import { Kodeverk } from '@k9-sak-web/types';
-
 export type AktsomhetInfo = {
-  sarligGrunner: Kodeverk[];
+  sarligGrunner: string[];
   harGrunnerTilReduksjon: boolean;
   andelTilbakekreves: number;
   ileggRenter: boolean;
@@ -9,20 +7,20 @@ export type AktsomhetInfo = {
   tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: boolean;
   annetBegrunnelse: string;
   sarligGrunnerBegrunnelse: string;
-}
+};
 
 export type VilkarResultatInfo = {
   begrunnelse: string;
-  aktsomhet?: Kodeverk;
+  aktsomhet?: string;
   aktsomhetInfo?: AktsomhetInfo;
   erBelopetIBehold?: boolean;
   tilbakekrevesBelop?: number;
-}
+};
 
 export type VilkarsVurdertPeriode = {
   fom: string;
   tom: string;
-  vilkarResultat: Kodeverk;
+  vilkarResultat: string;
   begrunnelse: string;
   vilkarResultatInfo: VilkarResultatInfo;
   feilutbetalingBelop?: number;

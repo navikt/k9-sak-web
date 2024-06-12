@@ -1,8 +1,10 @@
 import React from 'react';
 import { Location } from 'history';
 
-import { Historikkinnslag, Kodeverk } from '@k9-sak-web/types';
+import { Historikkinnslag } from '@k9-sak-web/types';
 import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { KodeverkNavnFraKodeFnType } from '@k9-sak-web/lib/types/index.js';
 
 import historikkinnslagType from '../kodeverk/historikkinnslagType';
 import SnakkebobleContainer from './maler/felles/SnakkebobleContainer';
@@ -21,10 +23,10 @@ import HistorikkMalTypeTilbakekreving from './maler/HistorikkMalTypeTilbakekrevi
 import HistorikkMalTypeForeldelse from './maler/HistorikkMalTypeForeldelse';
 import PlaceholderHistorikkMal from './maler/placeholderHistorikkMal';
 
-const velgHistorikkMal = (histType: Kodeverk) => {
+const velgHistorikkMal = (histType: string) => {
   // NOSONAR
   switch (
-    histType.kode // NOSONAR
+    histType // NOSONAR
   ) {
     case historikkinnslagType.BEH_GJEN:
     case historikkinnslagType.KOET_BEH_GJEN:
@@ -108,9 +110,9 @@ interface OwnProps {
   historikkinnslag: Historikkinnslag;
   saksnummer?: string;
   getBehandlingLocation: (behandlingId: number) => Location;
-  getKodeverknavn: (kodeverk: Kodeverk) => string;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
   erTilbakekreving: boolean;
+  kodeverkNavnFraKodeFn: KodeverkNavnFraKodeFnType;
 }
 
 /**
@@ -122,19 +124,19 @@ const History = ({
   historikkinnslag,
   saksnummer = '0',
   getBehandlingLocation,
-  getKodeverknavn,
   createLocationForSkjermlenke,
   erTilbakekreving,
+  kodeverkNavnFraKodeFn,
 }: OwnProps) => {
   const HistorikkMal = velgHistorikkMal(historikkinnslag.type);
-  const aktorIsVL = historikkinnslag.aktoer.kode === HistorikkAktor.VEDTAKSLOSNINGEN;
-  const aktorIsSOKER = historikkinnslag.aktoer.kode === HistorikkAktor.SOKER;
-  const aktorIsArbeidsgiver = historikkinnslag.aktoer.kode === HistorikkAktor.ARBEIDSGIVER;
-
+  const aktorIsVL = historikkinnslag.aktoer === HistorikkAktor.VEDTAKSLOSNINGEN;
+  const aktorIsSOKER = historikkinnslag.aktoer === HistorikkAktor.SOKER;
+  const aktorIsArbeidsgiver = historikkinnslag.aktoer === HistorikkAktor.ARBEIDSGIVER;
+  console.log('vi er her');
   return (
     <SnakkebobleContainer
       aktoer={historikkinnslag.aktoer}
-      rolleNavn={getKodeverknavn(historikkinnslag.aktoer)}
+      rolleNavn={kodeverkNavnFraKodeFn(historikkinnslag.aktoer, KodeverkType.HISTORIKK_AKTOER)}
       dato={historikkinnslag.opprettetTidspunkt}
       kjoenn={historikkinnslag.kjoenn}
       opprettetAv={aktorIsSOKER || aktorIsArbeidsgiver || aktorIsVL ? '' : historikkinnslag.opprettetAv}
@@ -143,9 +145,9 @@ const History = ({
         historikkinnslag={historikkinnslag}
         behandlingLocation={getBehandlingLocation(historikkinnslag.behandlingId)}
         saksnummer={saksnummer}
-        getKodeverknavn={getKodeverknavn}
         createLocationForSkjermlenke={createLocationForSkjermlenke}
         erTilbakekreving={erTilbakekreving}
+        kodeverkNavnFraKodeFn={kodeverkNavnFraKodeFn}
       />
     </SnakkebobleContainer>
   );

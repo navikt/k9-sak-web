@@ -22,7 +22,7 @@ export default ({ behandling: { links }, readOnly, aksjonspunkter, submitCallbac
     httpErrorHandler(status, addErrorMessage, locationHeader);
 
   const omsorgenForAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.AVKLAR_OMSORGEN_FOR);
-  const omsorgenForAksjonspunktkode = omsorgenForAksjonspunkt?.definisjon.kode;
+  const omsorgenForAksjonspunktkode = omsorgenForAksjonspunkt?.definisjon;
   const harAksjonspunkt = !!omsorgenForAksjonspunktkode;
 
   const løsAksjonspunkt = omsorgsperioder =>

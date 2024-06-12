@@ -5,10 +5,7 @@ import messages from '../../i18n/nb_NO.json';
 import Faresignaler from './Faresignaler';
 
 const mockRisikoklassifisering = (medlSignaler, iaySignaler) => ({
-  kontrollresultat: {
-    kode: 'HOY',
-    kodeverk: 'Kontrollresultat',
-  },
+  kontrollresultat: 'HOY', // 'Kontrollresultat'
   medlFaresignaler: {
     faresignaler: medlSignaler,
   },

@@ -1,5 +1,3 @@
-import Kodeverk from './kodeverkTsType';
-
 export type InnsynDokument = Readonly<{
   journalpostId: string;
   dokumentId: string;
@@ -14,7 +12,7 @@ export type InnsynVedtaksdokument = Readonly<{
 
 export type Innsyn = Readonly<{
   innsynMottattDato: string;
-  innsynResultatType: Kodeverk;
+  innsynResultatType: string;
   vedtaksdokumentasjon: InnsynVedtaksdokument[];
   dokumenter: InnsynDokument[];
 }>;

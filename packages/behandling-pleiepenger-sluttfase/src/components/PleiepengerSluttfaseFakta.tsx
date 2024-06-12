@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import {
-  KodeverkMedNavn,
-  Behandling,
-  ArbeidsgiverOpplysningerPerId,
-  FagsakPerson,
-  Fagsak,
-  Dokument,
-  FeatureToggles,
-} from '@k9-sak-web/types';
+import { Behandling, ArbeidsgiverOpplysningerPerId, FagsakPerson, Dokument, FeatureToggles } from '@k9-sak-web/types';
+import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -29,7 +23,7 @@ interface OwnProps {
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: AlleKodeverk;
   rettigheter: Rettigheter;
   hasFetchError: boolean;
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;

@@ -1,37 +1,23 @@
 import React from 'react';
-import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
+import alleKodeverk from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { getKodeverkNavnFraKodeFnMock } from '@k9-sak-web/lib/kodeverk/mocks/kodeverkNavnFraKodeMock.js';
 import HistorikkSakIndex from './HistorikkSakIndex';
 
 const history = [
   {
     behandlingId: 999951,
-    type: {
-      kode: 'NYE_REGOPPLYSNINGER',
-      kodeverk: 'HISTORIKKINNSLAG_TYPE',
-    },
-    aktoer: {
-      kode: 'VL',
-      kodeverk: 'HISTORIKK_AKTOER',
-    },
-    kjoenn: {
-      kode: '-',
-      kodeverk: 'BRUKER_KJOENN',
-    },
+    type: 'NYE_REGOPPLYSNINGER', // 'HISTORIKKINNSLAG_TYPE'
+    aktoer: 'VL', // 'HISTORIKK_AKTOER'
+    kjoenn: '-', // 'BRUKER_KJOENN'
     opprettetAv: 'Srvengangsstonad',
     opprettetTidspunkt: '2019-09-19T12:16:14.499',
     dokumentLinks: [],
     historikkinnslagDeler: [
       {
-        begrunnelse: {
-          kode: 'SAKSBEH_START_PA_NYTT',
-          kodeverk: 'HISTORIKK_BEGRUNNELSE_TYPE',
-        },
+        begrunnelse: 'SAKSBEH_START_PA_NYTT', // 'HISTORIKK_BEGRUNNELSE_TYPE'
         begrunnelseFritekst: null,
         hendelse: {
-          navn: {
-            kode: 'NYE_REGOPPLYSNINGER',
-            kodeverk: 'HISTORIKKINNSLAG_TYPE',
-          },
+          navn: 'NYE_REGOPPLYSNINGER', // 'HISTORIKKINNSLAG_TYPE'
           verdi: null,
         },
         opplysninger: null,
@@ -48,18 +34,9 @@ const history = [
   },
   {
     behandlingId: null,
-    type: {
-      kode: 'INNSYN_OPPR',
-      kodeverk: 'HISTORIKKINNSLAG_TYPE',
-    },
-    aktoer: {
-      kode: 'SBH',
-      kodeverk: 'HISTORIKK_AKTOER',
-    },
-    kjoenn: {
-      kode: '-',
-      kodeverk: 'BRUKER_KJOENN',
-    },
+    type: 'INNSYN_OPPR', // 'HISTORIKKINNSLAG_TYPE'
+    aktoer: 'SBH', // 'HISTORIKK_AKTOER'
+    kjoenn: '-', // 'BRUKER_KJOENN'
     opprettetAv: 'Z991110',
     opprettetTidspunkt: '2019-09-18T15:25:31.291',
     dokumentLinks: [],
@@ -68,10 +45,7 @@ const history = [
         begrunnelse: null,
         begrunnelseFritekst: 'Krav om innsyn mottatt 18.09.2019',
         hendelse: {
-          navn: {
-            kode: 'INNSYN_OPPR',
-            kodeverk: 'HISTORIKKINNSLAG_TYPE',
-          },
+          navn: 'INNSYN_OPPR', // 'HISTORIKKINNSLAG_TYPE'
           verdi: null,
         },
         opplysninger: null,
@@ -88,18 +62,9 @@ const history = [
   },
   {
     behandlingId: 999952,
-    type: {
-      kode: 'BEH_STARTET',
-      kodeverk: 'HISTORIKKINNSLAG_TYPE',
-    },
-    aktoer: {
-      kode: 'SOKER',
-      kodeverk: 'HISTORIKK_AKTOER',
-    },
-    kjoenn: {
-      kode: 'K',
-      kodeverk: 'BRUKER_KJOENN',
-    },
+    type: 'BEH_STARTET', // 'HISTORIKKINNSLAG_TYPE'
+    aktoer: 'SOKER', // 'HISTORIKK_AKTOER'
+    kjoenn: 'K', // 'BRUKER_KJOENN'
     opprettetAv: 'Srvengangsstonad',
     opprettetTidspunkt: '2019-09-18T13:12:48.874',
     dokumentLinks: [
@@ -116,10 +81,7 @@ const history = [
         begrunnelse: null,
         begrunnelseFritekst: null,
         hendelse: {
-          navn: {
-            kode: 'BEH_STARTET',
-            kodeverk: 'HISTORIKKINNSLAG_TYPE',
-          },
+          navn: 'BEH_STARTET', // 'HISTORIKKINNSLAG_TYPE'
           verdi: null,
         },
         opplysninger: null,
@@ -164,9 +126,9 @@ export const visHistorikk = () => (
           historikkinnslag={h}
           saksnummer="2"
           getBehandlingLocation={() => locationMock}
-          alleKodeverk={alleKodeverk as any}
           createLocationForSkjermlenke={() => locationMock}
           erTilbakekreving={false}
+          kodeverkNavnFraKodeFn={getKodeverkNavnFraKodeFnMock(alleKodeverk)}
         />
       ))}
     </div>

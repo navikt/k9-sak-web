@@ -1,7 +1,7 @@
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ariaCheck } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import React, { useCallback, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -32,7 +32,6 @@ const createNewPerioder = (perioder, id: string, values: any) => {
 interface PureOwnProps {
   behandlingId: number;
   behandlingVersjon: number;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
 interface OwnProps {
@@ -48,7 +47,6 @@ interface OwnProps {
   };
   behandlingId: number;
   behandlingVersjon: number;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   slettedePerioder?: any[];
   arbeidsgivere?: ArbeidsgiverOpplysningerPerId;
 }
@@ -57,7 +55,6 @@ export const PeriodeTabell = ({
   behandlingFormPrefix,
   behandlingId,
   behandlingVersjon,
-  alleKodeverk,
   perioder,
   slettedePerioder,
   initialValues,
@@ -233,7 +230,6 @@ export const PeriodeTabell = ({
         readOnly={readOnly}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
-        alleKodeverk={alleKodeverk}
       />
       <VerticalSpacer twentyPx />
       <FlexContainer wrap>
@@ -265,7 +261,6 @@ export const PeriodeTabell = ({
           newPeriodeResetCallback={newPeriodeResetCallback}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
-          alleKodeverk={alleKodeverk}
           arbeidsgivere={arbeidsgivere}
           readOnly={readOnly}
         />

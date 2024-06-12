@@ -5,8 +5,6 @@ import { ariaCheck, decodeHtmlEntity, isRequiredMessage } from '@fpsak-frontend/
 import {
   Behandling,
   KlageVurdering,
-  Kodeverk,
-  KodeverkMedNavn,
   TotrinnskontrollAksjonspunkt,
   TotrinnskontrollSkjermlenkeContext,
 } from '@k9-sak-web/types';
@@ -17,6 +15,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
+import { KodeverkV2, KodeverkObject } from '@k9-sak-web/lib/types/index.js';
 import AksjonspunktGodkjenningFieldArray, { AksjonspunktGodkjenningData } from './AksjonspunktGodkjenningFieldArray';
 import styles from './totrinnskontrollBeslutterForm.module.css';
 
@@ -32,8 +31,8 @@ interface PureOwnProps {
   behandlingKlageVurdering?: KlageVurdering;
   readOnly: boolean;
   erTilbakekreving: boolean;
-  arbeidsforholdHandlingTyper: KodeverkMedNavn[];
-  skjermlenkeTyper: KodeverkMedNavn[];
+  arbeidsforholdHandlingTyper: KodeverkV2[];
+  skjermlenkeTyper: KodeverkV2[];
   lagLenke: (skjermlenkeCode: string) => Location;
 }
 
@@ -79,11 +78,11 @@ export const TotrinnskontrollBeslutterForm = ({
         klagebehandlingVurdering={behandlingKlageVurdering}
         behandlingStatus={behandling.status}
         erTilbakekreving={erTilbakekreving}
-        arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
+        arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper as KodeverkObject[]}
         readOnly={readOnly}
         klageKA={!!behandlingKlageVurdering?.klageVurderingResultatNK}
         totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
-        skjermlenkeTyper={skjermlenkeTyper}
+        skjermlenkeTyper={skjermlenkeTyper as KodeverkObject[]}
         lagLenke={lagLenke}
       />
       <div className={styles.buttonRow}>
@@ -140,18 +139,18 @@ const validate = (values: FormValues) => {
   };
 };
 
-const finnArsaker = (vurderPaNyttArsaker: Kodeverk[]) =>
+const finnArsaker = (vurderPaNyttArsaker: string[]) =>
   vurderPaNyttArsaker.reduce((acc, arsak) => {
-    if (arsak.kode === vurderPaNyttArsakType.FEIL_FAKTA) {
+    if (arsak === vurderPaNyttArsakType.FEIL_FAKTA) {
       return { ...acc, feilFakta: true };
     }
-    if (arsak.kode === vurderPaNyttArsakType.FEIL_LOV) {
+    if (arsak === vurderPaNyttArsakType.FEIL_LOV) {
       return { ...acc, feilLov: true };
     }
-    if (arsak.kode === vurderPaNyttArsakType.FEIL_REGEL) {
+    if (arsak === vurderPaNyttArsakType.FEIL_REGEL) {
       return { ...acc, feilRegel: true };
     }
-    if (arsak.kode === vurderPaNyttArsakType.ANNET) {
+    if (arsak === vurderPaNyttArsakType.ANNET) {
       return { ...acc, annet: true };
     }
     return {};

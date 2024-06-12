@@ -42,10 +42,7 @@ const behandlinger: BehandlingAppKontekst[] = [
     toTrinnsBehandling: false,
     behandlingÅrsaker: [],
     behandlingsresultat: {
-      type: {
-        kode: 'AVSLÅTT',
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      },
+      type: 'AVSLÅTT',
     },
   },
   {
@@ -76,10 +73,7 @@ const behandlinger: BehandlingAppKontekst[] = [
     toTrinnsBehandling: false,
     behandlingÅrsaker: [],
     behandlingsresultat: {
-      type: {
-        kode: 'INNVILGET',
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      },
+      type: 'INNVILGET',
     },
   },
   {
@@ -137,10 +131,7 @@ const behandlinger: BehandlingAppKontekst[] = [
     toTrinnsBehandling: false,
     behandlingÅrsaker: [],
     behandlingsresultat: {
-      type: {
-        kode: 'HENLAGT_SØKNAD_TRUKKET',
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      },
+      type: 'HENLAGT_SØKNAD_TRUKKET',
     },
   },
 ];
