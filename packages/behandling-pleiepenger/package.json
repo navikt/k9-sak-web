@@ -36,7 +36,7 @@
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/diagnosekoder": "^1.2024.0",
-    "@navikt/ft-fakta-beregning-redesign": "1.2.9",
+    "@navikt/ft-fakta-beregning-redesign": "1.2.10",
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "7.5.10",
     "@navikt/ft-prosess-beregningsgrunnlag": "6.5.12",
     "axios": "1.7.2",
