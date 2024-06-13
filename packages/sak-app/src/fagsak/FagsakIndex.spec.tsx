@@ -1,12 +1,13 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { render, screen } from '@testing-library/react';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { BehandlingAppKontekst } from '@k9-sak-web/types';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+
 import * as useTrackRouteParam from '../app/useTrackRouteParam';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import FagsakIndex from './FagsakIndex';
@@ -35,7 +36,7 @@ describe('<FagsakIndex>', () => {
     ],
     [kodeverkTyper.BEHANDLING_TYPE]: [
       {
-        kode: behandlingType.FORSTEGANGSSOKNAD,
+        kode: behandlingType.FØRSTEGANGSSØKNAD,
         kodeverk: 'BEHANDLING_TYPE',
         navn: 'Førstegangsbehandling',
       },
@@ -85,7 +86,8 @@ describe('<FagsakIndex>', () => {
 
   const behandling: BehandlingAppKontekst = {
     id: 1,
-    type: behandlingType.FORSTEGANGSSOKNAD,
+    uuid: '1',
+    type: behandlingType.FØRSTEGANGSSØKNAD,
     status: behandlingStatus.AVSLUTTET,
     links: [],
     behandlendeEnhetId: 'test',
@@ -102,7 +104,8 @@ describe('<FagsakIndex>', () => {
   };
   const behandling2: BehandlingAppKontekst = {
     id: 2,
-    type: behandlingType.FORSTEGANGSSOKNAD,
+    uuid: '2',
+    type: behandlingType.FØRSTEGANGSSØKNAD,
     status: behandlingStatus.AVSLUTTET,
     links: [],
     behandlendeEnhetId: 'test',
@@ -119,7 +122,8 @@ describe('<FagsakIndex>', () => {
   };
   const behandling3: BehandlingAppKontekst = {
     id: 3,
-    type: behandlingType.FORSTEGANGSSOKNAD,
+    uuid: '3',
+    type: behandlingType.FØRSTEGANGSSØKNAD,
     status: behandlingStatus.AVSLUTTET,
     links: [],
     behandlendeEnhetId: 'test',

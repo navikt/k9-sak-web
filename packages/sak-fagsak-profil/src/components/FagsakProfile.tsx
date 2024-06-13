@@ -47,12 +47,6 @@ export const FagsakProfile = ({
                 <Heading level="2" size="medium" className="-ml-2">
                   {kodeverkNavnFraKode(fagsakYtelseType, KodeverkType.FAGSAK_YTELSE)}
                 </Heading>
-                <Tooltip
-                  content={intl.formatMessage({ id: 'FagsakProfile.Dekningsgrad' }, { dekningsgrad })}
-                  alignBottom
-                >
-                  <Tag variant="info">{`${dekningsgrad}%`}</Tag>
-                </Tooltip>
               </FlexColumn>
               {visSakDekningsgrad(fagsakYtelseType, dekningsgrad) && (
                 <FlexColumn>

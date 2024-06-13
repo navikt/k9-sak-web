@@ -1,7 +1,7 @@
 import type { Implements } from '@k9-sak-web/gui/utils/typehelp/Implements.js';
 import type { BehandlingInfo } from '@k9-sak-web/gui/sak/BehandlingInfo.js';
-import type { Språkkode } from '@k9-sak-web/backend/k9sak/kodeverk/Språkkode.js';
 import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
+import { BehandlingType as BehandlingTypeKlage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import Behandlingsresultat from './behandlingsresultatTsType';
 
 export type BehandlingAppKontekst = Implements<
@@ -11,7 +11,7 @@ export type BehandlingAppKontekst = Implements<
     versjon: number;
     uuid: string;
     status: string;
-    type: BehandlingType;
+    type: BehandlingType | BehandlingTypeKlage;
     fristBehandlingPaaVent?: string;
     venteArsakKode?: string;
     behandlingPaaVent: boolean;
@@ -26,7 +26,7 @@ export type BehandlingAppKontekst = Implements<
     opprettet: string;
     avsluttet?: string;
     gjeldendeVedtak: boolean;
-    sprakkode: Språkkode;
+    sprakkode: string;
     behandlendeEnhetId: string;
     stegTilstand?: {
       stegType: {

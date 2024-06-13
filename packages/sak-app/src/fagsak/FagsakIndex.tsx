@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -23,6 +23,7 @@ import {
   MerknadFraLos,
   NavAnsatt,
   Personopplysninger,
+  Fagsak as FagsakV1,
 } from '@k9-sak-web/types';
 import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
 import RelatertFagsak from '@k9-sak-web/types/src/relatertFagsak';
@@ -99,7 +100,8 @@ const FagsakIndex = () => {
     },
   );
 
-  const { data: fagsak, state: fagsakState } = restApiHooks.useRestApi<Fagsak>(
+  // Midlertidig kombinere gammel og ny Fagsak ts type
+  const { data: fagsak, state: fagsakState } = restApiHooks.useRestApi<Fagsak & FagsakV1>(
     K9sakApiKeys.FETCH_FAGSAK,
     { saksnummer: selectedSaksnummer },
     {
@@ -238,7 +240,7 @@ const FagsakIndex = () => {
   return (
     <>
       <BehandlingProvider>
-        <KodeverkProvider behandlingType={behandling.type}>
+        <KodeverkProvider behandlingType={behandling ? behandling.type : undefined} kodeverk={alleKodeverk}>
           <FagsakGrid
             behandlingContent={
               <Routes>
@@ -304,7 +306,7 @@ const FagsakIndex = () => {
                   <VisittkortSakIndex
                     personopplysninger={behandlingPersonopplysninger}
                     sprakkode={behandling?.sprakkode}
-                    fagsakPerson={fagsakPerson || fagsak.person}
+                    fagsakPerson={(fagsakPerson as FagsakPerson) || (fagsak.person as FagsakPerson)}
                     harTilbakekrevingVerge={erTilbakekreving(behandling?.type) && harVerge}
                     relaterteFagsaker={relaterteFagsaker}
                     direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}

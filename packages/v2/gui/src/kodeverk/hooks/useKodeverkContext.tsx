@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { utledKodeverkNavnFraKode, utledKodeverkNavnFraUndertypeKode } from '@k9-sak-web/lib/kodeverk/kodeverkUtils.js';
-import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
 import type { AlleKodeverk, KodeverkMedUndertype } from '@k9-sak-web/lib/types/AlleKodeverk.js';
-import type {
-  GetKodeverkNavnFraKodeFnType,
-  HentKodeverkForKodeType,
-  KodeverkNavnFraKodeType,
-  KodeverkNavnFraUndertypeKodeType,
+import {
+  BehandlingType,
+  type GetKodeverkNavnFraKodeFnType,
+  type HentKodeverkForKodeType,
+  type KodeverkNavnFraKodeType,
+  type KodeverkNavnFraUndertypeKodeType,
 } from '@k9-sak-web/lib/types/index.js';
 import { KodeverkContext } from '../context/KodeverkContext';
 
