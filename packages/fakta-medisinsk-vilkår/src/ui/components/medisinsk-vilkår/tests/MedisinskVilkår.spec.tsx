@@ -2,7 +2,7 @@ import { httpUtils } from '@fpsak-frontend/utils';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { QueryClientProvider } from 'react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import ContainerContract from '../../../../types/ContainerContract';
 import ContainerContext from '../../../context/ContainerContext';
 import queryClient from '../../../context/queryClient';

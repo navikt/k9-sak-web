@@ -2,9 +2,9 @@ import { httpUtils } from '@fpsak-frontend/utils';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Tabs } from '@navikt/ds-react';
 import { Box, ChildIcon, Infostripe, Margin, PageContainer } from '@navikt/ft-plattform-komponenter';
+import { useQuery } from '@tanstack/react-query';
 import classnames from 'classnames';
 import React, { useMemo } from 'react';
-import { useQuery } from 'react-query';
 import FagsakYtelseType from '../../../constants/FagsakYtelseType';
 import { DiagnosekodeResponse } from '../../../types/DiagnosekodeResponse';
 import Dokument from '../../../types/Dokument';
@@ -111,7 +111,7 @@ const MedisinskVilkår = (): JSX.Element => {
       .then((response: DiagnosekodeResponse) => response);
 
   const { isLoading: diagnosekoderLoading, data: diagnosekoderData } = useQuery(
-    'diagnosekodeResponse',
+    ['diagnosekodeResponse'],
     hentDiagnosekoder,
     { enabled: !erFagsakOLPEllerPLS(fagsakYtelseType) },
   );

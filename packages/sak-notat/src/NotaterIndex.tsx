@@ -1,7 +1,7 @@
 import { NavAnsatt } from '@k9-sak-web/types';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Notater, { Inputs, skjulNotatMutationVariables } from './Notater';
 import { getNotater, postNotat, skjulNotat } from './notatApi';
 
