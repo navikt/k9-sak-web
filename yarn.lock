@@ -2643,7 +2643,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": 4
+    "@tanstack/react-query": ^5.45.0
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -2910,7 +2910,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@tanstack/react-query": 4
+    "@tanstack/react-query": ^5.45.0
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -3841,7 +3841,7 @@ __metadata:
     "@navikt/ds-react": 6.10.0
     "@navikt/ft-plattform-komponenter": 2.5.11
     "@popperjs/core": 2.11.8
-    "@tanstack/react-query": 4
+    "@tanstack/react-query": ^5.45.0
     axios: 1.7.2
     classnames: 2.5.1
     cors: ^2.8.5
@@ -4249,7 +4249,7 @@ __metadata:
     "@navikt/ft-ui-komponenter": 2.3.8
     "@sentry/browser": 8.7.0
     "@sentry/react": ^8.7.0
-    "@tanstack/react-query": 4
+    "@tanstack/react-query": ^5.45.0
     axios: 1.7.2
     classnames: 2.5.1
     history: 5.3.0
@@ -4276,7 +4276,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": 4
+    "@tanstack/react-query": ^5.45.0
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
@@ -4342,7 +4342,7 @@ __metadata:
     "@navikt/ds-react": 6.10.0
     "@navikt/ft-form-hooks": 4.4.8
     "@navikt/ft-form-validators": 2.3.7
-    "@tanstack/react-query": 4
+    "@tanstack/react-query": ^5.45.0
     date-fns: 3.6.0
     react: 18.3.1
     react-hook-form: 7.51.5
@@ -6851,29 +6851,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:4.36.1":
-  version: 4.36.1
-  resolution: "@tanstack/query-core@npm:4.36.1"
-  checksum: 47672094da20d89402d9fe03bb7b0462be73a76ff9ca715169738bc600a719d064d106d083a8eedae22a2c22de22f87d5eb5d31ef447aba771d9190f2117ed10
+"@tanstack/query-core@npm:5.45.0":
+  version: 5.45.0
+  resolution: "@tanstack/query-core@npm:5.45.0"
+  checksum: a3c13d90cfa12955d22fa754ebfddbea70081fc0128111083269bdd78ed0d25678f050007b753164a929a00fdef9ee5ebba945deb8e360120ae3cbae06e655a5
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:4":
-  version: 4.36.1
-  resolution: "@tanstack/react-query@npm:4.36.1"
+"@tanstack/react-query@npm:^5.45.0":
+  version: 5.45.0
+  resolution: "@tanstack/react-query@npm:5.45.0"
   dependencies:
-    "@tanstack/query-core": 4.36.1
-    use-sync-external-store: ^1.2.0
+    "@tanstack/query-core": 5.45.0
   peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-native: "*"
-  peerDependenciesMeta:
-    react-dom:
-      optional: true
-    react-native:
-      optional: true
-  checksum: 1aff0a476859386f8d32253fa0d0bde7b81769a6d4d4d9cbd78778f0f955459a3bdb7ee27a0d2ee7373090f12998b45df80db0b5b313bd0a7a39d36c6e8e51c5
+    react: ^18.0.0
+  checksum: 3f2896e132e2fc4f5a2b77e015719cd8f74a3b5ce958d3d2ffc83cc9bd8a1a265ed54835a8751daf00b85af7bf15f8ad1a9fe123dafdfdfe3e81f17e585d0e95
   languageName: node
   linkType: hard
 
@@ -19070,7 +19062,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.0.0, use-sync-external-store@npm:^1.2.0":
+"use-sync-external-store@npm:^1.0.0":
   version: 1.2.2
   resolution: "use-sync-external-store@npm:1.2.2"
   peerDependencies:

@@ -116,13 +116,11 @@ const DocumentList = ({
         return inntektsmeldingerIBruk;
       });
 
-  const { data: inntektsmeldingerIBruk } = useQuery(
-    ['kompletthet'],
-    ({ signal }) => getInntektsmeldingerIBruk(signal),
-    {
-      enabled: erStøttetFagsakYtelseType && !!behandlingUuid,
-    },
-  );
+  const { data: inntektsmeldingerIBruk } = useQuery({
+    queryKey: ['kompletthet'],
+    queryFn: ({ signal }) => getInntektsmeldingerIBruk(signal),
+    enabled: erStøttetFagsakYtelseType && !!behandlingUuid
+  });
 
   const harMerEnnEnBehandlingKnyttetTilDokumenter = () => {
     const unikeBehandlinger = [];

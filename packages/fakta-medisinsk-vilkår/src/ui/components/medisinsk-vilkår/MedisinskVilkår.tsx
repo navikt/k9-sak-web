@@ -110,11 +110,11 @@ const MedisinskVilkår = (): JSX.Element => {
       .get<DiagnosekodeResponse>(endpoints.diagnosekoder, httpErrorHandler)
       .then((response: DiagnosekodeResponse) => response);
 
-  const { isLoading: diagnosekoderLoading, data: diagnosekoderData } = useQuery(
-    ['diagnosekodeResponse'],
-    hentDiagnosekoder,
-    { enabled: !erFagsakOLPEllerPLS(fagsakYtelseType) },
-  );
+  const { isLoading: diagnosekoderLoading, data: diagnosekoderData } = useQuery({
+    queryKey: ['diagnosekodeResponse'],
+    queryFn: hentDiagnosekoder,
+    enabled: !erFagsakOLPEllerPLS(fagsakYtelseType)
+  });
 
   const diagnosekoder = endpoints.diagnosekoder ? diagnosekoderData?.diagnosekoder : [];
   const diagnosekoderTekst = diagnosekoder?.length > 0 ? `${diagnosekoder?.join(', ')}` : 'Kode mangler';

@@ -43,7 +43,10 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
       .get<DiagnosekodeResponse>(endpoints.diagnosekoder, httpErrorHandler)
       .then((response: DiagnosekodeResponse) => response);
 
-  const { isLoading, data, refetch } = useQuery(['diagnosekodeResponse'], hentDiagnosekoder);
+  const { isLoading, data, refetch } = useQuery({
+    queryKey: ['diagnosekodeResponse'],
+    queryFn: hentDiagnosekoder
+  });
 
   const { diagnosekoder, links, behandlingUuid, versjon } = data;
   const endreDiagnosekoderLink = findLinkByRel(LinkRel.ENDRE_DIAGNOSEKODER, links);
@@ -89,22 +92,26 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
       httpErrorHandler,
     );
 
-  const slettDiagnosekodeMutation = useMutation((diagnosekode: string) => slettDiagnosekode(diagnosekode), {
+  const slettDiagnosekodeMutation = useMutation({
+    mutationFn: (diagnosekode: string) => slettDiagnosekode(diagnosekode),
+
     onSuccess: () => {
       refetch().finally(() => {
         onDiagnosekoderUpdated();
         focusAddButton();
       });
-    },
+    }
   });
-  const lagreDiagnosekodeMutation = useMutation((nyeDiagnosekoder: string[]) => lagreDiagnosekode(nyeDiagnosekoder), {
+  const lagreDiagnosekodeMutation = useMutation({
+    mutationFn: (nyeDiagnosekoder: string[]) => lagreDiagnosekode(nyeDiagnosekoder),
+
     onSuccess: () => {
       refetch().finally(() => {
         onDiagnosekoderUpdated();
         setModalIsOpen(false);
         focusAddButton();
       });
-    },
+    }
   });
 
   return (

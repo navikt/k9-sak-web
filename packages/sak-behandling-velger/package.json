@@ -10,7 +10,7 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@tanstack/react-query": "4",
+    "@tanstack/react-query": "^5.45.0",
     "classnames": "2.5.1",
     "history": "5.3.0",
     "moment": "2.30.1",

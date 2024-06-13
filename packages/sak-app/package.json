@@ -53,7 +53,7 @@
     "@navikt/ft-ui-komponenter": "2.3.8",
     "@sentry/browser": "8.7.0",
     "@sentry/react": "^8.7.0",
-    "@tanstack/react-query": "4",
+    "@tanstack/react-query": "^5.45.0",
     "axios": "1.7.2",
     "classnames": "2.5.1",
     "history": "5.3.0",
