@@ -90,4 +90,4 @@ This project uses Streamline Icons. If you use k9-sak-web in your project please
 
 ### For NAV-ansatte
 
-Interne henvendelser kan sendes via Slack i kanalen **#k9sak-frontend-tech**.
+Interne henvendelser kan sendes via Slack i kanalen **#sif-teknisk**.

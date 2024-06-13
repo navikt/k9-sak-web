@@ -17,12 +17,10 @@
   "dependencies": {
     "@navikt/ds-css": "6.10.0",
     "@navikt/ds-react": "6.10.0",
-    "@navikt/fnrvalidator": "2.0.7",
     "classnames": "2.5.1",
     "dayjs": "1.11.11",
     "lodash": "4.17.21",
     "react": "18.3.1",
-    "react-day-picker": "7.4.10",
     "react-dom": "18.3.1",
     "react-hook-form": "7.51.5"
   }

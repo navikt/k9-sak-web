@@ -23,7 +23,7 @@ describe('<ErrorMessagePanel>', () => {
     );
 
     expect(screen.getByText('Error!')).toBeInTheDocument();
-    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('errorDetailsLink')).not.toBeInTheDocument();
   });
 
   it('skal erstatte spesialtegn i feilmelding', () => {
@@ -62,7 +62,7 @@ describe('<ErrorMessagePanel>', () => {
       { messages },
     );
 
-    expect(screen.getByRole('link', { name: 'Detaljert informasjon' })).toBeInTheDocument();
+    expect(screen.getByTestId('errorDetailsLink')).toBeInTheDocument();
   });
 
   it('skal åpne, og så lukke, modal for visning av feildetaljer ved klikk på lenke', async () => {
@@ -83,12 +83,12 @@ describe('<ErrorMessagePanel>', () => {
       { messages },
     );
 
-    expect(screen.getByRole('link', { name: 'Detaljert informasjon' })).toBeInTheDocument();
+    expect(screen.getByTestId('errorDetailsLink')).toBeInTheDocument();
     expect(screen.queryByText('Dette er ein feilmelding')).not.toBeInTheDocument();
     expect(screen.queryByText('Url')).not.toBeInTheDocument();
     expect(screen.queryByText('www.test.no')).not.toBeInTheDocument();
     await act(async () => {
-      await userEvent.click(screen.getByRole('link', { name: 'Detaljert informasjon' }));
+      await userEvent.click(screen.getByTestId('errorDetailsLink'));
     });
     expect(screen.getByText('Dette er ein feilmelding')).toBeInTheDocument();
     expect(screen.getByText('Url:')).toBeInTheDocument();
