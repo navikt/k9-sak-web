@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { Alert, Button, Fieldset, HStack, RadioGroup, Select } from '@navikt/ds-react';
+import {useFeatureToggles} from "@fpsak-frontend/shared-components";
 import { AleneOmOmsorgenProps } from '../../../types/AleneOmOmsorgenProps';
 import {
   booleanTilTekst,
@@ -34,7 +35,7 @@ type FormData = {
   åpenForRedigering: boolean;
 };
 
-export enum AvlsagskoderAleneOmOmsorgen {
+export enum AvslagskoderAleneOmOmsorgen {
   FORELDRE_BOR_SAMMEN = "1078",
   AVTALE_OM_DELT_BOSTED = "1079",
   ANNET = "1077"
@@ -52,6 +53,8 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   losAksjonspunkt,
   formState,
 }) => {
+  const [featureToggles] = useFeatureToggles();
+
   const formStateKey = `${behandlingsID}-utvidetrett-alene-om-omsorgen`;
   const harAksjonspunktOgVilkarLostTidligere =
     informasjonTilLesemodus?.fraDato.length > 0 && informasjonTilLesemodus?.begrunnelse.length > 0;
@@ -123,6 +126,19 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     }
   };
 
+  const mapTilAvslagstekst = (avslagsKode: string): string => {
+    if (avslagsKode === AvslagskoderAleneOmOmsorgen.FORELDRE_BOR_SAMMEN) {
+      return tekst.foreldreBorSammen;
+    }
+    if (avslagsKode === AvslagskoderAleneOmOmsorgen.AVTALE_OM_DELT_BOSTED) {
+      return tekst.avltaleOmDeltBosted;
+    }
+    if (avslagsKode === AvslagskoderAleneOmOmsorgen.ANNET) {
+      return tekst.annet;
+    }
+    return '';
+  };
+
   return (
     <div
       className={classNames(
@@ -142,13 +158,23 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
       )}
 
       {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && (
-        <AleneOmOmsorgenLesemodus
-          fraDatoFraSoknad={fraDatoFraVilkar}
-          informasjonTilLesemodus={informasjonTilLesemodus}
-          harAksjonspunktBlivitLostTidligare={aksjonspunktLost}
-          åpneForRedigereInformasjon={() => setValue('åpenForRedigering', true)}
-          erBehandlingstypeRevurdering={erBehandlingstypeRevurdering}
-        />
+        <>
+          <AleneOmOmsorgenLesemodus
+            fraDatoFraSoknad={fraDatoFraVilkar}
+            informasjonTilLesemodus={informasjonTilLesemodus}
+            harAksjonspunktBlivitLostTidligare={aksjonspunktLost}
+            åpneForRedigereInformasjon={() => setValue('åpenForRedigering', true)}
+            erBehandlingstypeRevurdering={erBehandlingstypeRevurdering}
+          />
+
+          {featureToggles?.VITE_AVSLAGSÅRSAK_ALENEOMSORG && !informasjonTilLesemodus.vilkarOppfylt && informasjonTilLesemodus.avslagsårsakKode !== '' && (
+            <>
+              <p className={styleLesemodus.label}>{tekst.arsak}</p>
+              <p className={styleLesemodus.text}>{mapTilAvslagstekst(informasjonTilLesemodus.avslagsårsakKode)}</p>
+            </>
+          )}
+
+        </>
       )}
 
       {(åpenForRedigering || (!lesemodus && !vedtakFattetVilkarOppfylt)) && (
@@ -181,7 +207,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                 {errors.erSokerenAleneOmOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
               </div>
 
-              {erSokerAleneOmOmsorgen.length > 0 && !tekstTilBoolean(erSokerAleneOmOmsorgen) && (
+              {featureToggles?.VITE_AVSLAGSÅRSAK_ALENEOMSORG && erSokerAleneOmOmsorgen.length > 0 && !tekstTilBoolean(erSokerAleneOmOmsorgen) && (
                 <div>
                   <RadioGroup
                     className={styleRadioknapper.horisontalPlassering}
@@ -192,12 +218,12 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                     <HStack gap="1">
                       <RadioButtonWithBooleanValue
                         label={tekst.foreldreBorSammen}
-                        value={AvlsagskoderAleneOmOmsorgen.FORELDRE_BOR_SAMMEN}
+                        value={AvslagskoderAleneOmOmsorgen.FORELDRE_BOR_SAMMEN}
                         name="avslagsårsakKode"
                       />
                       <RadioButtonWithBooleanValue
                         label={tekst.avltaleOmDeltBosted}
-                        value={AvlsagskoderAleneOmOmsorgen.AVTALE_OM_DELT_BOSTED}
+                        value={AvslagskoderAleneOmOmsorgen.AVTALE_OM_DELT_BOSTED}
                         name="avslagsårsakKode"
                       />
                       <RadioButtonWithBooleanValue
