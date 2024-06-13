@@ -3654,7 +3654,7 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-kodeverk": ^2.4.7
+    "@navikt/ft-kodeverk": ^2.4.8
     "@navikt/ft-prosess-tilbakekreving-foreldelse": 3.3.8
     react: 18.3.1
     react-intl: 6.6.8
@@ -4623,6 +4623,13 @@ __metadata:
   version: 2.4.7
   resolution: "@navikt/ft-kodeverk@npm:2.4.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F2.4.7%2Fdcf534f5979c16fa22b065bcd9720abf1607c39e"
   checksum: 7626590d28f8089fbf3296a383043fbd40d5fe04d8b2d57ce4d8864ca22a627911114cf909ea872eefc51614a5bd2f9f305aed9f3589c6994b9be155af407298
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-kodeverk@npm:^2.4.8":
+  version: 2.4.8
+  resolution: "@navikt/ft-kodeverk@npm:2.4.8::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F2.4.8%2F8d722d726601eafe7f4836a3848d08cc762e008e"
+  checksum: 8de18724977b81476f5b2e72856492cd043e078846ac837405c4aed00574826fc7deda12b591fbe1128616ad1ed5776e3345fa17f63bcb631ffa87d6ca54f607
   languageName: node
   linkType: hard
 
