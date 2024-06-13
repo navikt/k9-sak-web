@@ -59,7 +59,7 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsak
     },
   });
 
-  const isLoading = getNotaterLoading || postNotatMutation.isLoading;
+  const isLoading = getNotaterLoading || postNotatMutation.isPending;
 
   const submitNotat = (data: Inputs, id?: number, fagsakIdFraRedigertNotat?: string, versjon?: number) =>
     postNotatMutation.mutate({ data, id, fagsakIdFraRedigertNotat, versjon });
