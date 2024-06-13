@@ -100,3 +100,5 @@ spec:
       value: "true"
     - name: BRUK_V2_MELDINGER
       value: "false"
+    - name: AVSLAGSÅRSAK_ALENEOMSORG
+      value: "false"
