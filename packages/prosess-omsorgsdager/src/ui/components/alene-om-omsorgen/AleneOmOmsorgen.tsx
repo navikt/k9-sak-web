@@ -27,11 +27,18 @@ import tekst from './alene-om-omsorgen-tekst';
 
 type FormData = {
   begrunnelse: string;
+  avslagsårsakKode: string;
   fraDato: string;
   tilDato: string;
   erSokerenAleneOmOmsorgen: string;
   åpenForRedigering: boolean;
 };
+
+export enum AvlsagskoderAleneOmOmsorgen {
+  FORELDRE_BOR_SAMMEN = "1078",
+  AVTALE_OM_DELT_BOSTED = "1079",
+  ANNET = "1077"
+}
 
 const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   behandlingsID,
@@ -53,6 +60,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     reValidateMode: 'onSubmit',
     defaultValues: {
       begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
+      avslagsårsakKode: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.avslagsårsakKode : '',
       fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : 'dd.mm.åååå',
       tilDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.tilDato) : 'dd.mm.åååå',
       erSokerenAleneOmOmsorgen: harAksjonspunktOgVilkarLostTidligere
@@ -94,7 +102,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     getValues,
   );
 
-  const bekreftAksjonspunkt = ({ begrunnelse, erSokerenAleneOmOmsorgen, fraDato, tilDato }) => {
+  const bekreftAksjonspunkt = ({ begrunnelse, avslagsårsakKode, erSokerenAleneOmOmsorgen, fraDato, tilDato }) => {
     if (
       (!errors.begrunnelse && !errors.fraDato && !errors.erSokerenAleneOmOmsorgen && !erBehandlingstypeRevurdering) ||
       (!errors.begrunnelse &&
@@ -105,6 +113,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     ) {
       losAksjonspunkt({
         begrunnelse,
+        avslagsårsakKode,
         vilkarOppfylt: tekstTilBoolean(erSokerenAleneOmOmsorgen),
         fraDato: tekstTilBoolean(erSokerenAleneOmOmsorgen) ? fraDato.replaceAll('.', '-') : '',
         tilDato: tilDato.replaceAll('.', '-'),
@@ -171,6 +180,35 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                 </RadioGroup>
                 {errors.erSokerenAleneOmOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
               </div>
+
+              {erSokerAleneOmOmsorgen.length > 0 && !tekstTilBoolean(erSokerAleneOmOmsorgen) && (
+                <div>
+                  <RadioGroup
+                    className={styleRadioknapper.horisontalPlassering}
+                    legend={tekst.velgArsak}
+                    size="small"
+                    name="avslagsårsakKode"
+                  >
+                    <HStack gap="1">
+                      <RadioButtonWithBooleanValue
+                        label={tekst.foreldreBorSammen}
+                        value={AvlsagskoderAleneOmOmsorgen.FORELDRE_BOR_SAMMEN}
+                        name="avslagsårsakKode"
+                      />
+                      <RadioButtonWithBooleanValue
+                        label={tekst.avltaleOmDeltBosted}
+                        value={AvlsagskoderAleneOmOmsorgen.AVTALE_OM_DELT_BOSTED}
+                        name="avslagsårsakKode"
+                      />
+                      <RadioButtonWithBooleanValue
+                        label={tekst.annet}
+                        value="1077"
+                        name="avslagsårsakKode"
+                      />
+                    </HStack>
+                  </RadioGroup>
+                </div>
+              )}
 
               {tekstTilBoolean(erSokerAleneOmOmsorgen) && (
                 <Fieldset
