@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { Alert, Button, Fieldset, HStack, RadioGroup, Select } from '@navikt/ds-react';
+import {useFeatureToggles} from "@fpsak-frontend/shared-components";
 import { AleneOmOmsorgenProps } from '../../../types/AleneOmOmsorgenProps';
 import {
   booleanTilTekst,
@@ -24,7 +25,6 @@ import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 import styles from '../vilkar-midlertidig-alene/vilkarMidlertidigAlene.module.css';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import tekst from './alene-om-omsorgen-tekst';
-import {useFeatureToggles} from "@fpsak-frontend/shared-components";
 
 type FormData = {
   begrunnelse: string;
@@ -133,7 +133,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     if (avslagsKode === AvslagskoderAleneOmOmsorgen.AVTALE_OM_DELT_BOSTED) {
       return tekst.avltaleOmDeltBosted;
     }
-    if (avslagsKode == AvslagskoderAleneOmOmsorgen.ANNET) {
+    if (avslagsKode === AvslagskoderAleneOmOmsorgen.ANNET) {
       return tekst.annet;
     }
     return '';
@@ -167,7 +167,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
             erBehandlingstypeRevurdering={erBehandlingstypeRevurdering}
           />
 
-          {!featureToggles?.AVSLAGSÅRSAK_ALENEOMSORG && !informasjonTilLesemodus.vilkarOppfylt && informasjonTilLesemodus.avslagsårsakKode != '' && (
+          {featureToggles?.VITE_AVSLAGSÅRSAK_ALENEOMSORG && !informasjonTilLesemodus.vilkarOppfylt && informasjonTilLesemodus.avslagsårsakKode !== '' && (
             <>
               <p className={styleLesemodus.label}>{tekst.arsak}</p>
               <p className={styleLesemodus.text}>{mapTilAvslagstekst(informasjonTilLesemodus.avslagsårsakKode)}</p>
@@ -207,7 +207,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                 {errors.erSokerenAleneOmOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
               </div>
 
-              {!featureToggles?.AVSLAGSÅRSAK_ALENEOMSORG && erSokerAleneOmOmsorgen.length > 0 && !tekstTilBoolean(erSokerAleneOmOmsorgen) && (
+              {featureToggles?.VITE_AVSLAGSÅRSAK_ALENEOMSORG && erSokerAleneOmOmsorgen.length > 0 && !tekstTilBoolean(erSokerAleneOmOmsorgen) && (
                 <div>
                   <RadioGroup
                     className={styleRadioknapper.horisontalPlassering}

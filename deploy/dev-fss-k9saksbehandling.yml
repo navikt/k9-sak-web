@@ -100,5 +100,5 @@ spec:
       value: "true"
     - name: "BRUK_V2_MELDINGER"
       value: "false"
-    - name: AVSLAGSÅRSAK_ALENEOMSORG
+    - name: VITE_AVSLAGSÅRSAK_ALENEOMSORG
       value: "true"

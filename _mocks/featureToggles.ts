@@ -70,7 +70,7 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_OVERSTYRING_UTTAK,
   },
   {
-    key: 'AVSLAGSÅRSAK_ALENEOMSORG',
-    value: process.env.AVSLAGSÅRSAK_ALENEOMSORG
+    key: 'VITE_AVSLAGSÅRSAK_ALENEOMSORG',
+    value: process.env.VITE_AVSLAGSÅRSAK_ALENEOMSORG
   },
 ];
