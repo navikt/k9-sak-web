@@ -2876,7 +2876,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/aksel-icons": 6.10.0
     "@navikt/ds-react": 6.10.0
-    "@navikt/fnrvalidator": 2.0.7
+    "@navikt/fnrvalidator": 2.1.0
     "@navikt/ft-plattform-komponenter": 2.5.11
     axios: 1.7.2
     classnames: 2.5.1
@@ -3886,7 +3886,7 @@ __metadata:
     "@navikt/ds-css": 6.10.0
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.10.0
-    "@navikt/fnrvalidator": 2.0.7
+    "@navikt/fnrvalidator": 2.1.0
     "@navikt/ft-plattform-komponenter": 2.5.11
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
@@ -4481,12 +4481,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/fnrvalidator@npm:2.0.7":
-  version: 2.0.7
-  resolution: "@navikt/fnrvalidator@npm:2.0.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffnrvalidator%2F2.0.7%2F89ceb6a448fbd068e4ad8ff7a414705bd0ea6315"
-  dependencies:
-    typescript: ^5.4.2
-  checksum: 51203dec469f64d497a31623c99cc21035e47a91cc8835d448b36e4267393f864cff1b3910a9adc71eb1fa52476c19375ebe007250238ec5f5d5611feff94526
+"@navikt/fnrvalidator@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@navikt/fnrvalidator@npm:2.1.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffnrvalidator%2F2.1.0%2F22070c4d38d3c928b1b5f75d5f0d786a5587e7d7"
+  checksum: c404d59993bff9761a78d1c87f164a8638559a6e18786282bd4b85ed5405564fa9ab2e0302f836c5624f9f27e350b0157af42ae2fbdcd29e6f0897218dc30bec
   languageName: node
   linkType: hard
 
@@ -18798,7 +18796,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.4.5, typescript@npm:^5.4.2":
+"typescript@npm:5.4.5":
   version: 5.4.5
   resolution: "typescript@npm:5.4.5"
   bin:
@@ -18808,7 +18806,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@5.4.5#~builtin<compat/typescript>, typescript@patch:typescript@^5.4.2#~builtin<compat/typescript>":
+"typescript@patch:typescript@5.4.5#~builtin<compat/typescript>":
   version: 5.4.5
   resolution: "typescript@patch:typescript@npm%3A5.4.5#~builtin<compat/typescript>::version=5.4.5&hash=1f5320"
   bin:
