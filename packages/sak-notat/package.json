@@ -10,7 +10,7 @@
     "@navikt/aksel-icons": "6.10.0",
     "@navikt/ds-react": "6.10.0",
     "@navikt/ft-form-hooks": "4.4.8",
-    "@navikt/ft-form-validators": "2.3.7",
+    "@navikt/ft-form-validators": "2.3.8",
     "@tanstack/react-query": "^5.45.0",
     "date-fns": "3.6.0",
     "react": "18.3.1",
