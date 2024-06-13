@@ -25,7 +25,7 @@ import {
 import { BodyShort, Tabs, Tooltip } from '@navikt/ds-react';
 import axios from 'axios';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
 import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';

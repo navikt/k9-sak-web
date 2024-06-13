@@ -2,8 +2,8 @@ import { httpUtils } from '@fpsak-frontend/utils';
 import { Box, Margin, TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
 
 import { Alert, Loader } from '@navikt/ds-react';
+import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
 import React, { useMemo } from 'react';
-import { useMutation, useQueries, useQuery } from 'react-query';
 import LinkRel from '../../../constants/LinkRel';
 import Diagnosekode from '../../../types/Diagnosekode';
 import { DiagnosekodeResponse } from '../../../types/DiagnosekodeResponse';
@@ -43,18 +43,21 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
       .get<DiagnosekodeResponse>(endpoints.diagnosekoder, httpErrorHandler)
       .then((response: DiagnosekodeResponse) => response);
 
-  const { isLoading, data, refetch } = useQuery('diagnosekodeResponse', hentDiagnosekoder);
+  const { isLoading, data, refetch } = useQuery({
+    queryKey: ['diagnosekodeResponse'],
+    queryFn: hentDiagnosekoder
+  });
 
   const { diagnosekoder, links, behandlingUuid, versjon } = data;
   const endreDiagnosekoderLink = findLinkByRel(LinkRel.ENDRE_DIAGNOSEKODER, links);
 
-  const diagnosekoderMedNavnResponses = useQueries(
-    diagnosekoder.map(diagnosekode => ({
+  const diagnosekoderMedNavnResponses = useQueries({
+    queries: diagnosekoder.map(diagnosekode => ({
       queryKey: ['diagnosekode', diagnosekode],
       queryFn: () => fetchDiagnosekoderByQuery(diagnosekode),
       refetchOnWindowFocus: false,
     })),
-  );
+  });
 
   const diagnosekoderMedNavn = useMemo(
     () => diagnosekoderMedNavnResponses.filter(response => !!response.data).map(response => response.data),
@@ -89,22 +92,26 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
       httpErrorHandler,
     );
 
-  const slettDiagnosekodeMutation = useMutation((diagnosekode: string) => slettDiagnosekode(diagnosekode), {
+  const slettDiagnosekodeMutation = useMutation({
+    mutationFn: (diagnosekode: string) => slettDiagnosekode(diagnosekode),
+
     onSuccess: () => {
       refetch().finally(() => {
         onDiagnosekoderUpdated();
         focusAddButton();
       });
-    },
+    }
   });
-  const lagreDiagnosekodeMutation = useMutation((nyeDiagnosekoder: string[]) => lagreDiagnosekode(nyeDiagnosekoder), {
+  const lagreDiagnosekodeMutation = useMutation({
+    mutationFn: (nyeDiagnosekoder: string[]) => lagreDiagnosekode(nyeDiagnosekoder),
+
     onSuccess: () => {
       refetch().finally(() => {
         onDiagnosekoderUpdated();
         setModalIsOpen(false);
         focusAddButton();
       });
-    },
+    }
   });
 
   return (
