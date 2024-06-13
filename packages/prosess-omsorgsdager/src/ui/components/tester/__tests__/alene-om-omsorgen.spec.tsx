@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { axe } from 'vitest-axe';
 import React from 'react';
+import {K9sakApiKeys, requestApi} from "@k9-sak-web/sak-app/src/data/k9sakApi";
 import { AleneOmOmsorgenProps } from '../../../../types/AleneOmOmsorgenProps';
 import AleneOmOmsorgen from '../../alene-om-omsorgen/AleneOmOmsorgen';
 import FormStateTilTest from '../dataTilTest/FormStateTilTest';
-import {K9sakApiKeys, requestApi} from "@k9-sak-web/sak-app/src/data/k9sakApi";
 
 describe('<AleneOmOmsorgen>', () => {
   test('AleneOmOmsorgen viser åpen aksjonspunkt som forventet', () => {
