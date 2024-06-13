@@ -316,7 +316,7 @@ const FagsakIndex = () => {
                 erHastesak={erHastesak}
               />
 
-              {behandling && (
+              {behandling && !erTilbakekreving(behandling.type) && (
                 <>
                   {showPunsjStripe && <Punsjstripe behandlingUuid={behandling.uuid} pathToLos={getPathToK9Los()} />}
                   {showFagsakPåSøkerStripe && (
