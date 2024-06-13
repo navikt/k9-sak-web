@@ -10,7 +10,7 @@
     "@k9-sak-web/types": "*",
     "@navikt/ds-icons": "3.4.3",
     "@navikt/ds-react": "6.10.0",
-    "@navikt/ft-plattform-komponenter": "2.5.11",
+    "@navikt/ft-plattform-komponenter": "2.5.12",
     "classnames": "2.5.1",
     "dayjs": "1.11.11",
     "formik": "2.4.6",
