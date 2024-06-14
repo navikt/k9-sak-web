@@ -9,10 +9,10 @@ import { DateTimeLabel, Image, Tooltip } from '@fpsak-frontend/shared-components
 import { Dokument, FagsakPerson } from '@k9-sak-web/types';
 import { StarFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Label, Link, Select, Table } from '@navikt/ds-react';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-import { useQuery } from 'react-query';
 import { Kompletthet } from '../types/Kompletthetsperioder';
 import styles from './documentList.module.css';
 
@@ -116,8 +116,10 @@ const DocumentList = ({
         return inntektsmeldingerIBruk;
       });
 
-  const { data: inntektsmeldingerIBruk } = useQuery('kompletthet', ({ signal }) => getInntektsmeldingerIBruk(signal), {
-    enabled: erStøttetFagsakYtelseType && !!behandlingUuid,
+  const { data: inntektsmeldingerIBruk } = useQuery({
+    queryKey: ['kompletthet'],
+    queryFn: ({ signal }) => getInntektsmeldingerIBruk(signal),
+    enabled: erStøttetFagsakYtelseType && !!behandlingUuid
   });
 
   const harMerEnnEnBehandlingKnyttetTilDokumenter = () => {

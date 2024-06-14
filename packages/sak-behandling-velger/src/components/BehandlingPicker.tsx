@@ -5,11 +5,11 @@ import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn, PerioderMedBehandling
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { AddCircle } from '@navikt/ds-icons';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
+import { UseQueryResult, useQueries } from '@tanstack/react-query';
 import axios from 'axios';
 import { Location } from 'history';
 import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
-import { UseQueryResult, useQueries } from 'react-query';
 import { NavLink, useNavigate } from 'react-router-dom';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
@@ -184,13 +184,13 @@ const BehandlingPicker = ({
       ),
     [behandlingerSomSkalVises],
   );
-  const søknadsperioder = useQueries(
-    behandlingerMedPerioderMedÅrsak.map(behandling => ({
+  const søknadsperioder = useQueries({
+    queries: behandlingerMedPerioderMedÅrsak.map(behandling => ({
       queryKey: ['behandlingId', behandling.id],
       queryFn: () => getBehandlingPerioderÅrsaker(behandling),
       staleTime: 3 * 60 * 1000,
     })),
-  );
+  });
 
   const valgtBehandling = valgtBehandlingId
     ? behandlingerSomSkalVises.find(behandling => behandling.id === valgtBehandlingId)

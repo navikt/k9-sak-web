@@ -1,5 +1,5 @@
 import React from 'react';
-import { QueryClientProvider } from 'react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import ContainerContext from './context/ContainerContext';
 import queryClient from './context/queryClient';
 import ContainerContract from '../types/ContainerContract';

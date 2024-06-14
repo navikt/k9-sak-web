@@ -1,7 +1,7 @@
 import { NavAnsatt } from '@k9-sak-web/types';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Notater, { Inputs, skjulNotatMutationVariables } from './Notater';
 import { getNotater, postNotat, skjulNotat } from './notatApi';
 
@@ -40,27 +40,26 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsak
     enabled: !!fagsakId,
   });
 
-  const postNotatMutation = useMutation(
-    ({ data, id, fagsakIdFraRedigertNotat, versjon }: postNotatMutationVariables) =>
+  const postNotatMutation = useMutation({
+    mutationFn: ({ data, id, fagsakIdFraRedigertNotat, versjon }: postNotatMutationVariables) =>
       postNotat(data, fagsakId, id, fagsakIdFraRedigertNotat, versjon),
-    {
-      onSuccess: () => {
-        formMethods.reset();
-        queryClient.invalidateQueries({ queryKey: notaterQueryKey });
-      },
-    },
-  );
 
-  const skjulNotatMutation = useMutation(
-    ({ skjul, id, saksnummer, versjon }: skjulNotatMutationVariables) => skjulNotat(skjul, id, saksnummer, versjon),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: notaterQueryKey });
-      },
+    onSuccess: () => {
+      formMethods.reset();
+      queryClient.invalidateQueries({ queryKey: notaterQueryKey });
     },
-  );
+  });
 
-  const isLoading = getNotaterLoading || postNotatMutation.isLoading;
+  const skjulNotatMutation = useMutation({
+    mutationFn: ({ skjul, id, saksnummer, versjon }: skjulNotatMutationVariables) =>
+      skjulNotat(skjul, id, saksnummer, versjon),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: notaterQueryKey });
+    },
+  });
+
+  const isLoading = getNotaterLoading || postNotatMutation.isPending;
 
   const submitNotat = (data: Inputs, id?: number, fagsakIdFraRedigertNotat?: string, versjon?: number) =>
     postNotatMutation.mutate({ data, id, fagsakIdFraRedigertNotat, versjon });
