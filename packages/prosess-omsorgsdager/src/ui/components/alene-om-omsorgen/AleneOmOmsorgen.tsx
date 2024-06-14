@@ -167,7 +167,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
             erBehandlingstypeRevurdering={erBehandlingstypeRevurdering}
           />
 
-          {featureToggles?.AVSLAGSÅRSAK_ALENEOMSORG &&
+          {featureToggles?.AVSLAGSAARSAK_ALENEOMSORG &&
             !informasjonTilLesemodus.vilkarOppfylt &&
             informasjonTilLesemodus.avslagsårsakKode !== '' && (
               <>
@@ -208,7 +208,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                 {errors.erSokerenAleneOmOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
               </div>
 
-              {featureToggles?.AVSLAGSÅRSAK_ALENEOMSORG &&
+              {featureToggles?.AVSLAGSAARSAK_ALENEOMSORG &&
                 erSokerAleneOmOmsorgen.length > 0 &&
                 !tekstTilBoolean(erSokerAleneOmOmsorgen) && (
                   <div>

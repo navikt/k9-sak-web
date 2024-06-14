@@ -10,7 +10,7 @@ describe('<AleneOmOmsorgen>', () => {
   test('AleneOmOmsorgen viser åpen aksjonspunkt som forventet', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
       {
-        key: 'AVSLAGSÅRSAK_ALENEOMSORG',
+        key: 'AVSLAGSAARSAK_ALENEOMSORG',
         value: 'true',
       },
     ]);
@@ -65,7 +65,7 @@ describe('<AleneOmOmsorgen>', () => {
   test('AleneOmOmsorgen viser åpen aksjonspunkt med informasjon fra tidigare lost vilkar (kommer tillbake etter totrinnskontroll)', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
       {
-        key: 'AVSLAGSÅRSAK_ALENEOMSORG',
+        key: 'AVSLAGSAARSAK_ALENEOMSORG',
         value: 'true',
       },
     ]);
@@ -109,7 +109,7 @@ describe('<AleneOmOmsorgen>', () => {
   test('AleneOmOmsorgen viser åpen aksjonspunkt med informasjon fra tidigare lost vilkar (kommer tillbake etter totrinnskontroll) - revurdering', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
       {
-        key: 'AVSLAGSÅRSAK_ALENEOMSORG',
+        key: 'AVSLAGSAARSAK_ALENEOMSORG',
         value: 'true',
       },
     ]);
@@ -156,7 +156,7 @@ describe('<AleneOmOmsorgen>', () => {
   test('AleneOmOmsorgen viser lesemodus', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
       {
-        key: 'AVSLAGSÅRSAK_ALENEOMSORG',
+        key: 'AVSLAGSAARSAK_ALENEOMSORG',
         value: 'true',
       },
     ]);
@@ -216,7 +216,7 @@ describe('<AleneOmOmsorgen>', () => {
   test('AleneOmOmsorgen viser lesemodus - revurdering', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
       {
-        key: 'AVSLAGSÅRSAK_ALENEOMSORG',
+        key: 'AVSLAGSAARSAK_ALENEOMSORG',
         value: 'true',
       },
     ]);
@@ -276,7 +276,7 @@ describe('<AleneOmOmsorgen>', () => {
   test('AleneOmOmsorgen viser lesemodus med rediger', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
       {
-        key: 'AVSLAGSÅRSAK_ALENEOMSORG',
+        key: 'AVSLAGSAARSAK_ALENEOMSORG',
         value: 'true',
       },
     ]);
@@ -315,7 +315,7 @@ describe('<AleneOmOmsorgen>', () => {
   test('AleneOmOmsorgen viser informasjon om vilkar etter fattet vedtak', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
       {
-        key: 'AVSLAGSÅRSAK_ALENEOMSORG',
+        key: 'AVSLAGSAARSAK_ALENEOMSORG',
         value: 'true',
       },
     ]);
@@ -363,7 +363,7 @@ describe('<AleneOmOmsorgen>', () => {
   test('Alene om omsorgen viser informasjon om vilkar ikke oppfylt etter fattet vedtak', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
       {
-        key: 'AVSLAGSÅRSAK_ALENEOMSORG',
+        key: 'AVSLAGSAARSAK_ALENEOMSORG',
         value: 'true',
       },
     ]);
@@ -408,7 +408,7 @@ describe('<AleneOmOmsorgen>', () => {
   test('Den har ingen a11y violations', async () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
       {
-        key: 'AVSLAGSÅRSAK_ALENEOMSORG',
+        key: 'AVSLAGSAARSAK_ALENEOMSORG',
         value: 'true',
       },
     ]);
