@@ -26,7 +26,7 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ saksnummer, pathToLos }) => {
   React.useEffect(() => {
     let isMounted = true;
     axios
-      .get(`/k9/sak/api/punsj/journalpost/uferdig?saksnummer=${saksnummer}`, {
+      .get(`/k9/sak/api/punsj/journalpost/uferdig/v2?saksnummer=${saksnummer}`, {
         cancelToken: httpCanceler.token,
       })
       .then((response: AxiosResponse) => {
