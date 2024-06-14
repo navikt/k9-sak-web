@@ -45,7 +45,7 @@
     "@k9-sak-web/sak-notat": "1.0.0",
     "@k9-sak-web/sak-soknadsperiodestripe": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ds-react": "6.10.0",
+    "@navikt/ds-react": "6.10.1",
     "@navikt/ft-fakta-beregning-redesign": "1.2.9",
     "@navikt/ft-form-hooks": "4.4.8",
     "@navikt/ft-plattform-komponenter": "2.5.11",
