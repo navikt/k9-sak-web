@@ -13,6 +13,7 @@ describe('<NokkeltallContainer>', () => {
           <NokkeltallContainer
             totaltAntallDager={20}
             antallDagerArbeidsgiverDekker={3}
+            antallDagerFraværRapportertSomNyoppstartet={0}
             forbrukteDager={4.4}
             restTid={restTid}
             benyttetRammemelding
