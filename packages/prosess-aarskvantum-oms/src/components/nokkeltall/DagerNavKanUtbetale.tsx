@@ -7,6 +7,7 @@ interface DagerNavKanUtbetaleProps {
   dagerNavKanUtbetale: number;
   dagerRettPå: number;
   antallDagerArbeidsgiverDekker: number;
+  antallDagerFraværRapportertSomNyoppstartet: number;
   visDetaljer: () => void;
   viserDetaljer: boolean;
 }
@@ -15,6 +16,7 @@ const DagerNavKanUtbetale = ({
   dagerNavKanUtbetale,
   dagerRettPå,
   antallDagerArbeidsgiverDekker,
+  antallDagerFraværRapportertSomNyoppstartet,
   visDetaljer,
   viserDetaljer,
 }: DagerNavKanUtbetaleProps) => (
@@ -32,6 +34,13 @@ const DagerNavKanUtbetale = ({
         infotekstContent: (
           <FormattedMessage id="Nøkkeltall.Ventetid.InfoText" values={{ dager: antallDagerArbeidsgiverDekker }} />
         ),
+      },
+      {
+        antallDager: antallDagerFraværRapportertSomNyoppstartet,
+        overskrifttekstId: 'Nøkkeltall.AntallDagerFraværRapportertSomNyoppstartet',
+        infotekstContent: (
+          <FormattedMessage id="Nøkkeltall.AntallDagerFraværRapportertSomNyoppstartet.InfoText" />
+        )
       },
     ]}
     viserDetaljer={viserDetaljer}
