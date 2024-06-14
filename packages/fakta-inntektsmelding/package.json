@@ -11,7 +11,7 @@
   "license": "MIT",
   "devDependencies": {
     "msw": "2.3.1",
-    "vite": "^5.2.13",
+    "vite": "^5.3.1",
     "vite-plugin-node-polyfills": "^0.22.0"
   },
   "dependencies": {
