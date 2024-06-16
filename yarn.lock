@@ -2811,7 +2811,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.45.0
+    "@tanstack/react-query": ^5.45.1
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -3078,7 +3078,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@tanstack/react-query": ^5.45.0
+    "@tanstack/react-query": ^5.45.1
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -4009,7 +4009,7 @@ __metadata:
     "@navikt/ds-react": 6.10.1
     "@navikt/ft-plattform-komponenter": 2.5.12
     "@popperjs/core": 2.11.8
-    "@tanstack/react-query": ^5.45.0
+    "@tanstack/react-query": ^5.45.1
     axios: 1.7.2
     classnames: 2.5.1
     cors: ^2.8.5
@@ -4417,7 +4417,7 @@ __metadata:
     "@navikt/ft-ui-komponenter": 2.3.9
     "@sentry/browser": 8.9.2
     "@sentry/react": ^8.9.2
-    "@tanstack/react-query": ^5.45.0
+    "@tanstack/react-query": ^5.45.1
     axios: 1.7.2
     classnames: 2.5.1
     history: 5.3.0
@@ -4444,7 +4444,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.45.0
+    "@tanstack/react-query": ^5.45.1
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
@@ -4510,7 +4510,7 @@ __metadata:
     "@navikt/ds-react": 6.10.1
     "@navikt/ft-form-hooks": 4.4.9
     "@navikt/ft-form-validators": 2.3.8
-    "@tanstack/react-query": ^5.45.0
+    "@tanstack/react-query": ^5.45.1
     date-fns: 3.6.0
     react: 18.3.1
     react-hook-form: 7.51.5
@@ -7024,14 +7024,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.45.0":
-  version: 5.45.0
-  resolution: "@tanstack/react-query@npm:5.45.0"
+"@tanstack/react-query@npm:^5.45.1":
+  version: 5.45.1
+  resolution: "@tanstack/react-query@npm:5.45.1"
   dependencies:
     "@tanstack/query-core": 5.45.0
   peerDependencies:
     react: ^18.0.0
-  checksum: 3f2896e132e2fc4f5a2b77e015719cd8f74a3b5ce958d3d2ffc83cc9bd8a1a265ed54835a8751daf00b85af7bf15f8ad1a9fe123dafdfdfe3e81f17e585d0e95
+  checksum: b5d8178ee1f4b1dd197a783e7f0eb4a7c0e9ef8fde18c73f71aee636cd57e742a1693a2cd2279fbfb3d6b04aa535212fba8b6c535f6ffc92d020938cc117796e
   languageName: node
   linkType: hard
 
