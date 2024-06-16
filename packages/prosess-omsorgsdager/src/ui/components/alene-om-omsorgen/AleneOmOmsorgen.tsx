@@ -3,8 +3,8 @@ import dayjs from 'dayjs';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { Alert, Button, Fieldset, HStack, RadioGroup, Select } from '@navikt/ds-react';
-import {useFeatureToggles} from "@fpsak-frontend/shared-components";
 import { AleneOmOmsorgenProps } from '../../../types/AleneOmOmsorgenProps';
 import {
   booleanTilTekst,
@@ -36,9 +36,9 @@ type FormData = {
 };
 
 export enum AvslagskoderAleneOmOmsorgen {
-  FORELDRE_BOR_SAMMEN = "1078",
-  AVTALE_OM_DELT_BOSTED = "1079",
-  ANNET = "1077"
+  FORELDRE_BOR_SAMMEN = '1078',
+  AVTALE_OM_DELT_BOSTED = '1079',
+  ANNET = '1077',
 }
 
 const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
@@ -167,13 +167,14 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
             erBehandlingstypeRevurdering={erBehandlingstypeRevurdering}
           />
 
-          {featureToggles?.VITE_AVSLAGSÅRSAK_ALENEOMSORG && !informasjonTilLesemodus.vilkarOppfylt && informasjonTilLesemodus.avslagsårsakKode !== '' && (
-            <>
-              <p className={styleLesemodus.label}>{tekst.arsak}</p>
-              <p className={styleLesemodus.text}>{mapTilAvslagstekst(informasjonTilLesemodus.avslagsårsakKode)}</p>
-            </>
-          )}
-
+          {featureToggles?.AVSLAGSAARSAK_ALENEOMSORG &&
+            !informasjonTilLesemodus.vilkarOppfylt &&
+            informasjonTilLesemodus.avslagsårsakKode !== '' && (
+              <>
+                <p className={styleLesemodus.label}>{tekst.arsak}</p>
+                <p className={styleLesemodus.text}>{mapTilAvslagstekst(informasjonTilLesemodus.avslagsårsakKode)}</p>
+              </>
+            )}
         </>
       )}
 
@@ -207,34 +208,32 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                 {errors.erSokerenAleneOmOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
               </div>
 
-              {featureToggles?.VITE_AVSLAGSÅRSAK_ALENEOMSORG && erSokerAleneOmOmsorgen.length > 0 && !tekstTilBoolean(erSokerAleneOmOmsorgen) && (
-                <div>
-                  <RadioGroup
-                    className={styleRadioknapper.horisontalPlassering}
-                    legend={tekst.velgArsak}
-                    size="small"
-                    name="avslagsårsakKode"
-                  >
-                    <HStack gap="1">
-                      <RadioButtonWithBooleanValue
-                        label={tekst.foreldreBorSammen}
-                        value={AvslagskoderAleneOmOmsorgen.FORELDRE_BOR_SAMMEN}
-                        name="avslagsårsakKode"
-                      />
-                      <RadioButtonWithBooleanValue
-                        label={tekst.avltaleOmDeltBosted}
-                        value={AvslagskoderAleneOmOmsorgen.AVTALE_OM_DELT_BOSTED}
-                        name="avslagsårsakKode"
-                      />
-                      <RadioButtonWithBooleanValue
-                        label={tekst.annet}
-                        value="1077"
-                        name="avslagsårsakKode"
-                      />
-                    </HStack>
-                  </RadioGroup>
-                </div>
-              )}
+              {featureToggles?.AVSLAGSAARSAK_ALENEOMSORG &&
+                erSokerAleneOmOmsorgen.length > 0 &&
+                !tekstTilBoolean(erSokerAleneOmOmsorgen) && (
+                  <div>
+                    <RadioGroup
+                      className={styleRadioknapper.horisontalPlassering}
+                      legend={tekst.velgArsak}
+                      size="small"
+                      name="avslagsårsakKode"
+                    >
+                      <HStack gap="1">
+                        <RadioButtonWithBooleanValue
+                          label={tekst.foreldreBorSammen}
+                          value={AvslagskoderAleneOmOmsorgen.FORELDRE_BOR_SAMMEN}
+                          name="avslagsårsakKode"
+                        />
+                        <RadioButtonWithBooleanValue
+                          label={tekst.avltaleOmDeltBosted}
+                          value={AvslagskoderAleneOmOmsorgen.AVTALE_OM_DELT_BOSTED}
+                          name="avslagsårsakKode"
+                        />
+                        <RadioButtonWithBooleanValue label={tekst.annet} value="1077" name="avslagsårsakKode" />
+                      </HStack>
+                    </RadioGroup>
+                  </div>
+                )}
 
               {tekstTilBoolean(erSokerAleneOmOmsorgen) && (
                 <Fieldset
