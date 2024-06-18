@@ -47,7 +47,7 @@
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ds-react": "6.10.1",
     "@navikt/ft-fakta-beregning-redesign": "1.2.10",
-    "@navikt/ft-form-hooks": "4.4.9",
+    "@navikt/ft-form-hooks": "4.4.10",
     "@navikt/ft-plattform-komponenter": "2.5.12",
     "@navikt/ft-prosess-beregningsgrunnlag": "6.5.13",
     "@navikt/ft-ui-komponenter": "2.3.9",
