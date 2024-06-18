@@ -25,7 +25,7 @@
     "css:modules:typegen:watch": "tcm ./packages/v2/gui --camelCase dashes --allowArbitraryExtensions --watch",
     "css:modules:typegen:check": "tcm ./packages/v2/gui --camelCase dashes --allowArbitraryExtensions --listDifferent",
     "dev": "yarn cross-env APP_URL_K9FORMIDLING=http://localhost:8060/rest/dummy vite serve",
-    "dev-lokal": "cross-env NODE_ENV=development APP_URL_SAK=http://k9-sak:8080 APP_URL_K9OPPDRAG=http://k9-oppdrag:8070 APP_URL_K9FORMIDLING_DD=http://k9-formidling-dokumentdata:8294 APP_URL_K9FORMIDLING=http://k9-formidling:8290 SPLITTET_SAMMENLINGNING_BEREGNING=true vite serve",
+    "dev-lokal": "cross-env NODE_ENV=development APP_URL_SAK=http://k9-sak:8080 APP_URL_K9OPPDRAG=http://k9-oppdrag:8070 APP_URL_K9FORMIDLING_DD=http://k9-formidling-dokumentdata:8294 APP_URL_K9FORMIDLING=http://localhost:8290 SPLITTET_SAMMENLINGNING_BEREGNING=true vite serve",
     "dev-med-formidling": "yarn cross-env APP_URL_K9FORMIDLING=http://k9-formidling:8290 SPLITTET_SAMMENLINGNING_BEREGNING=true vite serve",
     "build": "VITE_SENTRY_RELEASE=$(git rev-parse --short HEAD) vite build",
     "up": "docker-compose up -d --remove-orphans --build",
