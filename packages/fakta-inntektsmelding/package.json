@@ -11,15 +11,15 @@
   "license": "MIT",
   "devDependencies": {
     "msw": "2.3.1",
-    "vite": "^5.2.12",
+    "vite": "^5.3.1",
     "vite-plugin-node-polyfills": "^0.22.0"
   },
   "dependencies": {
-    "@navikt/ds-css": "6.10.0",
+    "@navikt/ds-css": "6.10.1",
     "@navikt/ds-icons": "3.4.3",
-    "@navikt/ds-react": "6.10.0",
-    "@navikt/ft-form-hooks": "4.4.8",
-    "@navikt/ft-plattform-komponenter": "2.5.11",
+    "@navikt/ds-react": "6.10.1",
+    "@navikt/ft-form-hooks": "4.4.9",
+    "@navikt/ft-plattform-komponenter": "2.5.12",
     "@popperjs/core": "2.11.8",
     "classnames": "2.5.1",
     "dayjs": "1.11.11",

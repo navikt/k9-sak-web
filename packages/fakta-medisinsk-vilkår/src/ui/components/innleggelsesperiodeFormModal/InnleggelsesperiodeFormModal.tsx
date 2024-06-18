@@ -92,7 +92,9 @@ const InnleggelsesperiodeFormModal = ({
                   const initialiserteInnleggelsesperioder = getValues().innleggelsesperioder.map(
                     ({ period }: AnyType) => new Period(period.fom, period.tom),
                   );
-                  const erAllePerioderGyldige = initialiserteInnleggelsesperioder.every(periode => periode.isValid());
+                  const erAllePerioderGyldige = initialiserteInnleggelsesperioder.every(
+                    periode => periode.isValid() && periode.fomIsBeforeOrSameAsTom(),
+                  );
                   if (erAllePerioderGyldige) {
                     endringerPåvirkerAndreBehandlinger(initialiserteInnleggelsesperioder).then(
                       ({ førerTilRevurdering }) => setShowWarningMessage(førerTilRevurdering),

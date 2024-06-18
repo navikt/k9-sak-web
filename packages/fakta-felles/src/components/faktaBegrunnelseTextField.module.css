@@ -1,12 +1,3 @@
 .begrunnelseTextField {
   width: 50%;
 }
-
-.explanationTextarea {
-  resize: none;
-}
-
-.explanationTextareaReadOnly {
-  padding-top: 0;
-  resize: none;
-}

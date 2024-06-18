@@ -2,7 +2,7 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { cleanup, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { intlMock } from '../../i18n/index';
 import DocumentList from './DocumentList';
 
