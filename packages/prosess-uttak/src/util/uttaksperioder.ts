@@ -5,9 +5,9 @@ import Uttaksperioder from '../types/Uttaksperioder';
 import { sortPeriodsByNewest, sortPeriodsChronological } from './periodUtils';
 
 const sjekkOmPerioderErKantIKant = (periode: Period, nestePeriode: Period) => {
-  const førsteDagEtterFørstePeriode = initializeDate(periode.tom).add(1, 'day');
-  const førsteDagINestePeriode = initializeDate(nestePeriode.fom);
-  return førsteDagEtterFørstePeriode.isSame(førsteDagINestePeriode);
+  const sisteUkeIFørstePeriode = initializeDate(periode.tom).week();
+  const førsteUkeINestePeriode = initializeDate(nestePeriode.fom).week();
+  return sisteUkeIFørstePeriode === førsteUkeINestePeriode || førsteUkeINestePeriode === sisteUkeIFørstePeriode + 1;
 };
 
 const lagUttaksperiodeliste = (uttaksperioder: Uttaksperioder): Uttaksperiode[] => {
