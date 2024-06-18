@@ -114,7 +114,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
 
   const finnesOpptjeningsaktiviteterVidOpptjeningTom: boolean = !erPleiepenger
     ? true
-    : opptjeninger.some(opptjening => {
+    : opptjeninger?.some(opptjening => {
         const skjæringstidspunkt = dayjs(opptjening.fastsattOpptjening.opptjeningTom)
           .add(1, 'day')
           .format('YYYY-MM-DD');
