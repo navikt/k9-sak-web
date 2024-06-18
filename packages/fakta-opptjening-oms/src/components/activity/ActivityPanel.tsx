@@ -27,13 +27,13 @@ import {
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import type { OpptjeningAktivitetType } from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
+import { CheckmarkCircleIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Label, Tag } from '@navikt/ds-react';
 import moment from 'moment';
 import React, { KeyboardEvent, MouseEvent } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
-import { CheckmarkCircleIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import ActivityDataSubPanel from './ActivityDataSubPanel';
 import styles from './activityPanel.module.css';
 
@@ -260,7 +260,6 @@ export const ActivityPanel = ({
       <VerticalSpacer fourPx />
       <TextAreaField
         name="begrunnelse"
-        textareaClass={styles.explanationTextarea}
         label={<FormattedMessage id={finnBegrunnelseLabel(initialValues, readOnly, hasAksjonspunkt)} />}
         validate={[requiredCustom, minLength3, maxLength1500, hasValidText]}
         maxLength={1500}

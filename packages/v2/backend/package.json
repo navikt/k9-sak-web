@@ -15,6 +15,6 @@
   },
   "dependencies": {
     "@navikt/k9-klage-typescript-client": "1.0.20240513162434-997f3da",
-    "@navikt/k9-sak-typescript-client": "1.0.20240610125642"
+    "@navikt/k9-sak-typescript-client": "1.0.20240614143521"
   }
 }
