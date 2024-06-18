@@ -107,3 +107,7 @@
   border-left: 1px solid #bbb;
   border-right: 1px solid #bbb;
 }
+
+.uttak__vilkarIconContainer svg {
+  vertical-align: middle;
+}

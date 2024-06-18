@@ -49,7 +49,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
   return (
     <>
       <Table.Row className={`${erValgt ? styles.uttak__expandedRow : ''} ${styles.uttak__row}`} onClick={velgPeriode}>
-        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} ${styles.borderLeft}`}>
+        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} `}>
           {periode.getFirstAndLastWeek()}
         </Table.DataCell>
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
@@ -73,7 +73,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
             )}
           </BodyShort>
         </Table.DataCell>
-        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} flex`}>
+        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} ${styles.uttak__vilkarIconContainer}`}>
           {harOppfyltAlleInngangsvilkår ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
         </Table.DataCell>
         {erFagytelsetypeLivetsSluttfase && (
@@ -102,7 +102,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
           <p className={styles.uttak__uttaksgrad__tekst}>{`${uttaksgrad} %`}</p>
           <div className={uttakGradIndikatorCls} />
         </Table.DataCell>
-        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} ${styles.borderRight}`}>
+        <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''} `}>
           <div className={styles.uttak__lastColumn}>
             <div className={styles.uttak__behandlerIcon}>
               <Endringsstatus status={endringsstatus} />
