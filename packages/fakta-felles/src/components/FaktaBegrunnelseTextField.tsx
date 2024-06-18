@@ -58,7 +58,6 @@ const FaktaBegrunnelseTextField = ({
             name={name}
             label={isReadOnly ? '' : textAreaLabel}
             validate={[required, minLength3, maxLength1500, hasValidText]}
-            textareaClass={isReadOnly ? styles.explanationTextareaReadOnly : styles.explanationTextarea}
             maxLength={1500}
             readOnly={isReadOnly}
           />

@@ -2799,6 +2799,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.5.12
     react: 18.3.1
     react-intl: 6.6.8
+    uuid: 9.0.1
   languageName: unknown
   linkType: soft
 

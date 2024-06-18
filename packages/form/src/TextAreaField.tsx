@@ -31,7 +31,6 @@ interface TextAreaFieldProps {
   )[];
   readOnly?: boolean;
   dataId?: string;
-  textareaClass?: string;
   maxLength?: number;
   badges?: Badges[];
   placeholder?: string;

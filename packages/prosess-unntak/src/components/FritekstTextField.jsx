@@ -14,7 +14,6 @@ const FritekstTextField = ({ sprakkode, readOnly = true, intl }) => (
       label={intl.formatMessage({ id: 'FritekstTextField.Fritekst' })}
       validate={[required, hasValidText]}
       readOnly={readOnly}
-      textareaClass={styles.explanationTextarea}
       maxLength={100000}
       badges={[
         {

@@ -7,7 +7,6 @@ import React from 'react';
 import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 
-import styles from './aktsomhetGradUaktsomhetFormPanel.module.css';
 import AktsomhetSarligeGrunnerFormPanel from './AktsomhetSarligeGrunnerFormPanel';
 
 const minLength3 = minLength(3);
@@ -25,7 +24,6 @@ const sarligGrunnerBegrunnelseDiv = (readOnly: boolean, intl: IntlShape) => (
       validate={[required, minLength3, maxLength1500, hasValidText]}
       maxLength={1500}
       readOnly={readOnly}
-      textareaClass={styles.explanationTextarea}
       placeholder={intl.formatMessage({ id: 'AktsomhetGradUaktsomhetFormPanel.VurderSærligGrunner.Hjelpetekst' })}
     />
     <VerticalSpacer twentyPx />
