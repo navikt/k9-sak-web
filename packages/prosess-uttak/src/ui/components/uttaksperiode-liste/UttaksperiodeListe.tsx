@@ -68,7 +68,7 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
     }
   };
   return (
-    <div style={{ maxWidth: '961px' }}>
+    <div className={styles.tableContainer}>
       <Table>
         <Table.Header>
           <Table.Row>
@@ -86,12 +86,21 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
         </Table.Header>
         <Table.Body>
           {afterOrCovering.map((uttak, index) => (
-            <Uttak
-              key={uttak.periode.prettifyPeriod()}
-              uttak={uttak}
-              erValgt={valgtPeriodeIndex === index}
-              velgPeriode={() => velgPeriode(index)}
-            />
+            <>
+              {uttak.harOppholdTilNestePeriode && (
+                <Table.Row>
+                  <td colSpan={12}>
+                    <div className={styles.oppholdRow} />
+                  </td>
+                </Table.Row>
+              )}
+              <Uttak
+                key={uttak.periode.prettifyPeriod()}
+                uttak={uttak}
+                erValgt={valgtPeriodeIndex === index}
+                velgPeriode={() => velgPeriode(index)}
+              />
+            </>
           ))}
           {virkningsdatoUttakNyeRegler && !redigerVirkningsdato && (
             <Table.Row>
@@ -122,13 +131,22 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
             </Table.Row>
           )}
           {before.map((uttak, index) => (
-            <Uttak
-              key={uttak.periode.prettifyPeriod()}
-              uttak={uttak}
-              erValgt={valgtPeriodeIndex === index}
-              velgPeriode={() => velgPeriode(index)}
-              withBorderTop={index === 0 && !!virkningsdatoUttakNyeRegler}
-            />
+            <>
+              {uttak.harOppholdTilNestePeriode && (
+                <Table.Row>
+                  <td colSpan={12}>
+                    <div className={styles.oppholdRow} />
+                  </td>
+                </Table.Row>
+              )}
+              <Uttak
+                key={uttak.periode.prettifyPeriod()}
+                uttak={uttak}
+                erValgt={valgtPeriodeIndex === index}
+                velgPeriode={() => velgPeriode(index)}
+                withBorderTop={index === 0 && !!virkningsdatoUttakNyeRegler}
+              />
+            </>
           ))}
         </Table.Body>
       </Table>
