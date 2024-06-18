@@ -14,7 +14,6 @@ const FritekstAnkeBrevTextField = ({ sprakkode, readOnly = false, intl }) => (
       label={intl.formatMessage({ id: 'FritekstAnkeBrevTextField' })}
       validate={[required, hasValidText]}
       readOnly={readOnly}
-      textareaClass={styles.explanationTextarea}
       maxLength={100000}
       badges={[
         {

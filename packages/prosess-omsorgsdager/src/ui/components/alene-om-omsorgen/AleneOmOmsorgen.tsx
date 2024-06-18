@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { Alert, Button, Fieldset, HStack, RadioGroup, Select } from '@navikt/ds-react';
 import { AleneOmOmsorgenProps } from '../../../types/AleneOmOmsorgenProps';
 import {
@@ -27,11 +28,18 @@ import tekst from './alene-om-omsorgen-tekst';
 
 type FormData = {
   begrunnelse: string;
+  avslagsårsakKode: string;
   fraDato: string;
   tilDato: string;
   erSokerenAleneOmOmsorgen: string;
   åpenForRedigering: boolean;
 };
+
+export enum AvslagskoderAleneOmOmsorgen {
+  FORELDRE_BOR_SAMMEN = '1078',
+  AVTALE_OM_DELT_BOSTED = '1079',
+  ANNET = '1077',
+}
 
 const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   behandlingsID,
@@ -45,6 +53,8 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   losAksjonspunkt,
   formState,
 }) => {
+  const [featureToggles] = useFeatureToggles();
+
   const formStateKey = `${behandlingsID}-utvidetrett-alene-om-omsorgen`;
   const harAksjonspunktOgVilkarLostTidligere =
     informasjonTilLesemodus?.fraDato.length > 0 && informasjonTilLesemodus?.begrunnelse.length > 0;
@@ -53,6 +63,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     reValidateMode: 'onSubmit',
     defaultValues: {
       begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
+      avslagsårsakKode: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.avslagsårsakKode : '',
       fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : 'dd.mm.åååå',
       tilDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.tilDato) : 'dd.mm.åååå',
       erSokerenAleneOmOmsorgen: harAksjonspunktOgVilkarLostTidligere
@@ -94,7 +105,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     getValues,
   );
 
-  const bekreftAksjonspunkt = ({ begrunnelse, erSokerenAleneOmOmsorgen, fraDato, tilDato }) => {
+  const bekreftAksjonspunkt = ({ begrunnelse, avslagsårsakKode, erSokerenAleneOmOmsorgen, fraDato, tilDato }) => {
     if (
       (!errors.begrunnelse && !errors.fraDato && !errors.erSokerenAleneOmOmsorgen && !erBehandlingstypeRevurdering) ||
       (!errors.begrunnelse &&
@@ -105,6 +116,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     ) {
       losAksjonspunkt({
         begrunnelse,
+        avslagsårsakKode,
         vilkarOppfylt: tekstTilBoolean(erSokerenAleneOmOmsorgen),
         fraDato: tekstTilBoolean(erSokerenAleneOmOmsorgen) ? fraDato.replaceAll('.', '-') : '',
         tilDato: tilDato.replaceAll('.', '-'),
@@ -112,6 +124,19 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
       setValue('åpenForRedigering', false);
       mellomlagringFormState.fjerneState();
     }
+  };
+
+  const mapTilAvslagstekst = (avslagsKode: string): string => {
+    if (avslagsKode === AvslagskoderAleneOmOmsorgen.FORELDRE_BOR_SAMMEN) {
+      return tekst.foreldreBorSammen;
+    }
+    if (avslagsKode === AvslagskoderAleneOmOmsorgen.AVTALE_OM_DELT_BOSTED) {
+      return tekst.avltaleOmDeltBosted;
+    }
+    if (avslagsKode === AvslagskoderAleneOmOmsorgen.ANNET) {
+      return tekst.annet;
+    }
+    return '';
   };
 
   return (
@@ -133,13 +158,24 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
       )}
 
       {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && (
-        <AleneOmOmsorgenLesemodus
-          fraDatoFraSoknad={fraDatoFraVilkar}
-          informasjonTilLesemodus={informasjonTilLesemodus}
-          harAksjonspunktBlivitLostTidligare={aksjonspunktLost}
-          åpneForRedigereInformasjon={() => setValue('åpenForRedigering', true)}
-          erBehandlingstypeRevurdering={erBehandlingstypeRevurdering}
-        />
+        <>
+          <AleneOmOmsorgenLesemodus
+            fraDatoFraSoknad={fraDatoFraVilkar}
+            informasjonTilLesemodus={informasjonTilLesemodus}
+            harAksjonspunktBlivitLostTidligare={aksjonspunktLost}
+            åpneForRedigereInformasjon={() => setValue('åpenForRedigering', true)}
+            erBehandlingstypeRevurdering={erBehandlingstypeRevurdering}
+          />
+
+          {featureToggles?.AVSLAGSAARSAK_ALENEOMSORG &&
+            !informasjonTilLesemodus.vilkarOppfylt &&
+            informasjonTilLesemodus.avslagsårsakKode !== '' && (
+              <>
+                <p className={styleLesemodus.label}>{tekst.arsak}</p>
+                <p className={styleLesemodus.text}>{mapTilAvslagstekst(informasjonTilLesemodus.avslagsårsakKode)}</p>
+              </>
+            )}
+        </>
       )}
 
       {(åpenForRedigering || (!lesemodus && !vedtakFattetVilkarOppfylt)) && (
@@ -171,6 +207,33 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                 </RadioGroup>
                 {errors.erSokerenAleneOmOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
               </div>
+
+              {featureToggles?.AVSLAGSAARSAK_ALENEOMSORG &&
+                erSokerAleneOmOmsorgen.length > 0 &&
+                !tekstTilBoolean(erSokerAleneOmOmsorgen) && (
+                  <div>
+                    <RadioGroup
+                      className={styleRadioknapper.horisontalPlassering}
+                      legend={tekst.velgArsak}
+                      size="small"
+                      name="avslagsårsakKode"
+                    >
+                      <HStack gap="1">
+                        <RadioButtonWithBooleanValue
+                          label={tekst.foreldreBorSammen}
+                          value={AvslagskoderAleneOmOmsorgen.FORELDRE_BOR_SAMMEN}
+                          name="avslagsårsakKode"
+                        />
+                        <RadioButtonWithBooleanValue
+                          label={tekst.avltaleOmDeltBosted}
+                          value={AvslagskoderAleneOmOmsorgen.AVTALE_OM_DELT_BOSTED}
+                          name="avslagsårsakKode"
+                        />
+                        <RadioButtonWithBooleanValue label={tekst.annet} value="1077" name="avslagsårsakKode" />
+                      </HStack>
+                    </RadioGroup>
+                  </div>
+                )}
 
               {tekstTilBoolean(erSokerAleneOmOmsorgen) && (
                 <Fieldset

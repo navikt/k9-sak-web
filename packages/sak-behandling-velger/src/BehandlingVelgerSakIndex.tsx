@@ -3,7 +3,7 @@ import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { Location } from 'history';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import messages from '../i18n/nb_NO.json';
 import BehandlingPicker from './components/BehandlingPicker';
 import BehandlingPickerOld from './components/BehandlingPickerOld';

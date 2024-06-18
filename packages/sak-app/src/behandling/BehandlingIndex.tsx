@@ -161,7 +161,6 @@ const BehandlingIndex = ({
   const behandlingTypeKode = behandling?.type ? behandling.type : undefined;
 
   const defaultProps = {
-    key: behandlingId,
     behandlingId,
     oppdaterBehandlingVersjon,
     behandlingEventHandler,
@@ -202,6 +201,7 @@ const BehandlingIndex = ({
           <BehandlingKlageIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             alleBehandlinger={fagsakBehandlingerInfo}
+            key={behandlingId}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -216,6 +216,7 @@ const BehandlingIndex = ({
           <BehandlingAnkeIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             alleBehandlinger={fagsakBehandlingerInfo}
+            key={behandlingId}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -230,6 +231,7 @@ const BehandlingIndex = ({
           <BehandlingUnntakIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
+            key={behandlingId}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -247,6 +249,7 @@ const BehandlingIndex = ({
               b => b.type === BehandlingType.REVURDERING && b.status !== BehandlingStatus.AVSLUTTET,
             )}
             valgtFaktaSteg={query.fakta}
+            key={behandlingId}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -261,6 +264,7 @@ const BehandlingIndex = ({
           <BehandlingOmsorgspengerIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
+            key={behandlingId}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -275,6 +279,7 @@ const BehandlingIndex = ({
           <BehandlingPleiepengerSluttfaseIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
+            key={behandlingId}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -289,6 +294,7 @@ const BehandlingIndex = ({
           <BehandlingUtvidetRettIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
+            key={behandlingId}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -303,6 +309,7 @@ const BehandlingIndex = ({
           <BehandlingFrisinnIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
+            key={behandlingId}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -317,6 +324,7 @@ const BehandlingIndex = ({
           <BehandlingOpplaeringspengerIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
+            key={behandlingId}
             {...defaultProps}
           />
         </ErrorBoundary>
@@ -330,6 +338,7 @@ const BehandlingIndex = ({
         <BehandlingPleiepengerIndex
           oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
           valgtFaktaSteg={query.fakta}
+          key={behandlingId}
           {...defaultProps}
         />
       </ErrorBoundary>

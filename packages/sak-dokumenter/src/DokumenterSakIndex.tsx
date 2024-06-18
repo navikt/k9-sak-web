@@ -1,7 +1,7 @@
 import { Dokument, Fagsak } from '@k9-sak-web/types';
 import React from 'react';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import messages from '../i18n/nb_NO.json';
 import DocumentList from './components/DocumentList';
 

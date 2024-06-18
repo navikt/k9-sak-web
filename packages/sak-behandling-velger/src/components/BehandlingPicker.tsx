@@ -1,17 +1,17 @@
 import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
-import axios from 'axios';
-import { Location } from 'history';
-import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
-import { UseQueryResult, useQueries } from 'react-query';
-import { NavLink, useNavigate } from 'react-router-dom';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { BehandlingAppKontekst, PerioderMedBehandlingsId } from '@k9-sak-web/types';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { AddCircle } from '@navikt/ds-icons';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
+import { UseQueryResult, useQueries } from '@tanstack/react-query';
+import axios from 'axios';
+import { Location } from 'history';
+import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
-import { BehandlingAppKontekst, PerioderMedBehandlingsId } from '@k9-sak-web/types';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
@@ -134,9 +134,6 @@ const BehandlingPicker = ({
   const { kodeverkNavnFraKode } = useKodeverkContext();
   const finnÅpenBehandling = () => {
     const åpenBehandling = behandlinger.find(behandling => behandling.status !== behandlingStatus.AVSLUTTET);
-    if (åpenBehandling) {
-      navigate(getBehandlingLocation(åpenBehandling.id));
-    }
     return åpenBehandling?.id;
   };
 
@@ -145,6 +142,13 @@ const BehandlingPicker = ({
   const previousBehandlingId = usePrevious(behandlingId || finnÅpenBehandling());
   const [activeFilters, setActiveFilters] = useState([]);
   const [numberOfBehandlingperioderToFetch, setNumberOfBehandlingPerioderToFetch] = useState(10);
+
+  useEffect(() => {
+    const åpenBehandlingId = finnÅpenBehandling();
+    if (åpenBehandlingId) {
+      navigate(getBehandlingLocation(åpenBehandlingId));
+    }
+  }, []);
 
   useEffect(() => {
     if (previousBehandlingId !== behandlingId) {
@@ -174,13 +178,13 @@ const BehandlingPicker = ({
       ),
     [behandlingerSomSkalVises],
   );
-  const søknadsperioder = useQueries(
-    behandlingerMedPerioderMedÅrsak.map(behandling => ({
+  const søknadsperioder = useQueries({
+    queries: behandlingerMedPerioderMedÅrsak.map(behandling => ({
       queryKey: ['behandlingId', behandling.id],
       queryFn: () => getBehandlingPerioderÅrsaker(behandling),
       staleTime: 3 * 60 * 1000,
     })),
-  );
+  });
 
   const valgtBehandling = valgtBehandlingId
     ? behandlingerSomSkalVises.find(behandling => behandling.id === valgtBehandlingId)

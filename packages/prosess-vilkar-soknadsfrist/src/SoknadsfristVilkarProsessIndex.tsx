@@ -51,6 +51,21 @@ interface SoknadsfristVilkarProsessIndexProps {
   soknadsfristStatus: { dokumentStatus: DokumentStatus[] };
 }
 
+// Finner ut om Statusperiode gjelder for vilkårsperiode
+const erRelevantForPeriode = (
+  vilkårPeriodeFom: moment.Moment,
+  vilkårPeriodeTom: moment.Moment,
+  statusPeriodeFom: moment.Moment,
+  statusPeriodeTom: moment.Moment,
+  innsendtDato: string,
+) => {
+  // er starten av vilkårsperioden før opprinnelig søkndasfrist
+  const erAktuellForPerioden = utledInnsendtSoknadsfrist(innsendtDato, false) > vilkårPeriodeFom;
+  // overlapper vilkårsperioden med statusperioden fra dokumentet
+  const overlapperPerioder = vilkårPeriodeFom <= statusPeriodeTom && vilkårPeriodeTom >= statusPeriodeFom;
+  return erAktuellForPerioden && overlapperPerioder;
+};
+
 const SoknadsfristVilkarProsessIndex = ({
   behandling,
   aksjonspunkter,
@@ -113,11 +128,12 @@ const SoknadsfristVilkarProsessIndex = ({
           return perioder.some(vilkårPeriode => {
             const vilkårPeriodeFom = moment(vilkårPeriode.periode.fom);
             const vilkårPeriodeTom = moment(vilkårPeriode.periode.tom);
-
-            return (
-              utledInnsendtSoknadsfrist(dok.innsendingstidspunkt, false) > vilkårPeriodeFom &&
-              ((vilkårPeriodeFom >= statusPeriodeFom && vilkårPeriodeFom <= statusPeriodeTom) ||
-                (vilkårPeriodeTom >= statusPeriodeFom && vilkårPeriodeTom <= statusPeriodeTom))
+            return erRelevantForPeriode(
+              vilkårPeriodeFom,
+              vilkårPeriodeTom,
+              statusPeriodeFom,
+              statusPeriodeTom,
+              dok.innsendingstidspunkt,
             );
           });
         }),
@@ -131,11 +147,12 @@ const SoknadsfristVilkarProsessIndex = ({
     dok.status.some(status => {
       const statusPeriodeFom = moment(status.periode.fom);
       const statusPeriodeTom = moment(status.periode.tom);
-
-      return (
-        utledInnsendtSoknadsfrist(dok.innsendingstidspunkt, false) > activePeriodeFom &&
-        ((activePeriodeFom >= statusPeriodeFom && activePeriodeFom <= statusPeriodeTom) ||
-          (activePeriodeTom >= statusPeriodeFom && activePeriodeTom <= statusPeriodeTom))
+      return erRelevantForPeriode(
+        activePeriodeFom,
+        activePeriodeTom,
+        statusPeriodeFom,
+        statusPeriodeTom,
+        dok.innsendingstidspunkt,
       );
     }),
   );

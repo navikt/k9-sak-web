@@ -1,5 +1,5 @@
 import { PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
-import { ContentWithTooltip } from '@navikt/ft-plattform-komponenter';
+import { Tooltip as DSTooltip } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { CSSProperties, RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styles from './TimelinePeriod.module.css';
@@ -82,18 +82,18 @@ const NonClickablePeriod = ({ divRef, period, className }: NonClickablePeriodPro
   }, [divRef.current]);
 
   return (
-    <div
-      ref={divRef}
-      className={`${styles.nonClickablePeriod} ${
-        tooltipShouldBeLeftAligned(xPosition) ? styles.tooltipLeft : ''
-      } ${className}`}
-      aria-label={ariaLabel(period)}
-      style={style(period)}
-    >
-      <ContentWithTooltip tooltipText={periodTooltip(period)}>
+    <DSTooltip content={periodTooltip(period)} delay={0} placement="bottom">
+      <div
+        ref={divRef}
+        className={`${styles.nonClickablePeriod} ${
+          tooltipShouldBeLeftAligned(xPosition) ? styles.tooltipLeft : ''
+        } ${className}`}
+        aria-label={ariaLabel(period)}
+        style={style(period)}
+      >
         {period.infoPin && <div className={styles.infoPin} />}
-      </ContentWithTooltip>
-    </div>
+      </div>
+    </DSTooltip>
   );
 };
 
