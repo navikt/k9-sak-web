@@ -1,4 +1,7 @@
 import { httpErrorHandler } from '@fpsak-frontend/utils';
+import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
+import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
+import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
 import { apiPaths } from '@k9-sak-web/rest-api';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
@@ -23,13 +26,10 @@ import {
   PersonGavelIcon,
 } from '@navikt/aksel-icons';
 import { BodyShort, Tabs, Tooltip } from '@navikt/ds-react';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
-import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
-import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
@@ -237,7 +237,10 @@ const BehandlingSupportIndex = ({
 
   const valgtIndex = synligeSupportPaneler.findIndex(p => p === aktivtSupportPanel);
 
-  const tabs = useMemo(() => lagTabs(synligeSupportPaneler, valgtIndex), [synligeSupportPaneler, valgtIndex]);
+  const tabs = useMemo(
+    () => lagTabs(synligeSupportPaneler, valgtIndex),
+    [synligeSupportPaneler, valgtIndex, antallUlesteNotater],
+  );
 
   const isPanelDisabled = () => (valgtSupportPanel ? !valgbareSupportPaneler.includes(valgtSupportPanel) : false);
 
