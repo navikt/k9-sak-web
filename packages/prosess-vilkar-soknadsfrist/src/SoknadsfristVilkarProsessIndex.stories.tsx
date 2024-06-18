@@ -9,11 +9,11 @@ import SoknadsfristVilkarProsessIndex from './SoknadsfristVilkarProsessIndex';
 
 const vilkarSoknadsfrist = [
   {
-    vilkarType: { kode: vilkarType.SOKNADSFRISTVILKARET, kodeverk: 'test' },
+    vilkarType: vilkarType.SOKNADSFRISTVILKARET,
     overstyrbar: true,
     perioder: [
       {
-        vilkarStatus: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+        vilkarStatus: vilkarUtfallType.IKKE_OPPFYLT,
         vurderesIBehandlingen: true,
         periode: {
           fom: '2020-02-20',
@@ -21,7 +21,7 @@ const vilkarSoknadsfrist = [
         },
       },
       {
-        vilkarStatus: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+        vilkarStatus: vilkarUtfallType.IKKE_OPPFYLT,
         vurderesIBehandlingen: true,
         periode: {
           fom: '2020-02-26',
@@ -29,7 +29,7 @@ const vilkarSoknadsfrist = [
         },
       },
       {
-        vilkarStatus: { kode: vilkarUtfallType.OPPFYLT, kodeverk: 'test' },
+        vilkarStatus: vilkarUtfallType.OPPFYLT,
         vurderesIBehandlingen: true,
         periode: {
           fom: '2020-02-28',
@@ -47,7 +47,7 @@ const soknadsStatus = {
       status: [
         {
           periode: { fom: '2020-02-20', tom: '2020-02-25' },
-          status: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+          status: vilkarUtfallType.IKKE_OPPFYLT,
         },
       ],
       innsendingstidspunkt: '2020-06-01',
@@ -60,7 +60,7 @@ const soknadsStatus = {
       status: [
         {
           periode: { fom: '2020-02-26', tom: '2020-02-27' },
-          status: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+          status: vilkarUtfallType.IKKE_OPPFYLT,
         },
       ],
       innsendingstidspunkt: '2020-06-01',
@@ -78,7 +78,7 @@ export default {
 const behandling = {
   id: 1,
   versjon: 1,
-  type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
+  type: behandlingType.FØRSTEGANGSSØKNAD,
 } as Behandling;
 
 export const visOverstyringspanelForSoknadsfrist = props => {
