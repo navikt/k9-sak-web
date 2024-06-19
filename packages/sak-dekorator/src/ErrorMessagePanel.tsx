@@ -40,10 +40,7 @@ export const ErrorMessagePanel = (props: OwnProps & WrappedComponentProps) => {
   };
 
   const { errorMessages, removeErrorMessage, intl } = props;
-  const errorMessagesWithId = useMemo(
-    () => errorMessages.map(error => ({ ...error, id: uuidv4() })),
-    [errorMessages.length],
-  );
+  const errorMessagesWithId = useMemo(() => errorMessages.map(error => ({ ...error, id: uuidv4() })), [errorMessages]);
 
   if (errorMessagesWithId.length === 0) {
     return null;

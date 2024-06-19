@@ -45,7 +45,9 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
 
   const { isLoading, data, refetch } = useQuery({
     queryKey: ['diagnosekodeResponse'],
-    queryFn: hentDiagnosekoder
+    queryFn: hentDiagnosekoder,
+    placeholderData: { diagnosekoder: [], links: [], behandlingUuid: '', versjon: null },
+    staleTime: 10000,
   });
 
   const { diagnosekoder, links, behandlingUuid, versjon } = data;
@@ -100,7 +102,7 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
         onDiagnosekoderUpdated();
         focusAddButton();
       });
-    }
+    },
   });
   const lagreDiagnosekodeMutation = useMutation({
     mutationFn: (nyeDiagnosekoder: string[]) => lagreDiagnosekode(nyeDiagnosekoder),
@@ -111,7 +113,7 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
         setModalIsOpen(false);
         focusAddButton();
       });
-    }
+    },
   });
 
   return (
