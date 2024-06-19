@@ -21,7 +21,7 @@ const DagerNavKanUtbetale = ({
   visDetaljer,
   viserDetaljer,
 }: DagerNavKanUtbetaleProps) => {
-  const featureToggles = useFeatureToggles();
+  const [featureToggles] = useFeatureToggles();
 
   return (
     <Nokkeltall
@@ -39,7 +39,7 @@ const DagerNavKanUtbetale = ({
             <FormattedMessage id="Nøkkeltall.Ventetid.InfoText" values={{dager: antallDagerArbeidsgiverDekker}}/>
           ),
         },
-        (featureToggles?.AVSLAGSAARSAK_ALENEOMSORG && {
+        (featureToggles?.NYE_NOKKELTALL && {
           antallDager: antallDagerFraværRapportertSomNyoppstartet,
           overskrifttekstId: 'Nøkkeltall.AntallDagerFraværRapportertSomNyoppstartet',
           infotekstContent: (
