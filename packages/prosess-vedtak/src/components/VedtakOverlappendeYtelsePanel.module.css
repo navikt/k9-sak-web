@@ -26,6 +26,10 @@
   padding: 0;
 }
 
+.accordion :global(.navds-accordion__header:not(:focus-visible)) {
+  box-shadow: none;
+}
+
 .accordion :global(.navds-accordion__header[aria-expanded='true']) {
   background-color: transparent;
 }
