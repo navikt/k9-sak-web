@@ -10,7 +10,7 @@ const sjekkOmPerioderErKantIKant = (periode: Period, nestePeriode: Period) => {
   return (
     sisteUkeIFørstePeriode === førsteUkeINestePeriode ||
     førsteUkeINestePeriode === sisteUkeIFørstePeriode + 1 ||
-    (sisteUkeIFørstePeriode === 52 && førsteUkeINestePeriode === 1)
+    (sisteUkeIFørstePeriode >= 52 && førsteUkeINestePeriode === 1)
   );
 };
 
