@@ -3,7 +3,8 @@ import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
+import { BehandlingType } from '@k9-sak-web/lib/types/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import HistorikkIndex from './HistorikkIndex';
 
@@ -60,7 +61,12 @@ describe('<HistorikkIndex>', () => {
 
     render(
       <MemoryRouter>
-        <KodeverkProvider behandlingType={BehandlingType.FORSTEGANGSSOKNAD}>
+        <KodeverkProvider
+          behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+          kodeverk={alleKodeverkV2}
+          klageKodeverk={alleKodeverkV2}
+          tilbakeKodeverk={alleKodeverkV2}
+        >
           <HistorikkIndex saksnummer="12345" behandlingId={1} behandlingVersjon={2} />
         </KodeverkProvider>
       </MemoryRouter>,
