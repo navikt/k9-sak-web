@@ -73,28 +73,16 @@ describe('<SoknadsfristVilkarForm>', () => {
         submitCallback={vi.fn()}
         aksjonspunkter={[
           {
-            aksjonspunktType: {
-              kode: 'MANU',
-              kodeverk: 'AKSJONSPUNKT_TYPE',
-            },
+            aksjonspunktType: 'MANU', // AKSJONSPUNKT_TYPE
             begrunnelse: 'begrunnelse',
             besluttersBegrunnelse: null,
-            definisjon: {
-              kode: '5077',
-              kodeverk: 'AKSJONSPUNKT_DEF',
-            },
+            definisjon: '5077', // AKSJONSPUNKT_DEF
             erAktivt: true,
             kanLoses: true,
-            status: {
-              kode: 'OPPR',
-              kodeverk: 'AKSJONSPUNKT_STATUS',
-            },
+            status: 'OPPR', // AKSJONSPUNKT_STATUS
             toTrinnsBehandling: true,
             toTrinnsBehandlingGodkjent: null,
-            vilkarType: {
-              kode: 'FP_VK_3',
-              kodeverk: 'VILKAR_TYPE',
-            },
+            vilkarType: 'FP_VK_3', // VILKAR_TYPE
             vurderPaNyttArsaker: null,
           },
         ]}
@@ -109,10 +97,7 @@ describe('<SoknadsfristVilkarForm>', () => {
                   fom: '2023-02-01',
                   tom: '2024-04-01',
                 },
-                vilkarStatus: {
-                  kode: 'test',
-                  kodeverk: 'test',
-                },
+                vilkarStatus: 'test',
                 avslagKode: 'test',
                 vurderesIBehandlingen: true,
                 merknadParametere: {
@@ -121,10 +106,7 @@ describe('<SoknadsfristVilkarForm>', () => {
               },
             ],
             overstyrbar: true,
-            vilkarType: {
-              kode: 'test',
-              kodeverk: 'test',
-            },
+            vilkarType: 'test',
           },
         ]}
         soknadsfristStatus={{
@@ -137,10 +119,7 @@ describe('<SoknadsfristVilkarForm>', () => {
                     fom: '2023-03-01',
                     tom: '2024-03-01',
                   },
-                  status: {
-                    kode: 'OPPFYLT',
-                    kodeverk: 'VILKAR_UTFALL_TYPE',
-                  },
+                  status: 'OPPFYLT', // VILKAR_UTFALL_TYPE
                 },
               ],
               innsendingstidspunkt: '2024-03-26T00:02:27.327',
