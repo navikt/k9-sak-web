@@ -14,10 +14,10 @@
     "vite-plugin-node-polyfills": "^0.22.0"
   },
   "dependencies": {
-    "@navikt/ds-css": "6.10.1",
+    "@navikt/ds-css": "6.11.0",
     "@navikt/ds-icons": "3.4.3",
-    "@navikt/ds-react": "6.10.1",
-    "@navikt/ft-plattform-komponenter": "2.5.12",
+    "@navikt/ds-react": "6.11.0",
+    "@navikt/ft-plattform-komponenter": "2.5.14",
     "@popperjs/core": "2.11.8",
     "classnames": "2.5.1",
     "dayjs": "1.11.11",
@@ -25,7 +25,7 @@
     "react": "18.3.1",
     "react-collapse": "5.1.1",
     "react-dom": "18.3.1",
-    "react-hook-form": "7.51.5",
+    "react-hook-form": "7.52.0",
     "react-popper": "2.3.0"
   },
   "msw": {
