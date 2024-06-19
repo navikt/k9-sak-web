@@ -101,6 +101,6 @@ spec:
     - name: BRUK_V2_MELDINGER
       value: "false"
     - name: AVSLAGSAARSAK_ALENEOMSORG
-      value: "false"
+      value: "true"
     - name: NYE_NOKKELTALL
       value: "false"
