@@ -12,13 +12,11 @@
 }
 
 .behandlingSelectedContainer .dateContainer {
-  align-items: end;
   display: flex;
   margin-top: 0.0625rem;
 }
 
 .behandlingSelectedContainer .resultContainer {
-  align-items: end;
   display: flex;
   margin-top: 0.0625rem;
 }
