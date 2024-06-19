@@ -3,9 +3,10 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { Fagsak, Kodeverk } from '@k9-sak-web/types';
-import React, { useState } from 'react';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
+import { Fagsak, Kodeverk } from '@k9-sak-web/types';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React, { useState } from 'react';
 import BehandlingVelgerSakIndex from './BehandlingVelgerSakIndex';
 
 const behandlinger = [
@@ -294,18 +295,21 @@ export default {
 
 export const visPanelForValgAvBehandlinger = props => {
   const [visAlle, toggleVisAlle] = useState(false);
+  const queryClient = new QueryClient();
   return (
-    <div style={{ width: '600px' }}>
-      <BehandlingVelgerSakIndex
-        getBehandlingLocation={() => locationMock}
-        showAll={visAlle}
-        toggleShowAll={() => toggleVisAlle(!visAlle)}
-        getKodeverkFn={getKodeverkFn}
-        fagsak={fagsak}
-        createLocationForSkjermlenke={() => locationMock}
-        {...props}
-      />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div style={{ width: '600px' }}>
+        <BehandlingVelgerSakIndex
+          getBehandlingLocation={() => locationMock}
+          showAll={visAlle}
+          toggleShowAll={() => toggleVisAlle(!visAlle)}
+          getKodeverkFn={getKodeverkFn}
+          fagsak={fagsak}
+          createLocationForSkjermlenke={() => locationMock}
+          {...props}
+        />
+      </div>
+    </QueryClientProvider>
   );
 };
 
