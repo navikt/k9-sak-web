@@ -116,7 +116,7 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
               aksjonspunkt.definisjon,
               begrunnelse,
               vilkarOppfylt,
-              avslagsårsakKode,
+              avslagsårsakKode ?? AvslagskoderAleneOmOmsorgen.IKKE_GRUNNLAG_ALENE_OMSORG,
               fraDato,
               erBehandlingRevurdering && !!tilDato ? tilDato : åretBarnetFyller18,
             ),

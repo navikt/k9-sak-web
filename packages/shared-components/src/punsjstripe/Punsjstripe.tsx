@@ -15,18 +15,18 @@ export interface JournalpostIder {
 }
 
 interface PunsjstripeProps {
-  behandlingUuid: string;
+  saksnummer: string;
   pathToLos: string;
 }
 
-const Punsjstripe: React.FC<PunsjstripeProps> = ({ behandlingUuid, pathToLos }) => {
+const Punsjstripe: React.FC<PunsjstripeProps> = ({ saksnummer, pathToLos }) => {
   const [punsjoppgaver, setPunsjoppgaver] = React.useState<PunsjResponse>(null);
   const [error, setError] = React.useState(null);
   const httpCanceler = useMemo(() => axios.CancelToken.source(), []);
   React.useEffect(() => {
     let isMounted = true;
     axios
-      .get(`/k9/sak/api/punsj/journalpost/uferdig?behandlingUuid=${behandlingUuid}`, {
+      .get(`/k9/sak/api/punsj/journalpost/uferdig/v2?saksnummer=${saksnummer}`, {
         cancelToken: httpCanceler.token,
       })
       .then((response: AxiosResponse) => {

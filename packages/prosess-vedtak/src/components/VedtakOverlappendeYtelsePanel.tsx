@@ -155,7 +155,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
       <Alert variant="info" size="medium">
         <Accordion className={styles.accordion}>
           <Accordion.Item>
-            <Accordion.Header type="button">
+            <Accordion.Header>
               <Heading size="xsmall" level="3">
                 Hvilke ytelser går det automatisk melding?
               </Heading>
