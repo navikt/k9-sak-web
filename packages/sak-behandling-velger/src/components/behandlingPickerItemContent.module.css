@@ -52,13 +52,11 @@
 }
 
 .behandlingPicker .dateContainer {
-  align-items: end;
   display: flex;
   margin-top: 0.25rem;
 }
 
 .behandlingPicker .resultContainer {
-  align-items: center;
   display: flex;
   margin-top: 0.5rem;
 }
