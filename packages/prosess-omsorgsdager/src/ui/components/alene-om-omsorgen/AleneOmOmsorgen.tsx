@@ -3,7 +3,6 @@ import dayjs from 'dayjs';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { Alert, Button, Fieldset, HStack, RadioGroup, Select } from '@navikt/ds-react';
 import { AleneOmOmsorgenProps } from '../../../types/AleneOmOmsorgenProps';
 import {
@@ -166,12 +165,12 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
           />
 
 
-          !informasjonTilLesemodus.vilkarOppfylt && informasjonTilLesemodus.avslagsårsakKode !== '' && (
+          {!informasjonTilLesemodus.vilkarOppfylt && informasjonTilLesemodus.avslagsårsakKode !== '' && (
             <>
               <p className={styleLesemodus.label}>{tekst.arsak}</p>
               <p className={styleLesemodus.text}>{mapTilAvslagstekst(informasjonTilLesemodus.avslagsårsakKode)}</p>
             </>
-          )
+          )}
         </>
       )}
 

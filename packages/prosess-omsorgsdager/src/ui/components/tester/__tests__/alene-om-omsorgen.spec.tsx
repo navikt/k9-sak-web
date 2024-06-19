@@ -1,4 +1,3 @@
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { axe } from 'vitest-axe';
