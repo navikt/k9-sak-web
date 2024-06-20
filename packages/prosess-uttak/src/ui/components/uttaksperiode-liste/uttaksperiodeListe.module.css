@@ -29,7 +29,7 @@
 .oppholdRow {
   border-bottom: 1px solid rgb(187 187 187);
   background: repeating-linear-gradient(-70deg, #bbb, #bbb 1px, #eceef0 1px, #eceef0 8px);
-  height: 35px;
+  height: 18px;
   margin: -1px 0 0;
   opacity: 0.8;
 }
