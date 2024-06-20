@@ -2,6 +2,7 @@ import '@fpsak-frontend/assets/styles/global.css';
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import { Preview } from '@storybook/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { initialize, mswLoader } from 'msw-storybook-addon';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -17,6 +18,8 @@ initialize({
   },
 });
 
+const queryClient = new QueryClient();
+
 const preview: Preview = {
   decorators: [
     Story => {
@@ -24,9 +27,11 @@ const preview: Preview = {
       return (
         <Provider store={store}>
           <MemoryRouter>
-            <div style={{ margin: '40px' }}>
-              <Story />
-            </div>
+            <QueryClientProvider client={queryClient}>
+              <div style={{ margin: '40px' }}>
+                <Story />
+              </div>
+            </QueryClientProvider>
           </MemoryRouter>
         </Provider>
       );
