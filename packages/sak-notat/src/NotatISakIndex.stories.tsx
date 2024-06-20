@@ -1,9 +1,6 @@
 import { HttpResponse, delay, http } from 'msw';
 import React from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import NotatISakIndex from './NotaterIndex';
-
-const queryClient = new QueryClient();
 
 export default {
   title: 'sak/sak-notat',
@@ -19,24 +16,22 @@ export const VisNotatISakPanel = () => (
       backgroundColor: 'white',
     }}
   >
-    <QueryClientProvider client={queryClient}>
-      <NotatISakIndex
-        fagsakId="1"
-        fagsakHarPleietrengende
-        navAnsatt={{
-          brukernavn: 'saksbeh',
-          funksjonellTid: '2023-08-28T16:11:44.107219587',
-          kanBehandleKode6: false,
-          kanBehandleKode7: false,
-          kanBehandleKodeEgenAnsatt: false,
-          kanBeslutte: false,
-          kanOverstyre: false,
-          kanSaksbehandle: true,
-          kanVeilede: false,
-          navn: 'Sara Saksbehandler',
-        }}
-      />
-    </QueryClientProvider>
+    <NotatISakIndex
+      fagsakId="1"
+      fagsakHarPleietrengende
+      navAnsatt={{
+        brukernavn: 'saksbeh',
+        funksjonellTid: '2023-08-28T16:11:44.107219587',
+        kanBehandleKode6: false,
+        kanBehandleKode7: false,
+        kanBehandleKodeEgenAnsatt: false,
+        kanBeslutte: false,
+        kanOverstyre: false,
+        kanSaksbehandle: true,
+        kanVeilede: false,
+        navn: 'Sara Saksbehandler',
+      }}
+    />
   </div>
 );
 
