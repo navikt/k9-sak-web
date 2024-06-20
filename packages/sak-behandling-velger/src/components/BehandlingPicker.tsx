@@ -140,6 +140,9 @@ const BehandlingPicker = ({
   const navigate = useNavigate();
   const finnÅpenBehandling = () => {
     const åpenBehandling = behandlinger.find(behandling => behandling.status.kode !== behandlingStatus.AVSLUTTET);
+    if (åpenBehandling) {
+      navigate(getBehandlingLocation(åpenBehandling.id));
+    }
     return åpenBehandling?.id;
   };
 
@@ -148,13 +151,6 @@ const BehandlingPicker = ({
   const previousBehandlingId = usePrevious(behandlingId || finnÅpenBehandling());
   const [activeFilters, setActiveFilters] = useState([]);
   const [numberOfBehandlingperioderToFetch, setNumberOfBehandlingPerioderToFetch] = useState(10);
-
-  useEffect(() => {
-    const åpenBehandlingId = finnÅpenBehandling();
-    if (åpenBehandlingId) {
-      navigate(getBehandlingLocation(åpenBehandlingId));
-    }
-  }, []);
 
   useEffect(() => {
     if (previousBehandlingId !== behandlingId) {
