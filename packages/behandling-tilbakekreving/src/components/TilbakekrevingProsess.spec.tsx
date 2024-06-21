@@ -1,13 +1,13 @@
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import { Behandling, FeilutbetalingPerioderWrapper } from '@k9-sak-web/types';
+import { Behandling, Fagsak, FeilutbetalingPerioderWrapper } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -18,10 +18,29 @@ import vedtakResultatType from '../kodeverk/vedtakResultatType';
 import TilbakekrevingProsess from './TilbakekrevingProsess';
 
 describe('<TilbakekrevingProsess>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123456',
     sakstype: fagsakYtelsesType.OMP,
     status: fagsakStatus.UNDER_BEHANDLING,
+    relasjonsRolleType: '',
+    barnFodt: '',
+    person: {
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+      diskresjonskode: '',
+      dodsdato: '',
+      aktørId: '',
+    },
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
   };
 
   const fagsakPerson = {

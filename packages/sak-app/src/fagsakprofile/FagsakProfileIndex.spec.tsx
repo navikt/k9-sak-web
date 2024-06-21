@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
@@ -42,7 +42,7 @@ vi.mock('react-router-dom', async () => {
 });
 
 describe('<FagsakProfileIndex>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123',
     sakstype: fagsakYtelseType.FORELDREPENGER,
     status: fagsakStatus.OPPRETTET,

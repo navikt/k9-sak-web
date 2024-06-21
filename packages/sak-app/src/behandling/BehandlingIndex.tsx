@@ -8,14 +8,20 @@ import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { ArbeidsgiverOpplysningerWrapper, FagsakPerson, FeatureToggles, NavAnsatt } from '@k9-sak-web/types';
+import {
+  ArbeidsgiverOpplysningerWrapper,
+  BehandlingAppKontekst,
+  Fagsak,
+  FagsakPerson,
+  FeatureToggles,
+  NavAnsatt,
+} from '@k9-sak-web/types';
 import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 
 import BehandlingPleiepengerSluttfaseIndex from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import { useBehandlingContext } from '@k9-sak-web/gui/behandling/index.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import ErrorBoundary from '../app/ErrorBoundary';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import getAccessRights from '../app/util/access';

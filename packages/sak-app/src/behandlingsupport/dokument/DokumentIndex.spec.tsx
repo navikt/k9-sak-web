@@ -1,4 +1,4 @@
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import { render, screen } from '@testing-library/react';
 import React from 'react';

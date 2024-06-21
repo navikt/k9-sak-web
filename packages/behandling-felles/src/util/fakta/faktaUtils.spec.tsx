@@ -6,9 +6,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import FaktaPanelDef from './FaktaPanelDef';
@@ -23,10 +23,29 @@ import {
 } from './faktaUtils';
 
 describe('<faktaUtils>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123456',
     sakstype: fagsakYtelsesType.OMP,
     status: fagsakStatus.UNDER_BEHANDLING,
+    relasjonsRolleType: '',
+    barnFodt: '',
+    person: {
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+      diskresjonskode: '',
+      dodsdato: '',
+      aktørId: '',
+    },
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
   };
   const behandling = {
     id: 1,

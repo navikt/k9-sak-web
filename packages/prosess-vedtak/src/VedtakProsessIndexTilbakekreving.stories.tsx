@@ -6,38 +6,26 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import { BehandlingType } from '@k9-sak-web/lib/types/index.js';
 import VedtakProsessIndex from './VedtakProsessIndex';
 
 const behandling = {
   id: 1,
   versjon: 1,
-  type: {
-    kode: behandlingType.FORSTEGANGSSOKNAD,
-    kodeverk: '',
-  },
-  status: {
-    kode: behandlingStatus.BEHANDLING_UTREDES,
-    kodeverk: '',
-  },
-  sprakkode: {
-    kode: 'NO',
-    kodeverk: '',
-  },
+  type: behandlingType.FORSTEGANGSSOKNAD,
+  status: behandlingStatus.BEHANDLING_UTREDES,
+  sprakkode: 'NO',
   behandlingsresultat: {
-    vedtaksbrev: {
-      kode: 'FRITEKST',
-      kodeverk: '',
-    },
+    vedtaksbrev: 'FRITEKST',
     type: behandlingResultatType.IKKE_FASTSATT,
   },
   behandlingPaaVent: false,
   behandlingHenlagt: false,
   behandlingArsaker: [
     {
-      behandlingArsakType: {
-        kode: klageBehandlingArsakType.ETTER_KLAGE,
-        kodeverk: '',
-      },
+      behandlingArsakType: klageBehandlingArsakType.ETTER_KLAGE,
     },
   ],
 };
@@ -48,47 +36,48 @@ export default {
 
 export const visSjekkTilbakekreving = args => {
   const aksjonspunkt5085 = {
-    aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
+    aksjonspunktType: 'MANU', // AKSJONSPUNKT_TYPE
     begrunnelse: null,
     besluttersBegrunnelse: null,
-    definisjon: {
-      kode: '5085',
-      kodeverk: 'AKSJONSPUNKT_DEF',
-    },
+    definisjon: '5085', // AKSJONSPUNKT_DEF
     erAktivt: true,
     fristTid: null,
     kanLoses: true,
-    status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
+    status: 'OPPR', // AKSJONSPUNKT_STATUS
     toTrinnsBehandling: false,
     toTrinnsBehandlingGodkjent: null,
     vilkarType: null,
     vurderPaNyttArsaker: null,
-    venteårsak: { kode: '-', kodeverk: 'VENT_AARSAK' },
+    venteårsak: '-', // VENT_AARSAK
   };
 
   return (
-    <VedtakProsessIndex
-      behandling={{
-        ...behandling,
-        type: {
-          kode: behandlingType.SOKNAD,
-          kodeverk: '',
-        },
-        behandlingsresultat: {
-          vedtaksbrev: {
-            kode: 'FRITEKST',
+    <KodeverkProvider
+      behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+      kodeverk={alleKodeverkV2}
+      klageKodeverk={{}}
+      tilbakeKodeverk={{}}
+    >
+      <VedtakProsessIndex
+        behandling={{
+          ...behandling,
+          type: behandlingType.SOKNAD,
+          behandlingsresultat: {
+            vedtaksbrev: {
+              kode: 'FRITEKST',
+            },
+            type: behandlingResultatType.IKKE_FASTSATT,
           },
-          type: behandlingResultatType.IKKE_FASTSATT,
-        },
-      }}
-      vilkar={[]}
-      medlemskap={{ fom: '2019-01-01' }}
-      aksjonspunkter={[aksjonspunkt5085]}
-      previewCallback={action('button-click')}
-      submitCallback={action('button-click')}
-      alleKodeverk={alleKodeverk}
-      {...args}
-    />
+        }}
+        vilkar={[]}
+        medlemskap={{ fom: '2019-01-01' }}
+        aksjonspunkter={[aksjonspunkt5085]}
+        previewCallback={action('button-click')}
+        submitCallback={action('button-click')}
+        alleKodeverk={alleKodeverk}
+        {...args}
+      />
+    </KodeverkProvider>
   );
 };
 

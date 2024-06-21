@@ -27,7 +27,7 @@ export interface FritekstInputInvalid {
 }
 
 type FritekstInputProps = {
-  readonly språk: Språkkode;
+  readonly språk: string;
   readonly show: boolean;
   readonly showTitle: boolean;
   readonly showValidation: boolean;
@@ -79,8 +79,8 @@ const validateTekst = (newValue: string | undefined): Valid | Error => {
 
 const tekstReducer = (_: Valid | Error, newValue: string | undefined): Valid | Error => validateTekst(newValue);
 
-const resolveLanguageName = (språk: Språkkode): string => {
-  switch (språk.kode.toUpperCase()) {
+const resolveLanguageName = (språk: string): string => {
+  switch (språk.toUpperCase()) {
     case 'NB':
       return 'Bokmål';
     case 'NO':
@@ -94,7 +94,7 @@ const resolveLanguageName = (språk: Språkkode): string => {
   }
 };
 
-const resolveLanguageTagVariant = (språk: Språkkode): TagProps['variant'] =>
+const resolveLanguageTagVariant = (språk: string): TagProps['variant'] =>
   resolveLanguageName(språk) === 'Ukjent' ? 'warning' : 'info';
 
 /**

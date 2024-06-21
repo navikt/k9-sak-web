@@ -2,7 +2,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
@@ -10,10 +9,11 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import { Behandling, Soknad } from '@k9-sak-web/types';
+import { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import messages from '../../i18n/nb_NO.json';
 import {
@@ -24,10 +24,29 @@ import FetchedData from '../types/fetchedDataTsType';
 import PleiepengerSluttfaseProsess from './PleiepengerSluttfaseProsess';
 
 describe('< PleiepengerSluttfaseProsess>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123456',
     sakstype: fagsakYtelsesType.OMP,
     status: fagsakStatus.UNDER_BEHANDLING,
+    relasjonsRolleType: '',
+    barnFodt: '',
+    person: {
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+      diskresjonskode: '',
+      dodsdato: '',
+      aktørId: '',
+    },
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
   };
 
   const fagsakPerson = {

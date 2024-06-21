@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 

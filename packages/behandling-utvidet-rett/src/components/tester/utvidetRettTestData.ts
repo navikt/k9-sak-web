@@ -1,8 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { Aksjonspunkt, Behandling, FagsakPerson, Rammevedtak, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Fagsak, FagsakPerson, Rammevedtak, Vilkar } from '@k9-sak-web/types';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
@@ -50,11 +50,13 @@ const utvidetRettTestData = {
     behandlingHenlagt: false,
     links: [],
   } as Behandling,
+
   fagsak: {
     saksnummer: '111111',
     sakstype: fagsakYtelsesType.OMP_KS,
     status: fagsakStatus.UNDER_BEHANDLING,
-  },
+  } as Fagsak,
+
   fagsakPerson: {
     alder: 25,
     personstatusType: personstatusType.BOSATT,

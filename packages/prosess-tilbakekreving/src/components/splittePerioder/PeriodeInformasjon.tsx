@@ -2,7 +2,9 @@ import { DDMMYYYY_DATE_FORMAT, calcDaysAndWeeks, formatCurrencyNoKr } from '@fps
 import { BodyShort, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import React from 'react';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { FormattedMessage } from 'react-intl';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import DataForPeriode from '../../types/dataForPeriodeTsType';
 
 import styles from './periodeInformasjon.module.css';
@@ -22,6 +24,7 @@ interface OwnProps {
  * Presentationskomponent
  */
 const PeriodeInformasjon = ({ fom, tom, feilutbetaling, arsak }: OwnProps) => {
+  const { kodeverkNavnFraKode } = useKodeverkContext();
   const daysAndWeeks = calcDaysAndWeeks(fom, tom);
   return (
     <HGrid gap="1" columns={{ xs: '8fr 4fr' }}>
@@ -58,7 +61,12 @@ const PeriodeInformasjon = ({ fom, tom, feilutbetaling, arsak }: OwnProps) => {
               <div>
                 {arsak && (
                   <BodyShort size="small" className={styles.resultName}>
-                    {arsak.hendelseType.navn}
+                    {
+                      kodeverkNavnFraKode(
+                        arsak.hendelseType,
+                        KodeverkType.HENDELSE_TYPE,
+                      ) /* Kodeverk: kan være denne skal slå opp i et annet kodeverk, tilbake? */
+                    }
                   </BodyShort>
                 )}
               </div>

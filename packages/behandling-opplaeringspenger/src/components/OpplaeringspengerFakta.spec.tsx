@@ -4,9 +4,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
@@ -15,7 +15,6 @@ import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import {
   OpplaeringspengerBehandlingApiKeys,
   requestOpplaeringspengerApi,
@@ -24,10 +23,27 @@ import FetchedData from '../types/fetchedDataTsType';
 import OpplaeringspengerFakta from './OpplaeringspengerFakta';
 
 describe('<OpplaeringspengerFakta>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123456',
     sakstype: fagsakYtelsesType.PSB,
     status: fagsakStatus.UNDER_BEHANDLING,
+    person: {
+      aktørId: '',
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+    },
+    relasjonsRolleType: '',
+    barnFodt: '',
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
   };
 
   const fagsakPerson = {
@@ -129,7 +145,7 @@ describe('<OpplaeringspengerFakta>', () => {
         <OpplaeringspengerFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
-          fagsak={fagsak as Fagsak}
+          fagsak={fagsak}
           fagsakPerson={fagsakPerson}
           rettigheter={rettigheter}
           alleKodeverk={{}}
@@ -170,7 +186,7 @@ describe('<OpplaeringspengerFakta>', () => {
         <OpplaeringspengerFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
-          fagsak={fagsak as Fagsak}
+          fagsak={fagsak}
           fagsakPerson={fagsakPerson}
           rettigheter={rettigheter}
           alleKodeverk={{}}

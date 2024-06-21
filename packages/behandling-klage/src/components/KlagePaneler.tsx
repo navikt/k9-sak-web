@@ -1,14 +1,7 @@
 import React from 'react';
 
 import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
-import {
-  Fagsak,
-  Behandling,
-  KodeverkMedNavn,
-  FagsakPerson,
-  ArbeidsgiverOpplysningerPerId,
-  FeatureToggles,
-} from '@k9-sak-web/types';
+import { Behandling, FagsakPerson, ArbeidsgiverOpplysningerPerId, FeatureToggles, Fagsak } from '@k9-sak-web/types';
 import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 
 import KlageProsess from './KlageProsess';

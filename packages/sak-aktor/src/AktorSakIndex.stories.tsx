@@ -1,6 +1,6 @@
 import React from 'react';
 
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';

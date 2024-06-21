@@ -10,7 +10,7 @@ import messages from '../../i18n/nb_NO.json';
 import FagsakList, { sortFagsaker } from './FagsakList';
 
 describe('<FagsakList>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '12345',
     sakstype: 'ES', // FAGSAK_YTELSE_KODEVERK
     relasjonsRolleType: 'TEST',

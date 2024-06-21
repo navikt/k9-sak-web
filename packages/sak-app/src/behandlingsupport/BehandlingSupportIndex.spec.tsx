@@ -15,7 +15,7 @@ import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import BehandlingSupportIndex, { hentSynligePaneler, hentValgbarePaneler } from './BehandlingSupportIndex';
 
 describe('<BehandlingSupportIndex>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123',
   };
 

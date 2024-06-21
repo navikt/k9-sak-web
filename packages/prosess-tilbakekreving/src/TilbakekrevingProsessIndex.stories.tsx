@@ -6,6 +6,9 @@ import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurd
 import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import { AlleKodeverk, BehandlingType, KodeverkType } from '@k9-sak-web/lib/types/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import TilbakekrevingProsessIndex from './TilbakekrevingProsessIndex';
 import aktsomhet from './kodeverk/aktsomhet';
 import sarligGrunn from './kodeverk/sarligGrunn';
@@ -19,19 +22,13 @@ const perioderForeldelse = {
       fom: '2019-01-01',
       tom: '2019-02-02',
       belop: 1000,
-      foreldelseVurderingType: {
-        kode: foreldelseVurderingType.IKKE_FORELDET,
-        kodeverk: 'FORELDELSE_VURDERING',
-      },
+      foreldelseVurderingType: foreldelseVurderingType.IKKE_FORELDET, // FORELDELSE_VURDERING
     },
     {
       fom: '2019-02-03',
       tom: '2019-04-02',
       belop: 3000,
-      foreldelseVurderingType: {
-        kode: foreldelseVurderingType.FORELDET,
-        kodeverk: 'FORELDELSE_VURDERING',
-      },
+      foreldelseVurderingType: foreldelseVurderingType.FORELDET, // FORELDELSE_VURDERING
     },
   ],
 } as FeilutbetalingPerioderWrapper;
@@ -44,11 +41,7 @@ const vilkarvurderingsperioder = {
       foreldet: false,
       feilutbetaling: 10,
       årsak: {
-        hendelseType: {
-          kode: 'MEDLEM',
-          kodeverk: '',
-          navn: '§22 Medlemskap',
-        },
+        hendelseType: 'MEDLEM', // kodeverk: '', navn: '§22 Medlemskap'
       },
       redusertBeloper: [],
       ytelser: [
@@ -142,6 +135,12 @@ const alleKodeverk = {
       navn: 'Simpel uaktsom',
     },
   ],
+  [KodeverkType.HENDELSE_TYPE]: [
+    {
+      kode: 'MEDLEM',
+      navn: '§22 Medlemskap',
+    },
+  ],
 };
 
 export default {
@@ -157,29 +156,33 @@ const beregnBelop = params => {
 };
 
 export const visAksjonspunktForTilbakekreving = args => (
-  <TilbakekrevingProsessIndex
-    behandling={
-      {
-        id: 1,
-        versjon: 1,
-      } as Behandling
-    }
-    submitCallback={action('button-click') as () => Promise<any>}
-    navBrukerKjonn={NavBrukerKjonn.KVINNE}
-    alleKodeverk={alleKodeverk as any}
-    beregnBelop={params => beregnBelop(params)}
-    aksjonspunkter={
-      [
+  <KodeverkProvider
+    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    kodeverk={alleKodeverk as AlleKodeverk}
+    klageKodeverk={alleKodeverk as AlleKodeverk}
+    tilbakeKodeverk={alleKodeverk as AlleKodeverk}
+  >
+    <TilbakekrevingProsessIndex
+      behandling={
         {
-          definisjon: {
-            kode: aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING,
-            kodeverk: '',
+          id: 1,
+          versjon: 1,
+        } as Behandling
+      }
+      submitCallback={action('button-click') as () => Promise<any>}
+      navBrukerKjonn={NavBrukerKjonn.KVINNE}
+      alleKodeverk={alleKodeverk as any}
+      beregnBelop={params => beregnBelop(params)}
+      aksjonspunkter={
+        [
+          {
+            definisjon: aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING,
           },
-        },
-      ] as Aksjonspunkt[]
-    }
-    {...args}
-  />
+        ] as Aksjonspunkt[]
+      }
+      {...args}
+    />
+  </KodeverkProvider>
 );
 
 visAksjonspunktForTilbakekreving.args = {

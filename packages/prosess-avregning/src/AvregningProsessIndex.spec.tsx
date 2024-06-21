@@ -7,7 +7,7 @@ import messages from '../i18n/nb_NO.json';
 import AvregningProsessIndex from './AvregningProsessIndex';
 
 describe('<AvregningProsessIndex>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123',
     sakstype: fagsakYtelseType.FORELDREPENGER,
     fagsakYtelseType: fagsakYtelseType.FORELDREPENGER,

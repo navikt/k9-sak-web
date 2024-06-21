@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';

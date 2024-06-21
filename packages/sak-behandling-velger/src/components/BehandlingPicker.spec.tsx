@@ -1,5 +1,5 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';

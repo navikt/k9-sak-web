@@ -26,7 +26,7 @@ vi.mock('react-router-dom', async () => {
 });
 
 describe('<TotrinnskontrollIndex>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '1',
     sakstype: fagsakYtelseType.FORELDREPENGER,
     person: {

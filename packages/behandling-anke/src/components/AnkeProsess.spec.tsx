@@ -6,7 +6,7 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import { Behandling, Vilkar } from '@k9-sak-web/types';
+import { Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -15,10 +15,29 @@ import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Fags
 import AnkeProsess from './AnkeProsess';
 
 describe('<AnkeProsess>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123456',
     sakstype: fagsakYtelsesType.OMP,
     status: fagsakStatus.UNDER_BEHANDLING,
+    relasjonsRolleType: '',
+    barnFodt: '',
+    person: {
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+      diskresjonskode: '',
+      dodsdato: '',
+      aktørId: '',
+    },
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
   };
 
   const fagsakPerson = {

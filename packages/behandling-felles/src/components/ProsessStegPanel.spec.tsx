@@ -8,7 +8,7 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
@@ -17,10 +17,29 @@ import { ProsessStegPanelUtledet, ProsessStegUtledet } from '../util/prosessSteg
 import ProsessStegPanel from './ProsessStegPanel';
 
 describe('<ProsessStegPanel>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123456',
     sakstype: fagsakYtelsesType.OMP,
     status: fagsakStatus.UNDER_BEHANDLING,
+    relasjonsRolleType: '',
+    barnFodt: '',
+    person: {
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+      diskresjonskode: '',
+      dodsdato: '',
+      aktørId: '',
+    },
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
   };
 
   const behandling = {

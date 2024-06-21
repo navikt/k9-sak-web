@@ -5,5 +5,3 @@ export type KodeverkObject = Readonly<{
 }>;
 
 export type KodeverkV2 = KodeverkObject | string;
-
-export default KodeverkV2;

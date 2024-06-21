@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { Behandling, ArbeidsgiverOpplysningerPerId, FagsakPerson, Dokument, FeatureToggles } from '@k9-sak-web/types';
+import {
+  Behandling,
+  ArbeidsgiverOpplysningerPerId,
+  FagsakPerson,
+  Dokument,
+  FeatureToggles,
+  Fagsak,
+} from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/FetchedData';
 import { restApiPleiepengerHooks, PleiepengerBehandlingApiKeys } from '../data/pleiepengerBehandlingApi';

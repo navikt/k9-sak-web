@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { render, screen } from '@testing-library/react';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { BehandlingAppKontekst } from '@k9-sak-web/types';

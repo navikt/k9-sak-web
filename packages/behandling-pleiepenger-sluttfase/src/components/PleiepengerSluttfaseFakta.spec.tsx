@@ -6,13 +6,12 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
-import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
-import { Behandling } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import messages from '../../i18n/nb_NO.json';
 import {
@@ -23,11 +22,29 @@ import FetchedData from '../types/fetchedDataTsType';
 import PleiepengerSluttfaseFakta from './PleiepengerSluttfaseFakta';
 
 describe('<PleiepengerSluttfaseFakta>', () => {
-  const fagsak: Partial<Fagsak> = {
+  const fagsak: Fagsak = {
     saksnummer: '123456',
     sakstype: fagsakYtelsesType.PPN,
     status: fagsakStatus.UNDER_BEHANDLING,
-    // fagsakStatus.UNDER_BEHANDLING,
+    relasjonsRolleType: '',
+    barnFodt: '',
+    person: {
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+      diskresjonskode: '',
+      dodsdato: '',
+      aktørId: '',
+    },
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
   };
 
   const fagsakPerson = {
@@ -127,7 +144,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
         <PleiepengerSluttfaseFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
-          fagsak={fagsak as Fagsak}
+          fagsak={fagsak}
           fagsakPerson={fagsakPerson}
           rettigheter={rettigheter}
           alleKodeverk={{}}
@@ -166,7 +183,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
         <PleiepengerSluttfaseFakta
           data={fetchedData as FetchedData}
           behandling={behandling as Behandling}
-          fagsak={fagsak as Fagsak}
+          fagsak={fagsak}
           fagsakPerson={fagsakPerson}
           rettigheter={rettigheter}
           alleKodeverk={{}}
