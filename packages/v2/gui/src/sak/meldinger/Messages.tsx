@@ -51,10 +51,10 @@ type MessagesProps = {
 type MessagesState = Readonly<{
   valgtMalkode: string | undefined;
   fritekstForslag: FritekstbrevDokumentdata[];
-  // valgtFritekst: FritekstbrevDokumentdata | undefined;
-  // valgtMottakerId: string | undefined;
-  // tredjepartsmottakerAktivert: boolean;
-  // tredjepartsmottaker: TredjepartsmottakerValue | TredjepartsmottakerError | undefined;
+  valgtFritekst: FritekstbrevDokumentdata | undefined;
+  valgtMottakerId: string | undefined;
+  tredjepartsmottakerAktivert: boolean;
+  tredjepartsmottaker: TredjepartsmottakerValue | TredjepartsmottakerError | undefined;
 }>
 
 type SetValgtMalkode = Readonly<{
@@ -67,20 +67,52 @@ type SetFritekstForslag = Readonly<{
   fritekstForslag: FritekstbrevDokumentdata[]
 }>
 
-type MessagesStateActions = SetValgtMalkode | SetFritekstForslag;
+type SetValgtFritekst = Readonly<{
+  type: 'SettValgtFritekst',
+  valgtFritekst: FritekstbrevDokumentdata | undefined,
+}>
+
+type SetValgtMottakerId = Readonly<{
+  type: 'SettValgtMottakerId',
+  valgtMottakerId: string | undefined,
+}>
+
+type SetTredjepartsmottakerAktivert = Readonly<{
+  type: 'SettTredjepartsmottakerAktivert',
+  tredjepartsmottakerAktivert: boolean,
+}>
+
+type SetTredjepartsmottaker = Readonly<{
+  type: "SettTredjepartsmottaker",
+  tredjepartsmottaker: TredjepartsmottakerValue | TredjepartsmottakerError | undefined,
+}>
+
+type MessagesStateActions = SetValgtMalkode | SetFritekstForslag | SetValgtFritekst | SetValgtMottakerId | SetTredjepartsmottakerAktivert | SetTredjepartsmottaker;
 
 const messagesStateReducer = (state: MessagesState, dispatch: MessagesStateActions): MessagesState => {
   const valgtMalkode = dispatch.type === "SettValgtMal" ? dispatch.malkode : state.valgtMalkode
   const fritekstForslag = dispatch.type === "SettFritekstForslag" ? dispatch.fritekstForslag : state.fritekstForslag
+  const valgtFritekst = dispatch.type === "SettValgtFritekst" ? dispatch.valgtFritekst : state.valgtFritekst
+  const valgtMottakerId = dispatch.type === "SettValgtMottakerId" ? dispatch.valgtMottakerId : state.valgtMottakerId
+  const tredjepartsmottakerAktivert = dispatch.type === "SettTredjepartsmottakerAktivert" ? dispatch.tredjepartsmottakerAktivert : state.tredjepartsmottakerAktivert
+  const tredjepartsmottaker = dispatch.type === "SettTredjepartsmottaker" ? dispatch.tredjepartsmottaker : state.tredjepartsmottaker
   return {
     valgtMalkode,
     fritekstForslag,
+    valgtFritekst,
+    valgtMottakerId,
+    tredjepartsmottakerAktivert,
+    tredjepartsmottaker,
   }
 }
 
 const initMessagesState = (maler: Template[]): MessagesState => ({
   valgtMalkode: maler[0]?.kode,
   fritekstForslag: [],
+  valgtFritekst: undefined,
+  valgtMottakerId: undefined,
+  tredjepartsmottakerAktivert: false,
+  tredjepartsmottaker: undefined,
 })
 
 const Messages = ({
@@ -91,13 +123,14 @@ const Messages = ({
   arbeidsgiverOpplysningerPerId,
   api,
 }: MessagesProps) => {
-  const [{valgtMalkode, fritekstForslag}, dispatch] = useReducer(messagesStateReducer, initMessagesState(maler))
-  const [valgtFritekst, setValgtFritekst] = useState<FritekstbrevDokumentdata | undefined>(undefined);
-  const [valgtMottakerId, setValgtMottakerId] = useState<string | undefined>(undefined);
-  const [tredjepartsmottakerAktivert, setTredjepartsmottakerAktivert] = useState(false)
-  const [tredjepartsmottaker, setTredjepartsmottaker] = useState<
-    TredjepartsmottakerValue | TredjepartsmottakerError | undefined
-  >(undefined);
+  const [{
+    valgtMalkode,
+    fritekstForslag,
+    valgtFritekst,
+    valgtMottakerId,
+    tredjepartsmottakerAktivert,
+    tredjepartsmottaker,
+  }, dispatch] = useReducer(messagesStateReducer, initMessagesState(maler))
   const fritekstInputRef = useRef<FritekstInputMethods>(null);
   // showValidation is set to true when inputs should display any validation errors, i.e. after the user tries to submit the form without having valid values.
   const [showValidation, setShowValidation] = useState(false);
@@ -105,6 +138,10 @@ const Messages = ({
 
   const setValgtMalkode = (malkode: string | undefined) => dispatch({type: 'SettValgtMal', malkode})
   const setFritekstForslag = (newFritekstForslag: FritekstbrevDokumentdata[]) => dispatch({type: "SettFritekstForslag", fritekstForslag: newFritekstForslag})
+  const setValgtFritekst = (newValgtFritekst: FritekstbrevDokumentdata | undefined) => dispatch({type: "SettValgtFritekst", valgtFritekst: newValgtFritekst})
+  const setValgtMottakerId = (newValgtMottakerId: string | undefined) => dispatch({type: "SettValgtMottakerId", valgtMottakerId: newValgtMottakerId})
+  const setTredjepartsmottakerAktivert = (newTredjepartsmottakerAktivert: boolean) => dispatch({type: "SettTredjepartsmottakerAktivert", tredjepartsmottakerAktivert: newTredjepartsmottakerAktivert})
+  const setTredjepartsmottaker = (newTredjepartsmottaker: TredjepartsmottakerValue | TredjepartsmottakerError | undefined) => dispatch({type: "SettTredjepartsmottaker", tredjepartsmottaker: newTredjepartsmottaker})
 
   // Konverter valgtFritekst til FritekstInputValue
   const valgtFritekstInputValue: FritekstInputValue = {
