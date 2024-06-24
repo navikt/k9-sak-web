@@ -87,7 +87,13 @@ type SetTredjepartsmottaker = Readonly<{
   tredjepartsmottaker: TredjepartsmottakerValue | TredjepartsmottakerError | undefined,
 }>
 
-type MessagesStateActions = SetValgtMalkode | SetFritekstForslag | SetValgtFritekst | SetValgtMottakerId | SetTredjepartsmottakerAktivert | SetTredjepartsmottaker;
+type MessagesStateActions =
+  SetValgtMalkode |
+  SetFritekstForslag |
+  SetValgtFritekst |
+  SetValgtMottakerId |
+  SetTredjepartsmottakerAktivert |
+  SetTredjepartsmottaker;
 
 const messagesStateReducer = (state: MessagesState, dispatch: MessagesStateActions): MessagesState => {
   const valgtMalkode = dispatch.type === "SettValgtMal" ? dispatch.malkode : state.valgtMalkode
