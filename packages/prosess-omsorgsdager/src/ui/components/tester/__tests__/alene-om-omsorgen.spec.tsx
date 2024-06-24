@@ -1,4 +1,3 @@
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { axe } from 'vitest-axe';
@@ -8,13 +7,6 @@ import FormStateTilTest from '../dataTilTest/FormStateTilTest';
 
 describe('<AleneOmOmsorgen>', () => {
   test('AleneOmOmsorgen viser åpen aksjonspunkt som forventet', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
-      {
-        key: 'AVSLAGSAARSAK_ALENEOMSORG',
-        value: 'true',
-      },
-    ]);
-
     const props = {
       behandlingsID: '123',
       aksjonspunktLost: false,
@@ -63,13 +55,6 @@ describe('<AleneOmOmsorgen>', () => {
   });
 
   test('AleneOmOmsorgen viser åpen aksjonspunkt med informasjon fra tidigare lost vilkar (kommer tillbake etter totrinnskontroll)', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
-      {
-        key: 'AVSLAGSAARSAK_ALENEOMSORG',
-        value: 'true',
-      },
-    ]);
-
     const props = {
       behandlingsID: '123',
       aksjonspunktLost: false,
@@ -107,13 +92,6 @@ describe('<AleneOmOmsorgen>', () => {
   });
 
   test('AleneOmOmsorgen viser åpen aksjonspunkt med informasjon fra tidigare lost vilkar (kommer tillbake etter totrinnskontroll) - revurdering', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
-      {
-        key: 'AVSLAGSAARSAK_ALENEOMSORG',
-        value: 'true',
-      },
-    ]);
-
     const props = {
       behandlingsID: '123',
       aksjonspunktLost: false,
@@ -154,13 +132,6 @@ describe('<AleneOmOmsorgen>', () => {
   });
 
   test('AleneOmOmsorgen viser lesemodus', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
-      {
-        key: 'AVSLAGSAARSAK_ALENEOMSORG',
-        value: 'true',
-      },
-    ]);
-
     const props = {
       behandlingsID: '123',
       aksjonspunktLost: false,
@@ -214,13 +185,6 @@ describe('<AleneOmOmsorgen>', () => {
   });
 
   test('AleneOmOmsorgen viser lesemodus - revurdering', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
-      {
-        key: 'AVSLAGSAARSAK_ALENEOMSORG',
-        value: 'true',
-      },
-    ]);
-
     const props = {
       behandlingsID: '123',
       aksjonspunktLost: false,
@@ -274,12 +238,6 @@ describe('<AleneOmOmsorgen>', () => {
   });
 
   test('AleneOmOmsorgen viser lesemodus med rediger', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
-      {
-        key: 'AVSLAGSAARSAK_ALENEOMSORG',
-        value: 'true',
-      },
-    ]);
     const props = {
       behandlingsID: '123',
       aksjonspunktLost: true,
@@ -313,12 +271,6 @@ describe('<AleneOmOmsorgen>', () => {
   });
 
   test('AleneOmOmsorgen viser informasjon om vilkar etter fattet vedtak', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
-      {
-        key: 'AVSLAGSAARSAK_ALENEOMSORG',
-        value: 'true',
-      },
-    ]);
     const props = {
       behandlingsID: '123',
       aksjonspunktLost: false,
@@ -361,12 +313,6 @@ describe('<AleneOmOmsorgen>', () => {
   });
 
   test('Alene om omsorgen viser informasjon om vilkar ikke oppfylt etter fattet vedtak', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
-      {
-        key: 'AVSLAGSAARSAK_ALENEOMSORG',
-        value: 'true',
-      },
-    ]);
     const props = {
       behandlingsID: '123',
       aksjonspunktLost: false,
@@ -406,12 +352,6 @@ describe('<AleneOmOmsorgen>', () => {
   });
 
   test('Den har ingen a11y violations', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
-      {
-        key: 'AVSLAGSAARSAK_ALENEOMSORG',
-        value: 'true',
-      },
-    ]);
     const props = {
       behandlingsID: '123',
       aksjonspunktLost: false,
