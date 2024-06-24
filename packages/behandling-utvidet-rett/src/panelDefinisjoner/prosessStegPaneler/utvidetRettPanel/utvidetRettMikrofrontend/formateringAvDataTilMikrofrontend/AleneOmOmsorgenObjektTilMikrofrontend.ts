@@ -30,6 +30,7 @@ const formatereLesemodusObjekt = (vilkar: Vilkar, aksjonspunkt: Aksjonspunkt, st
     return {
       begrunnelse: aksjonspunkt.begrunnelse,
       vilkarOppfylt: status === vilkarUtfallType.OPPFYLT,
+      avslagsårsakKode: vilkar.perioder[0].avslagKode,
       fraDato: vilkar.perioder[0].periode.fom,
       tilDato: vilkar.perioder[0].periode.tom,
     } as AleneOmOmsorgenAksjonspunktObjekt;
@@ -46,6 +47,7 @@ const formatereLosAksjonspunktObjekt = (
   aksjonspunktKode: string,
   begrunnelse: string,
   erVilkarOk: boolean,
+  avslagsårsakKode: string,
   fraDato: string,
   tilDato: string,
 ) => {
@@ -53,14 +55,13 @@ const formatereLosAksjonspunktObjekt = (
     kode: aksjonspunktKode,
     begrunnelse,
     erVilkarOk,
+    avslagsårsak: erVilkarOk ? null : avslagsårsakKode,
     periode: {
       fom: fraDato,
     },
   };
 
-  if (!erVilkarOk) {
-    losAksjonspunktObjekt.avslagsårsak = AvslagskoderAleneOmOmsorgen.IKKE_GRUNNLAG_ALENE_OMSORG;
-  } else {
+  if (erVilkarOk) {
     losAksjonspunktObjekt.periode.tom = tilDato;
   }
 
@@ -109,12 +110,13 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
           'Utvidet Rett',
         ),
         informasjonTilLesemodus: formatereLesemodusObjekt(vilkar, aksjonspunkt, status),
-        losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, fraDato, tilDato }) => {
+        losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, avslagsårsakKode, fraDato, tilDato }) => {
           submitCallback([
             formatereLosAksjonspunktObjekt(
               aksjonspunkt.definisjon.kode,
               begrunnelse,
               vilkarOppfylt,
+              avslagsårsakKode ?? AvslagskoderAleneOmOmsorgen.IKKE_GRUNNLAG_ALENE_OMSORG,
               fraDato,
               erBehandlingRevurdering && !!tilDato ? tilDato : åretBarnetFyller18,
             ),

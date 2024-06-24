@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -203,9 +203,11 @@ const PleiepengerProsess = ({
     apentFaktaPanelInfo,
   );
 
-  setBeregningErBehandlet(
-    prosessStegPaneler.find(panel => panel.getTekstKode() === 'Behandlingspunkt.Beregning').getErStegBehandlet(),
-  );
+  useEffect(() => {
+    setBeregningErBehandlet(
+      prosessStegPaneler.find(panel => panel.getTekstKode() === 'Behandlingspunkt.Beregning').getErStegBehandlet(),
+    );
+  }, [setBeregningErBehandlet, prosessStegPaneler]);
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);

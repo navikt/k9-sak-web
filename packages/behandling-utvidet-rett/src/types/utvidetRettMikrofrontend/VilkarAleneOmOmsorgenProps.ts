@@ -17,6 +17,7 @@ export interface AleneOmOmsorgenProps {
 
 export interface AleneOmOmsorgenAksjonspunktObjekt {
   begrunnelse: string;
+  avslagsårsakKode: string;
   vilkarOppfylt: boolean;
   fraDato: string;
   tilDato: string;

@@ -57,7 +57,7 @@ export const Uttak: Story = {
           annenPart: AnnenPart.MED_ANDRE,
           manueltOverstyrt: false,
         },
-        '2021-03-09/2021-03-22': {
+        '2021-03-10/2021-03-22': {
           utfall: Utfall.OPPFYLT,
           uttaksgrad: 65.0,
           utbetalingsgrader: [
@@ -134,7 +134,7 @@ export const Uttak: Story = {
           endringsstatus: 'UENDRET' as Endringsstatus,
           manueltOverstyrt: false,
         },
-        '2021-04-01/2021-04-14': {
+        '2021-04-02/2021-04-14': {
           utfall: Utfall.IKKE_OPPFYLT,
           uttaksgrad: 0.0,
           utbetalingsgrader: [

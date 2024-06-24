@@ -314,7 +314,6 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                     validate={[required, minLength3, maxLength1500, hasValidText]}
                     maxLength={1500}
                     readOnly={readOnly}
-                    textareaClass={styles.explanationTextarea}
                     placeholder={intl.formatMessage({ id: 'TilbakekrevingPeriodeForm.Vurdering.Hjelpetekst' })}
                   />
                   <VerticalSpacer twentyPx />

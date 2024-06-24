@@ -45,6 +45,9 @@ updates:
         patterns:
           - '@navikt/aksel-icons'
           - '@navikt/ds-*'
+      ft-frontend:
+        patterns:
+          - '@navikt/ft-*'
 
   - package-ecosystem: github-actions
     directory: '/'
