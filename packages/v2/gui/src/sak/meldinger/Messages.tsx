@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useReducer } from 'react';
 import { Button, Checkbox, HStack, Spacer, VStack } from '@navikt/ds-react';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
@@ -48,6 +48,41 @@ type MessagesProps = {
   readonly api: BackendApi;
 };
 
+type MessagesState = Readonly<{
+  valgtMalkode: string | undefined;
+  fritekstForslag: FritekstbrevDokumentdata[];
+  // valgtFritekst: FritekstbrevDokumentdata | undefined;
+  // valgtMottakerId: string | undefined;
+  // tredjepartsmottakerAktivert: boolean;
+  // tredjepartsmottaker: TredjepartsmottakerValue | TredjepartsmottakerError | undefined;
+}>
+
+type SetValgtMalkode = Readonly<{
+  type: 'SettValgtMal';
+  malkode: string | undefined;
+}>;
+
+type SetFritekstForslag = Readonly<{
+  type: 'SettFritekstForslag',
+  fritekstForslag: FritekstbrevDokumentdata[]
+}>
+
+type MessagesStateActions = SetValgtMalkode | SetFritekstForslag;
+
+const messagesStateReducer = (state: MessagesState, dispatch: MessagesStateActions): MessagesState => {
+  const valgtMalkode = dispatch.type === "SettValgtMal" ? dispatch.malkode : state.valgtMalkode
+  const fritekstForslag = dispatch.type === "SettFritekstForslag" ? dispatch.fritekstForslag : state.fritekstForslag
+  return {
+    valgtMalkode,
+    fritekstForslag,
+  }
+}
+
+const initMessagesState = (maler: Template[]): MessagesState => ({
+  valgtMalkode: maler[0]?.kode,
+  fritekstForslag: [],
+})
+
 const Messages = ({
   maler,
   fagsak,
@@ -56,8 +91,7 @@ const Messages = ({
   arbeidsgiverOpplysningerPerId,
   api,
 }: MessagesProps) => {
-  const [valgtMalkode, setValgtMalkode] = useState<string | undefined>(maler[0]?.kode);
-  const [fritekstForslag, setFritekstForslag] = useState<FritekstbrevDokumentdata[]>([]);
+  const [{valgtMalkode, fritekstForslag}, dispatch] = useReducer(messagesStateReducer, initMessagesState(maler))
   const [valgtFritekst, setValgtFritekst] = useState<FritekstbrevDokumentdata | undefined>(undefined);
   const [valgtMottakerId, setValgtMottakerId] = useState<string | undefined>(undefined);
   const [tredjepartsmottakerAktivert, setTredjepartsmottakerAktivert] = useState(false)
@@ -68,6 +102,9 @@ const Messages = ({
   // showValidation is set to true when inputs should display any validation errors, i.e. after the user tries to submit the form without having valid values.
   const [showValidation, setShowValidation] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
+
+  const setValgtMalkode = (malkode: string | undefined) => dispatch({type: 'SettValgtMal', malkode})
+  const setFritekstForslag = (newFritekstForslag: FritekstbrevDokumentdata[]) => dispatch({type: "SettFritekstForslag", fritekstForslag: newFritekstForslag})
 
   // Konverter valgtFritekst til FritekstInputValue
   const valgtFritekstInputValue: FritekstInputValue = {

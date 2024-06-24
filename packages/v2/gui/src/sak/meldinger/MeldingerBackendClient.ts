@@ -4,6 +4,7 @@ import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/Fo
 import type { FormidlingClient } from '@k9-sak-web/backend/k9formidling/client/FormidlingClient.ts';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.ts';
 import { type AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.ts';
+import { requestAborted, type RequestAborted } from "@k9-sak-web/backend/shared/RequestAborted.ts";
 import type { EregOrganizationLookupResponse } from './EregOrganizationLookupResponse.js';
 
 export default class MeldingerBackendClient {
@@ -16,7 +17,7 @@ export default class MeldingerBackendClient {
     this.#formidling = formidlingClient;
   }
 
-  async getBrevMottakerinfoEreg(organisasjonsnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse> {
+  async getBrevMottakerinfoEreg(organisasjonsnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse | RequestAborted> {
     const abortListenerRemover = new AbortController(); // Trengs nok eigentleg ikkje
     try {
       const promise = this.#k9sak.brev.getBrevMottakerinfoEreg({ organisasjonsnr });
@@ -26,6 +27,9 @@ export default class MeldingerBackendClient {
         return {
           name: resp.navn,
         };
+      }
+      if(promise.isCancelled) {
+        return requestAborted
       }
       return {
         notFound: true,

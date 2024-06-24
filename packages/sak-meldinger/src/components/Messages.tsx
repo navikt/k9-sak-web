@@ -29,6 +29,7 @@ import React, { useEffect, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
+import { RequestAborted } from "@k9-sak-web/backend/shared/RequestAborted.js";
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 import styles from './messages.module.css';
 
@@ -50,7 +51,7 @@ export type FormValues = {
 };
 
 export interface BackendApi {
-  getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse>;
+  getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse | RequestAborted>;
 }
 
 interface PureOwnProps {

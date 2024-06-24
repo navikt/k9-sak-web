@@ -5,10 +5,16 @@ import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/melding
 import type { BackendApi } from '@k9-sak-web/gui/sak/meldinger/Messages.js';
 import { action } from '@storybook/addon-actions';
 import type { AvsenderApplikasjon } from "@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.ts";
+import { requestAborted, type RequestAborted } from "@k9-sak-web/backend/shared/RequestAborted.ts";
 import { fakePdf } from './fakePdf.js';
-import { delay } from "../../utils/delay.ts";
+import { delay } from "../../utils/delay.js";
 
 export class FakeMessagesBackendApi implements BackendApi {
+  public static readonly dummyMalinnhold = [
+    { tittel: 'Varsel nr 1', fritekst: 'Hei, du må sende inn ditt og datt før frist.' },
+    { tittel: 'Varsel nr 2', fritekst: 'Brev tekst forslag nr 2.' },
+  ];
+
   async hentInnholdBrevmal(
     sakstype: string,
     eksternReferanse: string,
@@ -17,18 +23,15 @@ export class FakeMessagesBackendApi implements BackendApi {
   ): Promise<FritekstbrevDokumentdata[]> {
     const x = eksternReferanse + sakstype + avsenderApplikasjon; // For å unngå unused variable feil
     if (x !== null && maltype === 'INNHENT_MEDISINSKE_OPPLYSNINGER') {
-      return [
-        { tittel: 'Varsel nr 1', fritekst: 'Hei, du må sende inn ditt og datt før frist.' },
-        { tittel: 'Varsel nr 2', fritekst: 'Brev tekst forslag nr 2.' },
-      ];
+      return FakeMessagesBackendApi.dummyMalinnhold
     }
     return [];
   }
 
-  async getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse> {
-    abort?.addEventListener('abort', () => {
-      throw abort.reason;
-    });
+  async getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse | RequestAborted> {
+    if(abort?.aborted) {
+      return requestAborted
+    }
     if (orgnr.length === 9) {
       if (Number.isFinite(Number(orgnr))) {
         if (orgnr === '000000000') {

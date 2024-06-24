@@ -1,11 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { ErrorMessage, TextField } from '@navikt/ds-react';
 import { RequestIntentionallyAborted } from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
+import { requestAborted, type RequestAborted } from "@k9-sak-web/backend/shared/RequestAborted.ts";
 import styles from './TredjepartsmottakerInput.module.css';
 import type { EregOrganizationLookupResponse } from './EregOrganizationLookupResponse.js';
 
 export interface BackendApi {
-  getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse>;
+  getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse | RequestAborted>;
 }
 
 export interface TredjepartsmottakerOrgnrInputProps {
@@ -60,20 +61,22 @@ const TredjepartsmottakerInput = ({
       lookupAborterRef.current = new AbortController();
       const newTredjepartsmottaker =
         orgnr.length > 0 ? await api.getBrevMottakerinfoEreg(orgnr, lookupAborterRef.current?.signal) : undefined;
-      setTredjepartsmottaker(newTredjepartsmottaker);
-      if (!isEqual(newTredjepartsmottaker, prevTredjepartsmottaker)) {
-        if (newTredjepartsmottaker === undefined) {
-          if (required) {
-            onChange?.({ required: true });
+      if(newTredjepartsmottaker !== requestAborted) {
+        setTredjepartsmottaker(newTredjepartsmottaker);
+        if (!isEqual(newTredjepartsmottaker, prevTredjepartsmottaker)) {
+          if (newTredjepartsmottaker === undefined) {
+            if (required) {
+              onChange?.({ required: true });
+            } else {
+              onChange?.(undefined);
+            }
+          } else if (newTredjepartsmottaker.notFound) {
+            onChange?.({ notFound: true });
+          } else if (newTredjepartsmottaker.invalidOrgnum) {
+            onChange?.({ invalidOrgnum: true });
           } else {
-            onChange?.(undefined);
+            onChange?.({ navn: newTredjepartsmottaker.name ?? '', organisasjonsnr: orgnr });
           }
-        } else if (newTredjepartsmottaker.notFound) {
-          onChange?.({ notFound: true });
-        } else if (newTredjepartsmottaker.invalidOrgnum) {
-          onChange?.({ invalidOrgnum: true });
-        } else {
-          onChange?.({ navn: newTredjepartsmottaker.name ?? '', organisasjonsnr: orgnr });
         }
       }
     } catch (e) {
