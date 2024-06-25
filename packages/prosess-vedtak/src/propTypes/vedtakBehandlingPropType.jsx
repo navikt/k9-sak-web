@@ -7,7 +7,7 @@ import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 const vedtakBehandlingPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   versjon: PropTypes.number.isRequired,
-  type: PropTypes.string().isRequired,
+  type: PropTypes.string.isRequired,
   status: kodeverkObjektPropType.isRequired,
   sprakkode: PropTypes.string.isRequired,
   behandlingsresultat: PropTypes.shape(),
