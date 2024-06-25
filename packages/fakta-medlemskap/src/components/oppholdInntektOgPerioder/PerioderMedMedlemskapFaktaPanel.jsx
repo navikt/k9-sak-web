@@ -1,3 +1,9 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import { createSelector } from 'reselect';
 import { Label, RadioGroupField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -13,12 +19,6 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { BodyShort, Table, VStack } from '@navikt/ds-react';
-import moment from 'moment';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
 
 const headerTextCodes = [
   'PerioderMedMedlemskapFaktaPanel.Period',
@@ -179,10 +179,10 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
     .sort((p1, p2) => new Date(p1.fom).getTime() - new Date(p2.fom).getTime());
   const filteredAp = aksjonspunkter.filter(
     ap =>
-      periode.aksjonspunkter.includes(ap.definisjon.kode) ||
+      periode.aksjonspunkter.includes(ap.definisjon) ||
       (periode.aksjonspunkter.length > 0 &&
         periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE) &&
-        ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
+        ap.definisjon === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
   );
 
   return {
@@ -190,7 +190,7 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
     medlemskapManuellVurderingType: periode.medlemskapManuellVurderingType,
     fodselsdato: soknad && soknad.fodselsdatoer ? Object.values(soknad.fodselsdatoer)[0] : undefined,
     hasPeriodeAksjonspunkt: filteredAp.length > 0,
-    isPeriodAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status.kode)),
+    isPeriodAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status)),
   };
 };
 

@@ -5,7 +5,6 @@ import {
   ArbeidsgiverOpplysningerPerId,
   Brevmaler,
   FeatureToggles,
-  Kodeverk,
   KodeverkMedNavn,
   Personopplysninger,
 } from '@k9-sak-web/types';
@@ -33,8 +32,8 @@ export interface BackendApi extends MessagesBackendApi, V2MessagesBackendApi {}
 
 interface OwnProps {
   submitCallback: (values: FormValues) => void;
-  templates: Brevmaler;
-  sprakKode: Kodeverk; // TODO Erstatt med behandling
+  templates?: Brevmaler;
+  sprakKode: string;
   previewCallback: (
     mottaker: string | MottakerDto,
     brevmalkode: string,

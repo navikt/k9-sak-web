@@ -9,10 +9,13 @@
     "./sak/*": "./src/sak/*",
     "./utils/*": "./src/utils/*",
     "./kodeverk/*": "./src/kodeverk/*",
-    "./storybook/*": "./src/storybook/*"
+    "./storybook/*": "./src/storybook/*",
+    "./sak/meldinger/*": "./src/sak/meldinger/*",
+    "./behandling/*": "./src/behandling/*"
   },
   "dependencies": {
     "@k9-sak-web/backend": "workspace:^",
+    "@k9-sak-web/lib": "1.0.0",
     "react": "18.3.1"
   }
 }

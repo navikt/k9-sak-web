@@ -1,32 +1,35 @@
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
 import React from 'react';
+import { screen } from '@testing-library/react';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { intlMock } from '../../i18n/index';
-import messages from '../../i18n/nb_NO.json';
 import { FagsakProfile } from './FagsakProfile';
+import messages from '../../i18n/nb_NO.json';
 
 describe('<FagsakProfile>', () => {
   it('skal vise en fagsak med tilhørende informasjon', () => {
-    const fagsakYtelseType = {
-      kode: 'ES',
-      kodeverk: 'FAGSAK_YTELSE',
-      navn: 'Engangsstønad',
-    };
-    const status = {
-      kode: 'OPPR',
-      kodeverk: 'FAGSAK_STATUS',
-      navn: 'Opprettet',
-    };
+    const fagsakYtelseType = 'ES';
+    const status = 'OPPR';
+
     renderWithIntl(
-      <FagsakProfile
-        saksnummer="12345"
-        fagsakYtelseType={fagsakYtelseType}
-        fagsakStatus={status}
-        renderBehandlingMeny={vi.fn()}
-        renderBehandlingVelger={vi.fn()}
-        dekningsgrad={100}
-        intl={intlMock}
-      />,
+      <KodeverkProvider
+        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <FagsakProfile
+          saksnummer="12345"
+          fagsakYtelseType={fagsakYtelseType}
+          fagsakStatus={status}
+          renderBehandlingMeny={vi.fn()}
+          renderBehandlingVelger={vi.fn()}
+          dekningsgrad={100}
+          intl={intlMock}
+        />
+      </KodeverkProvider>,
       { messages },
     );
 
@@ -35,26 +38,26 @@ describe('<FagsakProfile>', () => {
   });
 
   it('skal vise dekningsgrad for foreldrepenger om den eksisterer', () => {
-    const fagsakYtelseType = {
-      kode: 'FP',
-      kodeverk: 'FAGSAK_YTELSE',
-      navn: 'Foreldrepenger',
-    };
-    const status = {
-      kode: 'OPPR',
-      kodeverk: 'FAGSAK_STATUS',
-      navn: 'Opprettet',
-    };
+    const fagsakYtelseType = 'FP';
+    const status = 'OPPR';
+
     renderWithIntl(
-      <FagsakProfile
-        saksnummer="12345"
-        fagsakYtelseType={fagsakYtelseType}
-        fagsakStatus={status}
-        renderBehandlingMeny={vi.fn()}
-        renderBehandlingVelger={vi.fn()}
-        dekningsgrad={100}
-        intl={intlMock}
-      />,
+      <KodeverkProvider
+        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <FagsakProfile
+          saksnummer="12345"
+          fagsakYtelseType={fagsakYtelseType}
+          fagsakStatus={status}
+          renderBehandlingMeny={vi.fn()}
+          renderBehandlingVelger={vi.fn()}
+          dekningsgrad={100}
+          intl={intlMock}
+        />
+      </KodeverkProvider>,
       { messages },
     );
 
@@ -64,25 +67,25 @@ describe('<FagsakProfile>', () => {
   });
 
   it('skal ikke vise dekningsgrad for foreldrepenger om den ikke eksisterer', () => {
-    const fagsakYtelseType = {
-      kode: 'FP',
-      kodeverk: 'FAGSAK_YTELSE',
-      navn: 'Foreldrepenger',
-    };
-    const status = {
-      kode: 'OPPR',
-      kodeverk: 'FAGSAK_STATUS',
-      navn: 'Opprettet',
-    };
+    const fagsakYtelseType = 'FP';
+    const status = 'OPPR';
+
     renderWithIntl(
-      <FagsakProfile
-        saksnummer="12345"
-        fagsakYtelseType={fagsakYtelseType}
-        fagsakStatus={status}
-        renderBehandlingMeny={vi.fn()}
-        renderBehandlingVelger={vi.fn()}
-        intl={intlMock}
-      />,
+      <KodeverkProvider
+        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <FagsakProfile
+          saksnummer="12345"
+          fagsakYtelseType={fagsakYtelseType}
+          fagsakStatus={status}
+          renderBehandlingMeny={vi.fn()}
+          renderBehandlingVelger={vi.fn()}
+          intl={intlMock}
+        />
+      </KodeverkProvider>,
       { messages },
     );
 
@@ -92,26 +95,26 @@ describe('<FagsakProfile>', () => {
   });
 
   it('skal ikke vise ugyldig dekningsgrad for foreldrepenger', () => {
-    const fagsakYtelseType = {
-      kode: 'FP',
-      kodeverk: 'FAGSAK_YTELSE',
-      navn: 'Foreldrepenger',
-    };
-    const status = {
-      kode: 'OPPR',
-      kodeverk: 'FAGSAK_STATUS',
-      navn: 'Opprettet',
-    };
+    const fagsakYtelseType = 'FP';
+    const status = 'OPPR';
+
     renderWithIntl(
-      <FagsakProfile
-        saksnummer="12345"
-        fagsakYtelseType={fagsakYtelseType}
-        fagsakStatus={status}
-        renderBehandlingMeny={vi.fn()}
-        renderBehandlingVelger={vi.fn()}
-        dekningsgrad={73}
-        intl={intlMock}
-      />,
+      <KodeverkProvider
+        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <FagsakProfile
+          saksnummer="12345"
+          fagsakYtelseType={fagsakYtelseType}
+          fagsakStatus={status}
+          renderBehandlingMeny={vi.fn()}
+          renderBehandlingVelger={vi.fn()}
+          dekningsgrad={73}
+          intl={intlMock}
+        />
+      </KodeverkProvider>,
       { messages },
     );
 

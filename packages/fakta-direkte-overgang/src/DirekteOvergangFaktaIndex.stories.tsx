@@ -14,22 +14,13 @@ const intl = createIntl(
 );
 
 const manglendePeriodeAP: Aksjonspunkt = {
-  aksjonspunktType: {
-    kode: 'MANU',
-    kodeverk: 'AKSJONSPUNKT_TYPE',
-  },
+  aksjonspunktType: 'MANU', // AKSJONSPUNKT_TYPE
   begrunnelse: null,
   besluttersBegrunnelse: null,
-  definisjon: {
-    kode: '9007',
-    kodeverk: 'AKSJONSPUNKT_DEF',
-  },
+  definisjon: '9007', // AKSJONSPUNKT_DEF
   erAktivt: true,
   kanLoses: true,
-  status: {
-    kode: 'OPPR',
-    kodeverk: 'AKSJONSPUNKT_STATUS',
-  },
+  status: 'OPPR', // AKSJONSPUNKT_STATUS
   toTrinnsBehandling: true,
   toTrinnsBehandlingGodkjent: null,
   vilkarType: null,
@@ -37,22 +28,13 @@ const manglendePeriodeAP: Aksjonspunkt = {
 };
 
 const manglendePeriodeAnnenPartAP: Aksjonspunkt = {
-  aksjonspunktType: {
-    kode: 'MANU',
-    kodeverk: 'AKSJONSPUNKT_TYPE',
-  },
+  aksjonspunktType: 'MANU', // AKSJONSPUNKT_TYPE
   begrunnelse: null,
   besluttersBegrunnelse: null,
-  definisjon: {
-    kode: '9008',
-    kodeverk: 'AKSJONSPUNKT_DEF',
-  },
+  definisjon: '9008', // AKSJONSPUNKT_DEF
   erAktivt: true,
   kanLoses: true,
-  status: {
-    kode: 'OPPR',
-    kodeverk: 'AKSJONSPUNKT_STATUS',
-  },
+  status: 'OPPR', // AKSJONSPUNKT_STATUS
   toTrinnsBehandling: true,
   toTrinnsBehandlingGodkjent: null,
   vilkarType: null,

@@ -2,6 +2,7 @@ import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import { HistorikkinnslagEndretFelt } from '@k9-sak-web/types';
 
 import historikkinnslagType from '../../kodeverk/historikkinnslagType';
@@ -30,7 +31,7 @@ const HistorikkMalType9 = ({
   intl,
   historikkinnslag,
   behandlingLocation,
-  getKodeverknavn,
+  kodeverkNavnFraKodeFn,
   createLocationForSkjermlenke,
 }: HistorikkMal & WrappedComponentProps) => (
   <>
@@ -45,26 +46,25 @@ const HistorikkMalType9 = ({
             <Skjermlenke
               skjermlenke={historikkinnslagDel.skjermlenke}
               behandlingLocation={behandlingLocation}
-              getKodeverknavn={getKodeverknavn}
+              kodeverkNavnFraKodeFn={kodeverkNavnFraKodeFn}
               createLocationForSkjermlenke={createLocationForSkjermlenke}
             />
           )}
-          {historikkinnslagDel.endredeFelter &&
-            historikkinnslag.type.kode === historikkinnslagType.OVST_UTTAK_SPLITT && (
-              <FormattedMessage
-                id="Historikk.Template.9"
-                values={{
-                  opprinneligPeriode: historikkinnslagDel.endredeFelter[0].fraVerdi,
-                  numberOfPeriods: historikkinnslagDel.endredeFelter.length,
-                  splitPeriods: getSplitPeriods(historikkinnslagDel.endredeFelter),
-                  b: chunks => <b>{chunks}</b>,
-                  br: <br />,
-                }}
-              />
-            )}
+          {historikkinnslagDel.endredeFelter && historikkinnslag.type === historikkinnslagType.OVST_UTTAK_SPLITT && (
+            <FormattedMessage
+              id="Historikk.Template.9"
+              values={{
+                opprinneligPeriode: historikkinnslagDel.endredeFelter[0].fraVerdi,
+                numberOfPeriods: historikkinnslagDel.endredeFelter.length,
+                splitPeriods: getSplitPeriods(historikkinnslagDel.endredeFelter),
+                b: chunks => <b>{chunks}</b>,
+                br: <br />,
+              }}
+            />
+          )}
 
           {historikkinnslagDel.endredeFelter &&
-            historikkinnslag.type.kode === historikkinnslagType.FASTSATT_UTTAK_SPLITT && (
+            historikkinnslag.type === historikkinnslagType.FASTSATT_UTTAK_SPLITT && (
               <FormattedMessage
                 id="Historikk.Template.9.ManuellVurdering"
                 values={{
@@ -77,7 +77,7 @@ const HistorikkMalType9 = ({
               />
             )}
 
-          {historikkinnslag.type.kode === historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING &&
+          {historikkinnslag.type === historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING &&
             historikkinnslagDel.endredeFelter &&
             historikkinnslagDel.endredeFelter
               .filter(endretFelt => endretFelt.tilVerdi !== tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK)
@@ -86,15 +86,17 @@ const HistorikkMalType9 = ({
                   <FormattedMessage
                     id="Historikk.Template.9.TilbakekrViderebehandling"
                     values={{
-                      felt: getKodeverknavn(endretFelt.endretFeltNavn),
-                      verdi: findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl, getKodeverknavn),
+                      felt: kodeverkNavnFraKodeFn(endretFelt.endretFeltNavn, KodeverkType.HISTORIKK_ENDRET_FELT_TYPE),
+                      verdi: findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl, kodeverkNavnFraKodeFn),
                       b: chunks => <b>{chunks}</b>,
                     }}
                   />
                 </div>
               ))}
           {historikkinnslagDel.begrunnelse && (
-            <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse)} />
+            <BubbleText
+              bodyText={kodeverkNavnFraKodeFn(historikkinnslagDel.begrunnelse, KodeverkType.HISTORIKK_BEGRUNNELSE_TYPE)}
+            />
           )}
           {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />}
         </div>

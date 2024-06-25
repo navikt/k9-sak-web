@@ -10,6 +10,7 @@ import {
   FagsakPerson,
   ArbeidsgiverOpplysningerWrapper,
 } from '@k9-sak-web/types';
+import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import FetchedData from './types/fetchedDataTsType';
 import UtvidetRettPaneler from './components/UtvidetRettPaneler';
@@ -43,7 +44,7 @@ interface OwnProps {
   };
   opneSokeside: () => void;
   featureToggles: FeatureToggles;
-  kodeverk?: { [key: string]: KodeverkMedNavn[] };
+  kodeverk?: AlleKodeverk;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setRequestPendingMessage: (message: string) => void;
 }

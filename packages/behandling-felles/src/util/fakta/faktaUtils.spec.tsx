@@ -6,7 +6,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 
@@ -23,16 +23,35 @@ import {
 } from './faktaUtils';
 
 describe('<faktaUtils>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
-  } as Fagsak;
+    sakstype: fagsakYtelsesType.OMP,
+    status: fagsakStatus.UNDER_BEHANDLING,
+    relasjonsRolleType: '',
+    barnFodt: '',
+    person: {
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+      diskresjonskode: '',
+      dodsdato: '',
+      aktørId: '',
+    },
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
+  };
   const behandling = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -79,8 +98,8 @@ describe('<faktaUtils>', () => {
     };
     const aksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'BEHANDLING_DEF' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
+        definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -118,8 +137,8 @@ describe('<faktaUtils>', () => {
 
     const aksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'BEHANDLING_DEF' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
+        definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -165,8 +184,8 @@ describe('<faktaUtils>', () => {
     const panelDef2 = new TestFaktaPanelDef();
     const aksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'BEHANDLING_DEF' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
+        definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -224,8 +243,8 @@ describe('<faktaUtils>', () => {
       behandlingVersjon: behandling.versjon,
       bekreftedeAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[0].kode,
-          kode: aksjonspunkter[0].kode,
+          '@type': aksjonspunkter[0],
+          kode: aksjonspunkter[0],
         },
       ],
     });
@@ -252,11 +271,7 @@ describe('<faktaUtils>', () => {
       lagreOverstyrteAksjonspunkter,
     );
 
-    const aksjonspunkter = [
-      {
-        kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
-      },
-    ];
+    const aksjonspunkter = [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
 
     await callback(aksjonspunkter);
 
@@ -270,8 +285,8 @@ describe('<faktaUtils>', () => {
       bekreftedeAksjonspunktDtoer: [],
       overstyrteAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[0].kode,
-          kode: aksjonspunkter[0].kode,
+          '@type': aksjonspunkter[0],
+          kode: aksjonspunkter[0],
         },
       ],
     });
@@ -299,12 +314,8 @@ describe('<faktaUtils>', () => {
     );
 
     const aksjonspunkter = [
-      {
-        kode: aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
-      },
-      {
-        kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
-      },
+      aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
+      aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
     ];
 
     await callback(aksjonspunkter);
@@ -318,14 +329,14 @@ describe('<faktaUtils>', () => {
       behandlingVersjon: behandling.versjon,
       overstyrteAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[0].kode,
-          kode: aksjonspunkter[0].kode,
+          '@type': aksjonspunkter[0],
+          kode: aksjonspunkter[0],
         },
       ],
       bekreftedeAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[1].kode,
-          kode: aksjonspunkter[1].kode,
+          '@type': aksjonspunkter[1],
+          kode: aksjonspunkter[1],
         },
       ],
     });

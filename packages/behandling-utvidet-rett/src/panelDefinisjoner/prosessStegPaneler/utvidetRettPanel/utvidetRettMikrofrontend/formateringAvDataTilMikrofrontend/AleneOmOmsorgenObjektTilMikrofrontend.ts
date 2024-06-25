@@ -26,7 +26,7 @@ interface OwnProps {
 }
 
 const formatereLesemodusObjekt = (vilkar: Vilkar, aksjonspunkt: Aksjonspunkt, status: string) => {
-  if (vilkar.perioder[0].vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT) {
+  if (vilkar.perioder[0].vilkarStatus !== vilkarUtfallType.IKKE_VURDERT) {
     return {
       begrunnelse: aksjonspunkt.begrunnelse,
       vilkarOppfylt: status === vilkarUtfallType.OPPFYLT,
@@ -82,16 +82,16 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
   visKomponent: KomponenterEnum.ALENE_OM_OMSORGEN;
   props: AleneOmOmsorgenProps;
 } => {
-  const erBehandlingRevurdering: boolean = behandling.type.kode === BehandlingType.REVURDERING;
+  const erBehandlingRevurdering: boolean = behandling.type === BehandlingType.REVURDERING;
   const angittBarn = soknad.angittePersoner.filter(person => person.rolle === 'BARN');
   const barnetsFodselsdato = new Date(angittBarn[0].fødselsdato);
   const åretBarnetFyller18 = `${barnetsFodselsdato.getFullYear() + 18}-12-31`;
 
   const vilkaretVurderesManuelltMedAksjonspunkt =
-    aksjonspunkt && vilkar && aksjonspunkt.definisjon.kode === aksjonspunktCodes.UTVIDET_RETT;
+    aksjonspunkt && vilkar && aksjonspunkt.definisjon === aksjonspunktCodes.UTVIDET_RETT;
   // Vilkåret kan kun bli automatisk innvilget. Dersom det blir automatiskt avslått resulterer det i manuell vurdering via aksjonspunkt.
   const vilkaretErAutomatiskInnvilget =
-    !aksjonspunkt && vilkar && vilkar.perioder[0]?.vilkarStatus.kode === vilkarUtfallType.OPPFYLT;
+    !aksjonspunkt && vilkar && vilkar.perioder[0]?.vilkarStatus === vilkarUtfallType.OPPFYLT;
 
   if (vilkaretVurderesManuelltMedAksjonspunkt) {
     return {
@@ -113,7 +113,7 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
         losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, avslagsårsakKode, fraDato, tilDato }) => {
           submitCallback([
             formatereLosAksjonspunktObjekt(
-              aksjonspunkt.definisjon.kode,
+              aksjonspunkt.definisjon,
               begrunnelse,
               vilkarOppfylt,
               avslagsårsakKode ?? AvslagskoderAleneOmOmsorgen.IKKE_GRUNNLAG_ALENE_OMSORG,

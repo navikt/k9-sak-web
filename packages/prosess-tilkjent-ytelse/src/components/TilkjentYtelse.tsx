@@ -1,13 +1,8 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineControl, Timeline } from '@fpsak-frontend/tidslinje';
-import {
-  DDMMYY_DATE_FORMAT,
-  ISO_DATE_FORMAT,
-  calcDaysAndWeeksWithWeekends,
-  getKodeverknavnFn,
-} from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, BeregningsresultatPeriode, KodeverkMedNavn } from '@k9-sak-web/types';
+import { DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT, calcDaysAndWeeksWithWeekends } from '@fpsak-frontend/utils';
+import { ArbeidsgiverOpplysningerPerId, BeregningsresultatPeriode } from '@k9-sak-web/types';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import moment from 'moment';
 import React, { Component, RefObject } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
@@ -40,7 +35,7 @@ const getOptions = (nyePerioder: PeriodeMedId[]) => {
   };
 };
 
-const createTooltipContent = (intl, item, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
+const createTooltipContent = (intl, item, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId) => {
   const { formatMessage } = intl;
   const periodeDato = `${moment(item.fom).format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom).format(DDMMYY_DATE_FORMAT)}`;
   return `
@@ -68,7 +63,7 @@ const createTooltipContent = (intl, item, getKodeverknavn, arbeidsgiverOpplysnin
               formatMessage(
                 { id: 'Timeline.tooltip.dagsatsPerAndel' },
                 {
-                  arbeidsgiver: createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+                  arbeidsgiver: createVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId),
                   dagsatsPerAndel: Number(andel.refusjon) + Number(andel.tilSoker),
                 },
               ),
@@ -102,14 +97,14 @@ const erTotalUtbetalingsgradOver100 = periode => {
   return false;
 };
 
-const prepareTimelineData = (periode, index, intl, getKodeverknavn, arbeidsgiverOpplysningerPerId) => ({
+const prepareTimelineData = (periode, index, intl, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId) => ({
   ...periode,
   className: erTotalUtbetalingsgradOver100(periode) ? 'innvilget' : 'gradert',
   group: 1,
   id: index,
   start: parseDateString(periode.fom),
   end: moment(parseDateString(periode.tom)).add(1, 'day'),
-  title: createTooltipContent(intl, periode, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+  title: createTooltipContent(intl, periode, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId),
 });
 
 interface OwnProps {
@@ -118,7 +113,7 @@ interface OwnProps {
     id: number;
     content: string;
   }[];
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
@@ -245,16 +240,15 @@ export class TilkjentYtelse extends Component<OwnProps & WrappedComponentProps, 
       goBackward,
       goForward,
       openPeriodInfo,
-      props: { groups, items, intl, alleKodeverk, arbeidsgiverOpplysningerPerId },
+      props: { groups, items, intl, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId },
       selectHandler,
       state: { selectedItem },
       zoomIn,
       zoomOut,
     } = this;
-    const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
     const timelineData = items.map((periode, index) =>
-      prepareTimelineData(periode, index, intl, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+      prepareTimelineData(periode, index, intl, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId),
     );
     return (
       <div className={styles.timelineContainer}>
@@ -280,7 +274,6 @@ export class TilkjentYtelse extends Component<OwnProps & WrappedComponentProps, 
         />
         {selectedItem && (
           <TilkjentYtelseTimelineData
-            alleKodeverk={alleKodeverk}
             selectedItemStartDate={selectedItem.fom.toString()}
             selectedItemEndDate={selectedItem.tom.toString()}
             selectedItemData={selectedItem}

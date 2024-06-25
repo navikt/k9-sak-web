@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { MemoryRouter } from 'react-router-dom';
@@ -6,27 +6,25 @@ import { MemoryRouter } from 'react-router-dom';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
 
 const lagRisikoklassifisering = kode => ({
-  kontrollresultat: {
-    kode,
-    kodeverk: 'Kontrollresultat',
-  },
+  kontrollresultat: kode,
   medlFaresignaler: undefined,
   iayFaresignaler: undefined,
-  status: {
-    kode: aksjonspunktStatus.UTFORT,
-  },
+  status: aksjonspunktStatus.UTFORT,
 });
 
 vi.mock('react-router-dom', async () => {
@@ -45,16 +43,27 @@ vi.mock('react-router-dom', async () => {
 });
 
 describe('<FagsakProfileIndex>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123',
-    sakstype: {
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: 'FAGSAK_YTELSE',
+    sakstype: fagsakYtelsesType.FP,
+    status: fagsakStatus.OPPRETTET,
+    person: {
+      aktørId: '',
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
     },
-    status: {
-      kode: fagsakStatus.OPPRETTET,
-      kodeverk: 'FAGSAK_STATUS',
-    },
+    relasjonsRolleType: '',
+    barnFodt: '',
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
   };
 
   const alleKodeverk = {
@@ -91,7 +100,7 @@ describe('<FagsakProfileIndex>', () => {
     ],
     [kodeverkTyper.FAGSAK_YTELSE]: [
       {
-        kode: fagsakYtelseType.FORELDREPENGER,
+        kode: fagsakYtelsesType.FP,
         kodeverk: 'FAGSAK_YTELSE',
         navn: 'Foreldrepenger',
       },
@@ -108,14 +117,8 @@ describe('<FagsakProfileIndex>', () => {
   const behandling: BehandlingAppKontekst = {
     id: 1,
     uuid: 'uuid-1',
-    type: {
-      kode: behandlingType.FØRSTEGANGSSØKNAD,
-      kodeverk: 'BEHANDLING_TYPE',
-    },
-    status: {
-      kode: behandlingStatus.AVSLUTTET,
-      kodeverk: 'BEHANDLING_STATUS',
-    },
+    type: behandlingType.FØRSTEGANGSSØKNAD,
+    status: behandlingStatus.AVSLUTTET,
     links: [],
     behandlendeEnhetId: 'test',
     behandlendeEnhetNavn: 'NAV Viken',
@@ -135,25 +138,16 @@ describe('<FagsakProfileIndex>', () => {
     id: 1,
     uuid: 'uuid-1',
     behandlingsresultat: {
-      type: {
-        kode: behandlingResultatType.AVSLATT,
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      },
+      type: behandlingResultatType.AVSLATT,
     },
   };
 
   const revurdering: BehandlingAppKontekst = {
     ...behandling,
     id: 2,
-    type: {
-      kode: behandlingType.REVURDERING,
-      kodeverk: 'BEHANDLING_TYPE',
-    },
+    type: behandlingType.REVURDERING,
     behandlingsresultat: {
-      type: {
-        kode: behandlingResultatType.INNVILGET,
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      },
+      type: behandlingResultatType.INNVILGET,
     },
     uuid: 'uuid-2',
     opprettet: '2021-02-01T00:54:25.455',
@@ -178,18 +172,25 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(K9sakApiKeys.SAK_BRUKER, {});
     requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, {});
 
-    renderWithIntlAndReactQueryClient(
-      <MemoryRouter>
-        <IntlProvider locale="nb-NO">
-          <FagsakProfileIndex
-            fagsak={fagsak as Fagsak}
-            alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
-            harHentetBehandlinger
-            oppfriskBehandlinger={vi.fn()}
-            fagsakRettigheter={fagsakRettigheter}
-          />
-        </IntlProvider>
-      </MemoryRouter>,
+    render(
+      <KodeverkProvider
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <MemoryRouter>
+          <IntlProvider locale="nb-NO">
+            <FagsakProfileIndex
+              fagsak={fagsak}
+              alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
+              harHentetBehandlinger
+              oppfriskBehandlinger={vi.fn()}
+              fagsakRettigheter={fagsakRettigheter}
+            />
+          </IntlProvider>
+        </MemoryRouter>
+      </KodeverkProvider>,
     );
 
     expect(await screen.findByRole('button', { name: 'Behandlingsmeny' })).toBeInTheDocument();
@@ -214,19 +215,26 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(K9sakApiKeys.SAK_BRUKER, {});
     requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, {});
 
-    renderWithIntlAndReactQueryClient(
-      <MemoryRouter>
-        <IntlProvider locale="nb-NO">
-          <FagsakProfileIndex
-            fagsak={fagsak as Fagsak}
-            alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
-            harHentetBehandlinger
-            oppfriskBehandlinger={vi.fn()}
-            behandlingId={1}
-            fagsakRettigheter={fagsakRettigheter}
-          />
-        </IntlProvider>
-      </MemoryRouter>,
+    render(
+      <KodeverkProvider
+        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <MemoryRouter>
+          <IntlProvider locale="nb-NO">
+            <FagsakProfileIndex
+              fagsak={fagsak}
+              alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
+              harHentetBehandlinger
+              oppfriskBehandlinger={vi.fn()}
+              behandlingId={1}
+              fagsakRettigheter={fagsakRettigheter}
+            />
+          </IntlProvider>
+        </MemoryRouter>
+      </KodeverkProvider>,
     );
 
     expect(await screen.findByRole('button', { name: 'Behandlingsmeny' })).toBeInTheDocument();

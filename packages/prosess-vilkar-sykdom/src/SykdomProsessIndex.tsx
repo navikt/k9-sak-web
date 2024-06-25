@@ -1,3 +1,7 @@
+import React from 'react';
+import classNames from 'classnames/bind';
+import isEqual from 'lodash/isEqual';
+import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -9,11 +13,8 @@ import { dateFormat } from '@fpsak-frontend/utils';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { Detail, Heading, Label } from '@navikt/ds-react';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
-import classNames from 'classnames/bind';
-import isEqual from 'lodash/isEqual';
-import React from 'react';
-import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
+
 import styles from './sykdomProsessIndex.module.css';
 
 const cx = classNames.bind(styles);
@@ -55,7 +56,7 @@ interface SykdomProsessIndexProps {
 
 const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomProsessIndexProps) => {
   const [activePeriode, setActivePeriode] = React.useState(perioder[0]);
-  const status = activePeriode?.vilkarStatus.kode || vilkarUtfallType.IKKE_VURDERT;
+  const status = activePeriode?.vilkarStatus || vilkarUtfallType.IKKE_VURDERT;
   const erOppfylt = vilkarUtfallType.OPPFYLT === status;
   const erVilkarOk = vilkarUtfallType.IKKE_VURDERT !== status ? erOppfylt : undefined;
   const skalBrukeSidemeny = perioder.length > 1;

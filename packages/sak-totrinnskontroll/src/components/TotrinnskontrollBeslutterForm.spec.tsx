@@ -3,6 +3,7 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-h
 import { Behandling, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import messages from '../../i18n/nb_NO.json';
 import { TotrinnskontrollBeslutterForm } from './TotrinnskontrollBeslutterForm';
 
@@ -19,27 +20,21 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
     id: 1234,
     uuid: 'uuid-1234',
     versjon: 123,
-    type: {
-      kode: 'BT-002',
-      kodeverk: 'BEHANDLING_TYPE',
-    },
+    type: behandlingType.FØRSTEGANGSSØKNAD,
     opprettet: '‎29.08.‎2017‎ ‎09‎:‎54‎:‎22',
-    status: {
-      kode: 'FVED',
-      kodeverk: '',
-    },
+    status: 'FVED',
     behandlingHenlagt: false,
     behandlingPaaVent: false,
     gjeldendeVedtak: false,
     links: [],
     toTrinnsBehandling: true,
-    sprakkode: { kode: 'NO', kodeverk: 'SPRAAK_KODE' },
+    sprakkode: 'NO', // SPRAAK_KODE
     behandlendeEnhetId: 'XX',
     behandlendeEnhetNavn: 'YYY',
     behandlingKoet: false,
     behandlingÅrsaker: [
       {
-        behandlingArsakType: { kode: '-', kodeverk: '' },
+        behandlingArsakType: '-',
         manueltOpprettet: true,
         erAutomatiskRevurdering: false,
       },

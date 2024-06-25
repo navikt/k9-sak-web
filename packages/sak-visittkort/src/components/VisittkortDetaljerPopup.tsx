@@ -1,12 +1,12 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { FlexColumn, FlexContainer, FlexRow, Tooltip, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Adresser, getAddresses, getKodeverknavnFn, getLanguageFromSprakkode } from '@fpsak-frontend/utils';
-import { Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
+import { Adresser, getAddresses, getLanguageFromSprakkode } from '@fpsak-frontend/utils';
+import { Personopplysninger } from '@k9-sak-web/types';
 import { BodyShort, Label, Tag } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import styles from './visittkortDetaljerPopup.module.css';
 
 const borSokerMedBarnet = (adresser: Adresser, personopplysningerForBarn: Personopplysninger[] = []): boolean =>
@@ -16,7 +16,7 @@ const borSokerMedBarnet = (adresser: Adresser, personopplysningerForBarn: Person
       getAddresses(barn.adresser)[opplysningAdresseType.BOSTEDSADRESSE],
   );
 
-const findPersonStatus = (personopplysning: Personopplysninger): Kodeverk => {
+const findPersonStatus = (personopplysning: Personopplysninger): string => {
   if (personopplysning.avklartPersonstatus) {
     return personopplysning.avklartPersonstatus.overstyrtPersonstatus;
   }
@@ -25,17 +25,12 @@ const findPersonStatus = (personopplysning: Personopplysninger): Kodeverk => {
 
 interface OwnProps {
   personopplysninger: Personopplysninger;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  sprakkode?: Kodeverk;
+  sprakkode?: string;
 }
 
-const VisittkortDetaljerPopup = ({
-  intl,
-  personopplysninger,
-  alleKodeverk,
-  sprakkode,
-}: OwnProps & WrappedComponentProps) => {
-  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+const VisittkortDetaljerPopup = ({ intl, personopplysninger, sprakkode }: OwnProps & WrappedComponentProps) => {
+  const { kodeverkNavnFraKode } = useKodeverkContext();
+
   const adresser = useMemo(() => getAddresses(personopplysninger.adresser), [personopplysninger.adresser]);
   const borMedBarnet = useMemo(() => borSokerMedBarnet(adresser, personopplysninger.barnSoktFor), [personopplysninger]);
   const midlertidigAdresse = adresser[opplysningAdresseType.NORSK_NAV_TILLEGGSADRESSE]
@@ -53,7 +48,7 @@ const VisittkortDetaljerPopup = ({
                 alignBottom
               >
                 <Tag variant="info" className={styles.etikett} size="small">
-                  {getKodeverknavn(personopplysninger.region)}
+                  {kodeverkNavnFraKode(personopplysninger.region, KodeverkType.REGION)}
                 </Tag>
               </Tooltip>
             </FlexColumn>
@@ -64,7 +59,7 @@ const VisittkortDetaljerPopup = ({
               alignBottom
             >
               <Tag variant="info" className={styles.etikett} size="small">
-                {getKodeverknavn(findPersonStatus(personopplysninger))}
+                {kodeverkNavnFraKode(findPersonStatus(personopplysninger), KodeverkType.PERSONSTATUS_TYPE)}
               </Tag>
             </Tooltip>
           </FlexColumn>
@@ -75,7 +70,7 @@ const VisittkortDetaljerPopup = ({
                 alignBottom
               >
                 <Tag variant="info" className={styles.etikett} size="small">
-                  {getKodeverknavn(personopplysninger.sivilstand)}
+                  {kodeverkNavnFraKode(personopplysninger.sivilstand, KodeverkType.SIVILSTAND_TYPE)}
                 </Tag>
               </Tooltip>
             </FlexColumn>

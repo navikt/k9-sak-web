@@ -1,7 +1,7 @@
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
@@ -16,17 +16,36 @@ import vedtakResultatType from '../kodeverk/vedtakResultatType';
 import TilbakekrevingFakta from './TilbakekrevingFakta';
 
 describe('<TilbakekrevingFakta>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
-  } as Fagsak;
+    sakstype: fagsakYtelsesType.OMP,
+    status: fagsakStatus.UNDER_BEHANDLING,
+    relasjonsRolleType: '',
+    barnFodt: '',
+    person: {
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+      diskresjonskode: '',
+      dodsdato: '',
+      aktørId: '',
+    },
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
+  };
 
   const behandling: Partial<Behandling> = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FØRSTEGANGSSØKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -46,8 +65,8 @@ describe('<TilbakekrevingFakta>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+      definisjon: aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
@@ -58,19 +77,13 @@ describe('<TilbakekrevingFakta>', () => {
         fom: '2019-01-01',
         tom: '2019-04-01',
         belop: 1212,
-        foreldelseVurderingType: {
-          kode: foreldelseVurderingType.FORELDET,
-          kodeverk: 'FORELDRE_VURDERING_TYPE',
-        },
+        foreldelseVurderingType: foreldelseVurderingType.FORELDET,
       },
     ],
   };
   const beregningsresultat = {
     beregningResultatPerioder: [],
-    vedtakResultatType: {
-      kode: vedtakResultatType.INGEN_TILBAKEBETALING,
-      kodeverk: 'VEDTAK_RESULTAT_TYPE',
-    },
+    vedtakResultatType: vedtakResultatType.INGEN_TILBAKEBETALING,
   };
   const feilutbetalingFakta = {
     behandlingFakta: {
@@ -86,20 +99,10 @@ describe('<TilbakekrevingFakta>', () => {
         },
       ],
       behandlingsresultat: {
-        type: {
-          kode: 'TEST',
-          kodeverk: 'BEHANDLINGSRESULTAT',
-        },
+        type: 'TEST',
         konsekvenserForYtelsen: [],
       },
-      behandlingÅrsaker: [
-        {
-          behandlingArsakType: {
-            kode: 'test',
-            kodeverk: 'test',
-          },
-        },
-      ],
+      behandlingÅrsaker: [{ behandlingArsakType: 'test' }],
     },
   };
 

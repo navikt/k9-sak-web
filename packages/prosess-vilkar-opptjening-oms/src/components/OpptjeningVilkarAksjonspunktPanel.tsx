@@ -54,7 +54,7 @@ const hentErVilkarOK = (
   periodeIndex: number,
   status: string,
 ) => {
-  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status));
   return isOpenAksjonspunkt && vilkårPerioder[periodeIndex].vurderesIBehandlingen
     ? undefined
     : vilkarUtfallType.OPPFYLT === status;
@@ -227,7 +227,7 @@ const transformValues = (
         tom: opptjening.fastsattOpptjening.opptjeningTom,
       }))
     : [],
-  ...{ kode: Array.isArray(aksjonspunkter) && aksjonspunkter.length ? aksjonspunkter[0].definisjon.kode : null },
+  ...{ kode: Array.isArray(aksjonspunkter) && aksjonspunkter.length ? aksjonspunkter[0].definisjon : null },
 });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps: OpptjeningVilkarAksjonspunktPanelImplProps) => {

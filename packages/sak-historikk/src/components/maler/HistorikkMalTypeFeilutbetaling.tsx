@@ -3,8 +3,9 @@ import { FormattedMessage } from 'react-intl';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { HistorikkinnslagDel, Kodeverk } from '@k9-sak-web/types';
+import { HistorikkinnslagDel } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
+import { KodeverkNavnFraKodeFnType, KodeverkType } from '@k9-sak-web/lib/types/index.js';
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import HistorikkMal from '../HistorikkMalTsType';
@@ -12,37 +13,37 @@ import Skjermlenke from './felles/Skjermlenke';
 import BubbleText from './felles/bubbleText';
 
 const finnFomOpplysning = (opplysninger: HistorikkinnslagDel['opplysninger']): string => {
-  const found = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_FOM.kode);
+  const found = opplysninger.find(o => o.opplysningType === historikkOpplysningTypeCodes.PERIODE_FOM.kode);
   return found.tilVerdi;
 };
 
 const finnTomOpplysning = (opplysninger: HistorikkinnslagDel['opplysninger']): string => {
-  const found = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode);
+  const found = opplysninger.find(o => o.opplysningType === historikkOpplysningTypeCodes.PERIODE_TOM.kode);
   return found.tilVerdi;
 };
 
 const buildEndretFeltText = (
   endredeFelter: HistorikkinnslagDel['endredeFelter'],
-  getKodeverknavn: (kodeverk: Kodeverk) => string,
+  kodeverkNavnFraKodeFn: KodeverkNavnFraKodeFnType,
 ): ReactNode => {
   const årsakFelt = endredeFelter.filter(
-    felt => felt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.FAKTA_OM_FEILUTBETALING_AARSAK.kode,
+    felt => felt.endretFeltNavn === historikkEndretFeltTypeCodes.FAKTA_OM_FEILUTBETALING_AARSAK.kode,
   )[0];
   const underÅrsakFelt = endredeFelter.filter(
-    felt => felt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.FAKTA_OM_FEILUTBETALING_UNDERAARSAK.kode,
+    felt => felt.endretFeltNavn === historikkEndretFeltTypeCodes.FAKTA_OM_FEILUTBETALING_UNDERAARSAK.kode,
   )[0];
   const underÅrsakFraVerdi = underÅrsakFelt
-    ? getKodeverknavn({ kode: underÅrsakFelt.fraVerdi as string, kodeverk: underÅrsakFelt.klFraVerdi })
+    ? kodeverkNavnFraKodeFn(underÅrsakFelt.fraVerdi as string, underÅrsakFelt.klFraVerdi as KodeverkType)
     : null;
   const underÅrsakTilVerdi = underÅrsakFelt
-    ? getKodeverknavn({ kode: underÅrsakFelt.tilVerdi as string, kodeverk: underÅrsakFelt.klTilVerdi })
+    ? kodeverkNavnFraKodeFn(underÅrsakFelt.tilVerdi as string, underÅrsakFelt.klTilVerdi as KodeverkType)
     : null;
   const endret = endredeFelter.filter(felt => felt.fraVerdi !== null).length > 0;
 
-  const tilVerdiNavn = getKodeverknavn({ kode: årsakFelt.tilVerdi as string, kodeverk: årsakFelt.klTilVerdi });
+  const tilVerdiNavn = kodeverkNavnFraKodeFn(årsakFelt.tilVerdi as string, årsakFelt.klTilVerdi as KodeverkType);
   if (endret) {
     const årsakVerdi = årsakFelt.fraVerdi ? årsakFelt.fraVerdi : årsakFelt.tilVerdi;
-    const fraVerdi = `${getKodeverknavn({ kode: årsakVerdi as string, kodeverk: årsakFelt.klFraVerdi })} ${
+    const fraVerdi = `${kodeverkNavnFraKodeFn(årsakVerdi as string, årsakFelt.klFraVerdi as KodeverkType)} ${
       underÅrsakFraVerdi ? `(${underÅrsakFraVerdi})` : ''
     }`;
     const tilVerdi = `${tilVerdiNavn} ${underÅrsakTilVerdi ? `(${underÅrsakTilVerdi})` : ''}`;
@@ -65,7 +66,7 @@ const buildEndretFeltText = (
 const HistorikkMalTypeFeilutbetaling = ({
   historikkinnslag,
   behandlingLocation,
-  getKodeverknavn,
+  kodeverkNavnFraKodeFn,
   createLocationForSkjermlenke,
 }: HistorikkMal) => {
   const { historikkinnslagDeler } = historikkinnslag;
@@ -74,7 +75,7 @@ const HistorikkMalTypeFeilutbetaling = ({
       <Skjermlenke
         skjermlenke={historikkinnslagDeler[0].skjermlenke}
         behandlingLocation={behandlingLocation}
-        getKodeverknavn={getKodeverknavn}
+        kodeverkNavnFraKodeFn={kodeverkNavnFraKodeFn}
         scrollUpOnClick
         createLocationForSkjermlenke={createLocationForSkjermlenke}
       />
@@ -90,7 +91,7 @@ const HistorikkMalTypeFeilutbetaling = ({
               }}
             />
             <BodyShort size="small">
-              {buildEndretFeltText(historikkinnslagDel.endredeFelter, getKodeverknavn)}
+              {buildEndretFeltText(historikkinnslagDel.endredeFelter, kodeverkNavnFraKodeFn)}
             </BodyShort>
             <VerticalSpacer eightPx />
           </div>

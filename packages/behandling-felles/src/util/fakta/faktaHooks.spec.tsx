@@ -4,28 +4,47 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { renderHook } from '@testing-library/react';
 import React from 'react';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import FaktaPanelDef from './FaktaPanelDef';
 import FaktaPanelUtledet from './FaktaPanelUtledet';
 import faktaHooks from './faktaHooks';
 import { DEFAULT_FAKTA_KODE } from './faktaUtils';
 
 describe('<faktaHooks>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
-  } as Fagsak;
+    sakstype: fagsakYtelsesType.OMP,
+    status: fagsakStatus.UNDER_BEHANDLING,
+    relasjonsRolleType: '',
+    barnFodt: '',
+    person: {
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+      diskresjonskode: '',
+      dodsdato: '',
+      aktørId: '',
+    },
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
+  };
   const behandling = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -66,8 +85,8 @@ describe('<faktaHooks>', () => {
     };
     const aksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'BEHANDLING_DEF' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
+        definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -115,8 +134,8 @@ describe('<faktaHooks>', () => {
   it('skal bruke callbacks for å velge faktapanel og for å lagre', () => {
     const aksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'test' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+        definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -154,11 +173,7 @@ describe('<faktaHooks>', () => {
     expect(opppdaterKall[0][0]).toEqual(DEFAULT_FAKTA_KODE);
     expect(opppdaterKall[0][1]).toEqual('arbeidsforhold');
 
-    const aksjonspunkterSomSkalLagres = [
-      {
-        kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
-      },
-    ];
+    const aksjonspunkterSomSkalLagres = [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
     bekreftAksjonspunktCallback(aksjonspunkterSomSkalLagres);
 
     const requestKall = lagreAksjonspunkter.mock.calls;
@@ -170,8 +185,8 @@ describe('<faktaHooks>', () => {
       behandlingVersjon: behandling.versjon,
       bekreftedeAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[0].definisjon.kode,
-          kode: aksjonspunkter[0].definisjon.kode,
+          '@type': aksjonspunkter[0].definisjon,
+          kode: aksjonspunkter[0].definisjon,
         },
       ],
     });

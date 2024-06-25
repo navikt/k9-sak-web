@@ -42,16 +42,16 @@ const AldersVilkarProsessIndex = ({
   vilkar,
   status,
 }: AldersVilkarProsessIndexProps) => {
-  const aldersVilkarBarn = vilkar.find(v => v.vilkarType.kode === vilkarType.ALDERSVILKAR_BARN);
+  const aldersVilkarBarn = vilkar.find(v => v.vilkarType === vilkarType.ALDERSVILKAR_BARN);
   const periode = aldersVilkarBarn.perioder[0];
-  const erVurdert = periode.vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT;
+  const erVurdert = periode.vilkarStatus !== vilkarUtfallType.IKKE_VURDERT;
   const vilkarOppfylt = erVurdert ? status === vilkarUtfallType.OPPFYLT : false;
   const relevantAksjonspunkt: Aksjonspunkt = aksjonspunkter.find(
-    ap => ap.definisjon.kode === aksjonspunktCodes.ALDERSVILKÅR,
+    ap => ap.definisjon === aksjonspunktCodes.ALDERSVILKÅR,
   );
-  const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;
+  const skalVilkarsUtfallVises = behandling.status === behandlingStatus.AVSLUTTET;
   const vilkaretErAutomatiskInnvilget =
-    !relevantAksjonspunkt && aldersVilkarBarn && periode?.vilkarStatus.kode === vilkarUtfallType.OPPFYLT;
+    !relevantAksjonspunkt && aldersVilkarBarn && periode?.vilkarStatus === vilkarUtfallType.OPPFYLT;
   let begrunnelseTekst = '';
   if (!vilkaretErAutomatiskInnvilget) begrunnelseTekst = relevantAksjonspunkt?.begrunnelse || '';
 

@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 
 import { HistorikkinnslagDel, HistorikkinnslagEndretFelt, Kodeverk } from '@k9-sak-web/types';
+import { KodeverkNavnFraKodeFnType } from '@k9-sak-web/lib/types/index.js';
 
 import historikkinnslagType from '../../kodeverk/historikkinnslagType';
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
@@ -16,23 +17,23 @@ const historikkFromToValues = (
   endretFelt: HistorikkinnslagEndretFelt,
   fieldName: string,
   intl: IntlShape,
-  getKodeverknavn: (kodeverk: Kodeverk) => string,
+  kodeverkNavnFraKodeFn: KodeverkNavnFraKodeFnType,
 ): ReactNode => {
-  const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl, getKodeverknavn);
-  const toValue = findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl, getKodeverknavn);
+  const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl, kodeverkNavnFraKodeFn);
+  const toValue = findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl, kodeverkNavnFraKodeFn);
   let messageId = fromValue ? 'Historikk.Template.10.ChangedFromTo' : 'Historikk.Template.10.FieldSetTo';
-  if (endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_PROSENT_UTBETALING.kode && fromValue) {
+  if (endretFelt.endretFeltNavn === historikkEndretFeltTypeCodes.UTTAK_PROSENT_UTBETALING.kode && fromValue) {
     messageId = 'Historikk.Template.10.ChangedFromToProsentUtbetaling';
-  } else if (endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_PROSENT_UTBETALING.kode) {
+  } else if (endretFelt.endretFeltNavn === historikkEndretFeltTypeCodes.UTTAK_PROSENT_UTBETALING.kode) {
     messageId = 'Historikk.Template.10.ChangedFromToProsentUtbetalingFromNothing';
   } else if (
-    endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_PERIODE_RESULTAT_TYPE.kode &&
+    endretFelt.endretFeltNavn === historikkEndretFeltTypeCodes.UTTAK_PERIODE_RESULTAT_TYPE.kode &&
     endretFelt.fraVerdi === 'MANUELL_BEHANDLING'
   ) {
     messageId = 'Historikk.Template.10.FieldSetTo';
   } else if (
-    endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_PERIODE_RESULTAT_ÅRSAK.kode ||
-    endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_GRADERING_AVSLAG_ÅRSAK.kode
+    endretFelt.endretFeltNavn === historikkEndretFeltTypeCodes.UTTAK_PERIODE_RESULTAT_ÅRSAK.kode ||
+    endretFelt.endretFeltNavn === historikkEndretFeltTypeCodes.UTTAK_GRADERING_AVSLAG_ÅRSAK.kode
   ) {
     if (endretFelt.tilVerdi === '-') {
       return '';
@@ -41,7 +42,7 @@ const historikkFromToValues = (
       messageId = 'Historikk.Template.10.FieldSetTo';
     }
   } else if (
-    endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_STØNADSKONTOTYPE.kode &&
+    endretFelt.endretFeltNavn === historikkEndretFeltTypeCodes.UTTAK_STØNADSKONTOTYPE.kode &&
     endretFelt.fraVerdi === '-'
   ) {
     messageId = 'Historikk.Template.10.FieldSetTo';
@@ -63,11 +64,11 @@ const historikkFromToValues = (
 const formatChangedField = (
   endretFelt: HistorikkinnslagEndretFelt,
   intl: IntlShape,
-  getKodeverknavn: (kodeverk: Kodeverk) => string,
+  kodeverkNavnFraKodeFn: KodeverkNavnFraKodeFnType,
 ): ReactNode => {
   const fieldName = findEndretFeltNavn(endretFelt, intl);
   if (
-    endretFelt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.UTTAK_TREKKDAGER.kode &&
+    endretFelt.endretFeltNavn === historikkEndretFeltTypeCodes.UTTAK_TREKKDAGER.kode &&
     typeof endretFelt.fraVerdi === 'number' &&
     typeof endretFelt.tilVerdi === 'number'
   ) {
@@ -91,28 +92,24 @@ const formatChangedField = (
       />
     );
   }
-  return historikkFromToValues(endretFelt, fieldName, intl, getKodeverknavn);
+  return historikkFromToValues(endretFelt, fieldName, intl, kodeverkNavnFraKodeFn);
 };
 
 const finnFomOpplysning = (opplysninger: HistorikkinnslagDel['opplysninger']): string => {
-  const [found] = opplysninger.filter(
-    o => o.opplysningType.kode === historikkOpplysningTypeCodes.UTTAK_PERIODE_FOM.kode,
-  );
+  const [found] = opplysninger.filter(o => o.opplysningType === historikkOpplysningTypeCodes.UTTAK_PERIODE_FOM.kode);
   return found.tilVerdi;
 };
 
 const finnTomOpplysning = (opplysninger: HistorikkinnslagDel['opplysninger']): string => {
-  const [found] = opplysninger.filter(
-    o => o.opplysningType.kode === historikkOpplysningTypeCodes.UTTAK_PERIODE_TOM.kode,
-  );
+  const [found] = opplysninger.filter(o => o.opplysningType === historikkOpplysningTypeCodes.UTTAK_PERIODE_TOM.kode);
   return found.tilVerdi;
 };
 
 const sortArray = (endredeFelter: HistorikkinnslagEndretFelt[]): HistorikkinnslagEndretFelt[] => {
   if (endredeFelter.length > 1) {
-    const resultatFelt = endredeFelter.filter(e => e.endretFeltNavn.kode === 'UTTAK_PERIODE_RESULTAT_TYPE');
+    const resultatFelt = endredeFelter.filter(e => e.endretFeltNavn === 'UTTAK_PERIODE_RESULTAT_TYPE');
     if (resultatFelt.length > 0) {
-      const andreFelt = endredeFelter.filter(e => e.endretFeltNavn.kode !== 'UTTAK_PERIODE_RESULTAT_TYPE');
+      const andreFelt = endredeFelter.filter(e => e.endretFeltNavn !== 'UTTAK_PERIODE_RESULTAT_TYPE');
       return andreFelt.concat(resultatFelt);
     }
   }
@@ -126,7 +123,7 @@ const HistorikkMalType10 = ({
   intl,
   historikkinnslag,
   behandlingLocation,
-  getKodeverknavn,
+  kodeverkNavnFraKodeFn,
   createLocationForSkjermlenke,
   saksnummer,
 }: HistorikkMal & WrappedComponentProps) => {
@@ -144,13 +141,13 @@ const HistorikkMalType10 = ({
             <Skjermlenke
               skjermlenke={historikkinnslagDeler[0].skjermlenke}
               behandlingLocation={behandlingLocation}
-              getKodeverknavn={getKodeverknavn}
+              kodeverkNavnFraKodeFn={kodeverkNavnFraKodeFn}
               scrollUpOnClick
               createLocationForSkjermlenke={createLocationForSkjermlenke}
             />
           )}
 
-          {historikkinnslagDel.opplysninger && originType.kode === historikkinnslagType.OVST_UTTAK && (
+          {historikkinnslagDel.opplysninger && originType === historikkinnslagType.OVST_UTTAK && (
             <FormattedMessage
               id="Historikk.Template.10.OverstyrtVurderingPeriode"
               values={{
@@ -161,7 +158,7 @@ const HistorikkMalType10 = ({
             />
           )}
 
-          {historikkinnslagDel.opplysninger && originType.kode === historikkinnslagType.FASTSATT_UTTAK && (
+          {historikkinnslagDel.opplysninger && originType === historikkinnslagType.FASTSATT_UTTAK && (
             <FormattedMessage
               id="Historikk.Template.10.ManuellVurderingPeriode"
               values={{
@@ -174,7 +171,7 @@ const HistorikkMalType10 = ({
 
           {historikkinnslagDel.endredeFelter &&
             sortArray(historikkinnslagDel.endredeFelter).map((endretFelt, i) => (
-              <div key={`endredeFelter${i + 1}`}>{formatChangedField(endretFelt, intl, getKodeverknavn)}</div>
+              <div key={`endredeFelter${i + 1}`}>{formatChangedField(endretFelt, intl, kodeverkNavnFraKodeFn)}</div>
             ))}
 
           {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />}

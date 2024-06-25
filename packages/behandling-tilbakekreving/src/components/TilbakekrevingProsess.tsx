@@ -12,8 +12,8 @@ import {
   Rettigheter,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
-
+import { Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
+import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 import { restApiTilbakekrevingHooks, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegTilbakekrevingPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -29,7 +29,7 @@ interface OwnProps {
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: AlleKodeverk;
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   hasFetchError: boolean;
@@ -40,40 +40,40 @@ interface OwnProps {
   setBehandling: (behandling: Behandling) => void;
 }
 
-const getHentFritekstbrevHtmlCallback = (
-  hentFriteksbrevHtml: (data: any) => Promise<any>,
-  behandling: Behandling,
-  fagsak: Fagsak,
-  fagsakPerson: FagsakPerson,
-) => (parameters: any) =>
-  hentFriteksbrevHtml({
-    ...parameters,
-    eksternReferanse: behandling.uuid,
-    ytelseType: fagsak.sakstype,
-    saksnummer: fagsak.saksnummer,
-    aktørId: fagsakPerson.aktørId,
-    avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
-  });
+const getHentFritekstbrevHtmlCallback =
+  (
+    hentFriteksbrevHtml: (data: any) => Promise<any>,
+    behandling: Behandling,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+  ) =>
+  (parameters: any) =>
+    hentFriteksbrevHtml({
+      ...parameters,
+      eksternReferanse: behandling.uuid,
+      ytelseType: fagsak.sakstype,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsakPerson.aktørId,
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type),
+    });
 
-const getLagringSideeffekter = (
-  toggleFatterVedtakModal,
-  toggleOppdatereFagsakContext,
-  oppdaterProsessStegOgFaktaPanelIUrl,
-) => async aksjonspunktModels => {
-  const isFatterVedtakAp = aksjonspunktModels.some(ap => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
-  if (isFatterVedtakAp) {
-    toggleOppdatereFagsakContext(false);
-  }
-
-  // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
-  return () => {
+const getLagringSideeffekter =
+  (toggleFatterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
+  async aksjonspunktModels => {
+    const isFatterVedtakAp = aksjonspunktModels.some(ap => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
     if (isFatterVedtakAp) {
-      toggleFatterVedtakModal(true);
-    } else {
-      oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+      toggleOppdatereFagsakContext(false);
     }
+
+    // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+    return () => {
+      if (isFatterVedtakAp) {
+        toggleFatterVedtakModal(true);
+      } else {
+        oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+      }
+    };
   };
-};
 
 const TilbakekrevingProsess = ({
   data,
@@ -96,9 +96,8 @@ const TilbakekrevingProsess = ({
     oppdaterBehandlingVersjon,
   );
 
-  const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } = restApiTilbakekrevingHooks.useRestApiRunner<
-    Behandling
-  >(TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT);
+  const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
+    restApiTilbakekrevingHooks.useRestApiRunner<Behandling>(TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT);
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
 
   const { startRequest: beregnBelop } = restApiTilbakekrevingHooks.useRestApiRunner(

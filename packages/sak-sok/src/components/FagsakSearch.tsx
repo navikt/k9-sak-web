@@ -1,5 +1,5 @@
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Fagsak } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -18,7 +18,6 @@ interface OwnProps {
   searchResultAccessDenied?: {
     feilmelding: string;
   };
-  alleKodeverk: { [key: string]: [KodeverkMedNavn] };
 }
 
 /**
@@ -34,7 +33,6 @@ const FagsakSearch = ({
   selectFagsakCallback,
   searchStarted,
   searchResultAccessDenied,
-  alleKodeverk,
 }: OwnProps) => (
   <div className={styles.container} data-testid="FagsakSearch">
     <SearchForm
@@ -52,9 +50,7 @@ const FagsakSearch = ({
 
     <VerticalSpacer eightPx />
 
-    {fagsaker.length > 1 && (
-      <FagsakList fagsaker={fagsaker} selectFagsakCallback={selectFagsakCallback} alleKodeverk={alleKodeverk} />
-    )}
+    {fagsaker.length > 1 && <FagsakList fagsaker={fagsaker} selectFagsakCallback={selectFagsakCallback} />}
   </div>
 );
 

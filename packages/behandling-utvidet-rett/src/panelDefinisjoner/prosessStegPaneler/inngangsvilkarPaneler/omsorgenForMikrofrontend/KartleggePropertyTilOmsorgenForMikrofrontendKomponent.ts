@@ -3,8 +3,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Behandling } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
+
 import {
   AksjonspunktInformasjon,
   VilkarInformasjon,
@@ -41,22 +42,22 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
 } => {
   const { aksjonspunkter, isAksjonspunktOpen } = aksjonspunktInformasjon;
   const { vilkar, status } = vilkarInformasjon;
-  const omsorgenForVilkar = vilkar.find(v => v.vilkarType.kode === vilkarType.OMSORGENFORVILKARET);
+  const omsorgenForVilkar = vilkar.find(v => v.vilkarType === vilkarType.OMSORGENFORVILKARET);
   const behandlingsID = behandling.id.toString();
-  let aksjonspunkt;
+  let aksjonspunkt: Aksjonspunkt;
 
   if (aksjonspunkter) {
-    aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OMSORGEN_FOR);
+    aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.OMSORGEN_FOR);
   }
 
   const vilkaretVurderesManuelltMedAksjonspunkt = aksjonspunkt && omsorgenForVilkar;
   // Vilkåret kan kun bli automatisk innvilget. Dersom det blir automatiskt avslått resulterer det i manuell vurdering via aksjonspunkt.
   const vilkaretErAutomatiskInnvilget =
-    !aksjonspunkt && omsorgenForVilkar && omsorgenForVilkar.perioder[0]?.vilkarStatus.kode === vilkarUtfallType.OPPFYLT;
+    !aksjonspunkt && omsorgenForVilkar && omsorgenForVilkar.perioder[0]?.vilkarStatus === vilkarUtfallType.OPPFYLT;
 
   if (vilkaretVurderesManuelltMedAksjonspunkt) {
-    const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;
-    const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
+    const skalVilkarsUtfallVises = behandling.status === behandlingStatus.AVSLUTTET;
+    const aksjonspunktLost = behandling.status === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
 
     return {
       visKomponent: KomponenterEnum.OMSORG,
@@ -81,7 +82,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
         losAksjonspunkt: (harOmsorgen, begrunnelse) => {
           submitCallback([
             {
-              kode: aksjonspunkt.definisjon.kode,
+              kode: aksjonspunkt.definisjon,
               harOmsorgenFor: harOmsorgen,
               begrunnelse,
             },

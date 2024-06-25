@@ -18,6 +18,7 @@ const EMPTY_ARRAY = [];
  * mot server og lagringen av resultatet i klientens state.
  */
 const FagsakSearchIndex = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const alleKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(
     K9sakApiKeys.KODEVERK,
   );
@@ -57,7 +58,6 @@ const FagsakSearchIndex = () => {
       selectFagsakCallback={(e, saksnummer: string) => goToFagsak(saksnummer)}
       searchStarted={sokeStatus === RestApiState.LOADING}
       searchResultAccessDenied={searchResultAccessDenied}
-      alleKodeverk={alleKodeverk}
     />
   );
 };

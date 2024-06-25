@@ -144,7 +144,12 @@ const behandling = {
   versjon: 1,
 } as Behandling;
 
-const aksjonspunkterForSteg = [{ status: { kode: '' }, definisjon: { kode: '9003' } }] as Aksjonspunkt[];
+const aksjonspunkterForSteg = [
+  {
+    status: '', // empty
+    definisjon: '9003', // AKSJONSPUNKT_DEF
+  },
+] as Aksjonspunkt[];
 
 const arbeidsforhold = [
   {
@@ -207,7 +212,11 @@ export const behandletAksjonspunkt = () => (
     submitCallback={action('bekreft')}
     aksjonspunkterForSteg={
       [
-        { begrunnelse: 'fordi', status: { kode: aksjonspunktStatus.UTFORT }, definisjon: { kode: '9003' } },
+        {
+          begrunnelse: 'fordi',
+          status: aksjonspunktStatus.UTFORT, // AKSJONSPUNKT_STATUS
+          definisjon: '9003', // AKSJONSPUNKT_DEF
+        },
       ] as Aksjonspunkt[]
     }
     arbeidsforhold={arbeidsforhold}

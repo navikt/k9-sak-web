@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
@@ -10,26 +10,14 @@ import { BehandlingAppKontekst, Fagsak, Kodeverk } from '@k9-sak-web/types';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import BehandlingVelgerSakIndex from './BehandlingVelgerSakIndex';
 
-const BEHANDLING_TYPE_KODEVERK = 'BEHANDLING_TYPE';
-const BEHANDLING_STATUS_KODEVERK = 'BEHANDLING_STATUS';
-
 const behandlinger: BehandlingAppKontekst[] = [
   {
     id: 1,
     uuid: 'dummy-uuid-behandling-1',
     versjon: 2,
-    type: {
-      kode: behandlingType.FØRSTEGANGSSØKNAD,
-      kodeverk: BEHANDLING_TYPE_KODEVERK,
-    },
-    status: {
-      kode: behandlingStatus.AVSLUTTET,
-      kodeverk: BEHANDLING_STATUS_KODEVERK,
-    },
-    sprakkode: {
-      kode: 'NB',
-      kodeverk: 'SPRAAK_KODE',
-    },
+    type: behandlingType.FØRSTEGANGSSØKNAD, // BEHANDLING_TYPE_KODEVERK
+    status: behandlingStatus.AVSLUTTET, // BEHANDLING_STATUS_KODEVERK
+    sprakkode: 'NB', // SPRAAK_KODE
     opprettet: '2017-08-02T00:54:25.455',
     avsluttet: '2017-08-03T00:54:25.455',
     behandlendeEnhetId: '4812',
@@ -42,28 +30,16 @@ const behandlinger: BehandlingAppKontekst[] = [
     toTrinnsBehandling: false,
     behandlingÅrsaker: [],
     behandlingsresultat: {
-      type: {
-        kode: 'AVSLÅTT',
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      },
+      type: 'AVSLÅTT',
     },
   },
   {
     id: 2,
     uuid: 'dummy-uuid-behandling-2',
     versjon: 2,
-    type: {
-      kode: behandlingType.FØRSTEGANGSSØKNAD,
-      kodeverk: BEHANDLING_TYPE_KODEVERK,
-    },
-    status: {
-      kode: behandlingStatus.OPPRETTET,
-      kodeverk: BEHANDLING_STATUS_KODEVERK,
-    },
-    sprakkode: {
-      kode: 'NB',
-      kodeverk: 'SPRAAK_KODE',
-    },
+    type: behandlingType.FØRSTEGANGSSØKNAD, // BEHANDLING_TYPE_KODEVERK
+    status: behandlingStatus.OPPRETTET, // BEHANDLING_STATUS_KODEVERK
+    sprakkode: 'NB', // SPRAAK_KODE
     opprettet: '2017-08-02T00:54:25.455',
     avsluttet: '2017-08-03T00:54:25.455',
     behandlendeEnhetId: '4812',
@@ -76,28 +52,16 @@ const behandlinger: BehandlingAppKontekst[] = [
     toTrinnsBehandling: false,
     behandlingÅrsaker: [],
     behandlingsresultat: {
-      type: {
-        kode: 'INNVILGET',
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      },
+      type: 'INNVILGET',
     },
   },
   {
     id: 3,
     uuid: 'dummy-uuid-behandling-3',
     versjon: 2,
-    type: {
-      kode: behandlingType.REVURDERING,
-      kodeverk: BEHANDLING_TYPE_KODEVERK,
-    },
-    status: {
-      kode: behandlingStatus.OPPRETTET,
-      kodeverk: BEHANDLING_STATUS_KODEVERK,
-    },
-    sprakkode: {
-      kode: 'NB',
-      kodeverk: 'SPRAAK_KODE',
-    },
+    type: behandlingType.REVURDERING, // BEHANDLING_TYPE_KODEVERK
+    status: behandlingStatus.OPPRETTET, // BEHANDLING_STATUS_KODEVERK
+    sprakkode: 'NB', // SPRAAK_KODE
     opprettet: '2017-08-02T00:54:25.455',
     behandlendeEnhetId: '4812',
     behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
@@ -113,18 +77,9 @@ const behandlinger: BehandlingAppKontekst[] = [
     id: 4,
     uuid: 'dummy-uuid-behandling-4',
     versjon: 2,
-    type: {
-      kode: behandlingType.FØRSTEGANGSSØKNAD,
-      kodeverk: BEHANDLING_TYPE_KODEVERK,
-    },
-    status: {
-      kode: behandlingStatus.AVSLUTTET,
-      kodeverk: BEHANDLING_STATUS_KODEVERK,
-    },
-    sprakkode: {
-      kode: 'NB',
-      kodeverk: 'SPRAAK_KODE',
-    },
+    type: behandlingType.FØRSTEGANGSSØKNAD, // BEHANDLING_TYPE_KODEVERK
+    status: behandlingStatus.AVSLUTTET, // BEHANDLING_STATUS_KODEVERK
+    sprakkode: 'NB', // SPRAAK_KODE
     opprettet: '2017-08-02T00:54:25.455',
     avsluttet: '2017-08-03T00:54:25.455',
     behandlendeEnhetId: '4812',
@@ -137,10 +92,7 @@ const behandlinger: BehandlingAppKontekst[] = [
     toTrinnsBehandling: false,
     behandlingÅrsaker: [],
     behandlingsresultat: {
-      type: {
-        kode: 'HENLAGT_SØKNAD_TRUKKET',
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      },
+      type: 'HENLAGT_SØKNAD_TRUKKET',
     },
   },
 ];
@@ -155,18 +107,9 @@ const locationMock = {
 
 const fagsak = {
   saksnummer: '35425245',
-  sakstype: {
-    kode: fagsakYtelsesType.FRISINN,
-    kodeverk: 'FAGSAK_YTELSE',
-  },
-  relasjonsRolleType: {
-    kode: relasjonsRolleType.MOR,
-    kodeverk: '',
-  },
-  status: {
-    kode: fagsakStatus.UNDER_BEHANDLING,
-    kodeverk: 'FAGSAK_STATUS',
-  },
+  sakstype: fagsakYtelsesType.FRISINN, // FAGSAK_YTELSE
+  relasjonsRolleType: relasjonsRolleType.MOR, // empty
+  status: fagsakStatus.UNDER_BEHANDLING, // FAGSAK_STATUS
   barnFodt: '2020-01-01',
   opprettet: '2020-01-01',
   endret: '2020-01-01',

@@ -2,7 +2,7 @@ import { CheckboxField, NavFieldGroup, RadioGroupField, TextAreaField } from '@f
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
+import { KlageVurdering, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
 import { BodyShort, Detail } from '@navikt/ds-react';
 import * as Sentry from '@sentry/browser';
 import { Location } from 'history';
@@ -10,6 +10,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { FieldArrayFieldsProps } from 'redux-form';
+import { KodeverkObject } from '@k9-sak-web/lib/types/index.js';
 
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 
@@ -36,10 +37,10 @@ interface OwnProps {
   klageKA?: boolean;
   erForeldrepengerFagsak: boolean;
   klagebehandlingVurdering?: KlageVurdering;
-  behandlingStatus: Kodeverk;
-  arbeidsforholdHandlingTyper: KodeverkMedNavn[];
+  behandlingStatus: string;
+  arbeidsforholdHandlingTyper: KodeverkObject[];
   erTilbakekreving: boolean;
-  skjermlenkeTyper: KodeverkMedNavn[];
+  skjermlenkeTyper: KodeverkObject[];
   lagLenke: (skjermlenkeCode: string) => Location;
 }
 

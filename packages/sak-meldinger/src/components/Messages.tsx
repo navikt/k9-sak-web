@@ -64,7 +64,7 @@ interface PureOwnProps {
     fritekstbrev?: Fritekstbrev,
   ) => void;
   templates?: Brevmaler;
-  sprakKode?: Kodeverk;
+  sprakKode?: string;
   revurderingVarslingArsak: KodeverkMedNavn[];
   isKontrollerRevurderingApOpen?: boolean;
   personopplysninger?: Personopplysninger;

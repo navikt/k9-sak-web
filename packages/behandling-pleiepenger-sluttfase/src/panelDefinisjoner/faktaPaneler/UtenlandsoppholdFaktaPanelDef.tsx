@@ -17,7 +17,6 @@ class UtenlandsoppholdFaktaPanelDef extends FaktaPanelDef {
   getKomponent = props => (
     <Utenlandsopphold
       utenlandsopphold={props.utenlandsopphold}
-      kodeverk={props.alleKodeverk}
       fagsakYtelseType={fagsakYtelseType.PLEIEPENGER_SLUTTFASE}
     />
   );

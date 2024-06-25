@@ -1,8 +1,14 @@
-import { KodeverkMedNavn, Kodeverk } from '@k9-sak-web/types';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
+/*
+ * Funksjon for å slå opp et navnet/verdien til en gitt kode i et kodeverk / en gitt kodeverktype.
+ * Må få alle kodeverk sendt inn som input, samt hvilket kodeverktype det gjelder og koden som skal
+ * det skal gjøres oppslag på.
+ */
 export const getKodeverknavnFraKode = (
   alleKodeverk: { [key: string]: KodeverkMedNavn[] },
-  kodeverkType: string,
+  kodeverkType: KodeverkType, // foreløpig usikker på om vi trenger undertype, beholder inntill videre
   kode: string,
   undertype?: string,
 ) => {
@@ -17,10 +23,13 @@ export const getKodeverknavnFraKode = (
   const kodeverk = kodeverkForType.find(k => k.kode === kode);
   return kodeverk ? kodeverk.navn : '';
 };
+
+/*
+ * Hjelpefunksjon for hente funksjon for å gjøre oppslag i kodeverk.
+ */
 export const getKodeverknavnFn =
-  (alleKodeverk: { [key: string]: KodeverkMedNavn[] }, kodeverkTyper: { [key: string]: string }) =>
-  (kodeverkOjekt: Kodeverk, undertype?: string) =>
-    getKodeverknavnFraKode(alleKodeverk, kodeverkTyper[kodeverkOjekt.kodeverk], kodeverkOjekt.kode, undertype);
+  (alleKodeverk: { [key: string]: KodeverkMedNavn[] }) => (kode: string, kodeverk: KodeverkType, undertype?: string) =>
+    getKodeverknavnFraKode(alleKodeverk, kodeverk, kode, undertype);
 
 export const konverterKodeverkTilKode = (data: any, erTilbakekreving = false) => {
   if (data === undefined || data === null) {

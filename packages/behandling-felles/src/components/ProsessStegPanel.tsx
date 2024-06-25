@@ -6,7 +6,7 @@ import { Fagsak, Behandling, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web
 
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { Options, EndpointData, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
-
+import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 import MargMarkering from './MargMarkering';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
@@ -17,7 +17,7 @@ import { ProsessStegUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 interface OwnProps {
   fagsak: Fagsak;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: AlleKodeverk;
   valgtProsessSteg?: ProsessStegUtledet;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   oppdaterProsessStegOgFaktaPanelIUrl?: (punktnavn?: string, faktanavn?: string) => void;

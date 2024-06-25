@@ -1,12 +1,15 @@
+import React from 'react';
+import { screen } from '@testing-library/react';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../../../i18n/nb_NO.json';
+
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
+
+import messages from '../../../i18n/nb_NO.json';
 
 describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
   const opphold = {
@@ -25,10 +28,7 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       personopplysning: {
         navn: 'Espen Utvikler',
         adresser: [],
-        personstatus: {
-          kode: 'UTVA',
-          navn: 'Utvandret',
-        },
+        personstatus: 'UTVA',
       },
     },
     {
@@ -36,10 +36,7 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       personopplysning: {
         navn: 'Petra Tester',
         adresser: [],
-        personstatus: {
-          kode: 'UTVA',
-          navn: 'Utvandret',
-        },
+        personstatus: 'UTVA',
       },
     },
   ];
@@ -151,10 +148,7 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
         personopplysning: {
           navn: 'Espen Utvikler',
           adresser: [],
-          personstatus: {
-            kode: 'UTVA',
-            navn: 'Utvandret',
-          },
+          personstatus: 'UTVA',
         },
       },
       {
@@ -162,10 +156,7 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
         personopplysning: {
           navn: 'Petra Tester',
           adresser: [],
-          personstatus: {
-            kode: 'UTVA',
-            navn: 'Utvandret',
-          },
+          personstatus: 'UTVA',
         },
       },
     ];
@@ -194,45 +185,30 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       personopplysninger: {
         navn: 'Espen Utvikler',
         personstatus: {
-          personstatus: {
-            kode: 'UTVANDRET',
-            navn: 'Utvandret',
-          },
+          personstatus: 'UTVANDRET',
         },
         avklartPersonstatus: {
-          overstyrtPersonstatus: {
-            kode: personstatusType.BOSATT,
-            navn: 'Bosatt',
-          },
+          overstyrtPersonstatus: personstatusType.BOSATT,
         },
         adresser: [
           {
             adresselinje1: 'Vei 1',
             postNummer: '1000',
             poststed: 'Oslo',
-            opplysningAdresseType: {
-              kode: opplysningAdresseType.POSTADRESSE,
-              navn: 'Bostedsadresse',
-            },
+            opplysningAdresseType: opplysningAdresseType.POSTADRESSE,
           },
         ],
         annenPart: {
           navn: 'Petra Tester',
           personstatus: {
-            personstatus: {
-              kode: 'UTVANDRET',
-              navn: 'Utvandret',
-            },
+            personstatus: 'UTVANDRET',
           },
           adresser: [
             {
               adresselinje1: 'Vei 2',
               postNummer: '2000',
               poststed: 'Stockholm',
-              opplysningAdresseType: {
-                kode: opplysningAdresseType.UTENLANDSK_POSTADRESSE,
-                navn: 'Bostedsadresse',
-              },
+              opplysningAdresseType: opplysningAdresseType.UTENLANDSK_POSTADRESSE,
             },
           ],
         },
@@ -241,12 +217,8 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
 
     const aksjonspunkter = [
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
+        status: aksjonspunktStatus.OPPRETTET,
       },
     ];
     const soknad = {
@@ -262,45 +234,30 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
           personopplysning: {
             navn: 'Espen Utvikler',
             personstatus: {
-              personstatus: {
-                kode: 'UTVANDRET',
-                navn: 'Utvandret',
-              },
+              personstatus: 'UTVANDRET',
             },
             avklartPersonstatus: {
-              overstyrtPersonstatus: {
-                kode: personstatusType.BOSATT,
-                navn: 'Bosatt',
-              },
+              overstyrtPersonstatus: personstatusType.BOSATT,
             },
             adresser: [
               {
                 adresselinje1: 'Vei 1',
                 postNummer: '1000',
                 poststed: 'Oslo',
-                opplysningAdresseType: {
-                  kode: opplysningAdresseType.POSTADRESSE,
-                  navn: 'Bostedsadresse',
-                },
+                opplysningAdresseType: opplysningAdresseType.POSTADRESSE,
               },
             ],
             annenPart: {
               navn: 'Petra Tester',
               personstatus: {
-                personstatus: {
-                  kode: 'UTVANDRET',
-                  navn: 'Utvandret',
-                },
+                personstatus: 'UTVANDRET',
               },
               adresser: [
                 {
                   adresselinje1: 'Vei 2',
                   postNummer: '2000',
                   poststed: 'Stockholm',
-                  opplysningAdresseType: {
-                    kode: opplysningAdresseType.UTENLANDSK_POSTADRESSE,
-                    navn: 'Bostedsadresse',
-                  },
+                  opplysningAdresseType: opplysningAdresseType.UTENLANDSK_POSTADRESSE,
                 },
               ],
             },
@@ -311,20 +268,14 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
           personopplysning: {
             navn: 'Petra Tester',
             personstatus: {
-              personstatus: {
-                kode: 'UTVANDRET',
-                navn: 'Utvandret',
-              },
+              personstatus: 'UTVANDRET',
             },
             adresser: [
               {
                 adresselinje1: 'Vei 2',
                 postNummer: '2000',
                 poststed: 'Stockholm',
-                opplysningAdresseType: {
-                  kode: opplysningAdresseType.UTENLANDSK_POSTADRESSE,
-                  navn: 'Bostedsadresse',
-                },
+                opplysningAdresseType: opplysningAdresseType.UTENLANDSK_POSTADRESSE,
               },
             ],
           },

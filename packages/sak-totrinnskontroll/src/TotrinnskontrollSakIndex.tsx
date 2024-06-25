@@ -2,19 +2,16 @@ import React, { useCallback, useMemo } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { Location } from 'history';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import {
-  BehandlingAppKontekst,
-  KodeverkMedNavn,
-  KlageVurdering,
-  TotrinnskontrollSkjermlenkeContext,
-} from '@k9-sak-web/types';
+import { BehandlingAppKontekst, KlageVurdering, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { KodeverkObject, KodeverkV2 } from '@k9-sak-web/lib/types/KodeverkV2.js';
 
 import TotrinnskontrollBeslutterForm, { FormValues } from './components/TotrinnskontrollBeslutterForm';
 import { AksjonspunktGodkjenningData } from './components/AksjonspunktGodkjenningFieldArray';
@@ -60,7 +57,6 @@ interface OwnProps {
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
   location: Location;
   behandlingKlageVurdering?: KlageVurdering;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   readOnly: boolean;
   onSubmit: (...args: any[]) => any;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
@@ -73,12 +69,11 @@ const TotrinnskontrollSakIndex = ({
   readOnly,
   onSubmit,
   behandlingKlageVurdering,
-  alleKodeverk,
   createLocationForSkjermlenke,
 }: OwnProps) => {
+  const { hentKodeverkForKode } = useKodeverkContext();
   const erTilbakekreving =
-    BehandlingType.TILBAKEKREVING === behandling.type.kode ||
-    BehandlingType.TILBAKEKREVING_REVURDERING === behandling.type.kode;
+    BehandlingType.TILBAKEKREVING === behandling.type || BehandlingType.TILBAKEKREVING_REVURDERING === behandling.type;
 
   const submitHandler = useCallback(
     (values: FormValues) => {
@@ -120,10 +115,10 @@ const TotrinnskontrollSakIndex = ({
     [location],
   );
 
-  const erStatusFatterVedtak = behandling.status.kode === BehandlingStatus.FATTER_VEDTAK;
-  const skjermlenkeTyper = alleKodeverk[kodeverkTyper.SKJERMLENKE_TYPE];
-  const arbeidsforholdHandlingTyper = alleKodeverk[kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE];
-  const vurderArsaker = alleKodeverk[kodeverkTyper.VURDER_AARSAK];
+  const erStatusFatterVedtak = behandling.status === BehandlingStatus.FATTER_VEDTAK;
+  const skjermlenkeTyper = hentKodeverkForKode(KodeverkType.SKJERMLENKE_TYPE);
+  const arbeidsforholdHandlingTyper = hentKodeverkForKode(KodeverkType.ARBEIDSFORHOLD_HANDLING_TYPE);
+  const vurderArsaker = hentKodeverkForKode(KodeverkType.VURDER_AARSAK);
 
   return (
     <RawIntlProvider value={intl}>
@@ -136,8 +131,8 @@ const TotrinnskontrollSakIndex = ({
           readOnly={readOnly}
           onSubmit={submitHandler}
           behandlingKlageVurdering={behandlingKlageVurdering}
-          arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
-          skjermlenkeTyper={skjermlenkeTyper}
+          arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper as KodeverkV2[]}
+          skjermlenkeTyper={skjermlenkeTyper as KodeverkV2[]}
           erTilbakekreving={erTilbakekreving}
           lagLenke={lagLenke}
         />
@@ -148,10 +143,10 @@ const TotrinnskontrollSakIndex = ({
           behandlingKlageVurdering={behandlingKlageVurdering}
           behandlingStatus={behandling.status}
           erTilbakekreving={erTilbakekreving}
-          arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
-          skjermlenkeTyper={skjermlenkeTyper}
+          arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper as KodeverkObject[]}
+          skjermlenkeTyper={skjermlenkeTyper as KodeverkObject[]}
           lagLenke={lagLenke}
-          vurderArsaker={vurderArsaker}
+          vurderArsaker={vurderArsaker as KodeverkObject[]}
         />
       )}
     </RawIntlProvider>

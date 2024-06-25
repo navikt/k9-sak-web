@@ -35,7 +35,7 @@ const harAllePerioderUtfall = (perioderTilVurdering: Periode[], perioderMedUtfal
         periodeMedUtfall =>
           new Period(periodeMedUtfall.periode.fom, periodeMedUtfall.periode.tom).covers(
             new Period(periodeTilVurdering.fom, periodeTilVurdering.tom),
-          ) && periodeMedUtfall.utfall.kode !== vilkarUtfallType.IKKE_VURDERT,
+          ) && periodeMedUtfall.utfall !== vilkarUtfallType.IKKE_VURDERT,
       ),
     );
   }
@@ -54,12 +54,11 @@ export const formaterPerioder = (behandlingPerioderMedVilkår: BehandlingPeriode
         id: `${periode.fom}-${periode.tom}`,
         fom: new Date(periode.fom),
         tom: new Date(periode.tom),
-        className: utfall.kode === vilkarUtfallType.OPPFYLT ? styles.suksess : styles.feil,
-        status: utfall.kode === vilkarUtfallType.OPPFYLT ? ('suksess' as PeriodStatus) : 'feil',
+        className: utfall === vilkarUtfallType.OPPFYLT ? styles.suksess : styles.feil,
+        status: utfall === vilkarUtfallType.OPPFYLT ? ('suksess' as PeriodStatus) : 'feil',
       };
       if (harOverlappMedPeriodeTilVurdering) {
-        nyPeriode.status =
-          utfall.kode === vilkarUtfallType.OPPFYLT ? ('suksessRevurder' as PeriodStatus) : 'feilRevurder';
+        nyPeriode.status = utfall === vilkarUtfallType.OPPFYLT ? ('suksessRevurder' as PeriodStatus) : 'feilRevurder';
         nyPeriode.className = `${styles.advarsel} ${styles.aktivPeriode}`;
       }
       return nyPeriode;
@@ -85,12 +84,12 @@ export const formaterPerioder = (behandlingPerioderMedVilkår: BehandlingPeriode
       const overlappendePeriodeMedUtfall = behandlingPerioderMedVilkår.periodeMedUtfall.find(
         periodeMedUtfall =>
           new Period(periodeMedUtfall.periode.fom, periodeMedUtfall.periode.tom).covers(new Period(fom, tom)) &&
-          periodeMedUtfall.utfall.kode !== vilkarUtfallType.IKKE_VURDERT,
+          periodeMedUtfall.utfall !== vilkarUtfallType.IKKE_VURDERT,
       );
       const erDelvisInnvilget = behandlingPerioderMedVilkår.periodeMedUtfall.some(
         periodeMedUtfall =>
           periodeTilVurdering.covers(new Period(periodeMedUtfall.periode.fom, periodeMedUtfall.periode.tom)) &&
-          periodeMedUtfall.utfall.kode === vilkarUtfallType.OPPFYLT,
+          periodeMedUtfall.utfall === vilkarUtfallType.OPPFYLT,
       );
       const nyPeriode = {
         id: `${fom}-${tom}`,
@@ -101,9 +100,9 @@ export const formaterPerioder = (behandlingPerioderMedVilkår: BehandlingPeriode
       };
       if (overlappendePeriodeMedUtfall) {
         let utfall = nyPeriode.status;
-        if (overlappendePeriodeMedUtfall.utfall.kode === vilkarUtfallType.OPPFYLT) {
+        if (overlappendePeriodeMedUtfall.utfall === vilkarUtfallType.OPPFYLT) {
           utfall = 'suksess';
-        } else if (overlappendePeriodeMedUtfall.utfall.kode === vilkarUtfallType.IKKE_OPPFYLT) {
+        } else if (overlappendePeriodeMedUtfall.utfall === vilkarUtfallType.IKKE_OPPFYLT) {
           utfall = 'feil';
         }
         nyPeriode.status = utfall;

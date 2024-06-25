@@ -12,7 +12,7 @@ import {
   Dokument,
 } from '@k9-sak-web/types';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-
+import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import {
@@ -53,7 +53,7 @@ interface OwnProps {
   };
   opneSokeside: () => void;
   featureToggles: FeatureToggles;
-  kodeverk?: { [key: string]: KodeverkMedNavn[] };
+  kodeverk?: AlleKodeverk;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setRequestPendingMessage: (message: string) => void;
 }

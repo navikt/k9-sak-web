@@ -83,9 +83,9 @@ const Messages = ({
     const loadFritekstForslag = async () => {
       if (valgtMalkode !== undefined) {
         const innhold = await api.hentInnholdBrevmal(
-          fagsak.sakstype.kode,
+          fagsak.sakstype,
           behandling.uuid,
-          bestemAvsenderApp(behandling.type.kode),
+          bestemAvsenderApp(behandling.type),
           valgtMalkode,
         );
         setFritekstForslag(innhold);
@@ -197,7 +197,7 @@ const Messages = ({
             fritekstbrev: values.fritekstbrev,
           },
           aktørId: fagsak.person.aktørId,
-          avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+          avsenderApplikasjon: bestemAvsenderApp(behandling.type),
         };
         const pdfBlob = await api.lagForhåndsvisningPdf(forhåndsvisDto);
         window.open(URL.createObjectURL(pdfBlob));

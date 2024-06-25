@@ -1,0 +1,14 @@
+{
+  "KlageAvvistÅrsak": [
+    {
+      "kode": "KLAGET_FOR_SENT",
+      "navn": "Bruker har klaget for sent",
+      "kodeverk": "KLAGE_AVVIST_AARSAK"
+    },
+    {
+      "kode": "KLAGER_IKKE_PART",
+      "navn": "Klager er ikke part",
+      "kodeverk": "KLAGE_AVVIST_AARSAK"
+    }
+  ]
+}

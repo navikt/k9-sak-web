@@ -5,7 +5,9 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Aksjonspunkt } from '@k9-sak-web/types';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkObject, KodeverkType } from '@k9-sak-web/lib/types/index.js';
 import { BodyShort } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 
@@ -20,7 +22,6 @@ type FormValues = {
 };
 
 interface OwnProps {
-  avslagsarsaker?: KodeverkMedNavn[];
   erVilkarOk?: boolean;
   customVilkarIkkeOppfyltText: string | ReactNode;
   customVilkarOppfyltText: string | ReactNode;
@@ -35,7 +36,6 @@ interface OwnProps {
  * Presentasjonskomponent. Lar NAV-ansatt velge om vilkåret skal oppfylles eller avvises.
  */
 const VilkarResultPicker = ({
-  avslagsarsaker,
   erVilkarOk,
   customVilkarIkkeOppfyltText,
   customVilkarOppfyltText,
@@ -43,6 +43,9 @@ const VilkarResultPicker = ({
   erMedlemskapsPanel = false,
   fieldNamePrefix,
 }: OwnProps) => {
+  const { hentKodeverkForKode } = useKodeverkContext();
+  const avslagsarsaker = hentKodeverkForKode(KodeverkType.AVSLAGSARSAK) as KodeverkObject[];
+
   const intl = getPackageIntl();
   return (
     <div className={styles.container}>
@@ -124,7 +127,7 @@ VilkarResultPicker.buildInitialValues = (
   aksjonspunkter: Aksjonspunkt[],
   status: string,
 ): FormValues => {
-  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status));
   const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
   return {
     erVilkarOk,

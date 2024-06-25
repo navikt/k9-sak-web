@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
 
 import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
-import {
-  Fagsak,
-  KodeverkMedNavn,
-  Behandling,
-  FeatureToggles,
-  ArbeidsgiverOpplysningerPerId,
-  FagsakPerson,
-} from '@k9-sak-web/types';
-
+import { Fagsak, Behandling, FeatureToggles, ArbeidsgiverOpplysningerPerId, FagsakPerson } from '@k9-sak-web/types';
+import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 import FrisinnProsess from './FrisinnProsess';
 import FrisinnFakta from './FrisinnFakta';
 import FetchedData from '../types/fetchedDataTsType';
@@ -19,7 +12,7 @@ interface OwnProps {
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: AlleKodeverk;
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;

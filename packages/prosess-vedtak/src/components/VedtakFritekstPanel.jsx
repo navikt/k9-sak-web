@@ -51,7 +51,7 @@ const VedtakFritekstPanelImpl = ({
 VedtakFritekstPanelImpl.propTypes = {
   begrunnelse: PropTypes.string,
   begrunnelseFieldName: PropTypes.string,
-  sprakkode: PropTypes.shape().isRequired,
+  sprakkode: PropTypes.string.isRequired,
   readOnly: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
   intl: PropTypes.shape(),

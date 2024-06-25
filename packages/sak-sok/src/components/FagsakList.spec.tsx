@@ -1,53 +1,20 @@
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Fagsak } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { BehandlingType } from '@k9-sak-web/lib/types/index.js';
+
 import messages from '../../i18n/nb_NO.json';
 import FagsakList, { sortFagsaker } from './FagsakList';
 
-const FAGSAK_STATUS_KODEVERK = 'FAGSAK_STATUS';
-const FAGSAK_YTELSE_KODEVERK = 'FAGSAK_YTELSE';
-
-const alleKodeverk = {
-  [kodeverkTyper.FAGSAK_STATUS]: [
-    {
-      kode: fagsakStatus.UNDER_BEHANDLING,
-      navn: 'Under behandling',
-      kodeverk: FAGSAK_STATUS_KODEVERK,
-    },
-    {
-      kode: fagsakStatus.AVSLUTTET,
-      navn: 'Avsluttet',
-      kodeverk: FAGSAK_STATUS_KODEVERK,
-    },
-  ],
-  [kodeverkTyper.FAGSAK_YTELSE]: [
-    {
-      kode: fagsakYtelseType.ENGANGSSTONAD,
-      navn: 'Engangsstønad',
-      kodeverk: FAGSAK_YTELSE_KODEVERK,
-    },
-  ],
-};
-
 describe('<FagsakList>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '12345',
-    sakstype: {
-      kode: 'ES',
-      kodeverk: FAGSAK_YTELSE_KODEVERK,
-    },
-    relasjonsRolleType: {
-      kode: 'TEST',
-      kodeverk: '',
-    },
-    status: {
-      kode: 'UBEH',
-      kodeverk: FAGSAK_STATUS_KODEVERK,
-    },
+    sakstype: 'ES', // FAGSAK_YTELSE_KODEVERK
+    relasjonsRolleType: 'TEST',
+    status: 'UBEH', // FAGSAK_STATUS_KODEVERK
     barnFodt: null,
     opprettet: '2019-02-17T13:49:18.645',
     endret: '2019-02-17T13:49:18.645',
@@ -60,11 +27,14 @@ describe('<FagsakList>', () => {
   it('skal vise en tabell med en rad og tilhørende kolonnedata', () => {
     const clickFunction = vi.fn();
     renderWithIntl(
-      <FagsakList
-        fagsaker={[fagsak]}
-        selectFagsakCallback={clickFunction}
-        alleKodeverk={alleKodeverk as { [key: string]: [KodeverkMedNavn] }}
-      />,
+      <KodeverkProvider
+        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <FagsakList fagsaker={[fagsak]} selectFagsakCallback={clickFunction} />
+      </KodeverkProvider>,
       { messages },
     );
     expect(screen.getByText('12345')).toBeInTheDocument();
@@ -75,18 +45,9 @@ describe('<FagsakList>', () => {
   it('skal sortere søkeresultat der avsluttede skal vises sist, mens sist endrede skal vises først', () => {
     const fagsak2 = {
       saksnummer: '23456',
-      sakstype: {
-        kode: 'ES',
-        kodeverk: FAGSAK_YTELSE_KODEVERK,
-      },
-      relasjonsRolleType: {
-        kode: 'TEST',
-        kodeverk: '',
-      },
-      status: {
-        kode: 'UBEH',
-        kodeverk: FAGSAK_STATUS_KODEVERK,
-      },
+      sakstype: 'ES', // FAGSAK_YTELSE_KODEVERK
+      relasjonsRolleType: 'TEST',
+      status: 'UBEH', // FAGSAK_STATUS_KODEVERK
       barnFodt: null,
       opprettet: '2019-02-18T13:49:18.645',
       endret: '2019-02-18T13:49:18.645',
@@ -95,14 +56,8 @@ describe('<FagsakList>', () => {
 
     const fagsak3 = {
       saksnummer: '34567',
-      sakstype: {
-        kode: 'ES',
-        kodeverk: FAGSAK_YTELSE_KODEVERK,
-      },
-      status: {
-        kode: 'AVSLU',
-        kodeverk: FAGSAK_STATUS_KODEVERK,
-      },
+      sakstype: 'ES', // FAGSAK_YTELSE_KODEVERK
+      status: 'AVSLU', // FAGSAK_STATUS_KODEVERK
       barnFodt: null,
       opprettet: '2019-02-18T13:49:18.645',
       endret: '2019-02-18T13:49:18.645',

@@ -1,7 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import React, { useState } from 'react';
 
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';

@@ -5,6 +5,9 @@ import { MemoryRouter } from 'react-router-dom';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
@@ -12,8 +15,29 @@ import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import BehandlingSupportIndex, { hentSynligePaneler, hentValgbarePaneler } from './BehandlingSupportIndex';
 
 describe('<BehandlingSupportIndex>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123',
+    sakstype: '-',
+    relasjonsRolleType: '',
+    status: 'AVSLU',
+    barnFodt: '',
+    person: {
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+      diskresjonskode: '',
+      dodsdato: '',
+      aktørId: '',
+    },
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
   };
 
   const navAnsatt = {
@@ -30,14 +54,8 @@ describe('<BehandlingSupportIndex>', () => {
 
   const behandling = {
     id: 1,
-    type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: '',
-    },
-    status: {
-      kode: behandlingStatus.OPPRETTET,
-      kodeverk: '',
-    },
+    type: behandlingType.FORSTEGANGSSOKNAD,
+    status: behandlingStatus.OPPRETTET,
   };
 
   it('skal vise godkjennings-panelet', () => {
@@ -53,13 +71,20 @@ describe('<BehandlingSupportIndex>', () => {
 
     renderWithIntlAndReactQueryClient(
       <MemoryRouter>
-        <BehandlingSupportIndex
-          fagsak={fagsak as Fagsak}
-          alleBehandlinger={[behandling] as BehandlingAppKontekst[]}
-          behandlingId={1}
-          behandlingVersjon={2}
-          navAnsatt={navAnsatt}
-        />
+        <KodeverkProvider
+          behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+          kodeverk={alleKodeverkV2}
+          klageKodeverk={{}}
+          tilbakeKodeverk={{}}
+        >
+          <BehandlingSupportIndex
+            fagsak={fagsak as Fagsak}
+            alleBehandlinger={[behandling] as BehandlingAppKontekst[]}
+            behandlingId={1}
+            behandlingVersjon={2}
+            navAnsatt={navAnsatt}
+          />
+        </KodeverkProvider>
       </MemoryRouter>,
     );
 
