@@ -74,9 +74,5 @@
   {
     "key": "OVERSTYRING_UTTAK",
     "value": "${OVERSTYRING_UTTAK}"
-  },
-  {
-    "key": "AVSLAGSAARSAK_ALENEOMSORG",
-    "value": "${AVSLAGSAARSAK_ALENEOMSORG}"
   }
 ]
