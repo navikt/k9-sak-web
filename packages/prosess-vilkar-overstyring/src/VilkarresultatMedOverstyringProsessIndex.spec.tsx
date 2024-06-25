@@ -29,7 +29,6 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         toggleOverstyring={vi.fn()}
         submitCallback={vi.fn()}
         aksjonspunkter={[]}
-        avslagsarsaker={[]}
         panelTittelKode="tittel"
         overstyringApKode=""
         lovReferanse=""
