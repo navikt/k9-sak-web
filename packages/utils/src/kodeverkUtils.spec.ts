@@ -25,28 +25,6 @@ describe('<kodeverkUtils>', () => {
     expect(navn).toBe('Lønn under utdanning');
   });
 
-  // Skipper per nå, blir obsoloete
-  it.skip('skal finne navn til gitt kodeverk-objekt', () => {
-    const alleKodeverk = {
-      [kodeverkTyper.ARBEID_TYPE]: [
-        {
-          kode: arbeidType.LONN_UNDER_UTDANNING,
-          kodeverk: 'ARBEID_TYPE',
-          navn: 'Lønn under utdanning',
-        },
-      ],
-    };
-
-    const kodeverk = {
-      kodeverk: 'ARBEID_TYPE',
-      kode: arbeidType.LONN_UNDER_UTDANNING,
-    };
-
-    // const navn = getKodeverknavnFn(alleKodeverk, kodeverkTyper)(kodeverk);
-
-    // expect(navn).toBe('Lønn under utdanning');
-  });
-
   it.skip('skal finne navn til gitt kodeverk-objekt når en har underkategori i kodeverk-json', () => {
     const alleKodeverk = {
       [kodeverkTyper.AVSLAGSARSAK]: {

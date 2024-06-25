@@ -5,7 +5,6 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import { BehandlingType } from '@k9-sak-web/lib/types/index.js';

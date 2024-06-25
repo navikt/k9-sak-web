@@ -9,7 +9,7 @@ import {
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
 import { HGrid, Tabs } from '@navikt/ds-react';
 import React, { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';

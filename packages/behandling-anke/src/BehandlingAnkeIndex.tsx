@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { Fagsak, Behandling, KodeverkMedNavn, FagsakPerson } from '@k9-sak-web/types';
+import { Fagsak, Behandling, FagsakPerson } from '@k9-sak-web/types';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 import AnkePaneler from './components/AnkePaneler';

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { FadingPanel, LoadingPanel } from '@fpsak-frontend/shared-components';
-import { Fagsak, Behandling, KodeverkMedNavn, FeatureToggles } from '@k9-sak-web/types';
+import { Fagsak, Behandling, FeatureToggles } from '@k9-sak-web/types';
 
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { Options, EndpointData, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';

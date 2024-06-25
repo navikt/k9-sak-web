@@ -2,7 +2,7 @@ import { CheckboxField, NavFieldGroup, RadioGroupField, TextAreaField } from '@f
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import { KlageVurdering, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
+import { KlageVurdering, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
 import { BodyShort, Detail } from '@navikt/ds-react';
 import * as Sentry from '@sentry/browser';
 import { Location } from 'history';

@@ -1,7 +1,7 @@
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakStatusCode from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { NavAnsatt, Kodeverk } from '@k9-sak-web/types';
+import { NavAnsatt } from '@k9-sak-web/types';
 
 type Aksess = {
   employeeHasAccess: boolean;

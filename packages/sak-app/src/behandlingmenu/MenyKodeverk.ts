@@ -1,5 +1,5 @@
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 
 class MenyKodeverk {
   $$behandlingType: string;

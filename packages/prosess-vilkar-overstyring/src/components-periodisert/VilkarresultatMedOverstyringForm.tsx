@@ -19,7 +19,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import VilkarResultPicker from '@k9-sak-web/prosess-felles/src/vilkar/VilkarResultPickerPeriodisert';
-import { Aksjonspunkt, Behandlingsresultat, KodeverkMedNavn, SubmitCallback } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandlingsresultat, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { BodyShort, Button, Label } from '@navikt/ds-react';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';

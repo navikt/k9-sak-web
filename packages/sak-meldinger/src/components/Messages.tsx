@@ -14,13 +14,7 @@ import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidling
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import {
-  ArbeidsgiverOpplysningerPerId,
-  Brevmaler,
-  Kodeverk,
-  KodeverkMedNavn,
-  Personopplysninger,
-} from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Brevmaler, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import { BodyShort, Button, Checkbox } from '@navikt/ds-react';
 import type { MottakerDto } from '@navikt/k9-sak-typescript-client';

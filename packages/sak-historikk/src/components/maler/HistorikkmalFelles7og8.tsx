@@ -1,12 +1,12 @@
 import { BodyShort, Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import HistorikkMal from '../HistorikkMalTsType';
 import BubbleText from './felles/bubbleText';
 import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
 import { findHendelseText, findIdForOpplysningCode, findResultatText } from './felles/historikkUtils';
 import Skjermlenke from './felles/Skjermlenke';
-import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 
 // TODO Kan denne slettast?
 const HistorikkMalFelles7og8 = ({

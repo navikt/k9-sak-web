@@ -18,7 +18,6 @@ interface BehandlingPaVentProps {
 const BehandlingPaVent = ({
   behandling,
   aksjonspunkter,
-  kodeverk,
   settPaVent,
   erTilbakekreving = false,
 }: BehandlingPaVentProps) => {

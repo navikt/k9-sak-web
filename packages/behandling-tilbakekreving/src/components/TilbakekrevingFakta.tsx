@@ -1,6 +1,6 @@
 import React from 'react';
 import { SideMenuWrapper, faktaHooks, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { KodeverkMedNavn, Behandling, Fagsak } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';

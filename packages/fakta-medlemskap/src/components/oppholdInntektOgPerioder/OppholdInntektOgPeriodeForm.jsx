@@ -18,7 +18,7 @@ import {
   VerticalSpacer,
   useSaksbehandlerOppslag,
 } from '@fpsak-frontend/shared-components';
-import { ISO_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { FaktaBegrunnelseTextField } from '@k9-sak-web/fakta-felles';
 
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';

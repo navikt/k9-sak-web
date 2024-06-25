@@ -14,7 +14,6 @@ import {
   Fagsak,
   FagsakPerson,
   FeatureToggles,
-  KodeverkMedNavn,
 } from '@k9-sak-web/types';
 import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 import moment from 'moment';

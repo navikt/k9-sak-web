@@ -14,14 +14,7 @@ import {
   prosessStegHooks,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import {
-  ArbeidsgiverOpplysningerPerId,
-  Behandling,
-  Fagsak,
-  FagsakPerson,
-  FeatureToggles,
-  KodeverkMedNavn,
-} from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, FeatureToggles } from '@k9-sak-web/types';
 import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 import {
   PleiepengerSluttfaseBehandlingApiKeys,

@@ -13,14 +13,7 @@ import {
   prosessStegHooks,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import {
-  ArbeidsgiverOpplysningerPerId,
-  Behandling,
-  Fagsak,
-  FagsakPerson,
-  FeatureToggles,
-  KodeverkMedNavn,
-} from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, FeatureToggles } from '@k9-sak-web/types';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';

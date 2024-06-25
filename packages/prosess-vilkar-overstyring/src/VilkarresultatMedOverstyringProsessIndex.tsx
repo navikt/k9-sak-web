@@ -6,7 +6,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { dateFormat } from '@fpsak-frontend/utils';
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
-import { Aksjonspunkt, Behandling, KodeverkMedNavn, SubmitCallback, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringForm';
@@ -41,7 +41,6 @@ interface VilkarresultatMedOverstyringProsessIndexProps {
     isEnabled: boolean;
   };
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
-  avslagsarsaker: KodeverkMedNavn[];
   lovReferanse?: string;
   erOverstyrt: boolean;
   panelTittelKode: string;
@@ -60,7 +59,6 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   overrideReadOnly,
   kanOverstyreAccess,
   toggleOverstyring,
-  avslagsarsaker,
   erOverstyrt,
   panelTittelKode,
   overstyringApKode,

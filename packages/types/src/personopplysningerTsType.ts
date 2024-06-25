@@ -1,5 +1,3 @@
-import KodeverkMedNavnTsType from './kodeverkMedNavnTsType';
-
 export type PersonopplysningAdresse = Readonly<{
   adresseType?: string;
   adresselinje1?: string;

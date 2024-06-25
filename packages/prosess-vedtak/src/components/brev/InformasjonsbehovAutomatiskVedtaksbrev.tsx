@@ -1,5 +1,4 @@
 import { CheckboxGroupFormik } from '@fpsak-frontend/form';
-import { Kodeverk } from '@k9-sak-web/types';
 import { Alert, Heading } from '@navikt/ds-react';
 import { useFormikContext } from 'formik';
 import React from 'react';

@@ -17,7 +17,7 @@ import {
   minLength,
   required,
 } from '@fpsak-frontend/utils';
-import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, Button, Label as DSLabel, Detail, HGrid } from '@navikt/ds-react';
 import moment from 'moment';
 import React, { Component } from 'react';

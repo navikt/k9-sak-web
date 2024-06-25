@@ -4,9 +4,6 @@ import PropTypes from 'prop-types';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-// eslint-disable-next-line import/no-duplicates
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-
 import medlemskapAksjonspunkterPropType from '../propTypes/medlemskapAksjonspunkterPropType';
 import medlemskapMedlemskaPropType from '../propTypes/medlemskapMedlemskapPropType';
 import medlemskapSoknadPropType from '../propTypes/medlemskapSoknadPropType';

@@ -109,8 +109,6 @@ interface OwnProps {
   readonly backendApi: BackendApi;
 }
 
-const EMPTY_ARRAY = [];
-
 /**
  * MeldingIndex
  *
@@ -134,7 +132,6 @@ const MeldingIndex = ({
 
   const navigate = useNavigate();
 
-  const ventearsaker = useFpSakKodeverk(kodeverkTyper.VENT_AARSAK) || EMPTY_ARRAY;
   const revurderingVarslingArsak = useFpSakKodeverk(kodeverkTyper.REVURDERING_VARSLING_ÅRSAK);
 
   const { startRequest: submitMessage, state: submitState } = restApiHooks.useRestApiRunner(

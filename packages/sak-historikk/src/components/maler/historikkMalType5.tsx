@@ -1,5 +1,5 @@
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { HistorikkinnslagDel, HistorikkinnslagEndretFelt, Kodeverk } from '@k9-sak-web/types';
+import { HistorikkinnslagDel, HistorikkinnslagEndretFelt } from '@k9-sak-web/types';
 import { BodyShort, Label } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';

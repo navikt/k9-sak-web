@@ -1,7 +1,6 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import { KodeverkType } from '@k9-sak-web/lib/types/index.js';
 import messages from '../../i18n/nb_NO.json';
 import createVisningsnavnForAndel from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
@@ -46,7 +45,7 @@ const selectedItemEndDate = '2020-04-24';
 const callbackForward = vi.fn();
 const callbackBackward = vi.fn();
 
-const kodeverkNavnFraKode = (kodeverk: string, kodeverkType: KodeverkType) => {
+const kodeverkNavnFraKode = (kodeverk: string) => {
   if (kodeverk === 'AT') {
     return 'Arbeidstaker';
   }

@@ -34,7 +34,7 @@ const getPersonstatus = (personopplysning: BostedSokerPersonopplysninger) =>
     ? personopplysning.avklartPersonstatus.overstyrtPersonstatus
     : personopplysning.personstatus;
 
-export const BostedSokerView = ({ intl, personopplysninger, sokerTypeTextId }: OwnProps & WrappedComponentProps) => {
+export const BostedSokerView = ({ personopplysninger, sokerTypeTextId }: OwnProps & WrappedComponentProps) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
   return (
     <div className={styles.defaultBostedSoker}>

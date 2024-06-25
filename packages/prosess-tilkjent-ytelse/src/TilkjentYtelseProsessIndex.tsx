@@ -8,8 +8,6 @@ import {
   Fagsak,
 } from '@k9-sak-web/types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import messages from '../i18n/nb_NO.json';
 

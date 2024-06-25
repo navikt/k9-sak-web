@@ -1,9 +1,7 @@
 import React, { ReactNode } from 'react';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
-import { AlleKodeverk } from '@k9-sak-web/lib/types/AlleKodeverk.js';
 
 import { ProsessStegPanelDef } from './ProsessStegDef';
 

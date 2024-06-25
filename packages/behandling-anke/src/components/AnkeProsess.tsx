@@ -10,14 +10,7 @@ import {
   prosessStegHooks,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import {
-  Aksjonspunkt,
-  Behandling,
-  BehandlingAppKontekst,
-  Fagsak,
-  FagsakPerson,
-  KodeverkMedNavn,
-} from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, BehandlingAppKontekst, Fagsak, FagsakPerson } from '@k9-sak-web/types';
 import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { AnkeBehandlingApiKeys, restApiAnkeHooks } from '../data/ankeBehandlingApi';

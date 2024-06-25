@@ -16,7 +16,6 @@ import { connect } from 'react-redux';
 
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Heading } from '@navikt/ds-react';
-import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import TilkjentYtelse, { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';

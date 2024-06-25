@@ -1,6 +1,5 @@
 import React from 'react';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';

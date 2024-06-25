@@ -1,6 +1,6 @@
 import { lagKonsekvensForYtelsenTekst } from './VedtakInnvilgetRevurderingPanel';
 
-const kodeverkNavnFraKode = (kode, kodeverkType) => {
+const kodeverkNavnFraKode = kode => {
   if (kode === 'BEREGNING') {
     return 'Endring i beregning';
   }

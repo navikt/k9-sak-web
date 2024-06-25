@@ -1,7 +1,6 @@
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Fagsak } from '@k9-sak-web/types';
 import React from 'react';
 import DokumenterSakIndex from './DokumenterSakIndex';
