@@ -6,7 +6,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
-import { renderWithReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import BehandlingSupportIndex, { hentSynligePaneler, hentValgbarePaneler } from './BehandlingSupportIndex';
@@ -51,7 +51,7 @@ describe('<BehandlingSupportIndex>', () => {
     requestApi.mock(K9sakApiKeys.HISTORY_TILBAKE, []);
     requestApi.mock(K9sakApiKeys.HISTORY_KLAGE, []);
 
-    renderWithReactQueryClient(
+    renderWithIntlAndReactQueryClient(
       <MemoryRouter>
         <BehandlingSupportIndex
           fagsak={fagsak as Fagsak}

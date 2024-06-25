@@ -1,9 +1,10 @@
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
-import { Fagsak } from '@k9-sak-web/types';
-import { render, screen } from '@testing-library/react';
-import React from 'react';
+import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { Fagsak } from '@k9-sak-web/types';
+import { screen } from '@testing-library/react';
+import React from 'react';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import { DokumentIndex } from './DokumentIndex';
 
@@ -55,7 +56,7 @@ describe('<DokumentIndex>', () => {
   it('skal vise liste med sorterte dokumenter', () => {
     requestApi.mock(K9sakApiKeys.ALL_DOCUMENTS, documents);
 
-    render(
+    renderWithIntlAndReactQueryClient(
       <DokumentIndex behandlingId={1} behandlingVersjon={2} saksnummer={123} behandlingUuid="1" fagsak={fagsak} />,
     );
     expect(screen.getByRole('link', { name: 'dok' })).toBeInTheDocument();
