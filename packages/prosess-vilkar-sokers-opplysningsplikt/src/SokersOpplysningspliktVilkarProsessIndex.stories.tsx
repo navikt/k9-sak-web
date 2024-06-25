@@ -13,10 +13,7 @@ import SokersOpplysningspliktVilkarProsessIndex from './SokersOpplysningspliktVi
 const soknad = {
   manglendeVedlegg: [
     {
-      dokumentType: {
-        kode: dokumentTypeId.INNTEKTSMELDING,
-        kodeverk: '',
-      },
+      dokumentType: dokumentTypeId.INNTEKTSMELDING,
       arbeidsgiver: {
         organisasjonsnummer: '1234',
         navn: 'Statoil',
@@ -42,12 +39,8 @@ export const visÅpentAksjonspunkt = args => (
     aksjonspunkter={
       [
         {
-          definisjon: {
-            kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
+          definisjon: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
+          status: aksjonspunktStatus.OPPRETTET,
           begrunnelse: undefined,
         },
       ] as Aksjonspunkt[]
@@ -79,12 +72,8 @@ export const visOppfyltVilkår = args => (
     aksjonspunkter={
       [
         {
-          definisjon: {
-            kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
-          },
-          status: {
-            kode: aksjonspunktStatus.UTFORT,
-          },
+          definisjon: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
+          status: aksjonspunktStatus.UTFORT,
           begrunnelse: 'Dette vilkåret er godkjent',
         },
       ] as Aksjonspunkt[]
@@ -110,9 +99,7 @@ export const visAvslåttVilkår = args => (
         id: 1,
         versjon: 1,
         behandlingsresultat: {
-          avslagsarsak: {
-            kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-          },
+          avslagsarsak: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
         },
       } as Behandling
     }
@@ -120,12 +107,8 @@ export const visAvslåttVilkår = args => (
     aksjonspunkter={
       [
         {
-          definisjon: {
-            kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
-          },
-          status: {
-            kode: aksjonspunktStatus.UTFORT,
-          },
+          definisjon: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
+          status: aksjonspunktStatus.UTFORT,
           begrunnelse: 'Dette vilkåret er avslått',
         },
       ] as Aksjonspunkt[]

@@ -35,7 +35,11 @@ const AvslagsårsakListe = ({ vilkar }: AvslagsårsakListeProps) => {
         {[
           kodeverkNavnFraKode(avslåttVilkår.vilkarType, KodeverkType.VILKAR_TYPE),
           ': ',
-          kodeverkNavnFraUndertypeKode(avslåttVilkår.vilkarType, avslåttPeriode.avslagKode, KodeverkType.AVSLAGSARSAK),
+          kodeverkNavnFraUndertypeKode(
+            avslåttVilkår.vilkarType,
+            avslåttPeriode.avslagKode || '',
+            KodeverkType.AVSLAGSARSAK,
+          ),
         ].join('')}
       </BodyShort>
     ));

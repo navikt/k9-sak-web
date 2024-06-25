@@ -17,6 +17,27 @@ import BehandlingSupportIndex, { hentSynligePaneler, hentValgbarePaneler } from 
 describe('<BehandlingSupportIndex>', () => {
   const fagsak: Fagsak = {
     saksnummer: '123',
+    sakstype: '-',
+    relasjonsRolleType: '',
+    status: 'AVSLU',
+    barnFodt: '',
+    person: {
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+      diskresjonskode: '',
+      dodsdato: '',
+      aktørId: '',
+    },
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
   };
 
   const navAnsatt = {

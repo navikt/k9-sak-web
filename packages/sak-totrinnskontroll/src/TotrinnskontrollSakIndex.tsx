@@ -11,7 +11,7 @@ import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjon
 import { BehandlingAppKontekst, KlageVurdering, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
-import KodeverkV2, { KodeverkObject } from '@k9-sak-web/lib/types/KodeverkV2.js';
+import { KodeverkObject, KodeverkV2 } from '@k9-sak-web/lib/types/KodeverkV2.js';
 
 import TotrinnskontrollBeslutterForm, { FormValues } from './components/TotrinnskontrollBeslutterForm';
 import { AksjonspunktGodkjenningData } from './components/AksjonspunktGodkjenningFieldArray';

@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
 import { type AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
 
 type KodeverkContextValuesType = {

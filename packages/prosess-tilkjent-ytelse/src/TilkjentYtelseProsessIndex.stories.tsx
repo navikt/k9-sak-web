@@ -11,8 +11,8 @@ import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
 
 const fagsak = {
   saksnummer: '123456',
-  sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
-  status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
+  sakstype: fagsakYtelsesType.FP, // FAGSAK_YTELSE
+  status: fagsakStatus.UNDER_BEHANDLING, // FAGSAK_STATUS
 } as Fagsak;
 
 const behandling = {
@@ -27,20 +27,11 @@ const beregningsresultat = {
       andeler: [
         {
           // @ts-ignore Fiks
-          aktivitetStatus: {
-            kode: 'AT',
-            kodeverk: 'AKTIVITET_STATUS',
-          },
-          inntektskategori: {
-            kode: 'ARBEIDSTAKER',
-            kodeverk: 'INNTEKTSKATEGORI',
-          },
+          aktivitetStatus: 'AT', // AKTIVITET_STATUS
+          inntektskategori: 'ARBEIDSTAKER', // INNTEKTSKATEGORI
           aktørId: null,
           arbeidsforholdId: null,
-          arbeidsforholdType: {
-            kode: '-',
-            kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-          },
+          arbeidsforholdType: '-', // OPPTJENING_AKTIVITET_TYPE
           arbeidsgiverNavn: 'BEDRIFT1 AS',
           arbeidsgiverOrgnr: '123456789',
           eksternArbeidsforholdId: null,
@@ -69,20 +60,11 @@ const beregningsresultat = {
           ],
         },
         {
-          aktivitetStatus: {
-            kode: 'AT',
-            kodeverk: 'AKTIVITET_STATUS',
-          },
-          inntektskategori: {
-            kode: 'ARBEIDSTAKER',
-            kodeverk: 'INNTEKTSKATEGORI',
-          },
+          aktivitetStatus: 'AT', // AKTIVITET_STATUS
+          inntektskategori: 'ARBEIDSTAKER', // INNTEKTSKATEGORI
           aktørId: null,
           arbeidsforholdId: null,
-          arbeidsforholdType: {
-            kode: '-',
-            kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-          },
+          arbeidsforholdType: '-', // OPPTJENING_AKTIVITET_TYPE
           arbeidsgiverNavn: 'BEDRIFT2 AS',
           arbeidsgiverOrgnr: '234567890',
           eksternArbeidsforholdId: null,
@@ -110,20 +92,11 @@ const beregningsresultat = {
     {
       andeler: [
         {
-          aktivitetStatus: {
-            kode: 'AT',
-            kodeverk: 'AKTIVITET_STATUS',
-          },
-          inntektskategori: {
-            kode: 'ARBEIDSTAKER',
-            kodeverk: 'INNTEKTSKATEGORI',
-          },
+          aktivitetStatus: 'AT', // AKTIVITET_STATUS
+          inntektskategori: 'ARBEIDSTAKER', // INNTEKTSKATEGORI
           aktørId: null,
           arbeidsforholdId: null,
-          arbeidsforholdType: {
-            kode: '-',
-            kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-          },
+          arbeidsforholdType: '-', // OPPTJENING_AKTIVITET_TYPE
           arbeidsgiverNavn: 'BEDRIFT1 AS',
           arbeidsgiverOrgnr: '123456789',
           eksternArbeidsforholdId: null,
@@ -213,14 +186,8 @@ export const visÅpentAksjonspunkt = args => (
     aksjonspunkter={
       [
         {
-          definisjon: {
-            kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
-            kodeverk: '',
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-            kodeverk: '',
-          },
+          definisjon: aksjonspunktCodes.VURDER_TILBAKETREKK,
+          status: aksjonspunktStatus.OPPRETTET,
         },
       ] as Aksjonspunkt[]
     }

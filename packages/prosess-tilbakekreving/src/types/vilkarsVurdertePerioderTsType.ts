@@ -1,5 +1,7 @@
+import KodeverkMedNavn from '@k9-sak-web/types/src/kodeverkMedNavnTsType';
+
 export type AktsomhetInfo = {
-  sarligGrunner: string[];
+  sarligGrunner: KodeverkMedNavn[];
   harGrunnerTilReduksjon: boolean;
   andelTilbakekreves: number;
   ileggRenter: boolean;

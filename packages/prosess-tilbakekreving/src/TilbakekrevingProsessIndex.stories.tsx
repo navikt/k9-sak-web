@@ -8,7 +8,6 @@ import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekre
 import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import { AlleKodeverk, BehandlingType, KodeverkType } from '@k9-sak-web/lib/types/index.js';
-import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import TilbakekrevingProsessIndex from './TilbakekrevingProsessIndex';
 import aktsomhet from './kodeverk/aktsomhet';
 import sarligGrunn from './kodeverk/sarligGrunn';

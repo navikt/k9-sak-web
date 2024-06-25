@@ -3,7 +3,7 @@ import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType'
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
+import { Fagsak } from '@k9-sak-web/types';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import { DokumentIndex } from './DokumentIndex';
 
@@ -44,7 +44,7 @@ describe('<DokumentIndex>', () => {
     kanRevurderingOpprettes: false,
     skalBehandlesAvInfotrygd: false,
     dekningsgrad: 100,
-  } as Partial<Fagsak>;
+  } as Fagsak;
 
   it('skal vise liste med sorterte dokumenter', () => {
     requestApi.mock(K9sakApiKeys.ALL_DOCUMENTS, documents);

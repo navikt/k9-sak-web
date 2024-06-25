@@ -36,10 +36,7 @@ export default meta;
 
 type Story = StoryObj<typeof MeldingerSakIndex>;
 
-const bokmål: Språkkode = {
-  kode: 'NB',
-  kodeverk: 'SPRAAK_KODE',
-};
+const bokmål: Språkkode = 'NB'; // SPRAAK_KODE
 
 const defaultFakeBackend = {
   /* eslint-disable @typescript-eslint/no-unused-vars -- Fordi alt er ikkje implementert i fake backend */
@@ -104,8 +101,8 @@ export const SendMeldingPanel: Story = {
     featureToggles: { BRUK_V2_MELDINGER: false },
     fagsak: {
       saksnummer: '100',
-      sakstype: { kode: fagsakYtelsesType.PSB, kodeverk: 'FAGSAK_YTELSE' },
-      status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
+      sakstype: fagsakYtelsesType.PSB, // FAGSAK_YTELSE
+      status: fagsakStatus.UNDER_BEHANDLING, // FAGSAK_STATUS
       person: {
         aktørId: 'person-aktørid-1',
       },
@@ -113,7 +110,7 @@ export const SendMeldingPanel: Story = {
     behandling: {
       id: 1,
       uuid: 'XUYPS4',
-      type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
+      type: behandlingType.FØRSTEGANGSSØKNAD, // BEHANDLING_TYPE
       sprakkode: bokmål,
     },
     backendApi: defaultFakeBackend,
@@ -138,10 +135,7 @@ export const SendMeldingPanelEnMal: Story = {
 export const SendMeldingPanelEngelsk: Story = {
   args: {
     ...SendMeldingPanel.args,
-    sprakKode: {
-      kode: 'EN',
-      kodeverk: 'Engelsk',
-    },
+    sprakKode: 'EN',
   },
 };
 

@@ -1,7 +1,6 @@
 import React, { type ForwardedRef, forwardRef, useEffect, useImperativeHandle, useReducer } from 'react';
 import { Tag, type TagProps, Textarea, TextField } from '@navikt/ds-react';
 import { $FritekstbrevinnholdDto } from '@k9-sak-web/backend/k9sak/generated';
-import type { Språkkode } from '@k9-sak-web/backend/k9sak/kodeverk/Språkkode.js';
 import { validateTextCharacters } from '../../utils/validation/validateTextCharacters.js';
 
 type Valid = {

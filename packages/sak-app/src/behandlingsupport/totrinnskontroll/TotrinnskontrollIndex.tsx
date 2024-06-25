@@ -64,6 +64,7 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
 
   const { brukernavn, kanVeilede } = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
 
+  // @ts-ignore
   const erInnsynBehandling = behandling.type === BehandlingType.DOKUMENTINNSYN;
 
   const { data: totrinnArsaker } = restApiHooks.useRestApi<TotrinnskontrollSkjermlenkeContext[]>(

@@ -16,6 +16,7 @@ import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
   Brevmaler,
+  Fagsak,
   FeatureToggles,
   Personopplysninger,
 } from '@k9-sak-web/types';
@@ -23,7 +24,6 @@ import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import type { MottakerDto } from '@k9-sak-web/backend/k9sak/generated';
-import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import { useFpSakKodeverk } from '../../data/useKodeverk';
 import { useVisForhandsvisningAvMelding } from '../../data/useVisForhandsvisningAvMelding';
 import { setBehandlingOnHold } from '../../behandlingmenu/behandlingMenuOperations';

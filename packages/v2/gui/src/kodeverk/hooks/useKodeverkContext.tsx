@@ -99,16 +99,14 @@ export const useKodeverkContext = () => {
     if (kodeverkForKilde === undefined) {
       kodeverkForKilde = behandlingType === BehandlingType.KLAGE ? klageKodeverk : kodeverk;
     }
-    console.log('#7', kodeverk, klageKodeverk, tilbakeKodeverk);
+
     if (kodeverkForKilde === undefined) {
       return (kode, kodeverkType, ukjentTekst = undefined) => {
-        console.log('Kodeverk for kilde ukjent');
         console.error(`Ukjent kodeverk (${kode}, ${kodeverkType})`);
         return ukjentTekst || 'Ukjent kodeverk';
       };
     }
     return (kode, kodeverkType, ukjentTekst = undefined) => {
-      console.log('Kodeverk for kilde funnet');
       const kodeverkForType = kodeverkForKilde[kodeverkType];
       if (kodeverkForType) return utledKodeverkNavnFraKode(kode, kodeverkForType, ukjentTekst);
       return ukjentTekst || 'Ukjent kodeverk';

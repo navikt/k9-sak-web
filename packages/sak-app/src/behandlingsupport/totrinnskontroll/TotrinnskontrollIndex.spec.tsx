@@ -1,11 +1,11 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import TotrinnskontrollIndex from './TotrinnskontrollIndex';
 
@@ -28,10 +28,25 @@ vi.mock('react-router-dom', async () => {
 describe('<TotrinnskontrollIndex>', () => {
   const fagsak: Fagsak = {
     saksnummer: '1',
-    sakstype: fagsakYtelseType.FORELDREPENGER,
+    sakstype: fagsakYtelsesType.FP,
     person: {
       aktørId: '123',
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
     },
+    relasjonsRolleType: '',
+    status: 'OPPR',
+    barnFodt: '',
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
   };
 
   const alleBehandlinger = [

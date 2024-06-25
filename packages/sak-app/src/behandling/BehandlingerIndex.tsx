@@ -1,8 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { BehandlingAppKontekst, ArbeidsgiverOpplysningerWrapper } from '@k9-sak-web/types';
-import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
+import { BehandlingAppKontekst, ArbeidsgiverOpplysningerWrapper, Fagsak } from '@k9-sak-web/types';
 import { IngenBehandlingValgtPanel } from '@k9-sak-web/sak-infosider';
 
 import BehandlingIndex from './BehandlingIndex';

@@ -6,19 +6,12 @@ import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType'
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import AktorSakIndex from '@k9-sak-web/sak-aktor';
 import { Fagsak } from '@k9-sak-web/types';
-import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 
 const fagsak = {
   saksnummer: '35425245',
-  sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
-  relasjonsRolleType: {
-    kode: relasjonsRolleType.MOR,
-    kodeverk: '',
-  },
-  status: {
-    kode: fagsakStatus.UNDER_BEHANDLING,
-    kodeverk: 'FAGSAK_STATUS',
-  },
+  sakstype: fagsakYtelsesType.FP, // FAGSAK_YTELSE
+  relasjonsRolleType: relasjonsRolleType.MOR,
+  status: fagsakStatus.UNDER_BEHANDLING, // FAGSAK_STATUS
   barnFodt: '2020-01-01',
   opprettet: '2020-01-01',
   endret: '2020-01-01',
@@ -50,17 +43,11 @@ export const visSakerOpprettetPaAktor = () => (
         alder: 41,
         personnummer: '123456233',
         erKvinne: false,
-        personstatusType: {
-          kode: personstatusType.BOSATT,
-          kodeverk: '',
-        },
+        personstatusType: personstatusType.BOSATT,
       },
     }}
-    alleKodeverk={alleKodeverk as any}
     finnPathToFagsak={() => 'path'}
   />
 );
 
-export const visningAvUgyldigAktorId = () => (
-  <AktorSakIndex valgtAktorId="123" alleKodeverk={alleKodeverk as any} finnPathToFagsak={() => 'path'} />
-);
+export const visningAvUgyldigAktorId = () => <AktorSakIndex valgtAktorId="123" finnPathToFagsak={() => 'path'} />;

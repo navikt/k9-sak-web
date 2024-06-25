@@ -7,12 +7,12 @@ import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
+  Fagsak,
   FeatureToggles,
   NavAnsatt,
   NotatResponse,
   Personopplysninger,
 } from '@k9-sak-web/types';
-import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import {
   ArrowUndoIcon,
   ClockDashedIcon,

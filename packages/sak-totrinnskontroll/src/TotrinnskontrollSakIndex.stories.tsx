@@ -123,7 +123,7 @@ const behandling = {
   id: 1,
   versjon: 2,
   status: behandlingStatus.FATTER_VEDTAK,
-  type: behandlingType.FORSTEGANGSSOKNAD,
+  type: behandlingType.FØRSTEGANGSSØKNAD,
   behandlingÅrsaker: [],
   toTrinnsBehandling: true,
 } as Behandling;

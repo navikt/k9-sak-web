@@ -3,7 +3,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
-import { FagsakPerson } from '@k9-sak-web/types';
+import { Fagsak, FagsakPerson } from '@k9-sak-web/types';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 

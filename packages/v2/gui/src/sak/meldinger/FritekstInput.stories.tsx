@@ -17,7 +17,7 @@ export default meta;
 
 export const Default: StoryObj<typeof FritekstInput> = {
   args: {
-    språk: { kode: 'NB', kodeverk: 'SPRAAK_KODE' },
+    språk: 'NB', // SPRAAK_KODE
     show: true,
     showTitle: true,
     showValidation: true,

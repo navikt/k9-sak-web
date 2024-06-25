@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
 import { BehandlingType } from '@k9-sak-web/lib/types/index.js';
 
 type BehandlingContextValuesType = {

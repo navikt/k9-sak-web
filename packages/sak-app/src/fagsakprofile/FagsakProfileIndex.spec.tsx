@@ -7,13 +7,12 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
-import { BehandlingAppKontekst } from '@k9-sak-web/types';
+import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
@@ -44,8 +43,25 @@ vi.mock('react-router-dom', async () => {
 describe('<FagsakProfileIndex>', () => {
   const fagsak: Fagsak = {
     saksnummer: '123',
-    sakstype: fagsakYtelseType.FORELDREPENGER,
+    sakstype: fagsakYtelsesType.FP,
     status: fagsakStatus.OPPRETTET,
+    person: {
+      aktørId: '',
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+    },
+    relasjonsRolleType: '',
+    barnFodt: '',
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
   };
 
   const alleKodeverk = {
@@ -82,7 +98,7 @@ describe('<FagsakProfileIndex>', () => {
     ],
     [kodeverkTyper.FAGSAK_YTELSE]: [
       {
-        kode: fagsakYtelseType.FORELDREPENGER,
+        kode: fagsakYtelsesType.FP,
         kodeverk: 'FAGSAK_YTELSE',
         navn: 'Foreldrepenger',
       },
@@ -164,7 +180,7 @@ describe('<FagsakProfileIndex>', () => {
         <MemoryRouter>
           <IntlProvider locale="nb-NO">
             <FagsakProfileIndex
-              fagsak={fagsak as Fagsak}
+              fagsak={fagsak}
               alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
               harHentetBehandlinger
               oppfriskBehandlinger={vi.fn()}
@@ -207,7 +223,7 @@ describe('<FagsakProfileIndex>', () => {
         <MemoryRouter>
           <IntlProvider locale="nb-NO">
             <FagsakProfileIndex
-              fagsak={fagsak as Fagsak}
+              fagsak={fagsak}
               alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
               harHentetBehandlinger
               oppfriskBehandlinger={vi.fn()}

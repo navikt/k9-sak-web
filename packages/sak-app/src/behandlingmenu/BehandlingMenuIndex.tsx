@@ -240,7 +240,6 @@ export const BehandlingMenuIndex = ({
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             settBehandlingPaVent={setBehandlingOnHold}
-            ventearsaker={menyKodeverk.getKodeverkForValgtBehandling(kodeverkTyper.VENT_AARSAK)}
             lukkModal={lukkModal}
             erTilbakekreving={
               behandlingTypeKode === BehandlingType.TILBAKEKREVING ||

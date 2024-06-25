@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react';
 import React from 'react';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
-import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
+import { Fagsak } from '@k9-sak-web/types';
 import messages from '../../i18n/nb_NO.json';
 import FagsakSearch from './FagsakSearch';
 
@@ -12,10 +12,7 @@ describe('<FagsakSearch>', () => {
     saksnummer: '12345',
     sakstype: fagsakYtelsesType.FP, // FAGSAK_YTELSE
     relasjonsRolleType: 'TEST',
-    status: {
-      kode: fagsakStatus.UNDER_BEHANDLING,
-      kodeverk: 'FAGSAK_STATUS',
-    },
+    status: fagsakStatus.UNDER_BEHANDLING, // FAGSAK_STATUS
     barnFodt: '13‎.‎02‎.‎2017‎',
     opprettet: '13‎.‎02‎.‎2017‎ ‎09‎:‎54‎:‎22',
     endret: '13‎.‎02‎.‎2017‎',
