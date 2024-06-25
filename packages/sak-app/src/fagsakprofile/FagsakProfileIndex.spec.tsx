@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { MemoryRouter } from 'react-router-dom';
@@ -172,7 +172,7 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(K9sakApiKeys.SAK_BRUKER, {});
     requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, {});
 
-    render(
+    renderWithIntlAndReactQueryClient(
       <KodeverkProvider
         behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
@@ -215,7 +215,7 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(K9sakApiKeys.SAK_BRUKER, {});
     requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, {});
 
-    render(
+    renderWithIntlAndReactQueryClient(
       <KodeverkProvider
         behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
         kodeverk={alleKodeverkV2}
