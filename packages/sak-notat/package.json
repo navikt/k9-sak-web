@@ -7,8 +7,8 @@
   "dependencies": {
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/aksel-icons": "6.11.0",
-    "@navikt/ds-react": "6.11.0",
+    "@navikt/aksel-icons": "6.12.0",
+    "@navikt/ds-react": "6.12.0",
     "@navikt/ft-form-hooks": "4.4.11",
     "@navikt/ft-form-validators": "2.3.10",
     "@tanstack/react-query": "^5.45.1",

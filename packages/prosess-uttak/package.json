@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
-    "@navikt/ds-css": "6.11.0",
-    "@navikt/ds-react": "6.11.0",
+    "@navikt/ds-css": "6.12.0",
+    "@navikt/ds-react": "6.12.0",
     "@navikt/ft-form-hooks": "4.4.11",
     "@navikt/ft-form-validators": "2.3.10",
     "@navikt/ft-plattform-komponenter": "2.5.14",
