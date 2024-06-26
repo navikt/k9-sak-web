@@ -26,7 +26,6 @@ import RelatertFagsak from '@k9-sak-web/types/src/relatertFagsak';
 import React, { useCallback, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
 import {
   behandlingerRoutePath,
@@ -61,8 +60,6 @@ const erOmsorgspenger = (fagsak: Fagsak) =>
     fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN,
     fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE,
   ].includes(fagsak?.sakstype?.kode);
-
-const queryClient = new QueryClient();
 
 /**
  * FagsakIndex
@@ -278,19 +275,17 @@ const FagsakIndex = () => {
           }
 
           return (
-            <QueryClientProvider client={queryClient}>
-              <BehandlingSupportIndex
-                fagsak={fagsak}
-                alleBehandlinger={alleBehandlinger}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-                behandlingRettigheter={behandlingRettigheter}
-                personopplysninger={behandlingPersonopplysninger}
-                arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-                navAnsatt={navAnsatt}
-                featureToggles={featureToggles}
-              />
-            </QueryClientProvider>
+            <BehandlingSupportIndex
+              fagsak={fagsak}
+              alleBehandlinger={alleBehandlinger}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              behandlingRettigheter={behandlingRettigheter}
+              personopplysninger={behandlingPersonopplysninger}
+              arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+              navAnsatt={navAnsatt}
+              featureToggles={featureToggles}
+            />
           );
         }}
         visittkortContent={() => {

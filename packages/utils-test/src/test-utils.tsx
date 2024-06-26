@@ -1,7 +1,7 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render as rtlRender } from '@testing-library/react';
 import React, { ReactElement } from 'react';
 import { IntlProvider } from 'react-intl';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Provider } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 import { reducer, reduxForm } from 'redux-form';
@@ -53,13 +53,25 @@ const createTestReactQueryClient = () =>
     },
   });
 
-export function renderWithReactQueryClient(ui: React.ReactElement) {
+export function renderWithIntlAndReactQueryClient(ui: React.ReactElement, { locale, messages }: any = {}) {
   const testQueryClient = createTestReactQueryClient();
-  const { rerender, ...result } = rtlRender(<QueryClientProvider client={testQueryClient}>{ui}</QueryClientProvider>);
+  const { rerender, ...result } = rtlRender(
+    <QueryClientProvider client={testQueryClient}>
+      <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages} onError={() => null}>
+        {ui}
+      </IntlProvider>
+    </QueryClientProvider>,
+  );
   return {
     ...result,
     rerender: (rerenderUi: React.ReactElement) =>
-      rerender(<QueryClientProvider client={testQueryClient}>{rerenderUi}</QueryClientProvider>),
+      rerender(
+        <QueryClientProvider client={testQueryClient}>
+          <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages} onError={() => null}>
+            {rerenderUi}
+          </IntlProvider>
+        </QueryClientProvider>,
+      ),
   };
 }
 

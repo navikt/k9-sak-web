@@ -1,8 +1,7 @@
-import axios, { AxiosResponse } from 'axios';
-import React, { useMemo } from 'react';
-
 import { Alert, Link } from '@navikt/ds-react';
-
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import React from 'react';
 import styles from './punsjstripe.module.css';
 
 export interface PunsjResponse {
@@ -20,31 +19,13 @@ interface PunsjstripeProps {
 }
 
 const Punsjstripe: React.FC<PunsjstripeProps> = ({ saksnummer, pathToLos }) => {
-  const [punsjoppgaver, setPunsjoppgaver] = React.useState<PunsjResponse>(null);
-  const [error, setError] = React.useState(null);
-  const httpCanceler = useMemo(() => axios.CancelToken.source(), []);
-  React.useEffect(() => {
-    let isMounted = true;
-    axios
-      .get(`/k9/sak/api/punsj/journalpost/uferdig/v2?saksnummer=${saksnummer}`, {
-        cancelToken: httpCanceler.token,
-      })
-      .then((response: AxiosResponse) => {
-        if (isMounted) {
-          setPunsjoppgaver(response.data);
-        }
-      })
-      .catch(err => {
-        if (isMounted) {
-          setError(err);
-        }
-      });
-
-    return () => {
-      isMounted = false;
-      httpCanceler.cancel();
-    };
-  }, []);
+  const { data: punsjoppgaver, error } = useQuery<PunsjResponse>({
+    queryKey: ['punsjoppgaver', saksnummer],
+    queryFn: async ({ signal }) => {
+      const response = await axios.get(`/k9/sak/api/punsj/journalpost/uferdig/v2?saksnummer=${saksnummer}`, { signal });
+      return response.data;
+    },
+  });
 
   const harPunsjoppgaver = punsjoppgaver?.journalpostIder?.length > 0 || punsjoppgaver?.journalpostIderBarn?.length > 0;
 

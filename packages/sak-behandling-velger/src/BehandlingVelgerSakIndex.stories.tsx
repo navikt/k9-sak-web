@@ -3,9 +3,9 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import { Fagsak, Kodeverk } from '@k9-sak-web/types';
 import React, { useState } from 'react';
-import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import BehandlingVelgerSakIndex from './BehandlingVelgerSakIndex';
 
 const behandlinger = [
@@ -294,6 +294,7 @@ export default {
 
 export const visPanelForValgAvBehandlinger = props => {
   const [visAlle, toggleVisAlle] = useState(false);
+
   return (
     <div style={{ width: '600px' }}>
       <BehandlingVelgerSakIndex

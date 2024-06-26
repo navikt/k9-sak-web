@@ -3,7 +3,8 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { render, screen } from '@testing-library/react';
+import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import * as useTrackRouteParam from '../app/useTrackRouteParam';
@@ -199,7 +200,7 @@ describe('<FagsakIndex>', () => {
     requestApi.mock(K9sakApiKeys.KONTROLLRESULTAT, {});
     requestApi.mock(K9sakApiKeys.BEHANDLENDE_ENHETER, {});
 
-    render(
+    renderWithIntlAndReactQueryClient(
       <MemoryRouter>
         <FagsakIndex />
       </MemoryRouter>,

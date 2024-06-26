@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { MemoryRouter } from 'react-router-dom';
@@ -12,6 +12,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
+import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
@@ -177,7 +178,7 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(K9sakApiKeys.SAK_BRUKER, {});
     requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, {});
 
-    render(
+    renderWithIntlAndReactQueryClient(
       <MemoryRouter>
         <IntlProvider locale="nb-NO">
           <FagsakProfileIndex
@@ -213,7 +214,7 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(K9sakApiKeys.SAK_BRUKER, {});
     requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, {});
 
-    render(
+    renderWithIntlAndReactQueryClient(
       <MemoryRouter>
         <IntlProvider locale="nb-NO">
           <FagsakProfileIndex
