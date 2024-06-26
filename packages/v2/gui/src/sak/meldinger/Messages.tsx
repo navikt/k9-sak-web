@@ -87,28 +87,79 @@ type SetTredjepartsmottaker = Readonly<{
   tredjepartsmottaker: TredjepartsmottakerValue | TredjepartsmottakerError | undefined,
 }>
 
+type OnValgtMalChanged = Readonly<{
+  type: "OnValgtMalChanged"
+  valgtMal: Template | undefined
+}>
+
 type MessagesStateActions =
   SetValgtMalkode |
   SetFritekstForslag |
   SetValgtFritekst |
   SetValgtMottakerId |
   SetTredjepartsmottakerAktivert |
-  SetTredjepartsmottaker;
+  SetTredjepartsmottaker |
+  OnValgtMalChanged;
 
+// eslint-disable-next-line consistent-return -- Bevisst deaktivert, ts sjekker at alle mulige typer fører til return.
 const messagesStateReducer = (state: MessagesState, dispatch: MessagesStateActions): MessagesState => {
-  const valgtMalkode = dispatch.type === "SettValgtMal" ? dispatch.malkode : state.valgtMalkode
-  const fritekstForslag = dispatch.type === "SettFritekstForslag" ? dispatch.fritekstForslag : state.fritekstForslag
-  const valgtFritekst = dispatch.type === "SettValgtFritekst" ? dispatch.valgtFritekst : state.valgtFritekst
-  const valgtMottakerId = dispatch.type === "SettValgtMottakerId" ? dispatch.valgtMottakerId : state.valgtMottakerId
-  const tredjepartsmottakerAktivert = dispatch.type === "SettTredjepartsmottakerAktivert" ? dispatch.tredjepartsmottakerAktivert : state.tredjepartsmottakerAktivert
-  const tredjepartsmottaker = dispatch.type === "SettTredjepartsmottaker" ? dispatch.tredjepartsmottaker : state.tredjepartsmottaker
-  return {
-    valgtMalkode,
-    fritekstForslag,
-    valgtFritekst,
-    valgtMottakerId,
-    tredjepartsmottakerAktivert,
-    tredjepartsmottaker,
+  // eslint-disable-next-line default-case -- Bevisst deaktivert for å få TS sjekk på at alle dispatch.type verdier er handtert
+  switch(dispatch.type) {
+    case "OnValgtMalChanged": {
+      // Når valgt mal har blitt endra, endre tredjepartsmottakerAktivert og valgtMottakerId i henhold.
+      const tredjepartsmottakerAktivert = state.tredjepartsmottakerAktivert && (dispatch.valgtMal?.støtterTredjepartsmottaker || false)
+      const valgtMottakerId = dispatch.valgtMal?.mottakere[0]?.id
+      return {
+        ...state,
+        tredjepartsmottakerAktivert,
+        valgtMottakerId,
+      }
+    }
+    case "SettValgtMal": {
+      const valgtMalkode = dispatch.malkode
+      return {
+        ...state,
+        valgtMalkode,
+      }
+    }
+    // Når fritekstForslag blir satt skal valgtFritekst settast til innhald i første forslag
+    case "SettFritekstForslag": {
+      const { fritekstForslag } = dispatch
+      const valgtFritekst = fritekstForslag[0]
+      return {
+        ...state,
+        fritekstForslag,
+        valgtFritekst,
+      }
+    }
+    case "SettValgtFritekst": {
+      const { valgtFritekst } = dispatch
+      return {
+        ...state,
+        valgtFritekst
+      }
+    }
+    case "SettValgtMottakerId": {
+      const { valgtMottakerId } = dispatch
+      return {
+        ...state,
+        valgtMottakerId,
+      }
+    }
+    case "SettTredjepartsmottakerAktivert": {
+      const { tredjepartsmottakerAktivert } = dispatch
+      return {
+        ...state,
+        tredjepartsmottakerAktivert
+      }
+    }
+    case "SettTredjepartsmottaker": {
+      const { tredjepartsmottaker } = dispatch
+      return {
+        ...state,
+        tredjepartsmottaker
+      }
+    }
   }
 }
 
@@ -148,6 +199,7 @@ const Messages = ({
   const setValgtMottakerId = (newValgtMottakerId: string | undefined) => dispatch({type: "SettValgtMottakerId", valgtMottakerId: newValgtMottakerId})
   const setTredjepartsmottakerAktivert = (newTredjepartsmottakerAktivert: boolean) => dispatch({type: "SettTredjepartsmottakerAktivert", tredjepartsmottakerAktivert: newTredjepartsmottakerAktivert})
   const setTredjepartsmottaker = (newTredjepartsmottaker: TredjepartsmottakerValue | TredjepartsmottakerError | undefined) => dispatch({type: "SettTredjepartsmottaker", tredjepartsmottaker: newTredjepartsmottaker})
+  const onValgtMalChanged = (newValgtMal: Template | undefined) => dispatch({type: "OnValgtMalChanged", valgtMal: newValgtMal})
 
   // Konverter valgtFritekst til FritekstInputValue
   const valgtFritekstInputValue: FritekstInputValue = {
@@ -170,7 +222,6 @@ const Messages = ({
           valgtMalkode,
         );
         setFritekstForslag(innhold);
-        setValgtFritekst(innhold[0]);
       }
     };
     loadFritekstForslag();
@@ -178,9 +229,8 @@ const Messages = ({
 
   const valgtMal = maler.find(mal => mal.kode === valgtMalkode);
   useEffect(() => {
-    setTredjepartsmottakerAktivert(tredjepartsmottakerAktivert && (valgtMal?.støtterTredjepartsmottaker || false))
-    setValgtMottakerId(valgtMal?.mottakere[0]?.id);
-  }, [valgtMal, valgtMalkode]);
+    onValgtMalChanged(valgtMal)
+  }, [valgtMal]);
 
   const showFritekstInput = (valgtMal?.støtterFritekst || valgtMal?.støtterTittelOgFritekst) ?? false;
 
