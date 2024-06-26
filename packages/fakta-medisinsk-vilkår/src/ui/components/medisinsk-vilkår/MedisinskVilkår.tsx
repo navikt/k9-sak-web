@@ -113,7 +113,9 @@ const MedisinskVilkår = (): JSX.Element => {
   const { isLoading: diagnosekoderLoading, data: diagnosekoderData } = useQuery({
     queryKey: ['diagnosekodeResponse'],
     queryFn: hentDiagnosekoder,
-    enabled: !erFagsakOLPEllerPLS(fagsakYtelseType)
+    enabled: !erFagsakOLPEllerPLS(fagsakYtelseType),
+    placeholderData: { diagnosekoder: [], links: [], behandlingUuid: '', versjon: null },
+    staleTime: 10000,
   });
 
   const diagnosekoder = endpoints.diagnosekoder ? diagnosekoderData?.diagnosekoder : [];

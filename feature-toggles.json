@@ -76,10 +76,6 @@
     "value": "${OVERSTYRING_UTTAK}"
   },
   {
-    "key": "AVSLAGSAARSAK_ALENEOMSORG",
-    "value": "${AVSLAGSAARSAK_ALENEOMSORG}"
-  },
-  {
     "key": "NYE_NOKKELTALL",
     "value": "${NYE_NOKKELTALL}"
   }

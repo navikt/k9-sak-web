@@ -1,12 +1,12 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import messages from '../../i18n/nb_NO.json';
 import BehandlingVelgerSakIndex from '../BehandlingVelgerSakIndex';
 import { sortBehandlinger } from './behandlingVelgerUtils';
@@ -73,7 +73,7 @@ describe('<BehandlingPicker>', () => {
   };
 
   it('skal vise forklarende tekst når det ikke finnes behandlinger', async () => {
-    renderWithIntl(
+    renderWithIntlAndReactQueryClient(
       <MemoryRouter>
         <BehandlingVelgerSakIndex
           noExistingBehandlinger
@@ -113,7 +113,7 @@ describe('<BehandlingPicker>', () => {
       },
     ];
 
-    renderWithIntl(
+    renderWithIntlAndReactQueryClient(
       <MemoryRouter>
         <BehandlingVelgerSakIndex
           noExistingBehandlinger={false}
@@ -203,7 +203,7 @@ describe('<BehandlingPicker>', () => {
       },
     ];
 
-    renderWithIntl(
+    renderWithIntlAndReactQueryClient(
       <MemoryRouter>
         <BehandlingVelgerSakIndex
           noExistingBehandlinger={false}

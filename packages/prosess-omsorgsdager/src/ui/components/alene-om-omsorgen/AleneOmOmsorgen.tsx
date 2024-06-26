@@ -3,7 +3,6 @@ import dayjs from 'dayjs';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { Alert, Button, Fieldset, HStack, RadioGroup, Select } from '@navikt/ds-react';
 import { AleneOmOmsorgenProps } from '../../../types/AleneOmOmsorgenProps';
 import {
@@ -53,8 +52,6 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   losAksjonspunkt,
   formState,
 }) => {
-  const [featureToggles] = useFeatureToggles();
-
   const formStateKey = `${behandlingsID}-utvidetrett-alene-om-omsorgen`;
   const harAksjonspunktOgVilkarLostTidligere =
     informasjonTilLesemodus?.fraDato.length > 0 && informasjonTilLesemodus?.begrunnelse.length > 0;
@@ -167,14 +164,13 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
             erBehandlingstypeRevurdering={erBehandlingstypeRevurdering}
           />
 
-          {featureToggles?.AVSLAGSAARSAK_ALENEOMSORG &&
-            !informasjonTilLesemodus.vilkarOppfylt &&
-            informasjonTilLesemodus.avslagsårsakKode !== '' && (
-              <>
-                <p className={styleLesemodus.label}>{tekst.arsak}</p>
-                <p className={styleLesemodus.text}>{mapTilAvslagstekst(informasjonTilLesemodus.avslagsårsakKode)}</p>
-              </>
-            )}
+
+          {!informasjonTilLesemodus.vilkarOppfylt && informasjonTilLesemodus.avslagsårsakKode !== '' && (
+            <>
+              <p className={styleLesemodus.label}>{tekst.arsak}</p>
+              <p className={styleLesemodus.text}>{mapTilAvslagstekst(informasjonTilLesemodus.avslagsårsakKode)}</p>
+            </>
+          )}
         </>
       )}
 
@@ -208,9 +204,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                 {errors.erSokerenAleneOmOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
               </div>
 
-              {featureToggles?.AVSLAGSAARSAK_ALENEOMSORG &&
-                erSokerAleneOmOmsorgen.length > 0 &&
-                !tekstTilBoolean(erSokerAleneOmOmsorgen) && (
+              {erSokerAleneOmOmsorgen.length > 0 && !tekstTilBoolean(erSokerAleneOmOmsorgen) && (
                   <div>
                     <RadioGroup
                       className={styleRadioknapper.horisontalPlassering}
