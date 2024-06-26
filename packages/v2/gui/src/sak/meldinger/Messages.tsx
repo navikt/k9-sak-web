@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';
+import React, { useEffect, useRef, useState, useReducer } from 'react';
+import { Button, Checkbox, HStack, Spacer, VStack } from '@navikt/ds-react';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { FilePdfIcon, PaperplaneIcon } from '@navikt/aksel-icons';
+import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import type { BestillBrevDto, MottakerDto, FritekstbrevinnholdDto } from '@k9-sak-web/backend/k9sak/generated';
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.ts';
@@ -17,7 +17,7 @@ import TredjepartsmottakerInput, {
   type TredjepartsmottakerError,
   type TredjepartsmottakerValue,
 } from './TredjepartsmottakerInput.js';
-import MottakerSelect, { tredjepartsmottakerValg } from './MottakerSelect.js';
+import MottakerSelect from './MottakerSelect.js';
 import FritekstForslagSelect from './FritekstForslagSelect.js';
 import FritekstInput, {
   type FritekstInputInvalid,
@@ -48,6 +48,130 @@ type MessagesProps = {
   readonly api: BackendApi;
 };
 
+type MessagesState = Readonly<{
+  valgtMalkode: string | undefined;
+  fritekstForslag: FritekstbrevDokumentdata[];
+  valgtFritekst: FritekstbrevDokumentdata | undefined;
+  valgtMottakerId: string | undefined;
+  tredjepartsmottakerAktivert: boolean;
+  tredjepartsmottaker: TredjepartsmottakerValue | TredjepartsmottakerError | undefined;
+}>
+
+type SetValgtMalkode = Readonly<{
+  type: 'SettValgtMal';
+  malkode: string | undefined;
+}>;
+
+type SetFritekstForslag = Readonly<{
+  type: 'SettFritekstForslag',
+  fritekstForslag: FritekstbrevDokumentdata[]
+}>
+
+type SetValgtFritekst = Readonly<{
+  type: 'SettValgtFritekst',
+  valgtFritekst: FritekstbrevDokumentdata | undefined,
+}>
+
+type SetValgtMottakerId = Readonly<{
+  type: 'SettValgtMottakerId',
+  valgtMottakerId: string | undefined,
+}>
+
+type SetTredjepartsmottakerAktivert = Readonly<{
+  type: 'SettTredjepartsmottakerAktivert',
+  tredjepartsmottakerAktivert: boolean,
+}>
+
+type SetTredjepartsmottaker = Readonly<{
+  type: "SettTredjepartsmottaker",
+  tredjepartsmottaker: TredjepartsmottakerValue | TredjepartsmottakerError | undefined,
+}>
+
+type OnValgtMalChanged = Readonly<{
+  type: "OnValgtMalChanged"
+  valgtMal: Template | undefined
+}>
+
+type MessagesStateActions =
+  SetValgtMalkode |
+  SetFritekstForslag |
+  SetValgtFritekst |
+  SetValgtMottakerId |
+  SetTredjepartsmottakerAktivert |
+  SetTredjepartsmottaker |
+  OnValgtMalChanged;
+
+// eslint-disable-next-line consistent-return -- Bevisst deaktivert, ts sjekker at alle mulige typer fører til return.
+const messagesStateReducer = (state: MessagesState, dispatch: MessagesStateActions): MessagesState => {
+  // eslint-disable-next-line default-case -- Bevisst deaktivert for å få TS sjekk på at alle dispatch.type verdier er handtert
+  switch(dispatch.type) {
+    case "OnValgtMalChanged": {
+      // Når valgt mal har blitt endra, endre tredjepartsmottakerAktivert og valgtMottakerId i henhold.
+      const tredjepartsmottakerAktivert = state.tredjepartsmottakerAktivert && (dispatch.valgtMal?.støtterTredjepartsmottaker || false)
+      const valgtMottakerId = dispatch.valgtMal?.mottakere[0]?.id
+      return {
+        ...state,
+        tredjepartsmottakerAktivert,
+        valgtMottakerId,
+      }
+    }
+    case "SettValgtMal": {
+      const valgtMalkode = dispatch.malkode
+      return {
+        ...state,
+        valgtMalkode,
+      }
+    }
+    // Når fritekstForslag blir satt skal valgtFritekst settast til innhald i første forslag
+    case "SettFritekstForslag": {
+      const { fritekstForslag } = dispatch
+      const valgtFritekst = fritekstForslag[0]
+      return {
+        ...state,
+        fritekstForslag,
+        valgtFritekst,
+      }
+    }
+    case "SettValgtFritekst": {
+      const { valgtFritekst } = dispatch
+      return {
+        ...state,
+        valgtFritekst
+      }
+    }
+    case "SettValgtMottakerId": {
+      const { valgtMottakerId } = dispatch
+      return {
+        ...state,
+        valgtMottakerId,
+      }
+    }
+    case "SettTredjepartsmottakerAktivert": {
+      const { tredjepartsmottakerAktivert } = dispatch
+      return {
+        ...state,
+        tredjepartsmottakerAktivert
+      }
+    }
+    case "SettTredjepartsmottaker": {
+      const { tredjepartsmottaker } = dispatch
+      return {
+        ...state,
+        tredjepartsmottaker
+      }
+    }
+  }
+}
+
+const initMessagesState = (maler: Template[]): MessagesState => ({
+  valgtMalkode: maler[0]?.kode,
+  fritekstForslag: [],
+  valgtFritekst: undefined,
+  valgtMottakerId: undefined,
+  tredjepartsmottakerAktivert: false,
+  tredjepartsmottaker: undefined,
+})
+
 const Messages = ({
   maler,
   fagsak,
@@ -56,17 +180,26 @@ const Messages = ({
   arbeidsgiverOpplysningerPerId,
   api,
 }: MessagesProps) => {
-  const [valgtMalkode, setValgtMalkode] = useState<string | undefined>(maler[0]?.kode);
-  const [fritekstForslag, setFritekstForslag] = useState<FritekstbrevDokumentdata[]>([]);
-  const [valgtFritekst, setValgtFritekst] = useState<FritekstbrevDokumentdata | undefined>(undefined);
-  const [valgtMottakerId, setValgtMottakerId] = useState<string | undefined>(undefined);
-  const [tredjepartsMottaker, setTredjepartsMottaker] = useState<
-    TredjepartsmottakerValue | TredjepartsmottakerError | undefined
-  >(undefined);
+  const [{
+    valgtMalkode,
+    fritekstForslag,
+    valgtFritekst,
+    valgtMottakerId,
+    tredjepartsmottakerAktivert,
+    tredjepartsmottaker,
+  }, dispatch] = useReducer(messagesStateReducer, initMessagesState(maler))
   const fritekstInputRef = useRef<FritekstInputMethods>(null);
   // showValidation is set to true when inputs should display any validation errors, i.e. after the user tries to submit the form without having valid values.
   const [showValidation, setShowValidation] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
+
+  const setValgtMalkode = (malkode: string | undefined) => dispatch({type: 'SettValgtMal', malkode})
+  const setFritekstForslag = (newFritekstForslag: FritekstbrevDokumentdata[]) => dispatch({type: "SettFritekstForslag", fritekstForslag: newFritekstForslag})
+  const setValgtFritekst = (newValgtFritekst: FritekstbrevDokumentdata | undefined) => dispatch({type: "SettValgtFritekst", valgtFritekst: newValgtFritekst})
+  const setValgtMottakerId = (newValgtMottakerId: string | undefined) => dispatch({type: "SettValgtMottakerId", valgtMottakerId: newValgtMottakerId})
+  const setTredjepartsmottakerAktivert = (newTredjepartsmottakerAktivert: boolean) => dispatch({type: "SettTredjepartsmottakerAktivert", tredjepartsmottakerAktivert: newTredjepartsmottakerAktivert})
+  const setTredjepartsmottaker = (newTredjepartsmottaker: TredjepartsmottakerValue | TredjepartsmottakerError | undefined) => dispatch({type: "SettTredjepartsmottaker", tredjepartsmottaker: newTredjepartsmottaker})
+  const onValgtMalChanged = (newValgtMal: Template | undefined) => dispatch({type: "OnValgtMalChanged", valgtMal: newValgtMal})
 
   // Konverter valgtFritekst til FritekstInputValue
   const valgtFritekstInputValue: FritekstInputValue = {
@@ -89,15 +222,14 @@ const Messages = ({
           valgtMalkode,
         );
         setFritekstForslag(innhold);
-        setValgtFritekst(innhold[0]);
       }
     };
     loadFritekstForslag();
-  }, [valgtMalkode]);
+  }, [valgtMalkode, fagsak, behandling]);
 
   const valgtMal = maler.find(mal => mal.kode === valgtMalkode);
   useEffect(() => {
-    setValgtMottakerId(valgtMal?.mottakere[0]?.id);
+    onValgtMalChanged(valgtMal)
   }, [valgtMal]);
 
   const showFritekstInput = (valgtMal?.støtterFritekst || valgtMal?.støtterTittelOgFritekst) ?? false;
@@ -118,12 +250,12 @@ const Messages = ({
   // overstyrtMottaker skal vere valgt mottaker frå MottakerSelect, viss ikkje tredjepartsmottaker alternativ er valgt der.
   // Viss sending til tredjepartsmottaker er aktivert skal den settast til inntasta orgnr.
   const resolveOvertyrtMottaker = (): MottakerDto | undefined => {
-    if (valgtMottakerId !== undefined && valgtMottakerId !== tredjepartsmottakerValg) {
+    if (valgtMottakerId !== undefined && !tredjepartsmottakerAktivert) {
       return valgtMal?.mottakere.filter(m => m.id === valgtMottakerId)[0];
     }
-    if (valgtMottakerId === tredjepartsmottakerValg && tredjepartsMottaker?.organisasjonsnr !== undefined) {
+    if (tredjepartsmottakerAktivert && tredjepartsmottaker?.organisasjonsnr !== undefined) {
       return {
-        id: tredjepartsMottaker.organisasjonsnr,
+        id: tredjepartsmottaker.organisasjonsnr,
         type: 'ORGNR',
       };
     }
@@ -145,7 +277,7 @@ const Messages = ({
     const fritekst = fritekstInputValue?.tekst;
     const overstyrtMottaker = resolveOvertyrtMottaker();
     // Viss valg for sending til tredjepartsmottaker er aktivt må overstyrtMottaker vere definert
-    if (valgtMottakerId === tredjepartsmottakerValg && overstyrtMottaker === undefined) {
+    if (tredjepartsmottakerAktivert && overstyrtMottaker === undefined) {
       return undefined; // Valideringsfeil
     }
     return {
@@ -171,11 +303,13 @@ const Messages = ({
       try {
         setIsBusy(true);
         await api.bestillDokument(bestillBrevDto);
+        // Reset form to initial default values:
+        setShowValidation(false);
+        setValgtMalkode(maler[0]?.kode)
+        fritekstInputRef.current?.reset();
       } finally {
         setIsBusy(false);
       }
-      setShowValidation(false);
-      fritekstInputRef.current?.reset();
     }
     // else: validation failed, error message should be displayed in the input field(s)
   };
@@ -222,14 +356,21 @@ const Messages = ({
         valgtMal={valgtMal}
         valgtMottakerId={valgtMottakerId}
         onChange={setValgtMottakerId}
+        disabled={tredjepartsmottakerAktivert}
       />
+      <Checkbox
+        checked={tredjepartsmottakerAktivert}
+        onChange={() => setTredjepartsmottakerAktivert(!tredjepartsmottakerAktivert)}
+        size="small"
+        disabled={!valgtMal?.støtterTredjepartsmottaker}
+        >Send til tredjepart</Checkbox>
       <TredjepartsmottakerInput
-        show={valgtMottakerId === tredjepartsmottakerValg}
+        show={tredjepartsmottakerAktivert}
         showValidation={showValidation}
         required
         api={api}
-        defaultValue={tredjepartsMottaker?.organisasjonsnr}
-        onChange={setTredjepartsMottaker}
+        defaultValue={tredjepartsmottaker?.organisasjonsnr}
+        onChange={setTredjepartsmottaker}
       />
       <FritekstInput
         språk={behandling.sprakkode}
@@ -244,7 +385,7 @@ const Messages = ({
           Send brev
         </Button>
         <Spacer />
-        <Button size="small" variant="secondary" icon={<FilePdfIcon />} loading={isBusy} onClick={previewHandler}>
+        <Button size="small" variant="secondary" icon={<FileSearchIcon />} loading={isBusy} onClick={previewHandler}>
           Forhåndsvis
         </Button>
       </HStack>
