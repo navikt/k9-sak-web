@@ -15,7 +15,6 @@ import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
@@ -217,7 +216,7 @@ describe('<FagsakProfileIndex>', () => {
 
     renderWithIntlAndReactQueryClient(
       <KodeverkProvider
-        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
         klageKodeverk={{}}
         tilbakeKodeverk={{}}

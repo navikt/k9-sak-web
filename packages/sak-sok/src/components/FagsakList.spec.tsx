@@ -4,8 +4,8 @@ import { screen } from '@testing-library/react';
 import React from 'react';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
-import { BehandlingType } from '@k9-sak-web/lib/types/index.js';
 
+import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
 import messages from '../../i18n/nb_NO.json';
 import FagsakList, { sortFagsaker } from './FagsakList';
 
@@ -28,7 +28,7 @@ describe('<FagsakList>', () => {
     const clickFunction = vi.fn();
     renderWithIntl(
       <KodeverkProvider
-        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
         klageKodeverk={{}}
         tilbakeKodeverk={{}}

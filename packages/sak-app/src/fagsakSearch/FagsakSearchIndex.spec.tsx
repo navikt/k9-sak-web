@@ -9,8 +9,8 @@ import { Fagsak } from '@k9-sak-web/types';
 
 import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import FagsakSearchIndex from './FagsakSearchIndex';
 
@@ -86,7 +86,7 @@ describe('<FagsakSearchIndex>', () => {
 
     render(
       <KodeverkProvider
-        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
         klageKodeverk={{}}
         tilbakeKodeverk={{}}

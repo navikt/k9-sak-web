@@ -4,7 +4,7 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
+import { behandlingType} from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import BostedSokerFaktaIndex, { BostedSokerPersonopplysninger } from './BostedSokerFaktaIndex';
 import messages from '../i18n/nb_NO.json';
@@ -14,7 +14,7 @@ describe('<BostedSokerFaktaIndex>', () => {
     // requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
     renderWithIntl(
       <KodeverkProvider
-        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
         klageKodeverk={{}}
         tilbakeKodeverk={{}}

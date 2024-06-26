@@ -7,7 +7,8 @@ import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import { AlleKodeverk, BehandlingType, KodeverkType } from '@k9-sak-web/lib/types/index.js';
+import { AlleKodeverk, KodeverkType } from '@k9-sak-web/lib/types/index.js';
+import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
 import TilbakekrevingProsessIndex from './TilbakekrevingProsessIndex';
 import aktsomhet from './kodeverk/aktsomhet';
 import sarligGrunn from './kodeverk/sarligGrunn';
@@ -156,7 +157,7 @@ const beregnBelop = params => {
 
 export const visAksjonspunktForTilbakekreving = args => (
   <KodeverkProvider
-    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverk as AlleKodeverk}
     klageKodeverk={alleKodeverk as AlleKodeverk}
     tilbakeKodeverk={alleKodeverk as AlleKodeverk}

@@ -1,5 +1,4 @@
 export * from './AlleKodeverk';
-export * from './BehandlingType';
 export * from './GetKodeverkNavnFraKodeFnType';
 export * from './HentKodeverkForKodeType';
 export * from './KodeverkKlageType';

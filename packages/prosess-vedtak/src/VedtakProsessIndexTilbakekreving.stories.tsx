@@ -4,17 +4,16 @@ import React from 'react';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import { BehandlingType } from '@k9-sak-web/lib/types/index.js';
+import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
 import VedtakProsessIndex from './VedtakProsessIndex';
 
 const behandling = {
   id: 1,
   versjon: 1,
-  type: behandlingType.FORSTEGANGSSOKNAD,
+  type: behandlingType.FØRSTEGANGSSØKNAD,
   status: behandlingStatus.BEHANDLING_UTREDES,
   sprakkode: 'NO',
   behandlingsresultat: {
@@ -53,7 +52,7 @@ export const visSjekkTilbakekreving = args => {
 
   return (
     <KodeverkProvider
-      behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+      behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
       kodeverk={alleKodeverkV2}
       klageKodeverk={{}}
       tilbakeKodeverk={{}}
@@ -61,7 +60,7 @@ export const visSjekkTilbakekreving = args => {
       <VedtakProsessIndex
         behandling={{
           ...behandling,
-          type: behandlingType.SOKNAD,
+          type: behandlingType.FØRSTEGANGSSØKNAD,
           behandlingsresultat: {
             vedtaksbrev: {
               kode: 'FRITEKST',
