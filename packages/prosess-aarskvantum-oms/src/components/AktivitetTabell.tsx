@@ -232,6 +232,7 @@ const AktivitetTabell = ({
                       <NøkkeltallContainer
                         totaltAntallDager={nøkkeltall.totaltAntallDager}
                         antallDagerArbeidsgiverDekker={nøkkeltall.antallDagerArbeidsgiverDekker}
+                        antallDagerFraværRapportertSomNyoppstartet={nøkkeltall.antallDagerFraværRapportertSomNyoppstartet}
                         antallDagerInfotrygd={nøkkeltall.antallDagerInfotrygd}
                         antallKoronadager={nøkkeltall.antallKoronadager}
                         forbrukteDager={nøkkeltall.antallForbrukteDager}
