@@ -199,7 +199,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       medlemskapPerioder,
       soknad,
       aksjonspunkter,
-      getKodeverknavn,
     );
 
     expect(initialValues).toStrictEqual({
