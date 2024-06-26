@@ -7,6 +7,9 @@ import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtel
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
+import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import FeilutbetalingFaktaIndex from './FeilutbetalingFaktaIndex';
 
 const BEHANDLING_AARSAK_KODEVERK = 'BEHANDLING_AARSAK';
@@ -129,22 +132,29 @@ export default {
 };
 
 export const visAksjonspunktForFeilutbetaling = args => (
-  <FeilutbetalingFaktaIndex
-    behandling={behandling}
-    aksjonspunkter={[
-      {
-        definisjon: aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING,
-        status: aksjonspunktStatus.OPPRETTET,
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      },
-    ]}
-    alleKodeverk={alleKodeverk}
-    fpsakKodeverk={alleKodeverk}
-    submitCallback={action('button-click')}
-    {...args}
-  />
+  <KodeverkProvider
+    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    kodeverk={alleKodeverkV2}
+    klageKodeverk={{}}
+    tilbakeKodeverk={{}}
+  >
+    <FeilutbetalingFaktaIndex
+      behandling={behandling}
+      aksjonspunkter={[
+        {
+          definisjon: aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING,
+          status: aksjonspunktStatus.OPPRETTET,
+          begrunnelse: undefined,
+          kanLoses: true,
+          erAktivt: true,
+        },
+      ]}
+      alleKodeverk={alleKodeverk}
+      fpsakKodeverk={alleKodeverk}
+      submitCallback={action('button-click')}
+      {...args}
+    />
+  </KodeverkProvider>
 );
 
 visAksjonspunktForFeilutbetaling.args = {

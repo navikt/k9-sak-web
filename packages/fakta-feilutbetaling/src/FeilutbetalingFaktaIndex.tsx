@@ -30,7 +30,7 @@ interface Props {
   fpsakKodeverk: { [key: string]: KodeverkMedNavn[] };
   submitCallback: () => void;
   readOnly: boolean;
-  harApneAksjonspunkter: boolean;
+  hasOpenAksjonspunkter: boolean;
   v2?: boolean;
 }
 
@@ -45,10 +45,10 @@ const FeilutbetalingFaktaIndex: FC<Props> = ({
   fpsakKodeverk,
   submitCallback,
   readOnly,
-  harApneAksjonspunkter,
+  hasOpenAksjonspunkter,
 }) => {
   const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
-  const kodeverTilbakekNavnFraKode = getKodeverkNavnFraKodeFn('kodeverkTilbake');
+  const kodeverkTilbakekNavnFraKode = getKodeverkNavnFraKodeFn('kodeverkTilbake');
   const kodeverkKlageNavnFraKode = getKodeverkNavnFraKodeFn('kodeverkKlage');
   return (
     <RawIntlProvider value={intl}>
@@ -65,9 +65,9 @@ const FeilutbetalingFaktaIndex: FC<Props> = ({
         fpsakKodeverk={fpsakKodeverk}
         submitCallback={submitCallback}
         readOnly={readOnly}
-        hasOpenAksjonspunkter={harApneAksjonspunkter}
+        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
         kodeverkKlageNavnFraKode={kodeverkKlageNavnFraKode}
-        kodeverTilbakekNavnFraKode={kodeverTilbakekNavnFraKode}
+        kodeverkTilbakekNavnFraKode={kodeverkTilbakekNavnFraKode}
       />
     </RawIntlProvider>
   );
