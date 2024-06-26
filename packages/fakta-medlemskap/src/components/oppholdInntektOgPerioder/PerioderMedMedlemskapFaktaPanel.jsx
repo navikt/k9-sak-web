@@ -8,6 +8,7 @@ import { Label, RadioGroupField, behandlingFormValueSelector } from '@fpsak-fron
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import {
   DateLabel,
   FaktaGruppe,
@@ -19,6 +20,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { BodyShort, Table, VStack } from '@navikt/ds-react';
+import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
 
 const headerTextCodes = [
   'PerioderMedMedlemskapFaktaPanel.Period',
@@ -41,6 +43,8 @@ export const PerioderMedMedlemskapFaktaPanel = ({
   vurderingTypes,
   alleMerknaderFraBeslutter,
 }) => {
+  const { kodeverkNavnFraKode } = useKodeverkContext();
+
   if (!fixedMedlemskapPerioder || fixedMedlemskapPerioder.length === 0) {
     return (
       <FaktaGruppe titleCode="PerioderMedMedlemskapFaktaPanel.ApplicationInformation">
@@ -76,8 +80,10 @@ export const PerioderMedMedlemskapFaktaPanel = ({
                   <Table.DataCell>
                     <PeriodLabel showTodayString dateStringFom={periode.fom} dateStringTom={periode.tom} />
                   </Table.DataCell>
-                  <Table.DataCell>{periode.dekning}</Table.DataCell>
-                  <Table.DataCell>{periode.status}</Table.DataCell>
+                  <Table.DataCell>
+                    {kodeverkNavnFraKode(periode.dekning, KodeverkType.MEDLEMSKAP_DEKNING)}
+                  </Table.DataCell>
+                  <Table.DataCell>{kodeverkNavnFraKode(periode.status, KodeverkType.MEDLEMSKAP_TYPE)}</Table.DataCell>
                   <Table.DataCell>
                     {periode.beslutningsdato ? <DateLabel dateString={periode.beslutningsdato} /> : null}
                   </Table.DataCell>
@@ -157,13 +163,7 @@ const mapStateToProps = (state, ownProps) => ({
   vurderingTypes: getAksjonspunkter(ownProps),
 });
 
-PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
-  periode,
-  medlemskapPerioder,
-  soknad,
-  aksjonspunkter,
-  getKodeverknavn,
-) => {
+PerioderMedMedlemskapFaktaPanel.buildInitialValues = (periode, medlemskapPerioder, soknad, aksjonspunkter) => {
   if (medlemskapPerioder === null) {
     return [];
   }
@@ -172,8 +172,8 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
     .map(i => ({
       fom: i.fom,
       tom: i.tom,
-      dekning: i.dekningType ? getKodeverknavn(i.dekningType) : '',
-      status: getKodeverknavn(i.medlemskapType),
+      dekning: i.dekningType,
+      status: i.medlemskapType,
       beslutningsdato: i.beslutningsdato,
     }))
     .sort((p1, p2) => new Date(p1.fom).getTime() - new Date(p2.fom).getTime());

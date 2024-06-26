@@ -5,9 +5,10 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
+import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import CheckPersonStatusIndex from './CheckPersonStatusIndex';
-
-const personstatusKodeverk = 'PERSONSTATUS_TYPE';
 
 const behandling = {
   id: 1,
@@ -20,19 +21,10 @@ const medlemskap = {
 };
 
 const personopplysninger = {
-  personstatus: {
-    kode: personstatusType.DOD,
-    kodeverk: personstatusKodeverk,
-  },
+  personstatus: personstatusType.DOD, // personstatusKodeverk
   avklartPersonstatus: {
-    orginalPersonstatus: {
-      kode: personstatusType.BOSATT,
-      kodeverk: personstatusKodeverk,
-    },
-    overstyrtPersonstatus: {
-      kode: personstatusType.DOD,
-      kodeverk: personstatusKodeverk,
-    },
+    orginalPersonstatus: personstatusType.BOSATT, // personstatusKodeverk
+    overstyrtPersonstatus: personstatusType.DOD, // personstatusKodeverk
   },
 };
 
@@ -42,22 +34,25 @@ export default {
 };
 
 export const visÅpentAksjonspunkt = args => (
-  <CheckPersonStatusIndex
-    aksjonspunkter={[
-      {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_PERSONSTATUS,
+  <KodeverkProvider
+    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    kodeverk={alleKodeverkV2}
+    klageKodeverk={{}}
+    tilbakeKodeverk={{}}
+  >
+    <CheckPersonStatusIndex
+      aksjonspunkter={[
+        {
+          definisjon: aksjonspunktCodes.AVKLAR_PERSONSTATUS,
+          status: aksjonspunktStatus.OPPRETTET,
+          begrunnelse: undefined,
         },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-      },
-    ]}
-    alleKodeverk={alleKodeverk}
-    submitCallback={action('button-click')}
-    {...args}
-  />
+      ]}
+      alleKodeverk={alleKodeverk}
+      submitCallback={action('button-click')}
+      {...args}
+    />
+  </KodeverkProvider>
 );
 
 visÅpentAksjonspunkt.args = {
@@ -69,24 +64,27 @@ visÅpentAksjonspunkt.args = {
 };
 
 export const visUtførtAksjonspunkt = args => (
-  <CheckPersonStatusIndex
-    aksjonspunkter={[
-      {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_PERSONSTATUS,
+  <KodeverkProvider
+    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    kodeverk={alleKodeverkV2}
+    klageKodeverk={{}}
+    tilbakeKodeverk={{}}
+  >
+    <CheckPersonStatusIndex
+      aksjonspunkter={[
+        {
+          definisjon: aksjonspunktCodes.AVKLAR_PERSONSTATUS,
+          status: aksjonspunktStatus.UTFORT,
+          begrunnelse: 'Dette er en begrunnelse',
         },
-        status: {
-          kode: aksjonspunktStatus.UTFORT,
-        },
-        begrunnelse: 'Dette er en begrunnelse',
-      },
-    ]}
-    alleKodeverk={alleKodeverk}
-    submitCallback={action('button-click')}
-    isReadOnly
-    readOnlySubmitButton
-    {...args}
-  />
+      ]}
+      alleKodeverk={alleKodeverk}
+      submitCallback={action('button-click')}
+      isReadOnly
+      readOnlySubmitButton
+      {...args}
+    />
+  </KodeverkProvider>
 );
 
 visUtførtAksjonspunkt.args = {

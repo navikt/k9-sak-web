@@ -36,10 +36,10 @@ export const useKodeverkContext = () => {
           break;
       }
     }
-
     if (kodeverkForKilde === undefined) {
       kodeverkForKilde = behandlingType === BehandlingType.KLAGE ? klageKodeverk : kodeverk;
     }
+    console.log('kodeverk for kilde', kodeverkForKilde);
 
     if (kodeverkForKilde && kodeverkForKilde[kodeverkType]) return kodeverkForKilde[kodeverkType];
 
@@ -54,7 +54,9 @@ export const useKodeverkContext = () => {
     kilde = undefined,
     ukjentTekst = undefined,
   ) => {
+    console.log('kodeverk for ', kode, kodeverkType, kilde);
     const kodeverkForType = hentKodeverkForKode(kodeverkType, kilde);
+    console.log('kodeverkfortype', kodeverkForType);
     if (kodeverkForType) return utledKodeverkNavnFraKode(kode, kodeverkForType);
     return ukjentTekst || 'Ukjent kode';
   };
@@ -107,6 +109,7 @@ export const useKodeverkContext = () => {
       };
     }
     return (kode, kodeverkType, ukjentTekst = undefined) => {
+      console.log('kodeverkForKilde', kode, kodeverkType);
       const kodeverkForType = kodeverkForKilde[kodeverkType];
       if (kodeverkForType) return utledKodeverkNavnFraKode(kode, kodeverkForType, ukjentTekst);
       return ukjentTekst || 'Ukjent kodeverk';

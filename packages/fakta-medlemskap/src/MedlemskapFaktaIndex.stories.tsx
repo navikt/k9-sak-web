@@ -4,15 +4,16 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
+import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import MedlemskapFaktaIndex from './MedlemskapFaktaIndex';
 
 const behandling = {
   id: 1,
   versjon: 1,
-  type: {
-    kode: behandlingType.FORSTEGANGSSOKNAD,
-  },
+  type: behandlingType.FORSTEGANGSSOKNAD,
   behandlingPaaVent: false,
   status: behandlingStatus.OPPRETTET,
 };
@@ -35,9 +36,7 @@ const soknad = {
 const arbeidsforhold = [
   {
     arbeidsgiverReferanse: '12345678',
-    kilde: {
-      kode: '-',
-    },
+    kilde: '-',
   },
 ];
 const medlemskap = {
@@ -63,18 +62,9 @@ const medlemskap = {
     {
       fom: '2019-01-01',
       tom: '2021-10-13',
-      medlemskapType: {
-        kode: 'AVKLARES',
-        kodeverk: 'MEDLEMSKAP_TYPE',
-      },
-      dekningType: {
-        kode: 'OPPHOR',
-        kodeverk: 'MEDLEMSKAP_DEKNING',
-      },
-      kildeType: {
-        kode: 'FS22',
-        kodeverk: 'MEDLEMSKAP_KILDE',
-      },
+      medlemskapType: 'AVKLARES', // MEDLEMSKAP_TYPE
+      dekningType: 'OPPHOR', // MEDLEMSKAP_DEKNING
+      kildeType: 'FS22', // MEDLEMSKAP_KILDE
       beslutningsdato: null,
     },
   ],
@@ -86,42 +76,20 @@ const medlemskap = {
         aktoerId: '1615078487209',
         diskresjonskode: null,
         nummer: null,
-        navBrukerKjonn: {
-          kode: 'K',
-          kodeverk: 'BRUKER_KJOENN',
-        },
-        statsborgerskap: {
-          kode: 'NOR',
-          kodeverk: 'LANDKODER',
-          navn: 'Norge',
-        },
+        navBrukerKjonn: 'K', // BRUKER_KJOENN
+        statsborgerskap: 'NOR', // LANDKODER
         avklartPersonstatus: {
-          orginalPersonstatus: {
-            kode: 'BOSA',
-            kodeverk: 'PERSONSTATUS_TYPE',
-          },
-          overstyrtPersonstatus: {
-            kode: 'BOSA',
-            kodeverk: 'PERSONSTATUS_TYPE',
-          },
+          orginalPersonstatus: 'BOSA', // PERSONSTATUS_TYPE
+          overstyrtPersonstatus: 'BOSA', // PERSONSTATUS_TYPE
         },
-        personstatus: {
-          kode: 'BOSA',
-          kodeverk: 'PERSONSTATUS_TYPE',
-        },
-        sivilstand: {
-          kode: 'UGIF',
-          kodeverk: 'SIVILSTAND_TYPE',
-        },
+        personstatus: 'BOSA', // PERSONSTATUS_TYPE
+        sivilstand: 'UGIF', // SIVILSTAND_TYPE
         navn: 'Mygg Robust',
         dodsdato: null,
         fodselsdato: '1966-08-02',
         adresser: [
           {
-            adresseType: {
-              kode: 'BOSTEDSADRESSE',
-              kodeverk: 'ADRESSE_TYPE',
-            },
+            adresseType: 'BOSTEDSADRESSE', // ADRESSE_TYPE
             mottakerNavn: 'Mygg Robust',
             adresselinje1: 'Skogvegen 3',
             adresselinje2: null,
@@ -131,10 +99,7 @@ const medlemskap = {
             land: 'NOR',
           },
         ],
-        region: {
-          kode: 'NORDEN',
-          kodeverk: 'REGION',
-        },
+        region: 'NORDEN', // REGION
         annenPart: null,
         ektefelle: null,
         barn: [],
@@ -158,41 +123,19 @@ const medlemskap = {
         aktoerId: '1615078487209',
         diskresjonskode: null,
         nummer: null,
-        navBrukerKjonn: {
-          kode: 'K',
-          kodeverk: 'BRUKER_KJOENN',
-        },
-        statsborgerskap: {
-          kode: 'NOR',
-          kodeverk: 'LANDKODER',
-          navn: 'Norge',
-        },
+        navBrukerKjonn: 'K', // BRUKER_KJOENN
+        statsborgerskap: 'NOR', // LANDKODER
         avklartPersonstatus: {
-          orginalPersonstatus: {
-            kode: 'BOSA',
-            kodeverk: 'PERSONSTATUS_TYPE',
-          },
-          overstyrtPersonstatus: {
-            kode: 'BOSA',
-            kodeverk: 'PERSONSTATUS_TYPE',
-          },
+          orginalPersonstatus: 'BOSA', // PERSONSTATUS_TYPE
+          overstyrtPersonstatus: 'BOSA', // PERSONSTATUS_TYPE
         },
-        personstatus: {
-          kode: 'BOSA',
-          kodeverk: 'PERSONSTATUS_TYPE',
-        },
-        sivilstand: {
-          kode: 'UGIF',
-          kodeverk: 'SIVILSTAND_TYPE',
-        },
+        personstatus: 'BOSA', // PERSONSTATUS_TYPE
+        sivilstand: 'UGIF', // SIVILSTAND_TYPE
         navn: 'Mygg Robust',
         dodsdato: null,
         fodselsdato: '1966-08-02',
         adresser: [],
-        region: {
-          kode: 'NORDEN',
-          kodeverk: 'REGION',
-        },
+        region: 'NORDEN', // REGION
         annenPart: null,
         ektefelle: null,
         barn: [],
@@ -223,24 +166,27 @@ export default {
 };
 
 export const visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = args => (
-  <MedlemskapFaktaIndex
-    aksjonspunkter={[
-      {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
+  <KodeverkProvider
+    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    kodeverk={alleKodeverkV2}
+    klageKodeverk={{}}
+    tilbakeKodeverk={{}}
+  >
+    <MedlemskapFaktaIndex
+      aksjonspunkter={[
+        {
+          definisjon: aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
+          status: aksjonspunktStatus.OPPRETTET,
+          begrunnelse: undefined,
+          kanLoses: true,
+          erAktivt: true,
         },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      },
-    ]}
-    alleKodeverk={alleKodeverk}
-    submitCallback={action('button-click')}
-    {...args}
-  />
+      ]}
+      alleKodeverk={alleKodeverk}
+      submitCallback={action('button-click')}
+      {...args}
+    />
+  </KodeverkProvider>
 );
 
 visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden.args = {
@@ -260,57 +206,48 @@ visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden.args = {
 };
 
 export const visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = args => (
-  <MedlemskapFaktaIndex
-    aksjonspunkter={[
-      {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
+  <KodeverkProvider
+    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    kodeverk={alleKodeverkV2}
+    klageKodeverk={{}}
+    tilbakeKodeverk={{}}
+  >
+    <MedlemskapFaktaIndex
+      aksjonspunkter={[
+        {
+          definisjon: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
+          status: aksjonspunktStatus.OPPRETTET,
+          begrunnelse: undefined,
+          kanLoses: true,
+          erAktivt: true,
         },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
+        {
+          definisjon: aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
+          status: aksjonspunktStatus.OPPRETTET,
+          begrunnelse: undefined,
+          kanLoses: true,
+          erAktivt: true,
         },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      },
-      {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
+        {
+          definisjon: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
+          status: aksjonspunktStatus.OPPRETTET,
+          begrunnelse: undefined,
+          kanLoses: true,
+          erAktivt: true,
         },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
+        {
+          definisjon: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
+          status: aksjonspunktStatus.OPPRETTET,
+          begrunnelse: undefined,
+          kanLoses: true,
+          erAktivt: true,
         },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      },
-      {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      },
-      {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      },
-    ]}
-    alleKodeverk={alleKodeverk}
-    submitCallback={action('button-click')}
-    {...args}
-  />
+      ]}
+      alleKodeverk={alleKodeverk}
+      submitCallback={action('button-click')}
+      {...args}
+    />
+  </KodeverkProvider>
 );
 
 visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter.args = {

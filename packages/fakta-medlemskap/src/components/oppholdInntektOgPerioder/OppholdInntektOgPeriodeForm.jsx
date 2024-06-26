@@ -6,10 +6,9 @@ import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   BorderBox,
   FlexColumn,
@@ -161,7 +160,7 @@ const buildInitialValues = createSelector(
       )(state, 'gjeldendeFom'),
     (state, ownProps) => ownProps.alleKodeverk,
   ],
-  (valgtPeriode, alleAksjonspunkter, soknad, person, medlemskapPerioder, gjeldendeFom, alleKodeverk) => {
+  (valgtPeriode, alleAksjonspunkter, soknad, person, medlemskapPerioder, gjeldendeFom) => {
     const aksjonspunkter = alleAksjonspunkter
       .filter(
         ap =>
@@ -180,17 +179,11 @@ const buildInitialValues = createSelector(
     if (valgtPeriode.aksjonspunkter.length > 0) {
       confirmValues = FaktaBegrunnelseTextField.buildInitialValues([valgtPeriode]);
     }
-    const kodeverkFn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+
     return {
       ...valgtPeriode,
       ...OppholdINorgeOgAdresserFaktaPanel.buildInitialValues(soknad, valgtPeriode, aksjonspunkter),
-      ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(
-        valgtPeriode,
-        medlemskapPerioder,
-        soknad,
-        aksjonspunkter,
-        kodeverkFn,
-      ),
+      ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(valgtPeriode, medlemskapPerioder, soknad, aksjonspunkter),
       fom: gjeldendeFom || moment().format(ISO_DATE_FORMAT),
       ...oppholdValues,
       ...confirmValues,

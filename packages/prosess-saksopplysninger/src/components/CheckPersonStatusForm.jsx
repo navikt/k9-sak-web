@@ -144,7 +144,7 @@ export const buildInitialValues = createSelector(
     (state, ownProps) => ownProps.behandlingHenlagt,
     (state, ownProps) => ownProps.aksjonspunkter,
     (state, ownProps) => ownProps.personopplysninger,
-    (state, ownProps) => ownProps.alleKodeverk,
+    (state, ownProps) => ownProps.kodeverkNavnFraKode,
   ],
   (behandlingHenlagt, aksjonspunkter, personopplysning, kodeverkNavnFraKode) => {
     const shouldContinueBehandling = !behandlingHenlagt;
