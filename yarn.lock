@@ -5441,6 +5441,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@remix-run/router@npm:1.17.0":
+  version: 1.17.0
+  resolution: "@remix-run/router@npm:1.17.0"
+  checksum: a801f605d6ff9fdc53676403cd9441f713251fbc23dcaf65c9337b3846e86db9c1b1fc9eee3c0f7142e3e1f7ed44efd427278138c3be9eeb7dd7e693347c35ab
+  languageName: node
+  linkType: hard
+
 "@rollup/plugin-inject@npm:^5.0.5":
   version: 5.0.5
   resolution: "@rollup/plugin-inject@npm:5.0.5"
@@ -14447,7 +14454,7 @@ __metadata:
     react: 18.3.1
     react-dom: 18.3.1
     react-popper: 2.3.0
-    react-router: 6.23.1
+    react-router: 6.24.0
     react-router-dom: 6.23.1
     storybook: ^8.1.10
     stylelint: 16.6.1
@@ -16981,6 +16988,17 @@ __metadata:
   peerDependencies:
     react: ">=16.8"
   checksum: d5d43ccb908a95d2b7345f2a13315c38bf094e25bcf97d5a6c3f353b1ea88602de15726c3570cd7f07c53b19a3519af2b6739bf6929ec355012795611d739cff
+  languageName: node
+  linkType: hard
+
+"react-router@npm:6.24.0":
+  version: 6.24.0
+  resolution: "react-router@npm:6.24.0"
+  dependencies:
+    "@remix-run/router": 1.17.0
+  peerDependencies:
+    react: ">=16.8"
+  checksum: c58073711357500f7b2adb8968f6d160e3f2fbe2f9d9482648e70ea96910438886d4e713d420c548c4a7d1ad30db15bc9a4b952bb1cbc14dd75a209cf286f49b
   languageName: node
   linkType: hard
 
