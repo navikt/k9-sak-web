@@ -179,21 +179,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         status: aksjonspunktStatus.OPPRETTET,
       },
     ];
-    const getKodeverknavn = kodeverk => {
-      if (kodeverk === 'DEK_TYPE') {
-        return 'testdekning';
-      }
-      if (kodeverk === 'DEK_TYPE2') {
-        return 'testdekning2017';
-      }
-      if (kodeverk === 'M_STATUS') {
-        return 'testStatus';
-      }
-      if (kodeverk === 'M_STATUS2') {
-        return 'testStatus2017';
-      }
-      return '';
-    };
+
     const initialValues = PerioderMedMedlemskapFaktaPanel.buildInitialValues(
       periode,
       medlemskapPerioder,
