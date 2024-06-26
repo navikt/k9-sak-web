@@ -7,9 +7,9 @@ import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtel
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
-import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
 import FeilutbetalingFaktaIndex from './FeilutbetalingFaktaIndex';
 
 const BEHANDLING_AARSAK_KODEVERK = 'BEHANDLING_AARSAK';
@@ -133,7 +133,7 @@ export default {
 
 export const visAksjonspunktForFeilutbetaling = args => (
   <KodeverkProvider
-    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverkV2}
     klageKodeverk={{}}
     tilbakeKodeverk={{}}

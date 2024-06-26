@@ -1,19 +1,18 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
-import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
+import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
 import MedlemskapFaktaIndex from './MedlemskapFaktaIndex';
 
 const behandling = {
   id: 1,
   versjon: 1,
-  type: behandlingType.FORSTEGANGSSOKNAD,
+  type: behandlingType.FØRSTEGANGSSØKNAD,
   behandlingPaaVent: false,
   status: behandlingStatus.OPPRETTET,
 };
@@ -167,7 +166,7 @@ export default {
 
 export const visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = args => (
   <KodeverkProvider
-    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverkV2}
     klageKodeverk={{}}
     tilbakeKodeverk={{}}
@@ -207,7 +206,7 @@ visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden.args = {
 
 export const visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = args => (
   <KodeverkProvider
-    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverkV2}
     klageKodeverk={{}}
     tilbakeKodeverk={{}}

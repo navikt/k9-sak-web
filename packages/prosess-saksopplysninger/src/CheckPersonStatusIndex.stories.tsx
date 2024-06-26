@@ -5,9 +5,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
-import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
 import CheckPersonStatusIndex from './CheckPersonStatusIndex';
 
 const behandling = {
@@ -35,7 +35,7 @@ export default {
 
 export const visÅpentAksjonspunkt = args => (
   <KodeverkProvider
-    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverkV2}
     klageKodeverk={{}}
     tilbakeKodeverk={{}}
@@ -65,7 +65,7 @@ visÅpentAksjonspunkt.args = {
 
 export const visUtførtAksjonspunkt = args => (
   <KodeverkProvider
-    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverkV2}
     klageKodeverk={{}}
     tilbakeKodeverk={{}}
