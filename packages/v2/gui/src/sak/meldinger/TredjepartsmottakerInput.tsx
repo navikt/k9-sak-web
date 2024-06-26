@@ -1,12 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { ErrorMessage, TextField } from '@navikt/ds-react';
-import { RequestIntentionallyAborted } from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
-import { requestAborted, type RequestAborted } from "@k9-sak-web/backend/shared/RequestAborted.ts";
+import { requestIntentionallyAborted, type RequestIntentionallyAborted } from "@k9-sak-web/backend/shared/RequestIntentionallyAborted.ts";
 import styles from './TredjepartsmottakerInput.module.css';
 import type { EregOrganizationLookupResponse } from './EregOrganizationLookupResponse.js';
 
 export interface BackendApi {
-  getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse | RequestAborted>;
+  getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse | RequestIntentionallyAborted>;
 }
 
 export interface TredjepartsmottakerOrgnrInputProps {
@@ -55,35 +54,27 @@ const TredjepartsmottakerInput = ({
   const lookupAborterRef = useRef<AbortController | undefined>(undefined);
 
   const handleInputOnChange = async (orgnr: string) => {
-    try {
-      const prevTredjepartsmottaker = tredjepartsmottaker;
-      lookupAborterRef.current?.abort(new RequestIntentionallyAborted());
-      lookupAborterRef.current = new AbortController();
-      const newTredjepartsmottaker =
-        orgnr.length > 0 ? await api.getBrevMottakerinfoEreg(orgnr, lookupAborterRef.current?.signal) : undefined;
-      if(newTredjepartsmottaker !== requestAborted) {
-        setTredjepartsmottaker(newTredjepartsmottaker);
-        if (!isEqual(newTredjepartsmottaker, prevTredjepartsmottaker)) {
-          if (newTredjepartsmottaker === undefined) {
-            if (required) {
-              onChange?.({ required: true });
-            } else {
-              onChange?.(undefined);
-            }
-          } else if (newTredjepartsmottaker.notFound) {
-            onChange?.({ notFound: true });
-          } else if (newTredjepartsmottaker.invalidOrgnum) {
-            onChange?.({ invalidOrgnum: true });
+    const prevTredjepartsmottaker = tredjepartsmottaker;
+    lookupAborterRef.current?.abort();
+    lookupAborterRef.current = new AbortController();
+    const newTredjepartsmottaker =
+      orgnr.length > 0 ? await api.getBrevMottakerinfoEreg(orgnr, lookupAborterRef.current?.signal) : undefined;
+    if(newTredjepartsmottaker !== requestIntentionallyAborted) {
+      setTredjepartsmottaker(newTredjepartsmottaker);
+      if (!isEqual(newTredjepartsmottaker, prevTredjepartsmottaker)) {
+        if (newTredjepartsmottaker === undefined) {
+          if (required) {
+            onChange?.({ required: true });
           } else {
-            onChange?.({ navn: newTredjepartsmottaker.name ?? '', organisasjonsnr: orgnr });
+            onChange?.(undefined);
           }
+        } else if (newTredjepartsmottaker.notFound) {
+          onChange?.({ notFound: true });
+        } else if (newTredjepartsmottaker.invalidOrgnum) {
+          onChange?.({ invalidOrgnum: true });
+        } else {
+          onChange?.({ navn: newTredjepartsmottaker.name ?? '', organisasjonsnr: orgnr });
         }
-      }
-    } catch (e) {
-      if (e instanceof RequestIntentionallyAborted) {
-        // Do nothing, the request was aborted because of new input
-      } else {
-        throw e;
       }
     }
   };

@@ -5,7 +5,7 @@ import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/melding
 import type { BackendApi } from '@k9-sak-web/gui/sak/meldinger/Messages.js';
 import { action } from '@storybook/addon-actions';
 import type { AvsenderApplikasjon } from "@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.ts";
-import { requestAborted, type RequestAborted } from "@k9-sak-web/backend/shared/RequestAborted.ts";
+import { requestIntentionallyAborted, type RequestIntentionallyAborted } from "@k9-sak-web/backend/shared/RequestIntentionallyAborted.ts";
 import { fakePdf } from './fakePdf.js';
 import { delay } from "../../utils/delay.js";
 
@@ -28,9 +28,9 @@ export class FakeMessagesBackendApi implements BackendApi {
     return [];
   }
 
-  async getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse | RequestAborted> {
+  async getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse | RequestIntentionallyAborted> {
     if(abort?.aborted) {
-      return requestAborted
+      return requestIntentionallyAborted
     }
     if (orgnr.length === 9) {
       if (Number.isFinite(Number(orgnr))) {
