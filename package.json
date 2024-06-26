@@ -51,7 +51,7 @@
     "@navikt/ft-plattform-komponenter": "2.5.14",
     "@popperjs/core": "2.11.8",
     "@sentry/browser": "8.9.2",
-    "@sentry/react": "^8.9.2",
+    "@sentry/react": "^8.12.0",
     "axios": "1.7.2",
     "date-fns": "3.6.0",
     "date-fns-tz": "3.1.3",
