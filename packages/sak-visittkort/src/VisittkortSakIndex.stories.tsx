@@ -8,8 +8,8 @@ import region from '@fpsak-frontend/kodeverk/src/region';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
 
 export default {
   title: 'sak/sak-visittkort',
@@ -73,7 +73,7 @@ const personopplysningerAnnenPart = {
 
 export const visVisittkortNårEnHarBegrensetMedInformasjon = () => (
   <KodeverkProvider
-    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverkV2}
     klageKodeverk={{}}
     tilbakeKodeverk={{}}
@@ -84,7 +84,7 @@ export const visVisittkortNårEnHarBegrensetMedInformasjon = () => (
 
 export const visVisittkortNårEnHarPersonopplysninger = () => (
   <KodeverkProvider
-    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverkV2}
     klageKodeverk={{}}
     tilbakeKodeverk={{}}
@@ -95,7 +95,7 @@ export const visVisittkortNårEnHarPersonopplysninger = () => (
 
 export const visVisittkortNårEnHarPersonopplysningerForBeggeParter = () => (
   <KodeverkProvider
-    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverkV2}
     klageKodeverk={{}}
     tilbakeKodeverk={{}}
@@ -113,7 +113,7 @@ export const visVisittkortNårEnHarPersonopplysningerForBeggeParter = () => (
 
 export const visVisittkortForAnnenPartDerAktørIdErUkjent = () => (
   <KodeverkProvider
-    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverkV2}
     klageKodeverk={{}}
     tilbakeKodeverk={{}}
@@ -134,7 +134,7 @@ export const visVisittkortForAnnenPartDerAktørIdErUkjent = () => (
 
 export const visVisittkortNårEnHarEnRelatertFagsak = () => (
   <KodeverkProvider
-    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverkV2}
     klageKodeverk={{}}
     tilbakeKodeverk={{}}
@@ -154,7 +154,7 @@ export const visVisittkortNårEnHarEnRelatertFagsak = () => (
 
 export const visVisittkortNårEnHarFlereRelaterteFagsaker = () => (
   <KodeverkProvider
-    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverkV2}
     klageKodeverk={{}}
     tilbakeKodeverk={{}}

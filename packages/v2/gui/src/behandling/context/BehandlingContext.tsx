@@ -1,5 +1,5 @@
 import React, { createContext, useMemo, useState } from 'react';
-import { BehandlingType } from '@k9-sak-web/lib/types/index.js';
+import type { BehandlingType } from "@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.ts";
 
 type BehandlingContextValuesType = {
   behandlingId: number | undefined;

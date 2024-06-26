@@ -8,9 +8,9 @@ import { combineReducers, createStore } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
-import { BehandlingType } from '@k9-sak-web/lib/types/index.js';
 
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
+import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
 import MenySettPaVentIndex from './MenySettPaVentIndex';
 
 vi.mock('react-router-dom', async () => {
@@ -33,7 +33,7 @@ describe('<MenySettPaVentIndex>', () => {
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
         <KodeverkProvider
-          behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+          behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
           kodeverk={alleKodeverkV2}
           klageKodeverk={{}}
           tilbakeKodeverk={{}}

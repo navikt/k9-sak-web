@@ -5,7 +5,7 @@ import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import alleKodeverkKlageV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkKlageV2.json';
 import React from 'react';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import { BehandlingType } from '@k9-sak-web/lib/types/index.js';
+import {behandlingType as klageBehandlingstyper} from "@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js";
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakKlageFormImpl, getAvvisningsAarsaker, getIsAvvist, getKlageresultat } from './VedtakKlageForm';
@@ -22,7 +22,7 @@ describe('<VedtakKlageForm>', () => {
     };
     renderWithIntl(
       <KodeverkProvider
-        behandlingType={BehandlingType.KLAGE}
+        behandlingType={klageBehandlingstyper.KLAGE}
         kodeverk={alleKodeverkV2}
         klageKodeverk={alleKodeverkKlageV2}
         tilbakeKodeverk={{}}

@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import { BehandlingType } from '@k9-sak-web/lib/types/index.js';
+import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
 import { BehandlingerIndex } from './BehandlingerIndex';
 
 describe('BehandlingerIndex', () => {
@@ -21,7 +21,7 @@ describe('BehandlingerIndex', () => {
     render(
       <MemoryRouter>
         <KodeverkProvider
-          behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+          behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
           kodeverk={alleKodeverkV2}
           klageKodeverk={alleKodeverkV2}
           tilbakeKodeverk={alleKodeverkV2}

@@ -2,8 +2,8 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
 import { intlMock } from '../../i18n/index';
 import { FagsakProfile } from './FagsakProfile';
 import messages from '../../i18n/nb_NO.json';
@@ -15,7 +15,7 @@ describe('<FagsakProfile>', () => {
 
     renderWithIntl(
       <KodeverkProvider
-        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
         klageKodeverk={{}}
         tilbakeKodeverk={{}}
@@ -43,7 +43,7 @@ describe('<FagsakProfile>', () => {
 
     renderWithIntl(
       <KodeverkProvider
-        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
         klageKodeverk={{}}
         tilbakeKodeverk={{}}
@@ -72,7 +72,7 @@ describe('<FagsakProfile>', () => {
 
     renderWithIntl(
       <KodeverkProvider
-        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
         klageKodeverk={{}}
         tilbakeKodeverk={{}}
@@ -100,7 +100,7 @@ describe('<FagsakProfile>', () => {
 
     renderWithIntl(
       <KodeverkProvider
-        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
         klageKodeverk={{}}
         tilbakeKodeverk={{}}

@@ -7,7 +7,7 @@ import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import { BehandlingType } from '@k9-sak-web/lib/types/index.js';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { BostedSokerPersonopplysninger } from '../BostedSokerFaktaIndex';
 import { BostedSokerView } from './BostedSokerView';
 import messages from '../../i18n/nb_NO.json';
@@ -34,7 +34,7 @@ describe('<BostedsokerView>', () => {
   it('vise navn', () => {
     renderWithIntl(
       <KodeverkProvider
-        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
         klageKodeverk={{}}
         tilbakeKodeverk={{}}
@@ -58,7 +58,7 @@ describe('<BostedsokerView>', () => {
   it('skal vise etiketter', () => {
     renderWithIntl(
       <KodeverkProvider
-        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
         klageKodeverk={{}}
         tilbakeKodeverk={{}}
@@ -78,7 +78,7 @@ describe('<BostedsokerView>', () => {
 
     renderWithIntl(
       <KodeverkProvider
-        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
         klageKodeverk={{}}
         tilbakeKodeverk={{}}

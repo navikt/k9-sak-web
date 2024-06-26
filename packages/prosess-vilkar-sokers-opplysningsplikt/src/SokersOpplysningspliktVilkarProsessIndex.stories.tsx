@@ -8,9 +8,9 @@ import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Aksjonspunkt, Behandling, Soknad } from '@k9-sak-web/types';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
-import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
 import SokersOpplysningspliktVilkarProsessIndex from './SokersOpplysningspliktVilkarProsessIndex';
 
 const soknad = {
@@ -32,7 +32,7 @@ export default {
 
 export const visÅpentAksjonspunkt = args => (
   <KodeverkProvider
-    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverkV2}
     klageKodeverk={{}}
     tilbakeKodeverk={{}}
@@ -71,7 +71,7 @@ visÅpentAksjonspunkt.args = {
 
 export const visOppfyltVilkår = args => (
   <KodeverkProvider
-    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverkV2}
     klageKodeverk={{}}
     tilbakeKodeverk={{}}
@@ -111,7 +111,7 @@ visOppfyltVilkår.args = {
 
 export const visAvslåttVilkår = args => (
   <KodeverkProvider
-    behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverkV2}
     klageKodeverk={{}}
     tilbakeKodeverk={{}}

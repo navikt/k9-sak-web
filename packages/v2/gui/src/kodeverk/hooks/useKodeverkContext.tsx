@@ -2,12 +2,12 @@ import { useContext } from 'react';
 import { utledKodeverkNavnFraKode, utledKodeverkNavnFraUndertypeKode } from '@k9-sak-web/lib/kodeverk/kodeverkUtils.js';
 import type { AlleKodeverk, KodeverkMedUndertype } from '@k9-sak-web/lib/types/AlleKodeverk.js';
 import {
-  BehandlingType,
   type GetKodeverkNavnFraKodeFnType,
   type HentKodeverkForKodeType,
   type KodeverkNavnFraKodeType,
   type KodeverkNavnFraUndertypeKodeType,
 } from '@k9-sak-web/lib/types/index.js';
+import {behandlingType as klageBehandlingstyper} from "@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js";
 import { KodeverkContext } from '../context/KodeverkContext';
 
 export const useKodeverkContext = () => {
@@ -38,7 +38,7 @@ export const useKodeverkContext = () => {
     }
 
     if (kodeverkForKilde === undefined) {
-      kodeverkForKilde = behandlingType === BehandlingType.KLAGE ? klageKodeverk : kodeverk;
+      kodeverkForKilde = behandlingType === klageBehandlingstyper.KLAGE ? klageKodeverk : kodeverk;
     }
 
     if (kodeverkForKilde && kodeverkForKilde[kodeverkType]) return kodeverkForKilde[kodeverkType];
@@ -98,7 +98,7 @@ export const useKodeverkContext = () => {
     }
 
     if (kodeverkForKilde === undefined) {
-      kodeverkForKilde = behandlingType === BehandlingType.KLAGE ? klageKodeverk : kodeverk;
+      kodeverkForKilde = behandlingType === klageBehandlingstyper.KLAGE ? klageKodeverk : kodeverk;
     }
 
     if (kodeverkForKilde === undefined) {

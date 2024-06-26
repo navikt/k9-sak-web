@@ -10,7 +10,6 @@ import {
 } from '@k9-sak-web/types';
 import React, { useCallback, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
 import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import { createLocationForSkjermlenke } from '../../app/paths';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
@@ -64,15 +63,12 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
 
   const { brukernavn, kanVeilede } = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
 
-  // @ts-ignore
-  const erInnsynBehandling = behandling.type === BehandlingType.DOKUMENTINNSYN;
-
   const { data: totrinnArsaker } = restApiHooks.useRestApi<TotrinnskontrollSkjermlenkeContext[]>(
     K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER,
     undefined,
     {
       updateTriggers: [behandlingId, behandling.status],
-      suspendRequest: !!erInnsynBehandling || behandling.status !== BehandlingStatus.FATTER_VEDTAK,
+      suspendRequest: behandling.status !== BehandlingStatus.FATTER_VEDTAK,
     },
   );
   const { data: totrinnArsakerReadOnly } = restApiHooks.useRestApi<TotrinnskontrollSkjermlenkeContext[]>(
@@ -80,7 +76,7 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
     undefined,
     {
       updateTriggers: [behandlingId, behandling.status],
-      suspendRequest: !!erInnsynBehandling || behandling.status !== BehandlingStatus.BEHANDLING_UTREDES,
+      suspendRequest: behandling.status !== BehandlingStatus.BEHANDLING_UTREDES,
     },
   );
 

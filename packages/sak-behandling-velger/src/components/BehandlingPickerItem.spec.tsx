@@ -4,9 +4,9 @@ import { screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
 import messages from '../../i18n/nb_NO.json';
 import BehandlingPickerItem from './BehandlingPickerItem';
 
@@ -14,7 +14,7 @@ describe('<BehandlingPickerItem>', () => {
   const behandlingTemplate = {
     id: 1,
     versjon: 123,
-    type: BehandlingType.FORSTEGANGSSOKNAD,
+    type: behandlingType.FØRSTEGANGSSØKNAD,
     status: behandlingStatus.OPPRETTET,
     opprettet: '2017-10-15',
     behandlendeEnhetId: '1242424',
@@ -40,7 +40,7 @@ describe('<BehandlingPickerItem>', () => {
   it('skal vise behandling uten lenke når det kun finnes en behandling og denne er valgt', () => {
     renderWithIntl(
       <KodeverkProvider
-        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
         klageKodeverk={{}}
         tilbakeKodeverk={{}}
@@ -64,7 +64,7 @@ describe('<BehandlingPickerItem>', () => {
   it('skal vise behandling med lenke når det kun finnes en behandling og denne ikke er valgt', () => {
     renderWithIntl(
       <KodeverkProvider
-        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
         klageKodeverk={{}}
         tilbakeKodeverk={{}}
@@ -95,7 +95,7 @@ describe('<BehandlingPickerItem>', () => {
   it('skal vise behandling med knapp for visning av alle behandlinger når ingen behandlinger er valgt og innslag er aktivt', () => {
     renderWithIntl(
       <KodeverkProvider
-        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
         klageKodeverk={{}}
         tilbakeKodeverk={{}}

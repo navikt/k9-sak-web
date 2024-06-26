@@ -4,9 +4,9 @@ import { screen } from '@testing-library/react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
 
 import messages from '../../../i18n/nb_NO.json';
@@ -35,7 +35,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
 
     renderWithIntlAndReduxForm(
       <KodeverkProvider
-        behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
         klageKodeverk={alleKodeverkV2}
         tilbakeKodeverk={alleKodeverkV2}

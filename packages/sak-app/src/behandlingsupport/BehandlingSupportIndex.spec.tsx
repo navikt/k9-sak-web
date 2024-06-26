@@ -3,13 +3,12 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
-import { BehandlingType } from '@k9-sak-web/lib/types/BehandlingType.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
+import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
 import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import BehandlingSupportIndex, { hentSynligePaneler, hentValgbarePaneler } from './BehandlingSupportIndex';
@@ -54,7 +53,7 @@ describe('<BehandlingSupportIndex>', () => {
 
   const behandling = {
     id: 1,
-    type: behandlingType.FORSTEGANGSSOKNAD,
+    type: behandlingType.FØRSTEGANGSSØKNAD,
     status: behandlingStatus.OPPRETTET,
   };
 
@@ -72,7 +71,7 @@ describe('<BehandlingSupportIndex>', () => {
     renderWithIntlAndReactQueryClient(
       <MemoryRouter>
         <KodeverkProvider
-          behandlingType={BehandlingType.FORSTEGANGSSOKNAD}
+          behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
           kodeverk={alleKodeverkV2}
           klageKodeverk={{}}
           tilbakeKodeverk={{}}
