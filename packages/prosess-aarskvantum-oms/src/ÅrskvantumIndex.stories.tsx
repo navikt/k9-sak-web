@@ -113,6 +113,7 @@ const årskvantumMedPerioder = (perioder: Uttaksperiode[]): ÅrskvantumForbrukte
   totaltAntallDager: 17,
   antallKoronadager: 0,
   antallDagerArbeidsgiverDekker: 3,
+  antallDagerFraværRapportertSomNyoppstartet: 0,
   forbrukteDager: 7.4,
   restdager: 9.6,
   restTid: 'PT802H30M',

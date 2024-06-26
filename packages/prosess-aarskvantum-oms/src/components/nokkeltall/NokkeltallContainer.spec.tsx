@@ -2,10 +2,16 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
+import {K9sakApiKeys, requestApi} from "@k9-sak-web/sak-app/src/data/k9sakApi";
+import {beforeEach} from "vitest";
 import messages from '../../../i18n/nb_NO.json';
 import NokkeltallContainer, { Nokkeltalltype } from './NokkeltallContainer';
 
 describe('<NokkeltallContainer>', () => {
+  beforeEach(() =>
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [])
+  )
+
   describe('Forbrukte dager', () => {
     const forbrukteDagerPropsForRestTidOgPeriode = (restTid: string, periode: string, smitteverndager?: string) => {
       renderWithIntl(
@@ -13,6 +19,7 @@ describe('<NokkeltallContainer>', () => {
           <NokkeltallContainer
             totaltAntallDager={20}
             antallDagerArbeidsgiverDekker={3}
+            antallDagerFraværRapportertSomNyoppstartet={0}
             forbrukteDager={4.4}
             restTid={restTid}
             benyttetRammemelding
