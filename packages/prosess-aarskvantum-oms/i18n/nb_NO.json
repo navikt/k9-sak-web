@@ -130,6 +130,8 @@
   "Nøkkeltall.DagerNavKanUtbetale": "Dager Nav kan utbetale",
   "Nøkkeltall.Ventetid": "Ventetid",
   "Nøkkeltall.Ventetid.InfoText": "Trekker fra {dager} dager som er dekket av arbeidsgiver eller bruker.",
+  "Nøkkeltall.AntallDagerFraværRapportertSomNyoppstartet": "Dager fravær rapportert som nyoppstartet",
+  "Nøkkeltall.AntallDagerFraværRapportertSomNyoppstartet.InfoText": "Trekker ikke fra dager dekket av arbeidsgiver eller bruker, dersom de de er rapportert som nyoppstartet.",
   "Nøkkeltall.DagerFraInfotrygd": "Utbetalt i Infotrygd",
   "Nøkkeltall.DagerFraInfotrygd.Dager.InfoText": "{dager} dager utbetalt fra Infotrygd.",
   "Nøkkeltall.DagerFraInfotrygd.DagerOgTimer.InfoText": "{dager} dager og {timer} timer utbetalt fra Infotrygd.",
