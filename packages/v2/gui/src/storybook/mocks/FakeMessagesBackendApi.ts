@@ -32,13 +32,13 @@ export class FakeMessagesBackendApi implements BackendApi {
     if(abort?.aborted) {
       return requestIntentionallyAborted
     }
-    if (orgnr.length === 9) {
-      if (Number.isFinite(Number(orgnr))) {
-        if (orgnr === '000000000') {
+    if (orgnr.trim().length === 9) {
+      if (Number.isFinite(Number(orgnr.trim()))) {
+        if (orgnr.trim() === '000000000') {
           // To test what happens when orgnr is not found
           return { notFound: true };
         }
-        return { name: `Fake storybook org (${orgnr})` };
+        return { name: `Fake storybook org (${orgnr.trim()})` };
       }
     }
     return { invalidOrgnum: true };

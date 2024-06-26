@@ -18,9 +18,13 @@ export default class MeldingerBackendClient {
   }
 
   async getBrevMottakerinfoEreg(organisasjonsnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse | RequestIntentionallyAborted> {
+    if(organisasjonsnr.trim().length !== 9) {
+      // organisasjonsnr må vere 9 siffer for å vere gyldig, så avbryt uten å kontakte server viss det ikkje er det.
+      return { invalidOrgnum: true }
+    }
     const abortListenerRemover = new AbortController(); // Trengs nok eigentleg ikkje
     try {
-      const promise = this.#k9sak.brev.getBrevMottakerinfoEreg({ organisasjonsnr });
+      const promise = this.#k9sak.brev.getBrevMottakerinfoEreg({ organisasjonsnr: organisasjonsnr.trim() });
       abort?.addEventListener('abort', () => promise.cancel(), { signal: abortListenerRemover.signal });
       const resp = await promise;
       if (resp !== null && resp.navn !== undefined) {
