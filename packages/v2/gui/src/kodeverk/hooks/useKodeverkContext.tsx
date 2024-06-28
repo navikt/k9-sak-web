@@ -54,7 +54,6 @@ export const useKodeverkContext = () => {
     kilde = undefined,
     ukjentTekst = undefined,
   ) => {
-    console.log('kodeverk oppslag', kode, kodeverkType, kilde);
     const kodeverkForType = hentKodeverkForKode(kodeverkType, kilde);
     if (kodeverkForType) return utledKodeverkNavnFraKode(kode, kodeverkForType);
     return ukjentTekst || 'Ukjent kode';
