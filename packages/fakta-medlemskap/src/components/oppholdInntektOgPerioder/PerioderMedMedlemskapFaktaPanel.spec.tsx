@@ -28,17 +28,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     ];
 
-    renderWithIntlAndReduxForm(
-      <PerioderMedMedlemskapFaktaPanel.WrappedComponent
-        hasPeriodeAksjonspunkt
-        isPeriodAksjonspunktClosed={false}
-        fixedMedlemskapPerioder={periods}
-        readOnly={false}
-        vurderingTypes={manuelleVurderingstyper}
-        alleMerknaderFraBeslutter={{}}
-      />,
-      { messages },
-    );
+    renderWithIntlAndReduxForm(<PerioderMedMedlemskapFaktaPanel readOnly={false} alleKodeverk={{}} />, { messages });
 
     expect(screen.getByText('testdekning')).toBeInTheDocument();
     expect(screen.getByText('testStatus')).toBeInTheDocument();
@@ -58,15 +48,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
     ];
 
     renderWithIntlAndReduxForm(
-      <PerioderMedMedlemskapFaktaPanel.WrappedComponent
-        hasPeriodeAksjonspunkt
-        isPeriodAksjonspunktClosed={false}
-        fixedMedlemskapPerioder={periods}
-        readOnly={false}
-        fodselsdato="2016-10-16"
-        vurderingTypes={[]}
-        alleMerknaderFraBeslutter={{}}
-      />,
+      <PerioderMedMedlemskapFaktaPanel readOnly={false} fodselsdato="2016-10-16" alleKodeverk={{}} />,
       { messages },
     );
 
@@ -84,17 +66,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     ];
 
-    renderWithIntlAndReduxForm(
-      <PerioderMedMedlemskapFaktaPanel.WrappedComponent
-        hasPeriodeAksjonspunkt
-        isPeriodAksjonspunktClosed={false}
-        readOnly={false}
-        fixedMedlemskapPerioder={perioder}
-        vurderingTypes={[]}
-        alleMerknaderFraBeslutter={{}}
-      />,
-      { messages },
-    );
+    renderWithIntlAndReduxForm(<PerioderMedMedlemskapFaktaPanel readOnly={false} alleKodeverk={{}} />, { messages });
 
     screen.debug();
     expect(screen.getByRole('table')).toBeInTheDocument();
@@ -103,17 +75,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
   it('skal ikke vise tabell når det ikke finnes medlemskapsperioder', () => {
     const medlemskapPerioder = [];
 
-    renderWithIntlAndReduxForm(
-      <PerioderMedMedlemskapFaktaPanel.WrappedComponent
-        hasPeriodeAksjonspunkt
-        isPeriodAksjonspunktClosed={false}
-        fixedMedlemskapPerioder={medlemskapPerioder}
-        readOnly={false}
-        vurderingTypes={[]}
-        alleMerknaderFraBeslutter={{}}
-      />,
-      { messages },
-    );
+    renderWithIntlAndReduxForm(<PerioderMedMedlemskapFaktaPanel readOnly={false} alleKodeverk={{}} />, { messages });
 
     expect(screen.queryByRole('table')).not.toBeInTheDocument();
   });
