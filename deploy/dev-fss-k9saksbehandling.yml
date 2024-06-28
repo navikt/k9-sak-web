@@ -101,4 +101,4 @@ spec:
     - name: "BRUK_V2_MELDINGER"
       value: "false"
     - name: NYE_NOKKELTALL
-      value: "true""
+      value: "true"
