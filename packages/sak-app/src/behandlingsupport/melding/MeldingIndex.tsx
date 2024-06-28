@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import MeldingerSakIndex, { FormValues, type MeldingerSakIndexBackendApi, } from '@k9-sak-web/sak-meldinger';
+import MeldingerSakIndex, { FormValues, type MeldingerSakIndexBackendApi } from '@k9-sak-web/sak-meldinger';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import {
@@ -19,57 +19,6 @@ import type { MottakerDto } from '@k9-sak-web/backend/k9sak/generated';
 import { useFpSakKodeverk } from '../../data/useKodeverk';
 import { useVisForhandsvisningAvMelding } from '../../data/useVisForhandsvisningAvMelding';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
-
-const getSubmitCallback =
-  (
-    behandlingTypeKode: string,
-    behandlingId: number,
-    behandlingUuid: string,
-    submitMessage: (data: any) => Promise<any>,
-    resetMessage: () => void,
-  ) =>
-  (values: FormValues) => {
-    const erTilbakekreving = erTilbakekrevingType({ kode: behandlingTypeKode });
-    const data = erTilbakekreving
-      ? {
-          behandlingUuid,
-          fritekst: values.fritekst,
-          brevmalkode: values.brevmalkode,
-        }
-      : {
-          behandlingId,
-          overstyrtMottaker: values.overstyrtMottaker,
-          brevmalkode: values.brevmalkode,
-          fritekst: values.fritekst,
-          fritekstbrev: values.fritekstbrev,
-        };
-    return submitMessage(data)
-      .then(() => resetMessage()) // NB: Utfører full reload av sida.
-  };
-
-const getPreviewCallback =
-  (
-    behandlingTypeKode: string,
-    fetchPreview: (erHenleggelse: boolean, data: any) => void,
-  ) =>
-  (overstyrtMottaker: MottakerDto, dokumentMal: string, fritekst: string, fritekstbrev?: Fritekstbrev) => {
-    const data = erTilbakekrevingType({ kode: behandlingTypeKode })
-      ? {
-          fritekst: fritekst || ' ',
-          brevmalkode: dokumentMal,
-        }
-      : {
-          overstyrtMottaker,
-          dokumentMal,
-          dokumentdata: {
-            fritekst: fritekst || ' ',
-            fritekstbrev: fritekstbrev
-              ? { brødtekst: fritekstbrev.brødtekst ?? '', overskrift: fritekstbrev.overskrift ?? '' }
-              : null,
-          },
-        };
-    fetchPreview(false, data);
-  };
 
 export interface BackendApi extends MeldingerSakIndexBackendApi {}
 
@@ -100,12 +49,9 @@ const MeldingIndex = ({
   backendApi,
 }: OwnProps) => {
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
-
   const revurderingVarslingArsak = useFpSakKodeverk(kodeverkTyper.REVURDERING_VARSLING_ÅRSAK);
-
-  const { startRequest: submitMessage } = restApiHooks.useRestApiRunner(
-    K9sakApiKeys.SUBMIT_MESSAGE,
-  );
+  const { startRequest: submitMessage } = restApiHooks.useRestApiRunner(K9sakApiKeys.SUBMIT_MESSAGE);
+  const fetchPreview = useVisForhandsvisningAvMelding(behandling, fagsak);
 
   /*
     Før var det kode for å vise to ulike modaler etter at melding vart sendt i denne komponenten.
@@ -127,23 +73,48 @@ const MeldingIndex = ({
     window.location.reload();
   };
 
-  const submitCallback = useCallback(
-    getSubmitCallback(
-      behandling.type.kode,
-      behandlingId,
-      behandling.uuid,
-      submitMessage,
-      resetMessage,
-    ),
-    [behandlingId, behandlingVersjon],
-  );
+  const submitCallback = async (values: FormValues) => {
+    const erTilbakekreving = erTilbakekrevingType({ kode: behandling.type.kode });
+    const data = erTilbakekreving
+      ? {
+          behandlingUuid: behandling.uuid,
+          fritekst: values.fritekst,
+          brevmalkode: values.brevmalkode,
+        }
+      : {
+          behandlingId,
+          overstyrtMottaker: values.overstyrtMottaker,
+          brevmalkode: values.brevmalkode,
+          fritekst: values.fritekst,
+          fritekstbrev: values.fritekstbrev,
+        };
+    await submitMessage(data);
+    resetMessage(); // NB: Utfører full reload av sida.
+  };
 
-  const fetchPreview = useVisForhandsvisningAvMelding(behandling, fagsak);
-
-  const previewCallback = useCallback(
-    getPreviewCallback(behandling.type.kode, fetchPreview),
-    [behandlingId, behandlingVersjon],
-  );
+  const previewCallback = (
+    overstyrtMottaker: MottakerDto,
+    dokumentMal: string,
+    fritekst: string,
+    fritekstbrev?: Fritekstbrev,
+  ) => {
+    const data = erTilbakekrevingType({ kode: behandling.type.kode })
+      ? {
+          fritekst: fritekst || ' ',
+          brevmalkode: dokumentMal,
+        }
+      : {
+          overstyrtMottaker,
+          dokumentMal,
+          dokumentdata: {
+            fritekst: fritekst || ' ',
+            fritekstbrev: fritekstbrev
+              ? { brødtekst: fritekstbrev.brødtekst ?? '', overskrift: fritekstbrev.overskrift ?? '' }
+              : null,
+          },
+        };
+    fetchPreview(false, data);
+  };
 
   const skalHenteRevAp = requestApi.hasPath(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP);
   const { data: harApentKontrollerRevAp, state: stateRevAp } = restApiHooks.useRestApi<boolean>(
