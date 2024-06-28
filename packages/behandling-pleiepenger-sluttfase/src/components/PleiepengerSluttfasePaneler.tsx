@@ -15,7 +15,7 @@ import {
   FagsakPerson,
   FeatureToggles,
 } from '@k9-sak-web/types';
-import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { Arbeidstype } from '../types/Arbeidstype';

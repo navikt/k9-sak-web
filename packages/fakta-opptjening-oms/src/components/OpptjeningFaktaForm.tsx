@@ -20,7 +20,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
-import { KodeverkType } from '@k9-sak-web/lib/types/index.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import ActivityPanel, { activityPanelNameFormName } from './activity/ActivityPanel';
 import styles from './opptjeningFaktaForm.module.css';
 import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';

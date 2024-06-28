@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
 import { Fagsak, Behandling, FeatureToggles, ArbeidsgiverOpplysningerPerId, FagsakPerson } from '@k9-sak-web/types';
-import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
 import FrisinnProsess from './FrisinnProsess';
 import FrisinnFakta from './FrisinnFakta';
 import FetchedData from '../types/fetchedDataTsType';

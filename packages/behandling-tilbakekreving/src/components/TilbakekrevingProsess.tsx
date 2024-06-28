@@ -13,7 +13,7 @@ import {
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
-import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
 import { restApiTilbakekrevingHooks, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegTilbakekrevingPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';

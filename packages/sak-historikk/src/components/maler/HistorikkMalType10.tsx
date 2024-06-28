@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 
 import { HistorikkinnslagDel, HistorikkinnslagEndretFelt } from '@k9-sak-web/types';
-import { KodeverkNavnFraKodeFnType } from '@k9-sak-web/lib/types/index.js';
+import { KodeverkNavnFraKodeFnType } from '@k9-sak-web/lib/kodeverk/types.js';
 
 import historikkinnslagType from '../../kodeverk/historikkinnslagType';
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';

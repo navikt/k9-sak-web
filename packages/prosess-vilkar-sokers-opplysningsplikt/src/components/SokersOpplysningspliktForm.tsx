@@ -15,7 +15,7 @@ import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl'
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 
 const formName = 'SokersOpplysningspliktForm';

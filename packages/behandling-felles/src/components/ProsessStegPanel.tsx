@@ -6,7 +6,7 @@ import { Fagsak, Behandling, FeatureToggles } from '@k9-sak-web/types';
 
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { Options, EndpointData, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
-import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
 import MargMarkering from './MargMarkering';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';

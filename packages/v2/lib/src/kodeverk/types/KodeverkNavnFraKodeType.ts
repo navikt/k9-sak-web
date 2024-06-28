@@ -1,8 +1,7 @@
-import { KodeverkKlageType, KodeverkTilbakeType, KodeverkType } from '.';
+import { KodeverkKlageType, KodeverkTilbakeType, KodeverkType } from '../types';
 
-export type KodeverkNavnFraUndertypeKodeType = (
+export type KodeverkNavnFraKodeType = (
   kode: string,
-  undertypeKode: string,
   kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType,
   kilde?: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' | undefined,
   ukjentTekst?: string | undefined,

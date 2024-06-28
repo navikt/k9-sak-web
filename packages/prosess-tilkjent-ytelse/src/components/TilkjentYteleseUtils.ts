@@ -1,4 +1,4 @@
-import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 
 export const getAktivitet = (aktivitetStatus, kodeverkNavnFraKode) =>
   // hvis valgtAndel ikke satt ennå return tom string.

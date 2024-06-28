@@ -4,7 +4,7 @@ import type {
   KodeverkNavnFraKodeType,
   KodeverkTilbakeType,
   KodeverkType,
-} from '../../types';
+} from '../types';
 import { utledKodeverkNavnFraKode } from '../kodeverkUtils';
 
 export const kodeverkNavnFraKodeMock = (

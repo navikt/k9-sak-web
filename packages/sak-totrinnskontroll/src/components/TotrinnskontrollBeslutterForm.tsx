@@ -15,7 +15,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import { KodeverkV2, KodeverkObject } from '@k9-sak-web/lib/types/index.js';
+import { KodeverkV2, KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import AksjonspunktGodkjenningFieldArray, { AksjonspunktGodkjenningData } from './AksjonspunktGodkjenningFieldArray';
 import styles from './totrinnskontrollBeslutterForm.module.css';
 

@@ -5,7 +5,7 @@ import { Timeline } from '@fpsak-frontend/tidslinje';
 import { DDMMYYYY_DATE_FORMAT, isEqual } from '@fpsak-frontend/utils';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
-import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import DateContainer from './DateContainer';
 import styles from './opptjeningTimeLine.module.css';
 // Desse må alltid vare med for rett skala av tidslinjen då den alltid skall vare 10 månader fra skjæringstidpunkten

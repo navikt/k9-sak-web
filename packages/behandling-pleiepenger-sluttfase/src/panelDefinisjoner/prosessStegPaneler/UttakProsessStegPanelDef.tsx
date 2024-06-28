@@ -6,7 +6,7 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import AntallDagerLivetsSluttfaseIndex from '@k9-sak-web/prosess-uttak-antall-dager-sluttfase';
-import { AlleKodeverk } from '@k9-sak-web/lib/types/AlleKodeverk.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types/AlleKodeverk.js';
 import { Fagsak } from '@k9-sak-web/types';
 
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';

@@ -6,7 +6,7 @@ import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-ho
 import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
 import { restApiFrisinnHooks, FrisinnBehandlingApiKeys } from '../data/frisinnBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaFrisinnPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';

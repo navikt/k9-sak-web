@@ -20,7 +20,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { BodyShort, Table, VStack } from '@navikt/ds-react';
-import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 
 const headerTextCodes = [
   'PerioderMedMedlemskapFaktaPanel.Period',

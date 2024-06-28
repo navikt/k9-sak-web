@@ -1,5 +1,5 @@
 import React, { createContext, useMemo, useState } from 'react';
-import { type AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
+import { type AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
 
 type KodeverkContextValuesType = {
   behandlingType: string | undefined;

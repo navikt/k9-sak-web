@@ -2,7 +2,7 @@ import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { AlleKodeverk } from '@k9-sak-web/lib/types/AlleKodeverk.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types/AlleKodeverk.js';
 import { Vilkar } from '@k9-sak-web/types';
 
 class InstitusjonPanelDef extends ProsessStegPanelDef {

@@ -5,7 +5,7 @@ import { Personopplysninger } from '@k9-sak-web/types';
 import { BodyShort, Label, Tag } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import styles from './visittkortDetaljerPopup.module.css';
 

@@ -3,8 +3,8 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { Soknad } from '@k9-sak-web/types';
 import { StandardProsessFormProps } from '@k9-sak-web/prosess-felles';
-import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
-import { KodeverkObject } from '@k9-sak-web/lib/types/KodeverkV2.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types/KodeverkV2.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 
 import SokersOpplysningspliktForm from './components/SokersOpplysningspliktForm';

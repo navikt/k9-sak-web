@@ -2,7 +2,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineControl, Timeline } from '@fpsak-frontend/tidslinje';
 import { DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT, calcDaysAndWeeksWithWeekends } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, BeregningsresultatPeriode } from '@k9-sak-web/types';
-import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import moment from 'moment';
 import React, { Component, RefObject } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';

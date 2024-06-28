@@ -1,4 +1,4 @@
-import { KodeverkNavnFraKodeFnType } from '@k9-sak-web/lib/types/index.js';
+import { KodeverkNavnFraKodeFnType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Historikkinnslag } from '@k9-sak-web/types';
 import { Location } from 'history';
 

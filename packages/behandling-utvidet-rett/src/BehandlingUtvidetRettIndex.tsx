@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { Behandling, FeatureToggles, Fagsak, FagsakPerson, ArbeidsgiverOpplysningerWrapper } from '@k9-sak-web/types';
-import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import FetchedData from './types/fetchedDataTsType';
 import UtvidetRettPaneler from './components/UtvidetRettPaneler';

@@ -17,7 +17,7 @@ import { BodyShort, Detail, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';

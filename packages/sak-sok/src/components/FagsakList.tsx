@@ -2,7 +2,7 @@ import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Fags
 import { Fagsak } from '@k9-sak-web/types';
 import { Table } from '@navikt/ds-react';
 import React from 'react';
-import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 
 import { useIntl } from 'react-intl';

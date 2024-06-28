@@ -1,6 +1,6 @@
 import React from 'react';
 import { HistorikkinnslagDel, HistorikkInnslagOpplysning, HistorikkinnslagEndretFelt } from '@k9-sak-web/types';
-import { KodeverkNavnFraKodeFnType, KodeverkType } from '@k9-sak-web/lib/types/index.js';
+import { KodeverkNavnFraKodeFnType, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { IntlShape } from 'react-intl';
 import historikkResultatTypeCodes from '../../../kodeverk/historikkResultatTypeCodes';
 import historikkEndretFeltVerdiTypeCodes from '../../../kodeverk/historikkEndretFeltVerdiTypeCodes';

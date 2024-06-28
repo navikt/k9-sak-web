@@ -9,7 +9,7 @@ import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsa
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Vilkarperiode, vilkarUtfallPeriodisert } from '@k9-sak-web/types';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkType, KodeverkObject } from '@k9-sak-web/lib/types/index.js';
+import { KodeverkType, KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort } from '@navikt/ds-react';
 import { parse } from 'date-fns';
 import getPackageIntl from '../../i18n/getPackageIntl';

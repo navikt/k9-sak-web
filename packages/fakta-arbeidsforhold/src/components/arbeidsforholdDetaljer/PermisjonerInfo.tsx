@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { BodyShort } from '@navikt/ds-react';
 import { PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
-import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import styles from './permisjonPeriode.module.css';
 

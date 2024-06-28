@@ -24,7 +24,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
-import { KodeverkType } from '@k9-sak-web/lib/types/index.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 
 import ankeOmgjorArsak from '../kodeverk/ankeOmgjorArsak';

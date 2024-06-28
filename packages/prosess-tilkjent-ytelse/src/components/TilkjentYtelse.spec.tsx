@@ -2,7 +2,7 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { BeregningsresultatPeriodeAndel } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import { KodeverkType } from '@k9-sak-web/lib/types/index.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { PeriodeMedId, TilkjentYtelse } from './TilkjentYtelse';

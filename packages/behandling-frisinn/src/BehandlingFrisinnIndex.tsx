@@ -4,7 +4,7 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { Fagsak, Behandling, FagsakPerson, ArbeidsgiverOpplysningerWrapper, FeatureToggles } from '@k9-sak-web/types';
 import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { AlleKodeverk } from '@k9-sak-web/lib/types/index.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
 import { restApiFrisinnHooks, requestFrisinnApi, FrisinnBehandlingApiKeys } from './data/frisinnBehandlingApi';
 import FrisinnPaneler from './components/FrisinnPaneler';
 import FetchedData from './types/fetchedDataTsType';

@@ -11,7 +11,7 @@ import axios from 'axios';
 import { Location } from 'history';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { KodeverkType } from '@k9-sak-web/lib/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';

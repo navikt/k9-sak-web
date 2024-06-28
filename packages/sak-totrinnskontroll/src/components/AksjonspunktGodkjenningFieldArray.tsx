@@ -10,7 +10,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { FieldArrayFieldsProps } from 'redux-form';
-import { KodeverkObject } from '@k9-sak-web/lib/types/index.js';
+import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 

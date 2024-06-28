@@ -1,7 +1,7 @@
 import { HistorikkInnslagOpplysning } from '@k9-sak-web/types';
 import { BodyShort, Label } from '@navikt/ds-react';
 import React from 'react';
-import { KodeverkNavnFraKodeFnType, KodeverkType } from '@k9-sak-web/lib/types/index.js';
+import { KodeverkNavnFraKodeFnType, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import HistorikkMal from '../HistorikkMalTsType';
 import { findHendelseText } from './felles/historikkUtils';
 

@@ -5,7 +5,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import SoknadsfristVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-soknadsfrist';
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { Vilkar } from '@k9-sak-web/types';
-import { AlleKodeverk } from '@k9-sak-web/lib/types/AlleKodeverk.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types/AlleKodeverk.js';
 
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../../data/pleiepengerSluttfaseBehandlingApi';
 

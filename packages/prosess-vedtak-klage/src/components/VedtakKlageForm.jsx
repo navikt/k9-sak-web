@@ -4,7 +4,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkKlageType } from '@k9-sak-web/lib/types/index.js';
+import { KodeverkKlageType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Detail, Heading } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
