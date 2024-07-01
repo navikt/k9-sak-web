@@ -5,7 +5,6 @@ import {
   ArbeidsgiverOpplysningerPerId,
   Brevmaler,
   FeatureToggles,
-  Kodeverk,
   KodeverkMedNavn,
   Personopplysninger,
 } from '@k9-sak-web/types';
@@ -37,9 +36,7 @@ export interface BackendApi extends MessagesBackendApi, V2MessagesBackendApi {}
 interface OwnProps {
   onMessageSent: () => void;
   templates: Brevmaler;
-  sprakKode: Kodeverk; // TODO Erstatt med behandling
-  behandlingId: number; // TODO Erstatt med behandling
-  behandlingVersjon: number;
+  behandlingVersjon: number; // Er vel berre for å detektere endring, kanskje fjernast etterkvart?
   isKontrollerRevurderingApOpen?: boolean;
   revurderingVarslingArsak: KodeverkMedNavn[];
   personopplysninger?: Personopplysninger;
@@ -54,8 +51,6 @@ interface OwnProps {
 const MeldingerSakIndex = ({
   onMessageSent,
   templates,
-  sprakKode,
-  behandlingId,
   behandlingVersjon,
   isKontrollerRevurderingApOpen = false,
   revurderingVarslingArsak,
@@ -92,7 +87,7 @@ const MeldingerSakIndex = ({
           brevmalkode: values.brevmalkode,
         }
       : {
-          behandlingId,
+          behandlingId: behandling.id,
           overstyrtMottaker: values.overstyrtMottaker,
           brevmalkode: values.brevmalkode,
           fritekst: values.fritekst,
@@ -132,9 +127,9 @@ const MeldingerSakIndex = ({
         <MessagesTilbakekreving
           submitCallback={submitCallback}
           templates={templates}
-          sprakKode={sprakKode}
+          sprakKode={behandling.sprakkode}
           previewCallback={previewCallback}
-          behandlingId={behandlingId}
+          behandlingId={behandling.id}
           behandlingVersjon={behandlingVersjon}
           isKontrollerRevurderingApOpen={isKontrollerRevurderingApOpen}
           revurderingVarslingArsak={revurderingVarslingArsak}
@@ -145,9 +140,9 @@ const MeldingerSakIndex = ({
         <Messages
           submitCallback={submitCallback}
           templates={templates}
-          sprakKode={sprakKode}
+          sprakKode={behandling.sprakkode}
           previewCallback={previewCallback}
-          behandlingId={behandlingId}
+          behandlingId={behandling.id}
           behandlingVersjon={behandlingVersjon}
           isKontrollerRevurderingApOpen={isKontrollerRevurderingApOpen}
           revurderingVarslingArsak={revurderingVarslingArsak}

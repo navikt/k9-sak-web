@@ -87,8 +87,6 @@ const revurderingVarslingArsak = [
 export const SendMeldingPanel: Story = {
   args: {
     templates: mockedBrevmaler,
-    sprakKode: bokmål,
-    behandlingId: 1,
     behandlingVersjon: 1,
     isKontrollerRevurderingApOpen: false,
     personopplysninger,
@@ -132,9 +130,12 @@ export const SendMeldingPanelEnMal: Story = {
 export const SendMeldingPanelEngelsk: Story = {
   args: {
     ...SendMeldingPanel.args,
-    sprakKode: {
-      kode: 'EN',
-      kodeverk: 'Engelsk',
+    behandling: {
+      ...SendMeldingPanel.args.behandling,
+      sprakkode: {
+        kode: 'EN',
+        kodeverk: 'SPRAAK_KODE',
+      },
     },
   },
 };

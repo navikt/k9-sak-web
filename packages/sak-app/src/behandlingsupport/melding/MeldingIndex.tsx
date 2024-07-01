@@ -96,8 +96,6 @@ const MeldingIndex = ({
   return (
     <MeldingerSakIndex
       onMessageSent={reloadWindow}
-      sprakKode={behandling?.sprakkode}
-      behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
       revurderingVarslingArsak={revurderingVarslingArsak}
       templates={brevmaler}
