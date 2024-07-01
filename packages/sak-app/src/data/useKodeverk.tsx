@@ -7,7 +7,7 @@ import { K9sakApiKeys, restApiHooks } from './k9sakApi';
 /**
  * Hook som henter kodeverk knyttet til behandlingstype
  */
-export function useKodeverk<T = KodeverkMedNavn>(behandlingType: Kodeverk): { [key: string]: T[] } {
+export function useKodeverk<T = KodeverkMedNavn>(behandlingType: string): { [key: string]: T[] } {
   const alleKodeverkK9Sak = restApiHooks.useGlobalStateRestApiData<{ [key: string]: T[] }>(K9sakApiKeys.KODEVERK);
   const alleKodeverkTilbake = restApiHooks.useGlobalStateRestApiData<{ [key: string]: T[] }>(
     K9sakApiKeys.KODEVERK_TILBAKE,
@@ -15,12 +15,12 @@ export function useKodeverk<T = KodeverkMedNavn>(behandlingType: Kodeverk): { [k
   const alleKlageKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: T[] }>(K9sakApiKeys.KODEVERK_KLAGE);
 
   if (
-    BehandlingType.TILBAKEKREVING === behandlingType?.kode ||
-    BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType?.kode
+    BehandlingType.TILBAKEKREVING === behandlingType ||
+    BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType
   ) {
     return alleKodeverkTilbake;
   }
-  return BehandlingType.KLAGE === behandlingType?.kode ? alleKlageKodeverk : alleKodeverkK9Sak;
+  return BehandlingType.KLAGE === behandlingType ? alleKlageKodeverk : alleKodeverkK9Sak;
 }
 
 /**

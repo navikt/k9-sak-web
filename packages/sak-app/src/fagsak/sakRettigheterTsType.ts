@@ -1,7 +1,5 @@
-import { Kodeverk } from '@k9-sak-web/types';
-
 type BehandlingOppretting = Readonly<{
-  behandlingType: Kodeverk;
+  behandlingType: string;
   kanOppretteBehandling: boolean;
 }>;
 

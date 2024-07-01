@@ -1,10 +1,15 @@
+import React from 'react';
+import { screen } from '@testing-library/react';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../../../i18n/nb_NO.json';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
+
+import messages from '../../../i18n/nb_NO.json';
 
 describe('<PerioderMedMedlemskapFaktaPanel>', () => {
   it('skal vise periode og manuelle-vurderingstyper i form', () => {
@@ -12,8 +17,8 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       {
         fom: '2016-01-15',
         tom: '2016-10-15',
-        dekning: 'testdekning',
-        status: 'testStatus',
+        dekning: 'FULL',
+        status: 'FORELOPIG',
         beslutningsdato: '2016-10-16',
       },
     ];
@@ -29,19 +34,26 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
     ];
 
     renderWithIntlAndReduxForm(
-      <PerioderMedMedlemskapFaktaPanel.WrappedComponent
-        hasPeriodeAksjonspunkt
-        isPeriodAksjonspunktClosed={false}
-        fixedMedlemskapPerioder={periods}
-        readOnly={false}
-        vurderingTypes={manuelleVurderingstyper}
-        alleMerknaderFraBeslutter={{}}
-      />,
+      <KodeverkProvider
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={alleKodeverkV2}
+        tilbakeKodeverk={alleKodeverkV2}
+      >
+        <PerioderMedMedlemskapFaktaPanel.WrappedComponent
+          hasPeriodeAksjonspunkt
+          isPeriodAksjonspunktClosed={false}
+          fixedMedlemskapPerioder={periods}
+          readOnly={false}
+          vurderingTypes={manuelleVurderingstyper}
+          alleMerknaderFraBeslutter={{}}
+        />
+      </KodeverkProvider>,
       { messages },
     );
 
-    expect(screen.getByText('testdekning')).toBeInTheDocument();
-    expect(screen.getByText('testStatus')).toBeInTheDocument();
+    expect(screen.getByText('Full')).toBeInTheDocument();
+    expect(screen.getByText('Foreløpig')).toBeInTheDocument();
     expect(screen.getByText('15.01.2016-15.10.2016')).toBeInTheDocument();
     expect(screen.getAllByRole('radio', { name: /navn/i }).length).toBe(2);
   });
@@ -51,8 +63,8 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       {
         fom: '2016-01-15',
         tom: '2016-10-15',
-        dekning: 'testdekning',
-        status: 'testStatus',
+        dekning: 'Full',
+        status: 'Foreløpig',
         beslutningsdato: '2016-10-16',
       },
     ];
@@ -78,8 +90,8 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       {
         fom: '2017-08-01',
         tom: '2017-08-31',
-        dekning: 'testDekning',
-        status: 'testStatus',
+        dekning: 'Full',
+        status: 'Foreløpig',
         beslutningsdato: '2017-06-01',
       },
     ];
@@ -96,7 +108,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       { messages },
     );
 
-    screen.debug();
     expect(screen.getByRole('table')).toBeInTheDocument();
   });
 
@@ -151,23 +162,15 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       {
         fom: '2016-01-15',
         tom: '2016-10-15',
-        dekningType: {
-          kode: 'DEK_TYPE',
-        },
-        medlemskapType: {
-          kode: 'M_STATUS',
-        },
+        dekningType: 'FTL_2_9_1_b',
+        medlemskapType: 'ENDELIG',
         beslutningsdato: '2016-10-16',
       },
       {
         fom: '2017-01-15',
         tom: '2017-10-15',
-        dekningType: {
-          kode: 'DEK_TYPE2',
-        },
-        medlemskapType: {
-          kode: 'M_STATUS2',
-        },
+        dekningType: 'FTL_2_6',
+        medlemskapType: 'FORELOPIG',
         beslutningsdato: '2017-10-16',
       },
     ];
@@ -180,35 +183,16 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
 
     const aksjonspunkter = [
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
+        status: aksjonspunktStatus.OPPRETTET,
       },
     ];
-    const getKodeverknavn = kodeverk => {
-      if (kodeverk.kode === 'DEK_TYPE') {
-        return 'testdekning';
-      }
-      if (kodeverk.kode === 'DEK_TYPE2') {
-        return 'testdekning2017';
-      }
-      if (kodeverk.kode === 'M_STATUS') {
-        return 'testStatus';
-      }
-      if (kodeverk.kode === 'M_STATUS2') {
-        return 'testStatus2017';
-      }
-      return '';
-    };
+
     const initialValues = PerioderMedMedlemskapFaktaPanel.buildInitialValues(
       periode,
       medlemskapPerioder,
       soknad,
       aksjonspunkter,
-      getKodeverknavn,
     );
 
     expect(initialValues).toStrictEqual({
@@ -216,15 +200,15 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         {
           fom: '2016-01-15',
           tom: '2016-10-15',
-          dekning: 'testdekning',
-          status: 'testStatus',
+          dekning: 'FTL_2_9_1_b',
+          status: 'ENDELIG',
           beslutningsdato: '2016-10-16',
         },
         {
           fom: '2017-01-15',
           tom: '2017-10-15',
-          dekning: 'testdekning2017',
-          status: 'testStatus2017',
+          dekning: 'FTL_2_6',
+          status: 'FORELOPIG',
           beslutningsdato: '2017-10-16',
         },
       ],

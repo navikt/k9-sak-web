@@ -23,7 +23,7 @@ const feilutbetalingFaktaPropType = PropTypes.shape({
       }),
     ),
     behandlingsresultat: PropTypes.shape({
-      type: kodeverkObjektPropType.isRequired,
+      type: PropTypes.string.isRequired,
       konsekvenserForYtelsen: PropTypes.arrayOf(kodeverkObjektPropType.isRequired),
     }),
     tilbakekrevingValg: PropTypes.shape({

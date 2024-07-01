@@ -1,12 +1,10 @@
-import { Kodeverk } from '@k9-sak-web/types';
-
 export type Vilkårresultat = Readonly<{
-  avslagsårsak: Kodeverk;
+  avslagsårsak: string;
   periode: {
     fom: string;
     tom: string;
   };
-  utfall: Kodeverk;
+  utfall: string;
 }>;
 
 export default Vilkårresultat;

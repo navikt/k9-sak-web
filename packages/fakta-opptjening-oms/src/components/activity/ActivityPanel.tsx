@@ -139,7 +139,7 @@ interface StateProps {
   opptjeningFom: string;
   opptjeningTom: string;
   initialValues: Partial<OpptjeningAktivitet>;
-  selectedActivityType: Kodeverk;
+  selectedActivityType: string;
   activityId: number;
 }
 
@@ -214,7 +214,7 @@ export const ActivityPanel = ({
         </FlexRow>
       </FlexContainer>
       <SelectField
-        name="aktivitetType.kode"
+        name="aktivitetType"
         label={intl.formatMessage({ id: 'ActivityPanel.Activity' })}
         validate={[required]}
         placeholder={intl.formatMessage({ id: 'ActivityPanel.VelgAktivitet' })}

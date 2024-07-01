@@ -6,10 +6,7 @@ import RisikoklassifiseringSakIndex from './RisikoklassifiseringSakIndex';
 import kontrollresultatKode from './kodeverk/kontrollresultatKode';
 
 const lagRisikoklassifisering = kode => ({
-  kontrollresultat: {
-    kode,
-    kodeverk: 'Kontrollresultat',
-  },
+  kontrollresultat: kode, // Kontrollresultat
   medlFaresignaler: undefined,
   iayFaresignaler: undefined,
 });

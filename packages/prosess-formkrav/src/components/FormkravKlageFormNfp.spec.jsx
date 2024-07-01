@@ -18,7 +18,6 @@ describe('<FormkravKlageFormNfp>', () => {
         intl={intlMock}
         behandlingId={1}
         behandlingVersjon={2}
-        alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
         fagsakPerson={{}}
         avsluttedeBehandlinger={[]}

@@ -434,7 +434,7 @@ const settOppPeriodeDataForDetailForm = createSelector(
     return perioderFormState.map((periodeFormState: CustomVilkarsVurdertePeriode) => {
       const periode = finnOriginalPeriode(periodeFormState, perioder.perioder) as CustomPeriode;
       const erForeldet = periode.foreldelseVurderingType
-        ? periode.foreldelseVurderingType.kode === foreldelseVurderingType.FORELDET
+        ? periode.foreldelseVurderingType === foreldelseVurderingType.FORELDET
         : periode.foreldet;
       return {
         redusertBeloper: periode.redusertBeloper,

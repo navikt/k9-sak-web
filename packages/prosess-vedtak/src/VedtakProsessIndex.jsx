@@ -56,7 +56,7 @@ const VedtakProsessIndex = ({
     <VedtakPanels
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
-      behandlingTypeKode={behandling.type.kode}
+      behandlingTypeKode={behandling.type}
       behandlingStatus={behandling.status}
       sprakkode={behandling.sprakkode}
       behandlingresultat={behandling.behandlingsresultat}

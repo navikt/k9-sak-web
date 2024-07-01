@@ -100,10 +100,7 @@ describe('<TotrinnskontrollSaksbehandlerPanel>', () => {
       <MemoryRouter>
         <TotrinnskontrollSaksbehandlerPanel
           totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
-          behandlingStatus={{
-            kode: behandlingStatus.BEHANDLING_UTREDES,
-            kodeverk: '',
-          }}
+          behandlingStatus={behandlingStatus.BEHANDLING_UTREDES}
           arbeidsforholdHandlingTyper={[]}
           erTilbakekreving={false}
           vurderArsaker={[]}

@@ -27,7 +27,7 @@ const FritekstTextField = ({ sprakkode, readOnly = true, intl }) => (
 );
 
 FritekstTextField.propTypes = {
-  sprakkode: PropTypes.shape().isRequired,
+  sprakkode: PropTypes.string.isRequired,
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool,
 };

@@ -1,7 +1,5 @@
-import Kodeverk from './kodeverkTsType';
-
 export type HistorikkinnslagEndretFelt = {
-  endretFeltNavn: Kodeverk;
+  endretFeltNavn: string;
   navnVerdi?: string;
   klNavn?: string;
   fraVerdi?: string | number | boolean;
@@ -11,7 +9,7 @@ export type HistorikkinnslagEndretFelt = {
 };
 
 export type HistorikkInnslagOpplysning = {
-  opplysningType?: Kodeverk;
+  opplysningType?: string;
   tilVerdi?: string;
 };
 
@@ -22,22 +20,22 @@ export type HistorikkInnslagAksjonspunkt = {
 };
 
 export type HistorikkinnslagDel = {
-  begrunnelse?: Kodeverk;
+  begrunnelse?: string;
   begrunnelseFritekst?: string;
   hendelse?: {
-    navn?: Kodeverk;
+    navn?: string;
     verdi?: string;
   };
   opplysninger?: HistorikkInnslagOpplysning[];
   soeknadsperiode?: {
-    soeknadsperiodeType?: Kodeverk;
+    soeknadsperiodeType?: string;
     navnVerdi?: string;
     tilVerdi?: string;
   };
-  skjermlenke?: Kodeverk;
-  aarsak?: Kodeverk;
+  skjermlenke?: string;
+  aarsak?: string;
   tema?: {
-    endretFeltNavn: Kodeverk;
+    endretFeltNavn: string;
     klNavn: string;
     navnVerdi: string;
   };
@@ -62,10 +60,10 @@ export type HistorikkInnslagDokumentLink = Readonly<{
 export type Historikkinnslag = Readonly<{
   opprettetAv?: string;
   opprettetTidspunkt: string;
-  type: Kodeverk;
+  type: string;
   behandlingId?: number;
-  kjoenn: Kodeverk;
-  aktoer: Kodeverk;
+  kjoenn: string;
+  aktoer: string;
   dokumentLinks?: HistorikkInnslagDokumentLink[];
   historikkinnslagDeler: HistorikkinnslagDel[];
 }>;

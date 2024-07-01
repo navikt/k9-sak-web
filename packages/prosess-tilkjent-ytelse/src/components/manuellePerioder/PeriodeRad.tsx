@@ -2,7 +2,7 @@ import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexRow, Image } from '@fpsak-frontend/shared-components';
-import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Kodeverk } from '@k9-sak-web/types';
 import { Alert, Table } from '@navikt/ds-react';
 import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
@@ -23,7 +23,6 @@ interface OwnProps {
   behandlingVersjon: number;
   behandlingId: number;
   behandlingStatus: Kodeverk;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   isAnyFormOpen: (...args: any[]) => any;
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
 }
@@ -34,7 +33,6 @@ const PeriodeRad = ({
   fields,
   meta,
   openSlettPeriodeModalCallback,
-  alleKodeverk,
   intl,
   isNyPeriodeFormOpen,
   readOnly,
@@ -98,7 +96,6 @@ const PeriodeRad = ({
                     // @ts-ignore
                     component={Andeler}
                     readOnly
-                    alleKodeverk={alleKodeverk}
                     arbeidsgivere={arbeidsgivere}
                   />
                 </Table.DataCell>

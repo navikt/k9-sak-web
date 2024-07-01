@@ -9,10 +9,7 @@ import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import RisikoklassifiseringIndex from './RisikoklassifiseringIndex';
 
 const lagRisikoklassifisering = kode => ({
-  kontrollresultat: {
-    kode,
-    kodeverk: 'Kontrollresultat',
-  },
+  kontrollresultat: kode, // 'Kontrollresultat'
   medlFaresignaler: undefined,
   iayFaresignaler: undefined,
 });

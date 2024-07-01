@@ -76,21 +76,17 @@ export function kanKunVelge(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev, 
 
 export function harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel): boolean {
   return (
-    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) ===
-      vedtaksbrevtype.FRITEKST || !!dokumentdata?.[dokumentdatatype.FRITEKSTBREV]
+    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev) === vedtaksbrevtype.FRITEKST ||
+    !!dokumentdata?.[dokumentdatatype.FRITEKSTBREV]
   );
 }
 
 export function harSattDokumentdataType(dokumentdata: DokumentDataType, vedtakVarsel, vedtaksbreType: string): boolean {
-  return (
-    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbreType || false
-  );
+  return (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev) === vedtaksbreType || false;
 }
 
 export function harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel): boolean {
-  return (
-    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbrevtype.INGEN
-  );
+  return (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev) === vedtaksbrevtype.INGEN;
 }
 
 export function kanOverstyreMottakere(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
@@ -135,7 +131,7 @@ export const lagForhåndsvisRequest = (
   ytelseType: fagsak.sakstype,
   saksnummer: fagsak.saksnummer,
   aktørId: fagsakPerson.aktørId,
-  avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+  avsenderApplikasjon: bestemAvsenderApp(behandling.type),
   ...data,
 });
 

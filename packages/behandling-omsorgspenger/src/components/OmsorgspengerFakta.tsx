@@ -5,7 +5,6 @@ import {
   Behandling,
   Fagsak,
   FagsakPerson,
-  KodeverkMedNavn,
   FeatureToggles,
   Dokument,
 } from '@k9-sak-web/types';
@@ -13,7 +12,7 @@ import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
-
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
 import { isBefore, parse } from 'date-fns';
 import { restApiOmsorgHooks, OmsorgspengerBehandlingApiKeys } from '../data/omsorgspengerBehandlingApi';
 import faktaPanelDefinisjoner, {
@@ -42,7 +41,7 @@ interface OwnProps {
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: AlleKodeverk;
   rettigheter: Rettigheter;
   hasFetchError: boolean;
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;

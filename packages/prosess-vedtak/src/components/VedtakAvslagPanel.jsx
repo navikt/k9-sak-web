@@ -1,6 +1,4 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { BodyShort, Label } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -15,30 +13,26 @@ export const VedtakAvslagPanelImpl = ({
   behandlingsresultat,
   ytelseTypeKode,
   tilbakekrevingText = null,
-  alleKodeverk,
-}) => {
-  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-  return (
-    <div>
-      <Label size="small" as="p" data-testid="avslaatt">
-        {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
-      </Label>
-      <BodyShort size="small">
-        {intl.formatMessage({ id: findAvslagResultatText(behandlingsresultat.type.kode, ytelseTypeKode) })}
-        {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
-      </BodyShort>
-      <VerticalSpacer sixteenPx />
+}) => (
+  <div>
+    <Label size="small" as="p" data-testid="avslaatt">
+      {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
+    </Label>
+    <BodyShort size="small">
+      {intl.formatMessage({ id: findAvslagResultatText(behandlingsresultat.type, ytelseTypeKode) })}
+      {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
+    </BodyShort>
+    <VerticalSpacer sixteenPx />
 
-      <div>
-        <Label size="small" as="p">
-          {intl.formatMessage({ id: 'VedtakForm.ArsakTilAvslag' })}
-        </Label>
-        <AvslagsårsakListe vilkar={vilkar} getKodeverknavn={getKodeverknavn} />
-        <VerticalSpacer sixteenPx />
-      </div>
+    <div>
+      <Label size="small" as="p">
+        {intl.formatMessage({ id: 'VedtakForm.ArsakTilAvslag' })}
+      </Label>
+      <AvslagsårsakListe vilkar={vilkar} />
+      <VerticalSpacer sixteenPx />
     </div>
-  );
-};
+  </div>
+);
 
 VedtakAvslagPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
@@ -46,7 +40,7 @@ VedtakAvslagPanelImpl.propTypes = {
   behandlingsresultat: PropTypes.shape().isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
   tilbakekrevingText: PropTypes.string,
-  alleKodeverk: PropTypes.shape().isRequired,
+  kodeverkNavnFraKode: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({

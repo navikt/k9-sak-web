@@ -1,6 +1,6 @@
 import mottakerTyper from '@fpsak-frontend/kodeverk/src/mottakerTyper';
 import { formatCurrencyNoKr, getRangeOfMonths } from '@fpsak-frontend/utils';
-import { Kodeverk, Periode, SimuleringMottaker, SimuleringResultatRad } from '@k9-sak-web/types';
+import { Periode, SimuleringMottaker, SimuleringResultatRad } from '@k9-sak-web/types';
 import { BodyShort, Table } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import moment from 'moment/moment';
@@ -98,7 +98,7 @@ const createColumns = (
 };
 
 const tableTitle = (mottaker: SimuleringMottaker) =>
-  mottaker.mottakerType.kode === mottakerTyper.ARBG ? (
+  mottaker.mottakerType === mottakerTyper.ARBG ? (
     <BodyShort
       size="small"
       className={styles.tableTitle}
@@ -124,14 +124,14 @@ const getPeriodeFom = (periodeFom: string, nesteUtbPeriodeFom: string) => period
 
 const getPeriod = (ingenPerioderMedAvvik: boolean, periodeFom: string, mottaker: SimuleringMottaker) =>
   getRangeOfMonths(
-    avvikBruker(ingenPerioderMedAvvik, mottaker.mottakerType.kode)
+    avvikBruker(ingenPerioderMedAvvik, mottaker.mottakerType)
       ? moment(mottaker.nesteUtbPeriode.tom).subtract(1, 'months')
       : getPeriodeFom(periodeFom, mottaker.nesteUtbPeriode.fom),
     mottaker.nesteUtbPeriode.tom,
   );
 
 interface ResultatPerFagområde {
-  fagOmrådeKode: Kodeverk;
+  fagOmrådeKode: string;
   rader: SimuleringResultatRad[];
 }
 
@@ -192,7 +192,7 @@ const AvregningTable = ({
                         return (
                           <Table.Row key={`rowIndex${fagIndex + 1}${rowIndex + 1}`} className={rowClassnames}>
                             <Table.DataCell className={boldText ? 'font-bold' : ''}>
-                              <FormattedMessage id={`Avregning.${fagOmråde.fagOmrådeKode.kode}.${rad.feltnavn}`} />
+                              <FormattedMessage id={`Avregning.${fagOmråde.fagOmrådeKode}.${rad.feltnavn}`} />
                             </Table.DataCell>
                             {createColumns(rad.resultaterPerMåned, rangeOfMonths, nesteMåned, boldText)}
                           </Table.Row>

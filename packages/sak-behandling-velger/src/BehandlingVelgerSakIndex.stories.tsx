@@ -1,11 +1,10 @@
 /* eslint-disable max-len */
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import { Fagsak, Kodeverk } from '@k9-sak-web/types';
 import React, { useState } from 'react';
+import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import BehandlingVelgerSakIndex from './BehandlingVelgerSakIndex';
 
 const behandlinger = [
@@ -26,15 +25,7 @@ const behandlinger = [
     behandlingsfristTid: '2022-01-31',
     behandlingsresultat: {
       erRevurderingMedUendretUtfall: false,
-      type: {
-        kode: 'INNVILGET',
-        erHenleggelse: false,
-        behandlingsresultatHenlagt: false,
-        behandlingsresultatOpphørt: false,
-        behandlingsresultatIkkeEndret: false,
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-        behandlingHenlagt: false,
-      },
+      type: 'INNVILGET',
       vilkårResultat: {
         MEDLEMSKAPSVILKÅRET: [
           {
@@ -95,22 +86,14 @@ const behandlinger = [
       },
       vedtaksdato: '2021-12-20',
     },
-    behandlingResultatType: {
-      kode: 'INNVILGET',
-      erHenleggelse: false,
-      behandlingsresultatHenlagt: false,
-      behandlingsresultatOpphørt: false,
-      behandlingsresultatIkkeEndret: false,
-      kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      behandlingHenlagt: false,
-    },
+    behandlingResultatType: 'INNVILGET',
     endret: '2021-12-20T09:23:01.248',
     endretAvBrukernavn: 'vtp',
     erPaaVent: false,
     fagsakId: 999951,
     førsteÅrsak: {
       erAutomatiskRevurdering: false,
-      behandlingArsakType: { kode: 'RE-END-INNTEKTSMELD', kodeverk: 'BEHANDLING_AARSAK' },
+      behandlingArsakType: 'RE-END-INNTEKTSMELD',
       manueltOpprettet: false,
     },
     gjeldendeVedtak: true,
@@ -148,15 +131,7 @@ const behandlinger = [
     behandlingsfristTid: '2022-01-31',
     behandlingsresultat: {
       erRevurderingMedUendretUtfall: false,
-      type: {
-        kode: 'INNVILGET',
-        erHenleggelse: false,
-        behandlingsresultatHenlagt: false,
-        behandlingsresultatOpphørt: false,
-        behandlingsresultatIkkeEndret: false,
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-        behandlingHenlagt: false,
-      },
+      type: 'INNVILGET',
       vilkårResultat: {
         MEDLEMSKAPSVILKÅRET: [
           {
@@ -217,22 +192,14 @@ const behandlinger = [
       },
       vedtaksdato: '2021-12-20',
     },
-    behandlingResultatType: {
-      kode: 'INNVILGET',
-      erHenleggelse: false,
-      behandlingsresultatHenlagt: false,
-      behandlingsresultatOpphørt: false,
-      behandlingsresultatIkkeEndret: false,
-      kodeverk: 'BEHANDLING_RESULTAT_TYPE',
-      behandlingHenlagt: false,
-    },
+    behandlingResultatType: 'INNVILGET',
     endret: '2021-12-20T09:22:36.118',
     endretAvBrukernavn: 'vtp',
     erPaaVent: false,
     fagsakId: 999951,
     førsteÅrsak: {
       erAutomatiskRevurdering: false,
-      behandlingArsakType: { kode: 'RE-END-INNTEKTSMELD', kodeverk: 'BEHANDLING_AARSAK' },
+      behandlingArsakType: 'RE-END-INNTEKTSMELD',
       manueltOpprettet: false,
     },
     gjeldendeVedtak: false,
@@ -252,18 +219,9 @@ const behandlinger = [
 
 const fagsak = {
   saksnummer: '35425245',
-  sakstype: {
-    kode: fagsakYtelsesType.PSB,
-    kodeverk: 'FAGSAK_YTELSE',
-  },
-  relasjonsRolleType: {
-    kode: relasjonsRolleType.MOR,
-    kodeverk: '',
-  },
-  status: {
-    kode: fagsakStatus.UNDER_BEHANDLING,
-    kodeverk: 'FAGSAK_STATUS',
-  },
+  sakstype: 'PSB', // FAGSAK_YTELSE
+  relasjonsRolleType: relasjonsRolleType.MOR, // empty
+  status: fagsakStatus.UNDER_BEHANDLING, // FAGSAK_STATUS
   barnFodt: '2020-01-01',
   opprettet: '2020-01-01',
   endret: '2020-01-01',

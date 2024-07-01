@@ -72,7 +72,7 @@ const useProsessStegPaneler = (
         urlKode === prosessStegCodes.SIMULERING ||
         urlKode === prosessStegCodes.VEDTAK ||
         urlKode === prosessStegCodes.KLAGE_RESULTAT ||
-        (fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER && urlKode === prosessStegCodes.UTTAK)
+        (fagsak.sakstype === fagsakYtelseType.PLEIEPENGER && urlKode === prosessStegCodes.UTTAK)
       ) {
         return panel;
       }

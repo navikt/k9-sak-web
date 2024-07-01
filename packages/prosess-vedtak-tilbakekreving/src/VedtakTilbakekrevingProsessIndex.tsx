@@ -1,7 +1,7 @@
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Behandling, BehandlingAppKontekst } from '@k9-sak-web/types';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import TilbakekrevingVedtak from './components/TilbakekrevingVedtak';
 import BeregningsresultatTilbakekreving from './types/beregningsresultatTilbakekrevingTsType';
@@ -20,7 +20,8 @@ const intl = createIntl(
 
 const tilbakekrevingÅrsakTyperKlage = [behandlingArsakType.RE_KLAGE_KA, behandlingArsakType.RE_KLAGE_NFP];
 
-const erTilbakekrevingÅrsakKlage = (årsak: any) => årsak && tilbakekrevingÅrsakTyperKlage.includes(årsak.kode);
+const erTilbakekrevingÅrsakKlage = (årsak: BehandlingAppKontekst['førsteÅrsak']['behandlingArsakType']) =>
+  årsak && tilbakekrevingÅrsakTyperKlage.includes(årsak);
 
 interface OwnProps {
   behandling: Behandling;
@@ -28,7 +29,6 @@ interface OwnProps {
   vedtaksbrev: Vedtaksbrev;
   submitCallback: (aksjonspunktData: { kode: string }[]) => Promise<any>;
   isReadOnly: boolean;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   fetchPreviewVedtaksbrev: (data: any) => Promise<any>;
   aksjonspunktKodeForeslaVedtak: string;
 }
@@ -39,7 +39,6 @@ const VedtakTilbakekrevingProsessIndex = ({
   vedtaksbrev,
   submitCallback,
   isReadOnly,
-  alleKodeverk,
   fetchPreviewVedtaksbrev,
   aksjonspunktKodeForeslaVedtak,
 }: OwnProps) => {
@@ -47,7 +46,7 @@ const VedtakTilbakekrevingProsessIndex = ({
     behandling.førsteÅrsak && erTilbakekrevingÅrsakKlage(behandling.førsteÅrsak.behandlingArsakType);
   const erRevurderingTilbakekrevingFeilBeløpBortfalt =
     behandling.førsteÅrsak &&
-    behandlingArsakType.RE_FEILUTBETALT_BELØP_REDUSERT === behandling.førsteÅrsak?.behandlingArsakType?.kode;
+    behandlingArsakType.RE_FEILUTBETALT_BELØP_REDUSERT === behandling.førsteÅrsak?.behandlingArsakType;
   return (
     <RawIntlProvider value={intl}>
       <TilbakekrevingVedtak
@@ -59,7 +58,6 @@ const VedtakTilbakekrevingProsessIndex = ({
         avsnittsliste={vedtaksbrev?.avsnittsliste ?? []}
         submitCallback={submitCallback}
         readOnly={isReadOnly}
-        alleKodeverk={alleKodeverk}
         fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
         aksjonspunktKodeForeslaVedtak={aksjonspunktKodeForeslaVedtak}
         erRevurderingTilbakekrevingKlage={erRevurderingTilbakekrevingKlage}

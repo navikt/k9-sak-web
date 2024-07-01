@@ -84,8 +84,8 @@ describe('<MeldingIndex>', () => {
     {
       id: 1,
       uuid: '1212',
-      type: { kode: BehandlingType.FORSTEGANGSSOKNAD, kodeverk: '' },
-      sprakkode: { kode: 'NB', kodeverk: 'SPRAAK_KODE' },
+      type: BehandlingType.FORSTEGANGSSOKNAD,
+      sprakkode: 'NB',
     },
   ];
 

@@ -1,26 +1,24 @@
-import Kodeverk from './kodeverkTsType';
-
 type BeregningsgrunnlagArbeidsforhold = Readonly<{
   arbeidsgiverIdent?: string;
   arbeidsgiverId?: string;
   startdato?: string;
   opphoersdato?: string;
   arbeidsforholdId?: string;
-  arbeidsforholdType?: Kodeverk;
+  arbeidsforholdType?: string;
 }>;
 
 type FaktaOmBeregningAndel = Readonly<{
   arbeidsforhold?: BeregningsgrunnlagArbeidsforhold;
   andelsnr?: number;
-  inntektskategori?: Kodeverk;
-  aktivitetStatus?: Kodeverk;
+  inntektskategori?: string;
+  aktivitetStatus?: string;
 }>;
 
 type AndelForFaktaOmBeregning = Readonly<{
   arbeidsforhold: BeregningsgrunnlagArbeidsforhold;
   andelsnr?: number;
-  inntektskategori?: Kodeverk;
-  aktivitetStatus?: Kodeverk;
+  inntektskategori?: string;
+  aktivitetStatus?: string;
   belopReadOnly?: number;
   fastsattBelop?: number;
   skalKunneEndreAktivitet: boolean;
@@ -47,7 +45,7 @@ type AvklarAktiviteter = Readonly<{
       fom: string;
       tom?: string;
       arbeidsforholdId?: string;
-      arbeidsforholdType: Kodeverk;
+      arbeidsforholdType: string;
       aktørIdString?: string;
     }[];
   }[];
@@ -67,12 +65,12 @@ type FaktaOmBeregning = Readonly<{
 
 export type Beregningsgrunnlag = Readonly<{
   aktivitetStatus?: {
-    aktivitetStatus: Kodeverk;
+    aktivitetStatus: string;
   }[];
   beregningsgrunnlagPeriode?: {
     beregningsgrunnlagPrStatusOgAndel?: {
-      aktivitetStatus?: Kodeverk;
-      arbeidsforholdType?: Kodeverk;
+      aktivitetStatus?: string;
+      arbeidsforholdType?: string;
       beregnetPrAar?: number;
       arbeidsforholdId?: string;
       erNyIArbeidslivet?: boolean;

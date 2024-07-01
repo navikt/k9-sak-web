@@ -74,7 +74,7 @@ const MeldingIndex = ({
   };
 
   const submitCallback = async (values: FormValues) => {
-    const erTilbakekreving = erTilbakekrevingType({ kode: behandling.type.kode });
+    const erTilbakekreving = erTilbakekrevingType({ kode: behandling.type });
     const data = erTilbakekreving
       ? {
           behandlingUuid: behandling.uuid,
@@ -98,7 +98,7 @@ const MeldingIndex = ({
     fritekst: string,
     fritekstbrev?: Fritekstbrev,
   ) => {
-    const data = erTilbakekrevingType({ kode: behandling.type.kode })
+    const data = erTilbakekrevingType({ kode: behandling.type })
       ? {
           fritekst: fritekst || ' ',
           brevmalkode: dokumentMal,
@@ -155,8 +155,8 @@ const MeldingIndex = ({
       personopplysninger={personopplysninger}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
       erTilbakekreving={
-        behandling.type.kode === BehandlingType.TILBAKEKREVING ||
-        behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
+        behandling.type === BehandlingType.TILBAKEKREVING ||
+        behandling.type === BehandlingType.TILBAKEKREVING_REVURDERING
       }
       featureToggles={featureToggles}
       fagsak={fagsak}

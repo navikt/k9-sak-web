@@ -1,9 +1,10 @@
+import React from 'react';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { findAksjonspunkt, findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { MedisinskVilkår } from '@k9-sak-web/fakta-medisinsk-vilkar';
-import React from 'react';
 
 export default ({
   behandling: { links, uuid },
@@ -18,8 +19,8 @@ export default ({
     httpErrorHandler(status, addErrorMessage, locationHeader);
 
   const medisinskVilkårAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.MEDISINSK_VILKAAR);
-  const medisinskVilkårAksjonspunktkode = medisinskVilkårAksjonspunkt?.definisjon.kode;
-  const medisinskVilkårAksjonspunktstatus = medisinskVilkårAksjonspunkt?.status.kode;
+  const medisinskVilkårAksjonspunktkode = medisinskVilkårAksjonspunkt?.definisjon;
+  const medisinskVilkårAksjonspunktstatus = medisinskVilkårAksjonspunkt?.status;
   const visFortsettknapp = medisinskVilkårAksjonspunktstatus === aksjonspunktStatus.OPPRETTET;
 
   const løsAksjonspunkt = aksjonspunktArgs =>

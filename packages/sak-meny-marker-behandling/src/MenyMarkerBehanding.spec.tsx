@@ -1,8 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import { act } from 'react-dom/test-utils';
 import MenyMarkerBehandling from './MenyMarkerBehandling';
 
 describe('<MenyMarkerBehandling', () => {

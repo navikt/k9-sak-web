@@ -1,4 +1,3 @@
-import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
 import MenySettPaVentIndex from './MenySettPaVentIndex';
@@ -20,18 +19,6 @@ export const visMenyForÅSetteBehandlingPåVent = () => (
     behandlingId={1}
     behandlingVersjon={2}
     settBehandlingPaVent={promiseAction('button-click')}
-    ventearsaker={[
-      {
-        kode: venteArsakType.AVV_DOK,
-        kodeverk: 'VENT_ARSAK_TYPE',
-        navn: 'Avvent dokumentasjon',
-      },
-      {
-        kode: venteArsakType.VENT_MANGL_FUNKSJ_SAKSBEHANDLER,
-        kodeverk: 'VENT_ARSAK_TYPE',
-        navn: 'Settes på vent av saksbehandler pga. manglende funksjonalitet i løsningen',
-      },
-    ]}
     lukkModal={action('button-click')}
     erTilbakekreving={false}
   />

@@ -1,3 +1,7 @@
+import { Location } from 'history';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Navigate, useLocation, useMatch } from 'react-router-dom';
+
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
@@ -8,13 +12,10 @@ import {
   ArbeidsgiverOpplysningerPerId,
   BehandlingAppKontekst,
   Fagsak,
-  KodeverkMedNavn,
   Personopplysninger,
   Risikoklassifisering,
 } from '@k9-sak-web/types';
-import { Location } from 'history';
-import React, { useCallback, useEffect, useState } from 'react';
-import { Navigate, useLocation, useMatch } from 'react-router-dom';
+
 import {
   createLocationForSkjermlenke,
   getLocationWithDefaultProsessStegAndFakta,
@@ -24,7 +25,6 @@ import {
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import BehandlingMenuIndex, { BehandlendeEnheter } from '../behandlingmenu/BehandlingMenuIndex';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../data/k9sakApi';
-import { useFpSakKodeverkMedNavn, useGetKodeverkFn } from '../data/useKodeverk';
 import SakRettigheter from '../fagsak/sakRettigheterTsType';
 import styles from './fagsakProfileIndex.module.css';
 import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
@@ -67,11 +67,6 @@ export const FagsakProfileIndex = ({
   const [showAll, setShowAll] = useState(!behandlingId);
   const toggleShowAll = useCallback(() => setShowAll(!showAll), [showAll]);
 
-  const getKodeverkFn = useGetKodeverkFn();
-
-  const fagsakStatusMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
-  const fagsakYtelseTypeMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.sakstype);
-
   const { data: risikoAksjonspunkt, state: risikoAksjonspunktState } = restApiHooks.useRestApi<Aksjonspunkt>(
     K9sakApiKeys.RISIKO_AKSJONSPUNKT,
     undefined,
@@ -90,7 +85,7 @@ export const FagsakProfileIndex = ({
   );
 
   const { data: behandlendeEnheter } = restApiHooks.useRestApi<BehandlendeEnheter>(K9sakApiKeys.BEHANDLENDE_ENHETER, {
-    ytelseType: fagsak.sakstype.kode,
+    ytelseType: fagsak.sakstype,
   });
 
   useEffect(() => {
@@ -111,7 +106,7 @@ export const FagsakProfileIndex = ({
   );
 
   const skalViseRisikoklassifisering = () => {
-    const isFagsakPleiepenger = fagsakYtelseTypeMedNavn.kode === fagsakYtelseType.PLEIEPENGER;
+    const isFagsakPleiepenger = fagsak.sakstype === fagsakYtelseType.PLEIEPENGER;
     return (
       kontrollresultatState === RestApiState.SUCCESS &&
       risikoAksjonspunktState === RestApiState.SUCCESS &&
@@ -128,8 +123,8 @@ export const FagsakProfileIndex = ({
       {harHentetBehandlinger && !shouldRedirectToBehandlinger && (
         <FagsakProfilSakIndex
           saksnummer={fagsak.saksnummer}
-          fagsakYtelseType={fagsakYtelseTypeMedNavn}
-          fagsakStatus={fagsakStatusMedNavn}
+          fagsakYtelseType={fagsak.sakstype}
+          fagsakStatus={fagsak.status}
           dekningsgrad={fagsak.dekningsgrad}
           renderBehandlingMeny={() => {
             if (!fagsakRettigheter || !behandlendeEnheter) {
@@ -156,7 +151,6 @@ export const FagsakProfileIndex = ({
               getBehandlingLocation={getBehandlingLocation}
               noExistingBehandlinger={alleBehandlinger.length === 0}
               behandlingId={behandlingId}
-              getKodeverkFn={getKodeverkFn}
               showAll={showAll}
               toggleShowAll={toggleShowAll}
               fagsak={fagsak}

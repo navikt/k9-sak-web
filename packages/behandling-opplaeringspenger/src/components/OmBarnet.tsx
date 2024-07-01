@@ -1,9 +1,10 @@
+import React from 'react';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { findAksjonspunkt, findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Aksjonspunkt, BehandlingAppKontekst } from '@k9-sak-web/types';
 import { OmBarnet } from '@k9-sak-web/fakta-om-barnet';
-import React from 'react';
 
 interface OmBarnetProps {
   behandling: BehandlingAppKontekst;
@@ -24,7 +25,7 @@ export default ({ behandling: { links }, readOnly, aksjonspunkter, submitCallbac
     aksjonspunkter,
     aksjonspunktCodes.VURDER_RETT_ETTER_PLEIETRENGENDES_DØD,
   );
-  const omBarnetAksjonspunktkode = omBarnetAksjonspunkt?.definisjon.kode;
+  const omBarnetAksjonspunktkode = omBarnetAksjonspunkt?.definisjon;
   const harAksjonspunkt = !!omBarnetAksjonspunktkode;
 
   const løsAksjonspunkt = data =>

@@ -1,10 +1,10 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-// eslint-disable-next-line import/no-duplicates
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import React, { useMemo } from 'react';
 // eslint-disable-next-line import/no-duplicates
 import PropTypes from 'prop-types';
-import React, { useMemo } from 'react';
+
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import medlemskapAksjonspunkterPropType from '../propTypes/medlemskapAksjonspunkterPropType';
 import medlemskapMedlemskaPropType from '../propTypes/medlemskapMedlemskapPropType';
 import medlemskapSoknadPropType from '../propTypes/medlemskapSoknadPropType';
@@ -14,7 +14,7 @@ const { OVERSTYR_AVKLAR_STARTDATO } = aksjonspunktCodes;
 
 const avklarStartdatoAp = [OVERSTYR_AVKLAR_STARTDATO];
 
-const hasOpen = aksjonspunkt => aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status.kode);
+const hasOpen = aksjonspunkt => aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status);
 
 /**
  * MedlemskapInfoPanel
@@ -35,9 +35,9 @@ const MedlemskapInfoPanel = ({
   medlemskap,
   fagsakPerson,
 }) => {
-  const avklarStartdatoOverstyring = aksjonspunkter.find(ap => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
+  const avklarStartdatoOverstyring = aksjonspunkter.find(ap => ap.definisjon === OVERSTYR_AVKLAR_STARTDATO);
   const aksjonspunkterMinusAvklarStartDato = useMemo(
-    () => aksjonspunkter.filter(ap => !avklarStartdatoAp.includes(ap.definisjon.kode)),
+    () => aksjonspunkter.filter(ap => !avklarStartdatoAp.includes(ap.definisjon)),
     [aksjonspunkter],
   );
 
@@ -72,7 +72,7 @@ MedlemskapInfoPanel.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   fagsakPerson: PropTypes.shape().isRequired,
-  behandlingType: kodeverkObjektPropType.isRequired,
+  behandlingType: PropTypes.string.isRequired,
   soknad: medlemskapSoknadPropType,
   alleKodeverk: PropTypes.shape().isRequired,
   medlemskap: medlemskapMedlemskaPropType.isRequired,
