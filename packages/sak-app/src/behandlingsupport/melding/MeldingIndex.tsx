@@ -1,8 +1,8 @@
 import React from 'react';
 
-import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import MeldingerSakIndex, { FormValues, type MeldingerSakIndexBackendApi } from '@k9-sak-web/sak-meldinger';
+import MeldingerSakIndex, { type MeldingerSakIndexBackendApi } from '@k9-sak-web/sak-meldinger';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import {
@@ -13,11 +13,7 @@ import {
   FeatureToggles,
   Personopplysninger,
 } from '@k9-sak-web/types';
-
-import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
-import type { MottakerDto } from '@k9-sak-web/backend/k9sak/generated';
 import { useFpSakKodeverk } from '../../data/useKodeverk';
-import { useVisForhandsvisningAvMelding } from '../../data/useVisForhandsvisningAvMelding';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
 
 export interface BackendApi extends MeldingerSakIndexBackendApi {}
@@ -50,8 +46,6 @@ const MeldingIndex = ({
 }: OwnProps) => {
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
   const revurderingVarslingArsak = useFpSakKodeverk(kodeverkTyper.REVURDERING_VARSLING_ÅRSAK);
-  const { startRequest: submitMessage } = restApiHooks.useRestApiRunner(K9sakApiKeys.SUBMIT_MESSAGE);
-  const fetchPreview = useVisForhandsvisningAvMelding(behandling, fagsak);
 
   /*
     Før var det kode for å vise to ulike modaler etter at melding vart sendt i denne komponenten.
@@ -68,52 +62,9 @@ const MeldingIndex = ({
     implementerast på nytt seinare når reload() har blitt fjerna, som ein "toast" type melding eller liknande.
    */
 
-  const resetMessage = () => {
+  const reloadWindow = () => {
     // FIXME temp fiks for å unngå prod-feil (her skjer det ein oppdatering av behandling, så må oppdatera)
     window.location.reload();
-  };
-
-  const submitCallback = async (values: FormValues) => {
-    const erTilbakekreving = erTilbakekrevingType({ kode: behandling.type.kode });
-    const data = erTilbakekreving
-      ? {
-          behandlingUuid: behandling.uuid,
-          fritekst: values.fritekst,
-          brevmalkode: values.brevmalkode,
-        }
-      : {
-          behandlingId,
-          overstyrtMottaker: values.overstyrtMottaker,
-          brevmalkode: values.brevmalkode,
-          fritekst: values.fritekst,
-          fritekstbrev: values.fritekstbrev,
-        };
-    await submitMessage(data);
-    resetMessage(); // NB: Utfører full reload av sida.
-  };
-
-  const previewCallback = (
-    overstyrtMottaker: MottakerDto,
-    dokumentMal: string,
-    fritekst: string,
-    fritekstbrev?: Fritekstbrev,
-  ) => {
-    const data = erTilbakekrevingType({ kode: behandling.type.kode })
-      ? {
-          fritekst: fritekst || ' ',
-          brevmalkode: dokumentMal,
-        }
-      : {
-          overstyrtMottaker,
-          dokumentMal,
-          dokumentdata: {
-            fritekst: fritekst || ' ',
-            fritekstbrev: fritekstbrev
-              ? { brødtekst: fritekstbrev.brødtekst ?? '', overskrift: fritekstbrev.overskrift ?? '' }
-              : null,
-          },
-        };
-    fetchPreview(false, data);
   };
 
   const skalHenteRevAp = requestApi.hasPath(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP);
@@ -144,9 +95,8 @@ const MeldingIndex = ({
 
   return (
     <MeldingerSakIndex
-      submitCallback={submitCallback}
+      onMessageSent={reloadWindow}
       sprakKode={behandling?.sprakkode}
-      previewCallback={previewCallback}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
       revurderingVarslingArsak={revurderingVarslingArsak}

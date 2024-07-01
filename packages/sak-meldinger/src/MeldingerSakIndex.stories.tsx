@@ -21,11 +21,8 @@ const meta: Meta<typeof MeldingerSakIndex> = {
   component: MeldingerSakIndex,
   decorators: [withMaxWidth(500)],
   argTypes: {
-    submitCallback: {
-      action: 'submitCallback',
-    },
-    previewCallback: {
-      action: 'previewCallback',
+    onMessageSent: {
+      action: 'onSubmitted',
     },
   },
 };

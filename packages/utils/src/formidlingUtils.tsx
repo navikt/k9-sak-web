@@ -1,4 +1,4 @@
-import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, Personopplysninger } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Behandling, Personopplysninger } from '@k9-sak-web/types';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
@@ -8,6 +8,8 @@ import {
   lagVisningsnavnForMottaker as v2LagvisningsnavnForMottaker,
 } from '@k9-sak-web/gui/utils/formidling.js';
 import { isBehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
+import type { BehandlingInfo } from '@k9-sak-web/gui/sak/BehandlingInfo.js';
+import type { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 
 export interface VedtaksbrevMal {
   dokumentMalType: string;
@@ -126,9 +128,9 @@ export const harMellomlagretRedusertUtbetalingArsak = (key, dokumentdata, vedtak
 };
 
 export const lagForhåndsvisRequest = (
-  behandling: Behandling,
+  behandling: BehandlingInfo,
   fagsak: Fagsak,
-  fagsakPerson: FagsakPerson,
+  fagsakPerson: Fagsak['person'],
   data: any,
 ): ForhåndsvisRequest => ({
   eksternReferanse: behandling.uuid,
@@ -149,7 +151,7 @@ export const getForhandsvisCallback =
   (
     forhandsvisMelding: (data: any) => Promise<any>,
     fagsak: Fagsak,
-    fagsakPerson: FagsakPerson,
+    fagsakPerson: Fagsak['person'],
     behandling: Behandling,
   ) =>
   (parametre: any, aapneINyttVindu = true) => {
