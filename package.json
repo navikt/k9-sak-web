@@ -127,7 +127,7 @@
     "webpack-merge": "5.10.0"
   },
   "resolutions": {
-    "postcss": "8.4.38",
+    "postcss": "8.4.39",
     "parse-url": "8.1.0",
     "@types/react": "17",
     "@editorjs/editorjs": "2.27.2"
