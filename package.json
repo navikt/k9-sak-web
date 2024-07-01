@@ -110,7 +110,7 @@
     "lint-staged": "15.2.7",
     "msw": "2.3.1",
     "msw-storybook-addon": "^2.0.2",
-    "postcss": "^8.4.38",
+    "postcss": "^8.4.39",
     "prettier": "3.3.2",
     "react-popper": "2.3.0",
     "storybook": "^8.1.11",
