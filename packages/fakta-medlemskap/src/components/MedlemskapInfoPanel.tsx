@@ -1,5 +1,3 @@
-// eslint-disable-next-line import/no-duplicates
-// eslint-disable-next-line import/no-duplicates
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Aksjonspunkt, FagsakPerson, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import React from 'react';
@@ -7,12 +5,6 @@ import { Medlemskap } from './oppholdInntektOgPerioder/Medlemskap';
 import { MerknaderFraBeslutter } from './oppholdInntektOgPerioder/MerknaderFraBeslutter';
 import OppholdInntektOgPerioderForm from './oppholdInntektOgPerioder/OppholdInntektOgPerioderForm';
 import { Soknad } from './oppholdInntektOgPerioder/Soknad';
-
-// const { OVERSTYR_AVKLAR_STARTDATO } = aksjonspunktCodes;
-
-// const avklarStartdatoAp = [OVERSTYR_AVKLAR_STARTDATO];
-
-// const hasOpen = aksjonspunkt => aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status.kode);
 
 interface MedlemskapInfoPanelProps {
   submittable: boolean;
@@ -47,32 +39,21 @@ const MedlemskapInfoPanel = ({
   alleKodeverk,
   medlemskap,
   fagsakPerson,
-  // eslint-disable-next-line arrow-body-style
-}: MedlemskapInfoPanelProps) => {
-  // const avklarStartdatoOverstyring = aksjonspunkter.find(ap => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
-  // const aksjonspunkterMinusAvklarStartDato = useMemo(
-  //   () => aksjonspunkter.filter(ap => !avklarStartdatoAp.includes(ap.definisjon.kode)),
-  //   [aksjonspunkter],
-  // );
-
-  return (
-    // !hasOpen(avklarStartdatoOverstyring) && (
-    <OppholdInntektOgPerioderForm
-      soknad={soknad}
-      readOnly={readOnly}
-      submitCallback={submitCallback}
-      submittable={submittable}
-      aksjonspunkter={aksjonspunkter}
-      alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-      behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
-      alleKodeverk={alleKodeverk}
-      medlemskap={medlemskap}
-      fagsakPerson={fagsakPerson}
-      isRevurdering={behandlingTypeProp.kode === behandlingType.REVURDERING && !!medlemskap.fom}
-    />
-    // )
-  );
-};
+}: MedlemskapInfoPanelProps) => (
+  <OppholdInntektOgPerioderForm
+    soknad={soknad}
+    readOnly={readOnly}
+    submitCallback={submitCallback}
+    submittable={submittable}
+    aksjonspunkter={aksjonspunkter}
+    alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+    behandlingId={behandlingId}
+    behandlingVersjon={behandlingVersjon}
+    alleKodeverk={alleKodeverk}
+    medlemskap={medlemskap}
+    fagsakPerson={fagsakPerson}
+    isRevurdering={behandlingTypeProp.kode === behandlingType.REVURDERING && !!medlemskap.fom}
+  />
+);
 
 export default MedlemskapInfoPanel;

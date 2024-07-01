@@ -213,10 +213,6 @@ export const OppholdInntektOgPerioderForm = (props: OppholdInntektOgPerioderForm
     //   formMethods.reset(getInitialValues(), { keepDefaultValues: true });
     //   // formMethods.resetField('perioder')
     //   // formReset(`${behandlingFormPrefix}.OppholdInntektOgPeriodeForm-${valgtPeriode.id}`);
-    console.log('labba', {
-      ...formMethods.getValues(),
-      oppholdInntektOgPeriodeForm: getInitialValues().oppholdInntektOgPeriodeForm,
-    });
     formMethods.reset({
       ...formMethods.getValues(),
       oppholdInntektOgPeriodeForm: getInitialValues().oppholdInntektOgPeriodeForm,
@@ -238,15 +234,12 @@ export const OppholdInntektOgPerioderForm = (props: OppholdInntektOgPerioderForm
   };
 
   const updateOppholdInntektPeriode = (values: OppholdInntektOgPeriodeFormState) => {
-    console.log('values', values);
     const updatedPeriode = perioder.find(p => p.id === values.id);
     const newPeriodeObject = {
       ...updatedPeriode,
       ...values,
     };
-    console.log('perioder', perioder);
     const newPerioder = createNewPerioder(perioder, values.id, newPeriodeObject);
-    console.log('newPerioder', newPerioder);
     formMethods.setValue(FieldName.PERIODER, newPerioder);
   };
 
