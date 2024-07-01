@@ -87,9 +87,10 @@ const AldersvilkarForm = ({
         label={<FormattedMessage id="AlderVilkar.KroniskSyk" />}
         name="erVilkarOk"
         validate={[required]}
+        isTrueOrFalseSelection
         radios={[
-          { value: true, label: intl.formatMessage({ id: 'AlderVilkar.KroniskSyk.Ja' }) },
-          { value: false, label: intl.formatMessage({ id: 'AlderVilkar.KroniskSyk.Nei' }) },
+          { value: 'true', label: intl.formatMessage({ id: 'AlderVilkar.KroniskSyk.Ja' }) },
+          { value: 'false', label: intl.formatMessage({ id: 'AlderVilkar.KroniskSyk.Nei' }) },
         ]}
       />
       <VerticalSpacer sixteenPx />
