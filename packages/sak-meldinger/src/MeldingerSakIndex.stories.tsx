@@ -2,9 +2,7 @@
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
-import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
 import { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
@@ -16,7 +14,6 @@ import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Be
 import type { Språkkode } from '@k9-sak-web/backend/k9sak/kodeverk/Språkkode.js';
 import mockedBrevmaler from '../../storybook/stories/mocks/brevmaler';
 import MeldingerSakIndex, { BackendApi } from './MeldingerSakIndex';
-import MessagesModalSakIndex from './MessagesModalSakIndex';
 import personopplysninger from '../../storybook/stories/mocks/personopplysninger.js';
 
 const meta: Meta<typeof MeldingerSakIndex> = {
@@ -138,5 +135,3 @@ export const SendMeldingPanelEngelsk: Story = {
     sprakKode: 'EN',
   },
 };
-
-export const visMeldingModal = () => <MessagesModalSakIndex showModal closeEvent={action('button-click')} />;
