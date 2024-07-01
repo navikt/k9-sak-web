@@ -6,7 +6,7 @@ const ignorerKodeverkKonvertering = ['AKSJONSPUNKT_DEF'];
 /*
  * Rekursivt konverterer kodeverkobjekter til kodeverkstrenger
  */
-export const konverterKodeverkTilKode = (data: any, erTilbakekreving: boolean, debug = false) => {
+export const konverterKodeverkTilKode = (data: any, erTilbakekreving: boolean) => {
   if (data === undefined || data === null) return;
 
   const lengdeKodeverkObjekt = erTilbakekreving ? 3 : 2;
@@ -24,7 +24,7 @@ export const konverterKodeverkTilKode = (data: any, erTilbakekreving: boolean, d
       }
     }
     if (typeof data[key] === 'object' && data[key] !== null) {
-      konverterKodeverkTilKode(data[key], erTilbakekreving, debug);
+      konverterKodeverkTilKode(data[key], erTilbakekreving);
     }
   });
 };
