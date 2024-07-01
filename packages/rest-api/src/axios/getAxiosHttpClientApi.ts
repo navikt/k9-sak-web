@@ -1,9 +1,6 @@
 import { AxiosResponse } from 'axios';
-
-import { identifiserKodeverk, konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import axiosEtag from './axiosEtag';
-
 import initRestMethods from './initRestMethods';
 
 /**
@@ -33,15 +30,7 @@ const getAxiosHttpClientApi = () => {
       !response.config.url.includes('/api/kodeverk')
     ) {
       const erTilbakekreving = response.config.url.includes('/k9tilbake/api/');
-
-      const bareSeIkkeRøre = false; // bare for lokal debugging
-      if (bareSeIkkeRøre) {
-        // bare for lokal debugging
-        identifiserKodeverk(response.data, erTilbakekreving); // bare for lokal debugging
-      } else {
-        // bare for lokal debugging
-        konverterKodeverkTilKode(response.data, erTilbakekreving); // IKKE bare for lokal debugging
-      } // bare for lokal debugging
+      konverterKodeverkTilKode(response.data, erTilbakekreving);
     }
     return response;
   });
