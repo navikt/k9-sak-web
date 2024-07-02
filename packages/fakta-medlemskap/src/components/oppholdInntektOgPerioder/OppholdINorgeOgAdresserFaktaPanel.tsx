@@ -1,34 +1,44 @@
 import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
-import { RadioGroupField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { FaktaGruppe, PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
+import { RadioGroupPanel } from '@navikt/ft-form-hooks';
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
 
+import { BostedSokerPersonopplysninger } from '@fpsak-frontend/fakta-bosted-soker/src/BostedSokerFaktaIndex';
+import { Aksjonspunkt, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
+import { OppholdINorgeOgAdresserFaktaPanelFormState } from './FormState';
+import { MerknaderFraBeslutter } from './MerknaderFraBeslutter';
+import { Opphold } from './Opphold';
+import { Periode } from './Periode';
+import { Soknad } from './Soknad';
 import styles from './oppholdINorgeOgAdresserFaktaPanel.module.css';
+
+interface Forelder {
+  isApplicant: boolean;
+  personopplysning: BostedSokerPersonopplysninger;
+}
 
 countries.registerLocale(norwegianLocale);
 
-const capitalizeFirstLetter = landNavn => {
+const capitalizeFirstLetter = (landNavn: string) => {
   const string = landNavn.toLowerCase();
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-const formatLandNavn = landNavn => {
+const formatLandNavn = (landNavn: string) => {
   if (landNavn.length === 2 || landNavn.length === 3) {
     return countries.getName(landNavn, 'no');
   }
   return landNavn;
 };
 
-const lagOppholdIUtland = utlandsOpphold =>
+const lagOppholdIUtland = (utlandsOpphold: Opphold['utlandsopphold']) =>
   Array.isArray(utlandsOpphold) && utlandsOpphold.length > 0 ? (
     utlandsOpphold.map(u => (
       <div key={`${u.landNavn}${u.fom}${u.tom}`}>
@@ -43,17 +53,43 @@ const lagOppholdIUtland = utlandsOpphold =>
   ) : (
     <BodyShort size="small">-</BodyShort>
   );
+
+interface OppholdINorgeOgAdresserFaktaPanelProps {
+  readOnly: boolean;
+  hasBosattAksjonspunkt: boolean;
+  isBosattAksjonspunktClosed: boolean;
+  opphold?: Opphold;
+  foreldre?: Forelder[];
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleMerknaderFraBeslutter: MerknaderFraBeslutter;
+}
+
+interface TransformedValues {
+  kode: string;
+  bosattVurdering: boolean;
+}
+
+interface StaticFunctions {
+  buildInitialValues: (
+    soknad: Soknad,
+    periode: Periode,
+    aksjonspunkter: Aksjonspunkt[],
+  ) => OppholdINorgeOgAdresserFaktaPanelFormState;
+  transformValues: (values: OppholdINorgeOgAdresserFaktaPanelFormState) => TransformedValues;
+}
+
 /**
  * OppholdINorgeOgAdresserFaktaPanel
  *
  * Presentasjonskomponent. Er tilknyttet faktapanelet for medlemskap.
  * Viser opphold i innland og utland som er relevante for søker. ReadOnly.
  */
-const OppholdINorgeOgAdresserFaktaPanel = ({
+const OppholdINorgeOgAdresserFaktaPanel: FunctionComponent<OppholdINorgeOgAdresserFaktaPanelProps> &
+  StaticFunctions = ({
   readOnly,
   hasBosattAksjonspunkt,
   isBosattAksjonspunktClosed,
-  opphold = {},
+  opphold,
   foreldre = [],
   alleKodeverk,
   alleMerknaderFraBeslutter,
@@ -66,7 +102,7 @@ const OppholdINorgeOgAdresserFaktaPanel = ({
             <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.StayingOutsideOfNorway" />
           </Detail>
           <VerticalSpacer fourPx />
-          {lagOppholdIUtland(opphold.utlandsopphold)}
+          {!!opphold && lagOppholdIUtland(opphold.utlandsopphold)}
         </FaktaGruppe>
       </div>
       <div>
@@ -88,19 +124,20 @@ const OppholdINorgeOgAdresserFaktaPanel = ({
         </FaktaGruppe>
         {hasBosattAksjonspunkt && (
           <div className={styles.ieFlex}>
-            <RadioGroupField
-              name="bosattVurdering"
+            <RadioGroupPanel
+              name="oppholdInntektOgPeriodeForm.bosattVurdering"
               validate={[required]}
-              bredde="XXL"
-              readOnly={readOnly}
+              isReadOnly={readOnly}
               isEdited={isBosattAksjonspunktClosed}
+              isHorizontal
+              isTrueOrFalseSelection
               radios={[
                 {
-                  value: true,
+                  value: 'true',
                   label: <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.ResidingInNorway" />,
                 },
                 {
-                  value: false,
+                  value: 'false',
                   label: (
                     <FormattedMessage
                       id="OppholdINorgeOgAdresserFaktaPanel.NotResidingInNorway"
@@ -119,43 +156,16 @@ const OppholdINorgeOgAdresserFaktaPanel = ({
   </FaktaGruppe>
 );
 
-OppholdINorgeOgAdresserFaktaPanel.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
-  hasBosattAksjonspunkt: PropTypes.bool.isRequired,
-  isBosattAksjonspunktClosed: PropTypes.bool.isRequired,
-  opphold: PropTypes.shape(),
-  foreldre: PropTypes.arrayOf(PropTypes.shape()),
-  alleKodeverk: PropTypes.shape().isRequired,
-  alleMerknaderFraBeslutter: PropTypes.shape({
-    notAccepted: PropTypes.bool,
-  }).isRequired,
-};
-
-const mapStateToProps = (state, ownProps) => {
-  const { behandlingId, behandlingVersjon } = ownProps;
-  const formName = `OppholdInntektOgPeriodeForm-${ownProps.id}`;
-  return {
-    opphold: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'opphold'),
-    foreldre: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'foreldre'),
-    hasBosattAksjonspunkt: behandlingFormValueSelector(
-      formName,
-      behandlingId,
-      behandlingVersjon,
-    )(state, 'hasBosattAksjonspunkt'),
-    isBosattAksjonspunktClosed: behandlingFormValueSelector(
-      formName,
-      behandlingId,
-      behandlingVersjon,
-    )(state, 'isBosattAksjonspunktClosed'),
-  };
-};
-
-const createParent = (isApplicant, personopplysning) => ({
+const createParent = (isApplicant: boolean, personopplysning: Personopplysninger) => ({
   isApplicant,
   personopplysning,
 });
 
-OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (soknad, periode, aksjonspunkter) => {
+OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (
+  soknad: Soknad,
+  periode: Periode,
+  aksjonspunkter: Aksjonspunkt[],
+) => {
   let opphold = {};
 
   if (soknad && soknad.oppgittTilknytning) {
@@ -188,9 +198,9 @@ OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (soknad, periode, aksjons
   };
 };
 
-OppholdINorgeOgAdresserFaktaPanel.transformValues = values => ({
+OppholdINorgeOgAdresserFaktaPanel.transformValues = (values: OppholdINorgeOgAdresserFaktaPanelFormState) => ({
   kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
   bosattVurdering: values.bosattVurdering,
 });
 
-export default connect(mapStateToProps)(OppholdINorgeOgAdresserFaktaPanel);
+export default OppholdINorgeOgAdresserFaktaPanel;

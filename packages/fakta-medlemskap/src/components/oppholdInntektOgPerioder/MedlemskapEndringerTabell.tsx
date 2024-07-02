@@ -1,32 +1,23 @@
-import { behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { DateLabel } from '@fpsak-frontend/shared-components';
 import { Table } from '@navikt/ds-react';
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useIntl } from 'react-intl';
-import { connect } from 'react-redux';
+import { OppholdInntektOgPerioderFormState } from './FormState';
+import { Periode } from './Periode';
 
 const headerTextCodes = ['MedlemskapEndringerTabell.GjeldeneFom', 'MedlemskapEndringerTabell.Opplysning'];
 
-interface Periode {
-  id: string;
-  vurderingsdato: string;
-  årsaker: string[];
-  aksjonspunkter: string[];
-  begrunnelse: string;
-}
-
 interface MedlemskapEndringerTabellProps {
-  velgPeriodeCallback: (event: React.MouseEvent<HTMLTableRowElement, MouseEvent>, id: string, periode: Periode) => void;
+  velgPeriodeCallback: (id: string, periode: Periode) => void;
   selectedId?: string;
-  perioder?: Periode[];
 }
 
-const MedlemskapEndringerTabellImpl = ({
-  perioder = [],
-  velgPeriodeCallback,
-  selectedId,
-}: MedlemskapEndringerTabellProps) => {
+const MedlemskapEndringerTabellImpl = ({ velgPeriodeCallback, selectedId }: MedlemskapEndringerTabellProps) => {
   const intl = useIntl();
+  const { getValues } = useFormContext<OppholdInntektOgPerioderFormState>();
+  const { perioder } = getValues();
+  const sortertePerioder = perioder.sort((a, b) => a.vurderingsdato.localeCompare(b.vurderingsdato));
   return (
     <Table>
       <Table.Header>
@@ -39,13 +30,13 @@ const MedlemskapEndringerTabellImpl = ({
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {perioder.map(periode => (
+        {sortertePerioder.map(periode => (
           <Table.Row
             key={periode.id}
             id={periode.id}
-            onClick={(event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) =>
-              velgPeriodeCallback(event, periode.id, periode)
-            }
+            onClick={() => {
+              velgPeriodeCallback(periode.id, periode);
+            }}
             selected={periode.id === selectedId}
             className={
               periode.begrunnelse === null && periode.aksjonspunkter.length > 0
@@ -64,20 +55,4 @@ const MedlemskapEndringerTabellImpl = ({
   );
 };
 
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const { behandlingId, behandlingVersjon } = initialOwnProps;
-  const perioder = (
-    behandlingFormValueSelector(
-      'OppholdInntektOgPerioderForm',
-      behandlingId,
-      behandlingVersjon,
-    )(initialState, 'perioder') || []
-  ).sort((a, b) => a.vurderingsdato.localeCompare(b.vurderingsdato));
-  return () => ({
-    perioder,
-  });
-};
-
-const MedlemskapEndringerTabell = connect(mapStateToPropsFactory)(MedlemskapEndringerTabellImpl);
-
-export default MedlemskapEndringerTabell;
+export default MedlemskapEndringerTabellImpl;

@@ -1,4 +1,4 @@
-import { Label, RadioGroupField, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { Label } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -12,13 +12,18 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+import { Aksjonspunkt, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, Table, VStack } from '@navikt/ds-react';
+import { RadioGroupPanel } from '@navikt/ft-form-hooks';
 import moment from 'moment';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, { FunctionComponent, useMemo } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
+import { OppholdInntektOgPerioderFormState, PerioderMedMedlemskapFaktaPanelFormState } from './FormState';
+import { MedlemskapPeriode } from './Medlemskap';
+import { MerknaderFraBeslutter } from './MerknaderFraBeslutter';
+import { Periode } from './Periode';
+import { Soknad } from './Soknad';
 
 const headerTextCodes = [
   'PerioderMedMedlemskapFaktaPanel.Period',
@@ -27,20 +32,55 @@ const headerTextCodes = [
   'PerioderMedMedlemskapFaktaPanel.Date',
 ];
 
+export const getAksjonspunkter = (alleKodeverk: { [key: string]: KodeverkMedNavn[] }) => {
+  const vurderingTypes = alleKodeverk[kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE];
+  return vurderingTypes.sort((a, b) => {
+    const kodeA = a.kode;
+    const kodeB = b.kode;
+    if (kodeA < kodeB) {
+      return -1;
+    }
+    if (kodeA > kodeB) {
+      return 1;
+    }
+
+    return 0;
+  });
+};
+
+interface PerioderMedMedlemskapFaktaPanelProps {
+  readOnly: boolean;
+  fodselsdato?: string;
+  alleMerknaderFraBeslutter?: MerknaderFraBeslutter;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+}
+
+interface StaticFunctions {
+  buildInitialValues: (
+    periode: Periode,
+    medlemskapPerioder: MedlemskapPeriode[],
+    soknad: Soknad,
+    aksjonspunkter: Aksjonspunkt[],
+    getKodeverknavn: (kode: Kodeverk) => string,
+  ) => PerioderMedMedlemskapFaktaPanelFormState;
+  transformValues: (
+    values: PerioderMedMedlemskapFaktaPanelFormState,
+    manuellVurderingTyper,
+  ) => { kode: string; medlemskapManuellVurderingType: string };
+}
+
 /**
  * PerioderMedMedlemskapFaktaPanel
  *
  * Presentasjonskomponent. Setter opp aksjonspunktet for avklaring av perioder (Medlemskapsvilkåret).
  */
-export const PerioderMedMedlemskapFaktaPanel = ({
-  readOnly,
-  hasPeriodeAksjonspunkt,
-  isPeriodAksjonspunktClosed,
-  fixedMedlemskapPerioder = [],
-  fodselsdato,
-  vurderingTypes,
-  alleMerknaderFraBeslutter,
-}) => {
+export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedlemskapFaktaPanelProps> &
+  StaticFunctions = ({ readOnly, fodselsdato, alleMerknaderFraBeslutter, alleKodeverk }) => {
+  const { getValues } = useFormContext<OppholdInntektOgPerioderFormState>();
+  const {
+    oppholdInntektOgPeriodeForm: { fixedMedlemskapPerioder, hasPeriodeAksjonspunkt, isPeriodAksjonspunktClosed },
+  } = getValues();
+  const vurderingTypes = useMemo(() => getAksjonspunkter(alleKodeverk), [alleKodeverk]);
   if (!fixedMedlemskapPerioder || fixedMedlemskapPerioder.length === 0) {
     return (
       <FaktaGruppe titleCode="PerioderMedMedlemskapFaktaPanel.ApplicationInformation">
@@ -53,7 +93,6 @@ export const PerioderMedMedlemskapFaktaPanel = ({
 
   return (
     <FaktaGruppe
-      aksjonspunktCode={aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE}
       titleCode="PerioderMedMedlemskapFaktaPanel.ApplicationInformation"
       merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE]}
     >
@@ -90,15 +129,16 @@ export const PerioderMedMedlemskapFaktaPanel = ({
           {hasPeriodeAksjonspunkt && (
             <FlexRow>
               <FlexColumn>
-                <RadioGroupField
-                  name="medlemskapManuellVurderingType.kode"
+                <RadioGroupPanel
+                  name="oppholdInntektOgPeriodeForm.medlemskapManuellVurderingType.kode"
                   validate={[required]}
-                  readOnly={readOnly}
+                  isReadOnly={readOnly}
                   isEdited={isPeriodAksjonspunktClosed}
                   radios={vurderingTypes.map(type => ({
                     value: type.kode,
                     label: <Label input={type.navn} textOnly />,
                   }))}
+                  isHorizontal
                 />
               </FlexColumn>
             </FlexRow>
@@ -120,56 +160,15 @@ export const PerioderMedMedlemskapFaktaPanel = ({
   );
 };
 
-PerioderMedMedlemskapFaktaPanel.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
-  fixedMedlemskapPerioder: PropTypes.arrayOf(PropTypes.shape()),
-  fodselsdato: PropTypes.string,
-  vurderingTypes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  hasPeriodeAksjonspunkt: PropTypes.bool.isRequired,
-  isPeriodAksjonspunktClosed: PropTypes.bool.isRequired,
-  alleMerknaderFraBeslutter: PropTypes.shape({
-    notAccepted: PropTypes.bool,
-  }).isRequired,
-};
-
-export const getAksjonspunkter = createSelector([ownProps => ownProps.alleKodeverk], alleKodeverk => {
-  const vurderingTypes = alleKodeverk[kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE];
-  return vurderingTypes.sort((a, b) => {
-    const kodeA = a.kode;
-    const kodeB = b.kode;
-    if (kodeA < kodeB) {
-      return -1;
-    }
-    if (kodeA > kodeB) {
-      return 1;
-    }
-
-    return 0;
-  });
-});
-
-const mapStateToProps = (state, ownProps) => ({
-  ...behandlingFormValueSelector(
-    `OppholdInntektOgPeriodeForm-${ownProps.id}`,
-    ownProps.behandlingId,
-    ownProps.behandlingVersjon,
-  )(state, 'fixedMedlemskapPerioder', 'fodselsdato', 'hasPeriodeAksjonspunkt', 'isPeriodAksjonspunktClosed'),
-  vurderingTypes: getAksjonspunkter(ownProps),
-});
-
 PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
-  periode,
-  medlemskapPerioder,
-  soknad,
-  aksjonspunkter,
-  getKodeverknavn,
+  periode: Periode,
+  medlemskapPerioder: MedlemskapPeriode[],
+  soknad: Soknad,
+  aksjonspunkter: Aksjonspunkt[],
+  getKodeverknavn: (kode: Kodeverk) => string,
 ) => {
-  if (medlemskapPerioder === null) {
-    return [];
-  }
-
   const fixedMedlemskapPerioder = medlemskapPerioder
-    .map(i => ({
+    ?.map(i => ({
       fom: i.fom,
       tom: i.tom,
       dekning: i.dekningType ? getKodeverknavn(i.dekningType) : '',
@@ -194,11 +193,14 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
   };
 };
 
-PerioderMedMedlemskapFaktaPanel.transformValues = (values, manuellVurderingTyper) => ({
+PerioderMedMedlemskapFaktaPanel.transformValues = (
+  values: PerioderMedMedlemskapFaktaPanelFormState,
+  manuellVurderingTyper,
+) => ({
   kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
   medlemskapManuellVurderingType: manuellVurderingTyper.find(
     m => m.kode === values.medlemskapManuellVurderingType.kode,
   ),
 });
 
-export default connect(mapStateToProps)(PerioderMedMedlemskapFaktaPanel);
+export default PerioderMedMedlemskapFaktaPanel;
