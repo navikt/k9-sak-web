@@ -1,9 +1,4 @@
-import { Button } from '@navikt/ds-react';
-import { AssessedBy } from '@navikt/ft-plattform-komponenter';
-import moment from 'moment';
-import React, { FunctionComponent } from 'react';
-import { FormattedMessage } from 'react-intl';
-
+import FaktaBegrunnelseTextFieldRHF from '@fpsak-frontend/form/src/hook-form/FaktaBegrunnelseTextFieldRHF';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
@@ -15,11 +10,18 @@ import {
   useSaksbehandlerOppslag,
 } from '@fpsak-frontend/shared-components';
 import { ISO_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
-
-import FaktaBegrunnelseTextFieldRHF from '@fpsak-frontend/form/src/hook-form/FaktaBegrunnelseTextFieldRHF';
 import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Button } from '@navikt/ds-react';
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
+import moment from 'moment';
+import React, { FunctionComponent } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { OppholdInntektOgPeriodeFormState, OppholdInntektOgPerioderFormState } from './FormState';
+import { FormattedMessage } from 'react-intl';
+import {
+  OppholdInntektOgPeriodeFormState,
+  OppholdInntektOgPerioderFormState,
+  StatusForBorgerFaktaPanelFormState,
+} from './FormState';
 import { MedlemskapPeriode } from './Medlemskap';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 import { Periode } from './Periode';
@@ -29,7 +31,8 @@ import StatusForBorgerFaktaPanel from './StatusForBorgerFaktaPanel';
 
 const { AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD } = aksjonspunktCodes;
 
-const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap === aksjonspunktCode);
+const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: string[]) =>
+  aksjonspunkter.some(ap => ap === aksjonspunktCode);
 
 const transformValues = (values: OppholdInntektOgPeriodeFormState) => ({
   begrunnelse: values.begrunnelse || '---',
@@ -47,10 +50,6 @@ interface OppholdInntektOgPeriodeFormProps {
   alleMerknaderFraBeslutter: { notAccepted: boolean };
 }
 
-export type FormValues = {
-  [key: string]: any;
-};
-
 interface StaticFunctions {
   buildInitialValues: (
     valgtPeriode: Periode,
@@ -59,7 +58,7 @@ interface StaticFunctions {
     medlemskapPerioder: MedlemskapPeriode[],
     gjeldendeFom: string,
     alleKodeverk: { [key: string]: KodeverkMedNavn[] },
-  ) => FormValues;
+  ) => OppholdInntektOgPeriodeFormState;
 }
 
 export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeriodeFormProps> & StaticFunctions = ({
@@ -148,8 +147,12 @@ OppholdInntektOgPeriodeForm.buildInitialValues = (
         ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
     )
     .filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
-  let oppholdValues = {};
-  let confirmValues = {};
+  let oppholdValues: StatusForBorgerFaktaPanelFormState | undefined;
+  let confirmValues:
+    | {
+        begrunnelse: string;
+      }
+    | undefined;
   if (
     hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, valgtPeriode.aksjonspunkter) ||
     hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, valgtPeriode.aksjonspunkter)

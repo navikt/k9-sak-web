@@ -5,7 +5,7 @@ import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Form } from '@navikt/ft-form-hooks';
-import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 // eslint-disable-next-line import/no-duplicates
 import { guid } from '@fpsak-frontend/utils';
 
@@ -26,14 +26,6 @@ const {
   AVKLAR_LOVLIG_OPPHOLD,
   AVKLAR_FORTSATT_MEDLEMSKAP,
 } = aksjonspunktCodes;
-
-export enum FieldName {
-  PERIODER = 'perioder',
-  SOKNAD = 'soknad',
-  PERSON = 'person',
-  GJELDENDE_FOM = 'gjeldendeFom',
-  MEDLEMSKAP_PERIODER = 'medlemskapPerioder',
-}
 
 const getHelpTexts = (aksjonspunkter: Aksjonspunkt[]) => {
   const helpTexts = [];
@@ -130,11 +122,10 @@ const buildInitialValues = (
   valgtPeriode: Periode,
   aksjonspunkter: Aksjonspunkt[],
   alleKodeverk: { [key: string]: KodeverkMedNavn[] },
-) => ({
+): OppholdInntektOgPerioderFormState => ({
   soknad,
-  fagsakPerson,
-  [FieldName.GJELDENDE_FOM]: medlemskap.fom,
-  [FieldName.MEDLEMSKAP_PERIODER]: medlemskap.medlemskapPerioder,
+  person: fagsakPerson,
+  gjeldendeFom: medlemskap.fom,
   perioder,
   oppholdInntektOgPeriodeForm: OppholdInntektOgPeriodeForm.buildInitialValues(
     valgtPeriode,
@@ -147,7 +138,6 @@ const buildInitialValues = (
 });
 
 interface OppholdInntektOgPerioderFormProps {
-  intl: IntlShape;
   submittable: boolean;
   aksjonspunkter: Aksjonspunkt[];
   readOnly: boolean;
@@ -162,18 +152,17 @@ interface OppholdInntektOgPerioderFormProps {
   submitCallback: (aksjonspunktData: any) => Promise<void>;
 }
 
-export const OppholdInntektOgPerioderForm = (props: OppholdInntektOgPerioderFormProps) => {
-  const {
-    readOnly,
-    submittable,
-    aksjonspunkter,
-    alleKodeverk,
-    alleMerknaderFraBeslutter,
-    soknad,
-    fagsakPerson,
-    medlemskap,
-    submitCallback,
-  } = props;
+export const OppholdInntektOgPerioderForm = ({
+  readOnly,
+  submittable,
+  aksjonspunkter,
+  alleKodeverk,
+  alleMerknaderFraBeslutter,
+  soknad,
+  fagsakPerson,
+  medlemskap,
+  submitCallback,
+}: OppholdInntektOgPerioderFormProps) => {
   const initialPerioder = useMemo(
     () =>
       (medlemskap.perioder || []).map(periode => ({
@@ -205,19 +194,13 @@ export const OppholdInntektOgPerioderForm = (props: OppholdInntektOgPerioderForm
     submitCallback(transformValues(formState, aksjonspunkter));
   };
 
-  const perioder = useWatch({ control: formMethods.control, name: FieldName.PERIODER });
+  const perioder = useWatch({ control: formMethods.control, name: 'perioder' });
 
   const periodeResetCallback = () => {
-    console.log('periodeResetCallback', valgtPeriode);
-    // if (valgtPeriode) {
-    //   formMethods.reset(getInitialValues(), { keepDefaultValues: true });
-    //   // formMethods.resetField('perioder')
-    //   // formReset(`${behandlingFormPrefix}.OppholdInntektOgPeriodeForm-${valgtPeriode.id}`);
     formMethods.reset({
       ...formMethods.getValues(),
       oppholdInntektOgPeriodeForm: getInitialValues().oppholdInntektOgPeriodeForm,
     });
-    // }
   };
 
   const velgPeriodeCallback = (id: string, periode: Periode) => {
@@ -240,7 +223,7 @@ export const OppholdInntektOgPerioderForm = (props: OppholdInntektOgPerioderForm
       ...values,
     };
     const newPerioder = createNewPerioder(perioder, values.id, newPeriodeObject);
-    formMethods.setValue(FieldName.PERIODER, newPerioder);
+    formMethods.setValue('perioder', newPerioder);
   };
 
   const isConfirmButtonDisabled = () => {
@@ -298,47 +281,4 @@ export const OppholdInntektOgPerioderForm = (props: OppholdInntektOgPerioderForm
   );
 };
 
-// const buildInitalValues = createSelector(
-//   [ownProps => ownProps.soknad, ownProps => ownProps.fagsakPerson, ownProps => ownProps.medlemskap],
-//   (soknad, person, medlem = {}) => ({
-//     soknad,
-//     person,
-//     gjeldendeFom: medlem.fom,
-//     medlemskapPerioder: medlem.medlemskapPerioder || [],
-//     perioder: (medlem.perioder || []).map(periode => ({
-//       ...periode,
-//       id: guid(),
-//     })),
-//   }),
-// );
-
-// export const isBehandlingRevurderingFortsattMedlemskap = createSelector(
-//   [ownProps => ownProps.behandlingType, ownProps => ownProps.medlemskap],
-//   (type, medlem = {}) => type.kode === behandlingType.REVURDERING && !!medlem.fom,
-// );
-
-// const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-//   const onSubmit = values => initialOwnProps.submitCallback(transformValues(values, initialOwnProps.aksjonspunkter));
-//   const hasOpenAksjonspunkter = initialOwnProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
-//   const perioder = [];
-
-//   return (state, ownProps) => {
-//     const { behandlingId, behandlingVersjon } = ownProps;
-//     const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
-//     return {
-//       behandlingFormPrefix,
-//       onSubmit,
-//       hasOpenAksjonspunkter,
-//       initialValues: buildInitalValues(ownProps),
-//       perioder:
-//         behandlingFormValueSelector(
-//           'OppholdInntektOgPerioderForm',
-//           behandlingId,
-//           behandlingVersjon,
-//         )(state, 'perioder') || perioder,
-//       isRevurdering: isBehandlingRevurderingFortsattMedlemskap(ownProps),
-//     };
-//   };
-// };
-
-export default injectIntl(OppholdInntektOgPerioderForm);
+export default OppholdInntektOgPerioderForm;

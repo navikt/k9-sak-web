@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import TextArea from './TextArea';
@@ -18,23 +18,31 @@ type OwnProps = {
 };
 
 export type FormValues = {
-  [key: string]: string;
+  begrunnelse: string;
 };
 
 type TransformedValues = {
   begrunnelse: string;
 };
 
+interface StaticFunctions {
+  buildInitialValues: (
+    aksjonspunkt: { begrunnelse: string }[] | { begrunnelse: string },
+    begrunnelseFieldName?: string,
+  ) => FormValues;
+  transformValues: (values: FormValues, name: string) => TransformedValues;
+}
+
 /**
  * FaktaBegrunnelseTextField
  */
-const FaktaBegrunnelseTextFieldRHF = ({
+const FaktaBegrunnelseTextFieldRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
   isReadOnly,
   isSubmittable,
   hasBegrunnelse,
   label,
   name = 'begrunnelse',
-}: OwnProps) =>
+}) =>
   (isSubmittable || hasBegrunnelse) && (
     <div className={styles.begrunnelseTextField}>
       <TextArea
@@ -55,9 +63,8 @@ const getBegrunnelse = (aksjonspunkt: { begrunnelse: string }[] | { begrunnelse:
 
 FaktaBegrunnelseTextFieldRHF.buildInitialValues = (
   aksjonspunkt: { begrunnelse: string }[] | { begrunnelse: string },
-  begrunnelseFieldName = 'begrunnelse',
 ): FormValues => ({
-  [begrunnelseFieldName]: decodeHtmlEntity(getBegrunnelse(aksjonspunkt)),
+  begrunnelse: decodeHtmlEntity(getBegrunnelse(aksjonspunkt)),
 });
 
 FaktaBegrunnelseTextFieldRHF.transformValues = (values: FormValues, name = 'begrunnelse'): TransformedValues => ({

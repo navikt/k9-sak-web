@@ -16,10 +16,10 @@ import { Aksjonspunkt, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, Table, VStack } from '@navikt/ds-react';
 import { RadioGroupPanel } from '@navikt/ft-form-hooks';
 import moment from 'moment';
-import React, { useMemo } from 'react';
+import React, { FunctionComponent, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
-import { OppholdInntektOgPerioderFormState } from './FormState';
+import { OppholdInntektOgPerioderFormState, PerioderMedMedlemskapFaktaPanelFormState } from './FormState';
 import { MedlemskapPeriode } from './Medlemskap';
 import { MerknaderFraBeslutter } from './MerknaderFraBeslutter';
 import { Periode } from './Periode';
@@ -55,17 +55,27 @@ interface PerioderMedMedlemskapFaktaPanelProps {
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
+interface StaticFunctions {
+  buildInitialValues: (
+    periode: Periode,
+    medlemskapPerioder: MedlemskapPeriode[],
+    soknad: Soknad,
+    aksjonspunkter: Aksjonspunkt[],
+    getKodeverknavn: (kode: Kodeverk) => string,
+  ) => PerioderMedMedlemskapFaktaPanelFormState;
+  transformValues: (
+    values: PerioderMedMedlemskapFaktaPanelFormState,
+    manuellVurderingTyper,
+  ) => { kode: string; medlemskapManuellVurderingType: string };
+}
+
 /**
  * PerioderMedMedlemskapFaktaPanel
  *
  * Presentasjonskomponent. Setter opp aksjonspunktet for avklaring av perioder (Medlemskapsvilkåret).
  */
-export const PerioderMedMedlemskapFaktaPanel = ({
-  readOnly,
-  fodselsdato,
-  alleMerknaderFraBeslutter,
-  alleKodeverk,
-}: PerioderMedMedlemskapFaktaPanelProps) => {
+export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedlemskapFaktaPanelProps> &
+  StaticFunctions = ({ readOnly, fodselsdato, alleMerknaderFraBeslutter, alleKodeverk }) => {
   const { getValues } = useFormContext<OppholdInntektOgPerioderFormState>();
   const {
     oppholdInntektOgPeriodeForm: { fixedMedlemskapPerioder, hasPeriodeAksjonspunkt, isPeriodAksjonspunktClosed },
@@ -183,7 +193,10 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
   };
 };
 
-PerioderMedMedlemskapFaktaPanel.transformValues = (values, manuellVurderingTyper) => ({
+PerioderMedMedlemskapFaktaPanel.transformValues = (
+  values: PerioderMedMedlemskapFaktaPanelFormState,
+  manuellVurderingTyper,
+) => ({
   kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
   medlemskapManuellVurderingType: manuellVurderingTyper.find(
     m => m.kode === values.medlemskapManuellVurderingType.kode,

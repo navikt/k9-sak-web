@@ -25,7 +25,7 @@ interface StatusForBorgerFaktaPanelProps {
 
 interface StaticFunctions {
   buildInitialValues: (periode: Periode, aksjonspunkter: Aksjonspunkt[]) => StatusForBorgerFaktaPanelFormState;
-  transformValues: (values: StatusForBorgerFaktaPanelFormState, name?: string) => TransformedValues;
+  transformValues: (values: StatusForBorgerFaktaPanelFormState, aksjonspunkter: Aksjonspunkt[]) => TransformedValues;
 }
 
 /**
@@ -131,14 +131,14 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
   );
 };
 
-const getApKode = aksjonspunkter =>
+const getApKode = (aksjonspunkter: Aksjonspunkt[]) =>
   aksjonspunkter
     .map(ap => ap.definisjon.kode)
     .filter(
       kode => kode === aksjonspunktCodes.AVKLAR_OPPHOLDSRETT || kode === aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD,
     )[0];
 
-const getEosBorger = (periode, aksjonspunkter) =>
+const getEosBorger = (periode: Periode, aksjonspunkter: Aksjonspunkt[]) =>
   periode.erEosBorger || periode.erEosBorger === false
     ? periode.erEosBorger
     : aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_OPPHOLDSRETT);
@@ -146,7 +146,7 @@ const getEosBorger = (periode, aksjonspunkter) =>
 const getOppholdsrettVurdering = (periode: Periode) =>
   periode.oppholdsrettVurdering || periode.oppholdsrettVurdering === false ? periode.oppholdsrettVurdering : undefined;
 
-const getLovligOppholdVurdering = periode =>
+const getLovligOppholdVurdering = (periode: Periode) =>
   periode.lovligOppholdVurdering || periode.lovligOppholdVurdering === false
     ? periode.lovligOppholdVurdering
     : undefined;
@@ -175,7 +175,10 @@ StatusForBorgerFaktaPanel.buildInitialValues = (periode: Periode, aksjonspunkter
   };
 };
 
-StatusForBorgerFaktaPanel.transformValues = (values, aksjonspunkter) => ({
+StatusForBorgerFaktaPanel.transformValues = (
+  values: StatusForBorgerFaktaPanelFormState,
+  aksjonspunkter: Aksjonspunkt[],
+) => ({
   kode: getApKode(aksjonspunkter),
   oppholdsrettVurdering: values.oppholdsrettVurdering,
   lovligOppholdVurdering: values.lovligOppholdVurdering,

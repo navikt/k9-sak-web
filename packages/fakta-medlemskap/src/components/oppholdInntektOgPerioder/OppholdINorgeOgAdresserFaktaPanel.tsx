@@ -7,11 +7,12 @@ import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import { RadioGroupPanel } from '@navikt/ft-form-hooks';
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { BostedSokerPersonopplysninger } from '@fpsak-frontend/fakta-bosted-soker/src/BostedSokerFaktaIndex';
-import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Aksjonspunkt, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
+import { OppholdINorgeOgAdresserFaktaPanelFormState } from './FormState';
 import { MerknaderFraBeslutter } from './MerknaderFraBeslutter';
 import { Opphold } from './Opphold';
 import { Periode } from './Periode';
@@ -62,21 +63,37 @@ interface OppholdINorgeOgAdresserFaktaPanelProps {
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   alleMerknaderFraBeslutter: MerknaderFraBeslutter;
 }
+
+interface TransformedValues {
+  kode: string;
+  bosattVurdering: boolean;
+}
+
+interface StaticFunctions {
+  buildInitialValues: (
+    soknad: Soknad,
+    periode: Periode,
+    aksjonspunkter: Aksjonspunkt[],
+  ) => OppholdINorgeOgAdresserFaktaPanelFormState;
+  transformValues: (values: OppholdINorgeOgAdresserFaktaPanelFormState) => TransformedValues;
+}
+
 /**
  * OppholdINorgeOgAdresserFaktaPanel
  *
  * Presentasjonskomponent. Er tilknyttet faktapanelet for medlemskap.
  * Viser opphold i innland og utland som er relevante for søker. ReadOnly.
  */
-const OppholdINorgeOgAdresserFaktaPanel = ({
+const OppholdINorgeOgAdresserFaktaPanel: FunctionComponent<OppholdINorgeOgAdresserFaktaPanelProps> &
+  StaticFunctions = ({
   readOnly,
   hasBosattAksjonspunkt,
   isBosattAksjonspunktClosed,
-  opphold = {},
+  opphold,
   foreldre = [],
   alleKodeverk,
   alleMerknaderFraBeslutter,
-}: OppholdINorgeOgAdresserFaktaPanelProps) => (
+}) => (
   <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]}>
     <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
       <div>
@@ -85,7 +102,7 @@ const OppholdINorgeOgAdresserFaktaPanel = ({
             <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.StayingOutsideOfNorway" />
           </Detail>
           <VerticalSpacer fourPx />
-          {lagOppholdIUtland(opphold.utlandsopphold)}
+          {!!opphold && lagOppholdIUtland(opphold.utlandsopphold)}
         </FaktaGruppe>
       </div>
       <div>
@@ -139,26 +156,7 @@ const OppholdINorgeOgAdresserFaktaPanel = ({
   </FaktaGruppe>
 );
 
-// const mapStateToProps = (state, ownProps) => {
-//   const { behandlingId, behandlingVersjon } = ownProps;
-//   const formName = `OppholdInntektOgPeriodeForm-${ownProps.id}`;
-//   return {
-//     opphold: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'opphold'),
-//     foreldre: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'foreldre'),
-//     hasBosattAksjonspunkt: behandlingFormValueSelector(
-//       formName,
-//       behandlingId,
-//       behandlingVersjon,
-//     )(state, 'hasBosattAksjonspunkt'),
-//     isBosattAksjonspunktClosed: behandlingFormValueSelector(
-//       formName,
-//       behandlingId,
-//       behandlingVersjon,
-//     )(state, 'isBosattAksjonspunktClosed'),
-//   };
-// };
-
-const createParent = (isApplicant, personopplysning) => ({
+const createParent = (isApplicant: boolean, personopplysning: Personopplysninger) => ({
   isApplicant,
   personopplysning,
 });
@@ -200,7 +198,7 @@ OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (
   };
 };
 
-OppholdINorgeOgAdresserFaktaPanel.transformValues = values => ({
+OppholdINorgeOgAdresserFaktaPanel.transformValues = (values: OppholdINorgeOgAdresserFaktaPanelFormState) => ({
   kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
   bosattVurdering: values.bosattVurdering,
 });
