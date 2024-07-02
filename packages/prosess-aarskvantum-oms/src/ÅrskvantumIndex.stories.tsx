@@ -147,7 +147,7 @@ const behandling = {
 
 const aksjonspunkterForSteg = [
   {
-    status: '', // empty
+    status: '',
     definisjon: '9003', // AKSJONSPUNKT_DEF
   },
 ] as Aksjonspunkt[];

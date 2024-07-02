@@ -108,7 +108,7 @@ const locationMock = {
 const fagsak = {
   saksnummer: '35425245',
   sakstype: fagsakYtelsesType.FRISINN, // FAGSAK_YTELSE
-  relasjonsRolleType: relasjonsRolleType.MOR, // empty
+  relasjonsRolleType: relasjonsRolleType.MOR,
   status: fagsakStatus.UNDER_BEHANDLING, // FAGSAK_STATUS
   barnFodt: '2020-01-01',
   opprettet: '2020-01-01',
