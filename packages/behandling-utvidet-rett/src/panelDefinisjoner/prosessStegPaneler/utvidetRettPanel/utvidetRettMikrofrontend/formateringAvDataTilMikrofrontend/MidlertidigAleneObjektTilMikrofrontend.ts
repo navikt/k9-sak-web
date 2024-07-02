@@ -28,14 +28,12 @@ const formatereLesemodusObjektForMidlertidigAlene = (vilkar: Vilkar, aksjonspunk
         fra: vilkar.perioder[0].periode.fom,
         til: vilkar.perioder[0].periode.tom,
       },
-      avslagsArsakErPeriodeErIkkeOverSeksMån:
-        vilkar.perioder[0]?.avslagKode === AvslagskoderMidlertidigAlene.VARIGHET_UNDER_SEKS_MÅN,
+      avslagsÅrsakKode: vilkar.perioder[0]?.avslagKode
     };
   }
   return {
     begrunnelse: '',
     vilkarOppfylt: false,
-    avslagsArsakErIkkeRiskioFraFravaer: false,
     dato: {
       fra: '',
       til: '',
@@ -51,20 +49,15 @@ const formatereLosAksjonspunktObjektForMidlertidigAlene = (
     fom: string;
     tom: string;
   },
-  avslagsArsakErPeriodeErIkkeOverSeksMån: boolean,
+  avslagsårsakKode: string
 ) => {
   const losAksjonspunktObjekt = {
     kode: aksjonspunktKode,
     begrunnelse,
     erVilkarOk,
     periode,
+    avslagsårsakKode: erVilkarOk ? null : avslagsårsakKode
   };
-
-  if (!erVilkarOk) {
-    losAksjonspunktObjekt['avslagsårsak'] = avslagsArsakErPeriodeErIkkeOverSeksMån
-      ? AvslagskoderMidlertidigAlene.VARIGHET_UNDER_SEKS_MÅN
-      : AvslagskoderMidlertidigAlene.REGNES_IKKE_SOM_Å_HA_ALENEOMSORG;
-  }
 
   return losAksjonspunktObjekt;
 };
@@ -109,7 +102,7 @@ const MidlertidigAleneObjektTilMikrofrontend = ({
         erSokerenMidlertidigAleneOmOmsorgen,
         fra,
         til,
-        avslagsArsakErPeriodeErIkkeOverSeksMån,
+        avslagsårsakKode
       }) => {
         submitCallback([
           formatereLosAksjonspunktObjektForMidlertidigAlene(
@@ -120,7 +113,7 @@ const MidlertidigAleneObjektTilMikrofrontend = ({
               fom: fra,
               tom: til,
             },
-            avslagsArsakErPeriodeErIkkeOverSeksMån,
+            avslagsårsakKode
           ),
         ]);
       },

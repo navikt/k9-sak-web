@@ -14,6 +14,7 @@ const tekst = {
   arsak: 'Årsak',
   arsakIkkeAleneOmsorg: 'Søker regnes ikke som å ha aleneomsorg',
   arsakPeriodeIkkeOverSeksMån: 'Varigheten er mindre enn seks måneder ',
+  arsakIkkeAleneOmsorgAnnet: 'Annet',
   feilIngenVurdering: 'Resultat må oppgis.',
   feilIngenÅrsak: 'Årsak må oppgis.',
 };
