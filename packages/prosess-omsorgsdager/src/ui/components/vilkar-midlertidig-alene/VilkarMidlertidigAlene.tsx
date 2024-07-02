@@ -180,27 +180,27 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                     <RadioGroup
                       className={classNames(
                         styleRadioknapper.horisontalPlassering,
-                        styles.avslagsArsakErPeriodeErIkkeOverSeksMån,
+                        styles.avslagsårsakKode,
                       )}
                       legend={tekst.velgArsak}
                       size="small"
-                      name="avslagsArsakErPeriodeErIkkeOverSeksMån"
+                      name="avslagsårsakKode"
                     >
                       <HStack gap="1">
                         <RadioButtonWithBooleanValue
                           label={tekst.arsakIkkeAleneOmsorg}
                           value={AvslagskoderMidlertidigAlene.REGNES_IKKE_SOM_Å_HA_ALENEOMSORG}
-                          name="avslagsArsakErPeriodeErIkkeOverSeksMån"
+                          name="avslagsårsakKode"
                         />
                         <RadioButtonWithBooleanValue
                           label={tekst.arsakPeriodeIkkeOverSeksMån}
                           value={AvslagskoderMidlertidigAlene.VARIGHET_UNDER_SEKS_MÅN}
-                          name="avslagsArsakErPeriodeErIkkeOverSeksMån"
+                          name="avslagsårsakKode"
                         />
                         <RadioButtonWithBooleanValue
                           label={tekst.arsakIkkeAleneOmsorgAnnet}
                           value={AvslagskoderMidlertidigAlene.ANNET}
-                          name="avslagsArsakErPeriodeErIkkeOverSeksMån"
+                          name="avslagsårsakKode"
                         />
                       </HStack>
                     </RadioGroup>

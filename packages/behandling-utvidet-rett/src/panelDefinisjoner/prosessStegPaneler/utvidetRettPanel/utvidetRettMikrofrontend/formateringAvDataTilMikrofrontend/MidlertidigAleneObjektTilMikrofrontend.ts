@@ -27,7 +27,7 @@ const formatereLesemodusObjektForMidlertidigAlene = (vilkar: Vilkar, aksjonspunk
         fra: vilkar.perioder[0].periode.fom,
         til: vilkar.perioder[0].periode.tom,
       },
-      avslagsÅrsakKode: vilkar.perioder[0]?.avslagKode
+      avslagsårsakKode: vilkar.perioder[0]?.avslagKode
     };
   }
   return {
@@ -55,7 +55,7 @@ const formatereLosAksjonspunktObjektForMidlertidigAlene = (
     begrunnelse,
     erVilkarOk,
     periode,
-    avslagsårsakKode: erVilkarOk ? null : avslagsårsakKode
+    avslagsårsak: erVilkarOk ? null : avslagsårsakKode
   };
 
   return losAksjonspunktObjekt;
