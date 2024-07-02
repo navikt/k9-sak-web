@@ -5,7 +5,6 @@ import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
 import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import { VilkarMidlertidigAleneProps } from '../../../../../types/utvidetRettMikrofrontend/VilkarMidlertidigAleneProps';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
-import AvslagskoderMidlertidigAlene from '../../../../../types/utvidetRettMikrofrontend/AvslagskoderMidlertidigAlene';
 
 interface OwnProps {
   behandlingsID: string;
