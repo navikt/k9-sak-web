@@ -74,5 +74,9 @@
   {
     "key": "OVERSTYRING_UTTAK",
     "value": "${OVERSTYRING_UTTAK}"
+  },
+  {
+    "key": "NYE_NOKKELTALL",
+    "value": "${NYE_NOKKELTALL}"
   }
 ]

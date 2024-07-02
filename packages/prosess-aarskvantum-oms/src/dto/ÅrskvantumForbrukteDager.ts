@@ -8,6 +8,7 @@ interface ÅrskvantumForbrukteDager {
   totaltAntallDager: number;
   antallKoronadager?: number;
   antallDagerArbeidsgiverDekker: number;
+  antallDagerFraværRapportertSomNyoppstartet: number;
   forbrukteDager?: number;
   forbruktTid?: Duration;
   restdager?: number;

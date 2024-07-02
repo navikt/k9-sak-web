@@ -48,6 +48,7 @@ export type Nøkkeltall = {
   totaltAntallDager: number;
   antallKoronadager: number;
   antallDagerArbeidsgiverDekker: number;
+  antallDagerFraværRapportertSomNyoppstartet: number;
   antallDagerInfotrygd: number;
   antallForbrukteDager: number;
   restTid: string; // Duration

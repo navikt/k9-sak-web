@@ -1,16 +1,8 @@
 /**
- * This error is thrown when a fetch request is intentionally aborted by the client.
- * E.g. if request is triggered by user input, and there is new input entered potentially before previous request completed.
+ * Used when one wants to signal to a caller that a request was intentionally aborted, e.g. because of debouncing, etc.
+ *
+ * The caller will then typically ignore this response and not do anything.
  */
-export class RequestIntentionallyAborted extends Error {
-  public static readonly MSG = 'request intentionally aborted';
+export const requestIntentionallyAborted = Symbol("RequestIntentionallyAborted")
 
-  constructor() {
-    super(RequestIntentionallyAborted.MSG);
-    this.name = this.constructor.name;
-
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, RequestIntentionallyAborted);
-    }
-  }
-}
+export type RequestIntentionallyAborted = typeof requestIntentionallyAborted

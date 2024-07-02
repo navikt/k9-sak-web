@@ -21,6 +21,7 @@ export type NokkeltallContainerProps = Pick<
   | 'totaltAntallDager'
   | 'antallKoronadager'
   | 'antallDagerArbeidsgiverDekker'
+  | 'antallDagerFraværRapportertSomNyoppstartet'
   | 'forbrukteDager'
   | 'forbruktTid'
   | 'restdager'
@@ -46,6 +47,7 @@ const NokkeltallContainer = ({
   forbrukteDager,
   forbruktTid,
   antallDagerArbeidsgiverDekker,
+  antallDagerFraværRapportertSomNyoppstartet,
   antallDagerInfotrygd,
   antallKoronadager,
   smitteverndager,
@@ -91,6 +93,7 @@ const NokkeltallContainer = ({
         dagerNavKanUtbetale={dagerNavKanUtbetale}
         dagerRettPå={dagerRettPå}
         antallDagerArbeidsgiverDekker={antallDagerArbeidsgiverDekker}
+        antallDagerFraværRapportertSomNyoppstartet={antallDagerFraværRapportertSomNyoppstartet}
         visDetaljer={() => visEllerSkjulNokkeltalldetaljer(Nokkeltalltype.DAGER_NAV_KAN_UTBETALE)}
         viserDetaljer={apneNokkeltall?.includes(Nokkeltalltype.DAGER_NAV_KAN_UTBETALE)}
       />
