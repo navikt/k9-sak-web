@@ -34,15 +34,9 @@ export function valideringsFunksjoner(getValues, prop: string) {
     return true;
   };
 
-  const erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig = val => {
-    if (tekstTilBoolean(getValues()[prop])) return true;
-    return val !== null && val.length > 0;
-  };
-
   return {
     erDatoFyltUt,
     erDatoGyldig,
-    erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig,
     erDatoSisteDagenIÅret,
     erDatoIkkeIFremtid,
   };
