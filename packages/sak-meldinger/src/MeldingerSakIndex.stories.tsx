@@ -21,11 +21,8 @@ const meta: Meta<typeof MeldingerSakIndex> = {
   component: MeldingerSakIndex,
   decorators: [withMaxWidth(500)],
   argTypes: {
-    submitCallback: {
-      action: 'submitCallback',
-    },
-    previewCallback: {
-      action: 'previewCallback',
+    onMessageSent: {
+      action: 'onSubmitted',
     },
   },
 };
@@ -87,8 +84,6 @@ const revurderingVarslingArsak = [
 export const SendMeldingPanel: Story = {
   args: {
     templates: mockedBrevmaler,
-    sprakKode: bokmål,
-    behandlingId: 1,
     behandlingVersjon: 1,
     isKontrollerRevurderingApOpen: false,
     personopplysninger,
@@ -132,6 +127,9 @@ export const SendMeldingPanelEnMal: Story = {
 export const SendMeldingPanelEngelsk: Story = {
   args: {
     ...SendMeldingPanel.args,
-    sprakKode: 'EN',
+    behandling: {
+      ...SendMeldingPanel.args.behandling,
+      sprakkode: 'EN', // SPRAAK_KODE
+    },
   },
 };

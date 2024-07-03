@@ -29,5 +29,5 @@ export interface VilkarMidlertidigInformasjonTilLesemodus {
   begrunnelse: string;
   vilkarOppfylt: boolean;
   dato: VilkarMidlertidigAleneDato;
-  avslagsArsakErPeriodeErIkkeOverSeksMån?: boolean;
+  avslagsårsakKode?: string;
 }

@@ -23,9 +23,15 @@ type FormData = {
   fraDato: string;
   tilDato: string;
   erSokerenMidlertidigAleneOmOmsorgen: string;
-  avslagsArsakErPeriodeErIkkeOverSeksMån: string;
+  avslagsårsakKode: string;
   åpenForRedigering: boolean;
 };
+
+export enum AvslagskoderMidlertidigAlene {
+  REGNES_IKKE_SOM_Å_HA_ALENEOMSORG = '1076',
+  VARIGHET_UNDER_SEKS_MÅN = '1075',
+  ANNET = '1093'
+}
 
 const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProps> = ({
   behandlingsID,
@@ -56,8 +62,8 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
       erSokerenMidlertidigAleneOmOmsorgen: harAksjonspunktOgVilkarLostTidligere
         ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt)
         : '',
-      avslagsArsakErPeriodeErIkkeOverSeksMån: harAksjonspunktOgVilkarLostTidligere
-        ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån)
+      avslagsårsakKode: harAksjonspunktOgVilkarLostTidligere
+        ? informasjonTilLesemodus.avslagsårsakKode
         : '',
       åpenForRedigering: false,
     },
@@ -73,7 +79,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   const sokerenMidlertidigAleneOmOmsorgen = watch('erSokerenMidlertidigAleneOmOmsorgen');
   const åpenForRedigering = watch('åpenForRedigering');
 
-  const { erDatoFyltUt, erDatoGyldig, erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig, erDatoSisteDagenIÅret } =
+  const { erDatoFyltUt, erDatoGyldig, erDatoSisteDagenIÅret } =
     valideringsFunksjoner(getValues, 'erSokerenMidlertidigAleneOmOmsorgen');
 
   const mellomlagringFormState = useFormSessionStorage(
@@ -89,7 +95,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   const bekreftAksjonspunkt = ({
     begrunnelse,
     erSokerenMidlertidigAleneOmOmsorgen,
-    avslagsArsakErPeriodeErIkkeOverSeksMån,
+    avslagsårsakKode,
     fraDato,
     tilDato,
   }) => {
@@ -98,14 +104,14 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
       !errors.fraDato &&
       !errors.tilDato &&
       !errors.erSokerenMidlertidigAleneOmOmsorgen &&
-      !errors.avslagsArsakErPeriodeErIkkeOverSeksMån
+      !errors.avslagsårsakKode
     ) {
       losAksjonspunkt({
         begrunnelse,
         erSokerenMidlertidigAleneOmOmsorgen: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen),
         fra: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen) ? fraDato.replaceAll('.', '-') : '',
         til: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen) ? tilDato.replaceAll('.', '-') : '',
-        avslagsArsakErPeriodeErIkkeOverSeksMån: tekstTilBoolean(avslagsArsakErPeriodeErIkkeOverSeksMån),
+        avslagsårsakKode,
       });
       setValue('åpenForRedigering', false);
       mellomlagringFormState.fjerneState();
@@ -174,30 +180,30 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                     <RadioGroup
                       className={classNames(
                         styleRadioknapper.horisontalPlassering,
-                        styles.avslagsArsakErPeriodeErIkkeOverSeksMån,
+                        styles.avslagsårsakKode,
                       )}
                       legend={tekst.velgArsak}
                       size="small"
-                      name="avslagsArsakErPeriodeErIkkeOverSeksMån"
+                      name="avslagsårsakKode"
                     >
                       <HStack gap="1">
                         <RadioButtonWithBooleanValue
                           label={tekst.arsakIkkeAleneOmsorg}
-                          value="false"
-                          name="avslagsArsakErPeriodeErIkkeOverSeksMån"
-                          valideringsFunksjoner={erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig}
+                          value={AvslagskoderMidlertidigAlene.REGNES_IKKE_SOM_Å_HA_ALENEOMSORG}
+                          name="avslagsårsakKode"
                         />
                         <RadioButtonWithBooleanValue
                           label={tekst.arsakPeriodeIkkeOverSeksMån}
-                          value="true"
-                          name="avslagsArsakErPeriodeErIkkeOverSeksMån"
-                          valideringsFunksjoner={erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig}
+                          value={AvslagskoderMidlertidigAlene.VARIGHET_UNDER_SEKS_MÅN}
+                          name="avslagsårsakKode"
+                        />
+                        <RadioButtonWithBooleanValue
+                          label={tekst.arsakIkkeAleneOmsorgAnnet}
+                          value={AvslagskoderMidlertidigAlene.ANNET}
+                          name="avslagsårsakKode"
                         />
                       </HStack>
                     </RadioGroup>
-                    {errors.avslagsArsakErPeriodeErIkkeOverSeksMån && (
-                      <p className="typo-feilmelding">{tekst.feilIngenÅrsak}</p>
-                    )}
                   </div>
                 )}
 
