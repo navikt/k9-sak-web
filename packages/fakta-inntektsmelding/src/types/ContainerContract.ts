@@ -1,4 +1,4 @@
-import Aksjonspunkt from './Aksjonspunkt';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import AksjonspunktRequestPayload from './AksjonspunktRequestPayload';
 
 export type ArbeidsgiverOpplysninger = Readonly<{

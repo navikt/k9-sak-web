@@ -25,21 +25,21 @@ const VedtakKlageProsessIndex = ({
   submitCallback,
   previewVedtakCallback,
   isReadOnly,
-  alleKodeverk,
 }) => (
   <RawIntlProvider value={intl}>
-    {klageVurdering ? <VedtakKlageForm
-      behandlingId={behandling.id}
-      behandlingVersjon={behandling.versjon}
-      behandlingsresultat={behandling.behandlingsresultat}
-      behandlingPaaVent={behandling.behandlingPaaVent}
-      klageVurdering={klageVurdering}
-      aksjonspunkter={aksjonspunkter}
-      submitCallback={submitCallback}
-      previewVedtakCallback={previewVedtakCallback}
-      readOnly={isReadOnly}
-      alleKodeverk={alleKodeverk}
-    /> : null}
+    {klageVurdering ? (
+      <VedtakKlageForm
+        behandlingId={behandling.id}
+        behandlingVersjon={behandling.versjon}
+        behandlingsresultat={behandling.behandlingsresultat}
+        behandlingPaaVent={behandling.behandlingPaaVent}
+        klageVurdering={klageVurdering}
+        aksjonspunkter={aksjonspunkter}
+        submitCallback={submitCallback}
+        previewVedtakCallback={previewVedtakCallback}
+        readOnly={isReadOnly}
+      />
+    ) : null}
   </RawIntlProvider>
 );
 
@@ -50,7 +50,6 @@ VedtakKlageProsessIndex.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 export default VedtakKlageProsessIndex;

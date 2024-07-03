@@ -1,4 +1,4 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+// import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import React from 'react';
 import SoknadsperioderIndex from './SoknadsperioderIndex';
 
@@ -7,65 +7,65 @@ export default {
   component: SoknadsperioderIndex,
 };
 
-const alleKodeverk = {
-  [kodeverkTyper.ÅRSAK_TIL_VURDERING]: [
-    {
-      kode: 'REVURDERER_ENDRING_FRA_ANNEN_PART',
-      navn: 'Annen parts vedtak endrer uttak',
-      kodeverk: 'ÅRSAK_TIL_VURDERING',
-    },
-    {
-      kode: 'REVURDERER_ETABLERT_TILSYN_ENDRING_FRA_ANNEN_OMSORGSPERSON',
-      navn: 'Endring i felles opplysninger om etablert tilsyn',
-      kodeverk: 'ÅRSAK_TIL_VURDERING',
-    },
-    {
-      kode: 'REVURDERER_SYKDOM_ENDRING_FRA_ANNEN_OMSORGSPERSON',
-      navn: 'Endring i felles opplysninger om sykdom',
-      kodeverk: 'ÅRSAK_TIL_VURDERING',
-    },
-    {
-      kode: 'ENDRING_FRA_BRUKER',
-      navn: 'Endring fra digital søknad/Punsj',
-      kodeverk: 'ÅRSAK_TIL_VURDERING',
-    },
-    {
-      kode: 'REVURDERER_NATTEVÅKBEREDSKAP_ENDRING_FRA_ANNEN_OMSORGSPERSON',
-      navn: 'Endring i felles opplysninger om nattevåk/beredskap',
-      kodeverk: 'ÅRSAK_TIL_VURDERING',
-    },
-    {
-      kode: 'G_REGULERING',
-      navn: 'G-regulering',
-      kodeverk: 'ÅRSAK_TIL_VURDERING',
-    },
-    {
-      kode: 'REVURDERER_BERØRT_PERIODE',
-      navn: 'Tilstøtende periode',
-      kodeverk: 'ÅRSAK_TIL_VURDERING',
-    },
-    {
-      kode: 'FØRSTEGANGSVURDERING',
-      navn: 'Ny periode',
-      kodeverk: 'ÅRSAK_TIL_VURDERING',
-    },
-    {
-      kode: 'MANUELT_REVURDERER_PERIODE',
-      navn: 'Manuell revurdering',
-      kodeverk: 'ÅRSAK_TIL_VURDERING',
-    },
-    {
-      kode: 'REVURDERER_NY_INNTEKTSMELDING',
-      navn: 'Ny inntektsmelding',
-      kodeverk: 'ÅRSAK_TIL_VURDERING',
-    },
-    {
-      kode: 'TRUKKET_KRAV',
-      navn: 'Endret/fjernet søknadsperiode',
-      kodeverk: 'ÅRSAK_TIL_VURDERING',
-    },
-  ],
-};
+// const alleKodeverk = {
+//   [kodeverkTyper.ÅRSAK_TIL_VURDERING]: [
+//     {
+//       kode: 'REVURDERER_ENDRING_FRA_ANNEN_PART',
+//       navn: 'Annen parts vedtak endrer uttak',
+//       kodeverk: 'ÅRSAK_TIL_VURDERING',
+//     },
+//     {
+//       kode: 'REVURDERER_ETABLERT_TILSYN_ENDRING_FRA_ANNEN_OMSORGSPERSON',
+//       navn: 'Endring i felles opplysninger om etablert tilsyn',
+//       kodeverk: 'ÅRSAK_TIL_VURDERING',
+//     },
+//     {
+//       kode: 'REVURDERER_SYKDOM_ENDRING_FRA_ANNEN_OMSORGSPERSON',
+//       navn: 'Endring i felles opplysninger om sykdom',
+//       kodeverk: 'ÅRSAK_TIL_VURDERING',
+//     },
+//     {
+//       kode: 'ENDRING_FRA_BRUKER',
+//       navn: 'Endring fra digital søknad/Punsj',
+//       kodeverk: 'ÅRSAK_TIL_VURDERING',
+//     },
+//     {
+//       kode: 'REVURDERER_NATTEVÅKBEREDSKAP_ENDRING_FRA_ANNEN_OMSORGSPERSON',
+//       navn: 'Endring i felles opplysninger om nattevåk/beredskap',
+//       kodeverk: 'ÅRSAK_TIL_VURDERING',
+//     },
+//     {
+//       kode: 'G_REGULERING',
+//       navn: 'G-regulering',
+//       kodeverk: 'ÅRSAK_TIL_VURDERING',
+//     },
+//     {
+//       kode: 'REVURDERER_BERØRT_PERIODE',
+//       navn: 'Tilstøtende periode',
+//       kodeverk: 'ÅRSAK_TIL_VURDERING',
+//     },
+//     {
+//       kode: 'FØRSTEGANGSVURDERING',
+//       navn: 'Ny periode',
+//       kodeverk: 'ÅRSAK_TIL_VURDERING',
+//     },
+//     {
+//       kode: 'MANUELT_REVURDERER_PERIODE',
+//       navn: 'Manuell revurdering',
+//       kodeverk: 'ÅRSAK_TIL_VURDERING',
+//     },
+//     {
+//       kode: 'REVURDERER_NY_INNTEKTSMELDING',
+//       navn: 'Ny inntektsmelding',
+//       kodeverk: 'ÅRSAK_TIL_VURDERING',
+//     },
+//     {
+//       kode: 'TRUKKET_KRAV',
+//       navn: 'Endret/fjernet søknadsperiode',
+//       kodeverk: 'ÅRSAK_TIL_VURDERING',
+//     },
+//   ],
+// };
 
 const data = {
   perioderMedÅrsak: {
@@ -133,14 +133,12 @@ const data = {
   periodeMedUtfall: [
     {
       periode: { fom: '2021-11-01', tom: '2022-05-06' },
-      utfall: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+      utfall: 'IKKE_VURDERT', // VILKAR_UTFALL_TYPE
     },
   ],
   forrigeVedtak: [
-    { periode: { fom: '2021-11-01', tom: '2022-01-31' }, utfall: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' } },
+    { periode: { fom: '2021-11-01', tom: '2022-01-31' }, utfall: 'OPPFYLT' }, // VILKAR_UTFALL_TYPE
   ],
 };
 
-export const visFaktaOmSøknadsperioder = () => (
-  <SoknadsperioderIndex behandlingPerioderårsakMedVilkår={data} alleKodeverk={alleKodeverk} />
-);
+export const visFaktaOmSøknadsperioder = () => <SoknadsperioderIndex behandlingPerioderårsakMedVilkår={data} />;

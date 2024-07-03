@@ -1,20 +1,14 @@
 // eslint-disable-next-line import/no-duplicates
 import PropTypes from 'prop-types';
-// eslint-disable-next-line import/no-duplicates
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 const beregningsgrunnlagPropType = PropTypes.shape({
-  aktivitetStatus: PropTypes.arrayOf(
-    PropTypes.shape({
-      aktivitetStatus: kodeverkObjektPropType,
-    }),
-  ),
+  aktivitetStatus: PropTypes.arrayOf(PropTypes.string),
   beregningsgrunnlagPeriode: PropTypes.arrayOf(
     PropTypes.shape({
       beregningsgrunnlagPrStatusOgAndel: PropTypes.arrayOf(
         PropTypes.shape({
-          aktivitetStatus: kodeverkObjektPropType,
-          arbeidsforholdType: kodeverkObjektPropType,
+          aktivitetStatus: PropTypes.string,
+          arbeidsforholdType: PropTypes.string,
           beregnetPrAar: PropTypes.number,
           overstyrtPrAar: PropTypes.number,
           arbeidsforholdId: PropTypes.string,

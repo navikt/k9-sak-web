@@ -5,8 +5,8 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { screen } from '@testing-library/react';
 import React from 'react';
 import type { OpptjeningAktivitetType } from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType.js';
-import messages from '../../../i18n/nb_NO.json';
 import { ActivityPanel } from './ActivityPanel';
+import messages from '../../../i18n/nb_NO.json';
 
 describe('<ActivityPanel>', () => {
   const opptjeningAktivitetTypes: OpptjeningAktivitetType[] = [
@@ -37,7 +37,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={vi.fn()}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -65,7 +65,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={vi.fn()}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -93,7 +93,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={vi.fn()}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -121,7 +121,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={vi.fn()}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt={false}
@@ -149,7 +149,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={vi.fn()}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt={false}
@@ -177,7 +177,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={vi.fn()}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -207,7 +207,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={vi.fn()}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -235,7 +235,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={vi.fn()}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -264,7 +264,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={vi.fn()}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt={false}
@@ -291,7 +291,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={vi.fn()}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -321,7 +321,7 @@ describe('<ActivityPanel>', () => {
         readOnly
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={vi.fn()}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -350,7 +350,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={vi.fn()}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt
@@ -378,7 +378,7 @@ describe('<ActivityPanel>', () => {
         readOnly={false}
         opptjeningAktivitetTypes={opptjeningAktivitetTypes}
         cancelSelectedOpptjeningActivity={vi.fn()}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
         opptjeningFom="2017-08-15"
         opptjeningTom="2017-12-31"
         hasAksjonspunkt

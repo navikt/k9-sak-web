@@ -23,7 +23,14 @@ const mockProps = {
 
 describe('<FeilutbetalingPerioderFormImpl>', () => {
   it('skal rendre FeilutbetalingInfoPanel', () => {
-    renderWithIntlAndReduxForm(<FeilutbetalingPerioderFormImpl {...mockProps} />, { messages });
+    renderWithIntlAndReduxForm(
+      <table>
+        <tbody>
+          <FeilutbetalingPerioderFormImpl {...mockProps} />
+        </tbody>
+      </table>,
+      { messages },
+    );
 
     expect(screen.getByText('16.03.2016 - 26.05.2016')).toBeInTheDocument();
     expect(screen.getByRole('combobox')).toBeInTheDocument();
@@ -35,9 +42,7 @@ describe('<FeilutbetalingPerioderFormImpl>', () => {
       {
         kodeverk: 'MEDLEMSKAP_VILKAARET_TYPE',
         årsak: 'Medlemskapsvilkåret §14-2',
-        hendelseType: {
-          kode: 'MEDLEMSKAP_VILKAARET_TYPE',
-        },
+        hendelseType: 'MEDLEMSKAP_VILKAARET_TYPE',
         hendelseUndertyper: [
           {
             kodeverk: 'MEDLEMSKAP_VILKAAR',
@@ -52,7 +57,15 @@ describe('<FeilutbetalingPerioderFormImpl>', () => {
       årsak,
       årsaker,
     };
-    renderWithIntlAndReduxForm(<FeilutbetalingPerioderFormImpl {...props} />, { messages });
+
+    renderWithIntlAndReduxForm(
+      <table>
+        <tbody>
+          <FeilutbetalingPerioderFormImpl {...props} />
+        </tbody>
+      </table>,
+      { messages },
+    );
 
     expect(screen.getAllByRole('combobox').length).toBe(2);
   });

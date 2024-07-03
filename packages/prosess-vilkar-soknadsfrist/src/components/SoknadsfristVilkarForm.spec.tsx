@@ -1,17 +1,19 @@
 import React from 'react';
-// import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { screen } from '@testing-library/react';
+
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { DokumentStatus } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
-import { screen } from '@testing-library/react';
-import messages from '../../i18n/nb_NO.json';
+
 import { SoknadsfristVilkarForm } from './SoknadsfristVilkarForm';
 
+import messages from '../../i18n/nb_NO.json';
+
 const periode = {
-  vilkarStatus: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+  vilkarStatus: vilkarUtfallType.IKKE_OPPFYLT,
   vurderesIBehandlingen: true,
   periode: {
     fom: '2020-02-20',
@@ -25,7 +27,7 @@ const dokumenter = [
     status: [
       {
         periode: { fom: '2020-02-20', tom: '2020-02-25' },
-        status: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+        status: vilkarUtfallType.IKKE_OPPFYLT,
       },
     ],
     innsendingstidspunkt: '2020-06-01',
@@ -38,7 +40,7 @@ const dokumenter = [
     status: [
       {
         periode: { fom: '2020-02-26', tom: '2020-02-27' },
-        status: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+        status: vilkarUtfallType.IKKE_OPPFYLT,
       },
     ],
     innsendingstidspunkt: '2020-06-01',

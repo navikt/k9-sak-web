@@ -2,50 +2,33 @@ import PropTypes from 'prop-types';
 
 const personopplysningPropType = PropTypes.shape({
   nummer: PropTypes.number,
-  navBrukerKjonn: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
-  statsborgerskap: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
+  navBrukerKjonn: PropTypes.string.isRequired, // kodeverk
+  statsborgerskap: PropTypes.string.isRequired, // kodeverk
   avklartPersonstatus: PropTypes.shape({
-    orginalPersonstatus: PropTypes.shape({
-      kode: PropTypes.string.isRequired,
-    }),
-    overstyrtPersonstatus: PropTypes.shape({
-      kode: PropTypes.string.isRequired,
-    }).isRequired,
+    orginalPersonstatus: PropTypes.string, // kodeverk
+    overstyrtPersonstatus: PropTypes.string.isRequired, // kodeverk
   }),
-  personstatus: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
-  diskresjonskode: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
-  sivilstand: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
+  personstatus: PropTypes.string.isRequired, // kodeverk
+  diskresjonskode: PropTypes.string.isRequired, // kodeverk
+  sivilstand: PropTypes.string.isRequired, // kodeverk
   aktoerId: PropTypes.string.isRequired,
   navn: PropTypes.string.isRequired,
   dodsdato: PropTypes.string,
   fodselsdato: PropTypes.string,
-  adresser: PropTypes.arrayOf(PropTypes.shape({
-    adresseType: PropTypes.shape({
-      kode: PropTypes.string.isRequired,
+  adresser: PropTypes.arrayOf(
+    PropTypes.shape({
+      adresseType: PropTypes.string, // kodeverk
+      adresselinje1: PropTypes.string,
+      adresselinje2: PropTypes.string,
+      adresselinje3: PropTypes.string,
+      postNummer: PropTypes.string,
+      poststed: PropTypes.string,
+      land: PropTypes.string,
+      mottakerNavn: PropTypes.string,
     }),
-    adresselinje1: PropTypes.string,
-    adresselinje2: PropTypes.string,
-    adresselinje3: PropTypes.string,
-    postNummer: PropTypes.string,
-    poststed: PropTypes.string,
-    land: PropTypes.string,
-    mottakerNavn: PropTypes.string,
-
-  })),
+  ),
   fnr: PropTypes.string,
-  region: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
+  region: PropTypes.string.isRequired, // kodeverk
   annenPart: PropTypes.shape(),
   barn: PropTypes.arrayOf(PropTypes.shape()),
   harVerge: PropTypes.bool,

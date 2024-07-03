@@ -17,14 +17,8 @@ describe('<InngangsvilkarPanel>', () => {
   const behandling = {
     id: 1,
     versjon: 1,
-    status: {
-      kode: behandlingStatus.BEHANDLING_UTREDES,
-      kodeverk: 'BEHANDLING_STATUS',
-    },
-    type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: 'BEHANDLING_TYPE',
-    },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     behandlingHenlagt: false,
     links: [],
@@ -34,8 +28,8 @@ describe('<InngangsvilkarPanel>', () => {
 
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.AVKLAR_AKTIVITETER, kodeverk: 'BEHANDLING_DEF' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
+      definisjon: aksjonspunktCodes.AVKLAR_AKTIVITETER,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },

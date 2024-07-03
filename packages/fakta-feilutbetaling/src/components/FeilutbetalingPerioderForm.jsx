@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import styles from './feilutbetalingPerioderTable.module.css';
 
 const getHendelseUndertyper = (årsakNavn, årsaker) => {
-  const årsak = årsaker.find(a => a.hendelseType.kode === årsakNavn);
+  const årsak = årsaker.find(a => a.hendelseType === årsakNavn);
   return årsak && årsak.hendelseUndertyper.length > 0 ? årsak.hendelseUndertyper : null;
 };
 
@@ -31,7 +31,7 @@ export const FeilutbetalingPerioderFormImpl = ({
         <SelectField
           name={`perioder.${elementId}.årsak`}
           selectValues={årsaker.map(a => (
-            <option key={a.hendelseType.kode} value={a.hendelseType.kode}>
+            <option key={a.hendelseType} value={a.hendelseType}>
               {a.hendelseType.navn}
             </option>
           ))}
@@ -41,12 +41,13 @@ export const FeilutbetalingPerioderFormImpl = ({
           bredde="m"
           label=""
         />
+
         {hendelseUndertyper && (
           <SelectField
             name={`perioder.${elementId}.${årsak}.underÅrsak`}
             selectValues={hendelseUndertyper.map(a => (
-              <option key={a.kode} value={a.kode}>
-                {a.navn}
+              <option key={a.underÅrsakKode} value={a.underÅrsakKode}>
+                {a.underÅrsak}
               </option>
             ))}
             validate={[required]}

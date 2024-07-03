@@ -1,9 +1,9 @@
+import React from 'react';
+import { screen } from '@testing-library/react';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../../../i18n/nb_NO.json';
 import ActivityDataSubPanel from './ActivityDataSubPanel';
+import messages from '../../../i18n/nb_NO.json';
 
 describe('<ActivityDataSubPanel>', () => {
   const activity1 = {
@@ -33,7 +33,7 @@ describe('<ActivityDataSubPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly={false}
         isManuallyAdded={false}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'arbeid' }}
+        selectedActivityType={OAType.ARBEID}
       />,
       { messages },
     );
@@ -50,7 +50,7 @@ describe('<ActivityDataSubPanel>', () => {
         initialValues={{}}
         readOnly={false}
         isManuallyAdded={false}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'arbeid' }}
+        selectedActivityType={OAType.ARBEID}
         arbeidsgiverOpplysningerPerId={undefined}
       />,
       { messages },
@@ -69,7 +69,7 @@ describe('<ActivityDataSubPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly={false}
         isManuallyAdded={false}
-        selectedActivityType={{ kode: OAType.FRILANS, kodeverk: 'FRILANS' }}
+        selectedActivityType={OAType.FRILANS}
       />,
       { messages },
     );
@@ -84,7 +84,7 @@ describe('<ActivityDataSubPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly={false}
         isManuallyAdded={false}
-        selectedActivityType={{ kode: OAType.NÆRING, kodeverk: OAType.NÆRING }}
+        selectedActivityType={OAType.NÆRING}
       />,
       { messages },
     );
@@ -101,7 +101,7 @@ describe('<ActivityDataSubPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly={false}
         isManuallyAdded={false}
-        selectedActivityType={{ kode: OAType.SYKEPENGER, kodeverk: OAType.SYKEPENGER }}
+        selectedActivityType={OAType.VENTELØNN_VARTPENGER}
       />,
       { messages },
     );
@@ -116,7 +116,7 @@ describe('<ActivityDataSubPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly={false}
         isManuallyAdded
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
       />,
       { messages },
     );
@@ -132,7 +132,7 @@ describe('<ActivityDataSubPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly
         isManuallyAdded
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
       />,
       { messages },
     );
@@ -148,7 +148,7 @@ describe('<ActivityDataSubPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly={false}
         isManuallyAdded={false}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
       />,
       { messages },
     );
@@ -161,7 +161,7 @@ describe('<ActivityDataSubPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         readOnly={false}
         isManuallyAdded={false}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
       />,
       { messages },
     );
@@ -173,7 +173,7 @@ describe('<ActivityDataSubPanel>', () => {
         initialValues={{}}
         readOnly={false}
         isManuallyAdded={false}
-        selectedActivityType={{ kode: OAType.ARBEID, kodeverk: 'ARBEID' }}
+        selectedActivityType={OAType.ARBEID}
         arbeidsgiverOpplysningerPerId={undefined}
       />,
       { messages },

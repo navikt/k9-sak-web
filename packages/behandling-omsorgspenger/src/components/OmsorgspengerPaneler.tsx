@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
 import {
-  KodeverkMedNavn,
   Behandling,
   FeatureToggles,
   Fagsak,
@@ -10,7 +9,7 @@ import {
   ArbeidsgiverOpplysningerPerId,
   Dokument,
 } from '@k9-sak-web/types';
-
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
 import OmsorgspengerProsess from './OmsorgspengerProsess';
 import OmsorgspengerFakta from './OmsorgspengerFakta';
 import FetchedData from '../types/fetchedDataTsType';
@@ -20,7 +19,7 @@ interface OwnProps {
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: AlleKodeverk;
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;

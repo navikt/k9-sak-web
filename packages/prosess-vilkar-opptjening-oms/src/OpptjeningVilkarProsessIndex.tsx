@@ -1,17 +1,21 @@
+import React, { useEffect, useState } from 'react';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
+import classNames from 'classnames/bind';
+import isEqual from 'lodash/isEqual';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
+
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Image } from '@fpsak-frontend/shared-components';
 import { dateFormat } from '@fpsak-frontend/utils';
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { Aksjonspunkt, Fagsak, Opptjening, OpptjeningBehandling, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
-import classNames from 'classnames/bind';
-import isEqual from 'lodash/isEqual';
-import React, { useEffect, useState } from 'react';
-import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
-import messages from '../i18n/nb_NO.json';
+
 import OpptjeningVilkarForm from './components/OpptjeningVilkarForm';
+
 import styles from './opptjeningVilkarProsessIndex.module.css';
+
+import messages from '../i18n/nb_NO.json';
 
 const cx = classNames.bind(styles);
 
@@ -79,7 +83,7 @@ const OpptjeningVilkarProsessIndex = ({
               active: activeTab === index,
               label: `${dateFormat(periode.fom)} - ${dateFormat(periode.tom)}`,
               iconSrc:
-                isAksjonspunktOpen && vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT ? (
+                isAksjonspunktOpen && vilkarStatus === vilkarUtfallType.IKKE_VURDERT ? (
                   <Image
                     src={advarselIcon}
                     className={styles.warningIcon}
@@ -96,9 +100,9 @@ const OpptjeningVilkarProsessIndex = ({
           <OpptjeningVilkarForm
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}
-            status={activePeriode.vilkarStatus.kode}
+            status={activePeriode.vilkarStatus}
             lovReferanse={lovReferanse}
-            fagsakType={fagsak.sakstype.kode}
+            fagsakType={fagsak.sakstype}
             aksjonspunkter={aksjonspunkter}
             submitCallback={submitCallback}
             readOnly={isReadOnly}

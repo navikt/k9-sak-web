@@ -10,12 +10,8 @@ import { Tilbaketrekkpanel as UnwrappedForm, buildInitialValues, transformValues
 
 const lagAksjonspunktTilbaketrekk = begrunnelse =>
   ({
-    definisjon: {
-      kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
-    },
-    status: {
-      kode: 'OPPR',
-    },
+    definisjon: aksjonspunktCodes.VURDER_TILBAKETREKK,
+    status: 'OPPR',
     begrunnelse,
   }) as Aksjonspunkt;
 

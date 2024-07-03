@@ -1,9 +1,12 @@
 import React from 'react';
+
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef, Rettigheter } from '@k9-sak-web/behandling-felles';
 import findStatusForVedtak from '@fpsak-frontend/utils/src/findStatusForVedtak';
+import { Aksjonspunkt, Fagsak, Personopplysninger, Vilkar } from '@k9-sak-web/types';
+
 import { UtvidetRettBehandlingApiKeys } from '../../data/utvidetRettBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
@@ -39,13 +42,23 @@ class PanelDef extends ProsessStegPanelDef {
     personopplysninger,
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,
+  }: {
+    previewCallback: () => void;
+    hentFritekstbrevHtmlCallback: () => void;
+    rettigheter: Rettigheter;
+    aksjonspunkter: Aksjonspunkt[];
+    vilkar: Vilkar[];
+    fagsak: Fagsak;
+    personopplysninger: Personopplysninger;
+    arbeidsgiverOpplysningerPerId: Personopplysninger;
+    lagreDokumentdata: () => void;
   }) => ({
     previewCallback,
     hentFritekstbrevHtmlCallback,
     aksjonspunkter,
     vilkar,
     personopplysninger,
-    ytelseTypeKode: fagsak.sakstype.kode,
+    ytelseTypeKode: fagsak.sakstype,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,

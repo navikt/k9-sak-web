@@ -1,7 +1,7 @@
 import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Periode } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Periode } from '@k9-sak-web/types';
 import { Button, Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -16,7 +16,6 @@ interface OwnProps {
   andeler: any[];
   nyPeriode: Periode;
   nyPeriodeDisabledDaysFom: string;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
   readOnly: boolean;
   behandlingId: number;
@@ -29,7 +28,6 @@ export const TilkjentYtelseNyPeriode = ({
   nyPeriode,
   readOnly,
   andeler,
-  alleKodeverk,
   behandlingId,
   behandlingVersjon,
   arbeidsgivere,
@@ -81,7 +79,6 @@ export const TilkjentYtelseNyPeriode = ({
                     readOnly={readOnly}
                     // @ts-ignore
                     andeler={andeler}
-                    alleKodeverk={alleKodeverk}
                     arbeidsgivere={arbeidsgivere}
                     behandlingId={behandlingId}
                     behandlingVersjon={behandlingVersjon}
@@ -150,7 +147,6 @@ interface PureOwnProps {
   newPeriodeCallback: (values: any) => void;
   behandlingId: number;
   behandlingVersjon: number;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
 const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {

@@ -1,12 +1,14 @@
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
+import { screen } from '@testing-library/react';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { BehandlingAppKontekst } from '@k9-sak-web/types';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+
+import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import * as useTrackRouteParam from '../app/useTrackRouteParam';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import FagsakIndex from './FagsakIndex';
@@ -35,7 +37,7 @@ describe('<FagsakIndex>', () => {
     ],
     [kodeverkTyper.BEHANDLING_TYPE]: [
       {
-        kode: behandlingType.FORSTEGANGSSOKNAD,
+        kode: behandlingType.FØRSTEGANGSSØKNAD,
         kodeverk: 'BEHANDLING_TYPE',
         navn: 'Førstegangsbehandling',
       },
@@ -79,26 +81,15 @@ describe('<FagsakIndex>', () => {
   };
   const fagsak = {
     saksnummer: 123456,
-    status: {
-      kode: fagsakStatus.OPPRETTET,
-      kodeverk: 'FAGSAK_STATUS',
-    },
-    sakstype: {
-      kode: fagsakYtelseType.PLEIEPENGER,
-      kodeverk: 'FAGSAK_YTELSE',
-    },
+    status: fagsakStatus.OPPRETTET,
+    sakstype: fagsakYtelseType.PLEIEPENGER,
   };
 
-  const behandling = {
+  const behandling: BehandlingAppKontekst = {
     id: 1,
-    type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: 'BEHANDLING_TYPE',
-    },
-    status: {
-      kode: behandlingStatus.AVSLUTTET,
-      kodeverk: 'BEHANDLING_STATUS',
-    },
+    uuid: '1',
+    type: behandlingType.FØRSTEGANGSSØKNAD,
+    status: behandlingStatus.AVSLUTTET,
     links: [],
     behandlendeEnhetId: 'test',
     behandlendeEnhetNavn: 'NAV Viken',
@@ -112,16 +103,11 @@ describe('<FagsakIndex>', () => {
     toTrinnsBehandling: undefined,
     behandlingÅrsaker: undefined,
   };
-  const behandling2 = {
+  const behandling2: BehandlingAppKontekst = {
     id: 2,
-    type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: 'BEHANDLING_TYPE',
-    },
-    status: {
-      kode: behandlingStatus.AVSLUTTET,
-      kodeverk: 'BEHANDLING_STATUS',
-    },
+    uuid: '2',
+    type: behandlingType.FØRSTEGANGSSØKNAD,
+    status: behandlingStatus.AVSLUTTET,
     links: [],
     behandlendeEnhetId: 'test',
     behandlendeEnhetNavn: 'NAV Viken',
@@ -135,16 +121,11 @@ describe('<FagsakIndex>', () => {
     toTrinnsBehandling: undefined,
     behandlingÅrsaker: undefined,
   };
-  const behandling3 = {
+  const behandling3: BehandlingAppKontekst = {
     id: 3,
-    type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: 'BEHANDLING_TYPE',
-    },
-    status: {
-      kode: behandlingStatus.AVSLUTTET,
-      kodeverk: 'BEHANDLING_STATUS',
-    },
+    uuid: '3',
+    type: behandlingType.FØRSTEGANGSSØKNAD,
+    status: behandlingStatus.AVSLUTTET,
     links: [],
     behandlendeEnhetId: 'test',
     behandlendeEnhetNavn: 'NAV Viken',

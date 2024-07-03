@@ -90,7 +90,7 @@ export const Tilbaketrekkpanel = ({
           validate={[required]}
           direction="horizontal"
           readOnly={readOnly}
-          isEdited={!isAksjonspunktOpen(vurderTilbaketrekkAP.status.kode)}
+          isEdited={!isAksjonspunktOpen(vurderTilbaketrekkAP.status)}
           radios={[
             {
               value: false,

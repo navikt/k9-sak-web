@@ -128,18 +128,14 @@ const behandlingsresultat = {
         periode: { fom: '2018-01-01', tom: '2018-04-04' },
         fom: '2018-01-01',
         tom: '2018-10-01',
-        utfall: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
-        kode: 'IKKE_VURDERT',
-        kodeverk: 'VILKAR_UTFALL_TYPE',
+        utfall: 'IKKE_VURDERT', // VILKAR_UTFALL_TYPE
       },
       {
         avslagsårsak: null,
         periode: { fom: '2018-05-01', tom: '2018-09-04' },
         fom: '2018-02-01',
         tom: '2018-12-01',
-        utfall: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
-        kode: 'IKKE_VURDERT',
-        kodeverk: 'VILKAR_UTFALL_TYPE',
+        utfall: 'IKKE_VURDERT', // VILKAR_UTFALL_TYPE
       },
     ],
   },
@@ -147,9 +143,9 @@ const behandlingsresultat = {
 
 const fagsak = {
   saksnummer: '1DoJZD0',
-  sakstype: { kode: 'PSB', kodeverk: 'FAGSAK_YTELSE' },
+  sakstype: 'PSB', // FAGSAK_YTELSE
   gyldigPeriode: { fom: '2022-11-28', tom: '2023-01-20' },
-  status: { kode: 'UBEH', kodeverk: 'FAGSAK_STATUS' },
+  status: 'UBEH', // FAGSAK_STATUS
   kanRevurderingOpprettes: false,
   skalBehandlesAvInfotrygd: false,
   opprettet: '2023-02-27T07:33:46.432',
@@ -162,7 +158,7 @@ const fagsak = {
     erKvinne: false,
     navn: 'DATO AKSEPTABEL',
     personnummer: '06838698180',
-    personstatusType: { kode: 'BOSA', kodeverk: 'PERSONSTATUS_TYPE' },
+    personstatusType: 'BOSA', // PERSONSTATUS_TYPE
     aktørId: '2649841813944',
   },
   erPbSak: false,
@@ -230,12 +226,8 @@ export const visPanelForÅpentAksjonspunkt = args => (
     aksjonspunkter={
       [
         {
-          definisjon: {
-            kode: aksjonspunktCodes.SVANGERSKAPSVILKARET,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
+          definisjon: aksjonspunktCodes.SVANGERSKAPSVILKARET,
+          status: aksjonspunktStatus.OPPRETTET,
           begrunnelse: undefined,
         },
       ] as Aksjonspunkt[]
@@ -298,12 +290,8 @@ export const visPanelForPSBÅpentAksjonspunktUten847B = args => (
     aksjonspunkter={
       [
         {
-          definisjon: {
-            kode: aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
+          definisjon: aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET,
+          status: aksjonspunktStatus.OPPRETTET,
           begrunnelse: undefined,
         },
       ] as Aksjonspunkt[]
@@ -366,12 +354,8 @@ export const visPanelForPSBÅpentAksjonspunktMed847B = args => (
     aksjonspunkter={
       [
         {
-          definisjon: {
-            kode: aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
+          definisjon: aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET,
+          status: aksjonspunktStatus.OPPRETTET,
           begrunnelse: undefined,
         },
       ] as Aksjonspunkt[]

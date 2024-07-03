@@ -17,7 +17,6 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { Kodeverk } from '@k9-sak-web/types';
 import { Heading } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -33,7 +32,7 @@ interface OwnProps {
   behandlingVersjon: number;
   readOnly: boolean;
   readOnlySubmitButton: boolean;
-  sprakkode: Kodeverk;
+  sprakkode: string;
 }
 
 export const BehandleUnntakForm = ({
@@ -43,7 +42,6 @@ export const BehandleUnntakForm = ({
   handleSubmit,
   readOnlySubmitButton,
   sprakkode,
-  // alleKodeverk,
   ...formProps
 }: OwnProps & InjectedFormProps) => (
   <form onSubmit={handleSubmit}>
@@ -109,7 +107,7 @@ export const buildInitialValues = createSelector(
     periode: vilkårsresultat ? vilkårsresultat[0].periode : null,
     avslagsårsak: vilkårsresultat ? vilkårsresultat[0].avslagsårsak : null,
     utfall: vilkårsresultat ? vilkårsresultat[0].utfall : null,
-    behandlingsresultat: behandlingsresultat ? behandlingsresultat?.type?.kode : null,
+    behandlingsresultat: behandlingsresultat ? behandlingsresultat?.type : null,
     begrunnelse: vilkar ? vilkar[0].perioder[0].begrunnelse : null,
   }),
 );

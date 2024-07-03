@@ -44,8 +44,8 @@ export const DefaultStory: Story = {
   args: {
     fagsak: {
       saksnummer: '100',
-      sakstype: { kode: fagsakYtelsesType.PSB, kodeverk: 'FAGSAK_YTELSE' },
-      status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
+      sakstype: fagsakYtelsesType.PSB, // FAGSAK_YTELSE
+      status: fagsakStatus.UNDER_BEHANDLING, // FAGSAK_STATUS
       person: {
         aktørId: 'person-aktørid-1',
       },
@@ -53,11 +53,8 @@ export const DefaultStory: Story = {
     behandling: {
       id: 101,
       uuid: 'XUYPS4',
-      type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
-      sprakkode: {
-        kode: 'NB',
-        kodeverk: 'SPRAAK_KODE',
-      },
+      type: behandlingType.FØRSTEGANGSSØKNAD, // BEHANDLING_TYPE
+      sprakkode: 'NB', // SPRAAK_KODE
     },
     maler: templates,
     personopplysninger,

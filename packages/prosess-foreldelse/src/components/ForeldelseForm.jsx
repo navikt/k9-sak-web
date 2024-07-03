@@ -51,7 +51,7 @@ const getApTekst = apCode =>
     : [];
 
 const harApentAksjonspunkt = periode =>
-  (!periode.foreldelseVurderingType || periode.foreldelseVurderingType.kode === foreldelseVurderingType.UDEFINERT) &&
+  (!periode.foreldelseVurderingType || periode.foreldelseVurderingType === foreldelseVurderingType.UDEFINERT) &&
   (!periode.begrunnelse || !!periode.erSplittet);
 
 const formaterPerioderForTidslinje = (perioder = []) =>
@@ -294,8 +294,7 @@ export const buildInitialValues = foreldelsePerioder => ({
   foreldelsesresultatActivity: foreldelsePerioder.map(p => ({
     ...p,
     feilutbetaling: p.belop,
-    foreldet:
-      p.foreldelseVurderingType.kode === foreldelseVurderingType.UDEFINERT ? null : p.foreldelseVurderingType.kode,
+    foreldet: p.foreldelseVurderingType === foreldelseVurderingType.UDEFINERT ? null : p.foreldelseVurderingType,
     begrunnelse: decodeHtmlEntity(p.begrunnelse),
   })),
 });

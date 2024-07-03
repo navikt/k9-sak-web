@@ -1,14 +1,16 @@
-import { Kodeverk } from '@k9-sak-web/types';
 import { Label } from '@navikt/ds-react';
 import { Location } from 'history';
 import React from 'react';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { KodeverkNavnFraKodeFnType } from '@k9-sak-web/lib/kodeverk/types.js';
+import SkjermlenkeTyper from '@k9-sak-web/types/src/totrinnskontroll/SkjermlenkeType';
 import { NavLink } from 'react-router-dom';
 import { scrollUp } from './historikkUtils';
 
 interface SkjermlenkeProps {
-  skjermlenke?: Kodeverk;
+  skjermlenke?: SkjermlenkeTyper; // Kodeverk: se notat ved SkjermlenkeTyper
   behandlingLocation?: Location;
-  getKodeverknavn?: (kodeverkObjekt: Kodeverk, undertype?: string) => string;
+  kodeverkNavnFraKodeFn: KodeverkNavnFraKodeFnType;
   scrollUpOnClick?: boolean;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeKode: string) => Location;
 }
@@ -16,7 +18,7 @@ interface SkjermlenkeProps {
 const Skjermlenke = ({
   skjermlenke,
   behandlingLocation,
-  getKodeverknavn,
+  kodeverkNavnFraKodeFn,
   scrollUpOnClick,
   createLocationForSkjermlenke,
 }: SkjermlenkeProps) => {
@@ -29,7 +31,7 @@ const Skjermlenke = ({
         to={createLocationForSkjermlenke(behandlingLocation, skjermlenke.kode)}
         onClick={scrollUpOnClick && scrollUp}
       >
-        {getKodeverknavn(skjermlenke)}
+        {kodeverkNavnFraKodeFn(skjermlenke.kode, KodeverkType.SKJERMLENKE_TYPE)}
       </NavLink>
     </Label>
   );

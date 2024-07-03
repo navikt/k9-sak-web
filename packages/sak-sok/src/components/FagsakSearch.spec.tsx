@@ -10,15 +10,9 @@ import FagsakSearch from './FagsakSearch';
 describe('<FagsakSearch>', () => {
   const fagsak: Fagsak = {
     saksnummer: '12345',
-    sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
-    relasjonsRolleType: {
-      kode: 'TEST',
-      kodeverk: '',
-    },
-    status: {
-      kode: fagsakStatus.UNDER_BEHANDLING,
-      kodeverk: 'FAGSAK_STATUS',
-    },
+    sakstype: fagsakYtelsesType.FP, // FAGSAK_YTELSE
+    relasjonsRolleType: 'TEST',
+    status: fagsakStatus.UNDER_BEHANDLING, // FAGSAK_STATUS
     barnFodt: '13‎.‎02‎.‎2017‎',
     opprettet: '13‎.‎02‎.‎2017‎ ‎09‎:‎54‎:‎22',
     endret: '13‎.‎02‎.‎2017‎',
@@ -31,10 +25,7 @@ describe('<FagsakSearch>', () => {
       alder: 44,
       personnummer: '0405198632231',
       erKvinne: true,
-      personstatusType: {
-        kode: 'TEST',
-        kodeverk: '',
-      },
+      personstatusType: 'TEST',
     },
     dekningsgrad: 100,
   };
@@ -49,7 +40,6 @@ describe('<FagsakSearch>', () => {
         searchResultReceived={false}
         selectFagsakCallback={vi.fn()}
         searchStarted
-        alleKodeverk={{}}
       />,
       { messages },
     );
@@ -65,7 +55,6 @@ describe('<FagsakSearch>', () => {
         searchResultReceived
         selectFagsakCallback={vi.fn()}
         searchStarted
-        alleKodeverk={{}}
       />,
       { messages },
     );
@@ -83,7 +72,6 @@ describe('<FagsakSearch>', () => {
         searchResultReceived
         selectFagsakCallback={selectFagsakFunction}
         searchStarted
-        alleKodeverk={{}}
       />,
       { messages },
     );

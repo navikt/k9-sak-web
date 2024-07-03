@@ -18,9 +18,9 @@ class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
 
   getKomponent = props => <MedisinskVilkår {...props} />;
 
-  getData = ({ fagsak, behandling }) => ({
-    fagsakYtelseType: fagsak.sakstype.kode,
-    behandlingType: behandling.type.kode,
+  getData = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => ({
+    fagsakYtelseType: fagsak.sakstype,
+    behandlingType: behandling.type,
   });
 
   getOverstyrVisningAvKomponent = ({ behandling }: { fagsak: Fagsak; behandling: Behandling }) => {

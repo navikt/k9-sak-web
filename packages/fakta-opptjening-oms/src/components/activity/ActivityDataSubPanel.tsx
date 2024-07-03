@@ -1,3 +1,6 @@
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import moment from 'moment';
 import { DatepickerField, DecimalField, InputField } from '@fpsak-frontend/form';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -9,12 +12,10 @@ import {
   minValue,
   required,
 } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, Kodeverk } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
-import moment from 'moment';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+
 import styles from './activityDataSubPanel.module.css';
 
 const ytelseTypes = [
@@ -25,15 +26,15 @@ const ytelseTypes = [
   OAType.UTENLANDSK_ARBEIDSFORHOLD,
 ];
 
-const isOfType = (selectedActivityType: Kodeverk, ...opptjeningAktivitetType: string[]) =>
-  selectedActivityType && opptjeningAktivitetType.includes(selectedActivityType.kode);
+const isOfType = (selectedActivityType: string, ...opptjeningAktivitetType: string[]) =>
+  selectedActivityType && opptjeningAktivitetType.includes(selectedActivityType);
 
 const formatDate = (date: string) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
 const minValue0 = minValue(0);
 const maxValue200 = maxValue(200);
 
-const getOppdragsgiverMessageId = (selectedActivityType: Kodeverk) =>
+const getOppdragsgiverMessageId = (selectedActivityType: string) =>
   isOfType(selectedActivityType, OAType.FRILANS) ? 'ActivityPanel.Oppdragsgiver' : 'ActivityPanel.Arbeidsgiver';
 
 const getArbeidsgiverText = (
@@ -65,16 +66,16 @@ const getArbeidsgiverText = (
   return '-';
 };
 
-const isManuallyAddedAndNotUtenlandskArbeidsforhold = (isManuallyAdded: boolean, selectedActivityType: Kodeverk) =>
+const isManuallyAddedAndNotUtenlandskArbeidsforhold = (isManuallyAdded: boolean, selectedActivityType: string) =>
   isManuallyAdded && !isOfType(selectedActivityType, OAType.UTENLANDSK_ARBEIDSFORHOLD);
-const isManuallyAddedAndUtenlandskArbeidsforhold = (isManuallyAdded: boolean, selectedActivityType: Kodeverk) =>
+const isManuallyAddedAndUtenlandskArbeidsforhold = (isManuallyAdded: boolean, selectedActivityType: string) =>
   isManuallyAdded && isOfType(selectedActivityType, OAType.UTENLANDSK_ARBEIDSFORHOLD);
 
 interface ActivityDataSubPanelProps {
   initialValues: Partial<OpptjeningAktivitet>;
   readOnly: boolean;
   isManuallyAdded: boolean;
-  selectedActivityType?: Kodeverk;
+  selectedActivityType?: string;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 

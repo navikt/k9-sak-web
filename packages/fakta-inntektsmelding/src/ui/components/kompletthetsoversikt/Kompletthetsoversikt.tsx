@@ -31,9 +31,9 @@ const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: Kompletthe
   const periods = tilstander.map(({ periode }) => periode);
   const statuses = tilstander.map(({ status }) => status);
   const aktivtAksjonspunkt = finnAktivtAksjonspunkt(aksjonspunkter);
-  const forrigeAksjonspunkt = aksjonspunkter.sort((a, b) => Number(b.definisjon.kode) - Number(a.definisjon.kode))[0];
-  const aktivtAksjonspunktKode = aktivtAksjonspunkt?.definisjon?.kode;
-  const forrigeAksjonspunktKode = forrigeAksjonspunkt?.definisjon?.kode;
+  const forrigeAksjonspunkt = aksjonspunkter.sort((a, b) => Number(b.definisjon) - Number(a.definisjon))[0];
+  const aktivtAksjonspunktKode = aktivtAksjonspunkt?.definisjon;
+  const forrigeAksjonspunktKode = forrigeAksjonspunkt?.definisjon;
   const aksjonspunktKode = aktivtAksjonspunktKode || forrigeAksjonspunktKode;
 
   const tilstanderBeriket = tilstander.map(tilstand => {

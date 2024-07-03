@@ -27,9 +27,7 @@ describe('<ForeldelseForm>', () => {
       {
         fom: '2019-10-10',
         tom: '2019-11-10',
-        foreldelseVurderingType: {
-          kode: foreldelseVurderingType.UDEFINERT,
-        },
+        foreldelseVurderingType: foreldelseVurderingType.UDEFINERT,
       },
     ];
     renderWithIntlAndReduxForm(
@@ -61,9 +59,7 @@ describe('<ForeldelseForm>', () => {
       {
         fom: '2019-10-10',
         tom: '2019-11-10',
-        foreldelseVurderingType: {
-          kode: foreldelseVurderingType.UDEFINERT,
-        },
+        foreldelseVurderingType: foreldelseVurderingType.UDEFINERT,
       },
     ];
     renderWithIntlAndReduxForm(
@@ -96,9 +92,7 @@ describe('<ForeldelseForm>', () => {
       {
         fom: '2019-10-10',
         tom: '2019-11-10',
-        foreldelseVurderingType: {
-          kode: foreldelseVurderingType.FORELDET,
-        },
+        foreldelseVurderingType: foreldelseVurderingType.FORELDET,
       },
     ];
     renderWithIntlAndReduxForm(

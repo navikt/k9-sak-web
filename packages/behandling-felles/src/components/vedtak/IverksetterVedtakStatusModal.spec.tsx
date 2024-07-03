@@ -16,10 +16,7 @@ describe('<IverksetterVedtakStatusModal>', () => {
         visModal
         lukkModal={closeEventCallback}
         behandlingsresultat={{
-          type: {
-            kode: behandlingResultatType.AVSLATT,
-            kodeverk: 'test',
-          },
+          type: behandlingResultatType.AVSLATT,
         }}
       />,
     );

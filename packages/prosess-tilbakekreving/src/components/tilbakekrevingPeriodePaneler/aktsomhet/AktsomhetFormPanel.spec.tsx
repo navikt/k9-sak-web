@@ -158,7 +158,7 @@ describe('<AktsomhetFormPanel>', () => {
 
   it('skal lage form-initialvalues fra struktur når en har aktsomhetsgrad GROVT_UAKTSOM', () => {
     const vilkarResultatInfo = {
-      aktsomhet: { kode: Aktsomhet.GROVT_UAKTSOM, kodeverk: '' },
+      aktsomhet: Aktsomhet.GROVT_UAKTSOM,
       aktsomhetInfo: {
         harGrunnerTilReduksjon: true,
         ileggRenter: true,

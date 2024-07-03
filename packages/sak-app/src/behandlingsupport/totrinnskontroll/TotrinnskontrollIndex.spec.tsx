@@ -1,11 +1,11 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import TotrinnskontrollIndex from './TotrinnskontrollIndex';
 
@@ -26,30 +26,36 @@ vi.mock('react-router-dom', async () => {
 });
 
 describe('<TotrinnskontrollIndex>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '1',
-    sakstype: {
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: '',
-    },
+    sakstype: fagsakYtelsesType.FP,
     person: {
       aktørId: '123',
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
     },
+    relasjonsRolleType: '',
+    status: 'OPPR',
+    barnFodt: '',
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
   };
 
   const alleBehandlinger = [
     {
       id: 1234,
       versjon: 123,
-      type: {
-        kode: behandlingType.FORSTEGANGSSOKNAD,
-        kodeverk: '',
-      },
+      type: behandlingType.FORSTEGANGSSOKNAD,
       opprettet: '‎29.08.‎2017‎ ‎09‎:‎54‎:‎22',
-      status: {
-        kode: 'FVED',
-        kodeverk: 'BEHANDLING_STATUS',
-      },
+      status: 'FVED',
       toTrinnsBehandling: true,
       ansvarligSaksbehandler: 'Espen Utvikler',
       behandlingÅrsaker: [],
@@ -93,6 +99,7 @@ describe('<TotrinnskontrollIndex>', () => {
         behandlingVersjon={alleBehandlinger[0].versjon}
       />,
     );
+
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     await act(async () => {
       await userEvent.click(screen.getByRole('button', { name: 'Godkjenn vedtaket' }));

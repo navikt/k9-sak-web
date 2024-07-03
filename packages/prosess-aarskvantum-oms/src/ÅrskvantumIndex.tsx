@@ -61,17 +61,17 @@ const ÅrskvantumIndex = ({
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
 
-  const apForVurderÅrskvantumDok: Aksjonspunkt = aksjonspunkterForSteg.find(
-    ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
+  const apForVurderÅrskvantumDok: Aksjonspunkt | undefined = aksjonspunkterForSteg.find(
+    ap => ap.definisjon === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
   );
   const aksjonspunkter: Aksjonspunkt[] = aksjonspunkterForSteg.filter(
-    ap => ap.definisjon.kode !== aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
+    ap => ap.definisjon !== aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
   );
-  const åpenAksjonspunkt = aksjonspunkter.find(ap => ap.status.kode !== aksjonspunktStatus.UTFORT) !== undefined;
+  const åpenAksjonspunkt = aksjonspunkter.find(ap => ap.status !== aksjonspunktStatus.UTFORT) !== undefined;
 
   const visAPVurderÅrskvantumDokIOmsorgsdagerFrontend =
     apForVurderÅrskvantumDok !== undefined &&
-    (!åpenAksjonspunkt || apForVurderÅrskvantumDok.status.kode === aksjonspunktStatus.UTFORT);
+    (!åpenAksjonspunkt || apForVurderÅrskvantumDok.status === aksjonspunktStatus.UTFORT);
   const [featureToggles] = useFeatureToggles();
 
   const propsTilMikrofrontend = {
@@ -86,24 +86,24 @@ const ÅrskvantumIndex = ({
     <RawIntlProvider value={årskvantumIntl}>
       {aksjonspunkter.length > 0 && featureToggles?.AKSJONSPUNKT_9014 && (
         <AksjonspunktForm9014
-          aktiviteter={sisteUttaksplan?.aktiviteter}
+          aktiviteter={sisteUttaksplan?.aktiviteter || []}
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
           submitCallback={submitCallback}
           aksjonspunkterForSteg={aksjonspunkter}
           isAksjonspunktOpen={isAksjonspunktOpen && !visAPVurderÅrskvantumDokIOmsorgsdagerFrontend}
-          fosterbarn={fosterbarn}
+          fosterbarn={fosterbarn || []}
         />
       )}
       {aksjonspunkter.length > 0 && !featureToggles?.AKSJONSPUNKT_9014 && (
         <AksjonspunktForm
-          aktiviteter={sisteUttaksplan?.aktiviteter}
+          aktiviteter={sisteUttaksplan?.aktiviteter || []}
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
           submitCallback={submitCallback}
           aksjonspunkterForSteg={aksjonspunkter}
           isAksjonspunktOpen={isAksjonspunktOpen && !visAPVurderÅrskvantumDokIOmsorgsdagerFrontend}
-          fosterbarn={fosterbarn}
+          fosterbarn={fosterbarn || []}
         />
       )}
 
@@ -113,10 +113,10 @@ const ÅrskvantumIndex = ({
 
       <Uttaksplan
         behandlingUuid={behandling.uuid}
-        aktiviteterBehandling={sisteUttaksplan?.aktiviteter}
-        aktiviteterHittilIÅr={fullUttaksplan?.aktiviteter}
+        aktiviteterBehandling={sisteUttaksplan?.aktiviteter || []}
+        aktiviteterHittilIÅr={fullUttaksplan?.aktiviteter || []}
         aktivitetsstatuser={aktivitetsstatuser}
-        aktiv={sisteUttaksplan?.aktiv}
+        aktiv={sisteUttaksplan?.aktiv || false}
         arbeidsforhold={arbeidsforhold}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />

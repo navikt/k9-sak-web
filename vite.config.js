@@ -4,8 +4,8 @@ import path from 'path';
 import { loadEnv } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import { defineConfig } from 'vitest/config';
-import { createMockResponder, staticJsonResponse } from "./_mocks/createMockResponder.js";
-import { featureTogglesFactory } from "./_mocks/featureToggles.js";
+import { createMockResponder, staticJsonResponse } from './_mocks/createMockResponder.js';
+import { featureTogglesFactory } from './_mocks/featureToggles.js';
 
 const createProxy = (target, pathRewrite) => ({
   target,
@@ -26,14 +26,14 @@ const createProxy = (target, pathRewrite) => ({
 
 function excludeMsw() {
   return {
-    name: "exclude-msw",
+    name: 'exclude-msw',
     resolveId(source) {
-      return source === "virtual-module" ? source : null;
+      return source === 'virtual-module' ? source : null;
     },
     renderStart(outputOptions, _inputOptions) {
       const outDir = outputOptions.dir;
       if (!outDir.includes('storybook')) {
-        const msWorker = path.resolve(outDir, "mockServiceWorker.js");
+        const msWorker = path.resolve(outDir, 'mockServiceWorker.js');
         fs.rm(msWorker, () => console.log(`Deleted ${msWorker}`));
       }
     },
@@ -78,7 +78,10 @@ export default ({ mode }) => {
             '^/k9/endringslogg': '',
           },
         ),
-        '/k9/feature-toggle/toggles.json': createMockResponder('http://localhost:8080', staticJsonResponse(featureTogglesFactory())),
+        '/k9/feature-toggle/toggles.json': createMockResponder(
+          'http://localhost:8080',
+          staticJsonResponse(featureTogglesFactory()),
+        ),
       },
     },
     base: '/k9/web',
@@ -86,25 +89,22 @@ export default ({ mode }) => {
     plugins: [
       react({
         include: [/\.jsx$/, /\.tsx?$/],
-
       }),
       svgr(),
-      excludeMsw()
+      excludeMsw(),
     ],
     build: {
       // Relative to the root
       outDir: './dist/k9/web',
       sourcemap: true,
       rollupOptions: {
-        external: [
-          "mockServiceWorker.js"
-        ],
+        external: ['mockServiceWorker.js'],
       },
     },
     test: {
       deps: {
         inline: ['@navikt/k9-sak-typescript-client'], // Without this, tests using k9-sak-typescript-client through backend project failed.
-        interopDefault: true
+        interopDefault: true,
       },
       environment: 'jsdom',
       css: {
@@ -122,6 +122,6 @@ export default ({ mode }) => {
           'Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools',
         );
       },
-    }
+    },
   });
 };

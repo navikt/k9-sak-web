@@ -1,7 +1,6 @@
 import React, { type ForwardedRef, forwardRef, useEffect, useImperativeHandle, useReducer } from 'react';
 import { Tag, type TagProps, Textarea, TextField } from '@navikt/ds-react';
 import { $FritekstbrevinnholdDto } from '@k9-sak-web/backend/k9sak/generated';
-import type { Språkkode } from '@k9-sak-web/backend/k9sak/kodeverk/Språkkode.js';
 import { validateTextCharacters } from '../../utils/validation/validateTextCharacters.js';
 
 type Valid = {
@@ -27,7 +26,7 @@ export interface FritekstInputInvalid {
 }
 
 type FritekstInputProps = {
-  readonly språk: Språkkode;
+  readonly språk: string;
   readonly show: boolean;
   readonly showTitle: boolean;
   readonly showValidation: boolean;
@@ -79,8 +78,8 @@ const validateTekst = (newValue: string | undefined): Valid | Error => {
 
 const tekstReducer = (_: Valid | Error, newValue: string | undefined): Valid | Error => validateTekst(newValue);
 
-const resolveLanguageName = (språk: Språkkode): string => {
-  switch (språk.kode.toUpperCase()) {
+const resolveLanguageName = (språk: string): string => {
+  switch (språk.toUpperCase()) {
     case 'NB':
       return 'Bokmål';
     case 'NO':
@@ -94,7 +93,7 @@ const resolveLanguageName = (språk: Språkkode): string => {
   }
 };
 
-const resolveLanguageTagVariant = (språk: Språkkode): TagProps['variant'] =>
+const resolveLanguageTagVariant = (språk: string): TagProps['variant'] =>
   resolveLanguageName(språk) === 'Ukjent' ? 'warning' : 'info';
 
 /**

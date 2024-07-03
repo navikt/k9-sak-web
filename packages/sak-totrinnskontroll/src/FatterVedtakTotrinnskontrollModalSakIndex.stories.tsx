@@ -14,18 +14,10 @@ export default {
 
 const behandling = {
   id: 1,
-  status: {
-    kode: behandlingStatus.FATTER_VEDTAK,
-    kodeverk: '',
-  },
-  type: {
-    kode: behandlingType.FØRSTEGANGSSØKNAD,
-    kodeverk: 'BEHANDLING_TYPE',
-  },
+  status: behandlingStatus.FATTER_VEDTAK,
+  type: behandlingType.FØRSTEGANGSSØKNAD, // BEHANDLING_TYPE
   behandlingsresultat: {
-    type: {
-      kode: behandlingResultatType.OPPHOR,
-    },
+    type: behandlingResultatType.OPPHOR,
   },
 } as Behandling;
 
@@ -34,10 +26,7 @@ export const visModalEtterGodkjenning = () => (
     behandling={behandling}
     closeEvent={action('button-click')}
     allAksjonspunktApproved
-    fagsakYtelseType={{
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: '',
-    }}
+    fagsakYtelseType={fagsakYtelseType.FORELDREPENGER}
     erKlageWithKA={false}
     harSammeResultatSomOriginalBehandling={false}
   />
@@ -48,18 +37,12 @@ export const visModalEtterGodkjenningAvKlage = () => (
     behandling={
       {
         ...behandling,
-        type: {
-          kode: behandlingType.KLAGE,
-          kodeverk: 'BEHANDLING_TYPE',
-        },
+        type: behandlingType.KLAGE, // BEHANDLING_TYPE,
       } as Behandling
     }
     closeEvent={action('button-click')}
     allAksjonspunktApproved
-    fagsakYtelseType={{
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: '',
-    }}
+    fagsakYtelseType={fagsakYtelseType.FORELDREPENGER}
     erKlageWithKA={false}
     harSammeResultatSomOriginalBehandling={false}
   />
@@ -70,10 +53,7 @@ export const visModalEtterTilbakesendingTilSaksbehandler = () => (
     behandling={behandling}
     closeEvent={action('button-click')}
     allAksjonspunktApproved={false}
-    fagsakYtelseType={{
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: '',
-    }}
+    fagsakYtelseType={fagsakYtelseType.FORELDREPENGER}
     erKlageWithKA={false}
     harSammeResultatSomOriginalBehandling={false}
   />

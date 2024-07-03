@@ -1,10 +1,10 @@
-import { NestedIntlProvider } from '@fpsak-frontend/shared-components';
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
-import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Tabs as DSTabs } from '@navikt/ds-react';
 import { WarningIcon } from '@navikt/ft-plattform-komponenter';
 import classnames from 'classnames';
 import React, { useContext } from 'react';
+import { Aksjonspunkt } from '@k9-sak-web/types';
+import { NestedIntlProvider } from '@fpsak-frontend/shared-components';
 import Tabs from './Tabs';
 import GjennomgaaOpplaeringOversikt from './gjennomgaaOpplaering/GjennomgaaOpplaeringOversikt';
 import messages from './i18n/nb_NO.json';
@@ -18,7 +18,7 @@ interface TabItemProps {
 }
 
 const findInitialTab = (aktivtAksjonspunkt: Aksjonspunkt) => {
-  const initialTab = Object.values(Tabs).find(tab => tab.aksjonspunkt === aktivtAksjonspunkt?.definisjon?.kode);
+  const initialTab = Object.values(Tabs).find(tab => tab.aksjonspunkt === aktivtAksjonspunkt?.definisjon);
   return initialTab ? initialTab.label : Tabs.GJENNOMGÅ_OPPLÆRING.label;
 };
 
@@ -38,8 +38,8 @@ const OpplaeringContainer = () => {
   const { aksjonspunkter } = useContext(FaktaOpplaeringContext);
 
   const aktivtAksjonspunkt = aksjonspunkter
-    .sort((a, b) => a.definisjon.kode.localeCompare(b.definisjon.kode))
-    .find(aksjonspunkt => aksjonspunkt.status.kode === 'OPPR');
+    .sort((a, b) => a.definisjon.localeCompare(b.definisjon))
+    .find(aksjonspunkt => aksjonspunkt.status === 'OPPR');
   return (
     <NestedIntlProvider messages={messages}>
       <DSTabs defaultValue={findInitialTab(aktivtAksjonspunkt)}>
@@ -49,10 +49,7 @@ const OpplaeringContainer = () => {
               key={tab.label}
               value={tab.label}
               label={
-                <TabItem
-                  label={tab.label}
-                  showWarningIcon={tab.aksjonspunkt === aktivtAksjonspunkt?.definisjon?.kode}
-                />
+                <TabItem label={tab.label} showWarningIcon={tab.aksjonspunkt === aktivtAksjonspunkt?.definisjon} />
               }
             />
           ))}

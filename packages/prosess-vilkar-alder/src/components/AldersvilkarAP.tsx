@@ -32,7 +32,7 @@ const AldersVilkarAP = ({
 }: AldersVilkarAPProps) => {
   const [redigering, setRedigering] = useState<boolean>(false);
   const lesemodus = isReadOnly || !isAksjonspunktOpen;
-  const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
+  const aksjonspunktLost = behandling.status === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
 
   useEffect(() => {
     if (lesemodus) setRedigering(false);

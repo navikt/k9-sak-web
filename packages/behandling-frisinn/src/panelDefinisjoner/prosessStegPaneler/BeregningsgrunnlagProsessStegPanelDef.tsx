@@ -4,7 +4,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
+import { mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
 import { BeregningsgrunnlagProsessIndex } from '@navikt/ft-prosess-beregningsgrunnlag';
 
 const mapYtelsesSpesifiktGrunnlagForFrisinn = (beregningsgrunnlag, behandling) =>
@@ -19,24 +19,28 @@ const mapYtelsesSpesifiktGrunnlagForFrisinn = (beregningsgrunnlag, behandling) =
 class PanelDef extends ProsessStegPanelDef {
   // eslint-disable-next-line class-methods-use-this
   getKomponent = props => {
-    const deepCopyProps = JSON.parse(JSON.stringify(props));
-    konverterKodeverkTilKode(deepCopyProps);
-    const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
+    const {
+      vilkar,
+      beregningsgrunnlag,
+      behandling,
+      beregningreferanserTilVurdering,
+      arbeidsgiverOpplysningerPerId,
+      isReadOnly,
+      alleKodeverk,
+    } = props;
+    const bgVilkaret = vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
     return (
       <BeregningsgrunnlagProsessIndex
         {...props}
-        beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
-        beregningsgrunnlagListe={mapYtelsesSpesifiktGrunnlagForFrisinn(
-          deepCopyProps.beregningsgrunnlag,
-          deepCopyProps.behandling,
-        )}
-        arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
+        beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, beregningreferanserTilVurdering)}
+        beregningsgrunnlagListe={mapYtelsesSpesifiktGrunnlagForFrisinn(beregningsgrunnlag, behandling)}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         submitCallback={data => props.submitCallback(transformBeregningValues(data))}
         formData={props.formData}
         setFormData={props.setFormData}
-        readOnlySubmitButton={deepCopyProps.isReadOnly}
-        kodeverkSamling={deepCopyProps.alleKodeverk}
-        isReadOnly={deepCopyProps.isReadOnly}
+        readOnlySubmitButton={isReadOnly}
+        kodeverkSamling={alleKodeverk}
+        isReadOnly={isReadOnly}
       />
     );
   };

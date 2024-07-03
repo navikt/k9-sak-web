@@ -2,7 +2,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
@@ -12,6 +11,7 @@ import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { OmsorgspengerBehandlingApiKeys, requestOmsorgApi } from '../data/omsorgspengerBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
@@ -44,19 +44,39 @@ const getbehandlingPerioderårsakMedVilkår = (fom: string, tom: string) => ({
       },
     ],
   },
-  periodeMedUtfall: [{ periode: { fom, tom }, utfall: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' } }],
+  periodeMedUtfall: [{ periode: { fom, tom }, utfall: 'IKKE_VURDERT' }],
   forrigeVedtak: [],
 });
 
 describe('<OmsorgspengerFakta>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
-  } as Fagsak;
+    sakstype: fagsakYtelsesType.OMP,
+    status: fagsakStatus.UNDER_BEHANDLING,
+    relasjonsRolleType: '',
+    barnFodt: '',
+    person: {
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+      diskresjonskode: '',
+      dodsdato: '',
+      aktørId: '',
+    },
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
+  };
+
   const fagsakPerson = {
     alder: 30,
-    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    personstatusType: personstatusType.BOSATT,
     erDod: false,
     erKvinne: true,
     navn: 'Espen Utvikler',
@@ -65,8 +85,8 @@ describe('<OmsorgspengerFakta>', () => {
   const behandling = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -86,8 +106,8 @@ describe('<OmsorgspengerFakta>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+      definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
@@ -97,50 +117,22 @@ describe('<OmsorgspengerFakta>', () => {
   const soker = {
     navn: 'Espen Utvikler',
     aktoerId: '1',
-    personstatus: {
-      kode: 'BOSA',
-      kodeverk: 'Bosatt',
-    },
+    personstatus: 'BOSA',
     avklartPersonstatus: {
-      overstyrtPersonstatus: {
-        kode: personstatusType.BOSATT,
-        kodeverk: 'Bosatt',
-      },
-      orginalPersonstatus: {
-        kode: personstatusType.DOD,
-        kodeverk: 'Bosatt',
-      },
+      overstyrtPersonstatus: personstatusType.BOSATT,
+      orginalPersonstatus: personstatusType.DOD,
     },
-    navBrukerKjonn: {
-      kode: '',
-      kodeverk: '',
-    },
-    statsborgerskap: {
-      kode: '',
-      kodeverk: '',
-      navn: '',
-    },
-    diskresjonskode: {
-      kode: '',
-      kodeverk: '',
-    },
-    sivilstand: {
-      kode: sivilstandType.UGIFT,
-      kodeverk: 'Ugift',
-    },
-    region: {
-      kode: 'NORDEN',
-      kodeverk: 'Norden',
-    },
+    navBrukerKjonn: '',
+    statsborgerskap: '',
+    diskresjonskode: '',
+    sivilstand: sivilstandType.UGIFT,
+    region: 'NORDEN',
     adresser: [
       {
         adresselinje1: 'Vei 1',
         postNummer: '1000',
         poststed: 'Oslo',
-        adresseType: {
-          kode: opplysningAdresseType.POSTADRESSE,
-          kodeverk: 'Bostedsadresse',
-        },
+        adresseType: opplysningAdresseType.POSTADRESSE,
       },
     ],
     barn: [],

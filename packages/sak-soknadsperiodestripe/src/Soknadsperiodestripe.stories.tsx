@@ -44,13 +44,13 @@ const data = {
   periodeMedUtfall: [
     {
       periode: { fom: '2022-01-05', tom: '2022-04-05' },
-      utfall: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+      utfall: 'OPPFYLT', // VILKAR_UTFALL_TYPE
     },
   ],
   forrigeVedtak: [
     {
       periode: { fom: '2022-01-05', tom: '2022-02-05' },
-      utfall: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+      utfall: 'OPPFYLT', // VILKAR_UTFALL_TYPE
     },
   ],
 };

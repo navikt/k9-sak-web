@@ -2,7 +2,7 @@ import React from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { konverterKodeverkTilKode, transformBeregningValues } from '@fpsak-frontend/utils';
+import { transformBeregningValues } from '@fpsak-frontend/utils';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { FordelBeregningsgrunnlagFaktaIndex } from '@navikt/ft-fakta-fordel-beregningsgrunnlag';
@@ -20,19 +20,26 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
   ];
 
   getKomponent = props => {
-    const deepCopyProps = JSON.parse(JSON.stringify(props));
-    konverterKodeverkTilKode(deepCopyProps);
-    const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
+    const {
+      vilkar,
+      beregningsgrunnlag,
+      arbeidsgiverOpplysningerPerId,
+      alleKodeverk,
+      submitCallback,
+      formData,
+      setFormData,
+    } = props;
+    const bgVilkaret = vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
     return (
       <FordelBeregningsgrunnlagFaktaIndex
         {...props}
         beregningsgrunnlagVilkår={bgVilkaret}
-        beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
-        arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-        kodeverkSamling={deepCopyProps.alleKodeverk}
-        submitCallback={data => props.submitCallback(transformBeregningValues([data]))} // Returnerer alltid kun eitt aksjonspunkt om gangen
-        formData={props.formData}
-        setFormData={props.setFormData}
+        beregningsgrunnlagListe={beregningsgrunnlag}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        kodeverkSamling={alleKodeverk}
+        submitCallback={data => submitCallback(transformBeregningValues([data]))} // Returnerer alltid kun eitt aksjonspunkt om gangen
+        formData={formData}
+        setFormData={setFormData}
       />
     );
   };

@@ -1,22 +1,19 @@
+import React from 'react';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { act, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React from 'react';
-import messages from '../../i18n/nb_NO.json';
 import { HenleggBehandlingModalImpl, getHenleggArsaker } from './HenleggBehandlingModal';
+import messages from '../../i18n/nb_NO.json';
 
 const intlMock = intlWithMessages(messages);
 
 describe('<HenleggBehandlingModal>', () => {
-  const ytelseType = {
-    kode: fagsakYtelseType.FORELDREPENGER,
-    kodeverk: 'FAGSAK_YTELSE_TYPE',
-  };
+  const ytelseType = fagsakYtelseType.FORELDREPENGER;
 
   const behandlingResultatTyper = [
     {
@@ -66,10 +63,7 @@ describe('<HenleggBehandlingModal>', () => {
         behandlingUuid="123"
         behandlingId={123}
         behandlingResultatTyper={behandlingResultatTyper}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
         hentMottakere={vi.fn()}
       />,
       { messages },
@@ -96,10 +90,7 @@ describe('<HenleggBehandlingModal>', () => {
         behandlingUuid="123"
         behandlingId={123}
         behandlingResultatTyper={behandlingResultatTyper}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
         hentMottakere={vi.fn()}
       />,
       { messages },
@@ -113,7 +104,7 @@ describe('<HenleggBehandlingModal>', () => {
   });
 
   it('skal bruke behandlingsresultat-typer for klage', () => {
-    const behandlingsType = { kode: behandlingType.KLAGE, kodeverk: 'BEHANDLING_TYPE' };
+    const behandlingsType = behandlingType.KLAGE;
     const resultat = getHenleggArsaker(behandlingResultatTyper, behandlingsType, ytelseType);
     expect(resultat.map(r => r.kode)).toEqual([
       behandlingResultatType.HENLAGT_KLAGE_TRUKKET,
@@ -122,13 +113,13 @@ describe('<HenleggBehandlingModal>', () => {
   });
 
   it('skal bruke behandlingsresultat-typer for tilbakekreving', () => {
-    const behandlingsType = { kode: behandlingType.TILBAKEKREVING, kodeverk: 'BEHANDLING_TYPE' };
+    const behandlingsType = behandlingType.TILBAKEKREVING;
     const resultat = getHenleggArsaker(behandlingResultatTyper, behandlingsType, ytelseType);
     expect(resultat.map(r => r.kode)).toEqual([behandlingResultatType.HENLAGT_FEILOPPRETTET]);
   });
 
   it('skal bruke behandlingsresultat-typer for tilbakekreving revurdering', () => {
-    const behandlingsType = { kode: behandlingType.TILBAKEKREVING_REVURDERING, kodeverk: 'BEHANDLING_TYPE' };
+    const behandlingsType = behandlingType.TILBAKEKREVING_REVURDERING;
     const resultat = getHenleggArsaker(behandlingResultatTyper, behandlingsType, ytelseType);
     expect(resultat.map(r => r.kode)).toEqual([
       behandlingResultatType.HENLAGT_FEILOPPRETTET_MED_BREV,
@@ -137,7 +128,7 @@ describe('<HenleggBehandlingModal>', () => {
   });
 
   it('skal bruke behandlingsresultat-typer for revudering', () => {
-    const behandlingsType = { kode: behandlingType.REVURDERING, kodeverk: 'BEHANDLING_TYPE' };
+    const behandlingsType = behandlingType.REVURDERING;
     const resultat = getHenleggArsaker(behandlingResultatTyper, behandlingsType, ytelseType);
     expect(resultat.map(r => r.kode)).toEqual([
       behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
@@ -146,7 +137,7 @@ describe('<HenleggBehandlingModal>', () => {
   });
 
   it('skal bruke behandlingsresultat-typer for førstegangsbehandling', () => {
-    const behandlingsType = { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'BEHANDLING_TYPE' };
+    const behandlingsType = behandlingType.FORSTEGANGSSOKNAD;
     const resultat = getHenleggArsaker(behandlingResultatTyper, behandlingsType, ytelseType);
     expect(resultat.map(r => r.kode)).toEqual([
       behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
@@ -155,11 +146,8 @@ describe('<HenleggBehandlingModal>', () => {
   });
 
   it('skal bruke behandlingsresultat-typer for førstegangsbehandling når ytelsestype er Engangsstønad', () => {
-    const behandlingsType = { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'BEHANDLING_TYPE' };
-    const resultat = getHenleggArsaker(behandlingResultatTyper, behandlingsType, {
-      kode: fagsakYtelseType.ENGANGSSTONAD,
-      kodeverk: 'FAGSAK_YTELSE_TYPE',
-    });
+    const behandlingsType = behandlingType.FORSTEGANGSSOKNAD;
+    const resultat = getHenleggArsaker(behandlingResultatTyper, behandlingsType, fagsakYtelseType.ENGANGSSTONAD);
     expect(resultat.map(r => r.kode)).toEqual([
       behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
       behandlingResultatType.HENLAGT_FEILOPPRETTET,
@@ -179,10 +167,7 @@ describe('<HenleggBehandlingModal>', () => {
         behandlingUuid="123"
         behandlingId={123}
         behandlingResultatTyper={behandlingResultatTyper}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
         hentMottakere={vi.fn()}
       />,
       { messages },
@@ -203,10 +188,7 @@ describe('<HenleggBehandlingModal>', () => {
         behandlingUuid="123"
         behandlingId={123}
         behandlingResultatTyper={behandlingResultatTyper}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
         hentMottakere={vi.fn()}
       />,
       { messages },
@@ -231,10 +213,7 @@ describe('<HenleggBehandlingModal>', () => {
         behandlingUuid="123"
         behandlingId={123}
         behandlingResultatTyper={behandlingResultatTyper}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
         hentMottakere={vi.fn()}
       />,
       { messages },
@@ -262,10 +241,7 @@ describe('<HenleggBehandlingModal>', () => {
         behandlingUuid="123"
         behandlingId={123}
         behandlingResultatTyper={behandlingResultatTyper}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
         hentMottakere={vi.fn()}
       />,
       { messages },
@@ -293,10 +269,7 @@ describe('<HenleggBehandlingModal>', () => {
         behandlingUuid="123"
         behandlingId={123}
         behandlingResultatTyper={behandlingResultatTyper}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
         hentMottakere={vi.fn()}
       />,
       { messages },
@@ -326,10 +299,7 @@ describe('<HenleggBehandlingModal>', () => {
         behandlingUuid="123"
         behandlingId={123}
         behandlingResultatTyper={behandlingResultatTyper}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
         hentMottakere={vi.fn()}
       />,
       { messages },

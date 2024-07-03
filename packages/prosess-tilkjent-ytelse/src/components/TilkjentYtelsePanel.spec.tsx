@@ -7,12 +7,8 @@ import messages from '../../i18n/nb_NO.json';
 import { TilkjentYtelsePanelImpl } from './TilkjentYtelsePanel';
 
 const tilbaketrekkAP = {
-  definisjon: {
-    kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
-  },
-  status: {
-    kode: 'OPPR',
-  },
+  definisjon: aksjonspunktCodes.VURDER_TILBAKETREKK,
+  status: 'OPPR',
   begrunnelse: undefined,
 } as Aksjonspunkt;
 

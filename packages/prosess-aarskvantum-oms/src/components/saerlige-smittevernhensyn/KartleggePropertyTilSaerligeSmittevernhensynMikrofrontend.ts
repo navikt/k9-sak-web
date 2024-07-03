@@ -107,9 +107,9 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
 
   const behandlingsID: string = behandling.id.toString();
 
-  if (typeof aksjonspunkt !== 'undefined' && aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK) {
-    const isAksjonspunktOpen = aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && aksjonspunkt.kanLoses;
-    const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
+  if (typeof aksjonspunkt !== 'undefined' && aksjonspunkt.definisjon === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK) {
+    const isAksjonspunktOpen = aksjonspunkt.status === aksjonspunktStatus.OPPRETTET && aksjonspunkt.kanLoses;
+    const aksjonspunktLost = behandling.status === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
 
     objektTilMikrofrontend = {
       visKomponent: KomponenterEnum.KORRIGERE_PERIODER,
@@ -126,7 +126,7 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
         losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) => {
           submitCallback([
             formatereLosAksjonspunktObjekt(
-              aksjonspunkt.definisjon.kode,
+              aksjonspunkt.definisjon,
               fravaerGrunnetSmittevernhensynEllerStengt,
               begrunnelse,
               antallDagerDelvisInnvilget,

@@ -1,13 +1,12 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { FloatRight, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
-import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { BodyShort, HGrid, Label, Tabs, Tag } from '@navikt/ds-react';
 import moment from 'moment';
 import React, { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { createVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
 import styles from './tilkjentYtelse.module.css';
@@ -19,7 +18,6 @@ interface OwnProps {
   selectedItemData?: PeriodeMedId;
   callbackForward: (...args: any[]) => any;
   callbackBackward: (...args: any[]) => any;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
@@ -40,9 +38,10 @@ const TilkjentYtelseTimeLineData = ({
   selectedItemData,
   callbackForward,
   callbackBackward,
-  alleKodeverk,
   arbeidsgiverOpplysningerPerId,
 }: OwnProps) => {
+  const intl = useIntl();
+  const { kodeverkNavnFraKode } = useKodeverkContext();
   const { andeler } = selectedItemData;
   const [selectedAndelIndex, setSelectedAndelIndex] = React.useState('0');
   const utbetalingsgradFraUttak = desimalerTilProsent(selectedItemData.totalUtbetalingsgradFraUttak);
@@ -70,8 +69,6 @@ const TilkjentYtelseTimeLineData = ({
   };
 
   const numberOfDaysAndWeeks = calcDaysAndWeeksWithWeekends(selectedItemStartDate, selectedItemEndDate);
-  const intl = useIntl();
-  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
     <TimeLineDataContainer>
       <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
@@ -158,7 +155,11 @@ const TilkjentYtelseTimeLineData = ({
                       id="Timeline.tooltip.dagsatsPerAndel"
                       key={`index${index + 1}`}
                       values={{
-                        arbeidsgiver: createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+                        arbeidsgiver: createVisningsnavnForAndel(
+                          andel,
+                          kodeverkNavnFraKode,
+                          arbeidsgiverOpplysningerPerId,
+                        ),
                         dagsatsPerAndel: Number(andel.refusjon),
                       }}
                     />
@@ -175,7 +176,11 @@ const TilkjentYtelseTimeLineData = ({
                       id="Timeline.tooltip.dagsatsPerAndel"
                       key={`index${index + 1}`}
                       values={{
-                        arbeidsgiver: createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+                        arbeidsgiver: createVisningsnavnForAndel(
+                          andel,
+                          kodeverkNavnFraKode,
+                          arbeidsgiverOpplysningerPerId,
+                        ),
                         dagsatsPerAndel: Number(andel.tilSoker),
                       }}
                     />
@@ -191,13 +196,13 @@ const TilkjentYtelseTimeLineData = ({
       <Tabs className="mt-12" value={String(selectedAndelIndex)} onChange={setSelectedAndelIndex}>
         <Tabs.List>
           {andeler.map((andel, index) => {
-            const label = createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId);
+            const label = createVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId);
             return <Tabs.Tab value={String(index)} key={label} label={label} />;
           })}
         </Tabs.List>
         {andeler.map((andel, index) => (
           <Tabs.Panel
-            key={createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}
+            key={createVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId)}
             value={String(index)}
           >
             <div className="p-4">
@@ -216,7 +221,7 @@ const TilkjentYtelseTimeLineData = ({
               <BodyShort size="small">
                 <FormattedMessage id="TilkjentYtelse.PeriodeData.Aktivitetsstatus" />
                 <span className="font-semibold inline-block">
-                  {getAktivitet(andel?.aktivitetStatus, getKodeverknavn)}
+                  {getAktivitet(andel?.aktivitetStatus, kodeverkNavnFraKode)}
                 </span>
               </BodyShort>
             </div>

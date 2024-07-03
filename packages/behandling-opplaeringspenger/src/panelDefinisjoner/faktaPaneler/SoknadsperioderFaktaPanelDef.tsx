@@ -1,9 +1,11 @@
+import React from 'react';
+
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import SoknadsperioderIndex from '@k9-sak-web/fakta-soknadsperioder';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { Fagsak } from '@k9-sak-web/types';
-import React from 'react';
+
 import { OpplaeringspengerBehandlingApiKeys } from '../../data/opplaeringspengerBehandlingApi';
 
 class SoknadsperioderFaktaPanelDef extends FaktaPanelDef {
@@ -17,8 +19,7 @@ class SoknadsperioderFaktaPanelDef extends FaktaPanelDef {
 
   getKomponent = props => <SoknadsperioderIndex {...props} />;
 
-  getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) =>
-    fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;
+  getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) => fagsak.sakstype === fagsakYtelseType.PLEIEPENGER;
 }
 
 export default SoknadsperioderFaktaPanelDef;

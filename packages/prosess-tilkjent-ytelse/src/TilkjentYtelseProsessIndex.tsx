@@ -49,7 +49,7 @@ const TilkjentYtelseProsessIndex = ({
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       beregningsresultat={beregningsresultat}
-      fagsakYtelseTypeKode={fagsak.sakstype?.kode}
+      fagsakYtelseTypeKode={fagsak.sakstype}
       aksjonspunkter={aksjonspunkter}
       alleKodeverk={alleKodeverk}
       readOnly={isReadOnly}
@@ -59,5 +59,4 @@ const TilkjentYtelseProsessIndex = ({
     />
   </RawIntlProvider>
 );
-
 export default TilkjentYtelseProsessIndex;

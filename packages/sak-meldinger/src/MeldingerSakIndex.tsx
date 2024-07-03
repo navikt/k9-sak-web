@@ -63,7 +63,7 @@ const MeldingerSakIndex = ({
 }: OwnProps) => {
   const { startRequest: submitMessage } = restApiHooks.useRestApiRunner(K9sakApiKeys.SUBMIT_MESSAGE);
   const fetchPreview = useVisForhandsvisningAvMelding(behandling, fagsak);
-  const erTilbakekreving = erTilbakekrevingType({ kode: behandling.type.kode });
+  const erTilbakekreving = erTilbakekrevingType(behandling.type);
   // Vis ny komponent for meldingssending viss dette ikkje er tilbakekreving, og featureflag er satt
   if (!erTilbakekreving && featureToggles.BRUK_V2_MELDINGER) {
     return (
@@ -103,7 +103,7 @@ const MeldingerSakIndex = ({
     fritekst: string,
     fritekstbrev?: Fritekstbrev,
   ) => {
-    const data = erTilbakekrevingType({ kode: behandling.type.kode })
+    const data = erTilbakekrevingType(behandling.type)
       ? {
           fritekst: fritekst || ' ',
           brevmalkode: dokumentMal,

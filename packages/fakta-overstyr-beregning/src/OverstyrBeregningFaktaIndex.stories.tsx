@@ -103,22 +103,13 @@ const overstyrInputBeregningToPerioder: OverstyrInputBeregningDto[] = [
 
 const aksjonspunkter: Aksjonspunkt[] = [
   {
-    aksjonspunktType: {
-      kode: 'MANU',
-      kodeverk: 'AKSJONSPUNKT_TYPE',
-    },
+    aksjonspunktType: 'MANU', // AKSJONSPUNKT_TYPE
     begrunnelse: null,
     besluttersBegrunnelse: null,
-    definisjon: {
-      kode: '9005',
-      kodeverk: 'AKSJONSPUNKT_DEF',
-    },
+    definisjon: '9005', // AKSJONSPUNKT_DEF
     erAktivt: true,
     kanLoses: true,
-    status: {
-      kode: 'OPPR',
-      kodeverk: 'AKSJONSPUNKT_STATUS',
-    },
+    status: 'OPPR', // AKSJONSPUNKT_STATUS
     toTrinnsBehandling: true,
     toTrinnsBehandlingGodkjent: null,
     vilkarType: null,

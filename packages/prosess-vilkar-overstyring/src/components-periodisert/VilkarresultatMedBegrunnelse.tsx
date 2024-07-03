@@ -3,11 +3,10 @@ import { FormattedMessage } from 'react-intl';
 
 import { VerticalSpacer, useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import { VilkarResultPickerPeriodisert as VilkarResultPicker } from '@k9-sak-web/prosess-felles';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 
-import VilkarBegrunnelse from './VilkarBegrunnelse';
 import { CustomVilkarText } from './VilkarresultatMedOverstyringForm';
+import VilkarBegrunnelse from './VilkarBegrunnelse';
 
 interface VilkarresultatMedBegrunnelseProps {
   erVilkarOk?: string;
@@ -15,7 +14,6 @@ interface VilkarresultatMedBegrunnelseProps {
   readOnly: boolean;
   erMedlemskapsPanel: boolean;
   visPeriodisering: boolean;
-  avslagsarsaker: KodeverkMedNavn[];
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
   skalViseBegrunnelse?: boolean;
@@ -36,7 +34,6 @@ export const VilkarresultatMedBegrunnelse = ({
   erVilkarOk,
   periodeVilkarStatus,
   readOnly,
-  avslagsarsaker,
   erMedlemskapsPanel,
   visPeriodisering,
   skalViseBegrunnelse = true,
@@ -59,7 +56,6 @@ export const VilkarresultatMedBegrunnelse = ({
         </>
       )}
       <VilkarResultPicker
-        avslagsarsaker={avslagsarsaker}
         customVilkarOppfyltText={
           <FormattedMessage
             id={customVilkarOppfyltText ? customVilkarOppfyltText.id : 'VilkarresultatMedOverstyringForm.ErOppfylt'}

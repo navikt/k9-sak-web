@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-
-// import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-
 import messages from '../i18n/nb_NO.json';
 import BehandleUnntak from './components/BehandleUnntakForm';
 import unntakBehandlingPropType from './propTypes/unntakBehandlingPropType';
@@ -20,7 +17,6 @@ const intl = createIntl(
 
 const UnntakProsessIndex = ({
   behandling,
-  alleKodeverk,
   submitCallback,
   isReadOnly,
   previewCallback,
@@ -42,7 +38,6 @@ const UnntakProsessIndex = ({
         readOnly={isReadOnly}
         previewCallback={previewCallback}
         readOnlySubmitButton={readOnlySubmitButton}
-        alleKodeverk={alleKodeverk}
         vilkårsresultat={vilkårsresultat}
         vilkar={vilkar}
       />
@@ -52,7 +47,6 @@ const UnntakProsessIndex = ({
 
 UnntakProsessIndex.propTypes = {
   behandling: unntakBehandlingPropType.isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,
