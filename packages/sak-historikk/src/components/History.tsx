@@ -5,7 +5,6 @@ import { Historikkinnslag } from '@k9-sak-web/types';
 import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { KodeverkNavnFraKodeFnType } from '@k9-sak-web/lib/kodeverk/types.js';
-import SkjermlenkeTyper from '@k9-sak-web/types/src/totrinnskontroll/SkjermlenkeType';
 
 import historikkinnslagType from '../kodeverk/historikkinnslagType';
 import SnakkebobleContainer from './maler/felles/SnakkebobleContainer';
