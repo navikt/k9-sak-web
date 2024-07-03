@@ -50,6 +50,7 @@ jobs:
           PRINT_PAYLOAD: true
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/${{ env.CLUSTER }}-k9saksbehandling.yml
+          VARS: deploy/dev.yaml
 
       - name: Oppdater kommentar med deployment status ved feil
         if: failure()
