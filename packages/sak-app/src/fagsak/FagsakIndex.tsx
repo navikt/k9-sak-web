@@ -280,8 +280,6 @@ const FagsakIndex = () => {
               />
             }
             supportContent={() => {
-              console.log('supportContent');
-              // return <>supportContent</>;
               if (isRequestNotDone(personopplysningerState)) {
                 return <LoadingPanel />;
               }
@@ -300,8 +298,6 @@ const FagsakIndex = () => {
               );
             }}
             visittkortContent={() => {
-              console.log('visittkortContent');
-              // return <>visittkortContent</>;
               if (skalIkkeHenteData) {
                 return null;
               }
