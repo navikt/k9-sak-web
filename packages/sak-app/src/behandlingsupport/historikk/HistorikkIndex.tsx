@@ -1,10 +1,10 @@
 import moment from 'moment';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
-import { Historikkinnslag, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Historikkinnslag } from '@k9-sak-web/types';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
 import ApplicationContextPath from '../../app/ApplicationContextPath';

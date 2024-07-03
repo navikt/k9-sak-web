@@ -1,3 +1,5 @@
+import SkjermlenkeTyper from './totrinnskontroll/SkjermlenkeType';
+
 export type HistorikkinnslagEndretFelt = {
   endretFeltNavn: string;
   navnVerdi?: string;
@@ -32,7 +34,7 @@ export type HistorikkinnslagDel = {
     navnVerdi?: string;
     tilVerdi?: string;
   };
-  skjermlenke?: string;
+  skjermlenke?: SkjermlenkeTyper;
   aarsak?: string;
   tema?: {
     endretFeltNavn: string;

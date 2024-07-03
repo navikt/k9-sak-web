@@ -111,7 +111,7 @@ interface OwnProps {
   historikkinnslag: Historikkinnslag;
   saksnummer?: string;
   getBehandlingLocation: (behandlingId: number) => Location;
-  createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: SkjermlenkeTyper) => Location;
+  createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
   erTilbakekreving: boolean;
   kodeverkNavnFraKodeFn: KodeverkNavnFraKodeFnType;
 }

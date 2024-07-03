@@ -12,7 +12,7 @@ interface SkjermlenkeProps {
   behandlingLocation?: Location;
   kodeverkNavnFraKodeFn: KodeverkNavnFraKodeFnType;
   scrollUpOnClick?: boolean;
-  createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeKode: SkjermlenkeTyper) => Location;
+  createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeKode: string) => Location;
 }
 
 const Skjermlenke = ({
@@ -27,7 +27,10 @@ const Skjermlenke = ({
   }
   return (
     <Label size="small" as="p">
-      <NavLink to={createLocationForSkjermlenke(behandlingLocation, skjermlenke)} onClick={scrollUpOnClick && scrollUp}>
+      <NavLink
+        to={createLocationForSkjermlenke(behandlingLocation, skjermlenke.kode)}
+        onClick={scrollUpOnClick && scrollUp}
+      >
         {kodeverkNavnFraKodeFn(skjermlenke.kode, KodeverkType.SKJERMLENKE_TYPE)}
       </NavLink>
     </Label>

@@ -11,7 +11,7 @@ describe('HistorikkMalTypeForeldelse', () => {
   it('skal vise alle historikkelement korrekt', () => {
     const historikkinnslagDeler = [
       {
-        skjermlenke: 'FORELDELSE',
+        skjermlenke: { kode: 'FORELDELSE', navn: 'Foreldelse' },
         endredeFelter: [
           {
             endretFeltNavn: 'feltkode',
