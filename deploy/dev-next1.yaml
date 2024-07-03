@@ -1,0 +1,6 @@
+# Verdier for dev-fss.k9saksbehandling.yml ved utrulling frå dev-next1 branch til k9-next1.dev.intern.nav.no
+name: k9-sak-web-dev-next1
+ingress: "https://k9-next1.dev.intern.nav.no/"
+replicas:
+  min: 1
+  max: 2
