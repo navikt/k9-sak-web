@@ -153,7 +153,7 @@ VedtakPanels.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   behandlingresultat: PropTypes.shape().isRequired,
   sprakkode: PropTypes.string.isRequired,
-  behandlingStatus: kodeverkObjektPropType.isRequired,
+  behandlingStatus: PropTypes.string.isRequired,
   behandlingPaaVent: PropTypes.bool.isRequired,
   behandlingArsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   tilbakekrevingvalg: PropTypes.shape(),
