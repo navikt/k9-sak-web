@@ -82,9 +82,14 @@ const FagsakIndex = () => {
     paramName: 'saksnummer',
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const alleKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(
+  const alleKodeverkK9Sak = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
     K9sakApiKeys.KODEVERK,
+  );
+  const alleKodeverkTilbake = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
+    K9sakApiKeys.KODEVERK_TILBAKE,
+  );
+  const alleKodeverkKlage = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
+    K9sakApiKeys.KODEVERK_KLAGE,
   );
 
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
@@ -238,7 +243,12 @@ const FagsakIndex = () => {
   return (
     <>
       <BehandlingProvider>
-        <KodeverkProvider behandlingType={behandling ? behandling.type : undefined} kodeverk={alleKodeverk}>
+        <KodeverkProvider
+          behandlingType={behandling ? behandling.type : undefined}
+          kodeverk={alleKodeverkK9Sak}
+          klageKodeverk={alleKodeverkKlage}
+          tilbakeKodeverk={alleKodeverkTilbake}
+        >
           <FagsakGrid
             behandlingContent={
               <Routes>
@@ -270,10 +280,11 @@ const FagsakIndex = () => {
               />
             }
             supportContent={() => {
+              console.log('supportContent');
+              // return <>supportContent</>;
               if (isRequestNotDone(personopplysningerState)) {
                 return <LoadingPanel />;
               }
-
               return (
                 <BehandlingSupportIndex
                   fagsak={fagsak}
@@ -289,6 +300,8 @@ const FagsakIndex = () => {
               );
             }}
             visittkortContent={() => {
+              console.log('visittkortContent');
+              // return <>visittkortContent</>;
               if (skalIkkeHenteData) {
                 return null;
               }

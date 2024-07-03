@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
@@ -50,24 +50,7 @@ interface OwnProps {
  */
 const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProps) => {
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
-  const { setKodeverkContext, behandlingType, getKodeverkNavnFraKodeFn } = useKodeverkContext();
-
-  const alleKodeverkK9Sak = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
-    K9sakApiKeys.KODEVERK,
-  );
-  const alleKodeverkTilbake = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
-    K9sakApiKeys.KODEVERK_TILBAKE,
-  );
-  const alleKodeverkKlage = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
-    K9sakApiKeys.KODEVERK_KLAGE,
-  );
-
-  setKodeverkContext({
-    behandlingType,
-    kodeverk: alleKodeverkK9Sak,
-    klageKodeverk: alleKodeverkKlage,
-    tilbakeKodeverk: alleKodeverkTilbake,
-  });
+  const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
 
   const location = useLocation();
   const getBehandlingLocation = useCallback(

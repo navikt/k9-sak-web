@@ -16,7 +16,6 @@ import {
   FeatureToggles,
   NavAnsatt,
 } from '@k9-sak-web/types';
-import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
 
 import BehandlingPleiepengerSluttfaseIndex from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
@@ -93,7 +92,7 @@ const BehandlingIndex = ({
   setRequestPendingMessage,
 }: OwnProps) => {
   const { setBehandlingContext, setBehandlingIdOgVersjon } = useBehandlingContext();
-  const { setKodeverkContext } = useKodeverkContext();
+  const { klageKodeverk, kodeverk } = useKodeverkContext();
   const { selected: behandlingId } = useTrackRouteParam<number>({
     paramName: 'behandlingId',
     parse: behandlingFromUrl => Number.parseInt(behandlingFromUrl, 10),
@@ -120,18 +119,6 @@ const BehandlingIndex = ({
     versjon => setBehandlingIdOgVersjon(behandlingId, versjon),
     [behandlingId],
   );
-
-  const kodeverk = restApiHooks.useGlobalStateRestApiData<AlleKodeverk>(K9sakApiKeys.KODEVERK);
-  const klageKodeverk = restApiHooks.useGlobalStateRestApiData<AlleKodeverk>(K9sakApiKeys.KODEVERK_KLAGE);
-
-  useEffect(() => {
-    setKodeverkContext({
-      kodeverk,
-      klageKodeverk,
-      tilbakeKodeverk: {},
-      behandlingType: BehandlingType[behandling?.type],
-    });
-  }, [kodeverk, klageKodeverk]);
 
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(K9sakApiKeys.SAK_BRUKER);
   const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(

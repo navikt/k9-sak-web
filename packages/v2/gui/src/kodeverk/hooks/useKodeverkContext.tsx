@@ -17,7 +17,7 @@ export const useKodeverkContext = () => {
     throw new Error('useKodeverkContext må brukes innenfor en KodeverkContext.Provider');
   }
 
-  const { behandlingType, kodeverk, klageKodeverk, tilbakeKodeverk, setKodeverkContext } = kodeverkContext;
+  const { behandlingType, kodeverk, klageKodeverk, tilbakeKodeverk } = kodeverkContext;
 
   const hentKodeverkForKode: HentKodeverkForKodeType = (kodeverkType, kilde = undefined) => {
     let kodeverkForKilde: AlleKodeverk | undefined;
@@ -120,7 +120,6 @@ export const useKodeverkContext = () => {
     tilbakeKodeverk,
     kodeverkNavnFraKode,
     kodeverkNavnFraUndertypeKode,
-    setKodeverkContext,
     getKodeverkNavnFraKodeFn,
     hentKodeverkForKode,
   };
