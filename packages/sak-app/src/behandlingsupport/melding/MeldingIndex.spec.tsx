@@ -5,8 +5,6 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { combineReducers, createStore } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import type { BehandlingAppKontekst, Brevmaler, Fagsak, FeatureToggles } from '@k9-sak-web/types';
@@ -16,6 +14,7 @@ import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/Fo
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import MeldingIndex, { type BackendApi } from './MeldingIndex';
 
@@ -84,7 +83,7 @@ describe('<MeldingIndex>', () => {
     {
       id: 1,
       uuid: '1212',
-      type: { kode: BehandlingType.FORSTEGANGSSOKNAD, kodeverk: '' },
+      type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
       sprakkode: { kode: 'NB', kodeverk: 'SPRAAK_KODE' },
     },
   ];
@@ -298,5 +297,4 @@ describe('<MeldingIndex>', () => {
     expect(reqData).toHaveLength(1);
     expect(reqData[0].params).toEqual({ ...meldingMal, ...melding, ...{ overstyrtMottaker: tredjepartsMottaker } });
   });
-
 });

@@ -5,7 +5,6 @@ import {
   ArbeidsgiverOpplysningerPerId,
   Brevmaler,
   FeatureToggles,
-  Kodeverk,
   KodeverkMedNavn,
   Personopplysninger,
 } from '@k9-sak-web/types';
@@ -15,6 +14,9 @@ import V2Messages, { type BackendApi as V2MessagesBackendApi } from '@k9-sak-web
 import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import { BehandlingInfo } from '@k9-sak-web/gui/sak/BehandlingInfo.js';
 import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
+import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType.js';
+import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi.js';
+import useVisForhandsvisningAvMelding from '@k9-sak-web/sak-app/src/data/useVisForhandsvisningAvMelding.js';
 import MessagesTilbakekreving from './components/MessagesTilbakekreving';
 import Messages, { type BackendApi as MessagesBackendApi, type FormValues } from './components/Messages';
 import messages from '../i18n/nb_NO.json';
@@ -32,17 +34,9 @@ const intl = createIntl(
 export interface BackendApi extends MessagesBackendApi, V2MessagesBackendApi {}
 
 interface OwnProps {
-  submitCallback: (values: FormValues) => void;
+  onMessageSent: () => void;
   templates: Brevmaler;
-  sprakKode: Kodeverk; // TODO Erstatt med behandling
-  previewCallback: (
-    mottaker: string | MottakerDto,
-    brevmalkode: string,
-    fritekst: string,
-    fritekstbrev?: Fritekstbrev,
-  ) => void;
-  behandlingId: number; // TODO Erstatt med behandling
-  behandlingVersjon: number;
+  behandlingVersjon: number; // Er vel berre for å detektere endring, kanskje fjernast etterkvart?
   isKontrollerRevurderingApOpen?: boolean;
   revurderingVarslingArsak: KodeverkMedNavn[];
   personopplysninger?: Personopplysninger;
@@ -55,22 +49,22 @@ interface OwnProps {
 }
 
 const MeldingerSakIndex = ({
-  submitCallback,
+  onMessageSent,
   templates,
-  sprakKode,
-  previewCallback,
-  behandlingId,
   behandlingVersjon,
   isKontrollerRevurderingApOpen = false,
   revurderingVarslingArsak,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
-  erTilbakekreving,
   featureToggles,
   fagsak,
   behandling,
   backendApi,
 }: OwnProps) => {
+  const { startRequest: submitMessage } = restApiHooks.useRestApiRunner(K9sakApiKeys.SUBMIT_MESSAGE);
+  const fetchPreview = useVisForhandsvisningAvMelding(behandling, fagsak);
+  const erTilbakekreving = erTilbakekrevingType({ kode: behandling.type.kode });
+  // Vis ny komponent for meldingssending viss dette ikkje er tilbakekreving, og featureflag er satt
   if (!erTilbakekreving && featureToggles.BRUK_V2_MELDINGER) {
     return (
       <V2Messages
@@ -80,9 +74,52 @@ const MeldingerSakIndex = ({
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         maler={Object.values(templates)}
         api={backendApi}
+        onMessageSent={onMessageSent}
       />
     );
   }
+  // Ellers, vis gamle komponenter:
+  const submitCallback = async (values: FormValues) => {
+    const data = erTilbakekreving
+      ? {
+          behandlingUuid: behandling.uuid,
+          fritekst: values.fritekst,
+          brevmalkode: values.brevmalkode,
+        }
+      : {
+          behandlingId: behandling.id,
+          overstyrtMottaker: values.overstyrtMottaker,
+          brevmalkode: values.brevmalkode,
+          fritekst: values.fritekst,
+          fritekstbrev: values.fritekstbrev,
+        };
+    await submitMessage(data);
+    onMessageSent(); // NB: Utfører full reload av sida.
+  };
+
+  const previewCallback = (
+    overstyrtMottaker: MottakerDto,
+    dokumentMal: string,
+    fritekst: string,
+    fritekstbrev?: Fritekstbrev,
+  ) => {
+    const data = erTilbakekrevingType({ kode: behandling.type.kode })
+      ? {
+          fritekst: fritekst || ' ',
+          brevmalkode: dokumentMal,
+        }
+      : {
+          overstyrtMottaker,
+          dokumentMal,
+          dokumentdata: {
+            fritekst: fritekst || ' ',
+            fritekstbrev: fritekstbrev
+              ? { brødtekst: fritekstbrev.brødtekst ?? '', overskrift: fritekstbrev.overskrift ?? '' }
+              : null,
+          },
+        };
+    fetchPreview(false, data);
+  };
 
   return (
     <RawIntlProvider value={intl}>
@@ -90,9 +127,9 @@ const MeldingerSakIndex = ({
         <MessagesTilbakekreving
           submitCallback={submitCallback}
           templates={templates}
-          sprakKode={sprakKode}
+          sprakKode={behandling.sprakkode}
           previewCallback={previewCallback}
-          behandlingId={behandlingId}
+          behandlingId={behandling.id}
           behandlingVersjon={behandlingVersjon}
           isKontrollerRevurderingApOpen={isKontrollerRevurderingApOpen}
           revurderingVarslingArsak={revurderingVarslingArsak}
@@ -103,9 +140,9 @@ const MeldingerSakIndex = ({
         <Messages
           submitCallback={submitCallback}
           templates={templates}
-          sprakKode={sprakKode}
+          sprakKode={behandling.sprakkode}
           previewCallback={previewCallback}
-          behandlingId={behandlingId}
+          behandlingId={behandling.id}
           behandlingVersjon={behandlingVersjon}
           isKontrollerRevurderingApOpen={isKontrollerRevurderingApOpen}
           revurderingVarslingArsak={revurderingVarslingArsak}
