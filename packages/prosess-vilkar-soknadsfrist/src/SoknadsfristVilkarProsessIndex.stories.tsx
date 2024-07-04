@@ -139,12 +139,12 @@ export const visSoknadsfristAksjonspunkt5077 = props => {
       aksjonspunkter={[
         {
           aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
-          begrunnelse: null,
+          begrunnelse: 'bikkjedrit',
           besluttersBegrunnelse: null,
           definisjon: { kode: '5077', kodeverk: 'AKSJONSPUNKT_DEF' },
           erAktivt: true,
           kanLoses: true,
-          status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
+          status: { kode: 'UTFO', kodeverk: 'AKSJONSPUNKT_STATUS' },
           toTrinnsBehandling: true,
           toTrinnsBehandlingGodkjent: null,
           vilkarType: { kode: 'FP_VK_3', kodeverk: 'VILKAR_TYPE' },
@@ -159,18 +159,18 @@ export const visSoknadsfristAksjonspunkt5077 = props => {
           {
             type: 'SØKNAD',
             status: [
-              {
-                periode: { fom: '2021-04-28', tom: '2021-04-30' },
-                status: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
-              },
+              // {
+              //   periode: { fom: '2021-04-28', tom: '2021-04-30' },
+              //   status: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+              // },
               {
                 periode: { fom: '2021-05-01', tom: '2021-05-05' },
-                status: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+                status: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
               },
             ],
-            innsendingstidspunkt: '2021-08-19T11:50:21.894',
+            innsendingstidspunkt: '2021-10-17T11:50:21.894',
             journalpostId: '510536417',
-            avklarteOpplysninger: null,
+            avklarteOpplysninger: { begrunnelse: 'bikkjedrit' },
             overstyrteOpplysninger: null,
           },
         ],
@@ -182,20 +182,20 @@ export const visSoknadsfristAksjonspunkt5077 = props => {
           lovReferanse: null,
           overstyrbar: true,
           perioder: [
+            // {
+            //   avslagKode: null,
+            //   merknadParametere: {},
+            //   vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            //   periode: { fom: '2021-04-28', tom: '2021-04-30' },
+            //   begrunnelse: null,
+            //   vurderesIBehandlingen: true,
+            // },
             {
               avslagKode: null,
               merknadParametere: {},
-              vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
-              periode: { fom: '2021-04-28', tom: '2021-04-30' },
-              begrunnelse: null,
-              vurderesIBehandlingen: true,
-            },
-            {
-              avslagKode: null,
-              merknadParametere: {},
-              vilkarStatus: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+              vilkarStatus: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
               periode: { fom: '2021-05-01', tom: '2021-05-05' },
-              begrunnelse: null,
+              begrunnelse: 'bikkjedrit',
               vurderesIBehandlingen: true,
             },
           ],
