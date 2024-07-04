@@ -139,7 +139,7 @@ export const visSoknadsfristAksjonspunkt5077 = props => {
       aksjonspunkter={[
         {
           aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
-          begrunnelse: 'bikkjedrit',
+          begrunnelse: 'Saklig begrunnelse',
           besluttersBegrunnelse: null,
           definisjon: { kode: '5077', kodeverk: 'AKSJONSPUNKT_DEF' },
           erAktivt: true,
@@ -170,7 +170,7 @@ export const visSoknadsfristAksjonspunkt5077 = props => {
             ],
             innsendingstidspunkt: '2021-10-17T11:50:21.894',
             journalpostId: '510536417',
-            avklarteOpplysninger: { begrunnelse: 'bikkjedrit' },
+            avklarteOpplysninger: { begrunnelse: 'Saklig begrunnelse' },
             overstyrteOpplysninger: null,
           },
         ],
@@ -195,7 +195,7 @@ export const visSoknadsfristAksjonspunkt5077 = props => {
               merknadParametere: {},
               vilkarStatus: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
               periode: { fom: '2021-05-01', tom: '2021-05-05' },
-              begrunnelse: 'bikkjedrit',
+              begrunnelse: 'Saklig begrunnelse',
               vurderesIBehandlingen: true,
             },
           ],
@@ -308,7 +308,6 @@ export const visSoknadsfristAksjonspunkt5077Delvis = props => {
           ],
         },
       ]}
-      visAllePerioder
       {...props}
     />
   );

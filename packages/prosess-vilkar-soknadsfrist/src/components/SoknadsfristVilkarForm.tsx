@@ -180,33 +180,31 @@ export const SoknadsfristVilkarForm = ({
     submitCallback([transformValues(values, alleDokumenter, aksjonspunktCode, periodeFom, periodeTom)]);
   };
 
-  if (!erOverstyrt && !harAksjonspunkt && dokumenterIAktivPeriode.length > 0 && !redigerVurdering) {
-    return (
-      <div>
-        {Array.isArray(alleDokumenter) &&
-          alleDokumenter.length > 0 &&
-          alleDokumenter.map((field, index) => {
-            const dokument = alleDokumenter.find(dok => dok.journalpostId === field.journalpostId);
-            const documentHash = hash(dokument);
-            return (
-              <SoknadsfristVilkarDokument
-                key={documentHash}
-                erAktivtDokument={dokumenterIAktivPeriode.findIndex(d => hash(d) === documentHash) > -1}
-                skalViseBegrunnelse
-                readOnly
-                erVilkarOk={erVilkarOk}
-                dokumentIndex={index}
-                dokument={dokument}
-                setRedigerVurdering={setRedigerVurdering}
-              />
-            );
-          })}
-      </div>
-    );
-  }
-
   return (
     <Form formMethods={formMethods} onSubmit={handleSubmit}>
+      {!erOverstyrt && !harAksjonspunkt && dokumenterIAktivPeriode.length > 0 && !redigerVurdering && (
+        <div>
+          {Array.isArray(alleDokumenter) &&
+            alleDokumenter.length > 0 &&
+            alleDokumenter.map((field, index) => {
+              const dokument = alleDokumenter.find(dok => dok.journalpostId === field.journalpostId);
+              const documentHash = hash(dokument);
+              return (
+                <SoknadsfristVilkarDokument
+                  key={documentHash}
+                  erAktivtDokument={dokumenterIAktivPeriode.findIndex(d => hash(d) === documentHash) > -1}
+                  skalViseBegrunnelse
+                  readOnly
+                  erVilkarOk={erVilkarOk}
+                  dokumentIndex={index}
+                  dokument={dokument}
+                  setRedigerVurdering={setRedigerVurdering}
+                />
+              );
+            })}
+        </div>
+      )}
+
       {(erOverstyrt || harAksjonspunkt || redigerVurdering) && dokumenterIAktivPeriode.length > 0 && (
         <AksjonspunktBox
           className={styles.aksjonspunktMargin}
