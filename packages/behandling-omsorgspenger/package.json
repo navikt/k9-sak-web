@@ -32,7 +32,7 @@
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ft-fakta-beregning-redesign": "1.2.17",
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "7.5.18",
-    "@navikt/ft-prosess-beregningsgrunnlag": "6.5.21",
+    "@navikt/ft-prosess-beregningsgrunnlag": "6.5.22",
     "react": "18.3.1",
     "react-intl": "6.6.8"
   }
