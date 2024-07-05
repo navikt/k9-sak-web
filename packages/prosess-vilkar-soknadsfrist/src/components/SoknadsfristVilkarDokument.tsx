@@ -92,7 +92,7 @@ export const SoknadsfristVilkarDokument = ({
         <small>(journalpostId: {dokument.journalpostId})</small>
       </p>
       {skalViseBegrunnelse && (
-        <div className={`flex ${redigerVurdering ? 'items-baseline' : ''}`}>
+        <div className={`flex max-w-[50%] ${redigerVurdering ? 'items-baseline' : ''}`}>
           <div>
             <VerticalSpacer eightPx />
             <TextAreaField
@@ -106,7 +106,7 @@ export const SoknadsfristVilkarDokument = ({
             <AssessedBy name={opprettetAv} date={opprettetTidspunkt} />
           </div>
           {!erOverstyrt && dokumentErVurdert && (
-            <div className="ml-2">
+            <div className="ml-2 flex-[1_0_auto]">
               <VerticalSpacer eightPx />
               <Button
                 className={styles.editButton}
