@@ -22,7 +22,7 @@ import FritekstForslagSelect from './FritekstForslagSelect.js';
 import FritekstInput, {
   type FritekstInputInvalid,
   type FritekstInputMethods,
-  type FritekstInputValue,
+  type FritekstInputValue, type FritekstModus,
 } from './FritekstInput.js';
 import MalSelect from './MalSelect.jsx';
 import type { BehandlingInfo } from '../BehandlingInfo.js';
@@ -238,13 +238,15 @@ const Messages = ({
     onValgtMalChanged(valgtMal);
   }, [valgtMal]);
 
+  const fritekstModus: FritekstModus = valgtMal?.støtterTittelOgFritekst ? 'StørreFritekstOgTittel' : 'EnkelFritekst'
+
   const showFritekstInput = (valgtMal?.støtterFritekst || valgtMal?.støtterTittelOgFritekst) ?? false;
 
   // FritekstbrevinnholdDto must be undefined or have props set with string value
   const resolveFritekstbrevinnholdDto = (
     fritekstInputValue: FritekstInputValue | FritekstInputInvalid | undefined,
   ): FritekstbrevinnholdDto | undefined => {
-    if (fritekstInputValue?.tittel !== undefined && fritekstInputValue?.tekst !== undefined) {
+    if (fritekstModus === 'StørreFritekstOgTittel' && fritekstInputValue?.tittel !== undefined && fritekstInputValue?.tekst !== undefined) {
       return {
         overskrift: fritekstInputValue.tittel,
         brødtekst: fritekstInputValue.tekst,
@@ -280,7 +282,7 @@ const Messages = ({
     const fritekstbrev = resolveFritekstbrevinnholdDto(fritekstInputValue);
     // Ut frå oppførsel til gammal kode ser det ut til at fritekst skal settast når valgt mal ikkje støtter tittel.
     // Ellers skal fritekstbrev prop settast.
-    const fritekst = fritekstInputValue?.tekst;
+    const fritekst = fritekstModus === 'EnkelFritekst' ? fritekstInputValue?.tekst : undefined;
     const overstyrtMottaker = resolveOvertyrtMottaker();
     // Viss valg for sending til tredjepartsmottaker er aktivt må overstyrtMottaker vere definert
     if (tredjepartsmottakerAktivert && overstyrtMottaker === undefined) {
@@ -386,7 +388,7 @@ const Messages = ({
         defaultValue={valgtFritekstInputValue}
         ref={fritekstInputRef}
         show={showFritekstInput}
-        showTitle={valgtMal?.støtterTittelOgFritekst === true}
+        fritekstModus={fritekstModus}
         showValidation={showValidation}
       />
       <HStack gap="3">
