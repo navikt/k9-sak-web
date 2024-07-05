@@ -23,8 +23,10 @@ import {
 } from '@navikt/ft-form-validators';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import React, { useCallback, useMemo } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { formatDate } from '../utils';
+import { FormState } from './FormState';
 import styles from './SoknadsfristVilkarDokument.module.css';
 
 const minLength3 = minLength(3);
@@ -62,6 +64,8 @@ export const SoknadsfristVilkarDokument = ({
   redigerVurdering,
   dokumentErVurdert,
 }: SoknadsfristVilkarDokumentProps) => {
+  const { getValues } = useFormContext<FormState>();
+  const harBegrunnelse = !!getValues('avklarteKrav')[dokumentIndex]?.begrunnelse;
   const intl = useIntl();
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   const opprettetAv = hentSaksbehandlerNavn(dokument?.avklarteOpplysninger?.opprettetAv);
@@ -105,7 +109,7 @@ export const SoknadsfristVilkarDokument = ({
             />
             <AssessedBy name={opprettetAv} date={opprettetTidspunkt} />
           </div>
-          {!erOverstyrt && dokumentErVurdert && (
+          {!erOverstyrt && dokumentErVurdert && harBegrunnelse && (
             <div className="ml-2 flex-[1_0_auto]">
               <VerticalSpacer eightPx />
               <Button
