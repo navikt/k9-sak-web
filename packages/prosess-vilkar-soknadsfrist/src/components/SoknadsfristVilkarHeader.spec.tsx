@@ -13,14 +13,12 @@ describe('<SoknadsfristVilkarHeader>', () => {
       <Provider store={createStore(combineReducers({ form: reducer }))}>
         <IntlProvider locale="nb-NO" messages={messages}>
           <SoknadsfristVilkarHeader
-            erVilkarOk
             overstyringApKode="5011"
             lovReferanse="§23"
             overrideReadOnly={false}
             kanOverstyreAccess={{
               isEnabled: true,
             }}
-            aksjonspunktCodes={[]}
             toggleOverstyring={() => undefined}
             panelTittelKode="Inngangsvilkar.Soknadsfrist"
             erOverstyrt

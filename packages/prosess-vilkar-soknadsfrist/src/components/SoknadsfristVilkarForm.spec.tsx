@@ -1,8 +1,8 @@
 import React from 'react';
 // import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { DokumentStatus } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
@@ -58,8 +58,6 @@ describe('<SoknadsfristVilkarForm>', () => {
         behandlingVersjon={2}
         erOverstyrt
         erVilkarOk
-        isReadOnly
-        harAksjonspunkt
         harÅpentAksjonspunkt={false}
         overrideReadOnly={false}
         toggleOverstyring={() => undefined}
@@ -69,7 +67,6 @@ describe('<SoknadsfristVilkarForm>', () => {
         dokumenterIAktivPeriode={dokumenter}
         alleDokumenter={dokumenter}
         periode={periode}
-        isSolvable
       />,
       { messages },
     );
