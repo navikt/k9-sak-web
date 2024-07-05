@@ -20,20 +20,12 @@ const simuleringResultat = {
     ingenPerioderMedAvvik: false,
     perioderPerMottaker: [
       {
-        mottakerType: {
-          kode: 'BRUKER',
-          navn: null,
-          kodeverk: 'MOTTAKER_TYPE',
-        },
+        mottakerType: 'BRUKER',
         mottakerNummer: null,
         mottakerNavn: null,
         resultatPerFagområde: [
           {
-            fagOmrådeKode: {
-              kode: 'FP',
-              navn: 'Foreldrepenger',
-              kodeverk: 'FAG_OMRAADE_KODE',
-            },
+            fagOmrådeKode: 'FP',
             rader: [
               {
                 feltnavn: 'nyttBeløp',

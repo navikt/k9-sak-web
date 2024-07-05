@@ -1,10 +1,13 @@
+import React from 'react';
+import { screen } from '@testing-library/react';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../../../i18n/nb_NO.json';
+
 import StatusForBorgerFaktaPanel from './StatusForBorgerFaktaPanel';
+
+import messages from '../../../i18n/nb_NO.json';
 
 describe('<StatusForBorgerFaktaPanel>', () => {
   it('skal vise radioknapper for vurdering av oppholdsrett', () => {
@@ -53,12 +56,8 @@ describe('<StatusForBorgerFaktaPanel>', () => {
     };
     const aksjonspunkter = [
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
-        },
-        status: {
-          kode: 'UTFO',
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
+        status: 'UTFO',
       },
     ];
     const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(periode, aksjonspunkter);
@@ -98,12 +97,8 @@ describe('<StatusForBorgerFaktaPanel>', () => {
     };
     const aksjonspunkter = [
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
-        },
-        status: {
-          kode: 'UTFO',
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
+        status: 'UTFO',
       },
     ];
 

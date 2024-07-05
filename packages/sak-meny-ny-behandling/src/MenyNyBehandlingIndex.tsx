@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 
 import NyBehandlingModal, { BehandlingOppretting, FormValues } from './components/NyBehandlingModal';
 
@@ -23,12 +23,12 @@ const intl = createIntl(
 export const getMenytekst = (): string => intl.formatMessage({ id: 'MenyNyBehandlingIndex.NyForstegangsbehandling' });
 
 interface OwnProps {
-  ytelseType: Kodeverk;
+  ytelseType: string;
   saksnummer: string;
   behandlingId?: number;
   behandlingUuid?: string;
   behandlingVersjon?: number;
-  behandlingType?: Kodeverk;
+  behandlingType?: string;
   lagNyBehandling: (behandlingTypeKode: string, data: any) => void;
   behandlingstyper: KodeverkMedNavn[];
   tilbakekrevingRevurderingArsaker: KodeverkMedNavn[];

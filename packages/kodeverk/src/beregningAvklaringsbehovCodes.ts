@@ -37,12 +37,12 @@ const avklaringsbehovIsOfType =
     validAksjonspunktCodes.includes(aksjonspunktCode);
 
 export const harAvklaringsbehov = (avklaringsbehovCode: string, avklaringsbehov: BeregningAvklaringsbehov[]): boolean =>
-  avklaringsbehov.some(ap => ap.definisjon.kode === avklaringsbehovCode);
+  avklaringsbehov.some(ap => ap.definisjon === avklaringsbehovCode);
 
 export const harAvklaringsbehovSomKanLøses = (
   avklaringsbehovCode: string,
   avklaringsbehov: BeregningAvklaringsbehov[],
-): boolean => avklaringsbehov.some(ap => ap.definisjon.kode === avklaringsbehovCode && ap.kanLoses);
+): boolean => avklaringsbehov.some(ap => ap.definisjon === avklaringsbehovCode && ap.kanLoses);
 
 export const isBGAksjonspunktSomGirFritekstfelt = avklaringsbehovIsOfType(
   beregningsgrunnlagFritekstfeltIVedtakAksjonspunkt,

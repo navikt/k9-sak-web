@@ -19,7 +19,7 @@ interface OwnProps {
 }
 
 const formatereLesemodusObjektForMidlertidigAlene = (vilkar: Vilkar, aksjonspunkt: Aksjonspunkt, status: string) => {
-  if (vilkar.perioder[0].vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT) {
+  if (vilkar.perioder[0].vilkarStatus !== vilkarUtfallType.IKKE_VURDERT) {
     return {
       begrunnelse: aksjonspunkt.begrunnelse,
       vilkarOppfylt: status === vilkarUtfallType.OPPFYLT,
@@ -105,7 +105,7 @@ const MidlertidigAleneObjektTilMikrofrontend = ({
       }) => {
         submitCallback([
           formatereLosAksjonspunktObjektForMidlertidigAlene(
-            aksjonspunkt.definisjon.kode,
+            aksjonspunkt.definisjon,
             begrunnelse,
             erSokerenMidlertidigAleneOmOmsorgen,
             {

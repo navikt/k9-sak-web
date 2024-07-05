@@ -6,10 +6,8 @@ import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   BorderBox,
   FlexColumn,
@@ -18,7 +16,7 @@ import {
   VerticalSpacer,
   useSaksbehandlerOppslag,
 } from '@fpsak-frontend/shared-components';
-import { ISO_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { FaktaBegrunnelseTextField } from '@k9-sak-web/fakta-felles';
 
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
@@ -161,14 +159,14 @@ const buildInitialValues = createSelector(
       )(state, 'gjeldendeFom'),
     (state, ownProps) => ownProps.alleKodeverk,
   ],
-  (valgtPeriode, alleAksjonspunkter, soknad, person, medlemskapPerioder, gjeldendeFom, alleKodeverk) => {
+  (valgtPeriode, alleAksjonspunkter, soknad, person, medlemskapPerioder, gjeldendeFom) => {
     const aksjonspunkter = alleAksjonspunkter
       .filter(
         ap =>
-          valgtPeriode.aksjonspunkter.includes(ap.definisjon.kode) ||
-          ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
+          valgtPeriode.aksjonspunkter.includes(ap.definisjon) ||
+          ap.definisjon === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
       )
-      .filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
+      .filter(ap => ap.definisjon !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
     let oppholdValues = {};
     let confirmValues = {};
     if (
@@ -180,17 +178,11 @@ const buildInitialValues = createSelector(
     if (valgtPeriode.aksjonspunkter.length > 0) {
       confirmValues = FaktaBegrunnelseTextField.buildInitialValues([valgtPeriode]);
     }
-    const kodeverkFn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+
     return {
       ...valgtPeriode,
       ...OppholdINorgeOgAdresserFaktaPanel.buildInitialValues(soknad, valgtPeriode, aksjonspunkter),
-      ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(
-        valgtPeriode,
-        medlemskapPerioder,
-        soknad,
-        aksjonspunkter,
-        kodeverkFn,
-      ),
+      ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(valgtPeriode, medlemskapPerioder, soknad, aksjonspunkter),
       fom: gjeldendeFom || moment().format(ISO_DATE_FORMAT),
       ...oppholdValues,
       ...confirmValues,

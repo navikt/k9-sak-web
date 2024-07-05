@@ -1,7 +1,6 @@
 import { RadioGroupField, TextAreaField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpText, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   ISO_DATE_FORMAT,
@@ -39,7 +38,6 @@ export class VarselOmRevurderingFormImpl extends React.Component {
     begrunnelse: null,
     languageCode: null,
     erAutomatiskRevurdering: false,
-    ventearsaker: [],
     avklartBarn: undefined,
     termindato: undefined,
   };
@@ -104,7 +102,6 @@ export class VarselOmRevurderingFormImpl extends React.Component {
       sendVarsel,
       aksjonspunktStatus,
       begrunnelse,
-      ventearsaker,
       behandlingTypeKode,
       ...formProps
     } = this.props;
@@ -188,7 +185,6 @@ export class VarselOmRevurderingFormImpl extends React.Component {
           frist={moment().add(28, 'days').format(ISO_DATE_FORMAT)}
           cancelEvent={this.hideSettPaVentModal}
           submitCallback={this.handleSubmitFromModal}
-          ventearsaker={ventearsaker}
           visBrevErBestilt
           hasManualPaVent
           erTilbakekreving={
@@ -213,12 +209,6 @@ VarselOmRevurderingFormImpl.propTypes = {
   sendVarsel: PropTypes.bool,
   fritekst: PropTypes.string,
   begrunnelse: PropTypes.string,
-  ventearsaker: PropTypes.arrayOf(
-    PropTypes.shape({
-      kode: PropTypes.string,
-      navn: PropTypes.string,
-    }),
-  ),
   avklartBarn: PropTypes.arrayOf(PropTypes.shape()),
   behandlingTypeKode: PropTypes.string.isRequired,
   soknad: revurderingSoknadPropType.isRequired,
@@ -229,7 +219,7 @@ VarselOmRevurderingFormImpl.propTypes = {
 };
 
 export const buildInitialValues = createSelector([(state, ownProps) => ownProps.aksjonspunkter], aksjonspunkter => ({
-  kode: aksjonspunkter[0].definisjon.kode,
+  kode: aksjonspunkter[0].definisjon,
   frist: moment().add(28, 'days').format(ISO_DATE_FORMAT),
   ventearsak: null,
 }));
@@ -254,20 +244,18 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     Array.isArray(behandlingArsaker) &&
     behandlingArsaker.reduce((result, current) => result || current.erAutomatiskRevurdering, false);
   const aksjonspunkt = aksjonspunkter[0];
-  const ventearsaker = ownProps.alleKodeverk[kodeverkTyper.VENT_AARSAK];
   const languageCode = getLanguageCodeFromSprakkode(sprakkode);
 
   return state => ({
     initialValues: buildInitialValues(state, ownProps),
-    aksjonspunktStatus: aksjonspunkt.status.kode,
+    aksjonspunktStatus: aksjonspunkt.status,
     begrunnelse: aksjonspunkt.begrunnelse,
     ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'sendVarsel', 'fritekst', 'frist'),
     avklartBarn: nullSafe(familiehendelse.register).avklartBarn,
     termindato: nullSafe(familiehendelse.gjeldende).termindato,
     vedtaksDatoSomSvangerskapsuke: nullSafe(familiehendelse.gjeldende).vedtaksDatoSomSvangerskapsuke,
-    behandlingTypeKode: behandlingType.kode,
+    behandlingTypeKode: behandlingType,
     languageCode,
-    ventearsaker,
     erAutomatiskRevurdering,
     onSubmit,
   });

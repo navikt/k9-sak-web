@@ -1,8 +1,7 @@
 import Arbeidsgiver from './arbeidsgiverTsType';
-import Kodeverk from './kodeverkTsType';
 
 export type ManglendeVedleggSoknad = Readonly<{
-  dokumentType: Kodeverk;
+  dokumentType: string;
   arbeidsgiver: Arbeidsgiver;
   brukerHarSagtAtIkkeKommer: boolean;
 }>;
@@ -12,7 +11,7 @@ export type Soknad = Readonly<{
   termindato?: string;
   antallBarn: number;
   utstedtdato?: string;
-  soknadType: Kodeverk;
+  soknadType: string;
   manglendeVedlegg: ManglendeVedleggSoknad[];
 }>;
 

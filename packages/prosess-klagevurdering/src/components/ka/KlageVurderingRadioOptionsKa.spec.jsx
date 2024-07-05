@@ -8,10 +8,7 @@ import messages from '../../../i18n/nb_NO.json';
 import { KlageVurderingRadioOptionsKa } from './KlageVurderingRadioOptionsKa';
 
 describe('<KlageVurderingRadioOptionsKaImpl>', () => {
-  const sprakkode = {
-    kode: 'NO',
-    navn: 'Norsk',
-  };
+  const sprakkode = 'NO';
   const medholdReasons = [
     { kode: 'NYE_OPPLYSNINGER', navn: 'Nytt faktum', kodeverk: 'KLAGE_MEDHOLD_AARSAK' },
     { kode: 'ULIK_REGELVERKSTOLKNING', navn: 'Feil lovanvendelse', kodeverk: 'KLAGE_MEDHOLD_AARSAK' },

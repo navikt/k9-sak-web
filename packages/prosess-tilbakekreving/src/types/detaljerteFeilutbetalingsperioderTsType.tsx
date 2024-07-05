@@ -1,11 +1,9 @@
-import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-
 export type DetaljertFeilutbetalingPeriode = {
   fom: string;
   tom: string;
   årsak: {
-    hendelseType: KodeverkMedNavn;
-    hendelseUndertype?: KodeverkMedNavn;
+    hendelseType: string;
+    hendelseUndertype?: string;
   };
   feilutbetaling: number;
   ytelser: {
@@ -16,7 +14,7 @@ export type DetaljertFeilutbetalingPeriode = {
     erTrekk: boolean;
     belop: number;
   }[];
-  oppfyltValg?: Kodeverk;
+  oppfyltValg?: string;
   foreldet?: boolean;
 };
 

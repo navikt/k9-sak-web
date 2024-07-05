@@ -73,20 +73,20 @@ const NoedvendighetOversikt = () => {
   );
 
   const andreAksjonspunkterIOpplæring = aksjonspunkter
-    .filter(aksjonspunkt => aksjonspunkt.definisjon.kode !== aksjonspunktCodes.VURDER_NØDVENDIGHET)
+    .filter(aksjonspunkt => aksjonspunkt.definisjon !== aksjonspunktCodes.VURDER_NØDVENDIGHET)
     .map(aksjonspunkt => {
-      if (aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_GJENNOMGÅTT_OPPLÆRING) {
+      if (aksjonspunkt.definisjon === aksjonspunktCodes.VURDER_GJENNOMGÅTT_OPPLÆRING) {
         return 'Opplæring';
       }
 
-      if (aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_REISETID) {
+      if (aksjonspunkt.definisjon === aksjonspunktCodes.VURDER_REISETID) {
         return 'Reisetid';
       }
       return aksjonspunkt;
     })
     .filter(v => typeof v === 'string');
 
-  if (!aksjonspunkter.find(aksjonspunkt => aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_NØDVENDIGHET)) {
+  if (!aksjonspunkter.find(aksjonspunkt => aksjonspunkt.definisjon === aksjonspunktCodes.VURDER_NØDVENDIGHET)) {
     return (
       <Alert variant="info">
         {`${andreAksjonspunkterIOpplæring.join(' og ')} må vurderes før Nødvendighet kan vurderes.`}

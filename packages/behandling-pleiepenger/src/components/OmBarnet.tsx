@@ -24,7 +24,7 @@ export default ({ behandling: { links }, readOnly, aksjonspunkter, submitCallbac
     aksjonspunkter,
     aksjonspunktCodes.VURDER_RETT_ETTER_PLEIETRENGENDES_DØD,
   );
-  const omBarnetAksjonspunktkode = omBarnetAksjonspunkt?.definisjon.kode;
+  const omBarnetAksjonspunktkode = omBarnetAksjonspunkt?.definisjon;
   const harAksjonspunkt = !!omBarnetAksjonspunktkode;
 
   const løsAksjonspunkt = data =>

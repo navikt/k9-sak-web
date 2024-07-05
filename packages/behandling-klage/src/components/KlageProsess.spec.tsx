@@ -5,9 +5,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { Behandling, Fagsak, KlageVurdering } from '@k9-sak-web/types';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
@@ -17,15 +17,34 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import KlageProsess from './KlageProsess';
 
 describe('<KlageProsess>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
-  } as Fagsak;
+    sakstype: fagsakYtelsesType.OMP,
+    status: fagsakStatus.UNDER_BEHANDLING,
+    relasjonsRolleType: '',
+    barnFodt: '',
+    person: {
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+      diskresjonskode: '',
+      dodsdato: '',
+      aktørId: '',
+    },
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
+  };
 
   const fagsakPerson = {
     alder: 30,
-    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    personstatusType: personstatusType.BOSATT,
     erDod: false,
     erKvinne: true,
     navn: 'Espen Utvikler',
@@ -35,8 +54,8 @@ describe('<KlageProsess>', () => {
   const behandling = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -56,8 +75,8 @@ describe('<KlageProsess>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+      definisjon: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
@@ -110,7 +129,7 @@ describe('<KlageProsess>', () => {
     renderWithIntl(
       <KlageProsess
         data={{ aksjonspunkter, klageVurdering }}
-        fagsak={{ ...fagsak, sakstype: { kode: fagsakYtelsesType.FRISINN, kodeverk: 'FAGSAK_YTELSE' } }}
+        fagsak={{ ...fagsak, sakstype: fagsakYtelsesType.FRISINN }}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
@@ -139,7 +158,7 @@ describe('<KlageProsess>', () => {
     renderWithIntl(
       <KlageProsess
         data={{ aksjonspunkter, klageVurdering }}
-        fagsak={{ ...fagsak, sakstype: { kode: fagsakYtelsesType.FRISINN, kodeverk: 'FAGSAK_YTELSE' } }}
+        fagsak={{ ...fagsak, sakstype: fagsakYtelsesType.FRISINN }}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}

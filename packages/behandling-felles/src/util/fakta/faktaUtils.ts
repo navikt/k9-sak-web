@@ -17,7 +17,7 @@ export const utledFaktaPaneler = (
   featureToggles?: FeatureToggles,
 ): FaktaPanelUtledet[] => {
   const utvidetEkstraPanelData = { ...ekstraPanelData, rettigheter };
-  const apCodes = aksjonspunkter.map(ap => ap.definisjon.kode);
+  const apCodes = aksjonspunkter.map(ap => ap.definisjon);
   return faktaPanelDefinisjoner
     .filter(panelDef => panelDef.skalVisePanel(apCodes, utvidetEkstraPanelData, featureToggles))
     .map(panelDef => new FaktaPanelUtledet(panelDef, behandling, aksjonspunkter));
@@ -55,8 +55,8 @@ export const getBekreftAksjonspunktCallback =
   ) =>
   aksjonspunkter => {
     const model = aksjonspunkter.map(ap => ({
-      '@type': ap.kode,
-      ...ap,
+      '@type': ap,
+      kode: ap,
     }));
 
     const params = {

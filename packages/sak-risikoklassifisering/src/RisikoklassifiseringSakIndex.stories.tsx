@@ -57,22 +57,13 @@ export const visPanelForHøyRisikoklassifisering = props => (
     behandlingVersjon={1}
     aksjonspunkt={
       {
-        definisjon: {
-          kode: aksjonspunktCodes.VURDER_FARESIGNALER,
-          kodeverk: '',
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-          kodeverk: '',
-        },
+        definisjon: aksjonspunktCodes.VURDER_FARESIGNALER,
+        status: aksjonspunktStatus.OPPRETTET,
         begrunnelse: undefined,
       } as Aksjonspunkt
     }
     risikoklassifisering={{
-      kontrollresultat: {
-        kode: kontrollresultatKode.HOY,
-        kodeverk: '',
-      },
+      kontrollresultat: kontrollresultatKode.HOY,
       medlFaresignaler: {
         faresignaler: ['Søker bor hos foreldre'],
       },

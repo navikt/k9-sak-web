@@ -10,7 +10,7 @@ const HistorikkMalType2 = ({
   intl,
   historikkinnslag,
   behandlingLocation,
-  getKodeverknavn,
+  kodeverkNavnFraKodeFn,
   createLocationForSkjermlenke,
 }: HistorikkMal & WrappedComponentProps) => {
   const { historikkinnslagDeler } = historikkinnslag;
@@ -20,20 +20,20 @@ const HistorikkMalType2 = ({
         <Skjermlenke
           skjermlenke={historikkinnslagDeler[0].skjermlenke}
           behandlingLocation={behandlingLocation}
-          getKodeverknavn={getKodeverknavn}
+          kodeverkNavnFraKodeFn={kodeverkNavnFraKodeFn}
           scrollUpOnClick
           createLocationForSkjermlenke={createLocationForSkjermlenke}
         />
       )}
       {historikkinnslagDeler[0].resultat && historikkinnslagDeler[0].hendelse && (
         <Label size="small" as="p" className="snakkeboble-panel__tekst">
-          {`${findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}:` +
-            ` ${findResultatText(historikkinnslagDeler[0].resultat, intl, getKodeverknavn)}`}
+          {`${findHendelseText(historikkinnslagDeler[0].hendelse, kodeverkNavnFraKodeFn)}:` +
+            ` ${findResultatText(historikkinnslagDeler[0].resultat, intl, kodeverkNavnFraKodeFn)}`}
         </Label>
       )}
       {!historikkinnslagDeler[0].resultat && historikkinnslagDeler[0].hendelse && (
         <Label size="small" as="p" className="snakkeboble-panel__tekst">
-          {findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}
+          {findHendelseText(historikkinnslagDeler[0].hendelse, kodeverkNavnFraKodeFn)}
         </Label>
       )}
     </>

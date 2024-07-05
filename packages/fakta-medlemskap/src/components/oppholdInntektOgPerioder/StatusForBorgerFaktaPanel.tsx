@@ -1,12 +1,12 @@
 import { RadioGroupField, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import React, { FunctionComponent } from 'react';
+import { FormattedMessage, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { ArrowBox, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { Detail } from '@navikt/ds-react';
-import React, { FunctionComponent } from 'react';
-import { FormattedMessage, WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
 
 export type FormValues = {
   erEosBorger: boolean;
@@ -138,7 +138,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const getApKode = aksjonspunkter =>
   aksjonspunkter
-    .map(ap => ap.definisjon.kode)
+    .map(ap => ap.definisjon)
     .filter(
       kode => kode === aksjonspunktCodes.AVKLAR_OPPHOLDSRETT || kode === aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD,
     )[0];
@@ -146,7 +146,7 @@ const getApKode = aksjonspunkter =>
 const getEosBorger = (periode, aksjonspunkter) =>
   periode.erEosBorger || periode.erEosBorger === false
     ? periode.erEosBorger
-    : aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_OPPHOLDSRETT);
+    : aksjonspunkter.some(ap => ap.definisjon === aksjonspunktCodes.AVKLAR_OPPHOLDSRETT);
 
 const getOppholdsrettVurdering = periode =>
   periode.oppholdsrettVurdering || periode.oppholdsrettVurdering === false ? periode.oppholdsrettVurdering : undefined;
@@ -162,14 +162,14 @@ StatusForBorgerFaktaPanel.buildInitialValues = (periode, aksjonspunkter) => {
   const closedAp = aksjonspunkter
     .filter(
       ap =>
-        periode.aksjonspunkter.includes(ap.definisjon.kode) ||
+        periode.aksjonspunkter.includes(ap.definisjon) ||
         (periode.aksjonspunkter.length > 0 &&
           periode.aksjonspunkter.some(
             pap => pap === aksjonspunktCodes.AVKLAR_OPPHOLDSRETT || pap === aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD,
           ) &&
-          ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
+          ap.definisjon === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
     )
-    .filter(ap => !isAksjonspunktOpen(ap.status.kode));
+    .filter(ap => !isAksjonspunktOpen(ap.status));
 
   return {
     erEosBorger,

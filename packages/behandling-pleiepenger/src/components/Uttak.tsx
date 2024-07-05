@@ -8,6 +8,7 @@ import { Uttak } from '@k9-sak-web/prosess-uttak';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
 import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
+
 import { OverstyringUttakRequest } from '../types';
 
 interface UttakProps {
@@ -48,11 +49,11 @@ export default ({
     httpErrorHandler(status, addErrorMessage, locationHeader);
 
   const funnedeRelevanteAksjonspunkter = aksjonspunkter.filter(aksjonspunkt =>
-    relevanteAksjonspunkter.some(relevantAksjonspunkt => relevantAksjonspunkt === aksjonspunkt.definisjon.kode),
+    relevanteAksjonspunkter.some(relevantAksjonspunkt => relevantAksjonspunkt === aksjonspunkt.definisjon),
   );
   const funnedeRelevanteAksjonspunktkoder = funnedeRelevanteAksjonspunkter
-    .filter(aksjonspunkt => aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET)
-    .map(aksjonspunkt => aksjonspunkt.definisjon.kode);
+    .filter(aksjonspunkt => aksjonspunkt.status === aksjonspunktStatus.OPPRETTET)
+    .map(aksjonspunkt => aksjonspunkt.definisjon);
 
   const løsAksjonspunktVurderDatoNyRegelUttak = ({ begrunnelse, virkningsdato }) =>
     submitCallback([{ kode: aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK, begrunnelse, virkningsdato }]);
@@ -88,7 +89,7 @@ export default ({
         versjon,
         featureToggles,
         erOverstyrer,
-        status: behandlingStatus.kode,
+        status: behandlingStatus,
       }}
     />
   );

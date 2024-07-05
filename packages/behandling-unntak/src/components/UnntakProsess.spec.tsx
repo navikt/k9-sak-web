@@ -2,7 +2,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -18,15 +18,34 @@ import FetchedData from '../types/fetchedDataTsType';
 import UnntakProsess from './UnntakProsess';
 
 describe('<UnntakProsess>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
-  } as Fagsak;
+    sakstype: fagsakYtelsesType.OMP,
+    status: fagsakStatus.UNDER_BEHANDLING,
+    relasjonsRolleType: '',
+    barnFodt: '',
+    person: {
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+      diskresjonskode: '',
+      dodsdato: '',
+      aktørId: '',
+    },
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
+  };
 
   const fagsakPerson = {
     alder: 30,
-    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    personstatusType: personstatusType.BOSATT,
     erDod: false,
     erKvinne: true,
     navn: 'Espen Utvikler',
@@ -35,8 +54,8 @@ describe('<UnntakProsess>', () => {
   const behandling = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -56,19 +75,19 @@ describe('<UnntakProsess>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+      definisjon: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
   ];
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.MEDLEMSKAPSVILKARET, kodeverk: 'test' },
+      vilkarType: vilkarType.MEDLEMSKAPSVILKARET,
       overstyrbar: true,
       perioder: [
         {
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           merknadParametere: {
             antattGodkjentArbeid: 'P0D',
             antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',

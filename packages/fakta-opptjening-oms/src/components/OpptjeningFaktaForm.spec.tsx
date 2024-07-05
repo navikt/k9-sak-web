@@ -1,17 +1,23 @@
-import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import type { OpptjeningAktivitetType } from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType.js';
-import messages from '../../i18n/nb_NO.json';
+
+import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import alleKodeverk from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { getKodeverkNavnFraKodeFnMock } from '@k9-sak-web/lib/kodeverk/mocks/kodeverkNavnFraKodeMock.js';
 import { OpptjeningFaktaFormImpl as OpptjeningFaktaForm } from './OpptjeningFaktaForm';
+import messages from '../../i18n/nb_NO.json';
 
 describe('<OpptjeningFaktaForm>', () => {
+  const kodeverkNavnFraKode = getKodeverkNavnFraKodeFnMock(alleKodeverk);
+
   const opptjeningActivities = [
     {
       id: 1,
-      aktivitetType: { kode: OAType.ARBEID, navn: 'ARBEID' },
+      aktivitetType: OAType.ARBEID,
       opptjeningFom: '2017-06-01',
       opptjeningTom: '2017-07-10',
       arbeidsgiver: 'Andersen Transport AS',
@@ -33,7 +39,7 @@ describe('<OpptjeningFaktaForm>', () => {
     },
     {
       id: 2,
-      aktivitetType: { kode: OAType.NÆRING, navn: 'NARING' },
+      aktivitetType: OAType.ARBEID,
       opptjeningFom: '2017-08-15',
       opptjeningTom: '2017-08-15',
       arbeidsgiver: 'Andersen Transport AS',
@@ -80,6 +86,7 @@ describe('<OpptjeningFaktaForm>', () => {
     },
   ];
   it('skal vise aksjonspunktinformasjon og knapper når aksjonspunkt finnes', () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
     renderWithIntlAndReduxForm(
       <OpptjeningFaktaForm
         hasAksjonspunkt
@@ -107,6 +114,7 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningList={opptjeningList}
         arbeidsgiverOpplysningerPerId={undefined}
         dokStatus="test"
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
       />,
       { messages },
     );
@@ -118,6 +126,7 @@ describe('<OpptjeningFaktaForm>', () => {
   });
 
   it('skal ikke vise aksjonspunktinformasjon og knapper når aksjonspunkt ikke finnes', () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
     renderWithIntlAndReduxForm(
       <OpptjeningFaktaForm
         hasAksjonspunkt={false}
@@ -137,6 +146,7 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningList={opptjeningList}
         arbeidsgiverOpplysningerPerId={undefined}
         dokStatus="test"
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
       />,
       { messages },
     );
@@ -147,6 +157,7 @@ describe('<OpptjeningFaktaForm>', () => {
   });
 
   it('skal ikke vise informasjon om aktiviteten når det ikke er valgt aktivitetstype i dropdown', async () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
     renderWithIntlAndReduxForm(
       <OpptjeningFaktaForm
         hasAksjonspunkt
@@ -166,6 +177,7 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningList={opptjeningList}
         arbeidsgiverOpplysningerPerId={undefined}
         dokStatus="test"
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
       />,
       { messages },
     );
@@ -178,6 +190,7 @@ describe('<OpptjeningFaktaForm>', () => {
   });
 
   it('skal kunne lagre og legge til når ingen aktivitet er valgt og alle aksjonspunkter er avklart', () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
     const updatedOpptjeningList = [
       {
         ...opptjeningList[0],
@@ -207,6 +220,7 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningList={updatedOpptjeningList}
         arbeidsgiverOpplysningerPerId={undefined}
         dokStatus="test"
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
       />,
       { messages },
     );
@@ -216,6 +230,7 @@ describe('<OpptjeningFaktaForm>', () => {
   });
 
   it('skal automatisk åpne aktivitet som må avklares', () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
     const formChangeCallback = vi.fn();
     const formInitCallback = vi.fn();
 
@@ -238,6 +253,7 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningList={opptjeningList}
         arbeidsgiverOpplysningerPerId={undefined}
         dokStatus="test"
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
       />,
       { messages },
     );
@@ -246,6 +262,7 @@ describe('<OpptjeningFaktaForm>', () => {
   });
 
   it('skal oppdatere aktivitet etter editering', async () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
     const formChangeCallback = vi.fn();
     const formInitCallback = vi.fn();
 
@@ -268,6 +285,7 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningList={opptjeningList}
         arbeidsgiverOpplysningerPerId={undefined}
         dokStatus="test"
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
       />,
       { messages },
     );
@@ -297,6 +315,7 @@ describe('<OpptjeningFaktaForm>', () => {
   });
 
   it('skal legge til aktivitet', async () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
     const formChangeCallback = vi.fn();
 
     renderWithIntlAndReduxForm(
@@ -326,6 +345,7 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningList={opptjeningList}
         arbeidsgiverOpplysningerPerId={undefined}
         dokStatus="test"
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
       />,
       { messages },
     );
@@ -338,6 +358,7 @@ describe('<OpptjeningFaktaForm>', () => {
   });
 
   it('skal kunne avbryte editering', async () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
     const formChangeCallback = vi.fn();
     const formInitCallback = vi.fn();
 
@@ -360,6 +381,7 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningList={opptjeningList}
         arbeidsgiverOpplysningerPerId={undefined}
         dokStatus="test"
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
       />,
       { messages },
     );

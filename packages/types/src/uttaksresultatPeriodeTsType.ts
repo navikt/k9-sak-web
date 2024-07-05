@@ -1,4 +1,3 @@
-import Kodeverk from './kodeverkTsType';
 import Arbeidsforhold from './arbeidsforholdTsType';
 
 export type UttaksresultatPeriode = Readonly<{
@@ -11,11 +10,11 @@ export type UttaksresultatPeriode = Readonly<{
       arbeidsgiver?: Arbeidsforhold;
       gradering?: boolean;
       prosentArbeid?: number;
-      stønadskontoType?: Kodeverk;
+      stønadskontoType?: string;
       trekkdagerDesimaler?: number;
       utbetalingsgrad?: number;
     }[];
-    periodeResultatType: Kodeverk;
+    periodeResultatType: string;
   }[];
   perioderAnnenpart: [];
   annenForelderHarRett: boolean;

@@ -1,17 +1,16 @@
 import type { Implements } from '@k9-sak-web/gui/utils/typehelp/Implements.js';
 import type { Fagsak as V2Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
-import type { FagsakYtelsesTypeKodeverk } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import type { FagsakStatusKodeverk } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
-import Kodeverk from './kodeverkTsType';
+import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import type { FagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import Periode from './periodeTsType';
 
 export type Fagsak = Implements<
   V2Fagsak,
   Readonly<{
     saksnummer: string;
-    sakstype: FagsakYtelsesTypeKodeverk;
-    relasjonsRolleType: Kodeverk;
-    status: FagsakStatusKodeverk;
+    sakstype: FagsakYtelsesType;
+    relasjonsRolleType: string;
+    status: FagsakStatus;
     barnFodt: string;
     person: {
       erDod: boolean;
@@ -19,8 +18,8 @@ export type Fagsak = Implements<
       alder: number;
       personnummer: string;
       erKvinne: boolean;
-      personstatusType: Kodeverk;
-      diskresjonskode?: Kodeverk;
+      personstatusType: string;
+      diskresjonskode?: string;
       dodsdato?: string;
       aktørId?: string;
     };

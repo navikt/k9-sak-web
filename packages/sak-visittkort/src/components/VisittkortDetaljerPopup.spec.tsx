@@ -1,3 +1,8 @@
+import React from 'react';
+import { screen } from '@testing-library/dom';
+
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import alleKodeverk from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
@@ -5,72 +10,39 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import region from '@fpsak-frontend/kodeverk/src/region';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/dom';
-import React from 'react';
+
 import messages from '../../i18n/nb_NO.json';
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 
 describe('<VisittkortDetaljerPopup>', () => {
   const personopplysningerSoker = {
-    navBrukerKjonn: {
-      kode: navBrukerKjonn.KVINNE,
-      kodeverk: 'NAV_BRUKER_KJONN',
-    },
-    statsborgerskap: {
-      kode: 'NORSK',
-      kodeverk: 'STATSBORGERSKAP',
-      navn: 'NORSK',
-    },
+    navBrukerKjonn: navBrukerKjonn.KVINNE,
+    statsborgerskap: 'NORSK',
     avklartPersonstatus: {
-      orginalPersonstatus: {
-        kode: personstatusType.BOSATT,
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
-      overstyrtPersonstatus: {
-        kode: personstatusType.BOSATT,
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
+      orginalPersonstatus: personstatusType.BOSATT,
+      overstyrtPersonstatus: personstatusType.BOSATT,
     },
-    personstatus: {
-      kode: personstatusType.BOSATT,
-      kodeverk: 'PERSONSTATUS_TYPE',
-    },
-    diskresjonskode: {
-      kode: diskresjonskodeType.KLIENT_ADRESSE,
-      kodeverk: 'DISKRESJONSKODE_TYPE',
-    },
-    sivilstand: {
-      kode: sivilstandType.SAMBOER,
-      kodeverk: 'SIVILSTAND_TYPE',
-    },
+    personstatus: personstatusType.BOSATT,
+    diskresjonskode: diskresjonskodeType.KLIENT_ADRESSE,
+    sivilstand: sivilstandType.SAMBOER,
     aktoerId: '24sedfs32',
     navn: 'Olga Utvikler',
     adresser: [
       {
-        adresseType: {
-          kode: opplysningAdresseType.BOSTEDSADRESSE,
-          kodeverk: 'ADRESSE_TYPE',
-        },
+        adresseType: opplysningAdresseType.BOSTEDSADRESSE,
         adresselinje1: 'Oslo',
       },
     ],
     fnr: '98773895',
-    region: {
-      kode: region.NORDEN,
-      kodeverk: 'REGION',
-    },
+    region: region.NORDEN,
     barn: [],
   };
 
   it('skal vise etiketter', () => {
-    renderWithIntl(
-      <VisittkortDetaljerPopup
-        personopplysninger={personopplysningerSoker}
-        alleKodeverk={{}}
-        sprakkode={{ kode: 'NN', kodeverk: '' }}
-      />,
-      { messages },
-    );
+    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
+    renderWithIntl(<VisittkortDetaljerPopup personopplysninger={personopplysningerSoker} sprakkode="NN" />, {
+      messages,
+    });
     expect(screen.getByText('Statsborgerskap')).toBeInTheDocument();
     expect(screen.getByText('Personstatus')).toBeInTheDocument();
     expect(screen.getByText('Sivilstand')).toBeInTheDocument();
@@ -78,14 +50,10 @@ describe('<VisittkortDetaljerPopup>', () => {
   });
 
   it('skal vise adresser', () => {
-    renderWithIntl(
-      <VisittkortDetaljerPopup
-        personopplysninger={personopplysningerSoker}
-        alleKodeverk={{}}
-        sprakkode={{ kode: 'NN', kodeverk: '' }}
-      />,
-      { messages },
-    );
+    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
+    renderWithIntl(<VisittkortDetaljerPopup personopplysninger={personopplysningerSoker} sprakkode="NN" />, {
+      messages,
+    });
 
     expect(screen.getByText('Bostedsadresse')).toBeInTheDocument();
     expect(screen.getByText('Oslo,')).toBeInTheDocument();

@@ -62,12 +62,8 @@ AnkeProsessIndex.propTypes = {
     PropTypes.shape({
       id: PropTypes.number,
       opprettet: PropTypes.string,
-      type: PropTypes.shape({
-        kode: PropTypes.string,
-      }),
-      status: PropTypes.shape({
-        kode: PropTypes.string,
-      }),
+      type: PropTypes.string, // kodeverk
+      status: PropTypes.string, // kodeverk
     }),
   ).isRequired,
 };

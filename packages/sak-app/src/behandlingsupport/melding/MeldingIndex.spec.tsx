@@ -83,8 +83,8 @@ describe('<MeldingIndex>', () => {
     {
       id: 1,
       uuid: '1212',
-      type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
-      sprakkode: { kode: 'NB', kodeverk: 'SPRAAK_KODE' },
+      type: behandlingType.FØRSTEGANGSSØKNAD,
+      sprakkode: 'NB',
     },
   ];
 

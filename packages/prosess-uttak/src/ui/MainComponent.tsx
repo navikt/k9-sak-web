@@ -28,7 +28,7 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
     erOverstyrer,
   } = containerData;
   const [redigerVirkningsdato, setRedigervirkningsdato] = React.useState<boolean>(false);
-  const aksjonspunktVurderDato = aksjonspunkter?.find(ap => ap.definisjon.kode === aksjonspunktVurderDatoKode);
+  const aksjonspunktVurderDato = aksjonspunkter?.find(ap => ap.definisjon === aksjonspunktVurderDatoKode);
 
   const harAksjonspunktForOverstyringAvUttak = aksjonspunktkoder.includes('6017');
   const [overstyringAktiv, setOverstyringAktiv] = React.useState<boolean>(harAksjonspunktForOverstyringAvUttak);

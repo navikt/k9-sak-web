@@ -1,4 +1,3 @@
-import Kodeverk from './kodeverkTsType';
 import ArbeidsforholdId from './arbeidsforholdIdTsType';
 import Arbeidsgiver from './arbeidsgiverTsType';
 import Periode from './periodeTsType';
@@ -11,16 +10,16 @@ export type ArbeidsforholdV2 = Readonly<{
   yrkestittel?: string;
   begrunnelse?: string;
   perioder: Periode[];
-  handlingType: Kodeverk;
-  kilde: Kodeverk[];
+  handlingType: string;
+  kilde: string[];
   permisjoner?: {
     permisjonFom?: string;
     permisjonTom?: string;
     permisjonsprosent?: number;
-    type?: Kodeverk;
+    type?: string;
   }[];
   stillingsprosent?: number;
-  aksjonspunktÅrsaker: Kodeverk[];
+  aksjonspunktÅrsaker: string[];
   inntektsmeldinger: Inntektsmelding[];
 }>;
 

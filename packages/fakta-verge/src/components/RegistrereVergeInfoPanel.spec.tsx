@@ -22,8 +22,8 @@ describe('<RegistrereVergeInfoPanel>', () => {
         aksjonspunkt={{
           kode: 5030,
           id: 100001,
-          definisjon: { kode: '5030', navn: 'VERGE' },
-          status: { kode: 'OPPR', navn: 'Opprettet', kodeverk: 'AKSJONSPUNKT_STATUS' },
+          definisjon: '5030',
+          status: 'OPPR',
           kanLoses: true,
           erAktivt: true,
         }}

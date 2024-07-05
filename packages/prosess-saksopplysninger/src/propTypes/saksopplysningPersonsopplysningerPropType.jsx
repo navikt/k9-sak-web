@@ -1,14 +1,11 @@
 // eslint-disable-next-line import/no-duplicates
 import PropTypes from 'prop-types';
 
-// eslint-disable-next-line import/no-duplicates
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-
 const saksopplysningPersonsopplysningerPropType = PropTypes.shape({
-  personstatus: kodeverkObjektPropType.isRequired,
+  personstatus: PropTypes.string.isRequired,
   avklartPersonstatus: PropTypes.shape({
-    orginalPersonstatus: kodeverkObjektPropType,
-    overstyrtPersonstatus: kodeverkObjektPropType,
+    orginalPersonstatus: PropTypes.string.isRequired,
+    overstyrtPersonstatus: PropTypes.string.isRequired,
   }).isRequired,
 });
 

@@ -31,7 +31,7 @@ class FeilutbetalingFaktaPanelDef extends FaktaPanelDef {
     fpsakKodeverk: any;
   }) => ({
     feilutbetalingFakta,
-    fagsakYtelseTypeKode: fagsak.sakstype.kode,
+    fagsakYtelseTypeKode: fagsak.sakstype,
     fpsakKodeverk,
   });
 }

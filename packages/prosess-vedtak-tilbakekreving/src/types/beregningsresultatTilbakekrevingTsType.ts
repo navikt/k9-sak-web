@@ -1,11 +1,9 @@
-import { Kodeverk } from '@k9-sak-web/types';
-
 export type BeregningResultatPeriode = {
   periode: {
     fom: string;
     tom: string;
   };
-  vurdering: Kodeverk;
+  vurdering: string;
   feilutbetaltBeløp: number;
   andelAvBeløp: number;
   renterProsent: number;
@@ -21,7 +19,7 @@ export type BeregningResultatPeriode = {
 
 type BeregningsresultatTilbakekreving = {
   beregningResultatPerioder: BeregningResultatPeriode[];
-  vedtakResultatType: Kodeverk;
+  vedtakResultatType: string;
 };
 
 export default BeregningsresultatTilbakekreving;

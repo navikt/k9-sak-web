@@ -5,6 +5,7 @@ import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { Fagsak, Behandling } from '@k9-sak-web/types';
+
 import OmsorgenFor from '../../components/OmsorgenFor';
 
 class OmsorgenForFaktaPanelDef extends FaktaPanelDef {
@@ -19,7 +20,7 @@ class OmsorgenForFaktaPanelDef extends FaktaPanelDef {
   getKomponent = props => <OmsorgenFor {...props} />;
 
   getOverstyrVisningAvKomponent = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => {
-    const erPleiepengesak = fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;
+    const erPleiepengesak = fagsak.sakstype === fagsakYtelseType.PLEIEPENGER;
     const søknadsfristErIkkeUnderVurdering = behandling.stegTilstand?.stegType?.kode !== 'VURDER_SØKNADSFRIST';
     return erPleiepengesak && søknadsfristErIkkeUnderVurdering;
   };

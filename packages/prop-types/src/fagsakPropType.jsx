@@ -3,21 +3,15 @@ import PropTypes from 'prop-types';
 const fagsakPropType = PropTypes.shape({
   dekningsgrad: PropTypes.number,
   saksnummer: PropTypes.string.isRequired,
-  sakstype: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
-  status: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
+  sakstype: PropTypes.string.isRequired, // kodeverk
+  status: PropTypes.string.isRequired, // kodeverk
   barnFodt: PropTypes.string,
   person: PropTypes.shape({
     navn: PropTypes.string.isRequired,
     alder: PropTypes.number.isRequired,
     personnummer: PropTypes.string.isRequired,
     erKvinne: PropTypes.bool.isRequired,
-    personstatusType: PropTypes.shape({
-      kode: PropTypes.string.isRequired,
-    }),
+    personstatusType: PropTypes.string, // kodeverk
     diskresjonskode: PropTypes.string,
     dodsdato: PropTypes.string,
     erNAVAnsatt: PropTypes.bool,

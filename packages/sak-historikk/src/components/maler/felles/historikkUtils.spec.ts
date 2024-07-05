@@ -1,6 +1,5 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
+import { getKodeverkNavnFraKodeFnMock } from '@k9-sak-web/lib/kodeverk/mocks/kodeverkNavnFraKodeMock.js';
 
 import messages from '../../../../i18n/nb_NO.json';
 import { findResultatText } from './historikkUtils';
@@ -21,6 +20,11 @@ const noenKodeverk = {
       navn: 'Behandling er hjemsendt',
       kodeverk: 'HISTORIKK_RESULTAT_TYPE',
     },
+    {
+      kode: 'FULL_TILBAKEBETALING',
+      navn: 'Full tilbakebetaling',
+      kodeverk: 'VEDTAK_RESULTAT_TYPE',
+    },
   ],
 };
 
@@ -29,14 +33,14 @@ describe('historikkUtils', () => {
     const historikkResultatNavn = findResultatText(
       noenKodeverk.HistorikkResultatType[0].kode,
       intlMock,
-      getKodeverknavnFn(noenKodeverk, kodeverkTyper),
+      getKodeverkNavnFraKodeFnMock(noenKodeverk),
     );
     expect(historikkResultatNavn).toEqual(noenKodeverk.HistorikkResultatType[0].navn);
 
     const vedtakResultatNavn = findResultatText(
       noenKodeverk.VedtakResultatType[0].kode,
       intlMock,
-      getKodeverknavnFn(noenKodeverk, kodeverkTyper),
+      getKodeverkNavnFraKodeFnMock(noenKodeverk),
     );
     expect(vedtakResultatNavn).toEqual(noenKodeverk.VedtakResultatType[0].navn);
   });
@@ -45,7 +49,7 @@ describe('historikkUtils', () => {
     const historikkResultatNavn = findResultatText(
       'FULL_TILBAKEBETALING',
       intlMock,
-      getKodeverknavnFn(noenKodeverk, kodeverkTyper),
+      getKodeverkNavnFraKodeFnMock(noenKodeverk),
     );
     expect(historikkResultatNavn).toEqual('Full tilbakebetaling');
   });

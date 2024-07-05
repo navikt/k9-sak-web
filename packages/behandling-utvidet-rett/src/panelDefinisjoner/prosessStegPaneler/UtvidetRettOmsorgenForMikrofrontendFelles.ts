@@ -1,6 +1,7 @@
 import { Vilkar } from '@k9-sak-web/types';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { formatereLukketPeriode } from '@fpsak-frontend/utils';
+
 import { InformasjonOmVurdertVilkar } from '../../types/utvidetRettMikrofrontend/InformasjonOmVurdertVilkar';
 
 export const generereInfoForVurdertVilkar = (
@@ -21,7 +22,7 @@ export const generereInfoForVurdertVilkar = (
     const periode = vilkar.perioder[0];
     vurdertVilkar.begrunnelse = begrunnelseFraAksjonspunkt;
     vurdertVilkar.navnPåAksjonspunkt = navnPåAksjonspunkt;
-    vurdertVilkar.vilkarOppfylt = periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT;
+    vurdertVilkar.vilkarOppfylt = periode.vilkarStatus === vilkarUtfallType.OPPFYLT;
     vurdertVilkar.vilkar = vilkar.lovReferanse;
     vurdertVilkar.periode = formatereLukketPeriode(`${periode.periode.fom}/${periode.periode.tom}`);
   }
