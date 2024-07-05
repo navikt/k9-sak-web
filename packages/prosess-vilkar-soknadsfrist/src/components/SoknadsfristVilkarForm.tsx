@@ -28,6 +28,12 @@ import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import SoknadsfristVilkarDokument, { DELVIS_OPPFYLT } from './SoknadsfristVilkarDokument';
 import styles from './SoknadsfristVilkarForm.module.css';
 
+/**
+ * Temporær fiks for saksbehandlere som setter dato og forventer at
+ * backend skal telle fra og meg datoen de setter.
+ *
+ * Backend teller fra dagen etter..
+ */
 const minusEnDag = (dato: string | Dayjs) => initializeDate(dato).subtract(1, 'days').format('YYYY-MM-DD');
 const plusEnDag = (dato: string | Dayjs) => initializeDate(dato).add(1, 'days').format('YYYY-MM-DD');
 
@@ -147,11 +153,14 @@ export const SoknadsfristVilkarForm = ({
   submitCallback,
 }: SoknadsfristVilkarFormProps) => {
   const formMethods = useForm<FormState>({ defaultValues: buildInitialValues(aksjonspunkter, alleDokumenter, status) });
-  // const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
-  //   control: formMethods.control, // control props comes from useForm (optional: if you are using FormContext)
-  //   name: 'avklarteKrav', // unique name for your Field Array
-  // });
-  const [redigerVurdering, setRedigerVurdering] = useState(false);
+  const [editForm, setEditForm] = useState(false);
+
+  const toggleEditForm = (shouldEdit: boolean) => {
+    setEditForm(shouldEdit);
+    if (!shouldEdit) {
+      formMethods.reset(buildInitialValues(aksjonspunkter, alleDokumenter, status));
+    }
+  };
   const aksjonspunkt = harÅpentAksjonspunkt
     ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST)
     : aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR);
@@ -182,7 +191,7 @@ export const SoknadsfristVilkarForm = ({
 
   return (
     <Form formMethods={formMethods} onSubmit={handleSubmit}>
-      {!erOverstyrt && !harAksjonspunkt && dokumenterIAktivPeriode.length > 0 && !redigerVurdering && (
+      {!erOverstyrt && !harAksjonspunkt && dokumenterIAktivPeriode.length > 0 && !editForm && (
         <div>
           {Array.isArray(alleDokumenter) &&
             alleDokumenter.length > 0 &&
@@ -198,14 +207,15 @@ export const SoknadsfristVilkarForm = ({
                   erVilkarOk={erVilkarOk}
                   dokumentIndex={index}
                   dokument={dokument}
-                  setRedigerVurdering={setRedigerVurdering}
+                  toggleEditForm={toggleEditForm}
+                  dokumentErVurdert={status !== vilkarUtfallType.IKKE_VURDERT}
                 />
               );
             })}
         </div>
       )}
 
-      {(erOverstyrt || harAksjonspunkt || redigerVurdering) && dokumenterIAktivPeriode.length > 0 && (
+      {(erOverstyrt || harAksjonspunkt || editForm) && dokumenterIAktivPeriode.length > 0 && (
         <AksjonspunktBox
           className={styles.aksjonspunktMargin}
           erAksjonspunktApent={erOverstyrt || harÅpentAksjonspunkt}
@@ -229,14 +239,15 @@ export const SoknadsfristVilkarForm = ({
                 <SoknadsfristVilkarDokument
                   key={documentHash}
                   erAktivtDokument={dokumenterIAktivPeriode.findIndex(d => hash(d) === documentHash) > -1}
-                  skalViseBegrunnelse={erOverstyrt || harAksjonspunkt || redigerVurdering}
-                  readOnly={(isReadOnly || (!erOverstyrt && !harÅpentAksjonspunkt)) && !redigerVurdering}
+                  skalViseBegrunnelse={erOverstyrt || harAksjonspunkt || editForm}
+                  readOnly={(isReadOnly || (!erOverstyrt && !harÅpentAksjonspunkt)) && !editForm}
                   erVilkarOk={erVilkarOk}
                   dokumentIndex={index}
                   dokument={dokument}
-                  setRedigerVurdering={setRedigerVurdering}
+                  toggleEditForm={toggleEditForm}
                   erOverstyrt={erOverstyrt}
-                  redigerVurdering={redigerVurdering}
+                  redigerVurdering={editForm}
+                  dokumentErVurdert={status !== vilkarUtfallType.IKKE_VURDERT}
                 />
               );
             })
@@ -296,7 +307,7 @@ export const SoknadsfristVilkarForm = ({
               </FlexRow>
             </FlexContainer>
           )}
-          {(harÅpentAksjonspunkt || redigerVurdering) && !erOverstyrt && (
+          {(harÅpentAksjonspunkt || editForm) && !erOverstyrt && (
             <Button
               variant="primary"
               size="small"
@@ -311,63 +322,5 @@ export const SoknadsfristVilkarForm = ({
     </Form>
   );
 };
-
-/**
- * Temporær fiks for saksbehandlere som setter dato og forventer at
- * backend skal telle fra og meg datoen de setter.
- *
- * Backend teller fra dagen etter..
- */
-
-// const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilkarFormProps) => {
-//   const { submitCallback, alleDokumenter, periode } = initialOwnProps;
-//   const periodeFom = periode?.periode?.fom;
-//   const periodeTom = periode?.periode?.tom;
-
-//   return (state, ownProps) => {
-//     const { behandlingId, behandlingVersjon, aksjonspunkter, harÅpentAksjonspunkt, erOverstyrt, overrideReadOnly } =
-//       ownProps;
-
-//     const aksjonspunkt = harÅpentAksjonspunkt
-//       ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST)
-//       : aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR);
-
-//     const isSolvable =
-//       harÅpentAksjonspunkt || aksjonspunkt !== undefined
-//         ? !(aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses)
-//         : false;
-
-//     const aksjonspunktCode = harÅpentAksjonspunkt
-//       ? aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST
-//       : aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR;
-
-//     const onSubmit = values =>
-//       submitCallback([transformValues(values, alleDokumenter, aksjonspunktCode, periodeFom, periodeTom)]);
-
-//     const initialValues = buildInitialValues(ownProps);
-
-//     return {
-//       // onSubmit,
-//       // initialValues,
-//       // harÅpentAksjonspunkt,
-//       // harAksjonspunkt: aksjonspunkt !== undefined,
-//       // isSolvable: erOverstyrt || isSolvable,
-//       // isReadOnly: overrideReadOnly || !periode?.vurderesIBehandlingen,
-//       // ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
-//       //   state,
-//       //   'isOverstyrt',
-//       //   'erVilkarOk',
-//       //   'avklarteKrav',
-//       // ),
-//     };
-//   };
-// };
-
-// const form = behandlingForm({
-//   form: formName,
-//   enableReinitialize: true,
-//   destroyOnUnmount: false,
-//   forceUnregisterOnUnmount: true,
-// })(SoknadsfristVilkarForm);
 
 export default SoknadsfristVilkarForm;

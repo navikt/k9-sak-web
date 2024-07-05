@@ -129,7 +129,7 @@ visOverstyringspanelForSoknadsfristUtenDokumenter.args = {
   },
 };
 
-export const visSoknadsfristAksjonspunkt5077 = props => {
+export const VisSoknadsfristAksjonspunkt5077 = props => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <SoknadsfristVilkarProsessIndex
@@ -149,7 +149,7 @@ export const visSoknadsfristAksjonspunkt5077 = props => {
           vurderPaNyttArsaker: null,
         },
       ]}
-      submitCallback={action('button-click')}
+      submitCallback={props?.submitCallback || action('button-click')}
       toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
       erOverstyrt={erOverstyrt}
       soknadsfristStatus={{
@@ -204,7 +204,7 @@ export const visSoknadsfristAksjonspunkt5077 = props => {
   );
 };
 
-visSoknadsfristAksjonspunkt5077.args = {
+VisSoknadsfristAksjonspunkt5077.args = {
   overrideReadOnly: false,
   kanOverstyreAccess: {
     isEnabled: true,

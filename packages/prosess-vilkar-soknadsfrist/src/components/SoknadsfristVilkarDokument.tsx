@@ -36,9 +36,10 @@ interface SoknadsfristVilkarDokumentProps {
   dokument: DokumentStatus;
   dokumentIndex: number;
   erAktivtDokument: boolean;
-  setRedigerVurdering: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleEditForm: React.Dispatch<React.SetStateAction<boolean>>;
   erOverstyrt?: boolean;
   redigerVurdering?: boolean;
+  dokumentErVurdert: boolean;
 }
 
 export const DELVIS_OPPFYLT = 'DELVIS_OPPFYLT';
@@ -56,9 +57,10 @@ export const SoknadsfristVilkarDokument = ({
   dokument,
   erAktivtDokument,
   dokumentIndex,
-  setRedigerVurdering,
+  toggleEditForm,
   erOverstyrt,
   redigerVurdering,
+  dokumentErVurdert,
 }: SoknadsfristVilkarDokumentProps) => {
   const intl = useIntl();
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
@@ -103,7 +105,7 @@ export const SoknadsfristVilkarDokument = ({
             />
             <AssessedBy name={opprettetAv} date={opprettetTidspunkt} />
           </div>
-          {!erOverstyrt && (
+          {!erOverstyrt && dokumentErVurdert && (
             <div className="ml-2">
               <VerticalSpacer eightPx />
               <Button
@@ -111,7 +113,7 @@ export const SoknadsfristVilkarDokument = ({
                 variant="tertiary"
                 size="xsmall"
                 onClick={() => {
-                  setRedigerVurdering(current => !current);
+                  toggleEditForm(!redigerVurdering);
                 }}
               >
                 {redigerVurdering ? 'Avbryt redigering' : 'Rediger vurdering'}
