@@ -1,10 +1,5 @@
 export { default as aksjonspunktPropType } from './src/aksjonspunktPropType';
 export {
-  arbeidsgiverUttakPropType,
-  arbeidsforholdBeregningProptype,
-  arbeidsforholdPropType,
-} from './src/arbeidsforholdPropType';
-export {
   uttakPropType,
   beregningsresultatPeriodeAndelPropType,
   beregningsresultatPeriodePropType,
@@ -17,8 +12,3 @@ export { default as navAnsattPropType } from './src/navAnsattPropType';
 export { default as personopplysningPropType } from './src/personopplysningPropType';
 export { default as rettighetPropType } from './src/rettighetPropType';
 export { stonadskontoPropType, stonadskontoerPropType } from './src/stonadskontoPropType';
-export {
-  uttaksresultatAktivitetPropType,
-  uttaksresultatPeriodePropType,
-  uttaksresultaltPerioderSøkerPropType,
-} from './src/uttaksresultatPropType';
