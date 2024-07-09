@@ -3,27 +3,9 @@
 Monorepo for Frontend kode for k9-sak.
 
 [![](https://github.com/navikt/k9-sak-web/workflows/Deploy%20Docker%20image/badge.svg)](https://github.com/navikt/k9-sak-web/actions?query=workflow%3A%22Deploy+Docker+image%22)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=navikt_k9-sak-frontend&metric=alert_status)](https://sonarcloud.io/dashboard?id=navikt_k9-sak-frontend)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-## Mikrofrontends i bruk per behandling
-
-### Pleiepenger sykt barn
-
-[Omsorgen for](https://github.com/navikt/omsorgen-for-frontend)
-[Uttak](https://github.com/navikt/psb-uttak-frontend)
-[Inntektsmelding](https://github.com/navikt/psb-inntektsmelding-frontend)
-[Etablert tilsyn](https://github.com/navikt/psb-etablert-tilsyn-frontend)
-[Medisinsk vilkår](https://github.com/navikt/medisinsk-vilkar-frontend)
-[Om barnet](https://github.com/navikt/psb-om-barnet-frontend)
-
-### Omsorgsdager (Utvidet rett)
-
-[Omsorgsdager](https://github.com/navikt/omsorgsdager-frontend)
-
 ## Komme i gang
-
-k9-sak-web har dependencies til pakker publisert fra [k9-frontend-modules](https://github.com/navikt/k9-frontend-modules).
 
 For å få hentet pakker fra GitHub sitt pakkeregistry må man sette opp lokal NPM med autentisering mot GitHub med en Personal Access Token (PAT) med `read:packages`-tilgang i lokalt utviklingsmiljø, før man gjør `yarn install`. GitHub har en guide på hvordan man gjør dette [her](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages).
 
@@ -45,11 +27,7 @@ yarn install
 yarn dev
 ```
 
-## Intellj og stubs
-
-Disse må installeres manuelt, følg denne tråden:
-
-https://intellij-support.jetbrains.com/hc/en-us/community/posts/207725245-React-import-are-not-resolved-in-WebStrom-and-Intellij-2016-2
+Storybook brukes også til utvikling, startes med `yarn storybook`. Se ellers _package.json_ for mer info.
 
 ## Workspaces
 
@@ -58,36 +36,41 @@ https://intellij-support.jetbrains.com/hc/en-us/community/posts/207725245-React-
   > If you have common dev dependencies, it’s better to specify them in the workspace root package.json.
   > For instance, this can be dependencies like Jest, Husky, Storybook, Eslint, Prettier, etc.
 
-## Mocks i dev-serveren
-
-Kan konfigureres via å sette opp en `.env`-fil i roten av prosjektet.
-
 ### Feature toggles
 
-Aktiveres ved å definiere en eller flere features i `.env`-fila i roten av prosjektet.
+Aktiveres ved å definere en eller flere features i `.env.development`fil i _envDir_ katalogen
 
-```
-UNNTAKSBEHANDLING=true
-```
+## Pakkeoppdatering
 
-### Overstyr enkeltrute (webpack/mocks/fake-error.js)
+### Avhengigheter som må ha samme versjon
+Noen sub-pakker i dette prosjekt har avhengigheter til kode fra [ft-frontend-saksbehandling](https://github.com/navikt/ft-frontend-saksbehandling).
 
-Nyttig for å teste feilsituasjoner. Overstyres som følger:
+Samtidig har disse sub-pakkene felles avhengigheter med koden i [ft-frontend-saksbehandling](https://github.com/navikt/ft-frontend-saksbehandling).
+Dette gjør at oppdatering av disse avhengighetene må gjøres synkronisert, slik at vi unngår dupliserte avhengigheter. Viss versjonsnr ikke er
+nøyaktig likt vil yarn laste ned flere kopier og installere node_modules med disse nede i avhengighetstreet. Det kan føre til kompileringsfeil,
+eller kjøretidsfeil viss avhengighet som blir duplisert inneholder css.
 
-```
-FAKE_ERROR_PATH=/k9/sak/api/behandling/person/personopplysninger
-FAKE_ERROR_CODE=401
-FAKE_ERROR_BODY={"error":"dette fikk galt"}
-```
+Så ved oppdatering av følgende avhengigheter må man sørge for at pakker fra [ft-frontend-saksbehandling](https://github.com/navikt/ft-frontend-saksbehandling)
+blir oppdatert til versjon med samme avhengighetsversjoner samtidig.
 
-### Licenses and attribution
+- @navikt/aksel-icons
+- @navikt/ds-css
+- @navikt/ds-react
+- @navikt/ds-tailwind
+- @navikt/ft-plattform-komponenter
+- react-hook-form
+- react-router-dom
 
-_For updated information, always see LICENSE first!_
+Eventuelt må man overstyre versjonene med resolutions i package.json slik at de blir like på tvers av avhengighetene.
 
-#### Icons
+## Modernisering med packages/v2
 
-This project uses Streamline Icons. If you use k9-sak-web in your project please adhere to the Streamline Icons license agreement found here: https://streamlineicons.com/ux/extended-license.html
+For å prøve å skape en mer robust kodebase har vi starta å flytte/skrive om en del eldre kode i _packages/v2_ katalogen.
 
-### For NAV-ansatte
+Kode som legges inn her blir kontrollert av en strengere tsconfig.json. Gammel kode kan importere fra packages/v2, men
+det motsatte skal ikke skje, kode under _packages/v2_ skal aldri importere kode som ikke ligger under _v2_. På denne
+måten får vi gjort en gradvis overgang til bedre kontrollert typescript.
+
+## For NAV-ansatte
 
 Interne henvendelser kan sendes via Slack i kanalen **#sif-teknisk**.
