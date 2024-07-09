@@ -19,7 +19,7 @@ export const Default: StoryObj<typeof FritekstInput> = {
   args: {
     språk: 'NB', // SPRAAK_KODE
     show: true,
-    showTitle: true,
+    fritekstModus: 'EnkelFritekst',
     showValidation: true,
   },
 };

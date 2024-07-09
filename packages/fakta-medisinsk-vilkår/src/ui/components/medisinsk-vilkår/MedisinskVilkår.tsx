@@ -1,6 +1,6 @@
 import { httpUtils } from '@fpsak-frontend/utils';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
-import { Tabs } from '@navikt/ds-react';
+import { Alert, HStack, Tabs } from '@navikt/ds-react';
 import { Box, ChildIcon, Infostripe, Margin, PageContainer } from '@navikt/ft-plattform-komponenter';
 import { useQuery } from '@tanstack/react-query';
 import classnames from 'classnames';
@@ -216,6 +216,7 @@ const MedisinskVilkår = (): JSX.Element => {
   };
 
   const kanLøseAksjonspunkt = sykdomsstegStatus?.kanLøseAksjonspunkt;
+  const ikkeSammenMedBarnet = sykdomsstegStatus?.ikkeSammenMedBarnet;
   const harDataSomIkkeHarBlittTattMedIBehandling = sykdomsstegStatus?.harDataSomIkkeHarBlittTattMedIBehandling;
   const manglerVurderingAvNyeDokumenter = sykdomsstegStatus?.nyttDokumentHarIkkekontrollertEksisterendeVurderinger;
 
@@ -256,7 +257,15 @@ const MedisinskVilkår = (): JSX.Element => {
       />
 
       <div className={styles.medisinskVilkår}>
-        <h1 style={{ fontSize: 22 }}>{sykdomTittel(fagsakYtelseType)}</h1>
+        <HStack gap="2">
+          <h1 style={{ fontSize: 22 }}>{sykdomTittel(fagsakYtelseType)}</h1>
+          {ikkeSammenMedBarnet === true && (
+            <Alert inline variant="warning" style={{ paddingTop: '1rem' }}>
+              Søker har opplyst om utenlandsopphold uten barnet i søknadsperioden. Sjekk søknaden og korriger den
+              aktuelle perioden via punsj, slik at det ikke utbetales pleiepenger for perioden søker ikke pleier barnet.
+            </Alert>
+          )}
+        </HStack>
         <WriteAccessBoundContent
           contentRenderer={() => (
             <Box marginBottom={Margin.medium}>
