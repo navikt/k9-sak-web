@@ -2690,7 +2690,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/prosess-vedtak@workspace:packages/prosess-vedtak"
   dependencies:
-    "@editorjs/editorjs": 2.29.1
+    "@editorjs/editorjs": 2.30.0
     "@editorjs/header": 2.8.5
     "@editorjs/list": 1.9.0
     "@editorjs/paragraph": 2.11.6
