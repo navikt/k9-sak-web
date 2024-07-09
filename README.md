@@ -50,8 +50,8 @@ Dette gjør at oppdatering av disse avhengighetene må gjøres synkronisert, sli
 nøyaktig likt vil yarn laste ned flere kopier og installere node_modules med disse nede i avhengighetstreet. Det kan føre til kompileringsfeil,
 eller kjøretidsfeil viss avhengighet som blir duplisert inneholder css.
 
-Så ved oppdatering av følgende avhengigheter må man sørge for at pakker fra [ft-frontend-saksbehandling](https://github.com/navikt/ft-frontend-saksbehandling)
-blir oppdatert til versjon med samme avhengighetsversjoner samtidig.
+Så ved oppdatering av følgende avhengigheter må man samtidig sørge for at alle pakker som starter på **@navikt/ft-** blir oppdatert
+til en versjon som har samme versjon av disse avhengighetene.
 
 - @navikt/aksel-icons
 - @navikt/ds-css
