@@ -99,6 +99,6 @@ spec:
     - name: "OVERSTYRING_UTTAK"
       value: "true"
     - name: "BRUK_V2_MELDINGER"
-      value: "false"
+      value: "true"
     - name: NYE_NOKKELTALL
       value: "true"

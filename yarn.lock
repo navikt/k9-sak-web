@@ -3554,7 +3554,7 @@ __metadata:
   resolution: "@k9-sak-web/backend@workspace:packages/v2/backend"
   dependencies:
     "@navikt/k9-klage-typescript-client": 1.0.20240513162434-997f3da
-    "@navikt/k9-sak-typescript-client": 1.0.20240620093339
+    "@navikt/k9-sak-typescript-client": 1.0.20240708134619
   languageName: unknown
   linkType: soft
 
@@ -4969,10 +4969,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-sak-typescript-client@npm:1.0.20240620093339":
-  version: 1.0.20240620093339
-  resolution: "@navikt/k9-sak-typescript-client@npm:1.0.20240620093339::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F1.0.20240620093339%2F5b3fd97d64b14200088a6cce51a7cd2ae7ef1f76"
-  checksum: 2b4f9bd7ecc1e6513804940937126a239f4275b45cb4e11ead3a3c8d8010f6f9947c4d583c56e9b6a1563fca7f4825cdafaa45fe5b8231041b17853095719e5f
+"@navikt/k9-sak-typescript-client@npm:1.0.20240708134619":
+  version: 1.0.20240708134619
+  resolution: "@navikt/k9-sak-typescript-client@npm:1.0.20240708134619::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F1.0.20240708134619%2F2fa329d145b278506879f5601cf0b45c050eaabe"
+  checksum: 64bdab709d2668a79699a66b24412e9e6202abad9b4204ba274aaf7c0835037e7f3659843fc0a0dc6e61a3cbbc150db8492ebeaf6e85465096ac991094e85edc
   languageName: node
   linkType: hard
 

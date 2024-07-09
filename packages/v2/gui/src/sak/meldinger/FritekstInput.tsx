@@ -1,6 +1,6 @@
 import React, { type ForwardedRef, forwardRef, useEffect, useImperativeHandle, useReducer } from 'react';
 import { Tag, type TagProps, Textarea, TextField } from '@navikt/ds-react';
-import { $FritekstbrevinnholdDto } from '@k9-sak-web/backend/k9sak/generated';
+import { $BestillBrevDto, $FritekstbrevinnholdDto } from '@k9-sak-web/backend/k9sak/generated';
 import type { Språkkode } from '@k9-sak-web/backend/k9sak/kodeverk/Språkkode.js';
 import { validateTextCharacters } from '../../utils/validation/validateTextCharacters.js';
 
@@ -26,10 +26,13 @@ export interface FritekstInputInvalid {
   readonly tekst?: never;
 }
 
+// Sending av brev med fritekst har to ulike varianter. Ein kort enkel fritekst eller lengre tekst med tittel.
+export type FritekstModus = 'EnkelFritekst' | 'StørreFritekstOgTittel';
+
 type FritekstInputProps = {
   readonly språk: Språkkode;
   readonly show: boolean;
-  readonly showTitle: boolean;
+  readonly fritekstModus: FritekstModus;
   readonly showValidation: boolean;
   readonly defaultValue?: FritekstInputValue;
   readonly onChange?: (value: FritekstInputValue | FritekstInputInvalid) => void;
@@ -41,8 +44,9 @@ export interface FritekstInputMethods {
   setValue(value: FritekstInputValue): void;
 }
 
-const fritekstMaxLength = $FritekstbrevinnholdDto.properties.brødtekst.maxLength;
 const tittelMaxLength = $FritekstbrevinnholdDto.properties.overskrift.maxLength;
+const storFritekstMaxLength = $FritekstbrevinnholdDto.properties.brødtekst.maxLength;
+const litenFritekstMaxLength = $BestillBrevDto.properties.fritekst.maxLength
 
 const validateTittel = (newValue: string | undefined): Valid | Error => {
   const input = newValue || '';
@@ -58,11 +62,12 @@ const validateTittel = (newValue: string | undefined): Valid | Error => {
 
 const tittelReducer = (_: Valid | Error, newValue: string | undefined): Valid | Error => validateTittel(newValue);
 
-const validateTekst = (newValue: string | undefined): Valid | Error => {
-  const input = newValue || '';
-  const len = newValue?.trim().length || 0;
-  if (newValue !== undefined && len > 0 && len <= fritekstMaxLength) {
-    const charValidationResult = validateTextCharacters(newValue);
+const validateTekst = (tekst: string | undefined, fritekstModus: FritekstModus): Valid | Error => {
+  const input = tekst || '';
+  const fritekstMaxLength = fritekstModus === "StørreFritekstOgTittel" ? storFritekstMaxLength : litenFritekstMaxLength
+  const len = tekst?.trim().length || 0;
+  if (tekst !== undefined && len > 0 && len <= fritekstMaxLength) {
+    const charValidationResult = validateTextCharacters(tekst);
     if (charValidationResult.ok) {
       // validation ok
       return { valid: true, input };
@@ -77,7 +82,8 @@ const validateTekst = (newValue: string | undefined): Valid | Error => {
   return { valid: false, input, error: `Fritekst kan være maks ${fritekstMaxLength} tegn` };
 };
 
-const tekstReducer = (_: Valid | Error, newValue: string | undefined): Valid | Error => validateTekst(newValue);
+const tekstReducer = (_: Valid | Error, newValue: {tekst: string | undefined, modus: FritekstModus}): Valid | Error =>
+  validateTekst(newValue.tekst, newValue.modus);
 
 const resolveLanguageName = (språk: Språkkode): string => {
   switch (språk.kode.toUpperCase()) {
@@ -107,15 +113,15 @@ const resolveLanguageTagVariant = (språk: Språkkode): TagProps['variant'] =>
  */
 const FritekstInput = forwardRef(
   (
-    { språk, show, showTitle, showValidation = false, defaultValue, onChange }: FritekstInputProps,
+    { språk, show, fritekstModus, showValidation = false, defaultValue, onChange }: FritekstInputProps,
     ref: ForwardedRef<FritekstInputMethods>,
   ) => {
     const [tittel, setTittel] = useReducer(tittelReducer, validateTittel(defaultValue?.tittel));
-    const [tekst, setTekst] = useReducer(tekstReducer, validateTekst(defaultValue?.tekst));
+    const [tekst, setTekst] = useReducer(tekstReducer, validateTekst(defaultValue?.tekst, fritekstModus));
 
     const getValue = (): FritekstInputValue | FritekstInputInvalid => {
       if (tekst.valid) {
-        if (!showTitle) {
+        if (fritekstModus === 'EnkelFritekst') {
           return { tittel: undefined, tekst: tekst.input };
         }
         if (tittel.valid) {
@@ -126,24 +132,25 @@ const FritekstInput = forwardRef(
     };
     const setValue = (value: FritekstInputValue | undefined) => {
       setTittel(value?.tekst);
-      setTekst(value?.tekst);
+      setTekst({tekst: value?.tekst, modus: fritekstModus});
     };
 
     useEffect(() => {
       if (onChange !== undefined) {
         onChange(getValue());
       }
-    }, [tittel, tekst, showTitle, onChange]);
+    }, [tittel, tekst, fritekstModus, onChange]);
     useImperativeHandle(ref, () => {
       const reset = () => setValue(defaultValue);
       return { reset, getValue, setValue };
     });
 
     if (show) {
+      const fritekstMaxLength = fritekstModus === 'StørreFritekstOgTittel' ? storFritekstMaxLength : litenFritekstMaxLength
       return (
         <>
           {
-            showTitle ? (
+            fritekstModus === 'StørreFritekstOgTittel' ? (
               <TextField
                 value={tittel.input}
                 size="small"
@@ -170,13 +177,13 @@ const FritekstInput = forwardRef(
             resize="vertical"
             defaultValue={defaultValue?.tekst}
             error={showValidation && tekst?.error}
-            onChange={ev => setTekst(ev.target.value)}
+            onChange={ev => setTekst({tekst: ev.target.value, modus: fritekstModus})}
           />
         </>
       );
     }
     return null; // Not displaying fritekst input
-  },
+  }
 );
 
 export default FritekstInput;
