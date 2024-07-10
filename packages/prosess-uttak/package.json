@@ -10,7 +10,7 @@
   "author": "NAV IT",
   "license": "MIT",
   "devDependencies": {
-    "vite": "^5.3.2",
+    "vite": "^5.3.3",
     "vite-plugin-node-polyfills": "^0.22.0"
   },
   "dependencies": {
