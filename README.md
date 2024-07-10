@@ -76,7 +76,8 @@ Ved merge av **PR til master** branch blir koden bygd inn i et Docker image og r
 Etter godkjenning i pipeline blir samme Docker image rulla ut i produksjon på https://k9.intern.nav.no/.
 
 Vi har også støtte for å rulle ut mer eksperimentelle endringer for test til https://k9-next1.dev.intern.nav.no. Dette
-skjer automatisk ved merge av **PR til dev-next1** branch.
+skjer automatisk ved merge av **PR til dev-next1** branch. Denne utrulling lever i 10 dager. Hvis det går lenger tid mellom
+hver nye utrulling her stenges servicen ned inntil det skjer en ny utrulling.
 
 ### Storybook
 Katalog med brukergrensesnitt-komponenter blir publisert i storybook på https://navikt.github.io/k9-sak-web/
