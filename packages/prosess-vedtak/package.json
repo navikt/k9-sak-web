@@ -6,7 +6,7 @@
   "private": true,
   "dependencies": {
     "@editorjs/editorjs": "2.29.1",
-    "@editorjs/header": "2.8.5",
+    "@editorjs/header": "2.8.6",
     "@editorjs/list": "1.9.0",
     "@editorjs/paragraph": "2.11.6",
     "@fpsak-frontend/form": "1.0.0",
