@@ -57,10 +57,7 @@ export const visSakerOpprettetPaAktor = () => (
       },
     }}
     alleKodeverk={alleKodeverk as any}
-    finnPathToFagsak={() => 'path'}
   />
 );
 
-export const visningAvUgyldigAktorId = () => (
-  <AktorSakIndex valgtAktorId="123" alleKodeverk={alleKodeverk as any} finnPathToFagsak={() => 'path'} />
-);
+export const visningAvUgyldigAktorId = () => <AktorSakIndex valgtAktorId="123" alleKodeverk={alleKodeverk as any} />;
