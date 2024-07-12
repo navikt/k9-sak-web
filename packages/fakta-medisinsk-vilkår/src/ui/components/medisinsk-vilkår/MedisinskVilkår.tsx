@@ -1,6 +1,6 @@
 import { httpUtils } from '@fpsak-frontend/utils';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
-import { Alert, HStack, Tabs, VStack } from '@navikt/ds-react';
+import { Alert, Tabs, VStack } from '@navikt/ds-react';
 import { Box, ChildIcon, Infostripe, Margin, PageContainer } from '@navikt/ft-plattform-komponenter';
 import { useQuery } from '@tanstack/react-query';
 import classnames from 'classnames';
@@ -29,8 +29,7 @@ import ContainerContext from '../../context/ContainerContext';
 import VurderingContext from '../../context/VurderingContext';
 import AksjonspunktFerdigStripe from '../aksjonspunkt-ferdig-stripe/AksjonspunktFerdigStripe';
 // eslint-disable-next-line max-len
-import NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController
-  from '../nye-dokumenter-som-kan-påvirke-eksisterende-vurderinger/NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController';
+import NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController from '../nye-dokumenter-som-kan-påvirke-eksisterende-vurderinger/NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController';
 import StruktureringAvDokumentasjon from '../strukturering-av-dokumentasjon/StruktureringAvDokumentasjon';
 import UteståendeEndringerMelding from '../utestående-endringer-melding/UteståendeEndringerMelding';
 import VilkarsvurderingAvLivetsSluttfase from '../vilkarsvurdering-av-livets-sluttfase/VilkarsvurderingAvLivetsSluttfase';
@@ -200,11 +199,11 @@ const MedisinskVilkår = (): JSX.Element => {
     dispatch({ type: ActionType.ENDRINGER_UTIFRA_NYE_DOKUMENTER_REGISTRERT });
     hentSykdomsstegStatus().then(
       ({
-         kanLøseAksjonspunkt,
-         manglerVurderingAvKontinuerligTilsynOgPleie,
-         manglerVurderingAvToOmsorgspersoner,
-         manglerVurderingAvLangvarigSykdom,
-       }) => {
+        kanLøseAksjonspunkt,
+        manglerVurderingAvKontinuerligTilsynOgPleie,
+        manglerVurderingAvToOmsorgspersoner,
+        manglerVurderingAvLangvarigSykdom,
+      }) => {
         if (kanLøseAksjonspunkt) {
           navigerTilSteg(toOmsorgspersonerSteg, true);
         } else if (!manglerVurderingAvKontinuerligTilsynOgPleie && manglerVurderingAvToOmsorgspersoner) {
@@ -260,10 +259,12 @@ const MedisinskVilkår = (): JSX.Element => {
       <div className={styles.medisinskVilkår}>
         <VStack paddingBlock="2">
           <h1 style={{ fontSize: 22 }}>{sykdomTittel(fagsakYtelseType)}</h1>
-          {ikkeSammenMedBarnet === true && <Alert variant="warning">
-            Søker har opplyst om utenlandsopphold uten barnet i søknadsperioden. Sjekk søknaden og korriger den aktuelle perioden via punsj, slik at det ikke
-            utbetales pleiepenger for perioden søker ikke pleier barnet.
-          </Alert>}
+          {ikkeSammenMedBarnet === true && (
+            <Alert variant="warning">
+              Søker har opplyst om utenlandsopphold uten barnet i søknadsperioden. Sjekk søknaden og korriger den
+              aktuelle perioden via punsj, slik at det ikke utbetales pleiepenger for perioden søker ikke pleier barnet.
+            </Alert>
+          )}
         </VStack>
         <WriteAccessBoundContent
           contentRenderer={() => (
