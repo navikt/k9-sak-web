@@ -21,7 +21,6 @@ const Utenlandsopphold = ({
   fagsakYtelseType?: string;
 }) => {
   const finnÅrsaker = (periode: UtenlandsoppholdType, erEØS: boolean) => {
-    // EØS eller Sveits
     if (erEØS || periode.landkode.kode === 'CHE') {
       return 'Periode telles ikke.';
     }
@@ -39,6 +38,7 @@ const Utenlandsopphold = ({
   };
 
   const mapItems = (periode: UtenlandsoppholdType) => {
+    // Storbritannia ligger som EØS-land i kodeverket. Frem til det er fjernet derfra må det spesialhåndteres her.
     const erEØS = () =>
       periode.region.kode === 'NORDEN' || (periode.region.kode === 'EOS' && periode.landkode.kode !== 'GBR');
 
