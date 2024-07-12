@@ -75,7 +75,7 @@ const utenlandsopphold = {
     },
     {
       periode: `${dayjs().subtract(45, 'day').format('YYYY-MM-DD')}/${dayjs()
-        .subtract(31, 'day')
+        .subtract(39, 'day')
         .format('YYYY-MM-DD')}`,
       landkode: {
         kode: 'CHE',
@@ -90,7 +90,7 @@ const utenlandsopphold = {
     },
     {
       periode: `${dayjs().subtract(52, 'day').format('YYYY-MM-DD')}/${dayjs()
-        .subtract(31, 'day')
+        .subtract(47, 'day')
         .format('YYYY-MM-DD')}`,
       landkode: {
         kode: 'XXK',
@@ -105,7 +105,7 @@ const utenlandsopphold = {
     },
     {
       periode: `${dayjs().subtract(59, 'day').format('YYYY-MM-DD')}/${dayjs()
-        .subtract(31, 'day')
+        .subtract(55, 'day')
         .format('YYYY-MM-DD')}`,
       landkode: {
         kode: 'GBR',
