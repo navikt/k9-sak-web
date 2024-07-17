@@ -1607,13 +1607,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/header@npm:2.8.5":
-  version: 2.8.5
-  resolution: "@editorjs/header@npm:2.8.5"
+"@editorjs/header@npm:2.8.7":
+  version: 2.8.7
+  resolution: "@editorjs/header@npm:2.8.7"
   dependencies:
     "@codexteam/icons": ^0.0.5
     "@editorjs/editorjs": ^2.29.1
-  checksum: 7055497b1ffa33d170eeeb50f98a4b44371219a9e01904dfb763c7cabe5a667e20bc127d79c3730139f3a00b4b8c56a9356fcf21de99957658985c2fe152bc78
+  checksum: bc4ac4b6db0fdcf5bacf88e6de54dedf538713e29f2e8a10e7db5bbcee9eedf2d93863451b4e208225a1b21e214c3d5e8cac37485e3a545ac87c75d6b6a5aff0
   languageName: node
   linkType: hard
 
@@ -2690,7 +2690,7 @@ __metadata:
   resolution: "@fpsak-frontend/prosess-vedtak@workspace:packages/prosess-vedtak"
   dependencies:
     "@editorjs/editorjs": 2.29.1
-    "@editorjs/header": 2.8.5
+    "@editorjs/header": 2.8.7
     "@editorjs/list": 1.9.0
     "@editorjs/paragraph": 2.11.6
     "@fpsak-frontend/form": 1.0.0
@@ -3945,7 +3945,7 @@ __metadata:
     react-dom: 18.3.1
     react-hook-form: 7.52.0
     react-popper: 2.3.0
-    vite: ^5.3.3
+    vite: ^5.3.4
     vite-plugin-node-polyfills: ^0.22.0
   languageName: unknown
   linkType: soft
@@ -3983,7 +3983,7 @@ __metadata:
     react-dom: 18.3.1
     react-hook-form: 7.52.0
     react-popper: 2.3.0
-    vite: ^5.3.3
+    vite: ^5.3.4
     vite-plugin-node-polyfills: ^0.22.0
   languageName: unknown
   linkType: soft
@@ -4022,7 +4022,7 @@ __metadata:
     react-hook-form: 7.52.0
     react-outside-click-handler: 1.3.0
     react-popper: 2.3.0
-    vite: ^5.3.3
+    vite: ^5.3.4
     vite-plugin-node-polyfills: ^0.22.0
   languageName: unknown
   linkType: soft
@@ -4042,8 +4042,8 @@ __metadata:
     react-dom: 18.3.1
     react-hook-form: 7.52.0
     react-popper: 2.3.0
-    tailwindcss: ^3.4.4
-    vite: ^5.3.3
+    tailwindcss: ^3.4.6
+    vite: ^5.3.4
     vite-plugin-node-polyfills: ^0.22.0
   languageName: unknown
   linkType: soft
@@ -4068,7 +4068,7 @@ __metadata:
     react-hook-form: 7.52.0
     react-intl: 6.6.8
     react-popper: 2.3.0
-    vite: ^5.3.3
+    vite: ^5.3.4
     vite-plugin-node-polyfills: ^0.22.0
   languageName: unknown
   linkType: soft
@@ -4213,7 +4213,7 @@ __metadata:
     react: 18.3.1
     react-dom: 18.3.1
     react-hook-form: 7.52.0
-    vite: ^5.3.3
+    vite: ^5.3.4
     vite-plugin-node-polyfills: ^0.22.0
     vitest-axe: ^0.1.0
   languageName: unknown
@@ -4271,7 +4271,7 @@ __metadata:
     react-dom: 18.3.1
     react-hook-form: 7.52.0
     react-popper: 2.3.0
-    vite: ^5.3.3
+    vite: ^5.3.4
     vite-plugin-node-polyfills: ^0.22.0
     yup: 1.4.0
   languageName: unknown
@@ -5066,14 +5066,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.45.1":
-  version: 1.45.1
-  resolution: "@playwright/test@npm:1.45.1"
+"@playwright/test@npm:^1.45.2":
+  version: 1.45.2
+  resolution: "@playwright/test@npm:1.45.2"
   dependencies:
-    playwright: 1.45.1
+    playwright: 1.45.2
   bin:
     playwright: cli.js
-  checksum: 43ae29946d44adc6d855af233cfa59dd145b116b9341fb7758c723ec029d506982e69e230bdd06291bee2d373a53de1833cf5279cf33bef74efcd0f1ea90fd34
+  checksum: 7f916fde237e6f5a5461571da026a959f8730dccfad6b4ee01ed6566089c750b8079c3a9930c45875faf67a7418195a8b11e0cdb6134405805065f6c7ee347de
   languageName: node
   linkType: hard
 
@@ -5622,66 +5622,66 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/cli-darwin@npm:2.32.1":
-  version: 2.32.1
-  resolution: "@sentry/cli-darwin@npm:2.32.1"
+"@sentry/cli-darwin@npm:2.32.2":
+  version: 2.32.2
+  resolution: "@sentry/cli-darwin@npm:2.32.2"
   conditions: os=darwin
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-arm64@npm:2.32.1":
-  version: 2.32.1
-  resolution: "@sentry/cli-linux-arm64@npm:2.32.1"
+"@sentry/cli-linux-arm64@npm:2.32.2":
+  version: 2.32.2
+  resolution: "@sentry/cli-linux-arm64@npm:2.32.2"
   conditions: (os=linux | os=freebsd) & cpu=arm64
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-arm@npm:2.32.1":
-  version: 2.32.1
-  resolution: "@sentry/cli-linux-arm@npm:2.32.1"
+"@sentry/cli-linux-arm@npm:2.32.2":
+  version: 2.32.2
+  resolution: "@sentry/cli-linux-arm@npm:2.32.2"
   conditions: (os=linux | os=freebsd) & cpu=arm
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-i686@npm:2.32.1":
-  version: 2.32.1
-  resolution: "@sentry/cli-linux-i686@npm:2.32.1"
+"@sentry/cli-linux-i686@npm:2.32.2":
+  version: 2.32.2
+  resolution: "@sentry/cli-linux-i686@npm:2.32.2"
   conditions: (os=linux | os=freebsd) & (cpu=x86 | cpu=ia32)
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-x64@npm:2.32.1":
-  version: 2.32.1
-  resolution: "@sentry/cli-linux-x64@npm:2.32.1"
+"@sentry/cli-linux-x64@npm:2.32.2":
+  version: 2.32.2
+  resolution: "@sentry/cli-linux-x64@npm:2.32.2"
   conditions: (os=linux | os=freebsd) & cpu=x64
   languageName: node
   linkType: hard
 
-"@sentry/cli-win32-i686@npm:2.32.1":
-  version: 2.32.1
-  resolution: "@sentry/cli-win32-i686@npm:2.32.1"
+"@sentry/cli-win32-i686@npm:2.32.2":
+  version: 2.32.2
+  resolution: "@sentry/cli-win32-i686@npm:2.32.2"
   conditions: os=win32 & (cpu=x86 | cpu=ia32)
   languageName: node
   linkType: hard
 
-"@sentry/cli-win32-x64@npm:2.32.1":
-  version: 2.32.1
-  resolution: "@sentry/cli-win32-x64@npm:2.32.1"
+"@sentry/cli-win32-x64@npm:2.32.2":
+  version: 2.32.2
+  resolution: "@sentry/cli-win32-x64@npm:2.32.2"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@sentry/cli@npm:2.32.1":
-  version: 2.32.1
-  resolution: "@sentry/cli@npm:2.32.1"
+"@sentry/cli@npm:2.32.2":
+  version: 2.32.2
+  resolution: "@sentry/cli@npm:2.32.2"
   dependencies:
-    "@sentry/cli-darwin": 2.32.1
-    "@sentry/cli-linux-arm": 2.32.1
-    "@sentry/cli-linux-arm64": 2.32.1
-    "@sentry/cli-linux-i686": 2.32.1
-    "@sentry/cli-linux-x64": 2.32.1
-    "@sentry/cli-win32-i686": 2.32.1
-    "@sentry/cli-win32-x64": 2.32.1
+    "@sentry/cli-darwin": 2.32.2
+    "@sentry/cli-linux-arm": 2.32.2
+    "@sentry/cli-linux-arm64": 2.32.2
+    "@sentry/cli-linux-i686": 2.32.2
+    "@sentry/cli-linux-x64": 2.32.2
+    "@sentry/cli-win32-i686": 2.32.2
+    "@sentry/cli-win32-x64": 2.32.2
     https-proxy-agent: ^5.0.0
     node-fetch: ^2.6.7
     progress: ^2.0.3
@@ -5704,7 +5704,7 @@ __metadata:
       optional: true
   bin:
     sentry-cli: bin/sentry-cli
-  checksum: 6f04c195a9a4dee23aca372c0523ca0e1b63d0092b335914ae18dbde97aa5f55a23c3b66fd1d96d062d4a68ce9e6b0a6f755da373c538bed375955998c5256cc
+  checksum: aef2eae8ba9197fe7184126af5859ce843b42967b1d3d404baa25625609b613371a4d99f122759e578c04d332dac64a5cd6e1f9d5d185c32e268e4ce1422bb32
   languageName: node
   linkType: hard
 
@@ -11232,9 +11232,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:7.34.3":
-  version: 7.34.3
-  resolution: "eslint-plugin-react@npm:7.34.3"
+"eslint-plugin-react@npm:7.34.4":
+  version: 7.34.4
+  resolution: "eslint-plugin-react@npm:7.34.4"
   dependencies:
     array-includes: ^3.1.8
     array.prototype.findlast: ^1.2.5
@@ -11244,19 +11244,20 @@ __metadata:
     doctrine: ^2.1.0
     es-iterator-helpers: ^1.0.19
     estraverse: ^5.3.0
+    hasown: ^2.0.2
     jsx-ast-utils: ^2.4.1 || ^3.0.0
     minimatch: ^3.1.2
     object.entries: ^1.1.8
     object.fromentries: ^2.0.8
-    object.hasown: ^1.1.4
     object.values: ^1.2.0
     prop-types: ^15.8.1
     resolve: ^2.0.0-next.5
     semver: ^6.3.1
     string.prototype.matchall: ^4.0.11
+    string.prototype.repeat: ^1.0.0
   peerDependencies:
     eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
-  checksum: 1a519b9792ab9392a5157f2543ce98ab1218c62f4a31c4c3ceb5dd3e7997def4aa07ab39f7276af0fe116ef002db29d97216a15b7aa3b200e55b641cf77d6292
+  checksum: 7bb7bdbec4ec628e1f139edbfa25f11ef6db8c92e9970866838bcb6d4dea471519dc0e5a0b3bd763afd1a8715fd54fe7f5317387580ff1e92eeb87eeba13bacf
   languageName: node
   linkType: hard
 
@@ -14315,10 +14316,10 @@ __metadata:
     "@navikt/ds-tailwind": ^6.12.0
     "@navikt/familie-endringslogg": 12.0.2
     "@navikt/ft-plattform-komponenter": 3.0.1
-    "@playwright/test": ^1.45.1
+    "@playwright/test": ^1.45.2
     "@popperjs/core": 2.11.8
     "@sentry/browser": 8.13.0
-    "@sentry/cli": 2.32.1
+    "@sentry/cli": 2.32.2
     "@sentry/react": ^8.13.0
     "@storybook/addon-a11y": ^8.1.11
     "@storybook/addon-actions": ^8.1.11
@@ -14357,7 +14358,7 @@ __metadata:
     eslint-plugin-import: 2.29.1
     eslint-plugin-jest-dom: 5.4.0
     eslint-plugin-jsx-a11y: 6.9.0
-    eslint-plugin-react: 7.34.3
+    eslint-plugin-react: 7.34.4
     eslint-plugin-storybook: 0.8.0
     eslint-plugin-vitest: ^0.4.1
     history: 5.3.0
@@ -14366,11 +14367,11 @@ __metadata:
     jsdom: 24.1.0
     lint-staged: 15.2.7
     msw: 2.3.1
-    msw-storybook-addon: ^2.0.2
+    msw-storybook-addon: ^2.0.3
     node-cache: 5.1.2
     postcss: ^8.4.39
     postcss-import: ^16.1.0
-    prettier: 3.3.2
+    prettier: 3.3.3
     react: 18.3.1
     react-dom: 18.3.1
     react-popper: 2.3.0
@@ -14380,10 +14381,10 @@ __metadata:
     stylelint: 16.6.1
     stylelint-config-standard: ^36.0.1
     stylelint-order: 6.0.4
-    tailwindcss: ^3.4.4
+    tailwindcss: ^3.4.6
     typed-css-modules: ^0.9.1
     typescript: 5.5.3
-    vite: ^5.3.3
+    vite: ^5.3.4
     vite-plugin-html: ^3.2.2
     vite-plugin-svgr: 4.2.0
     vitest: 1.6.0
@@ -15124,14 +15125,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw-storybook-addon@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "msw-storybook-addon@npm:2.0.2"
+"msw-storybook-addon@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "msw-storybook-addon@npm:2.0.3"
   dependencies:
     is-node-process: ^1.0.1
   peerDependencies:
     msw: ^2.0.0
-  checksum: 9097cac0a47c56a5d85537622152fe0a25ede6f4320f62c0f8a63ffc5c38af0d218905645f60001f5f1e13da467a39392edeefd5ccd202797d226ff995f676f4
+  checksum: 13b607849aadf1f8f67c2f7447b27acbea2582363c76a9b7fe98ecab3ee5a101a078009fb1c93ac63e5dc52a723c38a8e0761e88d0494299e69965abca12e16a
   languageName: node
   linkType: hard
 
@@ -15556,17 +15557,6 @@ __metadata:
     define-properties: ^1.2.1
     es-abstract: ^1.23.2
   checksum: 0d30693ca3ace29720bffd20b3130451dca7a56c612e1926c0a1a15e4306061d84410bdb1456be2656c5aca53c81b7a3661eceaa362db1bba6669c2c9b6d1982
-  languageName: node
-  linkType: hard
-
-"object.hasown@npm:^1.1.4":
-  version: 1.1.4
-  resolution: "object.hasown@npm:1.1.4"
-  dependencies:
-    define-properties: ^1.2.1
-    es-abstract: ^1.23.2
-    es-object-atoms: ^1.0.0
-  checksum: bc46eb5ca22106fcd07aab1411508c2c68b7565fe8fb272f166fb9bf203972e8b5c86a5a4b2c86204beead0626a7a4119d32cefbaf7c5dd57b400bf9e6363cb6
   languageName: node
   linkType: hard
 
@@ -16100,27 +16090,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.45.1":
-  version: 1.45.1
-  resolution: "playwright-core@npm:1.45.1"
+"playwright-core@npm:1.45.2":
+  version: 1.45.2
+  resolution: "playwright-core@npm:1.45.2"
   bin:
     playwright-core: cli.js
-  checksum: 1279cbf33d70a16f0451b590723a4b56bf3a96a9196f1d7bd76444fdd8c976bb7671698199ab4e0acaeb800c7aac48a62036e30f27fd37a74925b53b80f2e85f
+  checksum: 536423bfb320ad045b638498748df5681585dadda8bae1eff8995c70fcd6695761caf3c331c1e807e323e2af431bb15b0216142c5315d28f110b129f6e800b30
   languageName: node
   linkType: hard
 
-"playwright@npm:1.45.1":
-  version: 1.45.1
-  resolution: "playwright@npm:1.45.1"
+"playwright@npm:1.45.2":
+  version: 1.45.2
+  resolution: "playwright@npm:1.45.2"
   dependencies:
     fsevents: 2.3.2
-    playwright-core: 1.45.1
+    playwright-core: 1.45.2
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 34c589b3e7ef4d54782336167f8f3d1b456178b04b98eb8c944eaf21fd66cf5480e5f0c0ec8b846a69659b6fc31764283598aac5bb9307f7413f8fca81d40751
+  checksum: ff37a27f85220363fcc6876389f58ea43f95946a1c26a8153b5f831e3a6693772e4ff45290e32dc193b4f64bc5053dbae3305432eaf5bd4a7dc6782e9b7b8e4a
   languageName: node
   linkType: hard
 
@@ -16334,12 +16324,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:3.3.2":
-  version: 3.3.2
-  resolution: "prettier@npm:3.3.2"
+"prettier@npm:3.3.3":
+  version: 3.3.3
+  resolution: "prettier@npm:3.3.3"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 5557d8caed0b182f68123c2e1e370ef105251d1dd75800fadaece3d061daf96b1389141634febf776050f9d732c7ae8fd444ff0b4a61b20535e7610552f32c69
+  checksum: bc8604354805acfdde6106852d14b045bb20827ad76a5ffc2455b71a8257f94de93f17f14e463fe844808d2ccc87248364a5691488a3304f1031326e62d9276e
   languageName: node
   linkType: hard
 
@@ -18210,6 +18200,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"string.prototype.repeat@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "string.prototype.repeat@npm:1.0.0"
+  dependencies:
+    define-properties: ^1.1.3
+    es-abstract: ^1.17.5
+  checksum: 95dfc514ed7f328d80a066dabbfbbb1615c3e51490351085409db2eb7cbfed7ea29fdadaf277647fbf9f4a1e10e6dd9e95e78c0fd2c4e6bb6723ea6e59401004
+  languageName: node
+  linkType: hard
+
 "string.prototype.trim@npm:^1.2.9":
   version: 1.2.9
   resolution: "string.prototype.trim@npm:1.2.9"
@@ -18526,9 +18526,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.4.4":
-  version: 3.4.4
-  resolution: "tailwindcss@npm:3.4.4"
+"tailwindcss@npm:^3.4.6":
+  version: 3.4.6
+  resolution: "tailwindcss@npm:3.4.6"
   dependencies:
     "@alloc/quick-lru": ^5.2.0
     arg: ^5.0.2
@@ -18555,7 +18555,7 @@ __metadata:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: 743639b6a5c827b6f91ad8cff22ad296e25f4478202200a6f41ae49fbb28c4c6f8120e742a85e09987e33352fbc52c6a34c4ed33ce000b3810d4edf632142bac
+  checksum: bb5ea38bbceedfea6bad3fdb951b45c14bc875d56d69bd4a3d76862183d9112ab4f938920473a876293baffefb9f62118d4fac3e592e32d7c268b58a7fd0c374
   languageName: node
   linkType: hard
 
@@ -19553,9 +19553,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.3.3":
-  version: 5.3.3
-  resolution: "vite@npm:5.3.3"
+"vite@npm:^5.3.4":
+  version: 5.3.4
+  resolution: "vite@npm:5.3.4"
   dependencies:
     esbuild: ^0.21.3
     fsevents: ~2.3.3
@@ -19589,7 +19589,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 1a54b678c03b52be934b0db95295aa573819063fad9e13f148936cfc4006d081a6790fdd2dbe111b09b75b9a8d49f15e0788c58b86156d238ab3a0c1cc1a941f
+  checksum: 2dfbab98daf91b86b3d3e535add1d6a982f7087df62f8f4bc219f3ae91a97f38c04683a32ba2457618e804fa93380090ddda5b0c9823a94bdcb53d6044b04732
   languageName: node
   linkType: hard
 
