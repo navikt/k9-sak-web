@@ -88,6 +88,7 @@ jobs:
       id-token: write
     env:
       CLUSTER: dev-fss
+    environment: dev-fss:k9saksbehandling
     needs: [build-docker-image]
     steps:
       - uses: actions/checkout@v4
