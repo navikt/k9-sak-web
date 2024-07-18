@@ -123,8 +123,7 @@
     "vite": "^5.3.4",
     "vite-plugin-html": "^3.2.2",
     "vitest": "1.6.0",
-    "vitest-axe": "0.1.0",
-    "webpack-merge": "5.10.0"
+    "vitest-axe": "0.1.0"
   },
   "resolutions": {
     "postcss": "8.4.39",
