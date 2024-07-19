@@ -46,7 +46,7 @@ export interface FritekstInputMethods {
 
 const tittelMaxLength = $FritekstbrevinnholdDto.properties.overskrift.maxLength;
 const storFritekstMaxLength = $FritekstbrevinnholdDto.properties.brødtekst.maxLength;
-const litenFritekstMaxLength = $BestillBrevDto.properties.fritekst.maxLength
+const litenFritekstMaxLength = $BestillBrevDto.properties.fritekst.maxLength;
 
 const validateTittel = (newValue: string | undefined): Valid | Error => {
   const input = newValue || '';
@@ -64,7 +64,7 @@ const tittelReducer = (_: Valid | Error, newValue: string | undefined): Valid | 
 
 const validateTekst = (tekst: string | undefined, fritekstModus: FritekstModus): Valid | Error => {
   const input = tekst || '';
-  const fritekstMaxLength = fritekstModus === "StørreFritekstOgTittel" ? storFritekstMaxLength : litenFritekstMaxLength
+  const fritekstMaxLength = fritekstModus === 'StørreFritekstOgTittel' ? storFritekstMaxLength : litenFritekstMaxLength;
   const len = tekst?.trim().length || 0;
   if (tekst !== undefined && len > 0 && len <= fritekstMaxLength) {
     const charValidationResult = validateTextCharacters(tekst);
@@ -82,7 +82,7 @@ const validateTekst = (tekst: string | undefined, fritekstModus: FritekstModus):
   return { valid: false, input, error: `Fritekst kan være maks ${fritekstMaxLength} tegn` };
 };
 
-const tekstReducer = (_: Valid | Error, newValue: {tekst: string | undefined, modus: FritekstModus}): Valid | Error =>
+const tekstReducer = (_: Valid | Error, newValue: { tekst: string | undefined; modus: FritekstModus }): Valid | Error =>
   validateTekst(newValue.tekst, newValue.modus);
 
 const resolveLanguageName = (språk: Språkkode): string => {
@@ -131,8 +131,8 @@ const FritekstInput = forwardRef(
       return { invalid: true };
     };
     const setValue = (value: FritekstInputValue | undefined) => {
-      setTittel(value?.tekst);
-      setTekst({tekst: value?.tekst, modus: fritekstModus});
+      setTittel(value?.tittel);
+      setTekst({ tekst: value?.tekst, modus: fritekstModus });
     };
 
     useEffect(() => {
@@ -146,7 +146,8 @@ const FritekstInput = forwardRef(
     });
 
     if (show) {
-      const fritekstMaxLength = fritekstModus === 'StørreFritekstOgTittel' ? storFritekstMaxLength : litenFritekstMaxLength
+      const fritekstMaxLength =
+        fritekstModus === 'StørreFritekstOgTittel' ? storFritekstMaxLength : litenFritekstMaxLength;
       return (
         <>
           {
@@ -177,13 +178,13 @@ const FritekstInput = forwardRef(
             resize="vertical"
             defaultValue={defaultValue?.tekst}
             error={showValidation && tekst?.error}
-            onChange={ev => setTekst({tekst: ev.target.value, modus: fritekstModus})}
+            onChange={ev => setTekst({ tekst: ev.target.value, modus: fritekstModus })}
           />
         </>
       );
     }
     return null; // Not displaying fritekst input
-  }
+  },
 );
 
 export default FritekstInput;
