@@ -2170,7 +2170,7 @@ __metadata:
   dependencies:
     "@fpsak-frontend/kodeverk": 1.0.0
     "@fpsak-frontend/shared-components": 1.0.0
-    dayjs: 1.11.11
+    dayjs: 1.11.12
     formik: 2.4.6
     react: 18.3.1
     react-intl: 6.6.8
@@ -2689,7 +2689,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-plattform-komponenter": 3.0.1
     classnames: 2.5.1
-    dayjs: 1.11.11
+    dayjs: 1.11.12
     lodash: 4.17.21
     prop-types: 15.8.1
     react: 18.3.1
@@ -2771,7 +2771,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.51.8
+    "@tanstack/react-query": ^5.51.9
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -2984,7 +2984,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-plattform-komponenter": 3.0.1
-    dayjs: 1.11.11
+    dayjs: 1.11.12
     moment: 2.30.1
     react: 18.3.1
     react-intl: 6.6.8
@@ -3038,7 +3038,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@tanstack/react-query": ^5.51.8
+    "@tanstack/react-query": ^5.51.9
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -3897,7 +3897,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 3.0.1
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
-    dayjs: 1.11.11
+    dayjs: 1.11.12
     lodash: 4.17.21
     react: 18.3.1
     react-collapse: 5.1.1
@@ -3935,8 +3935,8 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 3.0.1
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
-    dayjs: 1.11.11
-    msw: 2.3.1
+    dayjs: 1.11.12
+    msw: 2.3.2
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
@@ -3969,12 +3969,12 @@ __metadata:
     "@navikt/ds-react": 6.12.0
     "@navikt/ft-plattform-komponenter": 3.0.1
     "@popperjs/core": 2.11.8
-    "@tanstack/react-query": ^5.51.8
+    "@tanstack/react-query": ^5.51.9
     axios: 1.7.2
     classnames: 2.5.1
     cors: ^2.8.5
-    dayjs: 1.11.11
-    msw: 2.3.1
+    dayjs: 1.11.12
+    msw: 2.3.2
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
@@ -3994,14 +3994,14 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 3.0.1
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
-    dayjs: 1.11.11
-    msw: 2.3.1
+    dayjs: 1.11.12
+    msw: 2.3.2
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
     react-hook-form: 7.52.0
     react-popper: 2.3.0
-    tailwindcss: ^3.4.4
+    tailwindcss: ^3.4.6
     vite: ^5.3.4
     vite-plugin-node-polyfills: ^0.22.0
   languageName: unknown
@@ -4018,8 +4018,8 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 3.0.1
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
-    dayjs: 1.11.11
-    msw: 2.3.1
+    dayjs: 1.11.12
+    msw: 2.3.2
     object-hash: 3.0.0
     react: 18.3.1
     react-collapse: 5.1.1
@@ -4043,7 +4043,7 @@ __metadata:
     "@navikt/ds-react": 6.12.0
     "@navikt/ft-plattform-komponenter": 3.0.1
     classnames: 2.5.1
-    dayjs: 1.11.11
+    dayjs: 1.11.12
     formik: 2.4.6
     react-intl: 6.6.8
     react-outside-click-handler: 1.3.0
@@ -4167,7 +4167,7 @@ __metadata:
     "@navikt/ds-css": 6.12.0
     "@navikt/ds-react": 6.12.0
     classnames: 2.5.1
-    dayjs: 1.11.11
+    dayjs: 1.11.12
     lodash: 4.17.21
     react: 18.3.1
     react-dom: 18.3.1
@@ -4224,7 +4224,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 3.0.1
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
-    dayjs: 1.11.11
+    dayjs: 1.11.12
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
@@ -4377,7 +4377,7 @@ __metadata:
     "@navikt/ft-ui-komponenter": 2.3.16
     "@sentry/browser": 8.18.0
     "@sentry/react": ^8.18.0
-    "@tanstack/react-query": ^5.51.8
+    "@tanstack/react-query": ^5.51.9
     axios: 1.7.2
     classnames: 2.5.1
     history: 5.3.0
@@ -4404,7 +4404,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.51.8
+    "@tanstack/react-query": ^5.51.9
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
@@ -4470,7 +4470,7 @@ __metadata:
     "@navikt/ds-react": 6.12.0
     "@navikt/ft-form-hooks": 4.4.16
     "@navikt/ft-form-validators": 2.3.15
-    "@tanstack/react-query": ^5.51.8
+    "@tanstack/react-query": ^5.51.9
     date-fns: 3.6.0
     react: 18.3.1
     react-hook-form: 7.52.0
@@ -6370,21 +6370,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.51.8":
-  version: 5.51.8
-  resolution: "@tanstack/query-core@npm:5.51.8"
-  checksum: 31ab723beb837db59ad821d059865a7f995c96ca790f93ad43c16f11024df6b6e811fa966e7f2e8999669b69b3452ce35de7222085a546ee9ddc79e3f1bb1d11
+"@tanstack/query-core@npm:5.51.9":
+  version: 5.51.9
+  resolution: "@tanstack/query-core@npm:5.51.9"
+  checksum: f3192fe32a2ac67be6f16f14e24867cf42587d3e6c3bc1715c44c6f899136a83d785986db5602b5da6ee4cc894bfb1c926d9a4e4574af32cbd9db243806f6113
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.51.8":
-  version: 5.51.8
-  resolution: "@tanstack/react-query@npm:5.51.8"
+"@tanstack/react-query@npm:^5.51.9":
+  version: 5.51.9
+  resolution: "@tanstack/react-query@npm:5.51.9"
   dependencies:
-    "@tanstack/query-core": 5.51.8
+    "@tanstack/query-core": 5.51.9
   peerDependencies:
     react: ^18.0.0
-  checksum: 46fa79177465df683df9b44326da9ab62ef5f5b3c9255fafd5cee9874bffbef70b777cc61f01cd64c6b0a314ee5839f4f419594bfbb16e1027080d248bcaa0e8
+  checksum: f0e1612227b9d7a13a666fff4099c57200a084d5ac7e03d1771972e4d332ec47553426f4fdd745177754e4327eb6e114f0844264cb1d98202d3219464b79d729
   languageName: node
   linkType: hard
 
@@ -9196,6 +9196,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dayjs@npm:1.11.12":
+  version: 1.11.12
+  resolution: "dayjs@npm:1.11.12"
+  checksum: 40a4f67c2df3af125ae0ddec68d3a6d806d3009a7414bf45479aaf82f1dd82f3e139e6642e72391abccc37488897830c56afcabb4c819014130d283644df8128
+  languageName: node
+  linkType: hard
+
 "debug@npm:2.6.9":
   version: 2.6.9
   resolution: "debug@npm:2.6.9"
@@ -11820,12 +11827,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:9.1.0":
-  version: 9.1.0
-  resolution: "husky@npm:9.1.0"
+"husky@npm:9.1.1":
+  version: 9.1.1
+  resolution: "husky@npm:9.1.1"
   bin:
     husky: bin.js
-  checksum: 604e1d7d76cde9350f3fbbd04830706c9c93ae1e110a71f9f6c157f8c7ea624c3dfe36fc77c343e98b22cc0a6a3cbd00d8f750b819a3015190c2307e59b05dad
+  checksum: d907eee996353b0b6da8e40b6cf6c1274d57470cd984f028a8baf3e17b7bbab57d796345d552971c6629521685297a1ee093128e4bd45c8fc1867c0dbf38086b
   languageName: node
   linkType: hard
 
@@ -13390,11 +13397,11 @@ __metadata:
     eslint-plugin-storybook: 0.8.0
     eslint-plugin-vitest: ^0.4.1
     history: 5.3.0
-    husky: 9.1.0
+    husky: 9.1.1
     i18n-iso-countries: 7.11.3
     jsdom: 24.1.0
     lint-staged: 15.2.7
-    msw: 2.3.1
+    msw: 2.3.2
     msw-storybook-addon: ^2.0.3
     node-cache: 5.1.2
     postcss: ^8.4.39
@@ -13409,7 +13416,7 @@ __metadata:
     stylelint: 16.7.0
     stylelint-config-standard: ^36.0.1
     stylelint-order: 6.0.4
-    tailwindcss: ^3.4.4
+    tailwindcss: ^3.4.6
     typed-css-modules: ^0.9.1
     typescript: 5.5.3
     vite: ^5.3.4
@@ -14143,9 +14150,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw@npm:2.3.1":
-  version: 2.3.1
-  resolution: "msw@npm:2.3.1"
+"msw@npm:2.3.2":
+  version: 2.3.2
+  resolution: "msw@npm:2.3.2"
   dependencies:
     "@bundled-es-modules/cookie": ^2.0.0
     "@bundled-es-modules/statuses": ^1.0.1
@@ -14171,7 +14178,7 @@ __metadata:
       optional: true
   bin:
     msw: cli/index.js
-  checksum: bae72567488822889cc5c18318206c847b85d1df4c7bff0eac62e3fa902b95dd2e36710e3679829eaceb9c4f5066f9ed441afd919b304fba111fe2dacf82cefb
+  checksum: 2b0a2a1f211c0793a7960b7b8eba1bd20e95b195a2f0a1c0c3017cc4b82c313ad45904e6819ce9276ade17e323fdb88d848720f498077e7d442e54b23b7c4d75
   languageName: node
   linkType: hard
 
@@ -17337,9 +17344,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.4.4":
-  version: 3.4.4
-  resolution: "tailwindcss@npm:3.4.4"
+"tailwindcss@npm:^3.4.6":
+  version: 3.4.6
+  resolution: "tailwindcss@npm:3.4.6"
   dependencies:
     "@alloc/quick-lru": ^5.2.0
     arg: ^5.0.2
@@ -17366,7 +17373,7 @@ __metadata:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: 743639b6a5c827b6f91ad8cff22ad296e25f4478202200a6f41ae49fbb28c4c6f8120e742a85e09987e33352fbc52c6a34c4ed33ce000b3810d4edf632142bac
+  checksum: bb5ea38bbceedfea6bad3fdb951b45c14bc875d56d69bd4a3d76862183d9112ab4f938920473a876293baffefb9f62118d4fac3e592e32d7c268b58a7fd0c374
   languageName: node
   linkType: hard
 
