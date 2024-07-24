@@ -6,7 +6,6 @@ import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import { Fagsak, FagsakPerson } from '@k9-sak-web/types';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
-import { pathToFagsak } from '@k9-sak-web/sak-app/src/app/paths';
 
 import styles from './aktoerGrid.module.css';
 

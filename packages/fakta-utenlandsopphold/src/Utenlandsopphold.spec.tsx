@@ -37,12 +37,7 @@ describe('Utenlandsopphold', () => {
   });
 
   test('land utenfor EØS vises med merknad', () => {
-    renderWithIntl(
-      <Utenlandsopphold
-        utenlandsopphold={{ perioder: [utenlandsoppholdMock.perioder[1]] }}
-        kodeverk={utenlandsoppholdÅrsakMock}
-      />,
-    );
+    renderWithIntl(<Utenlandsopphold utenlandsopphold={{ perioder: [utenlandsoppholdMock.perioder[1]] }} />);
 
     expect(screen.getByText('Land')).toBeVisible();
     expect(screen.getByText('Kina')).toBeVisible();
@@ -53,12 +48,7 @@ describe('Utenlandsopphold', () => {
   });
   // Egen test da det har mismatch mellom kodeverk og i18n-iso-countries
   test('Kosovo vises korrekt', () => {
-    renderWithIntl(
-      <Utenlandsopphold
-        utenlandsopphold={{ perioder: [utenlandsoppholdMock.perioder[6]] }}
-        kodeverk={utenlandsoppholdÅrsakMock}
-      />,
-    );
+    renderWithIntl(<Utenlandsopphold utenlandsopphold={{ perioder: [utenlandsoppholdMock.perioder[6]] }} />);
 
     expect(screen.getByText('Land')).toBeVisible();
     expect(screen.getByText('Kosovo')).toBeVisible();
@@ -68,12 +58,7 @@ describe('Utenlandsopphold', () => {
 
   // spesialhåndtering for Storbritannia da det ligger som EØS-land i kodeverket
   test('Storbritannia er ikke i EØS', () => {
-    renderWithIntl(
-      <Utenlandsopphold
-        utenlandsopphold={{ perioder: [utenlandsoppholdMock.perioder[7]] }}
-        kodeverk={utenlandsoppholdÅrsakMock}
-      />,
-    );
+    renderWithIntl(<Utenlandsopphold utenlandsopphold={{ perioder: [utenlandsoppholdMock.perioder[7]] }} />);
 
     expect(screen.getByText('Land')).toBeVisible();
     expect(screen.getByText('Storbritannia')).toBeVisible();
@@ -85,12 +70,7 @@ describe('Utenlandsopphold', () => {
 
   // Sveits vurderes på lik linje med EØS-land
   test('Sveits vises med ekstra informasjon', () => {
-    renderWithIntl(
-      <Utenlandsopphold
-        utenlandsopphold={{ perioder: [utenlandsoppholdMock.perioder[5]] }}
-        kodeverk={utenlandsoppholdÅrsakMock}
-      />,
-    );
+    renderWithIntl(<Utenlandsopphold utenlandsopphold={{ perioder: [utenlandsoppholdMock.perioder[5]] }} />);
 
     expect(screen.getByText('Land')).toBeVisible();
     expect(screen.getByText('Sveits')).toBeVisible();

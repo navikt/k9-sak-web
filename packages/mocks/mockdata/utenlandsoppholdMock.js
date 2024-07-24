@@ -50,30 +50,16 @@ const utenlandsopphold = {
       periode: `${dayjs().subtract(52, 'day').format('YYYY-MM-DD')}/${dayjs()
         .subtract(47, 'day')
         .format('YYYY-MM-DD')}`,
-      landkode: {
-        kode: 'XXK',
-        navn: 'XXK',
-        kodeverk: 'LANDKODER',
-      },
-      region: {
-        kode: 'ANNET',
-        kodeverk: 'REGION',
-      },
+      landkode: 'XXK',
+      region: 'ANNET',
       årsak: 'INGEN',
     },
     {
       periode: `${dayjs().subtract(59, 'day').format('YYYY-MM-DD')}/${dayjs()
         .subtract(55, 'day')
         .format('YYYY-MM-DD')}`,
-      landkode: {
-        kode: 'GBR',
-        navn: 'GBR',
-        kodeverk: 'LANDKODER',
-      },
-      region: {
-        kode: 'EOS',
-        kodeverk: 'REGION',
-      },
+      landkode: 'GBR',
+      region: 'EOS',
       årsak: 'INGEN',
     },
   ],
