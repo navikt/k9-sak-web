@@ -35,4 +35,69 @@ describe('Utenlandsopphold', () => {
     expect(screen.getByText('Merknad til utenlandsopphold')).toBeVisible();
     expect(screen.getByText('Periode telles ikke.')).toBeVisible();
   });
+
+  test('land utenfor EØS vises med merknad', () => {
+    renderWithIntl(
+      <Utenlandsopphold
+        utenlandsopphold={{ perioder: [utenlandsoppholdMock.perioder[1]] }}
+        kodeverk={utenlandsoppholdÅrsakMock}
+      />,
+    );
+
+    expect(screen.getByText('Land')).toBeVisible();
+    expect(screen.getByText('Kina')).toBeVisible();
+    expect(screen.getByText('EØS')).toBeVisible();
+    expect(screen.getByText('Nei')).toBeVisible();
+    expect(screen.getByText('Merknad til utenlandsopphold')).toBeVisible();
+    expect(screen.getByText('Ingen av årsakene over (kan motta pleiepenger i 8 uker)')).toBeVisible();
+  });
+  // Egen test da det har mismatch mellom kodeverk og i18n-iso-countries
+  test('Kosovo vises korrekt', () => {
+    renderWithIntl(
+      <Utenlandsopphold
+        utenlandsopphold={{ perioder: [utenlandsoppholdMock.perioder[6]] }}
+        kodeverk={utenlandsoppholdÅrsakMock}
+      />,
+    );
+
+    expect(screen.getByText('Land')).toBeVisible();
+    expect(screen.getByText('Kosovo')).toBeVisible();
+    expect(screen.getByText('EØS')).toBeVisible();
+    expect(screen.getByText('Nei')).toBeVisible();
+  });
+
+  // spesialhåndtering for Storbritannia da det ligger som EØS-land i kodeverket
+  test('Storbritannia er ikke i EØS', () => {
+    renderWithIntl(
+      <Utenlandsopphold
+        utenlandsopphold={{ perioder: [utenlandsoppholdMock.perioder[7]] }}
+        kodeverk={utenlandsoppholdÅrsakMock}
+      />,
+    );
+
+    expect(screen.getByText('Land')).toBeVisible();
+    expect(screen.getByText('Storbritannia')).toBeVisible();
+    expect(screen.getByText('EØS')).toBeVisible();
+    expect(screen.getByText('Nei')).toBeVisible();
+    expect(screen.getByText('Merknad til utenlandsopphold')).toBeVisible();
+    expect(screen.getByText('Ingen av årsakene over (kan motta pleiepenger i 8 uker)')).toBeVisible();
+  });
+
+  // Sveits vurderes på lik linje med EØS-land
+  test('Sveits vises med ekstra informasjon', () => {
+    renderWithIntl(
+      <Utenlandsopphold
+        utenlandsopphold={{ perioder: [utenlandsoppholdMock.perioder[5]] }}
+        kodeverk={utenlandsoppholdÅrsakMock}
+      />,
+    );
+
+    expect(screen.getByText('Land')).toBeVisible();
+    expect(screen.getByText('Sveits')).toBeVisible();
+    expect(screen.getByText('EØS')).toBeVisible();
+    expect(screen.getByText('Nei*')).toBeVisible();
+    expect(screen.getByText('Merknad til utenlandsopphold')).toBeVisible();
+    expect(screen.getByText('Periode telles ikke.')).toBeVisible();
+    expect(screen.getByText('*) Ikke en del av EØS, men vurderes mot EØS-regelverk')).toBeVisible();
+  });
 });

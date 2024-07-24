@@ -18,29 +18,22 @@ updates:
           - '*'
         update-types:
           - 'patch'
+          - 'minor'
         exclude-patterns:
-          - '@storybook/*'
-          - '@typescript-eslint*'
           - 'react*'
           - '@types/react'
           - '@navikt*'
+      storybook:
+        update-types:
+          - 'major'
+        patterns:
           - 'storybook'
+          - '@storybook/*'
       react:
         patterns:
           - 'react'
           - 'react-dom'
           - '@types/react'
-      typescript-eslint:
-        patterns:
-          - '@typescript-eslint*'
-      storybook:
-        patterns:
-          - '@storybook/*'
-          - 'storybook'
-        exclude-patterns:
-          - '@storybook/storybook-deployer'
-          - '@storybook/testing-react'
-          - '@storybook/testing-library'
       designsystem:
         patterns:
           - '@navikt/aksel-icons'
