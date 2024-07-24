@@ -22,13 +22,14 @@ const Utenlandsopphold = ({
 }) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
 
-  const finnÅrsaker = (periode: UtenlandsoppholdType, erEØS) => {
-    if (erEØS) {
+  const finnÅrsaker = (periode: UtenlandsoppholdType, erEØS: boolean) => {
+    if (erEØS || periode.landkode === 'CHE') {
       return 'Periode telles ikke.';
     }
     return kodeverkNavnFraKode(periode.årsak, KodeverkType.UTLANDSOPPHOLD_AARSAK, undefined, 'Ukjent årsak');
   };
 
+  // Sveits vurderes på lik linje med EØS-land
   const vurderesMotEØSRegelverk = (landkode: string) => {
     const land = ['CHE'];
     if (land.includes(landkode)) {
@@ -38,13 +39,25 @@ const Utenlandsopphold = ({
   };
 
   const mapItems = (periode: UtenlandsoppholdType) => {
-    const erEØS = periode.region === 'NORDEN' || periode.region === 'EOS';
+    // Storbritannia ligger som EØS-land i kodeverket. Frem til det er fjernet derfra må det spesialhåndteres her.
+    const erEØS = () => periode.region === 'NORDEN' || (periode.region === 'EOS' && periode.landkode !== 'GBR');
 
-    const land = { label: 'Land', value: countries.getName(periode.landkode, 'no') };
-    const eos = { label: 'EØS', value: erEØS ? 'Ja' : `Nei${vurderesMotEØSRegelverk(periode.landkode)}` };
-    const årsak = { label: 'Merknad til utenlandsopphold', value: finnÅrsaker(periode, erEØS) };
+    const hentLand = () => {
+      // Kosovo har en spesiell kode i kodeverk som ikke samsvarer med ISO-koden i i18n-iso-countries
+      if (periode.landkode === 'XXK') {
+        return { label: 'Land', value: 'Kosovo' };
+      }
+      return { label: 'Land', value: countries.getName(periode.landkode, 'no') };
+    };
 
-    return [land, eos, årsak];
+    const hentEØSStatus = () => {
+      const eøsStatus = erEØS() ? 'Ja' : `Nei${vurderesMotEØSRegelverk(periode.landkode)}`;
+      return { label: 'EØS', value: eøsStatus };
+    };
+
+    const hentÅrsak = () => ({ label: 'Merknad til utenlandsopphold', value: finnÅrsaker(periode, erEØS()) });
+
+    return [hentLand(), hentEØSStatus(), hentÅrsak()];
   };
 
   const perioder = utenlandsopphold?.perioder;

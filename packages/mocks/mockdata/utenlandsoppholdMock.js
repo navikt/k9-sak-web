@@ -40,11 +40,47 @@ const utenlandsopphold = {
     },
     {
       periode: `${dayjs().subtract(45, 'day').format('YYYY-MM-DD')}/${dayjs()
-        .subtract(31, 'day')
+        .subtract(39, 'day')
         .format('YYYY-MM-DD')}`,
       landkode: 'CHE',
       region: 'ANNET',
       årsak: 'INGEN',
+    },
+    {
+      periode: `${dayjs().subtract(52, 'day').format('YYYY-MM-DD')}/${dayjs()
+        .subtract(47, 'day')
+        .format('YYYY-MM-DD')}`,
+      landkode: 'XXK',
+      region: 'ANNET',
+      årsak: 'INGEN',
+    },
+    {
+      periode: `${dayjs().subtract(59, 'day').format('YYYY-MM-DD')}/${dayjs()
+        .subtract(55, 'day')
+        .format('YYYY-MM-DD')}`,
+      landkode: 'GBR',
+      region: 'EOS',
+      årsak: 'INGEN',
+    },
+  ],
+};
+
+export const utenlandsoppholdÅrsakMock = {
+  UtenlandsoppholdÅrsak: [
+    {
+      kode: 'BARNET_INNLAGT_I_HELSEINSTITUSJON_FOR_NORSK_OFFENTLIG_REGNING',
+      navn: 'Barnet er innlagt i helseinstitusjon for norsk offentlig regning (mottar pleiepenger som i Norge, telles ikke i 8 uker)',
+      kodeverk: 'UTENLANDSOPPHOLD_ÅRSAK',
+    },
+    {
+      kode: 'BARNET_INNLAGT_I_HELSEINSTITUSJON_DEKKET_ETTER_AVTALE_MED_ET_ANNET_LAND_OM_TRYGD',
+      navn: 'Barnet er innlagt i helseinstitusjon dekket etter avtale med annet land om trygd (mottar pleiepenger som i Norge, telles ikke i 8 uker)',
+      kodeverk: 'UTENLANDSOPPHOLD_ÅRSAK',
+    },
+    {
+      kode: 'INGEN',
+      navn: 'Ingen av årsakene over (kan motta pleiepenger i 8 uker)',
+      kodeverk: 'UTENLANDSOPPHOLD_ÅRSAK',
     },
   ],
 };

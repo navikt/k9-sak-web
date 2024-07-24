@@ -122,7 +122,6 @@ export const FormkravKlageForm = ({
           <HGrid gap="1" columns={{ xs: '4fr 8fr' }}>
             <div>
               <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErKlagerPart' })}</Detail>
-              <VerticalSpacer sixteenPx />
               <RadioGroupField
                 name="erKlagerPart"
                 validate={[required]}
@@ -141,7 +140,6 @@ export const FormkravKlageForm = ({
             </div>
             <div>
               <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErKonkret' })}</Detail>
-              <VerticalSpacer sixteenPx />
               <RadioGroupField
                 name="erKonkret"
                 validate={[required]}
@@ -159,10 +157,10 @@ export const FormkravKlageForm = ({
               />
             </div>
           </HGrid>
+          <VerticalSpacer sixteenPx />
           <HGrid gap="1" columns={{ xs: '4fr 8fr' }}>
             <div>
               <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErFristOverholdt' })}</Detail>
-              <VerticalSpacer sixteenPx />
               <RadioGroupField
                 name="erFristOverholdt"
                 validate={[required]}
@@ -181,7 +179,6 @@ export const FormkravKlageForm = ({
             </div>
             <div>
               <Detail>{intl.formatMessage({ id: 'Klage.Formkrav.ErSignert' })}</Detail>
-              <VerticalSpacer sixteenPx />
               <RadioGroupField
                 name="erSignert"
                 validate={[required]}

@@ -9,9 +9,10 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
-import * as useTrackRouteParam from '../app/useTrackRouteParam';
+import { vi } from 'vitest';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import FagsakIndex from './FagsakIndex';
+import type useTrackRouteParam from '../app/useTrackRouteParam.js';
 
 vi.mock('react-router-dom', async () => {
   const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
@@ -25,6 +26,19 @@ vi.mock('react-router-dom', async () => {
     }),
   };
 });
+
+vi.mock('../app/useTrackRouteParam', (): { default: typeof useTrackRouteParam<number> } => ({
+  default: () => ({
+    selected: 123456,
+    location: {
+      pathname: 'test',
+      search: 'test',
+      state: {},
+      hash: 'test',
+      key: 'test',
+    },
+  }),
+}));
 
 describe('<FagsakIndex>', () => {
   const kodeverk = {
@@ -139,19 +153,6 @@ describe('<FagsakIndex>', () => {
     toTrinnsBehandling: undefined,
     behandlingÅrsaker: undefined,
   };
-
-  beforeEach(() => {
-    vi.spyOn(useTrackRouteParam, 'default').mockImplementation(() => ({
-      selected: 123456,
-      location: {
-        pathname: 'test',
-        search: 'test',
-        state: {},
-        hash: 'test',
-        key: 'test',
-      },
-    }));
-  });
 
   it('skal hente alle behandlinger fra k9sak, tilbake og klage', () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);

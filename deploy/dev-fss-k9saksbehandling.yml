@@ -28,6 +28,9 @@ spec:
     min: {{ replicas.min }}
     max: {{ replicas.max }}
     cpuThresholdPercentage: 50
+  {{#if ttl}}
+  ttl: {{ ttl }}
+  {{/if}}
   resources:
     limits:
       cpu: 500m
