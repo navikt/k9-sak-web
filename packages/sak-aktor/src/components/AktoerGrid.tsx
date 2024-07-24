@@ -26,7 +26,7 @@ const AktoerGrid = ({ aktorInfo, finnPathToFagsak }: OwnProps) => {
       <div className={styles.list}>
         {aktorInfo.fagsaker.length ? (
           aktorInfo.fagsaker.map(fagsak => (
-            <LinkPanel key={fagsak.saksnummer} href={finnPathToFagsak(fagsak.saksnummer)}>
+            <LinkPanel key={fagsak.saksnummer} href={`/k9/web${finnPathToFagsak(fagsak.saksnummer)}`}>
               <LinkPanel.Description>
                 {kodeverkNavnFraKode(fagsak.sakstype, KodeverkType.FAGSAK_YTELSE)}
                 {` (${fagsak.saksnummer}) `}
