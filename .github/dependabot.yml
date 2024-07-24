@@ -13,7 +13,7 @@ updates:
     registries:
       - npm-github
     groups:
-      patch:
+      patch-and-minor:
         patterns:
           - '*'
         update-types:
