@@ -65,4 +65,24 @@ const utenlandsopphold = {
   ],
 };
 
+export const utenlandsoppholdÅrsakMock = {
+  UtenlandsoppholdÅrsak: [
+    {
+      kode: 'BARNET_INNLAGT_I_HELSEINSTITUSJON_FOR_NORSK_OFFENTLIG_REGNING',
+      navn: 'Barnet er innlagt i helseinstitusjon for norsk offentlig regning (mottar pleiepenger som i Norge, telles ikke i 8 uker)',
+      kodeverk: 'UTENLANDSOPPHOLD_ÅRSAK',
+    },
+    {
+      kode: 'BARNET_INNLAGT_I_HELSEINSTITUSJON_DEKKET_ETTER_AVTALE_MED_ET_ANNET_LAND_OM_TRYGD',
+      navn: 'Barnet er innlagt i helseinstitusjon dekket etter avtale med annet land om trygd (mottar pleiepenger som i Norge, telles ikke i 8 uker)',
+      kodeverk: 'UTENLANDSOPPHOLD_ÅRSAK',
+    },
+    {
+      kode: 'INGEN',
+      navn: 'Ingen av årsakene over (kan motta pleiepenger i 8 uker)',
+      kodeverk: 'UTENLANDSOPPHOLD_ÅRSAK',
+    },
+  ],
+};
+
 export default utenlandsopphold;
