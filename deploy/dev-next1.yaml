@@ -5,4 +5,4 @@ replicas:
   min: 1
   max: 2
 # k9-next1 stoppast etter 10 dager uten ny deploy
-ttl: 10d
+ttl: 240h
