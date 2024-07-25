@@ -1,5 +1,3 @@
-/* eslint-disable import/no-mutable-exports */
-
 // Alle handlers som ligger direkte i dette arrayet vil gjelde
 // selv om k9-sak-web startes uten env spesielle env-variabler.
 // Requesten treffer handlerne i stedet for eventuelle eksisterende APIer

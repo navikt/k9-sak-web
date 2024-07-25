@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import dayjs, { Dayjs } from 'dayjs';
 import { EnkelPeriode } from '@k9-sak-web/types/src/tidslinje';
 import { horizontalPositionAndWidth } from './calc';

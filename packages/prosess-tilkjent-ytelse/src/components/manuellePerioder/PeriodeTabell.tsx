@@ -218,13 +218,12 @@ export const PeriodeTabell = ({
       <VerticalSpacer twentyPx />
       <FieldArray
         name="perioder"
-        // @ts-ignore
         component={PeriodeRad}
         arbeidsgivere={arbeidsgivere}
         openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
         updatePeriode={updatePeriode}
         editPeriode={editPeriode}
-        // @ts-ignore
+        // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
         cleaningUpForm={cleaningUpForm}
         cancelEditPeriode={cancelEditPeriode}
         isAnyFormOpen={isAnyFormOpen}

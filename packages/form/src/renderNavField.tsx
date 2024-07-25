@@ -18,7 +18,7 @@ const renderNavField = WrappedNavFieldComponent => {
     const intl = useIntl();
     const formatError = (submitFailed: boolean, error: any) => {
       if (submitFailed && error) {
-        // @ts-ignore
+        // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
         return intl.formatMessage(...error);
       }
       return undefined;

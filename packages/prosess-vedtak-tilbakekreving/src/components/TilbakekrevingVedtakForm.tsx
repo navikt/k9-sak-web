@@ -96,7 +96,6 @@ export const TilbakekrevingVedtakFormImpl = ({
         <FlexColumn>
           <ProsessStegSubmitButton
             text={intl.formatMessage({ id: 'TilbakekrevingVedtakForm.TilGodkjenning' })}
-            // @ts-ignore Fjern denne når komponent er over på TS
             formName={formName}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}

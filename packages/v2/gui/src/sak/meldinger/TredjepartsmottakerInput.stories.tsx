@@ -1,4 +1,3 @@
-/* eslint-disable import/no-relative-packages */
 import type {
   TredjepartsmottakerError,
   TredjepartsmottakerOrgnrInputProps,
@@ -7,7 +6,7 @@ import type {
 import { Button, VStack } from '@navikt/ds-react';
 import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import { FakeMessagesBackendApi } from '@k9-sak-web/gui/storybook/mocks/FakeMessagesBackendApi.js';
 import TredjepartsmottakerInput from './TredjepartsmottakerInput.js';

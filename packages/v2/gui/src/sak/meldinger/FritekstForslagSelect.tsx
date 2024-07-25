@@ -1,5 +1,4 @@
 import { Select } from '@navikt/ds-react';
-import React from 'react';
 import { type FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 
 type FritekstForslagSelectProps = {
