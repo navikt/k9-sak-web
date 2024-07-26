@@ -7,7 +7,6 @@ import AktorSakIndex from '@k9-sak-web/sak-aktor';
 
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import { restApiHooks, K9sakApiKeys } from '../data/k9sakApi';
-import { pathToFagsak } from '../app/paths';
 
 /**
  * AktoerIndex
@@ -32,14 +31,7 @@ const AktoerIndex = () => {
     return <LoadingPanel />;
   }
 
-  return (
-    <AktorSakIndex
-      valgtAktorId={selectedAktoerId}
-      aktorInfo={data}
-      alleKodeverk={alleKodeverk}
-      finnPathToFagsak={pathToFagsak}
-    />
-  );
+  return <AktorSakIndex valgtAktorId={selectedAktoerId} aktorInfo={data} alleKodeverk={alleKodeverk} />;
 };
 
 export default AktoerIndex;

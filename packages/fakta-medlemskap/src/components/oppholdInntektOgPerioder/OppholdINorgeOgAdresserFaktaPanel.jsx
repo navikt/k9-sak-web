@@ -23,6 +23,9 @@ const capitalizeFirstLetter = landNavn => {
 
 const formatLandNavn = landNavn => {
   if (landNavn.length === 2 || landNavn.length === 3) {
+    if (landNavn === 'XXK') {
+      return 'Kosovo';
+    }
     return countries.getName(landNavn, 'no');
   }
   return landNavn;

@@ -8,32 +8,21 @@ on:
     branches:
       - master
 
+env:
+  TAG_LATEST_PROD: latest_prod
 jobs:
-  # test:
-  #   uses: ./.github/workflows/test.yml
-  #   secrets: inherit
-
-  # lint-tscheck-build:
-  #   uses: ./.github/workflows/lint-tscheck-build.yml
-  #   secrets: inherit
-  #   with:
-  #     run-build: false
-
-  deploy-docker-image:
-    name: Deploy Docker image
+  build-docker-image:
+    name: Build Docker image
     runs-on: ubuntu-latest
     permissions:
-      issues: write
       contents: read
       id-token: write
-    # needs: [test, lint-tscheck-build]
     outputs:
       tag: ${{ steps.docker-push.outputs.tag }}
       image: ${{ steps.docker-push.outputs.image }}
     steps:
       - name: Hente kode
         uses: actions/checkout@v4
-
       - name: Setup + Install
         uses: ./.github/actions/setup-install
         with:
@@ -61,55 +50,11 @@ jobs:
         run: |
           echo "IMAGE=${{steps.docker-push.outputs.image}}" >> $GITHUB_OUTPUT
           echo "TAG=${{steps.docker-push.outputs.tag}}" >> $GITHUB_OUTPUT
-
-      - name: Lukk gamle issues
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            github.rest.issues.listForRepo({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: 'open',
-              labels: ['deployment']
-            }).then(response => {
-              response.data.forEach(issue => {
-                github.rest.issues.update({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: issue.number,
-                  state: 'closed'
-                });
-              });
-            });
-
-      - name: Opprett deployment issue
-        id: createdeployissue
-        if: success()
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            github.rest.issues.create( {
-              owner: context.issue.owner,
-              repo: context.issue.repo,
-              labels: ['deployment'],
-              body: 'Kommenter enten "/promote dev-fss" eller "/promote prod-fss" for å deploye ${{ github.sha }}',
-              title: 'Deploy av ${{ steps.docker-push.outputs.tag }}'})
-            .then(response => {
-                    core.setOutput('number', response.data.number);
-            });
-
-      - name: Trigg deploy til dev-fss
-        if: success()
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{secrets.GA_P_TOKEN}}
-          script: |
-            const issue = { owner: context.issue.owner,
-                            repo: context.issue.repo,
-                            issue_number: ${{ steps.createdeployissue.outputs.number }} }
-            github.rest.issues.createComment({...issue, body: '/promote dev-fss'})
+      - name: Git diff url
+        shell: bash
+        run: |
+          dynamic_url="https://github.com/${{ github.repository }}/compare/${{ env.TAG_LATEST_PROD }}...${{ github.sha }}"
+          echo "Forskjell mellom denne build og prod: <${dynamic_url}>" >> $GITHUB_STEP_SUMMARY
 
   verdikjede-tester:
     name: Verdikjedetester
@@ -118,13 +63,12 @@ jobs:
       id-token: write
       packages: read
     uses: navikt/sif-gha-workflows/.github/workflows/verdikjede-test.yml@main
-    if: github.ref_name == 'master'
-    needs: deploy-docker-image
+    needs: build-docker-image
     with:
-      tag: ${{ needs.deploy-docker-image.outputs.tag }}
+      tag: ${{ needs.build-docker-image.outputs.tag }}
       frontend_only: 'true'
   trivy:
-    needs: [deploy-docker-image]
+    needs: [build-docker-image]
     uses: navikt/sif-gha-workflows/.github/workflows/trivy.yml@main
     permissions:
       contents: write
@@ -133,5 +77,104 @@ jobs:
       actions: read
     secrets: inherit
     with:
-      image: ${{ needs.deploy-docker-image.outputs.image }}
+      image: ${{ needs.build-docker-image.outputs.image }}
       team: k9saksbehandling
+
+  deploy-dev:
+    name: Deploy to dev
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      CLUSTER: dev-fss
+    environment: dev-fss:k9saksbehandling
+    needs: [build-docker-image]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: ${{ env.CLUSTER }}
+          RESOURCE: deploy/${{ env.CLUSTER }}-k9saksbehandling.yml
+          VARS: deploy/dev.yaml
+          VAR: image=${{ needs.build-docker-image.outputs.image }}
+
+  deploy-prod:
+    name: Deploy to prod
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    env:
+      CLUSTER: prod-fss
+    environment: prod-fss:k9saksbehandling
+    if: github.ref_name == 'master'
+    needs: [build-docker-image, deploy-dev, verdikjede-tester, trivy]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Ta med litt historie og tags for å finne latest_prod commit hash
+          fetch-tags: true
+          fetch-depth: 100
+      - name: tag deployment image tag
+        uses: actions/github-script@v7
+        env:
+          TAG: prod_${{ needs.build-docker-image.outputs.tag }}
+        with:
+          script: |
+            try {
+              await github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'refs/tags/${{ env.TAG }}',
+                sha: context.sha
+              })
+            } catch (err) {
+              if(err.status === 422) { // tag already exists
+                console.info('Tag for deployment ${{ env.TAG }} already existed. Will leave it as is');
+              } else {
+                throw err;
+              }
+            }
+      - name: Print static git diff url
+        shell: bash
+        run: |
+          # disable exit on error temporarily in case latest_prod tag does not exist
+          set +e
+          latest_prod_sha="$(git rev-list -n 1 tags/${{ env.TAG_LATEST_PROD }})"
+          # re-enable exit on error
+          set -e
+          if [ -n "${latest_prod_sha}" ]; then
+            static_url="https://github.com/${{ github.repository }}/compare/${latest_prod_sha}...${{ github.sha }}"
+            echo "Endringer prodsatt i denne utrulling : <${static_url}>" >> $GITHUB_STEP_SUMMARY
+          fi
+      - uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: ${{ env.CLUSTER }}
+          RESOURCE: deploy/${{ env.CLUSTER }}-k9saksbehandling.yml
+          VAR: image=${{ needs.build-docker-image.outputs.image }}
+      - name: tag deployment done
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+              await github.rest.git.updateRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'tags/${{ env.TAG_LATEST_PROD }}',
+                sha: context.sha,
+                force: true
+              })
+            } catch (err) {
+              if(err.status === 422) { // tag did not exist, try creating it
+                console.info('Tag for ${{ env.TAG_LATEST_PROD }} did not exist. Will try creating it');
+                await github.rest.git.createRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: 'refs/tags/${{ env.TAG_LATEST_PROD }}',
+                  sha: context.sha
+                })
+              } else {
+                throw err;
+              }
+            }
