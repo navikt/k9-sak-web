@@ -308,14 +308,30 @@ export const SoknadsfristVilkarForm = ({
             </FlexContainer>
           )}
           {(harÅpentAksjonspunkt || editForm) && !erOverstyrt && (
-            <Button
-              variant="primary"
-              size="small"
-              loading={formMethods.formState.isSubmitting}
-              disabled={!formMethods.formState.isValid || formMethods.formState.isSubmitting}
-            >
-              <FormattedMessage id="SoknadsfristVilkarForm.ConfirmInformation" />
-            </Button>
+            <div className="flex gap-4">
+              <Button
+                variant="primary"
+                size="small"
+                loading={formMethods.formState.isSubmitting}
+                disabled={!formMethods.formState.isValid || formMethods.formState.isSubmitting}
+              >
+                <FormattedMessage id="SoknadsfristVilkarForm.ConfirmInformation" />
+              </Button>
+              {editForm && (
+                <Button
+                  size="small"
+                  variant="secondary"
+                  type="button"
+                  loading={formMethods.formState.isSubmitting}
+                  disabled={formMethods.formState.isSubmitting}
+                  onClick={() => {
+                    toggleEditForm(false);
+                  }}
+                >
+                  <FormattedMessage id="SoknadsfristVilkarForm.Avbryt" />
+                </Button>
+              )}
+            </div>
           )}
         </AksjonspunktBox>
       )}

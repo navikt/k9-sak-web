@@ -109,7 +109,7 @@ export const SoknadsfristVilkarDokument = ({
             />
             <AssessedBy name={opprettetAv} date={opprettetTidspunkt} />
           </div>
-          {!erOverstyrt && dokumentErVurdert && harBegrunnelse && (
+          {!erOverstyrt && dokumentErVurdert && harBegrunnelse && !redigerVurdering && (
             <div className="ml-2 flex-[1_0_auto]">
               <VerticalSpacer eightPx />
               <Button
@@ -117,10 +117,10 @@ export const SoknadsfristVilkarDokument = ({
                 variant="tertiary"
                 size="xsmall"
                 onClick={() => {
-                  toggleEditForm(!redigerVurdering);
+                  toggleEditForm(true);
                 }}
               >
-                {redigerVurdering ? 'Avbryt redigering' : 'Rediger vurdering'}
+                Rediger vurdering
               </Button>
             </div>
           )}
