@@ -21,12 +21,11 @@ interface OwnProps {
   valgtAktorId: string;
   aktorInfo?: Aktor;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  finnPathToFagsak: (saksnummer: string) => string;
 }
 
-const AktorSakIndex = ({ valgtAktorId, aktorInfo, alleKodeverk, finnPathToFagsak }: OwnProps) => (
+const AktorSakIndex = ({ valgtAktorId, aktorInfo, alleKodeverk }: OwnProps) => (
   <RawIntlProvider value={intl}>
-    {aktorInfo && <AktoerGrid aktorInfo={aktorInfo} alleKodeverk={alleKodeverk} finnPathToFagsak={finnPathToFagsak} />}
+    {aktorInfo && <AktoerGrid aktorInfo={aktorInfo} alleKodeverk={alleKodeverk} />}
     {!aktorInfo && (
       <BodyShort size="small">
         <FormattedMessage id="AktorSakIndex.UgyldigAktorId" values={{ id: valgtAktorId }} />

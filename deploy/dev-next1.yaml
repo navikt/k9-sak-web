@@ -4,3 +4,5 @@ ingress: "https://k9-next1.dev.intern.nav.no/"
 replicas:
   min: 1
   max: 2
+# k9-next1 stoppast etter 10 dager uten ny deploy
+ttl: 240h
