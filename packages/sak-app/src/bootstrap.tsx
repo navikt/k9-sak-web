@@ -35,7 +35,7 @@ init({
   beforeSend: (event, hint) => {
     const exception = hint.originalException;
     // @ts-ignore
-    if (exception.isAxiosError) {
+    if (exception?.isAxiosError) {
       // @ts-ignore
       const requestUrl = new URL(exception.request.responseURL);
       // eslint-disable-next-line no-param-reassign

@@ -1,7 +1,7 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: k9-sak-web
+  name: {{ name }}
   namespace: k9saksbehandling
   labels:
     team: k9saksbehandling
@@ -25,9 +25,12 @@ spec:
     initialDelay: 20
     timeout: 1
   replicas:
-    min: 2
-    max: 3
+    min: {{ replicas.min }}
+    max: {{ replicas.max }}
     cpuThresholdPercentage: 50
+  {{#if ttl}}
+  ttl: {{ ttl }}
+  {{/if}}
   resources:
     limits:
       cpu: 500m
@@ -36,7 +39,7 @@ spec:
       cpu: 200m
       memory: 32Mi
   ingresses:
-    - "https://k9.dev.intern.nav.no/"
+    - "{{ ingress }}"
   env:
     - name: APP_NAME
       value: k9-sak-web
@@ -99,6 +102,6 @@ spec:
     - name: "OVERSTYRING_UTTAK"
       value: "true"
     - name: "BRUK_V2_MELDINGER"
-      value: "false"
+      value: "true"
     - name: NYE_NOKKELTALL
       value: "true"

@@ -23,7 +23,7 @@ describe.skip('httpUtils', () => {
     const badRequestResponseMock = { response: { status: 400, headers: {} } };
 
     it('should return the data-property from the response when the promise resolved', async () => {
-      vi.mocked(httpUtils.get).mockImplementation(() => Promise.resolve(goodResponseMock));
+      vi.mocked(httpUtils.get<typeof goodResponseMock>).mockImplementation(() => Promise.resolve(goodResponseMock));
       const data = await httpUtils.get('', () => null);
       expect(data).toEqual(goodResponseMock.data);
     });
