@@ -71,9 +71,10 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
   alleMerknaderFraBeslutter,
 }) => {
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
-  const { control, formState } = useFormContext<OppholdInntektOgPerioderFormState>();
+  const { control, formState, trigger } = useFormContext<OppholdInntektOgPerioderFormState>();
   const oppholdInntektOgPeriodeFormValues = useWatch({ control, name: 'oppholdInntektOgPeriodeForm' });
   const handleSubmit = () => {
+    trigger('oppholdInntektOgPeriodeForm');
     updateOppholdInntektPeriode(transformValues(oppholdInntektOgPeriodeFormValues));
   };
 
@@ -106,6 +107,7 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
             isSubmittable={submittable}
             hasBegrunnelse={!!begrunnelse}
             name="oppholdInntektOgPeriodeForm.begrunnelse"
+            label="Begrunn endringene"
           />
           {!!begrunnelse && (
             <AssessedBy name={hentSaksbehandlerNavn(valgtPeriode?.vurdertAv)} date={valgtPeriode?.vurdertTidspunkt} />

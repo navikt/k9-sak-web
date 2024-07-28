@@ -11,10 +11,11 @@ import {
   PeriodLabel,
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, Table, VStack } from '@navikt/ds-react';
 import { RadioGroupPanel } from '@navikt/ft-form-hooks';
+import { required } from '@navikt/ft-form-validators';
 import moment from 'moment';
 import React, { FunctionComponent, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';

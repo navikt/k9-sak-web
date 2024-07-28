@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
 
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import TextArea from './TextArea';
 import styles from './faktaBegrunnelseTextField.module.css';
-import { hasValidText, maxLength, minLength, required } from './validators';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);

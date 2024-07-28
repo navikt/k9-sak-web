@@ -2,9 +2,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
-import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import MedlemskapFaktaIndex from './MedlemskapFaktaIndex';
 
 const behandling = {
@@ -222,7 +222,7 @@ export default {
   component: MedlemskapFaktaIndex,
 };
 
-export const visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = args => (
+export const VisAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = args => (
   <MedlemskapFaktaIndex
     aksjonspunkter={[
       {
@@ -243,7 +243,7 @@ export const visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = a
   />
 );
 
-visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden.args = {
+VisAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden.args = {
   behandling,
   medlemskap,
   soknad,
@@ -259,7 +259,7 @@ visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden.args = {
   submittable: true,
 };
 
-export const visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = args => (
+export const VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = args => (
   <MedlemskapFaktaIndex
     aksjonspunkter={[
       {
@@ -313,7 +313,7 @@ export const visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = args => (
   />
 );
 
-visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter.args = {
+VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter.args = {
   behandling,
   medlemskap,
   soknad,

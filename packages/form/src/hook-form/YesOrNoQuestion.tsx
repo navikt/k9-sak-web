@@ -1,5 +1,6 @@
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { getError } from './formUtils';
 import PureYesOrNoQuestion from './pure/PureYesOrNoQuestion';
 
 interface YesOrNoQuestionProps {
@@ -30,7 +31,7 @@ const YesOrNoQuestion = ({ question, name, validators, disabled }: YesOrNoQuesti
             name={name}
             onChange={onChange}
             value={value}
-            errorMessage={errors[name]?.message as string}
+            errorMessage={getError(errors, name)}
             disabled={disabled}
           />
         );

@@ -12,7 +12,8 @@ import { FormattedMessage } from 'react-intl';
 
 import { BostedSokerPersonopplysninger } from '@fpsak-frontend/fakta-bosted-soker/src/BostedSokerFaktaIndex';
 import { Aksjonspunkt, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
-import { OppholdINorgeOgAdresserFaktaPanelFormState } from './FormState';
+import { useFormContext, useWatch } from 'react-hook-form';
+import { OppholdInntektOgPerioderFormState, OppholdINorgeOgAdresserFaktaPanelFormState } from './FormState';
 import { MerknaderFraBeslutter } from './MerknaderFraBeslutter';
 import { Opphold } from './Opphold';
 import { Periode } from './Periode';
@@ -92,73 +93,75 @@ const OppholdINorgeOgAdresserFaktaPanel: FunctionComponent<OppholdINorgeOgAdress
   readOnly,
   hasBosattAksjonspunkt,
   isBosattAksjonspunktClosed,
-  opphold,
-  foreldre = [],
+
   alleKodeverk,
   alleMerknaderFraBeslutter,
-}) => (
-  <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]}>
-    <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
-      <div>
-        <FaktaGruppe withoutBorder titleCode="OppholdINorgeOgAdresserFaktaPanel.OppholdINorge">
-          <Detail>
-            <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.StayingOutsideOfNorway" />
-          </Detail>
-          <VerticalSpacer fourPx />
-          {!!opphold && lagOppholdIUtland(opphold.utlandsopphold)}
-        </FaktaGruppe>
-      </div>
-      <div>
-        <FaktaGruppe withoutBorder titleCode="OppholdINorgeOgAdresserFaktaPanel.BosattAdresser">
-          {foreldre.map(f => (
-            <div key={f.personopplysning.navn}>
-              {f.isApplicant && (
-                <BostedSokerFaktaIndex personopplysninger={f.personopplysning} alleKodeverk={alleKodeverk} />
-              )}
-              {!f.isApplicant && (
-                <BostedSokerFaktaIndex
-                  sokerTypeTextId="OppholdINorgeOgAdresserFaktaPanel.Parent"
-                  personopplysninger={f.personopplysning}
-                  alleKodeverk={alleKodeverk}
-                />
-              )}
+}) => {
+  const { control } = useFormContext<OppholdInntektOgPerioderFormState>();
+  const { foreldre, opphold } = useWatch({ control, name: 'oppholdInntektOgPeriodeForm' });
+  return (
+    <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]}>
+      <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
+        <div>
+          <FaktaGruppe withoutBorder titleCode="OppholdINorgeOgAdresserFaktaPanel.OppholdINorge">
+            <Detail>
+              <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.StayingOutsideOfNorway" />
+            </Detail>
+            <VerticalSpacer fourPx />
+            {!!opphold && lagOppholdIUtland(opphold.utlandsopphold)}
+          </FaktaGruppe>
+        </div>
+        <div>
+          <FaktaGruppe withoutBorder titleCode="OppholdINorgeOgAdresserFaktaPanel.BosattAdresser">
+            {foreldre.map(f => (
+              <div key={f.personopplysning.navn}>
+                {f.isApplicant && (
+                  <BostedSokerFaktaIndex personopplysninger={f.personopplysning} alleKodeverk={alleKodeverk} />
+                )}
+                {!f.isApplicant && (
+                  <BostedSokerFaktaIndex
+                    sokerTypeTextId="OppholdINorgeOgAdresserFaktaPanel.Parent"
+                    personopplysninger={f.personopplysning}
+                    alleKodeverk={alleKodeverk}
+                  />
+                )}
+              </div>
+            ))}
+          </FaktaGruppe>
+          {hasBosattAksjonspunkt && (
+            <div className={styles.ieFlex}>
+              <RadioGroupPanel
+                name="oppholdInntektOgPeriodeForm.bosattVurdering"
+                validate={[required]}
+                isReadOnly={readOnly}
+                isEdited={isBosattAksjonspunktClosed}
+                isHorizontal
+                isTrueOrFalseSelection
+                radios={[
+                  {
+                    value: 'true',
+                    label: <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.ResidingInNorway" />,
+                  },
+                  {
+                    value: 'false',
+                    label: (
+                      <FormattedMessage
+                        id="OppholdINorgeOgAdresserFaktaPanel.NotResidingInNorway"
+                        values={{
+                          b: chunks => <b>{chunks}</b>,
+                        }}
+                      />
+                    ),
+                  },
+                ]}
+              />
             </div>
-          ))}
-        </FaktaGruppe>
-        {hasBosattAksjonspunkt && (
-          <div className={styles.ieFlex}>
-            <RadioGroupPanel
-              name="oppholdInntektOgPeriodeForm.bosattVurdering"
-              validate={[required]}
-              isReadOnly={readOnly}
-              isEdited={isBosattAksjonspunktClosed}
-              isHorizontal
-              isTrueOrFalseSelection
-              radios={[
-                {
-                  value: 'true',
-                  label: <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.ResidingInNorway" />,
-                },
-                {
-                  value: 'false',
-                  label: (
-                    <FormattedMessage
-                      id="OppholdINorgeOgAdresserFaktaPanel.NotResidingInNorway"
-                      values={{
-                        b: chunks => <b>{chunks}</b>,
-                      }}
-                    />
-                  ),
-                },
-              ]}
-            />
-          </div>
-        )}
-      </div>
-    </HGrid>
-  </FaktaGruppe>
-);
-
+          )}
+        </div>
+      </HGrid>
+    </FaktaGruppe>
+  );
+};
 const createParent = (isApplicant: boolean, personopplysning: Personopplysninger) => ({
   isApplicant,
   personopplysning,
