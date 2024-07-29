@@ -1,4 +1,4 @@
-import EditorJS, { API } from '@editorjs/editorjs';
+import EditorJS, { API, type EditorConfig } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import Paragraph from '@editorjs/paragraph';
 import List from '@editorjs/list';
@@ -8,7 +8,7 @@ export default class EditorJSWrapper {
   private editor: EditorJS;
 
   public async init({ holder, onChange }: { holder: string; onChange: (api: API, event: CustomEvent<any>) => void }) {
-    const tools = {
+    const tools: EditorConfig['tools'] = {
       paragraph: {
         class: Paragraph,
         inlineToolbar: true,
@@ -26,6 +26,7 @@ export default class EditorJSWrapper {
         },
       },
       list: {
+        // @ts-expect-error Incorrect typing on @editorjs/list
         class: List,
         inlineToolbar: true,
         config: {
