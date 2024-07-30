@@ -7,7 +7,7 @@ import edjsHTML from 'editorjs-html';
 export default class EditorJSWrapper {
   private editor: EditorJS;
 
-  public async init({ holder, onChange }: { holder: string; onChange: (api: API, event: CustomEvent<any>) => void }) {
+  constructor({ holder, onChange }: { holder: string; onChange: (api: API, event: CustomEvent<any>) => void }) {
     const tools: EditorConfig['tools'] = {
       paragraph: {
         class: Paragraph,
@@ -35,20 +35,12 @@ export default class EditorJSWrapper {
         },
       },
     };
-
     this.editor = new EditorJS({
       holder,
       minHeight: 0,
       tools,
       onChange,
     });
-  }
-
-  public harEditor() {
-    if (this.editor) {
-      return true;
-    }
-    return false;
   }
 
   public async importer(html) {
@@ -58,14 +50,12 @@ export default class EditorJSWrapper {
   }
 
   public async erKlar() {
-    if (!this.editor) return false;
-    return this.editor;
+    return this.editor.isReady;
   }
 
   public async lagre() {
-    return this.editor.save().then(innhold => {
-      const edjsParser = edjsHTML();
-      return edjsParser.parse(innhold).join('');
-    });
+    const innhold = await this.editor.save();
+    const edjsParser = edjsHTML();
+    return edjsParser.parse(innhold).join('');
   }
 }
