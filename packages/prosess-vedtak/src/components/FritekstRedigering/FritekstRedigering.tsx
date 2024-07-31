@@ -10,7 +10,7 @@ import {
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Edit } from '@navikt/ds-icons';
 import { Alert, Button, Heading, Modal } from '@navikt/ds-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstEditor from './FritekstEditor';
@@ -119,19 +119,31 @@ const FritekstRedigering = ({
 
   const lukkEditor = () => setVisRedigering(false);
 
-  const handleLagre = async html => {
-    handleSubmit(
-      html,
-      lagLagreHtmlDokumentdataRequest({
-        dokumentdata,
-        redigerbarDokumentmal,
-        redigertHtml: html,
-        originalHtml,
-        inkluderKalender,
-        overstyrtMottaker,
-      }),
-    );
-  };
+  // useCallback for å unngå unødvendig re-initialisering av editorjs i FritekstEditor
+  const handleLagre = useCallback(
+    async html => {
+      handleSubmit(
+        html,
+        lagLagreHtmlDokumentdataRequest({
+          dokumentdata,
+          redigerbarDokumentmal,
+          redigertHtml: html,
+          originalHtml,
+          inkluderKalender,
+          overstyrtMottaker,
+        }),
+      );
+    },
+    [
+      handleSubmit,
+      lagLagreHtmlDokumentdataRequest,
+      dokumentdata,
+      redigerbarDokumentmal,
+      originalHtml,
+      inkluderKalender,
+      overstyrtMottaker,
+    ],
+  );
 
   useEffect(() => {
     if (!firstRender.current && overstyrtMottaker && !henterMal) {
@@ -154,7 +166,11 @@ const FritekstRedigering = ({
 
   const handleForhåndsvis = (e: React.SyntheticEvent, html: string) => previewBrev(e, html);
 
-  const oppdaterFormFelt = (html: string) => setFieldValue(fieldnames.REDIGERT_HTML, html);
+  // useCallback for å unngå unødvendig re-initialisering av editorjs i FritekstEditor
+  const oppdaterFormFelt = useCallback(
+    (html: string) => setFieldValue(fieldnames.REDIGERT_HTML, html),
+    [setFieldValue],
+  );
 
   return (
     <>
