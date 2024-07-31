@@ -16,7 +16,6 @@ interface ownProps {
   handleSubmit: (value: string) => void;
   lukkEditor: () => void;
   handleForhåndsvis: (event: React.SyntheticEvent, html: string) => void;
-  oppdaterFormFelt: (html: string) => void;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
   kanInkludereKalender: boolean;
   skalBrukeOverstyrendeFritekstBrev: boolean;
@@ -45,7 +44,6 @@ const FritekstEditor = ({
   handleSubmit,
   lukkEditor,
   handleForhåndsvis,
-  oppdaterFormFelt,
   setFieldValue,
   kanInkludereKalender,
   skalBrukeOverstyrendeFritekstBrev,
@@ -61,6 +59,8 @@ const FritekstEditor = ({
   const [visAdvarsel, setVisAdvarsel] = useState<boolean>(false);
   const [visValideringsFeil, setVisValideringsFeil] = useState<boolean>(false);
   const editorRef = useRef<EditorJSWrapper | null>(null);
+  const lastSubmitHtml = useRef(redigerbartInnhold);
+  const initImportNotDone = useRef(true);
 
   // useCallback to avoid recreation of this on every re-render of component
   const handleLagre = useCallback(async () => {
@@ -68,7 +68,10 @@ const FritekstEditor = ({
     if (editor !== null) {
       await editor.erKlar();
       const html = await editor.lagre();
-      handleSubmit(html);
+      if (html !== lastSubmitHtml.current) {
+        handleSubmit(html);
+        lastSubmitHtml.current = html;
+      }
     }
   }, [handleSubmit]);
 
@@ -87,12 +90,13 @@ const FritekstEditor = ({
     editorRef.current = new EditorJSWrapper({ holder: 'rediger-brev', onChange });
   }, [onChange]);
 
-  // Load new content into editor when it has changed
+  // Last innhold inn i editor ved første initialisering, eller viss redigerbartInnhold har blir endra utanfrå.
   useEffect(() => {
     const lastEditor = async (editor: EditorJSWrapper) => {
-      await editor.importer(redigerbartInnhold);
-      const html = await editor.lagre();
-      oppdaterFormFelt(html);
+      if (initImportNotDone.current || lastSubmitHtml.current !== redigerbartInnhold) {
+        await editor.importer(redigerbartInnhold);
+        initImportNotDone.current = false;
+      }
     };
     const editor = editorRef.current;
     if (editor !== null) {
@@ -102,7 +106,7 @@ const FritekstEditor = ({
     } else {
       throw new Error(`Unexpectedly no editor instance available`);
     }
-  }, [redigerbartInnhold, oppdaterFormFelt, redigerbartInnholdKlart, readOnly]);
+  }, [redigerbartInnhold, redigerbartInnholdKlart, readOnly]);
 
   const handleLagreOgLukk = async () => {
     await handleLagre();
