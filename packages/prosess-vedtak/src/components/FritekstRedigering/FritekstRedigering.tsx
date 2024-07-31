@@ -166,12 +166,6 @@ const FritekstRedigering = ({
 
   const handleForhåndsvis = (e: React.SyntheticEvent, html: string) => previewBrev(e, html);
 
-  // useCallback for å unngå unødvendig re-initialisering av editorjs i FritekstEditor
-  const oppdaterFormFelt = useCallback(
-    (html: string) => setFieldValue(fieldnames.REDIGERT_HTML, html),
-    [setFieldValue],
-  );
-
   return (
     <>
       <h3>
@@ -207,7 +201,6 @@ const FritekstRedigering = ({
                 handleSubmit={handleLagre}
                 lukkEditor={lukkEditor}
                 handleForhåndsvis={handleForhåndsvis}
-                oppdaterFormFelt={oppdaterFormFelt}
                 setFieldValue={setFieldValue}
                 kanInkludereKalender={kanInkludereKalender}
                 skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
