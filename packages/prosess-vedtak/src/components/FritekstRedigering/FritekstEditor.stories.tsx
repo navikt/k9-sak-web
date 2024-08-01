@@ -40,7 +40,6 @@ export const Default: StoryObj<typeof meta> = {
     handleSubmit: fn(),
     lukkEditor: fn(),
     handleForhåndsvis: fn(),
-    oppdaterFormFelt: fn(),
     setFieldValue: fn(),
   },
 };
@@ -65,7 +64,6 @@ export const AvansertMedPlayTest: StoryObj<typeof FritekstEditor> = {
 
     const submitBtn = canvas.getByRole('button', { name: 'Lagre og lukk' });
     expect(submitBtn).toBeInTheDocument();
-    await waitFor(() => expect(args.oppdaterFormFelt).toHaveBeenCalled());
     await userEvent.click(submitBtn, { delay: 100 });
     await waitFor(() => expect(args.handleSubmit).toHaveBeenCalledWith(`<p>${customizedContent}</p>`));
     const para = contentBlock.querySelector('.ce-paragraph.cdx-block');
