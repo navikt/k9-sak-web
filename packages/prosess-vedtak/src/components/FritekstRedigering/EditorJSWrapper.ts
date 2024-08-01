@@ -26,7 +26,6 @@ export default class EditorJSWrapper {
         },
       },
       list: {
-        // @ts-expect-error Incorrect typing on @editorjs/list
         class: List,
         inlineToolbar: true,
         config: {
