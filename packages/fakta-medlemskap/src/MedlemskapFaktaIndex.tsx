@@ -43,20 +43,22 @@ const MedlemskapFaktaIndex = ({
   readOnly,
 }: MedlemskapFaktaIndexProps) => (
   <RawIntlProvider value={intl}>
-    <MedlemskapInfoPanel
-      behandlingId={behandling.id}
-      behandlingVersjon={behandling.versjon}
-      behandlingType={behandling.type}
-      soknad={soknad}
-      medlemskap={medlemskap}
-      fagsakPerson={fagsakPerson}
-      aksjonspunkter={aksjonspunkter}
-      submittable={submittable}
-      alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-      alleKodeverk={alleKodeverk}
-      submitCallback={submitCallback}
-      readOnly={readOnly}
-    />
+    {medlemskap && (
+      <MedlemskapInfoPanel
+        behandlingId={behandling.id}
+        behandlingVersjon={behandling.versjon}
+        behandlingType={behandling.type}
+        soknad={soknad}
+        medlemskap={medlemskap}
+        fagsakPerson={fagsakPerson}
+        aksjonspunkter={aksjonspunkter}
+        submittable={submittable}
+        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+        alleKodeverk={alleKodeverk}
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+      />
+    )}
   </RawIntlProvider>
 );
 
