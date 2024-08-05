@@ -14,7 +14,7 @@ export interface Periode {
   isPeriodAksjonspunktClosed: boolean;
   dekningType: Kodeverk;
   medlemskapManuellVurderingType: Kodeverk;
-  oppholdsrettVurdering: boolean;
+  oppholdsrettVurdering?: boolean;
   erEosBorger?: boolean;
   lovligOppholdVurdering?: boolean;
 }

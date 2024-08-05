@@ -116,20 +116,22 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
       )}
 
       <VerticalSpacer twentyPx />
-      <FlexContainer>
-        <FlexRow>
-          <FlexColumn>
-            <Button variant="primary" size="small" type="button" onClick={handleSubmit} disabled={!formState.isDirty}>
-              <FormattedMessage id="OppholdInntektOgPeriode.Oppdater" />
-            </Button>
-          </FlexColumn>
-          <FlexColumn>
-            <Button variant="secondary" type="button" size="small" onClick={periodeResetCallback}>
-              <FormattedMessage id="OppholdInntektOgPeriode.Avbryt" />
-            </Button>
-          </FlexColumn>
-        </FlexRow>
-      </FlexContainer>
+      {submittable && (
+        <FlexContainer>
+          <FlexRow>
+            <FlexColumn>
+              <Button variant="primary" size="small" type="button" onClick={handleSubmit} disabled={!formState.isDirty}>
+                <FormattedMessage id="OppholdInntektOgPeriode.Oppdater" />
+              </Button>
+            </FlexColumn>
+            <FlexColumn>
+              <Button variant="secondary" type="button" size="small" onClick={periodeResetCallback}>
+                <FormattedMessage id="OppholdInntektOgPeriode.Avbryt" />
+              </Button>
+            </FlexColumn>
+          </FlexRow>
+        </FlexContainer>
+      )}
     </BorderBox>
   );
 };
