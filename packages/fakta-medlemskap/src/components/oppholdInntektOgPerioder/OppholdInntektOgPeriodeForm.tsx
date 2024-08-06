@@ -11,10 +11,10 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { ISO_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
-import { Button } from '@navikt/ds-react';
+import { Alert, Button } from '@navikt/ds-react';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import moment from 'moment';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -70,16 +70,24 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
   alleKodeverk,
   alleMerknaderFraBeslutter,
 }) => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   const { control, formState, trigger } = useFormContext<OppholdInntektOgPerioderFormState>();
   const oppholdInntektOgPeriodeFormValues = useWatch({ control, name: 'oppholdInntektOgPeriodeForm' });
   const handleSubmit = () => {
-    trigger('oppholdInntektOgPeriodeForm');
+    trigger('oppholdInntektOgPeriodeForm').then(isValid => {
+      if (isValid) {
+        setIsSubmitted(true);
+      }
+    });
     updateOppholdInntektPeriode(transformValues(oppholdInntektOgPeriodeFormValues));
   };
 
   const begrunnelse = useWatch({ control, name: 'oppholdInntektOgPeriodeForm.begrunnelse' });
-
+  const perioder = useWatch({ control, name: 'perioder' });
+  const harAndreÅpneAksjonspunkter = perioder.some(
+    periode => periode.aksjonspunkter.length > 0 && periode.begrunnelse === null,
+  );
   return (
     <BorderBox>
       <OppholdINorgeOgAdresserFaktaPanel
@@ -130,6 +138,11 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
               </Button>
             </FlexColumn>
           </FlexRow>
+          {harAndreÅpneAksjonspunkter && isSubmitted && (
+            <Alert inline variant="info" className="mt-3">
+              Denne perioden er nå oppdatert. Du har flere perioder som må vurderes før du kan bekrefte og fortsette.
+            </Alert>
+          )}
         </FlexContainer>
       )}
     </BorderBox>

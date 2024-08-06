@@ -209,10 +209,13 @@ export const OppholdInntektOgPerioderForm = ({
       ...periode,
     };
 
-    formMethods.reset({
-      ...formMethods.getValues(),
-      oppholdInntektOgPeriodeForm: getInitialValues(perioder, nyValgtPeriode).oppholdInntektOgPeriodeForm,
-    });
+    formMethods.reset(
+      {
+        ...formMethods.getValues(),
+        oppholdInntektOgPeriodeForm: getInitialValues(perioder, nyValgtPeriode).oppholdInntektOgPeriodeForm,
+      },
+      { keepDirty: true },
+    );
     setValgtPeriode(nyValgtPeriode);
   };
 

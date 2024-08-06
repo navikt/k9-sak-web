@@ -29,7 +29,7 @@ const TextArea = ({ label, name, validators, textareaClass, id, disabled }: Text
       }}
       render={({ field }) => {
         const { value, onChange } = field;
-        const textAreaValue = value?.length === 0 ? '' : value;
+        const textAreaValue = value ?? '';
         return (
           <Textarea
             value={textAreaValue}
