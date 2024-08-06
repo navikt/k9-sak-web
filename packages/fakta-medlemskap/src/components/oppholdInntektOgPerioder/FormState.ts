@@ -35,7 +35,6 @@ export type OppholdInntektOgPeriodeFormState = Periode &
   StatusForBorgerFaktaPanelFormState &
   OppholdINorgeOgAdresserFaktaPanelFormState &
   PerioderMedMedlemskapFaktaPanelFormState & {
-    // medlemskapPerioder: Periode[];
     begrunnelse: string;
   };
 
@@ -51,7 +50,5 @@ export type OppholdInntektOgPerioderFormState = {
   person: FagsakPerson;
   gjeldendeFom: string;
   perioder: Periode[];
-  // begrunnelse: string;
-  // vurderingTypes: KodeverkMedNavn[];
   oppholdInntektOgPeriodeForm: OppholdInntektOgPeriodeFormState;
 };
