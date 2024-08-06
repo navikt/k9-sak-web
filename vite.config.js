@@ -20,6 +20,12 @@ const createProxy = (target, pathRewrite) => ({
         // eslint-disable-next-line no-param-reassign
         proxyRes.headers.location = `/k9/sak/resource/login?original=${req.originalUrl}`;
       }
+      // Viss respons frå proxied server inneheld location header med server adresse, fjern server addressa slik at redirect
+      // går til dev server istadenfor proxied server. Dette for å unngå CORS feil når request går direkte til proxied server.
+      if (proxyRes.headers.location?.startsWith(target)) {
+        // eslint-disable-next-line no-param-reassign
+        proxyRes.headers.location = proxyRes.headers.location.replace(target, "")
+      }
     });
   },
 });
