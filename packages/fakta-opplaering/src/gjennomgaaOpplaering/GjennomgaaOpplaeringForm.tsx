@@ -52,9 +52,7 @@ const schema = yup.object().shape({
         .test(
           'overlapp',
           ({ value }: { value: Period }) => `${value.prettifyPeriod()} overlapper med en annen periode`,
-          // @ts-ignore
           (periode: Period, testParams) => {
-            // @ts-ignore
             const [, , values] = testParams.from;
             const andrePerioder = values.value[fieldname.PERIODER]
               .filter(v => v.periode !== periode)
@@ -234,9 +232,9 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
                           </div>
                           <div>
                             {
-                              // @ts-ignore
+                              // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
                               typeof errors[fieldname.PERIODER]?.[index]?.periode === 'string' && (
-                                // @ts-ignore
+                                // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
                                 <ErrorMessage size="small">{errors[fieldname.PERIODER]?.[index]?.periode}</ErrorMessage>
                               )
                             }

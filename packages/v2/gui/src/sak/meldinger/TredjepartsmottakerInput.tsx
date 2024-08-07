@@ -1,11 +1,17 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { ErrorMessage, TextField } from '@navikt/ds-react';
-import { requestIntentionallyAborted, type RequestIntentionallyAborted } from "@k9-sak-web/backend/shared/RequestIntentionallyAborted.ts";
+import {
+  requestIntentionallyAborted,
+  type RequestIntentionallyAborted,
+} from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.ts';
 import styles from './TredjepartsmottakerInput.module.css';
 import type { EregOrganizationLookupResponse } from './EregOrganizationLookupResponse.js';
 
 export interface BackendApi {
-  getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse | RequestIntentionallyAborted>;
+  getBrevMottakerinfoEreg(
+    orgnr: string,
+    abort?: AbortSignal,
+  ): Promise<EregOrganizationLookupResponse | RequestIntentionallyAborted>;
 }
 
 export interface TredjepartsmottakerOrgnrInputProps {
@@ -59,7 +65,7 @@ const TredjepartsmottakerInput = ({
     lookupAborterRef.current = new AbortController();
     const newTredjepartsmottaker =
       orgnr.length > 0 ? await api.getBrevMottakerinfoEreg(orgnr, lookupAborterRef.current?.signal) : undefined;
-    if(newTredjepartsmottaker !== requestIntentionallyAborted) {
+    if (newTredjepartsmottaker !== requestIntentionallyAborted) {
       setTredjepartsmottaker(newTredjepartsmottaker);
       if (!isEqual(newTredjepartsmottaker, prevTredjepartsmottaker)) {
         if (newTredjepartsmottaker === undefined) {

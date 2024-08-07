@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { Period } from '@fpsak-frontend/utils';
 import { http, HttpResponse } from 'msw';
 import Dokument, { Dokumenttype } from '../src/types/Dokument';

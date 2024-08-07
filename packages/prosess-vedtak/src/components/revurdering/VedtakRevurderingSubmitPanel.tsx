@@ -86,7 +86,6 @@ export const VedtakRevurderingSubmitPanelImpl = ({
 };
 
 const erArsakTypeBehandlingEtterKlage = createSelector(
-  // @ts-ignore
   [ownProps => ownProps.behandlingArsaker],
   (behandlingArsakTyper = []) =>
     behandlingArsakTyper

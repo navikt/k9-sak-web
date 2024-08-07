@@ -81,7 +81,7 @@ const MenyHenleggIndex = ({
     <RawIntlProvider value={intl}>
       {!erHenlagt && (
         <HenleggBehandlingModal
-          // @ts-ignore Fiks denne
+          // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
           onSubmit={submit}
           cancelEvent={lukkModal}
           previewHenleggBehandling={forhandsvisHenleggBehandling}
