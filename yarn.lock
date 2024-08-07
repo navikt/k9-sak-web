@@ -4610,9 +4610,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/familie-endringslogg@npm:12.0.2":
-  version: 12.0.2
-  resolution: "@navikt/familie-endringslogg@npm:12.0.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffamilie-endringslogg%2F12.0.2%2F4036173993d27265340ae9febbc0a4205b992b73"
+"@navikt/familie-endringslogg@npm:13.1.0":
+  version: 13.1.0
+  resolution: "@navikt/familie-endringslogg@npm:13.1.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffamilie-endringslogg%2F13.1.0%2F5d5f3fac1baa31bd1b8ed733d34528fa976d7eba"
   dependencies:
     "@portabletext/react": ^3.1.0
     classnames: ^2.5.1
@@ -4622,7 +4622,7 @@ __metadata:
     "@navikt/ds-react": 6.x
     "@types/react": 18.x
     react: 18.x
-  checksum: c517ada83c65594cc25c825d3b8ea31af3198a2b0d53026cef18ced41ebd78ac0dd1341ecaf54bf16e3c87a1d17f03e0a4ac5f32292c04e5108dbe009e6233bf
+  checksum: 8c65ac328ad99c50492af512f14c5b959c048b8a4e5d7b3c9dfc5ede72e183e26742dc8577ed8cee68bfc6a8f098156ad8a059f86582d4462cecf2ce04b7ef06
   languageName: node
   linkType: hard
 
@@ -13129,7 +13129,7 @@ __metadata:
     "@navikt/ds-css": 6.13.0
     "@navikt/ds-react": 6.13.0
     "@navikt/ds-tailwind": ^6.13.0
-    "@navikt/familie-endringslogg": 12.0.2
+    "@navikt/familie-endringslogg": 13.1.0
     "@navikt/ft-plattform-komponenter": 3.0.3
     "@playwright/test": ^1.45.3
     "@popperjs/core": 2.11.8
