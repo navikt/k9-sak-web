@@ -1,14 +1,11 @@
-import { Button } from '@navikt/ds-react';
-import React, { useMemo, useState } from 'react';
-// eslint-disable-next-line import/no-duplicates
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Form } from '@navikt/ft-form-hooks';
-// eslint-disable-next-line import/no-duplicates
 import { guid } from '@fpsak-frontend/utils';
-
 import { Aksjonspunkt, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Button } from '@navikt/ds-react';
+import { Form } from '@navikt/ft-form-hooks';
+import React, { useMemo, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { OppholdInntektOgPeriodeFormState, OppholdInntektOgPerioderFormState } from './FormState';
 import { Medlemskap } from './Medlemskap';
