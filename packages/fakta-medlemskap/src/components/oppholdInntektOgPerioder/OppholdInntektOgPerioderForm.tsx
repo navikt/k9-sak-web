@@ -5,7 +5,6 @@ import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Form } from '@navikt/ft-form-hooks';
-import { FormattedMessage } from 'react-intl';
 // eslint-disable-next-line import/no-duplicates
 import { guid } from '@fpsak-frontend/utils';
 
@@ -30,25 +29,19 @@ const {
 const getHelpTexts = (aksjonspunkter: Aksjonspunkt[]) => {
   const helpTexts = [];
   if (hasAksjonspunkt(AVKLAR_FORTSATT_MEDLEMSKAP, aksjonspunkter)) {
-    helpTexts.push(<FormattedMessage key="HarFortsattMedlemskap" id="MedlemskapInfoPanel.HarFortsattMedlemskap" />);
+    helpTexts.push('Vurder om søker fortsatt har gyldig medlemskap i perioden');
   }
   if (hasAksjonspunkt(AVKLAR_OM_BRUKER_ER_BOSATT, aksjonspunkter)) {
-    helpTexts.push(<FormattedMessage key="ErSokerBosattINorge" id="MedlemskapInfoPanel.ErSokerBosattINorge" />);
+    helpTexts.push('Vurder om søker er bosatt i Norge');
   }
   if (hasAksjonspunkt(AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE, aksjonspunkter)) {
-    helpTexts.push(
-      <FormattedMessage key="GyldigMedlemFolketrygden" id="MedlemskapInfoPanel.GyldigMedlemFolketrygden" />,
-    );
+    helpTexts.push('Vurder om søker har gyldig medlemskap i perioden');
   }
   if (hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, aksjonspunkter)) {
-    helpTexts.push(
-      <FormattedMessage key="EOSBorgerMedOppholdsrett1" id="MedlemskapInfoPanel.EOSBorgerMedOppholdsrett" />,
-    );
+    helpTexts.push('Vurder om søker er EØS-borger med oppholdsrett');
   }
   if (hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, aksjonspunkter)) {
-    helpTexts.push(
-      <FormattedMessage key="IkkeEOSBorgerMedLovligOpphold" id="MedlemskapInfoPanel.IkkeEOSBorgerMedLovligOpphold" />,
-    );
+    helpTexts.push('Avklar om søker har lovlig opphold');
   }
   return helpTexts;
 };
@@ -250,7 +243,11 @@ export const OppholdInntektOgPerioderForm = ({
 
   return (
     <Form formMethods={formMethods} onSubmit={handleSubmit} data-testid="OppholdInntektOgPerioderForm">
-      <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>{getHelpTexts(aksjonspunkter)}</AksjonspunktHelpText>
+      <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
+        {getHelpTexts(aksjonspunkter).map(helpText => (
+          <React.Fragment key={helpText}>{helpText}</React.Fragment>
+        ))}
+      </AksjonspunktHelpText>
       {hasAksjonspunkt(AVKLAR_FORTSATT_MEDLEMSKAP, aksjonspunkter) && (
         <MedlemskapEndringerTabell
           selectedId={valgtPeriode ? valgtPeriode.id : undefined}
@@ -278,7 +275,7 @@ export const OppholdInntektOgPerioderForm = ({
         disabled={isConfirmButtonDisabled()}
         loading={formMethods.formState.isSubmitting}
       >
-        <FormattedMessage id="OppholdInntektOgPerioder.Bekreft" />
+        Bekreft og fortsett
       </Button>
     </Form>
   );

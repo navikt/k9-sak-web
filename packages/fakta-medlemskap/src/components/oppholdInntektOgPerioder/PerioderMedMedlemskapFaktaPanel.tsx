@@ -19,19 +19,13 @@ import { required } from '@navikt/ft-form-validators';
 import moment from 'moment';
 import React, { FunctionComponent, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { FormattedMessage } from 'react-intl';
 import { OppholdInntektOgPerioderFormState, PerioderMedMedlemskapFaktaPanelFormState } from './FormState';
 import { MedlemskapPeriode } from './Medlemskap';
 import { MerknaderFraBeslutter } from './MerknaderFraBeslutter';
 import { Periode } from './Periode';
 import { Soknad } from './Soknad';
 
-const headerTextCodes = [
-  'PerioderMedMedlemskapFaktaPanel.Period',
-  'PerioderMedMedlemskapFaktaPanel.Coverage',
-  'PerioderMedMedlemskapFaktaPanel.Status',
-  'PerioderMedMedlemskapFaktaPanel.Date',
-];
+const headerTextCodes = ['Periode', 'Dekning', 'Status', 'Beslutningsdato'];
 
 export const getAksjonspunkter = (alleKodeverk: { [key: string]: KodeverkMedNavn[] }) => {
   const vurderingTypes = alleKodeverk[kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE];
@@ -84,18 +78,17 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
   const vurderingTypes = useMemo(() => getAksjonspunkter(alleKodeverk), [alleKodeverk]);
   if (!fixedMedlemskapPerioder || fixedMedlemskapPerioder.length === 0) {
     return (
-      <FaktaGruppe titleCode="PerioderMedMedlemskapFaktaPanel.ApplicationInformation">
-        <BodyShort size="small">
-          <FormattedMessage id="PerioderMedMedlemskapFaktaPanel.NoInformation" />
-        </BodyShort>
+      <FaktaGruppe titleCode="Perioder med medlemskap" useIntl={false}>
+        <BodyShort size="small">Ingen registrerte opplysninger om medlemskap</BodyShort>
       </FaktaGruppe>
     );
   }
 
   return (
     <FaktaGruppe
-      titleCode="PerioderMedMedlemskapFaktaPanel.ApplicationInformation"
+      titleCode="Perioder med medlemskap"
       merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE]}
+      useIntl={false}
     >
       <VStack gap="4">
         <Table>
@@ -103,7 +96,7 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
             <Table.Row>
               {headerTextCodes.map(text => (
                 <Table.HeaderCell scope="col" key={text}>
-                  <FormattedMessage id={text} />
+                  {text}
                 </Table.HeaderCell>
               ))}
             </Table.Row>
@@ -146,14 +139,7 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
           )}
           <VerticalSpacer sixteenPx />
           <FlexRow className="justifyItemsToFlexEnd">
-            <FlexColumn>
-              {fodselsdato && (
-                <FormattedMessage
-                  id="PerioderMedMedlemskapFaktaPanel.Fodselsdato"
-                  values={{ dato: moment(fodselsdato).format(DDMMYYYY_DATE_FORMAT) }}
-                />
-              )}
-            </FlexColumn>
+            <FlexColumn>{fodselsdato && `Fødselsdato: ${moment(fodselsdato).format(DDMMYYYY_DATE_FORMAT)}`}</FlexColumn>
           </FlexRow>
         </FlexContainer>
       </VStack>

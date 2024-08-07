@@ -7,7 +7,6 @@ import { Detail } from '@navikt/ds-react';
 import { RadioGroupPanel } from '@navikt/ft-form-hooks';
 import React, { FunctionComponent } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { FormattedMessage } from 'react-intl';
 import { OppholdInntektOgPerioderFormState, StatusForBorgerFaktaPanelFormState } from './FormState';
 import { Periode } from './Periode';
 
@@ -42,10 +41,7 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
     oppholdInntektOgPeriodeForm: { erEosBorger, isBorgerAksjonspunktClosed, apKode },
   } = getValues();
   return (
-    <FaktaGruppe
-      titleCode="StatusForBorgerFaktaPanel.ApplicationInformation"
-      merknaderFraBeslutter={alleMerknaderFraBeslutter[apKode]}
-    >
+    <FaktaGruppe titleCode="Status for søker" merknaderFraBeslutter={alleMerknaderFraBeslutter[apKode]} useIntl={false}>
       <RadioGroupPanel
         name="oppholdInntektOgPeriodeForm.erEosBorger"
         validate={[required]}
@@ -54,20 +50,18 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
         radios={[
           {
             value: 'true',
-            label: <FormattedMessage id="StatusForBorgerFaktaPanel.CitizenEEA" />,
+            label: 'EØS borger',
           },
           {
             value: 'false',
-            label: <FormattedMessage id="StatusForBorgerFaktaPanel.CitizenOutsideEEA" />,
+            label: 'Utenlandsk borger utenfor EØS',
           },
         ]}
       />
 
       {erEosBorger && (
         <ArrowBox>
-          <Detail>
-            <FormattedMessage id="StatusForBorgerFaktaPanel.Oppholdsrett" />
-          </Detail>
+          <Detail>Oppholdsrett</Detail>
           <VerticalSpacer fourPx />
           <RadioGroupPanel
             name="oppholdInntektOgPeriodeForm.oppholdsrettVurdering"
@@ -78,17 +72,14 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
             radios={[
               {
                 value: 'true',
-                label: <FormattedMessage id="StatusForBorgerFaktaPanel.HarOppholdsrett" />,
+                label: 'Søker har oppholdsrett',
               },
               {
                 value: 'false',
                 label: (
-                  <FormattedMessage
-                    id="StatusForBorgerFaktaPanel.HarIkkeOppholdsrett"
-                    values={{
-                      b: chunks => <b>{chunks}</b>,
-                    }}
-                  />
+                  <>
+                    Søker har <b>ikke</b> oppholdsrett
+                  </>
                 ),
               },
             ]}
@@ -97,9 +88,7 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
       )}
       {erEosBorger === false && (
         <ArrowBox alignOffset={130}>
-          <Detail>
-            <FormattedMessage id="StatusForBorgerFaktaPanel.LovligOpphold" />
-          </Detail>
+          <Detail>Lovlig opphold</Detail>
           <VerticalSpacer fourPx />
           <RadioGroupPanel
             name="oppholdInntektOgPeriodeForm.lovligOppholdVurdering"
@@ -110,17 +99,14 @@ const StatusForBorgerFaktaPanel: FunctionComponent<StatusForBorgerFaktaPanelProp
             radios={[
               {
                 value: 'true',
-                label: <FormattedMessage id="StatusForBorgerFaktaPanel.HarLovligOpphold" />,
+                label: 'Søker har lovlig opphold',
               },
               {
                 value: 'false',
                 label: (
-                  <FormattedMessage
-                    id="StatusForBorgerFaktaPanel.HarIkkeLovligOpphold"
-                    values={{
-                      b: chunks => <b>{chunks}</b>,
-                    }}
-                  />
+                  <>
+                    Søker har <b>ikke</b> lovlig opphold
+                  </>
                 ),
               },
             ]}

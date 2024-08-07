@@ -8,7 +8,6 @@ import { RadioGroupPanel } from '@navikt/ft-form-hooks';
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
 import React, { FunctionComponent } from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { BostedSokerPersonopplysninger } from '@fpsak-frontend/fakta-bosted-soker/src/BostedSokerFaktaIndex';
 import { Aksjonspunkt, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
@@ -93,7 +92,6 @@ const OppholdINorgeOgAdresserFaktaPanel: FunctionComponent<OppholdINorgeOgAdress
   readOnly,
   hasBosattAksjonspunkt,
   isBosattAksjonspunktClosed,
-
   alleKodeverk,
   alleMerknaderFraBeslutter,
 }) => {
@@ -103,16 +101,14 @@ const OppholdINorgeOgAdresserFaktaPanel: FunctionComponent<OppholdINorgeOgAdress
     <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]}>
       <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
         <div>
-          <FaktaGruppe withoutBorder titleCode="OppholdINorgeOgAdresserFaktaPanel.OppholdINorge">
-            <Detail>
-              <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.StayingOutsideOfNorway" />
-            </Detail>
+          <FaktaGruppe withoutBorder titleCode="Opplysninger oppgitt i søknaden" useIntl={false}>
+            <Detail>Opphold utenfor Norge</Detail>
             <VerticalSpacer fourPx />
             {!!opphold && lagOppholdIUtland(opphold.utlandsopphold)}
           </FaktaGruppe>
         </div>
         <div>
-          <FaktaGruppe withoutBorder titleCode="OppholdINorgeOgAdresserFaktaPanel.BosattAdresser">
+          <FaktaGruppe withoutBorder titleCode="Bostedsadresse fra folkeregisteret" useIntl={false}>
             {foreldre.map(f => (
               <div key={f.personopplysning.navn}>
                 {f.isApplicant && (
@@ -140,17 +136,14 @@ const OppholdINorgeOgAdresserFaktaPanel: FunctionComponent<OppholdINorgeOgAdress
                 radios={[
                   {
                     value: 'true',
-                    label: <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.ResidingInNorway" />,
+                    label: 'Søker er bosatt i Norge',
                   },
                   {
                     value: 'false',
                     label: (
-                      <FormattedMessage
-                        id="OppholdINorgeOgAdresserFaktaPanel.NotResidingInNorway"
-                        values={{
-                          b: chunks => <b>{chunks}</b>,
-                        }}
-                      />
+                      <>
+                        Søker er <b>ikke</b> bosatt i Norge
+                      </>
                     ),
                   },
                 ]}

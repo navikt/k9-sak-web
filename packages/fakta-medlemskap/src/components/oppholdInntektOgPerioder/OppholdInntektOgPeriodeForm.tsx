@@ -16,7 +16,6 @@ import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import moment from 'moment';
 import React, { FunctionComponent, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { FormattedMessage } from 'react-intl';
 import {
   OppholdInntektOgPeriodeFormState,
   OppholdInntektOgPerioderFormState,
@@ -129,12 +128,12 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
           <FlexRow>
             <FlexColumn>
               <Button variant="primary" size="small" type="button" onClick={handleSubmit} disabled={!formState.isDirty}>
-                <FormattedMessage id="OppholdInntektOgPeriode.Oppdater" />
+                Oppdater
               </Button>
             </FlexColumn>
             <FlexColumn>
               <Button variant="secondary" type="button" size="small" onClick={periodeResetCallback}>
-                <FormattedMessage id="OppholdInntektOgPeriode.Avbryt" />
+                Avbryt
               </Button>
             </FlexColumn>
           </FlexRow>

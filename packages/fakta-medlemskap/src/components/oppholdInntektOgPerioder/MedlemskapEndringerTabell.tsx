@@ -3,11 +3,10 @@ import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Table } from '@navikt/ds-react';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { useIntl } from 'react-intl';
 import { OppholdInntektOgPerioderFormState } from './FormState';
 import { Periode } from './Periode';
 
-const headerTextCodes = ['MedlemskapEndringerTabell.GjeldeneFom', 'MedlemskapEndringerTabell.Opplysning'];
+const headerTextCodes = ['Gjeldende f.o.m', 'Opplysning'];
 
 interface MedlemskapEndringerTabellProps {
   velgPeriodeCallback: (id: string, periode: Periode) => void;
@@ -15,7 +14,6 @@ interface MedlemskapEndringerTabellProps {
 }
 
 const MedlemskapEndringerTabellImpl = ({ velgPeriodeCallback, selectedId }: MedlemskapEndringerTabellProps) => {
-  const intl = useIntl();
   const { getValues } = useFormContext<OppholdInntektOgPerioderFormState>();
   const { perioder } = getValues();
   const sortertePerioder = perioder.sort((a, b) => a.vurderingsdato.localeCompare(b.vurderingsdato));
@@ -25,7 +23,7 @@ const MedlemskapEndringerTabellImpl = ({ velgPeriodeCallback, selectedId }: Medl
         <Table.Row>
           {headerTextCodes.map(textCode => (
             <Table.HeaderCell scope="col" key={textCode}>
-              {intl.formatMessage({ id: textCode })}
+              {textCode}
             </Table.HeaderCell>
           ))}
         </Table.Row>
@@ -45,14 +43,16 @@ const MedlemskapEndringerTabellImpl = ({ velgPeriodeCallback, selectedId }: Medl
                 : ''
             }
           >
-            <Table.DataCell className="flex">
-              {periode.begrunnelse === null && periode.aksjonspunkter.length > 0 && (
-                <ExclamationmarkTriangleFillIcon
-                  fontSize="1.5rem"
-                  className="text-[var(--ac-alert-icon-warning-color,var(--a-icon-warning))] text-2xl mr-2"
-                />
-              )}
-              <DateLabel dateString={periode.vurderingsdato} />
+            <Table.DataCell>
+              <div className="flex">
+                {periode.begrunnelse === null && periode.aksjonspunkter.length > 0 && (
+                  <ExclamationmarkTriangleFillIcon
+                    fontSize="1.5rem"
+                    className="text-[var(--ac-alert-icon-warning-color,var(--a-icon-warning))] text-2xl mr-2"
+                  />
+                )}
+                <DateLabel dateString={periode.vurderingsdato} />
+              </div>
             </Table.DataCell>
             <Table.DataCell>{periode.årsaker.join()}</Table.DataCell>
           </Table.Row>
