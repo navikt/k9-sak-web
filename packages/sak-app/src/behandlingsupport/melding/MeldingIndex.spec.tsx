@@ -140,7 +140,7 @@ describe('<MeldingIndex>', () => {
 
   const assignMock = vi.fn();
   delete (window as Partial<ExtendedWindow>).location;
-  // @ts-ignore Dette er kun for å unngå warnings med window.location.reload(). (Denne blir brukt som en temp-fiks, så dette skal derfor fjernes)
+  // @ts-expect-error Dette er kun for å unngå warnings med window.location.reload(). (Denne blir brukt som en temp-fiks, så dette skal derfor fjernes)
   window.location = { reload: assignMock };
 
   afterEach(() => {

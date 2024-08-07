@@ -300,6 +300,6 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMe
   };
 };
 
-// @ts-ignore Kan ikkje senda med formnavn her sidan det er dynamisk. Må fikse på ein annan måte
+// @ts-expect-error Kan ikkje senda med formnavn her sidan det er dynamisk. Må fikse på ein annan måte
 const form = behandlingForm({ enableReinitialize: true })(VilkarresultatMedOverstyringForm);
 export default connect(mapStateToPropsFactory)(form);

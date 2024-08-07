@@ -112,9 +112,9 @@ LeggTilArbeidsforholdFelter.validate = (
   const { fomDato, tomDato } = values;
   if (fomDato && tomDato && moment(fomDato).isAfter(moment(tomDato))) {
     return {
-      // @ts-ignore
+      // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
       tomDato: sluttdatoErrorMsg(formatDate(fomDato)),
-      // @ts-ignore
+      // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
       fomDato: startdatoErrorMsg(formatDate(tomDato)),
     };
   }

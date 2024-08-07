@@ -5,9 +5,7 @@ import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 import { reducer, reduxForm } from 'redux-form';
-// eslint-disable-next-line import/no-relative-packages
 import defaultMessages from '../../../public/sprak/nb_NO.json';
-// eslint-disable-next-line import/no-relative-packages
 export { default as messages } from '../../../public/sprak/nb_NO.json';
 
 export function renderWithIntl(ui: ReactElement, { locale, messages, ...renderOptions }: any = {}) {

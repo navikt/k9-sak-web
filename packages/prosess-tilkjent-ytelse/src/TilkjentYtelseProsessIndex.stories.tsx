@@ -26,7 +26,6 @@ const beregningsresultat = {
     {
       andeler: [
         {
-          // @ts-ignore Fiks
           aktivitetStatus: {
             kode: 'AT',
             kodeverk: 'AKTIVITET_STATUS',

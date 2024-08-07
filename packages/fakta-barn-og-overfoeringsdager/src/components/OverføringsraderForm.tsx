@@ -40,7 +40,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: Overføringsrade
 };
 
 export default connect(mapStateToPropsFactory)(
-  // @ts-ignore
+  // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
   behandlingForm({
     enableReinitialize: true,
   })(OverføringsraderFormImpl),

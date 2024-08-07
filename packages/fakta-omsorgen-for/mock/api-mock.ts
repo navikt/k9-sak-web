@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { http, HttpResponse } from 'msw';
 import mockedOmsorgsperioder from './mocked-data/mockedOmsorgsperioder';
 

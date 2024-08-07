@@ -146,7 +146,6 @@ export class PeriodeController extends Component<OwnProps & WrappedComponentProp
           )}
           {showDelPeriodeModal && (
             <DelOppPeriodeModal
-              // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
               cancelEvent={this.hideModal}
