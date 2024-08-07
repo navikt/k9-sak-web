@@ -4,11 +4,11 @@ import { type FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/
 
 type FritekstForslagSelectProps = {
   readonly fritekstForslag: FritekstbrevDokumentdata[];
-  readonly defaultValue?: FritekstbrevDokumentdata;
+  readonly value?: FritekstbrevDokumentdata;
   readonly onChange: (v: FritekstbrevDokumentdata) => void;
 };
 
-const FritekstForslagSelect = ({ fritekstForslag, defaultValue, onChange }: FritekstForslagSelectProps) => {
+const FritekstForslagSelect = ({ fritekstForslag, value, onChange }: FritekstForslagSelectProps) => {
   if (fritekstForslag.length > 0) {
     const handleChange = (tittel: string) => {
       for (const v of fritekstForslag) {
@@ -23,7 +23,7 @@ const FritekstForslagSelect = ({ fritekstForslag, defaultValue, onChange }: Frit
         size="small"
         label="Type dokumentasjon du vil etterspørre"
         placeholder="Velg type"
-        defaultValue={defaultValue?.tittel}
+        value={value?.tittel}
         onChange={ev => handleChange(ev.target.value)}
       >
         {fritekstForslag.map(forslag => (

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useReducer } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Checkbox, HStack, Spacer, VStack } from '@navikt/ds-react';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
@@ -22,11 +22,13 @@ import FritekstForslagSelect from './FritekstForslagSelect.js';
 import FritekstInput, {
   type FritekstInputInvalid,
   type FritekstInputMethods,
-  type FritekstInputValue, type FritekstModus,
+  type FritekstInputValue,
+  type FritekstModus,
 } from './FritekstInput.js';
 import MalSelect from './MalSelect.jsx';
 import type { BehandlingInfo } from '../BehandlingInfo.js';
 import type { Fagsak } from '../Fagsak.ts';
+import { StickyMemoryReducer } from '../../utils/StickyMemoryReducer.js';
 
 export interface BackendApi extends TredjepartsmottakerBackendApi {
   hentInnholdBrevmal(
@@ -57,6 +59,17 @@ type MessagesState = Readonly<{
   tredjepartsmottakerAktivert: boolean;
   tredjepartsmottaker: TredjepartsmottakerValue | TredjepartsmottakerError | undefined;
 }>;
+
+const initMessagesState = (maler: Template[]): MessagesState => {
+  return {
+    valgtMalkode: maler[0]?.kode,
+    fritekstForslag: [],
+    valgtFritekst: undefined,
+    valgtMottakerId: undefined,
+    tredjepartsmottakerAktivert: false,
+    tredjepartsmottaker: undefined,
+  };
+};
 
 type SetValgtMalkode = Readonly<{
   type: 'SettValgtMal';
@@ -92,8 +105,13 @@ type OnValgtMalChanged = Readonly<{
   type: 'OnValgtMalChanged';
   valgtMal: Template | undefined;
 }>;
+type Reset = Readonly<{
+  type: 'Reset';
+  maler: Template[];
+}>;
 
 type MessagesStateActions =
+  | Reset
   | SetValgtMalkode
   | SetFritekstForslag
   | SetValgtFritekst
@@ -106,11 +124,18 @@ type MessagesStateActions =
 const messagesStateReducer = (state: MessagesState, dispatch: MessagesStateActions): MessagesState => {
   // eslint-disable-next-line default-case -- Bevisst deaktivert for å få TS sjekk på at alle dispatch.type verdier er handtert
   switch (dispatch.type) {
+    case 'Reset': {
+      // Når input properties endra seg vil vi resette til initial state
+      return initMessagesState(dispatch.maler);
+    }
     case 'OnValgtMalChanged': {
       // Når valgt mal har blitt endra, endre tredjepartsmottakerAktivert og valgtMottakerId i henhold.
       const tredjepartsmottakerAktivert =
         state.tredjepartsmottakerAktivert && (dispatch.valgtMal?.støtterTredjepartsmottaker || false);
-      const valgtMottakerId = dispatch.valgtMal?.mottakere[0]?.id;
+      // Viss valgt mal støtter valgt mottaker, behold den, ellers settast mottaker til første som er støtta av mal
+      const valgtMottakerId = dispatch.valgtMal?.mottakere.some(mottaker => mottaker.id === state.valgtMottakerId)
+        ? state.valgtMottakerId
+        : dispatch.valgtMal?.mottakere[0]?.id;
       return {
         ...state,
         tredjepartsmottakerAktivert,
@@ -124,10 +149,20 @@ const messagesStateReducer = (state: MessagesState, dispatch: MessagesStateActio
         valgtMalkode,
       };
     }
-    // Når fritekstForslag blir satt skal valgtFritekst settast til innhald i første forslag
+    // Når fritekstForslag blir satt skal valgtFritekst settast til innhald i første forslag viss nye fritekstforslag er endra
     case 'SettFritekstForslag': {
       const { fritekstForslag } = dispatch;
       const valgtFritekst = fritekstForslag[0];
+      // Vi ønsker å ikkje returnere ny state viss fritekstforslag lasta inn er samme som før.
+      // Uten dette vil tekst resette seg etter kvar komponentmount pga async lasting av fritekstforslag som skjer
+      // etter mount. Sidan vi ønsker å behalde evt inntasta tekst når andre ting ikkje har endra seg må vi returnere
+      // samme state som før då.
+      const sameAsBefore =
+        fritekstForslag.length === state.fritekstForslag.length &&
+        fritekstForslag.every(a => state.fritekstForslag.some(b => a.fritekst === b.fritekst && a.tittel === b.tittel));
+      if (sameAsBefore) {
+        return state;
+      }
       return {
         ...state,
         fritekstForslag,
@@ -165,14 +200,8 @@ const messagesStateReducer = (state: MessagesState, dispatch: MessagesStateActio
   }
 };
 
-const initMessagesState = (maler: Template[]): MessagesState => ({
-  valgtMalkode: maler[0]?.kode,
-  fritekstForslag: [],
-  valgtFritekst: undefined,
-  valgtMottakerId: undefined,
-  tredjepartsmottakerAktivert: false,
-  tredjepartsmottaker: undefined,
-});
+const stickyReducer = new StickyMemoryReducer<MessagesState>();
+let stickyResetValue = '';
 
 const Messages = ({
   maler,
@@ -186,7 +215,8 @@ const Messages = ({
   const [
     { valgtMalkode, fritekstForslag, valgtFritekst, valgtMottakerId, tredjepartsmottakerAktivert, tredjepartsmottaker },
     dispatch,
-  ] = useReducer(messagesStateReducer, initMessagesState(maler));
+  ] = stickyReducer.useStickyMemoryReducer(messagesStateReducer, initMessagesState(maler));
+
   const fritekstInputRef = useRef<FritekstInputMethods>(null);
   // showValidation is set to true when inputs should display any validation errors, i.e. after the user tries to submit the form without having valid values.
   const [showValidation, setShowValidation] = useState(false);
@@ -207,15 +237,22 @@ const Messages = ({
   const onValgtMalChanged = (newValgtMal: Template | undefined) =>
     dispatch({ type: 'OnValgtMalChanged', valgtMal: newValgtMal });
 
+  // Resett state når grunnleggande input props endra seg, så ein unngår at valg ein gjorde på ei anna sak blir gjeldande.
+  const nowStickyResetValue = `${fagsak.saksnummer}-${behandling.id}-${personopplysninger?.aktoerId}`;
+  useEffect(() => {
+    if (nowStickyResetValue !== stickyResetValue) {
+      dispatch({ type: 'Reset', maler });
+      fritekstInputRef.current?.reset();
+    }
+  }, [stickyResetValue]);
+  stickyResetValue = nowStickyResetValue;
+
   // Konverter valgtFritekst til FritekstInputValue
   const valgtFritekstInputValue: FritekstInputValue = {
     tittel: valgtFritekst?.tittel,
     tekst: valgtFritekst?.fritekst,
+    invalid: false,
   };
-  // Når evt fritekst forslag blir valgt, sett inn verdien i fritekst feltet.
-  useEffect(() => {
-    fritekstInputRef.current?.setValue(valgtFritekstInputValue);
-  }, [valgtFritekst]);
 
   // Last evt fritekst forslag når mal blir valgt
   useEffect(() => {
@@ -238,7 +275,7 @@ const Messages = ({
     onValgtMalChanged(valgtMal);
   }, [valgtMal]);
 
-  const fritekstModus: FritekstModus = valgtMal?.støtterTittelOgFritekst ? 'StørreFritekstOgTittel' : 'EnkelFritekst'
+  const fritekstModus: FritekstModus = valgtMal?.støtterTittelOgFritekst ? 'StørreFritekstOgTittel' : 'EnkelFritekst';
 
   const showFritekstInput = (valgtMal?.støtterFritekst || valgtMal?.støtterTittelOgFritekst) ?? false;
 
@@ -246,7 +283,11 @@ const Messages = ({
   const resolveFritekstbrevinnholdDto = (
     fritekstInputValue: FritekstInputValue | FritekstInputInvalid | undefined,
   ): FritekstbrevinnholdDto | undefined => {
-    if (fritekstModus === 'StørreFritekstOgTittel' && fritekstInputValue?.tittel !== undefined && fritekstInputValue?.tekst !== undefined) {
+    if (
+      fritekstModus === 'StørreFritekstOgTittel' &&
+      fritekstInputValue?.tittel !== undefined &&
+      fritekstInputValue?.tekst !== undefined
+    ) {
       return {
         overskrift: fritekstInputValue.tittel,
         brødtekst: fritekstInputValue.tekst,
@@ -354,11 +395,7 @@ const Messages = ({
   return (
     <VStack gap="4">
       <MalSelect maler={maler} valgtMalkode={valgtMalkode} onChange={setValgtMalkode} />
-      <FritekstForslagSelect
-        fritekstForslag={fritekstForslag}
-        defaultValue={valgtFritekst}
-        onChange={setValgtFritekst}
-      />
+      <FritekstForslagSelect fritekstForslag={fritekstForslag} value={valgtFritekst} onChange={setValgtFritekst} />
       <MottakerSelect
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         personopplysninger={personopplysninger}
