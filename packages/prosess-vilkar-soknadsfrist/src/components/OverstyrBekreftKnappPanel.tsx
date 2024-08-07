@@ -1,6 +1,5 @@
 import { Button } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 interface OwnProps {
   disabled?: boolean;
@@ -15,7 +14,7 @@ const OverstyrBekreftKnappPanel = ({ disabled = false, submitting, pristine, ove
   }
   return (
     <Button variant="primary" size="small" loading={submitting} disabled={disabled || submitting || pristine}>
-      <FormattedMessage id="OverstyrBekreftKnappPanel.ConfirmInformation" />
+      Bekreft overstyring
     </Button>
   );
 };

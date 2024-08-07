@@ -1,10 +1,8 @@
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { Behandling } from '@k9-sak-web/types';
 import { composeStories } from '@storybook/react';
 import { userEvent, waitFor } from '@storybook/test';
-import { act, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import React from 'react';
-import messages from '../i18n/nb_NO.json';
 import SoknadsfristVilkarProsessIndex from './SoknadsfristVilkarProsessIndex';
 import * as stories from './SoknadsfristVilkarProsessIndex.stories';
 
@@ -16,7 +14,7 @@ const soknadsfristStatus = {
 
 describe('<SoknadsfristVilkarForm>', () => {
   it('skal rendre tabs dersom bare en periode', () => {
-    renderWithIntl(
+    render(
       <SoknadsfristVilkarProsessIndex
         behandling={
           {
@@ -30,7 +28,7 @@ describe('<SoknadsfristVilkarForm>', () => {
         toggleOverstyring={vi.fn()}
         submitCallback={vi.fn()}
         aksjonspunkter={[]}
-        panelTittelKode="Inngangsvilkar.Soknadsfrist"
+        panelTittelKode="Søknadsfrist"
         erOverstyrt={false}
         overrideReadOnly={false}
         vilkar={[
@@ -62,14 +60,13 @@ describe('<SoknadsfristVilkarForm>', () => {
         soknadsfristStatus={soknadsfristStatus}
         visAllePerioder={false}
       />,
-      { messages },
     );
     expect(screen.getByText('Perioder')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '01.03.2020 - 01.04.2020' })).toBeInTheDocument();
   });
 
   it('skal rendre tabs med aksjonspunkt dersom bare en periode og statusperiode er inneholdt i vilkårsperiode', () => {
-    renderWithIntl(
+    render(
       <SoknadsfristVilkarProsessIndex
         behandling={
           {
@@ -109,7 +106,7 @@ describe('<SoknadsfristVilkarForm>', () => {
             vurderPaNyttArsaker: null,
           },
         ]}
-        panelTittelKode="Inngangsvilkar.Soknadsfrist"
+        panelTittelKode="Søknadsfrist"
         erOverstyrt={false}
         overrideReadOnly={false}
         vilkar={[
@@ -169,7 +166,6 @@ describe('<SoknadsfristVilkarForm>', () => {
         }}
         visAllePerioder={false}
       />,
-      { messages },
     );
     expect(screen.getByText('Perioder')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '01.02.2023 - 01.04.2024 Aksjonspunkt' })).toBeInTheDocument();
@@ -180,7 +176,7 @@ describe('<SoknadsfristVilkarForm>', () => {
 
   it('skal formatere data ved innsending ved oppfylt vilkår', async () => {
     const lagre = vi.fn();
-    renderWithIntl(<VisSoknadsfristAksjonspunkt5077 submitCallback={lagre} />, { messages });
+    render(<VisSoknadsfristAksjonspunkt5077 submitCallback={lagre} />);
     await act(async () => {
       await userEvent.click(screen.getByText('Vilkåret er oppfylt for hele perioden'));
       await userEvent.type(
@@ -214,7 +210,7 @@ describe('<SoknadsfristVilkarForm>', () => {
 
   it('skal formatere data ved innsending ved delvis oppfylt vilkår', async () => {
     const lagre = vi.fn();
-    renderWithIntl(<VisSoknadsfristAksjonspunkt5077 submitCallback={lagre} />, { messages });
+    render(<VisSoknadsfristAksjonspunkt5077 submitCallback={lagre} />);
     await act(async () => {
       await userEvent.click(screen.getByText('Vilkåret er oppfylt for deler av perioden'));
       await userEvent.type(
@@ -249,7 +245,7 @@ describe('<SoknadsfristVilkarForm>', () => {
 
   it('skal formatere data ved innsending ved ikke oppfylt vilkår', async () => {
     const lagre = vi.fn();
-    renderWithIntl(<VisSoknadsfristAksjonspunkt5077 submitCallback={lagre} />, { messages });
+    render(<VisSoknadsfristAksjonspunkt5077 submitCallback={lagre} />);
     await act(async () => {
       await userEvent.click(screen.getByLabelText('ikke', { exact: false }));
       await userEvent.type(

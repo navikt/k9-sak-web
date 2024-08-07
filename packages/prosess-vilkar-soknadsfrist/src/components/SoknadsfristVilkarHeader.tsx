@@ -7,7 +7,6 @@ import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsa
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Detail, Heading, Label } from '@navikt/ds-react';
 import React, { SetStateAction } from 'react';
-import { FormattedMessage } from 'react-intl';
 import styles from './SoknadsfristVilkarForm.module.css';
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
@@ -16,16 +15,16 @@ const isHidden = (kanOverstyre: boolean, aksjonspunktCodes: string[], aksjonspun
   !isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre;
 
 const getVilkarOkMessage = (originalErVilkarOk: boolean) => {
-  let messageId = 'SoknadsfristVilkarForm.IkkeBehandlet';
+  let message = 'Ikke behandlet';
   if (originalErVilkarOk) {
-    messageId = 'SoknadsfristVilkarForm.ErOppfylt';
+    message = 'Vilkåret er oppfylt for hele perioden';
   } else if (originalErVilkarOk === false) {
-    messageId = 'SoknadsfristVilkarForm.ErIkkeOppfylt';
+    message = 'Vilkåret er avslått';
   }
 
   return (
     <Label size="small" as="p">
-      <FormattedMessage id={messageId} />
+      {message}
     </Label>
   );
 };
@@ -72,7 +71,7 @@ const SoknadsfristVilkarHeader = ({
           )}
           <FlexColumn>
             <Heading size="small" level="2">
-              <FormattedMessage id={panelTittelKode} />
+              {panelTittelKode}
             </Heading>
           </FlexColumn>
           {lovReferanse && (

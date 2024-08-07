@@ -24,7 +24,6 @@ import {
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import React, { useCallback, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { FormattedMessage, useIntl } from 'react-intl';
 import { formatDate } from '../utils';
 import { FormState } from './FormState';
 import styles from './SoknadsfristVilkarDokument.module.css';
@@ -66,7 +65,6 @@ export const SoknadsfristVilkarDokument = ({
 }: SoknadsfristVilkarDokumentProps) => {
   const { getValues } = useFormContext<FormState>();
   const harBegrunnelse = !!getValues('avklarteKrav')[dokumentIndex]?.begrunnelse;
-  const intl = useIntl();
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   const opprettetAv = hentSaksbehandlerNavn(dokument?.avklarteOpplysninger?.opprettetAv);
   const opprettetTidspunkt = dokument?.avklarteOpplysninger?.opprettetTidspunkt;
@@ -101,11 +99,11 @@ export const SoknadsfristVilkarDokument = ({
             <VerticalSpacer eightPx />
             <TextAreaField
               name={`avklarteKrav.${dokumentIndex}.begrunnelse`}
-              label={intl.formatMessage({ id: 'VilkarBegrunnelse.Vilkar' })}
+              label="Vurder om det har vært fristavbrytende kontakt"
               validate={[required, minLength3, maxLength1500, hasValidText]}
               maxLength={1500}
               readOnly={readOnly}
-              placeholder={intl.formatMessage({ id: 'VilkarBegrunnelse.BegrunnVurdering' })}
+              placeholder="Begrunn vurderingen din"
             />
             <AssessedBy name={opprettetAv} date={opprettetTidspunkt} />
           </div>
@@ -134,17 +132,10 @@ export const SoknadsfristVilkarDokument = ({
               <Image className={styles.image} src={erVilkarOk ? innvilgetImage : avslattImage} />
             </FlexColumn>
             <FlexColumn>
-              {erVilkarOk && (
-                <BodyShort size="small">
-                  <FormattedMessage id="SoknadsfristVilkarForm.ErOppfylt" values={{ b: chunks => <b>{chunks}</b> }} />
-                </BodyShort>
-              )}
+              {erVilkarOk && <BodyShort size="small">Vilkåret er oppfylt for hele perioden</BodyShort>}
               {!erVilkarOk && (
                 <BodyShort size="small">
-                  <FormattedMessage
-                    id="SoknadsfristVilkarForm.VilkarIkkeOppfylt"
-                    values={{ b: chunks => <b>{chunks}</b> }}
-                  />
+                  Vilkåret er <b>ikke</b> oppfylt for denne perioden
                 </BodyShort>
               )}
             </FlexColumn>
@@ -161,23 +152,16 @@ export const SoknadsfristVilkarDokument = ({
           radios={[
             {
               value: 'true',
-              label: (
-                <FormattedMessage id="SoknadsfristVilkarForm.ErOppfylt" values={{ b: chunks => <b>{chunks}</b> }} />
-              ),
+              label: 'Vilkåret er oppfylt for hele perioden',
             },
             {
               value: DELVIS_OPPFYLT,
-              label: (
-                <FormattedMessage
-                  id="SoknadsfristVilkarForm.ErDelvisOppfylt"
-                  values={{ b: chunks => <b>{chunks}</b> }}
-                />
-              ),
+              label: 'Vilkåret er oppfylt for deler av perioden',
               element: (
                 <div className="my-2">
                   <Datepicker
                     name={`avklarteKrav.${dokumentIndex}.fraDato`}
-                    label={intl.formatMessage({ id: 'SoknadsfristVilkarForm.Dato' })}
+                    label="Oppgi dato søknadsfristvilkåret er oppfylt fra"
                     validate={[required, hasValidDate, isAtleastDate, isAtmostDate]}
                     isReadOnly={readOnly}
                     disabledDays={{
@@ -191,10 +175,9 @@ export const SoknadsfristVilkarDokument = ({
             {
               value: 'false',
               label: (
-                <FormattedMessage
-                  id="SoknadsfristVilkarForm.VilkarIkkeOppfylt"
-                  values={{ b: chunks => <b>{chunks}</b> }}
-                />
+                <>
+                  Vilkåret er <b>ikke</b> oppfylt for denne perioden
+                </>
               ),
             },
           ]}

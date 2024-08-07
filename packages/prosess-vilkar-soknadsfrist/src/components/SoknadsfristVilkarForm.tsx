@@ -21,7 +21,6 @@ import { Dayjs } from 'dayjs';
 import hash from 'object-hash';
 import React, { SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FormattedMessage } from 'react-intl';
 import { utledInnsendtSoknadsfrist } from '../utils';
 import { FormState } from './FormState';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
@@ -222,38 +221,34 @@ export const SoknadsfristVilkarForm = ({
         >
           {!isReadOnly &&
             (harÅpentAksjonspunkt ? (
-              <AksjonspunktHelpText isAksjonspunktOpen>
-                {[<FormattedMessage key={1} id="SoknadsfristVilkarForm.AvklarVurdering" />]}
-              </AksjonspunktHelpText>
+              <AksjonspunktHelpText isAksjonspunktOpen>Vurder om søknadsfristvilkåret er oppfylt</AksjonspunktHelpText>
             ) : (
               <Label size="small" as="p">
-                <FormattedMessage id="SoknadsfristVilkarForm.AutomatiskVurdering" />
+                Manuell overstyring av automatisk vurdering
               </Label>
             ))}
           <VerticalSpacer eightPx />
-          {Array.isArray(alleDokumenter) && alleDokumenter.length > 0 ? (
-            alleDokumenter.map((field, index) => {
-              const dokument = alleDokumenter.find(dok => dok.journalpostId === field.journalpostId);
-              const documentHash = hash(dokument);
-              return (
-                <SoknadsfristVilkarDokument
-                  key={documentHash}
-                  erAktivtDokument={dokumenterIAktivPeriode.findIndex(d => hash(d) === documentHash) > -1}
-                  skalViseBegrunnelse={erOverstyrt || harAksjonspunkt || editForm}
-                  readOnly={(isReadOnly || (!erOverstyrt && !harÅpentAksjonspunkt)) && !editForm}
-                  erVilkarOk={erVilkarOk}
-                  dokumentIndex={index}
-                  dokument={dokument}
-                  toggleEditForm={toggleEditForm}
-                  erOverstyrt={erOverstyrt}
-                  redigerVurdering={editForm}
-                  dokumentErVurdert={status !== vilkarUtfallType.IKKE_VURDERT}
-                />
-              );
-            })
-          ) : (
-            <FormattedMessage id="SoknadsfristVilkarForm.IngenDokumenter" />
-          )}
+          {Array.isArray(alleDokumenter) && alleDokumenter.length > 0
+            ? alleDokumenter.map((field, index) => {
+                const dokument = alleDokumenter.find(dok => dok.journalpostId === field.journalpostId);
+                const documentHash = hash(dokument);
+                return (
+                  <SoknadsfristVilkarDokument
+                    key={documentHash}
+                    erAktivtDokument={dokumenterIAktivPeriode.findIndex(d => hash(d) === documentHash) > -1}
+                    skalViseBegrunnelse={erOverstyrt || harAksjonspunkt || editForm}
+                    readOnly={(isReadOnly || (!erOverstyrt && !harÅpentAksjonspunkt)) && !editForm}
+                    erVilkarOk={erVilkarOk}
+                    dokumentIndex={index}
+                    dokument={dokument}
+                    toggleEditForm={toggleEditForm}
+                    erOverstyrt={erOverstyrt}
+                    redigerVurdering={editForm}
+                    dokumentErVurdert={status !== vilkarUtfallType.IKKE_VURDERT}
+                  />
+                );
+              })
+            : 'Det finnes ingen dokumenter knyttet til denne behandlingen'}
           <VerticalSpacer sixteenPx />
           {!erOverstyrt && erVilkarOk !== undefined && (
             <>
@@ -263,9 +258,7 @@ export const SoknadsfristVilkarForm = ({
                   <EditedIcon />
                 </FlexColumn>
                 <FlexColumn>
-                  <BodyShort size="small">
-                    <FormattedMessage id="SoknadsfristVilkarForm.Endret" />
-                  </BodyShort>
+                  <BodyShort size="small">Endret av saksbehandler</BodyShort>
                 </FlexColumn>
               </FlexRow>
             </>
@@ -278,7 +271,7 @@ export const SoknadsfristVilkarForm = ({
                 </FlexColumn>
                 <FlexColumn>
                   <Label size="small" as="p">
-                    <FormattedMessage id="SoknadsfristVilkarForm.Unntakstilfeller" />
+                    Overstyring skal kun gjøres i unntakstilfeller
                   </Label>
                 </FlexColumn>
               </FlexRow>
@@ -301,7 +294,7 @@ export const SoknadsfristVilkarForm = ({
                     disabled={formMethods.formState.isSubmitting}
                     onClick={toggleAv}
                   >
-                    <FormattedMessage id="SoknadsfristVilkarForm.Avbryt" />
+                    Avbryt
                   </Button>
                 </FlexColumn>
               </FlexRow>
@@ -315,7 +308,7 @@ export const SoknadsfristVilkarForm = ({
                 loading={formMethods.formState.isSubmitting}
                 disabled={!formMethods.formState.isValid || formMethods.formState.isSubmitting}
               >
-                <FormattedMessage id="SoknadsfristVilkarForm.ConfirmInformation" />
+                Bekreft og gå videre
               </Button>
               {editForm && (
                 <Button
@@ -328,7 +321,7 @@ export const SoknadsfristVilkarForm = ({
                     toggleEditForm(false);
                   }}
                 >
-                  <FormattedMessage id="SoknadsfristVilkarForm.Avbryt" />
+                  Avbryt
                 </Button>
               )}
             </div>

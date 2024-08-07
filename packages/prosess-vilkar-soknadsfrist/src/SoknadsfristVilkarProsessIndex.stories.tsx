@@ -102,7 +102,7 @@ export const visOverstyringspanelForSoknadsfrist: Story = {
         toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
         erOverstyrt={erOverstyrt}
         soknadsfristStatus={soknadsStatus}
-        panelTittelKode="Inngangsvilkar.Soknadsfrist"
+        panelTittelKode="Søknadsfrist"
         vilkar={vilkarSoknadsfrist}
         {...props}
       />
@@ -127,7 +127,7 @@ export const visOverstyringspanelForSoknadsfristUtenDokumenter: Story = {
         toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
         erOverstyrt={erOverstyrt}
         soknadsfristStatus={{ dokumentStatus: [] }}
-        panelTittelKode="Inngangsvilkar.Soknadsfrist"
+        panelTittelKode="Søknadsfrist"
         vilkar={vilkarSoknadsfrist}
         {...props}
       />
@@ -186,7 +186,7 @@ export const VisSoknadsfristAksjonspunkt5077: Story = {
             },
           ],
         }}
-        panelTittelKode="Inngangsvilkar.Soknadsfrist"
+        panelTittelKode="Søknadsfrist"
         vilkar={[
           {
             vilkarType: { kode: 'FP_VK_3', kodeverk: 'VILKAR_TYPE' },
@@ -285,7 +285,7 @@ export const visSoknadsfristAksjonspunkt5077Delvis: Story = {
             },
           ],
         }}
-        panelTittelKode="Inngangsvilkar.Soknadsfrist"
+        panelTittelKode="Søknadsfrist"
         vilkar={[
           {
             vilkarType: { kode: 'FP_VK_3', kodeverk: 'VILKAR_TYPE' },
