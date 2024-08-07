@@ -57,7 +57,7 @@ export function useFpSakKodeverkMedNavn<T = KodeverkMedNavn>(kodeverkOjekt: Kode
     kodeverkForType = kodeverkForType[undertype];
   }
 
-  // @ts-ignore Fiks dette
+  // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
   const kodeverk = kodeverkForType.find(k => k.kode === kodeverkOjekt.kode);
   return kodeverk;
 }

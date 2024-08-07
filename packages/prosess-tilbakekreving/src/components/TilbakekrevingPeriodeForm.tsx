@@ -168,7 +168,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
     ) {
       this.setState((state: any) => ({ ...state, showModal: !showModal }));
     } else {
-      // @ts-ignore Kva med parametere?
+      // @ts-expect-error Kva med parametere?
       formProps.handleSubmit();
     }
   };
@@ -178,7 +178,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
     const { ...formProps } = this.props;
 
     this.setState((state: any) => ({ ...state, showModal: !showModal }));
-    // @ts-ignore Kva med parametere?
+    // @ts-expect-error Kva med parametere?
     formProps.handleSubmit();
   };
 
@@ -330,7 +330,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                       value: vrt.kode,
                       label: <Label input={vrt.navn} textOnly />,
                     }))}
-                    // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
+                    // @ts-expect-error tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
                     onChange={this.resetFields}
                   />
                 </div>

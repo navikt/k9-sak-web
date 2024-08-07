@@ -39,7 +39,7 @@ const FagsakSearch = ({
   <div className={styles.container} data-testid="FagsakSearch">
     <SearchForm
       onSubmit={searchFagsakCallback}
-      // @ts-ignore Fiks denne!
+      // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
       searchStarted={searchStarted}
       searchResultAccessDenied={searchResultAccessDenied}
     />

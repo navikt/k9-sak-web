@@ -70,7 +70,7 @@ const MenyEndreBehandlendeEnhetIndex = ({
   return (
     <RawIntlProvider value={intl}>
       <EndreBehandlendeEnhetModal
-        // @ts-ignore Fiks denne
+        // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
         lukkModal={lukkModal}
         behandlendeEnheter={filtrerteBehandlendeEnheter}
         gjeldendeBehandlendeEnhetId={behandlendeEnhetId}

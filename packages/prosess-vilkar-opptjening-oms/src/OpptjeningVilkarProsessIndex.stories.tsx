@@ -191,7 +191,6 @@ export const visPanelForÅpentAksjonspunkt = args => (
         behandlingsresultat,
       } as OpptjeningBehandling
     }
-    // @ts-ignore Fiks!
     opptjening={opptjeninger}
     vilkar={[
       {
@@ -263,7 +262,6 @@ export const visPanelForPSBÅpentAksjonspunktUten847B = args => (
         behandlingsresultat,
       } as OpptjeningBehandling
     }
-    // @ts-ignore Fiks!
     opptjening={{ opptjeninger: [opptjeningUten847B] }}
     vilkar={[
       {
@@ -331,7 +329,6 @@ export const visPanelForPSBÅpentAksjonspunktMed847B = args => (
         behandlingsresultat,
       } as OpptjeningBehandling
     }
-    // @ts-ignore Fiks!
     opptjening={{ opptjeninger: [opptjeningMed847B] }}
     vilkar={[
       {
@@ -405,7 +402,6 @@ export const visPanelForNårEnIkkeHarAksjonspunkt = args => (
         behandlingsresultat: {},
       } as OpptjeningBehandling
     }
-    // @ts-ignore Fiks!
     opptjening={opptjening}
     vilkar={[
       {

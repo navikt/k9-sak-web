@@ -93,7 +93,7 @@ const AktsomhetFormPanel = ({
           vrt.navn
         ),
       }))}
-      // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
+      // @ts-expect-error tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
       onChange={resetFields}
     />
     {uaktsomhetCodes.includes(handletUaktsomhetGrad) && (

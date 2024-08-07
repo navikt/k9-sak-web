@@ -20,6 +20,7 @@ import React, { ReactElement } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import styles from './behandlingPickerItemContent.module.css';
+import { getStatusText } from './behandlingVelgerUtils';
 
 // TODO (TOR) Kva er dette for noko? Desse tekstane burde vel komma fra kodeverket? Ein skal uansett ikkje hardkoda kodane her!
 // TODO hente de forksjellige kodeverkene man trenger
@@ -110,6 +111,7 @@ interface OwnProps {
   erGjeldendeVedtak?: boolean;
   behandlingsresultatTypeKode?: string;
   behandlingsresultatTypeNavn?: string;
+  erFerdigstilt?: boolean;
 }
 
 /**
@@ -131,6 +133,7 @@ const BehandlingPickerItemContent = ({
   behandlingsresultatTypeNavn,
   førsteÅrsak,
   behandlingTypeKode,
+  erFerdigstilt,
 }: OwnProps) => (
   <Box background="surface-default" padding="4" borderWidth="1" borderColor="border-subtle" borderRadius="medium">
     <FlexContainer>
@@ -198,7 +201,9 @@ const BehandlingPickerItemContent = ({
           </BodyShort>
         </FlexColumn>
         <FlexColumn>
-          <BodyShort size="small">{behandlingsresultatTypeKode ? behandlingsresultatTypeNavn : '-'}</BodyShort>
+          <BodyShort size="small">
+            {getStatusText(behandlingsresultatTypeKode, behandlingsresultatTypeNavn, erFerdigstilt)}
+          </BodyShort>
         </FlexColumn>
       </FlexRow>
       <VerticalSpacer sixteenPx />

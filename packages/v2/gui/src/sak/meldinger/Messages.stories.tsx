@@ -1,4 +1,3 @@
-/* eslint-disable import/no-relative-packages */
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
@@ -20,23 +19,23 @@ const meta: Meta<typeof Messages> = {
 export default meta;
 
 const elemsfinder = (canvasElement: HTMLElement) => {
-  const canvas = within(canvasElement)
+  const canvas = within(canvasElement);
   return {
     canvas,
     malEl: () => canvas.getByLabelText('Mal'),
     mottakerEl: () => canvas.queryByLabelText('Mottaker'),
     sendTilTredjepartEl: () => canvas.getByLabelText('Send til tredjepart'),
     tittelEl: () => canvas.queryByLabelText('Tittel'),
-    fritekstEl: () => canvas.getByLabelText('Fritekst', {exact: false}),
-    sendBrevBtn: () => canvas.getByRole('button', {name: "Send brev"}),
-    forhåndsvisBtn: () => canvas.getByRole('button', {name: "Forhåndsvis"}),
+    fritekstEl: () => canvas.getByLabelText('Fritekst', { exact: false }),
+    sendBrevBtn: () => canvas.getByRole('button', { name: 'Send brev' }),
+    forhåndsvisBtn: () => canvas.getByRole('button', { name: 'Forhåndsvis' }),
     innholdsVelgerElQuery: () => canvas.queryByLabelText('Type dokumentasjon du vil etterspørre'),
     innholdsVelgerEl: () => canvas.getByLabelText('Type dokumentasjon du vil etterspørre'),
-    orgnrInp: () => canvas.getByLabelText("Organisasjonsnr"),
-    orgnrInpQuery: () => canvas.queryByLabelText("Organisasjonsnr"),
-    orgNavnInp: () => canvas.queryByLabelText("Navn"),
-  }
-}
+    orgnrInp: () => canvas.getByLabelText('Organisasjonsnr'),
+    orgnrInpQuery: () => canvas.queryByLabelText('Organisasjonsnr'),
+    orgNavnInp: () => canvas.queryByLabelText('Navn'),
+  };
+};
 
 type Story = StoryObj<typeof Messages>;
 const api = new FakeMessagesBackendApi();
@@ -64,7 +63,7 @@ export const DefaultStory: Story = {
     arbeidsgiverOpplysningerPerId: arbeidsgivere,
     api,
   },
-  play: async ({canvasElement, step}) => {
+  play: async ({ canvasElement, step }) => {
     const {
       malEl,
       mottakerEl,
@@ -75,20 +74,20 @@ export const DefaultStory: Story = {
       forhåndsvisBtn,
       orgnrInpQuery,
       orgNavnInp,
-    } = elemsfinder(canvasElement)
+    } = elemsfinder(canvasElement);
     await step('Sjekk visning basert på initiell default state', async () => {
-      await expect(malEl()).toBeInTheDocument()
-      await expect(mottakerEl()).toBeInTheDocument()
-      await expect(sendTilTredjepartEl()).toSatisfy(e => e instanceof HTMLInputElement && e.type === "checkbox")
-      await expect(sendTilTredjepartEl()).not.toBeChecked()
-      await expect(tittelEl()).toBeNull()
-      await expect(fritekstEl()).toBeInTheDocument()
-      await expect(sendBrevBtn()).toBeInTheDocument()
-      await expect(forhåndsvisBtn()).toBeInTheDocument()
-      await expect(orgnrInpQuery()).toBeNull()
-      await expect(orgNavnInp()).toBeNull()
-    })
-  }
+      await expect(malEl()).toBeInTheDocument();
+      await expect(mottakerEl()).toBeInTheDocument();
+      await expect(sendTilTredjepartEl()).toSatisfy(e => e instanceof HTMLInputElement && e.type === 'checkbox');
+      await expect(sendTilTredjepartEl()).not.toBeChecked();
+      await expect(tittelEl()).toBeNull();
+      await expect(fritekstEl()).toBeInTheDocument();
+      await expect(sendBrevBtn()).toBeInTheDocument();
+      await expect(forhåndsvisBtn()).toBeInTheDocument();
+      await expect(orgnrInpQuery()).toBeNull();
+      await expect(orgNavnInp()).toBeNull();
+    });
+  },
 };
 
 export const MedFritekstTittel: Story = {
@@ -97,15 +96,15 @@ export const MedFritekstTittel: Story = {
   },
   play: async ({ canvasElement, step }) => {
     await userEvent.click(canvasElement);
-    const elems = elemsfinder(canvasElement)
+    const elems = elemsfinder(canvasElement);
     await step('Sjekk visning ved valg av mal som krever tittel felt', async () => {
       await userEvent.selectOptions(elems.malEl(), 'GENERELT_FRITEKSTBREV');
-      await expect(elems.tittelEl()).toBeInTheDocument()
-      await expect(elems.fritekstEl()).toBeInTheDocument()
-      await expect(elems.sendBrevBtn()).toBeInTheDocument()
-      await expect(elems.forhåndsvisBtn()).toBeInTheDocument()
-      await expect(elems.innholdsVelgerElQuery()).not.toBeInTheDocument()
-    })
+      await expect(elems.tittelEl()).toBeInTheDocument();
+      await expect(elems.fritekstEl()).toBeInTheDocument();
+      await expect(elems.sendBrevBtn()).toBeInTheDocument();
+      await expect(elems.forhåndsvisBtn()).toBeInTheDocument();
+      await expect(elems.innholdsVelgerElQuery()).not.toBeInTheDocument();
+    });
   },
 };
 
@@ -114,22 +113,18 @@ export const FritekstValg: Story = {
     ...DefaultStory.args,
   },
   play: async ({ canvasElement, step }) => {
-    const {
-      malEl,
-      innholdsVelgerEl,
-      fritekstEl,
-    } = elemsfinder(canvasElement)
+    const { malEl, innholdsVelgerEl, fritekstEl } = elemsfinder(canvasElement);
     await userEvent.click(canvasElement); // Nødvendig for at selectOptions kall under skal fungere. Må ha fokus på sida.
-    await step("Sjekk initiell visning ved valg av mal med innholdsforslag", async () => {
+    await step('Sjekk initiell visning ved valg av mal med innholdsforslag', async () => {
       await userEvent.selectOptions(malEl(), 'INNHENT_MEDISINSKE_OPPLYSNINGER');
-      await expect(innholdsVelgerEl()).toBeInTheDocument()
-      await expect(innholdsVelgerEl()).toHaveValue(FakeMessagesBackendApi.dummyMalinnhold[0]?.tittel)
-      await expect(fritekstEl()).toHaveValue(FakeMessagesBackendApi.dummyMalinnhold[0]?.fritekst)
-    })
-    await step("Fritekst skal skifte viss ny type dokumentasjon blir valgt", async () => {
-      await userEvent.selectOptions(innholdsVelgerEl(), FakeMessagesBackendApi.dummyMalinnhold[1]!.tittel)
-      await expect(fritekstEl()).toHaveValue(FakeMessagesBackendApi.dummyMalinnhold[1]?.fritekst)
-    })
+      await expect(innholdsVelgerEl()).toBeInTheDocument();
+      await expect(innholdsVelgerEl()).toHaveValue(FakeMessagesBackendApi.dummyMalinnhold[0]?.tittel);
+      await expect(fritekstEl()).toHaveValue(FakeMessagesBackendApi.dummyMalinnhold[0]?.fritekst);
+    });
+    await step('Fritekst skal skifte viss ny type dokumentasjon blir valgt', async () => {
+      await userEvent.selectOptions(innholdsVelgerEl(), FakeMessagesBackendApi.dummyMalinnhold[1]!.tittel);
+      await expect(fritekstEl()).toHaveValue(FakeMessagesBackendApi.dummyMalinnhold[1]?.fritekst);
+    });
   },
 };
 
@@ -138,17 +133,17 @@ export const TilTredjepartsmottaker: Story = {
     ...DefaultStory.args,
   },
   play: async ({ canvasElement, step }) => {
-    const { sendTilTredjepartEl, orgnrInp, orgNavnInp } = elemsfinder(canvasElement)
+    const { sendTilTredjepartEl, orgnrInp, orgNavnInp } = elemsfinder(canvasElement);
     await userEvent.click(canvasElement); // Nødvendig for at tredjepartsmottakerCheckbox kall under skal fungere. Må ha fokus på sida.
-    await step("Sjekk initiell visining ved sending til tredjepart", async () => {
-      await userEvent.click(sendTilTredjepartEl()) // Aktiver sending til tredjepartsmottaker
-      await expect(orgnrInp()).toBeInTheDocument()
-      await expect(orgNavnInp()).toBeInTheDocument()
-    })
-    await step("Inntasting av org nr skal fungere", async () => {
-      const orgnr = "333444555"
-      await userEvent.type(orgnrInp(), orgnr)
-      await expect(orgNavnInp()).toHaveValue(`Fake storybook org (${orgnr})`)
-    })
+    await step('Sjekk initiell visining ved sending til tredjepart', async () => {
+      await userEvent.click(sendTilTredjepartEl()); // Aktiver sending til tredjepartsmottaker
+      await expect(orgnrInp()).toBeInTheDocument();
+      await expect(orgNavnInp()).toBeInTheDocument();
+    });
+    await step('Inntasting av org nr skal fungere', async () => {
+      const orgnr = '333444555';
+      await userEvent.type(orgnrInp(), orgnr);
+      await expect(orgNavnInp()).toHaveValue(`Fake storybook org (${orgnr})`);
+    });
   },
 };

@@ -273,7 +273,6 @@ export class TilbakekrevingFormImpl extends Component<OwnProps & DispatchProps &
                     key={valgtPeriodeFormatertForTidslinje.id}
                     periode={valgtPeriode}
                     data={dataForDetailForm.find(p => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom)}
-                    // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
                     behandlingFormPrefix={behandlingFormPrefix}
                     antallPerioderMedAksjonspunkt={antallPerioderMedAksjonspunkt}
                     readOnly={readOnly}
@@ -477,9 +476,7 @@ const mapStateToProps = (state: any, ownProps: PureOwnProps) => {
     ownProps.behandlingVersjon,
   )(state) as { erForeldet: boolean }) || { erForeldet: false };
   return {
-    // @ts-ignore Fiks denne (reselect)
     initialValues: buildInitialValues(state, ownProps),
-    // @ts-ignore Fiks denne (reselect)
     dataForDetailForm: settOppPeriodeDataForDetailForm(state, ownProps),
     vilkarsVurdertePerioder: behandlingFormValueSelector(
       TILBAKEKREVING_FORM_NAME,
