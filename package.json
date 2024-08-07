@@ -50,8 +50,8 @@
     "@navikt/familie-endringslogg": "12.0.2",
     "@navikt/ft-plattform-komponenter": "3.0.3",
     "@popperjs/core": "2.11.8",
-    "@sentry/browser": "8.22.0",
-    "@sentry/react": "^8.22.0",
+    "@sentry/browser": "8.24.0",
+    "@sentry/react": "^8.24.0",
     "axios": "1.7.3",
     "date-fns": "3.6.0",
     "date-fns-tz": "3.1.3",
@@ -66,7 +66,7 @@
     "vite-plugin-svgr": "4.2.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.45.3",
+    "@playwright/test": "^1.46.0",
     "@sentry/cli": "2.33.1",
     "@storybook/addon-a11y": "^8.2.7",
     "@storybook/addon-actions": "^8.2.7",
@@ -93,7 +93,7 @@
     "autoprefixer": "^10.4.20",
     "axios-mock-adapter": "1.22.0",
     "cross-env": "7.0.3",
-    "eslint": "9.7.0",
+    "eslint": "9.8.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-jsx-a11y": "6.9.0",
     "eslint-plugin-react": "7.35.0",
@@ -104,7 +104,7 @@
     "lint-staged": "15.2.8",
     "msw": "2.3.5",
     "msw-storybook-addon": "^2.0.3",
-    "postcss": "^8.4.40",
+    "postcss": "^8.4.41",
     "prettier": "3.3.3",
     "react-popper": "2.3.0",
     "storybook": "^8.2.7",
@@ -121,7 +121,7 @@
     "vitest-axe": "0.1.0"
   },
   "resolutions": {
-    "postcss": "8.4.40",
+    "postcss": "8.4.41",
     "parse-url": "8.1.0",
     "@types/react": "17",
     "@editorjs/editorjs": "2.27.2"

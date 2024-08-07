@@ -1602,12 +1602,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/list@npm:1.9.0":
-  version: 1.9.0
-  resolution: "@editorjs/list@npm:1.9.0"
+"@editorjs/list@npm:1.10.0":
+  version: 1.10.0
+  resolution: "@editorjs/list@npm:1.10.0"
   dependencies:
     "@codexteam/icons": ^0.0.4
-  checksum: a856f73a1abd42d0550afdc4fda355911abff8b25d30b0cdefdbebfea765182395d5afb08f7fef67597d88c31857408525a8cde28696374a2610297d54a93ce9
+  checksum: d3b5444d7fc820f2bd5dbc2473cca0d38780bace1e3b908b4ad539ffad32600f1f5181a7405f0c170d8443dd81de5651b6a7393c62e1f1cc4d1667185eb23a86
   languageName: node
   linkType: hard
 
@@ -1967,7 +1967,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/config-array@npm:^0.17.0":
+"@eslint/config-array@npm:^0.17.1":
   version: 0.17.1
   resolution: "@eslint/config-array@npm:0.17.1"
   dependencies:
@@ -1995,10 +1995,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:9.7.0":
-  version: 9.7.0
-  resolution: "@eslint/js@npm:9.7.0"
-  checksum: 384fb151c0719c8949b9c4245ffee311c67e43700867b83027a8b9249a71414d7d1b2406189800e578beaa47cf22ee13c87a578e626c189c679f56ecad147674
+"@eslint/js@npm:9.8.0":
+  version: 9.8.0
+  resolution: "@eslint/js@npm:9.8.0"
+  checksum: 8b6e809127edea3bf5b5b3c01ae75290afe5044f950642445a50cb4b86c153ad1512fc417d3cb7b79eb7cd0ce06acd858946b6497ea912750aa54de609064f63
   languageName: node
   linkType: hard
 
@@ -2685,7 +2685,7 @@ __metadata:
   dependencies:
     "@editorjs/editorjs": 2.30.3
     "@editorjs/header": 2.8.7
-    "@editorjs/list": 1.9.0
+    "@editorjs/list": 1.10.0
     "@editorjs/paragraph": 2.11.6
     "@fpsak-frontend/form": 1.0.0
     "@fpsak-frontend/kodeverk": 1.0.0
@@ -4399,8 +4399,8 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 3.0.3
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.25
     "@navikt/ft-ui-komponenter": 2.3.18
-    "@sentry/browser": 8.22.0
-    "@sentry/react": ^8.22.0
+    "@sentry/browser": 8.24.0
+    "@sentry/react": ^8.24.0
     "@tanstack/react-query": ^5.51.21
     axios: 1.7.3
     classnames: 2.5.1
@@ -5024,14 +5024,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.45.3":
-  version: 1.45.3
-  resolution: "@playwright/test@npm:1.45.3"
+"@playwright/test@npm:^1.46.0":
+  version: 1.46.0
+  resolution: "@playwright/test@npm:1.46.0"
   dependencies:
-    playwright: 1.45.3
+    playwright: 1.46.0
   bin:
     playwright: cli.js
-  checksum: 3e2c88d40f98cf94ab7947263804d1ee78c4bb21a35c8dbb64855eed5565ffc688509c5f07bda5438cba6c354374981448dcba3dbe326d1699b4fef75c9ce43d
+  checksum: 5e3747c63ca45a307c6a9c6314dfc8f8141c0e5e0e622bccee2afebe6450aa67cb1c151f5f187280b659d75bb7e1d5c84c6b441e54e963c654e0e19f6514f23d
   languageName: node
   linkType: hard
 
@@ -5231,64 +5231,64 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry-internal/browser-utils@npm:8.22.0":
-  version: 8.22.0
-  resolution: "@sentry-internal/browser-utils@npm:8.22.0"
+"@sentry-internal/browser-utils@npm:8.24.0":
+  version: 8.24.0
+  resolution: "@sentry-internal/browser-utils@npm:8.24.0"
   dependencies:
-    "@sentry/core": 8.22.0
-    "@sentry/types": 8.22.0
-    "@sentry/utils": 8.22.0
-  checksum: 3176fe52af88aa7ab0525ac266e084daab7c5b643ebadb711f83edc569e66e7e59ac19695d6b7692994e48c702fb27a342b5c92d0641720710a2c69c2618d8a1
+    "@sentry/core": 8.24.0
+    "@sentry/types": 8.24.0
+    "@sentry/utils": 8.24.0
+  checksum: 4da4c292ba9006b65b53ba20cef4f7ab954fee43c37c79ce16ad0e2e0716962ad318b54dc403693b93efdf7a77d317716c8b71e5c59f63d661250b1d6155664d
   languageName: node
   linkType: hard
 
-"@sentry-internal/feedback@npm:8.22.0":
-  version: 8.22.0
-  resolution: "@sentry-internal/feedback@npm:8.22.0"
+"@sentry-internal/feedback@npm:8.24.0":
+  version: 8.24.0
+  resolution: "@sentry-internal/feedback@npm:8.24.0"
   dependencies:
-    "@sentry/core": 8.22.0
-    "@sentry/types": 8.22.0
-    "@sentry/utils": 8.22.0
-  checksum: fe12804a69350079049b3690fad2319847bdbab451430808f25da93b073a648c9d98c1a713f30d2a43584466630aa7e6a27107a929d86b47c480d0c39869dc23
+    "@sentry/core": 8.24.0
+    "@sentry/types": 8.24.0
+    "@sentry/utils": 8.24.0
+  checksum: e05209e4046e85e8723ce8ca07d11082c52c6fffe6a6b487eb884a8e13bb0cc461d241050fb18288aa5c0b75716b0032fe39d5b832b67eb5f42d38ea7ed1b6fe
   languageName: node
   linkType: hard
 
-"@sentry-internal/replay-canvas@npm:8.22.0":
-  version: 8.22.0
-  resolution: "@sentry-internal/replay-canvas@npm:8.22.0"
+"@sentry-internal/replay-canvas@npm:8.24.0":
+  version: 8.24.0
+  resolution: "@sentry-internal/replay-canvas@npm:8.24.0"
   dependencies:
-    "@sentry-internal/replay": 8.22.0
-    "@sentry/core": 8.22.0
-    "@sentry/types": 8.22.0
-    "@sentry/utils": 8.22.0
-  checksum: c9766145185b35b2252fef1755c2da329f0d0d34b67b7cc6ee02eb8931ec67f9955034fc7360cea3f40de701db27373f9ee036806b7eaa109dfd963a3ce77e10
+    "@sentry-internal/replay": 8.24.0
+    "@sentry/core": 8.24.0
+    "@sentry/types": 8.24.0
+    "@sentry/utils": 8.24.0
+  checksum: cf00dbceb23e6da49857b2eb48582fde4bb6987c41043c96865ce171a6ee378a7f43489c3b58db11076db9d7d15b5336df165ec3a954185313adf73f86674836
   languageName: node
   linkType: hard
 
-"@sentry-internal/replay@npm:8.22.0":
-  version: 8.22.0
-  resolution: "@sentry-internal/replay@npm:8.22.0"
+"@sentry-internal/replay@npm:8.24.0":
+  version: 8.24.0
+  resolution: "@sentry-internal/replay@npm:8.24.0"
   dependencies:
-    "@sentry-internal/browser-utils": 8.22.0
-    "@sentry/core": 8.22.0
-    "@sentry/types": 8.22.0
-    "@sentry/utils": 8.22.0
-  checksum: d248c053df6bf8f83de2478413c95db7483594ba1bc74ae34581b37e887b384463e0b21e2a52d633c6200b99415c59d15f40028cbb8510e8f54f2fb969f645e4
+    "@sentry-internal/browser-utils": 8.24.0
+    "@sentry/core": 8.24.0
+    "@sentry/types": 8.24.0
+    "@sentry/utils": 8.24.0
+  checksum: 80c9e937b4f2a22f7bc2b04923722f60b4efde4f3ba12cf4067d87f9115776978b5b2826c6c7b76e5dd79ff7b00b86f2294df381b7d5f16263bf105e7d7af8a0
   languageName: node
   linkType: hard
 
-"@sentry/browser@npm:8.22.0":
-  version: 8.22.0
-  resolution: "@sentry/browser@npm:8.22.0"
+"@sentry/browser@npm:8.24.0":
+  version: 8.24.0
+  resolution: "@sentry/browser@npm:8.24.0"
   dependencies:
-    "@sentry-internal/browser-utils": 8.22.0
-    "@sentry-internal/feedback": 8.22.0
-    "@sentry-internal/replay": 8.22.0
-    "@sentry-internal/replay-canvas": 8.22.0
-    "@sentry/core": 8.22.0
-    "@sentry/types": 8.22.0
-    "@sentry/utils": 8.22.0
-  checksum: d520911cfe32f2de51786271826d71baf2abefb2b71ff8c029b1b53dca85ff36bcf5faefb672f1aeec738abc0a9fd86376123952c504b5e1f703763c42dc673b
+    "@sentry-internal/browser-utils": 8.24.0
+    "@sentry-internal/feedback": 8.24.0
+    "@sentry-internal/replay": 8.24.0
+    "@sentry-internal/replay-canvas": 8.24.0
+    "@sentry/core": 8.24.0
+    "@sentry/types": 8.24.0
+    "@sentry/utils": 8.24.0
+  checksum: 36dd7180ace32603fccd8f2222c348def3c241ddad30c58d61273732720dc78befa40b587a0647a889ce94620814a6de6ff0ba5cbc7b2c30b4e39fe71a8da835
   languageName: node
   linkType: hard
 
@@ -5378,44 +5378,44 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/core@npm:8.22.0":
-  version: 8.22.0
-  resolution: "@sentry/core@npm:8.22.0"
+"@sentry/core@npm:8.24.0":
+  version: 8.24.0
+  resolution: "@sentry/core@npm:8.24.0"
   dependencies:
-    "@sentry/types": 8.22.0
-    "@sentry/utils": 8.22.0
-  checksum: 4947c09af8451915dbf845b6eb76841df6d5c956a5be7041c7c64fb618e68dde41780959e4cce5d34e9ffa42b6ddf07e4a15d705878490dedca57a929c6ae7da
+    "@sentry/types": 8.24.0
+    "@sentry/utils": 8.24.0
+  checksum: 0220e45209272f2063c39d7afeb0073712548ca3cce38e46b9f874d6155fc385e709ac19f04c965498fbf79394073a0988d9c548a2830df1151a208da375f550
   languageName: node
   linkType: hard
 
-"@sentry/react@npm:^8.22.0":
-  version: 8.22.0
-  resolution: "@sentry/react@npm:8.22.0"
+"@sentry/react@npm:^8.24.0":
+  version: 8.24.0
+  resolution: "@sentry/react@npm:8.24.0"
   dependencies:
-    "@sentry/browser": 8.22.0
-    "@sentry/core": 8.22.0
-    "@sentry/types": 8.22.0
-    "@sentry/utils": 8.22.0
+    "@sentry/browser": 8.24.0
+    "@sentry/core": 8.24.0
+    "@sentry/types": 8.24.0
+    "@sentry/utils": 8.24.0
     hoist-non-react-statics: ^3.3.2
   peerDependencies:
     react: ^16.14.0 || 17.x || 18.x || 19.x
-  checksum: 539eaf8c805d316838c42a09690b97b2de1c7a8684b8ec13e669ae184e5a1a0749f094775f5959aefb1720dbba61708191356bdd420264804a7e7f0fce984027
+  checksum: 77a938578574410afbb37c4547e34d9e89e70f1c257e42befbd898099b4f16d4013ace724ff48dbbf5c72302e087bacbce374517944a4689dd8b20f4a5852ac1
   languageName: node
   linkType: hard
 
-"@sentry/types@npm:8.22.0":
-  version: 8.22.0
-  resolution: "@sentry/types@npm:8.22.0"
-  checksum: b946f53d0c8c3b3e76fe47794579e205800a5527724728afb6f86cfc7014c4869c9351c8a4cce741fd289b85e0e27c4be2b454635299d5357f2e71f53d73aea5
+"@sentry/types@npm:8.24.0":
+  version: 8.24.0
+  resolution: "@sentry/types@npm:8.24.0"
+  checksum: 3f9cc9ac7f9f1e3386e7f3b2e256641211bccdb9bf895f9d2a751af8dee5117c9a44e0a4b5157bbccb0c3bc40e9fa9b46602c93a39385372cff65bfc3e7a650f
   languageName: node
   linkType: hard
 
-"@sentry/utils@npm:8.22.0":
-  version: 8.22.0
-  resolution: "@sentry/utils@npm:8.22.0"
+"@sentry/utils@npm:8.24.0":
+  version: 8.24.0
+  resolution: "@sentry/utils@npm:8.24.0"
   dependencies:
-    "@sentry/types": 8.22.0
-  checksum: 3b9cb5a628958e0072f95faf50f3bd262dd65158d8ffde689edd0a9457861e4a992d705611b6ca1ab5ccb6f4464e2125bd7ab4669d419b95bf12109ea7909bcc
+    "@sentry/types": 8.24.0
+  checksum: 7d585233bb3699bae16de4b6e8a29be7dd7bec4e82b34a943e742809144e0d4a44f8024e9fc19d67a8a61161cc173abeda5b16f562e82f1953ee9523b3b9fdf4
   languageName: node
   linkType: hard
 
@@ -10248,15 +10248,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:9.7.0":
-  version: 9.7.0
-  resolution: "eslint@npm:9.7.0"
+"eslint@npm:9.8.0":
+  version: 9.8.0
+  resolution: "eslint@npm:9.8.0"
   dependencies:
     "@eslint-community/eslint-utils": ^4.2.0
     "@eslint-community/regexpp": ^4.11.0
-    "@eslint/config-array": ^0.17.0
+    "@eslint/config-array": ^0.17.1
     "@eslint/eslintrc": ^3.1.0
-    "@eslint/js": 9.7.0
+    "@eslint/js": 9.8.0
     "@humanwhocodes/module-importer": ^1.0.1
     "@humanwhocodes/retry": ^0.3.0
     "@nodelib/fs.walk": ^1.2.8
@@ -10288,7 +10288,7 @@ __metadata:
     text-table: ^0.2.0
   bin:
     eslint: bin/eslint.js
-  checksum: 36ece28b0966d30071574635b57e28926166e8be624059a271e3c2b64f8915bc3893b18bf27aa90467beafe70b84d177e47debf7e635ac7459d906eee067dfbd
+  checksum: 3fdcf4047ccb2e18bf5d072542d41bd60b5816a68bfbe95dff17cc680c90c29dfb9c595f9691db290190e55219a8088cf09c675095790c80db58f1b4560b8a14
   languageName: node
   linkType: hard
 
@@ -13131,11 +13131,11 @@ __metadata:
     "@navikt/ds-tailwind": ^6.13.0
     "@navikt/familie-endringslogg": 12.0.2
     "@navikt/ft-plattform-komponenter": 3.0.3
-    "@playwright/test": ^1.45.3
+    "@playwright/test": ^1.46.0
     "@popperjs/core": 2.11.8
-    "@sentry/browser": 8.22.0
+    "@sentry/browser": 8.24.0
     "@sentry/cli": 2.33.1
-    "@sentry/react": ^8.22.0
+    "@sentry/react": ^8.24.0
     "@storybook/addon-a11y": ^8.2.7
     "@storybook/addon-actions": ^8.2.7
     "@storybook/addon-docs": ^8.2.7
@@ -13164,7 +13164,7 @@ __metadata:
     cross-env: 7.0.3
     date-fns: 3.6.0
     date-fns-tz: 3.1.3
-    eslint: 9.7.0
+    eslint: 9.8.0
     eslint-config-prettier: 9.1.0
     eslint-plugin-jsx-a11y: 6.9.0
     eslint-plugin-react: 7.35.0
@@ -13178,7 +13178,7 @@ __metadata:
     msw: 2.3.5
     msw-storybook-addon: ^2.0.3
     node-cache: 5.1.2
-    postcss: ^8.4.40
+    postcss: ^8.4.41
     postcss-import: ^16.1.0
     prettier: 3.3.3
     react: 18.3.1
@@ -14837,27 +14837,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.45.3":
-  version: 1.45.3
-  resolution: "playwright-core@npm:1.45.3"
+"playwright-core@npm:1.46.0":
+  version: 1.46.0
+  resolution: "playwright-core@npm:1.46.0"
   bin:
     playwright-core: cli.js
-  checksum: cecb58877b2c643403d7a72c24a7aa0fdd087a3c7f9a5ea5403851336ea831d8e304b1f159aacbbabd12e5c47eaac054333746c9e5431ec07b13d64dbf3b50ec
+  checksum: 0af0bf8afdd2182d377137c19da870d13e0f849b12b147dce7d5273db9f3d08a6ea35ef229eeb1816b3a9eca61504596fc1171e041e666e6ebb4118e71fe83ba
   languageName: node
   linkType: hard
 
-"playwright@npm:1.45.3":
-  version: 1.45.3
-  resolution: "playwright@npm:1.45.3"
+"playwright@npm:1.46.0":
+  version: 1.46.0
+  resolution: "playwright@npm:1.46.0"
   dependencies:
     fsevents: 2.3.2
-    playwright-core: 1.45.3
+    playwright-core: 1.46.0
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: d9d23b155ccd001553214f710561b01e48eb409676102f8ab94c0b4aa5ac5f398becc1a96528b0554944e07e34189503d891913e0e0a4aa58ad36b9c08747983
+  checksum: 013d7cd81c4016556245f98bd0b407c95f7dbc6d11d174d33d2e6aeeac1a4c63f646909adf3a926df09e1f0638e408018af3799e2c8e437dd2362f78091182e4
   languageName: node
   linkType: hard
 
@@ -15054,14 +15054,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:8.4.40":
-  version: 8.4.40
-  resolution: "postcss@npm:8.4.40"
+"postcss@npm:8.4.41":
+  version: 8.4.41
+  resolution: "postcss@npm:8.4.41"
   dependencies:
     nanoid: ^3.3.7
     picocolors: ^1.0.1
     source-map-js: ^1.2.0
-  checksum: afd0cc49d2169dcd96c0f17e155c5d75de048956306a3017f1cfa6a7d66b941592245bed20f7796ceeccb2d8967749b623be2c7b010a74f67ea10fb5bdb8ba28
+  checksum: f865894929eb0f7fc2263811cc853c13b1c75103028b3f4f26df777e27b201f1abe21cb4aa4c2e901c80a04f6fb325ee22979688fe55a70e2ea82b0a517d3b6f
   languageName: node
   linkType: hard
 
