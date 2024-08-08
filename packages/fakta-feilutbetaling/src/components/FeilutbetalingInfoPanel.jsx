@@ -32,7 +32,7 @@ import styles from './feilutbetalingInfoPanel.module.css';
 
 const formName = 'FaktaFeilutbetalingForm';
 const minLength3 = minLength(3);
-const maxLength12000 = maxLength(12000);
+const maxLength1500 = maxLength(1500);
 const feilutbetalingAksjonspunkter = [aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING];
 
 export class FeilutbetalingInfoPanelImpl extends Component {
@@ -249,8 +249,8 @@ export class FeilutbetalingInfoPanelImpl extends Component {
             <TextAreaField
               name="begrunnelse"
               label={{ id: 'FeilutbetalingInfoPanel.Begrunnelse' }}
-              validate={[required, minLength3, maxLength12000, hasValidText]}
-              maxLength={12000}
+              validate={[required, minLength3, maxLength1500, hasValidText]}
+              maxLength={1500}
               readOnly={readOnly}
               id="begrunnelse"
             />
