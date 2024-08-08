@@ -2323,7 +2323,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": "workspace:^"
     "@k9-sak-web/types": "workspace:^"
-    "@navikt/ds-react": 6.13.0
+    "@navikt/ds-react": 6.14.0
     date-fns: 3.6.0
     formik: 2.4.6
     react: 18.3.1
@@ -3037,8 +3037,8 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/aksel-icons": 6.13.0
-    "@navikt/ds-react": 6.13.0
+    "@navikt/aksel-icons": 6.14.0
+    "@navikt/ds-react": 6.14.0
     "@navikt/fnrvalidator": 2.1.0
     "@navikt/ft-plattform-komponenter": 3.0.3
     axios: 1.7.3
@@ -3915,9 +3915,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-etablert-tilsyn@workspace:packages/fakta-etablert-tilsyn"
   dependencies:
-    "@navikt/ds-css": 6.13.0
+    "@navikt/ds-css": 6.14.0
     "@navikt/ds-icons": 3.4.3
-    "@navikt/ds-react": 6.13.0
+    "@navikt/ds-react": 6.14.0
     "@navikt/ft-plattform-komponenter": 3.0.3
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
@@ -3952,9 +3952,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-inntektsmelding@workspace:packages/fakta-inntektsmelding"
   dependencies:
-    "@navikt/ds-css": 6.13.0
+    "@navikt/ds-css": 6.14.0
     "@navikt/ds-icons": 3.4.3
-    "@navikt/ds-react": 6.13.0
+    "@navikt/ds-react": 6.14.0
     "@navikt/ft-form-hooks": 4.4.19
     "@navikt/ft-plattform-komponenter": 3.0.3
     "@popperjs/core": 2.11.8
@@ -3988,9 +3988,9 @@ __metadata:
   dependencies:
     "@fpsak-frontend/form": 1.0.0
     "@navikt/diagnosekoder": ^1.2024.0
-    "@navikt/ds-css": 6.13.0
+    "@navikt/ds-css": 6.14.0
     "@navikt/ds-icons": 3.4.3
-    "@navikt/ds-react": 6.13.0
+    "@navikt/ds-react": 6.14.0
     "@navikt/ft-plattform-komponenter": 3.0.3
     "@popperjs/core": 2.11.8
     "@tanstack/react-query": ^5.51.21
@@ -4014,7 +4014,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-om-barnet@workspace:packages/fakta-om-barnet"
   dependencies:
-    "@navikt/ds-react": 6.13.0
+    "@navikt/ds-react": 6.14.0
     "@navikt/ft-plattform-komponenter": 3.0.3
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
@@ -4035,9 +4035,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-omsorgen-for@workspace:packages/fakta-omsorgen-for"
   dependencies:
-    "@navikt/ds-css": 6.13.0
+    "@navikt/ds-css": 6.14.0
     "@navikt/ds-icons": 3.4.3
-    "@navikt/ds-react": 6.13.0
+    "@navikt/ds-react": 6.14.0
     "@navikt/fnrvalidator": 2.1.0
     "@navikt/ft-plattform-komponenter": 3.0.3
     "@popperjs/core": 2.11.8
@@ -4064,7 +4064,7 @@ __metadata:
     "@fpsak-frontend/utils": "*"
     "@k9-sak-web/types": "*"
     "@navikt/ds-icons": 3.4.3
-    "@navikt/ds-react": 6.13.0
+    "@navikt/ds-react": 6.14.0
     "@navikt/ft-plattform-komponenter": 3.0.3
     classnames: 2.5.1
     dayjs: 1.11.12
@@ -4188,8 +4188,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/prosess-omsorgsdager@workspace:packages/prosess-omsorgsdager"
   dependencies:
-    "@navikt/ds-css": 6.13.0
-    "@navikt/ds-react": 6.13.0
+    "@navikt/ds-css": 6.14.0
+    "@navikt/ds-react": 6.14.0
     classnames: 2.5.1
     dayjs: 1.11.12
     lodash: 4.17.21
@@ -4241,8 +4241,8 @@ __metadata:
   resolution: "@k9-sak-web/prosess-uttak@workspace:packages/prosess-uttak"
   dependencies:
     "@hookform/resolvers": ^3.9.0
-    "@navikt/ds-css": 6.13.0
-    "@navikt/ds-react": 6.13.0
+    "@navikt/ds-css": 6.14.0
+    "@navikt/ds-react": 6.14.0
     "@navikt/ft-form-hooks": 4.4.19
     "@navikt/ft-form-validators": 2.3.17
     "@navikt/ft-plattform-komponenter": 3.0.3
@@ -4393,7 +4393,7 @@ __metadata:
     "@k9-sak-web/sak-notat": 1.0.0
     "@k9-sak-web/sak-soknadsperiodestripe": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ds-react": 6.13.0
+    "@navikt/ds-react": 6.14.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.20
     "@navikt/ft-form-hooks": 4.4.19
     "@navikt/ft-plattform-komponenter": 3.0.3
@@ -4476,7 +4476,7 @@ __metadata:
     "@fpsak-frontend/form": 1.0.0
     "@fpsak-frontend/shared-components": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ds-react": 6.13.0
+    "@navikt/ds-react": 6.14.0
     formik: 2.4.6
     react: 18.3.1
     react-intl: 6.6.8
@@ -4490,8 +4490,8 @@ __metadata:
   dependencies:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/aksel-icons": 6.13.0
-    "@navikt/ds-react": 6.13.0
+    "@navikt/aksel-icons": 6.14.0
+    "@navikt/ds-react": 6.14.0
     "@navikt/ft-form-hooks": 4.4.19
     "@navikt/ft-form-validators": 2.3.17
     "@tanstack/react-query": ^5.51.21
@@ -4554,6 +4554,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/aksel-icons@npm:6.14.0, @navikt/aksel-icons@npm:^6.14.0":
+  version: 6.14.0
+  resolution: "@navikt/aksel-icons@npm:6.14.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F6.14.0%2F3197aec65aa29e81caad6cb2c4030d1aa3cfca92"
+  checksum: 7f32fa86ddb0bc62d08bb4aa7a1d5c384c9d72c3e692497effdf468d3f60b44a84122323b3afbd55ba8860dd575c8dca8f0b4b37c43cbe01b2b11266036c8e0f
+  languageName: node
+  linkType: hard
+
 "@navikt/diagnosekoder@npm:^1.2024.0":
   version: 1.2024.0
   resolution: "@navikt/diagnosekoder@npm:1.2024.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fdiagnosekoder%2F1.2024.0%2F2d990449f3bb8d5231f2e9b583ba30f8bebbeccb"
@@ -4565,6 +4572,13 @@ __metadata:
   version: 6.13.0
   resolution: "@navikt/ds-css@npm:6.13.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F6.13.0%2F9882c3009d59c19da414477877ab27aad65f7b13"
   checksum: b96a73bf8cbb8c24fbf059914c097bdf28100c0393e6345c325ea2a82ef454877b041021227d53b68c7e2431aeda20919e95e301b7765b01616ce365d87268e7
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-css@npm:6.14.0":
+  version: 6.14.0
+  resolution: "@navikt/ds-css@npm:6.14.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F6.14.0%2Fc39c1cea64eaa5a57049baf2f837bf8c1fd91b39"
+  checksum: 7b71399f7f52f9e1582f045c1d769bca46b8c936107b24d7a6642da57669764240c9025a37f8414901179eb78f51ff4712473adce16fbaf8194cc4b1d27871a2
   languageName: node
   linkType: hard
 
@@ -4596,10 +4610,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ds-tailwind@npm:^6.13.0":
-  version: 6.13.0
-  resolution: "@navikt/ds-tailwind@npm:6.13.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tailwind%2F6.13.0%2F26007f66871356b67e6d9b4f7fbe3a1f9771b8a2"
-  checksum: 171f3d53bcbff87eb74e320725beb2b872b4ac6536bf95d1917e2a1a87fb4bbae946f6e1b25bf7d74c865a8bd6c0035dce81dcf61acaa5d7ffe04241e6e99546
+"@navikt/ds-react@npm:6.14.0":
+  version: 6.14.0
+  resolution: "@navikt/ds-react@npm:6.14.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-react%2F6.14.0%2F0127b723f19f6fdcc1ec7a75b47b03f46938e04d"
+  dependencies:
+    "@floating-ui/react": 0.25.4
+    "@floating-ui/react-dom": ^2.0.9
+    "@navikt/aksel-icons": ^6.14.0
+    "@navikt/ds-tokens": ^6.14.0
+    clsx: ^2.1.0
+    date-fns: ^3.0.0
+    react-day-picker: 8.10.0
+  peerDependencies:
+    "@types/react": ^17.0.30 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  checksum: f0e0c63ddab5249f2d5457ec3f24cf7416de447cd8d8faebcfe16c86f77f1e131162e2a19091be0aa2e0373cd522cede939f7d7c71ab8e8a540f84db00e59ad9
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-tailwind@npm:^6.14.0":
+  version: 6.14.0
+  resolution: "@navikt/ds-tailwind@npm:6.14.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tailwind%2F6.14.0%2F3acd2b793387fe89201cce59769637ca4dd072c7"
+  checksum: 1ac873dcc539658cce13639a52eca8badd60c24fb50d664b0148036604bcdd982f3c40c339b68e3656eb876ea9461e333a1f03bf5fdaddbf68634c47fe0bc765
   languageName: node
   linkType: hard
 
@@ -4607,6 +4639,13 @@ __metadata:
   version: 6.13.0
   resolution: "@navikt/ds-tokens@npm:6.13.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tokens%2F6.13.0%2F6704caca2fffee89abdce0207e5dfe00b875482f"
   checksum: a5bb9b0d8b4867912ecac8f04d21119a649c7fe6d3d74ca18782c5b5bf749d0dab6a3de6fb261d63d00620fcbd40c2f26e8aedab27c50d6fa7acc4fb1d45200c
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-tokens@npm:^6.14.0":
+  version: 6.14.0
+  resolution: "@navikt/ds-tokens@npm:6.14.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tokens%2F6.14.0%2F4c63a82666b9af2a594571435b09c05c184f8627"
+  checksum: 984b90315d56b6ee68174de3e17895d9302187bfa11f5763ce451652ee26e8fd4461b17d51b5418556db93877b2594806ad63dd5ee41641b008f360259d3fec3
   languageName: node
   linkType: hard
 
@@ -13125,10 +13164,10 @@ __metadata:
   resolution: "k9-sak-web@workspace:."
   dependencies:
     "@hookform/error-message": ^2.0.1
-    "@navikt/aksel-icons": 6.13.0
-    "@navikt/ds-css": 6.13.0
-    "@navikt/ds-react": 6.13.0
-    "@navikt/ds-tailwind": ^6.13.0
+    "@navikt/aksel-icons": 6.14.0
+    "@navikt/ds-css": 6.14.0
+    "@navikt/ds-react": 6.14.0
+    "@navikt/ds-tailwind": ^6.14.0
     "@navikt/familie-endringslogg": 12.0.2
     "@navikt/ft-plattform-komponenter": 3.0.3
     "@playwright/test": ^1.45.3
