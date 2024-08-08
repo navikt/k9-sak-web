@@ -8,7 +8,7 @@ import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import { UseQueryResult, useQueries } from '@tanstack/react-query';
 import axios from 'axios';
 import { Location } from 'history';
-import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { NavLink, useNavigate } from 'react-router-dom';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
@@ -156,18 +156,19 @@ const BehandlingPicker = ({
     }
   }, [behandlingId]);
 
+  const åpenBehandlingId = useMemo(finnÅpenBehandling, [behandlinger]);
+
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false;
       return;
     }
     if (!behandlingId) {
-      const åpenBehandlingId = finnÅpenBehandling();
       if (åpenBehandlingId) {
         navigate(getBehandlingLocation(åpenBehandlingId));
       }
     }
-  });
+  }, [behandlingId, åpenBehandlingId, firstRender.current]);
 
   const behandlingerSomSkalVises = useMemo(() => {
     const sorterteBehandlinger = sortBehandlinger(behandlinger);
