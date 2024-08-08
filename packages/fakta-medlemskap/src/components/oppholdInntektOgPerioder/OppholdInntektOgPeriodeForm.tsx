@@ -41,7 +41,7 @@ const transformValues = (values: OppholdInntektOgPeriodeFormState) => ({
 interface OppholdInntektOgPeriodeFormProps {
   selectedId?: string;
   readOnly: boolean;
-  updateOppholdInntektPeriode: (values) => void;
+  updateOppholdInntektPeriode: (values: OppholdInntektOgPeriodeFormState) => void;
   submittable: boolean;
   valgtPeriode: Periode;
   periodeResetCallback: () => void;
