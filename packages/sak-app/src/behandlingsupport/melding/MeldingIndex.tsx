@@ -15,6 +15,7 @@ import {
 } from '@k9-sak-web/types';
 import { useFpSakKodeverk } from '../../data/useKodeverk';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
+import { Alert } from '@navikt/ds-react';
 
 export interface BackendApi extends MeldingerSakIndexBackendApi {}
 
@@ -91,6 +92,9 @@ const MeldingIndex = ({
     (skalHenteRevAp && stateRevAp === RestApiState.LOADING)
   ) {
     return <LoadingPanel />;
+  }
+  if (skalHenteBrevmaler && stateBrevmaler === RestApiState.ERROR) {
+    return <Alert variant="error">Feil ved henting av maler. Brevsending ikke mulig</Alert>;
   }
 
   return (
