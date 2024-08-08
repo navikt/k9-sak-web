@@ -7,7 +7,7 @@ describe('<Periodpicker>', () => {
     const { container } = renderWithIntl(
       <Periodpicker
         names={['fromDate', 'toDate']}
-        // @ts-ignore
+        // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
         fromDate={{ input: { value: '30.08.2017' } }}
         toDate={{ input: { value: '31.10.2017' } }}
       />,

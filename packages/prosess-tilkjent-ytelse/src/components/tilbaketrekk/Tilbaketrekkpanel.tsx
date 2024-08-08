@@ -162,7 +162,6 @@ const lagSubmitFn = createSelector(
 
 const mapStateToProps = (state: any, ownProps: PureOwnProps): MappedOwnProps => ({
   onSubmit: lagSubmitFn(ownProps),
-  // @ts-ignore Fiks denne (reselect)
   initialValues: buildInitialValues(state, ownProps),
 });
 

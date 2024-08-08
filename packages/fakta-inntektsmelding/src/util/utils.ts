@@ -3,7 +3,6 @@ import Aksjonspunkt from '../types/Aksjonspunkt';
 import { Kode, TilstandBeriket } from '../types/KompletthetData';
 import Status from '../types/TilstandStatus';
 
-// eslint-disable-next-line import/prefer-default-export
 export const finnAktivtAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]): Aksjonspunkt =>
   aksjonspunkter.find(aksjonspunkt => aksjonspunkt.status.kode === 'OPPR');
 

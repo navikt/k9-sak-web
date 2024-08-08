@@ -43,7 +43,7 @@ import BelopetMottattIGodTroFormPanel, {
 } from './tilbakekrevingPeriodePaneler/godTro/BelopetMottattIGodTroFormPanel';
 
 const minLength3 = minLength(3);
-const maxLength1500 = maxLength(1500);
+const maxLength12000 = maxLength(12000);
 
 export const TILBAKEKREVING_PERIODE_FORM_NAME = 'TilbakekrevingPeriodeForm';
 
@@ -168,7 +168,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
     ) {
       this.setState((state: any) => ({ ...state, showModal: !showModal }));
     } else {
-      // @ts-ignore Kva med parametere?
+      // @ts-expect-error Kva med parametere?
       formProps.handleSubmit();
     }
   };
@@ -178,7 +178,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
     const { ...formProps } = this.props;
 
     this.setState((state: any) => ({ ...state, showModal: !showModal }));
-    // @ts-ignore Kva med parametere?
+    // @ts-expect-error Kva med parametere?
     formProps.handleSubmit();
   };
 
@@ -311,8 +311,8 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                   <TextAreaField
                     name="begrunnelse"
                     label={{ id: 'TilbakekrevingPeriodeForm.Vurdering' }}
-                    validate={[required, minLength3, maxLength1500, hasValidText]}
-                    maxLength={1500}
+                    validate={[required, minLength3, maxLength12000, hasValidText]}
+                    maxLength={12000}
                     readOnly={readOnly}
                     placeholder={intl.formatMessage({ id: 'TilbakekrevingPeriodeForm.Vurdering.Hjelpetekst' })}
                   />
@@ -330,7 +330,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                       value: vrt.kode,
                       label: <Label input={vrt.navn} textOnly />,
                     }))}
-                    // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
+                    // @ts-expect-error tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
                     onChange={this.resetFields}
                   />
                 </div>
@@ -360,8 +360,8 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                             ? 'TilbakekrevingPeriodeForm.VurderingMottattIGodTro'
                             : 'TilbakekrevingPeriodeForm.VurderingAktsomhet',
                       }}
-                      validate={[required, minLength3, maxLength1500, hasValidText]}
-                      maxLength={1500}
+                      validate={[required, minLength3, maxLength12000, hasValidText]}
+                      maxLength={12000}
                       readOnly={readOnly}
                     />
                     <VerticalSpacer eightPx />

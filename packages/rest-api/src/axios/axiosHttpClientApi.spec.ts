@@ -7,7 +7,6 @@ describe('axiosHttpClientApi', () => {
   let mockAxios;
 
   beforeAll(() => {
-    // @ts-ignore
     mockAxios = new MockAdapter(httpClientApi.axiosInstance);
   });
 

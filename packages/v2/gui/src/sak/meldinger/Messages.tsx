@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useReducer } from 'react';
+import { useEffect, useRef, useState, useReducer } from 'react';
 import { Button, Checkbox, HStack, Spacer, VStack } from '@navikt/ds-react';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
@@ -22,7 +22,8 @@ import FritekstForslagSelect from './FritekstForslagSelect.js';
 import FritekstInput, {
   type FritekstInputInvalid,
   type FritekstInputMethods,
-  type FritekstInputValue, type FritekstModus,
+  type FritekstInputValue,
+  type FritekstModus,
 } from './FritekstInput.js';
 import MalSelect from './MalSelect.jsx';
 import type { BehandlingInfo } from '../BehandlingInfo.js';
@@ -238,7 +239,7 @@ const Messages = ({
     onValgtMalChanged(valgtMal);
   }, [valgtMal]);
 
-  const fritekstModus: FritekstModus = valgtMal?.støtterTittelOgFritekst ? 'StørreFritekstOgTittel' : 'EnkelFritekst'
+  const fritekstModus: FritekstModus = valgtMal?.støtterTittelOgFritekst ? 'StørreFritekstOgTittel' : 'EnkelFritekst';
 
   const showFritekstInput = (valgtMal?.støtterFritekst || valgtMal?.støtterTittelOgFritekst) ?? false;
 
@@ -246,7 +247,11 @@ const Messages = ({
   const resolveFritekstbrevinnholdDto = (
     fritekstInputValue: FritekstInputValue | FritekstInputInvalid | undefined,
   ): FritekstbrevinnholdDto | undefined => {
-    if (fritekstModus === 'StørreFritekstOgTittel' && fritekstInputValue?.tittel !== undefined && fritekstInputValue?.tekst !== undefined) {
+    if (
+      fritekstModus === 'StørreFritekstOgTittel' &&
+      fritekstInputValue?.tittel !== undefined &&
+      fritekstInputValue?.tekst !== undefined
+    ) {
       return {
         overskrift: fritekstInputValue.tittel,
         brødtekst: fritekstInputValue.tekst,
