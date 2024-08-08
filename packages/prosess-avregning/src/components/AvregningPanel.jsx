@@ -31,7 +31,6 @@ import styles from './avregningPanel.module.css';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
-const maxLength12000 = maxLength(12000);
 const simuleringAksjonspunkter = [aksjonspunktCodes.VURDER_FEILUTBETALING];
 const formName = 'AvregnigForm';
 const IKKE_SEND = 'IKKE_SEND';
@@ -157,8 +156,8 @@ export class AvregningPanelImpl extends Component {
                 <TextAreaField
                   name="begrunnelse"
                   label={{ id: 'Avregning.vurdering' }}
-                  validate={[required, minLength3, maxLength12000, hasValidText]}
-                  maxLength={12000}
+                  validate={[required, minLength3, maxLength1500, hasValidText]}
+                  maxLength={1500}
                   readOnly={readOnly}
                   id="avregningVurdering"
                 />
@@ -200,8 +199,8 @@ export class AvregningPanelImpl extends Component {
                                       <TextAreaField
                                         name="varseltekst"
                                         label={{ id: 'Avregning.fritekst' }}
-                                        validate={[required, minLength3, maxLength12000, hasValidText]}
-                                        maxLength={12000}
+                                        validate={[required, minLength3, maxLength1500, hasValidText]}
+                                        maxLength={1500}
                                         readOnly={readOnly}
                                         id="avregningFritekst"
                                         badges={[
