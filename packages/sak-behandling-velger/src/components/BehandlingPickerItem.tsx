@@ -27,7 +27,7 @@ const getContentProps = (
     ? getKodeverkFn(behandling.behandlingsresultat.type, behandling.type).navn
     : undefined,
   behandlingsresultatTypeKode: behandling.behandlingsresultat ? behandling.behandlingsresultat.type.kode : undefined,
-  erFerdigstilt: !!behandling.avsluttet
+  erFerdigstilt: !!behandling.avsluttet,
 });
 
 const renderItemContent = (

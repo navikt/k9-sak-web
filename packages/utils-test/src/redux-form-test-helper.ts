@@ -120,7 +120,6 @@ export class MockFields implements FieldArrayFieldsProps<any> {
 
   constructor(name?: string, len?: number) {
     const formatName = index => `${name}[${index}]`;
-    // @ts-ignore Fiks
     const array = [...new Array(len).keys()].map(formatName); // NOSONAR
 
     this.array = array;

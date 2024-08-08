@@ -38,10 +38,10 @@ const createNormalizeOnBlurField = WrappedNavFieldComponent => {
     blurHandler({ input: { onBlur, ...input }, ...props }) {
       const { normalizeOnBlur, component: Comp } = this.props;
       return (
-        // @ts-ignore TODO Fiks
+        // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
         <Comp
           {...props}
-          // @ts-ignore TODO Fiks
+          // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
           input={{
             ...input,
             onBlur: event => {
@@ -89,7 +89,7 @@ const DecimalField = ({
   <NormalizeOnBlurField
     name={name}
     validate={validate}
-    // @ts-ignore TODO Fiks
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     component={readOnly ? ReadOnlyField : renderNavInput}
     type={type}
     label={label}

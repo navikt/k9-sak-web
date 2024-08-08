@@ -62,7 +62,7 @@ const SelectField = ({
     hideValueOnDisable={hideValueOnDisable}
     {...otherProps}
     readOnly={readOnly}
-    // @ts-ignore TODO Fiks
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     readOnlyHideEmpty
     placeholder={placeholder}
   />
