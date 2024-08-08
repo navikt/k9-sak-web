@@ -48,7 +48,7 @@ export const featureTogglesFactory = () => [
   {
     key: "ALDERSVILKAR_KRONISK_SYK",
     value: process.env.VITE_ALDERSVILKAR_KRONISK_SYK
-  }
+  },
   {
     key: 'FRITEKST_REDIGERING',
     value: process.env.VITE_FRITEKST_REDIGERING,
