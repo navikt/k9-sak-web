@@ -168,6 +168,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'NYTT_REFUSJONSKRAV',
     feltId: 'HistorikkEndretFelt.NyttRefusjonskrav',
   },
+  OPPHOER_REFUSJON: {
+    kode: 'OPPHOER_REFUSJON',
+    feltId: 'HistorikkEndretFelt.OpphoerRefusjon',
+  },
   OMSORGSVILKAR: {
     kode: 'OMSORGSVILKAR',
     feltId: 'HistorikkEndretFelt.ApplicationInformation',
