@@ -1,14 +1,46 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import messages from '../../../i18n/nb_NO.json';
+import { MedlemskapPeriode } from './Medlemskap';
+import { Periode } from './Periode';
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
+import { Soknad } from './Soknad';
 
 describe('<PerioderMedMedlemskapFaktaPanel>', () => {
+  const Wrapper = props => {
+    const formMethods = useForm({
+      defaultValues: {
+        oppholdInntektOgPeriodeForm: {
+          fixedMedlemskapPerioder: props.perioder,
+          hasPeriodeAksjonspunkt: true,
+        },
+      },
+    });
+
+    return <FormProvider {...formMethods}>{props.children}</FormProvider>;
+  };
+
+  const manuelleVurderingstyper = [
+    {
+      kode: 'test1',
+      kodeverk: '',
+      navn: 'navn1',
+    },
+    {
+      kode: 'test2',
+      kodeverk: '',
+      navn: 'navn2',
+    },
+  ];
+
   it('skal vise periode og manuelle-vurderingstyper i form', () => {
-    const periods = [
+    const perioder = [
       {
         fom: '2016-01-15',
         tom: '2016-10-15',
@@ -17,26 +49,15 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         beslutningsdato: '2016-10-16',
       },
     ];
-    const manuelleVurderingstyper = [
-      {
-        kode: 'test1',
-        navn: 'navn1',
-      },
-      {
-        kode: 'test2',
-        navn: 'navn2',
-      },
-    ];
 
-    renderWithIntlAndReduxForm(
-      <PerioderMedMedlemskapFaktaPanel.WrappedComponent
-        hasPeriodeAksjonspunkt
-        isPeriodAksjonspunktClosed={false}
-        fixedMedlemskapPerioder={periods}
-        readOnly={false}
-        vurderingTypes={manuelleVurderingstyper}
-        alleMerknaderFraBeslutter={{}}
-      />,
+    renderWithIntl(
+      <Wrapper perioder={perioder}>
+        <PerioderMedMedlemskapFaktaPanel
+          readOnly={false}
+          alleKodeverk={{ [kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE]: manuelleVurderingstyper }}
+          alleMerknaderFraBeslutter={{ notAccepted: false }}
+        />
+      </Wrapper>,
       { messages },
     );
 
@@ -47,7 +68,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
   });
 
   it('skal vise fødselsdato når en har dette', () => {
-    const periods = [
+    const perioder = [
       {
         fom: '2016-01-15',
         tom: '2016-10-15',
@@ -57,16 +78,15 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     ];
 
-    renderWithIntlAndReduxForm(
-      <PerioderMedMedlemskapFaktaPanel.WrappedComponent
-        hasPeriodeAksjonspunkt
-        isPeriodAksjonspunktClosed={false}
-        fixedMedlemskapPerioder={periods}
-        readOnly={false}
-        fodselsdato="2016-10-16"
-        vurderingTypes={[]}
-        alleMerknaderFraBeslutter={{}}
-      />,
+    renderWithIntl(
+      <Wrapper perioder={perioder}>
+        <PerioderMedMedlemskapFaktaPanel
+          readOnly={false}
+          fodselsdato="2016-10-16"
+          alleKodeverk={{ [kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE]: manuelleVurderingstyper }}
+          alleMerknaderFraBeslutter={{ notAccepted: false }}
+        />
+      </Wrapper>,
       { messages },
     );
 
@@ -84,34 +104,31 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     ];
 
-    renderWithIntlAndReduxForm(
-      <PerioderMedMedlemskapFaktaPanel.WrappedComponent
-        hasPeriodeAksjonspunkt
-        isPeriodAksjonspunktClosed={false}
-        readOnly={false}
-        fixedMedlemskapPerioder={perioder}
-        vurderingTypes={[]}
-        alleMerknaderFraBeslutter={{}}
-      />,
+    renderWithIntl(
+      <Wrapper perioder={perioder}>
+        <PerioderMedMedlemskapFaktaPanel
+          readOnly={false}
+          alleKodeverk={{ [kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE]: manuelleVurderingstyper }}
+          alleMerknaderFraBeslutter={{ notAccepted: false }}
+        />
+      </Wrapper>,
       { messages },
     );
 
-    screen.debug();
     expect(screen.getByRole('table')).toBeInTheDocument();
   });
 
   it('skal ikke vise tabell når det ikke finnes medlemskapsperioder', () => {
-    const medlemskapPerioder = [];
+    const perioder = [];
 
-    renderWithIntlAndReduxForm(
-      <PerioderMedMedlemskapFaktaPanel.WrappedComponent
-        hasPeriodeAksjonspunkt
-        isPeriodAksjonspunktClosed={false}
-        fixedMedlemskapPerioder={medlemskapPerioder}
-        readOnly={false}
-        vurderingTypes={[]}
-        alleMerknaderFraBeslutter={{}}
-      />,
+    renderWithIntl(
+      <Wrapper perioder={perioder}>
+        <PerioderMedMedlemskapFaktaPanel
+          readOnly={false}
+          alleKodeverk={{ [kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE]: manuelleVurderingstyper }}
+          alleMerknaderFraBeslutter={{ notAccepted: false }}
+        />
+      </Wrapper>,
       { messages },
     );
 
@@ -119,73 +136,74 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
   });
 
   it('skal sette opp initielle verdier og sorterte perioder etter periodestart', () => {
-    const periode = {
+    const periode: Periode = {
       aksjonspunkter: [aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE],
-      medlemskapManuellVurderingType: 'manuellType',
-      medlemskapPerioder: [
-        {
-          fom: '2016-01-15',
-          tom: '2016-10-15',
-          dekningType: {
-            navn: 'testdekning',
-          },
-          medlemskapType: {
-            navn: 'testStatus',
-          },
-          beslutningsdato: '2016-10-16',
-        },
-        {
-          fom: '2017-01-15',
-          tom: '2017-10-15',
-          dekningType: {
-            navn: 'testdekning2017',
-          },
-          medlemskapType: {
-            navn: 'testStatus2017',
-          },
-          beslutningsdato: '2017-10-16',
-        },
-      ],
+      medlemskapManuellVurderingType: { kode: 'manuellType', kodeverk: '' },
+      id: '',
+      vurderingsdato: '',
+      årsaker: [],
+      begrunnelse: '',
+      personopplysninger: undefined,
+      bosattVurdering: false,
+      vurdertAv: '',
+      vurdertTidspunkt: '',
+      isBosattAksjonspunktClosed: false,
+      isPeriodAksjonspunktClosed: false,
+      dekningType: undefined,
     };
-    const medlemskapPerioder = [
+    const medlemskapPerioder: MedlemskapPeriode[] = [
       {
         fom: '2016-01-15',
         tom: '2016-10-15',
         dekningType: {
           kode: 'DEK_TYPE',
+          kodeverk: '',
         },
         medlemskapType: {
           kode: 'M_STATUS',
+          kodeverk: '',
         },
         beslutningsdato: '2016-10-16',
+        kildeType: undefined,
       },
       {
         fom: '2017-01-15',
         tom: '2017-10-15',
         dekningType: {
           kode: 'DEK_TYPE2',
+          kodeverk: '',
         },
         medlemskapType: {
           kode: 'M_STATUS2',
+          kodeverk: '',
         },
         beslutningsdato: '2017-10-16',
+        kildeType: undefined,
       },
     ];
 
-    const soknad = {
-      fodselsdatoer: {
-        1: '2017-10-15',
+    const soknad: Soknad = {
+      fodselsdatoer: ['2017-10-15'],
+      oppgittFordeling: {
+        startDatoForPermisjon: '',
+      },
+      oppgittTilknytning: {
+        utlandsopphold: [],
       },
     };
 
-    const aksjonspunkter = [
+    const aksjonspunkter: Aksjonspunkt[] = [
       {
         definisjon: {
           kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
+          kodeverk: '',
         },
         status: {
           kode: aksjonspunktStatus.OPPRETTET,
+          kodeverk: '',
         },
+        kanLoses: false,
+        erAktivt: false,
       },
     ];
     const getKodeverknavn = kodeverk => {
@@ -229,7 +247,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         },
       ],
       isPeriodAksjonspunktClosed: false,
-      medlemskapManuellVurderingType: 'manuellType',
+      medlemskapManuellVurderingType: { kode: 'manuellType', kodeverk: '' },
       fodselsdato: '2017-10-15',
       hasPeriodeAksjonspunkt: true,
     });
