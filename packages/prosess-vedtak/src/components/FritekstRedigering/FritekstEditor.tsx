@@ -2,7 +2,7 @@
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Cancel } from '@navikt/ds-icons';
 import { Alert, Button, HGrid, Heading, Modal } from '@navikt/ds-react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import InkluderKalenderCheckbox from '../InkluderKalenderCheckbox';
 import PreviewLink from '../PreviewLink';
@@ -16,7 +16,6 @@ interface ownProps {
   handleSubmit: (value: string) => void;
   lukkEditor: () => void;
   handleForhåndsvis: (event: React.SyntheticEvent, html: string) => void;
-  oppdaterFormFelt: (html: string) => void;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
   kanInkludereKalender: boolean;
   skalBrukeOverstyrendeFritekstBrev: boolean;
@@ -29,13 +28,22 @@ interface ownProps {
   brevStiler: string;
 }
 
-const editor = new EditorJSWrapper();
+const debounce = funksjon => {
+  let teller;
+  return function lagre(...args) {
+    const context = this;
+    if (teller) clearTimeout(teller);
+    teller = setTimeout(() => {
+      teller = null;
+      funksjon.apply(context, args);
+    }, 1000);
+  };
+};
 
 const FritekstEditor = ({
   handleSubmit,
   lukkEditor,
   handleForhåndsvis,
-  oppdaterFormFelt,
   setFieldValue,
   kanInkludereKalender,
   skalBrukeOverstyrendeFritekstBrev,
@@ -50,66 +58,87 @@ const FritekstEditor = ({
 }: ownProps & WrappedComponentProps) => {
   const [visAdvarsel, setVisAdvarsel] = useState<boolean>(false);
   const [visValideringsFeil, setVisValideringsFeil] = useState<boolean>(false);
+  const editorRef = useRef<EditorJSWrapper | null>(null);
+  const lastSubmitHtml = useRef(redigerbartInnhold);
+  const initImportNotDone = useRef(true);
 
-  const handleLagre = async () => {
-    const html = await editor.lagre();
-    handleSubmit(html);
-  };
+  // useCallback to avoid recreation of this on every re-render of component
+  const handleLagre = useCallback(async () => {
+    const editor = editorRef.current;
+    if (editor !== null) {
+      await editor.erKlar();
+      const html = await editor.lagre();
+      if (html !== lastSubmitHtml.current) {
+        handleSubmit(html);
+        lastSubmitHtml.current = html;
+      }
+    }
+  }, [handleSubmit]);
 
-  const debounce = funksjon => {
-    let teller;
-    return function lagre(...args) {
-      const context = this;
-      if (teller) clearTimeout(teller);
-      teller = setTimeout(() => {
-        teller = null;
-        funksjon.apply(context, args);
-      }, 1000);
-    };
-  };
+  // useCallback to avoid recreation of this on every re-render of component
+  const debouncedLagre = useCallback(debounce(handleLagre), [handleLagre]);
 
-  const debouncedLagre = useCallback(debounce(handleLagre), []);
-
-  const onChange = () => {
+  // useCallback to avoid recreation of this on every re-render of component, since that would require recreating the editor on every re-render.
+  const onChange = useCallback(() => {
     if (!readOnly) {
       debouncedLagre();
     }
-  };
+  }, [readOnly, debouncedLagre]);
 
-  const lastEditor = async () => {
-    await editor.init({ holder: 'rediger-brev', onChange });
-    await editor.importer(redigerbartInnhold);
-    const html = await editor.lagre();
-    oppdaterFormFelt(html);
-  };
-
+  // Create new instance of editor (wrapper) when neccessary
   useEffect(() => {
-    if (redigerbartInnholdKlart && !readOnly) {
-      lastEditor();
-    }
-  }, [redigerbartInnholdKlart, readOnly]);
+    editorRef.current = new EditorJSWrapper({ holder: 'rediger-brev', onChange });
+  }, [onChange]);
 
-  const handleLagreOgLukk = () => {
-    handleLagre();
+  // Last innhold inn i editor ved første initialisering, eller viss redigerbartInnhold har blir endra utanfrå.
+  useEffect(() => {
+    const lastEditor = async (editor: EditorJSWrapper) => {
+      if (initImportNotDone.current || lastSubmitHtml.current !== redigerbartInnhold) {
+        await editor.importer(redigerbartInnhold);
+        initImportNotDone.current = false;
+      }
+    };
+    const editor = editorRef.current;
+    if (editor !== null) {
+      if (redigerbartInnholdKlart && !readOnly) {
+        lastEditor(editor);
+      }
+    } else {
+      throw new Error(`Unexpectedly no editor instance available`);
+    }
+  }, [redigerbartInnhold, redigerbartInnholdKlart, readOnly]);
+
+  const handleLagreOgLukk = async () => {
+    await handleLagre();
     lukkEditor();
   };
 
   const onForhåndsvis = async e => {
-    const html = await editor.lagre();
-    const validert = await validerRedigertHtml.isValid(html);
+    const editor = editorRef.current;
+    if (editor !== null) {
+      const html = await editor.lagre();
+      const validert = await validerRedigertHtml.isValid(html);
 
-    if (validert) {
-      setVisValideringsFeil(false);
-      handleForhåndsvis(e, html);
+      if (validert) {
+        setVisValideringsFeil(false);
+        handleForhåndsvis(e, html);
+      } else {
+        setVisValideringsFeil(true);
+      }
     } else {
-      setVisValideringsFeil(true);
+      throw new Error(`Fritekstredigering ikke initialisert. Kan ikke lage forhåndsvisning.`);
     }
   };
 
   const handleTilbakestill = async () => {
-    await editor.importer(originalHtml);
-    setVisAdvarsel(false);
-    handleLagre();
+    const editor = editorRef.current;
+    if (editor !== null) {
+      await editor.importer(originalHtml);
+      setVisAdvarsel(false);
+      await handleLagre();
+    } else {
+      console.warn('Fritekstredigering ikke initialisert. Kan ikke tilbakestille.');
+    }
   };
 
   return (
