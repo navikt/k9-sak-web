@@ -7,7 +7,7 @@ import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import { RadioGroupPanel } from '@navikt/ft-form-hooks';
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 
 import { BostedSokerPersonopplysninger } from '@fpsak-frontend/fakta-bosted-soker/src/BostedSokerFaktaIndex';
 import { Aksjonspunkt, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
@@ -180,13 +180,9 @@ OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (
     parents.push(createParent(false, personopplysninger.annenPart));
   }
 
-  const filteredAp = aksjonspunkter.filter(
-    ap =>
-      periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT) ||
-      (periode.aksjonspunkter.length > 0 &&
-        periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT) &&
-        ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
-  );
+  const filteredAp = periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT)
+    ? aksjonspunkter
+    : aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP);
 
   return {
     opphold,

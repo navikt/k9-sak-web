@@ -14,7 +14,7 @@ import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Alert, Button } from '@navikt/ds-react';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import moment from 'moment';
-import React, { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import {
   OppholdInntektOgPeriodeFormState,
