@@ -43,7 +43,7 @@ import BelopetMottattIGodTroFormPanel, {
 } from './tilbakekrevingPeriodePaneler/godTro/BelopetMottattIGodTroFormPanel';
 
 const minLength3 = minLength(3);
-const maxLength12000 = maxLength(12000);
+const maxLength1500 = maxLength(1500);
 
 export const TILBAKEKREVING_PERIODE_FORM_NAME = 'TilbakekrevingPeriodeForm';
 
@@ -311,8 +311,8 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                   <TextAreaField
                     name="begrunnelse"
                     label={{ id: 'TilbakekrevingPeriodeForm.Vurdering' }}
-                    validate={[required, minLength3, maxLength12000, hasValidText]}
-                    maxLength={12000}
+                    validate={[required, minLength3, maxLength1500, hasValidText]}
+                    maxLength={1500}
                     readOnly={readOnly}
                     placeholder={intl.formatMessage({ id: 'TilbakekrevingPeriodeForm.Vurdering.Hjelpetekst' })}
                   />
@@ -360,8 +360,8 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
                             ? 'TilbakekrevingPeriodeForm.VurderingMottattIGodTro'
                             : 'TilbakekrevingPeriodeForm.VurderingAktsomhet',
                       }}
-                      validate={[required, minLength3, maxLength12000, hasValidText]}
-                      maxLength={12000}
+                      validate={[required, minLength3, maxLength1500, hasValidText]}
+                      maxLength={1500}
                       readOnly={readOnly}
                     />
                     <VerticalSpacer eightPx />
