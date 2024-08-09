@@ -5367,6 +5367,11 @@
       "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
     },
     {
+      "kode": "OPPHOER_REFUSJON",
+      "navn": "Dato for opphør av refusjon",
+      "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
+    },
+    {
       "kode": "DAGPENGER_INNTEKT",
       "navn": "Dagpenger",
       "kodeverk": "HISTORIKK_ENDRET_FELT_TYPE"
