@@ -33,6 +33,7 @@ interface OwnPropsFaktaGruppe {
   titleCode?: string;
   withoutBorder?: boolean;
   className?: string;
+  useIntl?: boolean;
 }
 
 /**
@@ -47,6 +48,7 @@ const FaktaGruppe = ({
   children,
   withoutBorder = false,
   className = '',
+  useIntl = true,
 }: OwnPropsFaktaGruppe) => {
   const error = !!(merknaderFraBeslutter && merknaderFraBeslutter.notAccepted);
   return (
@@ -54,7 +56,7 @@ const FaktaGruppe = ({
       {titleCode && (
         <div>
           <Label size="small" as="p">
-            <FormattedMessage id={titleCode} />
+            {useIntl ? <FormattedMessage id={titleCode} /> : titleCode}
           </Label>
           <VerticalSpacer twentyPx />
         </div>

@@ -2,6 +2,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import { Textarea } from '@navikt/ds-react';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { getError } from './formUtils';
 
 interface TextAreaProps {
   label?: React.ReactNode;
@@ -28,13 +29,13 @@ const TextArea = ({ label, name, validators, textareaClass, id, disabled }: Text
       }}
       render={({ field }) => {
         const { value, onChange } = field;
-        const textAreaValue = value?.length === 0 ? '' : value;
+        const textAreaValue = value ?? '';
         return (
           <Textarea
             value={textAreaValue}
             label={label}
             maxLength={0}
-            error={errors[name]?.message && <ErrorMessage errors={errors} name={name} />}
+            error={getError(errors, name) && <ErrorMessage errors={errors} name={name} />}
             id={id}
             name={name}
             onChange={onChange}
