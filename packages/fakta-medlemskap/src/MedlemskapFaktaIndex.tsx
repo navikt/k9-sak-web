@@ -1,5 +1,4 @@
 import { Aksjonspunkt, Behandling, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
-import React from 'react';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import MedlemskapInfoPanel from './components/MedlemskapInfoPanel';
@@ -17,7 +16,7 @@ const intl = createIntl(
   cache,
 );
 
-interface MedlemskapFaktaIndexProps {
+export interface MedlemskapFaktaIndexProps {
   behandling: Behandling;
   medlemskap: Medlemskap;
   soknad?: Soknad;
