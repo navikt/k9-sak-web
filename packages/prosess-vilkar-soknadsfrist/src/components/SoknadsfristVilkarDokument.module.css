@@ -11,3 +11,10 @@
 .fullBreddeIE {
   width: 100%;
 }
+
+.editButton {
+  :global(.navds-label) {
+    font-size: 0.875rem;
+    text-decoration: underline;
+  }
+}
