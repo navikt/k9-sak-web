@@ -5,7 +5,7 @@ import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePer
 import { Aksjonspunkt, Behandling, KodeverkMedNavn, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
-import React, { SetStateAction, useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringForm';
@@ -133,12 +133,10 @@ const VilkarresultatMedOverstyringProsessIndex = ({
               aksjonspunkter={aksjonspunkter}
               submitCallback={submitCallback}
               overrideReadOnly={overrideReadOnly}
-              kanOverstyreAccess={kanOverstyreAccess}
               toggleOverstyring={toggleOverstyring}
               avslagsarsaker={avslagsarsaker}
               status={activePeriode.vilkarStatus.kode}
               erOverstyrt={erOverstyrt}
-              panelTittelKode={panelTittelKode}
               overstyringApKode={overstyringApKode}
               lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
               erMedlemskapsPanel={erMedlemskapsPanel}
@@ -159,12 +157,10 @@ const VilkarresultatMedOverstyringProsessIndex = ({
               aksjonspunkter={aksjonspunkter}
               submitCallback={submitCallback}
               overrideReadOnly={overrideReadOnly}
-              kanOverstyreAccess={kanOverstyreAccess}
               toggleOverstyring={toggleOverstyring}
               avslagsarsaker={avslagsarsaker}
               status={activePeriode.vilkarStatus.kode}
               erOverstyrt={erOverstyrt}
-              panelTittelKode={panelTittelKode}
               overstyringApKode={overstyringApKode}
               lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
               erMedlemskapsPanel={erMedlemskapsPanel}

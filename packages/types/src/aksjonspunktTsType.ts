@@ -13,6 +13,7 @@ export type Aksjonspunkt = Readonly<{
   kanLoses: boolean;
   erAktivt: boolean;
   venteårsakVariant?: string;
+  opprettetAv?: string;
 }>;
 
 export default Aksjonspunkt;

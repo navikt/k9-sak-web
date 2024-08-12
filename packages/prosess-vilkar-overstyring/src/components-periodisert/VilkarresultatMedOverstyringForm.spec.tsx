@@ -1,9 +1,7 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { vilkarUtfallPeriodisert } from '@k9-sak-web/types';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import { VilkarresultatMedOverstyringForm } from './VilkarresultatMedOverstyringForm';
 
@@ -12,7 +10,6 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
     renderWithIntlAndReduxForm(
       <VilkarresultatMedOverstyringForm
         {...reduxFormPropsMock}
-        erVilkarOk={vilkarUtfallPeriodisert.OPPFYLT}
         isReadOnly
         overstyringApKode="5011"
         avslagsarsaker={[
@@ -38,11 +35,6 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         medlemskapFom="10.10.2010"
         status=""
         submitCallback={() => undefined}
-        isSolvable
-        periodeFom="2019-01-01"
-        periodeTom="2020-01-01"
-        valgtPeriodeFom="2019-01-01"
-        valgtPeriodeTom="2020-01-01"
       />,
       { messages },
     );
