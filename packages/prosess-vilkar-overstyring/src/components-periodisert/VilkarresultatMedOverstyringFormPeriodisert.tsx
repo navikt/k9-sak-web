@@ -23,7 +23,7 @@ import { FormattedMessage } from 'react-intl';
 import { VilkarresultatMedOverstyringFormState } from './FormState';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
-import styles from './vilkarresultatMedOverstyringForm.module.css';
+import styles from './vilkarresultatMedOverstyringFormPeriodisert.module.css';
 
 // const getFormName = (overstyringApKode: string) => `VilkarresultatForm_${overstyringApKode}`;
 
@@ -73,7 +73,9 @@ interface VilkarresultatMedOverstyringFormProps {
  * Presentasjonskomponent. Viser resultat av vilkårskjøring når det ikke finnes tilknyttede aksjonspunkter.
  * Resultatet kan overstyres av Nav-ansatt med overstyr-rettighet.
  */
-export const VilkarresultatMedOverstyringForm: FunctionComponent<Partial<VilkarresultatMedOverstyringFormProps>> = ({
+export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
+  Partial<VilkarresultatMedOverstyringFormProps>
+> = ({
   aksjonspunkter,
   avslagKode,
   avslagsarsaker,
@@ -292,4 +294,4 @@ const transformValues = (
 //   };
 // };
 
-export default VilkarresultatMedOverstyringForm;
+export default VilkarresultatMedOverstyringFormPeriodisert;

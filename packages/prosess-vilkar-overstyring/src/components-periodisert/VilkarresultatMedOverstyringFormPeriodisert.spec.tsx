@@ -3,12 +3,12 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-h
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import messages from '../../i18n/nb_NO.json';
-import { VilkarresultatMedOverstyringForm } from './VilkarresultatMedOverstyringForm';
+import { VilkarresultatMedOverstyringFormPeriodisert } from './VilkarresultatMedOverstyringFormPeriodisert';
 
 describe('<VilkarresultatMedOverstyringForm>', () => {
   it('skal rendre form med knapp når vilkåret er overstyrt', () => {
     renderWithIntlAndReduxForm(
-      <VilkarresultatMedOverstyringForm
+      <VilkarresultatMedOverstyringFormPeriodisert
         {...reduxFormPropsMock}
         isReadOnly
         overstyringApKode="5011"

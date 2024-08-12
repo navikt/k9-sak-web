@@ -8,7 +8,7 @@ import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { FunctionComponent } from 'react';
 import { VilkarresultatMedBegrunnelseState } from './FormState';
 import VilkarBegrunnelse from './VilkarBegrunnelse';
-import { CustomVilkarText } from './VilkarresultatMedOverstyringForm';
+import { CustomVilkarText } from './VilkarresultatMedOverstyringFormPeriodisert';
 
 interface VilkarresultatMedBegrunnelseProps {
   erVilkarOk?: string;
