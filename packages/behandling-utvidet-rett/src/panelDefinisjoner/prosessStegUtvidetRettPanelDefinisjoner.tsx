@@ -6,21 +6,25 @@ import AlderProsessStegPanelDef from './prosessStegPaneler/AlderProsessStegPanel
 
 const prosessStegUtvidetRettPanelDefinisjoner = (
   erFagytelseTypeAleneOmOmsorgen: boolean,
+  erFagytelseTypeKroniskSyk: boolean,
   featureToggles: FeatureToggles,
 ) => {
-  if (featureToggles.AKSJONSPUNKT_9015)
-    return erFagytelseTypeAleneOmOmsorgen
+  if (featureToggles.AKSJONSPUNKT_9015) {
+    const visAlderProsessSteg = erFagytelseTypeAleneOmOmsorgen || (erFagytelseTypeKroniskSyk && featureToggles.ALDERSVILKAR_KRONISK_SYK);
+
+    return visAlderProsessSteg
       ? [
-          new AlderProsessStegPanelDef(),
-          new InngangsvilkarProsessStegPanelDef(),
-          new UtvidetRettProsessStegPanelDef(erFagytelseTypeAleneOmOmsorgen),
-          new VedtakProsessStegPanelDef(),
-        ]
+        new AlderProsessStegPanelDef(),
+        new InngangsvilkarProsessStegPanelDef(),
+        new UtvidetRettProsessStegPanelDef(erFagytelseTypeAleneOmOmsorgen),
+        new VedtakProsessStegPanelDef(),
+      ]
       : [
-          new InngangsvilkarProsessStegPanelDef(),
-          new UtvidetRettProsessStegPanelDef(erFagytelseTypeAleneOmOmsorgen),
-          new VedtakProsessStegPanelDef(),
-        ];
+        new InngangsvilkarProsessStegPanelDef(),
+        new UtvidetRettProsessStegPanelDef(erFagytelseTypeAleneOmOmsorgen),
+        new VedtakProsessStegPanelDef(),
+      ];
+  }
 
   return [
     new InngangsvilkarProsessStegPanelDef(),
