@@ -70,6 +70,7 @@ export const VilkarresultatMedOverstyringForm = ({
   overstyringApKode,
   periode,
   submitCallback,
+  status,
   toggleOverstyring,
 }: Partial<VilkarresultatMedOverstyringFormProps>) => {
   const buildInitialValues = (): VilkarresultatMedOverstyringFormState => {

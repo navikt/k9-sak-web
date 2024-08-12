@@ -86,6 +86,7 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
   overrideReadOnly,
   overstyringApKode,
   periode,
+  status,
   submitCallback,
   toggleOverstyring,
   visPeriodisering,
