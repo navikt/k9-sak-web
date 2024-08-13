@@ -94,11 +94,10 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
       )}
       {erVilkarOk !== undefined && !erVilkarOk && avslagsarsaker && (
         <>
-          <VerticalSpacer eightPx />
+          <VerticalSpacer sixteenPx />
           <SelectField
             name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
             label="Avslagsårsak"
-            // placeholder={intl.formatMessage({ id: 'VilkarResultPicker.SelectArsak' })}
             selectValues={avslagsarsaker.map(aa => (
               <option key={aa.kode} value={aa.kode}>
                 {aa.navn}
@@ -107,12 +106,15 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
             readOnly={readOnly}
           />
           {erMedlemskapsPanel && (
-            <Datepicker
-              name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagDato`}
-              label="Dato"
-              isReadOnly={readOnly}
-              validate={[required, hasValidDate]}
-            />
+            <>
+              <VerticalSpacer eightPx />
+              <Datepicker
+                name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagDato`}
+                label="Dato"
+                isReadOnly={readOnly}
+                validate={[required, hasValidDate]}
+              />
+            </>
           )}
         </>
       )}

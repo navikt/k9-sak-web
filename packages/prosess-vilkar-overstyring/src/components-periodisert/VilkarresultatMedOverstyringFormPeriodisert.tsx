@@ -138,10 +138,10 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
   const opprettetAv = overstyringAksjonspunkt ? overstyringAksjonspunkt.opprettetAv : '';
 
   return (
-    <Form data-testid="overstyringform" formMethods={formMethods} onSubmit={onSubmit}>
+    <Form formMethods={formMethods} onSubmit={onSubmit}>
       {(erOverstyrt || hasAksjonspunkt) && (
         <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={erOverstyrt}>
-          <Label size="small" as="p">
+          <Label data-testid="overstyringform" size="small" as="p">
             <FormattedMessage id="VilkarresultatMedOverstyringForm.AutomatiskVurdering" />
           </Label>
           <VerticalSpacer eightPx />

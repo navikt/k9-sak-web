@@ -150,7 +150,6 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
             <SelectField
               name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
               label="Avslagsårsak"
-              // placeholder={intl.formatMessage({ id: 'VilkarResultPicker.SelectArsak' })}
               selectValues={avslagsarsaker.map(aa => (
                 <option key={aa.kode} value={aa.kode}>
                   {aa.navn}
@@ -186,7 +185,6 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
               <SelectField
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
                 label="Avslagsårsak"
-                // placeholder={intl.formatMessage({ id: 'VilkarResultPicker.SelectArsak' })}
                 selectValues={avslagsarsaker.map(aa => (
                   <option key={aa.kode} value={aa.kode}>
                     {aa.navn}

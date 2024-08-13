@@ -1,5 +1,4 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import messages from '../../i18n/nb_NO.json';
@@ -9,7 +8,6 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
   it('skal rendre form med knapp når vilkåret er overstyrt', () => {
     renderWithIntlAndReduxForm(
       <VilkarresultatMedOverstyringFormPeriodisert
-        {...reduxFormPropsMock}
         isReadOnly
         overstyringApKode="5011"
         avslagsarsaker={[
@@ -35,6 +33,14 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         medlemskapFom="10.10.2010"
         status=""
         submitCallback={() => undefined}
+        periode={{
+          periode: {
+            fom: '2020-01-01',
+            tom: '2020-01-31',
+          },
+          merknadParametere: {},
+          vilkarStatus: { kode: 'test', kodeverk: 'test' },
+        }}
       />,
       { messages },
     );
