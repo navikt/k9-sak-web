@@ -123,8 +123,7 @@
   "resolutions": {
     "postcss": "8.4.40",
     "parse-url": "8.1.0",
-    "@types/react": "17",
-    "@editorjs/editorjs": "2.27.2"
+    "@types/react": "17"
   },
   "msw": {
     "workerDirectory": "public"
