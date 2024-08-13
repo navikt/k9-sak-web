@@ -8,7 +8,7 @@ import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils
 import { Aksjonspunkt, KodeverkMedNavn, Periode, Vilkarperiode, vilkarUtfallPeriodisert } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
 import { Datepicker, RadioGroupPanel, SelectField } from '@navikt/ft-form-hooks';
-import { parse } from 'date-fns';
+import { isAfter, isBefore, parse } from 'date-fns';
 import { FunctionComponent, ReactNode } from 'react';
 import styles from './vilkarResultPicker.module.css';
 
@@ -75,15 +75,15 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
   valgtPeriodeFom,
   valgtPeriodeTom,
 }) => {
-  const gyldigFomDatoer = () => ({
-    before: parse(periodeFom, 'yyyy-MM-dd', new Date()),
-    after: parse(valgtPeriodeTom, 'yyyy-MM-dd', new Date()),
-  });
+  const ugyldigeFomDatoer = () => [
+    (date: Date) => isBefore(date, parse(periodeFom, 'yyyy-MM-dd', new Date())),
+    (date: Date) => isAfter(date, parse(valgtPeriodeTom, 'yyyy-MM-dd', new Date())),
+  ];
 
-  const gyldigTomDatoer = () => ({
-    before: parse(valgtPeriodeFom, 'yyyy-MM-dd', new Date()),
-    after: parse(periodeTom, 'yyyy-MM-dd', new Date()),
-  });
+  const ugyldigeTomDatoer = () => [
+    (date: Date) => isBefore(date, parse(valgtPeriodeFom, 'yyyy-MM-dd', new Date())),
+    (date: Date) => isAfter(date, parse(periodeTom, 'yyyy-MM-dd', new Date())),
+  ];
 
   return (
     <div className={styles.container}>
@@ -167,12 +167,12 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
                 label="Fra dato"
                 isReadOnly={readOnly}
                 validate={[required, hasValidDate]}
-                // disabledDays={gyldigFomDatoer()}
+                disabledDays={ugyldigeFomDatoer()}
               />
               <Datepicker
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}valgtPeriodeTom`}
                 label="Til dato"
-                // disabledDays={gyldigTomDatoer()}
+                disabledDays={ugyldigeTomDatoer()}
                 isReadOnly={readOnly}
                 validate={[required, hasValidDate]}
               />
