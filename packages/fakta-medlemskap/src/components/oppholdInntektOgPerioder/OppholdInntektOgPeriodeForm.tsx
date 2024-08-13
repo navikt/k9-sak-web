@@ -154,15 +154,14 @@ OppholdInntektOgPeriodeForm.buildInitialValues = (
   soknad: Soknad,
   medlemskapPerioder: MedlemskapPeriode[],
   gjeldendeFom: string,
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] },
 ) => {
   const aksjonspunkter = alleAksjonspunkter
     .filter(
       ap =>
-        valgtPeriode.aksjonspunkter.includes(ap.definisjon.kode) ||
-        ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
+        valgtPeriode.aksjonspunkter.includes(ap.definisjon) ||
+        ap.definisjon === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
     )
-    .filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
+    .filter(ap => ap.definisjon !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
   let oppholdValues: StatusForBorgerFaktaPanelFormState | undefined;
   let confirmValues:
     | {
@@ -178,17 +177,11 @@ OppholdInntektOgPeriodeForm.buildInitialValues = (
   if (valgtPeriode.aksjonspunkter.length > 0) {
     confirmValues = FaktaBegrunnelseTextFieldRHF.buildInitialValues([valgtPeriode]);
   }
-  const kodeverkFn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+
   return {
     ...valgtPeriode,
     ...OppholdINorgeOgAdresserFaktaPanel.buildInitialValues(soknad, valgtPeriode, aksjonspunkter),
-    ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(
-      valgtPeriode,
-      medlemskapPerioder,
-      soknad,
-      aksjonspunkter,
-      kodeverkFn,
-    ),
+    ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(valgtPeriode, medlemskapPerioder, soknad, aksjonspunkter),
     fom: gjeldendeFom || moment().format(ISO_DATE_FORMAT),
     ...oppholdValues,
     ...confirmValues,
