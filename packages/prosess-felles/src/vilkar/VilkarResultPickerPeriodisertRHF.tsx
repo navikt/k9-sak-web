@@ -4,7 +4,7 @@ import { Label } from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
+import { hasValidDate, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, KodeverkMedNavn, Periode, Vilkarperiode, vilkarUtfallPeriodisert } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
 import { Datepicker, RadioGroupPanel, SelectField } from '@navikt/ft-form-hooks';
@@ -52,7 +52,6 @@ interface StaticFunctions {
     status: string,
     periode: Vilkarperiode,
   ) => VilkarResultPickerFormState;
-  validate: (erVilkarOk: string, avslagCode: string) => { avslagCode?: [{ id: 'ValidationMessage.NotEmpty' }] };
 }
 
 /**
@@ -156,6 +155,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
                 </option>
               ))}
               readOnly={readOnly}
+              validate={[required]}
             />
           )}
           {(erVilkarOk === vilkarUtfallPeriodisert.DELVIS_OPPFYLT ||
@@ -191,6 +191,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
                   </option>
                 ))}
                 readOnly={readOnly}
+                validate={[required]}
               />
               {erMedlemskapsPanel && (
                 <Datepicker
@@ -207,19 +208,6 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
       <VerticalSpacer eightPx />
     </div>
   );
-};
-
-VilkarResultPickerPeriodisertRHF.validate = (erVilkarOk: string, avslagCode: string): { avslagCode?: any } => {
-  if (
-    (erVilkarOk === vilkarUtfallPeriodisert.IKKE_OPPFYLT ||
-      erVilkarOk === vilkarUtfallPeriodisert.DELVIS_IKKE_OPPFYLT) &&
-    !avslagCode
-  ) {
-    return {
-      avslagCode: isRequiredMessage(),
-    };
-  }
-  return {};
 };
 
 VilkarResultPickerPeriodisertRHF.buildInitialValues = (

@@ -29,7 +29,6 @@ interface StaticFunctions {
     status: string,
     periode: Vilkarperiode,
   ) => VilkarresultatMedBegrunnelseState;
-  validate: (values: { erVilkarOk: boolean; avslagCode: string }) => any;
 }
 
 /**
@@ -111,9 +110,5 @@ VilkarresultatMedBegrunnelse.buildInitialValues = (
 VilkarresultatMedBegrunnelse.transformValues = (values: VilkarresultatMedBegrunnelseState) => ({
   begrunnelse: values.begrunnelse,
 });
-
-VilkarresultatMedBegrunnelse.validate = (
-  values: { erVilkarOk: boolean; avslagCode: string } = { erVilkarOk: false, avslagCode: '' },
-) => VilkarResultPickerRHF.validate(values.erVilkarOk, values.avslagCode);
 
 export default VilkarresultatMedBegrunnelse;

@@ -4,7 +4,7 @@ import { Label } from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
+import { hasValidDate, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
 import { Datepicker, RadioGroupPanel, SelectField } from '@navikt/ft-form-hooks';
@@ -40,7 +40,6 @@ interface StaticFunctions {
     aksjonspunkter: Aksjonspunkt[],
     status: string,
   ) => VilkarResultPickerFormState;
-  validate: (erVilkarOk: boolean, avslagCode: string) => { avslagCode?: [{ id: 'ValidationMessage.NotEmpty' }] };
 }
 
 /**
@@ -104,6 +103,7 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
               </option>
             ))}
             readOnly={readOnly}
+            validate={[required]}
           />
           {erMedlemskapsPanel && (
             <>
@@ -121,15 +121,6 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
       <VerticalSpacer eightPx />
     </div>
   );
-};
-
-VilkarResultPickerRHF.validate = (erVilkarOk: boolean, avslagCode: string): { avslagCode?: any } => {
-  if (erVilkarOk === false && !avslagCode) {
-    return {
-      avslagCode: isRequiredMessage(),
-    };
-  }
-  return {};
 };
 
 VilkarResultPickerRHF.buildInitialValues = (

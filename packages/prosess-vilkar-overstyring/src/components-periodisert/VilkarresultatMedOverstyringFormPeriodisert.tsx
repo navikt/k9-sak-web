@@ -11,7 +11,7 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import VilkarResultPicker from '@k9-sak-web/prosess-felles/src/vilkar/VilkarResultPickerPeriodisert';
+import { VilkarResultPickerPeriodisertRHF } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { BodyShort, Button, Label } from '@navikt/ds-react';
@@ -24,8 +24,6 @@ import { VilkarresultatMedOverstyringFormState } from './FormState';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import styles from './vilkarresultatMedOverstyringFormPeriodisert.module.css';
-
-// const getFormName = (overstyringApKode: string) => `VilkarresultatForm_${overstyringApKode}`;
 
 export interface CustomVilkarText {
   id: string;
@@ -245,54 +243,8 @@ const transformValues = (
   periodeTom: string,
 ) => ({
   kode: overstyringApKode,
-  ...VilkarResultPicker.transformValues(values, periodeFom, periodeTom),
+  ...VilkarResultPickerPeriodisertRHF.transformValues(values, periodeFom, periodeTom),
   ...VilkarresultatMedBegrunnelse.transformValues(values),
 });
-
-// const validate = values => VilkarresultatMedBegrunnelse.validate(values);
-
-// const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMedOverstyringFormProps) => {
-//   const { overstyringApKode, submitCallback, periode } = initialOwnProps;
-//   const periodeFom = periode?.periode?.fom;
-//   const periodeTom = periode?.periode?.tom;
-//   const onSubmit = values => submitCallback([transformValues(values, overstyringApKode, periodeFom, periodeTom)]);
-//   const validateFn = values => validate(values);
-//   const formName = getFormName(overstyringApKode);
-
-//   return (state, ownProps) => {
-//     const { behandlingId, behandlingVersjon, aksjonspunkter, erOverstyrt, overrideReadOnly } = ownProps;
-
-//     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
-//     // const isSolvable =
-//     //   aksjonspunkt !== undefined
-//     //     ? !(aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses)
-//     //     : false;
-
-//     const initialValues = buildInitialValues(ownProps);
-
-//     return {
-//       onSubmit,
-//       initialValues,
-//       // customVilkarOppfyltText: getCustomVilkarTextForOppfylt(ownProps),
-//       // customVilkarIkkeOppfyltText: getCustomVilkarTextForIkkeOppfylt(ownProps),
-//       // isSolvable: erOverstyrt || isSolvable,
-//       // isReadOnly: overrideReadOnly || !periode?.vurderesIBehandlingen,
-//       // hasAksjonspunkt: aksjonspunkt !== undefined,
-//       validate: validateFn,
-//       form: formName,
-//       periodeFom,
-//       periodeTom,
-//       // opprettetAv: aksjonspunkt ? aksjonspunkt.opprettetAv : '',
-//       ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
-//         state,
-//         'isOverstyrt',
-//         'erVilkarOk',
-//         'valgtPeriodeFom',
-//         'valgtPeriodeTom',
-//         'periodeVilkarStatus',
-//       ),
-//     };
-//   };
-// };
 
 export default VilkarresultatMedOverstyringFormPeriodisert;
