@@ -15,7 +15,7 @@ interface MedlemskapInfoPanelProps {
   behandlingId: number;
   behandlingVersjon: number;
   fagsakPerson: FagsakPerson;
-  behandlingType: Kodeverk;
+  behandlingType: string;
   soknad?: Soknad;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   medlemskap: Medlemskap;
@@ -52,7 +52,7 @@ const MedlemskapInfoPanel = ({
     alleKodeverk={alleKodeverk}
     medlemskap={medlemskap}
     fagsakPerson={fagsakPerson}
-    isRevurdering={behandlingTypeProp.kode === behandlingType.REVURDERING && !!medlemskap.fom}
+    isRevurdering={behandlingTypeProp === behandlingType.REVURDERING && !!medlemskap.fom}
   />
 );
 

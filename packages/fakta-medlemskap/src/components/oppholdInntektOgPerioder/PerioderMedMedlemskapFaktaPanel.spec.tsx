@@ -6,6 +6,9 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { FormProvider, useForm } from 'react-hook-form';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { MedlemskapPeriode } from './Medlemskap';
 import { Periode } from './Periode';
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
@@ -24,7 +27,16 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     });
 
-    return <FormProvider {...formMethods}>{props.children}</FormProvider>;
+    return (
+      <KodeverkProvider
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={alleKodeverkV2}
+        tilbakeKodeverk={alleKodeverkV2}
+      >
+        <FormProvider {...formMethods}>{props.children}</FormProvider>
+      </KodeverkProvider>
+    );
   };
 
   it('skal vise periode og manuelle-vurderingstyper i form', () => {
@@ -48,7 +60,9 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
     expect(screen.getByText('Full')).toBeInTheDocument();
     expect(screen.getByText('Foreløpig')).toBeInTheDocument();
     expect(screen.getByText('15.01.2016-15.10.2016')).toBeInTheDocument();
-    expect(screen.getAllByRole('radio', { name: /navn/i }).length).toBe(2);
+    expect(screen.getAllByRole('radio', { name: 'Ikke relevant periode' }).length).toBe(1);
+    expect(screen.getAllByRole('radio', { name: 'Periode med medlemskap' }).length).toBe(1);
+    expect(screen.getAllByRole('radio', { name: 'Periode med unntak fra medlemskap' }).length).toBe(1);
   });
 
   it('skal vise fødselsdato når en har dette', () => {
@@ -113,7 +127,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
   it('skal sette opp initielle verdier og sorterte perioder etter periodestart', () => {
     const periode: Periode = {
       aksjonspunkter: [aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE],
-      medlemskapManuellVurderingType: { kode: 'manuellType', kodeverk: '' },
+      medlemskapManuellVurderingType: 'manuellType',
       id: '',
       vurderingsdato: '',
       årsaker: [],
@@ -130,16 +144,16 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       {
         fom: '2016-01-15',
         tom: '2016-10-15',
-        dekningType: 'DEK_TYPE',
-        medlemskapType: 'M_STATUS',
+        dekningType: 'FTL_2_9_1_b',
+        medlemskapType: 'ENDELIG',
         beslutningsdato: '2016-10-16',
         kildeType: undefined,
       },
       {
         fom: '2017-01-15',
         tom: '2017-10-15',
-        dekningType: 'DEK_TYPE2',
-        medlemskapType: 'M_STATUS2',
+        dekningType: 'FTL_2_6',
+        medlemskapType: 'FORELOPIG',
         beslutningsdato: '2017-10-16',
         kildeType: undefined,
       },
@@ -189,7 +203,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         },
       ],
       isPeriodAksjonspunktClosed: false,
-      medlemskapManuellVurderingType: { kode: 'manuellType', kodeverk: '' },
+      medlemskapManuellVurderingType: 'manuellType',
       fodselsdato: '2017-10-15',
       hasPeriodeAksjonspunkt: true,
     });

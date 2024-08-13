@@ -2,7 +2,6 @@ import { FunctionComponent, useMemo } from 'react';
 import { Label } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import {
   DateLabel,
@@ -14,7 +13,7 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, Table, VStack } from '@navikt/ds-react';
 import { RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
@@ -26,12 +25,12 @@ import { MedlemskapPeriode } from './Medlemskap';
 import { MerknaderFraBeslutter } from './MerknaderFraBeslutter';
 import { Periode } from './Periode';
 import { Soknad } from './Soknad';
+import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 
 const headerTextCodes = ['Periode', 'Dekning', 'Status', 'Beslutningsdato'];
 
-export const getAksjonspunkter = (alleKodeverk: { [key: string]: KodeverkMedNavn[] }) => {
-  const vurderingTypes = alleKodeverk[kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE];
-  return vurderingTypes.sort((a, b) => {
+export const getAksjonspunkter = (kodeverkVurderingTypes: KodeverkObject[]) => {
+  return kodeverkVurderingTypes.sort((a, b) => {
     const kodeA = a.kode;
     const kodeB = b.kode;
     if (kodeA < kodeB) {
@@ -49,7 +48,6 @@ interface PerioderMedMedlemskapFaktaPanelProps {
   readOnly: boolean;
   fodselsdato?: string;
   alleMerknaderFraBeslutter?: MerknaderFraBeslutter;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
 interface StaticFunctions {
@@ -58,7 +56,6 @@ interface StaticFunctions {
     medlemskapPerioder: MedlemskapPeriode[],
     soknad: Soknad,
     aksjonspunkter: Aksjonspunkt[],
-    getKodeverknavn: (kode: Kodeverk) => string,
   ) => PerioderMedMedlemskapFaktaPanelFormState;
   transformValues: (
     values: PerioderMedMedlemskapFaktaPanelFormState,
@@ -72,13 +69,16 @@ interface StaticFunctions {
  * Presentasjonskomponent. Setter opp aksjonspunktet for avklaring av perioder (Medlemskapsvilkåret).
  */
 export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedlemskapFaktaPanelProps> &
-  StaticFunctions = ({ readOnly, fodselsdato, alleMerknaderFraBeslutter, alleKodeverk }) => {
-  const { kodeverkNavnFraKode } = useKodeverkContext();
+  StaticFunctions = ({ readOnly, fodselsdato, alleMerknaderFraBeslutter }) => {
+  const { kodeverkNavnFraKode, hentKodeverkForKode } = useKodeverkContext();
   const { getValues } = useFormContext<OppholdInntektOgPerioderFormState>();
+  const kodeverkVurderingTypes: KodeverkObject[] = hentKodeverkForKode(
+    KodeverkType.MEDLEMSKAP_MANUELL_VURDERING_TYPE,
+  ) as KodeverkObject[];
   const {
     oppholdInntektOgPeriodeForm: { fixedMedlemskapPerioder, hasPeriodeAksjonspunkt, isPeriodAksjonspunktClosed },
   } = getValues();
-  const vurderingTypes = useMemo(() => getAksjonspunkter(alleKodeverk), [alleKodeverk]);
+  const vurderingTypes = useMemo(() => getAksjonspunkter(kodeverkVurderingTypes), [kodeverkVurderingTypes]);
   if (!fixedMedlemskapPerioder || fixedMedlemskapPerioder.length === 0) {
     return (
       <FaktaGruppe titleCode="Perioder med medlemskap" useIntl={false}>
@@ -189,9 +189,7 @@ PerioderMedMedlemskapFaktaPanel.transformValues = (
   manuellVurderingTyper,
 ) => ({
   kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-  medlemskapManuellVurderingType: manuellVurderingTyper.find(
-    m => m.kode === values.medlemskapManuellVurderingType.kode,
-  ),
+  medlemskapManuellVurderingType: manuellVurderingTyper.find(m => m.kode === values.medlemskapManuellVurderingType),
 });
 
 export default PerioderMedMedlemskapFaktaPanel;

@@ -182,12 +182,12 @@ OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (
 
   const filteredAp = periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT)
     ? aksjonspunkter
-    : aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP);
+    : aksjonspunkter.filter(ap => ap.definisjon === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP);
 
   return {
     opphold,
     hasBosattAksjonspunkt: filteredAp.length > 0,
-    isBosattAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status.kode)),
+    isBosattAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status)),
     foreldre: parents,
     bosattVurdering: periode.bosattVurdering || periode.bosattVurdering === false ? periode.bosattVurdering : undefined,
   };
