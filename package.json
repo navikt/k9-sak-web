@@ -121,7 +121,7 @@
     "vitest-axe": "0.1.0"
   },
   "resolutions": {
-    "postcss": "8.4.40",
+    "postcss": "8.4.41",
     "parse-url": "8.1.0",
     "@types/react": "17"
   },

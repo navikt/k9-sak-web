@@ -1585,10 +1585,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/editorjs@npm:2.30.2":
-  version: 2.30.2
-  resolution: "@editorjs/editorjs@npm:2.30.2"
-  checksum: 658e10918390d18578e65d73e84f601b7eab8ba1a704142872a597ed0da6bb1ee407fc32b5b18a473a99c993729dc8959df408f10738a6150199acaf225474fc
+"@editorjs/editorjs@npm:2.30.4":
+  version: 2.30.4
+  resolution: "@editorjs/editorjs@npm:2.30.4"
+  checksum: 353d9dcdf858469e6fe89ec4e0fab1e8f5eba5a60f637182b0b633bbf9e42a8d68030f10d7ddc4cb64f88dda9b6a96a8aaeb822145e2e5d66b23b4c9955e8479
   languageName: node
   linkType: hard
 
@@ -1609,12 +1609,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/list@npm:1.9.0":
-  version: 1.9.0
-  resolution: "@editorjs/list@npm:1.9.0"
+"@editorjs/list@npm:1.10.0":
+  version: 1.10.0
+  resolution: "@editorjs/list@npm:1.10.0"
   dependencies:
     "@codexteam/icons": ^0.0.4
-  checksum: a856f73a1abd42d0550afdc4fda355911abff8b25d30b0cdefdbebfea765182395d5afb08f7fef67597d88c31857408525a8cde28696374a2610297d54a93ce9
+  checksum: d3b5444d7fc820f2bd5dbc2473cca0d38780bace1e3b908b4ad539ffad32600f1f5181a7405f0c170d8443dd81de5651b6a7393c62e1f1cc4d1667185eb23a86
   languageName: node
   linkType: hard
 
@@ -2691,9 +2691,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/prosess-vedtak@workspace:packages/prosess-vedtak"
   dependencies:
-    "@editorjs/editorjs": 2.30.2
+    "@editorjs/editorjs": 2.30.4
     "@editorjs/header": 2.8.7
-    "@editorjs/list": 1.9.0
+    "@editorjs/list": 1.10.0
     "@editorjs/paragraph": 2.11.6
     "@fpsak-frontend/form": 1.0.0
     "@fpsak-frontend/kodeverk": 1.0.0
@@ -15056,14 +15056,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:8.4.40":
-  version: 8.4.40
-  resolution: "postcss@npm:8.4.40"
+"postcss@npm:8.4.41":
+  version: 8.4.41
+  resolution: "postcss@npm:8.4.41"
   dependencies:
     nanoid: ^3.3.7
     picocolors: ^1.0.1
     source-map-js: ^1.2.0
-  checksum: afd0cc49d2169dcd96c0f17e155c5d75de048956306a3017f1cfa6a7d66b941592245bed20f7796ceeccb2d8967749b623be2c7b010a74f67ea10fb5bdb8ba28
+  checksum: f865894929eb0f7fc2263811cc853c13b1c75103028b3f4f26df777e27b201f1abe21cb4aa4c2e901c80a04f6fb325ee22979688fe55a70e2ea82b0a517d3b6f
   languageName: node
   linkType: hard
 
