@@ -44,6 +44,10 @@
     "value": "${AKSJONSPUNKT_9015}"
   },
   {
+    "key": "ALDERSVILKAR_KRONISK_SYK",
+    "value": "${ALDERSVILKAR_KRONISK_SYK}"
+  },
+  {
     "key": "FRITEKST_REDIGERING",
     "value": "${FRITEKST_REDIGERING}"
   },
