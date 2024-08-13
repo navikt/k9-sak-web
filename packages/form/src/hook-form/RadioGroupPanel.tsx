@@ -1,7 +1,8 @@
-import { Radio, RadioGroup } from '@navikt/ds-react';
 import { ErrorMessage } from '@hookform/error-message';
+import { Radio, RadioGroup } from '@navikt/ds-react';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { getError } from './formUtils';
 
 interface RadioProps {
   value: string;
@@ -37,7 +38,7 @@ const RadioGroupPanel = ({ question, name, validators, radios, onChange, disable
         return (
           <RadioGroup
             legend={question}
-            error={errors[name]?.message && <ErrorMessage errors={errors} name={name} />}
+            error={getError(errors, name) && <ErrorMessage errors={errors} name={name} />}
             size="small"
           >
             {radios.map(radio => (

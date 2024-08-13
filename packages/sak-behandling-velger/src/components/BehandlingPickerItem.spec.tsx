@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import messages from '../../i18n/nb_NO.json';
 import BehandlingPickerItem from './BehandlingPickerItem';
 
@@ -87,7 +87,7 @@ describe('<BehandlingPickerItem>', () => {
     expect(screen.getByText('Resultat')).toBeInTheDocument();
     expect(
       screen.getByRole('link', {
-        name: /Behandlingsstatus Opprettet Resultat/g,
+        name: /Behandlingsstatus Resultat Ikke fastsatt Opprettet/g,
       }),
     ).toBeInTheDocument();
   });

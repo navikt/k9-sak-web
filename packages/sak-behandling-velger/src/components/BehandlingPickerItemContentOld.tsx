@@ -45,6 +45,7 @@ interface OwnProps {
   erGjeldendeVedtak?: boolean;
   behandlingsresultatTypeKode?: string;
   behandlingsresultatTypeNavn?: string;
+  erFerdigstilt?: boolean;
 }
 
 /**
@@ -83,7 +84,6 @@ const BehandlingPickerItemContent = ({
               <FlexColumn>
                 <BodyShort size="small">
                   {kodeverkNavnFraKode(førsteÅrsak?.behandlingArsakType, KodeverkType.BEHANDLING_AARSAK)}
-                  {/* <FormattedMessage id={getÅrsak(førsteÅrsak)} /> */}
                 </BodyShort>
               </FlexColumn>
             </>

@@ -7,7 +7,6 @@ import AktorSakIndex from '@k9-sak-web/sak-aktor';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import { restApiHooks, K9sakApiKeys } from '../data/k9sakApi';
-import { pathToFagsak } from '../app/paths';
 
 /**
  * AktoerIndex
@@ -34,7 +33,7 @@ const AktoerIndex = () => {
 
   return (
     <KodeverkProvider behandlingType={undefined} kodeverk={alleKodeverk}>
-      <AktorSakIndex valgtAktorId={selectedAktoerId} aktorInfo={data} finnPathToFagsak={pathToFagsak} />
+      <AktorSakIndex valgtAktorId={selectedAktoerId} aktorInfo={data} />
     </KodeverkProvider>
   );
 };

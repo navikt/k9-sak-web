@@ -58,7 +58,6 @@ const TilbakekrevingProsessIndex = ({
       vilkarvurdering={vilkarvurdering}
       submitCallback={submitCallback}
       readOnly={isReadOnly}
-      // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
       apCodes={Array.isArray(aksjonspunkter) && aksjonspunkter.map(a => a.definisjon)}
       readOnlySubmitButton={readOnlySubmitButton}
       navBrukerKjonn={navBrukerKjonn}

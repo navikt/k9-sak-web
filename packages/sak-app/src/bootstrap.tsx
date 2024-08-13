@@ -12,7 +12,6 @@ import configureStore from './configureStore';
 import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
 
 /* eslint no-undef: "error" */
-// @ts-ignore
 const isDevelopment = IS_DEV;
 const environment = window.location.hostname;
 
@@ -34,22 +33,22 @@ init({
   ],
   beforeSend: (event, hint) => {
     const exception = hint.originalException;
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     if (exception?.isAxiosError) {
-      // @ts-ignore
+      // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
       const requestUrl = new URL(exception.request.responseURL);
       // eslint-disable-next-line no-param-reassign
       event.fingerprint = [
         '{{ default }}',
-        // @ts-ignore
+        // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
         String(exception.name),
-        // @ts-ignore
+        // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
         String(exception.message),
         String(requestUrl.pathname),
       ];
       // eslint-disable-next-line no-param-reassign
       event.extra = event.extra ? event.extra : {};
-      // @ts-ignore
+      // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
       // eslint-disable-next-line no-param-reassign
       event.extra.callId = exception.response.config.headers['Nav-Callid'];
     }
@@ -74,8 +73,8 @@ const renderFunc = Component => {
   }
 
   const prepare = async (): Promise<void> => {
+    // eslint-disable-next-line no-undef
     if (process.env.NODE_ENV === 'test') {
-      // eslint-disable-next-line import/no-relative-packages
       const { worker } = await import('../../mocks/browser');
       worker.start({ onUnhandledRequest: 'bypass' });
     }

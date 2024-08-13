@@ -1,5 +1,4 @@
 import { Select } from '@navikt/ds-react';
-import React from 'react';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import {
   type ArbeidsgiverOpplysningerPerId,
@@ -30,15 +29,15 @@ const MottakerSelect = ({
         label="Mottaker"
         size="small"
         placeholder="Velg mottaker"
-        defaultValue={valgtMottakerId}
+        value={valgtMottakerId}
         onChange={e => onChange?.(e.target.value)}
         disabled={disabled}
       >
-          {valgtMal?.mottakere.map(mottaker => (
-            <option key={mottaker.id} value={mottaker.id}>
-              {lagVisningsnavnForMottaker(mottaker.id, personopplysninger, arbeidsgiverOpplysningerPerId)}
-            </option>
-          ))}
+        {valgtMal?.mottakere.map(mottaker => (
+          <option key={mottaker.id} value={mottaker.id}>
+            {lagVisningsnavnForMottaker(mottaker.id, personopplysninger, arbeidsgiverOpplysningerPerId)}
+          </option>
+        ))}
       </Select>
     );
   }

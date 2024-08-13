@@ -89,7 +89,6 @@ export const TilkjentYtelsePanelImpl = ({
       )}
       {beregningresultat && (
         <TilkjentYtelse
-          // @ts-ignore
           items={formatPerioder(beregningresultat.perioder)}
           groups={groups}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}

@@ -2,6 +2,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import { Checkbox, CheckboxGroup as DSCheckboxGroup } from '@navikt/ds-react';
 import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
+import { getError } from './formUtils';
 
 interface CheckboxGroupProps {
   question: string;
@@ -30,7 +31,7 @@ const CheckboxGroup = ({ question, checkboxes, name, validators, disabled }: Che
     <DSCheckboxGroup
       name={name}
       legend={question}
-      error={errors[name]?.message && <ErrorMessage errors={errors} name={name} />}
+      error={getError(errors, name) && <ErrorMessage errors={errors} name={name} />}
       size="small"
       onChange={value => {
         field.onChange(value);

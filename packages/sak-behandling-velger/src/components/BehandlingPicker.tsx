@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -130,13 +130,11 @@ const BehandlingPicker = ({
   createLocationForSkjermlenke,
   sakstypeKode,
 }: OwnProps) => {
+  const firstRender = useRef(true);
   const navigate = useNavigate();
   const { kodeverkNavnFraKode } = useKodeverkContext();
   const finnÅpenBehandling = () => {
     const åpenBehandling = behandlinger.find(behandling => behandling.status !== behandlingStatus.AVSLUTTET);
-    if (åpenBehandling) {
-      navigate(getBehandlingLocation(åpenBehandling.id));
-    }
     return åpenBehandling?.id;
   };
 
@@ -151,6 +149,20 @@ const BehandlingPicker = ({
       setValgtBehandlingId(behandlingId);
     }
   }, [behandlingId]);
+
+  const åpenBehandlingId = useMemo(finnÅpenBehandling, [behandlinger]);
+
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    if (!behandlingId) {
+      if (åpenBehandlingId) {
+        navigate(getBehandlingLocation(åpenBehandlingId));
+      }
+    }
+  }, [behandlingId, åpenBehandlingId, firstRender.current]);
 
   const behandlingerSomSkalVises = useMemo(() => {
     const sorterteBehandlinger = sortBehandlinger(behandlinger);

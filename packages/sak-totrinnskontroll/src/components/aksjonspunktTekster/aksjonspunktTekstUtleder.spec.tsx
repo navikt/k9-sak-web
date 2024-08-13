@@ -38,7 +38,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Adopsjon.VilkarOverstyrt');
   });
 
@@ -49,7 +49,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Fødsel.VilkarOverstyrt');
   });
 
@@ -60,7 +60,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.InntektFastsatt');
   });
   it('skal vise korrekt tekst for aksjonspunkt 5042', () => {
@@ -70,7 +70,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.InntektFastsatt');
   });
   it('skal vise korrekt tekst for aksjonspunkt 6007', () => {
@@ -80,7 +80,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.VilkarOverstyrt');
   });
   it('skal vise korrekt tekst for aksjonspunkt 5047', () => {
@@ -90,7 +90,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.InntektFastsatt');
   });
 
@@ -101,7 +101,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Soknadsfrist.VilkarOverstyrt');
   });
 
@@ -112,7 +112,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Medlemskap.VurderGyldigMedlemskap');
   });
   it('skal vise korrekt tekst for aksjonspunkt 5019', () => {
@@ -122,7 +122,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Medlemskap.AvklarLovligOpphold');
   });
   it('skal vise korrekt tekst for aksjonspunkt 5020', () => {
@@ -132,7 +132,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Medlemskap.VurderSokerBosatt');
   });
   it('skal vise korrekt tekst for aksjonspunkt 5023', () => {
@@ -142,7 +142,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Medlemskap.AvklarOppholdsrett');
   });
   it('skal vise korrekt tekst for aksjonspunkt 6005', () => {
@@ -152,7 +152,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Medlemskap.VilkarOverstyrt');
   });
 
@@ -164,7 +164,7 @@ describe('aksjonspunktTekstUtleder', () => {
       beregningDtoer: [{ fastsattVarigEndring: true, skjæringstidspunkt: '2022-01-01' }],
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.VarigEndring');
   });
   it('skal vise korrekt tekst for aksjonspunkt 5039 ikkje varig endring', () => {
@@ -175,7 +175,7 @@ describe('aksjonspunktTekstUtleder', () => {
       beregningDtoer: [{ fastsattVarigEndring: false, skjæringstidspunkt: '2022-01-01' }],
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.IkkeVarigEndring');
   });
   it('skal vise korrekt tekst for aksjonspunkt 5080 når søker er i permisjon, skal kun vise tekst om permisjon', () => {
@@ -220,7 +220,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNFP: medholdIKlage,
     } as KlageVurdering;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.OmgjortTilGunst');
   });
   it('skal vise korrekt tekst for aksjonspunkt 5036 medhold', () => {
@@ -233,7 +233,7 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNK: medholdIKlage,
     } as KlageVurdering;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.OmgjortTilGunst');
   });
   // Klage avslag
@@ -248,7 +248,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.OppheveYtelsesVedtak');
   });
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag ytelsesvedtak opphevet', () => {
@@ -261,7 +261,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.OppheveYtelsesVedtak');
   });
   // Klage avvist
@@ -275,7 +275,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.Avvist');
   });
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag klage avvist', () => {
@@ -288,7 +288,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.Avvist');
   });
   // Ikke fastsatt Engangsstønad
@@ -302,7 +302,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.StadfesteYtelsesVedtak');
   });
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag ytelsesvedtak stadfestet', () => {
@@ -315,7 +315,7 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.StadfesteYtelsesVedtak');
   });
 
@@ -428,9 +428,9 @@ describe('aksjonspunktTekstUtleder', () => {
     } as TotrinnskontrollAksjonspunkt;
 
     const messages = getAksjonspunkttekst(null, null, [], false, aksjonspunkt);
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(messages[0].props.children[0].props.id).toEqual('ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold');
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     expect(messages[0].props.children[1][0].key).toEqual('ToTrinnsForm.FaktaOmArbeidsforhold.Melding');
   });
 });

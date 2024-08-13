@@ -100,7 +100,6 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
                       name="andelSomTilbakekrevesManuell"
                       readOnly={readOnly}
                       validate={[required, minValue1, maxValue100]}
-                      // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
                       normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
                       htmlSize={14}
                     />

@@ -222,7 +222,6 @@ const getCustomVilkarTextForIkkeOppfylt = createSelector(
 
 const transformValues = (values, overstyringApKode, periodeFom, periodeTom) => ({
   kode: overstyringApKode,
-  // @ts-ignore Fiks
   ...VilkarResultPicker.transformValues(values),
   ...VilkarresultatMedBegrunnelse.transformValues(values),
   periode: periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : undefined,
@@ -269,6 +268,6 @@ const mapStateToPropsFactory = (
   };
 };
 
-// @ts-ignore Kan ikkje senda med formnavn her sidan det er dynamisk. Må fikse på ein annan måte
+// @ts-expect-error Kan ikkje senda med formnavn her sidan det er dynamisk. Må fikse på ein annan måte
 const form = behandlingForm({ enableReinitialize: true })(VilkarresultatMedOverstyringForm);
 export default connect(mapStateToPropsFactory)(form);

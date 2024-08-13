@@ -6,6 +6,7 @@ import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import { Fagsak, FagsakPerson } from '@k9-sak-web/types';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { pathToFagsak } from '@k9-sak-web/sak-app/src/app/paths';
 
 import styles from './aktoerGrid.module.css';
 
@@ -14,10 +15,9 @@ interface OwnProps {
     fagsaker: Fagsak[];
     person: FagsakPerson;
   };
-  finnPathToFagsak: (saksnummer: string) => string;
 }
 
-const AktoerGrid = ({ aktorInfo, finnPathToFagsak }: OwnProps) => {
+const AktoerGrid = ({ aktorInfo }: OwnProps) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
 
   return (
@@ -26,7 +26,7 @@ const AktoerGrid = ({ aktorInfo, finnPathToFagsak }: OwnProps) => {
       <div className={styles.list}>
         {aktorInfo.fagsaker.length ? (
           aktorInfo.fagsaker.map(fagsak => (
-            <LinkPanel key={fagsak.saksnummer} href={`/k9/web${finnPathToFagsak(fagsak.saksnummer)}`}>
+            <LinkPanel key={fagsak.saksnummer} href={`/k9/web${pathToFagsak(fagsak.saksnummer)}`}>
               <LinkPanel.Description>
                 {kodeverkNavnFraKode(fagsak.sakstype, KodeverkType.FAGSAK_YTELSE)}
                 {` (${fagsak.saksnummer}) `}

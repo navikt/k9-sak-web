@@ -304,5 +304,5 @@ const HenleggBehandlingModal = reduxForm({
   form: 'HenleggBehandlingModal',
 })(HenleggBehandlingModalImpl);
 
-// @ts-ignore Fiks
+// @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
 export default connect(mapStateToProps)(injectIntl(HenleggBehandlingModal));

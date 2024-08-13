@@ -74,10 +74,9 @@ export const TilkjentYtelseNyPeriode = ({
                 <FlexColumn>
                   <FieldArray
                     name="andeler"
-                    // @ts-ignore
                     component={NyAndel}
                     readOnly={readOnly}
-                    // @ts-ignore
+                    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
                     andeler={andeler}
                     arbeidsgivere={arbeidsgivere}
                     behandlingId={behandlingId}

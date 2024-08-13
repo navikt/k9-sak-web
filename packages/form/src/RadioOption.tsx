@@ -43,7 +43,6 @@ export const RadioOption = ({
       <Radio
         name={name || ''}
         className={className}
-        // @ts-ignore TODO Fjern denne. Må fjerna bruken av bolske verdiar som value
         value={value}
         disabled={disabled || groupDisabled}
         onChange={() => onChange?.(value)}

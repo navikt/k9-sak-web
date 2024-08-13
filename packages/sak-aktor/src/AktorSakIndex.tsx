@@ -20,12 +20,11 @@ const intl = createIntl(
 interface OwnProps {
   valgtAktorId: string;
   aktorInfo?: Aktor;
-  finnPathToFagsak: (saksnummer: string) => string;
 }
 
-const AktorSakIndex = ({ valgtAktorId, aktorInfo, finnPathToFagsak }: OwnProps) => (
+const AktorSakIndex = ({ valgtAktorId, aktorInfo }: OwnProps) => (
   <RawIntlProvider value={intl}>
-    {aktorInfo && <AktoerGrid aktorInfo={aktorInfo} finnPathToFagsak={finnPathToFagsak} />}
+    {aktorInfo && <AktoerGrid aktorInfo={aktorInfo} />}
     {!aktorInfo && (
       <BodyShort size="small">
         <FormattedMessage id="AktorSakIndex.UgyldigAktorId" values={{ id: valgtAktorId }} />

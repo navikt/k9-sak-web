@@ -1,6 +1,7 @@
 import { Datepicker as SharedDatepicker } from '@fpsak-frontend/shared-components';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { getError } from './formUtils';
 
 export interface DatepickerProps {
   label?: string;
@@ -45,7 +46,7 @@ const Datepicker = ({
             label={label}
             onChange={onChange}
             value={value}
-            error={error || (errors[name]?.message as string)}
+            error={error || getError(errors, name)}
             inputId={inputId}
             disabled={disabled}
             disabledDays={disabledDays}

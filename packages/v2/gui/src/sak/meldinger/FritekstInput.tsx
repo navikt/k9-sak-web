@@ -1,4 +1,4 @@
-import React, { type ForwardedRef, forwardRef, useEffect, useImperativeHandle, useReducer } from 'react';
+import { type ForwardedRef, forwardRef, useEffect, useImperativeHandle, useReducer } from 'react';
 import { Tag, type TagProps, Textarea, TextField } from '@navikt/ds-react';
 import { $BestillBrevDto, $FritekstbrevinnholdDto } from '@k9-sak-web/backend/k9sak/generated';
 import { validateTextCharacters } from '../../utils/validation/validateTextCharacters.js';

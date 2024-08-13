@@ -1,7 +1,6 @@
 import { http, HttpResponse } from 'msw';
 
 import utenlandsopphold from './mockdata/utenlandsoppholdMock';
-// eslint-disable-next-line import/prefer-default-export
 export const testHandlers = {
   navAnsatt: http.get('/k9/sak/api/nav-ansatt', () =>
     HttpResponse.json({

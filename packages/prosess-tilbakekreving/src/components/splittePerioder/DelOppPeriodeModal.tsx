@@ -61,7 +61,7 @@ export const DelOppPeriodeModalImpl = ({
         </Detail>
         <DatepickerField
           name="ForstePeriodeTomDato"
-          // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
+          // @ts-expect-error tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
           className={styles.datePicker}
           validate={[required, hasValidDate]}
           disabledDays={{ before: moment(periodeData.fom).toDate(), after: moment(periodeData.tom).toDate() }}

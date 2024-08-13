@@ -101,7 +101,6 @@ export const BehandleUnntakForm = ({
 );
 
 export const buildInitialValues = createSelector(
-  // @ts-ignore Fiks dette!
   [ownProps => ownProps.vilkårsresultat, ownProps => ownProps.behandlingsresultat, ownProps => ownProps.vilkar],
   (vilkårsresultat, behandlingsresultat, vilkar) => ({
     periode: vilkårsresultat ? vilkårsresultat[0].periode : null,

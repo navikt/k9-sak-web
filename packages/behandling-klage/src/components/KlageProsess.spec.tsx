@@ -1,4 +1,3 @@
-/* eslint-disable vitest/no-commented-out-tests */
 import React from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
