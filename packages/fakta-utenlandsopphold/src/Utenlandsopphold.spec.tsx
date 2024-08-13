@@ -5,7 +5,6 @@ import React, { ReactElement } from 'react';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/context/KodeverkContext.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverkContext.js';
-// eslint-disable-next-line import/no-relative-packages
 import utenlandsoppholdMock, { utenlandsoppholdÅrsakMock } from '../../mocks/mockdata/utenlandsoppholdMock';
 
 import Utenlandsopphold from './Utenlandsopphold';

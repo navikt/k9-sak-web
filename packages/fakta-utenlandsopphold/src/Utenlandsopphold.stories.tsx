@@ -1,5 +1,4 @@
 import React from 'react';
-// eslint-disable-next-line import/no-relative-packages
 import utenlandsoppholdMock from '../../mocks/mockdata/utenlandsoppholdMock';
 import Utenlandsopphold from './Utenlandsopphold';
 
