@@ -4,16 +4,28 @@ import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated';
 import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
 import type { BackendApi } from '@k9-sak-web/gui/sak/meldinger/Messages.js';
 import { action } from '@storybook/addon-actions';
-import type { AvsenderApplikasjon } from "@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.ts";
-import { requestIntentionallyAborted, type RequestIntentionallyAborted } from "@k9-sak-web/backend/shared/RequestIntentionallyAborted.ts";
+import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.ts';
+import {
+  requestIntentionallyAborted,
+  type RequestIntentionallyAborted,
+} from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.ts';
 import { fakePdf } from './fakePdf.js';
-import { delay } from "../../utils/delay.js";
+import { delay } from '../../utils/delay.js';
 
 export class FakeMessagesBackendApi implements BackendApi {
   public static readonly dummyMalinnhold = [
     { tittel: 'Varsel nr 1', fritekst: 'Hei, du må sende inn ditt og datt før frist.' },
     { tittel: 'Varsel nr 2', fritekst: 'Brev tekst forslag nr 2.' },
   ];
+
+  // Some state for storybook testing
+  public fakeDelayMillis = 800; // Set this to zero when running in storybook play
+  #sisteFakeDokumentBestilling: BestillBrevDto | undefined;
+
+  reset() {
+    this.fakeDelayMillis = 800;
+    this.resetSisteFakeDokumentBestilling();
+  }
 
   async hentInnholdBrevmal(
     sakstype: string,
@@ -23,14 +35,17 @@ export class FakeMessagesBackendApi implements BackendApi {
   ): Promise<FritekstbrevDokumentdata[]> {
     const x = eksternReferanse + sakstype + avsenderApplikasjon; // For å unngå unused variable feil
     if (x !== null && maltype === 'INNHENT_MEDISINSKE_OPPLYSNINGER') {
-      return FakeMessagesBackendApi.dummyMalinnhold
+      return FakeMessagesBackendApi.dummyMalinnhold;
     }
     return [];
   }
 
-  async getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse | RequestIntentionallyAborted> {
-    if(abort?.aborted) {
-      return requestIntentionallyAborted
+  async getBrevMottakerinfoEreg(
+    orgnr: string,
+    abort?: AbortSignal,
+  ): Promise<EregOrganizationLookupResponse | RequestIntentionallyAborted> {
+    if (abort?.aborted) {
+      return requestIntentionallyAborted;
     }
     if (orgnr.trim().length === 9) {
       if (Number.isFinite(Number(orgnr.trim()))) {
@@ -44,14 +59,26 @@ export class FakeMessagesBackendApi implements BackendApi {
     return { invalidOrgnum: true };
   }
 
+  private async doDelay() {
+    if (this.fakeDelayMillis > 0) await delay(this.fakeDelayMillis);
+  }
+
+  get sisteFakeDokumentBestilling() {
+    return this.#sisteFakeDokumentBestilling;
+  }
+  resetSisteFakeDokumentBestilling() {
+    this.#sisteFakeDokumentBestilling = undefined;
+  }
+
   async bestillDokument(bestilling: BestillBrevDto): Promise<void> {
-    await delay(1_400);
+    this.#sisteFakeDokumentBestilling = bestilling;
+    await this.doDelay();
     action('bestillDokument')(bestilling);
   }
 
   async lagForhåndsvisningPdf(data: ForhåndsvisDto): Promise<Blob> {
     action('lag pdf data')(data);
-    await delay(1_000);
+    await this.doDelay();
     return fakePdf();
   }
 }

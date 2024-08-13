@@ -5,6 +5,13 @@
  */
 export type IdType = 'ORGNR' | 'AKTØRID';
 
+export type UtilgjengeligÅrsak = 'PERSON_DØD' | 'ORG_OPPHØRT';
+
+export const utilgjengeligÅrsaker: Record<UtilgjengeligÅrsak, UtilgjengeligÅrsak> = {
+  PERSON_DØD: 'PERSON_DØD',
+  ORG_OPPHØRT: 'ORG_OPPHØRT',
+} as const;
+
 /**
  * Matcher k9-formidling Mottaker class i Mottaker.java
  *
@@ -13,4 +20,5 @@ export type IdType = 'ORGNR' | 'AKTØRID';
 export interface Mottaker {
   readonly id: string;
   readonly type: IdType;
+  readonly utilgjengelig?: UtilgjengeligÅrsak;
 }
