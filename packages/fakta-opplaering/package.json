@@ -9,7 +9,7 @@
     "@fpsak-frontend/utils": "*",
     "@k9-sak-web/types": "*",
     "@navikt/ds-icons": "3.4.3",
-    "@navikt/ds-react": "6.13.0",
+    "@navikt/ds-react": "6.15.0",
     "@navikt/ft-plattform-komponenter": "3.0.4",
     "classnames": "2.5.1",
     "dayjs": "1.11.12",
