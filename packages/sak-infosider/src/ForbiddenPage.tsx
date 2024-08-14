@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
 
-import ErrorPageWrapper from './components/ErrorPageWrapper';
+import { BigError } from '@k9-sak-web/gui/sak/systeminfo/BigError.js';
 
 /**
  * ForbiddenPage
@@ -12,13 +11,9 @@ import ErrorPageWrapper from './components/ErrorPageWrapper';
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ForbiddenPage = () => (
-  <ErrorPageWrapper titleCode="ForbiddenPage.Header">
-    <br />
-    <Link to="/">
-      <FormattedMessage id="ForbiddenPage.LinkText" />
-    </Link>
-    <br />
-  </ErrorPageWrapper>
+  <BigError title="Du har ikke tilgang til å slå opp denne personen">
+    <Link to="/">Gå til forsiden</Link>
+  </BigError>
 );
 
 export default ForbiddenPage;

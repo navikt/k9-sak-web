@@ -1,5 +1,4 @@
 import React from 'react';
-import ForbiddenPage from './ForbiddenPage';
 import IngenBehandlingValgtPanel from './IngenBehandlingValgtPanel';
 import NotFoundPage from './NotFoundPage';
 import UnauthorizedPage from './UnauthorizedPage';
@@ -7,8 +6,6 @@ import UnauthorizedPage from './UnauthorizedPage';
 export default {
   title: 'sak/sak-infosider',
 };
-
-export const visPanelForHarIkkeTilgang = () => <ForbiddenPage />;
 
 export const visPanelForSideIkkeFunnet = () => <NotFoundPage />;
 
