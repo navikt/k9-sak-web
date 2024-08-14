@@ -246,7 +246,7 @@
   "HistorikkEndretFelt.DelvisRefusjonFørStart": "Refusjon før oppgitt dato",
   "HistorikkEndretFelt.Inntektskategori": "Inntektskategori",
   "HistorikkEndretFelt.NyttRefusjonskrav": "Nytt refusjonskrav",
-  "HistorikkEndretFelt.OpphoerRefusjon": "Dato for opphør av refusjon",
+  "HistorikkEndretFelt.OpphoerRefusjon": "Dato for opphør av refusjon for {value}",
   "HistorikkEndretFelt.Inntekt": "Inntekt",
   "HistorikkEndretFelt.AvklartPeriode": "Avklart periode",
   "HistorikkEndretFelt.AndelArbeid": "Andel i arbeid",
