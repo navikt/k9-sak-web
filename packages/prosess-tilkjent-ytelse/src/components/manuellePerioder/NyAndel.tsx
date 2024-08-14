@@ -1,15 +1,16 @@
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import { InputField, SelectField } from '@fpsak-frontend/form';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { FlexColumn, FlexRow, Image, PeriodFieldArray } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
-import React, { useState } from 'react';
-import { WrappedComponentProps } from 'react-intl';
-import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
+import { ArbeidsgiverOpplysningerPerId, BeregningsresultatPeriodeAndel, KodeverkMedNavn } from '@k9-sak-web/types';
+import { useState } from 'react';
 import NyArbeidsgiverModal from './NyArbeidsgiverModal';
 
+import { Detail, Fieldset, HGrid } from '@navikt/ds-react';
+import { InputField, SelectField } from '@navikt/ft-form-hooks';
+import { useFieldArray, useFormContext } from 'react-hook-form';
+import { NyArbeidsgiverFormState, NyPeriodeFormState } from './FormState';
 import styles from './periode.module.css';
 
 const minValue0 = minValue(0);
@@ -25,7 +26,7 @@ const mapArbeidsgivere = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
       ))
     : [];
 
-const getInntektskategori = alleKodeverk => {
+const getInntektskategori = (alleKodeverk: { [key: string]: KodeverkMedNavn[] }) => {
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI];
   return aktivitetsstatuser.map(ik => (
     <option value={ik.kode} key={ik.kode}>
@@ -44,59 +45,57 @@ const erSelvstendigNæringsdrivende = inntektskategori =>
 
 const erFrilans = inntektskategori => inntektskategori === inntektskategorier.FRILANSER;
 
-const defaultAndel = {
-  fom: '',
-  tom: '',
+const defaultAndel: BeregningsresultatPeriodeAndel = {
+  aktivitetStatus: undefined,
+  aktørId: '',
+  arbeidsforholdId: '',
+  arbeidsforholdType: undefined,
+  arbeidsgiverNavn: '',
+  arbeidsgiverOrgnr: '',
+  eksternArbeidsforholdId: '',
+  inntektskategori: undefined,
+  refusjon: 0,
+  sisteUtbetalingsdato: '',
+  stillingsprosent: 0,
+  tilSoker: 0,
+  utbetalingsgrad: 0,
+  uttak: [],
 };
 
 interface OwnProps {
-  meta: FieldArrayMetaProps;
   readOnly: boolean;
-  fields: FieldArrayFieldsProps<any>;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
-  newArbeidsgiverCallback: (values: any) => void;
+  newArbeidsgiverCallback: (values: NyArbeidsgiverFormState) => void;
   behandlingId: number;
   behandlingVersjon: number;
 }
 
-export const NyAndel = ({
-  fields,
-  meta,
-  newArbeidsgiverCallback,
-  alleKodeverk,
-  readOnly,
-  arbeidsgivere,
-  behandlingId,
-  behandlingVersjon,
-}: OwnProps & WrappedComponentProps) => {
+export const NyAndel = ({ newArbeidsgiverCallback, alleKodeverk, readOnly, arbeidsgivere }: OwnProps) => {
   const [isOpen, setOpen] = useState(false);
-
-  const allFields = fields.getAll();
+  const { control } = useFormContext<NyPeriodeFormState>();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'andeler',
+    keyName: 'fieldId',
+  });
 
   return (
     <>
-      <PeriodFieldArray
-        shouldShowAddButton
-        fields={fields}
-        meta={meta}
-        textCode="TilkjentYtelse.NyAndel"
-        emptyPeriodTemplate={defaultAndel}
-        readOnly={readOnly}
+      <Fieldset
+        legend="Ny andel"
+        hideLegend
+        // error={formState.errors.andeler}
       >
-        {(periodeElementFieldId, index, getRemoveButton) => {
-          const values = allFields[index];
-
-          const erSN = erSelvstendigNæringsdrivende(values.inntektskategori);
-          const erFL = erFrilans(values.inntektskategori);
-
+        {fields.map((field, index) => {
+          const erSN = erSelvstendigNæringsdrivende(field.inntektskategori);
+          const erFL = erFrilans(field.inntektskategori);
           return (
-            <FlexRow key={periodeElementFieldId}>
+            <FlexRow key={field.fieldId}>
               <FlexColumn>
                 <SelectField
                   label={{ id: 'TilkjentYtelse.NyPeriode.Inntektskategori' }}
-                  name={`${periodeElementFieldId}.inntektskategori`}
-                  bredde="l"
+                  name={`andeler.${index}.inntektskategori`}
                   selectValues={getInntektskategori(alleKodeverk)}
                 />
               </FlexColumn>
@@ -104,26 +103,19 @@ export const NyAndel = ({
                 <FlexColumn className={styles.relative}>
                   <SelectField
                     label={{ id: 'TilkjentYtelse.NyPeriode.Arbeidsgiver' }}
-                    bredde="xl"
-                    name={`${periodeElementFieldId}.arbeidsgiverOrgnr`}
+                    name={`andeler.${index}.arbeidsgiverOrgnr`}
                     validate={[required]}
                     selectValues={mapArbeidsgivere(arbeidsgivere)}
                   />
-                  <div
-                    onClick={() => setOpen(true)}
-                    onKeyDown={() => setOpen(true)}
-                    className={styles.addArbeidsforhold}
-                    role="button"
-                    tabIndex={0}
-                  >
+                  <button onClick={() => setOpen(true)} className={styles.addArbeidsforhold}>
                     <Image className={styles.addCircleIcon} src={addCircleIcon} alt="Ny arbeidsgiver" />
-                  </div>
+                  </button>
                 </FlexColumn>
               )}
               <FlexColumn>
                 <InputField
                   label={{ id: 'TilkjentYtelse.NyPeriode.TilSoker' }}
-                  name={`${periodeElementFieldId}.tilSoker`}
+                  name={`andeler.${index}.tilSoker`}
                   validate={[required, minValue0, maxValue3999, hasValidDecimal]}
                   format={value => value}
                 />
@@ -132,7 +124,7 @@ export const NyAndel = ({
                 <FlexColumn>
                   <InputField
                     label={{ id: 'TilkjentYtelse.NyPeriode.Refusjon' }}
-                    name={`${periodeElementFieldId}.refusjon`}
+                    name={`andeler.${index}.refusjon`}
                     validate={[required, minValue0, maxValue3999, hasValidDecimal]}
                     format={value => value}
                   />
@@ -142,29 +134,45 @@ export const NyAndel = ({
                 <FlexColumn>
                   <InputField
                     label={{ id: 'TilkjentYtelse.NyPeriode.Ubetalingsgrad' }}
-                    name={`${periodeElementFieldId}.utbetalingsgrad`}
+                    name={`andeler.${index}.utbetalingsgrad`}
                     validate={[required, minValue0, maxValue100, hasValidDecimal]}
                     format={value => value}
                   />
                 </FlexColumn>
               )}
-              <FlexColumn>{getRemoveButton()}</FlexColumn>
+              <FlexColumn>
+                {index > 0 && (
+                  <button
+                    className={styles.buttonRemove}
+                    type="button"
+                    onClick={() => {
+                      remove(index);
+                    }}
+                    data-testid="removeButton"
+                  />
+                )}
+              </FlexColumn>
             </FlexRow>
           );
-        }}
-      </PeriodFieldArray>
-
+        })}
+        <HGrid gap="1" columns={{ xs: '12fr' }}>
+          {!readOnly && (
+            <button onClick={() => append(defaultAndel)} className={styles.addPeriode}>
+              <Image className={styles.addCircleIcon} src={addCircleIcon} alt="Ny andel" />
+              <Detail className={styles.imageText}>Ny andel</Detail>
+            </button>
+          )}
+          <VerticalSpacer sixteenPx />
+        </HGrid>
+      </Fieldset>
       {isOpen && (
         <NyArbeidsgiverModal
           showModal={isOpen}
-          newArbeidsgiverCallback={newArbeidsgiverCallback}
-          closeEvent={values => {
+          closeEvent={(values: NyArbeidsgiverFormState) => {
             newArbeidsgiverCallback(values);
             setOpen(false);
           }}
           cancelEvent={() => setOpen(false)}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
         />
       )}
     </>

@@ -1,25 +1,14 @@
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Alert, BodyShort, Table } from '@navikt/ds-react';
-import React from 'react';
-import { WrappedComponentProps, useIntl } from 'react-intl';
-import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
+import { useFormContext } from 'react-hook-form';
+import { useIntl } from 'react-intl';
 import { createVisningsnavnForAndel, getInntektskategori } from '../TilkjentYteleseUtils';
+import { TilkjentYtelseFormState } from './FormState';
 
 interface OwnProps {
-  fields: FieldArrayFieldsProps<any>;
-  meta: FieldArrayMetaProps;
-  openSlettPeriodeModalCallback: (...args: any[]) => any;
-  updatePeriode: (...args: any[]) => any;
-  editPeriode: (...args: any[]) => any;
-  cancelEditPeriode: (...args: any[]) => any;
-  readOnly: boolean;
-  perioder: any[];
-  isNyPeriodeFormOpen: boolean;
-  behandlingVersjon: number;
-  behandlingId: number;
-  behandlingStatus: Kodeverk;
+  name: string;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
 }
@@ -32,20 +21,22 @@ const headerTextCodes = [
   'TilkjentYtelse.NyPeriode.Ubetalingsgrad',
 ];
 
-const Andeler = ({ fields, meta, alleKodeverk, arbeidsgivere }: Partial<OwnProps> & WrappedComponentProps) => {
+const Andeler = ({ name, alleKodeverk, arbeidsgivere }: Partial<OwnProps>) => {
   const intl = useIntl();
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+  const {
+    formState: { errors },
+    watch,
+  } = useFormContext<TilkjentYtelseFormState>();
 
+  const error = errors?.[name];
+
+  const andeler = watch(name as 'perioder.0.andeler');
   return (
     <div>
-      {meta.error && (
+      {error && (
         <Alert size="small" variant="error">
-          {meta.error}
-        </Alert>
-      )}
-      {meta.warning && (
-        <Alert size="small" variant="info">
-          {meta.warning}
+          {error}
         </Alert>
       )}
 
@@ -60,13 +51,12 @@ const Andeler = ({ fields, meta, alleKodeverk, arbeidsgivere }: Partial<OwnProps
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {fields.map((fieldId: string, index: number, field: FieldArrayFieldsProps<any>) => {
-            const andel = field.get(index);
+          {andeler.map(andel => {
             const inntektskategori = getInntektskategori(andel.inntektskategori, getKodeverknavn);
             const arbeidsgiver = createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgivere);
 
             return (
-              <Table.Row key={fieldId}>
+              <Table.Row key={andel.arbeidsforholdId}>
                 <Table.DataCell>
                   <BodyShort size="small">{inntektskategori}</BodyShort>
                 </Table.DataCell>

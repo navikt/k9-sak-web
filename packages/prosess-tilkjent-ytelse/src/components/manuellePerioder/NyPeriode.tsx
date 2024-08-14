@@ -1,18 +1,17 @@
-import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Periode } from '@k9-sak-web/types';
 import { Button, Label } from '@navikt/ds-react';
-import React from 'react';
+import { Datepicker, Form } from '@navikt/ft-form-hooks';
+import { useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { FieldArray, InjectedFormProps } from 'redux-form';
+import { BeriketBeregningsresultatPeriode, NyArbeidsgiverFormState, NyPeriodeFormState } from './FormState';
 import NyAndel from './NyAndel';
 import styles from './periode.module.css';
 
 interface OwnProps {
   newPeriodeResetCallback: (values: any) => any;
-  newArbeidsgiverCallback: (values: any) => void;
+  newArbeidsgiverCallback: (values: NyArbeidsgiverFormState) => void;
   andeler: any[];
   nyPeriode: Periode;
   nyPeriodeDisabledDaysFom: string;
@@ -21,98 +20,105 @@ interface OwnProps {
   readOnly: boolean;
   behandlingId: number;
   behandlingVersjon: number;
+  newPeriodeCallback: (nyPeriode: Partial<BeriketBeregningsresultatPeriode>) => void;
 }
 
 export const TilkjentYtelseNyPeriode = ({
   newPeriodeResetCallback,
   newArbeidsgiverCallback,
-  nyPeriode,
+  newPeriodeCallback,
+  // nyPeriode,
   readOnly,
-  andeler,
+  // andeler,
   alleKodeverk,
   behandlingId,
   behandlingVersjon,
   arbeidsgivere,
-  ...formProps
-}: OwnProps & InjectedFormProps) => {
-  const numberOfDaysAndWeeks = calcDaysAndWeeks(nyPeriode.fom, nyPeriode.tom);
+}: OwnProps) => {
+  const formMethods = useForm<NyPeriodeFormState>({
+    defaultValues: { fom: null, tom: null, andeler: [] },
+  });
+  const fom = formMethods.watch('fom');
+  const tom = formMethods.watch('tom');
+  const numberOfDaysAndWeeks = calcDaysAndWeeks(fom, tom);
+
+  const handleSubmit = (formState: NyPeriodeFormState) => {
+    newPeriodeCallback(transformValues(formState));
+  };
+
   return (
-    <div className={styles.periodeContainer}>
-      <div className={styles.periodeType}>
-        <div className={styles.headerWrapper}>
-          <Label size="small" as="p">
-            <FormattedMessage id="TilkjentYtelse.NyPeriode" />
-          </Label>
+    <Form formMethods={formMethods} onSubmit={handleSubmit}>
+      <div className={styles.periodeContainer}>
+        <div className={styles.periodeType}>
+          <div className={styles.headerWrapper}>
+            <Label size="small" as="p">
+              <FormattedMessage id="TilkjentYtelse.NyPeriode" />
+            </Label>
+          </div>
+        </div>
+        <div className={styles.periodeInnhold}>
+          <VerticalSpacer eightPx />
+          <FlexContainer wrap>
+            <FlexRow wrap>
+              <FlexColumn>
+                <FlexRow>
+                  <FlexColumn>
+                    <Datepicker name="fom" label={{ id: 'TilkjentYtelse.NyPeriode.Fom' }} />
+                  </FlexColumn>
+                  <FlexColumn>
+                    <Datepicker name="tom" label={{ id: 'TilkjentYtelse.NyPeriode.Tom' }} />
+                  </FlexColumn>
+                  <FlexColumn className={styles.suffix}>
+                    <div id="antallDager">
+                      {fom && (
+                        <FormattedMessage
+                          id={numberOfDaysAndWeeks.id.toString()}
+                          values={{
+                            weeks: numberOfDaysAndWeeks.weeks.toString(),
+                            days: numberOfDaysAndWeeks.days.toString(),
+                          }}
+                        />
+                      )}
+                    </div>
+                  </FlexColumn>
+                </FlexRow>
+                <VerticalSpacer twentyPx />
+                <FlexRow>
+                  <FlexColumn>
+                    <NyAndel
+                      readOnly={readOnly}
+                      alleKodeverk={alleKodeverk}
+                      arbeidsgivere={arbeidsgivere}
+                      behandlingId={behandlingId}
+                      behandlingVersjon={behandlingVersjon}
+                      newArbeidsgiverCallback={newArbeidsgiverCallback}
+                    />
+                  </FlexColumn>
+                </FlexRow>
+              </FlexColumn>
+            </FlexRow>
+          </FlexContainer>
+          <VerticalSpacer twentyPx />
+
+          <Button
+            variant="primary"
+            className={styles.oppdaterMargin}
+            type="button"
+            size="small"
+            loading={formMethods.formState.isSubmitting}
+          >
+            <FormattedMessage id="TilkjentYtelse.LeggTilPeriode" />
+          </Button>
+          <Button variant="secondary" type="button" size="small" onClick={newPeriodeResetCallback}>
+            <FormattedMessage id="TilkjentYtelse.Avbryt" />
+          </Button>
         </div>
       </div>
-      <div className={styles.periodeInnhold}>
-        <VerticalSpacer eightPx />
-        <FlexContainer wrap>
-          <FlexRow wrap>
-            <FlexColumn>
-              <FlexRow>
-                <FlexColumn>
-                  <DatepickerField name="fom" label={{ id: 'TilkjentYtelse.NyPeriode.Fom' }} />
-                </FlexColumn>
-                <FlexColumn>
-                  <DatepickerField name="tom" label={{ id: 'TilkjentYtelse.NyPeriode.Tom' }} />
-                </FlexColumn>
-                <FlexColumn className={styles.suffix}>
-                  <div id="antallDager">
-                    {nyPeriode.fom && (
-                      <FormattedMessage
-                        id={numberOfDaysAndWeeks.id.toString()}
-                        values={{
-                          weeks: numberOfDaysAndWeeks.weeks.toString(),
-                          days: numberOfDaysAndWeeks.days.toString(),
-                        }}
-                      />
-                    )}
-                  </div>
-                </FlexColumn>
-              </FlexRow>
-              <VerticalSpacer twentyPx />
-              <FlexRow>
-                <FlexColumn>
-                  <FieldArray
-                    name="andeler"
-                    component={NyAndel}
-                    readOnly={readOnly}
-                    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-                    andeler={andeler}
-                    alleKodeverk={alleKodeverk}
-                    arbeidsgivere={arbeidsgivere}
-                    behandlingId={behandlingId}
-                    behandlingVersjon={behandlingVersjon}
-                    newArbeidsgiverCallback={newArbeidsgiverCallback}
-                    rerenderOnEveryChange
-                  />
-                </FlexColumn>
-              </FlexRow>
-            </FlexColumn>
-          </FlexRow>
-        </FlexContainer>
-        <VerticalSpacer twentyPx />
-
-        <Button
-          variant="primary"
-          className={styles.oppdaterMargin}
-          type="button"
-          size="small"
-          onClick={formProps.handleSubmit}
-          loading={formProps.submitting}
-        >
-          <FormattedMessage id="TilkjentYtelse.LeggTilPeriode" />
-        </Button>
-        <Button variant="secondary" type="button" size="small" onClick={newPeriodeResetCallback}>
-          <FormattedMessage id="TilkjentYtelse.Avbryt" />
-        </Button>
-      </div>
-    </div>
+    </Form>
   );
 };
 
-const transformValues = (values: any) => ({
+const transformValues = (values: NyPeriodeFormState) => ({
   id: guid(),
   fom: values.fom,
   tom: values.tom,
@@ -145,39 +151,26 @@ const validateNyPeriodeForm = (values: any) => {
   return errors;
 };
 
-interface PureOwnProps {
-  newPeriodeCallback: (values: any) => void;
-  behandlingId: number;
-  behandlingVersjon: number;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-}
+// const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
+//   const { newPeriodeCallback, behandlingId, behandlingVersjon } = ownProps;
+//   const onSubmit = (values: any) => newPeriodeCallback(transformValues(values));
 
-const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
-  const { newPeriodeCallback, behandlingId, behandlingVersjon } = ownProps;
-  const onSubmit = (values: any) => newPeriodeCallback(transformValues(values));
+//   return (state: any) => ({
+//     initialValues: {
+//       fom: null,
+//       tom: null,
+//     },
+//     nyPeriode: behandlingFormValueSelector('nyPeriodeForm', behandlingId, behandlingVersjon)(state, 'fom', 'tom'),
+//     andeler: behandlingFormValueSelector('andeler', behandlingId, behandlingVersjon)(
+//       state,
+//       'tilSoker',
+//       'refusjon',
+//       'arbeidsgiver',
+//       'inntektskategori',
+//       'utbetalingsgrad',
+//     ),
+//     onSubmit,
+//   });
+// };
 
-  return (state: any) => ({
-    initialValues: {
-      fom: null,
-      tom: null,
-    },
-    nyPeriode: behandlingFormValueSelector('nyPeriodeForm', behandlingId, behandlingVersjon)(state, 'fom', 'tom'),
-    andeler: behandlingFormValueSelector('andeler', behandlingId, behandlingVersjon)(
-      state,
-      'tilSoker',
-      'refusjon',
-      'arbeidsgiver',
-      'inntektskategori',
-      'utbetalingsgrad',
-    ),
-    onSubmit,
-  });
-};
-
-export default connect(mapStateToPropsFactory)(
-  behandlingForm({
-    form: 'nyPeriodeForm',
-    validate: values => validateNyPeriodeForm(values),
-    enableReinitialize: true,
-  })(TilkjentYtelseNyPeriode),
-);
+export default TilkjentYtelseNyPeriode;

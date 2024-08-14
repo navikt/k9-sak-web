@@ -1,4 +1,3 @@
-import { behandlingForm, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { guid } from '@fpsak-frontend/utils';
@@ -6,34 +5,26 @@ import {
   Aksjonspunkt,
   ArbeidsgiverOpplysningerPerId,
   BeregningsresultatUtbetalt,
-  Kodeverk,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
+import { Form } from '@navikt/ft-form-hooks';
 import moment from 'moment';
-import React from 'react';
+import { useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
+import { TilkjentYtelseFormState } from './FormState';
 import PeriodeTabell from './PeriodeTabell';
 
 interface OwnProps {
   readOnly: boolean;
   readOnlySubmitButton: boolean;
-  behandlingFormPrefix: string;
-  submitting: boolean;
   aksjonspunkter: Aksjonspunkt[];
   behandlingId: number;
   behandlingVersjon: number;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  behandlingStatus: Kodeverk;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  vilkarForSykdomExists: boolean;
-  beregningsresultat: BeregningsresultatUtbetalt[];
+  beregningsresultat: BeregningsresultatUtbetalt;
   submitCallback: (...args: any[]) => any;
 }
-
-const FORM_NAME = 'TilkjentYtelseForm';
 
 export const TilkjentYtelseForm = ({
   readOnly,
@@ -42,38 +33,68 @@ export const TilkjentYtelseForm = ({
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
-  ...formProps
-}: Partial<OwnProps> & InjectedFormProps) => (
-  <>
-    {aksjonspunkter.length > 0 && (
-      <>
-        <VerticalSpacer twentyPx />
-        <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
-          {[
-            <FormattedMessage
-              id="TilkjentYtelse.AksjonspunktHelpText"
-              key={aksjonspunktCodes.MANUELL_TILKJENT_YTELSE}
-            />,
-          ]}
-        </AksjonspunktHelpText>
-        <VerticalSpacer twentyPx />
-      </>
-    )}
+  beregningsresultat,
+  arbeidsgiverOpplysningerPerId,
+  submitCallback,
+}: OwnProps) => {
+  const handleSubmit = formState => {
+    submitCallback(transformValues(formState));
+  };
 
-    <form onSubmit={formProps.handleSubmit}>
-      {formProps.warning && <span>{formProps.warning}</span>}
-      <PeriodeTabell
-        // readOnlySubmitButton={readOnlySubmitButton}
-        readOnly={readOnly}
-        submitting={formProps.submitting}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        alleKodeverk={alleKodeverk}
-      />
-      {formProps.error && <span>{formProps.error}</span>}
-    </form>
-  </>
-);
+  const buildInitialValues = (): TilkjentYtelseFormState => {
+    if (beregningsresultat?.perioder) {
+      return {
+        arbeidsgivere: arbeidsgiverOpplysningerPerId,
+        perioder: beregningsresultat.perioder.map(periode => ({
+          ...periode,
+          id: guid(),
+          openForm: false,
+          // updated: false,
+        })),
+      };
+    }
+
+    return {
+      arbeidsgivere: arbeidsgiverOpplysningerPerId,
+      perioder: [],
+    };
+  };
+
+  const formMethods = useForm<TilkjentYtelseFormState>({
+    defaultValues: buildInitialValues(),
+  });
+  return (
+    <>
+      {aksjonspunkter.length > 0 && (
+        <>
+          <VerticalSpacer twentyPx />
+          <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
+            {[
+              <FormattedMessage
+                id="TilkjentYtelse.AksjonspunktHelpText"
+                key={aksjonspunktCodes.MANUELL_TILKJENT_YTELSE}
+              />,
+            ]}
+          </AksjonspunktHelpText>
+          <VerticalSpacer twentyPx />
+        </>
+      )}
+
+      <Form formMethods={formMethods} onSubmit={handleSubmit} data-testid="OppholdInntektOgPerioderForm">
+        {/* {formProps.warning && <span>{formProps.warning}</span>} */}
+        <PeriodeTabell
+          // readOnlySubmitButton={readOnlySubmitButton}
+          readOnly={readOnly}
+          submitting={formMethods.formState.isSubmitting}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          alleKodeverk={alleKodeverk}
+        />
+        {formMethods.formState.errors && <span>{formMethods.formState.errors}</span>}
+      </Form>
+    </>
+  );
+};
 
 export const sjekkOverlappendePerioder = (index: number, nestePeriode: any, forrigePeriode: any) =>
   index !== 0 && moment(nestePeriode.fom) <= moment(forrigePeriode.tom);
@@ -110,33 +131,33 @@ const validateForm = (values: any) => {
   return errors;
 };
 
-const buildInitialValues = createSelector(
-  [
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    (props: OwnProps) => props.beregningsresultat?.perioder,
-    (props: OwnProps) => props.arbeidsgiverOpplysningerPerId,
-  ],
-  (perioder = [], arbeidsgiverOpplysningerPerId = {}) => {
-    if (perioder) {
-      return {
-        arbeidsgivere: arbeidsgiverOpplysningerPerId,
-        perioder: perioder.map((periode: any) => ({
-          ...periode,
-          id: guid(),
-          openForm: false,
-          // updated: false,
-        })),
-      };
-    }
+// const buildInitialValues = createSelector(
+//   [
+//     // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
+//     (props: OwnProps) => props.beregningsresultat?.perioder,
+//     (props: OwnProps) => props.arbeidsgiverOpplysningerPerId,
+//   ],
+//   (perioder = [], arbeidsgiverOpplysningerPerId = {}) => {
+//     if (perioder) {
+//       return {
+//         arbeidsgivere: arbeidsgiverOpplysningerPerId,
+//         perioder: perioder.map((periode: any) => ({
+//           ...periode,
+//           id: guid(),
+//           openForm: false,
+//           // updated: false,
+//         })),
+//       };
+//     }
 
-    return {
-      arbeidsgivere: arbeidsgiverOpplysningerPerId,
-      perioder,
-    };
-  },
-);
+//     return {
+//       arbeidsgivere: arbeidsgiverOpplysningerPerId,
+//       perioder,
+//     };
+//   },
+// );
 
-export const transformValues = (values: any) => [
+export const transformValues = (values: TilkjentYtelseFormState) => [
   {
     kode: aksjonspunktCodes.MANUELL_TILKJENT_YTELSE,
     tilkjentYtelse: {
@@ -146,31 +167,26 @@ export const transformValues = (values: any) => [
   },
 ];
 
-const lagSubmitFn = createSelector(
-  [(ownProps: OwnProps) => ownProps.submitCallback, buildInitialValues],
-  submitCallback => (values: any) => submitCallback(transformValues(values)),
-);
+// const lagSubmitFn = createSelector(
+//   [(ownProps: OwnProps) => ownProps.submitCallback, buildInitialValues],
+//   submitCallback => (values: any) => submitCallback(transformValues(values)),
+// );
 
-const mapStateToPropsFactory = (_initialState: any, props: OwnProps) => {
-  const initialValues = buildInitialValues(props);
-  const { behandlingId, behandlingVersjon } = props;
+// const mapStateToPropsFactory = (_initialState: any, props: OwnProps) => {
+//   const initialValues = buildInitialValues(props);
+//   const { behandlingId, behandlingVersjon } = props;
 
-  const validate = (values: any) => validateForm(values);
+//   const validate = (values: any) => validateForm(values);
 
-  return (_state, ownProps) => {
-    const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
-    return {
-      initialValues,
-      behandlingFormPrefix,
-      validate,
-      onSubmit: lagSubmitFn(ownProps),
-    };
-  };
-};
+//   return (_state, ownProps) => {
+//     const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
+//     return {
+//       initialValues,
+//       behandlingFormPrefix,
+//       validate,
+//       onSubmit: lagSubmitFn(ownProps),
+//     };
+//   };
+// };
 
-export default connect(mapStateToPropsFactory)(
-  behandlingForm({
-    form: FORM_NAME,
-    enableReinitialize: true,
-  })(TilkjentYtelseForm),
-);
+export default TilkjentYtelseForm;

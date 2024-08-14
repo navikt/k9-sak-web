@@ -20,9 +20,9 @@ export type BeregningsresultatPeriodeAndel = Readonly<{
 export type BeregningsresultatPeriode = Readonly<{
   fom: string;
   tom: string;
-  dagsats: number;
+  dagsats?: number;
   andeler?: BeregningsresultatPeriodeAndel[];
-  totalUtbetalingsgradFraUttak: number;
+  totalUtbetalingsgradFraUttak?: number;
   totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt?: number;
 }>;
 
