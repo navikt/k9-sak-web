@@ -28,7 +28,7 @@ const unavailableCauseTxt = (cause: UtilgjengeligÅrsak | undefined): string | u
     case utilgjengeligÅrsaker.ORG_OPPHØRT:
       return 'opphørt';
     default:
-      console.warn(`Ukjendt årsak for unavailableCauseMsg, returnerer verdi direkte`);
+      console.warn(`Ukjendt utilgjengelig årsak, returnerer verdi direkte`);
       return cause;
   }
 };

@@ -53,6 +53,10 @@ export class FakeMessagesBackendApi implements BackendApi {
           // To test what happens when orgnr is not found
           return { notFound: true };
         }
+        if (orgnr.trim() === '999999999') {
+          // To test what happens when orgnr is opphørt
+          return { name: `Fake konkurs firma (${orgnr.trim()})`, utilgjengelig: 'ORG_OPPHØRT' };
+        }
         return { name: `Fake storybook org (${orgnr.trim()})` };
       }
     }

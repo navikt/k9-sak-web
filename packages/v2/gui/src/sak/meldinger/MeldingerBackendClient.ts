@@ -4,7 +4,10 @@ import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/Fo
 import type { FormidlingClient } from '@k9-sak-web/backend/k9formidling/client/FormidlingClient.ts';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.ts';
 import { type AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.ts';
-import { requestIntentionallyAborted, type RequestIntentionallyAborted } from "@k9-sak-web/backend/shared/RequestIntentionallyAborted.ts";
+import {
+  requestIntentionallyAborted,
+  type RequestIntentionallyAborted,
+} from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.ts';
 import type { EregOrganizationLookupResponse } from './EregOrganizationLookupResponse.js';
 
 export default class MeldingerBackendClient {
@@ -17,10 +20,13 @@ export default class MeldingerBackendClient {
     this.#formidling = formidlingClient;
   }
 
-  async getBrevMottakerinfoEreg(organisasjonsnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse | RequestIntentionallyAborted> {
-    if(organisasjonsnr.trim().length !== 9) {
+  async getBrevMottakerinfoEreg(
+    organisasjonsnr: string,
+    abort?: AbortSignal,
+  ): Promise<EregOrganizationLookupResponse | RequestIntentionallyAborted> {
+    if (organisasjonsnr.trim().length !== 9) {
       // organisasjonsnr må vere 9 siffer for å vere gyldig, så avbryt uten å kontakte server viss det ikkje er det.
-      return { invalidOrgnum: true }
+      return { invalidOrgnum: true };
     }
     const abortListenerRemover = new AbortController(); // Trengs nok eigentleg ikkje
     try {
@@ -30,10 +36,11 @@ export default class MeldingerBackendClient {
       if (resp !== null && resp.navn !== undefined) {
         return {
           name: resp.navn,
+          utilgjengelig: resp.utilgjengeligÅrsak,
         };
       }
-      if(promise.isCancelled) {
-        return requestIntentionallyAborted
+      if (promise.isCancelled) {
+        return requestIntentionallyAborted;
       }
       return {
         notFound: true,
