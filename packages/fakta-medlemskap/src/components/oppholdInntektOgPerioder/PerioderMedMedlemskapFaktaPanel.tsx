@@ -13,7 +13,7 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import { BodyShort, Table, VStack } from '@navikt/ds-react';
 import { RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
@@ -129,7 +129,7 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
             <FlexRow>
               <FlexColumn>
                 <RadioGroupPanel
-                  name="oppholdInntektOgPeriodeForm.medlemskapManuellVurderingType.kode"
+                  name="oppholdInntektOgPeriodeForm.medlemskapManuellVurderingType"
                   validate={[required]}
                   isReadOnly={readOnly}
                   isEdited={isPeriodAksjonspunktClosed}
@@ -187,9 +187,11 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
 PerioderMedMedlemskapFaktaPanel.transformValues = (
   values: PerioderMedMedlemskapFaktaPanelFormState,
   manuellVurderingTyper,
-) => ({
-  kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-  medlemskapManuellVurderingType: manuellVurderingTyper.find(m => m.kode === values.medlemskapManuellVurderingType),
-});
+) => {
+  return {
+    kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
+    medlemskapManuellVurderingType: manuellVurderingTyper.find(m => m.kode === values.medlemskapManuellVurderingType),
+  };
+};
 
 export default PerioderMedMedlemskapFaktaPanel;

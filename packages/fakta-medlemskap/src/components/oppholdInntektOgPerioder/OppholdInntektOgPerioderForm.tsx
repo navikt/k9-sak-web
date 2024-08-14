@@ -111,7 +111,6 @@ const buildInitialValues = (
   perioder: Periode[],
   valgtPeriode: Periode,
   aksjonspunkter: Aksjonspunkt[],
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] },
 ): OppholdInntektOgPerioderFormState => ({
   soknad,
   person: fagsakPerson,
@@ -123,7 +122,6 @@ const buildInitialValues = (
     soknad,
     medlemskap.medlemskapPerioder,
     medlemskap.fom,
-    alleKodeverk,
   ),
 });
 
@@ -146,7 +144,6 @@ export const OppholdInntektOgPerioderForm = ({
   readOnly,
   submittable,
   aksjonspunkter,
-  alleKodeverk,
   alleMerknaderFraBeslutter,
   soknad,
   fagsakPerson,
@@ -171,7 +168,6 @@ export const OppholdInntektOgPerioderForm = ({
       oppdatertePerioder || initialPerioder,
       nyValgtPeriode || valgtPeriode,
       aksjonspunkter,
-      alleKodeverk,
     );
 
   const formMethods = useForm<OppholdInntektOgPerioderFormState>({
@@ -260,7 +256,6 @@ export const OppholdInntektOgPerioderForm = ({
           submittable={submittable}
           updateOppholdInntektPeriode={updateOppholdInntektPeriode}
           periodeResetCallback={periodeResetCallback}
-          alleKodeverk={alleKodeverk}
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
         />
       )}

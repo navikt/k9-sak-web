@@ -10,7 +10,7 @@ import norwegianLocale from 'i18n-iso-countries/langs/no.json';
 import { FunctionComponent } from 'react';
 
 import { BostedSokerPersonopplysninger } from '@fpsak-frontend/fakta-bosted-soker/src/BostedSokerFaktaIndex';
-import { Aksjonspunkt, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
+import { Aksjonspunkt, Personopplysninger } from '@k9-sak-web/types';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { OppholdInntektOgPerioderFormState, OppholdINorgeOgAdresserFaktaPanelFormState } from './FormState';
 import { MerknaderFraBeslutter } from './MerknaderFraBeslutter';
@@ -63,7 +63,6 @@ interface OppholdINorgeOgAdresserFaktaPanelProps {
   isBosattAksjonspunktClosed: boolean;
   opphold?: Opphold;
   foreldre?: Forelder[];
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   alleMerknaderFraBeslutter: MerknaderFraBeslutter;
 }
 
@@ -88,13 +87,7 @@ interface StaticFunctions {
  * Viser opphold i innland og utland som er relevante for søker. ReadOnly.
  */
 const OppholdINorgeOgAdresserFaktaPanel: FunctionComponent<OppholdINorgeOgAdresserFaktaPanelProps> &
-  StaticFunctions = ({
-  readOnly,
-  hasBosattAksjonspunkt,
-  isBosattAksjonspunktClosed,
-  alleKodeverk,
-  alleMerknaderFraBeslutter,
-}) => {
+  StaticFunctions = ({ readOnly, hasBosattAksjonspunkt, isBosattAksjonspunktClosed, alleMerknaderFraBeslutter }) => {
   const { control } = useFormContext<OppholdInntektOgPerioderFormState>();
   const { foreldre, opphold } = useWatch({ control, name: 'oppholdInntektOgPeriodeForm' });
   return (
@@ -111,14 +104,11 @@ const OppholdINorgeOgAdresserFaktaPanel: FunctionComponent<OppholdINorgeOgAdress
           <FaktaGruppe withoutBorder titleCode="Bostedsadresse fra folkeregisteret" useIntl={false}>
             {foreldre.map(f => (
               <div key={f.personopplysning.navn}>
-                {f.isApplicant && (
-                  <BostedSokerFaktaIndex personopplysninger={f.personopplysning} alleKodeverk={alleKodeverk} />
-                )}
+                {f.isApplicant && <BostedSokerFaktaIndex personopplysninger={f.personopplysning} />}
                 {!f.isApplicant && (
                   <BostedSokerFaktaIndex
                     sokerTypeTextId="OppholdINorgeOgAdresserFaktaPanel.Parent"
                     personopplysninger={f.personopplysning}
-                    alleKodeverk={alleKodeverk}
                   />
                 )}
               </div>

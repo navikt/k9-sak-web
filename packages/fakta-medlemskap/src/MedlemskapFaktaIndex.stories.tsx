@@ -1,11 +1,10 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { action } from '@storybook/addon-actions';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
-import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { action } from '@storybook/addon-actions';
 import MedlemskapFaktaIndex, { MedlemskapFaktaIndexProps } from './MedlemskapFaktaIndex';
 
 const behandling = {
@@ -167,12 +166,19 @@ export const VisAksjonspunktForAvklaringOmBrukerErBosatt = args => (
   <KodeverkProvider
     behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverkV2}
-    klageKodeverk={{}}
-    tilbakeKodeverk={{}}
+    klageKodeverk={alleKodeverkV2}
+    tilbakeKodeverk={alleKodeverkV2}
   >
     <MedlemskapFaktaIndex
-      aksjonspunkter={[{ definisjon: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT }]}
-      alleKodeverk={alleKodeverk}
+      aksjonspunkter={[
+        {
+          definisjon: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
+          status: aksjonspunktStatus.OPPRETTET,
+          begrunnelse: undefined,
+          kanLoses: true,
+          erAktivt: true,
+        },
+      ]}
       submitCallback={action('button-click')}
       {...args}
     />
@@ -199,13 +205,21 @@ export const VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = (args: Medle
   <KodeverkProvider
     behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverkV2}
-    klageKodeverk={{}}
-    tilbakeKodeverk={{}}
+    klageKodeverk={alleKodeverkV2}
+    tilbakeKodeverk={alleKodeverkV2}
   >
     <MedlemskapFaktaIndex
       aksjonspunkter={[
         {
           definisjon: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
+          status: aksjonspunktStatus.OPPRETTET,
+          begrunnelse: undefined,
+          kanLoses: true,
+          erAktivt: true,
+        },
+        {
+          definisjon: aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
+          status: aksjonspunktStatus.OPPRETTET,
           begrunnelse: undefined,
           kanLoses: true,
           erAktivt: true,
@@ -225,7 +239,6 @@ export const VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = (args: Medle
           erAktivt: true,
         },
       ]}
-      alleKodeverk={alleKodeverk}
       submitCallback={args?.submitCallback || action('button-click')}
       {...args}
     />
@@ -252,12 +265,14 @@ VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter.args = {
 };
 
 export const VisPanelUtenAksjonspunkt = args => (
-  <MedlemskapFaktaIndex
-    aksjonspunkter={[]}
-    alleKodeverk={alleKodeverk}
-    submitCallback={action('button-click')}
-    {...args}
-  />
+  <KodeverkProvider
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+    kodeverk={alleKodeverkV2}
+    klageKodeverk={alleKodeverkV2}
+    tilbakeKodeverk={alleKodeverkV2}
+  >
+    <MedlemskapFaktaIndex aksjonspunkter={[]} submitCallback={action('button-click')} {...args} />
+  </KodeverkProvider>
 );
 
 VisPanelUtenAksjonspunkt.args = {

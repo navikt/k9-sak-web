@@ -1,5 +1,5 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { Aksjonspunkt, FagsakPerson, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Aksjonspunkt, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import React from 'react';
 import { Medlemskap } from './oppholdInntektOgPerioder/Medlemskap';
 import { MerknaderFraBeslutter } from './oppholdInntektOgPerioder/MerknaderFraBeslutter';

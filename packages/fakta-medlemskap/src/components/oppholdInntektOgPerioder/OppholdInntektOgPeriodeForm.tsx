@@ -1,6 +1,5 @@
 import FaktaBegrunnelseTextFieldRHF from '@fpsak-frontend/form/src/hook-form/FaktaBegrunnelseTextFieldRHF';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   BorderBox,
   FlexColumn,
@@ -9,8 +8,8 @@ import {
   VerticalSpacer,
   useSaksbehandlerOppslag,
 } from '@fpsak-frontend/shared-components';
-import { ISO_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Alert, Button } from '@navikt/ds-react';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import moment from 'moment';
@@ -45,7 +44,6 @@ interface OppholdInntektOgPeriodeFormProps {
   submittable: boolean;
   valgtPeriode: Periode;
   periodeResetCallback: () => void;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   alleMerknaderFraBeslutter: { notAccepted: boolean };
 }
 
@@ -56,7 +54,6 @@ interface StaticFunctions {
     soknad: Soknad,
     medlemskapPerioder: MedlemskapPeriode[],
     gjeldendeFom: string,
-    alleKodeverk: { [key: string]: KodeverkMedNavn[] },
   ) => OppholdInntektOgPeriodeFormState;
 }
 
@@ -66,7 +63,6 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
   updateOppholdInntektPeriode,
   submittable,
   periodeResetCallback,
-  alleKodeverk,
   alleMerknaderFraBeslutter,
 }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -91,17 +87,12 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
     <BorderBox>
       <OppholdINorgeOgAdresserFaktaPanel
         readOnly={readOnly}
-        alleKodeverk={alleKodeverk}
         alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
         hasBosattAksjonspunkt={valgtPeriode.isBosattAksjonspunktClosed}
         isBosattAksjonspunktClosed={valgtPeriode.isBosattAksjonspunktClosed}
       />
       <VerticalSpacer twentyPx />
-      <PerioderMedMedlemskapFaktaPanel
-        readOnly={readOnly}
-        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-        alleKodeverk={alleKodeverk}
-      />
+      <PerioderMedMedlemskapFaktaPanel readOnly={readOnly} alleMerknaderFraBeslutter={alleMerknaderFraBeslutter} />
       {(hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, valgtPeriode.aksjonspunkter) ||
         hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, valgtPeriode.aksjonspunkter)) && (
         <StatusForBorgerFaktaPanel readOnly={readOnly} alleMerknaderFraBeslutter={alleMerknaderFraBeslutter} />
