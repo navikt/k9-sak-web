@@ -3,7 +3,7 @@ import { XMarkOctagonIcon } from '@navikt/aksel-icons';
 
 export interface BigErrorProps {
   readonly title?: string;
-  readonly children: string | React.ReactNode;
+  readonly children?: string | React.ReactNode;
 }
 
 export const BigError = ({ title, children }: BigErrorProps) => (
