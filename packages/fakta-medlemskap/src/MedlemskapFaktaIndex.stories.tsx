@@ -2,10 +2,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { action } from '@storybook/addon-actions';
-import React from 'react';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
-import MedlemskapFaktaIndex from './MedlemskapFaktaIndex';
+import { action } from '@storybook/addon-actions';
+import MedlemskapFaktaIndex, { MedlemskapFaktaIndexProps } from './MedlemskapFaktaIndex';
 
 const behandling = {
   id: 1,
@@ -222,12 +221,12 @@ export default {
   component: MedlemskapFaktaIndex,
 };
 
-export const visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = args => (
+export const VisAksjonspunktForAvklaringOmBrukerErBosatt = args => (
   <MedlemskapFaktaIndex
     aksjonspunkter={[
       {
         definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
+          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
         },
         status: {
           kode: aksjonspunktStatus.OPPRETTET,
@@ -243,14 +242,14 @@ export const visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = a
   />
 );
 
-visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden.args = {
+VisAksjonspunktForAvklaringOmBrukerErBosatt.args = {
   behandling,
   medlemskap,
   soknad,
   arbeidsforhold,
   fagsakPerson,
   alleMerknaderFraBeslutter: {
-    [aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN]: merknaderFraBeslutter,
+    [aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]: merknaderFraBeslutter,
   },
   isForeldrepengerFagsak: true,
   readOnly: false,
@@ -259,7 +258,7 @@ visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden.args = {
   submittable: true,
 };
 
-export const visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = args => (
+export const VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = (args: MedlemskapFaktaIndexProps) => (
   <MedlemskapFaktaIndex
     aksjonspunkter={[
       {
@@ -308,12 +307,12 @@ export const visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = args => (
       },
     ]}
     alleKodeverk={alleKodeverk}
-    submitCallback={action('button-click')}
+    submitCallback={args?.submitCallback || action('button-click')}
     {...args}
   />
 );
 
-visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter.args = {
+VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter.args = {
   behandling,
   medlemskap,
   soknad,
@@ -330,4 +329,29 @@ visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter.args = {
   readOnlyBehandling: false,
   harApneAksjonspunkter: true,
   submittable: true,
+};
+
+export const VisPanelUtenAksjonspunkt = args => (
+  <MedlemskapFaktaIndex
+    aksjonspunkter={[]}
+    alleKodeverk={alleKodeverk}
+    submitCallback={action('button-click')}
+    {...args}
+  />
+);
+
+VisPanelUtenAksjonspunkt.args = {
+  behandling,
+  medlemskap,
+  soknad,
+  arbeidsforhold,
+  fagsakPerson,
+  alleMerknaderFraBeslutter: {
+    [aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN]: merknaderFraBeslutter,
+  },
+  isForeldrepengerFagsak: true,
+  readOnly: true,
+  readOnlyBehandling: false,
+  harApneAksjonspunkter: false,
+  submittable: false,
 };

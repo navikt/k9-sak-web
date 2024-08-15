@@ -29,7 +29,7 @@ const MottakerSelect = ({
         label="Mottaker"
         size="small"
         placeholder="Velg mottaker"
-        defaultValue={valgtMottakerId}
+        value={valgtMottakerId}
         onChange={e => onChange?.(e.target.value)}
         disabled={disabled}
       >
