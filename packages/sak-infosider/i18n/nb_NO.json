@@ -1,7 +1,5 @@
 {
   "GenericErrorPage.Header": "Noe gikk galt",
-  "UnauthorizedPage.Header": "Du må logge inn for å få tilgang til systemet",
-  "UnauthorizedPage.LinkText": "Gå til innloggingssiden",
   "ErrorPage.Header": "Det har oppstått en teknisk feil i denne behandlingen. {br}Meld feilen i Porten. Ta med feilmeldingsteksten.",
 
   "IngenBehandlingValgtPanel.ZeroBehandlinger": "Ingen behandlinger er opprettet",
