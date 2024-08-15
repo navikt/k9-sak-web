@@ -64,4 +64,10 @@ export const UtenTekst: Story = {
   },
 };
 
-export const IngenInfoSpesifisert: Story = {};
+export const IngenInfoSpesifisert: Story = {
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('heading')).toHaveTextContent('Uventet feil');
+    await expect(canvas.getByText('Meld fra i porten hvis problemet vedvarer', { exact: false })).toBeInTheDocument();
+    await expect(canvas.getByRole('link', { name: 'laste siden på nytt' })).toBeInTheDocument();
+  },
+};

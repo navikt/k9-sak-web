@@ -14,7 +14,8 @@ type Story = StoryObj<typeof meta>;
 export const GenerellFeilmelding: Story = {
   play: async ({ canvas }) => {
     await expect(canvas.getByRole('heading')).toHaveTextContent(
-      'Det har oppstått en teknisk feil i denne behandlingen. Meld feilen i Porten. Ta med feilmeldingsteksten.',
+      'Det har oppstått en teknisk feil i denne behandlingen.',
     );
+    await expect(canvas.getByText('Meld fra i porten hvis problemet vedvarer.', { exact: false })).toBeInTheDocument();
   },
 };

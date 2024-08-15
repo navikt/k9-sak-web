@@ -39,7 +39,7 @@ export const ErrorBoundaryTriggered: Story = {
   play: async ({ canvas, args }) => {
     await expect(args.errorMessageCallback).toHaveBeenCalledOnce();
     await expect(canvas.getByRole('heading')).toHaveTextContent(
-      'Det har oppstått en teknisk feil i denne behandlingen. Meld feilen i Porten. Ta med feilmeldingsteksten.',
+      'Det har oppstått en teknisk feil i denne behandlingen.',
     );
   },
 };

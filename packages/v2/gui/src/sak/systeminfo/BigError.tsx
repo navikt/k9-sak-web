@@ -6,14 +6,17 @@ export interface BigErrorProps {
   readonly children?: string | React.ReactNode;
 }
 
-const DefaultChildren = () => (
+const DefaultErrorMsg = () => (
   <>
-    Forøk gjerne å <a href="javascript: window.location.reload()">laste siden på nytt</a>, eller meld fra i porten hvis
-    problemet vedvarer.
+    Forøk gjerne å{' '}
+    <a href="#" onClick={() => window.location.reload()}>
+      laste siden på nytt
+    </a>
+    . Meld fra i porten hvis problemet vedvarer.
   </>
 );
 
-export const BigError = ({ title = 'Uventet feil', children = <DefaultChildren /> }: BigErrorProps) => {
+export const BigError = ({ title = 'Uventet feil', children = <DefaultErrorMsg /> }: BigErrorProps) => {
   return (
     <HStack justify="center" align="center" gap="4" marginBlock="24">
       <XMarkOctagonIcon fontSize="4rem" style={{ color: 'var(--a-text-danger)' }} />
