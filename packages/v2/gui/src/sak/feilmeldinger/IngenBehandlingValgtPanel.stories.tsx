@@ -1,9 +1,9 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { expect } from '@storybook/test';
 import IngenBehandlingValgtPanel from './IngenBehandlingValgtPanel.js';
 
 const meta = {
-  title: 'sak/sak-infosider',
+  title: 'gui/sak/feilmeldinger',
   component: IngenBehandlingValgtPanel,
 } satisfies Meta<typeof IngenBehandlingValgtPanel>;
 

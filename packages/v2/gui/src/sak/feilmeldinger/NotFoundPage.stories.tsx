@@ -1,9 +1,9 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { expect } from '@storybook/test';
 import NotFoundPage from './NotFoundPage.js';
 
 const meta = {
-  title: 'sak/sak-infosider',
+  title: 'gui/sak/feilmeldinger',
   component: NotFoundPage,
 } satisfies Meta<typeof NotFoundPage>;
 

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { expect } from '@storybook/test';
 
 const meta = {
-  title: 'gui/sak/systeminfo/BigError',
+  title: 'gui/sak/feilmeldinger/BigError',
   component: BigError,
 } satisfies Meta<typeof BigError>;
 
@@ -52,13 +52,13 @@ export const FleireAvsnitt: Story = {
   },
 };
 
-export const UtenTittel: Story = {
+export const UtenTittelSpesifisert: Story = {
   args: {
     children: 'Feilmeldingstekst',
   },
 };
 
-export const UtenTekst: Story = {
+export const UtenTekstSpesifisert: Story = {
   args: {
     title: 'Bare overskrift',
   },

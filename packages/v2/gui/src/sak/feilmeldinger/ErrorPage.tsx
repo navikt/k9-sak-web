@@ -1,5 +1,4 @@
-import React from 'react';
-import { BigError, DefaultErrorMsg } from '@k9-sak-web/gui/sak/systeminfo/BigError.js';
+import { BigError, DefaultErrorMsg } from '@k9-sak-web/gui/sak/feilmeldinger/BigError.js';
 import { CopyButton } from '@navikt/ds-react';
 
 export interface ErrorPageProps {
@@ -13,7 +12,7 @@ const ErrorPage = ({ sentryId }: ErrorPageProps) => {
         Inkluder referanse <b>{sentryId}</b> <CopyButton size="xsmall" copyText={`Sentry referanse: ${sentryId}`} />{' '}
         hvis du melder feilen inn.
       </p>
-    ) : undefined;
+    ) : null;
   return (
     <BigError title="Det har oppstått en teknisk feil i denne behandlingen.">
       <DefaultErrorMsg />

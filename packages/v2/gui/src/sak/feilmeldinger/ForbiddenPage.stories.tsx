@@ -1,9 +1,9 @@
 import ForbiddenPage from './ForbiddenPage.js';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { expect } from '@storybook/test';
 
 const meta = {
-  title: 'sak/sak-infosider',
+  title: 'gui/sak/feilmeldinger',
   component: ForbiddenPage,
 } satisfies Meta<typeof ForbiddenPage>;
 

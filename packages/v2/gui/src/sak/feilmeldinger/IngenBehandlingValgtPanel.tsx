@@ -1,5 +1,4 @@
 import { Alert, BodyShort } from '@navikt/ds-react';
-import React from 'react';
 
 import styles from './ingenBehandlingValgtPanel.module.css';
 
