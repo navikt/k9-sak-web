@@ -8,7 +8,7 @@ export interface BigErrorProps {
 
 export const DefaultErrorMsg = () => (
   <p>
-    Forøk gjerne å{' '}
+    Forsøk gjerne å{' '}
     <a href="#" onClick={() => window.location.reload()}>
       laste siden på nytt{' '}
     </a>
