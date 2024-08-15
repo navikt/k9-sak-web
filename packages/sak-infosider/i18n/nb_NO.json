@@ -1,7 +1,4 @@
 {
   "GenericErrorPage.Header": "Noe gikk galt",
   "ErrorPage.Header": "Det har oppstått en teknisk feil i denne behandlingen. {br}Meld feilen i Porten. Ta med feilmeldingsteksten.",
-
-  "IngenBehandlingValgtPanel.ZeroBehandlinger": "Ingen behandlinger er opprettet",
-  "IngenBehandlingValgtPanel.PleaseSelectBehandling": "Velg behandling"
 }
