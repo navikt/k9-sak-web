@@ -57,3 +57,11 @@ export const UtenTittel: Story = {
     children: 'Feilmeldingstekst',
   },
 };
+
+export const UtenTekst: Story = {
+  args: {
+    title: 'Bare overskrift',
+  },
+};
+
+export const IngenInfoSpesifisert: Story = {};
