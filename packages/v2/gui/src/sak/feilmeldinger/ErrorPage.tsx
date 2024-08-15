@@ -9,8 +9,9 @@ const ErrorPage = ({ sentryId }: ErrorPageProps) => {
   const SentryRef = () =>
     sentryId !== undefined ? (
       <p>
-        Inkluder referanse <b>{sentryId}</b> <CopyButton size="xsmall" copyText={`Sentry referanse: ${sentryId}`} />{' '}
-        hvis du melder feilen inn.
+        Inkluder referanse <b>{sentryId}</b>{' '}
+        <CopyButton size="xsmall" copyText={`Sentry referanse: ${sentryId}`} style={{ display: 'inline-grid' }} /> hvis
+        du melder feilen inn.
       </p>
     ) : null;
   return (
