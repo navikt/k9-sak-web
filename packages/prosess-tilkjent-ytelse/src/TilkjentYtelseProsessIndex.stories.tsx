@@ -1,12 +1,11 @@
 import { action } from '@storybook/addon-actions';
-import React from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
-import { Aksjonspunkt, Behandling, BeregningsresultatUtbetalt, Fagsak } from '@k9-sak-web/types';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
+import { Aksjonspunkt, Behandling, BeregningsresultatUtbetalt, Fagsak } from '@k9-sak-web/types';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
 
 const fagsak = {
@@ -205,7 +204,7 @@ visUtenAksjonspunkt.args = {
   readOnlySubmitButton: true,
 };
 
-export const visÅpentAksjonspunkt = args => (
+export const visÅpentAksjonspunktTilbaketrekk = args => (
   <TilkjentYtelseProsessIndex
     beregningsresultat={beregningsresultat}
     fagsak={fagsak}
@@ -230,7 +229,38 @@ export const visÅpentAksjonspunkt = args => (
   />
 );
 
-visÅpentAksjonspunkt.args = {
+visÅpentAksjonspunktTilbaketrekk.args = {
+  behandling,
+  isReadOnly: false,
+  readOnlySubmitButton: true,
+};
+
+export const visÅpentAksjonspunktManuellTilkjentYtelse = args => (
+  <TilkjentYtelseProsessIndex
+    beregningsresultat={beregningsresultat}
+    fagsak={fagsak}
+    aksjonspunkter={
+      [
+        {
+          definisjon: {
+            kode: aksjonspunktCodes.MANUELL_TILKJENT_YTELSE,
+            kodeverk: '',
+          },
+          status: {
+            kode: aksjonspunktStatus.OPPRETTET,
+            kodeverk: '',
+          },
+        },
+      ] as Aksjonspunkt[]
+    }
+    alleKodeverk={alleKodeverk as any}
+    submitCallback={action('button-click')}
+    arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+    {...args}
+  />
+);
+
+visÅpentAksjonspunktManuellTilkjentYtelse.args = {
   behandling,
   isReadOnly: false,
   readOnlySubmitButton: true,

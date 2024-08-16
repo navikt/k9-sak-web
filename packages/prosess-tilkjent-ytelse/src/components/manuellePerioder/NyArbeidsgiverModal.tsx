@@ -1,9 +1,9 @@
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidOrgNumber, required } from '@fpsak-frontend/utils';
 import { Button, Modal } from '@navikt/ds-react';
-import { Form, InputField } from '@navikt/ft-form-hooks';
-import { useForm } from 'react-hook-form';
-import { NyArbeidsgiverFormState } from './FormState';
+import { InputField } from '@navikt/ft-form-hooks';
+import { useFormContext } from 'react-hook-form';
+import { NyArbeidsgiverFormState, TilkjentYtelseFormState } from './FormState';
 import styles from './periode.module.css';
 
 interface OwnProps {
@@ -13,57 +13,60 @@ interface OwnProps {
 }
 
 const NyArbeidsgiverModal = ({ showModal = false, closeEvent, cancelEvent }: OwnProps) => {
-  const formMethods = useForm<NyArbeidsgiverFormState>({
-    defaultValues: { navn: '', orgNr: '', erPrivatPerson: false, arbeidsforholdreferanser: [] },
-  });
+  const formMethods = useFormContext<TilkjentYtelseFormState>();
+  const nyArbeidsgiverFormState = formMethods.watch('nyArbeidsgiverForm');
 
-  const handleSubmit = (values: NyArbeidsgiverFormState) => {
-    closeEvent(values);
+  const handleSubmit = () => {
+    formMethods.trigger('nyArbeidsgiverForm').then(valid => {
+      if (valid) {
+        closeEvent(nyArbeidsgiverFormState);
+      }
+    });
   };
 
   return (
-    <Form formMethods={formMethods} onSubmit={handleSubmit}>
-      <Modal className={styles.modal} open={showModal} aria-label="Ny arbeidsgiver" onClose={cancelEvent}>
-        <Modal.Body>
-          <FlexContainer wrap>
-            <FlexRow>
-              <FlexColumn className={styles.fullWidth}>
-                <InputField label="Navn" name="navn" validate={[required]} format={value => value} />
-
-                <InputField
-                  label="Organisasjonsnummer"
-                  name="orgNr"
-                  validate={[required, hasValidOrgNumber]}
-                  format={value => value}
-                />
-              </FlexColumn>
-            </FlexRow>
-            <FlexRow>
-              <FlexColumn className={styles.right}>
-                <VerticalSpacer eightPx />
-                <Button
-                  variant="primary"
-                  size="small"
-                  className={styles.button}
-                  disabled={!formMethods.formState.isDirty}
-                >
-                  Ok
-                </Button>
-                <Button
-                  variant="secondary"
-                  size="small"
-                  onClick={() => {
-                    cancelEvent();
-                  }}
-                >
-                  Avbryt
-                </Button>
-              </FlexColumn>
-            </FlexRow>
-          </FlexContainer>
-        </Modal.Body>
-      </Modal>
-    </Form>
+    <Modal className={styles.modal} open={showModal} aria-label="Ny arbeidsgiver" onClose={cancelEvent}>
+      <Modal.Body>
+        <FlexContainer wrap>
+          <FlexRow>
+            <FlexColumn className={styles.fullWidth}>
+              <InputField label="Navn" name="nyArbeidsgiverForm.navn" validate={[required]} format={value => value} />
+              <InputField
+                label="Organisasjonsnummer"
+                name="nyArbeidsgiverForm.orgNr"
+                validate={[required, hasValidOrgNumber]}
+                format={value => value}
+              />
+            </FlexColumn>
+          </FlexRow>
+          <FlexRow>
+            <FlexColumn className={styles.right}>
+              <VerticalSpacer eightPx />
+              <Button
+                variant="primary"
+                size="small"
+                className={styles.button}
+                disabled={!formMethods.formState.isDirty}
+                onClick={handleSubmit}
+                type="button"
+              >
+                Ok
+              </Button>
+              <Button
+                variant="secondary"
+                size="small"
+                onClick={() => {
+                  cancelEvent();
+                }}
+                type="button"
+              >
+                Avbryt
+              </Button>
+            </FlexColumn>
+          </FlexRow>
+        </FlexContainer>
+      </Modal.Body>
+    </Modal>
   );
 };
 

@@ -19,6 +19,8 @@ export type TilkjentYtelseFormState = {
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
   perioder: BeriketBeregningsresultatPeriode[];
   slettedePerioder?: SlettetPeriode[];
+  nyPeriodeForm?: NyPeriodeFormState;
+  nyArbeidsgiverForm?: NyArbeidsgiverFormState;
 };
 
 export type NyPeriodeFormAndeler = Omit<BeregningsresultatPeriodeAndel, 'inntektskategori'> & {
@@ -26,8 +28,8 @@ export type NyPeriodeFormAndeler = Omit<BeregningsresultatPeriodeAndel, 'inntekt
 };
 
 export type NyPeriodeFormState = {
-  fom: null;
-  tom: null;
+  fom: string;
+  tom: string;
   andeler?: NyPeriodeFormAndeler[];
 };
 

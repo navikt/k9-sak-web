@@ -10,20 +10,6 @@ import NyPeriode from './NyPeriode';
 import PeriodeRad from './PeriodeRad';
 import SlettPeriodeModal from './SlettPeriodeModal';
 
-// const createNewPerioder = (perioder, id: string, values: Partial<SlettetPeriode>) => {
-//   const updatedIndex = perioder.findIndex(p => p.id === id);
-//   const updatedPeriode = perioder.find(p => p.id === id);
-
-//   return [
-//     ...perioder.slice(0, updatedIndex),
-//     {
-//       ...updatedPeriode,
-//       ...values,
-//     },
-//     ...perioder.slice(updatedIndex + 1),
-//   ];
-// };
-
 interface OwnProps {
   readOnly: boolean;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
@@ -33,18 +19,17 @@ export const PeriodeTabell = ({ alleKodeverk, readOnly }: OwnProps) => {
   const {
     watch,
     setValue,
-    getValues,
     formState: { isSubmitting },
+    resetField,
   } = useFormContext<TilkjentYtelseFormState>();
-  const initialValues = getValues(); // OBS!!! Sjekk om dette er riktig
-  const { perioder, arbeidsgivere, slettedePerioder } = watch();
+  const { perioder, arbeidsgivere } = watch();
   const [isNyPeriodeFormOpen, setIsNyPeriodeFormOpen] = useState(false);
   const [showModalSlettPeriode, setShowModalSlettPeriode] = useState(false);
   const [periodeSlett, setPeriodeSlett] = useState<BeriketBeregningsresultatPeriode>(undefined);
 
   const hasOpenForm = perioder.some(periode => periode.openForm === true);
   const newPeriodeResetCallback = useCallback(() => {
-    // formReset(`${behandlingFormPrefix}.nyPeriodeForm`);
+    resetField('nyPeriodeForm', { defaultValue: { fom: '', tom: '', andeler: [] } });
     setIsNyPeriodeFormOpen(state => !state);
   }, []);
 
@@ -56,7 +41,6 @@ export const PeriodeTabell = ({ alleKodeverk, readOnly }: OwnProps) => {
     (nyPeriode: BeriketBeregningsresultatPeriode) => {
       const newPerioder = perioder.concat(nyPeriode).sort((a, b) => a.fom.localeCompare(b.fom));
       setValue('perioder', newPerioder);
-      // formChange(`${behandlingFormPrefix}.${FORM_NAME}`, 'perioder', newPerioder);
       setIsNyPeriodeFormOpen(state => !state);
     },
     [perioder],
@@ -73,8 +57,15 @@ export const PeriodeTabell = ({ alleKodeverk, readOnly }: OwnProps) => {
           arbeidsforholdreferanser: nyArbeidsgivere.arbeidsforholdreferanser,
         },
       });
-
-      // formReset(`${behandlingFormPrefix}.nyArbeidsgiverForm`);
+      resetField('nyArbeidsgiverForm', {
+        defaultValue: {
+          navn: '',
+          orgNr: '',
+          erPrivatPerson: false,
+          arbeidsforholdreferanser: [],
+          identifikator: '',
+        },
+      });
     },
     [arbeidsgivere],
   );
@@ -87,88 +78,14 @@ export const PeriodeTabell = ({ alleKodeverk, readOnly }: OwnProps) => {
     [perioder],
   );
 
-  const removePeriode = useCallback(
-    (values: any) => {
-      const hasOriginalPeriode = initialValues.perioder.find((p: any) => p.id === periodeSlett?.id);
+  const removePeriode = useCallback(() => {
+    setValue(
+      'perioder',
+      perioder.filter(periode => periode.id !== periodeSlett?.id),
+    );
 
-      if (hasOriginalPeriode) {
-        setValue(
-          'slettedePerioder',
-          slettedePerioder.concat([
-            {
-              ...periodeSlett,
-              begrunnelse: values.begrunnelse,
-            },
-          ]),
-        );
-      }
-
-      setValue(
-        'perioder',
-        perioder.filter(periode => periode.id !== periodeSlett?.id),
-      );
-
-      hideModal();
-    },
-    [initialValues, periodeSlett, perioder],
-  );
-
-  // const cleaningUpForm = useCallback(
-  //   (id: string) => {
-  //     setValue(
-  //       'perioder',
-  //       perioder
-  //         .map(periode => {
-  //           if (periode.id === id) {
-  //             return {
-  //               ...periode,
-  //               begrunnelse: undefined,
-  //               resultat: undefined,
-  //             };
-  //           }
-  //           return { ...periode };
-  //         })
-  //         .sort((a, b) => a.fom.localeCompare(b.fom)),
-  //     );
-  //   },
-  //   [perioder],
-  // );
-
-  // const editPeriode = useCallback(
-  //   (id: string) => {
-  //     const newPerioder = createNewPerioder(perioder, id, { openForm: true });
-  //     setValue('perioder', newPerioder);
-  //   },
-  //   [perioder],
-  // );
-
-  // const cancelEditPeriode = useCallback(
-  //   (id: string) => {
-  //     const newPerioder = createNewPerioder(perioder, id, { openForm: false });
-  //     setValue('perioder', newPerioder);
-  //   },
-  //   [perioder],
-  // );
-
-  // const updatePeriode = useCallback(
-  //   ({ id, begrunnelse, nyFom, nyTom }: { id: string; begrunnelse: string; nyFom: string; nyTom: string }) => {
-  //     const updatedPeriode = perioder.find(p => p.id === id);
-  //     const newPerioder = createNewPerioder(perioder, id, {
-  //       id,
-  //       tom: nyTom || updatedPeriode.tom,
-  //       fom: nyFom || updatedPeriode.fom,
-  //       begrunnelse,
-  //       openForm: !updatedPeriode.openForm,
-  //       // isFromSøknad: updatedPeriode.isFromSøknad, // finner ikke isFromSøknad noe sted i løsningen
-  //       updated: true,
-  //     });
-  //     setValue(
-  //       'perioder',
-  //       newPerioder.sort((a, b) => a.fom.localeCompare(b.fom)),
-  //     );
-  //   },
-  //   [perioder],
-  // );
+    hideModal();
+  }, [periodeSlett, perioder]);
 
   const isAnyFormOpen = useCallback(() => perioder.some(p => p.openForm), [perioder]);
 

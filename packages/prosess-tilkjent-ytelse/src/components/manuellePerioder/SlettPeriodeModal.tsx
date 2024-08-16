@@ -9,7 +9,7 @@ import styles from './periode.module.css';
 interface OwnProps {
   showModal?: boolean;
   periode: any;
-  closeEvent: (...args: any[]) => any;
+  closeEvent: () => void;
   cancelEvent: () => void;
 }
 
@@ -20,7 +20,7 @@ const SlettPeriodeModal = ({ showModal = false, periode, closeEvent, cancelEvent
   const tom = moment(periode.tom).format(DDMMYYYY_DATE_FORMAT);
 
   return (
-    <Modal className={styles.modal} open={showModal} aria-label="Perioden slettes" onClose={closeEvent}>
+    <Modal className={styles.modal} open={showModal} aria-label="Perioden slettes" onClose={cancelEvent}>
       <Modal.Body>
         <FlexContainer wrap>
           <FlexRow>
@@ -41,10 +41,10 @@ const SlettPeriodeModal = ({ showModal = false, periode, closeEvent, cancelEvent
           <FlexRow>
             <FlexColumn className={styles.right}>
               <VerticalSpacer eightPx />
-              <Button variant="primary" size="small" className={styles.button} onClick={closeEvent}>
+              <Button variant="primary" size="small" className={styles.button} onClick={closeEvent} type="button">
                 {intl.formatMessage({ id: 'TilkjentYtelse.Ok' })}
               </Button>
-              <Button variant="secondary" size="small" onClick={cancelEvent}>
+              <Button variant="secondary" size="small" onClick={cancelEvent} type="button">
                 {intl.formatMessage({ id: 'TilkjentYtelse.Avbryt' })}
               </Button>
             </FlexColumn>

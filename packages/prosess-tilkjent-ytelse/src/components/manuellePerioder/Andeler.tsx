@@ -56,7 +56,7 @@ const Andeler = ({ name, alleKodeverk, arbeidsgivere }: Partial<OwnProps>) => {
             const arbeidsgiver = createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgivere);
 
             return (
-              <Table.Row key={andel.arbeidsforholdId}>
+              <Table.Row key={andel.arbeidsgiverOrgnr}>
                 <Table.DataCell>
                   <BodyShort size="small">{inntektskategori}</BodyShort>
                 </Table.DataCell>

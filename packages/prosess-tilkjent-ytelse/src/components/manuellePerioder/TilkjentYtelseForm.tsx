@@ -7,35 +7,11 @@ import {
   BeregningsresultatUtbetalt,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import { ErrorMessage } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
-import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
-import { BeriketBeregningsresultatPeriode, TilkjentYtelseFormState } from './FormState';
+import { TilkjentYtelseFormState } from './FormState';
 import PeriodeTabell from './PeriodeTabell';
-
-const validateForm = (perioder: BeriketBeregningsresultatPeriode[]) => {
-  let feilmelding = '';
-  if (!perioder) {
-    return undefined;
-  }
-
-  if (perioder.length === 0) {
-    return 'Ingen perioder';
-  }
-
-  perioder.forEach((periode: any, index: number) => {
-    const forrigePeriode = perioder[index - 1];
-    const nestePeriode = periode;
-
-    if (sjekkOverlappendePerioder(index, nestePeriode, forrigePeriode)) {
-      feilmelding = 'Overlappende perioder';
-    }
-  });
-
-  return feilmelding;
-};
 
 interface OwnProps {
   readOnly: boolean;
@@ -60,31 +36,27 @@ export const TilkjentYtelseForm = ({
     submitCallback(transformValues(formState));
   };
 
-  const buildInitialValues = (): TilkjentYtelseFormState => {
-    if (beregningsresultat?.perioder) {
-      return {
-        arbeidsgivere: arbeidsgiverOpplysningerPerId,
-        perioder: beregningsresultat.perioder.map(periode => ({
-          ...periode,
-          id: guid(),
-          openForm: false,
-        })),
-      };
-    }
-
-    return {
-      arbeidsgivere: arbeidsgiverOpplysningerPerId,
-      perioder: [],
-    };
-  };
+  const buildInitialValues = (): TilkjentYtelseFormState => ({
+    arbeidsgivere: arbeidsgiverOpplysningerPerId,
+    perioder:
+      beregningsresultat?.perioder.map(periode => ({
+        ...periode,
+        id: guid(),
+        openForm: false,
+      })) ?? [],
+    nyArbeidsgiverForm: {
+      navn: '',
+      orgNr: '',
+      erPrivatPerson: false,
+      arbeidsforholdreferanser: [],
+      identifikator: '',
+    },
+    nyPeriodeForm: { fom: null, tom: null, andeler: [] },
+  });
 
   const formMethods = useForm<TilkjentYtelseFormState>({
     defaultValues: buildInitialValues(),
   });
-
-  const perioder = formMethods.watch('perioder');
-
-  const feilmelding = validateForm(perioder);
 
   return (
     <>
@@ -105,14 +77,10 @@ export const TilkjentYtelseForm = ({
 
       <Form formMethods={formMethods} onSubmit={handleSubmit} data-testid="OppholdInntektOgPerioderForm">
         <PeriodeTabell readOnly={readOnly} alleKodeverk={alleKodeverk} />
-        {feilmelding && <ErrorMessage>{feilmelding}</ErrorMessage>}
       </Form>
     </>
   );
 };
-
-export const sjekkOverlappendePerioder = (index: number, nestePeriode: any, forrigePeriode: any) =>
-  index !== 0 && moment(nestePeriode.fom) <= moment(forrigePeriode.tom);
 
 export const transformValues = (values: TilkjentYtelseFormState) => [
   {

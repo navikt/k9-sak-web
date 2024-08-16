@@ -2,15 +2,15 @@ import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { FlexColumn, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import NyArbeidsgiverModal from './NyArbeidsgiverModal';
 
-import { Detail, Fieldset, HGrid } from '@navikt/ds-react';
+import { Button, Detail, Fieldset, HGrid } from '@navikt/ds-react';
 import { InputField, SelectField } from '@navikt/ft-form-hooks';
+import { hasValidDecimal, maxValue, minValue, required } from '@navikt/ft-form-validators';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import { NyArbeidsgiverFormState, NyPeriodeFormAndeler, NyPeriodeFormState } from './FormState';
+import { NyArbeidsgiverFormState, NyPeriodeFormAndeler, TilkjentYtelseFormState } from './FormState';
 import styles from './periode.module.css';
 
 const minValue0 = minValue(0);
@@ -71,12 +71,18 @@ interface OwnProps {
 
 export const NyAndel = ({ newArbeidsgiverCallback, alleKodeverk, readOnly, arbeidsgivere }: OwnProps) => {
   const [isOpen, setOpen] = useState(false);
-  const { control } = useFormContext<NyPeriodeFormState>();
+  const { control } = useFormContext<TilkjentYtelseFormState>();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'andeler',
+    name: 'nyPeriodeForm.andeler',
     keyName: 'fieldId',
   });
+
+  useEffect(() => {
+    if (fields.length === 0) {
+      append(defaultAndel);
+    }
+  }, []);
 
   return (
     <>
@@ -92,28 +98,33 @@ export const NyAndel = ({ newArbeidsgiverCallback, alleKodeverk, readOnly, arbei
             <FlexRow key={field.fieldId}>
               <FlexColumn>
                 <SelectField
-                  label={{ id: 'TilkjentYtelse.NyPeriode.Inntektskategori' }}
-                  name={`andeler.${index}.inntektskategori`}
+                  label="Inntektskategori"
+                  name={`nyPeriodeForm.andeler.${index}.inntektskategori`}
                   selectValues={getInntektskategori(alleKodeverk)}
                 />
               </FlexColumn>
               {!erSN && !erFL && (
-                <FlexColumn className={styles.relative}>
+                <div className="flex items-end">
                   <SelectField
-                    label={{ id: 'TilkjentYtelse.NyPeriode.Arbeidsgiver' }}
-                    name={`andeler.${index}.arbeidsgiverOrgnr`}
+                    label="Arbeidsgiver"
+                    name={`nyPeriodeForm.andeler.${index}.arbeidsgiverOrgnr`}
                     validate={[required]}
                     selectValues={mapArbeidsgivere(arbeidsgivere)}
                   />
-                  <button onClick={() => setOpen(true)} className={styles.addArbeidsforhold}>
-                    <Image className={styles.addCircleIcon} src={addCircleIcon} alt="Ny arbeidsgiver" />
-                  </button>
-                </FlexColumn>
+                  <Button
+                    variant="secondary"
+                    size="small"
+                    icon={<Image src={addCircleIcon} />}
+                    onClick={() => setOpen(true)}
+                    aria-label="Ny arbeidsgiver"
+                    type="button"
+                  />
+                </div>
               )}
               <FlexColumn>
                 <InputField
-                  label={{ id: 'TilkjentYtelse.NyPeriode.TilSoker' }}
-                  name={`andeler.${index}.tilSoker`}
+                  label="Til søker"
+                  name={`nyPeriodeForm.andeler.${index}.tilSoker`}
                   validate={[required, minValue0, maxValue3999, hasValidDecimal]}
                   format={value => value}
                 />
@@ -121,8 +132,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, alleKodeverk, readOnly, arbei
               {!erSN && !erFL && (
                 <FlexColumn>
                   <InputField
-                    label={{ id: 'TilkjentYtelse.NyPeriode.Refusjon' }}
-                    name={`andeler.${index}.refusjon`}
+                    label="Refusjon"
+                    name={`nyPeriodeForm.andeler.${index}.refusjon`}
                     validate={[required, minValue0, maxValue3999, hasValidDecimal]}
                     format={value => value}
                   />
@@ -131,8 +142,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, alleKodeverk, readOnly, arbei
               {!erSN && (
                 <FlexColumn>
                   <InputField
-                    label={{ id: 'TilkjentYtelse.NyPeriode.Ubetalingsgrad' }}
-                    name={`andeler.${index}.utbetalingsgrad`}
+                    label="Uttaksgrad"
+                    name={`nyPeriodeForm.andeler.${index}.utbetalingsgrad`}
                     validate={[required, minValue0, maxValue100, hasValidDecimal]}
                     format={value => value}
                   />
@@ -153,9 +164,9 @@ export const NyAndel = ({ newArbeidsgiverCallback, alleKodeverk, readOnly, arbei
             </FlexRow>
           );
         })}
-        <HGrid gap="1" columns={{ xs: '12fr' }}>
+        <HGrid gap="1" columns={{ xs: '1fr 11fr' }}>
           {!readOnly && (
-            <button onClick={() => append(defaultAndel)} className={styles.addPeriode}>
+            <button type="button" onClick={() => append(defaultAndel)} className={styles.addPeriode}>
               <Image className={styles.addCircleIcon} src={addCircleIcon} alt="Ny andel" />
               <Detail className={styles.imageText}>Ny andel</Detail>
             </button>
