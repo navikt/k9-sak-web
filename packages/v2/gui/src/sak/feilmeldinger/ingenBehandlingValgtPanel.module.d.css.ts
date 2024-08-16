@@ -1,4 +1,5 @@
 declare const styles: {
-  readonly noSelectedBehandlingPanel: string;
+  readonly "noSelectedBehandlingPanel": string;
 };
 export = styles;
+
