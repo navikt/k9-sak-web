@@ -1,36 +1,32 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { Aksjonspunkt } from '@k9-sak-web/types';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { Aksjonspunkt, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
-import React from 'react';
-import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
-import { Tilbaketrekkpanel as UnwrappedForm, buildInitialValues, transformValues } from './Tilbaketrekkpanel';
+import { Tilbaketrekkpanel, buildInitialValues, transformValues } from './Tilbaketrekkpanel';
 
-const lagAksjonspunktTilbaketrekk = begrunnelse =>
-  ({
-    definisjon: {
-      kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
-    },
-    status: {
-      kode: 'OPPR',
-    },
-    begrunnelse,
-  }) as Aksjonspunkt;
+const lagAksjonspunktTilbaketrekk = (begrunnelse: string): Aksjonspunkt => ({
+  definisjon: {
+    kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
+    kodeverk: '',
+  },
+  status: {
+    kode: 'OPPR',
+    kodeverk: '',
+  },
+  begrunnelse,
+  kanLoses: false,
+  erAktivt: false,
+});
 
 describe('<Tilbaketrekkpanel>', () => {
   it('skal teste at komponent vises korrekt', () => {
-    renderWithIntlAndReduxForm(
-      <UnwrappedForm
-        intl={intlMock}
+    renderWithIntl(
+      <Tilbaketrekkpanel
         readOnly={false}
         submitCallback={vi.fn()}
         readOnlySubmitButton={false}
         vurderTilbaketrekkAP={lagAksjonspunktTilbaketrekk(undefined)}
-        behandlingId={1}
-        behandlingVersjon={1}
-        {...reduxFormPropsMock}
       />,
       { messages },
     );
@@ -48,7 +44,7 @@ describe('<Tilbaketrekkpanel>', () => {
   it('skal teste at komponent bygger korrekte initial values dersom alle data mangler', () => {
     const expectedInitialValues = undefined;
 
-    const actualInitialValues = buildInitialValues.resultFunc({}, {});
+    const actualInitialValues = buildInitialValues();
     expect(actualInitialValues).toEqual(expectedInitialValues);
   });
 
@@ -60,7 +56,10 @@ describe('<Tilbaketrekkpanel>', () => {
     const tilkjentYtelse = {
       skalHindreTilbaketrekk: null,
     };
-    const actualInitialValues = buildInitialValues.resultFunc(ownProps, tilkjentYtelse);
+    const actualInitialValues = buildInitialValues(
+      ownProps.vurderTilbaketrekkAP,
+      tilkjentYtelse as BeregningsresultatUtbetalt,
+    );
     expect(actualInitialValues).toEqual(expectedInitialValues);
   });
 
@@ -75,7 +74,10 @@ describe('<Tilbaketrekkpanel>', () => {
     const tilkjentYtelse = {
       skalHindreTilbaketrekk: false,
     };
-    const actualInitialValues = buildInitialValues.resultFunc(ownProps.vurderTilbaketrekkAP, tilkjentYtelse);
+    const actualInitialValues = buildInitialValues(
+      ownProps.vurderTilbaketrekkAP,
+      tilkjentYtelse as BeregningsresultatUtbetalt,
+    );
     expect(actualInitialValues).toEqual(expectedInitialValues);
   });
 
@@ -90,7 +92,10 @@ describe('<Tilbaketrekkpanel>', () => {
     const tilkjentYtelse = {
       skalHindreTilbaketrekk: true,
     };
-    const actualInitialValues = buildInitialValues.resultFunc(ownProps.vurderTilbaketrekkAP, tilkjentYtelse);
+    const actualInitialValues = buildInitialValues(
+      ownProps.vurderTilbaketrekkAP,
+      tilkjentYtelse as BeregningsresultatUtbetalt,
+    );
     expect(actualInitialValues).toEqual(expectedInitialValues);
   });
 

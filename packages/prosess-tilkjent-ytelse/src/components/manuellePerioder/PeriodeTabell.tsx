@@ -1,11 +1,10 @@
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ariaCheck } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
-import { useCallback, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Button } from '@navikt/ds-react';
+import { useCallback, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { FormattedMessage } from 'react-intl';
 import { BeriketBeregningsresultatPeriode, NyArbeidsgiverFormState, TilkjentYtelseFormState } from './FormState';
 import NyPeriode from './NyPeriode';
 import PeriodeRad from './PeriodeRad';
@@ -27,27 +26,10 @@ import SlettPeriodeModal from './SlettPeriodeModal';
 
 interface OwnProps {
   readOnly: boolean;
-  behandlingFormPrefix: string;
-  perioder?: any[];
-  openForms: boolean;
-  submitting: boolean;
-  initialValues: {
-    perioder?: any[];
-  };
-  behandlingId: number;
-  behandlingVersjon: number;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  slettedePerioder?: any[];
-  arbeidsgivere?: ArbeidsgiverOpplysningerPerId;
 }
 
-export const PeriodeTabell = ({
-  behandlingFormPrefix,
-  behandlingId,
-  behandlingVersjon,
-  alleKodeverk,
-  readOnly,
-}: OwnProps) => {
+export const PeriodeTabell = ({ alleKodeverk, readOnly }: OwnProps) => {
   const {
     watch,
     setValue,
@@ -62,7 +44,7 @@ export const PeriodeTabell = ({
 
   const hasOpenForm = perioder.some(periode => periode.openForm === true);
   const newPeriodeResetCallback = useCallback(() => {
-    formReset(`${behandlingFormPrefix}.nyPeriodeForm`);
+    // formReset(`${behandlingFormPrefix}.nyPeriodeForm`);
     setIsNyPeriodeFormOpen(state => !state);
   }, []);
 
@@ -84,10 +66,15 @@ export const PeriodeTabell = ({
     (nyArbeidsgivere: NyArbeidsgiverFormState) => {
       setValue('arbeidsgivere', {
         ...(arbeidsgivere || {}),
-        [nyArbeidsgivere.orgNr]: { identifikator: nyArbeidsgivere.orgNr, navn: nyArbeidsgivere.navn },
+        [nyArbeidsgivere.orgNr]: {
+          identifikator: nyArbeidsgivere.orgNr,
+          navn: nyArbeidsgivere.navn,
+          erPrivatPerson: nyArbeidsgivere.erPrivatPerson,
+          arbeidsforholdreferanser: nyArbeidsgivere.arbeidsforholdreferanser,
+        },
       });
 
-      formReset(`${behandlingFormPrefix}.nyArbeidsgiverForm`);
+      // formReset(`${behandlingFormPrefix}.nyArbeidsgiverForm`);
     },
     [arbeidsgivere],
   );
@@ -226,8 +213,6 @@ export const PeriodeTabell = ({
           newPeriodeCallback={newPeriodeCallback}
           newArbeidsgiverCallback={newArbeidsgiverCallback}
           newPeriodeResetCallback={newPeriodeResetCallback}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
           alleKodeverk={alleKodeverk}
           arbeidsgivere={arbeidsgivere}
           readOnly={readOnly}

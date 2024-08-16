@@ -3,14 +3,14 @@ import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier'
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { FlexColumn, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, BeregningsresultatPeriodeAndel, KodeverkMedNavn } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import { useState } from 'react';
 import NyArbeidsgiverModal from './NyArbeidsgiverModal';
 
 import { Detail, Fieldset, HGrid } from '@navikt/ds-react';
 import { InputField, SelectField } from '@navikt/ft-form-hooks';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import { NyArbeidsgiverFormState, NyPeriodeFormState } from './FormState';
+import { NyArbeidsgiverFormState, NyPeriodeFormAndeler, NyPeriodeFormState } from './FormState';
 import styles from './periode.module.css';
 
 const minValue0 = minValue(0);
@@ -45,7 +45,7 @@ const erSelvstendigNæringsdrivende = inntektskategori =>
 
 const erFrilans = inntektskategori => inntektskategori === inntektskategorier.FRILANSER;
 
-const defaultAndel: BeregningsresultatPeriodeAndel = {
+const defaultAndel: NyPeriodeFormAndeler = {
   aktivitetStatus: undefined,
   aktørId: '',
   arbeidsforholdId: '',
@@ -67,8 +67,6 @@ interface OwnProps {
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
   newArbeidsgiverCallback: (values: NyArbeidsgiverFormState) => void;
-  behandlingId: number;
-  behandlingVersjon: number;
 }
 
 export const NyAndel = ({ newArbeidsgiverCallback, alleKodeverk, readOnly, arbeidsgivere }: OwnProps) => {

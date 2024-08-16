@@ -3,7 +3,6 @@ import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsa
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { BodyShort, Button, Modal } from '@navikt/ds-react';
 import moment from 'moment';
-import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import styles from './periode.module.css';
 
@@ -11,10 +10,10 @@ interface OwnProps {
   showModal?: boolean;
   periode: any;
   closeEvent: (...args: any[]) => any;
-  cancelEvent: (...args: any[]) => any;
+  cancelEvent: () => void;
 }
 
-export const SlettPeriodeModal = ({ showModal = false, periode, closeEvent, cancelEvent }: OwnProps) => {
+const SlettPeriodeModal = ({ showModal = false, periode, closeEvent, cancelEvent }: OwnProps) => {
   const intl = useIntl();
 
   const fom = moment(periode.fom).format(DDMMYYYY_DATE_FORMAT);

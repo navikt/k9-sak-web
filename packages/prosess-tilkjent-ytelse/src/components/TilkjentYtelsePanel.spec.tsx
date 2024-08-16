@@ -1,10 +1,9 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { Aksjonspunkt, FamilieHendelse, Personopplysninger, Soknad } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import messages from '../../i18n/nb_NO.json';
-import { TilkjentYtelsePanelImpl } from './TilkjentYtelsePanel';
+import TilkjentYtelsePanelImpl from './TilkjentYtelsePanel';
 
 const tilbaketrekkAP = {
   definisjon: {
@@ -21,7 +20,7 @@ describe('<TilkjentYtelsePanelImpl>', () => {
     renderWithIntl(
       <TilkjentYtelsePanelImpl
         readOnly
-        beregningresultat={null}
+        beregningsresultat={null}
         submitCallback={vi.fn()}
         readOnlySubmitButton
         behandlingId={1}
@@ -41,14 +40,13 @@ describe('<TilkjentYtelsePanelImpl>', () => {
   });
 
   it('Skal vise tilbaketrekkpanel gitt tilbaketrekkaksjonspunkt', () => {
-    renderWithIntlAndReduxForm(
+    renderWithIntl(
       <TilkjentYtelsePanelImpl
         readOnly
-        aksjonspunkter={[]}
-        beregningresultat={null}
+        aksjonspunkter={[tilbaketrekkAP]}
+        beregningsresultat={null}
         submitCallback={vi.fn()}
         readOnlySubmitButton
-        vurderTilbaketrekkAP={tilbaketrekkAP}
         behandlingId={1}
         alleKodeverk={{}}
         behandlingVersjon={1}

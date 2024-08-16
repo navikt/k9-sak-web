@@ -1,15 +1,14 @@
-import React from 'react';
 import {
+  Aksjonspunkt,
   ArbeidsgiverOpplysningerPerId,
   Behandling,
   BeregningsresultatUtbetalt,
-  Aksjonspunkt,
-  KodeverkMedNavn,
   Fagsak,
+  KodeverkMedNavn,
 } from '@k9-sak-web/types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import messages from '../i18n/nb_NO.json';
+import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 
 interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
@@ -19,7 +18,7 @@ interface OwnProps {
   fagsak: Fagsak;
   aksjonspunkter: Aksjonspunkt[];
   isReadOnly: boolean;
-  submitCallback: () => void;
+  submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
 }
 

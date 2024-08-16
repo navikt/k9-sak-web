@@ -10,15 +10,14 @@ import {
 import { ArbeidsgiverOpplysningerPerId, BeregningsresultatPeriode, KodeverkMedNavn } from '@k9-sak-web/types';
 import moment from 'moment';
 import React, { Component, RefObject } from 'react';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
+import { IntlShape, WrappedComponentProps, injectIntl } from 'react-intl';
 import { createVisningsnavnForAndel } from './TilkjentYteleseUtils';
 import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
-
 import styles from './tilkjentYtelse.module.css';
 
 export type PeriodeMedId = BeregningsresultatPeriode & { id: number };
 
-const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT).toDate();
+const parseDateString = (dateString: string) => moment(dateString, ISO_DATE_FORMAT).toDate();
 
 const getOptions = (nyePerioder: PeriodeMedId[]) => {
   const firstPeriod = nyePerioder[0];
@@ -40,7 +39,12 @@ const getOptions = (nyePerioder: PeriodeMedId[]) => {
   };
 };
 
-const createTooltipContent = (intl, item, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
+const createTooltipContent = (
+  intl: IntlShape,
+  item: PeriodeMedId,
+  getKodeverknavn,
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
+) => {
   const { formatMessage } = intl;
   const periodeDato = `${moment(item.fom).format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom).format(DDMMYY_DATE_FORMAT)}`;
   return `
@@ -80,9 +84,10 @@ const createTooltipContent = (intl, item, getKodeverknavn, arbeidsgiverOpplysnin
 `;
 };
 
-const sumUtBetalingsgrad = (andeler: any) => andeler.reduce((sum, andel) => sum + andel.utbetalingsgrad, 0);
+const sumUtBetalingsgrad = (andeler: PeriodeMedId['andeler']) =>
+  andeler.reduce((sum, andel) => sum + andel.utbetalingsgrad, 0);
 
-const erTotalUtbetalingsgradOver100 = periode => {
+const erTotalUtbetalingsgradOver100 = (periode: PeriodeMedId) => {
   const values = [
     periode.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt,
     periode.totalUtbetalingsgradFraUttak,
@@ -102,14 +107,21 @@ const erTotalUtbetalingsgradOver100 = periode => {
   return false;
 };
 
-const prepareTimelineData = (periode, index, intl, getKodeverknavn, arbeidsgiverOpplysningerPerId) => ({
+const prepareTimelineData = (
+  periode: PeriodeMedId,
+  index: number,
+  intl: IntlShape,
+  getKodeverknavn,
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
+) => ({
   ...periode,
   className: erTotalUtbetalingsgradOver100(periode) ? 'innvilget' : 'gradert',
   group: 1,
   id: index,
   start: parseDateString(periode.fom),
-  end: moment(parseDateString(periode.tom)).add(1, 'day'),
+  end: moment(parseDateString(periode.tom)).add(1, 'day').toDate(),
   title: createTooltipContent(intl, periode, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+  content: '',
 });
 
 interface OwnProps {

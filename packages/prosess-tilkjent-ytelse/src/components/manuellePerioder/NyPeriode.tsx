@@ -1,8 +1,9 @@
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Periode } from '@k9-sak-web/types';
+import { calcDaysAndWeeks, guid } from '@fpsak-frontend/utils';
+import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Button, Label } from '@navikt/ds-react';
 import { Datepicker, Form } from '@navikt/ft-form-hooks';
+import { dateAfterOrEqual, hasValidDate, required } from '@navikt/ft-form-validators';
 import { useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 import { BeriketBeregningsresultatPeriode, NyArbeidsgiverFormState, NyPeriodeFormState } from './FormState';
@@ -12,14 +13,9 @@ import styles from './periode.module.css';
 interface OwnProps {
   newPeriodeResetCallback: (values: any) => any;
   newArbeidsgiverCallback: (values: NyArbeidsgiverFormState) => void;
-  andeler: any[];
-  nyPeriode: Periode;
-  nyPeriodeDisabledDaysFom: string;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
   readOnly: boolean;
-  behandlingId: number;
-  behandlingVersjon: number;
   newPeriodeCallback: (nyPeriode: Partial<BeriketBeregningsresultatPeriode>) => void;
 }
 
@@ -27,12 +23,8 @@ export const TilkjentYtelseNyPeriode = ({
   newPeriodeResetCallback,
   newArbeidsgiverCallback,
   newPeriodeCallback,
-  // nyPeriode,
   readOnly,
-  // andeler,
   alleKodeverk,
-  behandlingId,
-  behandlingVersjon,
   arbeidsgivere,
 }: OwnProps) => {
   const formMethods = useForm<NyPeriodeFormState>({
@@ -63,10 +55,18 @@ export const TilkjentYtelseNyPeriode = ({
               <FlexColumn>
                 <FlexRow>
                   <FlexColumn>
-                    <Datepicker name="fom" label={{ id: 'TilkjentYtelse.NyPeriode.Fom' }} />
+                    <Datepicker
+                      name="fom"
+                      label={{ id: 'TilkjentYtelse.NyPeriode.Fom' }}
+                      validate={[required, hasValidDate]}
+                    />
                   </FlexColumn>
                   <FlexColumn>
-                    <Datepicker name="tom" label={{ id: 'TilkjentYtelse.NyPeriode.Tom' }} />
+                    <Datepicker
+                      name="tom"
+                      label={{ id: 'TilkjentYtelse.NyPeriode.Tom' }}
+                      validate={[required, hasValidDate, dateAfterOrEqual(fom)]}
+                    />
                   </FlexColumn>
                   <FlexColumn className={styles.suffix}>
                     <div id="antallDager">
@@ -89,8 +89,6 @@ export const TilkjentYtelseNyPeriode = ({
                       readOnly={readOnly}
                       alleKodeverk={alleKodeverk}
                       arbeidsgivere={arbeidsgivere}
-                      behandlingId={behandlingId}
-                      behandlingVersjon={behandlingVersjon}
                       newArbeidsgiverCallback={newArbeidsgiverCallback}
                     />
                   </FlexColumn>
@@ -118,11 +116,12 @@ export const TilkjentYtelseNyPeriode = ({
   );
 };
 
-const transformValues = (values: NyPeriodeFormState) => ({
+const transformValues = (values: NyPeriodeFormState): BeriketBeregningsresultatPeriode => ({
   id: guid(),
   fom: values.fom,
   tom: values.tom,
   andeler: values.andeler.map(andel => ({
+    ...andel,
     inntektskategori: {
       kode: andel.inntektskategori,
       kodeverk: 'INNTEKTSKATEGORI',
@@ -133,23 +132,6 @@ const transformValues = (values: NyPeriodeFormState) => ({
     utbetalingsgrad: andel.utbetalingsgrad || 100,
   })),
 });
-
-const validateNyPeriodeForm = (values: any) => {
-  const errors = {};
-  if (!values) {
-    return errors;
-  }
-
-  const invalid = required(values.fom) || hasValidPeriod(values.fom, values.tom);
-
-  if (invalid) {
-    return {
-      fom: invalid,
-    };
-  }
-
-  return errors;
-};
 
 // const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
 //   const { newPeriodeCallback, behandlingId, behandlingVersjon } = ownProps;

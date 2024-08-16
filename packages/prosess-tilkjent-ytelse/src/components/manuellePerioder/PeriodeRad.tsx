@@ -15,7 +15,7 @@ interface OwnProps {
   readOnly: boolean;
   isNyPeriodeFormOpen: boolean;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  isAnyFormOpen: (...args: any[]) => any;
+  isAnyFormOpen: () => boolean;
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
 }
 

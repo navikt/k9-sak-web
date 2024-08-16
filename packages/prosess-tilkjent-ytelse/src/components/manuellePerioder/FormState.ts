@@ -1,4 +1,5 @@
 import {
+  ArbeidsgiverOpplysninger,
   ArbeidsgiverOpplysningerPerId,
   BeregningsresultatPeriode,
   BeregningsresultatPeriodeAndel,
@@ -20,13 +21,16 @@ export type TilkjentYtelseFormState = {
   slettedePerioder?: SlettetPeriode[];
 };
 
+export type NyPeriodeFormAndeler = Omit<BeregningsresultatPeriodeAndel, 'inntektskategori'> & {
+  inntektskategori: string;
+};
+
 export type NyPeriodeFormState = {
   fom: null;
   tom: null;
-  andeler?: BeregningsresultatPeriodeAndel[];
+  andeler?: NyPeriodeFormAndeler[];
 };
 
-export type NyArbeidsgiverFormState = {
-  navn: string;
+export type NyArbeidsgiverFormState = ArbeidsgiverOpplysninger & {
   orgNr: string;
 };

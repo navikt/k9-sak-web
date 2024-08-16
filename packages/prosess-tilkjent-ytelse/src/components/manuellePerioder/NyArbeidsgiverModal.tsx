@@ -12,9 +12,9 @@ interface OwnProps {
   cancelEvent: () => void;
 }
 
-export const NyArbeidsgiverModal = ({ showModal = false, closeEvent, cancelEvent }: OwnProps) => {
+const NyArbeidsgiverModal = ({ showModal = false, closeEvent, cancelEvent }: OwnProps) => {
   const formMethods = useForm<NyArbeidsgiverFormState>({
-    defaultValues: { navn: '', orgNr: '' },
+    defaultValues: { navn: '', orgNr: '', erPrivatPerson: false, arbeidsforholdreferanser: [] },
   });
 
   const handleSubmit = (values: NyArbeidsgiverFormState) => {
