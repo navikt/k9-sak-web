@@ -1,2 +1,2 @@
 #!/bin/sh
-npx lint-staged --allow-empty
+npx lint-staged
