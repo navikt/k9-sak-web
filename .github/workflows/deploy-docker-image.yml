@@ -61,12 +61,15 @@ jobs:
     secrets: inherit
     permissions:
       id-token: write
+      contents: read
       packages: read
-    uses: navikt/sif-gha-workflows/.github/workflows/verdikjede-test.yml@main
+    uses: navikt/sif-gha-workflows/.github/workflows/verdikjede-test-v2.yml@main
     needs: build-docker-image
     with:
       tag: ${{ needs.build-docker-image.outputs.tag }}
-      frontend_only: 'true'
+      suites: "frontend"
+      image_version: ${{ needs.build-docker-image.outputs.tag }}
+
   trivy:
     needs: [build-docker-image]
     uses: navikt/sif-gha-workflows/.github/workflows/trivy.yml@main
