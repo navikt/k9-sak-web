@@ -3849,13 +3849,11 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    axios-mock-adapter: 1.22.0
     react: 18.3.1
     react-intl: 6.6.8
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
-    redux-mock-store: 1.5.4
     reselect: 5.1.1
   languageName: unknown
   linkType: soft
@@ -13407,13 +13405,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.isplainobject@npm:^4.0.6":
-  version: 4.0.6
-  resolution: "lodash.isplainobject@npm:4.0.6"
-  checksum: 29c6351f281e0d9a1d58f1a4c8f4400924b4c79f18dfc4613624d7d54784df07efaff97c1ff2659f3e085ecf4fff493300adc4837553104cef2634110b0d5337
-  languageName: node
-  linkType: hard
-
 "lodash.merge@npm:^4.6.2":
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
@@ -15748,15 +15739,6 @@ __metadata:
     immutable:
       optional: true
   checksum: 2cefe541419cc8a9e61f7a597202ecfbfea4ecb497470117f492b8ea13a44c5f93783c31838011a86c2cee20ed4e3e1687e1ca6ad8ea17e34ca7120496eb117d
-  languageName: node
-  linkType: hard
-
-"redux-mock-store@npm:1.5.4":
-  version: 1.5.4
-  resolution: "redux-mock-store@npm:1.5.4"
-  dependencies:
-    lodash.isplainobject: ^4.0.6
-  checksum: 571eab2cca3e46321969025af865ddd780804c811be9db277fddf772d86e3ea67b4ef1b19ea3866417d41eb1b73605103020321f68cf68f379a52679a6823d12
   languageName: node
   linkType: hard
 
