@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { BehandlingAppKontekst, Fagsak, ArbeidsgiverOpplysningerWrapper } from '@k9-sak-web/types';
-import { IngenBehandlingValgtPanel } from '@k9-sak-web/sak-infosider';
+import IngenBehandlingValgtPanel from '@k9-sak-web/gui/sak/feilmeldinger/IngenBehandlingValgtPanel.js';
 
 import BehandlingIndex from './BehandlingIndex';
 import { behandlingRoutePath } from '../app/paths';
@@ -25,7 +25,7 @@ export const BehandlingerIndex = ({
   <Routes>
     <Route
       path={behandlingRoutePath}
-      element={(
+      element={
         <BehandlingIndex
           fagsak={fagsak}
           alleBehandlinger={alleBehandlinger}
@@ -33,7 +33,7 @@ export const BehandlingerIndex = ({
           setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
           setRequestPendingMessage={setRequestPendingMessage}
         />
-      )}
+      }
     />
     <Route path="/" element={<IngenBehandlingValgtPanel numBehandlinger={alleBehandlinger.length} />} />
   </Routes>

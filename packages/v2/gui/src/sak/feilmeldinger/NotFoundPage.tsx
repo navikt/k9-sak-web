@@ -1,8 +1,5 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
-
-import ErrorPageWrapper from './components/ErrorPageWrapper';
+import { BigError } from '@k9-sak-web/gui/sak/feilmeldinger/BigError.js';
 
 /**
  * NotFoundPage
@@ -11,11 +8,9 @@ import ErrorPageWrapper from './components/ErrorPageWrapper';
  * Det blir presentert en generell feilmelding og en lenke som tar NAV-ansatt tilbake til hovedsiden.
  */
 const NotFoundPage = () => (
-  <ErrorPageWrapper titleCode="NotFoundPage.Header">
-    <Link to="/">
-      <FormattedMessage id="NotFoundPage.LinkText" />
-    </Link>
-  </ErrorPageWrapper>
+  <BigError title="Beklager, vi finner ikke siden du leter etter.">
+    <Link to="/">Gå til forsiden</Link>
+  </BigError>
 );
 
 export default NotFoundPage;
