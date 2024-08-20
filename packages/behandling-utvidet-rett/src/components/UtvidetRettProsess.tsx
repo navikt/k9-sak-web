@@ -171,6 +171,7 @@ const UtvidetRettProsess = ({
     prosessStegUtvidetRettPanelDefinisjoner(
       fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN,
       fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN,
+      data.vilkar,
       featureToggles,
     ),
     dataTilUtledingAvFpPaneler,
