@@ -2814,7 +2814,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.51.23
+    "@tanstack/react-query": ^5.51.24
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -3081,7 +3081,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@tanstack/react-query": ^5.51.23
+    "@tanstack/react-query": ^5.51.24
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -3999,7 +3999,7 @@ __metadata:
     "@navikt/ds-react": 6.13.0
     "@navikt/ft-plattform-komponenter": 3.0.4
     "@popperjs/core": 2.11.8
-    "@tanstack/react-query": ^5.51.23
+    "@tanstack/react-query": ^5.51.24
     axios: 1.7.4
     classnames: 2.5.1
     cors: ^2.8.5
@@ -4406,7 +4406,7 @@ __metadata:
     "@navikt/ft-ui-komponenter": 2.3.19
     "@sentry/browser": 8.26.0
     "@sentry/react": ^8.26.0
-    "@tanstack/react-query": ^5.51.23
+    "@tanstack/react-query": ^5.51.24
     axios: 1.7.4
     classnames: 2.5.1
     history: 5.3.0
@@ -4433,7 +4433,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.51.23
+    "@tanstack/react-query": ^5.51.24
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
@@ -4489,7 +4489,7 @@ __metadata:
     "@navikt/ds-react": 6.13.0
     "@navikt/ft-form-hooks": 5.0.0
     "@navikt/ft-form-validators": 2.3.18
-    "@tanstack/react-query": ^5.51.23
+    "@tanstack/react-query": ^5.51.24
     date-fns: 3.6.0
     react: 18.3.1
     react-hook-form: 7.52.2
@@ -5052,14 +5052,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.46.0":
-  version: 1.46.0
-  resolution: "@playwright/test@npm:1.46.0"
+"@playwright/test@npm:^1.46.1":
+  version: 1.46.1
+  resolution: "@playwright/test@npm:1.46.1"
   dependencies:
-    playwright: 1.46.0
+    playwright: 1.46.1
   bin:
     playwright: cli.js
-  checksum: 5e3747c63ca45a307c6a9c6314dfc8f8141c0e5e0e622bccee2afebe6450aa67cb1c151f5f187280b659d75bb7e1d5c84c6b441e54e963c654e0e19f6514f23d
+  checksum: 180d90c6421ee6a8c00a1ae65d91d5f69767e2de95c3f5582ac2bdf3a388e621fdd3ee00ecb7836db427bb0d4cee58111c14f133cb62150357d8e4f43e3e2295
   languageName: node
   linkType: hard
 
@@ -6399,21 +6399,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.51.21":
-  version: 5.51.21
-  resolution: "@tanstack/query-core@npm:5.51.21"
-  checksum: a602e70bfbfa1fa28333be8c1b9ac9c9b97937b236d3997a757079ae04086fe59c2688cb6406fd82dcf9ef07f73e7a4ba1d373040f6cad340e1f64bceafe0e07
+"@tanstack/query-core@npm:5.51.24":
+  version: 5.51.24
+  resolution: "@tanstack/query-core@npm:5.51.24"
+  checksum: 5404604bf60a7d9880d33296da5316cd4087ff64f0d4afcd77facdbe1d5ca7a3770a1309a1f2202d3896ad6b0b807b4e0d17411d678bc4febe0577038102d40d
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.51.23":
-  version: 5.51.23
-  resolution: "@tanstack/react-query@npm:5.51.23"
+"@tanstack/react-query@npm:^5.51.24":
+  version: 5.51.24
+  resolution: "@tanstack/react-query@npm:5.51.24"
   dependencies:
-    "@tanstack/query-core": 5.51.21
+    "@tanstack/query-core": 5.51.24
   peerDependencies:
     react: ^18.0.0
-  checksum: d1d8131232430635923694befff9bdabc8d18ca2392789456a28191020d489671577e02ee5b0107e0064fea981c74c99cea3077a4e34cc1ac7438175bd50effe
+  checksum: 2aeb27d7f4965ca62baa30237948728bfc34689a78df912c367f322457715d2feca6e634b0b9b63851f96df8c0abce97b93803bcee67d6fdf56744d7292bd2f2
   languageName: node
   linkType: hard
 
@@ -11651,12 +11651,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:9.1.4":
-  version: 9.1.4
-  resolution: "husky@npm:9.1.4"
+"husky@npm:9.1.5":
+  version: 9.1.5
+  resolution: "husky@npm:9.1.5"
   bin:
     husky: bin.js
-  checksum: 7608a6dfac264876a2ff37f2db8520e0f9f0ea2b810a9ca151548327e9eca0b7ed58a63e0a208d20d3f43b191d8f111edcab46c3c8132c95e10ef7bd7115ee9b
+  checksum: c240018e852666dc12a93ca84751f1440bdf436468ba872c7b7b3cee54f5f1d7b4222a117988b27ca437093efdeb128778897ab0e409361336676a2c3012c8a7
   languageName: node
   linkType: hard
 
@@ -13171,7 +13171,7 @@ __metadata:
     "@navikt/ds-tailwind": ^6.13.0
     "@navikt/familie-endringslogg": 13.1.1
     "@navikt/ft-plattform-komponenter": 3.0.4
-    "@playwright/test": ^1.46.0
+    "@playwright/test": ^1.46.1
     "@popperjs/core": 2.11.8
     "@sentry/browser": 8.26.0
     "@sentry/cli": 2.33.1
@@ -13211,7 +13211,7 @@ __metadata:
     eslint-plugin-vitest: ~0.5.4
     globals: ^15.9.0
     history: 5.3.0
-    husky: 9.1.4
+    husky: 9.1.5
     i18n-iso-countries: 7.11.3
     jsdom: 24.1.1
     lint-staged: 15.2.9
@@ -14870,27 +14870,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.46.0":
-  version: 1.46.0
-  resolution: "playwright-core@npm:1.46.0"
+"playwright-core@npm:1.46.1":
+  version: 1.46.1
+  resolution: "playwright-core@npm:1.46.1"
   bin:
     playwright-core: cli.js
-  checksum: 0af0bf8afdd2182d377137c19da870d13e0f849b12b147dce7d5273db9f3d08a6ea35ef229eeb1816b3a9eca61504596fc1171e041e666e6ebb4118e71fe83ba
+  checksum: 99a03f97d76af02b0565aa09758eb03427e13497ef7e9e9044fd1184a5f050e7545a517dd7ad8988a68b3ea76e2ba0d411f81e410b1cb29f5ac9161c49689822
   languageName: node
   linkType: hard
 
-"playwright@npm:1.46.0":
-  version: 1.46.0
-  resolution: "playwright@npm:1.46.0"
+"playwright@npm:1.46.1":
+  version: 1.46.1
+  resolution: "playwright@npm:1.46.1"
   dependencies:
     fsevents: 2.3.2
-    playwright-core: 1.46.0
+    playwright-core: 1.46.1
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 013d7cd81c4016556245f98bd0b407c95f7dbc6d11d174d33d2e6aeeac1a4c63f646909adf3a926df09e1f0638e408018af3799e2c8e437dd2362f78091182e4
+  checksum: 9e721cb27f919cd92ea8c7461f4a8e97e32eade9da036baa4747f483549e33a8d77585f51e228d6639a1e28a76b0c1d59ca0a05dbd07aa3cfe427be7aaeb9ec8
   languageName: node
   linkType: hard
 
