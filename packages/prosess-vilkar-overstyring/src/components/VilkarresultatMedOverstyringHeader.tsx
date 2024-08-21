@@ -6,9 +6,8 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Detail, Heading, Label } from '@navikt/ds-react';
-import React, { SetStateAction } from 'react';
+import { SetStateAction } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
 import styles from './vilkarresultatMedOverstyringForm.module.css';
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
@@ -16,17 +15,17 @@ const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
 const isHidden = (kanOverstyre: boolean, aksjonspunktCodes: string[], aksjonspunktCode: string) =>
   !isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre;
 
-const getVilkarOkMessage = originalErVilkarOk => {
-  let messageId = 'VilkarresultatMedOverstyringForm.IkkeBehandlet';
+const getVilkarOkMessage = (originalErVilkarOk: boolean) => {
+  let messageId = 'Ikke behandlet';
   if (originalErVilkarOk) {
-    messageId = 'VilkarresultatMedOverstyringForm.ErOppfylt';
+    messageId = 'Vilkåret er oppfylt';
   } else if (originalErVilkarOk === false) {
-    messageId = 'VilkarresultatMedOverstyringForm.ErIkkeOppfylt';
+    messageId = 'Vilkåret er avslått';
   }
 
   return (
     <Label size="small" as="p">
-      <FormattedMessage id={messageId} />
+      {messageId}
     </Label>
   );
 };
@@ -39,11 +38,11 @@ interface VilkarresultatMedOverstyringHeaderProps {
     isEnabled: boolean;
   };
   lovReferanse?: string;
-  originalErVilkarOk?: boolean;
   overrideReadOnly: boolean;
   overstyringApKode: string;
   panelTittelKode: string;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
+  status: string;
 }
 
 const VilkarresultatMedOverstyringHeader = ({
@@ -51,12 +50,15 @@ const VilkarresultatMedOverstyringHeader = ({
   erOverstyrt,
   overstyringApKode,
   lovReferanse,
-  originalErVilkarOk,
   overrideReadOnly,
   kanOverstyreAccess,
-  aksjonspunktCodes,
   toggleOverstyring,
+  aksjonspunkter,
+  status,
 }: Partial<VilkarresultatMedOverstyringHeaderProps>) => {
+  const aksjonspunktCodes = aksjonspunkter.map(a => a.definisjon.kode);
+  const erOppfylt = vilkarUtfallType.OPPFYLT === status;
+  const erVilkarOk = vilkarUtfallType.IKKE_VURDERT !== status ? erOppfylt : undefined;
   const togglePa = () => {
     toggleOverstyring(oldArray => [...oldArray, overstyringApKode]);
   };
@@ -64,9 +66,9 @@ const VilkarresultatMedOverstyringHeader = ({
     <>
       <FlexContainer>
         <FlexRow>
-          {!erOverstyrt && originalErVilkarOk !== undefined && (
+          {!erOverstyrt && erVilkarOk !== undefined && (
             <FlexColumn>
-              <Image className={styles.status} src={originalErVilkarOk ? innvilgetImage : avslattImage} />
+              <Image className={styles.status} src={erVilkarOk ? innvilgetImage : avslattImage} />
             </FlexColumn>
           )}
           <FlexColumn>
@@ -83,9 +85,9 @@ const VilkarresultatMedOverstyringHeader = ({
         <FlexRow>
           <FlexColumn>
             <VerticalSpacer eightPx />
-            {getVilkarOkMessage(originalErVilkarOk)}
+            {getVilkarOkMessage(erVilkarOk)}
           </FlexColumn>
-          {originalErVilkarOk !== undefined &&
+          {erVilkarOk !== undefined &&
             !isHidden(kanOverstyreAccess.isEnabled, aksjonspunktCodes, overstyringApKode) && (
               <>
                 {!erOverstyrt && !overrideReadOnly && (
@@ -109,18 +111,4 @@ const VilkarresultatMedOverstyringHeader = ({
   );
 };
 
-const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMedOverstyringHeaderProps) => {
-  const aksjonspunktCodes = initialOwnProps.aksjonspunkter.map(a => a.definisjon.kode);
-
-  return (state, ownProps) => {
-    const erOppfylt = vilkarUtfallType.OPPFYLT === ownProps.status;
-    const erVilkarOk = vilkarUtfallType.IKKE_VURDERT !== ownProps.status ? erOppfylt : undefined;
-
-    return {
-      aksjonspunktCodes,
-      originalErVilkarOk: erVilkarOk,
-    };
-  };
-};
-
-export default connect(mapStateToPropsFactory)(VilkarresultatMedOverstyringHeader);
+export default VilkarresultatMedOverstyringHeader;
