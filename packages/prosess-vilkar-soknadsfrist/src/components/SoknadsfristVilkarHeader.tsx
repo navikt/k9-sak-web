@@ -7,8 +7,6 @@ import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsa
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Detail, Heading, Label } from '@navikt/ds-react';
 import React, { SetStateAction } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
 import styles from './SoknadsfristVilkarForm.module.css';
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
@@ -16,34 +14,33 @@ const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
 const isHidden = (kanOverstyre: boolean, aksjonspunktCodes: string[], aksjonspunktCode: string) =>
   !isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre;
 
-const getVilkarOkMessage = originalErVilkarOk => {
-  let messageId = 'SoknadsfristVilkarForm.IkkeBehandlet';
+const getVilkarOkMessage = (originalErVilkarOk: boolean) => {
+  let message = 'Ikke behandlet';
   if (originalErVilkarOk) {
-    messageId = 'SoknadsfristVilkarForm.ErOppfylt';
+    message = 'Vilkåret er oppfylt for hele perioden';
   } else if (originalErVilkarOk === false) {
-    messageId = 'SoknadsfristVilkarForm.ErIkkeOppfylt';
+    message = 'Vilkåret er avslått';
   }
 
   return (
     <Label size="small" as="p">
-      <FormattedMessage id={messageId} />
+      {message}
     </Label>
   );
 };
 
 interface SoknadsfristVilkarHeaderProps {
-  aksjonspunktCodes: string[];
   aksjonspunkter: Aksjonspunkt[];
   erOverstyrt?: boolean;
   kanOverstyreAccess?: {
     isEnabled: boolean;
   };
   lovReferanse?: string;
-  originalErVilkarOk?: boolean;
   overrideReadOnly: boolean;
   overstyringApKode: string;
   panelTittelKode: string;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
+  status: string;
 }
 
 const SoknadsfristVilkarHeader = ({
@@ -51,12 +48,15 @@ const SoknadsfristVilkarHeader = ({
   erOverstyrt,
   overstyringApKode,
   lovReferanse,
-  originalErVilkarOk,
   overrideReadOnly,
   kanOverstyreAccess,
-  aksjonspunktCodes,
+  aksjonspunkter,
+  status,
   toggleOverstyring,
 }: Partial<SoknadsfristVilkarHeaderProps>) => {
+  const aksjonspunktCodes = aksjonspunkter.map(a => a.definisjon.kode);
+  const erOppfylt = vilkarUtfallType.OPPFYLT === status;
+  const originalErVilkarOk = vilkarUtfallType.IKKE_VURDERT !== status ? erOppfylt : undefined;
   const togglePa = () => {
     toggleOverstyring(oldArray => [...oldArray, overstyringApKode]);
   };
@@ -71,7 +71,7 @@ const SoknadsfristVilkarHeader = ({
           )}
           <FlexColumn>
             <Heading size="small" level="2">
-              <FormattedMessage id={panelTittelKode} />
+              {panelTittelKode}
             </Heading>
           </FlexColumn>
           {lovReferanse && (
@@ -109,18 +109,4 @@ const SoknadsfristVilkarHeader = ({
   );
 };
 
-const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilkarHeaderProps) => {
-  const aksjonspunktCodes = initialOwnProps.aksjonspunkter.map(a => a.definisjon.kode);
-
-  return (state, ownProps) => {
-    const erOppfylt = vilkarUtfallType.OPPFYLT === ownProps.status;
-    const erVilkarOk = vilkarUtfallType.IKKE_VURDERT !== ownProps.status ? erOppfylt : undefined;
-
-    return {
-      aksjonspunktCodes,
-      originalErVilkarOk: erVilkarOk,
-    };
-  };
-};
-
-export default connect(mapStateToPropsFactory)(SoknadsfristVilkarHeader);
+export default SoknadsfristVilkarHeader;
