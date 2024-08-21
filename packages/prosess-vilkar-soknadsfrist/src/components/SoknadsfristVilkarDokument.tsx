@@ -1,5 +1,6 @@
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
+import { RadioGroupPanelRHF } from '@fpsak-frontend/form';
 import {
   FlexColumn,
   FlexContainer,
@@ -9,9 +10,9 @@ import {
   useSaksbehandlerOppslag,
 } from '@fpsak-frontend/shared-components';
 import { initializeDate } from '@fpsak-frontend/utils';
-import { DokumentStatus } from '@k9-sak-web/types';
+import { DokumentStatus, Vilkarperiode } from '@k9-sak-web/types';
 import { BodyShort, Button } from '@navikt/ds-react';
-import { Datepicker, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
+import { Datepicker, TextAreaField } from '@navikt/ft-form-hooks';
 import {
   dateAfterOrEqual,
   dateBeforeOrEqual,
@@ -31,7 +32,6 @@ import styles from './SoknadsfristVilkarDokument.module.css';
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 interface SoknadsfristVilkarDokumentProps {
-  erVilkarOk?: boolean | string;
   readOnly: boolean;
   skalViseBegrunnelse?: boolean;
   dokument: DokumentStatus;
@@ -41,6 +41,7 @@ interface SoknadsfristVilkarDokumentProps {
   erOverstyrt?: boolean;
   redigerVurdering?: boolean;
   dokumentErVurdert: boolean;
+  periode?: Vilkarperiode;
 }
 
 export const DELVIS_OPPFYLT = 'DELVIS_OPPFYLT';
@@ -52,7 +53,6 @@ export const DELVIS_OPPFYLT = 'DELVIS_OPPFYLT';
  * Resultatet kan overstyres av Nav-ansatt med overstyr-rettighet.
  */
 export const SoknadsfristVilkarDokument = ({
-  erVilkarOk,
   readOnly,
   skalViseBegrunnelse = true,
   dokument,
@@ -62,9 +62,11 @@ export const SoknadsfristVilkarDokument = ({
   erOverstyrt,
   redigerVurdering,
   dokumentErVurdert,
+  periode,
 }: SoknadsfristVilkarDokumentProps) => {
   const { getValues } = useFormContext<FormState>();
   const harBegrunnelse = !!getValues('avklarteKrav')[dokumentIndex]?.begrunnelse;
+  const erVilkarOk = readOnly && dokumentErVurdert && periode.vilkarStatus.kode === 'OPPFYLT';
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   const opprettetAv = hentSaksbehandlerNavn(dokument?.avklarteOpplysninger?.opprettetAv);
   const opprettetTidspunkt = dokument?.avklarteOpplysninger?.opprettetTidspunkt;
@@ -94,35 +96,22 @@ export const SoknadsfristVilkarDokument = ({
         <small>(journalpostId: {dokument.journalpostId})</small>
       </p>
       {skalViseBegrunnelse && (
-        <div className={`flex max-w-[50%] ${redigerVurdering ? 'items-baseline' : ''}`}>
+        <>
           <div>
-            <VerticalSpacer eightPx />
-            <TextAreaField
-              name={`avklarteKrav.${dokumentIndex}.begrunnelse`}
-              label="Vurder om det har vært fristavbrytende kontakt"
-              validate={[required, minLength3, maxLength1500, hasValidText]}
-              maxLength={1500}
-              readOnly={readOnly}
-              placeholder="Begrunn vurderingen din"
-            />
-            <AssessedBy name={opprettetAv} date={opprettetTidspunkt} />
-          </div>
-          {!erOverstyrt && dokumentErVurdert && harBegrunnelse && !redigerVurdering && (
-            <div className="ml-2 flex-[1_0_auto]">
+            <div>
               <VerticalSpacer eightPx />
-              <Button
-                className={styles.editButton}
-                variant="tertiary"
-                size="xsmall"
-                onClick={() => {
-                  toggleEditForm(true);
-                }}
-              >
-                Rediger vurdering
-              </Button>
+              <TextAreaField
+                name={`avklarteKrav.${dokumentIndex}.begrunnelse`}
+                label="Vurder om det har vært fristavbrytende kontakt"
+                validate={[required, minLength3, maxLength1500, hasValidText]}
+                maxLength={1500}
+                readOnly={readOnly}
+                placeholder="Begrunn vurderingen din"
+              />
+              <AssessedBy name={opprettetAv} date={opprettetTidspunkt} />
             </div>
-          )}
-        </div>
+          </div>
+        </>
       )}
       <VerticalSpacer sixteenPx />
       {readOnly && erVilkarOk !== undefined && (
@@ -144,11 +133,11 @@ export const SoknadsfristVilkarDokument = ({
         </FlexContainer>
       )}
       {(!readOnly || erVilkarOk === undefined) && (
-        <RadioGroupPanel
+        <RadioGroupPanelRHF
           name={`avklarteKrav.${dokumentIndex}.erVilkarOk`}
-          validate={[required]}
-          isHorizontal={false}
-          isReadOnly={readOnly}
+          validators={{ required }}
+          readOnly={readOnly}
+          question="Er vilkåret oppfylt for perioden?"
           radios={[
             {
               value: 'true',
@@ -182,6 +171,21 @@ export const SoknadsfristVilkarDokument = ({
             },
           ]}
         />
+      )}
+      {!erOverstyrt && dokumentErVurdert && harBegrunnelse && !redigerVurdering && (
+        <div>
+          <VerticalSpacer eightPx />
+          <Button
+            className={styles.editButton}
+            variant="tertiary"
+            size="xsmall"
+            onClick={() => {
+              toggleEditForm(true);
+            }}
+          >
+            Rediger vurdering
+          </Button>
+        </div>
       )}
       <VerticalSpacer eightPx />
     </div>

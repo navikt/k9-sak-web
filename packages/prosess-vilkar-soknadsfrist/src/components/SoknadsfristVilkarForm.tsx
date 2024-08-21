@@ -5,7 +5,6 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
   AksjonspunktBox,
   AksjonspunktHelpText,
-  EditedIcon,
   FlexColumn,
   FlexContainer,
   FlexRow,
@@ -15,11 +14,11 @@ import {
 import { decodeHtmlEntity, initializeDate } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, DokumentStatus, Periode, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
-import { BodyShort, Button, Label } from '@navikt/ds-react';
+import { Button, Label } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import { Dayjs } from 'dayjs';
 import hash from 'object-hash';
-import React, { SetStateAction, useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { utledInnsendtSoknadsfrist } from '../utils';
 import { FormState } from './FormState';
@@ -56,7 +55,6 @@ const buildInitialValues = (
       const erDelvisOppfylt =
         status !== vilkarUtfallType.OPPFYLT && fraDato && plusEnDag(fraDato) !== innsendtSoknadsfrist;
       const erVilkarOk = erDelvisOppfylt ? DELVIS_OPPFYLT : status === vilkarUtfallType.OPPFYLT;
-
       return {
         erVilkarOk: erAvklartEllerOverstyrt ? erVilkarOk : null,
         begrunnelse: decodeHtmlEntity(
@@ -123,7 +121,6 @@ interface SoknadsfristVilkarFormProps {
   submitCallback: (props: SubmitCallback[]) => void;
   periode?: Vilkarperiode;
   erOverstyrt?: boolean;
-  erVilkarOk?: boolean;
   harÅpentAksjonspunkt: boolean;
   overrideReadOnly: boolean;
   status: string;
@@ -141,7 +138,6 @@ interface SoknadsfristVilkarFormProps {
 export const SoknadsfristVilkarForm = ({
   erOverstyrt,
   harÅpentAksjonspunkt,
-  erVilkarOk,
   overrideReadOnly,
   toggleOverstyring,
   alleDokumenter,
@@ -203,11 +199,11 @@ export const SoknadsfristVilkarForm = ({
                   erAktivtDokument={dokumenterIAktivPeriode.findIndex(d => hash(d) === documentHash) > -1}
                   skalViseBegrunnelse
                   readOnly
-                  erVilkarOk={erVilkarOk}
                   dokumentIndex={index}
                   dokument={dokument}
                   toggleEditForm={toggleEditForm}
                   dokumentErVurdert={status !== vilkarUtfallType.IKKE_VURDERT}
+                  periode={periode}
                 />
               );
             })}
@@ -238,31 +234,19 @@ export const SoknadsfristVilkarForm = ({
                     erAktivtDokument={dokumenterIAktivPeriode.findIndex(d => hash(d) === documentHash) > -1}
                     skalViseBegrunnelse={erOverstyrt || harAksjonspunkt || editForm}
                     readOnly={(isReadOnly || (!erOverstyrt && !harÅpentAksjonspunkt)) && !editForm}
-                    erVilkarOk={erVilkarOk}
                     dokumentIndex={index}
                     dokument={dokument}
                     toggleEditForm={toggleEditForm}
                     erOverstyrt={erOverstyrt}
                     redigerVurdering={editForm}
                     dokumentErVurdert={status !== vilkarUtfallType.IKKE_VURDERT}
+                    periode={periode}
                   />
                 );
               })
             : 'Det finnes ingen dokumenter knyttet til denne behandlingen'}
           <VerticalSpacer sixteenPx />
-          {!erOverstyrt && erVilkarOk !== undefined && (
-            <>
-              <VerticalSpacer fourPx />
-              <FlexRow>
-                <FlexColumn>
-                  <EditedIcon />
-                </FlexColumn>
-                <FlexColumn>
-                  <BodyShort size="small">Endret av saksbehandler</BodyShort>
-                </FlexColumn>
-              </FlexRow>
-            </>
-          )}
+
           {erOverstyrt && (
             <FlexContainer>
               <FlexRow>
