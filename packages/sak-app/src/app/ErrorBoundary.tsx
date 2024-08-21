@@ -1,17 +1,16 @@
 import React, { Component, ReactNode, ErrorInfo } from 'react';
 import { captureException, withScope } from '@sentry/browser';
-
-import { ErrorPage } from '@k9-sak-web/sak-infosider';
+import ErrorPage from '@k9-sak-web/gui/sak/feilmeldinger/ErrorPage.js';
 
 interface OwnProps {
   errorMessageCallback: (error: any) => void;
-  textCode?: string;
   children: ReactNode;
   doNotShowErrorPage?: boolean;
 }
 
 interface State {
   hasError: boolean;
+  sentryId: string | undefined;
 }
 
 export class ErrorBoundary extends Component<OwnProps, State> {
@@ -21,7 +20,7 @@ export class ErrorBoundary extends Component<OwnProps, State> {
 
   constructor(props: OwnProps) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { hasError: false, sentryId: undefined };
   }
 
   static getDerivedStateFromError() {
@@ -35,7 +34,11 @@ export class ErrorBoundary extends Component<OwnProps, State> {
     withScope(scope => {
       Object.keys(info).forEach(key => {
         scope.setExtra(key, info[key]);
-        captureException(error);
+        const sentryId = captureException(error);
+        this.setState({
+          ...this.state,
+          sentryId,
+        });
       });
     });
 
@@ -54,10 +57,10 @@ export class ErrorBoundary extends Component<OwnProps, State> {
   }
 
   render(): ReactNode {
-    const { children, doNotShowErrorPage, textCode } = this.props;
-    const { hasError } = this.state;
+    const { children, doNotShowErrorPage } = this.props;
+    const { hasError, sentryId } = this.state;
 
-    return hasError && !doNotShowErrorPage ? <ErrorPage textCode={textCode} /> : children;
+    return hasError && !doNotShowErrorPage ? <ErrorPage sentryId={sentryId} /> : children;
   }
 }
 

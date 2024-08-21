@@ -5,7 +5,8 @@ import { useLocation } from 'react-router-dom';
 import { parseQueryString } from '@fpsak-frontend/utils';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
-import { ForbiddenPage, UnauthorizedPage } from '@k9-sak-web/sak-infosider';
+import ForbiddenPage from '@k9-sak-web/gui/sak/feilmeldinger/ForbiddenPage.js';
+import UnauthorizedPage from '@k9-sak-web/gui/sak/feilmeldinger/UnauthorizedPage.js';
 import { NavAnsatt } from '@k9-sak-web/types';
 
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';

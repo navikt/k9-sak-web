@@ -1,13 +1,9 @@
-import React from 'react';
 // import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { DokumentStatus } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
-import { screen } from '@testing-library/react';
-import messages from '../../i18n/nb_NO.json';
+import { render, screen } from '@testing-library/react';
 import { SoknadsfristVilkarForm } from './SoknadsfristVilkarForm';
 
 const periode = {
@@ -51,15 +47,11 @@ const dokumenter = [
 describe('<SoknadsfristVilkarForm>', () => {
   it('skal rendre form med knapp når vilkåret er overstyrt', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    renderWithIntlAndReduxForm(
+    render(
       <SoknadsfristVilkarForm
-        {...reduxFormPropsMock}
         behandlingId={1}
         behandlingVersjon={2}
         erOverstyrt
-        erVilkarOk
-        isReadOnly
-        harAksjonspunkt
         harÅpentAksjonspunkt={false}
         overrideReadOnly={false}
         toggleOverstyring={() => undefined}
@@ -69,9 +61,7 @@ describe('<SoknadsfristVilkarForm>', () => {
         dokumenterIAktivPeriode={dokumenter}
         alleDokumenter={dokumenter}
         periode={periode}
-        isSolvable
       />,
-      { messages },
     );
 
     expect(

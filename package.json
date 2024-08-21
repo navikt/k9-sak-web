@@ -47,12 +47,12 @@
     "@navikt/ds-css": "6.13.0",
     "@navikt/ds-react": "6.13.0",
     "@navikt/ds-tailwind": "^6.13.0",
-    "@navikt/familie-endringslogg": "12.0.2",
+    "@navikt/familie-endringslogg": "13.1.1",
     "@navikt/ft-plattform-komponenter": "3.0.4",
     "@popperjs/core": "2.11.8",
-    "@sentry/browser": "8.25.0",
-    "@sentry/react": "^8.25.0",
-    "axios": "1.7.3",
+    "@sentry/browser": "8.26.0",
+    "@sentry/react": "^8.26.0",
+    "axios": "1.7.4",
     "date-fns": "3.6.0",
     "date-fns-tz": "3.1.3",
     "history": "5.3.0",
@@ -91,7 +91,7 @@
     "@types/redux-form": "8.3.11",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.20",
-    "axios-mock-adapter": "1.22.0",
+    "axios-mock-adapter": "2.0.0",
     "cross-env": "7.0.3",
     "eslint": "9.9.0",
     "eslint-config-prettier": "9.1.0",
@@ -108,20 +108,20 @@
     "prettier": "3.3.3",
     "react-popper": "2.3.0",
     "storybook": "^8.2.9",
-    "stylelint": "16.8.1",
+    "stylelint": "16.8.2",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-order": "6.0.4",
-    "tailwindcss": "^3.4.9",
+    "tailwindcss": "^3.4.10",
     "typed-css-modules": "^0.9.1",
     "typescript": "5.5.4",
     "typescript-eslint": "^7.18.0",
-    "vite": "^5.4.0",
+    "vite": "^5.4.1",
     "vite-plugin-html": "^3.2.2",
     "vitest": "2.0.5",
     "vitest-axe": "0.1.0"
   },
   "resolutions": {
-    "postcss": "8.4.40",
+    "postcss": "8.4.41",
     "parse-url": "8.1.0",
     "@types/react": "17"
   },
@@ -129,9 +129,14 @@
     "workerDirectory": "public"
   },
   "lint-staged": {
-    "packages/**/*.{ts,tsx,js,jsx}": "eslint --cache --fix",
-    "packages/**/*.css": "stylelint --fix",
-    "packages/**/*.{ts,tsx,js,jsx,css}": "prettier --write"
+    "packages/**/!(*.module.d.css).(ts|tsx|js|jsx)": [
+      "eslint --cache --fix",
+      "prettier --write"
+    ],
+    "packages/**/*.css": [
+      "stylelint --fix",
+      "prettier --write"
+    ]
   },
   "packageManager": "yarn@3.4.1"
 }

@@ -1,6 +1,5 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import { Provider } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 import { reducer } from 'redux-form';
@@ -12,7 +11,6 @@ describe('<VilkarresultatMedOverstyringHeader>', () => {
     renderWithIntl(
       <Provider store={createStore(combineReducers({ form: reducer }))}>
         <VilkarresultatMedOverstyringHeader
-          erVilkarOk
           overstyringApKode="5011"
           lovReferanse="§23"
           overrideReadOnly={false}
@@ -24,6 +22,7 @@ describe('<VilkarresultatMedOverstyringHeader>', () => {
           panelTittelKode="Inngangsvilkar.Medlemskapsvilkaret"
           erOverstyrt
           aksjonspunkter={[]}
+          status=""
         />
       </Provider>,
       { messages },
