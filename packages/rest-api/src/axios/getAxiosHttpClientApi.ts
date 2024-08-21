@@ -1,6 +1,7 @@
 import axiosEtag from './axiosEtag';
 
 import initRestMethods from './initRestMethods';
+import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/interceptors/navCallid.js';
 
 /**
  * getAxiosHttpClientApi
@@ -9,11 +10,10 @@ import initRestMethods from './initRestMethods';
 const getAxiosHttpClientApi = () => {
   const axiosInstance = axiosEtag();
 
-  // TODO (TOR) sentry bør ikkje vera ein avhengighet til pakka "rest-api". Konfigurer dette utanfor
   axiosInstance.interceptors.request.use((c): any => {
-    const navCallId = `CallId_${new Date().getTime()}_${Math.floor(Math.random() * 1000000000)}`;
+    const { headerName, headerValue } = generateNavCallidHeader();
     const config = { ...c };
-    config.headers['Nav-Callid'] = navCallId;
+    config.headers[headerName] = headerValue;
     return config;
   });
 
