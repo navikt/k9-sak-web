@@ -9,7 +9,6 @@ import {
 } from '@k9-sak-web/types';
 import { Form } from '@navikt/ft-form-hooks';
 import { useForm } from 'react-hook-form';
-import { FormattedMessage } from 'react-intl';
 import { TilkjentYtelseFormState } from './FormState';
 import PeriodeTabell from './PeriodeTabell';
 
@@ -64,12 +63,7 @@ export const TilkjentYtelseForm = ({
         <>
           <VerticalSpacer twentyPx />
           <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
-            {[
-              <FormattedMessage
-                id="TilkjentYtelse.AksjonspunktHelpText"
-                key={aksjonspunktCodes.MANUELL_TILKJENT_YTELSE}
-              />,
-            ]}
+            {['Manuell tilkjent ytelse']}
           </AksjonspunktHelpText>
           <VerticalSpacer twentyPx />
         </>

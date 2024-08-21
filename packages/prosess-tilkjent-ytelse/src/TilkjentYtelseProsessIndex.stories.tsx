@@ -2,17 +2,9 @@ import { action } from '@storybook/addon-actions';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
-import { Aksjonspunkt, Behandling, BeregningsresultatUtbetalt, Fagsak } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
-
-const fagsak = {
-  saksnummer: '123456',
-  sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
-  status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
-} as Fagsak;
 
 const behandling = {
   id: 1,
@@ -189,7 +181,6 @@ export default {
 export const visUtenAksjonspunkt = args => (
   <TilkjentYtelseProsessIndex
     beregningsresultat={beregningsresultat}
-    fagsak={fagsak}
     aksjonspunkter={[]}
     alleKodeverk={alleKodeverk as any}
     submitCallback={action('button-click')}
@@ -207,7 +198,6 @@ visUtenAksjonspunkt.args = {
 export const visÅpentAksjonspunktTilbaketrekk = args => (
   <TilkjentYtelseProsessIndex
     beregningsresultat={beregningsresultat}
-    fagsak={fagsak}
     aksjonspunkter={
       [
         {
@@ -238,7 +228,6 @@ visÅpentAksjonspunktTilbaketrekk.args = {
 export const visÅpentAksjonspunktManuellTilkjentYtelse = args => (
   <TilkjentYtelseProsessIndex
     beregningsresultat={beregningsresultat}
-    fagsak={fagsak}
     aksjonspunkter={
       [
         {

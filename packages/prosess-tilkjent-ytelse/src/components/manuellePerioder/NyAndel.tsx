@@ -86,11 +86,7 @@ export const NyAndel = ({ newArbeidsgiverCallback, alleKodeverk, readOnly, arbei
 
   return (
     <>
-      <Fieldset
-        legend="Ny andel"
-        hideLegend
-        // error={formState.errors.andeler}
-      >
+      <Fieldset legend="Ny andel" hideLegend>
         {fields.map((field, index) => {
           const erSN = erSelvstendigNæringsdrivende(field.inntektskategori);
           const erFL = erFrilans(field.inntektskategori);

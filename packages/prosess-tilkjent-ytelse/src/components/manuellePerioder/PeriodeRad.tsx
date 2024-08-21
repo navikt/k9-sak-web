@@ -5,7 +5,6 @@ import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/type
 import { Alert, Table } from '@navikt/ds-react';
 import { Datepicker } from '@navikt/ft-form-hooks';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import { WrappedComponentProps, injectIntl } from 'react-intl';
 import Andeler from './Andeler';
 import { TilkjentYtelseFormState } from './FormState';
 import styles from './periode.module.css';
@@ -19,17 +18,16 @@ interface OwnProps {
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
 }
 
-const headerTextCodes = ['TilkjentYtelse.Periode', 'TilkjentYtelse.Andeler'];
+const headerTextCodes = ['Periode', 'Andeler'];
 
 const PeriodeRad = ({
   openSlettPeriodeModalCallback,
   alleKodeverk,
-  intl,
   isNyPeriodeFormOpen,
   readOnly,
   arbeidsgivere,
   isAnyFormOpen,
-}: Partial<OwnProps> & WrappedComponentProps) => {
+}: Partial<OwnProps>) => {
   const { control, formState } = useFormContext<TilkjentYtelseFormState>();
   const { fields } = useFieldArray({
     control,
@@ -51,7 +49,7 @@ const PeriodeRad = ({
           <Table.Row>
             {headerTextCodes.map(text => (
               <Table.HeaderCell scope="col" key={text}>
-                {intl.formatMessage({ id: text })}
+                {text}
               </Table.HeaderCell>
             ))}
           </Table.Row>
@@ -86,7 +84,7 @@ const PeriodeRad = ({
                         onClick={
                           isAnyFormOrNyPeriodeOpen ? () => undefined : () => openSlettPeriodeModalCallback(item.id)
                         }
-                        alt={intl.formatMessage({ id: 'TilkjentYtelse.SlettPerioden' })}
+                        alt="Slett Perioden"
                       />
                     </div>
                   )}
@@ -100,4 +98,4 @@ const PeriodeRad = ({
   );
 };
 
-export default injectIntl(PeriodeRad);
+export default PeriodeRad;

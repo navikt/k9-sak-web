@@ -1,14 +1,11 @@
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { BeregningsresultatPeriodeAndel } from '@k9-sak-web/types';
-import { screen } from '@testing-library/react';
-import React from 'react';
+import { render, screen } from '@testing-library/react';
 import { intlMock } from '../../i18n';
-import messages from '../../i18n/nb_NO.json';
 import { PeriodeMedId, TilkjentYtelse } from './TilkjentYtelse';
 
 describe('<TilkjentYtelse>', () => {
   it('skall innehålla korrekt antal felter', () => {
-    renderWithIntl(
+    render(
       <TilkjentYtelse
         items={
           [
@@ -58,7 +55,6 @@ describe('<TilkjentYtelse>', () => {
         alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
       />,
-      { messages },
     );
 
     expect(screen.getByText('Forrige periode')).toBeInTheDocument();

@@ -7,7 +7,6 @@ import { Button, HGrid, Label } from '@navikt/ds-react';
 import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useForm } from 'react-hook-form';
-import { FormattedMessage, useIntl } from 'react-intl';
 import styles from './tilbaketrekkpanel.module.css';
 
 const radioFieldName = 'radioVurderTilbaketrekk';
@@ -74,8 +73,6 @@ export const Tilbaketrekkpanel = ({
   submitCallback,
   readOnlySubmitButton,
 }: PureOwnProps) => {
-  const intl = useIntl();
-
   const formMethods = useForm<TilbaketrekkpanelFormState>({
     defaultValues: buildInitialValues(vurderTilbaketrekkAP, beregningsresultat),
   });
@@ -89,11 +86,7 @@ export const Tilbaketrekkpanel = ({
         <FlexContainer>
           <FlexRow>
             <FlexColumn>
-              <Image
-                className={styles.image}
-                alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
-                src={behandleImageURL}
-              />
+              <Image className={styles.image} alt="Aksjonspunkt" src={behandleImageURL} />
             </FlexColumn>
             <FlexColumn>
               <div className={styles.divider} />
@@ -101,7 +94,9 @@ export const Tilbaketrekkpanel = ({
             <FlexColumn className={styles.aksjonspunktText}>
               <div className={styles.oneElement}>
                 <Label size="small" as="p" className={styles.wordwrap}>
-                  <FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Aksjonspunkttekst" />
+                  Pleiepengene er utbetalt til søker, arbeidsgiver krever nå refusjon fra startdato av pleiepengene.
+                  Vurder om beløpet som er feilutbetalt skal tilbakekreves fra søker eller om dette er en sak mellom
+                  arbeidstaker og arbeidsgiver.
                 </Label>
               </div>
             </FlexColumn>
@@ -121,11 +116,11 @@ export const Tilbaketrekkpanel = ({
             radios={[
               {
                 value: 'false',
-                label: <FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Utfør" />,
+                label: 'Tilbakekrev fra søker',
               },
               {
                 value: 'true',
-                label: <FormattedMessage id="TilkjentYtelse.VurderTilbaketrekk.Hindre" />,
+                label: 'Ikke tilbakekrev fra søker',
               },
             ]}
           />
@@ -133,7 +128,7 @@ export const Tilbaketrekkpanel = ({
         <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
           <TextAreaField
             name={begrunnelseFieldName}
-            label={<FormattedMessage id="Beregningsgrunnlag.Forms.Vurdering" />}
+            label="Vurdering"
             validate={[required, maxLength1500, minLength3, hasValidText]}
             maxLength={1500}
             readOnly={readOnly}

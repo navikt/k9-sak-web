@@ -4,7 +4,6 @@ import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Button } from '@navikt/ds-react';
 import { useCallback, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { FormattedMessage } from 'react-intl';
 import { BeriketBeregningsresultatPeriode, NyArbeidsgiverFormState, TilkjentYtelseFormState } from './FormState';
 import NyPeriode from './NyPeriode';
 import PeriodeRad from './PeriodeRad';
@@ -107,7 +106,7 @@ export const PeriodeTabell = ({ alleKodeverk, readOnly }: OwnProps) => {
         <FlexRow>
           <FlexColumn>
             <Button variant="primary" size="small" disabled={disableButtons} onClick={ariaCheck} loading={isSubmitting}>
-              <FormattedMessage id="TilkjentYtelse.BekreftOgFortsett" />
+              Bekreft og fortsett
             </Button>
           </FlexColumn>
           <FlexColumn>
@@ -118,7 +117,7 @@ export const PeriodeTabell = ({ alleKodeverk, readOnly }: OwnProps) => {
               onClick={newPeriodeResetCallback}
               disabled={disableButtons}
             >
-              <FormattedMessage id="TilkjentYtelse.LeggTilPeriode" />
+              Legg til ny periode
             </Button>
           </FlexColumn>
         </FlexRow>

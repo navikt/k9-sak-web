@@ -3,7 +3,6 @@ import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Alert, BodyShort, Table } from '@navikt/ds-react';
 import { useFormContext } from 'react-hook-form';
-import { useIntl } from 'react-intl';
 import { createVisningsnavnForAndel, getInntektskategori } from '../TilkjentYteleseUtils';
 import { TilkjentYtelseFormState } from './FormState';
 
@@ -13,16 +12,9 @@ interface OwnProps {
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
 }
 
-const headerTextCodes = [
-  'TilkjentYtelse.NyPeriode.Inntektskategori',
-  'TilkjentYtelse.NyPeriode.Arbeidsgiver',
-  'TilkjentYtelse.NyPeriode.TilSoker',
-  'TilkjentYtelse.NyPeriode.Refusjon',
-  'TilkjentYtelse.NyPeriode.Ubetalingsgrad',
-];
+const headerTextCodes = ['Inntektskategori', 'Arbeidsgiver', 'Til søker', 'Refusjon', 'Uttaksgrad'];
 
 const Andeler = ({ name, alleKodeverk, arbeidsgivere }: Partial<OwnProps>) => {
-  const intl = useIntl();
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   const {
     formState: { errors },
@@ -45,7 +37,7 @@ const Andeler = ({ name, alleKodeverk, arbeidsgivere }: Partial<OwnProps>) => {
           <Table.Row>
             {headerTextCodes.map(textCode => (
               <Table.HeaderCell scope="col" key={textCode}>
-                {intl.formatMessage({ id: textCode })}
+                {textCode}
               </Table.HeaderCell>
             ))}
           </Table.Row>

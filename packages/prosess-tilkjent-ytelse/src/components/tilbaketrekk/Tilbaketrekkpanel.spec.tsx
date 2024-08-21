@@ -1,8 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { Aksjonspunkt, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
-import { screen } from '@testing-library/react';
-import messages from '../../../i18n/nb_NO.json';
+import { render, screen } from '@testing-library/react';
 import { Tilbaketrekkpanel, buildInitialValues, transformValues } from './Tilbaketrekkpanel';
 
 const lagAksjonspunktTilbaketrekk = (begrunnelse: string): Aksjonspunkt => ({
@@ -21,14 +19,13 @@ const lagAksjonspunktTilbaketrekk = (begrunnelse: string): Aksjonspunkt => ({
 
 describe('<Tilbaketrekkpanel>', () => {
   it('skal teste at komponent vises korrekt', () => {
-    renderWithIntl(
+    render(
       <Tilbaketrekkpanel
         readOnly={false}
         submitCallback={vi.fn()}
         readOnlySubmitButton={false}
         vurderTilbaketrekkAP={lagAksjonspunktTilbaketrekk(undefined)}
       />,
-      { messages },
     );
 
     expect(screen.getAllByRole('radio').length).toBe(2);

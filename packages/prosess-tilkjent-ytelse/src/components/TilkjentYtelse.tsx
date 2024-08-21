@@ -58,25 +58,14 @@ const createTooltipContent = (
        },
      )}
     <br />
-    ${formatMessage(
-      { id: 'Timeline.tooltip.dagsats' },
-      {
-        dagsats: item.dagsats,
-      },
-    )}
+    ${`Dagsats: ${item.dagsats}kr`}
     <br />
     ${
       (item.andeler || []).length > 1
         ? item.andeler
-            .map(andel =>
-              formatMessage(
-                { id: 'Timeline.tooltip.dagsatsPerAndel' },
-                {
-                  arbeidsgiver: createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId),
-                  dagsatsPerAndel: Number(andel.refusjon) + Number(andel.tilSoker),
-                },
-              ),
-            )
+            .map(andel => {
+              `${createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}: ${Number(andel.refusjon) + Number(andel.tilSoker)} kr`;
+            })
             .join('<br />')
         : ''
     }

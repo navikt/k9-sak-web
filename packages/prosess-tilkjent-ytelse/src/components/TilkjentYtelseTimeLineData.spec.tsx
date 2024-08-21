@@ -1,7 +1,4 @@
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../../i18n/nb_NO.json';
+import { render, screen } from '@testing-library/react';
 import createVisningsnavnForAndel from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData';
@@ -66,7 +63,7 @@ const getKodeverknavn = kodeverk => {
 
 describe('<TilkjentYtelseTimeLineData>', () => {
   it('Skal vise riktig aktivitetsStatus', () => {
-    renderWithIntl(
+    render(
       <TilkjentYtelseTimeLineData
         callbackForward={callbackForward}
         callbackBackward={callbackBackward}
@@ -76,7 +73,6 @@ describe('<TilkjentYtelseTimeLineData>', () => {
         alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
       />,
-      { messages },
     );
 
     expect(screen.getByText('Aktivitetsstatus:')).toBeInTheDocument();

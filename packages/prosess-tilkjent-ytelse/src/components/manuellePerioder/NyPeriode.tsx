@@ -83,7 +83,7 @@ export const TilkjentYtelseNyPeriode = ({
       <div className={styles.periodeType}>
         <div className={styles.headerWrapper}>
           <Label size="small" as="p">
-            <FormattedMessage id="TilkjentYtelse.NyPeriode" />
+            Ny periode
           </Label>
         </div>
       </div>
@@ -141,10 +141,10 @@ export const TilkjentYtelseNyPeriode = ({
           loading={formMethods.formState.isSubmitting}
           onClick={handleSubmit}
         >
-          <FormattedMessage id="TilkjentYtelse.LeggTilPeriode" />
+          Legg til ny periode
         </Button>
         <Button variant="secondary" type="button" size="small" onClick={newPeriodeResetCallback}>
-          <FormattedMessage id="TilkjentYtelse.Avbryt" />
+          Avbryt
         </Button>
       </div>
     </div>

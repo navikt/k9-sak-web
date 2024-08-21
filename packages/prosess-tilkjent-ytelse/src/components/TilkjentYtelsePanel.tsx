@@ -4,13 +4,9 @@ import {
   ArbeidsgiverOpplysningerPerId,
   BeregningsresultatPeriode,
   BeregningsresultatUtbetalt,
-  FamilieHendelse,
   KodeverkMedNavn,
-  Personopplysninger,
-  Soknad,
 } from '@k9-sak-web/types';
 import moment from 'moment';
-import { FormattedMessage } from 'react-intl';
 
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Heading } from '@navikt/ds-react';
@@ -43,13 +39,7 @@ const finnTilbaketrekkAksjonspunkt = (alleAksjonspunkter: Aksjonspunkt[]): Aksjo
     : undefined;
 
 interface PureOwnProps {
-  behandlingId: number;
-  behandlingVersjon: number;
   beregningsresultat: BeregningsresultatUtbetalt;
-  gjeldendeFamiliehendelse: FamilieHendelse;
-  personopplysninger: Personopplysninger;
-  soknad: Soknad;
-  fagsakYtelseTypeKode: string;
   aksjonspunkter: Aksjonspunkt[];
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   readOnly: boolean;
@@ -72,16 +62,9 @@ const TilkjentYtelsePanelImpl = ({
   return (
     <>
       <Heading size="small" level="2">
-        <FormattedMessage id="TilkjentYtelse.Title" />
+        Tilkjent ytelse
       </Heading>
-      {opphoersdato && (
-        <FormattedMessage
-          id="TilkjentYtelse.Opphoersdato"
-          values={{
-            opphoersdato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT).toString(),
-          }}
-        />
-      )}
+      {opphoersdato && `Opphørsdato: ${moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT).toString()}`}
       {beregningsresultat && (
         <TilkjentYtelse
           items={formatPerioder(beregningsresultat.perioder)}
