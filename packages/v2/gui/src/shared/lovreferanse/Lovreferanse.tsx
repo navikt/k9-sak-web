@@ -39,7 +39,7 @@ const berikMedLovdataLenker = (lovreferanse: string) => {
 
       return (
         <Fragment key={index}>
-          <Link href={link} title="Les mer på Lovdata.no">
+          <Link href={link} title="Les mer på Lovdata.no" target="_blank">
             {kapittelOgKanskjeParagraf}
           </Link>{' '}
         </Fragment>
