@@ -5,6 +5,7 @@ import Feilikon from '../icons/Feilikon';
 import Suksessikon from '../icons/Suksessikon';
 
 import styles from './AldersvilkarStatus.module.css';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 interface AldersVilkarAPProps {
   vilkarOppfylt: boolean;
@@ -26,7 +27,9 @@ const AldersVilkarStatus = ({
       <h2 className={styles.aksjonspunktNavn}>
         <FormattedMessage id="AlderVilkar.Status.Aldersvilkar" />
       </h2>
-      <p className={styles.vilkar}>{vilkarReferanse}</p>
+      <p className={styles.vilkar}>
+        <Lovreferanse>{vilkarReferanse}</Lovreferanse>
+      </p>
     </div>
     <p className={styles.vilkarStatus}>
       {vilkarOppfylt
