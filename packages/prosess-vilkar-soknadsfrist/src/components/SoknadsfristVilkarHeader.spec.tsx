@@ -31,6 +31,6 @@ describe('<SoknadsfristVilkarHeader>', () => {
     );
 
     expect(screen.getByRole('heading', { name: 'Søknadsfrist' })).toBeInTheDocument();
-    expect(screen.getByText('§ 9-2')).toBeInTheDocument();
+    expect(screen.getByText('9-2')).toBeInTheDocument();
   });
 });
