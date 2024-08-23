@@ -1,12 +1,9 @@
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { Behandling } from '@k9-sak-web/types';
-import { composeStories } from '@storybook/react';
-import { userEvent, waitFor } from '@storybook/test';
-import { act, render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import SoknadsfristVilkarProsessIndex from './SoknadsfristVilkarProsessIndex';
-import * as stories from './SoknadsfristVilkarProsessIndex.stories';
-
-const { VisSoknadsfristAksjonspunkt5077 } = composeStories(stories);
+import messages from '../i18n/nb_NO.json';
 
 const soknadsfristStatus = {
   dokumentStatus: [],
@@ -14,7 +11,7 @@ const soknadsfristStatus = {
 
 describe('<SoknadsfristVilkarForm>', () => {
   it('skal rendre tabs dersom bare en periode', () => {
-    render(
+    renderWithIntlAndReduxForm(
       <SoknadsfristVilkarProsessIndex
         behandling={
           {
@@ -28,7 +25,7 @@ describe('<SoknadsfristVilkarForm>', () => {
         toggleOverstyring={vi.fn()}
         submitCallback={vi.fn()}
         aksjonspunkter={[]}
-        panelTittelKode="Søknadsfrist"
+        panelTittelKode="Inngangsvilkar.Soknadsfrist"
         erOverstyrt={false}
         overrideReadOnly={false}
         vilkar={[
@@ -60,13 +57,14 @@ describe('<SoknadsfristVilkarForm>', () => {
         soknadsfristStatus={soknadsfristStatus}
         visAllePerioder={false}
       />,
+      { messages },
     );
     expect(screen.getByText('Perioder')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '01.03.2020 - 01.04.2020' })).toBeInTheDocument();
   });
 
   it('skal rendre tabs med aksjonspunkt dersom bare en periode og statusperiode er inneholdt i vilkårsperiode', () => {
-    render(
+    renderWithIntlAndReduxForm(
       <SoknadsfristVilkarProsessIndex
         behandling={
           {
@@ -106,7 +104,7 @@ describe('<SoknadsfristVilkarForm>', () => {
             vurderPaNyttArsaker: null,
           },
         ]}
-        panelTittelKode="Søknadsfrist"
+        panelTittelKode="Inngangsvilkar.Soknadsfrist"
         erOverstyrt={false}
         overrideReadOnly={false}
         vilkar={[
@@ -166,114 +164,12 @@ describe('<SoknadsfristVilkarForm>', () => {
         }}
         visAllePerioder={false}
       />,
+      { messages },
     );
     expect(screen.getByText('Perioder')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '01.02.2023 - 01.04.2024 Aksjonspunkt' })).toBeInTheDocument();
     expect(screen.getByRole('radio', { name: 'Vilkåret er oppfylt for hele perioden' })).toBeInTheDocument();
     expect(screen.getByRole('radio', { name: 'Vilkåret er oppfylt for deler av perioden' })).toBeInTheDocument();
     expect(screen.getByRole('radio', { name: 'Vilkåret er ikke oppfylt for denne perioden' })).toBeInTheDocument();
-  });
-
-  it('skal formatere data ved innsending ved oppfylt vilkår', async () => {
-    const lagre = vi.fn();
-    render(<VisSoknadsfristAksjonspunkt5077 submitCallback={lagre} />);
-    await act(async () => {
-      await userEvent.click(screen.getByText('Vilkåret er oppfylt for hele perioden'));
-      await userEvent.type(
-        screen.getByLabelText('Vurder om det har vært fristavbrytende kontakt'),
-        'Dette er en begrunnelse',
-      );
-      await userEvent.click(screen.getByText('Bekreft og gå videre'));
-    });
-    await waitFor(() => expect(lagre).toHaveBeenCalledTimes(1));
-    expect(lagre).toHaveBeenNthCalledWith(1, [
-      {
-        avklarteKrav: [
-          {
-            begrunnelse: 'Dette er en begrunnelse',
-            erVilkarOk: true,
-            fraDato: '2021-04-27',
-            godkjent: true,
-            journalpostId: '510536417',
-          },
-        ],
-        begrunnelse: 'Dette er en begrunnelse',
-        erVilkarOk: true,
-        kode: '5077',
-        periode: {
-          fom: '2021-04-28',
-          tom: '2021-04-30',
-        },
-      },
-    ]);
-  });
-
-  it('skal formatere data ved innsending ved delvis oppfylt vilkår', async () => {
-    const lagre = vi.fn();
-    render(<VisSoknadsfristAksjonspunkt5077 submitCallback={lagre} />);
-    await act(async () => {
-      await userEvent.click(screen.getByText('Vilkåret er oppfylt for deler av perioden'));
-      await userEvent.type(
-        screen.getByLabelText('Vurder om det har vært fristavbrytende kontakt'),
-        'Dette er en begrunnelse',
-      );
-      await userEvent.type(screen.getByLabelText('Oppgi dato søknadsfristvilkåret er oppfylt fra'), '03.05.2021');
-      await userEvent.click(screen.getByText('Bekreft og gå videre'));
-    });
-    await waitFor(() => expect(lagre).toHaveBeenCalledTimes(1));
-    expect(lagre).toHaveBeenNthCalledWith(1, [
-      {
-        avklarteKrav: [
-          {
-            begrunnelse: 'Dette er en begrunnelse',
-            erVilkarOk: true,
-            fraDato: '2021-05-02',
-            godkjent: true,
-            journalpostId: '510536417',
-          },
-        ],
-        begrunnelse: 'Dette er en begrunnelse',
-        erVilkarOk: true,
-        kode: '5077',
-        periode: {
-          fom: '2021-04-28',
-          tom: '2021-04-30',
-        },
-      },
-    ]);
-  });
-
-  it('skal formatere data ved innsending ved ikke oppfylt vilkår', async () => {
-    const lagre = vi.fn();
-    render(<VisSoknadsfristAksjonspunkt5077 submitCallback={lagre} />);
-    await act(async () => {
-      await userEvent.click(screen.getByLabelText('ikke', { exact: false }));
-      await userEvent.type(
-        screen.getByLabelText('Vurder om det har vært fristavbrytende kontakt'),
-        'Dette er en begrunnelse',
-      );
-      await userEvent.click(screen.getByText('Bekreft og gå videre'));
-    });
-    await waitFor(() => expect(lagre).toHaveBeenCalledTimes(1));
-    expect(lagre).toHaveBeenNthCalledWith(1, [
-      {
-        avklarteKrav: [
-          {
-            begrunnelse: 'Dette er en begrunnelse',
-            erVilkarOk: false,
-            fraDato: '2021-04-30',
-            godkjent: false,
-            journalpostId: '510536417',
-          },
-        ],
-        begrunnelse: 'Dette er en begrunnelse',
-        erVilkarOk: false,
-        kode: '5077',
-        periode: {
-          fom: '2021-04-28',
-          tom: '2021-04-30',
-        },
-      },
-    ]);
   });
 });

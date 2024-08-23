@@ -129,14 +129,8 @@
     "workerDirectory": "public"
   },
   "lint-staged": {
-    "packages/**/!(*.module.d.css).(ts|tsx|js|jsx)": [
-      "eslint --cache --fix",
-      "prettier --write"
-    ],
-    "packages/**/*.css": [
-      "stylelint --fix",
-      "prettier --write"
-    ]
+    "packages/**/!(*.module.d.css).(ts|tsx|js|jsx)": ["eslint --cache --fix", "prettier --write"],
+    "packages/**/*.css": ["stylelint --fix", "prettier --write"]
   },
   "packageManager": "yarn@3.4.1"
 }
