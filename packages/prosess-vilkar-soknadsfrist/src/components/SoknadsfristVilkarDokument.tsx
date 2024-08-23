@@ -1,6 +1,6 @@
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
-import { RadioGroupPanelRHF } from '@fpsak-frontend/form';
+import { DatepickerField, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
   FlexColumn,
   FlexContainer,
@@ -9,10 +9,6 @@ import {
   VerticalSpacer,
   useSaksbehandlerOppslag,
 } from '@fpsak-frontend/shared-components';
-import { initializeDate } from '@fpsak-frontend/utils';
-import { DokumentStatus, Vilkarperiode } from '@k9-sak-web/types';
-import { BodyShort, Button } from '@navikt/ds-react';
-import { Datepicker, TextAreaField } from '@navikt/ft-form-hooks';
 import {
   dateAfterOrEqual,
   dateBeforeOrEqual,
@@ -21,27 +17,28 @@ import {
   maxLength,
   minLength,
   required,
-} from '@navikt/ft-form-validators';
+  requiredIfNotPristine,
+} from '@fpsak-frontend/utils';
+import { DokumentStatus } from '@k9-sak-web/types';
+import { BodyShort } from '@navikt/ds-react';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
+import moment from 'moment';
 import React, { useCallback, useMemo } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { FormattedMessage, useIntl } from 'react-intl';
+
 import { formatDate } from '../utils';
-import { FormState } from './FormState';
+
 import styles from './SoknadsfristVilkarDokument.module.css';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 interface SoknadsfristVilkarDokumentProps {
+  erVilkarOk?: boolean | string;
   readOnly: boolean;
   skalViseBegrunnelse?: boolean;
   dokument: DokumentStatus;
   dokumentIndex: number;
   erAktivtDokument: boolean;
-  toggleEditForm: React.Dispatch<React.SetStateAction<boolean>>;
-  erOverstyrt?: boolean;
-  redigerVurdering?: boolean;
-  dokumentErVurdert: boolean;
-  periode?: Vilkarperiode;
 }
 
 export const DELVIS_OPPFYLT = 'DELVIS_OPPFYLT';
@@ -53,27 +50,21 @@ export const DELVIS_OPPFYLT = 'DELVIS_OPPFYLT';
  * Resultatet kan overstyres av Nav-ansatt med overstyr-rettighet.
  */
 export const SoknadsfristVilkarDokument = ({
+  erVilkarOk,
   readOnly,
   skalViseBegrunnelse = true,
   dokument,
   erAktivtDokument,
   dokumentIndex,
-  toggleEditForm,
-  erOverstyrt,
-  redigerVurdering,
-  dokumentErVurdert,
-  periode,
 }: SoknadsfristVilkarDokumentProps) => {
-  const { getValues } = useFormContext<FormState>();
-  const harBegrunnelse = !!getValues('avklarteKrav')[dokumentIndex]?.begrunnelse;
-  const erVilkarOk = readOnly && dokumentErVurdert && periode.vilkarStatus.kode === 'OPPFYLT';
+  const intl = useIntl();
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   const opprettetAv = hentSaksbehandlerNavn(dokument?.avklarteOpplysninger?.opprettetAv);
   const opprettetTidspunkt = dokument?.avklarteOpplysninger?.opprettetTidspunkt;
   const minDate = useMemo(
     () =>
       dokument.status.reduce(
-        (acc, curr) => (!acc || initializeDate(curr.periode.fom) < initializeDate(acc) ? curr.periode.fom : acc),
+        (acc, curr) => (!acc || moment(curr.periode.fom) < moment(acc) ? curr.periode.fom : acc),
         '',
       ),
     [dokument.journalpostId],
@@ -81,7 +72,7 @@ export const SoknadsfristVilkarDokument = ({
   const maxDate = useMemo(
     () =>
       dokument.status.reduce(
-        (acc, curr) => (!acc || initializeDate(curr.periode.tom) > initializeDate(acc) ? curr.periode.tom : acc),
+        (acc, curr) => (!acc || moment(curr.periode.tom) > moment(acc) ? curr.periode.tom : acc),
         '',
       ),
     [dokument.innsendingstidspunkt, dokument.journalpostId],
@@ -97,20 +88,16 @@ export const SoknadsfristVilkarDokument = ({
       </p>
       {skalViseBegrunnelse && (
         <>
-          <div>
-            <div>
-              <VerticalSpacer eightPx />
-              <TextAreaField
-                name={`avklarteKrav.${dokumentIndex}.begrunnelse`}
-                label="Vurder om det har vært fristavbrytende kontakt"
-                validate={[required, minLength3, maxLength1500, hasValidText]}
-                maxLength={1500}
-                readOnly={readOnly}
-                placeholder="Begrunn vurderingen din"
-              />
-              <AssessedBy name={opprettetAv} date={opprettetTidspunkt} />
-            </div>
-          </div>
+          <VerticalSpacer eightPx />
+          <TextAreaField
+            name={`avklarteKrav.${dokumentIndex}.begrunnelse`}
+            label={intl.formatMessage({ id: 'VilkarBegrunnelse.Vilkar' })}
+            validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
+            maxLength={1500}
+            readOnly={readOnly}
+            placeholder={intl.formatMessage({ id: 'VilkarBegrunnelse.BegrunnVurdering' })}
+          />
+          <AssessedBy name={opprettetAv} date={opprettetTidspunkt} />
         </>
       )}
       <VerticalSpacer sixteenPx />
@@ -121,10 +108,17 @@ export const SoknadsfristVilkarDokument = ({
               <Image className={styles.image} src={erVilkarOk ? innvilgetImage : avslattImage} />
             </FlexColumn>
             <FlexColumn>
-              {erVilkarOk && <BodyShort size="small">Vilkåret er oppfylt for hele perioden</BodyShort>}
+              {erVilkarOk && (
+                <BodyShort size="small">
+                  <FormattedMessage id="SoknadsfristVilkarForm.ErOppfylt" values={{ b: chunks => <b>{chunks}</b> }} />
+                </BodyShort>
+              )}
               {!erVilkarOk && (
                 <BodyShort size="small">
-                  Vilkåret er <b>ikke</b> oppfylt for denne perioden
+                  <FormattedMessage
+                    id="SoknadsfristVilkarForm.VilkarIkkeOppfylt"
+                    values={{ b: chunks => <b>{chunks}</b> }}
+                  />
                 </BodyShort>
               )}
             </FlexColumn>
@@ -133,59 +127,53 @@ export const SoknadsfristVilkarDokument = ({
         </FlexContainer>
       )}
       {(!readOnly || erVilkarOk === undefined) && (
-        <RadioGroupPanelRHF
+        <RadioGroupField
           name={`avklarteKrav.${dokumentIndex}.erVilkarOk`}
-          validators={{ required }}
+          validate={[required]}
+          bredde="XXL"
+          isVertical
           readOnly={readOnly}
-          question="Er vilkåret oppfylt for perioden?"
           radios={[
             {
-              value: 'true',
-              label: 'Vilkåret er oppfylt for hele perioden',
+              value: true,
+              label: (
+                <FormattedMessage id="SoknadsfristVilkarForm.ErOppfylt" values={{ b: chunks => <b>{chunks}</b> }} />
+              ),
             },
             {
               value: DELVIS_OPPFYLT,
-              label: 'Vilkåret er oppfylt for deler av perioden',
+              label: (
+                <FormattedMessage
+                  id="SoknadsfristVilkarForm.ErDelvisOppfylt"
+                  values={{ b: chunks => <b>{chunks}</b> }}
+                />
+              ),
               element: (
                 <div className="my-2">
-                  <Datepicker
+                  <DatepickerField
                     name={`avklarteKrav.${dokumentIndex}.fraDato`}
-                    label="Oppgi dato søknadsfristvilkåret er oppfylt fra"
+                    label={{ id: 'SoknadsfristVilkarForm.Dato' }}
                     validate={[required, hasValidDate, isAtleastDate, isAtmostDate]}
-                    isReadOnly={readOnly}
+                    readOnly={readOnly}
                     disabledDays={{
-                      fromDate: initializeDate(minDate).toDate(),
-                      toDate: initializeDate(maxDate).toDate(),
+                      before: moment(minDate, 'YYYY-MM-DD').toDate(),
+                      after: moment(maxDate, 'YYYY-MM-DD').toDate(),
                     }}
                   />
                 </div>
               ),
             },
             {
-              value: 'false',
+              value: false,
               label: (
-                <>
-                  Vilkåret er <b>ikke</b> oppfylt for denne perioden
-                </>
+                <FormattedMessage
+                  id="SoknadsfristVilkarForm.VilkarIkkeOppfylt"
+                  values={{ b: chunks => <b>{chunks}</b> }}
+                />
               ),
             },
           ]}
         />
-      )}
-      {!erOverstyrt && dokumentErVurdert && harBegrunnelse && !redigerVurdering && (
-        <div>
-          <VerticalSpacer eightPx />
-          <Button
-            className={styles.editButton}
-            variant="tertiary"
-            size="xsmall"
-            onClick={() => {
-              toggleEditForm(true);
-            }}
-          >
-            Rediger vurdering
-          </Button>
-        </div>
       )}
       <VerticalSpacer eightPx />
     </div>

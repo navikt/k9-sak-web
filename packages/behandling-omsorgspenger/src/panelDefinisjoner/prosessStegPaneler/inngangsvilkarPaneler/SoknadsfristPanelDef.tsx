@@ -1,14 +1,16 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import React from 'react';
+
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import SoknadsfristVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-soknadsfrist';
+import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { OmsorgspengerBehandlingApiKeys } from '../../../data/omsorgspengerBehandlingApi';
 
 class SoknadsfristPanelDef extends ProsessStegPanelDef {
   getId = () => 'SOKNADSFRIST';
 
-  getTekstKode = () => 'Søknadsfrist';
+  getTekstKode = () => 'Inngangsvilkar.Soknadsfrist';
 
   getKomponent = props => <SoknadsfristVilkarProsessIndex {...props} />;
 
