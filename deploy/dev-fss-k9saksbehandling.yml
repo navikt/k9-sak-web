@@ -107,3 +107,5 @@ spec:
       value: "true"
     - name: NYE_NOKKELTALL
       value: "true"
+    - name: PROSESS_VILKAR_SOKNADSFRIST
+      value: "true"

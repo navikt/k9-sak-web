@@ -46,8 +46,8 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_AKSJONSPUNKT_9015,
   },
   {
-    key: "ALDERSVILKAR_KRONISK_SYK",
-    value: process.env.VITE_ALDERSVILKAR_KRONISK_SYK
+    key: 'ALDERSVILKAR_KRONISK_SYK',
+    value: process.env.VITE_ALDERSVILKAR_KRONISK_SYK,
   },
   {
     key: 'FRITEKST_REDIGERING',
@@ -76,5 +76,9 @@ export const featureTogglesFactory = () => [
   {
     key: 'NYE_NOKKELTALL',
     value: process.env.VITE_NYE_NOKKELTALL,
-  }
+  },
+  {
+    key: 'PROSESS_VILKAR_SOKNADSFRIST',
+    value: process.env.VITE_PROSESS_VILKAR_SOKNADSFRIST,
+  },
 ];

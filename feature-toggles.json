@@ -82,5 +82,9 @@
   {
     "key": "NYE_NOKKELTALL",
     "value": "${NYE_NOKKELTALL}"
+  },
+  {
+    "key": "PROSESS_VILKAR_SOKNADSFRIST",
+    "value": "${PROSESS_VILKAR_SOKNADSFRIST}"
   }
 ]

@@ -9,15 +9,17 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Image } from '@fpsak-frontend/shared-components';
 import { dateFormat, initializeDate } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, Behandling, DokumentStatus, SubmitCallback, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, DokumentStatus, FeatureToggles, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { utledInnsendtSoknadsfrist } from './utils';
-import SoknadsfristVilkarForm from './v2/components/SoknadsfristVilkarForm';
-import SoknadsfristVilkarHeader from './v2/components/SoknadsfristVilkarHeader';
+import SoknadsfristVilkarFormV2 from './v2/components/SoknadsfristVilkarForm';
+import SoknadsfristVilkarHeaderV2 from './v2/components/SoknadsfristVilkarHeader';
 
 import styles from './SoknadsfristVilkarProsessIndex.module.css';
+import SoknadsfristVilkarFormV1 from './components/SoknadsfristVilkarForm';
+import SoknadsfristVilkarHeaderV1 from './components/SoknadsfristVilkarHeader';
 
 const cx = classNames.bind(styles);
 
@@ -46,6 +48,7 @@ interface SoknadsfristVilkarProsessIndexProps {
   vilkar: Vilkar[];
   visAllePerioder: boolean;
   soknadsfristStatus: { dokumentStatus: DokumentStatus[] };
+  featureToggles: FeatureToggles;
 }
 
 // Finner ut om Statusperiode gjelder for vilkårsperiode
@@ -75,6 +78,7 @@ const SoknadsfristVilkarProsessIndex = ({
   vilkar,
   visAllePerioder,
   soknadsfristStatus,
+  featureToggles,
 }: SoknadsfristVilkarProsessIndexProps) => {
   const [activeTab, setActiveTab] = useState(0);
   const [activeVilkår] = vilkar;
@@ -173,31 +177,66 @@ const SoknadsfristVilkarProsessIndex = ({
           />
         </div>
         <div className={styles.contentContainer}>
-          <SoknadsfristVilkarHeader
-            aksjonspunkter={aksjonspunkter}
-            erOverstyrt={erOverstyrt}
-            kanOverstyreAccess={kanOverstyreAccess}
-            lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
-            overrideReadOnly={overrideReadOnly || dokumenterSomSkalVurderes.length === 0}
-            overstyringApKode={aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR}
-            panelTittelKode={panelTittelKode}
-            status={activePeriode.vilkarStatus.kode}
-            toggleOverstyring={toggleOverstyring}
-          />
-          <SoknadsfristVilkarForm
-            behandlingId={behandling.id}
-            behandlingVersjon={behandling.versjon}
-            aksjonspunkter={aksjonspunkter}
-            harÅpentAksjonspunkt={harÅpentAksjonspunkt}
-            erOverstyrt={erOverstyrt}
-            submitCallback={submitCallback}
-            overrideReadOnly={overrideReadOnly}
-            toggleOverstyring={toggleOverstyring}
-            status={activePeriode.vilkarStatus.kode}
-            alleDokumenter={dokumenterSomSkalVurderes}
-            dokumenterIAktivPeriode={dokumenterIAktivPeriode}
-            periode={activePeriode}
-          />
+          {featureToggles?.PROSESS_VILKAR_SOKNADSFRIST ? (
+            <>
+              <SoknadsfristVilkarHeaderV2
+                aksjonspunkter={aksjonspunkter}
+                erOverstyrt={erOverstyrt}
+                kanOverstyreAccess={kanOverstyreAccess}
+                lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
+                overrideReadOnly={overrideReadOnly || dokumenterSomSkalVurderes.length === 0}
+                overstyringApKode={aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR}
+                panelTittelKode={panelTittelKode}
+                status={activePeriode.vilkarStatus.kode}
+                toggleOverstyring={toggleOverstyring}
+              />
+              <SoknadsfristVilkarFormV2
+                behandlingId={behandling.id}
+                behandlingVersjon={behandling.versjon}
+                aksjonspunkter={aksjonspunkter}
+                harÅpentAksjonspunkt={harÅpentAksjonspunkt}
+                erOverstyrt={erOverstyrt}
+                submitCallback={submitCallback}
+                overrideReadOnly={overrideReadOnly}
+                toggleOverstyring={toggleOverstyring}
+                status={activePeriode.vilkarStatus.kode}
+                alleDokumenter={dokumenterSomSkalVurderes}
+                dokumenterIAktivPeriode={dokumenterIAktivPeriode}
+                periode={activePeriode}
+              />
+            </>
+          ) : (
+            <>
+              <SoknadsfristVilkarHeaderV1
+                aksjonspunkter={aksjonspunkter}
+                erOverstyrt={erOverstyrt}
+                kanOverstyreAccess={kanOverstyreAccess}
+                lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
+                overrideReadOnly={overrideReadOnly || dokumenterSomSkalVurderes.length === 0}
+                overstyringApKode={aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR}
+                panelTittelKode={panelTittelKode}
+                status={activePeriode.vilkarStatus.kode}
+                toggleOverstyring={toggleOverstyring}
+              />
+              <SoknadsfristVilkarFormV1
+                behandlingId={behandling.id}
+                behandlingVersjon={behandling.versjon}
+                aksjonspunkter={aksjonspunkter}
+                harÅpentAksjonspunkt={harÅpentAksjonspunkt}
+                erOverstyrt={erOverstyrt}
+                submitCallback={submitCallback}
+                overrideReadOnly={overrideReadOnly}
+                kanOverstyreAccess={kanOverstyreAccess}
+                toggleOverstyring={toggleOverstyring}
+                status={activePeriode.vilkarStatus.kode}
+                panelTittelKode={panelTittelKode}
+                lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
+                alleDokumenter={dokumenterSomSkalVurderes}
+                dokumenterIAktivPeriode={dokumenterIAktivPeriode}
+                periode={activePeriode}
+              />
+            </>
+          )}
         </div>
       </div>
     </RawIntlProvider>
