@@ -6,7 +6,7 @@ import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Be
 import { Behandling, DokumentStatus, Vilkar } from '@k9-sak-web/types';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
-import SoknadsfristVilkarProsessIndex from './SoknadsfristVilkarProsessIndex';
+import SoknadsfristVilkarProsessIndex from '../SoknadsfristVilkarProsessIndex';
 
 const vilkarSoknadsfrist = [
   {

@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { Dayjs } from 'dayjs';
-import React, { SetStateAction, useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
@@ -13,9 +13,9 @@ import { Aksjonspunkt, Behandling, DokumentStatus, SubmitCallback, Vilkar } from
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
-import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
-import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
 import { utledInnsendtSoknadsfrist } from './utils';
+import SoknadsfristVilkarForm from './v2/components/SoknadsfristVilkarForm';
+import SoknadsfristVilkarHeader from './v2/components/SoknadsfristVilkarHeader';
 
 import styles from './SoknadsfristVilkarProsessIndex.module.css';
 

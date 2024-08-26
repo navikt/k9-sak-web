@@ -2,8 +2,7 @@ import { Behandling } from '@k9-sak-web/types';
 import { composeStories } from '@storybook/react';
 import { userEvent, waitFor } from '@storybook/test';
 import { act, render, screen } from '@testing-library/react';
-import React from 'react';
-import SoknadsfristVilkarProsessIndex from './SoknadsfristVilkarProsessIndex';
+import SoknadsfristVilkarProsessIndex from '../SoknadsfristVilkarProsessIndex';
 import * as stories from './SoknadsfristVilkarProsessIndex.stories';
 
 const { VisSoknadsfristAksjonspunkt5077 } = composeStories(stories);

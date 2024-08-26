@@ -20,7 +20,7 @@ import { Dayjs } from 'dayjs';
 import hash from 'object-hash';
 import { SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { utledInnsendtSoknadsfrist } from '../utils';
+import { utledInnsendtSoknadsfrist } from '../../utils';
 import { FormState } from './FormState';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import SoknadsfristVilkarDokument, { DELVIS_OPPFYLT } from './SoknadsfristVilkarDokument';
