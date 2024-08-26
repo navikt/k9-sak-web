@@ -104,7 +104,7 @@ export const SaligKaosFungererOgså: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const { linkEls, root } = elemsfinder(canvasElement);
-    await step('§ uten mellomrom etter blir korrekt', async () => {
+    await step('Salig kaos fungerer også', async () => {
       await expect(linkEls()).toHaveLength(3);
       const [firstLink, secondLink, thirdLink] = linkEls();
       await expect(firstLink).toHaveTextContent('9-1');
