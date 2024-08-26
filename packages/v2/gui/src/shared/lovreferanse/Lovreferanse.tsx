@@ -29,8 +29,8 @@ const berikMedLovdataLenker = (lovreferanse: string) => {
     return lovreferanse;
   }
 
-  return lovreferanse.split(' ').map((part, index) => {
-    const kapittelOgKanskjeParagraf = part.match(seksjonsRegex)?.[0];
+  return lovreferanse.split(' ').map((del, index) => {
+    const kapittelOgKanskjeParagraf = del.match(seksjonsRegex)?.[0];
 
     if (kapittelOgKanskjeParagraf) {
       const link = kapittelOgKanskjeParagraf.includes('-')
@@ -39,13 +39,15 @@ const berikMedLovdataLenker = (lovreferanse: string) => {
 
       return (
         <Fragment key={index}>
+          {del.includes('§§') ? '§§ ' : del.includes('§') ? '§ ' : ''}
           <Link href={link} title="Les mer på Lovdata.no" target="_blank">
             {kapittelOgKanskjeParagraf}
-          </Link>{' '}
+          </Link>
+          {del.endsWith(',') && ','}{' '}
         </Fragment>
       );
     }
 
-    return <span key={index}>{part} </span>;
+    return <span key={index}>{del} </span>;
   });
 };

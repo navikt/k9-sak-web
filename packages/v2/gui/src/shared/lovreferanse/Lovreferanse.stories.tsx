@@ -1,14 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import { expect, within } from '@storybook/test';
 import { Lovreferanse } from './Lovreferanse';
 
-const meta: Meta<typeof Lovreferanse> = {
+const meta = {
   title: 'gui/shared/lovreferanse/Lovreferanse.tsx',
   component: Lovreferanse,
-  decorators: [withMaxWidth(420)],
-};
+} satisfies Meta<typeof Lovreferanse>;
 export default meta;
 
 const elemsfinder = (canvasElement: HTMLElement) => {
@@ -20,7 +18,7 @@ const elemsfinder = (canvasElement: HTMLElement) => {
   };
 };
 
-type Story = StoryObj<typeof Lovreferanse>;
+type Story = StoryObj<typeof meta>;
 export const DefaultStory: Story = {
   args: {
     children: '§ 9-1',
@@ -80,6 +78,45 @@ export const DobbelparagraferBlirLenketRiktig: Story = {
 
       await expect(secondLink).toHaveTextContent('9-2');
       await expect(secondLink).toHaveAttribute('href', 'https://lovdata.no/lov/1997-02-28-19/§9-2');
+    });
+  },
+};
+
+export const ParagrafUtenMellomromEtter: Story = {
+  args: {
+    children: '§9-1',
+  },
+  play: async ({ canvasElement, step }) => {
+    const { linkEls, root } = elemsfinder(canvasElement);
+    await step('§ uten mellomrom etter blir korrekt', async () => {
+      await expect(linkEls()).toHaveLength(1);
+      const [firstLink] = linkEls();
+      await expect(firstLink).toHaveTextContent('9-1');
+      await expect(firstLink).toHaveAttribute('href', 'https://lovdata.no/lov/1997-02-28-19/§9-1');
+      await expect(root()).toHaveTextContent('§ 9-1');
+    });
+  },
+};
+
+export const SaligKaosFungererOgså: Story = {
+  args: {
+    children: '§§9-1, 9-2 og §9-3',
+  },
+  play: async ({ canvasElement, step }) => {
+    const { linkEls, root } = elemsfinder(canvasElement);
+    await step('§ uten mellomrom etter blir korrekt', async () => {
+      await expect(linkEls()).toHaveLength(3);
+      const [firstLink, secondLink, thirdLink] = linkEls();
+      await expect(firstLink).toHaveTextContent('9-1');
+      await expect(firstLink).toHaveAttribute('href', 'https://lovdata.no/lov/1997-02-28-19/§9-1');
+
+      await expect(secondLink).toHaveTextContent('9-2');
+      await expect(secondLink).toHaveAttribute('href', 'https://lovdata.no/lov/1997-02-28-19/§9-2');
+
+      await expect(thirdLink).toHaveTextContent('9-3');
+      await expect(thirdLink).toHaveAttribute('href', 'https://lovdata.no/lov/1997-02-28-19/§9-3');
+
+      await expect(root()).toHaveTextContent('§§ 9-1, 9-2 og § 9-3');
     });
   },
 };
