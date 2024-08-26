@@ -7,9 +7,9 @@ import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Image } from '@fpsak-frontend/shared-components';
+import { Image, useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { dateFormat, initializeDate } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, Behandling, DokumentStatus, FeatureToggles, SubmitCallback, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, DokumentStatus, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
@@ -50,7 +50,6 @@ interface SoknadsfristVilkarProsessIndexProps {
   vilkar: Vilkar[];
   visAllePerioder: boolean;
   soknadsfristStatus: { dokumentStatus: DokumentStatus[] };
-  featureToggles: FeatureToggles;
 }
 
 // Finner ut om Statusperiode gjelder for vilkårsperiode
@@ -80,8 +79,8 @@ const SoknadsfristVilkarProsessIndex = ({
   vilkar,
   visAllePerioder,
   soknadsfristStatus,
-  featureToggles,
 }: SoknadsfristVilkarProsessIndexProps) => {
+  const [featureToggles] = useFeatureToggles();
   const [activeTab, setActiveTab] = useState(0);
   const [activeVilkår] = vilkar;
   const perioder = hentAktivePerioderFraVilkar(vilkar, visAllePerioder);

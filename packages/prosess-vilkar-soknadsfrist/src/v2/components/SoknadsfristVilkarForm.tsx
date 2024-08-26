@@ -54,7 +54,7 @@ const buildInitialValues = (
 
       const erDelvisOppfylt =
         status !== vilkarUtfallType.OPPFYLT && fraDato && plusEnDag(fraDato) !== innsendtSoknadsfrist;
-      const erVilkarOk = erDelvisOppfylt ? DELVIS_OPPFYLT : status === vilkarUtfallType.OPPFYLT;
+      const erVilkarOk = erDelvisOppfylt ? DELVIS_OPPFYLT : status === vilkarUtfallType.OPPFYLT ? 'true' : 'false';
       return {
         erVilkarOk: erAvklartEllerOverstyrt ? erVilkarOk : null,
         begrunnelse: decodeHtmlEntity(
@@ -84,7 +84,7 @@ const transformValues = (
   begrunnelse: values.avklarteKrav.map(krav => krav.begrunnelse).join('\n'),
   avklarteKrav: values.avklarteKrav.map(krav => {
     const dokumentStatus = alleDokumenter.find(d => d.journalpostId === krav.journalpostId);
-    const erVilkarOk = krav.erVilkarOk === 'true' || krav.erVilkarOk === DELVIS_OPPFYLT;
+    const erVilkarOk = `${krav.erVilkarOk}` === 'true' || krav.erVilkarOk === DELVIS_OPPFYLT;
 
     const fraDato = (() => {
       switch (krav.erVilkarOk) {

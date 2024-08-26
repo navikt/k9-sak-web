@@ -153,10 +153,12 @@ export const SoknadsfristVilkarDokument = ({
                     label="Oppgi dato søknadsfristvilkåret er oppfylt fra"
                     validate={[required, hasValidDate, isAtleastDate, isAtmostDate]}
                     isReadOnly={readOnly}
-                    disabledDays={{
-                      fromDate: initializeDate(minDate).toDate(),
-                      toDate: initializeDate(maxDate).toDate(),
-                    }}
+                    disabledDays={[
+                      {
+                        before: initializeDate(minDate).toDate(),
+                        after: initializeDate(maxDate).toDate(),
+                      },
+                    ]}
                   />
                 </div>
               ),
