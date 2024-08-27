@@ -25,7 +25,7 @@ import {
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import React, { useCallback, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { formatDate } from '../../utils';
+import { formatDate } from '../utils';
 import { FormState } from './FormState';
 import styles from './SoknadsfristVilkarDokument.module.css';
 

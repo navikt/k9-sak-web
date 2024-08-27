@@ -6,7 +6,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Detail, Heading, Label } from '@navikt/ds-react';
-import React, { SetStateAction } from 'react';
+import { SetStateAction } from 'react';
 import styles from './SoknadsfristVilkarForm.module.css';
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
@@ -14,7 +14,7 @@ const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
 const isHidden = (kanOverstyre: boolean, aksjonspunktCodes: string[], aksjonspunktCode: string) =>
   !isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre;
 
-const getVilkarOkMessage = (originalErVilkarOk: boolean) => {
+const VilkarOkMessage = ({ originalErVilkarOk }: { originalErVilkarOk: boolean }) => {
   let message = 'Ikke behandlet';
   if (originalErVilkarOk) {
     message = 'Vilkåret er oppfylt for hele perioden';
@@ -83,7 +83,7 @@ const SoknadsfristVilkarHeader = ({
         <FlexRow>
           <FlexColumn>
             <VerticalSpacer eightPx />
-            {getVilkarOkMessage(originalErVilkarOk)}
+            <VilkarOkMessage originalErVilkarOk={originalErVilkarOk} />
           </FlexColumn>
           {originalErVilkarOk !== undefined &&
             !isHidden(kanOverstyreAccess.isEnabled, aksjonspunktCodes, overstyringApKode) && (

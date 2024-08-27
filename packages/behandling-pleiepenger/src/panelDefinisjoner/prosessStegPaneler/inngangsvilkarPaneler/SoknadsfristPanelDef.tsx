@@ -3,6 +3,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import SoknadsfristVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-soknadsfrist';
+import SoknadsfristVilkarProsessIndexV2 from '@k9-sak-web/prosess-vilkar-soknadsfrist-v2';
 import { PleiepengerBehandlingApiKeys } from '../../../data/pleiepengerBehandlingApi';
 
 class SoknadsfristPanelDef extends ProsessStegPanelDef {
@@ -10,7 +11,12 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
 
   getTekstKode = () => 'Søknadsfrist';
 
-  getKomponent = props => <SoknadsfristVilkarProsessIndex {...props} />;
+  getKomponent = props => {
+    if (props.featureToggles?.PROSESS_VILKAR_SOKNADSFRIST) {
+      return <SoknadsfristVilkarProsessIndexV2 {...props} />;
+    }
+    return <SoknadsfristVilkarProsessIndex {...props} />;
+  };
 
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR,

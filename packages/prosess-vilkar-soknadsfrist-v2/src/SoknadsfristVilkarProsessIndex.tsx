@@ -13,12 +13,12 @@ import { Aksjonspunkt, Behandling, DokumentStatus, SubmitCallback, Vilkar } from
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
+import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
+import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
 import { utledInnsendtSoknadsfrist } from './utils';
 
 import messages from '../i18n/nb_NO.json';
 import styles from './SoknadsfristVilkarProsessIndex.module.css';
-import SoknadsfristVilkarFormV1 from './components/SoknadsfristVilkarForm';
-import SoknadsfristVilkarHeaderV1 from './components/SoknadsfristVilkarHeader';
 
 const cx = classNames.bind(styles);
 
@@ -175,7 +175,7 @@ const SoknadsfristVilkarProsessIndex = ({
           />
         </div>
         <div className={styles.contentContainer}>
-          <SoknadsfristVilkarHeaderV1
+          <SoknadsfristVilkarHeader
             aksjonspunkter={aksjonspunkter}
             erOverstyrt={erOverstyrt}
             kanOverstyreAccess={kanOverstyreAccess}
@@ -186,7 +186,7 @@ const SoknadsfristVilkarProsessIndex = ({
             status={activePeriode.vilkarStatus.kode}
             toggleOverstyring={toggleOverstyring}
           />
-          <SoknadsfristVilkarFormV1
+          <SoknadsfristVilkarForm
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}
             aksjonspunkter={aksjonspunkter}
@@ -194,11 +194,8 @@ const SoknadsfristVilkarProsessIndex = ({
             erOverstyrt={erOverstyrt}
             submitCallback={submitCallback}
             overrideReadOnly={overrideReadOnly}
-            kanOverstyreAccess={kanOverstyreAccess}
             toggleOverstyring={toggleOverstyring}
             status={activePeriode.vilkarStatus.kode}
-            panelTittelKode={panelTittelKode}
-            lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
             alleDokumenter={dokumenterSomSkalVurderes}
             dokumenterIAktivPeriode={dokumenterIAktivPeriode}
             periode={activePeriode}
