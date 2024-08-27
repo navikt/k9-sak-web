@@ -17,7 +17,6 @@ import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
 import { utledInnsendtSoknadsfrist } from './utils';
 
-import messages from '../i18n/nb_NO.json';
 import styles from './SoknadsfristVilkarProsessIndex.module.css';
 
 const cx = classNames.bind(styles);
@@ -27,7 +26,6 @@ const cache = createIntlCache();
 const intl = createIntl(
   {
     locale: 'nb-NO',
-    messages,
   },
   cache,
 );
