@@ -35,9 +35,5 @@
     "redux": "5.0.1",
     "redux-form": "8.3.10",
     "reselect": "5.1.1"
-  },
-  "devDependencies": {
-    "axios-mock-adapter": "1.22.0",
-    "redux-mock-store": "1.5.4"
   }
 }
