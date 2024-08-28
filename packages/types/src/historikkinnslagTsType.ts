@@ -22,7 +22,8 @@ export type HistorikkInnslagAksjonspunkt = {
 };
 
 export type HistorikkinnslagDel = {
-  begrunnelse?: string;
+  begrunnelse?: string; // Dette er en kodeverkkode, men var avhengig av objektet, begrunnelseKodeverkType er lagt til for å kunne slå opp
+  begrunnelseKodeverkType?: string; // Kodeverktype trengs for å slå opp begrunnelseskoden i kodeverk, er lagt til i backend ifm. kodverksendringene
   begrunnelseFritekst?: string;
   hendelse?: {
     navn?: string;
@@ -36,6 +37,7 @@ export type HistorikkinnslagDel = {
   };
   skjermlenke?: SkjermlenkeTyper;
   aarsak?: string;
+  aarsakKodeverkType?: string; // Kodeverktype trengs for å slå opp årsakskoden i kodeverk, er lagt til i backend ifm. kodverksendringene
   tema?: {
     endretFeltNavn: string;
     klNavn: string;
