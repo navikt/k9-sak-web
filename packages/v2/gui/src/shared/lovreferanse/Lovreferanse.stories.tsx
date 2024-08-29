@@ -98,9 +98,32 @@ export const ParagrafUtenMellomromEtter: Story = {
   },
 };
 
-export const SaligKaosFungererOgså: Story = {
+export const UventetFormatteringFungererSomForventet: Story = {
   args: {
     children: '§§9-1, 9-2 og §9-3',
+  },
+  play: async ({ canvasElement, step }) => {
+    const { linkEls, root } = elemsfinder(canvasElement);
+    await step('Uventet formattering fungerer som forventet', async () => {
+      await expect(linkEls()).toHaveLength(3);
+      const [firstLink, secondLink, thirdLink] = linkEls();
+      await expect(firstLink).toHaveTextContent('9-1');
+      await expect(firstLink).toHaveAttribute('href', 'https://lovdata.no/lov/1997-02-28-19/§9-1');
+
+      await expect(secondLink).toHaveTextContent('9-2');
+      await expect(secondLink).toHaveAttribute('href', 'https://lovdata.no/lov/1997-02-28-19/§9-2');
+
+      await expect(thirdLink).toHaveTextContent('9-3');
+      await expect(thirdLink).toHaveAttribute('href', 'https://lovdata.no/lov/1997-02-28-19/§9-3');
+
+      await expect(root()).toHaveTextContent('§§ 9-1, 9-2 og § 9-3');
+    });
+  },
+};
+
+export const KommaUtenMellomromFungerer: Story = {
+  args: {
+    children: '§§9-1,9-2 og §9-3',
   },
   play: async ({ canvasElement, step }) => {
     const { linkEls, root } = elemsfinder(canvasElement);
