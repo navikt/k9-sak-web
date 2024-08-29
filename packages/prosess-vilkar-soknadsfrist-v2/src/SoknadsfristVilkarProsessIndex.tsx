@@ -1,23 +1,21 @@
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { initializeDate } from '@fpsak-frontend/utils';
+import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
+import { Aksjonspunkt, DokumentStatus, SubmitCallback, Vilkar } from '@k9-sak-web/types';
+import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
+import { SideMenu } from '@navikt/ft-plattform-komponenter';
+import { BehandlingDto } from '@navikt/k9-sak-typescript-client';
 import classNames from 'classnames/bind';
 import { Dayjs } from 'dayjs';
 import { SetStateAction, useEffect, useState } from 'react';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 
-import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Image } from '@fpsak-frontend/shared-components';
-import { dateFormat, initializeDate } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, Behandling, DokumentStatus, SubmitCallback, Vilkar } from '@k9-sak-web/types';
-import { SideMenu } from '@navikt/ft-plattform-komponenter';
-
-import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
-import { utledInnsendtSoknadsfrist } from './utils';
-
 import styles from './SoknadsfristVilkarProsessIndex.module.css';
+import { formatDate, utledInnsendtSoknadsfrist } from './utils';
 
 const cx = classNames.bind(styles);
 
@@ -33,7 +31,7 @@ const intl = createIntl(
 const lovReferanse = '§ 22-13';
 
 interface SoknadsfristVilkarProsessIndexProps {
-  behandling: Behandling;
+  behandling: BehandlingDto;
   aksjonspunkter: Aksjonspunkt[];
   submitCallback: (props: SubmitCallback[]) => void;
   overrideReadOnly: boolean;
@@ -161,10 +159,14 @@ const SoknadsfristVilkarProsessIndex = ({
           <SideMenu
             links={perioder.map(({ periode, vilkarStatus }, index) => ({
               active: activeTab === index,
-              label: `${dateFormat(periode.fom)} - ${dateFormat(periode.tom)}`,
+              label: `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`,
               icon:
                 (erOverstyrt || harÅpentAksjonspunkt) && vilkarStatus.kode !== vilkarUtfallType.OPPFYLT ? (
-                  <Image src={advarselIcon} className={styles.warningIcon} alt="Aksjonspunkt" />
+                  <ExclamationmarkTriangleFillIcon
+                    title="Aksjonspunkt"
+                    fontSize="1.5rem"
+                    className="text-[var(--ac-alert-icon-warning-color,var(--a-icon-warning))] text-2xl ml-2"
+                  />
                 ) : null,
             }))}
             onClick={setActiveTab}

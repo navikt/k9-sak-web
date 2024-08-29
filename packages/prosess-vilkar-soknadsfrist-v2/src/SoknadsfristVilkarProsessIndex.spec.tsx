@@ -1,4 +1,4 @@
-import { Behandling } from '@k9-sak-web/types';
+import { BehandlingDto } from '@navikt/k9-sak-typescript-client';
 import { composeStories } from '@storybook/react';
 import { userEvent, waitFor } from '@storybook/test';
 import { act, render, screen } from '@testing-library/react';
@@ -19,7 +19,7 @@ describe('<SoknadsfristVilkarForm>', () => {
           {
             id: 1,
             versjon: 1,
-          } as Behandling
+          } as BehandlingDto
         }
         kanOverstyreAccess={{
           isEnabled: true,
@@ -71,7 +71,7 @@ describe('<SoknadsfristVilkarForm>', () => {
           {
             id: 1,
             versjon: 1,
-          } as Behandling
+          } as BehandlingDto
         }
         kanOverstyreAccess={{
           isEnabled: true,

@@ -73,7 +73,7 @@ const soknadsStatus = {
 };
 
 const meta: Meta<typeof SoknadsfristVilkarProsessIndex> = {
-  title: 'prosess/prosess-vilkar-soknadsfrist',
+  title: 'prosess/prosess-vilkar-soknadsfrist-v2',
   component: SoknadsfristVilkarProsessIndex,
 };
 
