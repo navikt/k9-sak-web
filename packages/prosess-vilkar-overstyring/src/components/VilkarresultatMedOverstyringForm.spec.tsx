@@ -2,9 +2,8 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { VilkarresultatMedOverstyringForm } from './VilkarresultatMedOverstyringForm';
 
 import messages from '../../i18n/nb_NO.json';
@@ -14,11 +13,8 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
     renderWithIntlAndReduxForm(
       <VilkarresultatMedOverstyringForm
         {...reduxFormPropsMock}
-        erVilkarOk
-        isReadOnly
         overstyringApKode="5011"
         lovReferanse="§23"
-        hasAksjonspunkt
         overrideReadOnly={false}
         toggleOverstyring={() => undefined}
         erMedlemskapsPanel={false}
@@ -31,9 +27,6 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         medlemskapFom="10.10.2010"
         status=""
         submitCallback={() => undefined}
-        isSolvable
-        periodeFom="2019-01-01"
-        periodeTom="2020-01-01"
       />,
       { messages },
     );

@@ -1,27 +1,23 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
 
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-
-import { VilkarresultatMedOverstyringForm } from './VilkarresultatMedOverstyringForm';
+import { screen } from '@testing-library/react';
+import { VilkarresultatMedOverstyringFormPeriodisert } from './VilkarresultatMedOverstyringFormPeriodisert';
 
 import messages from '../../i18n/nb_NO.json';
 
 describe('<VilkarresultatMedOverstyringForm>', () => {
   it('skal rendre form med knapp når vilkåret er overstyrt', () => {
     renderWithIntlAndReduxForm(
-      <VilkarresultatMedOverstyringForm
-        {...reduxFormPropsMock}
-        erVilkarOk
+      <VilkarresultatMedOverstyringFormPeriodisert
         isReadOnly
         overstyringApKode="5011"
         lovReferanse="§23"
         hasAksjonspunkt
         overrideReadOnly={false}
         toggleOverstyring={() => undefined}
-        erMedlemskapsPanel={false}
+        visPeriodisering={false}
         erOverstyrt
         aksjonspunkter={[]}
         behandlingsresultat={{ type: 'test' }}
@@ -31,9 +27,14 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         medlemskapFom="10.10.2010"
         status=""
         submitCallback={() => undefined}
-        isSolvable
-        periodeFom="2019-01-01"
-        periodeTom="2020-01-01"
+        periode={{
+          periode: {
+            fom: '2020-01-01',
+            tom: '2020-01-31',
+          },
+          merknadParametere: {},
+          vilkarStatus: { kode: 'test', kodeverk: 'test' },
+        }}
       />,
       { messages },
     );

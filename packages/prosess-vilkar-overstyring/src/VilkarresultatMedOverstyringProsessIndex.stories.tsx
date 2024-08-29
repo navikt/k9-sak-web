@@ -36,8 +36,8 @@ const vilkarOpptjening = [
       {
         vilkarStatus: vilkarUtfallType.OPPFYLT,
         periode: {
-          fom: '2020-01-30',
-          tom: '2020-02-29',
+          fom: '2020-03-01',
+          tom: '2020-03-31',
         },
       },
     ],
@@ -135,42 +135,45 @@ visOverstyringspanelForMedlemskap.args = {
   },
 };
 
-export const visOverstyrtAksjonspunktSomErBekreftet = args => (
-  <VilkarresultatMedOverstyringProsessIndex
-    behandling={
-      {
-        ...behandling,
-        behandlingsresultat: {
-          avslagsarsak: 'AVSLAG_TEST_1',
-        },
-      } as Behandling
-    }
-    medlemskap={{
-      fom: '2019-01-01',
-    }}
-    aksjonspunkter={
-      [
+export const visOverstyrtAksjonspunktSomErBekreftet = args => {
+  const [erOverstyrt, toggleOverstyring] = React.useState(false);
+  return (
+    <VilkarresultatMedOverstyringProsessIndex
+      behandling={
         {
-          definisjon: aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET,
-          status: aksjonspunktStatus.UTFORT,
-          kanLoses: false,
-          begrunnelse: 'Dette er en begrunnelse',
-        },
-      ] as Aksjonspunkt[]
-    }
-    submitCallback={action('button-click')}
-    toggleOverstyring={action('button-click')}
-    avslagsarsaker={avslagsarsaker}
-    panelTittelKode="Inngangsvilkar.Opptjeningsvilkaret"
-    lovReferanse="§§ Dette er en lovreferanse"
-    overstyringApKode={aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET}
-    visPeriodisering={false}
-    vilkar={vilkarOpptjening}
-    visAllePerioder
-    erMedlemskapsPanel={false}
-    {...args}
-  />
-);
+          ...behandling,
+          behandlingsresultat: {
+            avslagsarsak: 'AVSLAG_TEST_1',
+          },
+        } as Behandling
+      }
+      medlemskap={{
+        fom: '2019-01-01',
+      }}
+      aksjonspunkter={
+        [
+          {
+            definisjon: aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET,
+            status: aksjonspunktStatus.UTFORT,
+            kanLoses: false,
+            begrunnelse: 'Dette er en begrunnelse',
+          },
+        ] as Aksjonspunkt[]
+      }
+      submitCallback={action('button-click')}
+      toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
+      avslagsarsaker={avslagsarsaker}
+      panelTittelKode="Inngangsvilkar.Opptjeningsvilkaret"
+      lovReferanse="§§ Dette er en lovreferanse"
+      overstyringApKode={aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET}
+      visPeriodisering={false}
+      vilkar={vilkarOpptjening}
+      visAllePerioder
+      erMedlemskapsPanel={false}
+      {...args}
+    />
+  );
+};
 
 visOverstyrtAksjonspunktSomErBekreftet.args = {
   overrideReadOnly: false,

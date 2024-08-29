@@ -1,19 +1,15 @@
-import { FunctionComponent, ReactNode } from 'react';
-
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
-import { DatepickerField, Label, RadioGroupField, SelectField } from '@fpsak-frontend/form';
+import { Label } from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkType, KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
-import { Aksjonspunkt, Periode, Vilkarperiode, vilkarUtfallPeriodisert } from '@k9-sak-web/types';
+import { hasValidDate, required } from '@fpsak-frontend/utils';
+import { Aksjonspunkt, KodeverkMedNavn, Periode, Vilkarperiode, vilkarUtfallPeriodisert } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
-import { parse } from 'date-fns';
-import getPackageIntl from '../../i18n/getPackageIntl';
-
+import { Datepicker, RadioGroupPanel, SelectField } from '@navikt/ft-form-hooks';
+import { isAfter, isBefore, parse } from 'date-fns';
+import { FunctionComponent, ReactNode } from 'react';
 import styles from './vilkarResultPicker.module.css';
 
 export type VilkarResultPickerFormState = {
@@ -33,6 +29,7 @@ type TransformedValues = {
 };
 
 interface OwnProps {
+  avslagsarsaker?: KodeverkMedNavn[];
   erVilkarOk?: string;
   periodeVilkarStatus?: boolean;
   customVilkarIkkeOppfyltText: string | ReactNode;
@@ -55,7 +52,6 @@ interface StaticFunctions {
     status: string,
     periode: Vilkarperiode,
   ) => VilkarResultPickerFormState;
-  validate: (erVilkarOk: string, avslagCode: string) => { avslagCode?: [{ id: 'ValidationMessage.NotEmpty' }] };
 }
 
 /**
@@ -63,7 +59,8 @@ interface StaticFunctions {
  *
  * Presentasjonskomponent. Lar NAV-ansatt velge om vilkåret skal oppfylles eller avvises.
  */
-const VilkarResultPicker: FunctionComponent<OwnProps> & StaticFunctions = ({
+const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
+  avslagsarsaker,
   erVilkarOk,
   periodeVilkarStatus,
   customVilkarIkkeOppfyltText,
@@ -76,20 +73,16 @@ const VilkarResultPicker: FunctionComponent<OwnProps> & StaticFunctions = ({
   periodeTom,
   valgtPeriodeFom,
   valgtPeriodeTom,
-}: OwnProps) => {
-  const { hentKodeverkForKode } = useKodeverkContext();
-  const avslagsarsaker = hentKodeverkForKode(KodeverkType.AVSLAGSARSAK) as KodeverkObject[];
-  const intl = getPackageIntl();
+}) => {
+  const ugyldigeFomDatoer = () => [
+    (date: Date) => isBefore(date, parse(periodeFom, 'yyyy-MM-dd', new Date())),
+    (date: Date) => isAfter(date, parse(valgtPeriodeTom, 'yyyy-MM-dd', new Date())),
+  ];
 
-  const gyldigFomDatoer = () => ({
-    before: parse(periodeFom, 'yyyy-MM-dd', new Date()),
-    after: parse(valgtPeriodeTom, 'yyyy-MM-dd', new Date()),
-  });
-
-  const gyldigTomDatoer = () => ({
-    before: parse(valgtPeriodeFom, 'yyyy-MM-dd', new Date()),
-    after: parse(periodeTom, 'yyyy-MM-dd', new Date()),
-  });
+  const ugyldigeTomDatoer = () => [
+    (date: Date) => isBefore(date, parse(valgtPeriodeFom, 'yyyy-MM-dd', new Date())),
+    (date: Date) => isAfter(date, parse(periodeTom, 'yyyy-MM-dd', new Date())),
+  ];
 
   return (
     <div className={styles.container}>
@@ -117,12 +110,10 @@ const VilkarResultPicker: FunctionComponent<OwnProps> & StaticFunctions = ({
       )}
 
       {(!readOnly || erVilkarOk === undefined) && (
-        <RadioGroupField
+        <RadioGroupPanel
           name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}erVilkarOk`}
           validate={[required]}
-          bredde="XXL"
-          isVertical
-          readOnly={readOnly}
+          isReadOnly={readOnly}
           radios={[
             {
               value: vilkarUtfallPeriodisert.OPPFYLT,
@@ -134,12 +125,13 @@ const VilkarResultPicker: FunctionComponent<OwnProps> & StaticFunctions = ({
                     value: periodeVilkarStatus
                       ? vilkarUtfallPeriodisert.DELVIS_IKKE_OPPFYLT
                       : vilkarUtfallPeriodisert.DELVIS_OPPFYLT,
-                    label: periodeVilkarStatus
-                      ? intl.formatMessage(
-                          { id: 'ProsessPanelTemplate.DelvisIkkeOppfylt' },
-                          { b: chunks => <b>{chunks}</b> },
-                        )
-                      : intl.formatMessage({ id: 'ProsessPanelTemplate.DelvisOppfylt' }),
+                    label: periodeVilkarStatus ? (
+                      <>
+                        Vilkåret er <b>delvis ikke</b> oppfylt
+                      </>
+                    ) : (
+                      'Vilkåret er delvis oppfylt'
+                    ),
                   },
                 ]
               : []),
@@ -156,33 +148,32 @@ const VilkarResultPicker: FunctionComponent<OwnProps> & StaticFunctions = ({
           {erVilkarOk === vilkarUtfallPeriodisert.DELVIS_IKKE_OPPFYLT && avslagsarsaker && (
             <SelectField
               name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
-              label={intl.formatMessage({ id: 'VilkarResultPicker.Arsak' })}
-              placeholder={intl.formatMessage({ id: 'VilkarResultPicker.SelectArsak' })}
+              label="Avslagsårsak"
               selectValues={avslagsarsaker.map(aa => (
                 <option key={aa.kode} value={aa.kode}>
                   {aa.navn}
                 </option>
               ))}
-              bredde="xl"
               readOnly={readOnly}
+              validate={[required]}
             />
           )}
           {(erVilkarOk === vilkarUtfallPeriodisert.DELVIS_OPPFYLT ||
             erVilkarOk === vilkarUtfallPeriodisert.DELVIS_IKKE_OPPFYLT) && (
             <>
               <VerticalSpacer eightPx />
-              <DatepickerField
+              <Datepicker
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}valgtPeriodeFom`}
-                label={intl.formatMessage({ id: 'VilkarResultPicker.VilkarPeriodisertFraDato' })}
-                readOnly={readOnly}
+                label="Fra dato"
+                isReadOnly={readOnly}
                 validate={[required, hasValidDate]}
-                disabledDays={gyldigFomDatoer()}
+                disabledDays={ugyldigeFomDatoer()}
               />
-              <DatepickerField
+              <Datepicker
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}valgtPeriodeTom`}
-                label={intl.formatMessage({ id: 'VilkarResultPicker.VilkarPeriodisertTilDato' })}
-                disabledDays={gyldigTomDatoer()}
-                readOnly={readOnly}
+                label="Til dato"
+                disabledDays={ugyldigeTomDatoer()}
+                isReadOnly={readOnly}
                 validate={[required, hasValidDate]}
               />
             </>
@@ -193,21 +184,20 @@ const VilkarResultPicker: FunctionComponent<OwnProps> & StaticFunctions = ({
               <VerticalSpacer eightPx />
               <SelectField
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
-                label={intl.formatMessage({ id: 'VilkarResultPicker.Arsak' })}
-                placeholder={intl.formatMessage({ id: 'VilkarResultPicker.SelectArsak' })}
+                label="Avslagsårsak"
                 selectValues={avslagsarsaker.map(aa => (
                   <option key={aa.kode} value={aa.kode}>
                     {aa.navn}
                   </option>
                 ))}
-                bredde="xl"
                 readOnly={readOnly}
+                validate={[required]}
               />
               {erMedlemskapsPanel && (
-                <DatepickerField
+                <Datepicker
                   name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagDato`}
-                  label={intl.formatMessage({ id: 'VilkarResultPicker.VilkarDato' })}
-                  readOnly={readOnly}
+                  label="Dato"
+                  isReadOnly={readOnly}
                   validate={[required, hasValidDate]}
                 />
               )}
@@ -220,26 +210,13 @@ const VilkarResultPicker: FunctionComponent<OwnProps> & StaticFunctions = ({
   );
 };
 
-VilkarResultPicker.validate = (erVilkarOk: string, avslagCode: string): { avslagCode?: any } => {
-  if (
-    (erVilkarOk === vilkarUtfallPeriodisert.IKKE_OPPFYLT ||
-      erVilkarOk === vilkarUtfallPeriodisert.DELVIS_IKKE_OPPFYLT) &&
-    !avslagCode
-  ) {
-    return {
-      avslagCode: isRequiredMessage(),
-    };
-  }
-  return {};
-};
-
-VilkarResultPicker.buildInitialValues = (
+VilkarResultPickerPeriodisertRHF.buildInitialValues = (
   avslagKode: string,
   aksjonspunkter: Aksjonspunkt[],
   status: string,
   periode: Vilkarperiode,
 ): VilkarResultPickerFormState => {
-  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status));
+  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
   let erVilkarOk;
 
   if (status === vilkarUtfallType.OPPFYLT) {
@@ -257,7 +234,7 @@ VilkarResultPicker.buildInitialValues = (
   };
 };
 
-VilkarResultPicker.transformValues = (
+VilkarResultPickerPeriodisertRHF.transformValues = (
   values: VilkarResultPickerFormState,
   periodeFom?: string,
   periodeTom?: string,
@@ -304,4 +281,4 @@ VilkarResultPicker.transformValues = (
   }
 };
 
-export default VilkarResultPicker;
+export default VilkarResultPickerPeriodisertRHF;
