@@ -27,6 +27,7 @@ interface OwnProps {
 const headerTextCodes = [
   'TilkjentYtelse.NyPeriode.Inntektskategori',
   'TilkjentYtelse.NyPeriode.Arbeidsgiver',
+  'TilkjentYtelse.NyPeriode.ArbeidsgiverPrivatperson',
   'TilkjentYtelse.NyPeriode.TilSoker',
   'TilkjentYtelse.NyPeriode.Refusjon',
   'TilkjentYtelse.NyPeriode.Ubetalingsgrad',
