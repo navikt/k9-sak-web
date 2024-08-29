@@ -143,3 +143,40 @@ export const KommaUtenMellomromFungerer: Story = {
     });
   },
 };
+
+export const KapitlerBlirLenketRiktig: Story = {
+  args: {
+    children: 'Kapittel 2',
+  },
+  play: async ({ canvasElement, step }) => {
+    const { linkEls, root } = elemsfinder(canvasElement);
+    await step('Kapitler blir lenket riktig', async () => {
+      await expect(linkEls()).toHaveLength(1);
+      const [firstLink] = linkEls();
+      await expect(firstLink).toHaveTextContent('2');
+      await expect(firstLink).toHaveAttribute('href', 'https://lovdata.no/lov/1997-02-28-19/§2-1');
+
+      await expect(root()).toHaveTextContent('Kapittel 2');
+    });
+  },
+};
+
+export const KapitlerBlirLenketRiktigMedParagrafer: Story = {
+  args: {
+    children: '§ 9-1, jamfør kapittel 2',
+  },
+  play: async ({ canvasElement, step }) => {
+    const { linkEls, root } = elemsfinder(canvasElement);
+    await step('Kapitler blir lenket riktig med paragrafer', async () => {
+      await expect(linkEls()).toHaveLength(2);
+      const [firstLink, secondLink] = linkEls();
+      await expect(firstLink).toHaveTextContent('9-1');
+      await expect(firstLink).toHaveAttribute('href', 'https://lovdata.no/lov/1997-02-28-19/§9-1');
+
+      await expect(secondLink).toHaveTextContent('2');
+      await expect(secondLink).toHaveAttribute('href', 'https://lovdata.no/lov/1997-02-28-19/§2-1');
+
+      await expect(root()).toHaveTextContent('§ 9-1, jamfør kapittel 2');
+    });
+  },
+};

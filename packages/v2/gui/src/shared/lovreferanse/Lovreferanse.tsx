@@ -25,7 +25,9 @@ const berikMedLovdataLenker = (lovreferanse: string) => {
 
   const seksjonsRegex = /(\d+(-\d+)?)/;
 
-  if (!lovreferanse.includes('§')) {
+  // Hvis lovreferansen ikke inneholder "§" eller "Kapittel" (case insensitive)
+  // så returnerer vi bare teksten
+  if (!/(§|Kapittel)/i.test(lovreferanse)) {
     return lovreferanse;
   }
 
