@@ -2,6 +2,7 @@ import React from 'react';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import TilbakekrevingEditerVedtaksbrevPanel from './TilbakekrevingEditerVedtaksbrevPanel';
+import {K9sakApiKeys, requestApi} from "@k9-sak-web/sak-app/src/data/k9sakApi";
 
 describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
   const vedtaksbrevAvsnitt = [
@@ -73,6 +74,7 @@ describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
   ];
 
   it('skal vise tekstfelt for begrunnelse og godkjenningsknapp', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ UTVIDET_VARSELTEKST: true }]);
     renderWithIntlAndReduxForm(
       <TilbakekrevingEditerVedtaksbrevPanel
         vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
@@ -94,6 +96,7 @@ describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
   });
 
   it('skal automatisk åpne panel som ikke har obligatorisk verdi utfylt', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ UTVIDET_VARSELTEKST: true }]);
     renderWithIntlAndReduxForm(
       <TilbakekrevingEditerVedtaksbrevPanel
         vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
