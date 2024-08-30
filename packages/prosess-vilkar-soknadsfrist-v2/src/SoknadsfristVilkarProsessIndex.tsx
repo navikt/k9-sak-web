@@ -2,7 +2,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { initializeDate } from '@fpsak-frontend/utils';
-import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { Aksjonspunkt, DokumentStatus, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
@@ -15,7 +14,7 @@ import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
 import styles from './SoknadsfristVilkarProsessIndex.module.css';
-import { formatDate, utledInnsendtSoknadsfrist } from './utils';
+import { formatDate, hentAktivePerioderFraVilkar, utledInnsendtSoknadsfrist } from './utils';
 
 const cx = classNames.bind(styles);
 

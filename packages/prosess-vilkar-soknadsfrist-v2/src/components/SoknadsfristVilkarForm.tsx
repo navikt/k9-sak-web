@@ -1,16 +1,7 @@
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import {
-  AksjonspunktBox,
-  AksjonspunktHelpText,
-  FlexColumn,
-  FlexContainer,
-  FlexRow,
-  Image,
-  VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+import { AksjonspunktBox, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, initializeDate } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, DokumentStatus, Periode, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
@@ -20,6 +11,8 @@ import { Dayjs } from 'dayjs';
 import hash from 'object-hash';
 import { SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
+
+import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { utledInnsendtSoknadsfrist } from '../utils';
 import { FormState } from './FormState';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
@@ -223,7 +216,7 @@ export const SoknadsfristVilkarForm = ({
                 Manuell overstyring av automatisk vurdering
               </Label>
             ))}
-          <VerticalSpacer eightPx />
+          <div className="mt-2" />
           {Array.isArray(alleDokumenter) && alleDokumenter.length > 0
             ? alleDokumenter.map((field, index) => {
                 const dokument = alleDokumenter.find(dok => dok.journalpostId === field.journalpostId);
@@ -245,44 +238,40 @@ export const SoknadsfristVilkarForm = ({
                 );
               })
             : 'Det finnes ingen dokumenter knyttet til denne behandlingen'}
-          <VerticalSpacer sixteenPx />
+          <div className="mt-4" />
 
           {erOverstyrt && (
-            <FlexContainer>
-              <FlexRow>
-                <FlexColumn>
-                  <Image src={advarselIkonUrl} />
-                </FlexColumn>
-                <FlexColumn>
-                  <Label size="small" as="p">
-                    Overstyring skal kun gjøres i unntakstilfeller
-                  </Label>
-                </FlexColumn>
-              </FlexRow>
-              <VerticalSpacer sixteenPx />
-              <FlexRow>
-                <FlexColumn>
-                  <OverstyrBekreftKnappPanel
-                    disabled={!formMethods.formState.isValid}
-                    submitting={formMethods.formState.isSubmitting}
-                    pristine={!isSolvable || !formMethods.formState.isDirty}
-                    overrideReadOnly={overrideReadOnly}
-                  />
-                </FlexColumn>
-                <FlexColumn>
-                  <Button
-                    size="small"
-                    variant="secondary"
-                    type="button"
-                    loading={formMethods.formState.isSubmitting}
-                    disabled={formMethods.formState.isSubmitting}
-                    onClick={toggleAv}
-                  >
-                    Avbryt
-                  </Button>
-                </FlexColumn>
-              </FlexRow>
-            </FlexContainer>
+            <>
+              <div className="flex gap-2 items-center">
+                <ExclamationmarkTriangleFillIcon
+                  title="Aksjonspunkt"
+                  fontSize="1.5rem"
+                  className="text-[var(--ac-alert-icon-warning-color,var(--a-icon-warning))] text-2xl"
+                />
+                <Label size="small" as="p">
+                  Overstyring skal kun gjøres i unntakstilfeller
+                </Label>
+              </div>
+              <div className="mt-4" />
+              <div className="flex gap-4">
+                <OverstyrBekreftKnappPanel
+                  disabled={!formMethods.formState.isValid}
+                  submitting={formMethods.formState.isSubmitting}
+                  pristine={!isSolvable || !formMethods.formState.isDirty}
+                  overrideReadOnly={overrideReadOnly}
+                />
+                <Button
+                  size="small"
+                  variant="secondary"
+                  type="button"
+                  loading={formMethods.formState.isSubmitting}
+                  disabled={formMethods.formState.isSubmitting}
+                  onClick={toggleAv}
+                >
+                  Avbryt
+                </Button>
+              </div>
+            </>
           )}
           {(harÅpentAksjonspunkt || editForm) && !erOverstyrt && (
             <div className="flex gap-4">

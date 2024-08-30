@@ -1,16 +1,8 @@
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 import { RadioGroupPanelRHF } from '@fpsak-frontend/form';
-import {
-  FlexColumn,
-  FlexContainer,
-  FlexRow,
-  Image,
-  VerticalSpacer,
-  useSaksbehandlerOppslag,
-} from '@fpsak-frontend/shared-components';
+import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import { initializeDate } from '@fpsak-frontend/utils';
 import { DokumentStatus, Vilkarperiode } from '@k9-sak-web/types';
+import { CheckmarkIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button } from '@navikt/ds-react';
 import { Datepicker, TextAreaField } from '@navikt/ft-form-hooks';
 import {
@@ -25,6 +17,7 @@ import {
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import React, { useCallback, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
+
 import { formatDate } from '../utils';
 import { FormState } from './FormState';
 import styles from './SoknadsfristVilkarDokument.module.css';
@@ -99,7 +92,7 @@ export const SoknadsfristVilkarDokument = ({
         <>
           <div>
             <div>
-              <VerticalSpacer eightPx />
+              <div className="mt-2" />
               <TextAreaField
                 name={`avklarteKrav.${dokumentIndex}.begrunnelse`}
                 label="Vurder om det har vært fristavbrytende kontakt"
@@ -113,24 +106,28 @@ export const SoknadsfristVilkarDokument = ({
           </div>
         </>
       )}
-      <VerticalSpacer sixteenPx />
+      <div className="mt-4" />
       {readOnly && erVilkarOk !== undefined && (
-        <FlexContainer>
-          <FlexRow>
-            <FlexColumn>
-              <Image className={styles.image} src={erVilkarOk ? innvilgetImage : avslattImage} />
-            </FlexColumn>
-            <FlexColumn>
+        <>
+          <div className="flex">
+            <div className="px-2">
+              {erVilkarOk ? (
+                <CheckmarkIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+              ) : (
+                <XMarkOctagonIcon fontSize={20} style={{ color: 'var(--a-surface-danger)' }} />
+              )}
+            </div>
+            <div className="px-2">
               {erVilkarOk && <BodyShort size="small">Vilkåret er oppfylt for hele perioden</BodyShort>}
               {!erVilkarOk && (
                 <BodyShort size="small">
                   Vilkåret er <b>ikke</b> oppfylt for denne perioden
                 </BodyShort>
               )}
-            </FlexColumn>
-          </FlexRow>
-          <VerticalSpacer eightPx />
-        </FlexContainer>
+            </div>
+          </div>
+          <div className="mt-2" />
+        </>
       )}
       {(!readOnly || erVilkarOk === undefined) && (
         <RadioGroupPanelRHF
@@ -176,7 +173,7 @@ export const SoknadsfristVilkarDokument = ({
       )}
       {!erOverstyrt && dokumentErVurdert && harBegrunnelse && !redigerVurdering && (
         <div>
-          <VerticalSpacer eightPx />
+          <div className="mt-2" />
           <Button
             className={styles.editButton}
             variant="tertiary"
@@ -189,7 +186,7 @@ export const SoknadsfristVilkarDokument = ({
           </Button>
         </div>
       )}
-      <VerticalSpacer eightPx />
+      <div className="mt-2" />
     </div>
   );
 };

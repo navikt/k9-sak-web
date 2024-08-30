@@ -1,11 +1,7 @@
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
-import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg';
-import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { Detail, Heading, Label } from '@navikt/ds-react';
+import { CheckmarkCircleFillIcon, KeyHorizontalIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
+import { Button, Detail, Heading, Label } from '@navikt/ds-react';
 import { SetStateAction } from 'react';
 import styles from './SoknadsfristVilkarForm.module.css';
 
@@ -62,49 +58,59 @@ const SoknadsfristVilkarHeader = ({
   };
   return (
     <>
-      <FlexContainer>
-        <FlexRow>
+      <>
+        <div className="flex">
           {!erOverstyrt && originalErVilkarOk !== undefined && (
-            <FlexColumn>
-              <Image className={styles.status} src={originalErVilkarOk ? innvilgetImage : avslattImage} />
-            </FlexColumn>
+            <div className="px-2">
+              {originalErVilkarOk ? (
+                <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+              ) : (
+                <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+              )}
+            </div>
           )}
-          <FlexColumn>
+          <div className="px-2">
             <Heading size="small" level="2">
               {panelTittelKode}
             </Heading>
-          </FlexColumn>
+          </div>
           {lovReferanse && (
-            <FlexColumn>
+            <div className="px-2">
               <Detail className={styles.vilkar}>{lovReferanse}</Detail>
-            </FlexColumn>
+            </div>
           )}
-        </FlexRow>
-        <FlexRow>
-          <FlexColumn>
-            <VerticalSpacer eightPx />
+        </div>
+        <div className="flex">
+          <div className="px-2">
+            <div className="mt-2" />
             <VilkarOkMessage originalErVilkarOk={originalErVilkarOk} />
-          </FlexColumn>
+          </div>
           {originalErVilkarOk !== undefined &&
             !isHidden(kanOverstyreAccess.isEnabled, aksjonspunktCodes, overstyringApKode) && (
               <>
                 {!erOverstyrt && !overrideReadOnly && (
-                  <FlexColumn>
-                    <VerticalSpacer eightPx />
-                    <Image className={styles.key} src={keyImage} onClick={togglePa} />
-                  </FlexColumn>
+                  <div className="px-2">
+                    <Button
+                      size="small"
+                      type="button"
+                      variant="tertiary"
+                      icon={<KeyHorizontalIcon className="-rotate-45 text-3xl" />}
+                      onClick={togglePa}
+                      aria-label="Overstyring av søknadsfristvilkåret"
+                    />
+                  </div>
                 )}
                 {(erOverstyrt || overrideReadOnly) && (
-                  <FlexColumn>
-                    <VerticalSpacer eightPx />
-                    <Image className={styles.keyWithoutCursor} src={keyUtgraetImage} />
-                  </FlexColumn>
+                  <div className="px-2">
+                    <div className="mt-1" />
+                    <KeyHorizontalIcon className="-rotate-45 text-3xl text-[#b7b1a9]" />
+                  </div>
                 )}
               </>
             )}
-        </FlexRow>
-      </FlexContainer>
-      <VerticalSpacer eightPx />
+        </div>
+      </>
+      <div className="mt-2" />
     </>
   );
 };
