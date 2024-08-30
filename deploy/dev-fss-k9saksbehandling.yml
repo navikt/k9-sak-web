@@ -109,3 +109,5 @@ spec:
       value: "true"
     - name: PROSESS_VILKAR_SOKNADSFRIST
       value: "true"
+    - name: UTVIDET_VARSELFELT
+      value: "true"

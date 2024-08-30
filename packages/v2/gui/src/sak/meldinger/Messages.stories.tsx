@@ -10,11 +10,21 @@ import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
 import { templates } from '@k9-sak-web/gui/storybook/mocks/brevmaler.js';
 import personopplysninger from '@k9-sak-web/gui/storybook/mocks/personopplysninger.js';
 import Messages from './Messages.js';
+import {
+  type Mottaker,
+  type UtilgjengeligÅrsak,
+  utilgjengeligÅrsaker,
+} from '@k9-sak-web/backend/k9formidling/models/Mottaker.ts';
+import { action } from '@storybook/addon-actions';
 
+const api = new FakeMessagesBackendApi();
 const meta: Meta<typeof Messages> = {
   title: 'gui/sak/meldinger/Messages.tsx',
   component: Messages,
   decorators: [withMaxWidth(420)],
+  beforeEach: () => {
+    api.reset();
+  },
 };
 export default meta;
 
@@ -23,7 +33,7 @@ const elemsfinder = (canvasElement: HTMLElement) => {
   return {
     canvas,
     malEl: () => canvas.getByLabelText('Mal'),
-    mottakerEl: () => canvas.queryByLabelText('Mottaker'),
+    mottakerEl: () => canvas.getByLabelText('Mottaker'),
     sendTilTredjepartEl: () => canvas.getByLabelText('Send til tredjepart'),
     tittelEl: () => canvas.queryByLabelText('Tittel'),
     fritekstEl: () => canvas.getByLabelText('Fritekst', { exact: false }),
@@ -38,7 +48,6 @@ const elemsfinder = (canvasElement: HTMLElement) => {
 };
 
 type Story = StoryObj<typeof Messages>;
-const api = new FakeMessagesBackendApi();
 export const DefaultStory: Story = {
   args: {
     fagsak: {
@@ -62,6 +71,7 @@ export const DefaultStory: Story = {
     personopplysninger,
     arbeidsgiverOpplysningerPerId: arbeidsgivere,
     api,
+    onMessageSent: action('onMessagesent'),
   },
   play: async ({ canvasElement, step }) => {
     const {
@@ -145,5 +155,67 @@ export const TilTredjepartsmottaker: Story = {
       await userEvent.type(orgnrInp(), orgnr);
       await expect(orgNavnInp()).toHaveValue(`Fake storybook org (${orgnr})`);
     });
+  },
+};
+
+// Hjelpefunksjoner brukt i justering av mock data under
+const leggTilUtilgjengelig = (mottaker: Mottaker, årsak: UtilgjengeligÅrsak): Mottaker => ({
+  ...mottaker,
+  utilgjengelig: årsak,
+});
+const dummyÅrsakResolver = (mottaker: Mottaker): UtilgjengeligÅrsak =>
+  mottaker.type === 'AKTØRID' ? utilgjengeligÅrsaker.PERSON_DØD : utilgjengeligÅrsaker.ORG_OPPHØRT;
+const leggTilDummyUtilgjengeligÅrsak = (mottaker: Mottaker): Mottaker =>
+  leggTilUtilgjengelig(mottaker, dummyÅrsakResolver(mottaker));
+
+export const UtilgjengeligeMottakere: Story = {
+  args: {
+    ...DefaultStory.args,
+    maler: DefaultStory.args?.maler?.map(template => {
+      // Juster to første mottakere på alle maler til å vere utilgjengelige
+      const mottakere = template.mottakere.map((mottaker, idx) =>
+        idx < 2 ? leggTilDummyUtilgjengeligÅrsak(mottaker) : mottaker,
+      );
+      return {
+        ...template,
+        mottakere,
+      };
+    }),
+  },
+  play: async ({ canvasElement, args, step }) => {
+    api.fakeDelayMillis = 0; // Deaktiver delay i automatisert køyring
+    const { mottakerEl, fritekstEl, sendBrevBtn } = elemsfinder(canvasElement);
+    const tilgjengeligMottaker = args.maler[0]?.mottakere.find(m => m.utilgjengelig === undefined);
+    const utilgjengeligMottaker = args.maler[0]?.mottakere.find(m => m.utilgjengelig !== undefined);
+    const dummyText = 'dummy text';
+    await userEvent.click(canvasElement);
+    await step('Initiell visning skal ha valgt mottaker som er tilgjengelig', async () => {
+      await expect(mottakerEl()).toHaveValue(tilgjengeligMottaker?.id);
+    });
+    await step('Submit med gyldig mottaker skal fungere', async () => {
+      api.resetSisteFakeDokumentBestilling();
+      // Fyll inn tekst så den input er gyldig
+      await userEvent.type(fritekstEl(), dummyText);
+      await userEvent.click(sendBrevBtn());
+
+      await expect(api.sisteFakeDokumentBestilling?.fritekst).toEqual(dummyText);
+      await expect(api.sisteFakeDokumentBestilling?.overstyrtMottaker).toEqual(tilgjengeligMottaker);
+    });
+    await step(
+      'Ved valg av utilgjengelig mottaker skal ein få valideringsfeil ved submit, og bestilling skal ikkje gjennomførast',
+      async () => {
+        api.resetSisteFakeDokumentBestilling();
+        // Fyll inn tekst så den input er gyldig
+        await userEvent.type(fritekstEl(), dummyText);
+        await expect(utilgjengeligMottaker).toBeDefined();
+        await userEvent.selectOptions(mottakerEl(), utilgjengeligMottaker?.id || '');
+        await userEvent.click(sendBrevBtn());
+
+        await expect(mottakerEl()).toBeInvalid();
+        await expect(api.sisteFakeDokumentBestilling?.fritekst).toBeUndefined();
+        await expect(api.sisteFakeDokumentBestilling?.overstyrtMottaker).toBeUndefined();
+      },
+    );
+    api.fakeDelayMillis = 800; // Reaktiver delay
   },
 };

@@ -29,9 +29,10 @@ import React, { useEffect, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
-import { RequestIntentionallyAborted } from "@k9-sak-web/backend/shared/RequestIntentionallyAborted.js";
+import { RequestIntentionallyAborted } from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 import styles from './messages.module.css';
+import { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 
 const maxLength4000 = maxLength(4000);
 const maxLength100000 = maxLength(100000);
@@ -51,7 +52,10 @@ export type FormValues = {
 };
 
 export interface BackendApi {
-  getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse | RequestIntentionallyAborted>;
+  getBrevMottakerinfoEreg(
+    orgnr: string,
+    abort?: AbortSignal,
+  ): Promise<EregOrganizationLookupResponse | RequestIntentionallyAborted>;
 }
 
 interface PureOwnProps {
@@ -167,7 +171,7 @@ export const MessagesImpl = ({
 
   const valgtBrevmal = templates[brevmalkode];
 
-  const recipients: MottakerDto[] = templates[brevmalkode]?.mottakere ?? [];
+  const recipients: Mottaker[] = templates[brevmalkode]?.mottakere ?? [];
 
   const tmpls: Template[] = Object.keys(templates).map(key => ({ ...templates[key], kode: key }));
 
@@ -311,7 +315,7 @@ export const MessagesImpl = ({
                   placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
                   selectValues={recipients.map(recipient => (
                     <option key={recipient.id} value={JSON.stringify(recipient)}>
-                      {lagVisningsnavnForMottaker(recipient.id, personopplysninger, arbeidsgiverOpplysningerPerId)}
+                      {lagVisningsnavnForMottaker(recipient, personopplysninger, arbeidsgiverOpplysningerPerId)}
                     </option>
                   ))}
                 />
