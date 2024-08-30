@@ -2267,7 +2267,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/fakta-felles": 1.0.0
-    "@navikt/ft-form-hooks": 4.4.20
+    "@navikt/ft-form-hooks": 5.0.0
     "@navikt/ft-plattform-komponenter": 3.0.4
     i18n-iso-countries: 7.11.3
     moment: 2.30.1
@@ -3961,7 +3961,7 @@ __metadata:
     "@navikt/ds-css": 6.13.0
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 6.13.0
-    "@navikt/ft-form-hooks": 4.4.20
+    "@navikt/ft-form-hooks": 5.0.0
     "@navikt/ft-plattform-komponenter": 3.0.4
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
@@ -4249,7 +4249,7 @@ __metadata:
     "@hookform/resolvers": ^3.9.0
     "@navikt/ds-css": 6.13.0
     "@navikt/ds-react": 6.13.0
-    "@navikt/ft-form-hooks": 4.4.20
+    "@navikt/ft-form-hooks": 5.0.0
     "@navikt/ft-form-validators": 2.3.18
     "@navikt/ft-plattform-komponenter": 3.0.4
     "@popperjs/core": 2.11.8
@@ -4274,7 +4274,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-form-hooks": 4.4.20
+    "@navikt/ft-form-hooks": 5.0.0
     "@navikt/ft-form-validators": 2.3.18
     react: 18.3.1
     react-hook-form: 7.52.2
@@ -4400,7 +4400,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ds-react": 6.13.0
     "@navikt/ft-fakta-beregning-redesign": 1.2.21
-    "@navikt/ft-form-hooks": 4.4.20
+    "@navikt/ft-form-hooks": 5.0.0
     "@navikt/ft-plattform-komponenter": 3.0.4
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.26
     "@navikt/ft-ui-komponenter": 2.3.19
@@ -4487,7 +4487,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/aksel-icons": 6.13.0
     "@navikt/ds-react": 6.13.0
-    "@navikt/ft-form-hooks": 4.4.20
+    "@navikt/ft-form-hooks": 5.0.0
     "@navikt/ft-form-validators": 2.3.18
     "@tanstack/react-query": ^5.51.23
     date-fns: 3.6.0
@@ -4712,7 +4712,40 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-form-hooks@npm:4.4.20, @navikt/ft-form-hooks@npm:^4.4.20":
+"@navikt/ft-form-hooks@npm:5.0.0":
+  version: 5.0.0
+  resolution: "@navikt/ft-form-hooks@npm:5.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F5.0.0%2F428d791811c515fc80f6513ae47b82fc0937b148"
+  dependencies:
+    "@navikt/aksel-icons": 6.13.0
+    "@navikt/ds-css": 6.13.0
+    "@navikt/ds-react": 6.13.0
+    "@navikt/ft-form-validators": ^2.3.18
+    "@navikt/ft-types": ^2.4.15
+    "@navikt/ft-ui-komponenter": ^2.3.19
+    "@navikt/ft-utils": ^2.3.18
+    classnames: 2.5.1
+    dayjs: 1.11.12
+    lodash.throttle: 4.1.1
+    react: 18.3.1
+    react-hook-form: 7.52.2
+  peerDependencies:
+    "@navikt/aksel-icons": 6.12.0
+    "@navikt/ds-css": 6.12.0
+    "@navikt/ds-react": 6.12.0
+    "@navikt/ft-form-validators": 2.x
+    "@navikt/ft-types": 2.x
+    "@navikt/ft-ui-komponenter": 2.x
+    "@navikt/ft-utils": 2.x
+    classnames: 2.5.1
+    dayjs: 1.11.11
+    lodash.throttle: 4.1.1
+    react: 18.3.1
+    react-hook-form: 7.52.0
+  checksum: 89babbe3817091180e181049b24995189fffeb45b85e4994d7922b47401b7152d95573639ed08a2c58ea5b27c16e0e73227f0df20a086a94394cea4c401cbea1
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-form-hooks@npm:^4.4.20":
   version: 4.4.20
   resolution: "@navikt/ft-form-hooks@npm:4.4.20::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F4.4.20%2F09aa9dfe224903f4ee9463bace47bfb36b80c5ac"
   dependencies:
