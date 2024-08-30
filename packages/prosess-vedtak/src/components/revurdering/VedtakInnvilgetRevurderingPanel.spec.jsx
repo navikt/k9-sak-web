@@ -12,7 +12,7 @@ const kodeverkNavnFraKode = kode => {
 
 describe('<VedtakInnvilgetRevurderingPanel>', () => {
   it('skal lage korrekt tekst for konsekvens for ytelsen', () => {
-    const konsekvenser = ['BEREGNING', 'UTTAK'];
+    const konsekvenser = [{ type: 'BEREGNING' }, { type: 'UTTAK' }];
     const selectorData = lagKonsekvensForYtelsenTekst(konsekvenser, kodeverkNavnFraKode);
     expect(selectorData).toBe('Endring i beregning og Endring i uttak');
   });
