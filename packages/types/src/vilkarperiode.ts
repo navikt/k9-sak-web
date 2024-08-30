@@ -1,4 +1,3 @@
-import { VilkårStatusKodeverk } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import Kodeverk from './kodeverkTsType';
 
 export type Vilkarperiode = Readonly<{
@@ -8,7 +7,7 @@ export type Vilkarperiode = Readonly<{
   merknad?: Kodeverk;
   merknadParametere: { [name: string]: string };
   periode: { fom: string; tom: string };
-  vilkarStatus: VilkårStatusKodeverk;
+  vilkarStatus: Kodeverk;
 }>;
 
 export default Vilkarperiode;
