@@ -1,4 +1,3 @@
-/* eslint-disable import/no-relative-packages */
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';

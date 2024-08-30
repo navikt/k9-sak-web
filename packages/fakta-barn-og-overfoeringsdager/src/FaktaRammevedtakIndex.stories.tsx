@@ -8,7 +8,7 @@ export default {
   component: FaktaRammevedtakIndex,
 };
 
-// @ts-ignore
+// @ts-expect-error Migrert frå ts-ignore
 const behandling: Behandling = {
   id: 1,
   versjon: 1,

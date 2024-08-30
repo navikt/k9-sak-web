@@ -46,8 +46,7 @@ export const visSakerOpprettetPaAktor = () => (
         personstatusType: personstatusType.BOSATT,
       },
     }}
-    finnPathToFagsak={() => 'path'}
   />
 );
 
-export const visningAvUgyldigAktorId = () => <AktorSakIndex valgtAktorId="123" finnPathToFagsak={() => 'path'} />;
+export const visningAvUgyldigAktorId = () => <AktorSakIndex valgtAktorId="123" />;

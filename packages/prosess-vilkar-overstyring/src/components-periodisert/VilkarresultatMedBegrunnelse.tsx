@@ -1,12 +1,16 @@
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { VerticalSpacer, useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import { VilkarResultPickerPeriodisert as VilkarResultPicker } from '@k9-sak-web/prosess-felles';
+
+import { VilkarResultPickerPeriodisertRHF } from '@k9-sak-web/prosess-felles';
+import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 
-import { CustomVilkarText } from './VilkarresultatMedOverstyringForm';
+import { FunctionComponent } from 'react';
+import { VilkarresultatMedBegrunnelseState } from './FormState';
 import VilkarBegrunnelse from './VilkarBegrunnelse';
+import { CustomVilkarText } from './VilkarresultatMedOverstyringFormPeriodisert';
 
 interface VilkarresultatMedBegrunnelseProps {
   erVilkarOk?: string;
@@ -24,13 +28,23 @@ interface VilkarresultatMedBegrunnelseProps {
   opprettetAv?: string;
 }
 
+interface StaticFunctions {
+  transformValues: (values: VilkarresultatMedBegrunnelseState) => { begrunnelse: string };
+  buildInitialValues: (
+    avslagKode: string,
+    aksjonspunkter: Aksjonspunkt[],
+    status: string,
+    periode: Vilkarperiode,
+  ) => VilkarresultatMedBegrunnelseState;
+}
+
 /**
  * VIlkarresultatMedBegrunnelse
  *
  * Presentasjonskomponent. Viser resultat av vilkårskjøring når det ikke finnes tilknyttede aksjonspunkter.
  * Resultatet kan overstyres av Nav-ansatt med overstyr-rettighet.
  */
-export const VilkarresultatMedBegrunnelse = ({
+export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBegrunnelseProps> & StaticFunctions = ({
   erVilkarOk,
   periodeVilkarStatus,
   readOnly,
@@ -100,17 +114,18 @@ export const VilkarresultatMedBegrunnelse = ({
   );
 };
 
-VilkarresultatMedBegrunnelse.buildInitialValues = (avslagKode, aksjonspunkter, status, overstyringApKode, periode) => ({
-  ...VilkarResultPicker.buildInitialValues(avslagKode, aksjonspunkter, status, periode),
+VilkarresultatMedBegrunnelse.buildInitialValues = (
+  avslagKode: string,
+  aksjonspunkter: Aksjonspunkt[],
+  status: string,
+  periode: Vilkarperiode,
+) => ({
+  ...VilkarResultPickerPeriodisertRHF.buildInitialValues(avslagKode, aksjonspunkter, status, periode),
   ...VilkarBegrunnelse.buildInitialValues(periode),
 });
 
-VilkarresultatMedBegrunnelse.transformValues = values => ({
+VilkarresultatMedBegrunnelse.transformValues = (values: VilkarresultatMedBegrunnelseState) => ({
   begrunnelse: values.begrunnelse,
 });
-
-VilkarresultatMedBegrunnelse.validate = (
-  values: { erVilkarOk: string; avslagCode: string } = { erVilkarOk: '', avslagCode: '' },
-) => VilkarResultPicker.validate(values.erVilkarOk, values.avslagCode);
 
 export default VilkarresultatMedBegrunnelse;

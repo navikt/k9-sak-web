@@ -1,6 +1,6 @@
 import { Alert, Heading } from '@navikt/ds-react';
 import { FormikProps, FormikValues } from 'formik';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 
 import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
@@ -59,10 +59,14 @@ const FritekstBrevPanel = ({
   const [featureToggles] = useFeatureToggles();
   const kanRedigereFritekstbrev = kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev);
 
-  const handleFritekstSubmit = async (html: string, request) => {
-    formikProps.setFieldValue(fieldnames.REDIGERT_HTML, html);
-    await lagreDokumentdata(request);
-  };
+  // useCallback to avoid re-initializing FritekstRedigering editorjs on every re-render of this component
+  const handleFritekstSubmit = useCallback(
+    async (html: string, request) => {
+      await formikProps.setFieldValue(fieldnames.REDIGERT_HTML, html);
+      lagreDokumentdata(request);
+    },
+    [formikProps.setFieldValue, lagreDokumentdata],
+  );
 
   return (
     <div className={styles.fritekstbrevPanel}>

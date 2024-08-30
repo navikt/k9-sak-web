@@ -26,7 +26,6 @@ const beregningsresultat = {
     {
       andeler: [
         {
-          // @ts-ignore Fiks
           aktivitetStatus: 'AT', // AKTIVITET_STATUS
           inntektskategori: 'ARBEIDSTAKER', // INNTEKTSKATEGORI
           aktørId: null,

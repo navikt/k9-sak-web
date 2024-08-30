@@ -1,17 +1,19 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { KodeverkMedNavn, Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
+import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
 import TilbakekrevingPaneler from './components/TilbakekrevingPaneler';
 import FetchedData from './types/fetchedDataTsType';
 import {
-  restApiTilbakekrevingHooks,
   requestTilbakekrevingApi,
+  restApiTilbakekrevingHooks,
   TilbakekrevingBehandlingApiKeys,
 } from './data/tilbakekrevingBehandlingApi';
+import NetworkErrorPage from '@k9-sak-web/gui/sak/feilmeldinger/NetworkErrorPage.js';
+import { extractErrorInfo } from '../../rest-api-hooks/src/error/extractErrorInfo.js';
 
 const tilbakekrevingData = [
   { key: TilbakekrevingBehandlingApiKeys.AKSJONSPUNKTER },
@@ -124,7 +126,7 @@ const BehandlingTilbakekrevingIndex = ({
     };
   }, []);
 
-  const { data, state } = restApiTilbakekrevingHooks.useMultipleRestApi<FetchedData>(tilbakekrevingData, {
+  const { data, state, error } = restApiTilbakekrevingHooks.useMultipleRestApi<FetchedData>(tilbakekrevingData, {
     keepData: true,
     updateTriggers: [behandling?.versjon],
     suspendRequest: !behandling,
@@ -133,6 +135,10 @@ const BehandlingTilbakekrevingIndex = ({
   const hasNotFinished = state === RestApiState.LOADING || state === RestApiState.NOT_STARTED;
   if (!behandling || !tilbakekrevingKodeverk || (hasNotFinished && data === undefined)) {
     return <LoadingPanel />;
+  }
+
+  if (state === RestApiState.ERROR) {
+    return <NetworkErrorPage {...extractErrorInfo(error)} />;
   }
 
   return (

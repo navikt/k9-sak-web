@@ -35,7 +35,7 @@ export const lagKonsekvensForYtelsenTekst = (konsekvenser, kodeverkNavnFraKode) 
   if (!konsekvenser || konsekvenser.length < 1) {
     return '';
   }
-  return konsekvenser.map(k => kodeverkNavnFraKode(k, KodeverkType.KONSEKVENS_FOR_YTELSEN)).join(' og ');
+  return konsekvenser.map(k => kodeverkNavnFraKode(k.type, KodeverkType.BEHANDLING_RESULTAT_TYPE)).join(' og ');
 };
 
 const lagPeriodevisning = periodeMedÅrsak => {
@@ -56,7 +56,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   bgPeriodeMedAvslagsårsak,
 }) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
-
+  const konsekvenserForYtelsenTekst = lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, kodeverkNavnFraKode);
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
@@ -68,10 +68,8 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
             {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
           </Label>
           <BodyShort size="small">
-            {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, kodeverkNavnFraKode)}
-            {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, kodeverkNavnFraKode) !== '' &&
-              tilbakekrevingText &&
-              '. '}
+            {konsekvenserForYtelsenTekst}
+            {konsekvenserForYtelsenTekst !== '' && tilbakekrevingText && '. '}
             {tilbakekrevingText &&
               intl.formatMessage({
                 id: tilbakekrevingText,

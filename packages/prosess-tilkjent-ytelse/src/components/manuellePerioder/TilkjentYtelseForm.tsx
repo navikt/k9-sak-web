@@ -102,10 +102,9 @@ const validateForm = (values: any) => {
   return errors;
 };
 
-// @ts-ignore
 const buildInitialValues = createSelector(
   [
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     (props: OwnProps) => props.beregningsresultat?.perioder,
     (props: OwnProps) => props.arbeidsgiverOpplysningerPerId,
   ],

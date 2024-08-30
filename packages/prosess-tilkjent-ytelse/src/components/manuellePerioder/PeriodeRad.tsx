@@ -74,7 +74,7 @@ const PeriodeRad = ({
                       <DatepickerField
                         name={`${fieldId}.fom`}
                         label=""
-                        // @ts-ignore
+                        // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
                         value={periode.fom}
                         readOnly
                       />
@@ -83,7 +83,7 @@ const PeriodeRad = ({
                       <DatepickerField
                         name={`${fieldId}.tom`}
                         label=""
-                        // @ts-ignore
+                        // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
                         value={periode.tom}
                         readOnly
                       />
@@ -93,7 +93,6 @@ const PeriodeRad = ({
                 <Table.DataCell>
                   <FieldArray
                     name={`${fieldId}.andeler`}
-                    // @ts-ignore
                     component={Andeler}
                     readOnly
                     arbeidsgivere={arbeidsgivere}

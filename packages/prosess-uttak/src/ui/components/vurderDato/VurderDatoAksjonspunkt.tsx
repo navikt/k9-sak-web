@@ -36,10 +36,8 @@ const VurderDatoAksjonspunkt = ({ avbryt, initialValues }: Props) => {
           name="virkningsdato"
           label="Endringsdato"
           defaultMonth={new Date()}
-          disabledDays={{
-            fromDate: new Date('1 Jan 2019'),
-            toDate: new Date('31 Dec 2024'),
-          }}
+          fromDate={new Date('1 Jan 2019')}
+          toDate={new Date('31 Dec 2024')}
           validate={[required]}
         />
         <TextAreaField

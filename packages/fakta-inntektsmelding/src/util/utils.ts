@@ -3,7 +3,6 @@ import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Kode, TilstandBeriket } from '../types/KompletthetData';
 import Status from '../types/TilstandStatus';
 
-// eslint-disable-next-line import/prefer-default-export
 export const finnAktivtAksjonspunkt = (aksjonspunkter: Aksjonspunkt[]): Aksjonspunkt =>
   aksjonspunkter.find(aksjonspunkt => aksjonspunkt.status === 'OPPR');
 

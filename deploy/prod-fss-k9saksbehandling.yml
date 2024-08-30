@@ -84,6 +84,8 @@ spec:
       value: "true"
     - name: AKSJONSPUNKT_9015
       value: "true"
+    - name: ALDERSVILKAR_KRONISK_SYK
+      value: "false"
     - name: FRITEKST_REDIGERING
       value: "true"
     - name: INKLUDER_KALENDER_PILS
@@ -101,4 +103,6 @@ spec:
     - name: BRUK_V2_MELDINGER
       value: "true"
     - name: NYE_NOKKELTALL
+      value: "false"
+    - name: UTVIDET_VARSELFELT
       value: "false"

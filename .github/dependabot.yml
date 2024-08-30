@@ -13,7 +13,7 @@ updates:
     registries:
       - npm-github
     groups:
-      patch:
+      patch-and-minor:
         patterns:
           - '*'
         update-types:
@@ -23,6 +23,7 @@ updates:
           - 'react*'
           - '@types/react'
           - '@navikt*'
+          - 'eslint-plugin-vitest' # version 0.5.4 requires eslint version 9
       storybook:
         update-types:
           - 'major'

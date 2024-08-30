@@ -8,8 +8,7 @@ import { dateFormat } from '@fpsak-frontend/utils';
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { Aksjonspunkt, Behandling, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
-
-import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringForm';
+import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringFormPeriodisert';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
 import VilkarresultatMedOverstyringHeader from './components/VilkarresultatMedOverstyringHeader';
 
@@ -135,11 +134,9 @@ const VilkarresultatMedOverstyringProsessIndex = ({
               aksjonspunkter={aksjonspunkter}
               submitCallback={submitCallback}
               overrideReadOnly={overrideReadOnly}
-              // kanOverstyreAccess={kanOverstyreAccess}
               toggleOverstyring={toggleOverstyring}
               status={activePeriode.vilkarStatus}
               erOverstyrt={erOverstyrt}
-              // panelTittelKode={panelTittelKode}
               overstyringApKode={overstyringApKode}
               lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
               erMedlemskapsPanel={erMedlemskapsPanel}
@@ -160,18 +157,14 @@ const VilkarresultatMedOverstyringProsessIndex = ({
               aksjonspunkter={aksjonspunkter}
               submitCallback={submitCallback}
               overrideReadOnly={overrideReadOnly}
-              // kanOverstyreAccess={kanOverstyreAccess}
               toggleOverstyring={toggleOverstyring}
               status={activePeriode.vilkarStatus}
               erOverstyrt={erOverstyrt}
-              // panelTittelKode={panelTittelKode}
               overstyringApKode={overstyringApKode}
               lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
               erMedlemskapsPanel={erMedlemskapsPanel}
               avslagKode={activePeriode.avslagKode}
               periode={activePeriode}
-              hasAksjonspunkt={undefined}
-              isReadOnly={undefined}
             />
           )}
         </div>

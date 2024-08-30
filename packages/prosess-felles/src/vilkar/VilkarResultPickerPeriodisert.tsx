@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { FunctionComponent, ReactNode } from 'react';
 
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
@@ -7,22 +7,29 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, Vilkarperiode, vilkarUtfallPeriodisert } from '@k9-sak-web/types';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType, KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
+import { Aksjonspunkt, Periode, Vilkarperiode, vilkarUtfallPeriodisert } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
 import { parse } from 'date-fns';
 import getPackageIntl from '../../i18n/getPackageIntl';
 
 import styles from './vilkarResultPicker.module.css';
 
-type FormValues = {
+export type VilkarResultPickerFormState = {
   erVilkarOk: string;
   periodeVilkarStatus: boolean;
   avslagCode?: string;
   avslagDato?: string;
   valgtPeriodeFom?: string;
   valgtPeriodeTom?: string;
+};
+
+type TransformedValues = {
+  erVilkarOk: boolean;
+  periode: Periode | null | undefined;
+  avslagskode?: string;
+  avslagDato?: string;
 };
 
 interface OwnProps {
@@ -40,12 +47,23 @@ interface OwnProps {
   valgtPeriodeTom?: string;
 }
 
+interface StaticFunctions {
+  transformValues: (values: VilkarResultPickerFormState, periodeFom?: string, periodeTom?: string) => TransformedValues;
+  buildInitialValues: (
+    avslagKode: string,
+    aksjonspunkter: Aksjonspunkt[],
+    status: string,
+    periode: Vilkarperiode,
+  ) => VilkarResultPickerFormState;
+  validate: (erVilkarOk: string, avslagCode: string) => { avslagCode?: [{ id: 'ValidationMessage.NotEmpty' }] };
+}
+
 /**
  * VilkarResultPicker
  *
  * Presentasjonskomponent. Lar NAV-ansatt velge om vilkåret skal oppfylles eller avvises.
  */
-const VilkarResultPicker = ({
+const VilkarResultPicker: FunctionComponent<OwnProps> & StaticFunctions = ({
   erVilkarOk,
   periodeVilkarStatus,
   customVilkarIkkeOppfyltText,
@@ -220,7 +238,7 @@ VilkarResultPicker.buildInitialValues = (
   aksjonspunkter: Aksjonspunkt[],
   status: string,
   periode: Vilkarperiode,
-): FormValues => {
+): VilkarResultPickerFormState => {
   const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status));
   let erVilkarOk;
 
@@ -239,7 +257,11 @@ VilkarResultPicker.buildInitialValues = (
   };
 };
 
-VilkarResultPicker.transformValues = (values: FormValues, periodeFom?: string, periodeTom?: string) => {
+VilkarResultPicker.transformValues = (
+  values: VilkarResultPickerFormState,
+  periodeFom?: string,
+  periodeTom?: string,
+) => {
   switch (values.erVilkarOk) {
     case vilkarUtfallPeriodisert.OPPFYLT:
       return {
