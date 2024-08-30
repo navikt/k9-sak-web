@@ -1,4 +1,4 @@
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { CheckmarkCircleFillIcon, KeyHorizontalIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Button, Detail, Heading, Label } from '@navikt/ds-react';
@@ -51,8 +51,8 @@ const SoknadsfristVilkarHeader = ({
   toggleOverstyring,
 }: Partial<SoknadsfristVilkarHeaderProps>) => {
   const aksjonspunktCodes = aksjonspunkter.map(a => a.definisjon.kode);
-  const erOppfylt = vilkarUtfallType.OPPFYLT === status;
-  const originalErVilkarOk = vilkarUtfallType.IKKE_VURDERT !== status ? erOppfylt : undefined;
+  const erOppfylt = vilkårStatus.OPPFYLT === status;
+  const originalErVilkarOk = vilkårStatus.IKKE_VURDERT !== status ? erOppfylt : undefined;
   const togglePa = () => {
     toggleOverstyring(oldArray => [...oldArray, overstyringApKode]);
   };

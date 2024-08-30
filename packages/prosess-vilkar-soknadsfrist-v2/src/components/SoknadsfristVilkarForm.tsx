@@ -1,10 +1,11 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { AksjonspunktBox, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, initializeDate } from '@fpsak-frontend/utils';
+import { aksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktType.js';
+import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { Aksjonspunkt, DokumentStatus, Periode, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
+import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Button, Label } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import { Dayjs } from 'dayjs';
@@ -12,7 +13,6 @@ import hash from 'object-hash';
 import { SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { utledInnsendtSoknadsfrist } from '../utils';
 import { FormState } from './FormState';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
@@ -45,9 +45,8 @@ const buildInitialValues = (
 
       const erAvklartEllerOverstyrt = !!fraDato;
 
-      const erDelvisOppfylt =
-        status !== vilkarUtfallType.OPPFYLT && fraDato && plusEnDag(fraDato) !== innsendtSoknadsfrist;
-      const erVilkarOk = erDelvisOppfylt ? DELVIS_OPPFYLT : status === vilkarUtfallType.OPPFYLT ? 'true' : 'false';
+      const erDelvisOppfylt = status !== vilkårStatus.OPPFYLT && fraDato && plusEnDag(fraDato) !== innsendtSoknadsfrist;
+      const erVilkarOk = erDelvisOppfylt ? DELVIS_OPPFYLT : status === vilkårStatus.OPPFYLT ? 'true' : 'false';
       return {
         erVilkarOk: erAvklartEllerOverstyrt ? erVilkarOk : null,
         begrunnelse: decodeHtmlEntity(
@@ -163,7 +162,7 @@ export const SoknadsfristVilkarForm = ({
   const isSolvable =
     erOverstyrt ||
     (harÅpentAksjonspunkt || aksjonspunkt !== undefined
-      ? !(aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses)
+      ? !(aksjonspunkt.status.kode === aksjonspunktType.OPPRETTET && !aksjonspunkt.kanLoses)
       : false);
 
   const isReadOnly = overrideReadOnly || !periode?.vurderesIBehandlingen;
@@ -195,7 +194,7 @@ export const SoknadsfristVilkarForm = ({
                   dokumentIndex={index}
                   dokument={dokument}
                   toggleEditForm={toggleEditForm}
-                  dokumentErVurdert={status !== vilkarUtfallType.IKKE_VURDERT}
+                  dokumentErVurdert={status !== vilkårStatus.IKKE_VURDERT}
                   periode={periode}
                 />
               );
@@ -232,7 +231,7 @@ export const SoknadsfristVilkarForm = ({
                     toggleEditForm={toggleEditForm}
                     erOverstyrt={erOverstyrt}
                     redigerVurdering={editForm}
-                    dokumentErVurdert={status !== vilkarUtfallType.IKKE_VURDERT}
+                    dokumentErVurdert={status !== vilkårStatus.IKKE_VURDERT}
                     periode={periode}
                   />
                 );

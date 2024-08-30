@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { initializeDate } from '@fpsak-frontend/utils';
+import { aksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktType.js';
+import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { Aksjonspunkt, DokumentStatus, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
@@ -89,7 +89,7 @@ const SoknadsfristVilkarProsessIndex = ({
   useEffect(() => {
     if (perioder.length > 1) {
       const førsteIkkeVurdertPeriodeIndex = perioder.findIndex(
-        periode => periode.vurderesIBehandlingen && periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT,
+        periode => periode.vurderesIBehandlingen && periode.vilkarStatus.kode === vilkårStatus.IKKE_VURDERT,
       );
       if (førsteIkkeVurdertPeriodeIndex > 0) {
         setActiveTab(førsteIkkeVurdertPeriodeIndex);
@@ -102,14 +102,14 @@ const SoknadsfristVilkarProsessIndex = ({
   const harÅpentAksjonspunkt = aksjonspunkter.some(
     ap =>
       ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST &&
-      ap.status.kode === aksjonspunktStatus.OPPRETTET &&
+      ap.status.kode === aksjonspunktType.OPPRETTET &&
       ap.kanLoses,
   );
 
   const dokumenterSomSkalVurderes = Array.isArray(soknadsfristStatus?.dokumentStatus)
     ? soknadsfristStatus.dokumentStatus.filter(dok =>
         dok.status.some(status => {
-          const erOppfyllt = status.status.kode === vilkarUtfallType.OPPFYLT;
+          const erOppfyllt = status.status.kode === vilkårStatus.OPPFYLT;
           const avklartEllerOverstyrt = dok.overstyrteOpplysninger || dok.avklarteOpplysninger;
 
           if (erOppfyllt && !avklartEllerOverstyrt) {
@@ -160,7 +160,7 @@ const SoknadsfristVilkarProsessIndex = ({
               active: activeTab === index,
               label: `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`,
               icon:
-                (erOverstyrt || harÅpentAksjonspunkt) && vilkarStatus.kode !== vilkarUtfallType.OPPFYLT ? (
+                (erOverstyrt || harÅpentAksjonspunkt) && vilkarStatus.kode !== vilkårStatus.OPPFYLT ? (
                   <ExclamationmarkTriangleFillIcon
                     title="Aksjonspunkt"
                     fontSize="1.5rem"
