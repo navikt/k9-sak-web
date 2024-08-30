@@ -4,11 +4,11 @@ import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated';
 import type { EregOrganizationLookupResponse } from '@k9-sak-web/gui/sak/meldinger/EregOrganizationLookupResponse.js';
 import type { BackendApi } from '@k9-sak-web/gui/sak/meldinger/Messages.js';
 import { action } from '@storybook/addon-actions';
-import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.ts';
+import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
 import {
   requestIntentionallyAborted,
   type RequestIntentionallyAborted,
-} from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.ts';
+} from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
 import { fakePdf } from './fakePdf.js';
 import { delay } from '../../utils/delay.js';
 

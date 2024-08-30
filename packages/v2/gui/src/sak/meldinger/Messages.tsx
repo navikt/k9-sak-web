@@ -6,7 +6,7 @@ import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/Fagsa
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import type { BestillBrevDto, MottakerDto, FritekstbrevinnholdDto } from '@k9-sak-web/backend/k9sak/generated';
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
-import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.ts';
+import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
 import {
   type ArbeidsgiverOpplysningerPerId,
   bestemAvsenderApp,

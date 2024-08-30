@@ -5,7 +5,7 @@ import {
   type Mottaker,
   type UtilgjengeligÅrsak,
   utilgjengeligÅrsaker,
-} from '@k9-sak-web/backend/k9formidling/models/Mottaker.ts';
+} from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 
 type MottakerSelectProps = {
   readonly valgtMal: Template | undefined;
