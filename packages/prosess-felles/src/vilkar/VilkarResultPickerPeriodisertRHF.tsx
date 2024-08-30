@@ -216,7 +216,7 @@ VilkarResultPickerPeriodisertRHF.buildInitialValues = (
   status: string,
   periode: Vilkarperiode,
 ): VilkarResultPickerFormState => {
-  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status));
   let erVilkarOk;
 
   if (status === vilkarUtfallType.OPPFYLT) {

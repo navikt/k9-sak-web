@@ -33,7 +33,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
             tom: '2020-01-31',
           },
           merknadParametere: {},
-          vilkarStatus: { kode: 'test', kodeverk: 'test' },
+          vilkarStatus: 'test',
         }}
       />,
       { messages },
