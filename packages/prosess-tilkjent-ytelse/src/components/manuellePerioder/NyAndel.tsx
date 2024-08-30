@@ -25,17 +25,6 @@ const mapArbeidsgivere = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
       ))
     : [];
 
-const mapArbeidsgivereOrg = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
-  arbeidsgivere
-    ? Object.values(arbeidsgivere)
-      .filter(arbeidsgiver => !arbeidsgiver.erPrivatPerson)
-      .map(({ navn, identifikator }) => (
-        <option value={identifikator} key={identifikator}>
-          {navn} ({identifikator})
-        </option>
-      ))
-    : [];
-
 const mapArbeidsgiverePrivatperson = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
   arbeidsgivere
     ? Object.values(arbeidsgivere)
