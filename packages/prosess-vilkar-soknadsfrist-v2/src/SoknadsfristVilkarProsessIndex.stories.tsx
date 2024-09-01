@@ -6,6 +6,8 @@ import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Be
 import { Behandling, DokumentStatus, Vilkar } from '@k9-sak-web/types';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
+import { act } from '@testing-library/react';
 import SoknadsfristVilkarProsessIndex from './SoknadsfristVilkarProsessIndex';
 
 const vilkarSoknadsfrist = [
@@ -77,7 +79,7 @@ const meta: Meta<typeof SoknadsfristVilkarProsessIndex> = {
   component: SoknadsfristVilkarProsessIndex,
 };
 
-type Story = StoryObj<typeof SoknadsfristVilkarProsessIndex>;
+type Story = StoryObj<typeof meta>;
 
 const behandling = {
   id: 1,
@@ -141,6 +143,111 @@ export const VisSoknadsfristAksjonspunkt5077: Story = {
     kanOverstyreAccess: {
       isEnabled: true,
     },
+    submitCallback: fn(),
+  },
+
+  play: async ({ canvasElement, step, args }) => {
+    const canvas = within(canvasElement);
+    await step('skal formatere data ved innsending ved oppfylt vilkår', async () => {
+      await act(async () => {
+        await userEvent.click(canvas.getByText('28.04.2021 - 30.04.2021'));
+        await userEvent.click(canvas.getByText('Vilkåret er oppfylt for hele perioden'));
+        await userEvent.type(
+          canvas.getByLabelText('Vurder om det har vært fristavbrytende kontakt'),
+          'Dette er en begrunnelse',
+        );
+        await waitFor(() => expect(canvas.getByText('Bekreft og gå videre')).toBeEnabled());
+      });
+      await act(async () => {
+        await userEvent.click(canvas.getByText('Bekreft og gå videre'));
+        await waitFor(() => expect(args.submitCallback).toHaveBeenCalledTimes(1));
+      });
+      expect(args.submitCallback).toHaveBeenNthCalledWith(1, [
+        {
+          avklarteKrav: [
+            {
+              begrunnelse: 'Dette er en begrunnelse',
+              erVilkarOk: true,
+              fraDato: '2021-04-27',
+              godkjent: true,
+              journalpostId: '510536417',
+            },
+          ],
+          begrunnelse: 'Dette er en begrunnelse',
+          erVilkarOk: true,
+          kode: '5077',
+          periode: {
+            fom: '2021-04-28',
+            tom: '2021-04-30',
+          },
+        },
+      ]);
+    });
+
+    await step('skal formatere data ved innsending ved delvis oppfylt vilkår', async () => {
+      await act(async () => {
+        await userEvent.click(canvas.getByText('28.04.2021 - 30.04.2021'));
+        await userEvent.click(canvas.getByText('Vilkåret er oppfylt for deler av perioden'));
+        await userEvent.type(canvas.getByLabelText('Oppgi dato søknadsfristvilkåret er oppfylt fra'), '03.05.2021');
+        await waitFor(() => expect(canvas.getByText('Bekreft og gå videre')).toBeEnabled());
+      });
+      await act(async () => {
+        await userEvent.click(canvas.getByText('Bekreft og gå videre'));
+        await waitFor(() => expect(args.submitCallback).toHaveBeenCalledTimes(2));
+      });
+      expect(args.submitCallback).toHaveBeenNthCalledWith(2, [
+        {
+          avklarteKrav: [
+            {
+              begrunnelse: 'Dette er en begrunnelse',
+              erVilkarOk: true,
+              fraDato: '2021-05-02',
+              godkjent: true,
+              journalpostId: '510536417',
+            },
+          ],
+          begrunnelse: 'Dette er en begrunnelse',
+          erVilkarOk: true,
+          kode: '5077',
+          periode: {
+            fom: '2021-04-28',
+            tom: '2021-04-30',
+          },
+        },
+      ]);
+    });
+
+    await step('skal formatere data ved innsending ved ikke oppfylt vilkår', async () => {
+      await act(async () => {
+        await userEvent.click(canvas.getByText('28.04.2021 - 30.04.2021'));
+        await userEvent.click(canvas.getByLabelText('ikke', { exact: false }));
+        await waitFor(() => expect(canvas.getByText('Bekreft og gå videre')).toBeEnabled());
+      });
+      await act(async () => {
+        await userEvent.click(canvas.getByText('Bekreft og gå videre'));
+        await waitFor(() => expect(args.submitCallback).toHaveBeenCalledTimes(3));
+      });
+      expect(args.submitCallback).toHaveBeenNthCalledWith(3, [
+        {
+          avklarteKrav: [
+            {
+              begrunnelse: 'Dette er en begrunnelse',
+              erVilkarOk: false,
+              fraDato: '2021-04-30',
+              godkjent: false,
+              journalpostId: '510536417',
+            },
+          ],
+          begrunnelse: 'Dette er en begrunnelse',
+          erVilkarOk: false,
+          kode: '5077',
+          periode: {
+            fom: '2021-04-28',
+            tom: '2021-04-30',
+          },
+        },
+      ]);
+    });
   },
   render: props => {
     const [erOverstyrt, toggleOverstyring] = React.useState(false);
