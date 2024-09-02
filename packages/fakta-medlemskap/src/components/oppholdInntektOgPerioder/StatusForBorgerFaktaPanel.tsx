@@ -5,7 +5,7 @@ import { required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Detail } from '@navikt/ds-react';
 import { RadioGroupPanel } from '@navikt/ft-form-hooks';
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { OppholdInntektOgPerioderFormState, StatusForBorgerFaktaPanelFormState } from './FormState';
 import { Periode } from './Periode';
@@ -24,7 +24,6 @@ interface StatusForBorgerFaktaPanelProps {
 
 interface StaticFunctions {
   buildInitialValues: (periode: Periode, aksjonspunkter: Aksjonspunkt[]) => StatusForBorgerFaktaPanelFormState;
-  transformValues: (values: StatusForBorgerFaktaPanelFormState, aksjonspunkter: Aksjonspunkt[]) => TransformedValues;
 }
 
 /**
@@ -160,15 +159,5 @@ StatusForBorgerFaktaPanel.buildInitialValues = (periode: Periode, aksjonspunkter
     apKode: getApKode(aksjonspunkter),
   };
 };
-
-StatusForBorgerFaktaPanel.transformValues = (
-  values: StatusForBorgerFaktaPanelFormState,
-  aksjonspunkter: Aksjonspunkt[],
-) => ({
-  kode: getApKode(aksjonspunkter),
-  oppholdsrettVurdering: values.oppholdsrettVurdering,
-  lovligOppholdVurdering: values.lovligOppholdVurdering,
-  erEosBorger: values.erEosBorger,
-});
 
 export default StatusForBorgerFaktaPanel;
