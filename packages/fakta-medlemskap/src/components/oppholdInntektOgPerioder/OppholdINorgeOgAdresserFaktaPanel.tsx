@@ -9,7 +9,6 @@ import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
 import { FunctionComponent } from 'react';
 
-import { BostedSokerPersonopplysninger } from '@fpsak-frontend/fakta-bosted-soker/src/BostedSokerFaktaIndex';
 import { Aksjonspunkt, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { OppholdInntektOgPerioderFormState, OppholdINorgeOgAdresserFaktaPanelFormState } from './FormState';
@@ -18,11 +17,6 @@ import { Opphold } from './Opphold';
 import { Periode } from './Periode';
 import { Soknad } from './Soknad';
 import styles from './oppholdINorgeOgAdresserFaktaPanel.module.css';
-
-interface Forelder {
-  isApplicant: boolean;
-  personopplysning: BostedSokerPersonopplysninger;
-}
 
 countries.registerLocale(norwegianLocale);
 
@@ -59,26 +53,16 @@ const lagOppholdIUtland = (utlandsOpphold: Opphold['utlandsopphold']) =>
 
 interface OppholdINorgeOgAdresserFaktaPanelProps {
   readOnly: boolean;
-  hasBosattAksjonspunkt: boolean;
-  isBosattAksjonspunktClosed: boolean;
-  opphold?: Opphold;
-  foreldre?: Forelder[];
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   alleMerknaderFraBeslutter: MerknaderFraBeslutter;
-}
-
-interface TransformedValues {
-  kode: string;
-  bosattVurdering: boolean;
 }
 
 interface StaticFunctions {
   buildInitialValues: (
     soknad: Soknad,
-    periode: Periode,
     aksjonspunkter: Aksjonspunkt[],
+    periode?: Periode,
   ) => OppholdINorgeOgAdresserFaktaPanelFormState;
-  transformValues: (values: OppholdINorgeOgAdresserFaktaPanelFormState) => TransformedValues;
 }
 
 /**
@@ -88,15 +72,12 @@ interface StaticFunctions {
  * Viser opphold i innland og utland som er relevante for søker. ReadOnly.
  */
 const OppholdINorgeOgAdresserFaktaPanel: FunctionComponent<OppholdINorgeOgAdresserFaktaPanelProps> &
-  StaticFunctions = ({
-  readOnly,
-  hasBosattAksjonspunkt,
-  isBosattAksjonspunktClosed,
-  alleKodeverk,
-  alleMerknaderFraBeslutter,
-}) => {
+  StaticFunctions = ({ readOnly, alleKodeverk, alleMerknaderFraBeslutter }) => {
   const { control } = useFormContext<OppholdInntektOgPerioderFormState>();
-  const { foreldre, opphold } = useWatch({ control, name: 'oppholdInntektOgPeriodeForm' });
+  const { foreldre, opphold, hasBosattAksjonspunkt, isBosattAksjonspunktClosed } = useWatch({
+    control,
+    name: 'oppholdInntektOgPeriodeForm',
+  });
   return (
     <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]}>
       <HGrid gap="1" columns={{ xs: '6fr 6fr' }}>
@@ -155,15 +136,15 @@ const OppholdINorgeOgAdresserFaktaPanel: FunctionComponent<OppholdINorgeOgAdress
     </FaktaGruppe>
   );
 };
-const createParent = (isApplicant: boolean, personopplysning: Personopplysninger) => ({
+const createParent = (isApplicant: boolean, personopplysning?: Personopplysninger) => ({
   isApplicant,
   personopplysning,
 });
 
 OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (
   soknad: Soknad,
-  periode: Periode,
   aksjonspunkter: Aksjonspunkt[],
+  periode?: Periode,
 ) => {
   let opphold = {};
 
@@ -174,13 +155,13 @@ OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (
     };
   }
 
-  const { personopplysninger } = periode;
+  const { personopplysninger } = periode || {};
   const parents = [createParent(true, personopplysninger)];
-  if (personopplysninger.annenPart) {
+  if (personopplysninger?.annenPart) {
     parents.push(createParent(false, personopplysninger.annenPart));
   }
 
-  const filteredAp = periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT)
+  const filteredAp = periode?.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT)
     ? aksjonspunkter
     : aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP);
 
@@ -189,13 +170,9 @@ OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (
     hasBosattAksjonspunkt: filteredAp.length > 0,
     isBosattAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status.kode)),
     foreldre: parents,
-    bosattVurdering: periode.bosattVurdering || periode.bosattVurdering === false ? periode.bosattVurdering : undefined,
+    bosattVurdering:
+      periode?.bosattVurdering || periode?.bosattVurdering === false ? periode.bosattVurdering : undefined,
   };
 };
-
-OppholdINorgeOgAdresserFaktaPanel.transformValues = (values: OppholdINorgeOgAdresserFaktaPanelFormState) => ({
-  kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
-  bosattVurdering: values.bosattVurdering,
-});
 
 export default OppholdINorgeOgAdresserFaktaPanel;
