@@ -57,11 +57,6 @@ interface OppholdINorgeOgAdresserFaktaPanelProps {
   alleMerknaderFraBeslutter: MerknaderFraBeslutter;
 }
 
-interface TransformedValues {
-  kode: string;
-  bosattVurdering: boolean;
-}
-
 interface StaticFunctions {
   buildInitialValues: (
     soknad: Soknad,

@@ -10,13 +10,6 @@ import { useFormContext } from 'react-hook-form';
 import { OppholdInntektOgPerioderFormState, StatusForBorgerFaktaPanelFormState } from './FormState';
 import { Periode } from './Periode';
 
-interface TransformedValues {
-  kode: string;
-  oppholdsrettVurdering: boolean;
-  lovligOppholdVurdering: boolean;
-  erEosBorger: boolean;
-}
-
 interface StatusForBorgerFaktaPanelProps {
   readOnly: boolean;
   alleMerknaderFraBeslutter: { notAccepted: boolean };
