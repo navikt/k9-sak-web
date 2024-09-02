@@ -2814,7 +2814,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.52.3
+    "@tanstack/react-query": ^5.53.2
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -3049,7 +3049,7 @@ __metadata:
     "@navikt/ds-react": 6.13.0
     "@navikt/fnrvalidator": 2.1.0
     "@navikt/ft-plattform-komponenter": 3.0.4
-    axios: 1.7.5
+    axios: 1.7.7
     classnames: 2.5.1
     date-fns: 3.6.0
     date-fns-tz: 3.1.3
@@ -3081,7 +3081,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@tanstack/react-query": ^5.52.3
+    "@tanstack/react-query": ^5.53.2
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -3710,7 +3710,7 @@ __metadata:
     "@navikt/ft-fakta-beregning-redesign": 1.2.21
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.22
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.26
-    axios: 1.7.5
+    axios: 1.7.7
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -3749,7 +3749,7 @@ __metadata:
     "@navikt/ft-fakta-beregning-redesign": 1.2.21
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.22
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.26
-    axios: 1.7.5
+    axios: 1.7.7
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -3793,7 +3793,7 @@ __metadata:
     "@navikt/ft-fakta-beregning-redesign": 1.2.21
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.5.22
     "@navikt/ft-prosess-beregningsgrunnlag": 6.5.26
-    axios: 1.7.5
+    axios: 1.7.7
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -3999,8 +3999,8 @@ __metadata:
     "@navikt/ds-react": 6.13.0
     "@navikt/ft-plattform-komponenter": 3.0.4
     "@popperjs/core": 2.11.8
-    "@tanstack/react-query": ^5.52.3
-    axios: 1.7.5
+    "@tanstack/react-query": ^5.53.2
+    axios: 1.7.7
     classnames: 2.5.1
     cors: ^2.8.5
     dayjs: 1.11.13
@@ -4336,7 +4336,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/rest-api@workspace:packages/rest-api"
   dependencies:
-    axios: 1.7.5
+    axios: 1.7.7
     node-cache: 5.1.2
   languageName: unknown
   linkType: soft
@@ -4406,8 +4406,8 @@ __metadata:
     "@navikt/ft-ui-komponenter": 2.3.19
     "@sentry/browser": 8.27.0
     "@sentry/react": ^8.27.0
-    "@tanstack/react-query": ^5.52.3
-    axios: 1.7.5
+    "@tanstack/react-query": ^5.53.2
+    axios: 1.7.7
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
@@ -4433,7 +4433,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.52.3
+    "@tanstack/react-query": ^5.53.2
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
@@ -4489,7 +4489,7 @@ __metadata:
     "@navikt/ds-react": 6.13.0
     "@navikt/ft-form-hooks": 5.0.0
     "@navikt/ft-form-validators": 2.3.18
-    "@tanstack/react-query": ^5.52.3
+    "@tanstack/react-query": ^5.53.2
     date-fns: 3.6.0
     react: 18.3.1
     react-hook-form: 7.52.2
@@ -6511,21 +6511,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.52.3":
-  version: 5.52.3
-  resolution: "@tanstack/query-core@npm:5.52.3"
-  checksum: cc5b6cefa40e600ca53f8d75f2aa34b8cf91e9c586f4d359963f60381c79ad7724c4f7cca6446d1272284c427c2be278e10afae021fab1317658d477d01c299c
+"@tanstack/query-core@npm:5.53.2":
+  version: 5.53.2
+  resolution: "@tanstack/query-core@npm:5.53.2"
+  checksum: cac7dce3c1b31101e6caf33f6d75cdfa1a580193a6fa130e5402d21647ca623a0608cea529b0695df73f8ff141ce0d430010c651704d5103db69bd9666fc25f4
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.52.3":
-  version: 5.52.3
-  resolution: "@tanstack/react-query@npm:5.52.3"
+"@tanstack/react-query@npm:^5.53.2":
+  version: 5.53.2
+  resolution: "@tanstack/react-query@npm:5.53.2"
   dependencies:
-    "@tanstack/query-core": 5.52.3
+    "@tanstack/query-core": 5.53.2
   peerDependencies:
     react: ^18 || ^19
-  checksum: f3ef9cf18bf5e97cf723e47b66882d69dd000873a7ea03235d2f9a936c0402caaa7035eb8ed5c6e1ecd38fd9e603b7e8de960c1e8b11d826f16fe992356b85b1
+  checksum: 8dab90fe514c4768f97a9a60cd0dacc671e0c4fda1b2a8f275a5200fc65b51ed80e10fe16d38b3dbb10659d80d21241c16a75b220a0fc2ee34cbfa11cd358081
   languageName: node
   linkType: hard
 
@@ -7893,14 +7893,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.7.5":
-  version: 1.7.5
-  resolution: "axios@npm:1.7.5"
+"axios@npm:1.7.7":
+  version: 1.7.7
+  resolution: "axios@npm:1.7.7"
   dependencies:
     follow-redirects: ^1.15.6
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
-  checksum: 2859fe01437cf133eee35571abc1d4b5224bb13e530e66cb3581ca226e170541dd5eef9f46abb41592cee0a2f54930c9e4978354e0cf1064748fc20d9a05e9d5
+  checksum: 882d4fe0ec694a07c7f5c1f68205eb6dc5a62aecdb632cc7a4a3d0985188ce3030e0b277e1a8260ac3f194d314ae342117660a151fabffdc5081ca0b5a8b47fe
   languageName: node
   linkType: hard
 
@@ -13310,7 +13310,7 @@ __metadata:
     "@types/redux-form": 8.3.11
     "@vitejs/plugin-react": ^4.3.1
     autoprefixer: ^10.4.20
-    axios: 1.7.5
+    axios: 1.7.7
     axios-mock-adapter: 2.0.0
     cross-env: 7.0.3
     date-fns: 3.6.0
@@ -13325,11 +13325,11 @@ __metadata:
     husky: 9.1.5
     i18n-iso-countries: 7.11.3
     jsdom: 24.1.1
-    lint-staged: 15.2.9
+    lint-staged: 15.2.10
     msw: 2.4.1
     msw-storybook-addon: ^2.0.3
     node-cache: 5.1.2
-    postcss: ^8.4.41
+    postcss: ^8.4.44
     postcss-import: ^16.1.0
     prettier: 3.3.3
     react: 18.3.1
@@ -13455,9 +13455,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:15.2.9":
-  version: 15.2.9
-  resolution: "lint-staged@npm:15.2.9"
+"lint-staged@npm:15.2.10":
+  version: 15.2.10
+  resolution: "lint-staged@npm:15.2.10"
   dependencies:
     chalk: ~5.3.0
     commander: ~12.1.0
@@ -13465,13 +13465,13 @@ __metadata:
     execa: ~8.0.1
     lilconfig: ~3.1.2
     listr2: ~8.2.4
-    micromatch: ~4.0.7
+    micromatch: ~4.0.8
     pidtree: ~0.6.0
     string-argv: ~0.3.2
     yaml: ~2.5.0
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: 7f804c24d0374b48d26f11a051342141b84c9954f77225bab5ae221b1e4d47a72f722f39b13169267592c28b2614ad39f9722fd86bc4cdfdf93e8601ff66b0e1
+  checksum: 7ab255b848478ca47c6b94aad0e7a3cfe5ba48ae1fb353cfa86635741333b83b1fd793d7cac6d44bf0388ad087d7e0250c7ec0a8ebece63fbcf7a8d175279809
   languageName: node
   linkType: hard
 
@@ -13819,7 +13819,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"micromatch@npm:^4.0.4, micromatch@npm:^4.0.5, micromatch@npm:^4.0.8, micromatch@npm:~4.0.7":
+"micromatch@npm:^4.0.4, micromatch@npm:^4.0.5, micromatch@npm:^4.0.8, micromatch@npm:~4.0.8":
   version: 4.0.8
   resolution: "micromatch@npm:4.0.8"
   dependencies:
@@ -15200,14 +15200,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:8.4.41":
-  version: 8.4.41
-  resolution: "postcss@npm:8.4.41"
+"postcss@npm:8.4.44":
+  version: 8.4.44
+  resolution: "postcss@npm:8.4.44"
   dependencies:
     nanoid: ^3.3.7
     picocolors: ^1.0.1
     source-map-js: ^1.2.0
-  checksum: f865894929eb0f7fc2263811cc853c13b1c75103028b3f4f26df777e27b201f1abe21cb4aa4c2e901c80a04f6fb325ee22979688fe55a70e2ea82b0a517d3b6f
+  checksum: 64d9ce78253696bb64e608a54b362c9ddb537d3b38b58223ebce8260d6110d4e798ef1b3d57d8c28131417d9809187fd51d5c4263113536363444f8635e11bdb
   languageName: node
   linkType: hard
 
