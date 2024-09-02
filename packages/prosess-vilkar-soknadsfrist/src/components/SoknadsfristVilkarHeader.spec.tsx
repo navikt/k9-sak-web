@@ -15,7 +15,7 @@ describe('<SoknadsfristVilkarHeader>', () => {
           <SoknadsfristVilkarHeader
             erVilkarOk
             overstyringApKode="5011"
-            lovReferanse="§23"
+            lovReferanse="§ 9-2"
             overrideReadOnly={false}
             kanOverstyreAccess={{
               isEnabled: true,
@@ -31,6 +31,6 @@ describe('<SoknadsfristVilkarHeader>', () => {
     );
 
     expect(screen.getByRole('heading', { name: 'Søknadsfrist' })).toBeInTheDocument();
-    expect(screen.getByText('§23')).toBeInTheDocument();
+    expect(screen.getByText('9-2')).toBeInTheDocument();
   });
 });

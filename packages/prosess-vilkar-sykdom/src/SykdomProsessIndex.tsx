@@ -15,6 +15,7 @@ import React from 'react';
 import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import styles from './sykdomProsessIndex.module.css';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 const cx = classNames.bind(styles);
 
@@ -105,7 +106,9 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomP
                 </Heading>
               </FlexColumn>
               <FlexColumn>
-                <Detail className={styles.vilkar}>{lovReferanseTekst}</Detail>
+                <Detail className={styles.vilkar}>
+                  <Lovreferanse>{lovReferanseTekst}</Lovreferanse>
+                </Detail>
               </FlexColumn>
             </FlexRow>
             <FlexRow>
