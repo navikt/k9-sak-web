@@ -61,6 +61,7 @@ describe('<SoknadsfristVilkarForm>', () => {
         dokumenterIAktivPeriode={dokumenter}
         alleDokumenter={dokumenter}
         periode={periode}
+        kanEndrePåSøknadsopplysninger
       />,
     );
 
