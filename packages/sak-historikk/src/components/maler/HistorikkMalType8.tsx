@@ -62,67 +62,88 @@ const HistorikkMalType8 = ({
 
   return (
     <>
-      {historikkinnslagDeler.map((historikkinnslagDel, historikkinnslagDelIndex) => (
-        <div
-          key={
-            `historikkinnslagDel${historikkinnslagDelIndex}` // eslint-disable-line react/no-array-index-key
-          }
-        >
-          {historikkinnslagDel.skjermlenke && (
-            <Skjermlenke
-              skjermlenke={historikkinnslagDel.skjermlenke}
-              behandlingLocation={behandlingLocation}
-              kodeverkNavnFraKodeFn={kodeverkNavnFraKodeFn}
-              createLocationForSkjermlenke={createLocationForSkjermlenke}
-            />
-          )}
+      {historikkinnslagDeler.map((historikkinnslagDel, historikkinnslagDelIndex) => {
+        const {
+          skjermlenke,
+          hendelse,
+          resultat,
+          endredeFelter,
+          opplysninger,
+          aarsak,
+          aarsakKodeverkType,
+          begrunnelse,
+          begrunnelseKodeverkType,
+          begrunnelseFritekst,
+        } = historikkinnslagDel;
 
-          {historikkinnslagDel.hendelse && (
-            <Label size="small" as="p">
-              {findHendelseText(historikkinnslagDel.hendelse, kodeverkNavnFraKodeFn)}
-            </Label>
-          )}
+        const begrunnelseTekst = begrunnelse
+          ? kodeverkNavnFraKodeFn(
+              begrunnelse,
+              KodeverkType[begrunnelseKodeverkType] || KodeverkType.HISTORIKK_BEGRUNNELSE_TYPE,
+            )
+          : null;
 
-          {historikkinnslagDel.resultat && (
-            <Label size="small" as="p">
-              {findResultatText(historikkinnslagDel.resultat, intl, kodeverkNavnFraKodeFn)}
-            </Label>
-          )}
+        const aarsakTekst = begrunnelse
+          ? kodeverkNavnFraKodeFn(
+              begrunnelse,
+              KodeverkType[aarsakKodeverkType] || KodeverkType.HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE,
+            )
+          : null;
 
-          {historikkinnslagDel.endredeFelter &&
-            historikkinnslagDel.endredeFelter.map((endretFelt, i) => (
-              <div key={`endredeFelter${i + 1}`}>{formatChangedField(endretFelt, intl, kodeverkNavnFraKodeFn)}</div>
-            ))}
-
-          {historikkinnslagDel.opplysninger &&
-            historikkinnslagDel.opplysninger.map(opplysning => (
-              <FormattedMessage
-                id={findIdForOpplysningCode(opplysning)}
-                values={{ antallBarn: opplysning.tilVerdi, b: chunks => <b>{chunks}</b> }}
+        return (
+          <div
+            key={
+              `historikkinnslagDel${historikkinnslagDelIndex}` // eslint-disable-line react/no-array-index-key
+            }
+          >
+            {skjermlenke && (
+              <Skjermlenke
+                skjermlenke={skjermlenke}
+                behandlingLocation={behandlingLocation}
+                kodeverkNavnFraKodeFn={kodeverkNavnFraKodeFn}
+                createLocationForSkjermlenke={createLocationForSkjermlenke}
               />
-            ))}
+            )}
 
-          {historikkinnslagDel.aarsak && (
-            <BodyShort size="small">
-              {kodeverkNavnFraKodeFn(historikkinnslagDel.aarsak, KodeverkType.VENT_AARSAK)}
-            </BodyShort>
-          )}
-          {historikkinnslagDel.begrunnelse && (
-            <BubbleText
-              bodyText={kodeverkNavnFraKodeFn(historikkinnslagDel.begrunnelse, KodeverkType.HISTORIKK_BEGRUNNELSE_TYPE)}
-            />
-          )}
-          {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />}
-          {dokumentLinks &&
-            dokumentLinks.map(dokumentLenke => (
-              <HistorikkDokumentLenke
-                key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
-                dokumentLenke={dokumentLenke}
-                saksnummer={saksnummer}
-              />
-            ))}
-        </div>
-      ))}
+            {hendelse && (
+              <Label size="small" as="p">
+                {findHendelseText(hendelse, kodeverkNavnFraKodeFn)}
+              </Label>
+            )}
+
+            {resultat && (
+              <Label size="small" as="p">
+                {findResultatText(resultat, intl, kodeverkNavnFraKodeFn)}
+              </Label>
+            )}
+
+            {endredeFelter &&
+              endredeFelter.map((endretFelt, i) => (
+                <div key={`endredeFelter${i + 1}`}>{formatChangedField(endretFelt, intl, kodeverkNavnFraKodeFn)}</div>
+              ))}
+
+            {opplysninger &&
+              opplysninger.map(opplysning => (
+                <FormattedMessage
+                  id={findIdForOpplysningCode(opplysning)}
+                  values={{ antallBarn: opplysning.tilVerdi, b: chunks => <b>{chunks}</b> }}
+                />
+              ))}
+
+            {aarsak && <BodyShort size="small">{aarsakTekst}</BodyShort>}
+            {begrunnelse && <BubbleText bodyText={begrunnelseTekst} />}
+            {begrunnelseFritekst && <BubbleText bodyText={begrunnelseFritekst} />}
+            {dokumentLinks &&
+              dokumentLinks.map(dokumentLenke => (
+                <HistorikkDokumentLenke
+                  key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
+                  dokumentLenke={dokumentLenke}
+                  saksnummer={saksnummer}
+                />
+              ))}
+          </div>
+        );
+      })}
     </>
   );
 };

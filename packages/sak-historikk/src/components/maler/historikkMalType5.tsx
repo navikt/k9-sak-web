@@ -157,78 +157,97 @@ const HistorikkMalType5 = ({
   saksnummer,
 }: HistorikkMal & WrappedComponentProps) => (
   <>
-    {historikkinnslag.historikkinnslagDeler.map((historikkinnslagDel, historikkinnslagDelIndex) => (
-      <div
-        key={
-          `historikkinnslagDel${historikkinnslagDelIndex}` // eslint-disable-line react/no-array-index-key
-        }
-      >
-        {historikkinnslagDel.skjermlenke && (
-          <Skjermlenke
-            skjermlenke={historikkinnslagDel.skjermlenke}
-            behandlingLocation={behandlingLocation}
-            kodeverkNavnFraKodeFn={kodeverkNavnFraKodeFn}
-            scrollUpOnClick
-            createLocationForSkjermlenke={createLocationForSkjermlenke}
-          />
-        )}
+    {historikkinnslag.historikkinnslagDeler.map((historikkinnslagDel, historikkinnslagDelIndex) => {
+      const {
+        skjermlenke,
+        soeknadsperiode,
+        endredeFelter,
+        opplysninger,
+        aarsakKodeverkType,
+        begrunnelse,
+        begrunnelseKodeverkType,
+        begrunnelseFritekst,
+        aarsak,
+      } = historikkinnslagDel;
 
-        {lageElementInnhold(historikkinnslagDel, intl, kodeverkNavnFraKodeFn).map(tekst => (
-          <div key={tekst}>
-            <Label size="small" as="p">
-              {tekst}
-            </Label>
-          </div>
-        ))}
+      const begrunnelseTekst = begrunnelse
+        ? kodeverkNavnFraKodeFn(
+            begrunnelse,
+            KodeverkType[begrunnelseKodeverkType] || KodeverkType.HISTORIKK_BEGRUNNELSE_TYPE,
+          )
+        : null;
 
-        {lagGjeldendeFraInnslag(historikkinnslagDel)}
+      const aarsakTekst = begrunnelse
+        ? kodeverkNavnFraKodeFn(
+            begrunnelse,
+            KodeverkType[aarsakKodeverkType] || KodeverkType.HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE,
+          )
+        : null;
 
-        {historikkinnslagDel.soeknadsperiode &&
-          lagSoeknadsperiode(historikkinnslagDel.soeknadsperiode, kodeverkNavnFraKodeFn)}
-
-        {lagTemaHeadingId(historikkinnslagDel)}
-
-        {historikkinnslagDel.endredeFelter &&
-          historikkinnslagDel.endredeFelter.map((endretFelt, i) => (
-            <BodyShort size="small" key={`endredeFelter${i + 1}`}>
-              {formatChangedField(endretFelt, intl, kodeverkNavnFraKodeFn)}
-            </BodyShort>
-          ))}
-
-        {historikkinnslagDel.opplysninger &&
-          historikkinnslagDel.opplysninger.map(opplysning => (
-            <BodyShort size="small">
-              <FormattedMessage
-                id={findIdForOpplysningCode(opplysning)}
-                values={{ antallBarn: opplysning.tilVerdi, b: chunks => <b>{chunks}</b>, br: <br /> }}
-                key={`${kodeverkNavnFraKodeFn(opplysning.opplysningType, KodeverkType.HISTORIKK_OPPLYSNING_TYPE)}@${opplysning.tilVerdi}`}
-              />
-            </BodyShort>
-          ))}
-
-        {historikkinnslagDel.aarsak && (
-          <BodyShort size="small">
-            {kodeverkNavnFraKodeFn(historikkinnslagDel.aarsak, KodeverkType.HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE)}
-          </BodyShort>
-        )}
-        {historikkinnslagDel.begrunnelse && (
-          <BubbleText
-            bodyText={kodeverkNavnFraKodeFn(historikkinnslagDel.begrunnelse, KodeverkType.HISTORIKK_BEGRUNNELSE_TYPE)}
-          />
-        )}
-        {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />}
-        {historikkinnslag.dokumentLinks &&
-          historikkinnslag.dokumentLinks.map(dokumentLenke => (
-            <HistorikkDokumentLenke
-              key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
-              dokumentLenke={dokumentLenke}
-              saksnummer={saksnummer}
+      return (
+        <div
+          key={
+            `historikkinnslagDel${historikkinnslagDelIndex}` // eslint-disable-line react/no-array-index-key
+          }
+        >
+          {skjermlenke && (
+            <Skjermlenke
+              skjermlenke={skjermlenke}
+              behandlingLocation={behandlingLocation}
+              kodeverkNavnFraKodeFn={kodeverkNavnFraKodeFn}
+              scrollUpOnClick
+              createLocationForSkjermlenke={createLocationForSkjermlenke}
             />
+          )}
+
+          {lageElementInnhold(historikkinnslagDel, intl, kodeverkNavnFraKodeFn).map(tekst => (
+            <div key={tekst}>
+              <Label size="small" as="p">
+                {tekst}
+              </Label>
+            </div>
           ))}
 
-        {historikkinnslagDelIndex < historikkinnslag.historikkinnslagDeler.length - 1 && <VerticalSpacer sixteenPx />}
-      </div>
-    ))}
+          {lagGjeldendeFraInnslag(historikkinnslagDel)}
+
+          {soeknadsperiode && lagSoeknadsperiode(soeknadsperiode, kodeverkNavnFraKodeFn)}
+
+          {lagTemaHeadingId(historikkinnslagDel)}
+
+          {endredeFelter &&
+            endredeFelter.map((endretFelt, i) => (
+              <BodyShort size="small" key={`endredeFelter${i + 1}`}>
+                {formatChangedField(endretFelt, intl, kodeverkNavnFraKodeFn)}
+              </BodyShort>
+            ))}
+
+          {opplysninger &&
+            opplysninger.map(opplysning => (
+              <BodyShort size="small">
+                <FormattedMessage
+                  id={findIdForOpplysningCode(opplysning)}
+                  values={{ antallBarn: opplysning.tilVerdi, b: chunks => <b>{chunks}</b>, br: <br /> }}
+                  key={`${kodeverkNavnFraKodeFn(opplysning.opplysningType, KodeverkType.HISTORIKK_OPPLYSNING_TYPE)}@${opplysning.tilVerdi}`}
+                />
+              </BodyShort>
+            ))}
+
+          {aarsak && <BodyShort size="small">{aarsakTekst}</BodyShort>}
+          {begrunnelse && <BubbleText bodyText={begrunnelseTekst} />}
+          {begrunnelseFritekst && <BubbleText bodyText={begrunnelseFritekst} />}
+          {historikkinnslag.dokumentLinks &&
+            historikkinnslag.dokumentLinks.map(dokumentLenke => (
+              <HistorikkDokumentLenke
+                key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
+                dokumentLenke={dokumentLenke}
+                saksnummer={saksnummer}
+              />
+            ))}
+
+          {historikkinnslagDelIndex < historikkinnslag.historikkinnslagDeler.length - 1 && <VerticalSpacer sixteenPx />}
+        </div>
+      );
+    })}
   </>
 );
 
