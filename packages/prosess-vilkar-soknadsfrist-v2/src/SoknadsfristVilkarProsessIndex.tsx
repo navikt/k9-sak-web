@@ -1,6 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { initializeDate } from '@fpsak-frontend/utils';
-import { aksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktType.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { Aksjonspunkt, DokumentStatus, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
@@ -43,6 +43,7 @@ interface SoknadsfristVilkarProsessIndexProps {
   vilkar: Vilkar[];
   visAllePerioder: boolean;
   soknadsfristStatus: { dokumentStatus: DokumentStatus[] };
+  kanEndrePåSøknadsopplysninger: boolean;
 }
 
 // Finner ut om Statusperiode gjelder for vilkårsperiode
@@ -72,6 +73,7 @@ const SoknadsfristVilkarProsessIndex = ({
   vilkar,
   visAllePerioder,
   soknadsfristStatus,
+  kanEndrePåSøknadsopplysninger,
 }: SoknadsfristVilkarProsessIndexProps) => {
   const [activeTab, setActiveTab] = useState(0);
   const [activeVilkår] = vilkar;
@@ -99,10 +101,10 @@ const SoknadsfristVilkarProsessIndex = ({
 
   const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
 
-  const harÅpentAksjonspunkt = aksjonspunkter.some(
+  const harÅpentUløstAksjonspunkt = aksjonspunkter.some(
     ap =>
       ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST &&
-      ap.status.kode === aksjonspunktType.OPPRETTET &&
+      ap.status.kode === aksjonspunktStatus.OPPRETTET &&
       ap.kanLoses,
   );
 
@@ -160,7 +162,7 @@ const SoknadsfristVilkarProsessIndex = ({
               active: activeTab === index,
               label: `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`,
               icon:
-                (erOverstyrt || harÅpentAksjonspunkt) && vilkarStatus.kode !== vilkårStatus.OPPFYLT ? (
+                (erOverstyrt || harÅpentUløstAksjonspunkt) && vilkarStatus.kode !== vilkårStatus.OPPFYLT ? (
                   <ExclamationmarkTriangleFillIcon
                     title="Aksjonspunkt"
                     fontSize="1.5rem"
@@ -189,7 +191,7 @@ const SoknadsfristVilkarProsessIndex = ({
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}
             aksjonspunkter={aksjonspunkter}
-            harÅpentAksjonspunkt={harÅpentAksjonspunkt}
+            harÅpentAksjonspunkt={harÅpentUløstAksjonspunkt}
             erOverstyrt={erOverstyrt}
             submitCallback={submitCallback}
             overrideReadOnly={overrideReadOnly}
@@ -198,6 +200,7 @@ const SoknadsfristVilkarProsessIndex = ({
             alleDokumenter={dokumenterSomSkalVurderes}
             dokumenterIAktivPeriode={dokumenterIAktivPeriode}
             periode={activePeriode}
+            kanEndrePåSøknadsopplysninger={kanEndrePåSøknadsopplysninger}
           />
         </div>
       </div>

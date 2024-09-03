@@ -1,7 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktBox, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, initializeDate } from '@fpsak-frontend/utils';
-import { aksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktType.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { Aksjonspunkt, DokumentStatus, Periode, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
@@ -13,6 +12,8 @@ import hash from 'object-hash';
 import { SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { utledInnsendtSoknadsfrist } from '../utils';
 import { FormState } from './FormState';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
@@ -119,6 +120,7 @@ interface SoknadsfristVilkarFormProps {
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   alleDokumenter?: DokumentStatus[];
   dokumenterIAktivPeriode?: DokumentStatus[];
+  kanEndrePåSøknadsopplysninger: boolean;
 }
 
 /**
@@ -138,6 +140,7 @@ export const SoknadsfristVilkarForm = ({
   periode,
   status,
   submitCallback,
+  kanEndrePåSøknadsopplysninger,
 }: SoknadsfristVilkarFormProps) => {
   const formMethods = useForm<FormState>({ defaultValues: buildInitialValues(aksjonspunkter, alleDokumenter, status) });
   const [editForm, setEditForm] = useState(false);
@@ -148,21 +151,28 @@ export const SoknadsfristVilkarForm = ({
       formMethods.reset(buildInitialValues(aksjonspunkter, alleDokumenter, status));
     }
   };
-  const aksjonspunkt = harÅpentAksjonspunkt
-    ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST)
-    : aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR);
+  const aksjonspunkt = erOverstyrt
+    ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR)
+    : aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST);
 
   const harAksjonspunkt = aksjonspunkt !== undefined;
   const periodeFom = periode?.periode?.fom;
   const periodeTom = periode?.periode?.tom;
-  const aksjonspunktCode = harÅpentAksjonspunkt
-    ? aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST
-    : aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR;
+  const aksjonspunktCode = erOverstyrt
+    ? aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR
+    : aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST;
+
+  const harLøstManueltAksjonspunkt = aksjonspunkter.some(
+    ap =>
+      ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST &&
+      ap.aksjonspunktType.kode === aksjonspunktType.MANUELL &&
+      ap.status.kode === aksjonspunktStatus.UTFORT,
+  );
 
   const isSolvable =
     erOverstyrt ||
-    (harÅpentAksjonspunkt || aksjonspunkt !== undefined
-      ? !(aksjonspunkt.status.kode === aksjonspunktType.OPPRETTET && !aksjonspunkt.kanLoses)
+    (harÅpentAksjonspunkt || harLøstManueltAksjonspunkt || aksjonspunkt !== undefined
+      ? !(aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses)
       : false);
 
   const isReadOnly = overrideReadOnly || !periode?.vurderesIBehandlingen;
@@ -174,6 +184,29 @@ export const SoknadsfristVilkarForm = ({
 
   const handleSubmit = (values: FormState) => {
     submitCallback([transformValues(values, alleDokumenter, aksjonspunktCode, periodeFom, periodeTom)]);
+  };
+
+  const AksjonspunktText = () => {
+    if (harLøstManueltAksjonspunkt && !editForm) {
+      return (
+        <Label size="small" as="p">
+          Vurder om søknadsfristvilkåret er oppfylt
+        </Label>
+      );
+    }
+    if (!isReadOnly) {
+      if (harÅpentAksjonspunkt || editForm) {
+        return (
+          <AksjonspunktHelpText isAksjonspunktOpen>Vurder om søknadsfristvilkåret er oppfylt</AksjonspunktHelpText>
+        );
+      }
+      return (
+        <Label size="small" as="p">
+          Manuell overstyring av automatisk vurdering
+        </Label>
+      );
+    }
+    return undefined;
   };
 
   return (
@@ -196,6 +229,7 @@ export const SoknadsfristVilkarForm = ({
                   toggleEditForm={toggleEditForm}
                   dokumentErVurdert={status !== vilkårStatus.IKKE_VURDERT}
                   periode={periode}
+                  kanEndrePåSøknadsopplysninger={kanEndrePåSøknadsopplysninger}
                 />
               );
             })}
@@ -207,14 +241,7 @@ export const SoknadsfristVilkarForm = ({
           className={styles.aksjonspunktMargin}
           erAksjonspunktApent={erOverstyrt || harÅpentAksjonspunkt}
         >
-          {!isReadOnly &&
-            (harÅpentAksjonspunkt ? (
-              <AksjonspunktHelpText isAksjonspunktOpen>Vurder om søknadsfristvilkåret er oppfylt</AksjonspunktHelpText>
-            ) : (
-              <Label size="small" as="p">
-                Manuell overstyring av automatisk vurdering
-              </Label>
-            ))}
+          <AksjonspunktText />
           <div className="mt-2" />
           {Array.isArray(alleDokumenter) && alleDokumenter.length > 0
             ? alleDokumenter.map((field, index) => {
@@ -233,6 +260,7 @@ export const SoknadsfristVilkarForm = ({
                     redigerVurdering={editForm}
                     dokumentErVurdert={status !== vilkårStatus.IKKE_VURDERT}
                     periode={periode}
+                    kanEndrePåSøknadsopplysninger={kanEndrePåSøknadsopplysninger}
                   />
                 );
               })

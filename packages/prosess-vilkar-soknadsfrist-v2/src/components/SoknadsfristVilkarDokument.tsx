@@ -35,6 +35,7 @@ interface SoknadsfristVilkarDokumentProps {
   redigerVurdering?: boolean;
   dokumentErVurdert: boolean;
   periode?: Vilkarperiode;
+  kanEndrePåSøknadsopplysninger: boolean;
 }
 
 export const DELVIS_OPPFYLT = 'DELVIS_OPPFYLT';
@@ -56,6 +57,7 @@ export const SoknadsfristVilkarDokument = ({
   redigerVurdering,
   dokumentErVurdert,
   periode,
+  kanEndrePåSøknadsopplysninger,
 }: SoknadsfristVilkarDokumentProps) => {
   const { getValues } = useFormContext<FormState>();
   const harBegrunnelse = !!getValues('avklarteKrav')[dokumentIndex]?.begrunnelse;
@@ -171,7 +173,7 @@ export const SoknadsfristVilkarDokument = ({
           ]}
         />
       )}
-      {!erOverstyrt && dokumentErVurdert && harBegrunnelse && !redigerVurdering && (
+      {!erOverstyrt && dokumentErVurdert && harBegrunnelse && !redigerVurdering && kanEndrePåSøknadsopplysninger && (
         <div>
           <div className="mt-2" />
           <Button
