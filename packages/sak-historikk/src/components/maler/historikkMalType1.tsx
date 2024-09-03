@@ -28,7 +28,7 @@ const HistorikkMalType1 = ({ historikkinnslag, kodeverkNavnFraKodeFn, saksnummer
           {findHendelseText(hendelse, kodeverkNavnFraKodeFn)}
         </Label>
       )}
-      {begrunnelseTekst && <BubbleText bodyText={begrunnelseTekst} />}
+      {begrunnelse && <BubbleText bodyText={begrunnelseTekst} />}
       {begrunnelseFritekst && <BubbleText bodyText={begrunnelseFritekst} />}
       {dokumentLinks &&
         dokumentLinks.map(dokumentLenke => (

@@ -9,24 +9,35 @@ import { findHendelseText } from './felles/historikkUtils';
 
 const HistorikkMalType4 = ({ historikkinnslag, kodeverkNavnFraKodeFn }: HistorikkMal & WrappedComponentProps) => (
   <>
-    {historikkinnslag.historikkinnslagDeler.map((del, delIndex) => (
-      <div
-        key={
-          `del${delIndex}` // eslint-disable-line react/no-array-index-key
-        }
-      >
-        <Label size="small" as="p" className="snakkeboble-panel__tekst">
-          {findHendelseText(del.hendelse, kodeverkNavnFraKodeFn)}
-        </Label>
-        {del.aarsak && (
-          <BodyShort size="small">{kodeverkNavnFraKodeFn(del.aarsak, KodeverkType.VENT_AARSAK)}</BodyShort>
-        )}
-        {del.begrunnelse && (
-          <BubbleText bodyText={kodeverkNavnFraKodeFn(del.begrunnelse, KodeverkType.HISTORIKK_BEGRUNNELSE_TYPE)} />
-        )}
-        {del.begrunnelseFritekst && <BubbleText bodyText={decodeHtmlEntity(del.begrunnelseFritekst)} />}
-      </div>
-    ))}
+    {historikkinnslag.historikkinnslagDeler.map((del, delIndex) => {
+      const { aarsak, begrunnelse, begrunnelseFritekst, aarsakKodeverkType, begrunnelseKodeverkType } = del;
+
+      const aarsakTekst = begrunnelse
+        ? kodeverkNavnFraKodeFn(begrunnelse, KodeverkType[aarsakKodeverkType] || KodeverkType.VENT_AARSAK)
+        : null;
+
+      const begrunnelseTekst = begrunnelse
+        ? kodeverkNavnFraKodeFn(
+            begrunnelse,
+            KodeverkType[begrunnelseKodeverkType] || KodeverkType.HISTORIKK_BEGRUNNELSE_TYPE,
+          )
+        : null;
+
+      return (
+        <div
+          key={
+            `del${delIndex}` // eslint-disable-line react/no-array-index-key
+          }
+        >
+          <Label size="small" as="p" className="snakkeboble-panel__tekst">
+            {findHendelseText(del.hendelse, kodeverkNavnFraKodeFn)}
+          </Label>
+          {aarsak && <BodyShort size="small">{aarsakTekst}</BodyShort>}
+          {begrunnelse && <BubbleText bodyText={begrunnelseTekst} />}
+          {begrunnelseFritekst && <BubbleText bodyText={decodeHtmlEntity(begrunnelseFritekst)} />}
+        </div>
+      );
+    })}
   </>
 );
 
