@@ -17,7 +17,7 @@ import { BodyShort, Table, VStack } from '@navikt/ds-react';
 import { RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import moment from 'moment';
-import React, { FunctionComponent, useMemo } from 'react';
+import { FunctionComponent, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { OppholdInntektOgPerioderFormState, PerioderMedMedlemskapFaktaPanelFormState } from './FormState';
 import { MedlemskapPeriode } from './Medlemskap';
@@ -52,16 +52,12 @@ interface PerioderMedMedlemskapFaktaPanelProps {
 
 interface StaticFunctions {
   buildInitialValues: (
-    periode: Periode,
     medlemskapPerioder: MedlemskapPeriode[],
     soknad: Soknad,
     aksjonspunkter: Aksjonspunkt[],
     getKodeverknavn: (kode: Kodeverk) => string,
+    periode?: Periode,
   ) => PerioderMedMedlemskapFaktaPanelFormState;
-  transformValues: (
-    values: PerioderMedMedlemskapFaktaPanelFormState,
-    manuellVurderingTyper,
-  ) => { kode: string; medlemskapManuellVurderingType: string };
 }
 
 /**
@@ -148,11 +144,11 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
 };
 
 PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
-  periode: Periode,
   medlemskapPerioder: MedlemskapPeriode[],
   soknad: Soknad,
   aksjonspunkter: Aksjonspunkt[],
   getKodeverknavn: (kode: Kodeverk) => string,
+  periode?: Periode,
 ) => {
   const fixedMedlemskapPerioder = medlemskapPerioder
     ?.map(i => ({
@@ -165,29 +161,18 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
     .sort((p1, p2) => new Date(p1.fom).getTime() - new Date(p2.fom).getTime());
   const filteredAp = aksjonspunkter.filter(
     ap =>
-      periode.aksjonspunkter.includes(ap.definisjon.kode) ||
-      (periode.aksjonspunkter.length > 0 &&
-        periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE) &&
+      periode?.aksjonspunkter.includes(ap.definisjon.kode) ||
+      (periode?.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE) &&
         ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
   );
 
   return {
     fixedMedlemskapPerioder,
-    medlemskapManuellVurderingType: periode.medlemskapManuellVurderingType,
+    medlemskapManuellVurderingType: periode?.medlemskapManuellVurderingType,
     fodselsdato: soknad && soknad.fodselsdatoer ? Object.values(soknad.fodselsdatoer)[0] : undefined,
     hasPeriodeAksjonspunkt: filteredAp.length > 0,
     isPeriodAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status.kode)),
   };
 };
-
-PerioderMedMedlemskapFaktaPanel.transformValues = (
-  values: PerioderMedMedlemskapFaktaPanelFormState,
-  manuellVurderingTyper,
-) => ({
-  kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-  medlemskapManuellVurderingType: manuellVurderingTyper.find(
-    m => m.kode === values.medlemskapManuellVurderingType.kode,
-  ),
-});
 
 export default PerioderMedMedlemskapFaktaPanel;

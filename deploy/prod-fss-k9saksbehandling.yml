@@ -105,4 +105,4 @@ spec:
     - name: NYE_NOKKELTALL
       value: "false"
     - name: UTVIDET_VARSELFELT
-      value: "false"
+      value: "true"
