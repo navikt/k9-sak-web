@@ -1,7 +1,7 @@
 import axiosEtag from './axiosEtag';
 
 import initRestMethods from './initRestMethods';
-import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/interceptors/navCallid.js';
+import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
 
 /**
  * getAxiosHttpClientApi
