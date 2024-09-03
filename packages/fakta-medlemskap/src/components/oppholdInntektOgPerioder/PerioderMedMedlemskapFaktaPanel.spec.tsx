@@ -4,7 +4,6 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import messages from '../../../i18n/nb_NO.json';
 import { MedlemskapPeriode } from './Medlemskap';
@@ -222,11 +221,11 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       return '';
     };
     const initialValues = PerioderMedMedlemskapFaktaPanel.buildInitialValues(
-      periode,
       medlemskapPerioder,
       soknad,
       aksjonspunkter,
       getKodeverknavn,
+      periode,
     );
 
     expect(initialValues).toStrictEqual({

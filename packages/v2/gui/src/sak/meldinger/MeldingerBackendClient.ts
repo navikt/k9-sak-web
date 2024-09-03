@@ -36,6 +36,7 @@ export default class MeldingerBackendClient {
       if (resp !== null && resp.navn !== undefined && resp.navn !== null) {
         return {
           name: resp.navn,
+          utilgjengelig: resp.utilgjengeligÅrsak,
         };
       }
       if (promise.isCancelled) {

@@ -9,6 +9,7 @@ import { Detail, Heading, Label } from '@navikt/ds-react';
 import { SetStateAction } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './vilkarresultatMedOverstyringForm.module.css';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
   aksjonspunktCodes.some(code => code === aksjonspunktCode);
@@ -78,7 +79,9 @@ const VilkarresultatMedOverstyringHeader = ({
           </FlexColumn>
           {lovReferanse && (
             <FlexColumn>
-              <Detail className={styles.vilkar}>{lovReferanse}</Detail>
+              <Detail className={styles.vilkar}>
+                <Lovreferanse>{lovReferanse}</Lovreferanse>
+              </Detail>
             </FlexColumn>
           )}
         </FlexRow>
