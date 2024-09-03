@@ -1,7 +1,7 @@
 import type { FagsakDto } from '../../generated';
 import type { Kodeverk } from '../../../shared/Kodeverk.ts';
 
-export type FagsakStatus = Exclude<FagsakDto['status'], undefined>;
+export type FagsakStatus = Exclude<FagsakDto['status'], undefined | null>;
 
 export type FagsakStatusKodeverk = Kodeverk<FagsakStatus, 'FAGSAK_STATUS'>;
 
