@@ -4336,6 +4336,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/rest-api@workspace:packages/rest-api"
   dependencies:
+    "@k9-sak-web/backend": "workspace:^"
     axios: 1.7.5
     node-cache: 5.1.2
   languageName: unknown
