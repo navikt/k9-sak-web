@@ -10,6 +10,7 @@ import React, { SetStateAction } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import styles from './SoknadsfristVilkarForm.module.css';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
   aksjonspunktCodes.some(code => code === aksjonspunktCode);
@@ -76,7 +77,9 @@ const SoknadsfristVilkarHeader = ({
           </FlexColumn>
           {lovReferanse && (
             <FlexColumn>
-              <Detail className={styles.vilkar}>{lovReferanse}</Detail>
+              <Detail className={styles.vilkar}>
+                <Lovreferanse>{lovReferanse}</Lovreferanse>
+              </Detail>
             </FlexColumn>
           )}
         </FlexRow>

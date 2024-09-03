@@ -3,6 +3,7 @@ import Kodeverk from './kodeverkTsType';
 export type BeregningsresultatPeriodeAndel = Readonly<{
   arbeidsgiverNavn: string;
   arbeidsgiverOrgnr: string;
+  arbeidsgiverPersonIdent: string;
   refusjon: number;
   tilSoker: number;
   uttak: any[];

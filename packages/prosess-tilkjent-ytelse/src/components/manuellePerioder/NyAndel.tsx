@@ -25,6 +25,17 @@ const mapArbeidsgivere = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
       ))
     : [];
 
+const mapArbeidsgiverePrivatperson = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
+  arbeidsgivere
+    ? Object.values(arbeidsgivere)
+      .filter(arbeidsgiver => arbeidsgiver.erPrivatPerson)
+      .map(({ navn, identifikator }) => (
+      <option value={identifikator} key={identifikator}>
+        {navn} ({identifikator})
+      </option>
+    ))
+    : [];
+
 const getInntektskategori = alleKodeverk => {
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI];
   return aktivitetsstatuser.map(ik => (
@@ -101,24 +112,44 @@ export const NyAndel = ({
                 />
               </FlexColumn>
               {!erSN && !erFL && (
-                <FlexColumn className={styles.relative}>
-                  <SelectField
-                    label={{ id: 'TilkjentYtelse.NyPeriode.Arbeidsgiver' }}
-                    bredde="xl"
-                    name={`${periodeElementFieldId}.arbeidsgiverOrgnr`}
-                    validate={[required]}
-                    selectValues={mapArbeidsgivere(arbeidsgivere)}
-                  />
-                  <div
-                    onClick={() => setOpen(true)}
-                    onKeyDown={() => setOpen(true)}
-                    className={styles.addArbeidsforhold}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    <Image className={styles.addCircleIcon} src={addCircleIcon} alt="Ny arbeidsgiver" />
-                  </div>
-                </FlexColumn>
+                <>
+                  <FlexColumn className={styles.relative}>
+                    <SelectField
+                      label={{ id: 'TilkjentYtelse.NyPeriode.Arbeidsgiver' }}
+                      bredde="xl"
+                      name={`${periodeElementFieldId}.arbeidsgiverOrgnr`}
+                      validate={[required]}
+                      selectValues={mapArbeidsgivere(arbeidsgivere)}
+                    />
+                    <div
+                      onClick={() => setOpen(true)}
+                      onKeyDown={() => setOpen(true)}
+                      className={styles.addArbeidsforhold}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      <Image className={styles.addCircleIcon} src={addCircleIcon} alt="Ny arbeidsgiver" />
+                    </div>
+                  </FlexColumn>
+                  <FlexColumn className={styles.relative}>
+                    <SelectField
+                      label={{ id: 'TilkjentYtelse.NyPeriode.ArbeidsgiverPrivatperson' }}
+                      bredde="xl"
+                      name={`${periodeElementFieldId}.arbeidsgiverPersonIdent`}
+                      validate={[required]}
+                      selectValues={mapArbeidsgiverePrivatperson(arbeidsgivere)}
+                    />
+                    <div
+                      onClick={() => setOpen(true)}
+                      onKeyDown={() => setOpen(true)}
+                      className={styles.addArbeidsforhold}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      <Image className={styles.addCircleIcon} src={addCircleIcon} alt="Ny arbeidsgiver (privatperson)" />
+                    </div>
+                  </FlexColumn>
+                </>
               )}
               <FlexColumn>
                 <InputField
