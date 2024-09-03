@@ -1,6 +1,7 @@
 import { composeStories, StoryFn } from '@storybook/react';
 import { userEvent } from '@storybook/test';
 import { act, render, screen } from '@testing-library/react';
+import React from 'react';
 import * as stories from '../MedlemskapFaktaIndex.stories';
 import MedlemskapInfoPanel from './MedlemskapInfoPanel';
 

@@ -7,6 +7,7 @@
   "exports": {
     "./app/*": "./src/app/*",
     "./sak/*": "./src/sak/*",
+    "./shared/*": "./src/shared/*",
     "./utils/*": "./src/utils/*",
     "./kodeverk/*": "./src/kodeverk/*",
     "./storybook/*": "./src/storybook/*",

@@ -1,10 +1,10 @@
-import React from 'react';
-import { screen } from '@testing-library/react';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
+import { screen } from '@testing-library/react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+
 import { Periode } from './Periode';
 import StatusForBorgerFaktaPanel from './StatusForBorgerFaktaPanel';
 

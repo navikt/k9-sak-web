@@ -8,6 +8,7 @@ import React from 'react';
 import { intlMock } from '../../i18n/index';
 import messages from '../../i18n/nb_NO.json';
 import { MessagesTilbakekrevingImpl as MessagesTilbakekreving } from './MessagesTilbakekreving';
+import { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 
 const mockProps = {
   setRecipient: () => undefined,
@@ -24,7 +25,7 @@ const mockProps = {
 describe('<MessagesTilbakekreving>', () => {
   const sprakkode = 'en';
 
-  const aktorer = [
+  const aktorer: Mottaker[] = [
     { id: '00000000', type: 'AKTØRID' },
     { id: '123456789', type: 'ORGNR' },
   ];

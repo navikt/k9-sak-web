@@ -3,13 +3,12 @@ import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
-import {
-  bestemAvsenderApp as v2BestemAvsenderApp,
-  lagVisningsnavnForMottaker as v2LagvisningsnavnForMottaker,
-} from '@k9-sak-web/gui/utils/formidling.js';
+import { bestemAvsenderApp as v2BestemAvsenderApp } from '@k9-sak-web/gui/utils/formidling.js';
 import { isBehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import type { BehandlingInfo } from '@k9-sak-web/gui/sak/BehandlingInfo.js';
 import type { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
+import { lagVisningsnavnForMottaker as v2LagvisningsnavnForMottaker } from '@k9-sak-web/gui/sak/meldinger/MottakerSelect.js';
+import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 
 export interface VedtaksbrevMal {
   dokumentMalType: string;
@@ -27,10 +26,7 @@ export interface TilgjengeligeVedtaksbrev {
   vedtaksbrevmaler: Record<string, string>;
 }
 
-export type Brevmottaker = Readonly<{
-  id: string;
-  type: string;
-}>;
+export type Brevmottaker = Readonly<Mottaker>;
 
 export function bestemAvsenderApp(type: string): string {
   if (isBehandlingType(type)) {
@@ -40,11 +36,11 @@ export function bestemAvsenderApp(type: string): string {
 }
 
 export function lagVisningsnavnForMottaker(
-  mottakerId: string,
+  mottaker: Mottaker,
   personopplysninger?: Personopplysninger,
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId,
 ): string {
-  return v2LagvisningsnavnForMottaker(mottakerId, personopplysninger, arbeidsgiverOpplysningerPerId);
+  return v2LagvisningsnavnForMottaker(mottaker, personopplysninger, arbeidsgiverOpplysningerPerId);
 }
 
 function vedtaksbrevmaler(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev) {

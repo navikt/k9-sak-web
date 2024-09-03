@@ -1,14 +1,14 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { Aksjonspunkt } from '@k9-sak-web/types';
-import { FormProvider, useForm } from 'react-hook-form';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { Aksjonspunkt } from '@k9-sak-web/types';
+import { screen } from '@testing-library/react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { MedlemskapPeriode } from './Medlemskap';
 import { Periode } from './Periode';
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
@@ -203,7 +203,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         },
       ],
       isPeriodAksjonspunktClosed: false,
-      medlemskapManuellVurderingType: 'manuellType',
+      medlemskapManuellVurderingType: { kode: 'manuellType', kodeverk: '' },
       fodselsdato: '2017-10-15',
       hasPeriodeAksjonspunkt: true,
     });
