@@ -49,11 +49,11 @@ interface OppholdInntektOgPeriodeFormProps {
 
 interface StaticFunctions {
   buildInitialValues: (
-    valgtPeriode?: Periode,
     alleAksjonspunkter: Aksjonspunkt[],
     soknad: Soknad,
     medlemskapPerioder: MedlemskapPeriode[],
     gjeldendeFom: string,
+    valgtPeriode?: Periode,
   ) => OppholdInntektOgPeriodeFormState;
 }
 

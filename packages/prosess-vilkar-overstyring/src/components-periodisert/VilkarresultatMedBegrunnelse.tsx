@@ -68,7 +68,6 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
         </>
       )}
       <VilkarResultPickerPeriodisertRHF
-        avslagsarsaker={avslagsarsaker}
         customVilkarOppfyltText={
           <FormattedMessage
             id={customVilkarOppfyltText ? customVilkarOppfyltText.id : 'VilkarresultatMedOverstyringForm.ErOppfylt'}

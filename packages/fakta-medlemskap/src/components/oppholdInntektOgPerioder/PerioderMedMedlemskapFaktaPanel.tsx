@@ -52,10 +52,10 @@ interface PerioderMedMedlemskapFaktaPanelProps {
 
 interface StaticFunctions {
   buildInitialValues: (
-    periode: Periode,
     medlemskapPerioder: MedlemskapPeriode[],
     soknad: Soknad,
     aksjonspunkter: Aksjonspunkt[],
+    periode: Periode,
   ) => PerioderMedMedlemskapFaktaPanelFormState;
 }
 
@@ -149,10 +149,10 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
 };
 
 PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
-  periode: Periode,
   medlemskapPerioder: MedlemskapPeriode[],
   soknad: Soknad,
   aksjonspunkter: Aksjonspunkt[],
+  periode: Periode,
 ) => {
   const fixedMedlemskapPerioder = medlemskapPerioder
     ?.map(i => ({

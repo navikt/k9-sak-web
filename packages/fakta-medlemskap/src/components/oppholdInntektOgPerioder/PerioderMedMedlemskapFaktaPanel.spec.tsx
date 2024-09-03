@@ -179,10 +179,10 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
     ];
 
     const initialValues = PerioderMedMedlemskapFaktaPanel.buildInitialValues(
-      periode,
       medlemskapPerioder,
       soknad,
       aksjonspunkter,
+      periode,
     );
 
     expect(initialValues).toStrictEqual({
