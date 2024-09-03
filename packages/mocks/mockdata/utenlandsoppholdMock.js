@@ -62,6 +62,22 @@ const utenlandsopphold = {
       region: 'EOS',
       årsak: 'INGEN',
     },
+    {
+      periode: `${dayjs().subtract(52, 'day').format('YYYY-MM-DD')}/${dayjs()
+        .subtract(47, 'day')
+        .format('YYYY-MM-DD')}`,
+      landkode: 'XXK', // LANDKODER
+      region: 'ANNET', // REGION
+      årsak: 'INGEN',
+    },
+    {
+      periode: `${dayjs().subtract(59, 'day').format('YYYY-MM-DD')}/${dayjs()
+        .subtract(55, 'day')
+        .format('YYYY-MM-DD')}`,
+      landkode: 'GBR', // LANDKODER
+      region: 'EOS', // REGION
+      årsak: 'INGEN',
+    },
   ],
 };
 

@@ -49,11 +49,11 @@ interface OppholdInntektOgPeriodeFormProps {
 
 interface StaticFunctions {
   buildInitialValues: (
-    valgtPeriode: Periode,
     alleAksjonspunkter: Aksjonspunkt[],
     soknad: Soknad,
     medlemskapPerioder: MedlemskapPeriode[],
     gjeldendeFom: string,
+    valgtPeriode?: Periode,
   ) => OppholdInntektOgPeriodeFormState;
 }
 
@@ -85,12 +85,7 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
   );
   return (
     <BorderBox>
-      <OppholdINorgeOgAdresserFaktaPanel
-        readOnly={readOnly}
-        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-        hasBosattAksjonspunkt={valgtPeriode.isBosattAksjonspunktClosed}
-        isBosattAksjonspunktClosed={valgtPeriode.isBosattAksjonspunktClosed}
-      />
+      <OppholdINorgeOgAdresserFaktaPanel readOnly={readOnly} alleMerknaderFraBeslutter={alleMerknaderFraBeslutter} />
       <VerticalSpacer twentyPx />
       <PerioderMedMedlemskapFaktaPanel readOnly={readOnly} alleMerknaderFraBeslutter={alleMerknaderFraBeslutter} />
       {(hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, valgtPeriode.aksjonspunkter) ||
@@ -140,16 +135,16 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
 };
 
 OppholdInntektOgPeriodeForm.buildInitialValues = (
-  valgtPeriode: Periode,
   alleAksjonspunkter: Aksjonspunkt[],
   soknad: Soknad,
   medlemskapPerioder: MedlemskapPeriode[],
   gjeldendeFom: string,
+  valgtPeriode?: Periode,
 ) => {
   const aksjonspunkter = alleAksjonspunkter
     .filter(
       ap =>
-        valgtPeriode.aksjonspunkter.includes(ap.definisjon) ||
+        valgtPeriode?.aksjonspunkter.includes(ap.definisjon) ||
         ap.definisjon === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
     )
     .filter(ap => ap.definisjon !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
@@ -160,19 +155,20 @@ OppholdInntektOgPeriodeForm.buildInitialValues = (
       }
     | undefined;
   if (
-    hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, valgtPeriode.aksjonspunkter) ||
-    hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, valgtPeriode.aksjonspunkter)
+    valgtPeriode &&
+    (hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, valgtPeriode.aksjonspunkter) ||
+      hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, valgtPeriode.aksjonspunkter))
   ) {
     oppholdValues = StatusForBorgerFaktaPanel.buildInitialValues(valgtPeriode, aksjonspunkter);
   }
-  if (valgtPeriode.aksjonspunkter.length > 0) {
+  if (valgtPeriode && valgtPeriode.aksjonspunkter.length > 0) {
     confirmValues = FaktaBegrunnelseTextFieldRHF.buildInitialValues([valgtPeriode]);
   }
 
   return {
     ...valgtPeriode,
-    ...OppholdINorgeOgAdresserFaktaPanel.buildInitialValues(soknad, valgtPeriode, aksjonspunkter),
-    ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(valgtPeriode, medlemskapPerioder, soknad, aksjonspunkter),
+    ...OppholdINorgeOgAdresserFaktaPanel.buildInitialValues(soknad, aksjonspunkter, valgtPeriode),
+    ...PerioderMedMedlemskapFaktaPanel.buildInitialValues(medlemskapPerioder, soknad, aksjonspunkter, valgtPeriode),
     fom: gjeldendeFom || moment().format(ISO_DATE_FORMAT),
     ...oppholdValues,
     ...confirmValues,

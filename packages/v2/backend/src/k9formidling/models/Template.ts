@@ -1,16 +1,18 @@
-import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
 import type { Linker } from './Linker.js';
 import { isString } from '../../typecheck/isString.js';
 import { isArray } from '../../typecheck/isArray.js';
 import { isBoolean } from '../../typecheck/isBoolean.js';
 import { isObject } from '../../typecheck/isObject.js';
+import type { Mottaker } from './Mottaker.js';
 
 /**
  * Matcher k9-formidling Template data class i MalController.kt
+ *
+ * XXX: Vurder å hente denne inn gjennom openapi generering via k9-sak K9FormidlingKodeverkWeb istadenfor å deklarere den her
  */
 export interface Template {
   readonly navn: string;
-  readonly mottakere: MottakerDto[];
+  readonly mottakere: Mottaker[];
   readonly linker: Linker[];
   readonly støtterFritekst: boolean;
   readonly støtterTittelOgFritekst: boolean;
@@ -35,17 +37,17 @@ const templateKeys: TemplateKeys[] = [
 const isTemplateWithUnknownValues = (v: unknown): v is TemplateWithUnknownValues =>
   isObject(v) && templateKeys.every(tk => Object.keys(v).includes(tk));
 
-const isMottakerDtoKeys = (v: unknown): v is Record<keyof MottakerDto, unknown> =>
+const isMottakerKeys = (v: unknown): v is Record<keyof Omit<Mottaker, 'utilgjengelig'>, unknown> =>
   isObject(v) && Object.keys(v).includes('id') && Object.keys(v).includes('type');
 
-export const isMottakerDto = (v: Record<keyof MottakerDto, unknown>): v is MottakerDto =>
+export const isMottaker = (v: Record<keyof Omit<Mottaker, 'utilgjengelig'>, unknown>): v is Mottaker =>
   isString(v.type) && isString(v.id);
 
 export const isTemplate = (v: unknown): v is Template =>
   isTemplateWithUnknownValues(v) &&
   isString(v.navn) &&
-  isMottakerDtoKeys(v.mottakere) &&
-  isMottakerDto(v.mottakere) &&
+  isMottakerKeys(v.mottakere) &&
+  isMottaker(v.mottakere) &&
   isArray(v.linker) &&
   isBoolean(v.støtterFritekst) &&
   isBoolean(v.støtterTittelOgFritekst) &&

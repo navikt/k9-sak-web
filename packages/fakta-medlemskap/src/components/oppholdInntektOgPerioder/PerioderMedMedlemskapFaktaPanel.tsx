@@ -1,8 +1,6 @@
-import { FunctionComponent, useMemo } from 'react';
 import { Label } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import {
   DateLabel,
   FaktaGruppe,
@@ -18,7 +16,7 @@ import { BodyShort, Table, VStack } from '@navikt/ds-react';
 import { RadioGroupPanel } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import moment from 'moment';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { FunctionComponent, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { OppholdInntektOgPerioderFormState, PerioderMedMedlemskapFaktaPanelFormState } from './FormState';
 import { MedlemskapPeriode } from './Medlemskap';
@@ -26,6 +24,8 @@ import { MerknaderFraBeslutter } from './MerknaderFraBeslutter';
 import { Periode } from './Periode';
 import { Soknad } from './Soknad';
 import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkType } from '../../../../v2/lib/src/kodeverk/types';
 
 const headerTextCodes = ['Periode', 'Dekning', 'Status', 'Beslutningsdato'];
 
@@ -52,15 +52,11 @@ interface PerioderMedMedlemskapFaktaPanelProps {
 
 interface StaticFunctions {
   buildInitialValues: (
-    periode: Periode,
     medlemskapPerioder: MedlemskapPeriode[],
     soknad: Soknad,
     aksjonspunkter: Aksjonspunkt[],
+    periode: Periode,
   ) => PerioderMedMedlemskapFaktaPanelFormState;
-  transformValues: (
-    values: PerioderMedMedlemskapFaktaPanelFormState,
-    manuellVurderingTyper,
-  ) => { kode: string; medlemskapManuellVurderingType: string };
 }
 
 /**
@@ -153,10 +149,10 @@ export const PerioderMedMedlemskapFaktaPanel: FunctionComponent<PerioderMedMedle
 };
 
 PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
-  periode: Periode,
   medlemskapPerioder: MedlemskapPeriode[],
   soknad: Soknad,
   aksjonspunkter: Aksjonspunkt[],
+  periode: Periode,
 ) => {
   const fixedMedlemskapPerioder = medlemskapPerioder
     ?.map(i => ({
@@ -169,28 +165,18 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
     .sort((p1, p2) => new Date(p1.fom).getTime() - new Date(p2.fom).getTime());
   const filteredAp = aksjonspunkter.filter(
     ap =>
-      periode.aksjonspunkter.includes(ap.definisjon) ||
-      (periode.aksjonspunkter.length > 0 &&
-        periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE) &&
+      periode?.aksjonspunkter.includes(ap.definisjon) ||
+      (periode?.aksjonspunkter.length > 0 &&
+        periode?.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE) &&
         ap.definisjon === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
   );
 
   return {
     fixedMedlemskapPerioder,
-    medlemskapManuellVurderingType: periode.medlemskapManuellVurderingType,
+    medlemskapManuellVurderingType: periode?.medlemskapManuellVurderingType,
     fodselsdato: soknad && soknad.fodselsdatoer ? Object.values(soknad.fodselsdatoer)[0] : undefined,
     hasPeriodeAksjonspunkt: filteredAp.length > 0,
     isPeriodAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status)),
-  };
-};
-
-PerioderMedMedlemskapFaktaPanel.transformValues = (
-  values: PerioderMedMedlemskapFaktaPanelFormState,
-  manuellVurderingTyper,
-) => {
-  return {
-    kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-    medlemskapManuellVurderingType: manuellVurderingTyper.find(m => m.kode === values.medlemskapManuellVurderingType),
   };
 };
 

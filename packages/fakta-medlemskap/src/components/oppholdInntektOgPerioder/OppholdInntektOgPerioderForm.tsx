@@ -83,8 +83,10 @@ export const transformValues = (values: OppholdInntektOgPerioderFormState, aksjo
           lovligOppholdVurdering,
           medlemskapManuellVurderingType,
           begrunnelse,
+          bosattVurdering,
         } = periode;
         const bekreftetPeriode = {
+          bosattVurdering,
           vurderingsdato,
           aksjonspunkter: aksjonspunkterFraPeriode,
           oppholdsrettVurdering,
@@ -109,19 +111,19 @@ const buildInitialValues = (
   fagsakPerson: FagsakPerson,
   medlemskap: Medlemskap,
   perioder: Periode[],
-  valgtPeriode: Periode,
   aksjonspunkter: Aksjonspunkt[],
+  valgtPeriode?: Periode,
 ): OppholdInntektOgPerioderFormState => ({
   soknad,
   person: fagsakPerson,
   gjeldendeFom: medlemskap.fom,
   perioder,
   oppholdInntektOgPeriodeForm: OppholdInntektOgPeriodeForm.buildInitialValues(
-    valgtPeriode,
     aksjonspunkter,
     soknad,
     medlemskap.medlemskapPerioder,
     medlemskap.fom,
+    valgtPeriode,
   ),
 });
 
@@ -166,8 +168,8 @@ export const OppholdInntektOgPerioderForm = ({
       fagsakPerson,
       medlemskap,
       oppdatertePerioder || initialPerioder,
-      nyValgtPeriode || valgtPeriode,
       aksjonspunkter,
+      nyValgtPeriode || valgtPeriode,
     );
 
   const formMethods = useForm<OppholdInntektOgPerioderFormState>({

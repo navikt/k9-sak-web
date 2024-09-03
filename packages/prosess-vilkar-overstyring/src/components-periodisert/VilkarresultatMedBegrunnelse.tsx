@@ -1,8 +1,6 @@
 import { FormattedMessage } from 'react-intl';
 
 import { VerticalSpacer, useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
-import { VilkarResultPickerPeriodisert as VilkarResultPicker } from '@k9-sak-web/prosess-felles';
-
 import { VilkarResultPickerPeriodisertRHF } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
@@ -69,7 +67,7 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
           <VerticalSpacer eightPx />
         </>
       )}
-      <VilkarResultPicker
+      <VilkarResultPickerPeriodisertRHF
         customVilkarOppfyltText={
           <FormattedMessage
             id={customVilkarOppfyltText ? customVilkarOppfyltText.id : 'VilkarresultatMedOverstyringForm.ErOppfylt'}

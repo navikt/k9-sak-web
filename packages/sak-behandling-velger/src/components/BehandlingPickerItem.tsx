@@ -27,6 +27,7 @@ const getContentProps = (behandling: BehandlingAppKontekst) => {
       ? kodeverkNavnFraKode(behandling.behandlingsresultat.type, KodeverkType.BEHANDLING_RESULTAT_TYPE)
       : undefined,
     behandlingsresultatTypeKode: behandling.behandlingsresultat ? behandling.behandlingsresultat.type : undefined,
+    erFerdigstilt: !!behandling.avsluttet,
   };
 };
 

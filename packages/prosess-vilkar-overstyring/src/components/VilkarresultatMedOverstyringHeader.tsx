@@ -9,6 +9,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import styles from './vilkarresultatMedOverstyringForm.module.css';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
   aksjonspunktCodes.some(code => code === aksjonspunktCode);
@@ -78,7 +79,9 @@ const VilkarresultatMedOverstyringHeader = ({
           </FlexColumn>
           {lovReferanse && (
             <FlexColumn>
-              <Detail className={styles.vilkar}>{lovReferanse}</Detail>
+              <Detail className={styles.vilkar}>
+                <Lovreferanse>{lovReferanse}</Lovreferanse>
+              </Detail>
             </FlexColumn>
           )}
         </FlexRow>

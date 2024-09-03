@@ -3,9 +3,8 @@ import React from 'react';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import { VilkarresultatMedOverstyringFormPeriodisert } from './VilkarresultatMedOverstyringFormPeriodisert';
-
 import messages from '../../i18n/nb_NO.json';
+import { VilkarresultatMedOverstyringFormPeriodisert } from './VilkarresultatMedOverstyringFormPeriodisert';
 
 describe('<VilkarresultatMedOverstyringForm>', () => {
   it('skal rendre form med knapp når vilkåret er overstyrt', () => {
