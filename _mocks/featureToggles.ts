@@ -76,5 +76,9 @@ export const featureTogglesFactory = () => [
   {
     key: 'NYE_NOKKELTALL',
     value: process.env.VITE_NYE_NOKKELTALL,
+  },
+  {
+    key: 'UTVIDET_VARSELFELT',
+    value: process.env.VITE_UTVIDET_VARSELFELT,
   }
 ];

@@ -14,6 +14,7 @@ import React, { ReactNode } from 'react';
 import getPackageIntl from '../../i18n/getPackageIntl';
 import ProsessStegSubmitButton from '../ProsessStegSubmitButton';
 import styles from './prosessPanelTemplate.module.css';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 interface OwnProps {
   title: string;
@@ -70,7 +71,9 @@ const ProsessPanelTemplate = ({
           </FlexColumn>
           {lovReferanse && (
             <FlexColumn>
-              <Detail className={styles.vilkar}>{lovReferanse}</Detail>
+              <Detail className={styles.vilkar}>
+                <Lovreferanse>{lovReferanse}</Lovreferanse>
+              </Detail>
             </FlexColumn>
           )}
         </FlexRow>

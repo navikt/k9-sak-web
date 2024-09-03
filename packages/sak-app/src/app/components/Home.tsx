@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { NotFoundPage } from '@k9-sak-web/sak-infosider';
+import NotFoundPage from '@k9-sak-web/gui/sak/feilmeldinger/NotFoundPage.js';
 
 import AktoerIndex from '../../aktoer/AktoerIndex';
 import FagsakIndex from '../../fagsak/FagsakIndex';

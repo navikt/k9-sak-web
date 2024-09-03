@@ -31,6 +31,7 @@ import styles from './avregningPanel.module.css';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
+const maxLength12000 = maxLength(12000);
 const simuleringAksjonspunkter = [aksjonspunktCodes.VURDER_FEILUTBETALING];
 const formName = 'AvregnigForm';
 const IKKE_SEND = 'IKKE_SEND';
@@ -108,6 +109,7 @@ export class AvregningPanelImpl extends Component {
       readOnly,
       sprakkode,
       featureVarseltekst,
+      featureUtvidetVarselfelt,
       previewCallback,
       hasOpenTilbakekrevingsbehandling,
       ...formProps
@@ -199,8 +201,8 @@ export class AvregningPanelImpl extends Component {
                                       <TextAreaField
                                         name="varseltekst"
                                         label={{ id: 'Avregning.fritekst' }}
-                                        validate={[required, minLength3, maxLength1500, hasValidText]}
-                                        maxLength={1500}
+                                        validate={[required, minLength3, featureUtvidetVarselfelt ? maxLength12000 : maxLength1500, hasValidText]}
+                                        maxLength={featureUtvidetVarselfelt ? 12000 : 1500}
                                         readOnly={readOnly}
                                         id="avregningFritekst"
                                         badges={[
@@ -338,6 +340,7 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       initialValues: buildInitialValues(state, ownProps),
       behandlingFormPrefix: getBehandlingFormPrefix(behandlingId, behandlingVersjon),
       featureVarseltekst: erFrisinn || featureToggles?.VARSELTEKST,
+      featureUtvidetVarselfelt: featureToggles?.UTVIDET_VARSELFELT,
       saksnummer: fagsak.saksnummer,
       hasOpenTilbakekrevingsbehandling,
       sprakkode,
