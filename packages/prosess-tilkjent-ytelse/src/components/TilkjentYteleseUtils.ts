@@ -1,3 +1,5 @@
+import {ArbeidsgiverOpplysninger} from "@k9-sak-web/types";
+
 export const getAktivitet = (aktivitetStatus, getKodeverknavn) =>
   // hvis valgtAndel ikke satt ennå return tom string.
   aktivitetStatus === undefined ? '' : getKodeverknavn(aktivitetStatus);
@@ -34,7 +36,7 @@ export const createArbeidsgiverVisningsnavnForAndel = (andel, getKodeverknavn, a
   return `${navn} (${identifikator})${getEndCharFromId(andel.eksternArbeidsforholdId)}`;
 };
 
-export const createPrivatarbeidsgiverVisningsnavnForAndel = (andel, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
+export const createPrivatarbeidsgiverVisningsnavnForAndel = (andel, getKodeverknavn, arbeidsgiverOpplysningerPerId: Map<string, ArbeidsgiverOpplysninger>) => {
   if (!andel) return '';
 
   let identifikator;
