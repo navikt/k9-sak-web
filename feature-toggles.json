@@ -90,5 +90,9 @@
   {
     "key": "UTVIDET_VARSELFELT",
     "value": "${UTVIDET_VARSELFELT}"
+  },
+  {
+    "key": "SKILL_UT_PRIVATPERSON",
+    "value": "${SKILL_UT_PRIVATPERSON}"
   }
 ]
