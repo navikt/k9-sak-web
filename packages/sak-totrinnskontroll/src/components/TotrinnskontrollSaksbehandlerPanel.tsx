@@ -95,7 +95,7 @@ const TotrinnskontrollSaksbehandlerPanel = ({
                             <span>
                               <Image src={avslattImg} className={styles.image} />
                             </span>
-                            <span>{vurderArsaker.find(arsak => item === arsak.kode).navn}</span>
+                            <span>{vurderArsaker.find(arsak => item === arsak.kode)?.navn || '-'}</span>
                           </div>
                         ))}
                       </div>
