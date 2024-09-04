@@ -109,3 +109,5 @@ spec:
       value: "true"
     - name: UTVIDET_VARSELFELT
       value: "true"
+    - name: SKILL_UT_PRIVATPERSON
+      value: "true"
