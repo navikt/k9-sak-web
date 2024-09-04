@@ -96,7 +96,7 @@ export const NyAndel = ({
 }: OwnProps & WrappedComponentProps) => {
   const [isOpen, setOpen] = useState(false);
   const [featureToggles] = useFeatureToggles()
-  const skillUtPrivatperson = featureToggles?.SKILL_UT_PRIVATEPERSON
+  const skillUtPrivatperson = featureToggles?.SKILL_UT_PRIVATPERSON
 
   const allFields = fields.getAll();
 
