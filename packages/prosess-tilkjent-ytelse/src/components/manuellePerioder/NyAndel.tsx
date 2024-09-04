@@ -42,9 +42,9 @@ const mapArbeidsgiverePrivatperson = (arbeidsgivere: ArbeidsgiverOpplysningerPer
   arbeidsgivere
     ? Object.values(arbeidsgivere)
       .filter(arbeidsgiver => arbeidsgiver.personIdentifikator != null) // erPrivatPerson returneres ikke fra backend
-      .map(({ navn, identifikator }) => (
-      <option value={identifikator} key={identifikator}>
-        {navn} ({identifikator})
+      .map(({ navn, personIdentifikator }) => (
+      <option value={personIdentifikator} key={personIdentifikator}>
+        {navn} ({personIdentifikator})
       </option>
     ))
     : [];
