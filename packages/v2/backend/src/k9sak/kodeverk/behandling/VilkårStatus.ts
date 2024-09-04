@@ -5,9 +5,7 @@ export type VilkårStatus = Exclude<VilkårDto['vilkarStatus'], undefined>;
 
 export type VilkårStatusKodeverk = Kodeverk<VilkårStatus, 'VILKAR_STATUS'>;
 
-export type VilkårStatusName = 'IKKE_OPPFYLT' | 'IKKE_VURDERT' | 'OPPFYLT' | 'IKKE_RELEVANT' | 'UDEFINERT';
-
-export const vilkårStatus: Readonly<Record<VilkårStatusName, VilkårStatus>> = {
+export const vilkårStatus: Readonly<Record<VilkårStatus, VilkårStatus>> = {
   OPPFYLT: 'OPPFYLT',
   IKKE_OPPFYLT: 'IKKE_OPPFYLT',
   IKKE_VURDERT: 'IKKE_VURDERT',
