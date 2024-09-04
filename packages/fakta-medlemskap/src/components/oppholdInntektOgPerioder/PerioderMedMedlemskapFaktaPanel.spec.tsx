@@ -1,11 +1,10 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { render } from '@fpsak-frontend/utils-test/test-utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
-import messages from '../../../i18n/nb_NO.json';
 import { MedlemskapPeriode } from './Medlemskap';
 import { Periode } from './Periode';
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
@@ -49,7 +48,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     ];
 
-    renderWithIntl(
+    render(
       <Wrapper perioder={perioder}>
         <PerioderMedMedlemskapFaktaPanel
           readOnly={false}
@@ -57,7 +56,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
           alleMerknaderFraBeslutter={{ notAccepted: false }}
         />
       </Wrapper>,
-      { messages },
     );
 
     expect(screen.getByText('testdekning')).toBeInTheDocument();
@@ -77,7 +75,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     ];
 
-    renderWithIntl(
+    render(
       <Wrapper perioder={perioder}>
         <PerioderMedMedlemskapFaktaPanel
           readOnly={false}
@@ -86,7 +84,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
           alleMerknaderFraBeslutter={{ notAccepted: false }}
         />
       </Wrapper>,
-      { messages },
     );
 
     expect(screen.getByText('Fødselsdato: 16.10.2016')).toBeInTheDocument();
@@ -103,7 +100,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     ];
 
-    renderWithIntl(
+    render(
       <Wrapper perioder={perioder}>
         <PerioderMedMedlemskapFaktaPanel
           readOnly={false}
@@ -111,7 +108,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
           alleMerknaderFraBeslutter={{ notAccepted: false }}
         />
       </Wrapper>,
-      { messages },
     );
 
     expect(screen.getByRole('table')).toBeInTheDocument();
@@ -120,7 +116,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
   it('skal ikke vise tabell når det ikke finnes medlemskapsperioder', () => {
     const perioder = [];
 
-    renderWithIntl(
+    render(
       <Wrapper perioder={perioder}>
         <PerioderMedMedlemskapFaktaPanel
           readOnly={false}
@@ -128,7 +124,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
           alleMerknaderFraBeslutter={{ notAccepted: false }}
         />
       </Wrapper>,
-      { messages },
     );
 
     expect(screen.queryByRole('table')).not.toBeInTheDocument();
