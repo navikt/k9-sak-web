@@ -28,7 +28,12 @@ export const UnhandledRejectionCatcher = () => {
         }
       }
       // XXX Legg til visning/handtering av andre feiltyper her.
+
       // Feil som ikkje blir handtert her propagerer vidare og blir logga i konsoll og sentry, men blir ikkje vist til brukaren på noko anna måte.
+      // Vurder å legge til generell visning av alle Error som blir fanga opp
+      // else if(error instanceof Error) {
+      //   addError(new GeneralAsyncError(error.message, error))
+      // }
     };
     addEventListener('unhandledrejection', listener);
     return () => {
