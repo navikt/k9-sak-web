@@ -2,7 +2,7 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';
-import createArbeidsgiverVisningsnavnForAndel from './TilkjentYteleseUtils';
+import { createArbeidsgiverVisningsnavnForAndel } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData';
 

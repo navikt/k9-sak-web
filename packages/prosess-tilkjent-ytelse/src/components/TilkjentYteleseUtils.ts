@@ -48,10 +48,10 @@ export const createPrivatarbeidsgiverVisningsnavnForAndel = (andel, getKodeverkn
     return ''
   }
 
-  const arbeidsgiverOpplysninger = Object.values(arbeidsgiverOpplysningerPerId).find(v => v.personIdentifikator == identifikator)
+  const arbeidsgiverOpplysninger = Object.values(arbeidsgiverOpplysningerPerId).find(v => v?.personIdentifikator == identifikator)
 
   const navn = arbeidsgiverOpplysninger != null
-      ? arbeidsgiverOpplysninger.navn
+      ? arbeidsgiverOpplysninger?.navn
       : '';
 
   if (!navn) {
