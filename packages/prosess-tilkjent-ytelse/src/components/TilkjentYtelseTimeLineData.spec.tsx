@@ -2,7 +2,7 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../../i18n/nb_NO.json';
-import createVisningsnavnForAndel from './TilkjentYteleseUtils';
+import createArbeidsgiverVisningsnavnForAndel from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData';
 
@@ -80,6 +80,6 @@ describe('<TilkjentYtelseTimeLineData>', () => {
     );
 
     expect(screen.getByText('Aktivitetsstatus:')).toBeInTheDocument();
-    expect(createVisningsnavnForAndel(selectedItemDataFL.andeler[0], getKodeverknavn, {})).toBe('Frilans');
+    expect(createArbeidsgiverVisningsnavnForAndel(selectedItemDataFL.andeler[0], getKodeverknavn, {})).toBe('Frilans');
   });
 });
