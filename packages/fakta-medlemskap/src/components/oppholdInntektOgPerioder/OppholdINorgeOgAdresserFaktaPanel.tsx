@@ -164,7 +164,7 @@ OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (
   const filteredAp = aksjonspunkter.filter(
     ap =>
       ap.definisjon.kode === aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT ||
-      (periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT) &&
+      (periode?.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT) &&
         ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
   );
 
