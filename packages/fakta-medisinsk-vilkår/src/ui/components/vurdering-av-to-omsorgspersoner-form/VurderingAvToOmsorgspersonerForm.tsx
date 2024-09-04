@@ -1,5 +1,6 @@
 import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
+import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
 import { Alert, Link } from '@navikt/ds-react';
 import { Box, ContentWithTooltip, Form, Margin, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
@@ -42,11 +43,11 @@ const lagToOmsorgspersonerVurdering = (
     periodeWrapper => new Period((periodeWrapper as AnyType).period.fom, (periodeWrapper as AnyType).period.tom),
   );
   const begrunnelse = formState[FieldName.VURDERING_AV_TO_OMSORGSPERSONER];
-
+  const vasketBegrunnelse = begrunnelse.replace(invalidTextRegex, '');
   return {
     resultat,
     perioder,
-    tekst: begrunnelse,
+    tekst: vasketBegrunnelse,
     dokumenter: finnBenyttedeDokumenter(formState[FieldName.DOKUMENTER], alleDokumenter),
   };
 };

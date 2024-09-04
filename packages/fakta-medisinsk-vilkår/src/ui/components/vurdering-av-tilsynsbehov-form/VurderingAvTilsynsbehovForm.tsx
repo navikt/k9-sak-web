@@ -1,5 +1,6 @@
 import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
 import { Period, isSameOrBefore } from '@fpsak-frontend/utils';
+import { invalidTextRegex } from '@k9-sak-web/gui/utils/validation/regexes.js';
 import { Close } from '@navikt/ds-icons';
 import { Alert, Label, Link } from '@navikt/ds-react';
 import { Box, ContentWithTooltip, Form, Margin, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
@@ -48,10 +49,12 @@ const lagTilsynsbehovVurdering = (
   );
   const begrunnelse = formState[FieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE];
 
+  const vasketBegrunnelse = begrunnelse.replace(invalidTextRegex, '');
+
   return {
     resultat,
     perioder,
-    tekst: begrunnelse,
+    tekst: vasketBegrunnelse,
     dokumenter: finnBenyttedeDokumenter(formState[FieldName.DOKUMENTER], alleDokumenter),
   };
 };
