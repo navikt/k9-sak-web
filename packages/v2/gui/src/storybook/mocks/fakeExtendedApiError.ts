@@ -1,7 +1,7 @@
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/ExtendedApiError.js';
 import { ApiError } from '@navikt/k9-sak-typescript-client';
-import type { K9SakErrorData } from '@k9-sak-web/backend/k9sak/errorhandling/errorData.ts';
-import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.ts';
+import type { K9SakErrorData } from '@k9-sak-web/backend/k9sak/errorhandling/errorData.js';
+import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
 
 type ApiRequestOptions = ApiError['request'];
 type ApiResult = ConstructorParameters<typeof ApiError>[1];

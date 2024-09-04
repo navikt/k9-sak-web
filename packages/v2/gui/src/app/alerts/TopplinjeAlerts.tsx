@@ -1,11 +1,11 @@
-import type { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/ExtendedApiError.js';
-import { ExtendedApiErrorAlert } from './ExtendedApiErrorAlert.js';
 import { VStack } from '@navikt/ds-react';
 import { useEffect, useRef } from 'react';
+import type { ErrorWithAlertInfo } from './AlertInfo.ts';
+import { ErrorAlert } from './ErrorAlert.js';
 
 export interface TopplinjeAlertsProps {
-  readonly apiErrors: ExtendedApiError[];
-  readonly onApiErrorDismiss: (error: ExtendedApiError) => void;
+  readonly errors: ErrorWithAlertInfo[];
+  readonly onErrorDismiss: (error: ErrorWithAlertInfo) => void;
 }
 
 /**
@@ -16,24 +16,24 @@ export interface TopplinjeAlertsProps {
  * Det er forventa at komponent lenger oppe i hierarkiet handterer state oppdatering slik at feilmelding forsvinner når
  * bruker krysser den ut.
  */
-export const TopplinjeAlerts = ({ apiErrors, onApiErrorDismiss }: TopplinjeAlertsProps) => {
-  const prevApiErrors = useRef<ExtendedApiError[]>(apiErrors);
+export const TopplinjeAlerts = ({ errors, onErrorDismiss }: TopplinjeAlertsProps) => {
+  const prevErrors = useRef<ErrorWithAlertInfo[]>(errors);
   useEffect(() => {
-    if (apiErrors.length > prevApiErrors.current.length) {
+    if (errors.length > prevErrors.current.length) {
       // Feil har blitt lagt til. Scroll til toppen av sida så brukar ser feilmeldinga.
       // Kunne brukt scrollIntoView på elementet her, men pga at dekorator ligg utanpå DOM layout øverst vart det
       // delvis skjult då. Vurder å fikse det seinare.
       window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }
-    prevApiErrors.current = apiErrors;
-  }, [apiErrors]);
-  if (apiErrors.length > 0) {
-    const apiErrorAlerts = apiErrors.map(err => (
-      <ExtendedApiErrorAlert error={err} onClose={() => onApiErrorDismiss(err)} key={`apiErr-${err.randomId}`} />
+    prevErrors.current = errors;
+  }, [errors]);
+  if (errors.length > 0) {
+    const errorAlerts = errors.map(err => (
+      <ErrorAlert error={err} onClose={() => onErrorDismiss(err)} key={`err-${err.errorId}`} />
     ));
     return (
       <VStack gap="4" padding="8">
-        {apiErrorAlerts}
+        {errorAlerts}
       </VStack>
     );
   }

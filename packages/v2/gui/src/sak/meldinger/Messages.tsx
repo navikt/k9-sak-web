@@ -27,8 +27,8 @@ import FritekstInput, {
 } from './FritekstInput.js';
 import MalSelect from './MalSelect.jsx';
 import type { BehandlingInfo } from '../BehandlingInfo.js';
-import type { Fagsak } from '../Fagsak.ts';
-import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.ts';
+import type { Fagsak } from '../Fagsak.js';
+import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 
 export interface BackendApi extends TredjepartsmottakerBackendApi {
   hentInnholdBrevmal(

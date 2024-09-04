@@ -7,7 +7,7 @@ export const isNavCallid = (maybe: string): maybe is NavCallid => maybe.startsWi
 
 export class ExtendedApiError extends ApiError {
   public navCallid: NavCallid | null;
-  public readonly randomId: number = Math.floor(Math.random() * 1000000000);
+  public readonly errorId: number = Math.floor(Math.random() * 1000000000);
 
   constructor(apiError: ApiError, navCallid: string | null) {
     // Rekonstruer type som opprinneleg vart sendt til ApiError

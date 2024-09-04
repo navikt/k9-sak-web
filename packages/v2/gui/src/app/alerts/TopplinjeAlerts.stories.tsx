@@ -1,15 +1,16 @@
 import { TopplinjeAlerts } from './TopplinjeAlerts.js';
 import type { Meta, StoryObj } from '@storybook/react';
 import { makeFakeExtendedApiError, makeFakeK9SakValidationError } from '../../storybook/mocks/fakeExtendedApiError.js';
-import type { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/ExtendedApiError.js';
 import { useState } from 'react';
 import { action } from '@storybook/addon-actions';
+import type { ErrorWithAlertInfo } from './AlertInfo.js';
+import GeneralAsyncError from './GeneralAsyncError.js';
 
 const meta = {
   title: 'gui/app/alerts/TopplinjeAlerts.tsx',
   component: TopplinjeAlerts,
   args: {
-    onApiErrorDismiss: action('onApiErrorDismiss'),
+    onErrorDismiss: action('onErrorDismiss'),
   },
   parameters: {
     layout: 'fullscreen',
@@ -23,17 +24,17 @@ type StoryDecorator = Story['decorators'];
 
 // Simulerer at parent komponent held på error state for denne komponent
 const withParentErrorStateMaintainer: StoryDecorator = (story, { args }) => {
-  const [apiErrors, setApiErrors] = useState<ExtendedApiError[]>(args.apiErrors);
-  const dismiss = (err: ExtendedApiError) => {
-    setApiErrors(apiErrors.filter(e => e.randomId !== err.randomId));
-    args.onApiErrorDismiss(err);
+  const [errors, setErrors] = useState<ErrorWithAlertInfo[]>(args.errors);
+  const dismiss = (err: ErrorWithAlertInfo) => {
+    setErrors(errors.filter(e => e.errorId !== err.errorId));
+    args.onErrorDismiss(err);
   };
-  return story({ args: { apiErrors, onApiErrorDismiss: dismiss } });
+  return story({ args: { errors: errors, onErrorDismiss: dismiss } });
 };
 
 export const ValideringsFeil: Story = {
   args: {
-    apiErrors: [
+    errors: [
       makeFakeK9SakValidationError({
         body: {
           feilmelding:
@@ -48,10 +49,17 @@ export const ValideringsFeil: Story = {
 
 export const FleireApiFeil: Story = {
   args: {
-    apiErrors: [
+    errors: [
       makeFakeK9SakValidationError({ body: { feilmelding: 'Her feila det i felt [test1]', type: 'VALIDERINGS_FEIL' } }),
       makeFakeExtendedApiError({ status: 500, body: { feilmelding: 'Noko feila på server' } }),
     ],
+  },
+  decorators: [withParentErrorStateMaintainer],
+};
+
+export const GenerellBakgrunnsfeil: Story = {
+  args: {
+    errors: [new GeneralAsyncError('Boom')],
   },
   decorators: [withParentErrorStateMaintainer],
 };
