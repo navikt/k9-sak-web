@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { render } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -48,7 +48,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     ];
 
-    render(
+    renderWithIntl(
       <Wrapper perioder={perioder}>
         <PerioderMedMedlemskapFaktaPanel
           readOnly={false}
@@ -75,7 +75,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     ];
 
-    render(
+    renderWithIntl(
       <Wrapper perioder={perioder}>
         <PerioderMedMedlemskapFaktaPanel
           readOnly={false}
@@ -100,7 +100,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     ];
 
-    render(
+    renderWithIntl(
       <Wrapper perioder={perioder}>
         <PerioderMedMedlemskapFaktaPanel
           readOnly={false}
@@ -116,7 +116,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
   it('skal ikke vise tabell når det ikke finnes medlemskapsperioder', () => {
     const perioder = [];
 
-    render(
+    renderWithIntl(
       <Wrapper perioder={perioder}>
         <PerioderMedMedlemskapFaktaPanel
           readOnly={false}
