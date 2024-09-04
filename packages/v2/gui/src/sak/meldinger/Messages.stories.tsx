@@ -15,7 +15,6 @@ import {
   type UtilgjengeligÅrsak,
   utilgjengeligÅrsaker,
 } from '@k9-sak-web/backend/k9formidling/models/Mottaker.ts';
-import { action } from '@storybook/addon-actions';
 import { makeFakeExtendedApiError } from '../../storybook/mocks/fakeExtendedApiError.js';
 import { action } from '@storybook/addon-actions';
 
