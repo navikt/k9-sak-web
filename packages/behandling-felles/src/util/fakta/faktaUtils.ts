@@ -55,8 +55,8 @@ export const getBekreftAksjonspunktCallback =
   ) =>
   aksjonspunkter => {
     const model = aksjonspunkter.map(ap => ({
-      '@type': ap,
-      kode: ap,
+      '@type': ap.kode,
+      kode: ap.kode,
     }));
 
     const params = {
