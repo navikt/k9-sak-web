@@ -80,5 +80,9 @@ export const featureTogglesFactory = () => [
   {
     key: 'UTVIDET_VARSELFELT',
     value: process.env.VITE_UTVIDET_VARSELFELT,
+  },
+  {
+    key: 'SKILL_UT_PRIVATPERSON',
+    value: process.env.VITE_SKILL_UT_PRIVATPERSON,
   }
 ];
