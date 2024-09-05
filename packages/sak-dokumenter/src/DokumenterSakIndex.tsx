@@ -1,21 +1,9 @@
-import { Dokument, Fagsak } from '@k9-sak-web/types';
-import React from 'react';
-import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
-import messages from '../i18n/nb_NO.json';
+import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
+import { DokumentDto } from '@navikt/k9-sak-typescript-client';
 import DocumentList from './components/DocumentList';
 
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
-
 interface OwnProps {
-  documents: Dokument[];
+  documents: DokumentDto[];
   behandlingId?: number;
   fagsak: Fagsak;
   saksnummer: number;
@@ -23,16 +11,14 @@ interface OwnProps {
 }
 
 const DokumenterSakIndex = ({ documents, behandlingId, fagsak, saksnummer, behandlingUuid }: OwnProps) => (
-  <RawIntlProvider value={intl}>
-    <DocumentList
-      documents={documents}
-      behandlingId={behandlingId}
-      fagsakPerson={fagsak.person}
-      saksnummer={saksnummer}
-      behandlingUuid={behandlingUuid}
-      sakstype={fagsak?.sakstype?.kode}
-    />
-  </RawIntlProvider>
+  <DocumentList
+    documents={documents}
+    behandlingId={behandlingId}
+    fagsakPerson={fagsak.person}
+    saksnummer={saksnummer}
+    behandlingUuid={behandlingUuid}
+    sakstype={fagsak?.sakstype?.kode}
+  />
 );
 
 export default DokumenterSakIndex;

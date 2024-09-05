@@ -2,8 +2,6 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { Fagsak } from '@k9-sak-web/types';
-import React from 'react';
 import DokumenterSakIndex from './DokumenterSakIndex';
 
 const behandlingId = 1;
@@ -59,7 +57,7 @@ const fagsak = {
   kanRevurderingOpprettes: false,
   skalBehandlesAvInfotrygd: false,
   dekningsgrad: 100,
-} as Fagsak;
+};
 
 export default {
   title: 'sak/sak-dokumenter',

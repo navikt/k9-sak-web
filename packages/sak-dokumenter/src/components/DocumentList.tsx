@@ -3,25 +3,19 @@ import eksternLinkImageUrl from '@fpsak-frontend/assets/images/ekstern_link_pil_
 import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg';
 import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
 import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import { DateTimeLabel, Image, Tooltip } from '@fpsak-frontend/shared-components';
-import { Dokument, FagsakPerson } from '@k9-sak-web/types';
+import { DateTimeLabel } from '@fpsak-frontend/shared-components';
+import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { StarFillIcon } from '@navikt/aksel-icons';
-import { BodyShort, Label, Link, Select, Table } from '@navikt/ds-react';
+import { BodyShort, Label, Link, Select, Table, Tooltip } from '@navikt/ds-react';
+import { DokumentDto, PersonDto } from '@navikt/k9-sak-typescript-client';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React, { useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { useState } from 'react';
 import { Kompletthet } from '../types/Kompletthetsperioder';
 import styles from './documentList.module.css';
 
-const headerTextCodes = [
-  'DocumentList.Direction',
-  'DocumentList.DocumentType',
-  'DocumentList.Gjelder',
-  'DocumentList.DateTime',
-];
+const headerTexts = ['Inn/ut', 'Dokument', 'Gjelder', 'Sendt/mottatt'];
 
 const alleBehandlinger = 'ALLE';
 
@@ -29,13 +23,13 @@ const vedtaksdokumenter = ['INNVILGELSE', 'AVSLAG', 'FRITKS', 'ENDRING', 'MANUEL
 
 const inntektsmeldingBrevkode = '4936';
 
-const isVedtaksdokument = (document: Dokument) =>
+const isVedtaksdokument = (document: DokumentDto) =>
   vedtaksdokumenter.some(vedtaksdokument => vedtaksdokument === document.brevkode);
 
 const isTextMoreThan25char = (text: string): boolean => text && text.length > 25;
 const trimText = (text: string): string => `${text.substring(0, 24)}...`;
 
-const getDirectionImage = (document: Dokument): string => {
+const getDirectionImage = (document: DokumentDto): string => {
   if (isVedtaksdokument(document)) {
     return arrowLeftPurpleImageUrl;
   }
@@ -47,14 +41,14 @@ const getDirectionImage = (document: Dokument): string => {
   }
   return internDokumentImageUrl;
 };
-const getDirectionText = (document: Dokument): string => {
+const getDirectionText = (document: DokumentDto): string => {
   if (document.kommunikasjonsretning === kommunikasjonsretning.INN) {
-    return 'DocumentList.Motta';
+    return 'Inn';
   }
   if (document.kommunikasjonsretning === kommunikasjonsretning.UT) {
-    return 'DocumentList.Send';
+    return 'Ut';
   }
-  return 'DocumentList.Intern';
+  return 'Intern';
 };
 
 const getModiaPath = (fødselsnummer: string) => {
@@ -69,12 +63,12 @@ const getModiaPath = (fødselsnummer: string) => {
 };
 
 interface OwnProps {
-  documents: Dokument[];
+  documents: DokumentDto[];
   behandlingId?: number;
-  fagsakPerson?: FagsakPerson;
+  fagsakPerson?: PersonDto;
   saksnummer: number;
   behandlingUuid: string;
-  sakstype: string;
+  sakstype: FagsakYtelsesType;
 }
 
 /**
@@ -84,22 +78,12 @@ interface OwnProps {
  * trigget når saksbehandler velger et dokument. Finnes ingen dokumenter blir det kun vist en label
  * som viser at ingen dokumenter finnes på fagsak.
  */
-const DocumentList = ({
-  intl,
-  documents,
-  behandlingId,
-  fagsakPerson,
-  saksnummer,
-  behandlingUuid,
-  sakstype,
-}: OwnProps & WrappedComponentProps) => {
+const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behandlingUuid, sakstype }: OwnProps) => {
   const [selectedFilter, setSelectedFilter] = useState(alleBehandlinger);
 
-  const erStøttetFagsakYtelseType = [
-    fagsakYtelseType.PLEIEPENGER,
-    fagsakYtelseType.OMSORGSPENGER,
-    fagsakYtelseType.PLEIEPENGER_SLUTTFASE,
-  ].includes(sakstype);
+  const erStøttetFagsakYtelseType = [fagsakYtelsesType.PSB, fagsakYtelsesType.OMP, fagsakYtelsesType.PPN].includes(
+    sakstype,
+  );
 
   const getInntektsmeldingerIBruk = (signal?: AbortSignal) =>
     axios
@@ -119,7 +103,7 @@ const DocumentList = ({
   const { data: inntektsmeldingerIBruk } = useQuery({
     queryKey: ['kompletthet'],
     queryFn: ({ signal }) => getInntektsmeldingerIBruk(signal),
-    enabled: erStøttetFagsakYtelseType && !!behandlingUuid
+    enabled: erStøttetFagsakYtelseType && !!behandlingUuid,
   });
 
   const harMerEnnEnBehandlingKnyttetTilDokumenter = () => {
@@ -136,30 +120,30 @@ const DocumentList = ({
     return unikeBehandlinger.length > 1;
   };
 
-  const getModiaLenke = () => (
+  const ModiaLenke = () => (
     <Link target="_blank" className={styles.modiaLink} href={getModiaPath(fagsakPerson?.personnummer)}>
-      <span>
-        <FormattedMessage id="DocumentList.ModiaLink" />
-      </span>
-      <Image className={styles.externalIcon} src={eksternLinkImageUrl} />
+      <span>Se dialog med søker i Modia</span>
+      <img alt="Ekstern lenke" className="ml-2 mb-1" src={eksternLinkImageUrl} />
     </Link>
   );
 
   if (documents.length === 0) {
     return (
       <>
-        <div className={styles.controlsContainer}>{getModiaLenke()}</div>
+        <div className={styles.controlsContainer}>
+          <ModiaLenke />
+        </div>
         <BodyShort size="small" className={styles.noDocuments} data-testid="no-documents">
-          <FormattedMessage id="DocumentList.NoDocuments" />
+          Det finnes ingen dokumenter på saken
         </BodyShort>
       </>
     );
   }
 
-  const makeDocumentURL = (document: Dokument) =>
+  const makeDocumentURL = (document: DokumentDto) =>
     `/k9/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
 
-  const erInntektsmeldingOgBruktIDenneBehandlingen = (document: Dokument) =>
+  const erInntektsmeldingOgBruktIDenneBehandlingen = (document: DokumentDto) =>
     document.brevkode === inntektsmeldingBrevkode &&
     inntektsmeldingerIBruk &&
     inntektsmeldingerIBruk.length > 0 &&
@@ -179,14 +163,14 @@ const DocumentList = ({
             <option value={behandlingId}>Denne behandlingen</option>
           </Select>
         )}
-        {getModiaLenke()}
+        <ModiaLenke />
       </div>
       <Table>
         <Table.Header>
           <Table.Row>
-            {headerTextCodes.map(textCode => (
-              <Table.HeaderCell key={textCode} scope="col">
-                <FormattedMessage id={textCode} />
+            {headerTexts.map(text => (
+              <Table.HeaderCell key={text} scope="col">
+                {text}
               </Table.HeaderCell>
             ))}
           </Table.Row>
@@ -200,7 +184,7 @@ const DocumentList = ({
             )
             .map(document => {
               const directionImage = getDirectionImage(document);
-              const directionTextCode = getDirectionText(document);
+              const directionText = getDirectionText(document);
               return (
                 <Table.Row
                   key={document.dokumentId}
@@ -208,20 +192,17 @@ const DocumentList = ({
                   className={isVedtaksdokument(document) ? styles.borderTop : ''}
                 >
                   <Table.DataCell>
-                    <a
-                      className={styles.documentAnchorPlain}
-                      href={makeDocumentURL(document)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      tabIndex={-1}
-                    >
-                      <Image
-                        className={styles.image}
-                        src={directionImage}
-                        alt={intl.formatMessage({ id: directionTextCode })}
-                        tooltip={intl.formatMessage({ id: directionTextCode })}
-                      />
-                    </a>
+                    <Tooltip content={directionText}>
+                      <a
+                        className={styles.documentAnchorPlain}
+                        href={makeDocumentURL(document)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        tabIndex={-1}
+                      >
+                        <img className="h-5 w-[25px]" src={directionImage} alt={directionText} />
+                      </a>
+                    </Tooltip>
                   </Table.DataCell>
                   <Table.DataCell>
                     <a
@@ -243,10 +224,7 @@ const DocumentList = ({
                         </BodyShort>
                       )}
                       {erInntektsmeldingOgBruktIDenneBehandlingen(document) && (
-                        <StarFillIcon
-                          className={styles.starIcon}
-                          title={intl.formatMessage({ id: 'DocumentList.IBruk' })}
-                        />
+                        <StarFillIcon className={styles.starIcon} title="Brukes i behandlingen" />
                       )}
                     </a>
                   </Table.DataCell>
@@ -259,8 +237,8 @@ const DocumentList = ({
                       tabIndex={-1}
                     >
                       {isTextMoreThan25char(document.gjelderFor) && (
-                        <Tooltip content={<BodyShort size="small">{document.gjelderFor}</BodyShort>} alignLeft>
-                          {trimText(document.gjelderFor)}
+                        <Tooltip content={document.gjelderFor} placement="left">
+                          <BodyShort>{trimText(document.gjelderFor)}</BodyShort>
                         </Tooltip>
                       )}
                       {!isTextMoreThan25char(document.gjelderFor) && document.gjelderFor}
@@ -278,7 +256,7 @@ const DocumentList = ({
                         <DateTimeLabel dateTimeString={document.tidspunkt} />
                       ) : (
                         <BodyShort size="small" data-testid="missing-timestamp">
-                          <FormattedMessage id="DocumentList.IProduksjon" />
+                          I bestilling
                         </BodyShort>
                       )}
                     </a>
@@ -292,4 +270,4 @@ const DocumentList = ({
   );
 };
 
-export default injectIntl(DocumentList);
+export default DocumentList;
