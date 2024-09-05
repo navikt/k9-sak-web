@@ -14,7 +14,7 @@
     "@k9-sak-web/types": "1.0.0",
     "@navikt/aksel-icons": "6.13.0",
     "@navikt/ds-react": "6.16.2",
-    "@navikt/fnrvalidator": "2.1.0",
+    "@navikt/fnrvalidator": "2.1.2",
     "@navikt/ft-plattform-komponenter": "3.0.7",
     "axios": "1.7.5",
     "classnames": "2.5.1",
