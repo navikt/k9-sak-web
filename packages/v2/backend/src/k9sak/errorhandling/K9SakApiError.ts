@@ -1,5 +1,5 @@
 import { ExtendedApiError } from '../../shared/instrumentation/ExtendedApiError.js';
-import type { ApiError } from '@navikt/k9-klage-typescript-client';
+import type { ApiError } from '@navikt/k9-sak-typescript-client';
 import { isK9SakErrorData, type K9SakErrorData } from './errorData.js';
 
 export class K9SakApiError extends ExtendedApiError {

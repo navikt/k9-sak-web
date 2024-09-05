@@ -1,5 +1,5 @@
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/ExtendedApiError.js';
-import { ApiError } from '@navikt/k9-sak-typescript-client';
+import { ApiError } from '@k9-sak-web/backend/k9sak/generated';
 import type { K9SakErrorData } from '@k9-sak-web/backend/k9sak/errorhandling/errorData.js';
 import { K9SakApiError } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakApiError.js';
 

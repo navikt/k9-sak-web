@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 import { K9SakClient } from '@k9-sak-web/backend/k9sak/generated';
 import { generateNavCallidHeader } from '@k9-sak-web/backend/shared/instrumentation/navCallid.js';
-import type { ApiRequestOptions } from '@navikt/k9-sak-typescript-client/core/ApiRequestOptions.js';
+import type { ApiRequestOptions } from '@k9-sak-web/backend/k9sak/generated';
 import { K9SakHttpRequest } from '@k9-sak-web/backend/k9sak/errorhandling/K9SakHttpRequest.js';
 
 const headerResolver = async (options: ApiRequestOptions<Record<string, string>>): Promise<Record<string, string>> => {

@@ -1,5 +1,7 @@
-import { ApiError } from '@navikt/k9-klage-typescript-client';
+import { ApiError } from '@navikt/k9-sak-typescript-client';
 import type { ApiResult } from '@navikt/k9-sak-typescript-client/core/ApiResult.js';
+import { isObject } from '../../typecheck/isObject.js';
+import { isString } from '../../typecheck/isString.js';
 
 export type NavCallid = `CallId_${string}`;
 
@@ -33,11 +35,8 @@ export class ExtendedApiError extends ApiError {
 
   public get bodyFeilmelding(): string | null {
     const { body } = this;
-    if (body !== undefined) {
-      const { feilmelding } = body;
-      if (typeof feilmelding === 'string') {
-        return feilmelding;
-      }
+    if (isObject(body) && 'feilmelding' in body && isString(body.feilmelding)) {
+      return body.feilmelding;
     }
     return null;
   }
