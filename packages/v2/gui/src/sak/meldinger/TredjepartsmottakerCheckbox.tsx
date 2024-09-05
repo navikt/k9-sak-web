@@ -13,10 +13,12 @@ export const TredjepartsmottakerCheckbox = ({ checked, onChange, disabled }: Tre
       Send til tredjepart
     </Checkbox>
     <Spacer />
-    <Link href="https://w2.brreg.no/enhet/sok" target="_blank" referrerPolicy="no-referrer">
-      <BodyShort size="small">
-        Søk på brreg.no <ExternalLinkIcon />
-      </BodyShort>
-    </Link>
+    {checked ? (
+      <Link href="https://w2.brreg.no/enhet/sok" target="_blank" referrerPolicy="no-referrer">
+        <BodyShort size="small">
+          Søk på brreg.no <ExternalLinkIcon />
+        </BodyShort>
+      </Link>
+    ) : null}
   </HStack>
 );
