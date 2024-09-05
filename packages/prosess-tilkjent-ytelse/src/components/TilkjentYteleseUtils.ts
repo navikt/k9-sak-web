@@ -1,4 +1,4 @@
-import {ArbeidsgiverOpplysninger, ArbeidsgiverOpplysningerPerId} from "@k9-sak-web/types";
+import {ArbeidsgiverOpplysningerPerId} from "@k9-sak-web/types";
 
 export const getAktivitet = (aktivitetStatus, getKodeverknavn) =>
   // hvis valgtAndel ikke satt ennå return tom string.
