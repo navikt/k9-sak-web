@@ -4,7 +4,7 @@ import React from 'react';
 import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
 import { TilbakekrevingVedtakUtdypendeTekstPanel } from './TilbakekrevingVedtakUtdypendeTekstPanel';
-import {K9sakApiKeys, requestApi} from "@k9-sak-web/sak-app/src/data/k9sakApi";
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
 describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
   it('skal vise lenke for å skrive inn tekst når felt ikke har verdi og en ikke er i readonly-modus', () => {

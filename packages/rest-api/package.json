@@ -5,6 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@k9-sak-web/backend": "workspace:^",
     "axios": "1.7.5",
     "node-cache": "5.1.2"
   }

@@ -1,6 +1,6 @@
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { behandlingFormValueSelector, TextAreaField } from '@fpsak-frontend/form';
-import {Image, useFeatureToggles, VerticalSpacer} from '@fpsak-frontend/shared-components';
+import { Image, useFeatureToggles, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Detail } from '@navikt/ds-react';
 import React, { useState } from 'react';
@@ -32,11 +32,13 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
   fritekstPakrevet,
   maximumLength,
 }: OwnProps & WrappedComponentProps) => {
-  const [featureToggles] = useFeatureToggles()
-  const utvidetVarseltekst = featureToggles?.UTVIDET_VARSELTEKST
+  const [featureToggles] = useFeatureToggles();
+  const utvidetVarseltekst = featureToggles?.UTVIDET_VARSELTEKST;
   const [isTextfieldHidden, hideTextField] = useState(isEmpty && !fritekstPakrevet);
   const valideringsRegler = fritekstPakrevet ? valideringsreglerPakrevet : valideringsregler;
-  valideringsRegler.push(maximumLength ? maxLength(maximumLength) : (utvidetVarseltekst ? maxLength12000 : maxLength4000));
+  valideringsRegler.push(
+    maximumLength ? maxLength(maximumLength) : utvidetVarseltekst ? maxLength12000 : maxLength4000,
+  );
   return (
     <>
       {isTextfieldHidden && !readOnly && (
