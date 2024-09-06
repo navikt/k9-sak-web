@@ -7,7 +7,7 @@ import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/type
 import { useEffect, useState } from 'react';
 import NyArbeidsgiverModal from './NyArbeidsgiverModal';
 
-import { Detail, Fieldset, HGrid } from '@navikt/ds-react';
+import { Button, Detail, Fieldset, HGrid } from '@navikt/ds-react';
 import { InputField, SelectField } from '@navikt/ft-form-hooks';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { NyArbeidsgiverFormState, NyPeriodeFormAndeler, TilkjentYtelseFormState } from './FormState';
@@ -125,49 +125,41 @@ export const NyAndel = ({ newArbeidsgiverCallback, alleKodeverk, readOnly, arbei
               </FlexColumn>
               {!erSN && !erFL && (
                 <>
-                  <FlexColumn className={styles.relative}>
+                  <div className="flex items-end">
                     <SelectField
-                      label={{ id: 'TilkjentYtelse.NyPeriode.Arbeidsgiver' }}
-                      bredde="xl"
-                      name={`${periodeElementFieldId}.arbeidsgiverOrgnr`}
+                      label="Arbeidsgiver"
+                      name={`nyPeriodeForm.andeler.${index}.arbeidsgiverOrgnr`}
                       validate={[required]}
                       selectValues={
                         skillUtPrivatperson ? mapArbeidsgivereOrg(arbeidsgivere) : mapArbeidsgivere(arbeidsgivere)
                       }
                     />
-                    <div
+                    <Button
+                      variant="secondary"
+                      size="small"
+                      icon={<Image src={addCircleIcon} />}
                       onClick={() => setOpen(true)}
-                      onKeyDown={() => setOpen(true)}
-                      className={styles.addArbeidsforhold}
-                      role="button"
-                      tabIndex={0}
-                    >
-                      <Image className={styles.addCircleIcon} src={addCircleIcon} alt="Ny arbeidsgiver" />
-                    </div>
-                  </FlexColumn>
+                      aria-label="Ny arbeidsgiver"
+                      type="button"
+                    />
+                  </div>
                   {skillUtPrivatperson && (
-                    <FlexColumn className={styles.relative}>
+                    <div className="flex items-end">
                       <SelectField
-                        label={{ id: 'TilkjentYtelse.NyPeriode.ArbeidsgiverPrivatperson' }}
-                        bredde="xl"
-                        name={`${periodeElementFieldId}.arbeidsgiverPersonIdent`}
+                        label="Arbeidsgiver (privatperson)"
+                        name={`nyPeriodeForm.andeler.${index}.arbeidsgiverPersonIdent`}
                         validate={[required]}
                         selectValues={mapArbeidsgiverePrivatperson(arbeidsgivere)}
                       />
-                      <div
+                      <Button
+                        variant="secondary"
+                        size="small"
+                        icon={<Image src={addCircleIcon} />}
                         onClick={() => setOpen(true)}
-                        onKeyDown={() => setOpen(true)}
-                        className={styles.addArbeidsforhold}
-                        role="button"
-                        tabIndex={0}
-                      >
-                        <Image
-                          className={styles.addCircleIcon}
-                          src={addCircleIcon}
-                          alt="Ny arbeidsgiver (privatperson)"
-                        />
-                      </div>
-                    </FlexColumn>
+                        aria-label="Ny arbeidsgiver (privatperson)"
+                        type="button"
+                      />
+                    </div>
                   )}
                 </>
               )}
