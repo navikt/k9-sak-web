@@ -8,7 +8,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 
-// @ts-ignore
 const { VITE_LOCAL_STORYBOOK } = import.meta.env;
 
 initialize({
@@ -21,6 +20,9 @@ initialize({
 const queryClient = new QueryClient();
 
 const preview: Preview = {
+  parameters: {
+    margin: '40px'
+  },
   decorators: [
     Story => {
       const store = configureStore();
@@ -28,13 +30,21 @@ const preview: Preview = {
         <Provider store={store}>
           <MemoryRouter>
             <QueryClientProvider client={queryClient}>
-              <div style={{ margin: '40px' }}>
-                <Story />
-              </div>
+              <Story />
             </QueryClientProvider>
           </MemoryRouter>
         </Provider>
       );
+    },
+    // Decorator som legger på ekstra margin. Kan overstyrast med parameter på komponentnivå/enkeltstories ved behov.
+    // Feks viss ein lager stories for komponenter som skal vise på toppnivå på sida kan det vere lurt å sette parameter
+    // layout: "fullscreen", som også fjerner margin her.
+    (Story, {parameters}) => {
+      return parameters.margin !== null && parameters.layout !== 'fullscreen'  ?
+        <div style={{margin: parameters.margin}}>
+          <Story />
+        </div> :
+        <Story />
     },
   ],
   loaders: [
