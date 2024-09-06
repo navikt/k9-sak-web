@@ -201,7 +201,12 @@ export class AvregningPanelImpl extends Component {
                                       <TextAreaField
                                         name="varseltekst"
                                         label={{ id: 'Avregning.fritekst' }}
-                                        validate={[required, minLength3, featureUtvidetVarselfelt ? maxLength12000 : maxLength1500, hasValidText]}
+                                        validate={[
+                                          required,
+                                          minLength3,
+                                          featureUtvidetVarselfelt ? maxLength12000 : maxLength1500,
+                                          hasValidText,
+                                        ]}
                                         maxLength={featureUtvidetVarselfelt ? 12000 : 1500}
                                         readOnly={readOnly}
                                         id="avregningFritekst"
