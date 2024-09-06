@@ -210,6 +210,68 @@ const medlemskap = {
     },
   ],
 };
+
+const periodeMed5020 = {
+  vurderingsdato: '2018-11-07',
+  personopplysninger: {
+    fnr: null,
+    aktoerId: '1615078487209',
+    diskresjonskode: null,
+    nummer: null,
+    navBrukerKjonn: {
+      kode: 'K',
+      kodeverk: 'BRUKER_KJOENN',
+    },
+    statsborgerskap: {
+      kode: 'NOR',
+      kodeverk: 'LANDKODER',
+      navn: 'Norge',
+    },
+    avklartPersonstatus: {
+      orginalPersonstatus: {
+        kode: 'BOSA',
+        kodeverk: 'PERSONSTATUS_TYPE',
+      },
+      overstyrtPersonstatus: {
+        kode: 'BOSA',
+        kodeverk: 'PERSONSTATUS_TYPE',
+      },
+    },
+    personstatus: {
+      kode: 'BOSA',
+      kodeverk: 'PERSONSTATUS_TYPE',
+    },
+    sivilstand: {
+      kode: 'UGIF',
+      kodeverk: 'SIVILSTAND_TYPE',
+    },
+    navn: 'Mygg Robust',
+    dodsdato: null,
+    fodselsdato: '1966-08-02',
+    adresser: [],
+    region: {
+      kode: 'NORDEN',
+      kodeverk: 'REGION',
+    },
+    annenPart: null,
+    ektefelle: null,
+    barn: [],
+    barnSoktFor: [],
+    barnFraTpsRelatertTilSoknad: [],
+    harVerge: false,
+  },
+  aksjonspunkter: ['5020'],
+  årsaker: ['SKJÆRINGSTIDSPUNKT'],
+  oppholdsrettVurdering: null,
+  erEosBorger: null,
+  lovligOppholdVurdering: null,
+  bosattVurdering: null,
+  medlemskapManuellVurderingType: null,
+  begrunnelse: null,
+};
+
+const medlemskapAp5020 = { ...medlemskap, perioder: [periodeMed5020] };
+
 const fagsakPerson = {};
 
 const merknaderFraBeslutter = {
@@ -244,7 +306,7 @@ export const VisAksjonspunktForAvklaringOmBrukerErBosatt = args => (
 
 VisAksjonspunktForAvklaringOmBrukerErBosatt.args = {
   behandling,
-  medlemskap,
+  medlemskap: medlemskapAp5020,
   soknad,
   arbeidsforhold,
   fagsakPerson,

@@ -2,7 +2,7 @@ import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { InputField, SelectField } from '@fpsak-frontend/form';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import {FlexColumn, FlexRow, Image, PeriodFieldArray, useFeatureToggles} from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexRow, Image, PeriodFieldArray, useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import React, { useState } from 'react';
@@ -19,8 +19,7 @@ const maxValue3999 = maxValue(3999);
 
 const mapArbeidsgivere = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
   arbeidsgivere
-    ? Object.values(arbeidsgivere)
-      .map(({ navn, identifikator }) => (
+    ? Object.values(arbeidsgivere).map(({ navn, identifikator }) => (
         <option value={identifikator} key={identifikator}>
           {navn} ({identifikator})
         </option>
@@ -30,24 +29,23 @@ const mapArbeidsgivere = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
 const mapArbeidsgivereOrg = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
   arbeidsgivere
     ? Object.values(arbeidsgivere)
-      .filter(arbeidsgiver => arbeidsgiver.personIdentifikator == null) // erPrivatPerson returneres ikke fra backend
-      .map(({ navn, identifikator }) => (
-        <option value={identifikator} key={identifikator}>
-          {navn} ({identifikator})
-        </option>
-      ))
+        .filter(arbeidsgiver => arbeidsgiver.personIdentifikator == null) // erPrivatPerson returneres ikke fra backend
+        .map(({ navn, identifikator }) => (
+          <option value={identifikator} key={identifikator}>
+            {navn} ({identifikator})
+          </option>
+        ))
     : [];
-
 
 const mapArbeidsgiverePrivatperson = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
   arbeidsgivere
     ? Object.values(arbeidsgivere)
-      .filter(arbeidsgiver => arbeidsgiver.personIdentifikator != null) // erPrivatPerson returneres ikke fra backend
-      .map(({ navn, personIdentifikator }) => (
-      <option value={personIdentifikator} key={personIdentifikator}>
-        {navn} ({personIdentifikator})
-      </option>
-    ))
+        .filter(arbeidsgiver => arbeidsgiver.personIdentifikator != null) // erPrivatPerson returneres ikke fra backend
+        .map(({ navn, personIdentifikator }) => (
+          <option value={personIdentifikator} key={personIdentifikator}>
+            {navn} ({personIdentifikator})
+          </option>
+        ))
     : [];
 
 const getInntektskategori = alleKodeverk => {
@@ -96,8 +94,8 @@ export const NyAndel = ({
   behandlingVersjon,
 }: OwnProps & WrappedComponentProps) => {
   const [isOpen, setOpen] = useState(false);
-  const [featureToggles] = useFeatureToggles()
-  const skillUtPrivatperson = featureToggles?.SKILL_UT_PRIVATPERSON
+  const [featureToggles] = useFeatureToggles();
+  const skillUtPrivatperson = featureToggles?.SKILL_UT_PRIVATPERSON;
 
   const allFields = fields.getAll();
 

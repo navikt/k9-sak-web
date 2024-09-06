@@ -10,13 +10,13 @@
     "dev": "vite serve"
   },
   "devDependencies": {
-    "msw": "2.4.1",
-    "vite": "^5.4.2",
+    "msw": "2.4.2",
+    "vite": "^5.4.3",
     "vite-plugin-node-polyfills": "^0.22.0"
   },
   "dependencies": {
-    "@navikt/ds-react": "6.16.2",
-    "@navikt/ft-plattform-komponenter": "3.0.7",
+    "@navikt/ds-react": "6.16.3",
+    "@navikt/ft-plattform-komponenter": "3.0.8",
     "@popperjs/core": "2.11.8",
     "classnames": "2.5.1",
     "dayjs": "1.11.13",
