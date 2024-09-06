@@ -40,6 +40,7 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
     toggleOverstyring,
     behandling,
     rettigheter,
+    featureToggles,
   }): any => {
     const behandlingenErAvsluttet = behandlingStatus.AVSLUTTET === behandling.status.kode;
     const kanEndrePåSøknadsopplysninger = rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet;
@@ -53,6 +54,7 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
       kanOverstyreAccess,
       toggleOverstyring,
       kanEndrePåSøknadsopplysninger,
+      featureToggles,
     };
   };
 }

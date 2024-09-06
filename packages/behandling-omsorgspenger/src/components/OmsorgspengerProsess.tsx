@@ -182,6 +182,7 @@ const OmsorgspengerProsess = ({
       [behandling.versjon],
     ),
     alleKodeverk,
+    featureToggles,
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,
     ...data,
