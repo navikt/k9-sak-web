@@ -12,7 +12,7 @@ describe('<VilkarresultatMedOverstyringHeader>', () => {
       <Provider store={createStore(combineReducers({ form: reducer }))}>
         <VilkarresultatMedOverstyringHeader
           overstyringApKode="5011"
-          lovReferanse="§23"
+          lovReferanse="§ 23"
           overrideReadOnly={false}
           kanOverstyreAccess={{
             isEnabled: true,
@@ -29,6 +29,6 @@ describe('<VilkarresultatMedOverstyringHeader>', () => {
     );
 
     expect(screen.getByRole('heading', { name: 'Medlemskap' })).toBeInTheDocument();
-    expect(screen.getByText('§23')).toBeInTheDocument();
+    expect(screen.getByText('23')).toBeInTheDocument();
   });
 });

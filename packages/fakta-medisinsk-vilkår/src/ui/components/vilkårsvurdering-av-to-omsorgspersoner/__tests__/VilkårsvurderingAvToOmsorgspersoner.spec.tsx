@@ -1,7 +1,7 @@
 import React from 'react';
 import { httpUtils } from '@fpsak-frontend/utils';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
-import VilkårsvurderingAvToOmsorgspersoner from '../VilkårsvurderingAvToOmsorgspersoner';
+import VilkårsvurderingAvToOmsorgspersoner from '../VilkårsvurderingAvToOmsorgspersoner.js';
 import ContainerContext from '../../../context/ContainerContext';
 import VurderingContext from '../../../context/VurderingContext';
 import Vurderingstype from '../../../../types/Vurderingstype';

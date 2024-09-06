@@ -27,6 +27,7 @@ describe('<TilkjentYtelse>', () => {
                   stillingsprosent: 100,
                   arbeidsgiver: '973861778',
                   arbeidsgiverOrgnr: '',
+                  arbeidsgiverPersonIdent: '',
                   aktivitetStatus: {
                     kode: '',
                     kodeverk: '',

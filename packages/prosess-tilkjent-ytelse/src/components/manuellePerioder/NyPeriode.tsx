@@ -162,6 +162,7 @@ const transformValues = (values: NyPeriodeFormState): BeriketBeregningsresultatP
       kodeverk: 'INNTEKTSKATEGORI',
     },
     arbeidsgiverOrgnr: andel.arbeidsgiverOrgnr,
+    arbeidsgiverPersonIdent: andel.arbeidsgiverPersonIdent,
     tilSoker: andel.tilSoker,
     refusjon: andel.refusjon || 0,
     utbetalingsgrad: andel.utbetalingsgrad || 100,

@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState, useReducer } from 'react';
-import { Button, Checkbox, HStack, Spacer, VStack } from '@navikt/ds-react';
+import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { FileSearchIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 import type { BestillBrevDto, MottakerDto, FritekstbrevinnholdDto } from '@k9-sak-web/backend/k9sak/generated';
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
-import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.ts';
+import type { AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
 import {
   type ArbeidsgiverOpplysningerPerId,
   bestemAvsenderApp,
@@ -25,9 +25,11 @@ import FritekstInput, {
   type FritekstInputValue,
   type FritekstModus,
 } from './FritekstInput.js';
-import MalSelect from './MalSelect.jsx';
+import MalSelect from './MalSelect.js';
 import type { BehandlingInfo } from '../BehandlingInfo.js';
-import type { Fagsak } from '../Fagsak.ts';
+import type { Fagsak } from '../Fagsak.js';
+import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
+import { TredjepartsmottakerCheckbox } from './TredjepartsmottakerCheckbox.js';
 
 export interface BackendApi extends TredjepartsmottakerBackendApi {
   hentInnholdBrevmal(
@@ -54,7 +56,7 @@ type MessagesState = Readonly<{
   valgtMalkode: string | undefined;
   fritekstForslag: FritekstbrevDokumentdata[];
   valgtFritekst: FritekstbrevDokumentdata | undefined;
-  valgtMottakerId: string | undefined;
+  valgtMottaker: Mottaker | undefined;
   tredjepartsmottakerAktivert: boolean;
   tredjepartsmottaker: TredjepartsmottakerValue | TredjepartsmottakerError | undefined;
 }>;
@@ -74,9 +76,9 @@ type SetValgtFritekst = Readonly<{
   valgtFritekst: FritekstbrevDokumentdata | undefined;
 }>;
 
-type SetValgtMottakerId = Readonly<{
-  type: 'SettValgtMottakerId';
-  valgtMottakerId: string | undefined;
+type SetValgtMottaker = Readonly<{
+  type: 'SettValgtMottaker';
+  valgtMottaker: Mottaker | undefined;
 }>;
 
 type SetTredjepartsmottakerAktivert = Readonly<{
@@ -98,7 +100,7 @@ type MessagesStateActions =
   | SetValgtMalkode
   | SetFritekstForslag
   | SetValgtFritekst
-  | SetValgtMottakerId
+  | SetValgtMottaker
   | SetTredjepartsmottakerAktivert
   | SetTredjepartsmottaker
   | OnValgtMalChanged;
@@ -111,11 +113,13 @@ const messagesStateReducer = (state: MessagesState, dispatch: MessagesStateActio
       // Når valgt mal har blitt endra, endre tredjepartsmottakerAktivert og valgtMottakerId i henhold.
       const tredjepartsmottakerAktivert =
         state.tredjepartsmottakerAktivert && (dispatch.valgtMal?.støtterTredjepartsmottaker || false);
-      const valgtMottakerId = dispatch.valgtMal?.mottakere[0]?.id;
+      // Velg første tilgjengelige mottaker for valgt mal, eller første utilgjengelige mottaker viss ingen er tilgjengelige.
+      const valgtMottaker =
+        dispatch.valgtMal?.mottakere.find(m => m.utilgjengelig === undefined) || dispatch.valgtMal?.mottakere[0];
       return {
         ...state,
         tredjepartsmottakerAktivert,
-        valgtMottakerId,
+        valgtMottaker,
       };
     }
     case 'SettValgtMal': {
@@ -142,11 +146,11 @@ const messagesStateReducer = (state: MessagesState, dispatch: MessagesStateActio
         valgtFritekst,
       };
     }
-    case 'SettValgtMottakerId': {
-      const { valgtMottakerId } = dispatch;
+    case 'SettValgtMottaker': {
+      const { valgtMottaker } = dispatch;
       return {
         ...state,
-        valgtMottakerId,
+        valgtMottaker,
       };
     }
     case 'SettTredjepartsmottakerAktivert': {
@@ -170,7 +174,7 @@ const initMessagesState = (maler: Template[]): MessagesState => ({
   valgtMalkode: maler[0]?.kode,
   fritekstForslag: [],
   valgtFritekst: undefined,
-  valgtMottakerId: undefined,
+  valgtMottaker: undefined,
   tredjepartsmottakerAktivert: false,
   tredjepartsmottaker: undefined,
 });
@@ -185,7 +189,7 @@ const Messages = ({
   onMessageSent,
 }: MessagesProps) => {
   const [
-    { valgtMalkode, fritekstForslag, valgtFritekst, valgtMottakerId, tredjepartsmottakerAktivert, tredjepartsmottaker },
+    { valgtMalkode, fritekstForslag, valgtFritekst, valgtMottaker, tredjepartsmottakerAktivert, tredjepartsmottaker },
     dispatch,
   ] = useReducer(messagesStateReducer, initMessagesState(maler));
   const fritekstInputRef = useRef<FritekstInputMethods>(null);
@@ -198,8 +202,8 @@ const Messages = ({
     dispatch({ type: 'SettFritekstForslag', fritekstForslag: newFritekstForslag });
   const setValgtFritekst = (newValgtFritekst: FritekstbrevDokumentdata | undefined) =>
     dispatch({ type: 'SettValgtFritekst', valgtFritekst: newValgtFritekst });
-  const setValgtMottakerId = (newValgtMottakerId: string | undefined) =>
-    dispatch({ type: 'SettValgtMottakerId', valgtMottakerId: newValgtMottakerId });
+  const setValgtMottaker = (newValgtMottaker: Mottaker | undefined) =>
+    dispatch({ type: 'SettValgtMottaker', valgtMottaker: newValgtMottaker });
   const setTredjepartsmottakerAktivert = (newTredjepartsmottakerAktivert: boolean) =>
     dispatch({ type: 'SettTredjepartsmottakerAktivert', tredjepartsmottakerAktivert: newTredjepartsmottakerAktivert });
   const setTredjepartsmottaker = (
@@ -260,21 +264,29 @@ const Messages = ({
     return undefined;
   };
 
-  // overstyrtMottaker skal vere valgt mottaker frå MottakerSelect, viss ikkje tredjepartsmottaker alternativ er valgt der.
+  // overstyrtMottaker skal vere valgt mottaker frå MottakerSelect, viss ikkje sending til tredjepartsmottaker er aktivert.
   // Viss sending til tredjepartsmottaker er aktivert skal den settast til inntasta orgnr.
+  // Her konverterast og Mottaker type returnert frå formidling til MottakerDto type som k9-sak server forventa.
+  // Når denne returnerer undefined er det ein valideringsfeil i skjemaet (manglande/feil på mottaker definisjon).
   const resolveOvertyrtMottaker = (): MottakerDto | undefined => {
-    if (valgtMottakerId !== undefined && !tredjepartsmottakerAktivert) {
-      return valgtMal?.mottakere.filter(m => m.id === valgtMottakerId)[0];
+    if (tredjepartsmottakerAktivert) {
+      // Må ha gyldig tredjepartsmottaker definert
+      if (tredjepartsmottaker?.organisasjonsnr !== undefined) {
+        return {
+          id: tredjepartsmottaker.organisasjonsnr,
+          type: 'ORGNR',
+        };
+      }
+
+      // Må ha gyldig mottaker valgt i select boks
+    } else if (valgtMottaker !== undefined && valgtMottaker.utilgjengelig === undefined) {
+      return valgtMottaker;
     }
-    if (tredjepartsmottakerAktivert && tredjepartsmottaker?.organisasjonsnr !== undefined) {
-      return {
-        id: tredjepartsmottaker.organisasjonsnr,
-        type: 'ORGNR',
-      };
-    }
+    // Feil, mangler gyldig mottaker for sending
     return undefined;
   };
 
+  // Skal returnere undefined når vi ikkje har gyldig tilstand for sending
   const validateAndResolveValues = () => {
     if (valgtMalkode === undefined) {
       return undefined; // Valideringsfeil
@@ -288,10 +300,10 @@ const Messages = ({
     // Ut frå oppførsel til gammal kode ser det ut til at fritekst skal settast når valgt mal ikkje støtter tittel.
     // Ellers skal fritekstbrev prop settast.
     const fritekst = fritekstModus === 'EnkelFritekst' ? fritekstInputValue?.tekst : undefined;
+
     const overstyrtMottaker = resolveOvertyrtMottaker();
-    // Viss valg for sending til tredjepartsmottaker er aktivt må overstyrtMottaker vere definert
-    if (tredjepartsmottakerAktivert && overstyrtMottaker === undefined) {
-      return undefined; // Valideringsfeil
+    if (overstyrtMottaker === undefined) {
+      return undefined;
     }
     return {
       brevmalkode: valgtMalkode,
@@ -368,18 +380,16 @@ const Messages = ({
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         personopplysninger={personopplysninger}
         valgtMal={valgtMal}
-        valgtMottakerId={valgtMottakerId}
-        onChange={setValgtMottakerId}
+        valgtMottakerId={valgtMottaker?.id}
+        onChange={setValgtMottaker}
         disabled={tredjepartsmottakerAktivert}
+        showValidation={showValidation}
       />
-      <Checkbox
+      <TredjepartsmottakerCheckbox
         checked={tredjepartsmottakerAktivert}
-        onChange={() => setTredjepartsmottakerAktivert(!tredjepartsmottakerAktivert)}
-        size="small"
+        onChange={v => setTredjepartsmottakerAktivert(v)}
         disabled={!valgtMal?.støtterTredjepartsmottaker}
-      >
-        Send til tredjepart
-      </Checkbox>
+      />
       <TredjepartsmottakerInput
         show={tredjepartsmottakerAktivert}
         showValidation={showValidation}

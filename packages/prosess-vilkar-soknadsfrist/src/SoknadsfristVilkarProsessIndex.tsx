@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { Dayjs } from 'dayjs';
+import moment from 'moment';
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 
@@ -8,7 +8,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Image } from '@fpsak-frontend/shared-components';
-import { dateFormat, initializeDate } from '@fpsak-frontend/utils';
+import { dateFormat } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Behandling, DokumentStatus, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
@@ -16,6 +16,8 @@ import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePer
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
 import { utledInnsendtSoknadsfrist } from './utils';
+
+import messages from '../i18n/nb_NO.json';
 
 import styles from './SoknadsfristVilkarProsessIndex.module.css';
 
@@ -26,6 +28,7 @@ const cache = createIntlCache();
 const intl = createIntl(
   {
     locale: 'nb-NO',
+    messages,
   },
   cache,
 );
@@ -50,10 +53,10 @@ interface SoknadsfristVilkarProsessIndexProps {
 
 // Finner ut om Statusperiode gjelder for vilkårsperiode
 const erRelevantForPeriode = (
-  vilkårPeriodeFom: Dayjs,
-  vilkårPeriodeTom: Dayjs,
-  statusPeriodeFom: Dayjs,
-  statusPeriodeTom: Dayjs,
+  vilkårPeriodeFom: moment.Moment,
+  vilkårPeriodeTom: moment.Moment,
+  statusPeriodeFom: moment.Moment,
+  statusPeriodeTom: moment.Moment,
   innsendtDato: string,
 ) => {
   // er starten av vilkårsperioden før opprinnelig søkndasfrist
@@ -119,12 +122,12 @@ const SoknadsfristVilkarProsessIndex = ({
             return false;
           }
 
-          const statusPeriodeFom = initializeDate(status.periode.fom);
-          const statusPeriodeTom = initializeDate(status.periode.tom);
+          const statusPeriodeFom = moment(status.periode.fom);
+          const statusPeriodeTom = moment(status.periode.tom);
 
           return perioder.some(vilkårPeriode => {
-            const vilkårPeriodeFom = initializeDate(vilkårPeriode.periode.fom);
-            const vilkårPeriodeTom = initializeDate(vilkårPeriode.periode.tom);
+            const vilkårPeriodeFom = moment(vilkårPeriode.periode.fom);
+            const vilkårPeriodeTom = moment(vilkårPeriode.periode.tom);
             return erRelevantForPeriode(
               vilkårPeriodeFom,
               vilkårPeriodeTom,
@@ -137,13 +140,13 @@ const SoknadsfristVilkarProsessIndex = ({
       )
     : [];
 
-  const activePeriodeFom = initializeDate(activePeriode.periode.fom);
-  const activePeriodeTom = initializeDate(activePeriode.periode.tom);
+  const activePeriodeFom = moment(activePeriode.periode.fom);
+  const activePeriodeTom = moment(activePeriode.periode.tom);
 
   const dokumenterIAktivPeriode = dokumenterSomSkalVurderes.filter(dok =>
     dok.status.some(status => {
-      const statusPeriodeFom = initializeDate(status.periode.fom);
-      const statusPeriodeTom = initializeDate(status.periode.tom);
+      const statusPeriodeFom = moment(status.periode.fom);
+      const statusPeriodeTom = moment(status.periode.tom);
       return erRelevantForPeriode(
         activePeriodeFom,
         activePeriodeTom,
@@ -164,12 +167,16 @@ const SoknadsfristVilkarProsessIndex = ({
               label: `${dateFormat(periode.fom)} - ${dateFormat(periode.tom)}`,
               icon:
                 (erOverstyrt || harÅpentAksjonspunkt) && vilkarStatus.kode !== vilkarUtfallType.OPPFYLT ? (
-                  <Image src={advarselIcon} className={styles.warningIcon} alt="Aksjonspunkt" />
+                  <Image
+                    src={advarselIcon}
+                    className={styles.warningIcon}
+                    alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
+                  />
                 ) : null,
             }))}
             onClick={setActiveTab}
             theme="arrow"
-            heading="Perioder"
+            heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
           />
         </div>
         <div className={styles.contentContainer}>
@@ -192,8 +199,11 @@ const SoknadsfristVilkarProsessIndex = ({
             erOverstyrt={erOverstyrt}
             submitCallback={submitCallback}
             overrideReadOnly={overrideReadOnly}
+            kanOverstyreAccess={kanOverstyreAccess}
             toggleOverstyring={toggleOverstyring}
             status={activePeriode.vilkarStatus.kode}
+            panelTittelKode={panelTittelKode}
+            lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
             alleDokumenter={dokumenterSomSkalVurderes}
             dokumenterIAktivPeriode={dokumenterIAktivPeriode}
             periode={activePeriode}

@@ -35,6 +35,7 @@ import { Button } from '@navikt/ds-react';
 import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 import styles from './messages.module.css';
+import { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 
 const maxLength4000 = maxLength(4000);
 const maxLength100000 = maxLength(100000);
@@ -145,7 +146,7 @@ export const MessagesTilbakekrevingImpl = ({
 
   const languageCode = getLanguageCodeFromSprakkode(sprakKode);
 
-  const recipients: MottakerDto[] =
+  const recipients: Mottaker[] =
     templates && brevmalkode && templates[brevmalkode] && Array.isArray(templates[brevmalkode].mottakere)
       ? templates[brevmalkode].mottakere
       : [];
@@ -253,7 +254,7 @@ export const MessagesTilbakekrevingImpl = ({
                 placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
                 selectValues={recipients.map(recipient => (
                   <option key={recipient.id} value={JSON.stringify(recipient)}>
-                    {lagVisningsnavnForMottaker(recipient.id, personopplysninger, arbeidsgiverOpplysningerPerId)}
+                    {lagVisningsnavnForMottaker(recipient, personopplysninger, arbeidsgiverOpplysningerPerId)}
                   </option>
                 ))}
                 bredde="xxl"

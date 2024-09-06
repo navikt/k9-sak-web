@@ -1,11 +1,11 @@
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
-import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg';
 import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { Detail, Heading, Label } from '@navikt/ds-react';
+import { Button, Detail, Heading, Label } from '@navikt/ds-react';
 import { SetStateAction } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './vilkarresultatMedOverstyringForm.module.css';
@@ -78,7 +78,9 @@ const VilkarresultatMedOverstyringHeader = ({
           </FlexColumn>
           {lovReferanse && (
             <FlexColumn>
-              <Detail className={styles.vilkar}>{lovReferanse}</Detail>
+              <Detail className={styles.vilkar}>
+                <Lovreferanse>{lovReferanse}</Lovreferanse>
+              </Detail>
             </FlexColumn>
           )}
         </FlexRow>
@@ -89,20 +91,16 @@ const VilkarresultatMedOverstyringHeader = ({
           </FlexColumn>
           {erVilkarOk !== undefined &&
             !isHidden(kanOverstyreAccess.isEnabled, aksjonspunktCodes, overstyringApKode) && (
-              <>
-                {!erOverstyrt && !overrideReadOnly && (
-                  <FlexColumn>
-                    <VerticalSpacer eightPx />
-                    <Image className={styles.key} src={keyImage} onClick={togglePa} />
-                  </FlexColumn>
-                )}
-                {(erOverstyrt || overrideReadOnly) && (
-                  <FlexColumn>
-                    <VerticalSpacer eightPx />
-                    <Image className={styles.keyWithoutCursor} src={keyUtgraetImage} />
-                  </FlexColumn>
-                )}
-              </>
+              <FlexColumn>
+                <VerticalSpacer fourPx />
+                <Button
+                  variant="tertiary"
+                  size="xsmall"
+                  onClick={togglePa}
+                  icon={<Image className={styles.key} src={keyImage} aria-label="Overstyring" />}
+                  disabled={erOverstyrt || overrideReadOnly}
+                />
+              </FlexColumn>
             )}
         </FlexRow>
       </FlexContainer>

@@ -12,7 +12,14 @@ interface OwnProps {
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
 }
 
-const headerTextCodes = ['Inntektskategori', 'Arbeidsgiver', 'Til søker', 'Refusjon', 'Uttaksgrad'];
+const headerTextCodes = [
+  'Inntektskategori',
+  'Arbeidsgiver',
+  'Arbeidsgiver (privatperson)',
+  'Til søker',
+  'Refusjon',
+  'Uttaksgrad',
+];
 
 const Andeler = ({ name, alleKodeverk, arbeidsgivere }: Partial<OwnProps>) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
