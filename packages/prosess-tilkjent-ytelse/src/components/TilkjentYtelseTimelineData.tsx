@@ -8,7 +8,7 @@ import moment from 'moment';
 import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { createVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
+import { createArbeidsgiverVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
 import styles from './tilkjentYtelse.module.css';
 import UtbetalingsgradDetaljer from './UtbetalingsgradDetaljer';
@@ -139,7 +139,7 @@ const TilkjentYtelseTimeLineData = ({
               {!!andel.refusjon && (
                 <div className="flex justify-between items-start">
                   <BodyShort size="small" className="inline-block">
-                    {`${createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}: ${Number(andel.refusjon)} kr`}
+                    {`${createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}: ${Number(andel.refusjon)} kr`}
                   </BodyShort>
                   <Tag size="xsmall" variant="neutral-moderate" className={styles.tilkjentYtelseTag}>
                     Refusjon
@@ -149,7 +149,7 @@ const TilkjentYtelseTimeLineData = ({
               {!!andel.tilSoker && (
                 <div className="flex justify-between items-start">
                   <BodyShort size="small" className="inline-block">
-                    {`${createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}: ${Number(andel.tilSoker)} kr`}
+                    {`${createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}: ${Number(andel.tilSoker)} kr`}
                   </BodyShort>
                   <Tag size="xsmall" variant="neutral-moderate" className={styles.tilkjentYtelseTag}>
                     Til bruker
@@ -162,13 +162,13 @@ const TilkjentYtelseTimeLineData = ({
       <Tabs className="mt-12" value={String(selectedAndelIndex)} onChange={setSelectedAndelIndex}>
         <Tabs.List>
           {andeler.map((andel, index) => {
-            const label = createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId);
+            const label = createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId);
             return <Tabs.Tab value={String(index)} key={label} label={label} />;
           })}
         </Tabs.List>
         {andeler.map((andel, index) => (
           <Tabs.Panel
-            key={createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}
+            key={createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}
             value={String(index)}
           >
             <div className="p-4">

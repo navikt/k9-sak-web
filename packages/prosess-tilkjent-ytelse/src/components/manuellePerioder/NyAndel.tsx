@@ -7,6 +7,7 @@ import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/type
 import { useEffect, useState } from 'react';
 import NyArbeidsgiverModal from './NyArbeidsgiverModal';
 
+import { atLeastOneRequired } from '@fpsak-frontend/utils/src/validation/validators';
 import { Button, Detail, Fieldset, HGrid } from '@navikt/ds-react';
 import { InputField, SelectField } from '@navikt/ft-form-hooks';
 import { useFieldArray, useFormContext } from 'react-hook-form';
@@ -74,6 +75,7 @@ const defaultAndel: NyPeriodeFormAndeler = {
   arbeidsforholdType: undefined,
   arbeidsgiverNavn: '',
   arbeidsgiverOrgnr: '',
+  arbeidsgiverPersonIdent: '',
   eksternArbeidsforholdId: '',
   inntektskategori: undefined,
   refusjon: 0,
@@ -129,7 +131,11 @@ export const NyAndel = ({ newArbeidsgiverCallback, alleKodeverk, readOnly, arbei
                     <SelectField
                       label="Arbeidsgiver"
                       name={`nyPeriodeForm.andeler.${index}.arbeidsgiverOrgnr`}
-                      validate={[required]}
+                      validate={
+                        skillUtPrivatperson
+                          ? [value => atLeastOneRequired(value, values.arbeidsgiverPersonIdent)]
+                          : [required]
+                      }
                       selectValues={
                         skillUtPrivatperson ? mapArbeidsgivereOrg(arbeidsgivere) : mapArbeidsgivere(arbeidsgivere)
                       }
@@ -148,16 +154,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, alleKodeverk, readOnly, arbei
                       <SelectField
                         label="Arbeidsgiver (privatperson)"
                         name={`nyPeriodeForm.andeler.${index}.arbeidsgiverPersonIdent`}
-                        validate={[required]}
+                        validate={[value => atLeastOneRequired(value, values.arbeidsgiverOrgnr)]}
                         selectValues={mapArbeidsgiverePrivatperson(arbeidsgivere)}
-                      />
-                      <Button
-                        variant="secondary"
-                        size="small"
-                        icon={<Image src={addCircleIcon} />}
-                        onClick={() => setOpen(true)}
-                        aria-label="Ny arbeidsgiver (privatperson)"
-                        type="button"
                       />
                     </div>
                   )}

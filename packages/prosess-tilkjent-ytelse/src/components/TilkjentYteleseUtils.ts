@@ -13,22 +13,15 @@ export const getInntektskategori = (
 
 const getEndCharFromId = (id: string) => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
-export const createVisningsnavnForAndel = (
-  andel: BeregningsresultatPeriodeAndel,
-  getKodeverknavn,
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
-): string => {
+export const createArbeidsgiverVisningsnavnForAndel = (andel, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
   if (!andel) return '';
 
   let identifikator;
   if (andel.arbeidsgiverOrgnr) {
     identifikator = andel.arbeidsgiverOrgnr;
+  } else if (andel.arbeidsgiver?.arbeidsgiverOrgnr) {
+    identifikator = andel.arbeidsgiver.arbeidsgiverOrgnr;
   }
-  // else if (andel.arbeidsgiver?.arbeidsgiverOrgnr) {
-  //   identifikator = andel.arbeidsgiver.arbeidsgiverOrgnr;
-  // } else if (andel.arbeidsgiver?.identifikator) {
-  //   identifikator = andel.arbeidsgiver.identifikator;
-  // }
 
   if (!identifikator) {
     return andel.aktivitetStatus ? getKodeverknavn(andel.aktivitetStatus) : '';
@@ -46,4 +39,33 @@ export const createVisningsnavnForAndel = (
   return `${navn} (${identifikator})${getEndCharFromId(andel.eksternArbeidsforholdId)}`;
 };
 
-export default createVisningsnavnForAndel;
+export const createPrivatarbeidsgiverVisningsnavnForAndel = (
+  andel,
+  getKodeverknavn,
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
+) => {
+  if (!andel) return '';
+
+  let identifikator;
+  if (andel.arbeidsgiverPersonIdent) {
+    identifikator = andel.arbeidsgiverPersonIdent;
+  } else if (andel.arbeidsgiver?.arbeidsgiverPersonIdent) {
+    identifikator = andel.arbeidsgiver.arbeidsgiverPersonIdent;
+  }
+
+  if (identifikator == null) {
+    return '';
+  }
+
+  const arbeidsgiverOpplysninger = Object.values(arbeidsgiverOpplysningerPerId).find(
+    v => v?.personIdentifikator === identifikator,
+  );
+
+  const navn = arbeidsgiverOpplysninger != null ? arbeidsgiverOpplysninger?.navn : '';
+
+  if (!navn) {
+    return `${identifikator}${getEndCharFromId(andel.eksternArbeidsforholdId)}`;
+  }
+
+  return `${navn} (${identifikator})${getEndCharFromId(andel.eksternArbeidsforholdId)}`;
+};

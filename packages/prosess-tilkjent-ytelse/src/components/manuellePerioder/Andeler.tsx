@@ -3,7 +3,11 @@ import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Alert, BodyShort, Table } from '@navikt/ds-react';
 import { useFormContext } from 'react-hook-form';
-import { createVisningsnavnForAndel, getInntektskategori } from '../TilkjentYteleseUtils';
+import {
+  createArbeidsgiverVisningsnavnForAndel,
+  createPrivatarbeidsgiverVisningsnavnForAndel,
+  getInntektskategori,
+} from '../TilkjentYteleseUtils';
 import { TilkjentYtelseFormState } from './FormState';
 
 interface OwnProps {
@@ -52,7 +56,12 @@ const Andeler = ({ name, alleKodeverk, arbeidsgivere }: Partial<OwnProps>) => {
         <Table.Body>
           {andeler.map(andel => {
             const inntektskategori = getInntektskategori(andel.inntektskategori, getKodeverknavn);
-            const arbeidsgiver = createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgivere);
+            const arbeidsgiver = createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgivere);
+            const arbeidsgiverPrivatperson = createPrivatarbeidsgiverVisningsnavnForAndel(
+              andel,
+              getKodeverknavn,
+              arbeidsgivere,
+            );
 
             return (
               <Table.Row key={andel.arbeidsgiverOrgnr}>
@@ -61,6 +70,9 @@ const Andeler = ({ name, alleKodeverk, arbeidsgivere }: Partial<OwnProps>) => {
                 </Table.DataCell>
                 <Table.DataCell>
                   <BodyShort size="small">{arbeidsgiver}</BodyShort>
+                </Table.DataCell>
+                <Table.DataCell>
+                  <BodyShort size="small">{arbeidsgiverPrivatperson}</BodyShort>
                 </Table.DataCell>
                 <Table.DataCell>
                   <BodyShort size="small">{andel.tilSoker}</BodyShort>

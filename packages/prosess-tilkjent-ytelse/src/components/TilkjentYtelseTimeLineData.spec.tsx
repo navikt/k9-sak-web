@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import createVisningsnavnForAndel from './TilkjentYteleseUtils';
+import { createArbeidsgiverVisningsnavnForAndel } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData';
 
@@ -76,6 +76,6 @@ describe('<TilkjentYtelseTimeLineData>', () => {
     );
 
     expect(screen.getByText('Aktivitetsstatus:')).toBeInTheDocument();
-    expect(createVisningsnavnForAndel(selectedItemDataFL.andeler[0], getKodeverknavn, {})).toBe('Frilans');
+    expect(createArbeidsgiverVisningsnavnForAndel(selectedItemDataFL.andeler[0], getKodeverknavn, {})).toBe('Frilans');
   });
 });
