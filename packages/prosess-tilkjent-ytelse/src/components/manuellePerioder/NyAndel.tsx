@@ -133,7 +133,7 @@ export const NyAndel = ({ newArbeidsgiverCallback, alleKodeverk, readOnly, arbei
                       name={`nyPeriodeForm.andeler.${index}.arbeidsgiverOrgnr`}
                       validate={
                         skillUtPrivatperson
-                          ? [value => atLeastOneRequired(value, values.arbeidsgiverPersonIdent)]
+                          ? [value => atLeastOneRequired(value, field.arbeidsgiverPersonIdent)]
                           : [required]
                       }
                       selectValues={
@@ -154,7 +154,7 @@ export const NyAndel = ({ newArbeidsgiverCallback, alleKodeverk, readOnly, arbei
                       <SelectField
                         label="Arbeidsgiver (privatperson)"
                         name={`nyPeriodeForm.andeler.${index}.arbeidsgiverPersonIdent`}
-                        validate={[value => atLeastOneRequired(value, values.arbeidsgiverOrgnr)]}
+                        validate={[value => atLeastOneRequired(value, field.arbeidsgiverOrgnr)]}
                         selectValues={mapArbeidsgiverePrivatperson(arbeidsgivere)}
                       />
                     </div>
