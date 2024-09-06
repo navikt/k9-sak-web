@@ -92,10 +92,15 @@ export const VilkarFields = ({
           isVertical
           readOnly={readOnly}
           radios={[
+            /*          TSFF-804: Fjerner mulighet for å velge at vilkåret er oppfylt.
+            dersom søker har 28 dager med opptjening blir dette aksjonspunktet automatisk løst.
+            Så de gangene man får løse aksjonspunktet manuelt har ikke brukeren 28 dager med opptjening.
+            Velger man at vilkåret er oppfylt i de tilfellene får man feil i beregning.
+            Valget fjernes midlertidig, men skal tilbake igjen når EØS-saker kan behandles i K9.
             {
               value: true,
               label: erOppfyltText,
-            },
+            }, */
             {
               value: false,
               label: erIkkeOppfyltText,
