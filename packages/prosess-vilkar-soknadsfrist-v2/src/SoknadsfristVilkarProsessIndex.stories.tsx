@@ -419,4 +419,287 @@ export const visSoknadsfristAksjonspunkt5077Delvis: Story = {
   },
 };
 
+export const VisSoknadsfristAksjonspunkt5077FlereSøknader: Story = {
+  args: {
+    overrideReadOnly: false,
+    kanOverstyreAccess: {
+      isEnabled: true,
+    },
+  },
+  render: props => {
+    const [erOverstyrt, toggleOverstyring] = React.useState(false);
+    return (
+      <SoknadsfristVilkarProsessIndex
+        behandling={{
+          behandlendeEnhetId: '4487',
+          behandlendeEnhetNavn: 'NAV AY sykdom i familien',
+          behandlingÅrsaker: [
+            {
+              erAutomatiskRevurdering: false,
+              behandlingArsakType: {
+                kode: 'RE-END-FRA-BRUKER',
+                kodeverk: 'BEHANDLING_AARSAK',
+              },
+              manueltOpprettet: false,
+            },
+            {
+              erAutomatiskRevurdering: false,
+              behandlingArsakType: {
+                kode: 'RE_ANNEN_SAK',
+                kodeverk: 'BEHANDLING_AARSAK',
+              },
+              manueltOpprettet: false,
+            },
+          ],
+          behandlingKoet: false,
+          behandlingPaaVent: false,
+          behandlingsfristTid: '2024-10-17',
+          behandlingsresultat: {
+            erRevurderingMedUendretUtfall: false,
+            type: {
+              kode: 'IKKE_FASTSATT',
+              kodeverk: 'BEHANDLING_RESULTAT_TYPE',
+            },
+            vilkårResultat: {
+              SØKNADSFRIST: [
+                {
+                  periode: {
+                    fom: '2024-03-04',
+                    tom: '2024-03-08',
+                  },
+                  avslagsårsak: {
+                    kode: '-',
+                    kodeverk: 'AVSLAGSARSAK',
+                  },
+                  utfall: {
+                    kode: '-',
+                    kodeverk: 'VILKAR_UTFALL_TYPE',
+                  },
+                },
+                {
+                  periode: {
+                    fom: '2024-03-25',
+                    tom: '2024-03-29',
+                  },
+                  avslagsårsak: {
+                    kode: '-',
+                    kodeverk: 'AVSLAGSARSAK',
+                  },
+                  utfall: {
+                    kode: '-',
+                    kodeverk: 'VILKAR_UTFALL_TYPE',
+                  },
+                },
+              ],
+            },
+          },
+          behandlingResultatType: {
+            kode: 'IKKE_FASTSATT',
+            kodeverk: 'BEHANDLING_RESULTAT_TYPE',
+          },
+          endret: '2024-09-05T15:03:10.053',
+          endretAvBrukernavn: 'k9-sak',
+          erPaaVent: false,
+          fagsakId: 1348202,
+          sakstype: {
+            kode: 'PSB',
+            kodeverk: 'FAGSAK_YTELSE',
+          },
+          førsteÅrsak: {
+            erAutomatiskRevurdering: false,
+            behandlingArsakType: {
+              kode: 'RE_ANNEN_SAK',
+              kodeverk: 'BEHANDLING_AARSAK',
+            },
+            manueltOpprettet: false,
+          },
+          gjeldendeVedtak: false,
+          id: 1355602,
+          links: [],
+          opprettet: '2024-09-05T15:01:53',
+          sprakkode: {
+            kode: 'NB',
+            kodeverk: 'SPRAAK_KODE',
+          },
+          status: {
+            kode: 'UTRED',
+            kodeverk: 'BEHANDLING_STATUS',
+          },
+          stegTilstand: {
+            stegType: {
+              kode: 'VURDER_SØKNADSFRIST',
+              kodeverk: 'BEHANDLING_STEG_TYPE',
+            },
+            stegStatus: {
+              kode: 'UTGANG',
+              kodeverk: 'BEHANDLING_STEG_STATUS',
+            },
+            tidsstempel: '2024-09-05T15:03:10.053+02:00',
+          },
+          toTrinnsBehandling: false,
+          type: {
+            kode: 'BT-002',
+            kodeverk: 'BEHANDLING_TYPE',
+          },
+          uuid: '46bc4af0-d515-4d2d-bfe5-abce509194a9',
+          behandlingHenlagt: false,
+          versjon: 40,
+        }}
+        aksjonspunkter={[
+          {
+            aksjonspunktType: {
+              kode: 'MANU',
+              kodeverk: 'AKSJONSPUNKT_TYPE',
+            },
+            begrunnelse: null,
+            besluttersBegrunnelse: null,
+            definisjon: {
+              kode: '5077',
+              kodeverk: 'AKSJONSPUNKT_DEF',
+            },
+            erAktivt: true,
+            fristTid: null,
+            kanLoses: true,
+            status: {
+              kode: 'OPPR',
+              kodeverk: 'AKSJONSPUNKT_STATUS',
+            },
+            toTrinnsBehandling: true,
+            toTrinnsBehandlingGodkjent: null,
+            vilkarType: {
+              kode: 'FP_VK_3',
+              kodeverk: 'VILKAR_TYPE',
+            },
+            vurderPaNyttArsaker: null,
+            venteårsak: {
+              kanVelgesIGui: false,
+              kode: '-',
+              ventekategori: null,
+              kodeverk: 'VENT_AARSAK',
+            },
+            venteårsakVariant: null,
+            opprettetAv: 'k9-sak',
+          },
+        ]}
+        submitCallback={action('button-click')}
+        toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
+        erOverstyrt={erOverstyrt}
+        soknadsfristStatus={{
+          dokumentStatus: [
+            {
+              type: 'SØKNAD',
+              status: [
+                {
+                  periode: {
+                    fom: '2024-03-25',
+                    tom: '2024-03-29',
+                  },
+                  status: {
+                    kode: 'IKKE_VURDERT',
+                    kodeverk: 'VILKAR_UTFALL_TYPE',
+                  },
+                },
+              ],
+              innsendingstidspunkt: '2024-09-05T13:01:56.322',
+              journalpostId: '671129216',
+              avklarteOpplysninger: null,
+              overstyrteOpplysninger: null,
+            },
+            {
+              type: 'SØKNAD',
+              status: [
+                {
+                  periode: {
+                    fom: '2024-03-04',
+                    tom: '2024-03-08',
+                  },
+                  status: {
+                    kode: 'IKKE_VURDERT',
+                    kodeverk: 'VILKAR_UTFALL_TYPE',
+                  },
+                },
+              ],
+              innsendingstidspunkt: '2024-09-05T13:00:44.446',
+              journalpostId: '671129199',
+              avklarteOpplysninger: null,
+              overstyrteOpplysninger: null,
+            },
+            {
+              type: 'SØKNAD',
+              status: [
+                {
+                  periode: {
+                    fom: '2024-04-15',
+                    tom: '2024-04-19',
+                  },
+                  status: {
+                    kode: 'IKKE_VURDERT',
+                    kodeverk: 'VILKAR_UTFALL_TYPE',
+                  },
+                },
+              ],
+              innsendingstidspunkt: '2024-09-05T13:03:07.003',
+              journalpostId: '671129200',
+              avklarteOpplysninger: null,
+              overstyrteOpplysninger: null,
+            },
+          ],
+        }}
+        panelTittelKode="Søknadsfrist"
+        vilkar={[
+          {
+            vilkarType: {
+              kode: 'FP_VK_3',
+              kodeverk: 'VILKAR_TYPE',
+            },
+            lovReferanse: '§ 22-13 tredje ledd',
+            overstyrbar: true,
+            perioder: [
+              {
+                avslagKode: null,
+                merknadParametere: {},
+                vilkarStatus: {
+                  kode: 'IKKE_VURDERT',
+                  kodeverk: 'VILKAR_UTFALL_TYPE',
+                },
+                periode: {
+                  fom: '2024-03-04',
+                  tom: '2024-03-08',
+                },
+                begrunnelse: null,
+                vurderesIBehandlingen: true,
+                vurdersIBehandlingen: true,
+                merknad: {
+                  kode: '-',
+                  kodeverk: 'VILKAR_UTFALL_MERKNAD',
+                },
+              },
+              {
+                avslagKode: null,
+                merknadParametere: {},
+                vilkarStatus: {
+                  kode: 'IKKE_VURDERT',
+                  kodeverk: 'VILKAR_UTFALL_TYPE',
+                },
+                periode: {
+                  fom: '2024-03-25',
+                  tom: '2024-03-29',
+                },
+                begrunnelse: null,
+                vurderesIBehandlingen: true,
+                vurdersIBehandlingen: true,
+                merknad: {
+                  kode: '-',
+                  kodeverk: 'VILKAR_UTFALL_MERKNAD',
+                },
+              },
+            ],
+          },
+        ]}
+        {...props}
+      />
+    );
+  },
+};
+
 export default meta;
