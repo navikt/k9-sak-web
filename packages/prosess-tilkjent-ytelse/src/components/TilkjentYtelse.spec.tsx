@@ -1,11 +1,12 @@
+import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { BeregningsresultatPeriodeAndel } from '@k9-sak-web/types';
-import { render, screen } from '@testing-library/react';
-import { intlMock } from '../../i18n';
+import { screen } from '@testing-library/react';
 import { PeriodeMedId, TilkjentYtelse } from './TilkjentYtelse';
 
 describe('<TilkjentYtelse>', () => {
   it('skall innehålla korrekt antal felter', () => {
-    render(
+    renderWithIntl(
       <TilkjentYtelse
         items={
           [

@@ -1,4 +1,5 @@
-import { render, screen } from '@testing-library/react';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
 import { createArbeidsgiverVisningsnavnForAndel } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData';
@@ -63,7 +64,7 @@ const getKodeverknavn = kodeverk => {
 
 describe('<TilkjentYtelseTimeLineData>', () => {
   it('Skal vise riktig aktivitetsStatus', () => {
-    render(
+    renderWithIntl(
       <TilkjentYtelseTimeLineData
         callbackForward={callbackForward}
         callbackBackward={callbackBackward}
