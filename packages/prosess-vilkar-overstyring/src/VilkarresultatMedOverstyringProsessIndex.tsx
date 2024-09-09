@@ -1,13 +1,12 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
-import classNames from 'classnames/bind';
-import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
-
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { dateFormat } from '@fpsak-frontend/utils';
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { Aksjonspunkt, Behandling, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
+import classNames from 'classnames/bind';
+import React, { SetStateAction, useEffect, useState } from 'react';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringFormPeriodisert';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
 import VilkarresultatMedOverstyringHeader from './components/VilkarresultatMedOverstyringHeader';

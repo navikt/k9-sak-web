@@ -46,8 +46,8 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_AKSJONSPUNKT_9015,
   },
   {
-    key: "ALDERSVILKAR_KRONISK_SYK",
-    value: process.env.VITE_ALDERSVILKAR_KRONISK_SYK
+    key: 'ALDERSVILKAR_KRONISK_SYK',
+    value: process.env.VITE_ALDERSVILKAR_KRONISK_SYK,
   },
   {
     key: 'FRITEKST_REDIGERING',
@@ -80,5 +80,9 @@ export const featureTogglesFactory = () => [
   {
     key: 'UTVIDET_VARSELFELT',
     value: process.env.VITE_UTVIDET_VARSELFELT,
-  }
+  },
+  {
+    key: 'SKILL_UT_PRIVATPERSON',
+    value: process.env.VITE_SKILL_UT_PRIVATPERSON,
+  },
 ];

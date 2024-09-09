@@ -53,7 +53,6 @@ const lagOppholdIUtland = (utlandsOpphold: Opphold['utlandsopphold']) =>
 
 interface OppholdINorgeOgAdresserFaktaPanelProps {
   readOnly: boolean;
-  // alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   alleMerknaderFraBeslutter: MerknaderFraBeslutter;
 }
 

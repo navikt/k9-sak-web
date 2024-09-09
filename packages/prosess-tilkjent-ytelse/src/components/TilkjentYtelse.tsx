@@ -6,7 +6,7 @@ import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import moment from 'moment';
 import React, { Component, RefObject } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
-import { createVisningsnavnForAndel } from './TilkjentYteleseUtils';
+import { createArbeidsgiverVisningsnavnForAndel } from './TilkjentYteleseUtils';
 import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
 
 import styles from './tilkjentYtelse.module.css';
@@ -63,7 +63,11 @@ const createTooltipContent = (intl, item, kodeverkNavnFraKode, arbeidsgiverOpply
               formatMessage(
                 { id: 'Timeline.tooltip.dagsatsPerAndel' },
                 {
-                  arbeidsgiver: createVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId),
+                  arbeidsgiver: createArbeidsgiverVisningsnavnForAndel(
+                    andel,
+                    kodeverkNavnFraKode,
+                    arbeidsgiverOpplysningerPerId,
+                  ),
                   dagsatsPerAndel: Number(andel.refusjon) + Number(andel.tilSoker),
                 },
               ),

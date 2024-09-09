@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useReducer } from 'react';
-import { Button, Checkbox, HStack, Spacer, VStack } from '@navikt/ds-react';
+import { Button, HStack, Spacer, VStack } from '@navikt/ds-react';
 import type { Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
 import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
@@ -25,10 +25,11 @@ import FritekstInput, {
   type FritekstInputValue,
   type FritekstModus,
 } from './FritekstInput.js';
-import MalSelect from './MalSelect.jsx';
+import MalSelect from './MalSelect.js';
 import type { BehandlingInfo } from '../BehandlingInfo.js';
-import type { Fagsak } from '../Fagsak.ts';
-import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.ts';
+import type { Fagsak } from '../Fagsak.js';
+import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
+import { TredjepartsmottakerCheckbox } from './TredjepartsmottakerCheckbox.js';
 
 export interface BackendApi extends TredjepartsmottakerBackendApi {
   hentInnholdBrevmal(
@@ -383,14 +384,11 @@ const Messages = ({
         disabled={tredjepartsmottakerAktivert}
         showValidation={showValidation}
       />
-      <Checkbox
+      <TredjepartsmottakerCheckbox
         checked={tredjepartsmottakerAktivert}
-        onChange={() => setTredjepartsmottakerAktivert(!tredjepartsmottakerAktivert)}
-        size="small"
+        onChange={v => setTredjepartsmottakerAktivert(v)}
         disabled={!valgtMal?.støtterTredjepartsmottaker}
-      >
-        Send til tredjepart
-      </Checkbox>
+      />
       <TredjepartsmottakerInput
         show={tredjepartsmottakerAktivert}
         showValidation={showValidation}

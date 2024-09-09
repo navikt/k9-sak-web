@@ -6,7 +6,8 @@
   "private": true,
   "dependencies": {
     "@k9-sak-web/lib": "1.0.0",
-    "axios": "1.7.5",
+    "@k9-sak-web/backend": "workspace:^",
+    "axios": "1.7.7",
     "node-cache": "5.1.2"
   }
 }

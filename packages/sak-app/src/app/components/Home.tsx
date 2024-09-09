@@ -11,6 +11,7 @@ import { aktoerRoutePath, fagsakRoutePath } from '../paths';
 import DashboardResolver from './DashboardResolver';
 import { BehandlingProvider } from '@k9-sak-web/gui/behandling/index.js';
 import styles from './home.module.css';
+import { UnhandledRejectionCatcher } from '@k9-sak-web/gui/app/UnhandledRejectionCatcher.js';
 
 interface OwnProps {
   headerHeight: number;
@@ -32,6 +33,7 @@ const queryClient = new QueryClient();
  */
 const Home = ({ headerHeight }: OwnProps) => (
   <div className={styles.content} style={{ margin: `${headerHeight}px auto 0` }}>
+    <UnhandledRejectionCatcher />
     <QueryClientProvider client={queryClient}>
       <SentryRoutes>
         <Route path="/" element={<DashboardResolver />} />

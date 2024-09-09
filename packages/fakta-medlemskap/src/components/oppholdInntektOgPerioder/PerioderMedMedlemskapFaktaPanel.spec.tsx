@@ -203,7 +203,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         },
       ],
       isPeriodAksjonspunktClosed: false,
-      medlemskapManuellVurderingType: 'manuellType',
+      medlemskapManuellVurderingType: { kode: 'manuellType', kodeverk: '' },
       fodselsdato: '2017-10-15',
       hasPeriodeAksjonspunkt: true,
     });

@@ -2,7 +2,7 @@ import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { InputField, SelectField } from '@fpsak-frontend/form';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { FlexColumn, FlexRow, Image, PeriodFieldArray } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexRow, Image, PeriodFieldArray, useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import React, { useState } from 'react';
@@ -11,6 +11,7 @@ import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import NyArbeidsgiverModal from './NyArbeidsgiverModal';
 
 import styles from './periode.module.css';
+import {atLeastOneRequired} from "@fpsak-frontend/utils/src/validation/validators";
 
 const minValue0 = minValue(0);
 const maxValue100 = maxValue(100);
@@ -23,6 +24,28 @@ const mapArbeidsgivere = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
           {navn} ({identifikator})
         </option>
       ))
+    : [];
+
+const mapArbeidsgivereOrg = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
+  arbeidsgivere
+    ? Object.values(arbeidsgivere)
+        .filter(arbeidsgiver => arbeidsgiver.personIdentifikator == null) // erPrivatPerson returneres ikke fra backend
+        .map(({ navn, identifikator }) => (
+          <option value={identifikator} key={identifikator}>
+            {navn} ({identifikator})
+          </option>
+        ))
+    : [];
+
+const mapArbeidsgiverePrivatperson = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
+  arbeidsgivere
+    ? Object.values(arbeidsgivere)
+        .filter(arbeidsgiver => arbeidsgiver.personIdentifikator != null) // erPrivatPerson returneres ikke fra backend
+        .map(({ navn, personIdentifikator }) => (
+          <option value={personIdentifikator} key={personIdentifikator}>
+            {navn} ({personIdentifikator})
+          </option>
+        ))
     : [];
 
 const getInntektskategori = alleKodeverk => {
@@ -71,6 +94,8 @@ export const NyAndel = ({
   behandlingVersjon,
 }: OwnProps & WrappedComponentProps) => {
   const [isOpen, setOpen] = useState(false);
+  const [featureToggles] = useFeatureToggles();
+  const skillUtPrivatperson = featureToggles?.SKILL_UT_PRIVATPERSON;
 
   const allFields = fields.getAll();
 
@@ -101,24 +126,37 @@ export const NyAndel = ({
                 />
               </FlexColumn>
               {!erSN && !erFL && (
-                <FlexColumn className={styles.relative}>
-                  <SelectField
-                    label={{ id: 'TilkjentYtelse.NyPeriode.Arbeidsgiver' }}
-                    bredde="xl"
-                    name={`${periodeElementFieldId}.arbeidsgiverOrgnr`}
-                    validate={[required]}
-                    selectValues={mapArbeidsgivere(arbeidsgivere)}
-                  />
-                  <div
-                    onClick={() => setOpen(true)}
-                    onKeyDown={() => setOpen(true)}
-                    className={styles.addArbeidsforhold}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    <Image className={styles.addCircleIcon} src={addCircleIcon} alt="Ny arbeidsgiver" />
-                  </div>
-                </FlexColumn>
+                <>
+                  <FlexColumn className={styles.relative}>
+                    <SelectField
+                      label={{ id: 'TilkjentYtelse.NyPeriode.Arbeidsgiver' }}
+                      bredde="xl"
+                      name={`${periodeElementFieldId}.arbeidsgiverOrgnr`}
+                      validate={skillUtPrivatperson
+                        ? [value => atLeastOneRequired(value, values.arbeidsgiverPersonIdent)]
+                        : [required]}
+                      selectValues={skillUtPrivatperson ? mapArbeidsgivereOrg(arbeidsgivere) : mapArbeidsgivere(arbeidsgivere)}
+                    />
+                    <div
+                      onClick={() => setOpen(true)}
+                      onKeyDown={() => setOpen(true)}
+                      className={styles.addArbeidsforhold}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      <Image className={styles.addCircleIcon} src={addCircleIcon} alt="Ny arbeidsgiver" />
+                    </div>
+                  </FlexColumn>
+                  {skillUtPrivatperson && (<FlexColumn className={styles.relative}>
+                    <SelectField
+                      label={{ id: 'TilkjentYtelse.NyPeriode.ArbeidsgiverPrivatperson' }}
+                      bredde="xl"
+                      name={`${periodeElementFieldId}.arbeidsgiverPersonIdent`}
+                      validate={[value => atLeastOneRequired(value, values.arbeidsgiverOrgnr)]}
+                      selectValues={mapArbeidsgiverePrivatperson(arbeidsgivere)}
+                    />
+                  </FlexColumn>)}
+                </>
               )}
               <FlexColumn>
                 <InputField

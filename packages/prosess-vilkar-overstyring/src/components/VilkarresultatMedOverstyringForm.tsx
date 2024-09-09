@@ -1,6 +1,3 @@
-import React, { SetStateAction, useEffect } from 'react';
-import { FormattedMessage } from 'react-intl';
-import moment from 'moment';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -15,11 +12,14 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VilkarResultPickerRHF } from '@k9-sak-web/prosess-felles';
-import { Aksjonspunkt, SubmitCallback } from '@k9-sak-web/types';
+import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { BodyShort, Button, Label } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
+import moment from 'moment';
+import React, { SetStateAction, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { FormattedMessage } from 'react-intl';
 import { VilkarresultatMedOverstyringFormState } from './FormState';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import VilkarresultatMedBegrunnelse from './VilkarresultatMedBegrunnelse';

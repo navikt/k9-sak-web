@@ -1,8 +1,9 @@
 import FritekstInput from '@k9-sak-web/gui/sak/meldinger/FritekstInput.js';
 import type { Meta, StoryObj } from '@storybook/react';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
+import { expect, fn } from '@storybook/test';
 
-const meta: Meta<typeof FritekstInput> = {
+const meta = {
   title: 'gui/sak/meldinger/FritekstInput.tsx',
   component: FritekstInput,
   decorators: [withMaxWidth(420)],
@@ -11,15 +12,31 @@ const meta: Meta<typeof FritekstInput> = {
       action: 'onChange',
     },
   },
-};
+} satisfies Meta<typeof FritekstInput>;
 
 export default meta;
 
-export const Default: StoryObj<typeof FritekstInput> = {
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
   args: {
     språk: 'NB', // SPRAAK_KODE
     show: true,
     fritekstModus: 'EnkelFritekst',
     showValidation: true,
+  },
+};
+
+export const UgyldigeTegn: Story = {
+  args: {
+    ...Default.args,
+    defaultValue: {
+      tittel: '',
+      tekst: 'abcd[^]feil',
+    },
+    onChange: fn(),
+  },
+  play: async ({ args }) => {
+    expect(args.onChange).toHaveBeenCalledWith({ invalid: true });
   },
 };

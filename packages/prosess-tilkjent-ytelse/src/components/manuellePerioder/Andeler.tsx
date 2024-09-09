@@ -4,7 +4,11 @@ import React from 'react';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { WrappedComponentProps, useIntl } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
-import { createVisningsnavnForAndel, getInntektskategori } from '../TilkjentYteleseUtils';
+import {
+  createArbeidsgiverVisningsnavnForAndel,
+  createPrivatarbeidsgiverVisningsnavnForAndel,
+  getInntektskategori,
+} from '../TilkjentYteleseUtils';
 
 interface OwnProps {
   fields: FieldArrayFieldsProps<any>;
@@ -25,6 +29,7 @@ interface OwnProps {
 const headerTextCodes = [
   'TilkjentYtelse.NyPeriode.Inntektskategori',
   'TilkjentYtelse.NyPeriode.Arbeidsgiver',
+  'TilkjentYtelse.NyPeriode.ArbeidsgiverPrivatperson',
   'TilkjentYtelse.NyPeriode.TilSoker',
   'TilkjentYtelse.NyPeriode.Refusjon',
   'TilkjentYtelse.NyPeriode.Ubetalingsgrad',
@@ -61,7 +66,12 @@ const Andeler = ({ fields, meta, arbeidsgivere }: Partial<OwnProps> & WrappedCom
           {fields.map((fieldId: string, index: number, field: FieldArrayFieldsProps<any>) => {
             const andel = field.get(index);
             const inntektskategori = getInntektskategori(andel.inntektskategori, kodeverkNavnFraKode);
-            const arbeidsgiver = createVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgivere);
+            const arbeidsgiver = createArbeidsgiverVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgivere);
+            const arbeidsgiverPrivatperson = createPrivatarbeidsgiverVisningsnavnForAndel(
+              andel,
+              kodeverkNavnFraKode,
+              arbeidsgivere,
+            );
 
             return (
               <Table.Row key={fieldId}>
@@ -70,6 +80,9 @@ const Andeler = ({ fields, meta, arbeidsgivere }: Partial<OwnProps> & WrappedCom
                 </Table.DataCell>
                 <Table.DataCell>
                   <BodyShort size="small">{arbeidsgiver}</BodyShort>
+                </Table.DataCell>
+                <Table.DataCell>
+                  <BodyShort size="small">{arbeidsgiverPrivatperson}</BodyShort>
                 </Table.DataCell>
                 <Table.DataCell>
                   <BodyShort size="small">{andel.tilSoker}</BodyShort>
