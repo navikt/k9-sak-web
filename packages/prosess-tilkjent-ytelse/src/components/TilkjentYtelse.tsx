@@ -6,18 +6,18 @@ import {
   ISO_DATE_FORMAT,
   calcDaysAndWeeksWithWeekends,
   getKodeverknavnFn,
+  initializeDate,
 } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, BeregningsresultatPeriode, KodeverkMedNavn } from '@k9-sak-web/types';
 import moment from 'moment';
 import React, { Component, RefObject } from 'react';
-import { IntlShape, WrappedComponentProps, injectIntl } from 'react-intl';
 import { createArbeidsgiverVisningsnavnForAndel } from './TilkjentYteleseUtils';
 import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
 import styles from './tilkjentYtelse.module.css';
 
 export type PeriodeMedId = BeregningsresultatPeriode & { id: number };
 
-const parseDateString = (dateString: string) => moment(dateString, ISO_DATE_FORMAT).toDate();
+const parseDateString = (dateString: string) => initializeDate(dateString, ISO_DATE_FORMAT).toDate();
 
 const getOptions = (nyePerioder: PeriodeMedId[]) => {
   const firstPeriod = nyePerioder[0];
@@ -40,23 +40,15 @@ const getOptions = (nyePerioder: PeriodeMedId[]) => {
 };
 
 const createTooltipContent = (
-  intl: IntlShape,
   item: PeriodeMedId,
   getKodeverknavn,
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 ) => {
-  const { formatMessage } = intl;
-  const periodeDato = `${moment(item.fom).format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom).format(DDMMYY_DATE_FORMAT)}`;
+  const periodeDato = `${initializeDate(item.fom).format(DDMMYY_DATE_FORMAT)} - ${initializeDate(item.tom).format(DDMMYY_DATE_FORMAT)}`;
   return `
   <p>
     ${periodeDato}
-     ${formatMessage(
-       { id: calcDaysAndWeeksWithWeekends(moment(item.fom), moment(item.tom)).id },
-       {
-         weeks: calcDaysAndWeeksWithWeekends(moment(item.fom), moment(item.tom)).weeks,
-         days: calcDaysAndWeeksWithWeekends(moment(item.fom), moment(item.tom)).days,
-       },
-     )}
+     ${calcDaysAndWeeksWithWeekends(initializeDate(item.fom), initializeDate(item.tom))}
     <br />
     ${`Dagsats: ${item.dagsats}kr`}
     <br />
@@ -99,7 +91,6 @@ const erTotalUtbetalingsgradOver100 = (periode: PeriodeMedId) => {
 const prepareTimelineData = (
   periode: PeriodeMedId,
   index: number,
-  intl: IntlShape,
   getKodeverknavn,
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 ) => ({
@@ -109,7 +100,7 @@ const prepareTimelineData = (
   id: index,
   start: parseDateString(periode.fom),
   end: moment(parseDateString(periode.tom)).add(1, 'day').toDate(),
-  title: createTooltipContent(intl, periode, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+  title: createTooltipContent(periode, getKodeverknavn, arbeidsgiverOpplysningerPerId),
   content: '',
 });
 
@@ -133,10 +124,10 @@ interface OwnState {
  * Presentationskomponent. Masserer data og populerer felten samt formatterar tidslinjen for tilkjent ytelse
  */
 
-export class TilkjentYtelse extends Component<OwnProps & WrappedComponentProps, OwnState> {
+export class TilkjentYtelse extends Component<OwnProps, OwnState> {
   timelineRef: RefObject<any>;
 
-  constructor(props: OwnProps & WrappedComponentProps) {
+  constructor(props: OwnProps) {
     super(props);
 
     this.state = {
@@ -246,7 +237,7 @@ export class TilkjentYtelse extends Component<OwnProps & WrappedComponentProps, 
       goBackward,
       goForward,
       openPeriodInfo,
-      props: { groups, items, intl, alleKodeverk, arbeidsgiverOpplysningerPerId },
+      props: { groups, items, alleKodeverk, arbeidsgiverOpplysningerPerId },
       selectHandler,
       state: { selectedItem },
       zoomIn,
@@ -255,7 +246,7 @@ export class TilkjentYtelse extends Component<OwnProps & WrappedComponentProps, 
     const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
     const timelineData = items.map((periode, index) =>
-      prepareTimelineData(periode, index, intl, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+      prepareTimelineData(periode, index, getKodeverknavn, arbeidsgiverOpplysningerPerId),
     );
     return (
       <div className={styles.timelineContainer}>
@@ -295,4 +286,4 @@ export class TilkjentYtelse extends Component<OwnProps & WrappedComponentProps, 
   }
 }
 
-export default injectIntl(TilkjentYtelse);
+export default TilkjentYtelse;

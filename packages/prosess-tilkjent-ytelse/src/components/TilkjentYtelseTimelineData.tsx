@@ -1,12 +1,15 @@
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { FloatRight, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
-import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import {
+  calcDaysAndWeeksWithWeekends,
+  DDMMYYYY_DATE_FORMAT,
+  getKodeverknavnFn,
+  initializeDate,
+} from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, HGrid, Label, Tabs, Tag } from '@navikt/ds-react';
-import moment from 'moment';
 import React, { useEffect } from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { createArbeidsgiverVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
@@ -91,19 +94,9 @@ const TilkjentYtelseTimeLineData = ({
       <div className={styles.detailsPeriode}>
         <div className="flex gap-2">
           <BodyShort size="small" className="font-semibold">
-            {`${moment(selectedItemStartDate).format(DDMMYYYY_DATE_FORMAT).toString()} - ${moment(selectedItemEndDate).format(DDMMYYYY_DATE_FORMAT).toString()}`}
+            {`${initializeDate(selectedItemStartDate).format(DDMMYYYY_DATE_FORMAT).toString()} - ${initializeDate(selectedItemEndDate).format(DDMMYYYY_DATE_FORMAT).toString()}`}
           </BodyShort>
-          <BodyShort size="small">
-            (
-            <FormattedMessage
-              id={numberOfDaysAndWeeks.id}
-              values={{
-                weeks: numberOfDaysAndWeeks.weeks.toString(),
-                days: numberOfDaysAndWeeks.days.toString(),
-              }}
-            />
-            )
-          </BodyShort>
+          <BodyShort size="small">{numberOfDaysAndWeeks}</BodyShort>
         </div>
         {harUtbetalingsgradFraUttak && (
           <div>

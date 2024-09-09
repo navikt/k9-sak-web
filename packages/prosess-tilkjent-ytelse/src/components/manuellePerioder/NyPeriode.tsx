@@ -1,12 +1,10 @@
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { calcDaysAndWeeks, guid } from '@fpsak-frontend/utils';
+import { calcDaysAndWeeks, guid, initializeDate } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Button, ErrorMessage, Label } from '@navikt/ds-react';
 import { Datepicker } from '@navikt/ft-form-hooks';
 import { dateAfterOrEqual, hasValidDate, required } from '@navikt/ft-form-validators';
-import moment from 'moment';
 import { useFormContext } from 'react-hook-form';
-import { FormattedMessage } from 'react-intl';
 import {
   BeriketBeregningsresultatPeriode,
   NyArbeidsgiverFormState,
@@ -22,7 +20,7 @@ interface Periode {
 }
 
 export const sjekkOverlappendePerioder = (index: number, nestePeriode: Periode, forrigePeriode: Periode) =>
-  index !== 0 && moment(nestePeriode.fom) <= moment(forrigePeriode.tom);
+  index !== 0 && initializeDate(nestePeriode.fom).isSameOrBefore(initializeDate(forrigePeriode.tom));
 
 const validateForm = (perioder: BeriketBeregningsresultatPeriode[], nyPeriodeFom: string, nyPeriodeTom: string) => {
   let feilmelding = '';
@@ -104,17 +102,7 @@ export const TilkjentYtelseNyPeriode = ({
                   />
                 </FlexColumn>
                 <FlexColumn className={styles.suffix}>
-                  <div id="antallDager">
-                    {formState.fom && (
-                      <FormattedMessage
-                        id={numberOfDaysAndWeeks.id.toString()}
-                        values={{
-                          weeks: numberOfDaysAndWeeks.weeks.toString(),
-                          days: numberOfDaysAndWeeks.days.toString(),
-                        }}
-                      />
-                    )}
-                  </div>
+                  <div id="antallDager">{formState.fom && numberOfDaysAndWeeks}</div>
                 </FlexColumn>
               </FlexRow>
               <VerticalSpacer twentyPx />

@@ -1,4 +1,3 @@
-import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { BeregningsresultatPeriodeAndel } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
@@ -53,7 +52,6 @@ describe('<TilkjentYtelse>', () => {
           ] as PeriodeMedId[]
         }
         groups={[]}
-        intl={intlMock}
         alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
       />,

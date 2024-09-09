@@ -1,4 +1,4 @@
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, initializeDate } from '@fpsak-frontend/utils';
 import {
   Aksjonspunkt,
   ArbeidsgiverOpplysningerPerId,
@@ -6,7 +6,6 @@ import {
   BeregningsresultatUtbetalt,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import moment from 'moment';
 
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Heading } from '@navikt/ds-react';
@@ -64,7 +63,7 @@ const TilkjentYtelsePanelImpl = ({
       <Heading size="small" level="2">
         Tilkjent ytelse
       </Heading>
-      {opphoersdato && `Opphørsdato: ${moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT).toString()}`}
+      {opphoersdato && `Opphørsdato: ${initializeDate(opphoersdato).format(DDMMYYYY_DATE_FORMAT).toString()}`}
       {beregningsresultat && (
         <TilkjentYtelse
           items={formatPerioder(beregningsresultat.perioder)}
