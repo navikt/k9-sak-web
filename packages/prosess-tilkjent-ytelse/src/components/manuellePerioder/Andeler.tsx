@@ -5,7 +5,11 @@ import { Alert, BodyShort, Table } from '@navikt/ds-react';
 import React from 'react';
 import { WrappedComponentProps, useIntl } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
-import { createVisningsnavnForAndel, getInntektskategori } from '../TilkjentYteleseUtils';
+import {
+  createArbeidsgiverVisningsnavnForAndel,
+  createPrivatarbeidsgiverVisningsnavnForAndel,
+  getInntektskategori
+} from '../TilkjentYteleseUtils';
 
 interface OwnProps {
   fields: FieldArrayFieldsProps<any>;
@@ -64,7 +68,8 @@ const Andeler = ({ fields, meta, alleKodeverk, arbeidsgivere }: Partial<OwnProps
           {fields.map((fieldId: string, index: number, field: FieldArrayFieldsProps<any>) => {
             const andel = field.get(index);
             const inntektskategori = getInntektskategori(andel.inntektskategori, getKodeverknavn);
-            const arbeidsgiver = createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgivere);
+            const arbeidsgiver = createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgivere);
+            const arbeidsgiverPrivatperson = createPrivatarbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgivere);
 
             return (
               <Table.Row key={fieldId}>
@@ -73,6 +78,9 @@ const Andeler = ({ fields, meta, alleKodeverk, arbeidsgivere }: Partial<OwnProps
                 </Table.DataCell>
                 <Table.DataCell>
                   <BodyShort size="small">{arbeidsgiver}</BodyShort>
+                </Table.DataCell>
+                <Table.DataCell>
+                  <BodyShort size="small">{arbeidsgiverPrivatperson}</BodyShort>
                 </Table.DataCell>
                 <Table.DataCell>
                   <BodyShort size="small">{andel.tilSoker}</BodyShort>

@@ -34,7 +34,7 @@
     "storybook": "VITE_LOCAL_STORYBOOK=true storybook dev -p 9001",
     "build-storybook": "storybook build -o .static_storybook",
     "build-storybook-test": "VITE_LOCAL_STORYBOOK=true storybook build --test -o .static_storybook",
-    "prepare": "husky install",
+    "prepare": "husky",
     "sentry-release": "(SENTRY_RELEASE=$(git rev-parse --short HEAD); node ./scripts/sentry-release.cjs)"
   },
   "workspaces": [
@@ -121,7 +121,7 @@
     "vitest-axe": "0.1.0"
   },
   "resolutions": {
-    "postcss": "8.4.41",
+    "postcss": "8.4.45",
     "parse-url": "8.1.0",
     "@types/react": "17"
   },
