@@ -1,4 +1,3 @@
-import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -9,6 +8,7 @@ import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import { UseQueryResult, useQueries } from '@tanstack/react-query';
 import axios from 'axios';
 import { Location } from 'history';
+import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';

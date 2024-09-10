@@ -1,6 +1,6 @@
 import type { FagsakDto } from '../../generated';
 
-export type FagsakStatus = Exclude<FagsakDto['status'], undefined>;
+export type FagsakStatus = Exclude<FagsakDto['status'], undefined | null>;
 
 // enum navn i java kode skiller seg tydleg frå kode verdi, reimplementerer navna her for å gjere koding enklare.
 type FagsakStatusName = 'OPPRETTET' | 'UNDER_BEHANDLING' | 'LØPENDE' | 'AVSLUTTET';

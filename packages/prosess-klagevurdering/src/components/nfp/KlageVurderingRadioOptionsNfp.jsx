@@ -29,6 +29,7 @@ const utledHjemler = fagsak => {
     case fagsakYtelseType.OMSORGSPENGER:
     case fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN:
     case fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE:
+    case fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },

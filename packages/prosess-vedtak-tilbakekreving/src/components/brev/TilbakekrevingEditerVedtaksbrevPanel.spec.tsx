@@ -2,7 +2,7 @@ import React from 'react';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import TilbakekrevingEditerVedtaksbrevPanel from './TilbakekrevingEditerVedtaksbrevPanel';
-import {K9sakApiKeys, requestApi} from "@k9-sak-web/sak-app/src/data/k9sakApi";
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
 describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
   const vedtaksbrevAvsnitt = [

@@ -7,7 +7,8 @@ import moment from 'moment';
 import React, { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { createVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
+
+import { createArbeidsgiverVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
 import styles from './tilkjentYtelse.module.css';
 import UtbetalingsgradDetaljer from './UtbetalingsgradDetaljer';
@@ -155,7 +156,7 @@ const TilkjentYtelseTimeLineData = ({
                       id="Timeline.tooltip.dagsatsPerAndel"
                       key={`index${index + 1}`}
                       values={{
-                        arbeidsgiver: createVisningsnavnForAndel(
+                        arbeidsgiver: createArbeidsgiverVisningsnavnForAndel(
                           andel,
                           kodeverkNavnFraKode,
                           arbeidsgiverOpplysningerPerId,
@@ -176,7 +177,7 @@ const TilkjentYtelseTimeLineData = ({
                       id="Timeline.tooltip.dagsatsPerAndel"
                       key={`index${index + 1}`}
                       values={{
-                        arbeidsgiver: createVisningsnavnForAndel(
+                        arbeidsgiver: createArbeidsgiverVisningsnavnForAndel(
                           andel,
                           kodeverkNavnFraKode,
                           arbeidsgiverOpplysningerPerId,
@@ -196,13 +197,17 @@ const TilkjentYtelseTimeLineData = ({
       <Tabs className="mt-12" value={String(selectedAndelIndex)} onChange={setSelectedAndelIndex}>
         <Tabs.List>
           {andeler.map((andel, index) => {
-            const label = createVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId);
+            const label = createArbeidsgiverVisningsnavnForAndel(
+              andel,
+              kodeverkNavnFraKode,
+              arbeidsgiverOpplysningerPerId,
+            );
             return <Tabs.Tab value={String(index)} key={label} label={label} />;
           })}
         </Tabs.List>
         {andeler.map((andel, index) => (
           <Tabs.Panel
-            key={createVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId)}
+            key={createArbeidsgiverVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId)}
             value={String(index)}
           >
             <div className="p-4">

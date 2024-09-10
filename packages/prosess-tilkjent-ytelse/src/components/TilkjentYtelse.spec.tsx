@@ -41,6 +41,7 @@ describe('<TilkjentYtelse>', () => {
                   arbeidsgiver: '973861778',
                   arbeidsgiverOrgnr: '',
                   aktivitetStatus: '',
+                  arbeidsgiverPersonIdent: '',
                   arbeidsforholdId: '',
                   eksternArbeidsforholdId: '',
                   arbeidsgiverNavn: '',

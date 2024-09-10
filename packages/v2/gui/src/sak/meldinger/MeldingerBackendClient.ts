@@ -33,10 +33,10 @@ export default class MeldingerBackendClient {
       const promise = this.#k9sak.brev.getBrevMottakerinfoEreg({ organisasjonsnr: organisasjonsnr.trim() });
       abort?.addEventListener('abort', () => promise.cancel(), { signal: abortListenerRemover.signal });
       const resp = await promise;
-      if (resp !== null && resp.navn !== undefined) {
+      if (resp !== null && resp.navn !== undefined && resp.navn !== null) {
         return {
           name: resp.navn,
-          utilgjengelig: resp.utilgjengeligÅrsak,
+          utilgjengelig: resp.utilgjengeligÅrsak || undefined,
         };
       }
       if (promise.isCancelled) {

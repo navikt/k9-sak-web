@@ -4,7 +4,6 @@ import { Aksjonspunkt } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-
 import { Periode } from './Periode';
 import StatusForBorgerFaktaPanel from './StatusForBorgerFaktaPanel';
 

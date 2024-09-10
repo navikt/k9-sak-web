@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
-import { expect, userEvent, within } from '@storybook/test';
+import { expect, fn, userEvent, within } from '@storybook/test';
 import withMaxWidth from '@k9-sak-web/gui/storybook/decorators/withMaxWidth.js';
 import { FakeMessagesBackendApi } from '@k9-sak-web/gui/storybook/mocks/FakeMessagesBackendApi.js';
 import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
@@ -15,17 +15,18 @@ import {
   type UtilgjengeligÅrsak,
   utilgjengeligÅrsaker,
 } from '@k9-sak-web/backend/k9formidling/models/Mottaker.ts';
+import { makeFakeExtendedApiError } from '../../storybook/mocks/fakeExtendedApiError.js';
 import { action } from '@storybook/addon-actions';
 
 const api = new FakeMessagesBackendApi();
-const meta: Meta<typeof Messages> = {
+const meta = {
   title: 'gui/sak/meldinger/Messages.tsx',
   component: Messages,
   decorators: [withMaxWidth(420)],
   beforeEach: () => {
     api.reset();
   },
-};
+} satisfies Meta<typeof Messages>;
 export default meta;
 
 const elemsfinder = (canvasElement: HTMLElement) => {
@@ -47,7 +48,7 @@ const elemsfinder = (canvasElement: HTMLElement) => {
   };
 };
 
-type Story = StoryObj<typeof Messages>;
+type Story = StoryObj<typeof meta>;
 export const DefaultStory: Story = {
   args: {
     fagsak: {
@@ -68,7 +69,7 @@ export const DefaultStory: Story = {
     personopplysninger,
     arbeidsgiverOpplysningerPerId: arbeidsgivere,
     api,
-    onMessageSent: action('onMessagesent'),
+    onMessageSent: fn(() => action('onMessageSent')),
   },
   play: async ({ canvasElement, step }) => {
     const {
@@ -214,5 +215,22 @@ export const UtilgjengeligeMottakere: Story = {
       },
     );
     api.fakeDelayMillis = 800; // Reaktiver delay
+  },
+};
+
+class FakeFailingApi extends FakeMessagesBackendApi {
+  public override async bestillDokument() {
+    throw makeFakeExtendedApiError({ status: 400 });
+  }
+}
+
+const fakeFailingApi = new FakeFailingApi();
+/**
+ * Eksempel på feil ved serverkall
+ */
+export const TekstValideringsfeilServer: Story = {
+  args: {
+    ...DefaultStory.args,
+    api: fakeFailingApi,
   },
 };
