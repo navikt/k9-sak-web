@@ -44,6 +44,7 @@ import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
 import FagsakGrid from './components/FagsakGrid';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 
 const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   behandlingType &&
@@ -85,8 +86,14 @@ const FagsakIndex = () => {
     paramName: 'saksnummer',
   });
 
-  const alleKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(
+  const alleKodeverkK9Sak = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
     K9sakApiKeys.KODEVERK,
+  );
+  const alleKodeverkTilbake = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
+    K9sakApiKeys.KODEVERK_TILBAKE,
+  );
+  const alleKodeverkKlage = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
+    K9sakApiKeys.KODEVERK_KLAGE,
   );
 
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
@@ -238,99 +245,106 @@ const FagsakIndex = () => {
 
   return (
     <>
-      <FagsakGrid
-        behandlingContent={
-          <Routes>
-            <Route
-              path={behandlingerRoutePath}
-              element={
-                <BehandlingerIndex
-                  fagsak={fagsak}
-                  alleBehandlinger={alleBehandlinger}
-                  arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-                  setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
-                  setRequestPendingMessage={setRequestPendingMessage}
-                />
-              }
-            />
-          </Routes>
-        }
-        profileAndNavigationContent={
-          <FagsakProfileIndex
-            fagsak={fagsak}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            alleBehandlinger={alleBehandlinger}
-            harHentetBehandlinger={harFerdighentetAlleBehandlinger}
-            oppfriskBehandlinger={oppfriskBehandlinger}
-            fagsakRettigheter={fagsakRettigheter}
-            behandlingRettigheter={behandlingRettigheter}
-            personopplysninger={behandlingPersonopplysninger}
-            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger?.arbeidsgivere ?? {}}
-          />
-        }
-        supportContent={() => {
-          if (isRequestNotDone(personopplysningerState)) {
-            return <LoadingPanel />;
+      <KodeverkProvider
+        behandlingType={behandling ? behandling?.type?.kode : undefined}
+        kodeverk={alleKodeverkK9Sak}
+        klageKodeverk={alleKodeverkKlage}
+        tilbakeKodeverk={alleKodeverkTilbake}
+      >
+        <FagsakGrid
+          behandlingContent={
+            <Routes>
+              <Route
+                path={behandlingerRoutePath}
+                element={
+                  <BehandlingerIndex
+                    fagsak={fagsak}
+                    alleBehandlinger={alleBehandlinger}
+                    arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+                    setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
+                    setRequestPendingMessage={setRequestPendingMessage}
+                  />
+                }
+              />
+            </Routes>
           }
-
-          return (
-            <BehandlingSupportIndex
+          profileAndNavigationContent={
+            <FagsakProfileIndex
               fagsak={fagsak}
-              alleBehandlinger={alleBehandlinger}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
+              alleBehandlinger={alleBehandlinger}
+              harHentetBehandlinger={harFerdighentetAlleBehandlinger}
+              oppfriskBehandlinger={oppfriskBehandlinger}
+              fagsakRettigheter={fagsakRettigheter}
               behandlingRettigheter={behandlingRettigheter}
               personopplysninger={behandlingPersonopplysninger}
-              arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-              navAnsatt={navAnsatt}
-              featureToggles={featureToggles}
+              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger?.arbeidsgivere ?? {}}
             />
-          );
-        }}
-        visittkortContent={() => {
-          if (skalIkkeHenteData) {
-            return null;
           }
+          supportContent={() => {
+            if (isRequestNotDone(personopplysningerState)) {
+              return <LoadingPanel />;
+            }
 
-          if (isRequestNotDone(personopplysningerState)) {
-            return <LoadingPanel />;
-          }
-
-          return (
-            <div style={{ overflow: 'hidden' }}>
-              <VisittkortSakIndex
+            return (
+              <BehandlingSupportIndex
+                fagsak={fagsak}
+                alleBehandlinger={alleBehandlinger}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                behandlingRettigheter={behandlingRettigheter}
                 personopplysninger={behandlingPersonopplysninger}
-                alleKodeverk={alleKodeverk}
-                sprakkode={behandling?.sprakkode}
-                fagsakPerson={fagsakPerson || fagsak.person}
-                harTilbakekrevingVerge={erTilbakekreving(behandling?.type) && harVerge}
-                relaterteFagsaker={relaterteFagsaker}
-                direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
-                erPbSak={fagsak.erPbSak}
-                erHastesak={erHastesak}
+                arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+                navAnsatt={navAnsatt}
+                featureToggles={featureToggles}
               />
+            );
+          }}
+          visittkortContent={() => {
+            if (skalIkkeHenteData) {
+              return null;
+            }
 
-              {behandling && (
-                <>
-                  {showPunsjStripe && <Punsjstripe saksnummer={fagsak.saksnummer} pathToLos={getPathToK9Los()} />}
-                  {showFagsakPåSøkerStripe && (
-                    <AndreSakerPåSøkerStripe
-                      søkerIdent={fagsakPerson.personnummer}
-                      saksnummer={fagsak.saksnummer}
-                      fagsakYtelseType={fagsak.sakstype.kode}
-                    />
-                  )}
-                </>
-              )}
+            if (isRequestNotDone(personopplysningerState)) {
+              return <LoadingPanel />;
+            }
 
-              {showSøknadsperiodestripe && (
-                <Soknadsperiodestripe behandlingPerioderMedVilkår={behandlingPerioderMedVilkår} />
-              )}
-            </div>
-          );
-        }}
-      />
+            return (
+              <div style={{ overflow: 'hidden' }}>
+                <VisittkortSakIndex
+                  personopplysninger={behandlingPersonopplysninger}
+                  alleKodeverk={alleKodeverkK9Sak}
+                  sprakkode={behandling?.sprakkode}
+                  fagsakPerson={fagsakPerson || fagsak.person}
+                  harTilbakekrevingVerge={erTilbakekreving(behandling?.type) && harVerge}
+                  relaterteFagsaker={relaterteFagsaker}
+                  direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
+                  erPbSak={fagsak.erPbSak}
+                  erHastesak={erHastesak}
+                />
+
+                {behandling && (
+                  <>
+                    {showPunsjStripe && <Punsjstripe saksnummer={fagsak.saksnummer} pathToLos={getPathToK9Los()} />}
+                    {showFagsakPåSøkerStripe && (
+                      <AndreSakerPåSøkerStripe
+                        søkerIdent={fagsakPerson.personnummer}
+                        saksnummer={fagsak.saksnummer}
+                        fagsakYtelseType={fagsak.sakstype.kode}
+                      />
+                    )}
+                  </>
+                )}
+
+                {showSøknadsperiodestripe && (
+                  <Soknadsperiodestripe behandlingPerioderMedVilkår={behandlingPerioderMedVilkår} />
+                )}
+              </div>
+            );
+          }}
+        />
+      </KodeverkProvider>
       {requestPendingMessage && <DataFetchPendingModal pendingMessage={requestPendingMessage} />}
     </>
   );

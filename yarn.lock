@@ -4328,6 +4328,7 @@ __metadata:
   resolution: "@k9-sak-web/gui@workspace:packages/v2/gui"
   dependencies:
     "@k9-sak-web/backend": "workspace:^"
+    "@k9-sak-web/lib": 1.0.0
     react: 18.3.1
   languageName: unknown
   linkType: soft
@@ -4335,6 +4336,12 @@ __metadata:
 "@k9-sak-web/konstanter@1.0.0, @k9-sak-web/konstanter@workspace:packages/konstanter":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/konstanter@workspace:packages/konstanter"
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/lib@1.0.0, @k9-sak-web/lib@workspace:packages/v2/lib":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/lib@workspace:packages/v2/lib"
   languageName: unknown
   linkType: soft
 
