@@ -16,7 +16,6 @@
 /target/
 /node_modules
 npm-debug.log
-lib/
 dist
 lerna-debug.log
 .vscode
