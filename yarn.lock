@@ -13081,9 +13081,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom@npm:24.1.3":
-  version: 24.1.3
-  resolution: "jsdom@npm:24.1.3"
+"jsdom@npm:25.0.0":
+  version: 25.0.0
+  resolution: "jsdom@npm:25.0.0"
   dependencies:
     cssstyle: ^4.0.1
     data-urls: ^5.0.0
@@ -13111,7 +13111,7 @@ __metadata:
   peerDependenciesMeta:
     canvas:
       optional: true
-  checksum: c71e2e6b5304c95a230feaef0c21fb7c353b7e785ba49ed9544d309f8faab1fc167146e0f1d00e2fb5346a11a27c60ae021a9688382f6b2d78e2c169769b4bfc
+  checksum: aa7dc92333f7694c3ddd61685b640f743a61e5e638fcc9c24156e63dc432ab36dbe90137d608c82a3f84d9e05f70c903a38f9e34d6cca1a74469fad4c93f76c2
   languageName: node
   linkType: hard
 
@@ -13269,7 +13269,7 @@ __metadata:
     history: 5.3.0
     husky: 9.1.5
     i18n-iso-countries: 7.11.3
-    jsdom: 24.1.3
+    jsdom: 25.0.0
     lint-staged: 15.2.10
     msw: 2.4.2
     msw-storybook-addon: ^2.0.3
