@@ -1,7 +1,6 @@
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { ariaCheck, decodeHtmlEntity, isRequiredMessage } from '@fpsak-frontend/utils';
+import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { ariaCheck, decodeHtmlEntity } from '@fpsak-frontend/utils';
 import {
   Behandling,
   KlageVurdering,
@@ -11,13 +10,12 @@ import {
   TotrinnskontrollSkjermlenkeContext,
 } from '@k9-sak-web/types';
 import { Button } from '@navikt/ds-react';
+import { Form } from '@navikt/ft-form-hooks';
 import { Location } from 'history';
-import React from 'react';
+import { useForm, useWatch } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { FieldArray, InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
-import AksjonspunktGodkjenningFieldArray, { AksjonspunktGodkjenningData } from './AksjonspunktGodkjenningFieldArray';
+import AksjonspunktGodkjenningFieldArray from './AksjonspunktGodkjenningFieldArray';
+import { FormState } from './FormState';
 import styles from './totrinnskontrollBeslutterForm.module.css';
 
 const erAlleGodkjent = (formState: TotrinnskontrollAksjonspunkt[] = []) =>
@@ -25,6 +23,18 @@ const erAlleGodkjent = (formState: TotrinnskontrollAksjonspunkt[] = []) =>
 
 const erAlleGodkjentEllerAvvist = (formState: TotrinnskontrollAksjonspunkt[] = []) =>
   formState.every(ap => ap.totrinnskontrollGodkjent !== null);
+
+const buildInitialValues = (totrinnskontrollContext: TotrinnskontrollSkjermlenkeContext[]): FormState => ({
+  aksjonspunktGodkjenning: totrinnskontrollContext
+    .map(context => context.totrinnskontrollAksjonspunkter)
+    .flat()
+    .map(ap => ({
+      aksjonspunktKode: ap.aksjonspunktKode,
+      totrinnskontrollGodkjent: ap.totrinnskontrollGodkjent,
+      besluttersBegrunnelse: decodeHtmlEntity(ap.besluttersBegrunnelse),
+      ...finnArsaker(ap.vurderPaNyttArsaker),
+    })),
+});
 
 interface PureOwnProps {
   behandling: Behandling;
@@ -35,10 +45,7 @@ interface PureOwnProps {
   arbeidsforholdHandlingTyper: KodeverkMedNavn[];
   skjermlenkeTyper: KodeverkMedNavn[];
   lagLenke: (skjermlenkeCode: string) => Location;
-}
-
-interface MappedOwnProps {
-  aksjonspunktGodkjenning: TotrinnskontrollAksjonspunkt[];
+  handleSubmit: (formValues: FormState) => void;
 }
 
 /*
@@ -54,28 +61,36 @@ export const TotrinnskontrollBeslutterForm = ({
   arbeidsforholdHandlingTyper,
   skjermlenkeTyper,
   erTilbakekreving,
-  aksjonspunktGodkjenning,
   totrinnskontrollSkjermlenkeContext,
   lagLenke,
-  ...formProps
-}: PureOwnProps & MappedOwnProps & InjectedFormProps) => {
+}: PureOwnProps) => {
+  const formMethods = useForm<FormState>({
+    defaultValues: buildInitialValues(totrinnskontrollSkjermlenkeContext),
+  });
+  const aksjonspunktGodkjenning = useWatch({
+    control: formMethods.control,
+    name: 'aksjonspunktGodkjenning',
+  });
+  const { formState } = formMethods;
   if (!behandling.toTrinnsBehandling) {
     return null;
   }
 
+  const onSubmit = (formState: FormState) => {
+    handleSubmit(formState);
+  };
+
   return (
-    <form name="toTrinn" onSubmit={handleSubmit}>
+    <Form formMethods={formMethods} onSubmit={onSubmit}>
       {!readOnly && (
         <>
           <AksjonspunktHelpText isAksjonspunktOpen>
             {[<FormattedMessage key={1} id="HelpText.ToTrinnsKontroll" />]}
           </AksjonspunktHelpText>
-          <VerticalSpacer sixteenPx />
+          <div className="mt-4" />
         </>
       )}
-      <FieldArray
-        name="aksjonspunktGodkjenning"
-        component={AksjonspunktGodkjenningFieldArray}
+      <AksjonspunktGodkjenningFieldArray
         klagebehandlingVurdering={behandlingKlageVurdering}
         behandlingStatus={behandling.status}
         erTilbakekreving={erTilbakekreving}
@@ -93,9 +108,9 @@ export const TotrinnskontrollBeslutterForm = ({
           disabled={
             !erAlleGodkjent(aksjonspunktGodkjenning) ||
             !erAlleGodkjentEllerAvvist(aksjonspunktGodkjenning) ||
-            formProps.submitting
+            formState.isSubmitting
           }
-          loading={formProps.submitting}
+          loading={formState.isSubmitting}
         >
           <FormattedMessage id="ToTrinnsForm.Godkjenn" />
         </Button>
@@ -105,40 +120,36 @@ export const TotrinnskontrollBeslutterForm = ({
           disabled={
             erAlleGodkjent(aksjonspunktGodkjenning) ||
             !erAlleGodkjentEllerAvvist(aksjonspunktGodkjenning) ||
-            formProps.submitting
+            formState.isSubmitting
           }
-          loading={formProps.submitting}
+          loading={formState.isSubmitting}
           onClick={ariaCheck}
         >
           <FormattedMessage id="ToTrinnsForm.SendTilbake" />
         </Button>
       </div>
-    </form>
+    </Form>
   );
 };
 
-export type FormValues = {
-  aksjonspunktGodkjenning: AksjonspunktGodkjenningData[];
-};
+// const validate = (values: FormState) => {
+//   const errors = {};
+//   if (!values.aksjonspunktGodkjenning) {
+//     return errors;
+//   }
 
-const validate = (values: FormValues) => {
-  const errors = {};
-  if (!values.aksjonspunktGodkjenning) {
-    return errors;
-  }
+//   return {
+//     aksjonspunktGodkjenning: values.aksjonspunktGodkjenning.map(kontekst => {
+//       if (!kontekst.feilFakta && !kontekst.feilLov && !kontekst.feilRegel && !kontekst.annet) {
+//         return {
+//           missingArsakError: isRequiredMessage(),
+//         };
+//       }
 
-  return {
-    aksjonspunktGodkjenning: values.aksjonspunktGodkjenning.map(kontekst => {
-      if (!kontekst.feilFakta && !kontekst.feilLov && !kontekst.feilRegel && !kontekst.annet) {
-        return {
-          missingArsakError: isRequiredMessage(),
-        };
-      }
-
-      return undefined;
-    }),
-  };
-};
+//       return undefined;
+//     }),
+//   };
+// };
 
 const finnArsaker = (vurderPaNyttArsaker: Kodeverk[]) =>
   vurderPaNyttArsaker.reduce((acc, arsak) => {
@@ -157,30 +168,4 @@ const finnArsaker = (vurderPaNyttArsaker: Kodeverk[]) =>
     return {};
   }, {});
 
-const buildInitialValues = createSelector(
-  [(ownProps: PureOwnProps) => ownProps.totrinnskontrollSkjermlenkeContext],
-  (totrinnskontrollContext): FormValues => ({
-    aksjonspunktGodkjenning: totrinnskontrollContext
-      .map(context => context.totrinnskontrollAksjonspunkter)
-      .flat()
-      .map(ap => ({
-        aksjonspunktKode: ap.aksjonspunktKode,
-        totrinnskontrollGodkjent: ap.totrinnskontrollGodkjent,
-        besluttersBegrunnelse: decodeHtmlEntity(ap.besluttersBegrunnelse),
-        ...finnArsaker(ap.vurderPaNyttArsaker),
-      })),
-  }),
-);
-
-const formName = 'toTrinnForm';
-
-const mapStateToProps = (state: any, ownProps: PureOwnProps) => ({
-  initialValues: buildInitialValues(ownProps),
-  aksjonspunktGodkjenning: behandlingFormValueSelector(
-    formName,
-    ownProps.behandling.id,
-    ownProps.behandling.versjon,
-  )(state, 'aksjonspunktGodkjenning'),
-});
-
-export default connect(mapStateToProps)(behandlingForm({ form: formName, validate })(TotrinnskontrollBeslutterForm));
+export default TotrinnskontrollBeslutterForm;

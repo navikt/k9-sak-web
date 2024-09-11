@@ -7,7 +7,6 @@ import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforh
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   KlageVurdering,
   Kodeverk,
@@ -17,6 +16,7 @@ import {
   TotrinnskontrollArbeidsforhold,
 } from '@k9-sak-web/types';
 
+import hash from 'object-hash';
 import vurderFaktaOmBeregningTotrinnText from '../../VurderFaktaBeregningTotrinnText';
 import totrinnskontrollaksjonspunktTextCodes, {
   totrinnsTilbakekrevingkontrollaksjonspunktTextCodes,
@@ -108,7 +108,7 @@ const buildArbeidsforholdText = (
   aksjonspunkt.arbeidsforholdDtos.map(arbeidforholdDto => {
     const formattedMessages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
     return (
-      <>
+      <React.Fragment key={arbeidforholdDto.arbeidsforholdId}>
         <FormattedMessage
           id="ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold"
           values={{
@@ -123,12 +123,14 @@ const buildArbeidsforholdText = (
         {formattedMessages.map(formattedMessage => (
           <React.Fragment key={formattedMessage.props.id}>{formattedMessage}</React.Fragment>
         ))}
-      </>
+      </React.Fragment>
     );
   });
 
 const buildOpptjeningText = (aksjonspunkt: TotrinnskontrollAksjonspunkt): ReactNode[] =>
-  aksjonspunkt.opptjeningAktiviteter.map(aktivitet => <OpptjeningTotrinnText aktivitet={aktivitet} />);
+  aksjonspunkt.opptjeningAktiviteter.map(aktivitet => (
+    <OpptjeningTotrinnText key={hash(aktivitet)} aktivitet={aktivitet} />
+  ));
 
 const getTextFromAksjonspunktkode = (aksjonspunkt: TotrinnskontrollAksjonspunkt): ReactNode => {
   const aksjonspunktTextId = totrinnskontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktKode];
@@ -143,7 +145,7 @@ const getTextFromTilbakekrevingAksjonspunktkode = (aksjonspunkt: Totrinnskontrol
 const lagBgTilfelleTekst = (bg: TotrinnsBeregningDto): ReactNode => {
   const aksjonspunktTextIds = bg.faktaOmBeregningTilfeller.map(({ kode }) => vurderFaktaOmBeregningTotrinnText[kode]);
   return (
-    <>
+    <React.Fragment key={hash(aksjonspunktTextIds)}>
       <Label size="small" as="p">
         <FormattedMessage
           id="ToTrinnsForm.Beregning.Tittel"
@@ -152,11 +154,12 @@ const lagBgTilfelleTekst = (bg: TotrinnsBeregningDto): ReactNode => {
           }}
         />
       </Label>
-      <VerticalSpacer eightPx />
-      {aksjonspunktTextIds.map(aksjonspunktTextId =>
-        aksjonspunktTextId ? <FormattedMessage id={aksjonspunktTextId} /> : null,
-      )}
-    </>
+      <div className="mt-2">
+        {aksjonspunktTextIds.map(aksjonspunktTextId =>
+          aksjonspunktTextId ? <FormattedMessage key={aksjonspunktTextId} id={aksjonspunktTextId} /> : null,
+        )}
+      </div>
+    </React.Fragment>
   );
 };
 

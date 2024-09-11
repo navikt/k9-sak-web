@@ -6,10 +6,8 @@ import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
 import { KlageVurdering, TotrinnskontrollAksjonspunkt, TotrinnskontrollArbeidsforhold } from '@k9-sak-web/types';
 import { Label } from '@navikt/ds-react';
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import getAksjonspunkttekst, { getFaktaOmArbeidsforholdMessages } from './aksjonspunktTekstUtleder';
 
 const medholdIKlage = {
@@ -341,7 +339,7 @@ describe('aksjonspunktTekstUtleder', () => {
             }}
           />
         </Label>
-        <VerticalSpacer eightPx />
+        <div className="mt-2" />
         {[<FormattedMessage id="ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold" />]}
       </>,
     );
@@ -368,8 +366,7 @@ describe('aksjonspunktTekstUtleder', () => {
             }}
           />
         </Label>
-        <VerticalSpacer eightPx />
-        {[<FormattedMessage id="ToTrinnsForm.Beregning.VurderATFLISammeOrg" />]}
+        <div className="mt-2">{[<FormattedMessage id="ToTrinnsForm.Beregning.VurderATFLISammeOrg" />]}</div>
       </>,
     );
   });
@@ -397,8 +394,9 @@ describe('aksjonspunktTekstUtleder', () => {
             }}
           />
         </Label>
-        <VerticalSpacer eightPx />
-        {[<FormattedMessage id="ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold" />]}
+        <div className="mt-2">
+          {[<FormattedMessage id="ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold" />]}
+        </div>
       </>,
     );
   });
