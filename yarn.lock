@@ -3196,7 +3196,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.55.4
+    "@tanstack/react-query": ^5.56.0
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -3463,7 +3463,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@tanstack/react-query": ^5.55.4
+    "@tanstack/react-query": ^5.56.0
     react: 18.3.1
     react-intl: 6.6.8
   languageName: unknown
@@ -4386,7 +4386,7 @@ __metadata:
     "@navikt/ds-react": 6.16.3
     "@navikt/ft-plattform-komponenter": 3.0.8
     "@popperjs/core": 2.11.8
-    "@tanstack/react-query": ^5.55.4
+    "@tanstack/react-query": ^5.56.0
     axios: 1.7.7
     classnames: 2.5.1
     cors: ^2.8.5
@@ -4418,7 +4418,7 @@ __metadata:
     react-dom: 18.3.1
     react-hook-form: 7.53.0
     react-popper: 2.3.0
-    tailwindcss: ^3.4.10
+    tailwindcss: ^3.4.11
     vite: ^5.4.4
     vite-plugin-node-polyfills: ^0.22.0
   languageName: unknown
@@ -4801,7 +4801,7 @@ __metadata:
     "@navikt/ft-ui-komponenter": 2.4.4
     "@sentry/browser": 8.30.0
     "@sentry/react": ^8.30.0
-    "@tanstack/react-query": ^5.55.4
+    "@tanstack/react-query": ^5.56.0
     axios: 1.7.7
     classnames: 2.5.1
     history: 5.3.0
@@ -4828,7 +4828,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.55.4
+    "@tanstack/react-query": ^5.56.0
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
@@ -4884,7 +4884,7 @@ __metadata:
     "@navikt/ds-react": 6.16.3
     "@navikt/ft-form-hooks": 5.0.5
     "@navikt/ft-form-validators": 2.3.22
-    "@tanstack/react-query": ^5.55.4
+    "@tanstack/react-query": ^5.56.0
     date-fns: 3.6.0
     react: 18.3.1
     react-hook-form: 7.53.0
@@ -6783,21 +6783,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.55.4":
-  version: 5.55.4
-  resolution: "@tanstack/query-core@npm:5.55.4"
-  checksum: f20fc8dbd7484b38aa010bd51a381f185691589373ebb41b9fe22c24492d8537a9eaaf6bf273cb781f2dfd65021f4fc984d4104a92a34c911df706b2bd1bdb8c
+"@tanstack/query-core@npm:5.56.0":
+  version: 5.56.0
+  resolution: "@tanstack/query-core@npm:5.56.0"
+  checksum: 7c69fcb06b85c5c0d1be0234c1d664d4d87ed3948bf2abaff2afce7a5b4f5f0bc31f3857cbd2584e5e8a48f7aca96904d99eba9b2a62378171d2f1d58dd0f127
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.55.4":
-  version: 5.55.4
-  resolution: "@tanstack/react-query@npm:5.55.4"
+"@tanstack/react-query@npm:^5.56.0":
+  version: 5.56.0
+  resolution: "@tanstack/react-query@npm:5.56.0"
   dependencies:
-    "@tanstack/query-core": 5.55.4
+    "@tanstack/query-core": 5.56.0
   peerDependencies:
     react: ^18 || ^19
-  checksum: 26e4ecc0950f2d9a1c0d527dbe736827ae63bcb12e688b442083507235a48abf3bf9fc247ee730820b0d1af242d7b516ed9de02568a4867b7867c2dd23de3664
+  checksum: 53bb34971af990b2ea9a7c4727abc3771708d4e84f2ec561ee60f35541849ac2936ee4c878d8c0323403b4360f100c7806af808106cec98d62642c6fdac4aafb
   languageName: node
   linkType: hard
 
@@ -10535,9 +10535,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:7.35.2":
-  version: 7.35.2
-  resolution: "eslint-plugin-react@npm:7.35.2"
+"eslint-plugin-react@npm:7.36.0":
+  version: 7.36.0
+  resolution: "eslint-plugin-react@npm:7.36.0"
   dependencies:
     array-includes: ^3.1.8
     array.prototype.findlast: ^1.2.5
@@ -10559,7 +10559,7 @@ __metadata:
     string.prototype.repeat: ^1.0.0
   peerDependencies:
     eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7
-  checksum: 88dfb91d52a10fa0333199fa4abaa8d1112066d8fdc5df88c136d1cc24145b8d92bb7292f82a3781aef9c3ec91990b4461dbd1fa5eee471df5517014c6e843f9
+  checksum: faf18956f3fc0cbb49ce846321f3337fc77ee08c11ad1aeda9b95905337f375767c53aca933ba9c9311ba017fddc0c8994cde9915d3b1d580a78eb31e78a9fb9
   languageName: node
   linkType: hard
 
@@ -11956,12 +11956,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:9.1.5":
-  version: 9.1.5
-  resolution: "husky@npm:9.1.5"
+"husky@npm:9.1.6":
+  version: 9.1.6
+  resolution: "husky@npm:9.1.6"
   bin:
     husky: bin.js
-  checksum: c240018e852666dc12a93ca84751f1440bdf436468ba872c7b7b3cee54f5f1d7b4222a117988b27ca437093efdeb128778897ab0e409361336676a2c3012c8a7
+  checksum: 421ccd8850378231aaefd70dbe9e4f1549b84ffe3a6897f93a202242bbc04e48bd498169aef43849411105d9fcf7c192b757d42661e28d06b934a609a4eb8771
   languageName: node
   linkType: hard
 
@@ -13512,11 +13512,11 @@ __metadata:
     eslint: 9.10.0
     eslint-config-prettier: 9.1.0
     eslint-plugin-jsx-a11y: 6.10.0
-    eslint-plugin-react: 7.35.2
+    eslint-plugin-react: 7.36.0
     eslint-plugin-vitest: ~0.5.4
     globals: ^15.9.0
     history: 5.3.0
-    husky: 9.1.5
+    husky: 9.1.6
     i18n-iso-countries: 7.12.0
     jsdom: 25.0.0
     lint-staged: 15.2.10
@@ -13535,7 +13535,7 @@ __metadata:
     stylelint: 16.9.0
     stylelint-config-standard: ^36.0.1
     stylelint-order: 6.0.4
-    tailwindcss: ^3.4.10
+    tailwindcss: ^3.4.11
     typed-css-modules: ^0.9.1
     typescript: 5.6.2
     typescript-eslint: ^7.18.0
@@ -17511,9 +17511,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.4.10":
-  version: 3.4.10
-  resolution: "tailwindcss@npm:3.4.10"
+"tailwindcss@npm:^3.4.11":
+  version: 3.4.11
+  resolution: "tailwindcss@npm:3.4.11"
   dependencies:
     "@alloc/quick-lru": ^5.2.0
     arg: ^5.0.2
@@ -17540,7 +17540,7 @@ __metadata:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: aa8db3514ec5110b2dee0bf5b35b84ebedf0c23a0dcafc870a5176bc2bad7d581956e0692ed6d888d602c114d2c54d7aa8fdb7028456880bd28b326078c8ba6e
+  checksum: 41d7ff8e4d7b8e2df925853b0eb43efa25459462fea29dce0be14fdf32370445c403a2f512e3357ecd800c30ad813dc01ef1ca592fe3c90a2a84d0a1b71e2ba6
   languageName: node
   linkType: hard
 
