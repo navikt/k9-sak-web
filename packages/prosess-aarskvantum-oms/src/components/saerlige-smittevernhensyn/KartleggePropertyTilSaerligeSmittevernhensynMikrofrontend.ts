@@ -10,6 +10,7 @@ import PeriodeBekreftetStatus from '../../dto/PeriodeBekreftetStatus';
 import Soknadsårsak from '../../dto/Soknadsårsak';
 import { antallDager } from '../AktivitetTabell';
 import { SaerligSmittevernhensynProps } from './types/SaerligSmittevernhensynProps';
+import {useFeatureToggles} from "@fpsak-frontend/shared-components";
 
 interface LosAksjonspunktSaerligSmittevern {
   kode: string;
@@ -107,7 +108,12 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
 
   const behandlingsID: string = behandling.id.toString();
 
-  if (typeof aksjonspunkt !== 'undefined' && aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK) {
+  const [ featureToggles ] = useFeatureToggles()
+  const årskvantumDokEllerKvote = aksjonspunkt =>
+    aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK
+    || (featureToggles?.NYTT_SKJEMA_FOR_9003 && aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE)
+
+  if (typeof aksjonspunkt !== 'undefined' && årskvantumDokEllerKvote(aksjonspunkt)) {
     const isAksjonspunktOpen = aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && aksjonspunkt.kanLoses;
     const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
 

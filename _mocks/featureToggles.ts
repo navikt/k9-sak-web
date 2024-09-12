@@ -84,5 +84,9 @@ export const featureTogglesFactory = () => [
   {
     key: 'SKILL_UT_PRIVATPERSON',
     value: process.env.VITE_SKILL_UT_PRIVATPERSON,
+  },
+  {
+    key: 'NYTT_SKJEMA_FOR_9003',
+    value: process.env.VITE_NYTT_SKJEMA_FOR_9003,
   }
 ];
