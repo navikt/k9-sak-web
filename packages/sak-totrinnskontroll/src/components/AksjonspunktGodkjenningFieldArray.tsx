@@ -1,6 +1,5 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
 import { BodyShort, Detail, Fieldset } from '@navikt/ds-react';
 import * as Sentry from '@sentry/browser';
@@ -12,6 +11,7 @@ import { NavLink } from 'react-router-dom';
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 
 import { CheckboxField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
+import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import styles from './aksjonspunktGodkjenningFieldArray.module.css';
 import { FormState } from './FormState';
@@ -54,13 +54,15 @@ export const AksjonspunktGodkjenningFieldArray = ({
   skjermlenkeTyper,
   lagLenke,
 }: OwnProps) => {
-  const { control } = useFormContext<FormState>();
+  const { control, formState } = useFormContext<FormState>();
   const { fields } = useFieldArray({ control, name: 'aksjonspunktGodkjenning' });
   const aksjonspunktGodkjenning = useWatch({ control, name: 'aksjonspunktGodkjenning' });
+
   return (
     <>
       {fields.map((field, index) => {
-        const { aksjonspunktKode, totrinnskontrollGodkjent } = aksjonspunktGodkjenning[index];
+        const { aksjonspunktKode, totrinnskontrollGodkjent, annet, feilFakta, feilLov, feilRegel } =
+          aksjonspunktGodkjenning[index];
         const context = totrinnskontrollSkjermlenkeContext.find(c =>
           c.totrinnskontrollAksjonspunkter.some(ta => ta.aksjonspunktKode === aksjonspunktKode),
         );
@@ -100,6 +102,11 @@ export const AksjonspunktGodkjenningFieldArray = ({
             return '';
           }
         };
+
+        const checkboxRequiredError =
+          formState.isSubmitted && !totrinnskontrollGodkjent && !annet && !feilFakta && !feilLov && !feilRegel
+            ? 'Feltet må fylles ut'
+            : '';
 
         return (
           <React.Fragment key={field.id}>
@@ -178,6 +185,11 @@ export const AksjonspunktGodkjenningFieldArray = ({
                                 />
                               </div>
                             </div>
+                            {checkboxRequiredError && (
+                              <div className="navds-error-message navds-label navds-label--small">
+                                {checkboxRequiredError}
+                              </div>
+                            )}
                           </Fieldset>
                         </FlexRow>
                       </FlexContainer>

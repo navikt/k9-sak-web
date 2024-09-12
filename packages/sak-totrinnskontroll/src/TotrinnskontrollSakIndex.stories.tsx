@@ -277,6 +277,33 @@ export const GodkjennerVedtak: Story = {
   },
 };
 
+export const ViserFeilmeldingDersomCheckboxMangler: Story = {
+  args: {
+    behandling,
+    totrinnskontrollSkjermlenkeContext: data,
+    location,
+    onSubmit: fn(),
+    behandlingKlageVurdering: {
+      klageVurderingResultatNFP: {
+        klageVurdering: 'STADFESTE_YTELSESVEDTAK',
+      },
+    } as KlageVurdering,
+    alleKodeverk: alleKodeverk as any,
+    createLocationForSkjermlenke: () => location,
+    readOnly: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getAllByLabelText('Godkjent')[0]);
+    await userEvent.click(canvas.getAllByLabelText('Godkjent')[1]);
+    await userEvent.click(canvas.getAllByLabelText('Godkjent')[2]);
+    await userEvent.click(canvas.getAllByLabelText('Vurder på nytt')[3]);
+    await userEvent.type(canvas.getByLabelText('Begrunnelse'), 'Dette er en begrunnelse');
+    await userEvent.click(canvas.getByRole('button', { name: 'Send til saksbehandler' }));
+    expect(canvas.getByText('Feltet må fylles ut')).toBeInTheDocument();
+  },
+};
+
 export const visTotrinnskontrollForSaksbehandler = () => (
   <div
     style={{

@@ -77,7 +77,16 @@ export const TotrinnskontrollBeslutterForm = ({
   }
 
   const onSubmit = (formState: FormState) => {
-    handleSubmit(formState);
+    if (
+      !erAlleGodkjent(formState.aksjonspunktGodkjenning) &&
+      formState.aksjonspunktGodkjenning.some(
+        ap => !ap.totrinnskontrollGodkjent && !ap.annet && !ap.feilFakta && !ap.feilLov && !ap.feilRegel,
+      )
+    ) {
+      return;
+    } else {
+      handleSubmit(formState);
+    }
   };
 
   return (
@@ -131,25 +140,6 @@ export const TotrinnskontrollBeslutterForm = ({
     </Form>
   );
 };
-
-// const validate = (values: FormState) => {
-//   const errors = {};
-//   if (!values.aksjonspunktGodkjenning) {
-//     return errors;
-//   }
-
-//   return {
-//     aksjonspunktGodkjenning: values.aksjonspunktGodkjenning.map(kontekst => {
-//       if (!kontekst.feilFakta && !kontekst.feilLov && !kontekst.feilRegel && !kontekst.annet) {
-//         return {
-//           missingArsakError: isRequiredMessage(),
-//         };
-//       }
-
-//       return undefined;
-//     }),
-//   };
-// };
 
 const finnArsaker = (vurderPaNyttArsaker: Kodeverk[]) =>
   vurderPaNyttArsaker.reduce((acc, arsak) => {
