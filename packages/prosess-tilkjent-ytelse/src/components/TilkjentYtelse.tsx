@@ -11,7 +11,7 @@ import { ArbeidsgiverOpplysningerPerId, BeregningsresultatPeriode, KodeverkMedNa
 import moment from 'moment';
 import React, { Component, RefObject } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
-import { createVisningsnavnForAndel } from './TilkjentYteleseUtils';
+import { createArbeidsgiverVisningsnavnForAndel } from './TilkjentYteleseUtils';
 import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
 
 import styles from './tilkjentYtelse.module.css';
@@ -68,7 +68,7 @@ const createTooltipContent = (intl, item, getKodeverknavn, arbeidsgiverOpplysnin
               formatMessage(
                 { id: 'Timeline.tooltip.dagsatsPerAndel' },
                 {
-                  arbeidsgiver: createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+                  arbeidsgiver: createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId),
                   dagsatsPerAndel: Number(andel.refusjon) + Number(andel.tilSoker),
                 },
               ),

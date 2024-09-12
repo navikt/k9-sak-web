@@ -14,7 +14,7 @@
     "@k9-sak-web/fakta-felles": "1.0.0",
     "@navikt/ft-form-hooks": "5.0.5",
     "@navikt/ft-plattform-komponenter": "3.0.8",
-    "i18n-iso-countries": "7.11.3",
+    "i18n-iso-countries": "7.12.0",
     "moment": "2.30.1",
     "prop-types": "15.8.1",
     "react": "18.3.1",
