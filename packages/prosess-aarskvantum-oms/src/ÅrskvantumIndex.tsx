@@ -72,8 +72,6 @@ const ÅrskvantumIndex = ({
   const aksjonspunkter: Aksjonspunkt[] = aksjonspunkterForSteg.filter(
     ap => !årskvantumDokEllerKvote(ap)
   );
-  console.log(apForVurderÅrskvantum)
-  console.log(aksjonspunkter)
   const åpenAksjonspunkt = aksjonspunkter.find(ap => ap.status.kode !== aksjonspunktStatus.UTFORT) !== undefined;
 
   const visAPVurderÅrskvantumDokIOmsorgsdagerFrontend =
