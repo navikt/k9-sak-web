@@ -94,5 +94,9 @@
   {
     "key": "SKILL_UT_PRIVATPERSON",
     "value": "${SKILL_UT_PRIVATPERSON}"
+  },
+  {
+    "key": "NYTT_SKJEMA_FOR_9003",
+    "value": "${NYTT_SKJEMA_FOR_9003}"
   }
 ]
