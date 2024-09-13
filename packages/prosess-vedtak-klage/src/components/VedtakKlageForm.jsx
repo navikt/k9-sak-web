@@ -189,6 +189,8 @@ const getResultatText = createSelector([getKlageresultat], klageresultat => {
       return 'VedtakKlageForm.HjemmsendUtenOpphev';
     case klageVurderingCodes.TRUKKET_KLAGE:
       return 'VedtakKlageForm.Trukket';
+    case klageVurderingCodes.FEILREGISTRERT:
+      return klageresultat.begrunnelse
     case klageVurderingCodes.MEDHOLD_I_KLAGE:
       return omgjoerTekstMap[klageresultat.klageVurderingOmgjoer];
     default:
