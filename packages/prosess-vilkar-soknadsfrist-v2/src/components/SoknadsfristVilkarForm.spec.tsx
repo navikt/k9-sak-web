@@ -1,27 +1,26 @@
 // import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import { DokumentStatus } from '@k9-sak-web/types';
-import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
+import { KravDokumentStatus, VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client';
 import { render, screen } from '@testing-library/react';
 import { SoknadsfristVilkarForm } from './SoknadsfristVilkarForm';
 
 const periode = {
-  vilkarStatus: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+  vilkarStatus: 'IKKE_OPPFYLT', // kodeverk: 'test'
   vurderesIBehandlingen: true,
   periode: {
     fom: '2020-02-20',
     tom: '2020-02-25',
   },
-} as Vilkarperiode;
+} as VilkårPeriodeDto;
 
 const dokumenter = [
   {
-    type: 'SOKNAD',
+    type: 'SØKNAD',
     status: [
       {
         periode: { fom: '2020-02-20', tom: '2020-02-25' },
-        status: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+        status: 'IKKE_OPPFYLT', // kodeverk: 'test'
       },
     ],
     innsendingstidspunkt: '2020-06-01',
@@ -30,11 +29,11 @@ const dokumenter = [
     overstyrteOpplysninger: null,
   },
   {
-    type: 'SOKNAD',
+    type: 'SØKNAD',
     status: [
       {
         periode: { fom: '2020-02-26', tom: '2020-02-27' },
-        status: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+        status: 'IKKE_OPPFYLT', // kodeverk: 'test'
       },
     ],
     innsendingstidspunkt: '2020-06-01',
@@ -42,7 +41,7 @@ const dokumenter = [
     avklarteOpplysninger: null,
     overstyrteOpplysninger: null,
   },
-] as DokumentStatus[];
+] as KravDokumentStatus[];
 
 describe('<SoknadsfristVilkarForm>', () => {
   it('skal rendre form med knapp når vilkåret er overstyrt', () => {
@@ -67,12 +66,12 @@ describe('<SoknadsfristVilkarForm>', () => {
 
     expect(
       screen.getAllByText(
-        (_, element) => element.textContent === 'SOKNAD innsendt 01.06.2020 (journalpostId: 12345)',
+        (_, element) => element.textContent === 'SØKNAD innsendt 01.06.2020 (journalpostId: 12345)',
       )[0],
     ).toBeInTheDocument();
     expect(
       screen.getAllByText(
-        (_, element) => element.textContent === 'SOKNAD innsendt 01.06.2020 (journalpostId: 23456)',
+        (_, element) => element.textContent === 'SØKNAD innsendt 01.06.2020 (journalpostId: 23456)',
       )[0],
     ).toBeInTheDocument();
     expect(screen.getAllByText('Vilkåret er oppfylt for hele perioden').length).toBe(2);

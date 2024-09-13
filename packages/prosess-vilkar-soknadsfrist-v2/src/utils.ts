@@ -1,5 +1,5 @@
 import { DDMMYYYY_DATE_FORMAT, initializeDate } from '@fpsak-frontend/utils';
-import { Vilkar } from '@k9-sak-web/types';
+import type { VilkårMedPerioderDto } from '@navikt/k9-sak-typescript-client';
 import { Dayjs } from 'dayjs';
 
 export const formatDate = (dato: string) => initializeDate(dato).format(DDMMYYYY_DATE_FORMAT);
@@ -30,7 +30,7 @@ export const dateStringSorter = (date1: string, date2: string) => {
   return dateSorter(date1AsDayjs, date2AsDayjs);
 };
 
-export const hentAktivePerioderFraVilkar = (vilkar: Vilkar[], visAllePerioder: boolean) => {
+export const hentAktivePerioderFraVilkar = (vilkar: VilkårMedPerioderDto[], visAllePerioder: boolean) => {
   const [activeVilkår] = vilkar;
 
   if (!activeVilkår?.perioder) {

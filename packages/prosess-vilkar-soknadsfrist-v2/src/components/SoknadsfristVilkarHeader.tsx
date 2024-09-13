@@ -1,7 +1,7 @@
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { Aksjonspunkt } from '@k9-sak-web/types';
 import { CheckmarkCircleFillIcon, KeyHorizontalIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Button, Detail, Heading, Label } from '@navikt/ds-react';
+import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import { SetStateAction } from 'react';
 import styles from './SoknadsfristVilkarForm.module.css';
 
@@ -26,7 +26,7 @@ const VilkarOkMessage = ({ originalErVilkarOk }: { originalErVilkarOk: boolean }
 };
 
 interface SoknadsfristVilkarHeaderProps {
-  aksjonspunkter: Aksjonspunkt[];
+  aksjonspunkter: AksjonspunktDto[];
   erOverstyrt?: boolean;
   kanOverstyreAccess?: {
     isEnabled: boolean;
@@ -50,7 +50,7 @@ const SoknadsfristVilkarHeader = ({
   status,
   toggleOverstyring,
 }: Partial<SoknadsfristVilkarHeaderProps>) => {
-  const aksjonspunktCodes = aksjonspunkter.map(a => a.definisjon.kode);
+  const aksjonspunktCodes = aksjonspunkter.map(a => a.definisjon);
   const erOppfylt = vilkårStatus.OPPFYLT === status;
   const originalErVilkarOk = vilkårStatus.IKKE_VURDERT !== status ? erOppfylt : undefined;
   const togglePa = () => {

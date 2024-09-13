@@ -1,7 +1,6 @@
 import { RadioGroupPanelRHF } from '@fpsak-frontend/form';
 import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import { initializeDate } from '@fpsak-frontend/utils';
-import { DokumentStatus, Vilkarperiode } from '@k9-sak-web/types';
 import { CheckmarkIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button } from '@navikt/ds-react';
 import { Datepicker, TextAreaField } from '@navikt/ft-form-hooks';
@@ -18,6 +17,7 @@ import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import React, { useCallback, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { KravDokumentStatus, VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client';
 import { formatDate } from '../utils';
 import { FormState } from './FormState';
 import styles from './SoknadsfristVilkarDokument.module.css';
@@ -27,14 +27,14 @@ const maxLength1500 = maxLength(1500);
 interface SoknadsfristVilkarDokumentProps {
   readOnly: boolean;
   skalViseBegrunnelse?: boolean;
-  dokument: DokumentStatus;
+  dokument: KravDokumentStatus;
   dokumentIndex: number;
   erAktivtDokument: boolean;
   toggleEditForm: React.Dispatch<React.SetStateAction<boolean>>;
   erOverstyrt?: boolean;
   redigerVurdering?: boolean;
   dokumentErVurdert: boolean;
-  periode?: Vilkarperiode;
+  periode?: VilkårPeriodeDto;
   kanEndrePåSøknadsopplysninger: boolean;
 }
 
@@ -61,7 +61,7 @@ export const SoknadsfristVilkarDokument = ({
 }: SoknadsfristVilkarDokumentProps) => {
   const { getValues } = useFormContext<FormState>();
   const harBegrunnelse = !!getValues('avklarteKrav')[dokumentIndex]?.begrunnelse;
-  const erVilkarOk = readOnly && dokumentErVurdert && periode.vilkarStatus.kode === 'OPPFYLT';
+  const erVilkarOk = readOnly && dokumentErVurdert && periode.vilkarStatus === 'OPPFYLT';
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   const opprettetAv = hentSaksbehandlerNavn(dokument?.avklarteOpplysninger?.opprettetAv);
   const opprettetTidspunkt = dokument?.avklarteOpplysninger?.opprettetTidspunkt;

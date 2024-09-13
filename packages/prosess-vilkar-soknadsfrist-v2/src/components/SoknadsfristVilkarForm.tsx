@@ -2,11 +2,11 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktBox, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, initializeDate } from '@fpsak-frontend/utils';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { Aksjonspunkt, DokumentStatus, Periode, SubmitCallback } from '@k9-sak-web/types';
-import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
+import { Periode, SubmitCallback } from '@k9-sak-web/types';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Button, Label } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
+import { AksjonspunktDto, KravDokumentStatus } from '@navikt/k9-sak-typescript-client';
 import { Dayjs } from 'dayjs';
 import hash from 'object-hash';
 import { SetStateAction, useState } from 'react';
@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form';
 
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client';
 import { utledInnsendtSoknadsfrist } from '../utils';
 import { FormState } from './FormState';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
@@ -30,12 +31,12 @@ const minusEnDag = (dato: string | Dayjs) => initializeDate(dato).subtract(1, 'd
 const plusEnDag = (dato: string | Dayjs) => initializeDate(dato).add(1, 'days').format('YYYY-MM-DD');
 
 const buildInitialValues = (
-  aksjonspunkter: Aksjonspunkt[],
-  alleDokumenter: DokumentStatus[],
+  aksjonspunkter: AksjonspunktDto[],
+  alleDokumenter: KravDokumentStatus[],
   status: string,
 ): FormState => {
   const overstyrtAksjonspunkt = aksjonspunkter.find(
-    ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR,
+    ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR,
   );
 
   return {
@@ -62,7 +63,7 @@ const buildInitialValues = (
 
 const transformValues = (
   values: FormState,
-  alleDokumenter: DokumentStatus[],
+  alleDokumenter: KravDokumentStatus[],
   apKode: string,
   periodeFom: string,
   periodeTom: string,
@@ -108,18 +109,18 @@ const transformValues = (
 });
 
 interface SoknadsfristVilkarFormProps {
-  aksjonspunkter: Aksjonspunkt[];
+  aksjonspunkter: AksjonspunktDto[];
   behandlingId: number;
   behandlingVersjon: number;
   submitCallback: (props: SubmitCallback[]) => void;
-  periode?: Vilkarperiode;
+  periode?: VilkårPeriodeDto;
   erOverstyrt?: boolean;
   harÅpentAksjonspunkt: boolean;
   overrideReadOnly: boolean;
   status: string;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
-  alleDokumenter?: DokumentStatus[];
-  dokumenterIAktivPeriode?: DokumentStatus[];
+  alleDokumenter?: KravDokumentStatus[];
+  dokumenterIAktivPeriode?: KravDokumentStatus[];
   kanEndrePåSøknadsopplysninger: boolean;
 }
 
@@ -152,8 +153,8 @@ export const SoknadsfristVilkarForm = ({
     }
   };
   const aksjonspunkt = erOverstyrt
-    ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR)
-    : aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST);
+    ? aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR)
+    : aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST);
 
   const harAksjonspunkt = aksjonspunkt !== undefined;
   const periodeFom = periode?.periode?.fom;
@@ -164,15 +165,15 @@ export const SoknadsfristVilkarForm = ({
 
   const harLøstManueltAksjonspunkt = aksjonspunkter.some(
     ap =>
-      ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST &&
-      ap.aksjonspunktType.kode === aksjonspunktType.MANUELL &&
-      ap.status.kode === aksjonspunktStatus.UTFORT,
+      ap.definisjon === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST &&
+      ap.aksjonspunktType === aksjonspunktType.MANUELL &&
+      ap.status === aksjonspunktStatus.UTFORT,
   );
 
   const isSolvable =
     erOverstyrt ||
     (harÅpentAksjonspunkt || harLøstManueltAksjonspunkt || aksjonspunkt !== undefined
-      ? !(aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses)
+      ? !(aksjonspunkt.status === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses)
       : false);
 
   const isReadOnly = overrideReadOnly || !periode?.vurderesIBehandlingen;

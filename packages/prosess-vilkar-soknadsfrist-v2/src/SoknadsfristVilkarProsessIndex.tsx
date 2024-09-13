@@ -2,9 +2,10 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { initializeDate } from '@fpsak-frontend/utils';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { Aksjonspunkt, DokumentStatus, SubmitCallback, Vilkar } from '@k9-sak-web/types';
+import { SubmitCallback } from '@k9-sak-web/types';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
+import type { AksjonspunktDto, SøknadsfristTilstandDto, VilkårMedPerioderDto } from '@navikt/k9-sak-typescript-client';
 import { BehandlingDto } from '@navikt/k9-sak-typescript-client';
 import classNames from 'classnames/bind';
 import { Dayjs } from 'dayjs';
@@ -31,7 +32,7 @@ const lovReferanse = '§ 22-13';
 
 interface SoknadsfristVilkarProsessIndexProps {
   behandling: BehandlingDto;
-  aksjonspunkter: Aksjonspunkt[];
+  aksjonspunkter: AksjonspunktDto[];
   submitCallback: (props: SubmitCallback[]) => void;
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
@@ -40,9 +41,9 @@ interface SoknadsfristVilkarProsessIndexProps {
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   erOverstyrt: boolean;
   panelTittelKode: string;
-  vilkar: Vilkar[];
+  vilkar: VilkårMedPerioderDto[];
   visAllePerioder: boolean;
-  soknadsfristStatus: { dokumentStatus: DokumentStatus[] };
+  soknadsfristStatus: SøknadsfristTilstandDto;
   kanEndrePåSøknadsopplysninger: boolean;
 }
 
@@ -91,7 +92,7 @@ const SoknadsfristVilkarProsessIndex = ({
   useEffect(() => {
     if (perioder.length > 1) {
       const førsteIkkeVurdertPeriodeIndex = perioder.findIndex(
-        periode => periode.vurderesIBehandlingen && periode.vilkarStatus.kode === vilkårStatus.IKKE_VURDERT,
+        periode => periode.vurderesIBehandlingen && periode.vilkarStatus === vilkårStatus.IKKE_VURDERT,
       );
       if (førsteIkkeVurdertPeriodeIndex > 0) {
         setActiveTab(førsteIkkeVurdertPeriodeIndex);
@@ -103,15 +104,15 @@ const SoknadsfristVilkarProsessIndex = ({
 
   const harÅpentUløstAksjonspunkt = aksjonspunkter.some(
     ap =>
-      ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST &&
-      ap.status.kode === aksjonspunktStatus.OPPRETTET &&
+      ap.definisjon === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST &&
+      ap.status === aksjonspunktStatus.OPPRETTET &&
       ap.kanLoses,
   );
 
   const dokumenterSomSkalVurderes = Array.isArray(soknadsfristStatus?.dokumentStatus)
     ? soknadsfristStatus.dokumentStatus.filter(dok =>
         dok.status.some(status => {
-          const erOppfyllt = status.status.kode === vilkårStatus.OPPFYLT;
+          const erOppfyllt = status.status === vilkårStatus.OPPFYLT;
           const avklartEllerOverstyrt = dok.overstyrteOpplysninger || dok.avklarteOpplysninger;
 
           if (erOppfyllt && !avklartEllerOverstyrt) {
@@ -162,7 +163,7 @@ const SoknadsfristVilkarProsessIndex = ({
               active: activeTab === index,
               label: `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`,
               icon:
-                (erOverstyrt || harÅpentUløstAksjonspunkt) && vilkarStatus.kode !== vilkårStatus.OPPFYLT ? (
+                (erOverstyrt || harÅpentUløstAksjonspunkt) && vilkarStatus !== vilkårStatus.OPPFYLT ? (
                   <ExclamationmarkTriangleFillIcon
                     title="Aksjonspunkt"
                     fontSize="1.5rem"
@@ -184,7 +185,7 @@ const SoknadsfristVilkarProsessIndex = ({
             overrideReadOnly={overrideReadOnly || dokumenterSomSkalVurderes.length === 0}
             overstyringApKode={aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR}
             panelTittelKode={panelTittelKode}
-            status={activePeriode.vilkarStatus.kode}
+            status={activePeriode.vilkarStatus}
             toggleOverstyring={toggleOverstyring}
           />
           <SoknadsfristVilkarForm
@@ -196,7 +197,7 @@ const SoknadsfristVilkarProsessIndex = ({
             submitCallback={submitCallback}
             overrideReadOnly={overrideReadOnly}
             toggleOverstyring={toggleOverstyring}
-            status={activePeriode.vilkarStatus.kode}
+            status={activePeriode.vilkarStatus}
             alleDokumenter={dokumenterSomSkalVurderes}
             dokumenterIAktivPeriode={dokumenterIAktivPeriode}
             periode={activePeriode}

@@ -3,6 +3,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import SoknadsfristVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-soknadsfrist';
 import SoknadsfristVilkarProsessIndexV2 from '@k9-sak-web/prosess-vilkar-soknadsfrist-v2';
 import { PleiepengerBehandlingApiKeys } from '../../../data/pleiepengerBehandlingApi';
@@ -14,7 +15,9 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
 
   getKomponent = props => {
     if (props.featureToggles?.PROSESS_VILKAR_SOKNADSFRIST) {
-      return <SoknadsfristVilkarProsessIndexV2 {...props} />;
+      const deepCopyProps = JSON.parse(JSON.stringify(props));
+      konverterKodeverkTilKode(deepCopyProps, false);
+      return <SoknadsfristVilkarProsessIndexV2 {...props} {...deepCopyProps} />;
     }
     return <SoknadsfristVilkarProsessIndex {...props} />;
   };
