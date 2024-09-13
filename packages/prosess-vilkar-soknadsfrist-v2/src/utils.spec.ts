@@ -1,5 +1,5 @@
 import { initializeDate } from '@fpsak-frontend/utils';
-import { Vilkar } from '@k9-sak-web/types';
+import type { VilkårMedPerioderDto } from '@navikt/k9-sak-typescript-client';
 import { formatDate, hentAktivePerioderFraVilkar, utledInnsendtSoknadsfrist } from './utils';
 
 describe('formatDate', () => {
@@ -39,7 +39,7 @@ describe('utledInnsendtSoknadsfrist', () => {
 describe('hentAktivePerioderFraVilkar', () => {
   it('should return an empty array if there are no periods in vilkar', () => {
     const vilkar = [{ perioder: [] }];
-    const result = hentAktivePerioderFraVilkar(vilkar as Vilkar[], true);
+    const result = hentAktivePerioderFraVilkar(vilkar as VilkårMedPerioderDto[], true);
     expect(result).toEqual([]);
   });
 
@@ -53,7 +53,7 @@ describe('hentAktivePerioderFraVilkar', () => {
       },
     ];
 
-    const result = hentAktivePerioderFraVilkar(vilkar as Vilkar[], true);
+    const result = hentAktivePerioderFraVilkar(vilkar as VilkårMedPerioderDto[], true);
     expect(result).toEqual([{ periode: { fom: '2023-01-01' }, vurderesIBehandlingen: false }]);
   });
 
@@ -67,7 +67,7 @@ describe('hentAktivePerioderFraVilkar', () => {
       },
     ];
 
-    const result = hentAktivePerioderFraVilkar(vilkar as Vilkar[], false);
+    const result = hentAktivePerioderFraVilkar(vilkar as VilkårMedPerioderDto[], false);
     expect(result).toEqual([{ periode: { fom: '2023-02-01' }, vurderesIBehandlingen: true }]);
   });
 
@@ -81,7 +81,7 @@ describe('hentAktivePerioderFraVilkar', () => {
       },
     ];
 
-    const result = hentAktivePerioderFraVilkar(vilkar as Vilkar[], true);
+    const result = hentAktivePerioderFraVilkar(vilkar as VilkårMedPerioderDto[], true);
     expect(result).toEqual([
       { periode: { fom: '2023-02-01' }, vurderesIBehandlingen: false },
       { periode: { fom: '2023-01-01' }, vurderesIBehandlingen: false },
