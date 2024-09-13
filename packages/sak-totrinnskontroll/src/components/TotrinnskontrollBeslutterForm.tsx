@@ -13,7 +13,6 @@ import { Button } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import { Location } from 'history';
 import { useForm, useWatch } from 'react-hook-form';
-import { FormattedMessage } from 'react-intl';
 import AksjonspunktGodkjenningFieldArray from './AksjonspunktGodkjenningFieldArray';
 import { FormState } from './FormState';
 import styles from './totrinnskontrollBeslutterForm.module.css';
@@ -94,7 +93,7 @@ export const TotrinnskontrollBeslutterForm = ({
       {!readOnly && (
         <>
           <AksjonspunktHelpText isAksjonspunktOpen>
-            {[<FormattedMessage key={1} id="HelpText.ToTrinnsKontroll" />]}
+            Kontroller endrede opplysninger og faglige vurderinger
           </AksjonspunktHelpText>
           <div className="mt-4" />
         </>
@@ -121,7 +120,7 @@ export const TotrinnskontrollBeslutterForm = ({
           }
           loading={formState.isSubmitting}
         >
-          <FormattedMessage id="ToTrinnsForm.Godkjenn" />
+          Godkjenn vedtaket
         </Button>
         <Button
           variant="primary"
@@ -134,7 +133,7 @@ export const TotrinnskontrollBeslutterForm = ({
           loading={formState.isSubmitting}
           onClick={ariaCheck}
         >
-          <FormattedMessage id="ToTrinnsForm.SendTilbake" />
+          Send til saksbehandler
         </Button>
       </div>
     </Form>

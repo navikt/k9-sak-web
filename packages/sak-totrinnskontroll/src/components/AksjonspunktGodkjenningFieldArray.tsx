@@ -4,8 +4,6 @@ import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeC
 import { BodyShort, Detail, Fieldset } from '@navikt/ds-react';
 import * as Sentry from '@sentry/browser';
 import { Location } from 'history';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
@@ -91,7 +89,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
         const hentSkjermlenkeTypeKodeverkNavn = () => {
           try {
             if (skjermlenkeTypeKodeverk.navn === 'Vedtak') {
-              return <FormattedMessage id="ToTrinnsForm.Vedtak.Brev" />;
+              return 'Brev';
             }
             return skjermlenkeTypeKodeverk.navn;
           } catch (err) {
@@ -109,7 +107,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
             : '';
 
         return (
-          <React.Fragment key={field.id}>
+          <div className={index > 0 && 'mt-2'} key={field.id}>
             <NavLink
               to={lagLenke(context.skjermlenkeType)}
               onClick={() => window.scroll(0, 0)}
@@ -133,14 +131,15 @@ export const AksjonspunktGodkjenningFieldArray = ({
                   name={`aksjonspunktGodkjenning.${index}.totrinnskontrollGodkjent`}
                   isReadOnly={readOnly}
                   isTrueOrFalseSelection
+                  isHorizontal
                   radios={[
                     {
                       value: 'true',
-                      label: <FormattedMessage id="ApprovalField.Godkjent" />,
+                      label: 'Godkjent',
                     },
                     {
                       value: 'false',
-                      label: <FormattedMessage id="ApprovalField.Vurder" />,
+                      label: 'Vurder på nytt',
                     },
                   ]}
                 />
@@ -150,9 +149,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
                       <FlexContainer wrap>
                         <FlexRow>
                           <FlexColumn>
-                            <Detail className="blokk-xs">
-                              <FormattedMessage id="AksjonspunktGodkjenningArsakPanel.Arsak" />
-                            </Detail>
+                            <Detail className="blokk-xs">Årsak</Detail>
                           </FlexColumn>
                         </FlexRow>
                         <FlexRow>
@@ -161,26 +158,24 @@ export const AksjonspunktGodkjenningFieldArray = ({
                               <div>
                                 <CheckboxField
                                   name={`aksjonspunktGodkjenning.${index}.feilFakta`}
-                                  label={<FormattedMessage id="AksjonspunktGodkjenningArsakPanel.FeilFakta" />}
+                                  label="Feil fakta"
                                   readOnly={readOnly}
                                 />
                                 <CheckboxField
                                   name={`aksjonspunktGodkjenning.${index}.feilRegel`}
-                                  label={
-                                    <FormattedMessage id="AksjonspunktGodkjenningArsakPanel.FeilRegelForstaelse" />
-                                  }
+                                  label="Feil regelforståelse"
                                   readOnly={readOnly}
                                 />
                               </div>
                               <div>
                                 <CheckboxField
                                   name={`aksjonspunktGodkjenning.${index}.feilLov`}
-                                  label={<FormattedMessage id="AksjonspunktGodkjenningArsakPanel.FeilLovanvendelse" />}
+                                  label="Feil lovanvendelse"
                                   readOnly={readOnly}
                                 />
                                 <CheckboxField
                                   name={`aksjonspunktGodkjenning.${index}.annet`}
-                                  label={<FormattedMessage id="AksjonspunktGodkjenningArsakPanel.Annet" />}
+                                  label="Annet"
                                   readOnly={readOnly}
                                 />
                               </div>
@@ -197,7 +192,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
                     <div className="mt-4">
                       <TextAreaField
                         name={`aksjonspunktGodkjenning.${index}.besluttersBegrunnelse`}
-                        label={<FormattedMessage id="AksjonspunktGodkjenningArsakPanel.Begrunnelse" />}
+                        label="Begrunnelse"
                         validate={[required, minLength3, maxLength2000, hasValidText]}
                         readOnly={readOnly}
                         maxLength={2000}
@@ -207,7 +202,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
                 )}
               </Fieldset>
             </div>
-          </React.Fragment>
+          </div>
         );
       })}
     </>

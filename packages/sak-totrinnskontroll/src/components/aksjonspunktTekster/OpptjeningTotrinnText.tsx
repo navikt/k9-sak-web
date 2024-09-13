@@ -1,72 +1,45 @@
 import { OpptjeningAktiviteter } from '@k9-sak-web/types';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 const mapAktivitetTextEndring = (aktivitetType: string, arbeidsgiverNavn?: string, orgnr?: string) => {
   if (arbeidsgiverNavn && orgnr) {
-    return (
-      <FormattedMessage
-        id="ToTrinnsForm.Opptjening.EndringArbeidMedNavn"
-        values={{ a: aktivitetType, b: arbeidsgiverNavn, c: orgnr }}
-      />
-    );
+    return `Perioden ${aktivitetType} for ${arbeidsgiverNavn} (${orgnr}) er endret.`;
   }
   if (orgnr) {
-    return (
-      <FormattedMessage id="ToTrinnsForm.Opptjening.EndringArbeidUtenNavn" values={{ a: aktivitetType, b: orgnr }} />
-    );
+    return `Perioden ${aktivitetType} for organisasjonen med orgnr. ${orgnr} er endret.`;
   }
-  return <FormattedMessage id="ToTrinnsForm.Opptjening.EndringAktivitet" values={{ a: aktivitetType }} />;
+  return `Perioden ${aktivitetType} er endret.`;
 };
 
 const mapAktivitetTextUnderkjenning = (aktivitetType: string, arbeidsgiverNavn?: string, orgnr?: string) => {
   if (arbeidsgiverNavn && orgnr) {
     return (
-      <FormattedMessage
-        id="ToTrinnsForm.Opptjening.UnderkjenningArbeidMedNavn"
-        values={{
-          a: aktivitetType,
-          bb: arbeidsgiverNavn,
-          c: orgnr,
-          b: (chunks: any) => <b>{chunks}</b>,
-        }}
-      />
+      <>
+        `Aktivitet ${aktivitetType} for ${arbeidsgiverNavn} (${orgnr}) er `<b>ikke</b>` godkjent.`
+      </>
     );
   }
   if (orgnr) {
     return (
-      <FormattedMessage
-        id="ToTrinnsForm.Opptjening.UnderkjenningArbeidUtenNavn"
-        values={{ a: aktivitetType, bb: orgnr, b: (chunks: any) => <b>{chunks}</b> }}
-      />
+      <>
+        `Aktivitet ${aktivitetType} for organisasjonen med orgnr. ${orgnr} er `<b>ikke</b>` godkjent.`
+      </>
     );
   }
   return (
-    <FormattedMessage
-      id="ToTrinnsForm.Opptjening.UnderkjenningAktivitet"
-      values={{ a: aktivitetType, b: (chunks: any) => <b>{chunks}</b> }}
-    />
+    <>
+      `Aktivitet ${aktivitetType} er `<b>ikke</b>` godkjent.`
+    </>
   );
 };
 
 const mapAktivitetTextGodkjenning = (aktivitetType: string, arbeidsgiverNavn?: string, orgnr?: string) => {
   if (arbeidsgiverNavn && orgnr) {
-    return (
-      <FormattedMessage
-        id="ToTrinnsForm.Opptjening.GodkjenningArbeidMedNavn"
-        values={{ a: aktivitetType, b: arbeidsgiverNavn, c: orgnr }}
-      />
-    );
+    return `Aktivitet ${aktivitetType} for ${arbeidsgiverNavn} (${orgnr}) er godkjent.`;
   }
   if (orgnr) {
-    return (
-      <FormattedMessage
-        id="ToTrinnsForm.Opptjening.GodkjenningArbeidUtenNavn"
-        values={{ a: aktivitetType, b: orgnr }}
-      />
-    );
+    return `Aktivitet ${aktivitetType} for organisasjonen med orgnr. ${orgnr} er godkjent.`;
   }
-  return <FormattedMessage id="ToTrinnsForm.Opptjening.GodkjenningAktivitet" values={{ a: aktivitetType }} />;
+  return `Aktivitet ${aktivitetType} er godkjent.`;
 };
 
 interface OwnProps {
@@ -80,23 +53,35 @@ interface OwnProps {
  */
 export const OpptjeningTotrinnText = ({ aktivitet }: OwnProps) => {
   if (aktivitet.erEndring) {
-    return mapAktivitetTextEndring(
-      aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
-      aktivitet.arbeidsgiverNavn,
-      aktivitet.orgnr,
+    return (
+      <>
+        {mapAktivitetTextEndring(
+          aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
+          aktivitet.arbeidsgiverNavn,
+          aktivitet.orgnr,
+        )}
+      </>
     );
   }
   if (aktivitet.godkjent) {
-    return mapAktivitetTextGodkjenning(
-      aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
-      aktivitet.arbeidsgiverNavn,
-      aktivitet.orgnr,
+    return (
+      <>
+        {mapAktivitetTextGodkjenning(
+          aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
+          aktivitet.arbeidsgiverNavn,
+          aktivitet.orgnr,
+        )}
+      </>
     );
   }
-  return mapAktivitetTextUnderkjenning(
-    aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
-    aktivitet.arbeidsgiverNavn,
-    aktivitet.orgnr,
+  return (
+    <>
+      {mapAktivitetTextUnderkjenning(
+        aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
+        aktivitet.arbeidsgiverNavn,
+        aktivitet.orgnr,
+      )}
+    </>
   );
 };
 

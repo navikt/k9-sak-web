@@ -16,7 +16,6 @@ import {
   TotrinnskontrollSkjermlenkeContext,
 } from '@k9-sak-web/types';
 
-import messages from '../i18n/nb_NO.json';
 import { AksjonspunktGodkjenningData } from './components/AksjonspunktGodkjenningFieldArray';
 import { FormState } from './components/FormState';
 import TotrinnskontrollBeslutterForm from './components/TotrinnskontrollBeslutterForm';
@@ -27,7 +26,6 @@ const cache = createIntlCache();
 const intl = createIntl(
   {
     locale: 'nb-NO',
-    messages,
   },
   cache,
 );
