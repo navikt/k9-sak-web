@@ -108,3 +108,5 @@ spec:
       value: "true"
     - name: SKILL_UT_PRIVATPERSON
       value: "false"
+    - name: NYTT_SKJEMA_FOR_9003
+      value: "false"
