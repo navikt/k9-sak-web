@@ -158,7 +158,11 @@ const TilkjentYtelseTimeLineData = ({
                       id="Timeline.tooltip.dagsatsPerAndel"
                       key={`index${index + 1}`}
                       values={{
-                        arbeidsgiver: createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+                        arbeidsgiver: createArbeidsgiverVisningsnavnForAndel(
+                          andel,
+                          getKodeverknavn,
+                          arbeidsgiverOpplysningerPerId,
+                        ),
                         dagsatsPerAndel: Number(andel.refusjon),
                       }}
                     />
@@ -175,7 +179,11 @@ const TilkjentYtelseTimeLineData = ({
                       id="Timeline.tooltip.dagsatsPerAndel"
                       key={`index${index + 1}`}
                       values={{
-                        arbeidsgiver: createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+                        arbeidsgiver: createArbeidsgiverVisningsnavnForAndel(
+                          andel,
+                          getKodeverknavn,
+                          arbeidsgiverOpplysningerPerId,
+                        ),
                         dagsatsPerAndel: Number(andel.tilSoker),
                       }}
                     />

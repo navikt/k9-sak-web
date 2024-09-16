@@ -8,7 +8,7 @@ import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import {
   createArbeidsgiverVisningsnavnForAndel,
   createPrivatarbeidsgiverVisningsnavnForAndel,
-  getInntektskategori
+  getInntektskategori,
 } from '../TilkjentYteleseUtils';
 
 interface OwnProps {
@@ -69,7 +69,11 @@ const Andeler = ({ fields, meta, alleKodeverk, arbeidsgivere }: Partial<OwnProps
             const andel = field.get(index);
             const inntektskategori = getInntektskategori(andel.inntektskategori, getKodeverknavn);
             const arbeidsgiver = createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgivere);
-            const arbeidsgiverPrivatperson = createPrivatarbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgivere);
+            const arbeidsgiverPrivatperson = createPrivatarbeidsgiverVisningsnavnForAndel(
+              andel,
+              getKodeverknavn,
+              arbeidsgivere,
+            );
 
             return (
               <Table.Row key={fieldId}>

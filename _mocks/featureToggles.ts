@@ -46,8 +46,8 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_AKSJONSPUNKT_9015,
   },
   {
-    key: "ALDERSVILKAR_KRONISK_SYK",
-    value: process.env.VITE_ALDERSVILKAR_KRONISK_SYK
+    key: 'ALDERSVILKAR_KRONISK_SYK',
+    value: process.env.VITE_ALDERSVILKAR_KRONISK_SYK,
   },
   {
     key: 'FRITEKST_REDIGERING',
@@ -78,6 +78,10 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_NYE_NOKKELTALL,
   },
   {
+    key: 'PROSESS_VILKAR_SOKNADSFRIST',
+    value: process.env.VITE_PROSESS_VILKAR_SOKNADSFRIST,
+  },
+  {
     key: 'UTVIDET_VARSELFELT',
     value: process.env.VITE_UTVIDET_VARSELFELT,
   },
@@ -88,5 +92,5 @@ export const featureTogglesFactory = () => [
   {
     key: 'NYTT_SKJEMA_FOR_9003',
     value: process.env.VITE_NYTT_SKJEMA_FOR_9003,
-  }
+  },
 ];

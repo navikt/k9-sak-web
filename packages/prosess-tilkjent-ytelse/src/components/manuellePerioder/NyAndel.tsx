@@ -11,7 +11,7 @@ import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import NyArbeidsgiverModal from './NyArbeidsgiverModal';
 
 import styles from './periode.module.css';
-import {atLeastOneRequired} from "@fpsak-frontend/utils/src/validation/validators";
+import { atLeastOneRequired } from '@fpsak-frontend/utils/src/validation/validators';
 
 const minValue0 = minValue(0);
 const maxValue100 = maxValue(100);
@@ -132,10 +132,14 @@ export const NyAndel = ({
                       label={{ id: 'TilkjentYtelse.NyPeriode.Arbeidsgiver' }}
                       bredde="xl"
                       name={`${periodeElementFieldId}.arbeidsgiverOrgnr`}
-                      validate={skillUtPrivatperson
-                        ? [value => atLeastOneRequired(value, values.arbeidsgiverPersonIdent)]
-                        : [required]}
-                      selectValues={skillUtPrivatperson ? mapArbeidsgivereOrg(arbeidsgivere) : mapArbeidsgivere(arbeidsgivere)}
+                      validate={
+                        skillUtPrivatperson
+                          ? [value => atLeastOneRequired(value, values.arbeidsgiverPersonIdent)]
+                          : [required]
+                      }
+                      selectValues={
+                        skillUtPrivatperson ? mapArbeidsgivereOrg(arbeidsgivere) : mapArbeidsgivere(arbeidsgivere)
+                      }
                     />
                     <div
                       onClick={() => setOpen(true)}
@@ -147,15 +151,17 @@ export const NyAndel = ({
                       <Image className={styles.addCircleIcon} src={addCircleIcon} alt="Ny arbeidsgiver" />
                     </div>
                   </FlexColumn>
-                  {skillUtPrivatperson && (<FlexColumn className={styles.relative}>
-                    <SelectField
-                      label={{ id: 'TilkjentYtelse.NyPeriode.ArbeidsgiverPrivatperson' }}
-                      bredde="xl"
-                      name={`${periodeElementFieldId}.arbeidsgiverPersonIdent`}
-                      validate={[value => atLeastOneRequired(value, values.arbeidsgiverOrgnr)]}
-                      selectValues={mapArbeidsgiverePrivatperson(arbeidsgivere)}
-                    />
-                  </FlexColumn>)}
+                  {skillUtPrivatperson && (
+                    <FlexColumn className={styles.relative}>
+                      <SelectField
+                        label={{ id: 'TilkjentYtelse.NyPeriode.ArbeidsgiverPrivatperson' }}
+                        bredde="xl"
+                        name={`${periodeElementFieldId}.arbeidsgiverPersonIdent`}
+                        validate={[value => atLeastOneRequired(value, values.arbeidsgiverOrgnr)]}
+                        selectValues={mapArbeidsgiverePrivatperson(arbeidsgivere)}
+                      />
+                    </FlexColumn>
+                  )}
                 </>
               )}
               <FlexColumn>

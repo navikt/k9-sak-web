@@ -1,4 +1,4 @@
-import {ArbeidsgiverOpplysningerPerId} from "@k9-sak-web/types";
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 
 export const getAktivitet = (aktivitetStatus, getKodeverknavn) =>
   // hvis valgtAndel ikke satt ennå return tom string.
@@ -36,7 +36,11 @@ export const createArbeidsgiverVisningsnavnForAndel = (andel, getKodeverknavn, a
   return `${navn} (${identifikator})${getEndCharFromId(andel.eksternArbeidsforholdId)}`;
 };
 
-export const createPrivatarbeidsgiverVisningsnavnForAndel = (andel, getKodeverknavn, arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId) => {
+export const createPrivatarbeidsgiverVisningsnavnForAndel = (
+  andel,
+  getKodeverknavn,
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
+) => {
   if (!andel) return '';
 
   let identifikator;
@@ -46,15 +50,15 @@ export const createPrivatarbeidsgiverVisningsnavnForAndel = (andel, getKodeverkn
     identifikator = andel.arbeidsgiver.arbeidsgiverPersonIdent;
   }
 
-  if(identifikator == null) {
-    return ''
+  if (identifikator == null) {
+    return '';
   }
 
-  const arbeidsgiverOpplysninger = Object.values(arbeidsgiverOpplysningerPerId).find(v => v?.personIdentifikator === identifikator)
+  const arbeidsgiverOpplysninger = Object.values(arbeidsgiverOpplysningerPerId).find(
+    v => v?.personIdentifikator === identifikator,
+  );
 
-  const navn = arbeidsgiverOpplysninger != null
-      ? arbeidsgiverOpplysninger?.navn
-      : '';
+  const navn = arbeidsgiverOpplysninger != null ? arbeidsgiverOpplysninger?.navn : '';
 
   if (!navn) {
     return `${identifikator}${getEndCharFromId(andel.eksternArbeidsforholdId)}`;

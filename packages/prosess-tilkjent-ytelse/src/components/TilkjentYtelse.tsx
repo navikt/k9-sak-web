@@ -68,7 +68,11 @@ const createTooltipContent = (intl, item, getKodeverknavn, arbeidsgiverOpplysnin
               formatMessage(
                 { id: 'Timeline.tooltip.dagsatsPerAndel' },
                 {
-                  arbeidsgiver: createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+                  arbeidsgiver: createArbeidsgiverVisningsnavnForAndel(
+                    andel,
+                    getKodeverknavn,
+                    arbeidsgiverOpplysningerPerId,
+                  ),
                   dagsatsPerAndel: Number(andel.refusjon) + Number(andel.tilSoker),
                 },
               ),
