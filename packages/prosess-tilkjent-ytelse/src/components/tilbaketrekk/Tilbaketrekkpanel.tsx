@@ -2,10 +2,11 @@ import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Aksjonspunkt, BeregningsresultatFp, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
+import { BeregningsresultatFp, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
 import { Button, HGrid, Label } from '@navikt/ds-react';
 import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
+import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import { useForm } from 'react-hook-form';
 import styles from './tilbaketrekkpanel.module.css';
 
@@ -26,7 +27,7 @@ export const transformValues = (values: TilbaketrekkpanelFormState): TransformVa
 };
 
 export const buildInitialValues = (
-  vurderTilbaketrekkAP?: Aksjonspunkt,
+  vurderTilbaketrekkAP?: AksjonspunktDto,
   beregningsresultat?: BeregningsresultatFp | BeregningsresultatUtbetalt,
 ) => {
   let tidligereValgt: boolean | undefined = undefined;
@@ -60,7 +61,7 @@ type TransformValues = {
 
 interface PureOwnProps {
   readOnly: boolean;
-  vurderTilbaketrekkAP?: Aksjonspunkt;
+  vurderTilbaketrekkAP?: AksjonspunktDto;
   submitCallback: (data: TransformValues) => Promise<any>;
   readOnlySubmitButton: boolean;
   beregningsresultat?: BeregningsresultatFp | BeregningsresultatUtbetalt;
@@ -111,7 +112,7 @@ export const Tilbaketrekkpanel = ({
             validate={[required]}
             isHorizontal
             isReadOnly={readOnly}
-            isEdited={!isAksjonspunktOpen(vurderTilbaketrekkAP.status.kode)}
+            isEdited={!isAksjonspunktOpen(vurderTilbaketrekkAP.status)}
             isTrueOrFalseSelection
             radios={[
               {

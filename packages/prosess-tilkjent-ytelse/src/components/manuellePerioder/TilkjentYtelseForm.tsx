@@ -1,13 +1,10 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { guid } from '@fpsak-frontend/utils';
-import {
-  Aksjonspunkt,
-  ArbeidsgiverOpplysningerPerId,
-  BeregningsresultatUtbetalt,
-  KodeverkMedNavn,
-} from '@k9-sak-web/types';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { ArbeidsgiverOpplysningerPerId, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
 import { Form } from '@navikt/ft-form-hooks';
+import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import { useForm } from 'react-hook-form';
 import { TilkjentYtelseFormState } from './FormState';
 import PeriodeTabell from './PeriodeTabell';
@@ -15,18 +12,17 @@ import PeriodeTabell from './PeriodeTabell';
 interface OwnProps {
   readOnly: boolean;
   readOnlySubmitButton: boolean;
-  aksjonspunkter: Aksjonspunkt[];
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  aksjonspunkter: AksjonspunktDto[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   beregningsresultat: BeregningsresultatUtbetalt;
   submitCallback: (...args: any[]) => any;
+  kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string;
 }
 
 export const TilkjentYtelseForm = ({
   readOnly,
   readOnlySubmitButton,
   aksjonspunkter,
-  alleKodeverk,
   beregningsresultat,
   arbeidsgiverOpplysningerPerId,
   submitCallback,
@@ -70,7 +66,7 @@ export const TilkjentYtelseForm = ({
       )}
 
       <Form formMethods={formMethods} onSubmit={handleSubmit} data-testid="OppholdInntektOgPerioderForm">
-        <PeriodeTabell readOnly={readOnly} alleKodeverk={alleKodeverk} />
+        <PeriodeTabell readOnly={readOnly} />
       </Form>
     </>
   );

@@ -1,14 +1,14 @@
 import { DDMMYYYY_DATE_FORMAT, initializeDate } from '@fpsak-frontend/utils';
 import {
-  Aksjonspunkt,
   ArbeidsgiverOpplysningerPerId,
   BeregningsresultatPeriode,
   BeregningsresultatUtbetalt,
-  KodeverkMedNavn,
 } from '@k9-sak-web/types';
 
-import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { Heading } from '@navikt/ds-react';
+import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import TilkjentYtelse, { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
@@ -32,15 +32,17 @@ const groups = [
 
 const { MANUELL_TILKJENT_YTELSE } = aksjonspunktCodes;
 
-const finnTilbaketrekkAksjonspunkt = (alleAksjonspunkter: Aksjonspunkt[]): Aksjonspunkt | undefined =>
+const finnTilbaketrekkAksjonspunkt = (alleAksjonspunkter: AksjonspunktDto[]): AksjonspunktDto | undefined =>
   alleAksjonspunkter
-    ? alleAksjonspunkter.find(ap => ap.definisjon?.kode === aksjonspunktCodes.VURDER_TILBAKETREKK)
+    ? alleAksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.VURDER_TILBAKETREKK)
     : undefined;
+
+export const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: AksjonspunktDto[]): boolean =>
+  aksjonspunkter.some(ap => ap.definisjon === aksjonspunktCode);
 
 interface PureOwnProps {
   beregningsresultat: BeregningsresultatUtbetalt;
-  aksjonspunkter: Aksjonspunkt[];
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  aksjonspunkter: AksjonspunktDto[];
   readOnly: boolean;
   submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
@@ -53,9 +55,10 @@ const TilkjentYtelsePanelImpl = ({
   readOnlySubmitButton,
   aksjonspunkter,
   readOnly,
-  alleKodeverk,
   arbeidsgiverOpplysningerPerId,
 }: Partial<PureOwnProps>) => {
+  const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
+  const kodeverkNavnFraKode = getKodeverkNavnFraKodeFn();
   const vurderTilbaketrekkAP = finnTilbaketrekkAksjonspunkt(aksjonspunkter);
   const opphoersdato = beregningsresultat?.opphoersdato;
   return (
@@ -68,8 +71,8 @@ const TilkjentYtelsePanelImpl = ({
         <TilkjentYtelse
           items={formatPerioder(beregningsresultat.perioder)}
           groups={groups}
-          alleKodeverk={alleKodeverk}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          kodeverkNavnFraKode={kodeverkNavnFraKode}
         />
       )}
 
@@ -78,10 +81,10 @@ const TilkjentYtelsePanelImpl = ({
           beregningsresultat={beregningsresultat}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           aksjonspunkter={aksjonspunkter}
-          alleKodeverk={alleKodeverk}
           readOnly={readOnly}
           submitCallback={submitCallback}
           readOnlySubmitButton={readOnlySubmitButton}
+          kodeverkNavnFraKode={kodeverkNavnFraKode}
         />
       )}
 

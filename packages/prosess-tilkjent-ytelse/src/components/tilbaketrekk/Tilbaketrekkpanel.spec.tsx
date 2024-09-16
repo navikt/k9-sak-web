@@ -1,17 +1,12 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Aksjonspunkt, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
+import { BeregningsresultatUtbetalt } from '@k9-sak-web/types';
+import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import { render, screen } from '@testing-library/react';
 import { Tilbaketrekkpanel, buildInitialValues, transformValues } from './Tilbaketrekkpanel';
 
-const lagAksjonspunktTilbaketrekk = (begrunnelse: string): Aksjonspunkt => ({
-  definisjon: {
-    kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
-    kodeverk: '',
-  },
-  status: {
-    kode: 'OPPR',
-    kodeverk: '',
-  },
+const lagAksjonspunktTilbaketrekk = (begrunnelse: string): AksjonspunktDto => ({
+  definisjon: '5090',
+  status: 'OPPR',
   begrunnelse,
   kanLoses: false,
   erAktivt: false,

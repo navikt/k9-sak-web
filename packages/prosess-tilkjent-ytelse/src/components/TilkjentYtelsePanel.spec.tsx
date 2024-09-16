@@ -1,17 +1,13 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Aksjonspunkt } from '@k9-sak-web/types';
+import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import { render, screen } from '@testing-library/react';
 import TilkjentYtelsePanelImpl from './TilkjentYtelsePanel';
 
 const tilbaketrekkAP = {
-  definisjon: {
-    kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
-  },
-  status: {
-    kode: 'OPPR',
-  },
+  definisjon: aksjonspunktCodes.VURDER_TILBAKETREKK,
+  status: 'OPPR',
   begrunnelse: undefined,
-} as Aksjonspunkt;
+} as AksjonspunktDto;
 
 describe('<TilkjentYtelsePanelImpl>', () => {
   it('skall innehålla rätt undertekst', () => {
@@ -21,7 +17,6 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         beregningsresultat={null}
         submitCallback={vi.fn()}
         readOnlySubmitButton
-        alleKodeverk={{}}
         aksjonspunkter={[]}
         arbeidsgiverOpplysningerPerId={{}}
       />,
@@ -38,7 +33,6 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         beregningsresultat={null}
         submitCallback={vi.fn()}
         readOnlySubmitButton
-        alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
       />,
     );

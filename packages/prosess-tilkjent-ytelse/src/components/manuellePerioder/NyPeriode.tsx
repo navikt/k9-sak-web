@@ -1,6 +1,6 @@
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { calcDaysAndWeeks, guid, initializeDate } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Button, ErrorMessage, Label } from '@navikt/ds-react';
 import { Datepicker } from '@navikt/ft-form-hooks';
 import { dateAfterOrEqual, hasValidDate, required } from '@navikt/ft-form-validators';
@@ -46,7 +46,6 @@ const validateForm = (perioder: BeriketBeregningsresultatPeriode[], nyPeriodeFom
 interface OwnProps {
   newPeriodeResetCallback: (values: any) => any;
   newArbeidsgiverCallback: (values: NyArbeidsgiverFormState) => void;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
   readOnly: boolean;
   newPeriodeCallback: (nyPeriode: Partial<BeriketBeregningsresultatPeriode>) => void;
@@ -57,7 +56,6 @@ export const TilkjentYtelseNyPeriode = ({
   newArbeidsgiverCallback,
   newPeriodeCallback,
   readOnly,
-  alleKodeverk,
   arbeidsgivere,
 }: OwnProps) => {
   const formMethods = useFormContext<TilkjentYtelseFormState>();
@@ -110,7 +108,6 @@ export const TilkjentYtelseNyPeriode = ({
                 <FlexColumn>
                   <NyAndel
                     readOnly={readOnly}
-                    alleKodeverk={alleKodeverk}
                     arbeidsgivere={arbeidsgivere}
                     newArbeidsgiverCallback={newArbeidsgiverCallback}
                   />

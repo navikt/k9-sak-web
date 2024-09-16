@@ -1,21 +1,14 @@
-import {
-  Aksjonspunkt,
-  ArbeidsgiverOpplysningerPerId,
-  Behandling,
-  BeregningsresultatUtbetalt,
-  Fagsak,
-  KodeverkMedNavn,
-} from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
+import { AksjonspunktDto, BehandlingDto, FagsakDto } from '@navikt/k9-sak-typescript-client';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 
 interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  behandling: Behandling;
+  behandling: BehandlingDto;
   beregningsresultat: BeregningsresultatUtbetalt;
-  fagsak: Fagsak;
-  aksjonspunkter: Aksjonspunkt[];
+  fagsak: FagsakDto;
+  aksjonspunkter: AksjonspunktDto[];
   isReadOnly: boolean;
   submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
@@ -33,7 +26,6 @@ const intl = createIntl(
 const TilkjentYtelseProsessIndex = ({
   beregningsresultat,
   aksjonspunkter,
-  alleKodeverk,
   isReadOnly,
   submitCallback,
   readOnlySubmitButton,
@@ -43,7 +35,6 @@ const TilkjentYtelseProsessIndex = ({
     <TilkjentYtelsePanel
       beregningsresultat={beregningsresultat}
       aksjonspunkter={aksjonspunkter}
-      alleKodeverk={alleKodeverk}
       readOnly={isReadOnly}
       submitCallback={submitCallback}
       readOnlySubmitButton={readOnlySubmitButton}

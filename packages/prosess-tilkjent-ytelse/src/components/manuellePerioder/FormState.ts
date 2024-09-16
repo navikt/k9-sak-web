@@ -4,13 +4,14 @@ import {
   BeregningsresultatPeriode,
   BeregningsresultatPeriodeAndel,
 } from '@k9-sak-web/types';
+import { BeregningsresultatPeriodeDto } from '@navikt/k9-sak-typescript-client';
 
 export interface BeriketBeregningsresultatPeriode extends BeregningsresultatPeriode {
   id: string;
   openForm?: boolean;
 }
 
-export interface SlettetPeriode extends BeriketBeregningsresultatPeriode {
+export interface SlettetPeriode extends BeregningsresultatPeriodeDto {
   begrunnelse: string;
   updated?: boolean;
 }

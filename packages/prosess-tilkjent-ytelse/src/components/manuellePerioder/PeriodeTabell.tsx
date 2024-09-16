@@ -1,6 +1,5 @@
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ariaCheck } from '@fpsak-frontend/utils';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Button } from '@navikt/ds-react';
 import { useCallback, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -11,10 +10,9 @@ import SlettPeriodeModal from './SlettPeriodeModal';
 
 interface OwnProps {
   readOnly: boolean;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
-export const PeriodeTabell = ({ alleKodeverk, readOnly }: OwnProps) => {
+export const PeriodeTabell = ({ readOnly }: OwnProps) => {
   const {
     watch,
     setValue,
@@ -99,7 +97,6 @@ export const PeriodeTabell = ({ alleKodeverk, readOnly }: OwnProps) => {
         isAnyFormOpen={isAnyFormOpen}
         isNyPeriodeFormOpen={isNyPeriodeFormOpen}
         readOnly={readOnly}
-        alleKodeverk={alleKodeverk}
       />
       <VerticalSpacer twentyPx />
       <FlexContainer wrap>
@@ -129,7 +126,6 @@ export const PeriodeTabell = ({ alleKodeverk, readOnly }: OwnProps) => {
           newPeriodeCallback={newPeriodeCallback}
           newArbeidsgiverCallback={newArbeidsgiverCallback}
           newPeriodeResetCallback={newPeriodeResetCallback}
-          alleKodeverk={alleKodeverk}
           arbeidsgivere={arbeidsgivere}
           readOnly={readOnly}
         />

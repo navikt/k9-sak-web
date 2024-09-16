@@ -1,21 +1,21 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineControl, Timeline } from '@fpsak-frontend/tidslinje';
 import {
   DDMMYY_DATE_FORMAT,
   ISO_DATE_FORMAT,
   calcDaysAndWeeksWithWeekends,
-  getKodeverknavnFn,
   initializeDate,
 } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, BeregningsresultatPeriode, KodeverkMedNavn } from '@k9-sak-web/types';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { BeregningsresultatPeriodeDto } from '@navikt/k9-sak-typescript-client';
 import moment from 'moment';
 import React, { Component, RefObject } from 'react';
 import { createArbeidsgiverVisningsnavnForAndel } from './TilkjentYteleseUtils';
 import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
 import styles from './tilkjentYtelse.module.css';
 
-export type PeriodeMedId = BeregningsresultatPeriode & { id: number };
+export type PeriodeMedId = BeregningsresultatPeriodeDto & { id: number };
 
 const parseDateString = (dateString: string) => initializeDate(dateString, ISO_DATE_FORMAT).toDate();
 
@@ -110,7 +110,7 @@ interface OwnProps {
     id: number;
     content: string;
   }[];
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
@@ -237,16 +237,15 @@ export class TilkjentYtelse extends Component<OwnProps, OwnState> {
       goBackward,
       goForward,
       openPeriodInfo,
-      props: { groups, items, alleKodeverk, arbeidsgiverOpplysningerPerId },
+      props: { groups, items, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId },
       selectHandler,
       state: { selectedItem },
       zoomIn,
       zoomOut,
     } = this;
-    const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
     const timelineData = items.map((periode, index) =>
-      prepareTimelineData(periode, index, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+      prepareTimelineData(periode, index, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId),
     );
     return (
       <div className={styles.timelineContainer}>
@@ -272,7 +271,6 @@ export class TilkjentYtelse extends Component<OwnProps, OwnState> {
         />
         {selectedItem && (
           <TilkjentYtelseTimelineData
-            alleKodeverk={alleKodeverk}
             selectedItemStartDate={selectedItem.fom.toString()}
             selectedItemEndDate={selectedItem.tom.toString()}
             selectedItemData={selectedItem}

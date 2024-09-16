@@ -3,13 +3,13 @@ import { action } from '@storybook/addon-actions';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
-import { Aksjonspunkt, Behandling, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
+import { AksjonspunktDto, BehandlingDto } from '@navikt/k9-sak-typescript-client';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
 
 const behandling = {
   id: 1,
   versjon: 1,
-} as Behandling;
+} as BehandlingDto;
 
 const beregningsresultat = {
   opphoersdato: '2021-03-27',
@@ -17,20 +17,11 @@ const beregningsresultat = {
     {
       andeler: [
         {
-          aktivitetStatus: {
-            kode: 'AT',
-            kodeverk: 'AKTIVITET_STATUS',
-          },
-          inntektskategori: {
-            kode: 'ARBEIDSTAKER',
-            kodeverk: 'INNTEKTSKATEGORI',
-          },
+          aktivitetStatus: 'AT', // kodeverk: 'AKTIVITET_STATUS'
+          inntektskategori: 'ARBEIDSTAKER', // kodeverk: 'INNTEKTSKATEGORI'
           aktørId: null,
           arbeidsforholdId: null,
-          arbeidsforholdType: {
-            kode: '-',
-            kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-          },
+          arbeidsforholdType: '-', // kodeverk: 'OPPTJENING_AKTIVITET_TYPE'
           arbeidsgiverNavn: 'BEDRIFT1 AS',
           arbeidsgiverOrgnr: '123456789',
           eksternArbeidsforholdId: null,
@@ -46,7 +37,7 @@ const beregningsresultat = {
                 tom: '2021-03-14',
               },
               utbetalingsgrad: 100,
-              utfall: 'INNVILGET',
+              utfall: 'INNVILGET', // kodeverk: 'UTTAK_UTFALL'
             },
             {
               periode: {
@@ -54,25 +45,16 @@ const beregningsresultat = {
                 tom: '2021-03-15',
               },
               utbetalingsgrad: 100,
-              utfall: 'INNVILGET',
+              utfall: 'INNVILGET', // kodeverk: 'UTTAK_UTFALL'
             },
           ],
         },
         {
-          aktivitetStatus: {
-            kode: 'AT',
-            kodeverk: 'AKTIVITET_STATUS',
-          },
-          inntektskategori: {
-            kode: 'ARBEIDSTAKER',
-            kodeverk: 'INNTEKTSKATEGORI',
-          },
+          aktivitetStatus: 'AT', // kodeverk: 'AKTIVITET_STATUS'
+          inntektskategori: 'ARBEIDSTAKER', // kodeverk: 'INNTEKTSKATEGORI'
           aktørId: null,
           arbeidsforholdId: null,
-          arbeidsforholdType: {
-            kode: '-',
-            kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-          },
+          arbeidsforholdType: '-', // kodeverk: 'OPPTJENING_AKTIVITET_TYPE'
           arbeidsgiverNavn: 'BEDRIFT2 AS',
           arbeidsgiverOrgnr: '234567890',
           eksternArbeidsforholdId: null,
@@ -100,20 +82,11 @@ const beregningsresultat = {
     {
       andeler: [
         {
-          aktivitetStatus: {
-            kode: 'AT',
-            kodeverk: 'AKTIVITET_STATUS',
-          },
-          inntektskategori: {
-            kode: 'ARBEIDSTAKER',
-            kodeverk: 'INNTEKTSKATEGORI',
-          },
+          aktivitetStatus: 'AT', // kodeverk: 'AKTIVITET_STATUS'
+          inntektskategori: 'ARBEIDSTAKER', // kodeverk: 'INNTEKTSKATEGORI'
           aktørId: null,
           arbeidsforholdId: null,
-          arbeidsforholdType: {
-            kode: '-',
-            kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-          },
+          arbeidsforholdType: '-', // kodeverk: 'OPPTJENING_AKTIVITET_TYPE'
           arbeidsgiverNavn: 'BEDRIFT1 AS',
           arbeidsgiverOrgnr: '123456789',
           eksternArbeidsforholdId: null,
@@ -157,7 +130,7 @@ const beregningsresultat = {
   ],
   skalHindreTilbaketrekk: false,
   utbetaltePerioder: [],
-} as BeregningsresultatUtbetalt;
+};
 
 const arbeidsgiverOpplysningerPerId = {
   12345678: {
@@ -201,16 +174,10 @@ export const visÅpentAksjonspunktTilbaketrekk = args => (
     aksjonspunkter={
       [
         {
-          definisjon: {
-            kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
-            kodeverk: '',
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-            kodeverk: '',
-          },
+          definisjon: aksjonspunktCodes.VURDER_TILBAKETREKK, // kodeverk: ''
+          status: aksjonspunktStatus.OPPRETTET, // kodeverk: ''
         },
-      ] as Aksjonspunkt[]
+      ] as AksjonspunktDto[]
     }
     alleKodeverk={alleKodeverk as any}
     submitCallback={action('button-click')}
@@ -231,16 +198,10 @@ export const visÅpentAksjonspunktManuellTilkjentYtelse = args => (
     aksjonspunkter={
       [
         {
-          definisjon: {
-            kode: aksjonspunktCodes.MANUELL_TILKJENT_YTELSE,
-            kodeverk: '',
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-            kodeverk: '',
-          },
+          definisjon: aksjonspunktCodes.MANUELL_TILKJENT_YTELSE, // kodeverk: ''
+          status: aksjonspunktStatus.OPPRETTET, // kodeverk: ''
         },
-      ] as Aksjonspunkt[]
+      ] as AksjonspunktDto[]
     }
     alleKodeverk={alleKodeverk as any}
     submitCallback={action('button-click')}

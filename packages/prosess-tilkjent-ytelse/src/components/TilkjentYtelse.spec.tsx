@@ -1,9 +1,21 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { BeregningsresultatPeriodeAndel } from '@k9-sak-web/types';
+import { BeregningsresultatPeriodeAndelDto } from '@navikt/k9-sak-typescript-client';
 import { screen } from '@testing-library/react';
 import { PeriodeMedId, TilkjentYtelse } from './TilkjentYtelse';
 
 describe('<TilkjentYtelse>', () => {
+  const kodeverkNavnFraKode = (kodeverk: string) => {
+    if (kodeverk === 'AT') {
+      return 'Arbeidstaker';
+    }
+    if (kodeverk === 'SN') {
+      return 'Selvstendig næringsdrivende';
+    }
+    if (kodeverk === 'FL') {
+      return 'Frilans';
+    }
+    return '';
+  };
   it('skall innehålla korrekt antal felter', () => {
     renderWithIntl(
       <TilkjentYtelse
@@ -15,44 +27,29 @@ describe('<TilkjentYtelse>', () => {
               dagsats: 10000,
               andeler: [
                 {
-                  inntektskategori: {
-                    kode: 'ARBEIDSTAKER',
-                    kodeverk: 'INNTEKTSKATEGORI',
-                  },
+                  inntektskategori: 'ARBEIDSTAKER', // INNTEKTSKATEGORI
                   aktørId: '',
-                  arbeidsforholdType: {
-                    kode: '',
-                    kodeverk: '',
-                  },
+                  arbeidsforholdType: 'ARBEID',
                   stillingsprosent: 100,
                   arbeidsgiver: '973861778',
                   arbeidsgiverOrgnr: '',
                   arbeidsgiverPersonIdent: '',
-                  aktivitetStatus: {
-                    kode: '',
-                    kodeverk: '',
-                  },
+                  aktivitetStatus: 'AT',
                   arbeidsforholdId: '',
                   eksternArbeidsforholdId: '',
                   arbeidsgiverNavn: '',
                   refusjon: 0,
                   sisteUtbetalingsdato: '2018-03-31',
                   tilSoker: 1846,
-                  uttak: [
-                    {
-                      stonadskontoType: '',
-                      periodeResultatType: 'INNVILGET',
-                      gradering: false,
-                    },
-                  ],
+                  uttak: [],
                   utbetalingsgrad: 100,
-                } as BeregningsresultatPeriodeAndel,
+                } as BeregningsresultatPeriodeAndelDto,
               ],
             },
           ] as PeriodeMedId[]
         }
         groups={[]}
-        alleKodeverk={{}}
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
         arbeidsgiverOpplysningerPerId={{}}
       />,
     );

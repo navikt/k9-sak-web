@@ -1,13 +1,14 @@
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { FlexColumn, FlexRow, Image, useFeatureToggles, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { useEffect, useState } from 'react';
 import NyArbeidsgiverModal from './NyArbeidsgiverModal';
 
 import { atLeastOneRequired } from '@fpsak-frontend/utils/src/validation/validators';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Button, Detail, Fieldset, HGrid } from '@navikt/ds-react';
 import { InputField, SelectField } from '@navikt/ft-form-hooks';
 import { useFieldArray, useFormContext } from 'react-hook-form';
@@ -49,9 +50,8 @@ const mapArbeidsgiverePrivatperson = (arbeidsgivere: ArbeidsgiverOpplysningerPer
         ))
     : [];
 
-const getInntektskategori = (alleKodeverk: { [key: string]: KodeverkMedNavn[] }) => {
-  const aktivitetsstatuser = alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI];
-  return aktivitetsstatuser.map(ik => (
+const getInntektskategori = (inntektskategorier: KodeverkObject[]) => {
+  return inntektskategorier.map(ik => (
     <option value={ik.kode} key={ik.kode}>
       {ik.navn}
     </option>
@@ -88,14 +88,15 @@ const defaultAndel: NyPeriodeFormAndeler = {
 
 interface OwnProps {
   readOnly: boolean;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
   newArbeidsgiverCallback: (values: NyArbeidsgiverFormState) => void;
 }
 
-export const NyAndel = ({ newArbeidsgiverCallback, alleKodeverk, readOnly, arbeidsgivere }: OwnProps) => {
+export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: OwnProps) => {
   const [isOpen, setOpen] = useState(false);
   const { control } = useFormContext<TilkjentYtelseFormState>();
+  const { hentKodeverkForKode } = useKodeverkContext();
+  const inntektskategorier = hentKodeverkForKode(KodeverkType.INNTEKTSKATEGORI) as KodeverkObject[];
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'nyPeriodeForm.andeler',
@@ -122,7 +123,7 @@ export const NyAndel = ({ newArbeidsgiverCallback, alleKodeverk, readOnly, arbei
                 <SelectField
                   label="Inntektskategori"
                   name={`nyPeriodeForm.andeler.${index}.inntektskategori`}
-                  selectValues={getInntektskategori(alleKodeverk)}
+                  selectValues={getInntektskategori(inntektskategorier)}
                 />
               </FlexColumn>
               {!erSN && !erFL && (
