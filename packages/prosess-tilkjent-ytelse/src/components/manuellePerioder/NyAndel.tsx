@@ -2,17 +2,16 @@ import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import { FlexColumn, FlexRow, Image, useFeatureToggles, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { useEffect, useState } from 'react';
-import NyArbeidsgiverModal from './NyArbeidsgiverModal';
-
 import { atLeastOneRequired } from '@fpsak-frontend/utils/src/validation/validators';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Button, Detail, Fieldset, HGrid } from '@navikt/ds-react';
 import { InputField, SelectField } from '@navikt/ft-form-hooks';
+import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { NyArbeidsgiverFormState, NyPeriodeFormAndeler, TilkjentYtelseFormState } from './FormState';
+import NyArbeidsgiverModal from './NyArbeidsgiverModal';
 import styles from './periode.module.css';
 
 const minValue0 = minValue(0);

@@ -10,7 +10,7 @@
     "dev": "vite serve"
   },
   "devDependencies": {
-    "vite": "^5.4.4",
+    "vite": "^5.4.5",
     "vite-plugin-node-polyfills": "^0.22.0",
     "vitest-axe": "^0.1.0"
   },

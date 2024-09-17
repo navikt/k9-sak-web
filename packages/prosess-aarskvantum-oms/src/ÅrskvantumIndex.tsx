@@ -61,17 +61,14 @@ const ÅrskvantumIndex = ({
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
 
-  const [ featureToggles ] = useFeatureToggles()
+  const [featureToggles] = useFeatureToggles();
   const årskvantumDokEllerKvote = aksjonspunkt =>
-    aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK
-    || (featureToggles?.NYTT_SKJEMA_FOR_9003 && aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE)
+    aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK ||
+    (featureToggles?.NYTT_SKJEMA_FOR_9003 &&
+      aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE);
 
-  const apForVurderÅrskvantum: Aksjonspunkt = aksjonspunkterForSteg.find(
-    ap => årskvantumDokEllerKvote(ap)
-  );
-  const aksjonspunkter: Aksjonspunkt[] = aksjonspunkterForSteg.filter(
-    ap => !årskvantumDokEllerKvote(ap)
-  );
+  const apForVurderÅrskvantum: Aksjonspunkt = aksjonspunkterForSteg.find(ap => årskvantumDokEllerKvote(ap));
+  const aksjonspunkter: Aksjonspunkt[] = aksjonspunkterForSteg.filter(ap => !årskvantumDokEllerKvote(ap));
   const åpenAksjonspunkt = aksjonspunkter.find(ap => ap.status.kode !== aksjonspunktStatus.UTFORT) !== undefined;
 
   const visAPVurderÅrskvantumDokIOmsorgsdagerFrontend =

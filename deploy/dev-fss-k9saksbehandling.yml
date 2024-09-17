@@ -107,6 +107,8 @@ spec:
       value: "true"
     - name: NYE_NOKKELTALL
       value: "true"
+    - name: PROSESS_VILKAR_SOKNADSFRIST
+      value: "true"
     - name: UTVIDET_VARSELFELT
       value: "true"
     - name: SKILL_UT_PRIVATPERSON
