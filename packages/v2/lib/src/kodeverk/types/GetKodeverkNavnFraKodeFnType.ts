@@ -3,7 +3,7 @@ import { KodeverkKlageType, KodeverkTilbakeType, KodeverkType } from '../types';
 export type KodeverkNavnFraKodeFnType = (
   kode: string,
   kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType,
-  ukjentTekst?: string | undefined,
+  ukjentTekst?: string | boolean | undefined,
 ) => string;
 
 export type GetKodeverkNavnFraKodeFnType = (
