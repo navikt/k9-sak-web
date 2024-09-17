@@ -22,13 +22,19 @@ import styles from './behandlingPicker.module.css';
 const getBehandlingNavn = (behandlingTypeKode, intl: IntlShape) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
 
-  if (
-    [behandlingType.FORSTEGANGSSOKNAD, behandlingType.KLAGE, behandlingType.TILBAKEKREVING].includes(behandlingTypeKode)
-  ) {
-    return kodeverkNavnFraKode(behandlingTypeKode, KodeverkType.BEHANDLING_TYPE);
-  }
+  switch (behandlingTypeKode) {
+    case behandlingType.FORSTEGANGSSOKNAD:
+      return kodeverkNavnFraKode(behandlingTypeKode, KodeverkType.BEHANDLING_TYPE);
 
-  return intl.formatMessage({ id: 'BehandlingPickerItemContent.BehandlingTypeNavn.Viderebehandling' });
+    case behandlingType.KLAGE:
+      return kodeverkNavnFraKode(behandlingTypeKode, KodeverkType.BEHANDLING_TYPE, 'kodeverkKlage');
+
+    case behandlingType.TILBAKEKREVING:
+      return kodeverkNavnFraKode(behandlingTypeKode, KodeverkType.BEHANDLING_TYPE, 'kodeverkTilbake');
+
+    default:
+      return intl.formatMessage({ id: 'BehandlingPickerItemContent.BehandlingTypeNavn.Viderebehandling' });
+  }
 };
 
 const erAutomatiskBehandlet = (behandling: BehandlingAppKontekst) =>
