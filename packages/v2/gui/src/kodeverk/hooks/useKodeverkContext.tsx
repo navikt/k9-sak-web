@@ -56,7 +56,6 @@ export const useKodeverkContext = () => {
   ) => {
     const kodeverkForType = hentKodeverkForKode(kodeverkType, kilde);
     if (kodeverkForType) return utledKodeverkNavnFraKode(kode, kodeverkForType);
-    if (ukjentTekst === false) return false;
     return ukjentTekst || 'Ukjent kode';
   };
 
@@ -72,7 +71,6 @@ export const useKodeverkContext = () => {
       const kodeverkForUndertype = hentKodeverkForUndertype(kode, kodeverkForType as KodeverkMedUndertype);
       return utledKodeverkNavnFraUndertypeKode(undertypeKode, kodeverkForUndertype);
     }
-    if (ukjentTekst === false) return false;
     return ukjentTekst || 'Ukjent kode';
   };
 
