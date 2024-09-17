@@ -35,7 +35,7 @@ export const FeilutbetalingPerioderFormImpl = ({
           name={`perioder.${elementId}.årsak`}
           selectValues={årsaker.map(a => (
             <option key={a.hendelseType} value={a.hendelseType}>
-              {kodeverkNavnFraKode(a.hendelseType, KodeverkType.HENDELSE_TYPE)}
+              {kodeverkNavnFraKode(a.hendelseType, KodeverkType.HENDELSE_TYPE, 'kodeverkTilbake')}
             </option>
           ))}
           validate={[required]}
@@ -50,7 +50,7 @@ export const FeilutbetalingPerioderFormImpl = ({
             name={`perioder.${elementId}.${årsak}.underÅrsak`}
             selectValues={hendelseUndertyper.map(hendelseUndertype => (
               <option key={hendelseUndertype} value={hendelseUndertype}>
-                {kodeverkNavnFraKode(hendelseUndertype, KodeverkType.HENDELSE_UNDERTYPE)}
+                {kodeverkNavnFraKode(hendelseUndertype, KodeverkType.HENDELSE_UNDERTYPE, 'kodeverkTilbake')}
               </option>
             ))}
             validate={[required]}
