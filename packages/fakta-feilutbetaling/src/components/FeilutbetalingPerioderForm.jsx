@@ -5,7 +5,9 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import styles from './feilutbetalingPerioderTable.module.css';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 
 const getHendelseUndertyper = (årsakNavn, årsaker) => {
   const årsak = årsaker.find(a => a.hendelseType === årsakNavn);
@@ -21,6 +23,7 @@ export const FeilutbetalingPerioderFormImpl = ({
   onChangeÅrsak,
   onChangeUnderÅrsak,
 }) => {
+  const { kodeverkNavnFraKode } = useKodeverkContext();
   const hendelseUndertyper = getHendelseUndertyper(årsak, årsaker);
   return (
     <Table.Row shadeOnHover={false}>
@@ -32,7 +35,7 @@ export const FeilutbetalingPerioderFormImpl = ({
           name={`perioder.${elementId}.årsak`}
           selectValues={årsaker.map(a => (
             <option key={a.hendelseType} value={a.hendelseType}>
-              {a.hendelseType.navn}
+              {kodeverkNavnFraKode(a.hendelseType, KodeverkType.HENDELSE_TYPE)}
             </option>
           ))}
           validate={[required]}
@@ -45,9 +48,9 @@ export const FeilutbetalingPerioderFormImpl = ({
         {hendelseUndertyper && (
           <SelectField
             name={`perioder.${elementId}.${årsak}.underÅrsak`}
-            selectValues={hendelseUndertyper.map(a => (
-              <option key={a.underÅrsakKode} value={a.underÅrsakKode}>
-                {a.underÅrsak}
+            selectValues={hendelseUndertyper.map(hendelseUndertype => (
+              <option key={hendelseUndertype} value={hendelseUndertype}>
+                {kodeverkNavnFraKode(hendelseUndertype, KodeverkType.HENDELSE_UNDERTYPE)}
               </option>
             ))}
             validate={[required]}
