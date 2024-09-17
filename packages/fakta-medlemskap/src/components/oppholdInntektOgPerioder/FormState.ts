@@ -10,8 +10,8 @@ interface FixedMedlemskapPerioder {
   beslutningsdato: string;
 }
 
-interface Foreldre {
-  isApplicant: any;
+export interface Foreldre {
+  isApplicant: boolean;
   personopplysning: any;
 }
 
