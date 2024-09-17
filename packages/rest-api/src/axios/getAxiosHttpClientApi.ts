@@ -29,7 +29,7 @@ const getAxiosHttpClientApi = () => {
       response.config.url.includes('/api/') &&
       !response.config.url.includes('/api/kodeverk')
     ) {
-      const erTilbakekreving = response.config.url.includes('/k9tilbake/api/');
+      const erTilbakekreving = response.config.url.includes('/k9/tilbake/api/');
       konverterKodeverkTilKode(response.data, erTilbakekreving);
     }
     return response;
