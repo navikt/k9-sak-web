@@ -76,17 +76,13 @@ export const findEndretFeltVerdi = (
     const historikkFeltVerdiNavn = kodeverkNavnFraKodeFn(
       verdi as string,
       KodeverkType.HISTORIKK_ENDRET_FELT_VERDI_TYPE,
-      undefined,
+      false,
     );
     if (historikkFeltVerdiNavn) {
       return historikkFeltVerdiNavn;
     }
 
-    const historikkFeltNavn = kodeverkNavnFraKodeFn(
-      verdi as string,
-      KodeverkType.HISTORIKK_ENDRET_FELT_TYPE,
-      undefined,
-    );
+    const historikkFeltNavn = kodeverkNavnFraKodeFn(verdi as string, KodeverkType.HISTORIKK_ENDRET_FELT_TYPE, false);
     if (historikkFeltNavn) {
       return historikkFeltNavn;
     }
