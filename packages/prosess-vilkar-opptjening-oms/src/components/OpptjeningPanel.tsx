@@ -84,7 +84,7 @@ const OpptjeningPanel = ({
               <>
                 <VerticalSpacer eightPx />
                 <Label size="small" as="p">
-                  {intl.formatMessage({ id: 'OpptjeningPanel.ErOppfylt' })}
+                  {intl.formatMessage({ id: 'OpptjeningVilkarView.Oppfylt' })}
                 </Label>
               </>
             )}
