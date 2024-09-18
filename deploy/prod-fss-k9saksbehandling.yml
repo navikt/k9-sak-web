@@ -112,3 +112,5 @@ spec:
       value: "false"
     - name: NYTT_SKJEMA_FOR_9003
       value: "false"
+    - name: AUTOMATISK_VURDERT_MEDLEMSKAP
+      value: "false"
