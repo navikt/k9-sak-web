@@ -9,7 +9,7 @@ import { action } from '@storybook/addon-actions';
 import React from 'react';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
-import { behandlingType } from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import FeilutbetalingFaktaIndex from './FeilutbetalingFaktaIndex';
 
 const BEHANDLING_AARSAK_KODEVERK = 'BEHANDLING_AARSAK';
@@ -54,33 +54,18 @@ const feilutbetalingFakta = {
 const feilutbetalingAarsak = {
   hendelseTyper: [
     {
-      hendelseType: {
-        kode: 'OPPTJENING',
-        navn: '§14-6 Opptjening',
-      },
+      hendelseType: 'OPPTJENING', // navn: '§14-6 Opptjening'
       hendelseUndertyper: [],
     },
     {
-      hendelseType: {
-        kode: 'ANNET',
-        navn: 'Annet',
-      },
+      hendelseType: 'ANNET', // navn: 'Annet'
       hendelseUndertyper: [],
     },
     {
-      hendelseType: {
-        kode: 'MEDLEM',
-        navn: '§14-2 Medlemskap',
-      },
+      hendelseType: 'MEDLEM', // navn: '§14-2 Medlemskap'
       hendelseUndertyper: [
-        {
-          kode: 'IKKE_EØS',
-          navn: 'Ikke oppholdsrett EØS',
-        },
-        {
-          kode: 'IKKE_BOSATT',
-          navn: 'Ikke bosatt',
-        },
+        'IKKE_EØS', // navn: 'Ikke oppholdsrett EØS'
+        'IKKE_BOSATT', // navn: 'Ikke bosatt'
       ],
     },
   ],

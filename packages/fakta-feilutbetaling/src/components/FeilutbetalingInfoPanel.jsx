@@ -314,9 +314,9 @@ const buildInitialValues = createSelector([ownProps => ownProps.feilutbetalingFa
 
             return {
               ...period,
-              årsak: hendelseType.kode,
-              [hendelseType.kode]: {
-                underÅrsak: hendelseUndertype ? hendelseUndertype.kode : null,
+              årsak: hendelseType,
+              [hendelseType]: {
+                underÅrsak: hendelseUndertype ? hendelseUndertype : null,
               },
             };
           })
@@ -343,12 +343,12 @@ const getSortedFeilutbetalingArsaker = createSelector(
 );
 
 const transformValues = (values, aksjonspunkter, årsaker) => {
-  const apCode = aksjonspunkter.find(ap => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
+  const apCode = aksjonspunkter.find(ap => ap.definisjon === feilutbetalingAksjonspunkter[0]);
 
   const feilutbetalingFakta = values.perioder.map(periode => {
-    const feilutbetalingÅrsak = årsaker.find(el => el.hendelseType.kode === periode.årsak);
+    const feilutbetalingÅrsak = årsaker.find(årsak => årsak.hendelseType === periode.årsak);
     const findUnderÅrsakObjekt = underÅrsak =>
-      feilutbetalingÅrsak.hendelseUndertyper.find(el => el.kode === underÅrsak);
+      feilutbetalingÅrsak.hendelseUndertyper.find(hendelseUndertype => hendelseUndertype === underÅrsak);
     const feilutbetalingUnderÅrsak = periode[periode.årsak]
       ? findUnderÅrsakObjekt(periode[periode.årsak].underÅrsak)
       : false;
@@ -365,7 +365,7 @@ const transformValues = (values, aksjonspunkter, årsaker) => {
 
   return [
     {
-      kode: apCode.definisjon.kode,
+      kode: apCode.definisjon,
       begrunnelse: values.begrunnelse,
       feilutbetalingFakta,
     },
