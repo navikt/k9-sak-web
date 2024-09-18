@@ -363,15 +363,13 @@ const transformValues = (values, aksjonspunkter, årsaker) => {
     };
   });
 
-  const returnValues = [
+  return [
     {
       kode: apCode.definisjon,
       begrunnelse: values.begrunnelse,
       feilutbetalingFakta,
     },
   ];
-
-  return returnValues;
 };
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const årsaker = getSortedFeilutbetalingArsaker(initialOwnProps);
