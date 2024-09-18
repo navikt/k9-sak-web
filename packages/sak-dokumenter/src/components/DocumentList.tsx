@@ -119,22 +119,8 @@ const DocumentList = ({
   const { data: inntektsmeldingerIBruk } = useQuery({
     queryKey: ['kompletthet'],
     queryFn: ({ signal }) => getInntektsmeldingerIBruk(signal),
-    enabled: erStøttetFagsakYtelseType && !!behandlingUuid
+    enabled: erStøttetFagsakYtelseType && !!behandlingUuid,
   });
-
-  const harMerEnnEnBehandlingKnyttetTilDokumenter = () => {
-    const unikeBehandlinger = [];
-    if (documents.some(document => document.behandlinger?.length > 0)) {
-      documents.forEach(document =>
-        document.behandlinger.forEach(behandling => {
-          if (!unikeBehandlinger.includes(behandling)) {
-            unikeBehandlinger.push(behandling);
-          }
-        }),
-      );
-    }
-    return unikeBehandlinger.length > 1;
-  };
 
   const getModiaLenke = () => (
     <Link target="_blank" className={styles.modiaLink} href={getModiaPath(fagsakPerson?.personnummer)}>
@@ -168,17 +154,15 @@ const DocumentList = ({
   return (
     <>
       <div className={styles.controlsContainer}>
-        {harMerEnnEnBehandlingKnyttetTilDokumenter() && (
-          <Select
-            size="small"
-            onChange={event => setSelectedFilter(event.target.value)}
-            label="Hvilke behandlinger skal vises?"
-            hideLabel
-          >
-            <option value={alleBehandlinger}>Alle behandlinger</option>
-            <option value={behandlingId}>Denne behandlingen</option>
-          </Select>
-        )}
+        <Select
+          size="small"
+          onChange={event => setSelectedFilter(event.target.value)}
+          label="Hvilke behandlinger skal vises?"
+          hideLabel
+        >
+          <option value={alleBehandlinger}>Alle behandlinger</option>
+          <option value={behandlingId}>Denne behandlingen</option>
+        </Select>
         {getModiaLenke()}
       </div>
       <Table>
