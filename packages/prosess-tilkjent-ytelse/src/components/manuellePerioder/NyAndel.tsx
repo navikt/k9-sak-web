@@ -1,7 +1,6 @@
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { InputField, SelectField } from '@fpsak-frontend/form';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { FlexColumn, FlexRow, Image, PeriodFieldArray, useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
@@ -11,7 +10,9 @@ import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import NyArbeidsgiverModal from './NyArbeidsgiverModal';
 
 import styles from './periode.module.css';
-import {atLeastOneRequired} from "@fpsak-frontend/utils/src/validation/validators";
+import { atLeastOneRequired } from '@fpsak-frontend/utils/src/validation/validators';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 
 const minValue0 = minValue(0);
 const maxValue100 = maxValue(100);
@@ -48,14 +49,12 @@ const mapArbeidsgiverePrivatperson = (arbeidsgivere: ArbeidsgiverOpplysningerPer
         ))
     : [];
 
-const getInntektskategori = alleKodeverk => {
-  const aktivitetsstatuser = alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI];
-  return aktivitetsstatuser.map(ik => (
+const getInntektskategori = aktivitetsstatuser =>
+  aktivitetsstatuser.map(ik => (
     <option value={ik.kode} key={ik.kode}>
       {ik.navn}
     </option>
   ));
-};
 
 const erSelvstendigNæringsdrivende = inntektskategori =>
   [
@@ -87,12 +86,12 @@ export const NyAndel = ({
   fields,
   meta,
   newArbeidsgiverCallback,
-  alleKodeverk,
   readOnly,
   arbeidsgivere,
   behandlingId,
   behandlingVersjon,
 }: OwnProps & WrappedComponentProps) => {
+  const { hentKodeverkForKode } = useKodeverkContext();
   const [isOpen, setOpen] = useState(false);
   const [featureToggles] = useFeatureToggles();
   const skillUtPrivatperson = featureToggles?.SKILL_UT_PRIVATPERSON;
@@ -122,7 +121,7 @@ export const NyAndel = ({
                   label={{ id: 'TilkjentYtelse.NyPeriode.Inntektskategori' }}
                   name={`${periodeElementFieldId}.inntektskategori`}
                   bredde="l"
-                  selectValues={getInntektskategori(alleKodeverk)}
+                  selectValues={getInntektskategori(hentKodeverkForKode(KodeverkType.INNTEKTSKATEGORI))}
                 />
               </FlexColumn>
               {!erSN && !erFL && (
@@ -132,10 +131,14 @@ export const NyAndel = ({
                       label={{ id: 'TilkjentYtelse.NyPeriode.Arbeidsgiver' }}
                       bredde="xl"
                       name={`${periodeElementFieldId}.arbeidsgiverOrgnr`}
-                      validate={skillUtPrivatperson
-                        ? [value => atLeastOneRequired(value, values.arbeidsgiverPersonIdent)]
-                        : [required]}
-                      selectValues={skillUtPrivatperson ? mapArbeidsgivereOrg(arbeidsgivere) : mapArbeidsgivere(arbeidsgivere)}
+                      validate={
+                        skillUtPrivatperson
+                          ? [value => atLeastOneRequired(value, values.arbeidsgiverPersonIdent)]
+                          : [required]
+                      }
+                      selectValues={
+                        skillUtPrivatperson ? mapArbeidsgivereOrg(arbeidsgivere) : mapArbeidsgivere(arbeidsgivere)
+                      }
                     />
                     <div
                       onClick={() => setOpen(true)}
@@ -147,15 +150,17 @@ export const NyAndel = ({
                       <Image className={styles.addCircleIcon} src={addCircleIcon} alt="Ny arbeidsgiver" />
                     </div>
                   </FlexColumn>
-                  {skillUtPrivatperson && (<FlexColumn className={styles.relative}>
-                    <SelectField
-                      label={{ id: 'TilkjentYtelse.NyPeriode.ArbeidsgiverPrivatperson' }}
-                      bredde="xl"
-                      name={`${periodeElementFieldId}.arbeidsgiverPersonIdent`}
-                      validate={[value => atLeastOneRequired(value, values.arbeidsgiverOrgnr)]}
-                      selectValues={mapArbeidsgiverePrivatperson(arbeidsgivere)}
-                    />
-                  </FlexColumn>)}
+                  {skillUtPrivatperson && (
+                    <FlexColumn className={styles.relative}>
+                      <SelectField
+                        label={{ id: 'TilkjentYtelse.NyPeriode.ArbeidsgiverPrivatperson' }}
+                        bredde="xl"
+                        name={`${periodeElementFieldId}.arbeidsgiverPersonIdent`}
+                        validate={[value => atLeastOneRequired(value, values.arbeidsgiverOrgnr)]}
+                        selectValues={mapArbeidsgiverePrivatperson(arbeidsgivere)}
+                      />
+                    </FlexColumn>
+                  )}
                 </>
               )}
               <FlexColumn>
