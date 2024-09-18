@@ -11,9 +11,9 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { BodyShort, Detail, Heading, Label } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
-import getPackageIntl from '../../i18n/getPackageIntl';
-import ProsessStegSubmitButton from '../ProsessStegSubmitButton';
-import styles from './prosessPanelTemplate.module.css';
+import getPackageIntl from '@k9-sak-web/prosess-felles/i18n/getPackageIntl';
+import ProsessStegSubmitButton from '@k9-sak-web/prosess-felles/src/ProsessStegSubmitButton';
+import styles from './OpptjeningPanel.module.css';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 interface OwnProps {
@@ -34,11 +34,11 @@ interface OwnProps {
 }
 
 /*
- * ProsessPanelTemplate
+ * OpptjeningPanel
  *
  * Presentasjonskomponent.
  */
-const ProsessPanelTemplate = ({
+const OpptjeningPanel = ({
   behandlingId,
   behandlingVersjon,
   lovReferanse,
@@ -84,7 +84,7 @@ const ProsessPanelTemplate = ({
               <>
                 <VerticalSpacer eightPx />
                 <Label size="small" as="p">
-                  {intl.formatMessage({ id: 'ProsessPanelTemplate.ErOppfylt' })}
+                  {intl.formatMessage({ id: 'OpptjeningPanel.ErOppfylt' })}
                 </Label>
               </>
             )}
@@ -92,14 +92,14 @@ const ProsessPanelTemplate = ({
               <>
                 <VerticalSpacer eightPx />
                 <Label size="small" as="p">
-                  {intl.formatMessage({ id: 'ProsessPanelTemplate.ErIkkeOppfylt' })}
+                  {intl.formatMessage({ id: 'OpptjeningPanel.ErIkkeOppfylt' })}
                 </Label>
               </>
             )}
             {!isAksjonspunktOpen && originalErVilkarOk === undefined && (
               <>
                 <VerticalSpacer eightPx />
-                <BodyShort size="small">{intl.formatMessage({ id: 'ProsessPanelTemplate.IkkeBehandlet' })}</BodyShort>
+                <BodyShort size="small">{intl.formatMessage({ id: 'OpptjeningPanel.IkkeBehandlet' })}</BodyShort>
               </>
             )}
           </FlexColumn>
@@ -132,4 +132,4 @@ const ProsessPanelTemplate = ({
   );
 };
 
-export default ProsessPanelTemplate;
+export default OpptjeningPanel;

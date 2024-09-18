@@ -9,6 +9,11 @@
   "OpptjeningVilkarView.MonthsAndDays": "{months} måneder og {days} dager aktivitet i opptjeningsperioden",
   "OpptjeningVilkarView.DetailsForSelectedPeriod": "Detaljer for valgt periode",
 
+  "OpptjeningPanel.ErOppfylt": "Vilkåret er oppfylt",
+  "OpptjeningPanel.ErIkkeOppfylt": "Vilkåret er avslått",
+  "OpptjeningPanel.IkkeBehandlet": "Ikke behandlet",
+
+
   "OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilPleiepenger": "Opptjent rett til pleiepenger",
   "OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilOmsorgspenger": "Opptjent rett til omsorgspenger",
   "OpptjeningVilkarAksjonspunktPanel.OmsorgspengerVurderLabel": "Vurder om bruker oppfyller opptjening jf § 9-2 eller § 8-47 bokstav B",

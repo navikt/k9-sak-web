@@ -2,7 +2,7 @@ import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/for
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { ProsessPanelTemplate, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
+import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
 import { HelpText, Label } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
@@ -15,6 +15,7 @@ import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import styles from './OpptjeningVilkarAksjonspunktPanel.module.css';
 import VilkarFields, { midlertidigInaktiv } from './VilkarFields';
+import OpptjeningPanel from './OpptjeningPanel';
 
 dayjs.extend(isBetween);
 
@@ -139,7 +140,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       });
 
   return (
-    <ProsessPanelTemplate
+    <OpptjeningPanel
       title={intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret' })}
       isAksjonspunktOpen={isApOpen && vilkårPerioder[periodeIndex].vurderesIBehandlingen}
       formName={formProps.form}
@@ -180,7 +181,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
         fieldPrefix={`vilkarFields[${periodeIndex}]`}
         skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidOpptjeningTom}
       />
-    </ProsessPanelTemplate>
+    </OpptjeningPanel>
   );
 };
 
