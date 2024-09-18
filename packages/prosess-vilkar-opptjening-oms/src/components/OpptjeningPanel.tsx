@@ -13,7 +13,7 @@ import { BodyShort, Detail, Heading, Label } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 import getPackageIntl from '@k9-sak-web/prosess-felles/i18n/getPackageIntl';
 import ProsessStegSubmitButton from '@k9-sak-web/prosess-felles/src/ProsessStegSubmitButton';
-import styles from './OpptjeningPanel.module.css';
+import styles from './opptjeningPanel.module.css';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 interface OwnProps {
