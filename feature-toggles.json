@@ -84,11 +84,23 @@
     "value": "${NYE_NOKKELTALL}"
   },
   {
+    "key": "PROSESS_VILKAR_SOKNADSFRIST",
+    "value": "${PROSESS_VILKAR_SOKNADSFRIST}"
+  },
+  {
     "key": "UTVIDET_VARSELFELT",
     "value": "${UTVIDET_VARSELFELT}"
   },
   {
     "key": "SKILL_UT_PRIVATPERSON",
     "value": "${SKILL_UT_PRIVATPERSON}"
+  },
+  {
+    "key": "NYTT_SKJEMA_FOR_9003",
+    "value": "${NYTT_SKJEMA_FOR_9003}"
+  },
+  {
+    "key": "AUTOMATISK_VURDERT_MEDLEMSKAP",
+    "value": "${AUTOMATISK_VURDERT_MEDLEMSKAP}"
   }
 ]

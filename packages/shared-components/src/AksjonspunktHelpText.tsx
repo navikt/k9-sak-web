@@ -1,6 +1,6 @@
 import { Alert, BodyShort } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './aksjonspunktHelpText.module.css';
 
 interface OwnProps {
@@ -17,9 +17,7 @@ const AksjonspunktHelpText = ({ isAksjonspunktOpen, children }: OwnProps & Wrapp
       <>
         {React.Children.map(children, child => (
           <BodyShort size="small" className={styles.wordwrap}>
-            <strong>
-              <FormattedMessage id="HelpText.Aksjonspunkt.BehandletAksjonspunkt" />
-            </strong>
+            <strong>{`Behandlet aksjonspunkt: `}</strong>
             {child}
           </BodyShort>
         ))}

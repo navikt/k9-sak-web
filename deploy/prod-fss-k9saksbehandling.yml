@@ -104,7 +104,13 @@ spec:
       value: "true"
     - name: NYE_NOKKELTALL
       value: "false"
+    - name: PROSESS_VILKAR_SOKNADSFRIST
+      value: "false"
     - name: UTVIDET_VARSELFELT
       value: "true"
     - name: SKILL_UT_PRIVATPERSON
+      value: "false"
+    - name: NYTT_SKJEMA_FOR_9003
+      value: "false"
+    - name: AUTOMATISK_VURDERT_MEDLEMSKAP
       value: "false"
