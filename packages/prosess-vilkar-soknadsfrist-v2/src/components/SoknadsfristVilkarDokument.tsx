@@ -15,11 +15,9 @@ import {
 } from '@navikt/ft-form-validators';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import React, { useCallback, useMemo } from 'react';
-import { useFormContext } from 'react-hook-form';
 
 import { KravDokumentStatus, VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client';
 import { formatDate } from '../utils';
-import { FormState } from './FormState';
 import styles from './SoknadsfristVilkarDokument.module.css';
 
 const minLength3 = minLength(3);
@@ -59,8 +57,6 @@ export const SoknadsfristVilkarDokument = ({
   periode,
   kanEndrePåSøknadsopplysninger,
 }: SoknadsfristVilkarDokumentProps) => {
-  const { getValues } = useFormContext<FormState>();
-  const harBegrunnelse = !!getValues('avklarteKrav')[dokumentIndex]?.begrunnelse;
   const erVilkarOk = readOnly && dokumentErVurdert && periode.vilkarStatus === 'OPPFYLT';
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   const opprettetAv = hentSaksbehandlerNavn(dokument?.avklarteOpplysninger?.opprettetAv);
@@ -173,7 +169,7 @@ export const SoknadsfristVilkarDokument = ({
           ]}
         />
       )}
-      {!erOverstyrt && dokumentErVurdert && harBegrunnelse && !redigerVurdering && kanEndrePåSøknadsopplysninger && (
+      {!erOverstyrt && dokumentErVurdert && !redigerVurdering && kanEndrePåSøknadsopplysninger && (
         <div>
           <div className="mt-2" />
           <Button

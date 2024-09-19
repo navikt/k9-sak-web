@@ -159,9 +159,10 @@ export const SoknadsfristVilkarForm = ({
   const harAksjonspunkt = aksjonspunkt !== undefined;
   const periodeFom = periode?.periode?.fom;
   const periodeTom = periode?.periode?.tom;
-  const aksjonspunktCode = erOverstyrt
-    ? aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR
-    : aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST;
+  const aksjonspunktCode =
+    erOverstyrt || !harAksjonspunkt
+      ? aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR
+      : aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST;
 
   const harLøstManueltAksjonspunkt = aksjonspunkter.some(
     ap =>
@@ -212,7 +213,7 @@ export const SoknadsfristVilkarForm = ({
 
   return (
     <Form formMethods={formMethods} onSubmit={handleSubmit}>
-      {!erOverstyrt && !harAksjonspunkt && dokumenterIAktivPeriode.length > 0 && !editForm && (
+      {!erOverstyrt && dokumenterIAktivPeriode.length > 0 && !editForm && (
         <div>
           {Array.isArray(alleDokumenter) &&
             alleDokumenter.length > 0 &&
@@ -240,7 +241,7 @@ export const SoknadsfristVilkarForm = ({
       {(erOverstyrt || harAksjonspunkt || editForm) && dokumenterIAktivPeriode.length > 0 && (
         <AksjonspunktBox
           className={styles.aksjonspunktMargin}
-          erAksjonspunktApent={erOverstyrt || harÅpentAksjonspunkt}
+          erAksjonspunktApent={erOverstyrt || harÅpentAksjonspunkt || editForm}
         >
           <AksjonspunktText />
           <div className="mt-2" />
