@@ -85,6 +85,7 @@ const InngangsvilkarPanel = ({
         ]
       : [{ label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" />, key: 'Vilkarsperioder.DenneBehandling' }];
 
+  console.log('filteredPanels', filteredPanels);
   return (
     <NestedIntlProvider messages={messages}>
       <FadingPanel>
@@ -118,7 +119,7 @@ const InngangsvilkarPanel = ({
           </Tabs.List>
         </Tabs>
         <VerticalSpacer thirtyTwoPx />
-        <HGrid gap="4" columns={{ xs: '8fr 4fr' }}>
+        <HGrid gap="4" columns={filteredPanels.length > 2 ? { xs: '6fr 6fr' } : { xs: '8fr 4fr' }}>
           <div>
             {filteredPanels
               .filter((_panel, index) => index < 2)
