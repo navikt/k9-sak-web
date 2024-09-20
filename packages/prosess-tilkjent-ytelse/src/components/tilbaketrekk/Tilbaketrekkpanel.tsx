@@ -2,11 +2,11 @@ import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { BeregningsresultatFp, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
+import { BeregningsresultatFp } from '@k9-sak-web/types';
 import { Button, HGrid, Label } from '@navikt/ds-react';
 import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
-import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import { AksjonspunktDto, BeregningsresultatMedUtbetaltePeriodeDto } from '@navikt/k9-sak-typescript-client';
 import { useForm } from 'react-hook-form';
 import styles from './tilbaketrekkpanel.module.css';
 
@@ -28,7 +28,7 @@ export const transformValues = (values: TilbaketrekkpanelFormState): TransformVa
 
 export const buildInitialValues = (
   vurderTilbaketrekkAP?: AksjonspunktDto,
-  beregningsresultat?: BeregningsresultatFp | BeregningsresultatUtbetalt,
+  beregningsresultat?: BeregningsresultatFp | BeregningsresultatMedUtbetaltePeriodeDto,
 ) => {
   let tidligereValgt: boolean | undefined = undefined;
   if (beregningsresultat && 'skalHindreTilbaketrekk' in beregningsresultat) {
@@ -64,7 +64,7 @@ interface PureOwnProps {
   vurderTilbaketrekkAP?: AksjonspunktDto;
   submitCallback: (data: TransformValues) => Promise<any>;
   readOnlySubmitButton: boolean;
-  beregningsresultat?: BeregningsresultatFp | BeregningsresultatUtbetalt;
+  beregningsresultat?: BeregningsresultatFp | BeregningsresultatMedUtbetaltePeriodeDto;
 }
 
 export const Tilbaketrekkpanel = ({

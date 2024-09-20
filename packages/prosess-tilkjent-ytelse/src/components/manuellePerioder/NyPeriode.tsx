@@ -140,12 +140,10 @@ const transformValues = (values: NyPeriodeFormState): BeriketBeregningsresultatP
   id: guid(),
   fom: values.fom,
   tom: values.tom,
+  dagsats: null,
   andeler: values.andeler.map(andel => ({
     ...andel,
-    inntektskategori: {
-      kode: andel.inntektskategori,
-      kodeverk: 'INNTEKTSKATEGORI',
-    },
+    inntektskategori: andel.inntektskategori,
     arbeidsgiverOrgnr: andel.arbeidsgiverOrgnr,
     arbeidsgiverPersonIdent: andel.arbeidsgiverPersonIdent,
     tilSoker: andel.tilSoker,

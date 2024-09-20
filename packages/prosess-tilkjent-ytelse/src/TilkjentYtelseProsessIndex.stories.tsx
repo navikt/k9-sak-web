@@ -2,6 +2,8 @@ import { action } from '@storybook/addon-actions';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import { AksjonspunktDto, BehandlingDto } from '@navikt/k9-sak-typescript-client';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
@@ -193,21 +195,27 @@ visÅpentAksjonspunktTilbaketrekk.args = {
 };
 
 export const visÅpentAksjonspunktManuellTilkjentYtelse = args => (
-  <TilkjentYtelseProsessIndex
-    beregningsresultat={beregningsresultat}
-    aksjonspunkter={
-      [
-        {
-          definisjon: aksjonspunktCodes.MANUELL_TILKJENT_YTELSE, // kodeverk: ''
-          status: aksjonspunktStatus.OPPRETTET, // kodeverk: ''
-        },
-      ] as AksjonspunktDto[]
-    }
-    alleKodeverk={alleKodeverk as any}
-    submitCallback={action('button-click')}
-    arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-    {...args}
-  />
+  <KodeverkProvider
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+    kodeverk={alleKodeverk}
+    klageKodeverk={{}}
+    tilbakeKodeverk={{}}
+  >
+    <TilkjentYtelseProsessIndex
+      beregningsresultat={beregningsresultat}
+      aksjonspunkter={
+        [
+          {
+            definisjon: aksjonspunktCodes.MANUELL_TILKJENT_YTELSE, // kodeverk: ''
+            status: aksjonspunktStatus.OPPRETTET, // kodeverk: ''
+          },
+        ] as AksjonspunktDto[]
+      }
+      submitCallback={action('button-click')}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      {...args}
+    />
+  </KodeverkProvider>
 );
 
 visÅpentAksjonspunktManuellTilkjentYtelse.args = {

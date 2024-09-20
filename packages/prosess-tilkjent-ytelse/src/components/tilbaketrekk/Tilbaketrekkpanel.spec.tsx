@@ -1,6 +1,5 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BeregningsresultatUtbetalt } from '@k9-sak-web/types';
-import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import { AksjonspunktDto, BeregningsresultatMedUtbetaltePeriodeDto } from '@navikt/k9-sak-typescript-client';
 import { render, screen } from '@testing-library/react';
 import { Tilbaketrekkpanel, buildInitialValues, transformValues } from './Tilbaketrekkpanel';
 
@@ -50,7 +49,7 @@ describe('<Tilbaketrekkpanel>', () => {
     };
     const actualInitialValues = buildInitialValues(
       ownProps.vurderTilbaketrekkAP,
-      tilkjentYtelse as BeregningsresultatUtbetalt,
+      tilkjentYtelse as BeregningsresultatMedUtbetaltePeriodeDto,
     );
     expect(actualInitialValues).toEqual(expectedInitialValues);
   });
@@ -68,7 +67,7 @@ describe('<Tilbaketrekkpanel>', () => {
     };
     const actualInitialValues = buildInitialValues(
       ownProps.vurderTilbaketrekkAP,
-      tilkjentYtelse as BeregningsresultatUtbetalt,
+      tilkjentYtelse as BeregningsresultatMedUtbetaltePeriodeDto,
     );
     expect(actualInitialValues).toEqual(expectedInitialValues);
   });
@@ -86,7 +85,7 @@ describe('<Tilbaketrekkpanel>', () => {
     };
     const actualInitialValues = buildInitialValues(
       ownProps.vurderTilbaketrekkAP,
-      tilkjentYtelse as BeregningsresultatUtbetalt,
+      tilkjentYtelse as BeregningsresultatMedUtbetaltePeriodeDto,
     );
     expect(actualInitialValues).toEqual(expectedInitialValues);
   });

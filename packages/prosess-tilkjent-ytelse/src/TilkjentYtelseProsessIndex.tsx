@@ -1,12 +1,17 @@
-import { ArbeidsgiverOpplysningerPerId, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
-import { AksjonspunktDto, BehandlingDto, FagsakDto } from '@navikt/k9-sak-typescript-client';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import {
+  AksjonspunktDto,
+  BehandlingDto,
+  BeregningsresultatMedUtbetaltePeriodeDto,
+  FagsakDto,
+} from '@navikt/k9-sak-typescript-client';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 
 interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   behandling: BehandlingDto;
-  beregningsresultat: BeregningsresultatUtbetalt;
+  beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto;
   fagsak: FagsakDto;
   aksjonspunkter: AksjonspunktDto[];
   isReadOnly: boolean;

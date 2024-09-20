@@ -2,9 +2,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { guid } from '@fpsak-frontend/utils';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { ArbeidsgiverOpplysningerPerId, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Form } from '@navikt/ft-form-hooks';
-import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import { AksjonspunktDto, BeregningsresultatMedUtbetaltePeriodeDto } from '@navikt/k9-sak-typescript-client';
 import { useForm } from 'react-hook-form';
 import { TilkjentYtelseFormState } from './FormState';
 import PeriodeTabell from './PeriodeTabell';
@@ -14,7 +14,7 @@ interface OwnProps {
   readOnlySubmitButton: boolean;
   aksjonspunkter: AksjonspunktDto[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  beregningsresultat: BeregningsresultatUtbetalt;
+  beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto;
   submitCallback: (...args: any[]) => any;
   kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string;
 }

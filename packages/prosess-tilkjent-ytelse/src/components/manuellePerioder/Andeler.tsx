@@ -1,6 +1,5 @@
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Alert, BodyShort, Table } from '@navikt/ds-react';
 import { useFormContext } from 'react-hook-form';
 import {
@@ -12,7 +11,6 @@ import { TilkjentYtelseFormState } from './FormState';
 
 interface OwnProps {
   name: string;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
 }
 
@@ -25,8 +23,8 @@ const headerTextCodes = [
   'Uttaksgrad',
 ];
 
-const Andeler = ({ name, alleKodeverk, arbeidsgivere }: Partial<OwnProps>) => {
-  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+const Andeler = ({ name, arbeidsgivere }: Partial<OwnProps>) => {
+  const { kodeverkNavnFraKode } = useKodeverkContext();
   const {
     formState: { errors },
     watch,
@@ -55,11 +53,11 @@ const Andeler = ({ name, alleKodeverk, arbeidsgivere }: Partial<OwnProps>) => {
         </Table.Header>
         <Table.Body>
           {andeler.map(andel => {
-            const inntektskategori = getInntektskategori(andel.inntektskategori, getKodeverknavn);
-            const arbeidsgiver = createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgivere);
+            const inntektskategori = getInntektskategori(andel.inntektskategori, kodeverkNavnFraKode);
+            const arbeidsgiver = createArbeidsgiverVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgivere);
             const arbeidsgiverPrivatperson = createPrivatarbeidsgiverVisningsnavnForAndel(
               andel,
-              getKodeverknavn,
+              kodeverkNavnFraKode,
               arbeidsgivere,
             );
 

@@ -1,21 +1,21 @@
 import { DDMMYYYY_DATE_FORMAT, initializeDate } from '@fpsak-frontend/utils';
-import {
-  ArbeidsgiverOpplysningerPerId,
-  BeregningsresultatPeriode,
-  BeregningsresultatUtbetalt,
-} from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { Heading } from '@navikt/ds-react';
-import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import {
+  AksjonspunktDto,
+  BeregningsresultatMedUtbetaltePeriodeDto,
+  BeregningsresultatPeriodeDto,
+} from '@navikt/k9-sak-typescript-client';
 import TilkjentYtelse, { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
 
 const perioderMedClassName = [];
 
-const formatPerioder = (perioder: BeregningsresultatPeriode[]): PeriodeMedId[] => {
+const formatPerioder = (perioder: BeregningsresultatPeriodeDto[]): PeriodeMedId[] => {
   perioderMedClassName.length = 0;
   perioder.forEach(item => {
     if (item.andeler[0] && item.dagsats >= 0) {
@@ -41,7 +41,7 @@ export const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: Aksjon
   aksjonspunkter.some(ap => ap.definisjon === aksjonspunktCode);
 
 interface PureOwnProps {
-  beregningsresultat: BeregningsresultatUtbetalt;
+  beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto;
   aksjonspunkter: AksjonspunktDto[];
   readOnly: boolean;
   submitCallback: (data: any) => Promise<any>;

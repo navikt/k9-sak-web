@@ -1,7 +1,7 @@
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
 import { FlexColumn, FlexRow, Image } from '@fpsak-frontend/shared-components';
-import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Alert, Table } from '@navikt/ds-react';
 import { Datepicker } from '@navikt/ft-form-hooks';
 import { useFieldArray, useFormContext } from 'react-hook-form';
@@ -13,7 +13,6 @@ interface OwnProps {
   openSlettPeriodeModalCallback: (...args: any[]) => any;
   readOnly: boolean;
   isNyPeriodeFormOpen: boolean;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   isAnyFormOpen: () => boolean;
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
 }
@@ -22,7 +21,6 @@ const headerTextCodes = ['Periode', 'Andeler'];
 
 const PeriodeRad = ({
   openSlettPeriodeModalCallback,
-  alleKodeverk,
   isNyPeriodeFormOpen,
   readOnly,
   arbeidsgivere,
@@ -69,11 +67,7 @@ const PeriodeRad = ({
                   </FlexRow>
                 </Table.DataCell>
                 <Table.DataCell>
-                  <Andeler
-                    name={`perioder.${index}.andeler`}
-                    alleKodeverk={alleKodeverk}
-                    arbeidsgivere={arbeidsgivere}
-                  />
+                  <Andeler name={`perioder.${index}.andeler`} arbeidsgivere={arbeidsgivere} />
                 </Table.DataCell>
                 <Table.DataCell>
                   {!readOnly && (

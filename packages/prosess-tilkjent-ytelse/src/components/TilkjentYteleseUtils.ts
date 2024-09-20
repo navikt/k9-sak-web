@@ -1,6 +1,7 @@
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { ArbeidsgiverOpplysningerPerId, BeregningsresultatPeriodeAndel } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { BeregningsresultatPeriodeAndelDto } from '@navikt/k9-sak-typescript-client';
+import { NyPeriodeFormAndeler } from './manuellePerioder/FormState';
 
 export const getAktivitet = (
   aktivitetStatus: BeregningsresultatPeriodeAndelDto['aktivitetStatus'],
@@ -10,7 +11,7 @@ export const getAktivitet = (
   aktivitetStatus === undefined ? '' : kodeverkNavnFraKode(aktivitetStatus, KodeverkType.AKTIVITET_STATUS);
 
 export const getInntektskategori = (
-  inntektkategori: BeregningsresultatPeriodeAndel['inntektskategori'],
+  inntektkategori: NyPeriodeFormAndeler['inntektskategori'],
   kodeverkNavnFraKode,
 ): string =>
   // hvis valgtAndel ikke satt ennå return tom string.

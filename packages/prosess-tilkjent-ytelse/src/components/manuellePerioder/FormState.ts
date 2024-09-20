@@ -1,13 +1,9 @@
-import {
-  ArbeidsgiverOpplysninger,
-  ArbeidsgiverOpplysningerPerId,
-  BeregningsresultatPeriode,
-  BeregningsresultatPeriodeAndel,
-} from '@k9-sak-web/types';
-import { BeregningsresultatPeriodeDto } from '@navikt/k9-sak-typescript-client';
+import { ArbeidsgiverOpplysninger, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { BeregningsresultatPeriodeAndelDto, BeregningsresultatPeriodeDto } from '@navikt/k9-sak-typescript-client';
 
-export interface BeriketBeregningsresultatPeriode extends BeregningsresultatPeriode {
+export interface BeriketBeregningsresultatPeriode extends Omit<BeregningsresultatPeriodeDto, 'andeler'> {
   id: string;
+  andeler: Array<NyPeriodeFormAndeler & { arbeidsgiverPersonIdent?: string }> | null;
   openForm?: boolean;
 }
 
@@ -24,8 +20,9 @@ export type TilkjentYtelseFormState = {
   nyArbeidsgiverForm?: NyArbeidsgiverFormState;
 };
 
-export type NyPeriodeFormAndeler = Omit<BeregningsresultatPeriodeAndel, 'inntektskategori'> & {
+export type NyPeriodeFormAndeler = Omit<BeregningsresultatPeriodeAndelDto, 'inntektskategori'> & {
   inntektskategori: string;
+  arbeidsgiverPersonIdent?: string;
 };
 
 export type NyPeriodeFormState = {
