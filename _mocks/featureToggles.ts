@@ -93,4 +93,8 @@ export const featureTogglesFactory = () => [
     key: 'NYTT_SKJEMA_FOR_9003',
     value: process.env.VITE_NYTT_SKJEMA_FOR_9003,
   },
+  {
+    key: 'AUTOMATISK_VURDERT_MEDLEMSKAP',
+    value: process.env.AUTOMATISK_VURDERT_MEDLEMSKAP,
+  },
 ];
