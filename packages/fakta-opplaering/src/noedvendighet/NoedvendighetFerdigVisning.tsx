@@ -65,7 +65,7 @@ const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
       <Box marginTop={Margin.xLarge}>
         <LabelledContent
           label={intl.formatMessage({ id: 'noedvendighet.vurdering.label' })}
-          content={vurdering.begrunnelse}
+          content={<span className="whitespace-pre-wrap">{vurdering.begrunnelse}</span>}
           indentContent
         />
         <AssessedBy name={hentSaksbehandlerNavn(vurdering.vurdertAv)} date={vurdering?.vurdertTidspunkt} />

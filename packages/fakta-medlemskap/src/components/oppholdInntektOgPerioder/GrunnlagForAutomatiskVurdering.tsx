@@ -40,8 +40,6 @@ const GrunnlagForAutomatiskVurdering = ({
     foreldre.push(createParent(false, personopplysninger.annenPart));
   }
 
-  console.log('valgtPeriode', valgtPeriode);
-
   return (
     <>
       <Table>
