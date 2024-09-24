@@ -36,7 +36,7 @@ interface VilkarFieldsProps {
   skalValgMidlertidigInaktivTypeBVises: boolean;
 }
 
-const erVilkarOk = (kode: string) => {
+export const erVilkarOk = (kode: string) => {
   if (kode === 'OPPFYLT' || midlertidigInaktiv.TYPE_A === kode || midlertidigInaktiv.TYPE_B === kode) {
     return true;
   }

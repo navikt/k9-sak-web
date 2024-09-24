@@ -12,7 +12,7 @@ import { createSelector } from 'reselect';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import styles from './OpptjeningVilkarAksjonspunktPanel.module.css';
-import VilkarField, { midlertidigInaktiv, VilkårFieldType } from './VilkarFields';
+import VilkarField, { erVilkarOk, midlertidigInaktiv, VilkårFieldType } from './VilkarFields';
 import OpptjeningPanel from './OpptjeningPanel';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
@@ -71,7 +71,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
     }),
     [handleSubmit, form],
   );
-  const isFormComplete = () => {
+  const allePerioderHarVurdering = () => {
     const isAllTabsCreated = Array.isArray(vilkårPerioder) && vilkårPerioder.length === vilkarFields?.length;
     return isAllTabsCreated
       ? !vilkarFields.some(
@@ -128,15 +128,12 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       readOnly={readOnly || !vilkårPerioder[periodeIndex].vurderesIBehandlingen}
       originalErVilkarOk={vilkårPerioder[periodeIndex].vilkarStatus.kode === 'OPPFYLT'}
       aksjonspunktErLøst={aksjonspunkter.some(
-        ap =>
-          aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET === ap.definisjon.kode &&
-          ap.erAktivt &&
-          ap.status.kode === 'UTFO',
+        ap => aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET === ap.definisjon.kode && ap.status.kode === 'UTFO',
       )}
       lovReferanse={lovReferanse}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
-      isPeriodisertFormComplete={isFormComplete()}
+      isPeriodisertFormComplete={allePerioderHarVurdering()}
       skjulAksjonspunktVisning={vilkarFields[periodeIndex].periodeHar28DagerOgTrengerIkkeVurderesManuelt}
     >
       <div className={styles.titelOgHjelpetekstFlexbox}>
@@ -198,7 +195,7 @@ const transformValues = (
 ) => ({
   vilkårPeriodeVurderinger: values.vilkarFields.map((vilkarField, index) => ({
     ...vilkarField,
-    erVilkarOk: vilkarField.kode === 'OPPFYLT' || Object.values(midlertidigInaktiv).includes(vilkarField.kode),
+    erVilkarOk: erVilkarOk(vilkarField.kode),
     innvilgelseMerknadKode: Object.values(midlertidigInaktiv).includes(vilkarField.kode) ? vilkarField.kode : undefined,
     periode: Array.isArray(vilkårPerioder) && vilkårPerioder[index] ? vilkårPerioder[index].periode : {},
   })),
