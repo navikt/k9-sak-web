@@ -85,7 +85,6 @@ const InngangsvilkarPanel = ({
         ]
       : [{ label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" />, key: 'Vilkarsperioder.DenneBehandling' }];
 
-  console.log('filteredPanels', filteredPanels);
   return (
     <NestedIntlProvider messages={messages}>
       <FadingPanel>

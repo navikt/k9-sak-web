@@ -1,39 +1,52 @@
 import { RadioGroupField } from '@fpsak-frontend/form';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
-import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
+import { Opptjening, Vilkarperiode } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
-import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 
 import styles from './VilkarFields.module.css';
+import dayjs from 'dayjs';
 
 export const midlertidigInaktiv = {
   TYPE_A: '7847A',
   TYPE_B: '7847B',
 };
 
+export type VilkårFieldType = {
+  begrunnelse: string;
+  vurderesIBehandlingen: boolean;
+  periodeHar28DagerOgTrengerIkkeVurderesManuelt: boolean;
+  kode: '7847A' | '7847B' | 'OPPFYLT' | 'IKKE_OPPFYLT';
+};
+
 type FormValues = {
-  erVilkarOk: string | boolean;
-  vilkarFields: { erVilkarOk: string | boolean }[];
+  vilkarFields: VilkårFieldType[];
 };
 
 interface VilkarFieldsProps {
   erOmsorgspenger?: boolean;
   fieldPrefix: string;
   readOnly: boolean;
+  field: VilkårFieldType;
   skalValgMidlertidigInaktivTypeBVises: boolean;
 }
 
-export const VilkarFields = ({
+const erVilkarOk = (kode: string) => {
+  if (kode === 'OPPFYLT' || midlertidigInaktiv.TYPE_A === kode || midlertidigInaktiv.TYPE_B === kode) {
+    return true;
+  }
+  return false;
+};
+
+export const VilkarField = ({
   erOmsorgspenger,
   fieldPrefix,
-  erVilkarOk,
+  field,
   readOnly,
   skalValgMidlertidigInaktivTypeBVises,
 }: VilkarFieldsProps & Partial<FormValues>) => {
@@ -44,7 +57,7 @@ export const VilkarFields = ({
   const erOppfyltText = <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.ErOppfylt" />;
 
   const hent847Text = () => {
-    switch (erVilkarOk) {
+    switch (field.kode) {
       case midlertidigInaktiv.TYPE_A:
         return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847A" />;
       case midlertidigInaktiv.TYPE_B:
@@ -52,6 +65,16 @@ export const VilkarFields = ({
       default:
         return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847" />;
     }
+  };
+
+  const vilkarVurderingTekst = () => {
+    if (erVilkarOk(field.kode) && Object.values(midlertidigInaktiv).includes(field.kode)) {
+      return hent847Text();
+    }
+    if (erVilkarOk(field.kode)) {
+      return erOppfyltText;
+    }
+    return erIkkeOppfyltText;
   };
 
   return (
@@ -67,26 +90,22 @@ export const VilkarFields = ({
         placeholderText={intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.VurderingPlaceholderText' })}
       />
       <VerticalSpacer sixteenPx />
-      {readOnly && erVilkarOk !== undefined && (
+      {readOnly && (
         <FlexContainer>
           <FlexRow>
             <FlexColumn>
-              <Image className={styles.image} src={erVilkarOk ? innvilgetImage : avslattImage} />
+              <Image className={styles.image} src={erVilkarOk(field.kode) ? innvilgetImage : avslattImage} />
             </FlexColumn>
             <FlexColumn>
-              {typeof erVilkarOk === 'string' && Object.values(midlertidigInaktiv).includes(erVilkarOk) === true && (
-                <BodyShort size="small">{hent847Text()}</BodyShort>
-              )}
-              {erVilkarOk === true && <BodyShort size="small">{erOppfyltText}</BodyShort>}
-              {!erVilkarOk && <BodyShort size="small">{erIkkeOppfyltText}</BodyShort>}
+              <BodyShort>{vilkarVurderingTekst()}</BodyShort>
             </FlexColumn>
           </FlexRow>
           <VerticalSpacer eightPx />
         </FlexContainer>
       )}
-      {(!readOnly || erVilkarOk === undefined) && (
+      {!readOnly && (
         <RadioGroupField
-          name={`${fieldPrefix}.erVilkarOk`}
+          name={`${fieldPrefix}.kode`}
           validate={[required]}
           bredde="XXL"
           isVertical
@@ -96,13 +115,14 @@ export const VilkarFields = ({
             dersom søker har 28 dager med opptjening blir dette aksjonspunktet automatisk løst.
             Så de gangene man får løse aksjonspunktet manuelt har ikke brukeren 28 dager med opptjening.
             Velger man at vilkåret er oppfylt i de tilfellene får man feil i beregning.
-            Valget fjernes midlertidig, men skal tilbake igjen når EØS-saker kan behandles i K9. */
+            Valget fjernes midlertidig, men skal tilbake igjen når EØS-saker kan behandles i K9. 
             {
-              value: true,
+              value: 'OPPFYLT',
               label: erOppfyltText,
             },
+            */
             {
-              value: false,
+              value: 'IKKE_OPPFYLT',
               label: erIkkeOppfyltText,
             },
             ...(!erOmsorgspenger
@@ -129,21 +149,34 @@ export const VilkarFields = ({
   );
 };
 
-VilkarFields.buildInitialValues = (
-  aksjonspunkter: Aksjonspunkt[],
-  vilkårPerioder: Vilkarperiode[],
-  erVilkarOk: boolean,
-): FormValues => ({
-  erVilkarOk,
-  vilkarFields: Array.isArray(vilkårPerioder)
-    ? vilkårPerioder.map(periode => ({
-        begrunnelse: periode.begrunnelse,
-        vurderesIBehandlingen: periode.vurderesIBehandlingen,
-        erVilkarOk: Object.values(midlertidigInaktiv).includes(periode.merknad?.kode)
-          ? periode.merknad.kode
-          : periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
-      }))
-    : [],
-});
+VilkarField.buildInitialValues = (vilkårPerioder: Vilkarperiode[], opptjening: Opptjening[]): FormValues => {
+  const utledKode = (periode: Vilkarperiode) => {
+    if (periode.merknad.kode === midlertidigInaktiv.TYPE_A || periode.merknad.kode === midlertidigInaktiv.TYPE_B) {
+      return periode.merknad.kode as '7847A' | '7847B';
+    }
+    return periode.vilkarStatus.kode as 'OPPFYLT' | 'IKKE_OPPFYLT';
+  };
 
-export default VilkarFields;
+  return {
+    vilkarFields: Array.isArray(vilkårPerioder)
+      ? vilkårPerioder.map(periode => {
+          const skjæringstidspunkt = periode.periode.fom;
+          const opptjeningForPeriode = opptjening.find(
+            o => dayjs(o.fastsattOpptjening.opptjeningTom).add(1, 'day').format('YYYY-MM-DD') === skjæringstidspunkt,
+          );
+          const periodeHar28DagerOgTrengerIkkeVurderesManuelt =
+            opptjeningForPeriode.fastsattOpptjening.opptjeningperiode.dager >= 28 ||
+            opptjeningForPeriode.fastsattOpptjening.opptjeningperiode.måneder > 0;
+
+          return {
+            begrunnelse: periode.begrunnelse,
+            vurderesIBehandlingen: periode.vurderesIBehandlingen,
+            periodeHar28DagerOgTrengerIkkeVurderesManuelt,
+            kode: utledKode(periode),
+          };
+        })
+      : [],
+  };
+};
+
+export default VilkarField;

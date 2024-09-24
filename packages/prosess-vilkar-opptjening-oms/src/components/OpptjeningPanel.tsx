@@ -10,11 +10,11 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { BodyShort, Detail, Heading, Label } from '@navikt/ds-react';
-import React, { ReactNode } from 'react';
-import getPackageIntl from '@k9-sak-web/prosess-felles/i18n/getPackageIntl';
+import { ReactNode } from 'react';
 import ProsessStegSubmitButton from '@k9-sak-web/prosess-felles/src/ProsessStegSubmitButton';
 import styles from './opptjeningPanel.module.css';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { useIntl } from 'react-intl';
 
 interface OwnProps {
   title: string;
@@ -31,6 +31,8 @@ interface OwnProps {
   isDirty?: boolean;
   children: ReactNode | ReactNode[];
   isPeriodisertFormComplete?: boolean;
+  skjulAksjonspunktVisning: boolean;
+  aksjonspunktErLøst: boolean;
 }
 
 /*
@@ -53,13 +55,15 @@ const OpptjeningPanel = ({
   isDirty,
   children,
   isPeriodisertFormComplete,
+  skjulAksjonspunktVisning,
+  aksjonspunktErLøst,
 }: OwnProps) => {
-  const intl = getPackageIntl();
+  const intl = useIntl();
   return (
     <form onSubmit={handleSubmit}>
       <FlexContainer>
         <FlexRow>
-          {originalErVilkarOk !== undefined && (
+          {aksjonspunktErLøst && (
             <FlexColumn>
               <Image className={styles.status} src={originalErVilkarOk ? innvilgetImage : avslattImage} />
             </FlexColumn>
@@ -80,20 +84,24 @@ const OpptjeningPanel = ({
 
         <FlexRow>
           <FlexColumn>
-            {originalErVilkarOk && (
+            {aksjonspunktErLøst && (
               <>
-                <VerticalSpacer eightPx />
-                <Label size="small" as="p">
-                  {intl.formatMessage({ id: 'OpptjeningVilkarView.Oppfylt' })}
-                </Label>
-              </>
-            )}
-            {originalErVilkarOk === false && (
-              <>
-                <VerticalSpacer eightPx />
-                <Label size="small" as="p">
-                  {intl.formatMessage({ id: 'OpptjeningPanel.ErIkkeOppfylt' })}
-                </Label>
+                {originalErVilkarOk && (
+                  <>
+                    <VerticalSpacer eightPx />
+                    <Label size="small" as="p">
+                      {intl.formatMessage({ id: 'OpptjeningVilkarView.Oppfylt' })}
+                    </Label>
+                  </>
+                )}
+                {originalErVilkarOk === false && (
+                  <>
+                    <VerticalSpacer eightPx />
+                    <Label size="small" as="p">
+                      {intl.formatMessage({ id: 'OpptjeningPanel.ErIkkeOppfylt' })}
+                    </Label>
+                  </>
+                )}
               </>
             )}
             {!isAksjonspunktOpen && originalErVilkarOk === undefined && (
@@ -106,21 +114,26 @@ const OpptjeningPanel = ({
         </FlexRow>
       </FlexContainer>
       {isAksjonspunktOpen && <VerticalSpacer eightPx />}
-      <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={isAksjonspunktOpen}>
+      <AksjonspunktBox
+        className={styles.aksjonspunktMargin}
+        erAksjonspunktApent={isAksjonspunktOpen && !skjulAksjonspunktVisning}
+      >
         {children}
         {!readOnly && <VerticalSpacer sixteenPx />}
-        <ProsessStegSubmitButton
-          formName={formName}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          isReadOnly={readOnly}
-          isSubmittable={!readOnlySubmitButton}
-          isDirty={isDirty}
-          isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-          isBehandlingFormDirty={isBehandlingFormDirty}
-          hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-          isPeriodisertFormComplete={isPeriodisertFormComplete}
-        />
+        {!skjulAksjonspunktVisning && (
+          <ProsessStegSubmitButton
+            formName={formName}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            isReadOnly={readOnly}
+            isSubmittable={!readOnlySubmitButton}
+            isDirty={isDirty}
+            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+            isBehandlingFormDirty={isBehandlingFormDirty}
+            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+            isPeriodisertFormComplete={isPeriodisertFormComplete}
+          />
+        )}
       </AksjonspunktBox>
       {rendreFakta && (
         <>
