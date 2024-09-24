@@ -159,9 +159,10 @@ export const SoknadsfristVilkarForm = ({
   const harAksjonspunkt = aksjonspunkt !== undefined;
   const periodeFom = periode?.periode?.fom;
   const periodeTom = periode?.periode?.tom;
-  const aksjonspunktCode = erOverstyrt
-    ? aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR
-    : aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST;
+  const aksjonspunktCode =
+    erOverstyrt || !harAksjonspunkt
+      ? aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR
+      : aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST;
 
   const harLøstManueltAksjonspunkt = aksjonspunkter.some(
     ap =>
@@ -190,7 +191,7 @@ export const SoknadsfristVilkarForm = ({
   const AksjonspunktText = () => {
     if (harLøstManueltAksjonspunkt && !editForm) {
       return (
-        <Label size="small" as="p">
+        <Label className="mt-2" size="small" as="p">
           Vurder om søknadsfristvilkåret er oppfylt
         </Label>
       );
@@ -198,52 +199,30 @@ export const SoknadsfristVilkarForm = ({
     if (!isReadOnly) {
       if (harÅpentAksjonspunkt || editForm) {
         return (
-          <AksjonspunktHelpText isAksjonspunktOpen>Vurder om søknadsfristvilkåret er oppfylt</AksjonspunktHelpText>
+          <div className="mt-2">
+            <AksjonspunktHelpText isAksjonspunktOpen>Vurder om søknadsfristvilkåret er oppfylt</AksjonspunktHelpText>
+          </div>
         );
       }
-      return (
-        <Label size="small" as="p">
-          Manuell overstyring av automatisk vurdering
-        </Label>
-      );
+      if (erOverstyrt) {
+        return (
+          <Label className="mt-2" size="small" as="p">
+            Manuell overstyring av automatisk vurdering
+          </Label>
+        );
+      }
     }
     return undefined;
   };
 
   return (
     <Form formMethods={formMethods} onSubmit={handleSubmit}>
-      {!erOverstyrt && !harAksjonspunkt && dokumenterIAktivPeriode.length > 0 && !editForm && (
-        <div>
-          {Array.isArray(alleDokumenter) &&
-            alleDokumenter.length > 0 &&
-            alleDokumenter.map((field, index) => {
-              const dokument = alleDokumenter.find(dok => dok.journalpostId === field.journalpostId);
-              const documentHash = hash(dokument);
-              return (
-                <SoknadsfristVilkarDokument
-                  key={documentHash}
-                  erAktivtDokument={dokumenterIAktivPeriode.findIndex(d => hash(d) === documentHash) > -1}
-                  skalViseBegrunnelse
-                  readOnly
-                  dokumentIndex={index}
-                  dokument={dokument}
-                  toggleEditForm={toggleEditForm}
-                  dokumentErVurdert={status !== vilkårStatus.IKKE_VURDERT}
-                  periode={periode}
-                  kanEndrePåSøknadsopplysninger={kanEndrePåSøknadsopplysninger}
-                />
-              );
-            })}
-        </div>
-      )}
-
-      {(erOverstyrt || harAksjonspunkt || editForm) && dokumenterIAktivPeriode.length > 0 && (
+      {dokumenterIAktivPeriode.length > 0 && (
         <AksjonspunktBox
           className={styles.aksjonspunktMargin}
-          erAksjonspunktApent={erOverstyrt || harÅpentAksjonspunkt}
+          erAksjonspunktApent={erOverstyrt || harÅpentAksjonspunkt || editForm}
         >
-          <AksjonspunktText />
-          <div className="mt-2" />
+          {(erOverstyrt || harÅpentAksjonspunkt || editForm) && <AksjonspunktText />}
           {Array.isArray(alleDokumenter) && alleDokumenter.length > 0
             ? alleDokumenter.map((field, index) => {
                 const dokument = alleDokumenter.find(dok => dok.journalpostId === field.journalpostId);
