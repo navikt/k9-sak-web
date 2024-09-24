@@ -14,11 +14,11 @@ import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi'
 import { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { UngdomsytelseBehandlingApiKeys, requestPleiepengerApi } from '../data/pleiepengerBehandlingApi';
+import { UngdomsytelseBehandlingApiKeys, requestUngdomsytelseApi } from '../data/ungdomsytelseBehandlingApi';
 import FetchedData from '../types/FetchedData';
 import UngdomsytelseProsess from './UngdomsytelseProsess';
 
-describe('<PleiepengerProsess>', () => {
+describe('<UngdomsytelseProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
     sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
@@ -65,73 +65,7 @@ describe('<PleiepengerProsess>', () => {
   ];
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.SOKERSOPPLYSNINGSPLIKT, kodeverk: 'test' },
-      overstyrbar: true,
-      perioder: [
-        {
-          merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
-          periode: { fom: '2020-12-30', tom: '2021-02-28' },
-        },
-      ],
-    },
-    {
-      vilkarType: { kode: vilkarType.BEREGNINGSGRUNNLAGVILKARET, kodeverk: 'test' },
-      overstyrbar: true,
-      perioder: [
-        {
-          merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
-          periode: { fom: '2020-12-30', tom: '2021-02-28' },
-        },
-      ],
-    },
-    {
-      vilkarType: { kode: vilkarType.MEDLEMSKAPSVILKARET, kodeverk: 'test' },
-      overstyrbar: true,
-      perioder: [
-        {
-          merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
-          periode: { fom: '2020-12-30', tom: '2021-02-28' },
-        },
-      ],
-    },
-    {
-      vilkarType: { kode: vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, kodeverk: 'test' },
-      overstyrbar: true,
-      perioder: [
-        {
-          merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
-          periode: { fom: '2020-12-30', tom: '2021-02-28' },
-        },
-      ],
-    },
-    {
-      vilkarType: { kode: vilkarType.OPPTJENINGSVILKARET, kodeverk: 'test' },
-      overstyrbar: true,
-      perioder: [
-        {
-          merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
-          periode: { fom: '2020-12-30', tom: '2021-02-28' },
-        },
-      ],
-    },
-    {
-      vilkarType: { kode: vilkarType.OMSORGENFORVILKARET, kodeverk: 'test' },
-      overstyrbar: true,
-      perioder: [
-        {
-          merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
-          periode: { fom: '2020-12-30', tom: '2021-02-28' },
-        },
-      ],
-    },
-    {
-      vilkarType: { kode: vilkarType.SOKNADSFRISTVILKARET, kodeverk: 'test' },
+      vilkarType: { kode: vilkarType.ALDERSVILKARET, kodeverk: 'test' },
       overstyrbar: true,
       perioder: [
         {
@@ -170,7 +104,7 @@ describe('<PleiepengerProsess>', () => {
   };
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
-    requestPleiepengerApi.mock(UngdomsytelseBehandlingApiKeys.SOKNADSFRIST_STATUS);
+    requestUngdomsytelseApi.mock(UngdomsytelseBehandlingApiKeys.SOKNADSFRIST_STATUS);
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     renderWithIntlAndReduxForm(
       <UngdomsytelseProsess
@@ -191,16 +125,11 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => {}}
         lagreOverstyringUttak={vi.fn()}
       />,
     );
 
     expect(screen.getByRole('button', { name: 'Inngangsvilkår' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Sykdom' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Inngangsvilkår Fortsettelse/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Beregning/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Uttak/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Tilkjent ytelse/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Simulering/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Vedtak/i })).toBeInTheDocument();
@@ -228,19 +157,18 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => {}}
         lagreOverstyringUttak={vi.fn()}
       />,
     );
 
     await act(async () => {
-      await userEvent.click(screen.getByRole('button', { name: 'Inngangsvilkår Fortsettelse' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Vedtak' }));
     });
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.mock.calls;
     expect(opppdaterKall).toHaveLength(1);
     expect(opppdaterKall[0]).toHaveLength(2);
-    expect(opppdaterKall[0][0]).toEqual('opptjening');
+    expect(opppdaterKall[0][0]).toEqual('vedtak');
     expect(opppdaterKall[0][1]).toEqual('default');
   });
 });

@@ -26,6 +26,7 @@
   "VedtakForm.VilkarStatusInnvilgetOmsorgspenger": "Omsorgspenger er innvilget",
   "VedtakForm.VilkarStatusInnvilgetFrisinn": "Frisinn er innvilget",
   "VedtakForm.VilkarStatusInnvilgetLivetsSluttfase": "Pleiepenger i livets sluttfase er innvilget",
+  "VedtakForm.VilkarStatusInnvilgetUngdomsytelse": "Ungdomsytelse er innvilget",
   "VedtakForm.TilbakekrInfotrygdOgInntrekk": "Feilutbetaling med tilbakekreving hvor beløp er redusert med inntrekk",
   "VedtakForm.FritekstBrevLagre": "Lagre utkast",
   "VedtakForm.FritekstBrevIkkeLagret": "Du har gjort endringer i brevet, men endringene er foreløpig ikke lagret. Trykk på \"Lagre\" for å lagre endringene uten å sende til godkjenning eller fatte vedtak.",

@@ -18,9 +18,9 @@ import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakAp
 import UngdomsytelsePaneler from './components/UngdomsytelsePaneler';
 import {
   UngdomsytelseBehandlingApiKeys,
-  requestPleiepengerApi,
-  restApiPleiepengerHooks,
-} from './data/pleiepengerBehandlingApi';
+  requestUngdomsytelseApi,
+  restApiUngdomsytelseHooks,
+} from './data/ungdomsytelseBehandlingApi';
 import { FetchedData, OverstyringUttakRequest } from './types';
 
 const ungdomsytelseData = [
@@ -93,8 +93,8 @@ const BehandlingUngdomsytelseIndex = ({
   );
 
   const setBehandling = useCallback(nyBehandling => {
-    requestPleiepengerApi.resetCache();
-    requestPleiepengerApi.setLinks(nyBehandling.links);
+    requestUngdomsytelseApi.resetCache();
+    requestUngdomsytelseApi.setLinks(nyBehandling.links);
     setBehandlinger(prevState => ({ current: nyBehandling, previous: prevState.current }));
   }, []);
 
@@ -102,37 +102,37 @@ const BehandlingUngdomsytelseIndex = ({
     startRequest: hentBehandling,
     data: behandlingRes,
     state: behandlingState,
-  } = restApiPleiepengerHooks.useRestApiRunner<Behandling>(UngdomsytelseBehandlingApiKeys.BEHANDLING_PP);
+  } = restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(UngdomsytelseBehandlingApiKeys.BEHANDLING_PP);
   useSetBehandlingVedEndring(behandlingRes, setBehandling);
 
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
-  const { startRequest: nyBehandlendeEnhet } = restApiPleiepengerHooks.useRestApiRunner(
+  const { startRequest: nyBehandlendeEnhet } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET,
   );
-  const { startRequest: settBehandlingPaVent } = restApiPleiepengerHooks.useRestApiRunner(
+  const { startRequest: settBehandlingPaVent } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.BEHANDLING_ON_HOLD,
   );
-  const { startRequest: taBehandlingAvVent } = restApiPleiepengerHooks.useRestApiRunner<Behandling>(
+  const { startRequest: taBehandlingAvVent } = restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(
     UngdomsytelseBehandlingApiKeys.RESUME_BEHANDLING,
   );
-  const { startRequest: henleggBehandling } = restApiPleiepengerHooks.useRestApiRunner(
+  const { startRequest: henleggBehandling } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.HENLEGG_BEHANDLING,
   );
-  const { startRequest: settPaVent } = restApiPleiepengerHooks.useRestApiRunner(
+  const { startRequest: settPaVent } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.UPDATE_ON_HOLD,
   );
-  const { startRequest: opprettVerge } = restApiPleiepengerHooks.useRestApiRunner(
+  const { startRequest: opprettVerge } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.VERGE_OPPRETT,
   );
-  const { startRequest: fjernVerge } = restApiPleiepengerHooks.useRestApiRunner(
+  const { startRequest: fjernVerge } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.VERGE_FJERN,
   );
-  const { startRequest: lagreRisikoklassifiseringAksjonspunkt } = restApiPleiepengerHooks.useRestApiRunner(
+  const { startRequest: lagreRisikoklassifiseringAksjonspunkt } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.SAVE_AKSJONSPUNKT,
   );
 
-  const { startRequest: lagreOverstyringUttakRequest } = restApiPleiepengerHooks.useRestApiRunner(
+  const { startRequest: lagreOverstyringUttakRequest } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
   );
 
@@ -160,8 +160,8 @@ const BehandlingUngdomsytelseIndex = ({
       lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 
-    requestPleiepengerApi.setRequestPendingHandler(setRequestPendingMessage);
-    requestPleiepengerApi.setAddErrorMessageHandler(addErrorMessage);
+    requestUngdomsytelseApi.setRequestPendingHandler(setRequestPendingMessage);
+    requestUngdomsytelseApi.setAddErrorMessageHandler(addErrorMessage);
 
     hentBehandling({ behandlingId }, false);
 
@@ -170,7 +170,7 @@ const BehandlingUngdomsytelseIndex = ({
     };
   }, []);
 
-  const { data, state } = restApiPleiepengerHooks.useMultipleRestApi<FetchedData>(ungdomsytelseData, {
+  const { data, state } = restApiUngdomsytelseHooks.useMultipleRestApi<FetchedData>(ungdomsytelseData, {
     keepData: true,
     updateTriggers: [behandling?.versjon],
     suspendRequest: !behandling,

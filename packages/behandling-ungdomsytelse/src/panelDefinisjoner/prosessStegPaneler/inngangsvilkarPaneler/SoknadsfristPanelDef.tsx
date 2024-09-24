@@ -6,7 +6,7 @@ import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import SoknadsfristVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-soknadsfrist';
 import SoknadsfristVilkarProsessIndexV2 from '@k9-sak-web/prosess-vilkar-soknadsfrist-v2';
-import { UngdomsytelseBehandlingApiKeys } from '../../../data/pleiepengerBehandlingApi';
+import { UngdomsytelseBehandlingApiKeys } from '../../../data/ungdomsytelseBehandlingApi';
 
 class SoknadsfristPanelDef extends ProsessStegPanelDef {
   getId = () => 'SOKNADSFRIST';

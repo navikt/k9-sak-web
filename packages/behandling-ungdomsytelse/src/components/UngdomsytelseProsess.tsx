@@ -22,8 +22,8 @@ import {
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
 
-import { UngdomsytelseBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
-import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
+import { UngdomsytelseBehandlingApiKeys, restApiUngdomsytelseHooks } from '../data/ungdomsytelseBehandlingApi';
+import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegUngdomsytelsePanelDefinisjoner';
 import FetchedData from '../types/FetchedData';
 
 interface OwnProps {
@@ -147,21 +147,21 @@ const UngdomsytelseProsess = ({
   prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
-    restApiPleiepengerHooks.useRestApiRunner<Behandling>(UngdomsytelseBehandlingApiKeys.SAVE_AKSJONSPUNKT);
+    restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(UngdomsytelseBehandlingApiKeys.SAVE_AKSJONSPUNKT);
 
   const { startRequest: lagreOverstyrteAksjonspunkter, data: apOverstyrtBehandlingRes } =
-    restApiPleiepengerHooks.useRestApiRunner<Behandling>(UngdomsytelseBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
+    restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(UngdomsytelseBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
 
-  const { startRequest: forhandsvisMelding } = restApiPleiepengerHooks.useRestApiRunner(
+  const { startRequest: forhandsvisMelding } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.PREVIEW_MESSAGE,
   );
-  const { startRequest: forhandsvisTilbakekrevingMelding } = restApiPleiepengerHooks.useRestApiRunner<Behandling>(
+  const { startRequest: forhandsvisTilbakekrevingMelding } = restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(
     UngdomsytelseBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
   );
-  const { startRequest: lagreDokumentdata } = restApiPleiepengerHooks.useRestApiRunner<Behandling>(
+  const { startRequest: lagreDokumentdata } = restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(
     UngdomsytelseBehandlingApiKeys.DOKUMENTDATA_LAGRE,
   );
-  const { startRequest: hentFriteksbrevHtml } = restApiPleiepengerHooks.useRestApiRunner(
+  const { startRequest: hentFriteksbrevHtml } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
   );
 
@@ -252,7 +252,7 @@ const UngdomsytelseProsess = ({
           lagringSideeffekterCallback={lagringSideeffekterCallback}
           lagreAksjonspunkter={lagreAksjonspunkter}
           lagreOverstyrteAksjonspunkter={lagreOverstyrteAksjonspunkter}
-          useMultipleRestApi={restApiPleiepengerHooks.useMultipleRestApi}
+          useMultipleRestApi={restApiUngdomsytelseHooks.useMultipleRestApi}
           featureToggles={featureToggles}
           lagreOverstyringUttak={lagreOverstyringUttak}
           erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}

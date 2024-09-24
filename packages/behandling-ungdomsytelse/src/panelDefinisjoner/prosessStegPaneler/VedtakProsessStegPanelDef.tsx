@@ -4,8 +4,8 @@ import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 
-import { UngdomsytelseBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
-import findStatusForVedtak from '../vedtakStatusUtlederPleiepenger';
+import { UngdomsytelseBehandlingApiKeys } from '../../data/ungdomsytelseBehandlingApi';
+import findStatusForVedtak from '../vedtakStatusUtlederUngdomsytelse';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <VedtakProsessIndex {...props} />;
@@ -56,7 +56,7 @@ class PanelDef extends ProsessStegPanelDef {
     vilkar,
     simuleringResultat,
     beregningsgrunnlag,
-    ytelseTypeKode: fagsakYtelseType.PLEIEPENGER,
+    ytelseTypeKode: fagsakYtelseType.UNGDOMSYTELSE,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,

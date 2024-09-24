@@ -4,7 +4,7 @@ import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 
-import { UngdomsytelseBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
+import { UngdomsytelseBehandlingApiKeys } from '../../data/ungdomsytelseBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <AvregningProsessIndex {...props} />;

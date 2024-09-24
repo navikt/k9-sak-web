@@ -130,6 +130,6 @@ const endpoints = new RestApiConfigBuilder()
 
   .build();
 
-export const requestPleiepengerApi = createRequestApi(endpoints);
+export const requestUngdomsytelseApi = createRequestApi(endpoints);
 
-export const restApiPleiepengerHooks = RestApiHooks.initHooks(requestPleiepengerApi);
+export const restApiUngdomsytelseHooks = RestApiHooks.initHooks(requestUngdomsytelseApi);
