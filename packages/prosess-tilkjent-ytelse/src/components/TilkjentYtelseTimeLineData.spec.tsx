@@ -1,7 +1,5 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../../i18n/nb_NO.json';
 import { createArbeidsgiverVisningsnavnForAndel } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData';
@@ -9,16 +7,10 @@ import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData';
 const selectedItemDataFL = {
   andeler: [
     {
-      aktivitetStatus: {
-        kode: 'FL',
-        kodeverk: 'AKTIVITET_STATUS',
-      },
+      aktivitetStatus: 'FL', // AKTIIVITET_STATUS
       aktørId: null,
       arbeidsforholdId: null,
-      arbeidsforholdType: {
-        kode: '-',
-        kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-      },
+      arbeidsforholdType: '-', // OPPTJENING_AKTIVITET_TYPE
       arbeidsgiverNavn: null,
       arbeidsgiverOrgnr: '',
       eksternArbeidsforholdId: null,
@@ -51,14 +43,14 @@ const selectedItemEndDate = '2020-04-24';
 const callbackForward = vi.fn();
 const callbackBackward = vi.fn();
 
-const getKodeverknavn = kodeverk => {
-  if (kodeverk.kode === 'AT') {
+const kodeverkNavnFraKode = (kodeverk: string) => {
+  if (kodeverk === 'AT') {
     return 'Arbeidstaker';
   }
-  if (kodeverk.kode === 'SN') {
+  if (kodeverk === 'SN') {
     return 'Selvstendig næringsdrivende';
   }
-  if (kodeverk.kode === 'FL') {
+  if (kodeverk === 'FL') {
     return 'Frilans';
   }
   return '';
@@ -73,13 +65,13 @@ describe('<TilkjentYtelseTimeLineData>', () => {
         selectedItemData={selectedItemDataFL}
         selectedItemStartDate={selectedItemStartDate}
         selectedItemEndDate={selectedItemEndDate}
-        alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
       />,
-      { messages },
     );
 
     expect(screen.getByText('Aktivitetsstatus:')).toBeInTheDocument();
-    expect(createArbeidsgiverVisningsnavnForAndel(selectedItemDataFL.andeler[0], getKodeverknavn, {})).toBe('Frilans');
+    expect(createArbeidsgiverVisningsnavnForAndel(selectedItemDataFL.andeler[0], kodeverkNavnFraKode, {})).toBe(
+      'Frilans',
+    );
   });
 });

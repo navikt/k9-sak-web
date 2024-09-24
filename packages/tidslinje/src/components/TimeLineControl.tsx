@@ -1,6 +1,5 @@
 import { HGrid } from '@navikt/ds-react';
-import React, { MouseEvent, ReactNode } from 'react';
-import { useIntl } from 'react-intl';
+import { MouseEvent, ReactNode } from 'react';
 import TimeLineButton from './TimeLineButton';
 import styles from './timeLineControl.module.css';
 
@@ -28,7 +27,6 @@ const TimeLineControl = ({
   zoomInCallback,
   zoomOutCallback,
 }: TimeLineControlProps) => {
-  const { formatMessage } = useIntl();
   return (
     <HGrid gap="1" columns={{ xs: '12fr' }}>
       <div>
@@ -36,28 +34,16 @@ const TimeLineControl = ({
           {children}
           <TimeLineButton
             inverted={selectedPeriod !== undefined}
-            text={formatMessage({ id: 'Timeline.openData' })}
+            text="Åpne info om første periode"
             type="openData"
             callback={openPeriodInfo}
           />
           <span className={styles.buttonSpacing}>
-            <TimeLineButton text={formatMessage({ id: 'Timeline.zoomIn' })} type="zoomIn" callback={zoomInCallback} />
-            <TimeLineButton
-              text={formatMessage({ id: 'Timeline.zoomOut' })}
-              type="zoomOut"
-              callback={zoomOutCallback}
-            />
+            <TimeLineButton text="Zoom inn" type="zoomIn" callback={zoomInCallback} />
+            <TimeLineButton text="Zoom ut" type="zoomOut" callback={zoomOutCallback} />
           </span>
-          <TimeLineButton
-            text={formatMessage({ id: 'Timeline.prevPeriod' })}
-            type="prev"
-            callback={goBackwardCallback}
-          />
-          <TimeLineButton
-            text={formatMessage({ id: 'Timeline.nextPeriod' })}
-            type="next"
-            callback={goForwardCallback}
-          />
+          <TimeLineButton text="Forrige periode" type="prev" callback={goBackwardCallback} />
+          <TimeLineButton text="Neste periode" type="next" callback={goForwardCallback} />
         </div>
       </div>
     </HGrid>
