@@ -31,6 +31,7 @@ import useTrackRouteParam from '../app/useTrackRouteParam';
 import getAccessRights from '../app/util/access';
 import { K9sakApiKeys, LinkCategory, requestApi, restApiHooks } from '../data/k9sakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
+import BehandlingUngdomsytelseIndex from '@k9-sak-web/behandling-ungdomsytelse/src/BehandlingUngdomsytelseIndex';
 
 const BehandlingPleiepengerIndex = React.lazy(() => import('@k9-sak-web/behandling-pleiepenger'));
 const BehandlingOmsorgspengerIndex = React.lazy(() => import('@k9-sak-web/behandling-omsorgspenger'));
@@ -314,6 +315,21 @@ const BehandlingIndex = ({
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
           <BehandlingOpplaeringspengerIndex
+            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            valgtFaktaSteg={query.fakta}
+            key={behandlingId}
+            {...defaultProps}
+          />
+        </ErrorBoundary>
+      </Suspense>
+    );
+  }
+
+  if (fagsak.sakstype.kode === FagsakYtelseType.UNGDOMSYTELSE) {
+    return (
+      <Suspense fallback={<LoadingPanel />}>
+        <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <BehandlingUngdomsytelseIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
             key={behandlingId}

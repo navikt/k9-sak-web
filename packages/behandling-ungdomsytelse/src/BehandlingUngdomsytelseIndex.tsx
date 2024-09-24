@@ -1,0 +1,214 @@
+import { useCallback, useEffect, useState } from 'react';
+
+import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
+import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import {
+  ArbeidsgiverOpplysningerWrapper,
+  Behandling,
+  Dokument,
+  Fagsak,
+  FagsakPerson,
+  FeatureToggles,
+  KodeverkMedNavn,
+} from '@k9-sak-web/types';
+
+import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
+import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import UngdomsytelsePaneler from './components/UngdomsytelsePaneler';
+import {
+  UngdomsytelseBehandlingApiKeys,
+  requestPleiepengerApi,
+  restApiPleiepengerHooks,
+} from './data/pleiepengerBehandlingApi';
+import { FetchedData, OverstyringUttakRequest } from './types';
+
+const ungdomsytelseData = [
+  { key: UngdomsytelseBehandlingApiKeys.AKSJONSPUNKTER },
+  { key: UngdomsytelseBehandlingApiKeys.VILKAR },
+  { key: UngdomsytelseBehandlingApiKeys.PERSONOPPLYSNINGER },
+  { key: UngdomsytelseBehandlingApiKeys.SOKNAD },
+  { key: UngdomsytelseBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING },
+  { key: UngdomsytelseBehandlingApiKeys.BEREGNINGSGRUNNLAG },
+  { key: UngdomsytelseBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING },
+  { key: UngdomsytelseBehandlingApiKeys.SIMULERING_RESULTAT },
+  { key: UngdomsytelseBehandlingApiKeys.UTTAK },
+  { key: UngdomsytelseBehandlingApiKeys.OVERLAPPENDE_YTELSER },
+];
+
+interface OwnProps {
+  behandlingId: number;
+  fagsak: Fagsak;
+  fagsakPerson: FagsakPerson;
+  rettigheter: Rettigheter;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
+  valgtProsessSteg?: string;
+  valgtFaktaSteg?: string;
+  oppdaterBehandlingVersjon: (versjon: number) => void;
+  behandlingEventHandler: {
+    setHandler: (events: { [key: string]: (params: any) => Promise<any> }) => void;
+    clear: () => void;
+  };
+  opneSokeside: () => void;
+  featureToggles: FeatureToggles;
+  kodeverk?: { [key: string]: KodeverkMedNavn[] };
+  arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
+  setRequestPendingMessage: (message: string) => void;
+}
+
+const BehandlingUngdomsytelseIndex = ({
+  behandlingEventHandler,
+  behandlingId,
+  oppdaterBehandlingVersjon,
+  kodeverk,
+  fagsak,
+  fagsakPerson,
+  rettigheter,
+  oppdaterProsessStegOgFaktaPanelIUrl,
+  valgtProsessSteg,
+  opneSokeside,
+  valgtFaktaSteg,
+  arbeidsgiverOpplysninger,
+  setRequestPendingMessage,
+  featureToggles,
+}: OwnProps) => {
+  const forrigeSaksnummer = usePrevious(fagsak.saksnummer);
+
+  const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
+    current: undefined,
+    previous: undefined,
+  });
+  const behandling = nyOgForrigeBehandling.current;
+  const forrigeBehandling = nyOgForrigeBehandling.previous;
+
+  const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandling?.versjon);
+  const { data: alleDokumenter = [] } = restApiHooks.useRestApi<Dokument[]>(
+    K9sakApiKeys.ALL_DOCUMENTS,
+    { saksnummer: fagsak.saksnummer },
+    {
+      updateTriggers: [behandlingId, behandling?.versjon],
+      suspendRequest: forrigeSaksnummer && erBehandlingEndretFraUndefined,
+      keepData: true,
+    },
+  );
+
+  const setBehandling = useCallback(nyBehandling => {
+    requestPleiepengerApi.resetCache();
+    requestPleiepengerApi.setLinks(nyBehandling.links);
+    setBehandlinger(prevState => ({ current: nyBehandling, previous: prevState.current }));
+  }, []);
+
+  const {
+    startRequest: hentBehandling,
+    data: behandlingRes,
+    state: behandlingState,
+  } = restApiPleiepengerHooks.useRestApiRunner<Behandling>(UngdomsytelseBehandlingApiKeys.BEHANDLING_PP);
+  useSetBehandlingVedEndring(behandlingRes, setBehandling);
+
+  const { addErrorMessage } = useRestApiErrorDispatcher();
+
+  const { startRequest: nyBehandlendeEnhet } = restApiPleiepengerHooks.useRestApiRunner(
+    UngdomsytelseBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET,
+  );
+  const { startRequest: settBehandlingPaVent } = restApiPleiepengerHooks.useRestApiRunner(
+    UngdomsytelseBehandlingApiKeys.BEHANDLING_ON_HOLD,
+  );
+  const { startRequest: taBehandlingAvVent } = restApiPleiepengerHooks.useRestApiRunner<Behandling>(
+    UngdomsytelseBehandlingApiKeys.RESUME_BEHANDLING,
+  );
+  const { startRequest: henleggBehandling } = restApiPleiepengerHooks.useRestApiRunner(
+    UngdomsytelseBehandlingApiKeys.HENLEGG_BEHANDLING,
+  );
+  const { startRequest: settPaVent } = restApiPleiepengerHooks.useRestApiRunner(
+    UngdomsytelseBehandlingApiKeys.UPDATE_ON_HOLD,
+  );
+  const { startRequest: opprettVerge } = restApiPleiepengerHooks.useRestApiRunner(
+    UngdomsytelseBehandlingApiKeys.VERGE_OPPRETT,
+  );
+  const { startRequest: fjernVerge } = restApiPleiepengerHooks.useRestApiRunner(
+    UngdomsytelseBehandlingApiKeys.VERGE_FJERN,
+  );
+  const { startRequest: lagreRisikoklassifiseringAksjonspunkt } = restApiPleiepengerHooks.useRestApiRunner(
+    UngdomsytelseBehandlingApiKeys.SAVE_AKSJONSPUNKT,
+  );
+
+  const { startRequest: lagreOverstyringUttakRequest } = restApiPleiepengerHooks.useRestApiRunner(
+    UngdomsytelseBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
+  );
+
+  const lagreOverstyringUttak = async (values: OverstyringUttakRequest): Promise<void> => {
+    lagreOverstyringUttakRequest({
+      saksnummer: fagsak.saksnummer,
+      behandlingId: behandling.id,
+      behandlingVersjon: behandling.versjon,
+      overstyrteAksjonspunktDtoer: [values],
+    })
+      .then(() => hentBehandling({ behandlingId }, true))
+      .then(() => window.scroll(0, 0));
+  };
+
+  useEffect(() => {
+    behandlingEventHandler.setHandler({
+      endreBehandlendeEnhet: params => nyBehandlendeEnhet(params).then(() => hentBehandling({ behandlingId }, true)),
+      settBehandlingPaVent: params => settBehandlingPaVent(params).then(() => hentBehandling({ behandlingId }, true)),
+      taBehandlingAvVent: params =>
+        taBehandlingAvVent(params).then(behandlingResTaAvVent => setBehandling(behandlingResTaAvVent)),
+      henleggBehandling: params => henleggBehandling(params),
+      opprettVerge: params =>
+        opprettVerge(params).then(behandlingResOpprettVerge => setBehandling(behandlingResOpprettVerge)),
+      fjernVerge: params => fjernVerge(params).then(behandlingResFjernVerge => setBehandling(behandlingResFjernVerge)),
+      lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
+    });
+
+    requestPleiepengerApi.setRequestPendingHandler(setRequestPendingMessage);
+    requestPleiepengerApi.setAddErrorMessageHandler(addErrorMessage);
+
+    hentBehandling({ behandlingId }, false);
+
+    return () => {
+      behandlingEventHandler.clear();
+    };
+  }, []);
+
+  const { data, state } = restApiPleiepengerHooks.useMultipleRestApi<FetchedData>(ungdomsytelseData, {
+    keepData: true,
+    updateTriggers: [behandling?.versjon],
+    suspendRequest: !behandling,
+  });
+
+  const harIkkeHentetBehandlingsdata = state === RestApiState.LOADING || state === RestApiState.NOT_STARTED;
+  if (!behandling || (harIkkeHentetBehandlingsdata && data === undefined) || state === RestApiState.ERROR) {
+    return <LoadingPanel />;
+  }
+
+  return (
+    <>
+      <ReduxFormStateCleaner
+        behandlingId={behandling.id}
+        behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
+      />
+      <UngdomsytelsePaneler
+        behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
+        fetchedData={data}
+        fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
+        alleKodeverk={kodeverk}
+        rettigheter={rettigheter}
+        valgtProsessSteg={valgtProsessSteg}
+        valgtFaktaSteg={valgtFaktaSteg}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+        oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+        settPaVent={settPaVent}
+        opneSokeside={opneSokeside}
+        hasFetchError={behandlingState === RestApiState.ERROR}
+        setBehandling={setBehandling}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+        featureToggles={featureToggles}
+        dokumenter={alleDokumenter}
+        lagreOverstyringUttak={lagreOverstyringUttak}
+      />
+    </>
+  );
+};
+
+export default BehandlingUngdomsytelseIndex;
