@@ -105,6 +105,7 @@ export const visOverstyringspanelForSoknadsfrist: Story = {
         soknadsfristStatus={soknadsStatus}
         panelTittelKode="Søknadsfrist"
         vilkar={vilkarSoknadsfrist}
+        kanEndrePåSøknadsopplysninger
         {...props}
       />
     );
@@ -130,6 +131,7 @@ export const visOverstyringspanelForSoknadsfristUtenDokumenter: Story = {
         soknadsfristStatus={{ dokumentStatus: [] }}
         panelTittelKode="Søknadsfrist"
         vilkar={vilkarSoknadsfrist}
+        kanEndrePåSøknadsopplysninger
         {...props}
       />
     );
@@ -306,6 +308,7 @@ export const VisSoknadsfristAksjonspunkt5077: Story = {
             ],
           },
         ]}
+        kanEndrePåSøknadsopplysninger
         {...props}
       />
     );
@@ -413,6 +416,7 @@ export const visSoknadsfristAksjonspunkt5077Delvis: Story = {
             ],
           },
         ]}
+        kanEndrePåSøknadsopplysninger
         {...props}
       />
     );
@@ -611,6 +615,7 @@ export const VisSoknadsfristAksjonspunkt5077FlereSøknader: Story = {
             ],
           },
         ]}
+        kanEndrePåSøknadsopplysninger
         {...props}
       />
     );

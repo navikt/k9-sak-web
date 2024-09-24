@@ -7,7 +7,7 @@ const isDevelopment = IS_DEV;
 
 const configureStore = () => {
   let enhancer;
-  if (isDevelopment) {
+  if (isDevelopment || window.location.href.includes('dev.intern.nav.no')) {
     /* eslint-disable-next-line no-underscore-dangle */
     const composeEnhancers = (window && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
     enhancer = composeEnhancers(applyMiddleware(thunk));
