@@ -12,7 +12,7 @@ import { createSelector } from 'reselect';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import styles from './OpptjeningVilkarAksjonspunktPanel.module.css';
-import VilkarField, { erVilkarOk, midlertidigInaktiv, VilkårFieldType } from './VilkarFields';
+import VilkarField, { erVilkarOk, midlertidigInaktiv, VilkårFieldType } from './VilkarField';
 import OpptjeningPanel from './OpptjeningPanel';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
@@ -71,6 +71,8 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
     }),
     [handleSubmit, form],
   );
+
+  const vilkarField = vilkarFields?.[periodeIndex];
   const allePerioderHarVurdering = () => {
     const isAllTabsCreated = Array.isArray(vilkårPerioder) && vilkårPerioder.length === vilkarFields?.length;
     return isAllTabsCreated
@@ -134,7 +136,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
       isPeriodisertFormComplete={allePerioderHarVurdering()}
-      skjulAksjonspunktVisning={vilkarFields[periodeIndex].periodeHar28DagerOgTrengerIkkeVurderesManuelt}
+      skjulAksjonspunktVisning={vilkarField?.periodeHar28DagerOgTrengerIkkeVurderesManuelt}
     >
       <div className={styles.titelOgHjelpetekstFlexbox}>
         <Label size="small" as="p">
@@ -157,11 +159,9 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       </div>
       <VilkarField
         erOmsorgspenger={erOmsorgspenger}
-        field={vilkarFields[periodeIndex]}
+        field={vilkarField}
         readOnly={
-          readOnly ||
-          !vilkarFields[periodeIndex]?.vurderesIBehandlingen ||
-          vilkarFields[periodeIndex]?.periodeHar28DagerOgTrengerIkkeVurderesManuelt
+          readOnly || !vilkarField?.vurderesIBehandlingen || vilkarField?.periodeHar28DagerOgTrengerIkkeVurderesManuelt
         }
         fieldPrefix={`vilkarFields[${periodeIndex}]`}
         skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidOpptjeningTom}

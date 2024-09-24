@@ -31,8 +31,8 @@ interface OwnProps {
   isDirty?: boolean;
   children: ReactNode | ReactNode[];
   isPeriodisertFormComplete?: boolean;
-  skjulAksjonspunktVisning: boolean;
-  aksjonspunktErLøst: boolean;
+  skjulAksjonspunktVisning?: boolean;
+  aksjonspunktErLøst?: boolean;
 }
 
 /*

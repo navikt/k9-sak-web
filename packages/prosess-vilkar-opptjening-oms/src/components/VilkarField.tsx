@@ -57,7 +57,7 @@ export const VilkarField = ({
   const erOppfyltText = <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.ErOppfylt" />;
 
   const hent847Text = () => {
-    switch (field.kode) {
+    switch (field?.kode) {
       case midlertidigInaktiv.TYPE_A:
         return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847A" />;
       case midlertidigInaktiv.TYPE_B:
@@ -68,10 +68,10 @@ export const VilkarField = ({
   };
 
   const vilkarVurderingTekst = () => {
-    if (erVilkarOk(field.kode) && Object.values(midlertidigInaktiv).includes(field.kode)) {
+    if (erVilkarOk(field?.kode) && Object.values(midlertidigInaktiv).includes(field?.kode)) {
       return hent847Text();
     }
-    if (erVilkarOk(field.kode)) {
+    if (erVilkarOk(field?.kode)) {
       return erOppfyltText;
     }
     return erIkkeOppfyltText;
@@ -94,7 +94,7 @@ export const VilkarField = ({
         <FlexContainer>
           <FlexRow>
             <FlexColumn>
-              <Image className={styles.image} src={erVilkarOk(field.kode) ? innvilgetImage : avslattImage} />
+              <Image className={styles.image} src={erVilkarOk(field?.kode) ? innvilgetImage : avslattImage} />
             </FlexColumn>
             <FlexColumn>
               <BodyShort>{vilkarVurderingTekst()}</BodyShort>
@@ -161,7 +161,7 @@ VilkarField.buildInitialValues = (vilkårPerioder: Vilkarperiode[], opptjening: 
     vilkarFields: Array.isArray(vilkårPerioder)
       ? vilkårPerioder.map(periode => {
           const skjæringstidspunkt = periode.periode.fom;
-          const opptjeningForPeriode = opptjening.find(
+          const opptjeningForPeriode = opptjening?.find(
             o => dayjs(o?.fastsattOpptjening?.opptjeningTom).add(1, 'day').format('YYYY-MM-DD') === skjæringstidspunkt,
           );
           const periodeHar28DagerOgTrengerIkkeVurderesManuelt =
