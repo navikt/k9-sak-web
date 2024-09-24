@@ -21,7 +21,7 @@ const BeskrivelseFraSoeker = ({ vurdering }: OwnProps) => {
         </div>
         <LabelledContent
           label="Beskrivelse fra søker for reisetid i perioden 11.06.2021 - 13.06.2021"
-          content={vurdering.perioderFraSoeknad.beskrivelseFraSoeker}
+          content={<span className="whitespace-pre-wrap">{vurdering.perioderFraSoeknad.beskrivelseFraSoeker}</span>}
         />
       </div>
     </Box>
