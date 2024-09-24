@@ -162,11 +162,11 @@ VilkarField.buildInitialValues = (vilkårPerioder: Vilkarperiode[], opptjening: 
       ? vilkårPerioder.map(periode => {
           const skjæringstidspunkt = periode.periode.fom;
           const opptjeningForPeriode = opptjening.find(
-            o => dayjs(o.fastsattOpptjening.opptjeningTom).add(1, 'day').format('YYYY-MM-DD') === skjæringstidspunkt,
+            o => dayjs(o?.fastsattOpptjening?.opptjeningTom).add(1, 'day').format('YYYY-MM-DD') === skjæringstidspunkt,
           );
           const periodeHar28DagerOgTrengerIkkeVurderesManuelt =
-            opptjeningForPeriode.fastsattOpptjening.opptjeningperiode.dager >= 28 ||
-            opptjeningForPeriode.fastsattOpptjening.opptjeningperiode.måneder > 0;
+            opptjeningForPeriode?.fastsattOpptjening?.opptjeningperiode?.dager >= 28 ||
+            opptjeningForPeriode?.fastsattOpptjening?.opptjeningperiode?.måneder > 0;
 
           return {
             begrunnelse: periode.begrunnelse,
