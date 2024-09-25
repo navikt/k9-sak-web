@@ -10,11 +10,11 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { BodyShort, Detail, Heading, Label } from '@navikt/ds-react';
-import { ReactNode } from 'react';
-import ProsessStegSubmitButton from '@k9-sak-web/prosess-felles/src/ProsessStegSubmitButton';
-import styles from './opptjeningPanel.module.css';
+import React, { ReactNode } from 'react';
+import getPackageIntl from '../../i18n/getPackageIntl';
+import ProsessStegSubmitButton from '../ProsessStegSubmitButton';
+import styles from './prosessPanelTemplate.module.css';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
-import { useIntl } from 'react-intl';
 
 interface OwnProps {
   title: string;
@@ -31,16 +31,14 @@ interface OwnProps {
   isDirty?: boolean;
   children: ReactNode | ReactNode[];
   isPeriodisertFormComplete?: boolean;
-  skjulAksjonspunktVisning?: boolean;
-  aksjonspunktErLøst?: boolean;
 }
 
 /*
- * OpptjeningPanel
+ * ProsessPanelTemplate
  *
  * Presentasjonskomponent.
  */
-const OpptjeningPanel = ({
+const ProsessPanelTemplate = ({
   behandlingId,
   behandlingVersjon,
   lovReferanse,
@@ -55,15 +53,13 @@ const OpptjeningPanel = ({
   isDirty,
   children,
   isPeriodisertFormComplete,
-  skjulAksjonspunktVisning,
-  aksjonspunktErLøst,
 }: OwnProps) => {
-  const intl = useIntl();
+  const intl = getPackageIntl();
   return (
     <form onSubmit={handleSubmit}>
       <FlexContainer>
         <FlexRow>
-          {aksjonspunktErLøst && (
+          {originalErVilkarOk !== undefined && (
             <FlexColumn>
               <Image className={styles.status} src={originalErVilkarOk ? innvilgetImage : avslattImage} />
             </FlexColumn>
@@ -84,56 +80,47 @@ const OpptjeningPanel = ({
 
         <FlexRow>
           <FlexColumn>
-            {aksjonspunktErLøst && (
+            {originalErVilkarOk && (
               <>
-                {originalErVilkarOk && (
-                  <>
-                    <VerticalSpacer eightPx />
-                    <Label size="small" as="p">
-                      {intl.formatMessage({ id: 'OpptjeningVilkarView.Oppfylt' })}
-                    </Label>
-                  </>
-                )}
-                {originalErVilkarOk === false && (
-                  <>
-                    <VerticalSpacer eightPx />
-                    <Label size="small" as="p">
-                      {intl.formatMessage({ id: 'OpptjeningPanel.ErIkkeOppfylt' })}
-                    </Label>
-                  </>
-                )}
+                <VerticalSpacer eightPx />
+                <Label size="small" as="p">
+                  {intl.formatMessage({ id: 'ProsessPanelTemplate.ErOppfylt' })}
+                </Label>
+              </>
+            )}
+            {originalErVilkarOk === false && (
+              <>
+                <VerticalSpacer eightPx />
+                <Label size="small" as="p">
+                  {intl.formatMessage({ id: 'ProsessPanelTemplate.ErIkkeOppfylt' })}
+                </Label>
               </>
             )}
             {!isAksjonspunktOpen && originalErVilkarOk === undefined && (
               <>
                 <VerticalSpacer eightPx />
-                <BodyShort size="small">{intl.formatMessage({ id: 'OpptjeningPanel.IkkeBehandlet' })}</BodyShort>
+                <BodyShort size="small">{intl.formatMessage({ id: 'ProsessPanelTemplate.IkkeBehandlet' })}</BodyShort>
               </>
             )}
           </FlexColumn>
         </FlexRow>
       </FlexContainer>
       {isAksjonspunktOpen && <VerticalSpacer eightPx />}
-      <AksjonspunktBox
-        className={styles.aksjonspunktMargin}
-        erAksjonspunktApent={isAksjonspunktOpen && !skjulAksjonspunktVisning}
-      >
+      <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={isAksjonspunktOpen}>
         {children}
         {!readOnly && <VerticalSpacer sixteenPx />}
-        {!skjulAksjonspunktVisning && (
-          <ProsessStegSubmitButton
-            formName={formName}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            isReadOnly={readOnly}
-            isSubmittable={!readOnlySubmitButton}
-            isDirty={isDirty}
-            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-            isBehandlingFormDirty={isBehandlingFormDirty}
-            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-            isPeriodisertFormComplete={isPeriodisertFormComplete}
-          />
-        )}
+        <ProsessStegSubmitButton
+          formName={formName}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          isReadOnly={readOnly}
+          isSubmittable={!readOnlySubmitButton}
+          isDirty={isDirty}
+          isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+          isBehandlingFormDirty={isBehandlingFormDirty}
+          hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          isPeriodisertFormComplete={isPeriodisertFormComplete}
+        />
       </AksjonspunktBox>
       {rendreFakta && (
         <>
@@ -145,4 +132,4 @@ const OpptjeningPanel = ({
   );
 };
 
-export default OpptjeningPanel;
+export default ProsessPanelTemplate;
