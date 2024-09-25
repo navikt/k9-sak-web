@@ -1,5 +1,5 @@
-import { formatDate, isValidDate } from '@fpsak-frontend/utils';
+import { visningsdato, isValidDate } from '@fpsak-frontend/utils';
 
-const formaterDato = (dato: string) => (isValidDate(dato) ? formatDate(dato) : '-');
+const formaterDato = (dato: string) => (isValidDate(dato) ? visningsdato(dato) : '-');
 
 export default formaterDato;

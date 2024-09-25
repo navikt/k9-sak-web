@@ -1,28 +1,40 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { BodyShort, Button, Modal } from '@navikt/ds-react';
-import { BeriketBeregningsresultatPeriode } from './FormState';
+import moment from 'moment';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import styles from './periode.module.css';
 
 interface OwnProps {
   showModal?: boolean;
-  periode: BeriketBeregningsresultatPeriode;
-  closeEvent: () => void;
-  cancelEvent: () => void;
+  periode: any;
+  closeEvent: (...args: any[]) => any;
+  cancelEvent: (...args: any[]) => any;
 }
 
-const SlettPeriodeModal = ({ showModal = false, closeEvent, cancelEvent }: OwnProps) => {
+export const SlettPeriodeModal = ({ showModal = false, periode, closeEvent, cancelEvent }: OwnProps) => {
+  const intl = useIntl();
+
+  const fom = moment(periode.fom).format(DDMMYYYY_DATE_FORMAT);
+  const tom = moment(periode.tom).format(DDMMYYYY_DATE_FORMAT);
+
   return (
-    <Modal className={styles.modal} open={showModal} aria-label="Perioden slettes" onClose={cancelEvent}>
+    <Modal className={styles.modal} open={showModal} aria-label="Perioden slettes" onClose={closeEvent}>
       <Modal.Body>
         <FlexContainer wrap>
           <FlexRow>
             <FlexColumn className={styles.iconContainer}>
-              <Image className={styles.icon} src={innvilgetImageUrl} alt="Ok" />
+              <Image
+                className={styles.icon}
+                src={innvilgetImageUrl}
+                alt={intl.formatMessage({ id: 'TilkjentYtelse.Ok' })}
+              />
             </FlexColumn>
             <FlexColumn className={styles.fullWidth}>
               <BodyShort size="small" className={styles.modalLabel}>
-                Perioden vil bli slettet
+                <FormattedMessage id="TilkjentYtelse.PeriodenSlettes" values={{ fom, tom }} />
               </BodyShort>
             </FlexColumn>
           </FlexRow>
@@ -30,11 +42,11 @@ const SlettPeriodeModal = ({ showModal = false, closeEvent, cancelEvent }: OwnPr
           <FlexRow>
             <FlexColumn className={styles.right}>
               <VerticalSpacer eightPx />
-              <Button variant="primary" size="small" className={styles.button} onClick={closeEvent} type="button">
-                Ok
+              <Button variant="primary" size="small" className={styles.button} onClick={closeEvent}>
+                {intl.formatMessage({ id: 'TilkjentYtelse.Ok' })}
               </Button>
-              <Button variant="secondary" size="small" onClick={cancelEvent} type="button">
-                Avbryt
+              <Button variant="secondary" size="small" onClick={cancelEvent}>
+                {intl.formatMessage({ id: 'TilkjentYtelse.Avbryt' })}
               </Button>
             </FlexColumn>
           </FlexRow>

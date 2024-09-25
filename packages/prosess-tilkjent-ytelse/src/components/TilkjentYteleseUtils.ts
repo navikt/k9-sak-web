@@ -1,25 +1,16 @@
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { BeregningsresultatPeriodeAndelDto } from '@navikt/k9-sak-typescript-client';
-import { NyPeriodeFormAndeler } from './manuellePerioder/FormState';
 
-export const getAktivitet = (
-  aktivitetStatus: BeregningsresultatPeriodeAndelDto['aktivitetStatus'],
-  kodeverkNavnFraKode,
-) =>
+export const getAktivitet = (aktivitetStatus, getKodeverknavn) =>
   // hvis valgtAndel ikke satt ennå return tom string.
-  aktivitetStatus === undefined ? '' : kodeverkNavnFraKode(aktivitetStatus, KodeverkType.AKTIVITET_STATUS);
+  aktivitetStatus === undefined ? '' : getKodeverknavn(aktivitetStatus);
 
-export const getInntektskategori = (
-  inntektkategori: NyPeriodeFormAndeler['inntektskategori'],
-  kodeverkNavnFraKode,
-): string =>
+export const getInntektskategori = (inntektkategori, getKodeverknavn) =>
   // hvis valgtAndel ikke satt ennå return tom string.
-  inntektkategori === undefined ? '' : kodeverkNavnFraKode(inntektkategori, KodeverkType.INNTEKTSKATEGORI);
+  inntektkategori === undefined ? '' : getKodeverknavn(inntektkategori);
 
-const getEndCharFromId = (id: string) => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
+const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
-export const createArbeidsgiverVisningsnavnForAndel = (andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId) => {
+export const createArbeidsgiverVisningsnavnForAndel = (andel, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
   if (!andel) return '';
 
   let identifikator;
@@ -30,7 +21,7 @@ export const createArbeidsgiverVisningsnavnForAndel = (andel, kodeverkNavnFraKod
   }
 
   if (!identifikator) {
-    return andel.aktivitetStatus ? kodeverkNavnFraKode(andel.aktivitetStatus, KodeverkType.AKTIVITET_STATUS) : '';
+    return andel.aktivitetStatus ? getKodeverknavn(andel.aktivitetStatus) : '';
   }
 
   const navn =

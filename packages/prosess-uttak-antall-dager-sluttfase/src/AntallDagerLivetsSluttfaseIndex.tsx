@@ -1,7 +1,8 @@
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { formatDate } from '@fpsak-frontend/utils';
+import { visningsdato } from '@fpsak-frontend/utils';
 import KvoteInfo from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/types/KvoteInfo';
 import Fremdriftslinje from '@k9-sak-web/fremdriftslinje';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 
@@ -48,7 +49,7 @@ const AntallDagerLivetsSluttfaseIndex = ({ kvoteInfo }: OwnProps) => {
                 {intl.formatMessage(
                   { id: 'Underskrift.SistePleiedag' },
                   {
-                    sistePleiedag: formatDate(kvoteInfo.maxDato),
+                    sistePleiedag: visningsdato(kvoteInfo.maxDato),
                     b: (...chunks) => <b>{chunks}</b>,
                   },
                 )}

@@ -2,6 +2,7 @@ import { DDMMYYYY_DATE_FORMAT, calcDaysAndWeeks, formatCurrencyNoKr } from '@fps
 import { BodyShort, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import styles from './periodeInformasjon.module.css';
@@ -22,7 +23,15 @@ const PeriodeInformasjon = ({ fom, tom, feilutbetaling, arsak }) => {
           <Label size="small" as="p">
             {`${moment(fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(tom).format(DDMMYYYY_DATE_FORMAT)}`}
           </Label>
-          <BodyShort size="small">{daysAndWeeks}</BodyShort>
+          <BodyShort size="small">
+            <FormattedMessage
+              id={daysAndWeeks.id}
+              values={{
+                weeks: daysAndWeeks.weeks,
+                days: daysAndWeeks.days,
+              }}
+            />
+          </BodyShort>
         </HGrid>
         <div className={styles.resultSum}>
           <HGrid gap="1" columns={{ xs: '6fr 6fr' }} className={styles.redNumbers}>
