@@ -1,17 +1,24 @@
 import { action } from '@storybook/addon-actions';
+import React from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
+import { Aksjonspunkt, Behandling, BeregningsresultatUtbetalt, Fagsak } from '@k9-sak-web/types';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
-import { AksjonspunktDto, BehandlingDto } from '@navikt/k9-sak-typescript-client';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
+
+const fagsak = {
+  saksnummer: '123456',
+  sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
+  status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
+} as Fagsak;
 
 const behandling = {
   id: 1,
   versjon: 1,
-} as BehandlingDto;
+} as Behandling;
 
 const beregningsresultat = {
   opphoersdato: '2021-03-27',
@@ -19,11 +26,20 @@ const beregningsresultat = {
     {
       andeler: [
         {
-          aktivitetStatus: 'AT', // kodeverk: 'AKTIVITET_STATUS'
-          inntektskategori: 'ARBEIDSTAKER', // kodeverk: 'INNTEKTSKATEGORI'
+          aktivitetStatus: {
+            kode: 'AT',
+            kodeverk: 'AKTIVITET_STATUS',
+          },
+          inntektskategori: {
+            kode: 'ARBEIDSTAKER',
+            kodeverk: 'INNTEKTSKATEGORI',
+          },
           aktørId: null,
           arbeidsforholdId: null,
-          arbeidsforholdType: '-', // kodeverk: 'OPPTJENING_AKTIVITET_TYPE'
+          arbeidsforholdType: {
+            kode: '-',
+            kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+          },
           arbeidsgiverNavn: 'BEDRIFT1 AS',
           arbeidsgiverOrgnr: '123456789',
           eksternArbeidsforholdId: null,
@@ -39,7 +55,7 @@ const beregningsresultat = {
                 tom: '2021-03-14',
               },
               utbetalingsgrad: 100,
-              utfall: 'INNVILGET', // kodeverk: 'UTTAK_UTFALL'
+              utfall: 'INNVILGET',
             },
             {
               periode: {
@@ -47,16 +63,25 @@ const beregningsresultat = {
                 tom: '2021-03-15',
               },
               utbetalingsgrad: 100,
-              utfall: 'INNVILGET', // kodeverk: 'UTTAK_UTFALL'
+              utfall: 'INNVILGET',
             },
           ],
         },
         {
-          aktivitetStatus: 'AT', // kodeverk: 'AKTIVITET_STATUS'
-          inntektskategori: 'ARBEIDSTAKER', // kodeverk: 'INNTEKTSKATEGORI'
+          aktivitetStatus: {
+            kode: 'AT',
+            kodeverk: 'AKTIVITET_STATUS',
+          },
+          inntektskategori: {
+            kode: 'ARBEIDSTAKER',
+            kodeverk: 'INNTEKTSKATEGORI',
+          },
           aktørId: null,
           arbeidsforholdId: null,
-          arbeidsforholdType: '-', // kodeverk: 'OPPTJENING_AKTIVITET_TYPE'
+          arbeidsforholdType: {
+            kode: '-',
+            kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+          },
           arbeidsgiverNavn: 'BEDRIFT2 AS',
           arbeidsgiverOrgnr: '234567890',
           eksternArbeidsforholdId: null,
@@ -84,11 +109,20 @@ const beregningsresultat = {
     {
       andeler: [
         {
-          aktivitetStatus: 'AT', // kodeverk: 'AKTIVITET_STATUS'
-          inntektskategori: 'ARBEIDSTAKER', // kodeverk: 'INNTEKTSKATEGORI'
+          aktivitetStatus: {
+            kode: 'AT',
+            kodeverk: 'AKTIVITET_STATUS',
+          },
+          inntektskategori: {
+            kode: 'ARBEIDSTAKER',
+            kodeverk: 'INNTEKTSKATEGORI',
+          },
           aktørId: null,
           arbeidsforholdId: null,
-          arbeidsforholdType: '-', // kodeverk: 'OPPTJENING_AKTIVITET_TYPE'
+          arbeidsforholdType: {
+            kode: '-',
+            kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+          },
           arbeidsgiverNavn: 'BEDRIFT1 AS',
           arbeidsgiverOrgnr: '123456789',
           eksternArbeidsforholdId: null,
@@ -132,7 +166,7 @@ const beregningsresultat = {
   ],
   skalHindreTilbaketrekk: false,
   utbetaltePerioder: [],
-};
+} as BeregningsresultatUtbetalt;
 
 const arbeidsgiverOpplysningerPerId = {
   12345678: {
@@ -156,6 +190,7 @@ export default {
 export const visUtenAksjonspunkt = args => (
   <TilkjentYtelseProsessIndex
     beregningsresultat={beregningsresultat}
+    fagsak={fagsak}
     aksjonspunkter={[]}
     alleKodeverk={alleKodeverk as any}
     submitCallback={action('button-click')}
@@ -170,16 +205,23 @@ visUtenAksjonspunkt.args = {
   readOnlySubmitButton: true,
 };
 
-export const visÅpentAksjonspunktTilbaketrekk = args => (
+export const visÅpentAksjonspunkt = args => (
   <TilkjentYtelseProsessIndex
     beregningsresultat={beregningsresultat}
+    fagsak={fagsak}
     aksjonspunkter={
       [
         {
-          definisjon: aksjonspunktCodes.VURDER_TILBAKETREKK, // kodeverk: ''
-          status: aksjonspunktStatus.OPPRETTET, // kodeverk: ''
+          definisjon: {
+            kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
+            kodeverk: '',
+          },
+          status: {
+            kode: aksjonspunktStatus.OPPRETTET,
+            kodeverk: '',
+          },
         },
-      ] as AksjonspunktDto[]
+      ] as Aksjonspunkt[]
     }
     alleKodeverk={alleKodeverk as any}
     submitCallback={action('button-click')}
@@ -188,37 +230,7 @@ export const visÅpentAksjonspunktTilbaketrekk = args => (
   />
 );
 
-visÅpentAksjonspunktTilbaketrekk.args = {
-  behandling,
-  isReadOnly: false,
-  readOnlySubmitButton: true,
-};
-
-export const visÅpentAksjonspunktManuellTilkjentYtelse = args => (
-  <KodeverkProvider
-    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
-    kodeverk={alleKodeverk}
-    klageKodeverk={{}}
-    tilbakeKodeverk={{}}
-  >
-    <TilkjentYtelseProsessIndex
-      beregningsresultat={beregningsresultat}
-      aksjonspunkter={
-        [
-          {
-            definisjon: aksjonspunktCodes.MANUELL_TILKJENT_YTELSE, // kodeverk: ''
-            status: aksjonspunktStatus.OPPRETTET, // kodeverk: ''
-          },
-        ] as AksjonspunktDto[]
-      }
-      submitCallback={action('button-click')}
-      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-      {...args}
-    />
-  </KodeverkProvider>
-);
-
-visÅpentAksjonspunktManuellTilkjentYtelse.args = {
+visÅpentAksjonspunkt.args = {
   behandling,
   isReadOnly: false,
   readOnlySubmitButton: true,

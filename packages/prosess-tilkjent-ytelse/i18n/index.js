@@ -1,3 +1,8 @@
-import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
+import {
+  intlWithMessages
+} from '@fpsak-frontend/utils-test/intl-test-helper';
 
-export const intlMock = intlWithMessages();
+import messages from './nb_NO.json';
+
+
+export const intlMock = intlWithMessages(messages);

@@ -1,9 +1,10 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import React from 'react';
+
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
-import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 const harKunAvslåtteUttak = beregningsresultatUtbetaling => {
   const { perioder } = beregningsresultatUtbetaling;
@@ -14,11 +15,7 @@ const harKunAvslåtteUttak = beregningsresultatUtbetaling => {
 };
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = props => {
-    const deepCopyProps = JSON.parse(JSON.stringify(props));
-    konverterKodeverkTilKode(deepCopyProps, false);
-    return <TilkjentYtelseProsessIndex {...props} {...deepCopyProps} />;
-  };
+  getKomponent = props => <TilkjentYtelseProsessIndex {...props} />;
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_TILBAKETREKK];
 
