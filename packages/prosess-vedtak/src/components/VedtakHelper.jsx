@@ -118,6 +118,10 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
     return 'VedtakForm.LivetsSluttfaseIkkeInnvilget';
   }
 
+  if (ytelseType === fagsakYtelseType.UNGDOMSYTELSE) {
+    return 'VedtakForm.UngdomsytelseIkkeInnvilget';
+  }
+
   return 'VedtakForm.PleiepengerIkkeInnvilget';
 };
 
