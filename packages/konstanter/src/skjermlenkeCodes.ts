@@ -123,6 +123,11 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: prosessStegCodes.OPPTJENING,
   },
+  PUNKT_FOR_MEDISINSK: {
+    kode: 'PUNKT_FOR_MEDISINSK',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.PUNKT_FOR_MEDISINSK,
+  },
   PUNKT_FOR_OMSORG: {
     kode: 'PUNKT_FOR_OMSORG',
     faktaNavn: faktaPanelCodes.DEFAULT,
