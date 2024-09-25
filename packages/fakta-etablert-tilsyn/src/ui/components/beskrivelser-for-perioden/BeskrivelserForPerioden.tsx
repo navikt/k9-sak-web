@@ -1,3 +1,4 @@
+import { sortPeriodsByFomDate } from '@fpsak-frontend/utils';
 import {
   Box,
   ContentWithTooltip,
@@ -6,7 +7,6 @@ import {
   OnePersonIconGray,
   OnePersonOutlineGray,
 } from '@navikt/ft-plattform-komponenter';
-import * as React from 'react';
 import Beskrivelse from '../../../types/Beskrivelse';
 import Kilde from '../../../types/Kilde';
 import { prettifyDate } from '../../../util/formats';
@@ -41,9 +41,14 @@ const getLabel = (periodebeskrivelse: Beskrivelse) => {
 
 const BeskrivelserForPerioden = ({ periodebeskrivelser }: BeskrivelserForPeriodenProps): JSX.Element | null => {
   if (periodebeskrivelser?.length > 0) {
+    const sortertePeriodebeskrivelser = [
+      ...periodebeskrivelser
+        .sort((periode1, periode2) => sortPeriodsByFomDate(periode1.periode, periode2.periode))
+        .reverse(),
+    ];
     return (
       <>
-        {periodebeskrivelser.map(periodebeskrivelse => (
+        {sortertePeriodebeskrivelser.map(periodebeskrivelse => (
           <Box marginBottom={Margin.large} key={periodebeskrivelse.tekst}>
             <LabelledContent
               label={getLabel(periodebeskrivelse)}
