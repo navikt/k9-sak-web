@@ -1,5 +1,7 @@
-import { DDMMYYYY_DATE_FORMAT, calcDaysAndWeeks, formatCurrencyNoKr, initializeDate } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, calcDaysAndWeeks, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { BodyShort, HGrid, Label } from '@navikt/ds-react';
+import moment from 'moment';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import DataForPeriode from '../../types/dataForPeriodeTsType';
 
@@ -28,11 +30,19 @@ const PeriodeInformasjon = ({ fom, tom, feilutbetaling, arsak }: OwnProps) => {
           <HGrid gap="4" columns={{ xs: '6fr 6fr' }}>
             <div>
               <Label size="small" as="p">
-                {`${initializeDate(fom).format(DDMMYYYY_DATE_FORMAT)} - ${initializeDate(tom).format(DDMMYYYY_DATE_FORMAT)}`}
+                {`${moment(fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(tom).format(DDMMYYYY_DATE_FORMAT)}`}
               </Label>
             </div>
             <div>
-              <BodyShort size="small">{daysAndWeeks}</BodyShort>
+              <BodyShort size="small">
+                <FormattedMessage
+                  id={daysAndWeeks.id}
+                  values={{
+                    weeks: daysAndWeeks.weeks,
+                    days: daysAndWeeks.days,
+                  }}
+                />
+              </BodyShort>
             </div>
           </HGrid>
           <div className={styles.resultSum}>

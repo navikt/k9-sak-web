@@ -1,85 +1,47 @@
+import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { calcDaysAndWeeks, guid, initializeDate } from '@fpsak-frontend/utils';
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { Button, ErrorMessage, Label } from '@navikt/ds-react';
-import { Datepicker } from '@navikt/ft-form-hooks';
-import { dateAfterOrEqual, hasValidDate, required } from '@navikt/ft-form-validators';
-import { useFormContext } from 'react-hook-form';
-import {
-  BeriketBeregningsresultatPeriode,
-  NyArbeidsgiverFormState,
-  NyPeriodeFormState,
-  TilkjentYtelseFormState,
-} from './FormState';
+import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
+import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Periode } from '@k9-sak-web/types';
+import { Button, Label } from '@navikt/ds-react';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { FieldArray, InjectedFormProps } from 'redux-form';
 import NyAndel from './NyAndel';
 import styles from './periode.module.css';
 
-interface Periode {
-  fom: string;
-  tom: string;
-}
-
-export const sjekkOverlappendePerioder = (index: number, nestePeriode: Periode, forrigePeriode: Periode) =>
-  index !== 0 && initializeDate(nestePeriode.fom).isSameOrBefore(initializeDate(forrigePeriode.tom));
-
-const validateForm = (perioder: BeriketBeregningsresultatPeriode[], nyPeriodeFom: string, nyPeriodeTom: string) => {
-  let feilmelding = '';
-
-  if (!nyPeriodeFom || !nyPeriodeTom) {
-    return feilmelding;
-  }
-
-  const kombinertePerioder = [...perioder, { fom: nyPeriodeFom, tom: nyPeriodeTom }];
-
-  kombinertePerioder.forEach((periode, index: number) => {
-    const forrigePeriode = perioder[index - 1];
-    const nestePeriode = periode;
-
-    if (sjekkOverlappendePerioder(index, nestePeriode, forrigePeriode)) {
-      feilmelding = 'Perioden overlapper med en annen periode';
-    }
-  });
-
-  return feilmelding;
-};
-
 interface OwnProps {
   newPeriodeResetCallback: (values: any) => any;
-  newArbeidsgiverCallback: (values: NyArbeidsgiverFormState) => void;
+  newArbeidsgiverCallback: (values: any) => void;
+  andeler: any[];
+  nyPeriode: Periode;
+  nyPeriodeDisabledDaysFom: string;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
   readOnly: boolean;
-  newPeriodeCallback: (nyPeriode: Partial<BeriketBeregningsresultatPeriode>) => void;
+  behandlingId: number;
+  behandlingVersjon: number;
 }
 
 export const TilkjentYtelseNyPeriode = ({
   newPeriodeResetCallback,
   newArbeidsgiverCallback,
-  newPeriodeCallback,
+  nyPeriode,
   readOnly,
+  andeler,
+  alleKodeverk,
+  behandlingId,
+  behandlingVersjon,
   arbeidsgivere,
-}: OwnProps) => {
-  const formMethods = useFormContext<TilkjentYtelseFormState>();
-  const formState = formMethods.watch('nyPeriodeForm');
-  const numberOfDaysAndWeeks = calcDaysAndWeeks(formState.fom, formState.tom);
-
-  const perioder = formMethods.watch('perioder');
-
-  const feilmelding = validateForm(perioder, formState.fom, formState.fom);
-
-  const handleSubmit = () => {
-    formMethods.trigger(['nyPeriodeForm']).then(valid => {
-      if (valid && !feilmelding) {
-        newPeriodeCallback(transformValues(formState));
-      }
-    });
-  };
-
+  ...formProps
+}: OwnProps & InjectedFormProps) => {
+  const numberOfDaysAndWeeks = calcDaysAndWeeks(nyPeriode.fom, nyPeriode.tom);
   return (
     <div className={styles.periodeContainer}>
       <div className={styles.periodeType}>
         <div className={styles.headerWrapper}>
           <Label size="small" as="p">
-            Ny periode
+            <FormattedMessage id="TilkjentYtelse.NyPeriode" />
           </Label>
         </div>
       </div>
@@ -90,26 +52,40 @@ export const TilkjentYtelseNyPeriode = ({
             <FlexColumn>
               <FlexRow>
                 <FlexColumn>
-                  <Datepicker name="nyPeriodeForm.fom" label="Fra" validate={[required, hasValidDate]} />
+                  <DatepickerField name="fom" label={{ id: 'TilkjentYtelse.NyPeriode.Fom' }} />
                 </FlexColumn>
                 <FlexColumn>
-                  <Datepicker
-                    name="nyPeriodeForm.tom"
-                    label="Til"
-                    validate={[required, hasValidDate, dateAfterOrEqual(formState.fom)]}
-                  />
+                  <DatepickerField name="tom" label={{ id: 'TilkjentYtelse.NyPeriode.Tom' }} />
                 </FlexColumn>
                 <FlexColumn className={styles.suffix}>
-                  <div id="antallDager">{formState.fom && numberOfDaysAndWeeks}</div>
+                  <div id="antallDager">
+                    {nyPeriode.fom && (
+                      <FormattedMessage
+                        id={numberOfDaysAndWeeks.id.toString()}
+                        values={{
+                          weeks: numberOfDaysAndWeeks.weeks.toString(),
+                          days: numberOfDaysAndWeeks.days.toString(),
+                        }}
+                      />
+                    )}
+                  </div>
                 </FlexColumn>
               </FlexRow>
               <VerticalSpacer twentyPx />
               <FlexRow>
                 <FlexColumn>
-                  <NyAndel
+                  <FieldArray
+                    name="andeler"
+                    component={NyAndel}
                     readOnly={readOnly}
+                    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
+                    andeler={andeler}
+                    alleKodeverk={alleKodeverk}
                     arbeidsgivere={arbeidsgivere}
+                    behandlingId={behandlingId}
+                    behandlingVersjon={behandlingVersjon}
                     newArbeidsgiverCallback={newArbeidsgiverCallback}
+                    rerenderOnEveryChange
                   />
                 </FlexColumn>
               </FlexRow>
@@ -117,33 +93,34 @@ export const TilkjentYtelseNyPeriode = ({
           </FlexRow>
         </FlexContainer>
         <VerticalSpacer twentyPx />
-        {feilmelding && <ErrorMessage className="my-2">{feilmelding}</ErrorMessage>}
+
         <Button
           variant="primary"
           className={styles.oppdaterMargin}
           type="button"
           size="small"
-          loading={formMethods.formState.isSubmitting}
-          onClick={handleSubmit}
+          onClick={formProps.handleSubmit}
+          loading={formProps.submitting}
         >
-          Legg til ny periode
+          <FormattedMessage id="TilkjentYtelse.LeggTilPeriode" />
         </Button>
         <Button variant="secondary" type="button" size="small" onClick={newPeriodeResetCallback}>
-          Avbryt
+          <FormattedMessage id="TilkjentYtelse.Avbryt" />
         </Button>
       </div>
     </div>
   );
 };
 
-const transformValues = (values: NyPeriodeFormState): BeriketBeregningsresultatPeriode => ({
+const transformValues = (values: any) => ({
   id: guid(),
   fom: values.fom,
   tom: values.tom,
-  dagsats: null,
   andeler: values.andeler.map(andel => ({
-    ...andel,
-    inntektskategori: andel.inntektskategori,
+    inntektskategori: {
+      kode: andel.inntektskategori,
+      kodeverk: 'INNTEKTSKATEGORI',
+    },
     arbeidsgiverOrgnr: andel.arbeidsgiverOrgnr,
     arbeidsgiverPersonIdent: andel.arbeidsgiverPersonIdent,
     tilSoker: andel.tilSoker,
@@ -152,4 +129,56 @@ const transformValues = (values: NyPeriodeFormState): BeriketBeregningsresultatP
   })),
 });
 
-export default TilkjentYtelseNyPeriode;
+const validateNyPeriodeForm = (values: any) => {
+  const errors = {};
+  if (!values) {
+    return errors;
+  }
+
+  const invalid = required(values.fom) || hasValidPeriod(values.fom, values.tom);
+
+  if (invalid) {
+    return {
+      fom: invalid,
+    };
+  }
+
+  return errors;
+};
+
+interface PureOwnProps {
+  newPeriodeCallback: (values: any) => void;
+  behandlingId: number;
+  behandlingVersjon: number;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+}
+
+const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
+  const { newPeriodeCallback, behandlingId, behandlingVersjon } = ownProps;
+  const onSubmit = (values: any) => newPeriodeCallback(transformValues(values));
+
+  return (state: any) => ({
+    initialValues: {
+      fom: null,
+      tom: null,
+    },
+    nyPeriode: behandlingFormValueSelector('nyPeriodeForm', behandlingId, behandlingVersjon)(state, 'fom', 'tom'),
+    andeler: behandlingFormValueSelector('andeler', behandlingId, behandlingVersjon)(
+      state,
+      'tilSoker',
+      'refusjon',
+      'arbeidsgiver',
+      'inntektskategori',
+      'utbetalingsgrad',
+    ),
+    onSubmit,
+  });
+};
+
+export default connect(mapStateToPropsFactory)(
+  behandlingForm({
+    form: 'nyPeriodeForm',
+    validate: values => validateNyPeriodeForm(values),
+    enableReinitialize: true,
+  })(TilkjentYtelseNyPeriode),
+);

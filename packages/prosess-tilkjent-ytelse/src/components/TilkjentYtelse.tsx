@@ -1,23 +1,24 @@
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineControl, Timeline } from '@fpsak-frontend/tidslinje';
 import {
   DDMMYY_DATE_FORMAT,
   ISO_DATE_FORMAT,
   calcDaysAndWeeksWithWeekends,
-  initializeDate,
+  getKodeverknavnFn,
 } from '@fpsak-frontend/utils';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { BeregningsresultatPeriodeDto } from '@navikt/k9-sak-typescript-client';
+import { ArbeidsgiverOpplysningerPerId, BeregningsresultatPeriode, KodeverkMedNavn } from '@k9-sak-web/types';
 import moment from 'moment';
 import React, { Component, RefObject } from 'react';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { createArbeidsgiverVisningsnavnForAndel } from './TilkjentYteleseUtils';
 import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
+
 import styles from './tilkjentYtelse.module.css';
 
-export type PeriodeMedId = BeregningsresultatPeriodeDto & { id: number };
+export type PeriodeMedId = BeregningsresultatPeriode & { id: number };
 
-const parseDateString = (dateString: string) => initializeDate(dateString, ISO_DATE_FORMAT).toDate();
+const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT).toDate();
 
 const getOptions = (nyePerioder: PeriodeMedId[]) => {
   const firstPeriod = nyePerioder[0];
@@ -39,25 +40,43 @@ const getOptions = (nyePerioder: PeriodeMedId[]) => {
   };
 };
 
-const createTooltipContent = (
-  item: PeriodeMedId,
-  getKodeverknavn,
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
-) => {
-  const periodeDato = `${initializeDate(item.fom).format(DDMMYY_DATE_FORMAT)} - ${initializeDate(item.tom).format(DDMMYY_DATE_FORMAT)}`;
+const createTooltipContent = (intl, item, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
+  const { formatMessage } = intl;
+  const periodeDato = `${moment(item.fom).format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom).format(DDMMYY_DATE_FORMAT)}`;
   return `
   <p>
     ${periodeDato}
-     ${calcDaysAndWeeksWithWeekends(initializeDate(item.fom), initializeDate(item.tom))}
+     ${formatMessage(
+       { id: calcDaysAndWeeksWithWeekends(moment(item.fom), moment(item.tom)).id },
+       {
+         weeks: calcDaysAndWeeksWithWeekends(moment(item.fom), moment(item.tom)).weeks,
+         days: calcDaysAndWeeksWithWeekends(moment(item.fom), moment(item.tom)).days,
+       },
+     )}
     <br />
-    ${`Dagsats: ${item.dagsats}kr`}
+    ${formatMessage(
+      { id: 'Timeline.tooltip.dagsats' },
+      {
+        dagsats: item.dagsats,
+      },
+    )}
     <br />
     ${
       (item.andeler || []).length > 1
         ? item.andeler
-            .map(andel => {
-              `${createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}: ${Number(andel.refusjon) + Number(andel.tilSoker)} kr`;
-            })
+            .map(andel =>
+              formatMessage(
+                { id: 'Timeline.tooltip.dagsatsPerAndel' },
+                {
+                  arbeidsgiver: createArbeidsgiverVisningsnavnForAndel(
+                    andel,
+                    getKodeverknavn,
+                    arbeidsgiverOpplysningerPerId,
+                  ),
+                  dagsatsPerAndel: Number(andel.refusjon) + Number(andel.tilSoker),
+                },
+              ),
+            )
             .join('<br />')
         : ''
     }
@@ -65,10 +84,9 @@ const createTooltipContent = (
 `;
 };
 
-const sumUtBetalingsgrad = (andeler: PeriodeMedId['andeler']) =>
-  andeler.reduce((sum, andel) => sum + andel.utbetalingsgrad, 0);
+const sumUtBetalingsgrad = (andeler: any) => andeler.reduce((sum, andel) => sum + andel.utbetalingsgrad, 0);
 
-const erTotalUtbetalingsgradOver100 = (periode: PeriodeMedId) => {
+const erTotalUtbetalingsgradOver100 = periode => {
   const values = [
     periode.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt,
     periode.totalUtbetalingsgradFraUttak,
@@ -88,20 +106,14 @@ const erTotalUtbetalingsgradOver100 = (periode: PeriodeMedId) => {
   return false;
 };
 
-const prepareTimelineData = (
-  periode: PeriodeMedId,
-  index: number,
-  getKodeverknavn,
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
-) => ({
+const prepareTimelineData = (periode, index, intl, getKodeverknavn, arbeidsgiverOpplysningerPerId) => ({
   ...periode,
   className: erTotalUtbetalingsgradOver100(periode) ? 'innvilget' : 'gradert',
   group: 1,
   id: index,
   start: parseDateString(periode.fom),
-  end: moment(parseDateString(periode.tom)).add(1, 'day').toDate(),
-  title: createTooltipContent(periode, getKodeverknavn, arbeidsgiverOpplysningerPerId),
-  content: '',
+  end: moment(parseDateString(periode.tom)).add(1, 'day'),
+  title: createTooltipContent(intl, periode, getKodeverknavn, arbeidsgiverOpplysningerPerId),
 });
 
 interface OwnProps {
@@ -110,7 +122,7 @@ interface OwnProps {
     id: number;
     content: string;
   }[];
-  kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
@@ -124,10 +136,10 @@ interface OwnState {
  * Presentationskomponent. Masserer data og populerer felten samt formatterar tidslinjen for tilkjent ytelse
  */
 
-export class TilkjentYtelse extends Component<OwnProps, OwnState> {
+export class TilkjentYtelse extends Component<OwnProps & WrappedComponentProps, OwnState> {
   timelineRef: RefObject<any>;
 
-  constructor(props: OwnProps) {
+  constructor(props: OwnProps & WrappedComponentProps) {
     super(props);
 
     this.state = {
@@ -237,15 +249,16 @@ export class TilkjentYtelse extends Component<OwnProps, OwnState> {
       goBackward,
       goForward,
       openPeriodInfo,
-      props: { groups, items, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId },
+      props: { groups, items, intl, alleKodeverk, arbeidsgiverOpplysningerPerId },
       selectHandler,
       state: { selectedItem },
       zoomIn,
       zoomOut,
     } = this;
+    const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
     const timelineData = items.map((periode, index) =>
-      prepareTimelineData(periode, index, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId),
+      prepareTimelineData(periode, index, intl, getKodeverknavn, arbeidsgiverOpplysningerPerId),
     );
     return (
       <div className={styles.timelineContainer}>
@@ -271,6 +284,7 @@ export class TilkjentYtelse extends Component<OwnProps, OwnState> {
         />
         {selectedItem && (
           <TilkjentYtelseTimelineData
+            alleKodeverk={alleKodeverk}
             selectedItemStartDate={selectedItem.fom.toString()}
             selectedItemEndDate={selectedItem.tom.toString()}
             selectedItemData={selectedItem}
@@ -284,4 +298,4 @@ export class TilkjentYtelse extends Component<OwnProps, OwnState> {
   }
 }
 
-export default TilkjentYtelse;
+export default injectIntl(TilkjentYtelse);

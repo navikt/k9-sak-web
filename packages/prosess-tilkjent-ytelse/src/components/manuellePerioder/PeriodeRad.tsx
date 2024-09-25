@@ -1,44 +1,57 @@
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
+import { DatepickerField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexRow, Image } from '@fpsak-frontend/shared-components';
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Alert, Table } from '@navikt/ds-react';
-import { Datepicker } from '@navikt/ft-form-hooks';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import React from 'react';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
+import { FieldArray, FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import Andeler from './Andeler';
-import { TilkjentYtelseFormState } from './FormState';
 import styles from './periode.module.css';
 
 interface OwnProps {
+  fields: FieldArrayFieldsProps<any>;
+  meta: FieldArrayMetaProps;
   openSlettPeriodeModalCallback: (...args: any[]) => any;
+  updatePeriode: (...args: any[]) => any;
+  editPeriode: (...args: any[]) => any;
+  cancelEditPeriode: (...args: any[]) => any;
   readOnly: boolean;
+  perioder: any[];
   isNyPeriodeFormOpen: boolean;
-  isAnyFormOpen: () => boolean;
+  behandlingVersjon: number;
+  behandlingId: number;
+  behandlingStatus: Kodeverk;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  isAnyFormOpen: (...args: any[]) => any;
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
 }
 
-const headerTextCodes = ['Periode', 'Andeler'];
+const headerTextCodes = ['TilkjentYtelse.Periode', 'TilkjentYtelse.Andeler'];
 
 const PeriodeRad = ({
+  fields,
+  meta,
   openSlettPeriodeModalCallback,
+  alleKodeverk,
+  intl,
   isNyPeriodeFormOpen,
   readOnly,
   arbeidsgivere,
   isAnyFormOpen,
-}: Partial<OwnProps>) => {
-  const { control, formState } = useFormContext<TilkjentYtelseFormState>();
-  const { fields } = useFieldArray({
-    control,
-    name: 'perioder',
-    keyName: 'fieldId',
-  });
+}: Partial<OwnProps> & WrappedComponentProps) => {
   const isAnyFormOrNyPeriodeOpen = isAnyFormOpen() || isNyPeriodeFormOpen;
-  const error = formState.errors?.perioder;
   return (
     <div>
-      {error && (
+      {meta.error && (
         <Alert size="small" variant="error">
-          {error}
+          {meta.error}
+        </Alert>
+      )}
+      {meta.warning && (
+        <Alert size="small" variant="info">
+          {meta.warning}
         </Alert>
       )}
 
@@ -47,27 +60,46 @@ const PeriodeRad = ({
           <Table.Row>
             {headerTextCodes.map(text => (
               <Table.HeaderCell scope="col" key={text}>
-                {text}
+                {intl.formatMessage({ id: text })}
               </Table.HeaderCell>
             ))}
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {fields.map((item, index) => {
+          {fields.map((fieldId: string, index: number, field: FieldArrayFieldsProps<any>) => {
+            const periode = field.get(index);
             return (
-              <Table.Row key={item.fieldId} id={item.fieldId}>
+              <Table.Row key={periode.id} id={periode.id}>
                 <Table.DataCell>
                   <FlexRow>
                     <FlexColumn>
-                      <Datepicker name={`perioder.${index}.fom`} label="" isReadOnly />
+                      <DatepickerField
+                        name={`${fieldId}.fom`}
+                        label=""
+                        // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
+                        value={periode.fom}
+                        readOnly
+                      />
                     </FlexColumn>
                     <FlexColumn>
-                      <Datepicker name={`perioder.${index}.tom`} label="" isReadOnly />
+                      <DatepickerField
+                        name={`${fieldId}.tom`}
+                        label=""
+                        // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
+                        value={periode.tom}
+                        readOnly
+                      />
                     </FlexColumn>
                   </FlexRow>
                 </Table.DataCell>
                 <Table.DataCell>
-                  <Andeler name={`perioder.${index}.andeler`} arbeidsgivere={arbeidsgivere} />
+                  <FieldArray
+                    name={`${fieldId}.andeler`}
+                    component={Andeler}
+                    readOnly
+                    alleKodeverk={alleKodeverk}
+                    arbeidsgivere={arbeidsgivere}
+                  />
                 </Table.DataCell>
                 <Table.DataCell>
                   {!readOnly && (
@@ -76,9 +108,9 @@ const PeriodeRad = ({
                         className={styles.removeIcon}
                         src={isAnyFormOrNyPeriodeOpen ? removePeriodDisabled : removePeriod}
                         onClick={
-                          isAnyFormOrNyPeriodeOpen ? () => undefined : () => openSlettPeriodeModalCallback(item.id)
+                          isAnyFormOrNyPeriodeOpen ? () => undefined : () => openSlettPeriodeModalCallback(periode.id)
                         }
-                        alt="Slett Perioden"
+                        alt={intl.formatMessage({ id: 'TilkjentYtelse.SlettPerioden' })}
                       />
                     </div>
                   )}
@@ -92,4 +124,4 @@ const PeriodeRad = ({
   );
 };
 
-export default PeriodeRad;
+export default injectIntl(PeriodeRad);

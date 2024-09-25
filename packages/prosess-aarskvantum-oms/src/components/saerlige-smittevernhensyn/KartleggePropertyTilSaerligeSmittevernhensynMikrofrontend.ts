@@ -2,8 +2,8 @@ import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
 import { Aksjonspunkt, Behandling, UtfallEnum, Uttaksperiode } from '@k9-sak-web/types';
+import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
 import { isAfter, parse } from 'date-fns';
 import Aktivitet from '../../dto/Aktivitet';
 import PeriodeBekreftetStatus from '../../dto/PeriodeBekreftetStatus';
@@ -102,12 +102,7 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
 
   if (eksistererInnvilgetPeriode && perioderAvslått.length > 0) {
     perioderInnvilget.forEach(period => {
-      const daysToAdd = antallDager(period.periode);
-      if (typeof daysToAdd === 'string') {
-        dagerDelvisInnvilget += parseInt(daysToAdd, 10);
-      } else {
-        dagerDelvisInnvilget += daysToAdd;
-      }
+      dagerDelvisInnvilget += parseInt(antallDager(period.periode), 10);
     });
   }
 

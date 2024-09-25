@@ -134,10 +134,10 @@ const VilkarResultPicker: FunctionComponent<OwnProps> & StaticFunctions = ({
                       : vilkarUtfallPeriodisert.DELVIS_OPPFYLT,
                     label: periodeVilkarStatus
                       ? intl.formatMessage(
-                          { id: 'OpptjeningPanel.DelvisIkkeOppfylt' },
+                          { id: 'ProsessPanelTemplate.DelvisIkkeOppfylt' },
                           { b: chunks => <b>{chunks}</b> },
                         )
-                      : intl.formatMessage({ id: 'OpptjeningPanel.DelvisOppfylt' }),
+                      : intl.formatMessage({ id: 'ProsessPanelTemplate.DelvisOppfylt' }),
                   },
                 ]
               : []),

@@ -16,7 +16,7 @@ import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksper
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, HelpText, Label, Table, Tabs } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { ReactNode, useMemo, useState } from 'react';
+import React, { ReactNode, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Utfall from './Utfall';
 import styles from './aktivitetTabell.module.css';
@@ -32,7 +32,7 @@ interface AktivitetTabellProps {
   aktivitetsstatuser: KodeverkMedNavn[];
 }
 
-export const antallDager = (periode: string): string | number => {
+export const antallDager = (periode: string): string => {
   const [fom, tom] = periode.split('/');
   return calcDays(fom, tom, false);
 };
@@ -232,9 +232,7 @@ const AktivitetTabell = ({
                       <NøkkeltallContainer
                         totaltAntallDager={nøkkeltall.totaltAntallDager}
                         antallDagerArbeidsgiverDekker={nøkkeltall.antallDagerArbeidsgiverDekker}
-                        antallDagerFraværRapportertSomNyoppstartet={
-                          nøkkeltall.antallDagerFraværRapportertSomNyoppstartet
-                        }
+                        antallDagerFraværRapportertSomNyoppstartet={nøkkeltall.antallDagerFraværRapportertSomNyoppstartet}
                         antallDagerInfotrygd={nøkkeltall.antallDagerInfotrygd}
                         antallKoronadager={nøkkeltall.antallKoronadager}
                         forbrukteDager={nøkkeltall.antallForbrukteDager}

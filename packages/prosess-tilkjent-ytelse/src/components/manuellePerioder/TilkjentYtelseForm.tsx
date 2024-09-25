@@ -1,85 +1,176 @@
+import { behandlingForm, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { guid } from '@fpsak-frontend/utils';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { Form } from '@navikt/ft-form-hooks';
-import { AksjonspunktDto, BeregningsresultatMedUtbetaltePeriodeDto } from '@navikt/k9-sak-typescript-client';
-import { useForm } from 'react-hook-form';
-import { TilkjentYtelseFormState } from './FormState';
+import {
+  Aksjonspunkt,
+  ArbeidsgiverOpplysningerPerId,
+  BeregningsresultatUtbetalt,
+  Kodeverk,
+  KodeverkMedNavn,
+} from '@k9-sak-web/types';
+import moment from 'moment';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
 import PeriodeTabell from './PeriodeTabell';
 
 interface OwnProps {
   readOnly: boolean;
   readOnlySubmitButton: boolean;
-  aksjonspunkter: AksjonspunktDto[];
+  behandlingFormPrefix: string;
+  submitting: boolean;
+  aksjonspunkter: Aksjonspunkt[];
+  behandlingId: number;
+  behandlingVersjon: number;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  behandlingStatus: Kodeverk;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto;
+  vilkarForSykdomExists: boolean;
+  beregningsresultat: BeregningsresultatUtbetalt[];
   submitCallback: (...args: any[]) => any;
-  kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string;
 }
+
+const FORM_NAME = 'TilkjentYtelseForm';
 
 export const TilkjentYtelseForm = ({
   readOnly,
   readOnlySubmitButton,
   aksjonspunkter,
-  beregningsresultat,
-  arbeidsgiverOpplysningerPerId,
-  submitCallback,
-}: OwnProps) => {
-  const handleSubmit = formState => {
-    submitCallback(transformValues(formState));
-  };
+  behandlingId,
+  behandlingVersjon,
+  alleKodeverk,
+  ...formProps
+}: Partial<OwnProps> & InjectedFormProps) => (
+  <>
+    {aksjonspunkter.length > 0 && (
+      <>
+        <VerticalSpacer twentyPx />
+        <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
+          {[
+            <FormattedMessage
+              id="TilkjentYtelse.AksjonspunktHelpText"
+              key={aksjonspunktCodes.MANUELL_TILKJENT_YTELSE}
+            />,
+          ]}
+        </AksjonspunktHelpText>
+        <VerticalSpacer twentyPx />
+      </>
+    )}
 
-  const buildInitialValues = (): TilkjentYtelseFormState => ({
-    arbeidsgivere: arbeidsgiverOpplysningerPerId,
-    perioder:
-      beregningsresultat?.perioder.map(periode => ({
-        ...periode,
-        id: guid(),
-        openForm: false,
-      })) ?? [],
-    nyArbeidsgiverForm: {
-      navn: '',
-      orgNr: '',
-      erPrivatPerson: false,
-      arbeidsforholdreferanser: [],
-      identifikator: '',
-    },
-    nyPeriodeForm: { fom: null, tom: null, andeler: [] },
+    <form onSubmit={formProps.handleSubmit}>
+      {formProps.warning && <span>{formProps.warning}</span>}
+      <PeriodeTabell
+        // readOnlySubmitButton={readOnlySubmitButton}
+        readOnly={readOnly}
+        submitting={formProps.submitting}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        alleKodeverk={alleKodeverk}
+      />
+      {formProps.error && <span>{formProps.error}</span>}
+    </form>
+  </>
+);
+
+export const sjekkOverlappendePerioder = (index: number, nestePeriode: any, forrigePeriode: any) =>
+  index !== 0 && moment(nestePeriode.fom) <= moment(forrigePeriode.tom);
+
+const validateForm = (values: any) => {
+  // NOSONAR må ha disse sjekkene
+  const errors = {};
+  if (!values.perioder) {
+    return errors;
+  }
+
+  if (values.perioder.length === 0) {
+    return {
+      perioder: {
+        _error: <FormattedMessage id="TilkjentYtelse.IngenPerioder" />,
+      },
+    };
+  }
+
+  values.perioder.forEach((periode: any, index: number) => {
+    const forrigePeriode = values.perioder[index - 1];
+    const nestePeriode = periode;
+
+    if (sjekkOverlappendePerioder(index, nestePeriode, forrigePeriode)) {
+      return {
+        perioder: {
+          _error: <FormattedMessage id="TilkjentYtelse.OverlappendePerioder" />,
+        },
+      };
+    }
+    return {};
   });
 
-  const formMethods = useForm<TilkjentYtelseFormState>({
-    defaultValues: buildInitialValues(),
-  });
-
-  return (
-    <>
-      {aksjonspunkter.length > 0 && (
-        <>
-          <VerticalSpacer twentyPx />
-          <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
-            {['Manuell tilkjent ytelse']}
-          </AksjonspunktHelpText>
-          <VerticalSpacer twentyPx />
-        </>
-      )}
-
-      <Form formMethods={formMethods} onSubmit={handleSubmit} data-testid="OppholdInntektOgPerioderForm">
-        <PeriodeTabell readOnly={readOnly} />
-      </Form>
-    </>
-  );
+  return errors;
 };
 
-export const transformValues = (values: TilkjentYtelseFormState) => [
+const buildInitialValues = createSelector(
+  [
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
+    (props: OwnProps) => props.beregningsresultat?.perioder,
+    (props: OwnProps) => props.arbeidsgiverOpplysningerPerId,
+  ],
+  (perioder = [], arbeidsgiverOpplysningerPerId = {}) => {
+    if (perioder) {
+      return {
+        arbeidsgivere: arbeidsgiverOpplysningerPerId,
+        perioder: perioder.map((periode: any) => ({
+          ...periode,
+          id: guid(),
+          openForm: false,
+          // updated: false,
+        })),
+      };
+    }
+
+    return {
+      arbeidsgivere: arbeidsgiverOpplysningerPerId,
+      perioder,
+    };
+  },
+);
+
+export const transformValues = (values: any) => [
   {
     kode: aksjonspunktCodes.MANUELL_TILKJENT_YTELSE,
     tilkjentYtelse: {
       perioder: values.perioder,
     },
-    begrunnelse: '',
+    // begrunnelse: '',
   },
 ];
 
-export default TilkjentYtelseForm;
+const lagSubmitFn = createSelector(
+  [(ownProps: OwnProps) => ownProps.submitCallback, buildInitialValues],
+  submitCallback => (values: any) => submitCallback(transformValues(values)),
+);
+
+const mapStateToPropsFactory = (_initialState: any, props: OwnProps) => {
+  const initialValues = buildInitialValues(props);
+  const { behandlingId, behandlingVersjon } = props;
+
+  const validate = (values: any) => validateForm(values);
+
+  return (_state, ownProps) => {
+    const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
+    return {
+      initialValues,
+      behandlingFormPrefix,
+      validate,
+      onSubmit: lagSubmitFn(ownProps),
+    };
+  };
+};
+
+export default connect(mapStateToPropsFactory)(
+  behandlingForm({
+    form: FORM_NAME,
+    enableReinitialize: true,
+  })(TilkjentYtelseForm),
+);

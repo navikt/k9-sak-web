@@ -1,18 +1,17 @@
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
+import { InputField, SelectField } from '@fpsak-frontend/form';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
-import { FlexColumn, FlexRow, Image, useFeatureToggles, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { FlexColumn, FlexRow, Image, PeriodFieldArray, useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
-import { atLeastOneRequired } from '@fpsak-frontend/utils/src/validation/validators';
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { Button, Detail, Fieldset, HGrid } from '@navikt/ds-react';
-import { InputField, SelectField } from '@navikt/ft-form-hooks';
-import { useEffect, useState } from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
-import { NyArbeidsgiverFormState, NyPeriodeFormAndeler, TilkjentYtelseFormState } from './FormState';
+import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import React, { useState } from 'react';
+import { WrappedComponentProps } from 'react-intl';
+import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import NyArbeidsgiverModal from './NyArbeidsgiverModal';
+
 import styles from './periode.module.css';
+import { atLeastOneRequired } from '@fpsak-frontend/utils/src/validation/validators';
 
 const minValue0 = minValue(0);
 const maxValue100 = maxValue(100);
@@ -49,8 +48,9 @@ const mapArbeidsgiverePrivatperson = (arbeidsgivere: ArbeidsgiverOpplysningerPer
         ))
     : [];
 
-const getInntektskategori = (inntektskategorier: KodeverkObject[]) => {
-  return inntektskategorier.map(ik => (
+const getInntektskategori = alleKodeverk => {
+  const aktivitetsstatuser = alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI];
+  return aktivitetsstatuser.map(ik => (
     <option value={ik.kode} key={ik.kode}>
       {ik.navn}
     </option>
@@ -67,104 +67,107 @@ const erSelvstendigNæringsdrivende = inntektskategori =>
 
 const erFrilans = inntektskategori => inntektskategori === inntektskategorier.FRILANSER;
 
-const defaultAndel: NyPeriodeFormAndeler = {
-  aktivitetStatus: undefined,
-  aktørId: '',
-  arbeidsforholdId: '',
-  arbeidsforholdType: undefined,
-  arbeidsgiverNavn: '',
-  arbeidsgiverOrgnr: '',
-  arbeidsgiverPersonIdent: '',
-  eksternArbeidsforholdId: '',
-  inntektskategori: undefined,
-  refusjon: 0,
-  sisteUtbetalingsdato: '',
-  stillingsprosent: 0,
-  tilSoker: 0,
-  utbetalingsgrad: 0,
-  uttak: [],
+const defaultAndel = {
+  fom: '',
+  tom: '',
 };
 
 interface OwnProps {
+  meta: FieldArrayMetaProps;
   readOnly: boolean;
+  fields: FieldArrayFieldsProps<any>;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
-  newArbeidsgiverCallback: (values: NyArbeidsgiverFormState) => void;
+  newArbeidsgiverCallback: (values: any) => void;
+  behandlingId: number;
+  behandlingVersjon: number;
 }
 
-export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: OwnProps) => {
+export const NyAndel = ({
+  fields,
+  meta,
+  newArbeidsgiverCallback,
+  alleKodeverk,
+  readOnly,
+  arbeidsgivere,
+  behandlingId,
+  behandlingVersjon,
+}: OwnProps & WrappedComponentProps) => {
   const [isOpen, setOpen] = useState(false);
-  const { control } = useFormContext<TilkjentYtelseFormState>();
-  const { hentKodeverkForKode } = useKodeverkContext();
-  const inntektskategorier = hentKodeverkForKode(KodeverkType.INNTEKTSKATEGORI) as KodeverkObject[];
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'nyPeriodeForm.andeler',
-    keyName: 'fieldId',
-  });
   const [featureToggles] = useFeatureToggles();
   const skillUtPrivatperson = featureToggles?.SKILL_UT_PRIVATPERSON;
 
-  useEffect(() => {
-    if (fields.length === 0) {
-      append(defaultAndel);
-    }
-  }, []);
+  const allFields = fields.getAll();
 
   return (
     <>
-      <Fieldset legend="Ny andel" hideLegend>
-        {fields.map((field, index) => {
-          const erSN = erSelvstendigNæringsdrivende(field.inntektskategori);
-          const erFL = erFrilans(field.inntektskategori);
+      <PeriodFieldArray
+        shouldShowAddButton
+        fields={fields}
+        meta={meta}
+        textCode="TilkjentYtelse.NyAndel"
+        emptyPeriodTemplate={defaultAndel}
+        readOnly={readOnly}
+      >
+        {(periodeElementFieldId, index, getRemoveButton) => {
+          const values = allFields[index];
+
+          const erSN = erSelvstendigNæringsdrivende(values.inntektskategori);
+          const erFL = erFrilans(values.inntektskategori);
+
           return (
-            <FlexRow key={field.fieldId}>
+            <FlexRow key={periodeElementFieldId}>
               <FlexColumn>
                 <SelectField
-                  label="Inntektskategori"
-                  name={`nyPeriodeForm.andeler.${index}.inntektskategori`}
-                  selectValues={getInntektskategori(inntektskategorier)}
+                  label={{ id: 'TilkjentYtelse.NyPeriode.Inntektskategori' }}
+                  name={`${periodeElementFieldId}.inntektskategori`}
+                  bredde="l"
+                  selectValues={getInntektskategori(alleKodeverk)}
                 />
               </FlexColumn>
               {!erSN && !erFL && (
                 <>
-                  <div className="flex items-end">
+                  <FlexColumn className={styles.relative}>
                     <SelectField
-                      label="Arbeidsgiver"
-                      name={`nyPeriodeForm.andeler.${index}.arbeidsgiverOrgnr`}
+                      label={{ id: 'TilkjentYtelse.NyPeriode.Arbeidsgiver' }}
+                      bredde="xl"
+                      name={`${periodeElementFieldId}.arbeidsgiverOrgnr`}
                       validate={
                         skillUtPrivatperson
-                          ? [value => atLeastOneRequired(value, field.arbeidsgiverPersonIdent)]
+                          ? [value => atLeastOneRequired(value, values.arbeidsgiverPersonIdent)]
                           : [required]
                       }
                       selectValues={
                         skillUtPrivatperson ? mapArbeidsgivereOrg(arbeidsgivere) : mapArbeidsgivere(arbeidsgivere)
                       }
                     />
-                    <Button
-                      variant="secondary"
-                      size="small"
-                      icon={<Image src={addCircleIcon} />}
+                    <div
                       onClick={() => setOpen(true)}
-                      aria-label="Ny arbeidsgiver"
-                      type="button"
-                    />
-                  </div>
+                      onKeyDown={() => setOpen(true)}
+                      className={styles.addArbeidsforhold}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      <Image className={styles.addCircleIcon} src={addCircleIcon} alt="Ny arbeidsgiver" />
+                    </div>
+                  </FlexColumn>
                   {skillUtPrivatperson && (
-                    <div className="flex items-end">
+                    <FlexColumn className={styles.relative}>
                       <SelectField
-                        label="Arbeidsgiver (privatperson)"
-                        name={`nyPeriodeForm.andeler.${index}.arbeidsgiverPersonIdent`}
-                        validate={[value => atLeastOneRequired(value, field.arbeidsgiverOrgnr)]}
+                        label={{ id: 'TilkjentYtelse.NyPeriode.ArbeidsgiverPrivatperson' }}
+                        bredde="xl"
+                        name={`${periodeElementFieldId}.arbeidsgiverPersonIdent`}
+                        validate={[value => atLeastOneRequired(value, values.arbeidsgiverOrgnr)]}
                         selectValues={mapArbeidsgiverePrivatperson(arbeidsgivere)}
                       />
-                    </div>
+                    </FlexColumn>
                   )}
                 </>
               )}
               <FlexColumn>
                 <InputField
-                  label="Til søker"
-                  name={`nyPeriodeForm.andeler.${index}.tilSoker`}
+                  label={{ id: 'TilkjentYtelse.NyPeriode.TilSoker' }}
+                  name={`${periodeElementFieldId}.tilSoker`}
                   validate={[required, minValue0, maxValue3999, hasValidDecimal]}
                   format={value => value}
                 />
@@ -172,8 +175,8 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: Ow
               {!erSN && !erFL && (
                 <FlexColumn>
                   <InputField
-                    label="Refusjon"
-                    name={`nyPeriodeForm.andeler.${index}.refusjon`}
+                    label={{ id: 'TilkjentYtelse.NyPeriode.Refusjon' }}
+                    name={`${periodeElementFieldId}.refusjon`}
                     validate={[required, minValue0, maxValue3999, hasValidDecimal]}
                     format={value => value}
                   />
@@ -182,46 +185,30 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: Ow
               {!erSN && (
                 <FlexColumn>
                   <InputField
-                    label="Uttaksgrad"
-                    name={`nyPeriodeForm.andeler.${index}.utbetalingsgrad`}
+                    label={{ id: 'TilkjentYtelse.NyPeriode.Ubetalingsgrad' }}
+                    name={`${periodeElementFieldId}.utbetalingsgrad`}
                     validate={[required, minValue0, maxValue100, hasValidDecimal]}
                     format={value => value}
                   />
                 </FlexColumn>
               )}
-              <FlexColumn>
-                {index > 0 && (
-                  <button
-                    className={styles.buttonRemove}
-                    type="button"
-                    onClick={() => {
-                      remove(index);
-                    }}
-                    data-testid="removeButton"
-                  />
-                )}
-              </FlexColumn>
+              <FlexColumn>{getRemoveButton()}</FlexColumn>
             </FlexRow>
           );
-        })}
-        <HGrid gap="1" columns={{ xs: '1fr 11fr' }}>
-          {!readOnly && (
-            <button type="button" onClick={() => append(defaultAndel)} className={styles.addPeriode}>
-              <Image className={styles.addCircleIcon} src={addCircleIcon} alt="Ny andel" />
-              <Detail className={styles.imageText}>Ny andel</Detail>
-            </button>
-          )}
-          <VerticalSpacer sixteenPx />
-        </HGrid>
-      </Fieldset>
+        }}
+      </PeriodFieldArray>
+
       {isOpen && (
         <NyArbeidsgiverModal
           showModal={isOpen}
-          closeEvent={(values: NyArbeidsgiverFormState) => {
+          newArbeidsgiverCallback={newArbeidsgiverCallback}
+          closeEvent={values => {
             newArbeidsgiverCallback(values);
             setOpen(false);
           }}
           cancelEvent={() => setOpen(false)}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
         />
       )}
     </>
