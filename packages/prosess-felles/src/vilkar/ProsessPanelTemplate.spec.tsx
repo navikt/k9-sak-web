@@ -1,13 +1,13 @@
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
-import messages from '@k9-sak-web/prosess-felles/i18n/nb_NO.json';
-import OpptjeningPanel from './OpptjeningPanel';
+import messages from '../../i18n/nb_NO.json';
+import ProsessPanelTemplate from './ProsessPanelTemplate';
 
-describe('<OpptjeningPanel>', () => {
+describe('<ProsessPanelTemplate>', () => {
   it('skal ikke vise lovreferanse når dette ikke finnes', () => {
     const { container } = renderWithIntlAndReduxForm(
-      <OpptjeningPanel
+      <ProsessPanelTemplate
         handleSubmit={vi.fn()}
         title="Fødsel"
         isAksjonspunktOpen
@@ -19,7 +19,7 @@ describe('<OpptjeningPanel>', () => {
         behandlingVersjon={1}
       >
         <div>test</div>
-      </OpptjeningPanel>,
+      </ProsessPanelTemplate>,
       { messages },
     );
 
@@ -28,7 +28,7 @@ describe('<OpptjeningPanel>', () => {
 
   it('skal vise lovreferanse når dette finnes', () => {
     renderWithIntlAndReduxForm(
-      <OpptjeningPanel
+      <ProsessPanelTemplate
         handleSubmit={vi.fn()}
         lovReferanse="test lovReferanse"
         title="Fødsel"
@@ -41,7 +41,7 @@ describe('<OpptjeningPanel>', () => {
         behandlingVersjon={1}
       >
         <div>test</div>
-      </OpptjeningPanel>,
+      </ProsessPanelTemplate>,
       { messages },
     );
 
