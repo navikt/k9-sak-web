@@ -41,7 +41,7 @@ const NattevåksperiodeVurderingsdetaljer = ({
       <Box marginTop={Margin.xLarge}>
         <LabelledContent
           label="Vurdering av om det er behov for nattevåk"
-          content={nattevåksperiode.begrunnelse}
+          content={<span className="whitespace-pre-wrap">{nattevåksperiode.begrunnelse}</span>}
           indentContent
         />
         <AssessedBy name={hentSaksbehandlerNavn(opprettetAv)} date={opprettetTidspunkt} />

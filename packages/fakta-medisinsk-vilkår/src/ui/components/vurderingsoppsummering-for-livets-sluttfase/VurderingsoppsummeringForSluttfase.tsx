@@ -57,7 +57,7 @@ const VurderingsoppsummeringForSluttfase = ({
         <Box marginTop={Margin.xLarge}>
           <LabelledContent
             label="Skriv begrunnelsen for at den pleietrengende er/var i livets sluttfase etter § 9-13."
-            content={<span>{tekst}</span>}
+            content={<span className="whitespace-pre-wrap">{tekst}</span>}
             indentContent
           />
           <AssessedBy name={hentSaksbehandlerNavn(brukerId)} date={gjeldendeVurdering?.endretTidspunkt} />

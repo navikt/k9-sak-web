@@ -45,7 +45,11 @@ const BeskrivelserForPerioden = ({ periodebeskrivelser }: BeskrivelserForPeriode
       <>
         {periodebeskrivelser.map(periodebeskrivelse => (
           <Box marginBottom={Margin.large} key={periodebeskrivelse.tekst}>
-            <LabelledContent label={getLabel(periodebeskrivelse)} content={periodebeskrivelse.tekst} labelTag="div" />
+            <LabelledContent
+              label={getLabel(periodebeskrivelse)}
+              content={<span className="whitespace-pre-wrap">{periodebeskrivelse.tekst}</span>}
+              labelTag="div"
+            />
           </Box>
         ))}
         <hr className={styles.beskrivelserForPerioden__separator} />

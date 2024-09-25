@@ -52,7 +52,7 @@ const VurderingsoppsummeringForKontinuerligTilsynOgPleie = ({
           <LabelledContent
             label="Gjør en vurdering av om det er behov for kontinuerlig tilsyn og pleie som følge
                                         av sykdommen etter § 9-10, første ledd."
-            content={<span>{tekst}</span>}
+            content={<span className="whitespace-pre-wrap">{tekst}</span>}
             indentContent
           />
           <AssessedBy name={hentSaksbehandlerNavn(brukerId)} date={gjeldendeVurdering?.endretTidspunkt} />
