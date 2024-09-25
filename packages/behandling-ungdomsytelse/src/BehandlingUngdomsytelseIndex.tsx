@@ -1,27 +1,24 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
   ArbeidsgiverOpplysningerWrapper,
   Behandling,
-  Dokument,
   Fagsak,
   FagsakPerson,
   FeatureToggles,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
 
-import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
-import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import UngdomsytelsePaneler from './components/UngdomsytelsePaneler';
 import {
   UngdomsytelseBehandlingApiKeys,
   requestUngdomsytelseApi,
   restApiUngdomsytelseHooks,
 } from './data/ungdomsytelseBehandlingApi';
-import { FetchedData, OverstyringUttakRequest } from './types';
+import { FetchedData } from './types';
 
 const ungdomsytelseData = [
   { key: UngdomsytelseBehandlingApiKeys.AKSJONSPUNKTER },
@@ -30,10 +27,7 @@ const ungdomsytelseData = [
   { key: UngdomsytelseBehandlingApiKeys.SOKNAD },
   { key: UngdomsytelseBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING },
   { key: UngdomsytelseBehandlingApiKeys.BEREGNINGSGRUNNLAG },
-  { key: UngdomsytelseBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING },
   { key: UngdomsytelseBehandlingApiKeys.SIMULERING_RESULTAT },
-  { key: UngdomsytelseBehandlingApiKeys.UTTAK },
-  { key: UngdomsytelseBehandlingApiKeys.OVERLAPPENDE_YTELSER },
 ];
 
 interface OwnProps {
@@ -72,25 +66,12 @@ const BehandlingUngdomsytelseIndex = ({
   setRequestPendingMessage,
   featureToggles,
 }: OwnProps) => {
-  const forrigeSaksnummer = usePrevious(fagsak.saksnummer);
-
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
     current: undefined,
     previous: undefined,
   });
   const behandling = nyOgForrigeBehandling.current;
   const forrigeBehandling = nyOgForrigeBehandling.previous;
-
-  const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandling?.versjon);
-  const { data: alleDokumenter = [] } = restApiHooks.useRestApi<Dokument[]>(
-    K9sakApiKeys.ALL_DOCUMENTS,
-    { saksnummer: fagsak.saksnummer },
-    {
-      updateTriggers: [behandlingId, behandling?.versjon],
-      suspendRequest: forrigeSaksnummer && erBehandlingEndretFraUndefined,
-      keepData: true,
-    },
-  );
 
   const setBehandling = useCallback(nyBehandling => {
     requestUngdomsytelseApi.resetCache();
@@ -102,7 +83,7 @@ const BehandlingUngdomsytelseIndex = ({
     startRequest: hentBehandling,
     data: behandlingRes,
     state: behandlingState,
-  } = restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(UngdomsytelseBehandlingApiKeys.BEHANDLING_PP);
+  } = restApiUngdomsytelseHooks.useRestApiRunner<Behandling>(UngdomsytelseBehandlingApiKeys.BEHANDLING_UU);
   useSetBehandlingVedEndring(behandlingRes, setBehandling);
 
   const { addErrorMessage } = useRestApiErrorDispatcher();
@@ -122,30 +103,9 @@ const BehandlingUngdomsytelseIndex = ({
   const { startRequest: settPaVent } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.UPDATE_ON_HOLD,
   );
-  const { startRequest: opprettVerge } = restApiUngdomsytelseHooks.useRestApiRunner(
-    UngdomsytelseBehandlingApiKeys.VERGE_OPPRETT,
-  );
-  const { startRequest: fjernVerge } = restApiUngdomsytelseHooks.useRestApiRunner(
-    UngdomsytelseBehandlingApiKeys.VERGE_FJERN,
-  );
   const { startRequest: lagreRisikoklassifiseringAksjonspunkt } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.SAVE_AKSJONSPUNKT,
   );
-
-  const { startRequest: lagreOverstyringUttakRequest } = restApiUngdomsytelseHooks.useRestApiRunner(
-    UngdomsytelseBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
-  );
-
-  const lagreOverstyringUttak = async (values: OverstyringUttakRequest): Promise<void> => {
-    lagreOverstyringUttakRequest({
-      saksnummer: fagsak.saksnummer,
-      behandlingId: behandling.id,
-      behandlingVersjon: behandling.versjon,
-      overstyrteAksjonspunktDtoer: [values],
-    })
-      .then(() => hentBehandling({ behandlingId }, true))
-      .then(() => window.scroll(0, 0));
-  };
 
   useEffect(() => {
     behandlingEventHandler.setHandler({
@@ -154,9 +114,6 @@ const BehandlingUngdomsytelseIndex = ({
       taBehandlingAvVent: params =>
         taBehandlingAvVent(params).then(behandlingResTaAvVent => setBehandling(behandlingResTaAvVent)),
       henleggBehandling: params => henleggBehandling(params),
-      opprettVerge: params =>
-        opprettVerge(params).then(behandlingResOpprettVerge => setBehandling(behandlingResOpprettVerge)),
-      fjernVerge: params => fjernVerge(params).then(behandlingResFjernVerge => setBehandling(behandlingResFjernVerge)),
       lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 
@@ -204,8 +161,6 @@ const BehandlingUngdomsytelseIndex = ({
         setBehandling={setBehandling}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
         featureToggles={featureToggles}
-        dokumenter={alleDokumenter}
-        lagreOverstyringUttak={lagreOverstyringUttak}
       />
     </>
   );

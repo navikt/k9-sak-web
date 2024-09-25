@@ -125,7 +125,6 @@ describe('<UngdomsytelseProsess>', () => {
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        lagreOverstyringUttak={vi.fn()}
       />,
     );
 
@@ -157,7 +156,6 @@ describe('<UngdomsytelseProsess>', () => {
         setBehandling={vi.fn()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        lagreOverstyringUttak={vi.fn()}
       />,
     );
 

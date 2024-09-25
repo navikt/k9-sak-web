@@ -39,11 +39,9 @@ interface OwnProps {
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   opneSokeside: () => void;
-  apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   setBehandling: (behandling: Behandling) => void;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles: FeatureToggles;
-  lagreOverstyringUttak: (values: any) => void;
 }
 
 const getForhandsvisFptilbakeCallback =
@@ -138,11 +136,9 @@ const UngdomsytelseProsess = ({
   oppdaterBehandlingVersjon,
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
-  apentFaktaPanelInfo,
   setBehandling,
   arbeidsgiverOpplysningerPerId,
   featureToggles,
-  lagreOverstyringUttak,
 }: OwnProps) => {
   prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
@@ -198,7 +194,6 @@ const UngdomsytelseProsess = ({
     data.vilkar,
     hasFetchError,
     valgtProsessSteg,
-    apentFaktaPanelInfo,
   );
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
@@ -247,14 +242,12 @@ const UngdomsytelseProsess = ({
           fagsak={fagsak}
           behandling={behandling}
           alleKodeverk={alleKodeverk}
-          apentFaktaPanelInfo={apentFaktaPanelInfo}
           oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
           lagringSideeffekterCallback={lagringSideeffekterCallback}
           lagreAksjonspunkter={lagreAksjonspunkter}
           lagreOverstyrteAksjonspunkter={lagreOverstyrteAksjonspunkter}
           useMultipleRestApi={restApiUngdomsytelseHooks.useMultipleRestApi}
           featureToggles={featureToggles}
-          lagreOverstyringUttak={lagreOverstyringUttak}
           erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
         />
       </ProsessStegContainer>
