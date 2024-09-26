@@ -243,9 +243,9 @@ export const OppholdInntektOgPerioderForm = ({
   const isApOpen = hasOpenAksjonspunkter || !submittable;
 
   const erAutomatiskVurdert =
-    medlemskap.medlemskapPerioder.length === 0 &&
-    medlemskap.perioder.length === 0 &&
-    Object.keys(medlemskap.personopplysninger).length > 0;
+    medlemskap?.medlemskapPerioder?.length === 0 &&
+    medlemskap?.perioder?.length === 0 &&
+    Object.keys(medlemskap?.personopplysninger).length > 0;
 
   return (
     <Form formMethods={formMethods} onSubmit={handleSubmit} data-testid="OppholdInntektOgPerioderForm">
