@@ -1,7 +1,7 @@
-import ErrorBoundary from './ErrorBoundary.js';
 import { Meta, StoryObj } from '@storybook/react';
-import { fn, expect } from '@storybook/test';
+import { expect, fn, waitFor } from '@storybook/test';
 import { useEffect } from 'react';
+import ErrorBoundary from './ErrorBoundary.js';
 
 const meta = {
   title: 'sak/sak-app',
@@ -37,7 +37,7 @@ export const ErrorBoundaryTriggered: Story = {
     children: <FailingChild />,
   },
   play: async ({ canvas, args }) => {
-    await expect(args.errorMessageCallback).toHaveBeenCalledOnce();
+    await waitFor(() => expect(args.errorMessageCallback).toHaveBeenCalledOnce());
     await expect(canvas.getByRole('heading')).toHaveTextContent(
       'Det har oppstått en teknisk feil i denne behandlingen.',
     );
