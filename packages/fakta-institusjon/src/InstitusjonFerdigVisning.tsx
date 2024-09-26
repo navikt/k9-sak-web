@@ -13,13 +13,14 @@ interface OwnProps {
 
 const InstitusjonFerdigVisning = ({ vurdering, readOnly, rediger }: OwnProps) => {
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
+  const visEndreLink = !readOnly && vurdering.resultat !== Vurderingsresultat.GODKJENT_AUTOMATISK;
 
   return (
     <DetailView
       title="Vurdering av institusjon"
       // eslint-disable-next-line react/jsx-no-useless-fragment
       contentAfterTitleRenderer={() =>
-        !readOnly ? (
+        visEndreLink ? (
           <LinkButton onClick={rediger} className={styles.endreLink}>
             Endre vurdering
           </LinkButton>
@@ -41,7 +42,7 @@ const InstitusjonFerdigVisning = ({ vurdering, readOnly, rediger }: OwnProps) =>
         <LabelledContent
           // eslint-disable-next-line max-len
           label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter etter § 9-14, første ledd."
-          content={vurdering.begrunnelse}
+          content={<span className="whitespace-pre-wrap">{vurdering.begrunnelse}</span>}
           indentContent
         />
         <AssessedBy name={hentSaksbehandlerNavn(vurdering?.vurdertAv)} date={vurdering?.vurdertTidspunkt} />

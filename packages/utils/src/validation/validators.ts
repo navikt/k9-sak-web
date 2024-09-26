@@ -54,7 +54,8 @@ import {
 export const maxLengthOrFodselsnr = length => text =>
   isEmpty(text) || text.toString().trim().length <= length ? null : maxLengthOrFodselsnrMessage(length);
 export const required = value => (isEmpty(value) ? isRequiredMessage() : undefined);
-export const atLeastOneRequired = ((value, otherValue) => (isEmpty(value) && isEmpty(otherValue) ? isRequiredMessage() : undefined));
+export const atLeastOneRequired = (value, otherValue) =>
+  isEmpty(value) && isEmpty(otherValue) ? isRequiredMessage() : undefined;
 export const notDash = value => (value === '-' ? isRequiredMessage() : undefined);
 export const requiredIfNotPristine = (value, allValues, props) =>
   props.pristine || !isEmpty(value) ? undefined : isRequiredMessage();

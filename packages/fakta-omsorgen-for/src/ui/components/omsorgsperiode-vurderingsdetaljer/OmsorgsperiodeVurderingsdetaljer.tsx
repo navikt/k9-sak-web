@@ -39,7 +39,11 @@ const OmsorgsperiodeVurderingsdetaljer = ({
     }
     return (
       <>
-        <LabelledContent label={label} content={begrunnelse} indentContent />
+        <LabelledContent
+          label={label}
+          content={<span className="whitespace-pre-wrap">{begrunnelse}</span>}
+          indentContent
+        />
         <AssessedBy name={hentSaksbehandlerNavn(omsorgsperiode?.vurdertAv)} date={omsorgsperiode?.vurdertTidspunkt} />
       </>
     );

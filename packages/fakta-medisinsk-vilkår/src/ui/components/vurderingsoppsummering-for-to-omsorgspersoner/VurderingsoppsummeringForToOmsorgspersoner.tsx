@@ -49,7 +49,7 @@ const VurderingsoppsummeringForToOmsorgspersoner = ({
         <Box marginTop={Margin.xLarge}>
           <LabelledContent
             label="Gjør en vurdering av om det er behov for to omsorgspersoner samtidig etter § 9-10, andre ledd."
-            content={<span>{tekst}</span>}
+            content={<span className="whitespace-pre-wrap">{tekst}</span>}
             indentContent
           />
           <AssessedBy name={hentSaksbehandlerNavn(brukerId)} date={gjeldendeVurdering?.endretTidspunkt} />

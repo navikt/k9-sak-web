@@ -106,20 +106,6 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
     enabled: erStøttetFagsakYtelseType && !!behandlingUuid,
   });
 
-  const harMerEnnEnBehandlingKnyttetTilDokumenter = () => {
-    const unikeBehandlinger = [];
-    if (documents.some(document => document.behandlinger?.length > 0)) {
-      documents.forEach(document =>
-        document.behandlinger.forEach(behandling => {
-          if (!unikeBehandlinger.includes(behandling)) {
-            unikeBehandlinger.push(behandling);
-          }
-        }),
-      );
-    }
-    return unikeBehandlinger.length > 1;
-  };
-
   const ModiaLenke = () => (
     <Link target="_blank" className={styles.modiaLink} href={getModiaPath(fagsakPerson?.personnummer)}>
       <span>Se dialog med søker i Modia</span>
@@ -152,17 +138,15 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
   return (
     <>
       <div className={styles.controlsContainer}>
-        {harMerEnnEnBehandlingKnyttetTilDokumenter() && (
-          <Select
-            size="small"
-            onChange={event => setSelectedFilter(event.target.value)}
-            label="Hvilke behandlinger skal vises?"
-            hideLabel
-          >
-            <option value={alleBehandlinger}>Alle behandlinger</option>
-            <option value={behandlingId}>Denne behandlingen</option>
-          </Select>
-        )}
+        <Select
+          size="small"
+          onChange={event => setSelectedFilter(event.target.value)}
+          label="Hvilke behandlinger skal vises?"
+          hideLabel
+        >
+          <option value={alleBehandlinger}>Alle behandlinger</option>
+          <option value={behandlingId}>Denne behandlingen</option>
+        </Select>
         <ModiaLenke />
       </div>
       <Table>
