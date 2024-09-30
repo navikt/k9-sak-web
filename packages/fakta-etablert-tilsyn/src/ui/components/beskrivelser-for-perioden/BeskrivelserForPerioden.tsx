@@ -71,7 +71,7 @@ const BeskrivelserForPerioden = ({ periodebeskrivelser }: BeskrivelserForPeriode
             type="button"
             variant="secondary"
           >
-            {visAlleBeskrivelser ? 'Vis tre nyeste beskrivelser' : 'Vis tidligere beskrivelser'}
+            {visAlleBeskrivelser ? 'Skjul tidligere beskrivelser' : 'Vis tidligere beskrivelser'}
           </Button>
         )}
         <hr className={styles.beskrivelserForPerioden__separator} />
