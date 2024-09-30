@@ -5,7 +5,7 @@ import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsa
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { KeyHorizontalIcon } from '@navikt/aksel-icons';
-import { Detail, Heading, Label } from '@navikt/ds-react';
+import { Button, Detail, Heading, Label } from '@navikt/ds-react';
 import { SetStateAction } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -93,9 +93,13 @@ const SoknadsfristVilkarHeader = ({
                 {!erOverstyrt && !overrideReadOnly && (
                   <FlexColumn>
                     <VerticalSpacer eightPx />
-                    <KeyHorizontalIcon
-                      className="-rotate-45 text-3xl text-[var(--a-text-action)] -mt-1"
+                    <Button
+                      size="small"
+                      type="button"
+                      variant="tertiary"
+                      icon={<KeyHorizontalIcon className="-rotate-45 text-3xl" />}
                       onClick={togglePa}
+                      aria-label="Overstyring av søknadsfristvilkåret"
                     />
                   </FlexColumn>
                 )}
