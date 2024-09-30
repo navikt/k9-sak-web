@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
 import SoknadsfristVilkarHeader from './SoknadsfristVilkarHeader';
 
 describe('<SoknadsfristVilkarHeader>', () => {
@@ -10,6 +9,7 @@ describe('<SoknadsfristVilkarHeader>', () => {
         lovReferanse="§23"
         overrideReadOnly={false}
         kanOverstyreAccess={{
+          employeeHasAccess: true,
           isEnabled: true,
         }}
         toggleOverstyring={() => undefined}

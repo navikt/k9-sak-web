@@ -90,6 +90,7 @@ export const visOverstyringspanelForSoknadsfrist: Story = {
   args: {
     overrideReadOnly: false,
     kanOverstyreAccess: {
+      employeeHasAccess: true,
       isEnabled: true,
     },
   },
@@ -116,6 +117,7 @@ export const visOverstyringspanelForSoknadsfristUtenDokumenter: Story = {
   args: {
     overrideReadOnly: false,
     kanOverstyreAccess: {
+      employeeHasAccess: true,
       isEnabled: true,
     },
   },
@@ -142,6 +144,7 @@ export const VisSoknadsfristAksjonspunkt5077: Story = {
   args: {
     overrideReadOnly: false,
     kanOverstyreAccess: {
+      employeeHasAccess: true,
       isEnabled: true,
     },
     submitCallback: fn(),
@@ -319,6 +322,7 @@ export const visSoknadsfristAksjonspunkt5077Delvis: Story = {
   args: {
     overrideReadOnly: false,
     kanOverstyreAccess: {
+      employeeHasAccess: true,
       isEnabled: true,
     },
   },
@@ -427,6 +431,7 @@ export const VisSoknadsfristAksjonspunkt5077FlereSøknader: Story = {
   args: {
     overrideReadOnly: false,
     kanOverstyreAccess: {
+      employeeHasAccess: true,
       isEnabled: true,
     },
   },
