@@ -13,13 +13,14 @@ interface OwnProps {
 
 const InstitusjonFerdigVisning = ({ vurdering, readOnly, rediger }: OwnProps) => {
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
+  const visEndreLink = !readOnly && vurdering.resultat !== Vurderingsresultat.GODKJENT_AUTOMATISK;
 
   return (
     <DetailView
       title="Vurdering av institusjon"
       // eslint-disable-next-line react/jsx-no-useless-fragment
       contentAfterTitleRenderer={() =>
-        !readOnly ? (
+        visEndreLink ? (
           <LinkButton onClick={rediger} className={styles.endreLink}>
             Endre vurdering
           </LinkButton>
