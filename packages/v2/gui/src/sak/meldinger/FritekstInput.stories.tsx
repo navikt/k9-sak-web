@@ -33,6 +33,7 @@ export const UgyldigeTegn: Story = {
     defaultValue: {
       tittel: '',
       tekst: 'abcd[^]feil',
+      invalid: false,
     },
     onChange: fn(),
   },

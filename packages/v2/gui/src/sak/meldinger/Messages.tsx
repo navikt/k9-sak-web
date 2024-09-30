@@ -67,7 +67,7 @@ const initMessagesState = (maler: Template[]): MessagesState => {
     valgtMalkode: maler[0]?.kode,
     fritekstForslag: [],
     valgtFritekst: undefined,
-    valgtMottakerId: undefined,
+    valgtMottaker: undefined,
     tredjepartsmottakerAktivert: false,
     tredjepartsmottaker: undefined,
   };
@@ -137,7 +137,7 @@ const messagesStateReducer = (state: MessagesState, dispatch: MessagesStateActio
       // Viss valgt mal støtter valgt mottaker, behold den, ellers settast mottaker til første som er støtta av mal
       const valgtMottaker = dispatch.valgtMal?.mottakere.some(mottaker => mottaker.id === state.valgtMottaker?.id)
         ? state.valgtMottaker
-        : dispatch.valgtMal?.mottakere[0];
+        : dispatch.valgtMal?.mottakere.find(m => m.utilgjengelig === undefined) || dispatch.valgtMal?.mottakere[0];
       return {
         ...state,
         tredjepartsmottakerAktivert,
