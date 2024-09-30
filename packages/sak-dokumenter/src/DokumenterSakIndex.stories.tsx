@@ -2,8 +2,6 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { Fagsak } from '@k9-sak-web/types';
-import React from 'react';
 import DokumenterSakIndex from './DokumenterSakIndex';
 
 const behandlingId = 1;
@@ -40,18 +38,9 @@ const dokumenter = [
 
 const fagsak = {
   saksnummer: '35425245',
-  sakstype: {
-    kode: fagsakYtelsesType.PSB,
-    kodeverk: 'FAGSAK_YTELSE',
-  },
-  relasjonsRolleType: {
-    kode: relasjonsRolleType.MOR,
-    kodeverk: '',
-  },
-  status: {
-    kode: fagsakStatus.UNDER_BEHANDLING,
-    kodeverk: 'FAGSAK_STATUS',
-  },
+  sakstype: fagsakYtelsesType.PSB, // FAGSAK_YTELSE
+  relasjonsRolleType: relasjonsRolleType.MOR,
+  status: fagsakStatus.UNDER_BEHANDLING, // FAGSAK_STATUS
   barnFodt: '2020-01-01',
   opprettet: '2020-01-01',
   endret: '2020-01-01',
@@ -59,7 +48,7 @@ const fagsak = {
   kanRevurderingOpprettes: false,
   skalBehandlesAvInfotrygd: false,
   dekningsgrad: 100,
-} as Fagsak;
+};
 
 export default {
   title: 'sak/sak-dokumenter',

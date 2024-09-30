@@ -2,9 +2,8 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { Fagsak } from '@k9-sak-web/types';
+import { FagsakDto } from '@navikt/k9-sak-typescript-client';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import { DokumentIndex } from './DokumentIndex';
 
@@ -35,15 +34,9 @@ describe('<DokumentIndex>', () => {
 
   const fagsak = {
     saksnummer: '35425245',
-    sakstype: { kode: fagsakYtelsesType.PSB, kodeverk: 'FAGSAK_YTELSE' },
-    relasjonsRolleType: {
-      kode: relasjonsRolleType.MOR,
-      kodeverk: '',
-    },
-    status: {
-      kode: fagsakStatus.UNDER_BEHANDLING,
-      kodeverk: 'FAGSAK_STATUS',
-    },
+    sakstype: fagsakYtelsesType.PSB, // FAGSAK_YTELSE
+    relasjonsRolleType: relasjonsRolleType.MOR,
+    status: fagsakStatus.UNDER_BEHANDLING, // FAGSAK_STATUS
     barnFodt: '2020-01-01',
     opprettet: '2020-01-01',
     endret: '2020-01-01',
@@ -51,7 +44,7 @@ describe('<DokumentIndex>', () => {
     kanRevurderingOpprettes: false,
     skalBehandlesAvInfotrygd: false,
     dekningsgrad: 100,
-  } as Fagsak;
+  } as FagsakDto;
 
   it('skal vise liste med sorterte dokumenter', () => {
     requestApi.mock(K9sakApiKeys.ALL_DOCUMENTS, documents);
