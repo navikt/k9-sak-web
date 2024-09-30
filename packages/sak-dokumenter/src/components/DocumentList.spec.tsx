@@ -1,9 +1,7 @@
 /* eslint-disable max-len */
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { cleanup, screen, waitFor } from '@testing-library/react';
-import React from 'react';
+import { kommunikasjonsretning } from '@navikt/k9-sak-typescript-client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { intlMock } from '../../i18n/index';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import DocumentList from './DocumentList';
 
 const queryClient = new QueryClient({
@@ -25,22 +23,21 @@ describe('<DocumentList>', () => {
       journalpostId: '1',
       dokumentId: '1',
       tittel: 'Terminbekreftelse',
-      tidspunkt: '0405198632231',
-      kommunikasjonsretning: 'INN',
+      tidspunkt: new Date().toDateString(),
+      kommunikasjonsretning: 'I' as kommunikasjonsretning,
     };
 
     const anotherDocument = {
       journalpostId: '2',
       dokumentId: '2',
       tittel: 'Førstegangssøknad',
-      tidspunkt: '0405198632231',
-      kommunikasjonsretning: 'UT',
+      tidspunkt: new Date().toDateString(),
+      kommunikasjonsretning: 'U' as kommunikasjonsretning,
     };
 
-    renderWithIntl(
+    render(
       wrapper(
-        <DocumentList.WrappedComponent
-          intl={intlMock}
+        <DocumentList
           documents={[document, anotherDocument]}
           behandlingId={1}
           saksnummer={1}
@@ -61,19 +58,12 @@ describe('<DocumentList>', () => {
       dokumentId: '1',
       tittel: 'Terminbekreftelse',
       tidspunkt: null,
-      kommunikasjonsretning: 'INN',
+      kommunikasjonsretning: 'I' as kommunikasjonsretning,
     };
 
-    renderWithIntl(
+    render(
       <QueryClientProvider client={queryClient}>
-        <DocumentList.WrappedComponent
-          intl={intlMock}
-          documents={[document]}
-          behandlingId={1}
-          saksnummer={1}
-          behandlingUuid="1"
-          sakstype="PSB"
-        />
+        <DocumentList documents={[document]} behandlingId={1} saksnummer={1} behandlingUuid="1" sakstype="PSB" />
       </QueryClientProvider>,
     );
     await waitFor(() => {
@@ -82,16 +72,9 @@ describe('<DocumentList>', () => {
   });
 
   it('skal ikke vise tabell når det ikke finnes dokumenter', async () => {
-    renderWithIntl(
+    render(
       <QueryClientProvider client={queryClient}>
-        <DocumentList.WrappedComponent
-          intl={intlMock}
-          documents={[]}
-          behandlingId={1}
-          saksnummer={1}
-          behandlingUuid="1"
-          sakstype="PSB"
-        />
+        <DocumentList documents={[]} behandlingId={1} saksnummer={1} behandlingUuid="1" sakstype="PSB" />
       </QueryClientProvider>,
     );
 

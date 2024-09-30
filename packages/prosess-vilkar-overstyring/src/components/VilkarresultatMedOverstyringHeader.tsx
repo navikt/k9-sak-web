@@ -1,10 +1,10 @@
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
-import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { Aksjonspunkt } from '@k9-sak-web/types';
+import { KeyHorizontalIcon } from '@navikt/aksel-icons';
 import { Button, Detail, Heading, Label } from '@navikt/ds-react';
 import { SetStateAction } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -97,7 +97,7 @@ const VilkarresultatMedOverstyringHeader = ({
                   variant="tertiary"
                   size="xsmall"
                   onClick={togglePa}
-                  icon={<Image className={styles.key} src={keyImage} aria-label="Overstyring" />}
+                  icon={<KeyHorizontalIcon className="-rotate-45 text-3xl" />}
                   disabled={erOverstyrt || overrideReadOnly}
                 />
               </FlexColumn>

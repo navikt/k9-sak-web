@@ -28,7 +28,10 @@ const FortsettUtenInntektsmeldingAvslag = ({
             </Button>
           )}
         </Alert>
-        <LabelledContent label="Begrunnelse" content={<span>{tilstand.begrunnelse}</span>} />
+        <LabelledContent
+          label="Begrunnelse"
+          content={<span className="whitespace-pre-wrap">{tilstand.begrunnelse}</span>}
+        />
       </>
     );
   }

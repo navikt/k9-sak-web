@@ -44,7 +44,7 @@ const VurderingsoppsummeringLangvarigSykdom = ({
           <LabelledContent
             // eslint-disable-next-line max-len
             label="Gjør en vurdering av om den pleietrengende har en funksjonshemning eller en langvarig sykdom antatt å være i mer enn ett år som følge av § 9-14."
-            content={<span>{tekst}</span>}
+            content={<span className="whitespace-pre-wrap">{tekst}</span>}
             indentContent
           />
           <AssessedBy name={hentSaksbehandlerNavn(brukerId)} date={gjeldendeVurdering?.endretTidspunkt} />

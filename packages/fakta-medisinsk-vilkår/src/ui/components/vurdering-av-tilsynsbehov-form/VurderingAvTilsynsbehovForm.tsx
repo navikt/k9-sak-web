@@ -1,7 +1,7 @@
 import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
 import { Period, isSameOrBefore } from '@fpsak-frontend/utils';
 import { Close } from '@navikt/ds-icons';
-import { Alert, Label, Link } from '@navikt/ds-react';
+import { Alert, Button, Label, Link } from '@navikt/ds-react';
 import { Box, ContentWithTooltip, Form, Margin, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
 import React, { useState } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
@@ -254,13 +254,15 @@ const VurderingAvTilsynsbehovForm = ({
                 />
               </div>
               {visFlereDokumenterKnapp() && (
-                <button
-                  className={styles.visDokumenterKnapp}
+                <Button
+                  className="mt-2"
                   onClick={() => setVisAlleDokumenter(!visAlleDokumenter)}
+                  size="small"
                   type="button"
+                  variant="secondary"
                 >
                   {visAlleDokumenter ? `Vis færre dokumenter` : `Vis alle dokumenter (${dokumenter.length})`}
-                </button>
+                </Button>
               )}
             </Box>
           )}

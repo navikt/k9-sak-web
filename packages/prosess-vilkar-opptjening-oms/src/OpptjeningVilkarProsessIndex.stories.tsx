@@ -63,8 +63,8 @@ const opptjeningUten847B = {
   ],
   fastsattOpptjening: {
     opptjeningperiode: {
-      måneder: 4,
-      dager: 6,
+      måneder: 0,
+      dager: 10,
     },
     fastsattOpptjeningAktivitetList: [
       {
@@ -102,8 +102,8 @@ const opptjeningMed847B = {
   ],
   fastsattOpptjening: {
     opptjeningperiode: {
-      måneder: 4,
-      dager: 6,
+      måneder: 0,
+      dager: 10,
     },
     fastsattOpptjeningAktivitetList: [
       {
@@ -274,6 +274,10 @@ export const visPanelForPSBÅpentAksjonspunktUten847B = args => (
         perioder: [
           {
             avslagKode: null,
+            merknad: {
+              kode: '7847A',
+              kodeverk: 'VILKAR_UTFALL_MERKNAD',
+            },
             merknadParametere: {
               antattGodkjentArbeid: 'P10D',
               antattOpptjeningAktivitetTidslinje:
@@ -299,6 +303,7 @@ export const visPanelForPSBÅpentAksjonspunktUten847B = args => (
           definisjon: {
             kode: aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET,
           },
+          erAktivt: true,
           status: {
             kode: aksjonspunktStatus.OPPRETTET,
           },
@@ -345,6 +350,9 @@ export const visPanelForPSBÅpentAksjonspunktMed847B = args => (
               antattGodkjentArbeid: 'P10D',
               antattOpptjeningAktivitetTidslinje:
                 'LocalDateTimeline<2020-04-17, 2020-04-26 [1]> = [[2020-04-17, 2020-04-26]]',
+            },
+            merknad: {
+              kode: '-',
             },
             vilkarStatus: {
               kode: 'OPPFYLT',
@@ -430,7 +438,7 @@ export const visPanelForNårEnIkkeHarAksjonspunkt = args => (
             begrunnelse: null,
             vurderesIBehandlingen: true,
             merknad: {
-              kode: '1035',
+              kode: '-',
               kodeverk: 'VILKAR_UTFALL_MERKNAD',
             },
           },
