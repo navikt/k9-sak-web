@@ -29,6 +29,7 @@ interface SoknadsfristVilkarHeaderProps {
   aksjonspunkter: AksjonspunktDto[];
   erOverstyrt?: boolean;
   kanOverstyreAccess?: {
+    employeeHasAccess: boolean;
     isEnabled: boolean;
   };
   lovReferanse?: string;
@@ -86,6 +87,7 @@ const SoknadsfristVilkarHeader = ({
             <VilkarOkMessage originalErVilkarOk={originalErVilkarOk} />
           </div>
           {originalErVilkarOk !== undefined &&
+            kanOverstyreAccess.employeeHasAccess &&
             !isHidden(kanOverstyreAccess.isEnabled, aksjonspunktCodes, overstyringApKode) && (
               <>
                 {!erOverstyrt && !overrideReadOnly && (

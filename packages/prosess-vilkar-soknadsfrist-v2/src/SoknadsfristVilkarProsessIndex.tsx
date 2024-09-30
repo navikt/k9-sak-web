@@ -36,6 +36,7 @@ interface SoknadsfristVilkarProsessIndexProps {
   submitCallback: (props: SubmitCallback[]) => void;
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
+    employeeHasAccess: boolean;
     isEnabled: boolean;
   };
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
