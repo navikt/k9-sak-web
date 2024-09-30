@@ -3,6 +3,7 @@ import Kodeverk from './kodeverkTsType';
 export type BeregningsresultatPeriodeAndel = Readonly<{
   arbeidsgiverNavn: string;
   arbeidsgiverOrgnr: string;
+  arbeidsgiverPersonIdent: string;
   refusjon: number;
   tilSoker: number;
   uttak: any[];
@@ -20,9 +21,9 @@ export type BeregningsresultatPeriodeAndel = Readonly<{
 export type BeregningsresultatPeriode = Readonly<{
   fom: string;
   tom: string;
-  dagsats: number;
+  dagsats?: number;
   andeler?: BeregningsresultatPeriodeAndel[];
-  totalUtbetalingsgradFraUttak: number;
+  totalUtbetalingsgradFraUttak?: number;
   totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt?: number;
 }>;
 

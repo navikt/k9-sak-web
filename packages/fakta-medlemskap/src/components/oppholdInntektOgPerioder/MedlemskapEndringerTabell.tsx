@@ -1,51 +1,41 @@
-import { behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { DateLabel } from '@fpsak-frontend/shared-components';
+import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Table } from '@navikt/ds-react';
 import React from 'react';
-import { useIntl } from 'react-intl';
-import { connect } from 'react-redux';
+import { useFormContext } from 'react-hook-form';
+import { OppholdInntektOgPerioderFormState } from './FormState';
+import { Periode } from './Periode';
 
-const headerTextCodes = ['MedlemskapEndringerTabell.GjeldeneFom', 'MedlemskapEndringerTabell.Opplysning'];
-
-interface Periode {
-  id: string;
-  vurderingsdato: string;
-  årsaker: string[];
-  aksjonspunkter: string[];
-  begrunnelse: string;
-}
+const headerTextCodes = ['Gjeldende f.o.m', 'Opplysning'];
 
 interface MedlemskapEndringerTabellProps {
-  velgPeriodeCallback: (event: React.MouseEvent<HTMLTableRowElement, MouseEvent>, id: string, periode: Periode) => void;
+  velgPeriodeCallback: (id: string, periode: Periode) => void;
   selectedId?: string;
-  perioder?: Periode[];
 }
 
-const MedlemskapEndringerTabellImpl = ({
-  perioder = [],
-  velgPeriodeCallback,
-  selectedId,
-}: MedlemskapEndringerTabellProps) => {
-  const intl = useIntl();
+const MedlemskapEndringerTabellImpl = ({ velgPeriodeCallback, selectedId }: MedlemskapEndringerTabellProps) => {
+  const { getValues } = useFormContext<OppholdInntektOgPerioderFormState>();
+  const { perioder } = getValues();
+  const sortertePerioder = perioder.sort((a, b) => a.vurderingsdato.localeCompare(b.vurderingsdato));
   return (
     <Table>
       <Table.Header>
         <Table.Row>
           {headerTextCodes.map(textCode => (
             <Table.HeaderCell scope="col" key={textCode}>
-              {intl.formatMessage({ id: textCode })}
+              {textCode}
             </Table.HeaderCell>
           ))}
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {perioder.map(periode => (
+        {sortertePerioder.map(periode => (
           <Table.Row
             key={periode.id}
             id={periode.id}
-            onClick={(event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) =>
-              velgPeriodeCallback(event, periode.id, periode)
-            }
+            onClick={() => {
+              velgPeriodeCallback(periode.id, periode);
+            }}
             selected={periode.id === selectedId}
             className={
               periode.begrunnelse === null && periode.aksjonspunkter.length > 0
@@ -54,7 +44,15 @@ const MedlemskapEndringerTabellImpl = ({
             }
           >
             <Table.DataCell>
-              <DateLabel dateString={periode.vurderingsdato} />
+              <div className="flex">
+                {periode.begrunnelse === null && periode.aksjonspunkter.length > 0 && (
+                  <ExclamationmarkTriangleFillIcon
+                    fontSize="1.5rem"
+                    className="text-[var(--ac-alert-icon-warning-color,var(--a-icon-warning))] text-2xl mr-2"
+                  />
+                )}
+                <DateLabel dateString={periode.vurderingsdato} />
+              </div>
             </Table.DataCell>
             <Table.DataCell>{periode.årsaker.join()}</Table.DataCell>
           </Table.Row>
@@ -64,20 +62,4 @@ const MedlemskapEndringerTabellImpl = ({
   );
 };
 
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const { behandlingId, behandlingVersjon } = initialOwnProps;
-  const perioder = (
-    behandlingFormValueSelector(
-      'OppholdInntektOgPerioderForm',
-      behandlingId,
-      behandlingVersjon,
-    )(initialState, 'perioder') || []
-  ).sort((a, b) => a.vurderingsdato.localeCompare(b.vurderingsdato));
-  return () => ({
-    perioder,
-  });
-};
-
-const MedlemskapEndringerTabell = connect(mapStateToPropsFactory)(MedlemskapEndringerTabellImpl);
-
-export default MedlemskapEndringerTabell;
+export default MedlemskapEndringerTabellImpl;

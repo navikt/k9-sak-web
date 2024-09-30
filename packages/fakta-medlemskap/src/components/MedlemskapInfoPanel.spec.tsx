@@ -1,57 +1,57 @@
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../../i18n/nb_NO.json';
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { composeStories, StoryFn } from '@storybook/react';
+import { userEvent } from '@storybook/test';
+import { act, render, screen } from '@testing-library/react';
+import * as stories from '../MedlemskapFaktaIndex.stories';
 import MedlemskapInfoPanel from './MedlemskapInfoPanel';
 
 describe('<MedlemskapInfoPanel>', () => {
-  it('skal vise begge medlemskapsformer når aksjonspunkt for startdato for foreldrepengerperioden er avklart', () => {
-    renderWithIntlAndReduxForm(
-      <MedlemskapInfoPanel
-        aksjonspunkter={[]}
-        submittable
-        readOnly
-        submitCallback={vi.fn()}
-        alleMerknaderFraBeslutter={{}}
-        behandlingId={1}
-        behandlingVersjon={1}
-        behandlingType={{
-          kode: 'Test',
-          kodeverk: 'test',
-        }}
-        soknad={{}}
-        alleKodeverk={{}}
-        medlemskap={{}}
-        fagsakPerson={{}}
-      />,
-      { messages },
-    );
+  const {
+    VisPanelUtenAksjonspunkt,
+    VisAksjonspunktForAvklaringOmBrukerErBosatt,
+    VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter,
+  } = composeStories(stories) as {
+    [key: string]: StoryFn<Partial<typeof MedlemskapInfoPanel>>;
+  };
 
-    expect(screen.getByTestId('OppholdInntektOgPerioderForm')).toBeInTheDocument();
+  it('skal vise editeringsmuligheter når det finnes aksjonspunkter', async () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
+    render(<VisAksjonspunktForAvklaringOmBrukerErBosatt />);
+    expect(screen.getByText('Vurder om søker er bosatt i Norge')).toBeInTheDocument();
+    expect(screen.getByText('Opplysninger oppgitt i søknaden')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Begrunn endringene' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Oppdater' })).toBeDisabled();
+    await act(async () => {
+      await userEvent.type(screen.getByRole('textbox', { name: 'Begrunn endringene' }), 'Dette er en begrunnelse');
+    });
+    expect(screen.getByRole('button', { name: 'Oppdater' })).not.toBeDisabled();
   });
 
-  it('skal vise panel for avklaring av startdato for foreldrepengerperioden, for å tilate manuell korrigering selvom aksjonspunktet ikke finnes', () => {
-    renderWithIntlAndReduxForm(
-      <MedlemskapInfoPanel
-        aksjonspunkter={[]}
-        submittable
-        readOnly
-        submitCallback={vi.fn()}
-        alleMerknaderFraBeslutter={{}}
-        behandlingId={1}
-        behandlingVersjon={1}
-        behandlingType={{
-          kode: 'test',
-          kodeverk: 'test',
-        }}
-        soknad={{}}
-        alleKodeverk={{}}
-        medlemskap={{}}
-        fagsakPerson={{}}
-      />,
-      { messages },
-    );
+  it('skal kunne avklare perioder når en har dette aksjonspunktet', async () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
+    render(<VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter />);
+    expect(screen.getByText('Vurder om søker har gyldig medlemskap i perioden')).toBeInTheDocument();
+    expect(screen.getByText('Perioder med medlemskap')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Begrunn endringene' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Ikke relevant periode' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Periode med medlemskap' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Periode med unntak fra medlemskap' })).toBeInTheDocument();
+  });
 
-    expect(screen.getByTestId('OppholdInntektOgPerioderForm')).toBeInTheDocument();
+  it('skal vise informasjon uten editeringsmuligheter når det ikke finnes aksjonspunkter', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
+    render(<VisPanelUtenAksjonspunkt />);
+    expect(screen.getByText('Opplysninger oppgitt i søknaden')).toBeInTheDocument();
+    expect(screen.getByText('Perioder med medlemskap')).toBeInTheDocument();
+    expect(screen.queryByText('textbox')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Oppdater' })).not.toBeInTheDocument();
+  });
+
+  it('skal vise informasjon om opphold og bosatt informasjon', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
+    render(<VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter />);
+    expect(screen.getByText('Opphold utenfor Norge')).toBeInTheDocument();
+    expect(screen.getByText('Sverige')).toBeInTheDocument();
+    expect(screen.getByText('Mygg Robust')).toBeInTheDocument();
   });
 });

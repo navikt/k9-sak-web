@@ -289,7 +289,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
             name="overstyrtMottaker"
             selectValues={tilgjengeligeVedtaksbrev.alternativeMottakere.map(mottaker => (
               <option value={JSON.stringify(mottaker)} key={mottaker.id}>
-                {lagVisningsnavnForMottaker(mottaker.id, personopplysninger, arbeidsgiverOpplysningerPerId)}
+                {lagVisningsnavnForMottaker(mottaker, personopplysninger, arbeidsgiverOpplysningerPerId)}
               </option>
             ))}
             className={readOnly ? styles.selectReadOnly : null}

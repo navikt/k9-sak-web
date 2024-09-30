@@ -8,7 +8,7 @@ const cancellable = (axiosInstance: AxiosInstance, config: AxiosRequestConfig): 
       cancel = c;
     }),
   });
-  // @ts-ignore Fiks
+  // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
   request.cancel = cancel;
   return request.catch(error => (axios.isCancel(error) ? Promise.reject(new Error(null)) : Promise.reject(error)));
 };
@@ -23,40 +23,46 @@ const defaultPostHeaders = {
   'Content-Type': 'application/json',
 };
 
-const get = (axiosInstance: AxiosInstance) => (url: string, params: any, responseType: ResponseType = 'json') =>
-  cancellable(axiosInstance, {
-    url,
-    params,
-    responseType,
-    method: 'get',
-    headers: {
-      ...defaultHeaders,
-    },
-  });
+const get =
+  (axiosInstance: AxiosInstance) =>
+  (url: string, params: any, responseType: ResponseType = 'json') =>
+    cancellable(axiosInstance, {
+      url,
+      params,
+      responseType,
+      method: 'get',
+      headers: {
+        ...defaultHeaders,
+      },
+    });
 
-const post = (axiosInstance: AxiosInstance) => (url: string, data: any, responseType: ResponseType = 'json') =>
-  cancellable(axiosInstance, {
-    url,
-    responseType,
-    data: JSON.stringify(data),
-    method: 'post',
-    headers: {
-      ...defaultHeaders,
-      ...defaultPostHeaders,
-    },
-  });
+const post =
+  (axiosInstance: AxiosInstance) =>
+  (url: string, data: any, responseType: ResponseType = 'json') =>
+    cancellable(axiosInstance, {
+      url,
+      responseType,
+      data: JSON.stringify(data),
+      method: 'post',
+      headers: {
+        ...defaultHeaders,
+        ...defaultPostHeaders,
+      },
+    });
 
-const put = (axiosInstance: AxiosInstance) => (url: string, data: any, responseType: ResponseType = 'json') =>
-  cancellable(axiosInstance, {
-    url,
-    responseType,
-    data: JSON.stringify(data),
-    method: 'put',
-    headers: {
-      ...defaultHeaders,
-      ...defaultPostHeaders,
-    },
-  });
+const put =
+  (axiosInstance: AxiosInstance) =>
+  (url: string, data: any, responseType: ResponseType = 'json') =>
+    cancellable(axiosInstance, {
+      url,
+      responseType,
+      data: JSON.stringify(data),
+      method: 'put',
+      headers: {
+        ...defaultHeaders,
+        ...defaultPostHeaders,
+      },
+    });
 
 const getBlob = (axiosInstance: AxiosInstance) => (url: string, params: any) => get(axiosInstance)(url, params, 'blob');
 

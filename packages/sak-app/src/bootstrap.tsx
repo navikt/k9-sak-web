@@ -10,9 +10,12 @@ import { BrowserRouter, createRoutesFromChildren, matchRoutes, useLocation, useN
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
 import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
+import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/ExtendedApiError.js';
+
+import { isAlertInfo } from '@k9-sak-web/gui/app/alerts/AlertInfo.js';
+import { AxiosError } from 'axios';
 
 /* eslint no-undef: "error" */
-// @ts-ignore
 const isDevelopment = IS_DEV;
 const environment = window.location.hostname;
 
@@ -33,25 +36,37 @@ init({
     }),
   ],
   beforeSend: (event, hint) => {
-    const exception = hint.originalException;
-    // @ts-ignore
-    if (exception?.isAxiosError) {
-      // @ts-ignore
-      const requestUrl = new URL(exception.request.responseURL);
-      // eslint-disable-next-line no-param-reassign
-      event.fingerprint = [
-        '{{ default }}',
-        // @ts-ignore
-        String(exception.name),
-        // @ts-ignore
-        String(exception.message),
-        String(requestUrl.pathname),
-      ];
-      // eslint-disable-next-line no-param-reassign
-      event.extra = event.extra ? event.extra : {};
-      // @ts-ignore
-      // eslint-disable-next-line no-param-reassign
-      event.extra.callId = exception.response.config.headers['Nav-Callid'];
+    try {
+      event.extra = event.extra || {};
+      const exception = hint.originalException;
+      if (exception instanceof AxiosError) {
+        const requestUrl = new URL(exception.request.responseURL);
+        event.fingerprint = [
+          '{{ default }}',
+          String(exception.name),
+          String(exception.message),
+          String(requestUrl.pathname),
+        ];
+        event.extra.callId = exception.response.config.headers['Nav-Callid'];
+      } else if (exception instanceof ExtendedApiError) {
+        event.fingerprint = ['{{ default }}', exception.name, exception.statusText, exception.url];
+        event.extra.callId = exception.navCallid;
+      }
+      // For alle Error typer som implementerer AlertInfo tek vi med errorId i sentry rapport.
+      if (isAlertInfo(exception)) {
+        event.extra.errorId = `${exception.errorId}`;
+      }
+    } catch (e) {
+      try {
+        event.exception.values.push(e);
+        console.error('Sentry beforeSend failure. Will send the original event with extra error attached', e);
+      } catch (e2) {
+        console.error(
+          'Sentry beforeSend failure. Will send the original event. Attaching of extra error also failed',
+          e,
+          e2,
+        );
+      }
     }
     return event;
   },
@@ -74,8 +89,8 @@ const renderFunc = Component => {
   }
 
   const prepare = async (): Promise<void> => {
+    // eslint-disable-next-line no-undef
     if (process.env.NODE_ENV === 'test') {
-      // eslint-disable-next-line import/no-relative-packages
       const { worker } = await import('../../mocks/browser');
       worker.start({ onUnhandledRequest: 'bypass' });
     }

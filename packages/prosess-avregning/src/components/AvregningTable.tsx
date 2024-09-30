@@ -1,10 +1,9 @@
 import mottakerTyper from '@fpsak-frontend/kodeverk/src/mottakerTyper';
-import { formatCurrencyNoKr, getRangeOfMonths } from '@fpsak-frontend/utils';
+import { formatCurrencyNoKr, getRangeOfMonths, initializeDate } from '@fpsak-frontend/utils';
 import { Kodeverk, Periode, SimuleringMottaker, SimuleringResultatRad } from '@k9-sak-web/types';
 import { BodyShort, Table } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import moment from 'moment/moment';
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import CollapseButton from './CollapseButton';
 import styles from './avregningTable.module.css';
@@ -125,7 +124,7 @@ const getPeriodeFom = (periodeFom: string, nesteUtbPeriodeFom: string) => period
 const getPeriod = (ingenPerioderMedAvvik: boolean, periodeFom: string, mottaker: SimuleringMottaker) =>
   getRangeOfMonths(
     avvikBruker(ingenPerioderMedAvvik, mottaker.mottakerType.kode)
-      ? moment(mottaker.nesteUtbPeriode.tom).subtract(1, 'months')
+      ? initializeDate(mottaker.nesteUtbPeriode.tom).subtract(1, 'months').format('YYYY-MM')
       : getPeriodeFom(periodeFom, mottaker.nesteUtbPeriode.fom),
     mottaker.nesteUtbPeriode.tom,
   );

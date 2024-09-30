@@ -4,7 +4,7 @@
   "compilerOptions": {
     "target": "es2020",
     "module": "es2020",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "moduleResolution": "bundler",
     "allowJs": true,
     "noEmit": true,
@@ -26,7 +26,7 @@
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
     "sourceMap": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
     "baseUrl": "packages/v2/",
     "skipLibCheck": true

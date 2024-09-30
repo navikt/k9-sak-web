@@ -7,12 +7,14 @@
   "exports": {
     "./app/*": "./src/app/*",
     "./sak/*": "./src/sak/*",
+    "./shared/*": "./src/shared/*",
     "./utils/*": "./src/utils/*",
     "./kodeverk/*": "./src/kodeverk/*",
     "./storybook/*": "./src/storybook/*"
   },
   "dependencies": {
     "@k9-sak-web/backend": "workspace:^",
+    "@k9-sak-web/lib": "1.0.0",
     "react": "18.3.1"
   }
 }

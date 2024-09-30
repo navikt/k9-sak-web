@@ -1,11 +1,18 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { ErrorMessage, TextField } from '@navikt/ds-react';
-import { requestIntentionallyAborted, type RequestIntentionallyAborted } from "@k9-sak-web/backend/shared/RequestIntentionallyAborted.ts";
+import {
+  requestIntentionallyAborted,
+  type RequestIntentionallyAborted,
+} from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.ts';
+import type { utilgjengeligÅrsak } from '@k9-sak-web/backend/k9sak/generated';
 import styles from './TredjepartsmottakerInput.module.css';
 import type { EregOrganizationLookupResponse } from './EregOrganizationLookupResponse.js';
 
 export interface BackendApi {
-  getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal): Promise<EregOrganizationLookupResponse | RequestIntentionallyAborted>;
+  getBrevMottakerinfoEreg(
+    orgnr: string,
+    abort?: AbortSignal,
+  ): Promise<EregOrganizationLookupResponse | RequestIntentionallyAborted>;
 }
 
 export interface TredjepartsmottakerOrgnrInputProps {
@@ -20,17 +27,19 @@ export interface TredjepartsmottakerOrgnrInputProps {
 export interface TredjepartsmottakerValue {
   readonly navn: string;
   readonly organisasjonsnr: string;
+  readonly utilgjengelig?: never;
   readonly notFound?: never;
   readonly invalidOrgnum?: never;
   readonly required?: never;
 }
 
 type NotValue = {
-  readonly navn?: never;
+  readonly navn?: string;
   readonly organisasjonsnr?: never;
 };
 
-export type TredjepartsmottakerError = NotValue & ({ notFound: true } | { invalidOrgnum: true } | { required: true });
+export type TredjepartsmottakerError = NotValue &
+  ({ notFound: true } | { invalidOrgnum: true } | { required: true } | { utilgjengelig: utilgjengeligÅrsak });
 
 const isEqual = (
   a: EregOrganizationLookupResponse | undefined,
@@ -41,6 +50,20 @@ const isEqual = (
   a.invalidOrgnum === b.invalidOrgnum &&
   a.notFound === b.notFound &&
   a.name === b.name;
+
+const utilgjengeligÅrsakTxt = (cause: utilgjengeligÅrsak | undefined): string | undefined => {
+  switch (cause) {
+    case undefined:
+      return undefined;
+    case 'PERSON_DØD':
+      return 'død';
+    case 'ORG_OPPHØRT':
+      return 'opphørt';
+    default:
+      console.warn(`Ukjendt utilgjengelig årsak, returnerer verdi direkte`);
+      return cause;
+  }
+};
 
 const TredjepartsmottakerInput = ({
   defaultValue,
@@ -59,7 +82,7 @@ const TredjepartsmottakerInput = ({
     lookupAborterRef.current = new AbortController();
     const newTredjepartsmottaker =
       orgnr.length > 0 ? await api.getBrevMottakerinfoEreg(orgnr, lookupAborterRef.current?.signal) : undefined;
-    if(newTredjepartsmottaker !== requestIntentionallyAborted) {
+    if (newTredjepartsmottaker !== requestIntentionallyAborted) {
       setTredjepartsmottaker(newTredjepartsmottaker);
       if (!isEqual(newTredjepartsmottaker, prevTredjepartsmottaker)) {
         if (newTredjepartsmottaker === undefined) {
@@ -72,6 +95,8 @@ const TredjepartsmottakerInput = ({
           onChange?.({ notFound: true });
         } else if (newTredjepartsmottaker.invalidOrgnum) {
           onChange?.({ invalidOrgnum: true });
+        } else if (newTredjepartsmottaker.utilgjengelig !== undefined) {
+          onChange?.({ navn: newTredjepartsmottaker.name, utilgjengelig: newTredjepartsmottaker.utilgjengelig });
         } else {
           onChange?.({ navn: newTredjepartsmottaker.name ?? '', organisasjonsnr: orgnr });
         }
@@ -80,13 +105,15 @@ const TredjepartsmottakerInput = ({
   };
 
   const errorMessage =
-    tredjepartsmottaker === undefined && required
-      ? 'Gyldig organisasjonsnr påkrevd'
-      : tredjepartsmottaker?.invalidOrgnum
-        ? 'Ugyldig verdi. Må være 9 siffer.'
-        : tredjepartsmottaker?.notFound
-          ? 'Gitt organisasjonsnr ble ikke funnet i registeret'
-          : null;
+    tredjepartsmottaker?.utilgjengelig !== undefined
+      ? `Organisasjon er ${utilgjengeligÅrsakTxt(tredjepartsmottaker?.utilgjengelig)}, kan ikke sendes brev til`
+      : tredjepartsmottaker === undefined && required
+        ? 'Gyldig organisasjonsnr påkrevd'
+        : tredjepartsmottaker?.invalidOrgnum
+          ? 'Ugyldig verdi. Må være 9 siffer.'
+          : tredjepartsmottaker?.notFound
+            ? 'Gitt organisasjonsnr ble ikke funnet i registeret'
+            : null;
 
   if (show) {
     return (

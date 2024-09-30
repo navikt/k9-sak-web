@@ -1,7 +1,7 @@
 import type { OpptjeningAktivitetDto } from '../generated';
 import type { Kodeverk } from '../../shared/Kodeverk.ts';
 
-export type OpptjeningAktivitetType = Exclude<OpptjeningAktivitetDto['aktivitetType'], undefined>;
+export type OpptjeningAktivitetType = Exclude<OpptjeningAktivitetDto['aktivitetType'], undefined | null>;
 
 export type OpptjeningAktivitetTypeKodeverk = Kodeverk<OpptjeningAktivitetType, 'OPPTJENING_AKTIVITET_TYPE'>;
 

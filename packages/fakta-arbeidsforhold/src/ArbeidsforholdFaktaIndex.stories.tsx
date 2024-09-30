@@ -1,4 +1,3 @@
-/* eslint-disable import/no-relative-packages */
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { action } from '@storybook/addon-actions';

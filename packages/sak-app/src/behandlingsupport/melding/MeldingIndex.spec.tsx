@@ -17,6 +17,7 @@ import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import MeldingIndex, { type BackendApi } from './MeldingIndex';
+import { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 
 const mockHistoryPush = vi.fn();
 
@@ -93,7 +94,7 @@ describe('<MeldingIndex>', () => {
     [kodeverkTyper.REVURDERING_VARSLING_ÅRSAK]: [{ kode: 'kode', navn: 'Årsak 1', kodeverk: 'kode' }],
   };
 
-  const aktorer = [
+  const aktorer: Mottaker[] = [
     { id: '00000000', type: 'AKTØRID' },
     { id: '123456789', type: 'ORGNR' },
   ];
@@ -140,7 +141,7 @@ describe('<MeldingIndex>', () => {
 
   const assignMock = vi.fn();
   delete (window as Partial<ExtendedWindow>).location;
-  // @ts-ignore Dette er kun for å unngå warnings med window.location.reload(). (Denne blir brukt som en temp-fiks, så dette skal derfor fjernes)
+  // @ts-expect-error Dette er kun for å unngå warnings med window.location.reload(). (Denne blir brukt som en temp-fiks, så dette skal derfor fjernes)
   window.location = { reload: assignMock };
 
   afterEach(() => {

@@ -71,6 +71,8 @@ Kode som legges inn her blir kontrollert av en strengere tsconfig.json. Gammel k
 det motsatte skal ikke skje, kode under _packages/v2_ skal aldri importere kode som ikke ligger under _v2_. På denne
 måten får vi gjort en gradvis overgang til bedre kontrollert typescript.
 
+Mer info om dette i [v2/README](./packages/v2/README.md)
+
 ## Bygg og utrulling
 Ved merge av **PR til master** branch blir koden bygd inn i et Docker image og rulla ut til testmiljø på https://k9.dev.intern.nav.no.
 Etter godkjenning i pipeline blir samme Docker image rulla ut i produksjon på https://k9.intern.nav.no/.

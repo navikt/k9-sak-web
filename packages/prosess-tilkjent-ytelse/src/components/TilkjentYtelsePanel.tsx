@@ -1,28 +1,21 @@
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import {
-  Aksjonspunkt,
-  ArbeidsgiverOpplysningerPerId,
-  BeregningsresultatPeriode,
-  BeregningsresultatUtbetalt,
-  FamilieHendelse,
-  KodeverkMedNavn,
-  Personopplysninger,
-  Soknad,
-} from '@k9-sak-web/types';
-import moment from 'moment';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
+import { DDMMYYYY_DATE_FORMAT, initializeDate } from '@fpsak-frontend/utils';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 
-import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { Heading } from '@navikt/ds-react';
+import {
+  AksjonspunktDto,
+  BeregningsresultatMedUtbetaltePeriodeDto,
+  BeregningsresultatPeriodeDto,
+} from '@navikt/k9-sak-typescript-client';
 import TilkjentYtelse, { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
 
 const perioderMedClassName = [];
 
-const formatPerioder = (perioder: BeregningsresultatPeriode[]): PeriodeMedId[] => {
+const formatPerioder = (perioder: BeregningsresultatPeriodeDto[]): PeriodeMedId[] => {
   perioderMedClassName.length = 0;
   perioder.forEach(item => {
     if (item.andeler[0] && item.dagsats >= 0) {
@@ -39,100 +32,73 @@ const groups = [
 
 const { MANUELL_TILKJENT_YTELSE } = aksjonspunktCodes;
 
+const finnTilbaketrekkAksjonspunkt = (alleAksjonspunkter: AksjonspunktDto[]): AksjonspunktDto | undefined =>
+  alleAksjonspunkter
+    ? alleAksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.VURDER_TILBAKETREKK)
+    : undefined;
+
+export const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: AksjonspunktDto[]): boolean =>
+  aksjonspunkter.some(ap => ap.definisjon === aksjonspunktCode);
+
 interface PureOwnProps {
-  behandlingId: number;
-  behandlingVersjon: number;
-  beregningresultat: BeregningsresultatUtbetalt;
-  gjeldendeFamiliehendelse: FamilieHendelse;
-  personopplysninger: Personopplysninger;
-  soknad: Soknad;
-  fagsakYtelseTypeKode: string;
-  aksjonspunkter: Aksjonspunkt[];
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto;
+  aksjonspunkter: AksjonspunktDto[];
   readOnly: boolean;
   submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
-interface MappedOwnProps {
-  vurderTilbaketrekkAP?: Aksjonspunkt;
-}
-
-export const TilkjentYtelsePanelImpl = ({
-  beregningresultat,
-  vurderTilbaketrekkAP,
+const TilkjentYtelsePanelImpl = ({
+  beregningsresultat,
   submitCallback,
   readOnlySubmitButton,
-  behandlingId,
-  behandlingVersjon,
   aksjonspunkter,
   readOnly,
-  alleKodeverk,
   arbeidsgiverOpplysningerPerId,
-}: Partial<PureOwnProps> & MappedOwnProps) => {
-  const opphoersdato = beregningresultat?.opphoersdato;
+}: Partial<PureOwnProps>) => {
+  const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
+  const kodeverkNavnFraKode = getKodeverkNavnFraKodeFn();
+  const vurderTilbaketrekkAP = finnTilbaketrekkAksjonspunkt(aksjonspunkter);
+  const opphoersdato = beregningsresultat?.opphoersdato;
   return (
     <>
       <Heading size="small" level="2">
-        <FormattedMessage id="TilkjentYtelse.Title" />
+        Tilkjent ytelse
       </Heading>
-      {opphoersdato && (
-        <FormattedMessage
-          id="TilkjentYtelse.Opphoersdato"
-          values={{
-            opphoersdato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT).toString(),
-          }}
-        />
-      )}
-      {beregningresultat && (
+      {opphoersdato && `Opphørsdato: ${initializeDate(opphoersdato).format(DDMMYYYY_DATE_FORMAT).toString()}`}
+      {beregningsresultat && (
         <TilkjentYtelse
-          // @ts-ignore
-          items={formatPerioder(beregningresultat.perioder)}
+          items={formatPerioder(beregningsresultat.perioder)}
           groups={groups}
-          alleKodeverk={alleKodeverk}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          kodeverkNavnFraKode={kodeverkNavnFraKode}
         />
       )}
 
       {hasAksjonspunkt(MANUELL_TILKJENT_YTELSE, aksjonspunkter) && (
         <TilkjentYtelseForm
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          beregningsresultat={beregningresultat}
+          beregningsresultat={beregningsresultat}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           aksjonspunkter={aksjonspunkter}
-          alleKodeverk={alleKodeverk}
           readOnly={readOnly}
           submitCallback={submitCallback}
           readOnlySubmitButton={readOnlySubmitButton}
+          kodeverkNavnFraKode={kodeverkNavnFraKode}
         />
       )}
 
       {vurderTilbaketrekkAP && (
         <Tilbaketrekkpanel
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
           readOnly={readOnly}
           vurderTilbaketrekkAP={vurderTilbaketrekkAP}
           submitCallback={submitCallback}
           readOnlySubmitButton={readOnlySubmitButton}
-          beregningsresultat={beregningresultat}
+          beregningsresultat={beregningsresultat}
         />
       )}
     </>
   );
 };
 
-const finnTilbaketrekkAksjonspunkt = (alleAksjonspunkter: Aksjonspunkt[]): Aksjonspunkt | undefined =>
-  alleAksjonspunkter
-    ? alleAksjonspunkter.find(ap => ap.definisjon?.kode === aksjonspunktCodes.VURDER_TILBAKETREKK)
-    : undefined;
-
-const mapStateToProps = (state, ownProps) => ({
-  beregningresultat: ownProps.beregningsresultat,
-
-  vurderTilbaketrekkAP: finnTilbaketrekkAksjonspunkt(ownProps.aksjonspunkter),
-});
-
-export default connect(mapStateToProps)(TilkjentYtelsePanelImpl);
+export default TilkjentYtelsePanelImpl;

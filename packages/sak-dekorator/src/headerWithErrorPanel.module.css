@@ -9,8 +9,11 @@
 }
 
 .endringslogg-container {
-  margin-top: -4px;
-  color: black;
+  display: grid;
+}
+
+.endringslogg-container :global(.endringslogg) {
+  margin-right: 0.5rem;
 }
 
 .endringslogg-container :global(.endringslogg-dropDown) {

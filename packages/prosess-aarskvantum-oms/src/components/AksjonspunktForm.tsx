@@ -140,7 +140,7 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
             <VerticalSpacer sixteenPx />
             <div className={styles.spaceBetween}>
               <CheckboxField
-                // @ts-ignore Fiks
+                // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
                 validate={[hasValidValue(true)]}
                 name="bekreftInfotrygd"
                 label={{

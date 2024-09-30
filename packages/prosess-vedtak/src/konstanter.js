@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const fieldnames = {
   SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV: 'skalBrukeOverstyrendeFritekstBrev',
   SKAL_HINDRE_UTSENDING_AV_BREV: 'skalHindreUtsendingAvBrev',

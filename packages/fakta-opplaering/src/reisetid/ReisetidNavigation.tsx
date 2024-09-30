@@ -19,7 +19,7 @@ const ReisetidNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
   }, []);
   const perioderSomErVurdert = perioder
     .filter(periode => periode.resultat !== ReisetidStatus.IKKE_VURDERT)
-    // @ts-ignore
+    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
     .sort((a, b) => new Date(b.periode.fom) - new Date(a.periode.fom));
   const allePerioder = [...perioderTilVurdering, ...perioderSomErVurdert];
   const elements = [

@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { NotFoundPage } from '@k9-sak-web/sak-infosider';
+import NotFoundPage from '@k9-sak-web/gui/sak/feilmeldinger/NotFoundPage.js';
 
 import AktoerIndex from '../../aktoer/AktoerIndex';
 import FagsakIndex from '../../fagsak/FagsakIndex';
@@ -11,6 +11,7 @@ import { aktoerRoutePath, fagsakRoutePath } from '../paths';
 import DashboardResolver from './DashboardResolver';
 
 import styles from './home.module.css';
+import { UnhandledRejectionCatcher } from '@k9-sak-web/gui/app/UnhandledRejectionCatcher.js';
 
 interface OwnProps {
   headerHeight: number;
@@ -32,6 +33,7 @@ const queryClient = new QueryClient();
  */
 const Home = ({ headerHeight }: OwnProps) => (
   <div className={styles.content} style={{ margin: `${headerHeight}px auto 0` }}>
+    <UnhandledRejectionCatcher />
     <QueryClientProvider client={queryClient}>
       <SentryRoutes>
         <Route path="/" element={<DashboardResolver />} />
