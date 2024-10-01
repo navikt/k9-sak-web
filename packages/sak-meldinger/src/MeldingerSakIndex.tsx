@@ -10,7 +10,10 @@ import {
 } from '@k9-sak-web/types';
 
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
-import V2Messages, { type BackendApi as V2MessagesBackendApi } from '@k9-sak-web/gui/sak/meldinger/Messages.js';
+import V2Messages, {
+  type BackendApi as V2MessagesBackendApi,
+  MessagesProps as V2MessagesProps,
+} from '@k9-sak-web/gui/sak/meldinger/Messages.js';
 import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import { BehandlingInfo } from '@k9-sak-web/gui/sak/BehandlingInfo.js';
 import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
@@ -20,6 +23,7 @@ import useVisForhandsvisningAvMelding from '@k9-sak-web/sak-app/src/data/useVisF
 import MessagesTilbakekreving from './components/MessagesTilbakekreving';
 import Messages, { type BackendApi as MessagesBackendApi, type FormValues } from './components/Messages';
 import messages from '../i18n/nb_NO.json';
+import { StickyMemoryReducer } from '@k9-sak-web/gui/utils/StickyMemoryReducer.js';
 
 const cache = createIntlCache();
 
@@ -48,6 +52,17 @@ interface OwnProps {
   readonly backendApi: BackendApi;
 }
 
+// Held på state oppretta inni reducers i Messages og FritekstInput komponenter.
+// Dette slik at bruker ikkje mister state når disse blir unmounta og remounta
+// ved visning av anna panel midlertidig (på samme sak/behandling).
+const stickyState: V2MessagesProps['stickyState'] = {
+  messages: new StickyMemoryReducer(),
+  fritekst: {
+    tittel: new StickyMemoryReducer(),
+    tekst: new StickyMemoryReducer(),
+  },
+};
+
 const MeldingerSakIndex = ({
   onMessageSent,
   templates,
@@ -75,6 +90,7 @@ const MeldingerSakIndex = ({
         maler={Object.values(templates)}
         api={backendApi}
         onMessageSent={onMessageSent}
+        stickyState={stickyState}
       />
     );
   }

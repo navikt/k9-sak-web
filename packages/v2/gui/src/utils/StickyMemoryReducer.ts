@@ -4,19 +4,13 @@ type Reducer<State, Actions> = (state: State, dispatch: Actions) => State;
 type Dispatch<A> = (action: A) => void;
 
 /**
- * Denne klassen er tenkt brukt for å opprette nye instanser av reducer som beheld state mellom unmount + mount av komponent
- * der den er brukt. Klassen må derfor opprettast på ein global statisk posisjon i koden, altså utanfor komponenten som
- * skal bruke den, slik at den samme instansen av state blir verande intakt viss komponenten som bruker reducer blir
- * unmounted.
+ * Denne klassen er tenkt brukt for å opprette nye instanser av reducer som beheld enkapsulert state mellom unmount + mount av komponent
+ * der den er brukt. Instans av denne må derfor opprettast utanom komponenten som skal bruke den, og sendast ned som prop,
+ * slik at samme instans blir verande intakt når komponent som bruker den blir unmounta + remounta.
  *
  * Den kan dermed halde på state til ein komponent sjølv om den kanskje midlertidig blir fjerna frå DOM.
  *
- * Ideelt sett bør ikkje denne brukast, ein burde heller løfte state opp i komponent hierarkiet eller unngå å unmounte
- * komponent ein eigentleg ikkje er ferdig med å bruke. Der er ingen opprydding av state minnet etter unmount, så
- * ein bør i alle fall ikkje bruke mange instanser av denne samtidig.
- *
- * Når ein komponent bruker denne må det også heller ikkje opprettast fleire instanser av den, dei vil då dele det samme
- * globale minnet som vil føre til feil.
+ * Sjå Messages.tsx for eksempel på bruk.
  */
 export class StickyMemoryReducer<State> {
   #state: State | null = null;

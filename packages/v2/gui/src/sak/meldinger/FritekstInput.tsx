@@ -5,12 +5,12 @@ import type { Språkkode } from '@k9-sak-web/backend/k9sak/kodeverk/Språkkode.j
 import { validateTextCharacters } from '../../utils/validation/validateTextCharacters.js';
 import { StickyMemoryReducer } from '../../utils/StickyMemoryReducer.js';
 
-type Valid = {
+export type Valid = {
   readonly input: string;
   readonly valid: true;
   readonly error?: never;
 };
-type Error = {
+export type Error = {
   readonly input: string;
   readonly error: string;
   readonly valid: false;
@@ -30,13 +30,17 @@ export interface FritekstInputInvalid {
 // Sending av brev med fritekst har to ulike varianter. Ein kort enkel fritekst eller lengre tekst med tittel.
 export type FritekstModus = 'EnkelFritekst' | 'StørreFritekstOgTittel';
 
-type FritekstInputProps = {
+export type FritekstInputProps = {
   readonly språk: Språkkode;
   readonly show: boolean;
   readonly fritekstModus: FritekstModus;
   readonly showValidation: boolean;
   readonly defaultValue?: FritekstInputValue;
   readonly onChange?: (value: FritekstInputValue | FritekstInputInvalid) => void;
+  readonly stickyState: {
+    readonly tittel: StickyMemoryReducer<Valid | Error>;
+    readonly tekst: StickyMemoryReducer<Valid | Error>;
+  };
 };
 
 export interface FritekstInputMethods {
@@ -103,9 +107,6 @@ const resolveLanguageName = (språk: Språkkode): string => {
 const resolveLanguageTagVariant = (språk: Språkkode): TagProps['variant'] =>
   resolveLanguageName(språk) === 'Ukjent' ? 'warning' : 'info';
 
-const stickyTittelReducer = new StickyMemoryReducer<Valid | Error>();
-const stickyTekstReducer = new StickyMemoryReducer<Valid | Error>();
-
 /**
  * Denne komponent er for at bruker skal kunne skrive inn tekst og evt tittel i brev som har fritekstinnhold.
  *
@@ -113,19 +114,17 @@ const stickyTekstReducer = new StickyMemoryReducer<Valid | Error>();
  * for valideringsfeil.
  *
  * Ved å bruke ref interface for å hente verdi kan ein unngå hyppig re-rendering av komponent over denne.
- *
- * NB: Sidan denne bruker delt minne må ein aldri initialisere meir enn ein instans av denne.
  */
 const FritekstInput = forwardRef(
   (
-    { språk, show, fritekstModus, showValidation = false, defaultValue, onChange }: FritekstInputProps,
+    { språk, show, fritekstModus, showValidation = false, defaultValue, onChange, stickyState }: FritekstInputProps,
     ref: ForwardedRef<FritekstInputMethods>,
   ) => {
-    const [tittel, setTittel] = stickyTittelReducer.useStickyMemoryReducer(
+    const [tittel, setTittel] = stickyState.tittel.useStickyMemoryReducer(
       tittelReducer,
       validateTittel(defaultValue?.tittel),
     );
-    const [tekst, setTekst] = stickyTekstReducer.useStickyMemoryReducer(
+    const [tekst, setTekst] = stickyState.tekst.useStickyMemoryReducer(
       tekstReducer,
       validateTekst(defaultValue?.tekst, fritekstModus),
     );

@@ -20,10 +20,12 @@ import TredjepartsmottakerInput, {
 import MottakerSelect from './MottakerSelect.js';
 import FritekstForslagSelect from './FritekstForslagSelect.js';
 import FritekstInput, {
+  type Error,
   type FritekstInputInvalid,
   type FritekstInputMethods,
   type FritekstInputValue,
   type FritekstModus,
+  type Valid,
 } from './FritekstInput.js';
 import MalSelect from './MalSelect.js';
 import type { BehandlingInfo } from '../BehandlingInfo.js';
@@ -43,17 +45,7 @@ export interface BackendApi extends TredjepartsmottakerBackendApi {
   lagForhåndsvisningPdf(data: ForhåndsvisDto): Promise<Blob>;
 }
 
-type MessagesProps = {
-  readonly maler: Template[];
-  readonly fagsak: Fagsak;
-  readonly behandling: BehandlingInfo;
-  readonly personopplysninger?: Personopplysninger;
-  readonly arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
-  readonly api: BackendApi;
-  readonly onMessageSent: () => void;
-};
-
-type MessagesState = Readonly<{
+export type MessagesState = Readonly<{
   valgtMalkode: string | undefined;
   fritekstForslag: FritekstbrevDokumentdata[];
   valgtFritekst: FritekstbrevDokumentdata | undefined;
@@ -61,6 +53,23 @@ type MessagesState = Readonly<{
   tredjepartsmottakerAktivert: boolean;
   tredjepartsmottaker: TredjepartsmottakerValue | TredjepartsmottakerError | undefined;
 }>;
+
+export type MessagesProps = {
+  readonly maler: Template[];
+  readonly fagsak: Fagsak;
+  readonly behandling: BehandlingInfo;
+  readonly personopplysninger?: Personopplysninger;
+  readonly arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
+  readonly api: BackendApi;
+  readonly onMessageSent: () => void;
+  readonly stickyState: {
+    readonly messages: StickyMemoryReducer<MessagesState>;
+    readonly fritekst: {
+      readonly tittel: StickyMemoryReducer<Valid | Error>;
+      readonly tekst: StickyMemoryReducer<Valid | Error>;
+    };
+  };
+};
 
 const initMessagesState = (maler: Template[]): MessagesState => {
   return {
@@ -202,7 +211,6 @@ const messagesStateReducer = (state: MessagesState, dispatch: MessagesStateActio
   }
 };
 
-const stickyReducer = new StickyMemoryReducer<MessagesState>();
 let stickyResetValue = '';
 
 const Messages = ({
@@ -213,11 +221,12 @@ const Messages = ({
   arbeidsgiverOpplysningerPerId,
   api,
   onMessageSent,
+  stickyState,
 }: MessagesProps) => {
   const [
     { valgtMalkode, fritekstForslag, valgtFritekst, valgtMottaker, tredjepartsmottakerAktivert, tredjepartsmottaker },
     dispatch,
-  ] = stickyReducer.useStickyMemoryReducer(messagesStateReducer, initMessagesState(maler));
+  ] = stickyState.messages.useStickyMemoryReducer(messagesStateReducer, initMessagesState(maler));
 
   const fritekstInputRef = useRef<FritekstInputMethods>(null);
   // showValidation is set to true when inputs should display any validation errors, i.e. after the user tries to submit the form without having valid values.
@@ -435,6 +444,7 @@ const Messages = ({
         show={showFritekstInput}
         fritekstModus={fritekstModus}
         showValidation={showValidation}
+        stickyState={{ ...stickyState.fritekst }}
       />
       <HStack gap="3">
         <Button size="small" variant="primary" icon={<PaperplaneIcon />} loading={isBusy} onClick={submitHandler}>

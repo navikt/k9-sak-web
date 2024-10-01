@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Decorator, Meta, StoryObj } from '@storybook/react';
 
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
@@ -9,7 +9,7 @@ import { FakeMessagesBackendApi } from '@k9-sak-web/gui/storybook/mocks/FakeMess
 import arbeidsgivere from '@k9-sak-web/gui/storybook/mocks/arbeidsgivere.json';
 import { templates } from '@k9-sak-web/gui/storybook/mocks/brevmaler.js';
 import personopplysninger from '@k9-sak-web/gui/storybook/mocks/personopplysninger.js';
-import Messages from './Messages.js';
+import Messages, { type MessagesProps } from './Messages.js';
 import {
   type Mottaker,
   type UtilgjengeligÅrsak,
@@ -17,14 +17,31 @@ import {
 } from '@k9-sak-web/backend/k9formidling/models/Mottaker.ts';
 import { makeFakeExtendedApiError } from '../../storybook/mocks/fakeExtendedApiError.js';
 import { action } from '@storybook/addon-actions';
+import { StickyMemoryReducer } from '../../utils/StickyMemoryReducer.js';
+
+const newStickyState = (): MessagesProps['stickyState'] => ({
+  messages: new StickyMemoryReducer(),
+  fritekst: {
+    tekst: new StickyMemoryReducer(),
+    tittel: new StickyMemoryReducer(),
+  },
+});
+
+const withStickyState = (): Decorator => (Story, ctx) => {
+  ctx.args['stickyState'] = newStickyState();
+  return <Story />;
+};
 
 const api = new FakeMessagesBackendApi();
 const meta = {
   title: 'gui/sak/meldinger/Messages.tsx',
   component: Messages,
-  decorators: [withMaxWidth(420)],
+  decorators: [withMaxWidth(420), withStickyState()],
   beforeEach: () => {
     api.reset();
+  },
+  args: {
+    stickyState: newStickyState(),
   },
 } satisfies Meta<typeof Messages>;
 export default meta;
