@@ -14,20 +14,26 @@ const mapAktivitetTextUnderkjenning = (aktivitetType: string, arbeidsgiverNavn?:
   if (arbeidsgiverNavn && orgnr) {
     return (
       <>
-        `Aktivitet ${aktivitetType} for ${arbeidsgiverNavn} (${orgnr}) er `<b>ikke</b>` godkjent.`
+        {`Aktivitet ${aktivitetType} for ${arbeidsgiverNavn} (${orgnr}) er `}
+        <b>ikke</b>
+        {` godkjent.`}
       </>
     );
   }
   if (orgnr) {
     return (
       <>
-        `Aktivitet ${aktivitetType} for organisasjonen med orgnr. ${orgnr} er `<b>ikke</b>` godkjent.`
+        {`Aktivitet ${aktivitetType} for organisasjonen med orgnr. ${orgnr} er `}
+        <b>ikke</b>
+        {` godkjent.`}
       </>
     );
   }
   return (
     <>
-      `Aktivitet ${aktivitetType} er `<b>ikke</b>` godkjent.`
+      {`Aktivitet ${aktivitetType} er `}
+      <b>ikke</b>
+      {` godkjent.`}
     </>
   );
 };

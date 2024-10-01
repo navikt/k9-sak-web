@@ -5,8 +5,8 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
 import { KlageVurdering, TotrinnskontrollAksjonspunkt, TotrinnskontrollArbeidsforhold } from '@k9-sak-web/types';
-import { Label } from '@navikt/ds-react';
 
+import { render, screen } from '@testing-library/react';
 import getAksjonspunkttekst, { getFaktaOmArbeidsforholdMessages } from './aksjonspunktTekstUtleder';
 
 const medholdIKlage = {
@@ -35,8 +35,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Adopsjonsvilkåret er overstyrt.');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Adopsjonsvilkåret er overstyrt.')).toBeInTheDocument();
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 6003', () => {
@@ -46,8 +46,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Vilkåret omsorgen for er overstyrt.');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Vilkåret omsorgen for er overstyrt.')).toBeInTheDocument();
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 5038', () => {
@@ -57,8 +57,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Inntekt er skjønnsmessig fastsatt.');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Inntekt er skjønnsmessig fastsatt.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5042', () => {
     const aksjonspunkt = {
@@ -67,8 +67,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Inntekt er skjønnsmessig fastsatt.');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Inntekt er skjønnsmessig fastsatt.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 6007', () => {
     const aksjonspunkt = {
@@ -77,8 +77,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.VilkarOverstyrt');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Beregningsvilkåret er overstyrt.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5047', () => {
     const aksjonspunkt = {
@@ -87,8 +87,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Inntekt er skjønnsmessig fastsatt.');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Inntekt er skjønnsmessig fastsatt.')).toBeInTheDocument();
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 6006', () => {
@@ -98,8 +98,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Søknadsfristvilkåret er overstyrt.');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Søknadsfristvilkåret er overstyrt.')).toBeInTheDocument();
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 5021', () => {
@@ -109,8 +109,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Det er vurdert om søker har gyldig medlemskap i perioden.');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Det er vurdert om søker har gyldig medlemskap i perioden.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5019', () => {
     const aksjonspunkt = {
@@ -119,8 +119,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Det er vurdert om søker har lovlig opphold.');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Det er vurdert om søker har lovlig opphold.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5020', () => {
     const aksjonspunkt = {
@@ -129,8 +129,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Det er vurdert om søker er bosatt i Norge.');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Det er vurdert om søker er bosatt i Norge.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5023', () => {
     const aksjonspunkt = {
@@ -139,8 +139,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Det er vurdert om søker har oppholdsrett.');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Det er vurdert om søker har oppholdsrett.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 6005', () => {
     const aksjonspunkt = {
@@ -149,8 +149,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Medlemskapsvilkåret er overstyrt.');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Medlemskapsvilkåret er overstyrt.')).toBeInTheDocument();
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 5039 varig endring', () => {
@@ -161,8 +161,8 @@ describe('aksjonspunktTekstUtleder', () => {
       beregningDtoer: [{ fastsattVarigEndring: true, skjæringstidspunkt: '2022-01-01' }],
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual(`Det er fastsatt varig endret/nyoppstartet næring fom 2022-01-01.`);
+    render(<div>{message}</div>);
+    expect(screen.getByText('Det er fastsatt varig endret/nyoppstartet næring fom 2022-01-01.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5039 ikkje varig endring', () => {
     const aksjonspunkt = {
@@ -172,8 +172,10 @@ describe('aksjonspunktTekstUtleder', () => {
       beregningDtoer: [{ fastsattVarigEndring: false, skjæringstidspunkt: '2022-01-01' }],
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual(`Det er fastsatt at det ikke er varig endring i næring fom 2022-01-01.`);
+    render(<div>{message}</div>);
+    expect(
+      screen.getByText('Det er fastsatt at det ikke er varig endring i næring fom 2022-01-01.'),
+    ).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5080 når søker er i permisjon, skal kun vise tekst om permisjon', () => {
     const arbeidforholdDto = {
@@ -182,7 +184,8 @@ describe('aksjonspunktTekstUtleder', () => {
     } as TotrinnskontrollArbeidsforhold;
     const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
     expect(messages).toHaveLength(1);
-    expect(messages[0].props.id).toEqual('<b>Søker er i permisjon.</b>');
+    render(<div>{messages}</div>);
+    expect(screen.getByText('Søker er i permisjon.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5080 når søker ikke er i permisjon, skal ikke vise tekst for bruk', () => {
     const arbeidforholdDto = {
@@ -191,7 +194,8 @@ describe('aksjonspunktTekstUtleder', () => {
     } as TotrinnskontrollArbeidsforhold;
     const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
     expect(messages).toHaveLength(1);
-    expect(messages[0].props.id).toEqual('<b> Søker er ikke i permisjon.</b>');
+    render(<div>{messages}</div>);
+    expect(screen.getByText('Søker er ikke i permisjon.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5080 når søker ikke er i permisjon sammen med en annen handling som ikke er bruk', () => {
     const arbeidforholdDto = {
@@ -200,9 +204,9 @@ describe('aksjonspunktTekstUtleder', () => {
     } as TotrinnskontrollArbeidsforhold;
     const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
     expect(messages).toHaveLength(2);
-    expect(messages[0].props.id).toEqual('<b> Søker er ikke i permisjon.</b>');
-    expect(messages[1].props.id).toEqual('<b> {melding}.</b>');
-    expect(messages[1].props.values.melding).toEqual('ccc');
+    render(<div>{messages}</div>);
+    expect(screen.getByText('Søker er ikke i permisjon.')).toBeInTheDocument();
+    expect(screen.getByText('ccc.')).toBeInTheDocument();
   });
 
   // Klage
@@ -217,8 +221,8 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNFP: medholdIKlage,
     } as KlageVurdering;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Omgjort til gunst');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Omgjort til gunst')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5036 medhold', () => {
     const aksjonspunkt = {
@@ -230,8 +234,8 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNK: medholdIKlage,
     } as KlageVurdering;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Omgjort til gunst');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Omgjort til gunst')).toBeInTheDocument();
   });
   // Klage avslag
   // Ytelsesvedtak opphevet
@@ -245,8 +249,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Opphev ytelsesvedtak');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Opphev ytelsesvedtak')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag ytelsesvedtak opphevet', () => {
     const klagebehandlingVurdering = {
@@ -258,8 +262,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Opphev ytelsesvedtak');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Opphev ytelsesvedtak')).toBeInTheDocument();
   });
   // Klage avvist
   it('skal vise korrekt tekst for aksjonspunkt 5035 avslag klage avvist', () => {
@@ -272,8 +276,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Klagen avvist fordi den ikke oppfyller formkravene');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Klagen avvist fordi den ikke oppfyller formkravene')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag klage avvist', () => {
     const klagebehandlingVurdering = {
@@ -285,8 +289,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Klagen avvist fordi den ikke oppfyller formkravene');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Klagen avvist fordi den ikke oppfyller formkravene')).toBeInTheDocument();
   });
   // Ikke fastsatt Engangsstønad
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag ikke fastsatt', () => {
@@ -299,8 +303,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Stadfest ytelsesvedtak');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Stadfest ytelsesvedtak')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag ytelsesvedtak stadfestet', () => {
     const klagebehandlingVurdering = {
@@ -312,8 +316,8 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(message[0].props.id).toEqual('Stadfest ytelsesvedtak');
+    render(<div>{message}</div>);
+    expect(screen.getByText('Stadfest ytelsesvedtak')).toBeInTheDocument();
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 5058 vurder tidsbegrenset', () => {
@@ -328,15 +332,11 @@ describe('aksjonspunktTekstUtleder', () => {
       beregningDtoer: [beregningDto],
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    expect(message[0]).toEqual(
-      <>
-        <Label size="small" as="p">
-          Vurderinger av beregningsgrunnlag med skjæringstidspunkt 2022-01-01.
-        </Label>
-        <div className="mt-2" />
-        Det er vurdert om arbeidsforhold er tidsbegrenset.
-      </>,
-    );
+    render(<div>{message}</div>);
+    expect(
+      screen.getByText('Vurderinger av beregningsgrunnlag med skjæringstidspunkt 2022-01-01.'),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Det er vurdert om arbeidsforhold er tidsbegrenset.')).toBeInTheDocument();
   });
   it('skal vise korrekt tekst for aksjonspunkt 5058 ATFL i samme org', () => {
     const beregningDto = {
@@ -350,14 +350,11 @@ describe('aksjonspunktTekstUtleder', () => {
       beregningDtoer: [beregningDto],
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    expect(message[0]).toEqual(
-      <>
-        <Label size="small" as="p">
-          Vurderinger av beregningsgrunnlag med skjæringstidspunkt 2022-01-01.
-        </Label>
-        <div className="mt-2">Inntekt er fastsatt for arbeidstaker/frilanser i samme organisajon.</div>
-      </>,
-    );
+    render(<div>{message}</div>);
+    expect(
+      screen.getByText('Vurderinger av beregningsgrunnlag med skjæringstidspunkt 2022-01-01.'),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Inntekt er fastsatt for arbeidstaker/frilanser i samme organisajon.')).toBeInTheDocument();
   });
   it('skal vise korrekte tekster for kombinasjon av aksjonspunkt 5058', () => {
     const beregningDto = {
@@ -372,15 +369,11 @@ describe('aksjonspunktTekstUtleder', () => {
     } as TotrinnskontrollAksjonspunkt;
 
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-
-    expect(message[0]).toEqual(
-      <>
-        <Label size="small" as="p">
-          Vurderinger av beregningsgrunnlag med skjæringstidspunkt 2022-01-01.
-        </Label>
-        <div className="mt-2">Det er vurdert om arbeidsforhold er tidsbegrenset.</div>
-      </>,
-    );
+    render(<div>{message}</div>);
+    expect(
+      screen.getByText('Vurderinger av beregningsgrunnlag med skjæringstidspunkt 2022-01-01.'),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Det er vurdert om arbeidsforhold er tidsbegrenset.')).toBeInTheDocument();
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 5080', () => {
@@ -412,9 +405,7 @@ describe('aksjonspunktTekstUtleder', () => {
     } as TotrinnskontrollAksjonspunkt;
 
     const messages = getAksjonspunkttekst(null, null, [], false, aksjonspunkt);
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(messages[0].props.children[0].props.id).toEqual('ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold');
-    // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-    expect(messages[0].props.children[1][0].key).toEqual('<b> {melding}.</b>');
+    render(<div>{messages}</div>);
+    expect(screen.getByText('Arbeidsforhold hos COLOR LINE CREW AS(973135678)', { exact: false })).toBeInTheDocument();
   });
 });

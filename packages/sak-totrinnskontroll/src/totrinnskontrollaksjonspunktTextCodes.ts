@@ -12,7 +12,7 @@ const totrinnskontrollaksjonspunktTextCodes = {
   [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS]: 'Inntekt er skjønnsmessig fastsatt.',
   [aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE]:
     'Inntekt er skjønnsmessig fastsatt.',
-  [aksjonspunktCodes.OVERSTYR_BEREGNING]: 'ToTrinnsForm.Beregning.VilkarOverstyrt',
+  [aksjonspunktCodes.OVERSTYR_BEREGNING]: 'Beregningsvilkåret er overstyrt.',
   [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD]: 'Inntekt er skjønnsmessig fastsatt.',
   [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET]: 'Inntekt er skjønnsmessig fastsatt.',
   [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: 'Ny fordeling av beregningsgrunnlaget er fastsatt.',
