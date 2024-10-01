@@ -17,13 +17,13 @@ import {
 } from '@k9-sak-web/backend/k9formidling/models/Mottaker.ts';
 import { makeFakeExtendedApiError } from '../../storybook/mocks/fakeExtendedApiError.js';
 import { action } from '@storybook/addon-actions';
-import { StickyMemoryReducer } from '../../utils/StickyMemoryReducer.js';
+import { StickyStateReducer } from '../../utils/StickyStateReducer.js';
 
 const newStickyState = (): MessagesProps['stickyState'] => ({
-  messages: new StickyMemoryReducer(),
+  messages: new StickyStateReducer(),
   fritekst: {
-    tekst: new StickyMemoryReducer(),
-    tittel: new StickyMemoryReducer(),
+    tekst: new StickyStateReducer(),
+    tittel: new StickyStateReducer(),
   },
 });
 

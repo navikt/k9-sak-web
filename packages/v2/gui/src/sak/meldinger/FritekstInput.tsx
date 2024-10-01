@@ -3,7 +3,7 @@ import { Tag, type TagProps, Textarea, TextField } from '@navikt/ds-react';
 import { $BestillBrevDto, $FritekstbrevinnholdDto } from '@k9-sak-web/backend/k9sak/generated';
 import type { Språkkode } from '@k9-sak-web/backend/k9sak/kodeverk/Språkkode.js';
 import { validateTextCharacters } from '../../utils/validation/validateTextCharacters.js';
-import { StickyMemoryReducer } from '../../utils/StickyMemoryReducer.js';
+import { StickyStateReducer } from '../../utils/StickyStateReducer.js';
 
 export type Valid = {
   readonly input: string;
@@ -38,8 +38,8 @@ export type FritekstInputProps = {
   readonly defaultValue?: FritekstInputValue;
   readonly onChange?: (value: FritekstInputValue | FritekstInputInvalid) => void;
   readonly stickyState: {
-    readonly tittel: StickyMemoryReducer<Valid | Error>;
-    readonly tekst: StickyMemoryReducer<Valid | Error>;
+    readonly tittel: StickyStateReducer<Valid | Error>;
+    readonly tekst: StickyStateReducer<Valid | Error>;
   };
 };
 
@@ -120,11 +120,11 @@ const FritekstInput = forwardRef(
     { språk, show, fritekstModus, showValidation = false, defaultValue, onChange, stickyState }: FritekstInputProps,
     ref: ForwardedRef<FritekstInputMethods>,
   ) => {
-    const [tittel, setTittel] = stickyState.tittel.useStickyMemoryReducer(
+    const [tittel, setTittel] = stickyState.tittel.useStickyStateReducer(
       tittelReducer,
       validateTittel(defaultValue?.tittel),
     );
-    const [tekst, setTekst] = stickyState.tekst.useStickyMemoryReducer(
+    const [tekst, setTekst] = stickyState.tekst.useStickyStateReducer(
       tekstReducer,
       validateTekst(defaultValue?.tekst, fritekstModus),
     );

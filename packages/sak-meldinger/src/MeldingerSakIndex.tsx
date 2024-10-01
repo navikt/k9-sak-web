@@ -23,7 +23,7 @@ import useVisForhandsvisningAvMelding from '@k9-sak-web/sak-app/src/data/useVisF
 import MessagesTilbakekreving from './components/MessagesTilbakekreving';
 import Messages, { type BackendApi as MessagesBackendApi, type FormValues } from './components/Messages';
 import messages from '../i18n/nb_NO.json';
-import { StickyMemoryReducer } from '@k9-sak-web/gui/utils/StickyMemoryReducer.js';
+import { StickyStateReducer } from '@k9-sak-web/gui/utils/StickyStateReducer.js';
 
 const cache = createIntlCache();
 
@@ -56,10 +56,10 @@ interface OwnProps {
 // Dette slik at bruker ikkje mister state når disse blir unmounta og remounta
 // ved visning av anna panel midlertidig (på samme sak/behandling).
 const stickyState: V2MessagesProps['stickyState'] = {
-  messages: new StickyMemoryReducer(),
+  messages: new StickyStateReducer(),
   fritekst: {
-    tittel: new StickyMemoryReducer(),
-    tekst: new StickyMemoryReducer(),
+    tittel: new StickyStateReducer(),
+    tekst: new StickyStateReducer(),
   },
 };
 

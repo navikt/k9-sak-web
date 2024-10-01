@@ -32,7 +32,7 @@ import type { BehandlingInfo } from '../BehandlingInfo.js';
 import type { Fagsak } from '../Fagsak.js';
 import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import { TredjepartsmottakerCheckbox } from './TredjepartsmottakerCheckbox.js';
-import { StickyMemoryReducer } from '../../utils/StickyMemoryReducer.js';
+import { StickyStateReducer } from '../../utils/StickyStateReducer.js';
 
 export interface BackendApi extends TredjepartsmottakerBackendApi {
   hentInnholdBrevmal(
@@ -63,10 +63,10 @@ export type MessagesProps = {
   readonly api: BackendApi;
   readonly onMessageSent: () => void;
   readonly stickyState: {
-    readonly messages: StickyMemoryReducer<MessagesState>;
+    readonly messages: StickyStateReducer<MessagesState>;
     readonly fritekst: {
-      readonly tittel: StickyMemoryReducer<Valid | Error>;
-      readonly tekst: StickyMemoryReducer<Valid | Error>;
+      readonly tittel: StickyStateReducer<Valid | Error>;
+      readonly tekst: StickyStateReducer<Valid | Error>;
     };
   };
 };
@@ -226,7 +226,7 @@ const Messages = ({
   const [
     { valgtMalkode, fritekstForslag, valgtFritekst, valgtMottaker, tredjepartsmottakerAktivert, tredjepartsmottaker },
     dispatch,
-  ] = stickyState.messages.useStickyMemoryReducer(messagesStateReducer, initMessagesState(maler));
+  ] = stickyState.messages.useStickyStateReducer(messagesStateReducer, initMessagesState(maler));
 
   const fritekstInputRef = useRef<FritekstInputMethods>(null);
   // showValidation is set to true when inputs should display any validation errors, i.e. after the user tries to submit the form without having valid values.

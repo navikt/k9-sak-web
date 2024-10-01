@@ -12,10 +12,10 @@ type Dispatch<A> = (action: A) => void;
  *
  * Sjå Messages.tsx for eksempel på bruk.
  */
-export class StickyMemoryReducer<State> {
+export class StickyStateReducer<State> {
   #state: State | null = null;
 
-  useStickyMemoryReducer<Actions>(reducer: Reducer<State, Actions>, initState: State): [State, Dispatch<Actions>] {
+  useStickyStateReducer<Actions>(reducer: Reducer<State, Actions>, initState: State): [State, Dispatch<Actions>] {
     const [state, dispatch] = useReducer(reducer, this.#state ?? initState);
     this.#state = state;
     return [state, dispatch];
