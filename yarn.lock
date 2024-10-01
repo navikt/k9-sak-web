@@ -4625,6 +4625,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/prosess-ung-beregning@workspace:packages/prosess-ung-beregning":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/prosess-ung-beregning@workspace:packages/prosess-ung-beregning"
+  dependencies:
+    react: 18.3.1
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/prosess-unntak@1.0.0, @k9-sak-web/prosess-unntak@workspace:packages/prosess-unntak":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/prosess-unntak@workspace:packages/prosess-unntak"
