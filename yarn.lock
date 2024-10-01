@@ -5729,66 +5729,66 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/cli-darwin@npm:2.36.3":
-  version: 2.36.3
-  resolution: "@sentry/cli-darwin@npm:2.36.3"
+"@sentry/cli-darwin@npm:2.36.5":
+  version: 2.36.5
+  resolution: "@sentry/cli-darwin@npm:2.36.5"
   conditions: os=darwin
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-arm64@npm:2.36.3":
-  version: 2.36.3
-  resolution: "@sentry/cli-linux-arm64@npm:2.36.3"
+"@sentry/cli-linux-arm64@npm:2.36.5":
+  version: 2.36.5
+  resolution: "@sentry/cli-linux-arm64@npm:2.36.5"
   conditions: (os=linux | os=freebsd) & cpu=arm64
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-arm@npm:2.36.3":
-  version: 2.36.3
-  resolution: "@sentry/cli-linux-arm@npm:2.36.3"
+"@sentry/cli-linux-arm@npm:2.36.5":
+  version: 2.36.5
+  resolution: "@sentry/cli-linux-arm@npm:2.36.5"
   conditions: (os=linux | os=freebsd) & cpu=arm
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-i686@npm:2.36.3":
-  version: 2.36.3
-  resolution: "@sentry/cli-linux-i686@npm:2.36.3"
+"@sentry/cli-linux-i686@npm:2.36.5":
+  version: 2.36.5
+  resolution: "@sentry/cli-linux-i686@npm:2.36.5"
   conditions: (os=linux | os=freebsd) & (cpu=x86 | cpu=ia32)
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-x64@npm:2.36.3":
-  version: 2.36.3
-  resolution: "@sentry/cli-linux-x64@npm:2.36.3"
+"@sentry/cli-linux-x64@npm:2.36.5":
+  version: 2.36.5
+  resolution: "@sentry/cli-linux-x64@npm:2.36.5"
   conditions: (os=linux | os=freebsd) & cpu=x64
   languageName: node
   linkType: hard
 
-"@sentry/cli-win32-i686@npm:2.36.3":
-  version: 2.36.3
-  resolution: "@sentry/cli-win32-i686@npm:2.36.3"
+"@sentry/cli-win32-i686@npm:2.36.5":
+  version: 2.36.5
+  resolution: "@sentry/cli-win32-i686@npm:2.36.5"
   conditions: os=win32 & (cpu=x86 | cpu=ia32)
   languageName: node
   linkType: hard
 
-"@sentry/cli-win32-x64@npm:2.36.3":
-  version: 2.36.3
-  resolution: "@sentry/cli-win32-x64@npm:2.36.3"
+"@sentry/cli-win32-x64@npm:2.36.5":
+  version: 2.36.5
+  resolution: "@sentry/cli-win32-x64@npm:2.36.5"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@sentry/cli@npm:2.36.3":
-  version: 2.36.3
-  resolution: "@sentry/cli@npm:2.36.3"
+"@sentry/cli@npm:2.36.5":
+  version: 2.36.5
+  resolution: "@sentry/cli@npm:2.36.5"
   dependencies:
-    "@sentry/cli-darwin": 2.36.3
-    "@sentry/cli-linux-arm": 2.36.3
-    "@sentry/cli-linux-arm64": 2.36.3
-    "@sentry/cli-linux-i686": 2.36.3
-    "@sentry/cli-linux-x64": 2.36.3
-    "@sentry/cli-win32-i686": 2.36.3
-    "@sentry/cli-win32-x64": 2.36.3
+    "@sentry/cli-darwin": 2.36.5
+    "@sentry/cli-linux-arm": 2.36.5
+    "@sentry/cli-linux-arm64": 2.36.5
+    "@sentry/cli-linux-i686": 2.36.5
+    "@sentry/cli-linux-x64": 2.36.5
+    "@sentry/cli-win32-i686": 2.36.5
+    "@sentry/cli-win32-x64": 2.36.5
     https-proxy-agent: ^5.0.0
     node-fetch: ^2.6.7
     progress: ^2.0.3
@@ -5811,7 +5811,7 @@ __metadata:
       optional: true
   bin:
     sentry-cli: bin/sentry-cli
-  checksum: e1afded7c5967976b88947e0fe4b4e0c6116d980122130781c3fbf31758961713838fe70263322dfbb837d4feb3fda24f949b5780198518fb9c1ac3dffb4efed
+  checksum: b8d1245dc9ae49dff0aadd8a5eb3fda5ff01d3d86581e354f56aeffd9f8bf4b33d1cb1053094cf075966fce9bd667d48eec6b262a4c6c3f89fa50229efb0eabd
   languageName: node
   linkType: hard
 
@@ -10575,9 +10575,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:7.37.0":
-  version: 7.37.0
-  resolution: "eslint-plugin-react@npm:7.37.0"
+"eslint-plugin-react@npm:7.37.1":
+  version: 7.37.1
+  resolution: "eslint-plugin-react@npm:7.37.1"
   dependencies:
     array-includes: ^3.1.8
     array.prototype.findlast: ^1.2.5
@@ -10599,7 +10599,7 @@ __metadata:
     string.prototype.repeat: ^1.0.0
   peerDependencies:
     eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7
-  checksum: ece92e28b34ced0fd6bddebd41234ee53187b236fd507abef4f61cc868e27edd94fb7e290f44ff546037a6862c3302e848185a5e6511e2bcdf1883a1bfaa4ffc
+  checksum: 22d1bdf0dd4cdbf8c57ce563c58d43c5f5e1da0b08d27d0a69d7126d9e8afcb74a5befae97dab4019b4c6029ae617b6a0af1709cb9e0439d5757b01b392d2ca7
   languageName: node
   linkType: hard
 
@@ -13547,7 +13547,7 @@ __metadata:
     "@playwright/test": ^1.47.2
     "@popperjs/core": 2.11.8
     "@sentry/browser": 8.32.0
-    "@sentry/cli": 2.36.3
+    "@sentry/cli": 2.36.5
     "@sentry/react": ^8.32.0
     "@storybook/addon-a11y": ^8.3.4
     "@storybook/addon-actions": ^8.3.4
@@ -13580,7 +13580,7 @@ __metadata:
     eslint: 9.11.1
     eslint-config-prettier: 9.1.0
     eslint-plugin-jsx-a11y: 6.10.0
-    eslint-plugin-react: 7.37.0
+    eslint-plugin-react: 7.37.1
     eslint-plugin-vitest: ~0.5.4
     globals: ^15.9.0
     history: 5.3.0
