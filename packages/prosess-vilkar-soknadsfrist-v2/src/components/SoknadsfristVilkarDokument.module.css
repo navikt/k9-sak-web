@@ -1,0 +1,20 @@
+.container {
+  padding-right: 15px;
+}
+
+.image {
+  height: 16px;
+  margin-top: -2px;
+  width: 16px;
+}
+
+.fullBreddeIE {
+  width: 100%;
+}
+
+.editButton {
+  :global(.navds-label) {
+    font-size: 0.875rem;
+    text-decoration: underline;
+  }
+}

@@ -1,64 +1,40 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { Aksjonspunkt, FamilieHendelse, Personopplysninger, Soknad } from '@k9-sak-web/types';
-import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../../i18n/nb_NO.json';
-import { TilkjentYtelsePanelImpl } from './TilkjentYtelsePanel';
+import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import { render, screen } from '@testing-library/react';
+import TilkjentYtelsePanelImpl from './TilkjentYtelsePanel';
 
 const tilbaketrekkAP = {
-  definisjon: {
-    kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
-  },
-  status: {
-    kode: 'OPPR',
-  },
+  definisjon: aksjonspunktCodes.VURDER_TILBAKETREKK,
+  status: 'OPPR',
   begrunnelse: undefined,
-} as Aksjonspunkt;
+} as AksjonspunktDto;
 
 describe('<TilkjentYtelsePanelImpl>', () => {
   it('skall innehålla rätt undertekst', () => {
-    renderWithIntl(
+    render(
       <TilkjentYtelsePanelImpl
         readOnly
-        beregningresultat={null}
+        beregningsresultat={null}
         submitCallback={vi.fn()}
         readOnlySubmitButton
-        behandlingId={1}
-        alleKodeverk={{}}
-        behandlingVersjon={1}
         aksjonspunkter={[]}
-        gjeldendeFamiliehendelse={{} as FamilieHendelse}
-        personopplysninger={{} as Personopplysninger}
-        soknad={{} as Soknad}
-        fagsakYtelseTypeKode=""
         arbeidsgiverOpplysningerPerId={{}}
       />,
-      { messages },
     );
 
     expect(screen.getByRole('heading', { name: 'Tilkjent ytelse' })).toBeInTheDocument();
   });
 
   it('Skal vise tilbaketrekkpanel gitt tilbaketrekkaksjonspunkt', () => {
-    renderWithIntlAndReduxForm(
+    render(
       <TilkjentYtelsePanelImpl
         readOnly
-        aksjonspunkter={[]}
-        beregningresultat={null}
+        aksjonspunkter={[tilbaketrekkAP]}
+        beregningsresultat={null}
         submitCallback={vi.fn()}
         readOnlySubmitButton
-        vurderTilbaketrekkAP={tilbaketrekkAP}
-        behandlingId={1}
-        alleKodeverk={{}}
-        behandlingVersjon={1}
-        gjeldendeFamiliehendelse={{} as FamilieHendelse}
-        personopplysninger={{} as Personopplysninger}
-        soknad={{} as Soknad}
-        fagsakYtelseTypeKode=""
         arbeidsgiverOpplysningerPerId={{}}
       />,
-      { messages },
     );
     expect(screen.getByRole('heading', { name: 'Tilkjent ytelse' })).toBeInTheDocument();
     expect(

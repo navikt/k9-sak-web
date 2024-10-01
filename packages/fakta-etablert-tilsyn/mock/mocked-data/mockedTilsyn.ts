@@ -272,12 +272,48 @@ export default {
     beskrivelser: [
       {
         periode: {
+          fom: '2021-08-20',
+          tom: '2021-08-25',
+        },
+        tekst: 'More text',
+        mottattDato: '2021-08-20',
+        kilde: 'ANDRE',
+      },
+      {
+        periode: {
           fom: '2021-05-11',
           tom: '2021-05-11',
         },
-        tekst: 'string',
+        tekst: 'Some text',
         mottattDato: '2021-05-11',
+        kilde: 'ANDRE',
+      },
+      {
+        periode: {
+          fom: '2021-09-15',
+          tom: '2021-09-20',
+        },
+        tekst: 'Additional text',
+        mottattDato: '2021-09-15',
         kilde: 'SØKER',
+      },
+      {
+        periode: {
+          fom: '2021-06-01',
+          tom: '2021-06-05',
+        },
+        tekst: 'Another text',
+        mottattDato: '2021-06-01',
+        kilde: 'SØKER',
+      },
+      {
+        periode: {
+          fom: '2021-07-10',
+          tom: '2021-07-15',
+        },
+        tekst: 'Different text',
+        mottattDato: '2021-07-10',
+        kilde: 'ANDRE',
       },
     ],
     vurderinger: [

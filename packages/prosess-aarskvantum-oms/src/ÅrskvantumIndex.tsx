@@ -61,23 +61,24 @@ const ÅrskvantumIndex = ({
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
 
-  const apForVurderÅrskvantumDok: Aksjonspunkt = aksjonspunkterForSteg.find(
-    ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
-  );
-  const aksjonspunkter: Aksjonspunkt[] = aksjonspunkterForSteg.filter(
-    ap => ap.definisjon.kode !== aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
-  );
+  const [featureToggles] = useFeatureToggles();
+  const årskvantumDokEllerKvote = aksjonspunkt =>
+    aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK ||
+    (featureToggles?.NYTT_SKJEMA_FOR_9003 &&
+      aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE);
+
+  const apForVurderÅrskvantum: Aksjonspunkt = aksjonspunkterForSteg.find(ap => årskvantumDokEllerKvote(ap));
+  const aksjonspunkter: Aksjonspunkt[] = aksjonspunkterForSteg.filter(ap => !årskvantumDokEllerKvote(ap));
   const åpenAksjonspunkt = aksjonspunkter.find(ap => ap.status.kode !== aksjonspunktStatus.UTFORT) !== undefined;
 
   const visAPVurderÅrskvantumDokIOmsorgsdagerFrontend =
-    apForVurderÅrskvantumDok !== undefined &&
-    (!åpenAksjonspunkt || apForVurderÅrskvantumDok.status.kode === aksjonspunktStatus.UTFORT);
-  const [featureToggles] = useFeatureToggles();
+    apForVurderÅrskvantum !== undefined &&
+    (!åpenAksjonspunkt || apForVurderÅrskvantum.status.kode === aksjonspunktStatus.UTFORT);
 
   const propsTilMikrofrontend = {
     submitCallback,
     behandling,
-    saerligSmittevernAp: apForVurderÅrskvantumDok,
+    saerligSmittevernAp: apForVurderÅrskvantum,
     aktiviteter: sisteUttaksplan?.aktiviteter,
     featureToggles,
   };

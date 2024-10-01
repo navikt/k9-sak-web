@@ -1,5 +1,4 @@
-import React from 'react';
-import { FormattedMessage, FormattedDate, FormattedTime } from 'react-intl';
+import { format } from 'date-fns';
 
 interface OwnProps {
   dateTimeString: string;
@@ -22,18 +21,9 @@ const DateTimeLabel = ({ dateTimeString, useNewFormat = false }: OwnProps) => {
   const minutes = String(date.getMinutes()).padStart(2, '0');
   return (
     <>
-      <FormattedDate day="2-digit" month="2-digit" year="numeric" value={date} />
-      {!useNewFormat && (
-        <>
-          -<span>{`${hours}:${minutes}`}</span>
-        </>
-      )}
-      {useNewFormat && (
-        <>
-          <FormattedMessage id="DateTimeLabel.Kl" />
-          <FormattedTime value={date} hour="numeric" minute="numeric" second="numeric" />
-        </>
-      )}
+      {format(date, 'dd.MM.yyyy')}
+      {!useNewFormat && ` - ${hours}:${minutes}`}
+      {useNewFormat && ` Kl.${format(date, 'HH:mm:ss')}`}
     </>
   );
 };

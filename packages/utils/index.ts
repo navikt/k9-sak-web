@@ -25,7 +25,6 @@ export {
   TIDENES_ENDE,
   timeFormat,
   getRangeOfMonths,
-  visningsdato,
   isValidDate,
   convertHoursToDays,
   formatereLukketPeriode,

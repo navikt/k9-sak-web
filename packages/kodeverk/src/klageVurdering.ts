@@ -5,6 +5,7 @@ const klageVurdering = {
   AVVIS_KLAGE: 'AVVIS_KLAGE',
   HJEMSENDE_UTEN_Å_OPPHEVE: 'HJEMSENDE_UTEN_Å_OPPHEVE',
   TRUKKET_KLAGE: 'TRUKKET_KLAGE',
+  FEILREGISTRERT: 'FEILREGISTRERT',
 };
 
 export default klageVurdering;

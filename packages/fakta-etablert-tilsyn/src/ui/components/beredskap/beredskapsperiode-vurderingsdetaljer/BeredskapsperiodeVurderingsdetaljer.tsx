@@ -40,7 +40,7 @@ const BeredskapsperiodeVurderingsdetaljer = ({
       <Box marginTop={Margin.xLarge}>
         <LabelledContent
           label="Vurdering av om det er behov for beredskap"
-          content={beredskapsperiode.begrunnelse}
+          content={<span className="whitespace-pre-wrap">{beredskapsperiode.begrunnelse}</span>}
           indentContent
         />
         <AssessedBy name={hentSaksbehandlerNavn(opprettetAv)} date={opprettetTidspunkt} />
