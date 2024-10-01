@@ -1,3 +1,6 @@
+import { sortPeriodsByFomDate } from '@fpsak-frontend/utils';
+import { MinusIcon, PlusIcon } from '@navikt/aksel-icons';
+import { Button } from '@navikt/ds-react';
 import {
   Box,
   ContentWithTooltip,
@@ -6,7 +9,7 @@ import {
   OnePersonIconGray,
   OnePersonOutlineGray,
 } from '@navikt/ft-plattform-komponenter';
-import * as React from 'react';
+import { useState } from 'react';
 import Beskrivelse from '../../../types/Beskrivelse';
 import Kilde from '../../../types/Kilde';
 import { prettifyDate } from '../../../util/formats';
@@ -40,14 +43,37 @@ const getLabel = (periodebeskrivelse: Beskrivelse) => {
 };
 
 const BeskrivelserForPerioden = ({ periodebeskrivelser }: BeskrivelserForPeriodenProps): JSX.Element | null => {
+  const [visAlleBeskrivelser, setVisAlleBeskrivelser] = useState(periodebeskrivelser?.length <= 3);
   if (periodebeskrivelser?.length > 0) {
+    const sortertePeriodebeskrivelser = [
+      ...periodebeskrivelser
+        .sort((periode1, periode2) => sortPeriodsByFomDate(periode1.periode, periode2.periode))
+        .reverse(),
+    ];
     return (
       <>
-        {periodebeskrivelser.map(periodebeskrivelse => (
-          <Box marginBottom={Margin.large} key={periodebeskrivelse.tekst}>
-            <LabelledContent label={getLabel(periodebeskrivelse)} content={periodebeskrivelse.tekst} labelTag="div" />
-          </Box>
-        ))}
+        {sortertePeriodebeskrivelser
+          .filter((periodebeskrivelse, index) => (visAlleBeskrivelser ? true : index <= 2))
+          .map(periodebeskrivelse => (
+            <Box marginBottom={Margin.large} key={periodebeskrivelse.tekst}>
+              <LabelledContent
+                label={getLabel(periodebeskrivelse)}
+                content={<span className="whitespace-pre-wrap">{periodebeskrivelse.tekst}</span>}
+                labelTag="div"
+              />
+            </Box>
+          ))}
+        {sortertePeriodebeskrivelser.length > 3 && (
+          <Button
+            icon={visAlleBeskrivelser ? <MinusIcon /> : <PlusIcon />}
+            onClick={() => setVisAlleBeskrivelser(!visAlleBeskrivelser)}
+            size="small"
+            type="button"
+            variant="secondary"
+          >
+            {visAlleBeskrivelser ? 'Skjul tidligere beskrivelser' : 'Vis tidligere beskrivelser'}
+          </Button>
+        )}
         <hr className={styles.beskrivelserForPerioden__separator} />
       </>
     );

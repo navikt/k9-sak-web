@@ -513,6 +513,7 @@
   "Historikk.BeregningsgrunnlagOgInntektskategoriTY": "Fastsatt beregningsgrunnlag og inntektskategori for bruker med tilstøtende ytelse",
   "Historikk.BeregningsgrunnlagManueltSNNYIArbeidslivet": "Fastsatt beregningsgrunnlag for selvstendig næring ny i arbeidslivet",
   "Historikk.VurderFaktaATFLSN": "Vurder fakta for beregning",
+  "Historikk.Sykdom": "Sykdom",
   "Historikk.FaktaUttak.ForsteUttakDato": "Kontroller manglende uttaksperiode",
   "Historikk.FaktaUttak.VurderAnnenForelder": "Vurdering om den andre forelderen har rett til pleiepenger"
 }

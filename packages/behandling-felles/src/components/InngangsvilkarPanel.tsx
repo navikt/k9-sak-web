@@ -118,7 +118,7 @@ const InngangsvilkarPanel = ({
           </Tabs.List>
         </Tabs>
         <VerticalSpacer thirtyTwoPx />
-        <HGrid gap="4" columns={{ xs: '6fr 6fr' }}>
+        <HGrid gap="4" columns={filteredPanels.length > 2 ? { xs: '6fr 6fr' } : { xs: '8fr 4fr' }}>
           <div>
             {filteredPanels
               .filter((_panel, index) => index < 2)

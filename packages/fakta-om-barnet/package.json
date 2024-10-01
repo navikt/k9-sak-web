@@ -10,13 +10,13 @@
     "dev": "vite serve"
   },
   "devDependencies": {
-    "msw": "2.4.2",
-    "vite": "^5.4.3",
+    "msw": "2.4.9",
+    "vite": "^5.4.8",
     "vite-plugin-node-polyfills": "^0.22.0"
   },
   "dependencies": {
-    "@navikt/ds-react": "6.16.3",
-    "@navikt/ft-plattform-komponenter": "3.0.8",
+    "@navikt/ds-react": "7.1.0",
+    "@navikt/ft-plattform-komponenter": "3.1.1",
     "@popperjs/core": "2.11.8",
     "classnames": "2.5.1",
     "dayjs": "1.11.13",
@@ -25,7 +25,7 @@
     "react-dom": "18.3.1",
     "react-hook-form": "7.53.0",
     "react-popper": "2.3.0",
-    "tailwindcss": "^3.4.10"
+    "tailwindcss": "^3.4.13"
   },
   "msw": {
     "workerDirectory": "public"
