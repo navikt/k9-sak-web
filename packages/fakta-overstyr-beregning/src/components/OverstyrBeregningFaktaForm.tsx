@@ -143,7 +143,7 @@ const OverstyrBeregningFaktaForm = ({
                             </div>
                           )}
                           <VerticalSpacer twentyPx />
-                          {aktivitetliste.length > 0 && (
+                          {aktivitetliste?.length > 0 && (
                             <FieldArray name={`perioder[${periodeIndex}].aktivitetliste`}>
                               {() => (
                                 <Table zebraStripes>
