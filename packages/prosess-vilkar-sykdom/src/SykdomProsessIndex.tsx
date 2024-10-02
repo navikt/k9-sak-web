@@ -6,12 +6,12 @@ import { dateFormat } from '@fpsak-frontend/utils';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
-import { Detail, Heading, Label } from '@navikt/ds-react';
+import { Detail, Heading, HStack, Label } from '@navikt/ds-react';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import isEqual from 'lodash/isEqual';
 import React from 'react';
-import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
+import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import styles from './sykdomProsessIndex.module.css';
 
@@ -92,7 +92,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomP
         )}
         <div className={styles.contentContainer}>
           <FlexContainer>
-            <div className="flex gap-4">
+            <HStack gap="4">
               {erVilkarOk !== undefined && (
                 <>
                   {erVilkarOk ? (
@@ -108,7 +108,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomP
               <Detail className={styles.vilkar}>
                 <Lovreferanse>{lovReferanseTekst}</Lovreferanse>
               </Detail>
-            </div>
+            </HStack>
             <FlexRow>
               <FlexColumn>
                 <VerticalSpacer eightPx />
