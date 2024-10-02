@@ -12,7 +12,7 @@ class UngdomsprogrammetPanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [];
 
-  getVilkarKoder = () => [vilkarType.UNGDOMSPROGRAMMET];
+  getVilkarKoder = () => [vilkarType.UNGDOMSPROGRAMVILKARET];
 
   getOverstyrVisningAvKomponent = ({ vilkarForSteg }) => vilkarForSteg.length > 0;
 
