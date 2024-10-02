@@ -5,12 +5,6 @@ import UngBeregningIndex from '@k9-sak-web/prosess-ung-beregning';
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <UngBeregningIndex {...props} />;
   getOverstyrVisningAvKomponent = () => true;
-
-  // getEndepunkter = () => [UngdomsytelseBehandlingApiKeys.MEDLEMSKAP];
-
-  // getData = ({ personopplysninger }) => ({
-  //   personopplysninger,
-  // });
 }
 
 class BeregningProsessStegPanelDef extends ProsessStegDef {
