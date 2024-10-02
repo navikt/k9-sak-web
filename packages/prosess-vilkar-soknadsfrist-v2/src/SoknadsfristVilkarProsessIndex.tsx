@@ -164,7 +164,7 @@ const SoknadsfristVilkarProsessIndex = ({
               active: activeTab === index,
               label: `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`,
               icon:
-                (erOverstyrt || harÅpentUløstAksjonspunkt) && vilkarStatus !== vilkårStatus.OPPFYLT ? (
+                (erOverstyrt || harÅpentUløstAksjonspunkt) && vilkarStatus === vilkårStatus.IKKE_VURDERT ? (
                   <ExclamationmarkTriangleFillIcon
                     title="Aksjonspunkt"
                     fontSize="1.5rem"
