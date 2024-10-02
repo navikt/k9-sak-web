@@ -79,10 +79,6 @@ const VilkarresultatMedOverstyringProsessIndex = ({
     }
   }, [activeTab, visAllePerioder]);
 
-  if (perioder.length === 0) {
-    return null;
-  }
-
   useEffect(() => {
     if (perioder.length > 1) {
       const førsteIkkeVurdertPeriodeIndex = perioder.findIndex(
@@ -94,6 +90,9 @@ const VilkarresultatMedOverstyringProsessIndex = ({
     }
   }, []);
 
+  if (perioder.length === 0) {
+    return null;
+  }
   const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
 
   return (
