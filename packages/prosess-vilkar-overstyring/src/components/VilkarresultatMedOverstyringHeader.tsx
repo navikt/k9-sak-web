@@ -7,7 +7,7 @@ import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-front
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
 import { CheckmarkCircleFillIcon, KeyHorizontalIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
-import { Button, Detail, Heading, Label } from '@navikt/ds-react';
+import { Button, Detail, Heading, HStack, Label } from '@navikt/ds-react';
 import { SetStateAction } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './vilkarresultatMedOverstyringForm.module.css';
@@ -76,7 +76,7 @@ const VilkarresultatMedOverstyringHeader = ({
   return (
     <>
       <FlexContainer>
-        <div className="flex gap-4">
+        <HStack gap="4">
           {!erOverstyrt && erVilkarOk !== undefined && (
             <>
               {erVilkarOk ? (
@@ -94,7 +94,7 @@ const VilkarresultatMedOverstyringHeader = ({
               <Lovreferanse>{lovReferanse}</Lovreferanse>
             </Detail>
           )}
-        </div>
+        </HStack>
         <FlexRow>
           <FlexColumn>
             <VerticalSpacer eightPx />
