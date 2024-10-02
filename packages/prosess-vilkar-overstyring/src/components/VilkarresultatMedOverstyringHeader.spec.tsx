@@ -25,7 +25,7 @@ describe('<VilkarresultatMedOverstyringHeader>', () => {
           periode={{
             avslagKode: '',
             begrunnelse: '',
-            vurderesIBehandlingen: false,
+            vurderesIBehandlingen: true,
             merknad: { kode: '', kodeverk: '' },
             merknadParametere: {},
             periode: { fom: '', tom: '' },
