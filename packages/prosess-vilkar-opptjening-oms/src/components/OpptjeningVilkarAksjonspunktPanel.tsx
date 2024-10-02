@@ -3,7 +3,7 @@ import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
 import { HelpText, Label } from '@navikt/ds-react';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -12,7 +12,7 @@ import { createSelector } from 'reselect';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import styles from './OpptjeningVilkarAksjonspunktPanel.module.css';
-import VilkarField, { erVilkarOk, midlertidigInaktiv, VilkårFieldType } from './VilkarField';
+import VilkarField, { erVilkarOk, opptjeningMidlertidigInaktivKoder, VilkårFieldType } from './VilkarField';
 import OpptjeningPanel from './OpptjeningPanel';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
@@ -196,7 +196,9 @@ const transformValues = (
   vilkårPeriodeVurderinger: values.vilkarFields.map((vilkarField, index) => ({
     ...vilkarField,
     erVilkarOk: erVilkarOk(vilkarField.kode),
-    innvilgelseMerknadKode: Object.values(midlertidigInaktiv).includes(vilkarField.kode) ? vilkarField.kode : undefined,
+    innvilgelseMerknadKode: Object.values(opptjeningMidlertidigInaktivKoder).includes(vilkarField.kode)
+      ? vilkarField.kode
+      : undefined,
     periode: Array.isArray(vilkårPerioder) && vilkårPerioder[index] ? vilkårPerioder[index].periode : {},
   })),
   opptjeningPerioder: Array.isArray(opptjeninger)

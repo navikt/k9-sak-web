@@ -3,29 +3,36 @@ import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
-import { Aksjonspunkt } from '@k9-sak-web/types';
+import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
 import { KeyHorizontalIcon } from '@navikt/aksel-icons';
 import { Button, Detail, Heading, Label } from '@navikt/ds-react';
 import { SetStateAction } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './vilkarresultatMedOverstyringForm.module.css';
+import {
+  hent847Text,
+  opptjeningMidlertidigInaktivKoder,
+} from '@fpsak-frontend/prosess-vilkar-opptjening-oms/src/components/VilkarField';
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
   aksjonspunktCodes.some(code => code === aksjonspunktCode);
 const isHidden = (kanOverstyre: boolean, aksjonspunktCodes: string[], aksjonspunktCode: string) =>
   !isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre;
 
-const getVilkarOkMessage = (originalErVilkarOk: boolean) => {
-  let messageId = 'Ikke behandlet';
+const vilkårResultatText = (originalErVilkarOk: boolean, periode: Vilkarperiode) => {
+  let text = 'Ikke behandlet';
   if (originalErVilkarOk) {
-    messageId = 'Vilkåret er oppfylt';
-  } else if (originalErVilkarOk === false) {
-    messageId = 'Vilkåret er avslått';
+    text = 'Vilkåret er oppfylt';
   }
-
+  if (originalErVilkarOk === false) {
+    text = 'Vilkåret er avslått';
+  }
+  if (Object.values(opptjeningMidlertidigInaktivKoder).includes(periode?.merknad?.kode)) {
+    text = hent847Text(periode.merknad.kode);
+  }
   return (
     <Label size="small" as="p">
-      {messageId}
+      {text}
     </Label>
   );
 };
@@ -43,6 +50,7 @@ interface VilkarresultatMedOverstyringHeaderProps {
   panelTittelKode: string;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   status: string;
+  periode: Vilkarperiode;
 }
 
 const VilkarresultatMedOverstyringHeader = ({
@@ -54,9 +62,10 @@ const VilkarresultatMedOverstyringHeader = ({
   kanOverstyreAccess,
   toggleOverstyring,
   aksjonspunkter,
-  status,
+  periode,
 }: Partial<VilkarresultatMedOverstyringHeaderProps>) => {
   const aksjonspunktCodes = aksjonspunkter.map(a => a.definisjon.kode);
+  const status = periode?.vilkarStatus?.kode;
   const erOppfylt = vilkarUtfallType.OPPFYLT === status;
   const erVilkarOk = vilkarUtfallType.IKKE_VURDERT !== status ? erOppfylt : undefined;
   const togglePa = () => {
@@ -87,7 +96,7 @@ const VilkarresultatMedOverstyringHeader = ({
         <FlexRow>
           <FlexColumn>
             <VerticalSpacer eightPx />
-            {getVilkarOkMessage(erVilkarOk)}
+            {vilkårResultatText(erVilkarOk, periode)}
           </FlexColumn>
           {erVilkarOk !== undefined &&
             !isHidden(kanOverstyreAccess.isEnabled, aksjonspunktCodes, overstyringApKode) && (
