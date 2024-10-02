@@ -4,7 +4,7 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import AlderPanelDef from './inngangsvilkarPaneler/AlderPanelDef';
 import OmsorgenForPanelDef from './inngangsvilkarPaneler/OmsorgenForPanelDef';
 import SoknadsfristPanelDef from './inngangsvilkarPaneler/SoknadsfristPanelDef';
-import UngdomsprogrammetPanelDef from './inngangsvilkarPaneler/UngdomsprogrammetPanelDef';
+import UngdomsprogramPanelDef from './inngangsvilkarPaneler/UngdomsprogramPanelDef';
 
 class InngangsvilkarProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.INNGANGSVILKAR;
@@ -15,7 +15,7 @@ class InngangsvilkarProsessStegPanelDef extends ProsessStegDef {
     new SoknadsfristPanelDef(),
     new AlderPanelDef(),
     new OmsorgenForPanelDef(),
-    new UngdomsprogrammetPanelDef(),
+    new UngdomsprogramPanelDef(),
   ];
 }
 

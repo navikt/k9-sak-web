@@ -1,12 +1,12 @@
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
-class UngdomsprogrammetPanelDef extends ProsessStegPanelDef {
+class UngdomsprogramPanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
 
-  getId = () => 'UNGDOMSPROGRAMMET';
+  getId = () => 'UNGDOMSPROGRAM';
 
-  getTekstKode = () => 'Inngangsvilkar.Ungdomsprogrammet';
+  getTekstKode = () => 'Inngangsvilkar.Ungdomsprogram';
 
   getKomponent = props => this.overstyringDef.getKomponent(props);
 
@@ -19,4 +19,4 @@ class UngdomsprogrammetPanelDef extends ProsessStegPanelDef {
   getData = data => this.overstyringDef.getData(data);
 }
 
-export default UngdomsprogrammetPanelDef;
+export default UngdomsprogramPanelDef;
