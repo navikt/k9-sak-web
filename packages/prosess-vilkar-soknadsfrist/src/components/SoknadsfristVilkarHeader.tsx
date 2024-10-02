@@ -1,11 +1,9 @@
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { KeyHorizontalIcon } from '@navikt/aksel-icons';
-import { Button, Detail, Heading, Label } from '@navikt/ds-react';
+import { CheckmarkCircleFillIcon, KeyHorizontalIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
+import { Button, Detail, Heading, HStack, Label } from '@navikt/ds-react';
 import { SetStateAction } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -63,25 +61,25 @@ const SoknadsfristVilkarHeader = ({
   return (
     <>
       <FlexContainer>
-        <FlexRow>
+        <HStack gap="4">
           {!erOverstyrt && originalErVilkarOk !== undefined && (
-            <FlexColumn>
-              <Image className={styles.status} src={originalErVilkarOk ? innvilgetImage : avslattImage} />
-            </FlexColumn>
+            <>
+              {originalErVilkarOk ? (
+                <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+              ) : (
+                <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+              )}
+            </>
           )}
-          <FlexColumn>
-            <Heading size="small" level="2">
-              <FormattedMessage id={panelTittelKode} />
-            </Heading>
-          </FlexColumn>
+          <Heading size="small" level="2">
+            <FormattedMessage id={panelTittelKode} />
+          </Heading>
           {lovReferanse && (
-            <FlexColumn>
-              <Detail className={styles.vilkar}>
-                <Lovreferanse>{lovReferanse}</Lovreferanse>
-              </Detail>
-            </FlexColumn>
+            <Detail className={styles.vilkar}>
+              <Lovreferanse>{lovReferanse}</Lovreferanse>
+            </Detail>
           )}
-        </FlexRow>
+        </HStack>
         <FlexRow>
           <FlexColumn>
             <VerticalSpacer eightPx />

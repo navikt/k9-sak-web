@@ -1,21 +1,19 @@
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer } from '@fpsak-frontend/shared-components/index';
-import Image from '@fpsak-frontend/shared-components/src/Image';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import { dateFormat } from '@fpsak-frontend/utils';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
-import { Detail, Heading, Label } from '@navikt/ds-react';
+import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
+import { Detail, Heading, HStack, Label } from '@navikt/ds-react';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import isEqual from 'lodash/isEqual';
 import React from 'react';
-import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
+import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import styles from './sykdomProsessIndex.module.css';
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 const cx = classNames.bind(styles);
 
@@ -94,23 +92,23 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomP
         )}
         <div className={styles.contentContainer}>
           <FlexContainer>
-            <FlexRow>
+            <HStack gap="4">
               {erVilkarOk !== undefined && (
-                <FlexColumn>
-                  <Image className={styles.status} src={erVilkarOk ? innvilgetImage : avslattImage} />
-                </FlexColumn>
+                <>
+                  {erVilkarOk ? (
+                    <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+                  ) : (
+                    <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+                  )}
+                </>
               )}
-              <FlexColumn>
-                <Heading size="small" level="2">
-                  <FormattedMessage id={panelTittelKode} />
-                </Heading>
-              </FlexColumn>
-              <FlexColumn>
-                <Detail className={styles.vilkar}>
-                  <Lovreferanse>{lovReferanseTekst}</Lovreferanse>
-                </Detail>
-              </FlexColumn>
-            </FlexRow>
+              <Heading size="small" level="2">
+                <FormattedMessage id={panelTittelKode} />
+              </Heading>
+              <Detail className={styles.vilkar}>
+                <Lovreferanse>{lovReferanseTekst}</Lovreferanse>
+              </Detail>
+            </HStack>
             <FlexRow>
               <FlexColumn>
                 <VerticalSpacer eightPx />

@@ -1,18 +1,16 @@
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
-import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
-import { KeyHorizontalIcon } from '@navikt/aksel-icons';
-import { Button, Detail, Heading, Label } from '@navikt/ds-react';
-import { SetStateAction } from 'react';
-import { FormattedMessage } from 'react-intl';
-import styles from './vilkarresultatMedOverstyringForm.module.css';
 import {
   hent847Text,
   opptjeningMidlertidigInaktivKoder,
 } from '@fpsak-frontend/prosess-vilkar-opptjening-oms/src/components/VilkarField';
+import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
+import { CheckmarkCircleFillIcon, KeyHorizontalIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
+import { Button, Detail, Heading, HStack, Label } from '@navikt/ds-react';
+import { SetStateAction } from 'react';
+import { FormattedMessage } from 'react-intl';
+import styles from './vilkarresultatMedOverstyringForm.module.css';
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
   aksjonspunktCodes.some(code => code === aksjonspunktCode);
@@ -78,25 +76,25 @@ const VilkarresultatMedOverstyringHeader = ({
   return (
     <>
       <FlexContainer>
-        <FlexRow>
+        <HStack gap="4">
           {!erOverstyrt && erVilkarOk !== undefined && (
-            <FlexColumn>
-              <Image className={styles.status} src={erVilkarOk ? innvilgetImage : avslattImage} />
-            </FlexColumn>
+            <>
+              {erVilkarOk ? (
+                <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+              ) : (
+                <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+              )}
+            </>
           )}
-          <FlexColumn>
-            <Heading size="small" level="2">
-              <FormattedMessage id={panelTittelKode} />
-            </Heading>
-          </FlexColumn>
+          <Heading size="small" level="2">
+            <FormattedMessage id={panelTittelKode} />
+          </Heading>
           {lovReferanse && (
-            <FlexColumn>
-              <Detail className={styles.vilkar}>
-                <Lovreferanse>{lovReferanse}</Lovreferanse>
-              </Detail>
-            </FlexColumn>
+            <Detail className={styles.vilkar}>
+              <Lovreferanse>{lovReferanse}</Lovreferanse>
+            </Detail>
           )}
-        </FlexRow>
+        </HStack>
         <FlexRow>
           <FlexColumn>
             <VerticalSpacer eightPx />
