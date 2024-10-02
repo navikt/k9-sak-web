@@ -1,6 +1,6 @@
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import UngBeregningIndex from '@k9-sak-web/gui/prosess/ung-beregning/UngBeregningIndex.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import UngBeregningIndex from '@k9-sak-web/prosess-ung-beregning';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <UngBeregningIndex {...props} />;

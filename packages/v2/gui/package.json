@@ -10,7 +10,8 @@
     "./shared/*": "./src/shared/*",
     "./utils/*": "./src/utils/*",
     "./kodeverk/*": "./src/kodeverk/*",
-    "./storybook/*": "./src/storybook/*"
+    "./storybook/*": "./src/storybook/*",
+    "./prosess/*": "./src/prosess/*"
   },
   "dependencies": {
     "@k9-sak-web/backend": "workspace:^",
