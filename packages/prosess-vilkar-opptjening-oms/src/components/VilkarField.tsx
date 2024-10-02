@@ -12,7 +12,7 @@ import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 import styles from './VilkarFields.module.css';
 import dayjs from 'dayjs';
 
-export const midlertidigInaktiv = {
+export const opptjeningMidlertidigInaktivKoder = {
   TYPE_A: '7847A',
   TYPE_B: '7847B',
 };
@@ -37,12 +37,24 @@ interface VilkarFieldsProps {
 }
 
 export const erVilkarOk = (kode: string) => {
-  if (kode === 'OPPFYLT' || midlertidigInaktiv.TYPE_A === kode || midlertidigInaktiv.TYPE_B === kode) {
+  if (
+    kode === 'OPPFYLT' ||
+    opptjeningMidlertidigInaktivKoder.TYPE_A === kode ||
+    opptjeningMidlertidigInaktivKoder.TYPE_B === kode
+  ) {
     return true;
   }
   return false;
 };
 
+export const hent847Text = (kode: string) => {
+  const kodeTekster: { [key: string]: string } = {
+    [opptjeningMidlertidigInaktivKoder.TYPE_A]: 'Vilkåret beregnes jf § 8-47 bokstav A',
+    [opptjeningMidlertidigInaktivKoder.TYPE_B]: 'Vilkåret beregnes jf § 8-47 bokstav B',
+  };
+
+  return kodeTekster[kode] || '';
+};
 export const VilkarField = ({
   erOmsorgspenger,
   fieldPrefix,
@@ -56,20 +68,9 @@ export const VilkarField = ({
   );
   const erOppfyltText = <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.ErOppfylt" />;
 
-  const hent847Text = () => {
-    switch (field?.kode) {
-      case midlertidigInaktiv.TYPE_A:
-        return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847A" />;
-      case midlertidigInaktiv.TYPE_B:
-        return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847B" />;
-      default:
-        return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847" />;
-    }
-  };
-
   const vilkarVurderingTekst = () => {
-    if (erVilkarOk(field?.kode) && Object.values(midlertidigInaktiv).includes(field?.kode)) {
-      return hent847Text();
+    if (erVilkarOk(field?.kode) && Object.values(opptjeningMidlertidigInaktivKoder).includes(field?.kode)) {
+      return hent847Text(field?.kode);
     }
     if (erVilkarOk(field?.kode)) {
       return erOppfyltText;
@@ -128,7 +129,7 @@ export const VilkarField = ({
             ...(!erOmsorgspenger
               ? [
                   {
-                    value: midlertidigInaktiv.TYPE_A,
+                    value: opptjeningMidlertidigInaktivKoder.TYPE_A,
                     label: intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA' }),
                   },
                 ]
@@ -136,7 +137,7 @@ export const VilkarField = ({
             ...(skalValgMidlertidigInaktivTypeBVises
               ? [
                   {
-                    value: midlertidigInaktiv.TYPE_B,
+                    value: opptjeningMidlertidigInaktivKoder.TYPE_B,
                     label: intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' }),
                   },
                 ]
@@ -151,7 +152,10 @@ export const VilkarField = ({
 
 VilkarField.buildInitialValues = (vilkårPerioder: Vilkarperiode[], opptjening: Opptjening[]): FormValues => {
   const utledKode = (periode: Vilkarperiode) => {
-    if (periode.merknad.kode === midlertidigInaktiv.TYPE_A || periode.merknad.kode === midlertidigInaktiv.TYPE_B) {
+    if (
+      periode.merknad.kode === opptjeningMidlertidigInaktivKoder.TYPE_A ||
+      periode.merknad.kode === opptjeningMidlertidigInaktivKoder.TYPE_B
+    ) {
       return periode.merknad.kode as '7847A' | '7847B';
     }
     return periode.vilkarStatus.kode as 'OPPFYLT' | 'IKKE_OPPFYLT';

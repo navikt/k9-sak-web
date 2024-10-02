@@ -119,7 +119,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
             overrideReadOnly={overrideReadOnly}
             overstyringApKode={overstyringApKode}
             panelTittelKode={panelTittelKode}
-            status={activePeriode.vilkarStatus.kode}
+            periode={activePeriode}
             toggleOverstyring={toggleOverstyring}
           />
           {featureToggles?.OMSORGEN_FOR_PERIODISERT && (
