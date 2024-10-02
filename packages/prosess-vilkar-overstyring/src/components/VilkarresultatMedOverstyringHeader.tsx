@@ -16,8 +16,12 @@ import {
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
   aksjonspunktCodes.some(code => code === aksjonspunktCode);
-const isHidden = (kanOverstyre: boolean, aksjonspunktCodes: string[], aksjonspunktCode: string) =>
-  !isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre;
+const isHidden = (
+  kanOverstyre: boolean,
+  aksjonspunktCodes: string[],
+  aksjonspunktCode: string,
+  vurderesIBehandlingen: boolean,
+) => (!isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre) || !vurderesIBehandlingen;
 
 const vilkårResultatText = (originalErVilkarOk: boolean, periode: Vilkarperiode) => {
   let text = 'Ikke behandlet';
@@ -99,7 +103,12 @@ const VilkarresultatMedOverstyringHeader = ({
             {vilkårResultatText(erVilkarOk, periode)}
           </FlexColumn>
           {erVilkarOk !== undefined &&
-            !isHidden(kanOverstyreAccess.isEnabled, aksjonspunktCodes, overstyringApKode) && (
+            !isHidden(
+              kanOverstyreAccess.isEnabled,
+              aksjonspunktCodes,
+              overstyringApKode,
+              periode.vurderesIBehandlingen,
+            ) && (
               <FlexColumn>
                 <VerticalSpacer fourPx />
                 <Button
