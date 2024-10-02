@@ -102,6 +102,7 @@ export const DefaultStory: Story = {
       forhåndsvisBtn,
       orgnrInpQuery,
       orgNavnInp,
+      innholdsVelgerElQuery,
     } = elemsfinder(canvasElement);
     await step('Sjekk visning basert på initiell default state', async () => {
       await expect(malEl()).toBeInTheDocument();
@@ -114,6 +115,14 @@ export const DefaultStory: Story = {
       await expect(forhåndsvisBtn()).toBeInTheDocument();
       await expect(orgnrInpQuery()).toBeNull();
       await expect(orgNavnInp()).toBeNull();
+    });
+    await step('Endring til mal med tekstforslag og tilbake skal vise samme initielle default state', async () => {
+      await userEvent.selectOptions(malEl(), 'INNHENT_MEDISINSKE_OPPLYSNINGER');
+      await expect(innholdsVelgerElQuery()).toBeInTheDocument();
+      await userEvent.selectOptions(malEl(), 'INNHEN');
+      await expect(innholdsVelgerElQuery()).not.toBeInTheDocument();
+      //await userEvent.clear(fritekstEl())
+      await expect(fritekstEl()).toHaveValue('');
     });
   },
 };

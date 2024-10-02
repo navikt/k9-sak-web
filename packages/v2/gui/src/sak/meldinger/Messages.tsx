@@ -211,8 +211,6 @@ const messagesStateReducer = (state: MessagesState, dispatch: MessagesStateActio
   }
 };
 
-let stickyResetValue = '';
-
 const Messages = ({
   maler,
   fagsak,
@@ -227,6 +225,8 @@ const Messages = ({
     { valgtMalkode, fritekstForslag, valgtFritekst, valgtMottaker, tredjepartsmottakerAktivert, tredjepartsmottaker },
     dispatch,
   ] = stickyState.messages.useStickyStateReducer(messagesStateReducer, initMessagesState(maler));
+  const nowStickyResetValue = `${fagsak.saksnummer}-${behandling.id}-${personopplysninger?.aktoerId}`;
+  const stickyResetValue = useRef(nowStickyResetValue);
 
   const fritekstInputRef = useRef<FritekstInputMethods>(null);
   // showValidation is set to true when inputs should display any validation errors, i.e. after the user tries to submit the form without having valid values.
@@ -249,14 +249,13 @@ const Messages = ({
     dispatch({ type: 'OnValgtMalChanged', valgtMal: newValgtMal });
 
   // Resett state når grunnleggande input props endra seg, så ein unngår at valg ein gjorde på ei anna sak blir gjeldande.
-  const nowStickyResetValue = `${fagsak.saksnummer}-${behandling.id}-${personopplysninger?.aktoerId}`;
   useEffect(() => {
-    if (nowStickyResetValue !== stickyResetValue) {
+    if (nowStickyResetValue !== stickyResetValue.current) {
       dispatch({ type: 'Reset', maler });
       fritekstInputRef.current?.reset();
     }
-  }, [stickyResetValue]);
-  stickyResetValue = nowStickyResetValue;
+    stickyResetValue.current = nowStickyResetValue;
+  }, [nowStickyResetValue]);
 
   // Konverter valgtFritekst til FritekstInputValue
   const valgtFritekstInputValue: FritekstInputValue = {

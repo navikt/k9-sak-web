@@ -55,6 +55,10 @@ interface OwnProps {
 // Held på state oppretta inni reducers i Messages og FritekstInput komponenter.
 // Dette slik at bruker ikkje mister state når disse blir unmounta og remounta
 // ved visning av anna panel midlertidig (på samme sak/behandling).
+// NB: Pga denne må ein ikkje initialisere meir enn ein instans av MeldingerSakIndex komponent på samme tid,
+// dette blir ein globalt delt state.
+// XXX Burde kanskje løftast som context høgare oppe i hierariet istadenfor å vere
+// statisk global her. Er ein liten minnelekkasje slik det er no.
 const stickyState: V2MessagesProps['stickyState'] = {
   messages: new StickyStateReducer(),
   fritekst: {

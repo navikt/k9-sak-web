@@ -129,20 +129,18 @@ const FritekstInput = forwardRef(
       validateTekst(defaultValue?.tekst, fritekstModus),
     );
 
-    // Så vi kan detektere når default value har blitt endra etter første mount:
-    const mountedDefault = useRef(defaultValue);
+    // Så vi kan detektere når default value har blitt endra:
+    const prevDefault = useRef(defaultValue);
     useEffect(() => {
       // Når bruker velger eit nytt tekstforslag skal tekst bli overskrive.
       // For å unngå at lagra verdi blir overskrive av defaultValue ved remount av komponent, når defaultValue eigentleg
       // ikkje har blitt endra sjekker vi at defaultValue har ein anna tekstverdi enn når komponent vart mounta.
       // Ved å gjere det slik får ein beholdt innskrevet verdi i sticky memory reducer forbi unmounts + mounts, men
       // overskrive den når bruker aktivt velger eit nytt tekstforslag, eller endrer mal, etc.
-      if (
-        defaultValue?.tekst !== mountedDefault.current?.tekst ||
-        defaultValue?.tittel !== mountedDefault.current?.tittel
-      ) {
+      if (defaultValue?.tekst !== prevDefault.current?.tekst || defaultValue?.tittel !== prevDefault.current?.tittel) {
         setTittel(defaultValue?.tittel);
         setTekst({ tekst: defaultValue?.tekst, modus: fritekstModus });
+        prevDefault.current = defaultValue;
       }
     }, [defaultValue]);
 
