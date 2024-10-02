@@ -3196,7 +3196,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.56.2
+    "@tanstack/react-query": ^5.59.0
     react: 18.3.1
     react-intl: 6.7.0
   languageName: unknown
@@ -3463,7 +3463,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@tanstack/react-query": ^5.56.2
+    "@tanstack/react-query": ^5.59.0
     react: 18.3.1
     react-intl: 6.7.0
   languageName: unknown
@@ -4409,7 +4409,7 @@ __metadata:
     "@navikt/ds-react": 7.1.0
     "@navikt/ft-plattform-komponenter": 3.1.1
     "@popperjs/core": 2.11.8
-    "@tanstack/react-query": ^5.56.2
+    "@tanstack/react-query": ^5.59.0
     axios: 1.7.7
     classnames: 2.5.1
     cors: ^2.8.5
@@ -4848,7 +4848,7 @@ __metadata:
     "@navikt/ft-ui-komponenter": 2.5.1
     "@sentry/browser": 8.32.0
     "@sentry/react": ^8.32.0
-    "@tanstack/react-query": ^5.56.2
+    "@tanstack/react-query": ^5.59.0
     axios: 1.7.7
     classnames: 2.5.1
     history: 5.3.0
@@ -4875,7 +4875,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.56.2
+    "@tanstack/react-query": ^5.59.0
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
@@ -4931,7 +4931,7 @@ __metadata:
     "@navikt/ds-react": 7.1.0
     "@navikt/ft-form-hooks": 5.1.1
     "@navikt/ft-form-validators": 2.4.1
-    "@tanstack/react-query": ^5.56.2
+    "@tanstack/react-query": ^5.59.0
     date-fns: 4.1.0
     react: 18.3.1
     react-hook-form: 7.53.0
@@ -5729,66 +5729,66 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/cli-darwin@npm:2.36.3":
-  version: 2.36.3
-  resolution: "@sentry/cli-darwin@npm:2.36.3"
+"@sentry/cli-darwin@npm:2.36.5":
+  version: 2.36.5
+  resolution: "@sentry/cli-darwin@npm:2.36.5"
   conditions: os=darwin
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-arm64@npm:2.36.3":
-  version: 2.36.3
-  resolution: "@sentry/cli-linux-arm64@npm:2.36.3"
+"@sentry/cli-linux-arm64@npm:2.36.5":
+  version: 2.36.5
+  resolution: "@sentry/cli-linux-arm64@npm:2.36.5"
   conditions: (os=linux | os=freebsd) & cpu=arm64
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-arm@npm:2.36.3":
-  version: 2.36.3
-  resolution: "@sentry/cli-linux-arm@npm:2.36.3"
+"@sentry/cli-linux-arm@npm:2.36.5":
+  version: 2.36.5
+  resolution: "@sentry/cli-linux-arm@npm:2.36.5"
   conditions: (os=linux | os=freebsd) & cpu=arm
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-i686@npm:2.36.3":
-  version: 2.36.3
-  resolution: "@sentry/cli-linux-i686@npm:2.36.3"
+"@sentry/cli-linux-i686@npm:2.36.5":
+  version: 2.36.5
+  resolution: "@sentry/cli-linux-i686@npm:2.36.5"
   conditions: (os=linux | os=freebsd) & (cpu=x86 | cpu=ia32)
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-x64@npm:2.36.3":
-  version: 2.36.3
-  resolution: "@sentry/cli-linux-x64@npm:2.36.3"
+"@sentry/cli-linux-x64@npm:2.36.5":
+  version: 2.36.5
+  resolution: "@sentry/cli-linux-x64@npm:2.36.5"
   conditions: (os=linux | os=freebsd) & cpu=x64
   languageName: node
   linkType: hard
 
-"@sentry/cli-win32-i686@npm:2.36.3":
-  version: 2.36.3
-  resolution: "@sentry/cli-win32-i686@npm:2.36.3"
+"@sentry/cli-win32-i686@npm:2.36.5":
+  version: 2.36.5
+  resolution: "@sentry/cli-win32-i686@npm:2.36.5"
   conditions: os=win32 & (cpu=x86 | cpu=ia32)
   languageName: node
   linkType: hard
 
-"@sentry/cli-win32-x64@npm:2.36.3":
-  version: 2.36.3
-  resolution: "@sentry/cli-win32-x64@npm:2.36.3"
+"@sentry/cli-win32-x64@npm:2.36.5":
+  version: 2.36.5
+  resolution: "@sentry/cli-win32-x64@npm:2.36.5"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@sentry/cli@npm:2.36.3":
-  version: 2.36.3
-  resolution: "@sentry/cli@npm:2.36.3"
+"@sentry/cli@npm:2.36.5":
+  version: 2.36.5
+  resolution: "@sentry/cli@npm:2.36.5"
   dependencies:
-    "@sentry/cli-darwin": 2.36.3
-    "@sentry/cli-linux-arm": 2.36.3
-    "@sentry/cli-linux-arm64": 2.36.3
-    "@sentry/cli-linux-i686": 2.36.3
-    "@sentry/cli-linux-x64": 2.36.3
-    "@sentry/cli-win32-i686": 2.36.3
-    "@sentry/cli-win32-x64": 2.36.3
+    "@sentry/cli-darwin": 2.36.5
+    "@sentry/cli-linux-arm": 2.36.5
+    "@sentry/cli-linux-arm64": 2.36.5
+    "@sentry/cli-linux-i686": 2.36.5
+    "@sentry/cli-linux-x64": 2.36.5
+    "@sentry/cli-win32-i686": 2.36.5
+    "@sentry/cli-win32-x64": 2.36.5
     https-proxy-agent: ^5.0.0
     node-fetch: ^2.6.7
     progress: ^2.0.3
@@ -5811,7 +5811,7 @@ __metadata:
       optional: true
   bin:
     sentry-cli: bin/sentry-cli
-  checksum: e1afded7c5967976b88947e0fe4b4e0c6116d980122130781c3fbf31758961713838fe70263322dfbb837d4feb3fda24f949b5780198518fb9c1ac3dffb4efed
+  checksum: b8d1245dc9ae49dff0aadd8a5eb3fda5ff01d3d86581e354f56aeffd9f8bf4b33d1cb1053094cf075966fce9bd667d48eec6b262a4c6c3f89fa50229efb0eabd
   languageName: node
   linkType: hard
 
@@ -6720,21 +6720,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.56.2":
-  version: 5.56.2
-  resolution: "@tanstack/query-core@npm:5.56.2"
-  checksum: e78430464de89fd2543155449391415983c7cdcd1ff2bb86da019414204b6800e2405e341db88000b36a101d3619ee7e94e90da1fa5497b2e021c5765924a64c
+"@tanstack/query-core@npm:5.59.0":
+  version: 5.59.0
+  resolution: "@tanstack/query-core@npm:5.59.0"
+  checksum: 2f7620b63170236755ff9d87cd4a94011a98697c92c090ebdb214274964e8545ae9962cfe38675ed1f49a0abad34bc2f59f8c78180913c3a55d8bf0a30c422ea
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.56.2":
-  version: 5.56.2
-  resolution: "@tanstack/react-query@npm:5.56.2"
+"@tanstack/react-query@npm:^5.59.0":
+  version: 5.59.0
+  resolution: "@tanstack/react-query@npm:5.59.0"
   dependencies:
-    "@tanstack/query-core": 5.56.2
+    "@tanstack/query-core": 5.59.0
   peerDependencies:
     react: ^18 || ^19
-  checksum: 7819a3a316c95df41844bd6e3435511594c3762320c21ee1ef2205ede18a87faae4556ff84d52b36ba17c99540b9554e72a5acf0c225481bdaf107ea79ace815
+  checksum: e2df523f7b40b949c23ad43e5c1d7a6d87902f114e086c6a65a60126f8d721a965b24146170c56334699b5ee96c36bf6a3c40b48d9a85bba6b944f397ffe744d
   languageName: node
   linkType: hard
 
@@ -10575,9 +10575,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:7.37.0":
-  version: 7.37.0
-  resolution: "eslint-plugin-react@npm:7.37.0"
+"eslint-plugin-react@npm:7.37.1":
+  version: 7.37.1
+  resolution: "eslint-plugin-react@npm:7.37.1"
   dependencies:
     array-includes: ^3.1.8
     array.prototype.findlast: ^1.2.5
@@ -10599,7 +10599,7 @@ __metadata:
     string.prototype.repeat: ^1.0.0
   peerDependencies:
     eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7
-  checksum: ece92e28b34ced0fd6bddebd41234ee53187b236fd507abef4f61cc868e27edd94fb7e290f44ff546037a6862c3302e848185a5e6511e2bcdf1883a1bfaa4ffc
+  checksum: 22d1bdf0dd4cdbf8c57ce563c58d43c5f5e1da0b08d27d0a69d7126d9e8afcb74a5befae97dab4019b4c6029ae617b6a0af1709cb9e0439d5757b01b392d2ca7
   languageName: node
   linkType: hard
 
@@ -11598,10 +11598,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globals@npm:^15.9.0":
-  version: 15.9.0
-  resolution: "globals@npm:15.9.0"
-  checksum: 32c4470ffcc26db3ddbc579ddf968b74c26462d1a268039980c2fa2e107090fd442a7a7445d953dc4ee874f68846e713066c5a8e63d146fd9349cd1fc5a6f63d
+"globals@npm:^15.10.0":
+  version: 15.10.0
+  resolution: "globals@npm:15.10.0"
+  checksum: c6b7d1b3e74a830005e248c2a2b26a0c4b0d40460dbd3b2b1badbee13fadf6e735f7ea6c232e48fbef6beb4b4eac0d3530d9d89e31d6f629ac27e755d42d4872
   languageName: node
   linkType: hard
 
@@ -13547,7 +13547,7 @@ __metadata:
     "@playwright/test": ^1.47.2
     "@popperjs/core": 2.11.8
     "@sentry/browser": 8.32.0
-    "@sentry/cli": 2.36.3
+    "@sentry/cli": 2.36.5
     "@sentry/react": ^8.32.0
     "@storybook/addon-a11y": ^8.3.4
     "@storybook/addon-actions": ^8.3.4
@@ -13580,9 +13580,9 @@ __metadata:
     eslint: 9.11.1
     eslint-config-prettier: 9.1.0
     eslint-plugin-jsx-a11y: 6.10.0
-    eslint-plugin-react: 7.37.0
+    eslint-plugin-react: 7.37.1
     eslint-plugin-vitest: ~0.5.4
-    globals: ^15.9.0
+    globals: ^15.10.0
     history: 5.3.0
     husky: 9.1.6
     i18n-iso-countries: 7.12.0
