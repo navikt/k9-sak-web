@@ -79,7 +79,7 @@ const OverstyrBeregningFaktaForm = ({
   const behandleOverstyrInputBeregning = (input: OverstyrInputBeregningDto[]): OverstyrInputBeregningDto[] =>
     input.map(periode => ({
       ...periode,
-      aktivitetliste: periode.aktivitetliste?.map(aktivitet => ({
+      aktivitetliste: periode?.aktivitetliste?.map(aktivitet => ({
         ...aktivitet,
         inntektPrAar: aktivitet.inntektPrAar || '',
         refusjonPrAar: aktivitet.refusjonPrAar || '',
