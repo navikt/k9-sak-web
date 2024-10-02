@@ -27,8 +27,6 @@ const vilkårResultatText = (originalErVilkarOk: boolean, periode: Vilkarperiode
   if (originalErVilkarOk === false) {
     text = 'Vilkåret er avslått';
   }
-  console.log('periode.merknad.kode', periode.merknad.kode);
-  console.log('Object.values(opptjeningMidlertidigInaktivKoder)', Object.entries(opptjeningMidlertidigInaktivKoder));
   if (Object.values(opptjeningMidlertidigInaktivKoder).includes(periode.merknad.kode)) {
     text = hent847Text(periode.merknad.kode);
   }
