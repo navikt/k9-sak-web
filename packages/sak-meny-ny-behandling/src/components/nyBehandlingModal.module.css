@@ -32,17 +32,7 @@
   margin-right: 50px;
 }
 
-.button {
-  margin-top: 10px;
-  padding-left: 35px;
-  padding-right: 35px;
-}
-
-.cancelButton {
-  margin: 10px 10px 0;
-}
-
-.buttonContainer {
+.datePickerContainer {
   display: flex;
   gap: 0.625rem;
 }

@@ -1,12 +1,11 @@
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import { CheckboxField, SelectField } from '@fpsak-frontend/form';
+import { CheckboxField, DatepickerField, SelectField } from '@fpsak-frontend/form';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import { Button, HGrid, Label, Modal } from '@navikt/ds-react';
-import React, { ReactElement, useEffect } from 'react';
+import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
+import { ModalBody, ModalFooter } from '@navikt/ds-react/Modal';
+import { ReactElement, useEffect } from 'react';
 import { FormattedMessage, IntlShape, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
@@ -35,6 +34,9 @@ export type FormValues = {
   behandlingType: string;
   nyBehandlingEtterKlage?: string;
   behandlingArsakType?: string;
+  steg?: 'inngangsvilkår' | 'RE-ENDRET-FORDELING';
+  fom?: string;
+  tom?: string;
 };
 
 interface PureOwnProps {
@@ -73,13 +75,15 @@ interface MappedOwnProps {
   behandlingArsakTyper: KodeverkMedNavn[];
   valgtBehandlingTypeKode: string;
   erTilbakekreving: boolean;
+  fom?: string;
+  steg?: string;
 }
 
 /**
  * NyBehandlingModal
  *
  * Presentasjonskomponent. Denne modalen vises etter at en saksbehandler har valgt opprett ny 1.gangsbehandling i behandlingsmenyen.
- * Ved å trykke på ok skal ny behandling(1.gangsbehandling) av sak opprettes.
+ * Ved å trykke på "Opprett behandling" skal ny behandling (1.gangsbehandling) av sak opprettes.
  */
 export const NyBehandlingModal = ({
   handleSubmit,
@@ -95,6 +99,8 @@ export const NyBehandlingModal = ({
   saksnummer,
   erTilbakekrevingAktivert,
   valgtBehandlingTypeKode,
+  steg,
+  fom,
   erTilbakekreving,
 }: Partial<PureOwnProps> & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
   useEffect(() => {
@@ -107,75 +113,94 @@ export const NyBehandlingModal = ({
       }
     }
   }, []);
+  const erFørstegangsbehandling = valgtBehandlingTypeKode === bType.FORSTEGANGSSOKNAD;
+  const erRevurdering = valgtBehandlingTypeKode === bType.REVURDERING;
   return (
     <Modal
       className={styles.modal}
       open
       aria-label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.ModalDescription' })}
       onClose={cancelEvent}
+      header={{
+        heading: intl.formatMessage({ id: 'MenyNyBehandlingIndex.OpprettNyForstegangsbehandling' }),
+        size: 'small',
+      }}
     >
-      <Modal.Body>
-        <form onSubmit={handleSubmit}>
-          <HGrid gap="1" columns={{ xs: '1fr 11fr' }}>
-            <div className="relative">
-              <Image className={styles.image} src={innvilgetImageUrl} />
-              <div className={styles.divider} />
-            </div>
-            <div>
-              <div className={styles.label}>
-                <Label size="small" as="p">
-                  <FormattedMessage id="MenyNyBehandlingIndex.OpprettNyForstegangsbehandling" />
-                </Label>
-              </div>
-              <VerticalSpacer sixteenPx />
-              <VerticalSpacer sixteenPx />
+      <form onSubmit={handleSubmit}>
+        <ModalBody>
+          <VStack gap="5">
+            <SelectField
+              name="behandlingType"
+              label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectBehandlingTypeLabel' })}
+              placeholder={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectBehandlingTypePlaceholder' })}
+              validate={[required]}
+              selectValues={behandlingTyper.map(bt => createOptions(bt, enabledBehandlingstyper, intl))}
+            />
+            {erRevurdering && (
               <SelectField
-                name="behandlingType"
-                label=""
-                placeholder={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectBehandlingTypePlaceholder' })}
+                name="steg"
+                label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectStartpunktLabel' })}
+                placeholder={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectStartpunktPlaceholder' })}
                 validate={[required]}
-                selectValues={behandlingTyper.map(bt => createOptions(bt, enabledBehandlingstyper, intl))}
-                bredde="l"
+                selectValues={[
+                  <option key="inngangsvilkår" value="inngangsvilkår">
+                    {intl.formatMessage({ id: 'MenyNyBehandlingIndex.StartpunktInngangsvilkår' })}
+                  </option>,
+                  <option key="uttak" value="RE-ENDRET-FORDELING">
+                    {intl.formatMessage({ id: 'MenyNyBehandlingIndex.StartpunktUttak' })}
+                  </option>,
+                ]}
               />
-              <VerticalSpacer eightPx />
-              {valgtBehandlingTypeKode === bType.FORSTEGANGSSOKNAD && (
-                <CheckboxField
-                  name="nyBehandlingEtterKlage"
-                  label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.NyBehandlingEtterKlage' })}
+            )}
+            {erFørstegangsbehandling && (
+              <CheckboxField
+                name="nyBehandlingEtterKlage"
+                label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.NyBehandlingEtterKlage' })}
+              />
+            )}
+            {behandlingArsakTyper.length > 0 && (!erRevurdering || steg === 'inngangsvilkår') && (
+              <SelectField
+                name="behandlingArsakType"
+                label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectBehandlingArsakTypeLabel' })}
+                placeholder={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectBehandlingArsakTypePlaceholder' })}
+                validate={[required]}
+                selectValues={behandlingArsakTyper.map(b => (
+                  <option key={b.kode} value={b.kode}>
+                    {b.navn}
+                  </option>
+                ))}
+              />
+            )}
+            {erRevurdering && steg === 'RE-ENDRET-FORDELING' && (
+              <Fieldset
+                className={styles.datePickerContainer}
+                legend={intl.formatMessage({ id: 'MenyNyBehandlingIndex.RevurderingPeriode' })}
+              >
+                <DatepickerField
+                  name="fom"
+                  disabledDays={{ before: null, after: new Date() }}
+                  label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.RevurderingFraOgMedLabel' })}
                 />
-              )}
-              {behandlingArsakTyper.length > 0 && (
-                <SelectField
-                  name="behandlingArsakType"
-                  label=""
-                  placeholder={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectBehandlingArsakTypePlaceholder' })}
-                  validate={[required]}
-                  selectValues={behandlingArsakTyper.map(b => (
-                    <option key={b.kode} value={b.kode}>
-                      {b.navn}
-                    </option>
-                  ))}
+                <DatepickerField
+                  name="tom"
+                  disabledDays={{ before: new Date(fom), after: new Date() }}
+                  label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.RevurderingTilOgMedLabel' })}
                 />
-              )}
-              <VerticalSpacer sixteenPx />
-              <div className={styles.buttonContainer}>
-                <Button variant="primary" size="small" className={styles.button}>
-                  <FormattedMessage id="MenyNyBehandlingIndex.Ok" />
-                </Button>
-                <Button
-                  variant="secondary"
-                  type="button"
-                  size="small"
-                  onClick={cancelEvent}
-                  className={styles.cancelButton}
-                >
-                  <FormattedMessage id="MenyNyBehandlingIndex.Avbryt" />
-                </Button>
-              </div>
-            </div>
-          </HGrid>
-        </form>
-      </Modal.Body>
+              </Fieldset>
+            )}
+          </VStack>
+        </ModalBody>
+        <ModalFooter>
+          <HStack gap="2" justify="end">
+            <Button variant="secondary" type="button" size="small" onClick={cancelEvent}>
+              <FormattedMessage id="MenyNyBehandlingIndex.Avbryt" />
+            </Button>
+            <Button variant="primary" size="small">
+              <FormattedMessage id="MenyNyBehandlingIndex.OpprettBehandling" />
+            </Button>
+          </HStack>
+        </ModalFooter>
+      </form>
     </Modal>
   );
 };
@@ -280,7 +305,7 @@ export const getEnabledBehandlingstyper = createSelector(
   },
 );
 
-const mapStateToPropsFactory = (initialState, initialOwnProps: PureOwnProps) => {
+const mapStateToPropsFactory = (_, initialOwnProps: PureOwnProps) => {
   const onSubmit = values => {
     const klageOnlyValues =
       values?.behandlingType === bType.KLAGE
@@ -303,6 +328,8 @@ const mapStateToPropsFactory = (initialState, initialOwnProps: PureOwnProps) => 
     uuid: ownProps.uuidForSistLukkede,
     behandlingArsakTyper: getBehandlingAarsaker(state, ownProps),
     valgtBehandlingTypeKode: formValueSelector(formName)(state, 'behandlingType'),
+    steg: formValueSelector(formName)(state, 'steg'),
+    fom: formValueSelector(formName)(state, 'fom'),
     erTilbakekreving:
       ownProps.behandlingType &&
       (ownProps.behandlingType.kode === bType.TILBAKEKREVING ||

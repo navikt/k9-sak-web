@@ -219,7 +219,7 @@ describe('<NyBehandlingModal>', () => {
     ).toBeInTheDocument();
   });
 
-  it('skal vise dropdown for revuderingsårsaker når revurdering er valgt', () => {
+  it('skal vise dropdown for revurderingsårsaker når revurdering er valgt', () => {
     const behandlingstyper = [{ kode: behandlingType.REVURDERING, navn: 'REVURDERING', kodeverk: 'BEHANDLING_TYPE' }];
     renderWithIntlAndReduxForm(
       <NyBehandlingModal
@@ -262,6 +262,151 @@ describe('<NyBehandlingModal>', () => {
     expect(screen.getAllByRole('combobox').length).toBe(2);
     expect(screen.getByRole('option', { name: 'Revurderingsbehandling' })).toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'FEIL_I_LOVANDVENDELSE' })).toBeInTheDocument();
+  });
+
+  it('skal rendre steg-dropdown når revurdering er valgt', () => {
+    const behandlingstyper = [
+      { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
+    ];
+    renderWithIntlAndReduxForm(
+      <NyBehandlingModal
+        {...reduxFormPropsMock}
+        handleSubmit={submitEventCallback}
+        cancelEvent={cancelEventCallback}
+        intl={intlMock}
+        behandlingTyper={behandlingstyper}
+        behandlingstyper={behandlingstyper}
+        behandlingArsakTyper={[
+          { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
+        ]}
+        enabledBehandlingstyper={behandlingstyper}
+        erTilbakekrevingAktivert={false}
+        saksnummer={123}
+        sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
+        ytelseType={ytelseType}
+        submitCallback={vi.fn()}
+        behandlingOppretting={[
+          {
+            behandlingType: {
+              kode: behandlingType.FORSTEGANGSSOKNAD,
+              kodeverk: '',
+            },
+            kanOppretteBehandling: true,
+          },
+        ]}
+        tilbakekrevingRevurderingArsaker={[]}
+        revurderingArsaker={[]}
+        kanTilbakekrevingOpprettes={{
+          kanBehandlingOpprettes: true,
+          kanRevurderingOpprettes: true,
+        }}
+        valgtBehandlingTypeKode={behandlingType.REVURDERING}
+        erTilbakekreving={false}
+      />,
+      { messages },
+    );
+
+    expect(screen.getAllByRole('combobox').length).toBe(2);
+    expect(screen.getByRole('option', { name: 'inngangsvilkår' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'RE-ENDRET-FORDELING' })).toBeInTheDocument();
+  });
+
+  it('skal rendre årsak for revurdering fra steg når revurdering fra inngangsvilkår er valgt', () => {
+    const behandlingstyper = [
+      { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
+    ];
+    renderWithIntlAndReduxForm(
+      <NyBehandlingModal
+        {...reduxFormPropsMock}
+        handleSubmit={submitEventCallback}
+        cancelEvent={cancelEventCallback}
+        intl={intlMock}
+        behandlingTyper={behandlingstyper}
+        behandlingstyper={behandlingstyper}
+        behandlingArsakTyper={[
+          { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
+        ]}
+        enabledBehandlingstyper={behandlingstyper}
+        erTilbakekrevingAktivert={false}
+        saksnummer={123}
+        sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
+        ytelseType={ytelseType}
+        submitCallback={vi.fn()}
+        behandlingOppretting={[
+          {
+            behandlingType: {
+              kode: behandlingType.FORSTEGANGSSOKNAD,
+              kodeverk: '',
+            },
+            kanOppretteBehandling: true,
+          },
+        ]}
+        tilbakekrevingRevurderingArsaker={[]}
+        revurderingArsaker={[]}
+        kanTilbakekrevingOpprettes={{
+          kanBehandlingOpprettes: true,
+          kanRevurderingOpprettes: true,
+        }}
+        valgtBehandlingTypeKode={behandlingType.REVURDERING}
+        steg="inngangsvilkår"
+        erTilbakekreving={false}
+      />,
+      { messages },
+    );
+
+    expect(screen.getAllByRole('combobox').length).toBe(3);
+    expect(screen.getByRole('option', { name: 'FEIL_I_LOVANDVENDELSE' })).toBeInTheDocument();
+  });
+
+  it('skal rendre fra- og til-dato når revurdering fra uttakssteg er valgt', () => {
+    const behandlingstyper = [
+      { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
+    ];
+    renderWithIntlAndReduxForm(
+      <NyBehandlingModal
+        {...reduxFormPropsMock}
+        handleSubmit={submitEventCallback}
+        cancelEvent={cancelEventCallback}
+        intl={intlMock}
+        behandlingTyper={behandlingstyper}
+        behandlingstyper={behandlingstyper}
+        behandlingArsakTyper={[
+          { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
+        ]}
+        enabledBehandlingstyper={behandlingstyper}
+        erTilbakekrevingAktivert={false}
+        saksnummer={123}
+        sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
+        sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
+        ytelseType={ytelseType}
+        submitCallback={vi.fn()}
+        behandlingOppretting={[
+          {
+            behandlingType: {
+              kode: behandlingType.FORSTEGANGSSOKNAD,
+              kodeverk: '',
+            },
+            kanOppretteBehandling: true,
+          },
+        ]}
+        tilbakekrevingRevurderingArsaker={[]}
+        revurderingArsaker={[]}
+        kanTilbakekrevingOpprettes={{
+          kanBehandlingOpprettes: true,
+          kanRevurderingOpprettes: true,
+        }}
+        valgtBehandlingTypeKode={behandlingType.REVURDERING}
+        steg="inngangsvilkår"
+        erTilbakekreving={false}
+      />,
+      { messages },
+    );
+
+    expect(screen.getAllByRole('combobox').length).toBe(2);
+    expect(screen.getByRole('textbox', { name: 'fom' })).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'tom' })).toBeInTheDocument();
   });
 
   it('skal finne filtrerte behandlingsårsaker når det er valgt behandlingstype TILBAKEKREVING_REVURDERING', () => {
