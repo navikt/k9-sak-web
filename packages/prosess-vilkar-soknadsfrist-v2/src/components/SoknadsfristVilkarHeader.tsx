@@ -1,6 +1,7 @@
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { CheckmarkCircleFillIcon, KeyHorizontalIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
-import { Button, Detail, Heading, Label } from '@navikt/ds-react';
+import { Button, Detail, Heading, HStack, Label } from '@navikt/ds-react';
 import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import { SetStateAction } from 'react';
 import styles from './SoknadsfristVilkarForm.module.css';
@@ -60,27 +61,25 @@ const SoknadsfristVilkarHeader = ({
   return (
     <>
       <>
-        <div className="flex">
+        <HStack gap="4">
           {!erOverstyrt && originalErVilkarOk !== undefined && (
-            <div className="px-2">
+            <>
               {originalErVilkarOk ? (
                 <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
               ) : (
                 <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
               )}
-            </div>
+            </>
           )}
-          <div className="px-2">
-            <Heading size="small" level="2">
-              {panelTittelKode}
-            </Heading>
-          </div>
+          <Heading size="small" level="2">
+            {panelTittelKode}
+          </Heading>
           {lovReferanse && (
-            <div className="px-2">
-              <Detail className={styles.vilkar}>{lovReferanse}</Detail>
-            </div>
+            <Detail className={styles.vilkar}>
+              <Lovreferanse>{lovReferanse}</Lovreferanse>
+            </Detail>
           )}
-        </div>
+        </HStack>
         <div className="flex">
           <div className="px-2">
             <div className="mt-2" />

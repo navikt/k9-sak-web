@@ -23,7 +23,7 @@ import { DokumentStatus } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import moment from 'moment';
-import React, { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { formatDate } from '../utils';
