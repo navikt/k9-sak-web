@@ -75,7 +75,6 @@ const ÅrskvantumIndex = ({
     behandling,
     saerligSmittevernAp: apForVurderÅrskvantum,
     aktiviteter: sisteUttaksplan?.aktiviteter,
-    featureToggles,
   };
 
   return (
