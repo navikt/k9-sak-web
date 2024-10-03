@@ -1,5 +1,4 @@
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import {
   Aksjonspunkt,
   ArbeidsforholdV2,
@@ -61,14 +60,10 @@ const ÅrskvantumIndex = ({
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
 
-  const [featureToggles] = useFeatureToggles();
-  const årskvantumDokEllerKvote = aksjonspunkt =>
-    aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK ||
-    (featureToggles?.NYTT_SKJEMA_FOR_9003 &&
-      aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE);
+  const årskvantumDok = aksjonspunkt => aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK;
 
-  const apForVurderÅrskvantum: Aksjonspunkt = aksjonspunkterForSteg.find(ap => årskvantumDokEllerKvote(ap));
-  const aksjonspunkter: Aksjonspunkt[] = aksjonspunkterForSteg.filter(ap => !årskvantumDokEllerKvote(ap));
+  const apForVurderÅrskvantum: Aksjonspunkt = aksjonspunkterForSteg.find(ap => årskvantumDok(ap));
+  const aksjonspunkter: Aksjonspunkt[] = aksjonspunkterForSteg.filter(ap => !årskvantumDok(ap));
   const åpenAksjonspunkt = aksjonspunkter.find(ap => ap.status.kode !== aksjonspunktStatus.UTFORT) !== undefined;
 
   const visAPVurderÅrskvantumDokIOmsorgsdagerFrontend =
@@ -85,7 +80,7 @@ const ÅrskvantumIndex = ({
 
   return (
     <RawIntlProvider value={årskvantumIntl}>
-      {aksjonspunkter.length > 0 && featureToggles?.AKSJONSPUNKT_9014 && (
+      {aksjonspunkter.length > 0 && (
         <AksjonspunktForm9014
           aktiviteter={sisteUttaksplan?.aktiviteter}
           behandlingId={behandling.id}
@@ -96,7 +91,7 @@ const ÅrskvantumIndex = ({
           fosterbarn={fosterbarn}
         />
       )}
-      {aksjonspunkter.length > 0 && !featureToggles?.AKSJONSPUNKT_9014 && (
+      {aksjonspunkter.length > 0 && (
         <AksjonspunktForm
           aktiviteter={sisteUttaksplan?.aktiviteter}
           behandlingId={behandling.id}
