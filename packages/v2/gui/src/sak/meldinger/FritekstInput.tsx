@@ -1,15 +1,16 @@
-import { type ForwardedRef, forwardRef, useEffect, useImperativeHandle, useReducer } from 'react';
+import { type ForwardedRef, forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { Tag, type TagProps, Textarea, TextField } from '@navikt/ds-react';
 import { $BestillBrevDto, $FritekstbrevinnholdDto } from '@k9-sak-web/backend/k9sak/generated';
 import type { Språkkode } from '@k9-sak-web/backend/k9sak/kodeverk/Språkkode.js';
 import { validateTextCharacters } from '../../utils/validation/validateTextCharacters.js';
+import { StickyStateReducer } from '../../utils/StickyStateReducer.js';
 
-type Valid = {
+export type Valid = {
   readonly input: string;
   readonly valid: true;
   readonly error?: never;
 };
-type Error = {
+export type Error = {
   readonly input: string;
   readonly error: string;
   readonly valid: false;
@@ -18,7 +19,7 @@ type Error = {
 export interface FritekstInputValue {
   readonly tittel: string | undefined;
   readonly tekst: string | undefined;
-  readonly invalid?: never;
+  readonly invalid: false;
 }
 export interface FritekstInputInvalid {
   readonly invalid: true;
@@ -29,19 +30,22 @@ export interface FritekstInputInvalid {
 // Sending av brev med fritekst har to ulike varianter. Ein kort enkel fritekst eller lengre tekst med tittel.
 export type FritekstModus = 'EnkelFritekst' | 'StørreFritekstOgTittel';
 
-type FritekstInputProps = {
+export type FritekstInputProps = {
   readonly språk: Språkkode;
   readonly show: boolean;
   readonly fritekstModus: FritekstModus;
   readonly showValidation: boolean;
   readonly defaultValue?: FritekstInputValue;
   readonly onChange?: (value: FritekstInputValue | FritekstInputInvalid) => void;
+  readonly stickyState: {
+    readonly tittel: StickyStateReducer<Valid | Error>;
+    readonly tekst: StickyStateReducer<Valid | Error>;
+  };
 };
 
 export interface FritekstInputMethods {
   reset(): void;
   getValue(): FritekstInputValue | FritekstInputInvalid;
-  setValue(value: FritekstInputValue): void;
 }
 
 const tittelMaxLength = $FritekstbrevinnholdDto.properties.overskrift.maxLength;
@@ -113,25 +117,46 @@ const resolveLanguageTagVariant = (språk: Språkkode): TagProps['variant'] =>
  */
 const FritekstInput = forwardRef(
   (
-    { språk, show, fritekstModus, showValidation = false, defaultValue, onChange }: FritekstInputProps,
+    { språk, show, fritekstModus, showValidation = false, defaultValue, onChange, stickyState }: FritekstInputProps,
     ref: ForwardedRef<FritekstInputMethods>,
   ) => {
-    const [tittel, setTittel] = useReducer(tittelReducer, validateTittel(defaultValue?.tittel));
-    const [tekst, setTekst] = useReducer(tekstReducer, validateTekst(defaultValue?.tekst, fritekstModus));
+    const [tittel, setTittel] = stickyState.tittel.useStickyStateReducer(
+      tittelReducer,
+      validateTittel(defaultValue?.tittel),
+    );
+    const [tekst, setTekst] = stickyState.tekst.useStickyStateReducer(
+      tekstReducer,
+      validateTekst(defaultValue?.tekst, fritekstModus),
+    );
+
+    // Så vi kan detektere når default value har blitt endra:
+    const prevDefault = useRef(defaultValue);
+    useEffect(() => {
+      // Når bruker velger eit nytt tekstforslag skal tekst bli overskrive.
+      // For å unngå at lagra verdi blir overskrive av defaultValue ved remount av komponent, når defaultValue eigentleg
+      // ikkje har blitt endra sjekker vi at defaultValue har ein anna tekstverdi enn når komponent vart mounta.
+      // Ved å gjere det slik får ein beholdt innskrevet verdi i sticky memory reducer forbi unmounts + mounts, men
+      // overskrive den når bruker aktivt velger eit nytt tekstforslag, eller endrer mal, etc.
+      if (defaultValue?.tekst !== prevDefault.current?.tekst || defaultValue?.tittel !== prevDefault.current?.tittel) {
+        setTittel(defaultValue?.tittel);
+        setTekst({ tekst: defaultValue?.tekst, modus: fritekstModus });
+        prevDefault.current = defaultValue;
+      }
+    }, [defaultValue]);
 
     const getValue = (): FritekstInputValue | FritekstInputInvalid => {
       if (tekst.valid) {
         if (fritekstModus === 'EnkelFritekst') {
-          return { tittel: undefined, tekst: tekst.input };
+          return { tittel: undefined, tekst: tekst.input, invalid: false };
         }
         if (tittel.valid) {
-          return { tittel: tittel.input, tekst: tekst.input };
+          return { tittel: tittel.input, tekst: tekst.input, invalid: false };
         }
       }
       return { invalid: true };
     };
     const setValue = (value: FritekstInputValue | undefined) => {
-      setTittel(value?.tekst);
+      setTittel(value?.tittel);
       setTekst({ tekst: value?.tekst, modus: fritekstModus });
     };
 
@@ -142,7 +167,7 @@ const FritekstInput = forwardRef(
     }, [tittel, tekst, fritekstModus, onChange]);
     useImperativeHandle(ref, () => {
       const reset = () => setValue(defaultValue);
-      return { reset, getValue, setValue };
+      return { reset, getValue };
     });
 
     if (show) {
@@ -157,7 +182,6 @@ const FritekstInput = forwardRef(
                 size="small"
                 label="Tittel"
                 maxLength={tittelMaxLength}
-                defaultValue={defaultValue?.tittel}
                 error={showValidation && tittel?.error}
                 onChange={ev => setTittel(ev.target.value)}
               />
@@ -176,7 +200,6 @@ const FritekstInput = forwardRef(
             }
             maxLength={fritekstMaxLength}
             resize="vertical"
-            defaultValue={defaultValue?.tekst}
             error={showValidation && tekst?.error}
             onChange={ev => setTekst({ tekst: ev.target.value, modus: fritekstModus })}
           />
