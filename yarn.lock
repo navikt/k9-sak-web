@@ -4397,9 +4397,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/fakta-medisinsk-vilkar@1.0.0, @k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår":
+"@k9-sak-web/fakta-medisinsk-vilkar@1.0.0, @k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår":
   version: 0.0.0-use.local
-  resolution: "@k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår"
+  resolution: "@k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår"
   dependencies:
     "@fpsak-frontend/form": 1.0.0
     "@navikt/diagnosekoder": ^1.2024.0
