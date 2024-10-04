@@ -84,7 +84,7 @@ const OppholdINorgeOgAdresser = ({
               )}
               {!f.isApplicant && (
                 <BostedSokerFaktaIndex
-                  sokerTypeTextId="OppholdINorgeOgAdresserFaktaPanel.Parent"
+                  sokerTypeText="Den andre forelderen"
                   personopplysninger={f.personopplysning}
                   alleKodeverk={alleKodeverk}
                 />
