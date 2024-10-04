@@ -96,10 +96,6 @@
     "value": "${SKILL_UT_PRIVATPERSON}"
   },
   {
-    "key": "NYTT_SKJEMA_FOR_9003",
-    "value": "${NYTT_SKJEMA_FOR_9003}"
-  },
-  {
     "key": "AUTOMATISK_VURDERT_MEDLEMSKAP",
     "value": "${AUTOMATISK_VURDERT_MEDLEMSKAP}"
   }

@@ -113,7 +113,5 @@ spec:
       value: "true"
     - name: SKILL_UT_PRIVATPERSON
       value: "true"
-    - name: NYTT_SKJEMA_FOR_9003
-      value: "true"
     - name: AUTOMATISK_VURDERT_MEDLEMSKAP
       value: "true"
