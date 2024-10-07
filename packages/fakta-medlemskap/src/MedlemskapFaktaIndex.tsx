@@ -1,6 +1,5 @@
 import { Aksjonspunkt, Behandling, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
-import messages from '../i18n/nb_NO.json';
 import MedlemskapInfoPanel from './components/MedlemskapInfoPanel';
 import { Medlemskap } from './components/oppholdInntektOgPerioder/Medlemskap';
 import { MerknaderFraBeslutter } from './components/oppholdInntektOgPerioder/MerknaderFraBeslutter';
@@ -11,7 +10,6 @@ const cache = createIntlCache();
 const intl = createIntl(
   {
     locale: 'nb-NO',
-    messages,
   },
   cache,
 );

@@ -3,7 +3,6 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import region from '@fpsak-frontend/kodeverk/src/region';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import React from 'react';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import BostedSokerFaktaIndex from './BostedSokerFaktaIndex';
 

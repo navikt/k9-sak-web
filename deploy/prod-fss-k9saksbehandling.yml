@@ -80,8 +80,6 @@ spec:
       value: "true"
     - name: LOS_MARKER_BEHANDLING_SUBMIT
       value: "false"
-    - name: AKSJONSPUNKT_9014
-      value: "true"
     - name: AKSJONSPUNKT_9015
       value: "true"
     - name: ALDERSVILKAR_KRONISK_SYK
@@ -109,8 +107,6 @@ spec:
     - name: UTVIDET_VARSELFELT
       value: "true"
     - name: SKILL_UT_PRIVATPERSON
-      value: "false"
-    - name: NYTT_SKJEMA_FOR_9003
       value: "false"
     - name: AUTOMATISK_VURDERT_MEDLEMSKAP
       value: "true"

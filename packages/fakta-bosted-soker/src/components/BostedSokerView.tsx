@@ -4,28 +4,25 @@ import Region from '@fpsak-frontend/kodeverk/src/region';
 import { getAddresses } from '@fpsak-frontend/utils';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, Detail, HGrid, Label, Tag } from '@navikt/ds-react';
-import React from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
-import { BostedSokerPersonopplysninger } from '../BostedSokerFaktaIndex';
-
+import { Adresse, BostedSokerPersonopplysninger } from '../types';
 import styles from './bostedSokerView.module.css';
 
 interface OwnProps {
   personopplysninger: BostedSokerPersonopplysninger;
-  sokerTypeTextId: string;
+  sokerTypeText: string;
   regionTypes: KodeverkMedNavn[];
   sivilstandTypes: KodeverkMedNavn[];
   personstatusTypes: KodeverkMedNavn[];
 }
 
-const getAdresse = adresser => {
+const getAdresse = (adresser: Adresse[]) => {
   const adresseListe = getAddresses(adresser);
   const adresse = adresseListe[opplysningAdresseType.POSTADRESSE] || adresseListe[opplysningAdresseType.BOSTEDSADRESSE];
   return adresse || '-';
 };
 
-const getUtlandsadresse = adresser => {
+const getUtlandsadresse = (adresser: Adresse[]) => {
   const adresseListe = getAddresses(adresser);
   const utlandsAdresse =
     adresseListe[opplysningAdresseType.UTENLANDSK_POSTADRESSE] ||
@@ -33,34 +30,29 @@ const getUtlandsadresse = adresser => {
   return utlandsAdresse || '-';
 };
 
-const getPersonstatus = personopplysning =>
+const getPersonstatus = (personopplysning: BostedSokerPersonopplysninger) =>
   personopplysning.avklartPersonstatus && personopplysning.avklartPersonstatus.overstyrtPersonstatus
     ? personopplysning.avklartPersonstatus.overstyrtPersonstatus
     : personopplysning.personstatus;
 
 export const BostedSokerView = ({
-  intl,
   personopplysninger,
-  sokerTypeTextId,
+  sokerTypeText,
   regionTypes,
   sivilstandTypes,
   personstatusTypes,
-}: OwnProps & WrappedComponentProps) => (
+}: OwnProps) => (
   <div className={styles.defaultBostedSoker}>
     <HGrid gap="4" columns={{ xs: '8fr 4fr' }}>
       <div>
-        <Detail>
-          <FormattedMessage id={sokerTypeTextId} />
-        </Detail>
+        <Detail>{sokerTypeText}</Detail>
         <Label size="small" as="p">
           {personopplysninger.navn ? personopplysninger.navn : '-'}
         </Label>
         <BodyShort size="small" className={styles.paddingBottom}>
           {getAdresse(personopplysninger.adresser)}
         </BodyShort>
-        <Detail>
-          <FormattedMessage id="BostedSokerView.ForeignAddresse" />
-        </Detail>
+        <Detail>Utenlandsadresse</Detail>
         <BodyShort size="small">{getUtlandsadresse(personopplysninger.adresser)}</BodyShort>
       </div>
       <div>
@@ -70,24 +62,24 @@ export const BostedSokerView = ({
               variant="warning"
               size="small"
               className={getPersonstatus(personopplysninger).kode === personstatusType.DOD ? styles.dodEtikett : ''}
-              title={intl.formatMessage({ id: 'Personstatus.Hjelpetekst' })}
+              title="Personstatus"
             >
               {getPersonstatus(personopplysninger).kode === personstatusType.UDEFINERT
-                ? intl.formatMessage({ id: 'Personstatus.Ukjent' })
+                ? 'Ukjent'
                 : personstatusTypes.find(s => s.kode === getPersonstatus(personopplysninger).kode).navn}
             </Tag>
           </div>
         )}
         {personopplysninger.sivilstand && (
           <div className={styles.etikettMargin}>
-            <Tag variant="warning" size="small" title={intl.formatMessage({ id: 'Sivilstand.Hjelpetekst' })}>
+            <Tag variant="warning" size="small" title="Sivilstand">
               {sivilstandTypes.find(s => s.kode === personopplysninger.sivilstand.kode).navn}
             </Tag>
           </div>
         )}
         {personopplysninger.region && personopplysninger.region.kode !== Region.UDEFINERT && (
           <div className={styles.etikettMargin}>
-            <Tag variant="warning" size="small" title={intl.formatMessage({ id: 'BostedSokerView.Region' })}>
+            <Tag variant="warning" size="small" title="Region">
               {regionTypes.find(r => r.kode === personopplysninger.region.kode).navn}
             </Tag>
           </div>
@@ -97,4 +89,4 @@ export const BostedSokerView = ({
   </div>
 );
 
-export default injectIntl(BostedSokerView);
+export default BostedSokerView;

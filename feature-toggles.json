@@ -36,10 +36,6 @@
     "value": "${LOS_MARKER_BEHANDLING_SUBMIT}"
   },
   {
-    "key": "AKSJONSPUNKT_9014",
-    "value": "${AKSJONSPUNKT_9014}"
-  },
-  {
     "key": "AKSJONSPUNKT_9015",
     "value": "${AKSJONSPUNKT_9015}"
   },
@@ -94,10 +90,6 @@
   {
     "key": "SKILL_UT_PRIVATPERSON",
     "value": "${SKILL_UT_PRIVATPERSON}"
-  },
-  {
-    "key": "NYTT_SKJEMA_FOR_9003",
-    "value": "${NYTT_SKJEMA_FOR_9003}"
   },
   {
     "key": "AUTOMATISK_VURDERT_MEDLEMSKAP",

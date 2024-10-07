@@ -38,10 +38,6 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_LOS_MARKER_BEHANDLING_SUBMIT,
   },
   {
-    key: 'AKSJONSPUNKT_9014',
-    value: process.env.VITE_AKSJONSPUNKT_9014,
-  },
-  {
     key: 'AKSJONSPUNKT_9015',
     value: process.env.VITE_AKSJONSPUNKT_9015,
   },
@@ -88,10 +84,6 @@ export const featureTogglesFactory = () => [
   {
     key: 'SKILL_UT_PRIVATPERSON',
     value: process.env.VITE_SKILL_UT_PRIVATPERSON,
-  },
-  {
-    key: 'NYTT_SKJEMA_FOR_9003',
-    value: process.env.VITE_NYTT_SKJEMA_FOR_9003,
   },
   {
     key: 'AUTOMATISK_VURDERT_MEDLEMSKAP',
