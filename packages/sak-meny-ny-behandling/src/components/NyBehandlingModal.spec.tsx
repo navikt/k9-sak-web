@@ -7,7 +7,6 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import messages from '../../i18n/nb_NO.json';
 import {
   NyBehandlingModal,
   getBehandlingAarsaker,
@@ -15,7 +14,7 @@ import {
   getEnabledBehandlingstyper,
 } from './NyBehandlingModal';
 
-const intlMock = intlWithMessages(messages);
+const intlMock = intlWithMessages({});
 
 describe('<NyBehandlingModal>', () => {
   const submitEventCallback = vi.fn();
@@ -66,11 +65,10 @@ describe('<NyBehandlingModal>', () => {
         valgtBehandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
         erTilbakekreving={false}
       />,
-      { messages },
     );
 
     expect(screen.getByRole('dialog', { name: 'Ny behandling' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'OK' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Opprett behandling' })).toBeInTheDocument();
     expect(screen.getAllByRole('combobox').length).toBe(2);
   });
 
@@ -114,13 +112,12 @@ describe('<NyBehandlingModal>', () => {
         valgtBehandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
         erTilbakekreving={false}
       />,
-      { messages },
     );
 
     await act(async () => {
-      await userEvent.click(screen.getByRole('button', { name: 'OK' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Opprett behandling' }));
     });
-    expect(submitEventCallback.mock.calls.length).toBeGreaterThan(0);
+    expect(submitEventCallback.mock.calls.length).toBe(1);
   });
 
   it('skal lukke modal ved klikk på avbryt-knapp', async () => {
@@ -163,7 +160,6 @@ describe('<NyBehandlingModal>', () => {
         valgtBehandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
         erTilbakekreving={false}
       />,
-      { messages },
     );
 
     await act(async () => {
@@ -212,7 +208,6 @@ describe('<NyBehandlingModal>', () => {
         valgtBehandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
         erTilbakekreving={false}
       />,
-      { messages },
     );
     expect(
       screen.getByRole('checkbox', { name: 'Behandlingen opprettes som et resultat av klagebehandling' }),
@@ -255,11 +250,11 @@ describe('<NyBehandlingModal>', () => {
           kanRevurderingOpprettes: true,
         }}
         valgtBehandlingTypeKode={behandlingType.REVURDERING}
+        steg="inngangsvilkår"
         erTilbakekreving={false}
       />,
-      { messages },
     );
-    expect(screen.getAllByRole('combobox').length).toBe(2);
+    expect(screen.getAllByRole('combobox').length).toBe(3);
     expect(screen.getByRole('option', { name: 'Revurderingsbehandling' })).toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'FEIL_I_LOVANDVENDELSE' })).toBeInTheDocument();
   });
@@ -304,12 +299,13 @@ describe('<NyBehandlingModal>', () => {
         valgtBehandlingTypeKode={behandlingType.REVURDERING}
         erTilbakekreving={false}
       />,
-      { messages },
     );
 
     expect(screen.getAllByRole('combobox').length).toBe(2);
-    expect(screen.getByRole('option', { name: 'inngangsvilkår' })).toBeInTheDocument();
-    expect(screen.getByRole('option', { name: 'RE-ENDRET-FORDELING' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Fra inngangsvilkår (full revurdering)' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('option', { name: 'Fra uttak, refusjon og fordeling-steget (delvis revurdering)' }),
+    ).toBeInTheDocument();
   });
 
   it('skal rendre årsak for revurdering fra steg når revurdering fra inngangsvilkår er valgt', () => {
@@ -353,7 +349,6 @@ describe('<NyBehandlingModal>', () => {
         steg="inngangsvilkår"
         erTilbakekreving={false}
       />,
-      { messages },
     );
 
     expect(screen.getAllByRole('combobox').length).toBe(3);
@@ -398,15 +393,14 @@ describe('<NyBehandlingModal>', () => {
           kanRevurderingOpprettes: true,
         }}
         valgtBehandlingTypeKode={behandlingType.REVURDERING}
-        steg="inngangsvilkår"
+        steg="RE-ENDRET-FORDELING"
         erTilbakekreving={false}
       />,
-      { messages },
     );
 
     expect(screen.getAllByRole('combobox').length).toBe(2);
-    expect(screen.getByRole('textbox', { name: 'fom' })).toBeInTheDocument();
-    expect(screen.getByRole('textbox', { name: 'tom' })).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Fra og med' })).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Til og med' })).toBeInTheDocument();
   });
 
   it('skal finne filtrerte behandlingsårsaker når det er valgt behandlingstype TILBAKEKREVING_REVURDERING', () => {
