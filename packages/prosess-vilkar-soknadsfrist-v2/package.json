@@ -12,7 +12,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-form-hooks": "5.1.1",
+    "@navikt/ft-form-hooks": "5.1.2",
     "@navikt/ft-form-validators": "2.4.1",
     "@navikt/ft-plattform-komponenter": "3.1.1",
     "classnames": "2.5.1",
