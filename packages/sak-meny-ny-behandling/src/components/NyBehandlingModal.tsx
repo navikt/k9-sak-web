@@ -6,20 +6,14 @@ import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
 import { ModalBody, ModalFooter } from '@navikt/ds-react/Modal';
 import { ReactElement, useEffect } from 'react';
-import { FormattedMessage, IntlShape, WrappedComponentProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
 import { createSelector } from 'reselect';
 import styles from './nyBehandlingModal.module.css';
 
-const createOptions = (
-  bt: KodeverkMedNavn,
-  enabledBehandlingstyper: KodeverkMedNavn[],
-  intl: IntlShape,
-): ReactElement => {
-  // TODO Burde retta opp navn for behandlingstype i DB
-  const navn =
-    bt.kode === bType.REVURDERING ? intl.formatMessage({ id: 'MenyNyBehandlingIndex.OpprettRevurdering' }) : bt.navn;
+const createOptions = (bt: KodeverkMedNavn, enabledBehandlingstyper: KodeverkMedNavn[]): ReactElement => {
+  const navn = bt.kode === bType.REVURDERING ? 'Revurderingsbehandling' : bt.navn;
 
   const isEnabled = enabledBehandlingstyper.some(b => b.kode === bt.kode);
   return <option key={bt.kode} value={bt.kode} disabled={!isEnabled}>{` ${navn} `}</option>;
@@ -88,7 +82,6 @@ interface MappedOwnProps {
 export const NyBehandlingModal = ({
   handleSubmit,
   cancelEvent,
-  intl,
   behandlingTyper,
   behandlingArsakTyper,
   enabledBehandlingstyper,
@@ -119,10 +112,10 @@ export const NyBehandlingModal = ({
     <Modal
       className={styles.modal}
       open
-      aria-label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.ModalDescription' })}
+      aria-label="Ny behandling"
       onClose={cancelEvent}
       header={{
-        heading: intl.formatMessage({ id: 'MenyNyBehandlingIndex.OpprettNyForstegangsbehandling' }),
+        heading: 'Opprett ny behandling',
         size: 'small',
       }}
     >
@@ -131,23 +124,23 @@ export const NyBehandlingModal = ({
           <VStack gap="5">
             <SelectField
               name="behandlingType"
-              label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectBehandlingTypeLabel' })}
-              placeholder={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectBehandlingTypePlaceholder' })}
+              label="Hva slags behandling ønsker du å opprette?"
+              placeholder="Velg behandlingstype"
               validate={[required]}
-              selectValues={behandlingTyper.map(bt => createOptions(bt, enabledBehandlingstyper, intl))}
+              selectValues={behandlingTyper.map(bt => createOptions(bt, enabledBehandlingstyper))}
             />
             {erRevurdering && (
               <SelectField
                 name="steg"
-                label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectStartpunktLabel' })}
-                placeholder={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectStartpunktPlaceholder' })}
+                label="Hvor i prosessen vil du starte revurderingen?"
+                placeholder="Velg startpunkt i revurderingsprosessen"
                 validate={[required]}
                 selectValues={[
                   <option key="inngangsvilkår" value="inngangsvilkår">
-                    {intl.formatMessage({ id: 'MenyNyBehandlingIndex.StartpunktInngangsvilkår' })}
+                    Fra inngangsvilkår (full revurdering)
                   </option>,
                   <option key="uttak" value="RE-ENDRET-FORDELING">
-                    {intl.formatMessage({ id: 'MenyNyBehandlingIndex.StartpunktUttak' })}
+                    Fra uttak, refusjon og fordeling-steget (delvis revurdering)
                   </option>,
                 ]}
               />
@@ -155,14 +148,14 @@ export const NyBehandlingModal = ({
             {erFørstegangsbehandling && (
               <CheckboxField
                 name="nyBehandlingEtterKlage"
-                label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.NyBehandlingEtterKlage' })}
+                label="Behandlingen opprettes som et resultat av klagebehandling"
               />
             )}
             {behandlingArsakTyper.length > 0 && (!erRevurdering || steg === 'inngangsvilkår') && (
               <SelectField
                 name="behandlingArsakType"
-                label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectBehandlingArsakTypeLabel' })}
-                placeholder={intl.formatMessage({ id: 'MenyNyBehandlingIndex.SelectBehandlingArsakTypePlaceholder' })}
+                label="Hva er årsaken til revurderingen?"
+                placeholder="Velg årsak"
                 validate={[required]}
                 selectValues={behandlingArsakTyper.map(b => (
                   <option key={b.kode} value={b.kode}>
@@ -172,19 +165,12 @@ export const NyBehandlingModal = ({
               />
             )}
             {erRevurdering && steg === 'RE-ENDRET-FORDELING' && (
-              <Fieldset
-                className={styles.datePickerContainer}
-                legend={intl.formatMessage({ id: 'MenyNyBehandlingIndex.RevurderingPeriode' })}
-              >
-                <DatepickerField
-                  name="fom"
-                  disabledDays={{ before: null, after: new Date() }}
-                  label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.RevurderingFraOgMedLabel' })}
-                />
+              <Fieldset className={styles.datePickerContainer} legend="Hvilken periode vil du revurdere?">
+                <DatepickerField name="fom" disabledDays={{ before: null, after: new Date() }} label="Fra og med" />
                 <DatepickerField
                   name="tom"
                   disabledDays={{ before: new Date(fom), after: new Date() }}
-                  label={intl.formatMessage({ id: 'MenyNyBehandlingIndex.RevurderingTilOgMedLabel' })}
+                  label="Til og med"
                 />
               </Fieldset>
             )}
@@ -193,10 +179,10 @@ export const NyBehandlingModal = ({
         <ModalFooter>
           <HStack gap="2" justify="end">
             <Button variant="secondary" type="button" size="small" onClick={cancelEvent}>
-              <FormattedMessage id="MenyNyBehandlingIndex.Avbryt" />
+              Avbryt
             </Button>
             <Button variant="primary" size="small">
-              <FormattedMessage id="MenyNyBehandlingIndex.OpprettBehandling" />
+              Opprett behandling
             </Button>
           </HStack>
         </ModalFooter>
