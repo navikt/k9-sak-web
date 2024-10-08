@@ -10,11 +10,14 @@
     "./shared/*": "./src/shared/*",
     "./utils/*": "./src/utils/*",
     "./kodeverk/*": "./src/kodeverk/*",
-    "./storybook/*": "./src/storybook/*"
+    "./storybook/*": "./src/storybook/*",
+    "./prosess/*": "./src/prosess/*"
   },
   "dependencies": {
     "@k9-sak-web/backend": "workspace:^",
     "@k9-sak-web/lib": "1.0.0",
+    "@tanstack/react-query": "^5.56.2",
+    "axios": "1.7.7",
     "react": "18.3.1"
   }
 }
