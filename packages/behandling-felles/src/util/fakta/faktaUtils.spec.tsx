@@ -243,8 +243,8 @@ describe('<faktaUtils>', () => {
       behandlingVersjon: behandling.versjon,
       bekreftedeAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[0],
-          kode: aksjonspunkter[0],
+          '@type': aksjonspunkter[0].kode,
+          kode: aksjonspunkter[0].kode,
         },
       ],
     });
@@ -271,7 +271,7 @@ describe('<faktaUtils>', () => {
       lagreOverstyrteAksjonspunkter,
     );
 
-    const aksjonspunkter = [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
+    const aksjonspunkter = [{ kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD }];
 
     await callback(aksjonspunkter);
 
@@ -285,8 +285,8 @@ describe('<faktaUtils>', () => {
       bekreftedeAksjonspunktDtoer: [],
       overstyrteAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[0],
-          kode: aksjonspunkter[0],
+          '@type': aksjonspunkter[0].kode,
+          kode: aksjonspunkter[0].kode,
         },
       ],
     });
@@ -314,8 +314,8 @@ describe('<faktaUtils>', () => {
     );
 
     const aksjonspunkter = [
-      aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
-      aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
+      { kode: aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG },
+      { kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN },
     ];
 
     await callback(aksjonspunkter);
@@ -329,14 +329,14 @@ describe('<faktaUtils>', () => {
       behandlingVersjon: behandling.versjon,
       overstyrteAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[0],
-          kode: aksjonspunkter[0],
+          '@type': aksjonspunkter[0].kode,
+          kode: aksjonspunkter[0].kode,
         },
       ],
       bekreftedeAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[1],
-          kode: aksjonspunkter[1],
+          '@type': aksjonspunkter[1].kode,
+          kode: aksjonspunkter[1].kode,
         },
       ],
     });
