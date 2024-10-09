@@ -1,18 +1,19 @@
-import React from 'react';
-import { MemoryRouter } from 'react-router';
-import { screen } from '@testing-library/react';
-import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { BehandlingAppKontekst } from '@k9-sak-web/types';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import { MemoryRouter } from 'react-router';
 import { vi } from 'vitest';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import FagsakIndex from './FagsakIndex';
 import type useTrackRouteParam from '../app/useTrackRouteParam.js';
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 
 vi.mock('react-router-dom', async () => {
   const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
@@ -51,7 +52,7 @@ describe('<FagsakIndex>', () => {
     ],
     [kodeverkTyper.BEHANDLING_TYPE]: [
       {
-        kode: behandlingType.FØRSTEGANGSSØKNAD,
+        kode: behandlingType.FORSTEGANGSSOKNAD,
         kodeverk: 'BEHANDLING_TYPE',
         navn: 'Førstegangsbehandling',
       },
@@ -102,7 +103,7 @@ describe('<FagsakIndex>', () => {
   const behandling: BehandlingAppKontekst = {
     id: 1,
     uuid: '1',
-    type: behandlingType.FØRSTEGANGSSØKNAD,
+    type: behandlingType.FORSTEGANGSSOKNAD as BehandlingType,
     status: behandlingStatus.AVSLUTTET,
     links: [],
     behandlendeEnhetId: 'test',
@@ -120,7 +121,7 @@ describe('<FagsakIndex>', () => {
   const behandling2: BehandlingAppKontekst = {
     id: 2,
     uuid: '2',
-    type: behandlingType.FØRSTEGANGSSØKNAD,
+    type: behandlingType.FORSTEGANGSSOKNAD as BehandlingType,
     status: behandlingStatus.AVSLUTTET,
     links: [],
     behandlendeEnhetId: 'test',
@@ -138,7 +139,7 @@ describe('<FagsakIndex>', () => {
   const behandling3: BehandlingAppKontekst = {
     id: 3,
     uuid: '3',
-    type: behandlingType.FØRSTEGANGSSØKNAD,
+    type: behandlingType.FORSTEGANGSSOKNAD as BehandlingType,
     status: behandlingStatus.AVSLUTTET,
     links: [],
     behandlendeEnhetId: 'test',

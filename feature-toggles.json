@@ -36,10 +36,6 @@
     "value": "${LOS_MARKER_BEHANDLING_SUBMIT}"
   },
   {
-    "key": "AKSJONSPUNKT_9014",
-    "value": "${AKSJONSPUNKT_9014}"
-  },
-  {
     "key": "AKSJONSPUNKT_9015",
     "value": "${AKSJONSPUNKT_9015}"
   },
@@ -84,11 +80,19 @@
     "value": "${NYE_NOKKELTALL}"
   },
   {
+    "key": "PROSESS_VILKAR_SOKNADSFRIST",
+    "value": "${PROSESS_VILKAR_SOKNADSFRIST}"
+  },
+  {
     "key": "UTVIDET_VARSELFELT",
     "value": "${UTVIDET_VARSELFELT}"
   },
   {
     "key": "SKILL_UT_PRIVATPERSON",
     "value": "${SKILL_UT_PRIVATPERSON}"
+  },
+  {
+    "key": "AUTOMATISK_VURDERT_MEDLEMSKAP",
+    "value": "${AUTOMATISK_VURDERT_MEDLEMSKAP}"
   }
 ]

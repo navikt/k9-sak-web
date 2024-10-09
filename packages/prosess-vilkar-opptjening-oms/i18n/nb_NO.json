@@ -9,13 +9,13 @@
   "OpptjeningVilkarView.MonthsAndDays": "{months} måneder og {days} dager aktivitet i opptjeningsperioden",
   "OpptjeningVilkarView.DetailsForSelectedPeriod": "Detaljer for valgt periode",
 
+  "OpptjeningPanel.ErIkkeOppfylt": "Vilkåret er avslått",
+  "OpptjeningPanel.IkkeBehandlet": "Ikke behandlet",
+
   "OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilPleiepenger": "Opptjent rett til pleiepenger",
   "OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilOmsorgspenger": "Opptjent rett til omsorgspenger",
   "OpptjeningVilkarAksjonspunktPanel.OmsorgspengerVurderLabel": "Vurder om bruker oppfyller opptjening jf § 9-2 eller § 8-47 bokstav B",
   "OpptjeningVilkarAksjonspunktPanel.ErOppfylt": "Søker har oppfylt krav om 28 dagers opptjening, vilkåret er oppfylt.",
-  "OpptjeningVilkarAksjonspunktPanel.Er847": "Vilkåret beregnes jf § 8-47.",
-  "OpptjeningVilkarAksjonspunktPanel.Er847A": "Vilkåret beregnes jf § 8-47 bokstav A.",
-  "OpptjeningVilkarAksjonspunktPanel.Er847B": "Vilkåret beregnes jf § 8-47 bokstav B.",
 
   "OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt": "Søker har ikke oppfylt krav om 28 dagers opptjening, vilkåret er <b>ikke</b> oppfylt.",
   "OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret": "Opptjening",
@@ -23,8 +23,6 @@
   "OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB": "Søker oppfyller vilkåret til opptjening jf § 8-47 bokstav B",
   "OpptjeningVilkarAksjonspunktPanel.VurderingHjelpetekst": "<b>Veiledning for vurdering av opptjent rett</b> {linebreak}• Sjekk Opptjening i Saksopplysninger. {linebreak} • Kontroller opplysningene i Arbeidsforhold. {linebreak} • Er det perioder uten arbeidsforhold eller med permisjon/permittering i noen av arbeidsforholdene som varer lengre en 14 dager? {linebreak} • Sjekk opplysningene i A-inntekt {linebreak} • Vurder om det kan være mangelfull registrering fra arbeidsgiver i Aa-registret. Hvis så, ta kontakt med arbeidsgiver for korrigering.{linebreak} • Skal ytelse være en del av opptjeningen? Husk at perioder med ytelse før skjæringstidspunktet må være utbetalt før det blir med i opptjening.{linebreak}{linebreak} <b>Vurder om bruker oppfyller opptjeningsvilkåret jf. § 9-2</b> {linebreak} • Hvis § 9-2 ikke er oppfylt. Vurder om § 8-47 bokstav A eller § 8-47 bokstav B er oppfylt. Bruker må ha aktivt arbeidsforhold på skjæringstidspunktet for at bokstav B kan være oppfylt.",
   "OpptjeningVilkarAksjonspunktPanel.VurderingPlaceholderText": "Begrunn vurderingen din. Se hjelpetekst for veiledning.",
-
-
 
   "TimeLineNavigation.openData": "Åpne info om første periode",
   "TimeLineData.nextPeriod": "Neste periode",

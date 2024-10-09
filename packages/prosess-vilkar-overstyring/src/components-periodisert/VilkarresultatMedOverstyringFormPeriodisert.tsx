@@ -17,7 +17,7 @@ import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { BodyShort, Button, Label } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import moment from 'moment';
-import React, { FunctionComponent, SetStateAction, useEffect } from 'react';
+import { FunctionComponent, SetStateAction, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 import { VilkarresultatMedOverstyringFormState } from './FormState';

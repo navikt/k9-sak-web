@@ -1,18 +1,18 @@
-import { createSelector } from 'reselect';
 import moment from 'moment';
+import { createSelector } from 'reselect';
 
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isBGAksjonspunktSomGirFritekstfelt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { TIDENES_ENDE } from '@fpsak-frontend/utils';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
   tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT &&
@@ -86,6 +86,10 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType
     return 'VedtakForm.VilkarStatusInnvilgetLivetsSluttfase';
   }
 
+  if (ytelseType === fagsakYtelseType.UNGDOMSYTELSE) {
+    return 'VedtakForm.VilkarStatusInnvilgetUngdomsytelse';
+  }
+
   return 'VedtakForm.VilkarStatusInnvilgetPleiepenger';
 };
 
@@ -115,6 +119,10 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
 
   if (ytelseType === fagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
     return 'VedtakForm.LivetsSluttfaseIkkeInnvilget';
+  }
+
+  if (ytelseType === fagsakYtelseType.UNGDOMSYTELSE) {
+    return 'VedtakForm.UngdomsytelseIkkeInnvilget';
   }
 
   return 'VedtakForm.PleiepengerIkkeInnvilget';

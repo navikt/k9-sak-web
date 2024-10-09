@@ -1,13 +1,11 @@
 import { FloatRight, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
-import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT, initializeDate } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { BodyShort, HGrid, Label, Tabs, Tag } from '@navikt/ds-react';
-import moment from 'moment';
 import React, { useEffect } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { createArbeidsgiverVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
 import styles from './tilkjentYtelse.module.css';
@@ -41,7 +39,6 @@ const TilkjentYtelseTimeLineData = ({
   callbackBackward,
   arbeidsgiverOpplysningerPerId,
 }: OwnProps) => {
-  const intl = useIntl();
   const { kodeverkNavnFraKode } = useKodeverkContext();
   const { andeler } = selectedItemData;
   const [selectedAndelIndex, setSelectedAndelIndex] = React.useState('0');
@@ -75,21 +72,13 @@ const TilkjentYtelseTimeLineData = ({
       <HGrid gap="1" columns={{ xs: '10fr 2fr' }}>
         <div>
           <Label size="small" as="p">
-            <FormattedMessage id="TilkjentYtelse.PeriodeData.Detaljer" />
+            Detaljer for valgt periode
           </Label>
         </div>
         <div>
           <FloatRight>
-            <TimeLineButton
-              text={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
-              type="prev"
-              callback={callbackBackward}
-            />
-            <TimeLineButton
-              text={intl.formatMessage({ id: 'Timeline.nextPeriod' })}
-              type="next"
-              callback={callbackForward}
-            />
+            <TimeLineButton text="Forrige periode" type="prev" callback={callbackBackward} />
+            <TimeLineButton text="Neste periode" type="next" callback={callbackForward} />
           </FloatRight>
         </div>
       </HGrid>
@@ -98,31 +87,15 @@ const TilkjentYtelseTimeLineData = ({
       <div className={styles.detailsPeriode}>
         <div className="flex gap-2">
           <BodyShort size="small" className="font-semibold">
-            <FormattedMessage
-              id="TilkjentYtelse.PeriodeData.Periode"
-              values={{
-                fomVerdi: moment(selectedItemStartDate).format(DDMMYYYY_DATE_FORMAT).toString(),
-                tomVerdi: moment(selectedItemEndDate).format(DDMMYYYY_DATE_FORMAT).toString(),
-              }}
-            />
+            {`${initializeDate(selectedItemStartDate).format(DDMMYYYY_DATE_FORMAT).toString()} - ${initializeDate(selectedItemEndDate).format(DDMMYYYY_DATE_FORMAT).toString()}`}
           </BodyShort>
-          <BodyShort size="small">
-            (
-            <FormattedMessage
-              id={numberOfDaysAndWeeks.id}
-              values={{
-                weeks: numberOfDaysAndWeeks.weeks.toString(),
-                days: numberOfDaysAndWeeks.days.toString(),
-              }}
-            />
-            )
-          </BodyShort>
+          <BodyShort size="small">{numberOfDaysAndWeeks}</BodyShort>
         </div>
         {harUtbetalingsgradFraUttak && (
           <div>
             <div className="mt-6">
               <BodyShort size="small">
-                <FormattedMessage id="TilkjentYtelse.PeriodeData.UtbetalingsgradAvBeregningsGrunnlag" />
+                {`Total utbetalingsgrad av beregningsgrunnlag: `}
                 <span className="font-semibold inline-block">
                   {utbetalingsgradVedTilkommetInntektErMinst()
                     ? utbetalingsgradEtterReduksjonVedTilkommetInntekt
@@ -142,7 +115,7 @@ const TilkjentYtelseTimeLineData = ({
         )}
         <div className="mt-5 mb-4">
           <BodyShort size="small">
-            <FormattedMessage id="TilkjentYtelse.PeriodeData.Dagsats" />
+            {`Utbetalt dagsats: `}
             <span className="font-semibold inline-block">{selectedItemData.dagsats} kr</span>
           </BodyShort>
         </div>
@@ -152,18 +125,7 @@ const TilkjentYtelseTimeLineData = ({
               {!!andel.refusjon && (
                 <div className="flex justify-between items-start">
                   <BodyShort size="small" className="inline-block">
-                    <FormattedMessage
-                      id="Timeline.tooltip.dagsatsPerAndel"
-                      key={`index${index + 1}`}
-                      values={{
-                        arbeidsgiver: createArbeidsgiverVisningsnavnForAndel(
-                          andel,
-                          kodeverkNavnFraKode,
-                          arbeidsgiverOpplysningerPerId,
-                        ),
-                        dagsatsPerAndel: Number(andel.refusjon),
-                      }}
-                    />
+                    {`${createArbeidsgiverVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId)}: ${Number(andel.refusjon)} kr`}
                   </BodyShort>
                   <Tag size="xsmall" variant="neutral-moderate" className={styles.tilkjentYtelseTag}>
                     Refusjon
@@ -173,18 +135,7 @@ const TilkjentYtelseTimeLineData = ({
               {!!andel.tilSoker && (
                 <div className="flex justify-between items-start">
                   <BodyShort size="small" className="inline-block">
-                    <FormattedMessage
-                      id="Timeline.tooltip.dagsatsPerAndel"
-                      key={`index${index + 1}`}
-                      values={{
-                        arbeidsgiver: createArbeidsgiverVisningsnavnForAndel(
-                          andel,
-                          kodeverkNavnFraKode,
-                          arbeidsgiverOpplysningerPerId,
-                        ),
-                        dagsatsPerAndel: Number(andel.tilSoker),
-                      }}
-                    />
+                    {`${createArbeidsgiverVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId)}: ${Number(andel.tilSoker)} kr`}
                   </BodyShort>
                   <Tag size="xsmall" variant="neutral-moderate" className={styles.tilkjentYtelseTag}>
                     Til bruker
@@ -212,19 +163,19 @@ const TilkjentYtelseTimeLineData = ({
           >
             <div className="p-4">
               <BodyShort size="small">
-                <FormattedMessage id="TilkjentYtelse.PeriodeData.UtbetaltRefusjon" />
+                {`Utbetalt refusjon: `}
                 <span className="font-semibold inline-block">{andel?.refusjon} kr</span>
               </BodyShort>
               <BodyShort size="small">
-                <FormattedMessage id="TilkjentYtelse.PeriodeData.UtbetaltTilSoker" />
+                {`Utbetalt til søker: `}
                 <span className="font-semibold inline-block">{andel?.tilSoker} kr</span>
               </BodyShort>
               <BodyShort size="small">
-                <FormattedMessage id="TilkjentYtelse.PeriodeData.Utbetalingsgrad" />
+                {`Utbetalingsgrad: `}
                 <span className="font-semibold inline-block">{andel?.utbetalingsgrad} %</span>
               </BodyShort>
               <BodyShort size="small">
-                <FormattedMessage id="TilkjentYtelse.PeriodeData.Aktivitetsstatus" />
+                {`Aktivitetsstatus: `}
                 <span className="font-semibold inline-block">
                   {getAktivitet(andel?.aktivitetStatus, kodeverkNavnFraKode)}
                 </span>

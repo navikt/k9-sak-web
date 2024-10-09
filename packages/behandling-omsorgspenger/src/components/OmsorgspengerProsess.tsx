@@ -12,8 +12,8 @@ import {
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
 import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, FeatureToggles } from '@k9-sak-web/types';
-import React, { useCallback, useMemo, useState } from 'react';
 import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
+import { useCallback, useMemo, useState } from 'react';
 
 import { bestemAvsenderApp, forhandsvis, getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { OmsorgspengerBehandlingApiKeys, restApiOmsorgHooks } from '../data/omsorgspengerBehandlingApi';
@@ -176,6 +176,7 @@ const OmsorgspengerProsess = ({
       [behandling.versjon],
     ),
     alleKodeverk,
+    featureToggles,
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,
     ...data,

@@ -19,7 +19,7 @@ import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { BodyShort, Button, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import hash from 'object-hash';
-import React, { SetStateAction } from 'react';
+import { SetStateAction } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';

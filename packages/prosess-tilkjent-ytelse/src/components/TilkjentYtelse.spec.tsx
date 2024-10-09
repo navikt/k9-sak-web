@@ -1,16 +1,10 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { BeregningsresultatPeriodeAndel } from '@k9-sak-web/types';
+import { BeregningsresultatPeriodeAndelDto } from '@navikt/k9-sak-typescript-client';
 import { screen } from '@testing-library/react';
-import React from 'react';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { intlMock } from '../../i18n';
-import messages from '../../i18n/nb_NO.json';
 import { PeriodeMedId, TilkjentYtelse } from './TilkjentYtelse';
 
 describe('<TilkjentYtelse>', () => {
-  // mock
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const kodeverkNavnFraKode = (kodeverk: string, kodeverkType: KodeverkType) => {
+  const kodeverkNavnFraKode = (kodeverk: string) => {
     if (kodeverk === 'AT') {
       return 'Arbeidstaker';
     }
@@ -22,7 +16,6 @@ describe('<TilkjentYtelse>', () => {
     }
     return '';
   };
-
   it('skall innehålla korrekt antal felter', () => {
     renderWithIntl(
       <TilkjentYtelse
@@ -34,39 +27,31 @@ describe('<TilkjentYtelse>', () => {
               dagsats: 10000,
               andeler: [
                 {
-                  inntektskategori: 'ARBEIDSTAKER', // 'INNTEKTSKATEGORI',
+                  inntektskategori: 'ARBEIDSTAKER', // INNTEKTSKATEGORI
                   aktørId: '',
-                  arbeidsforholdType: '',
+                  arbeidsforholdType: 'ARBEID',
                   stillingsprosent: 100,
                   arbeidsgiver: '973861778',
                   arbeidsgiverOrgnr: '',
-                  aktivitetStatus: '',
                   arbeidsgiverPersonIdent: '',
+                  aktivitetStatus: 'AT',
                   arbeidsforholdId: '',
                   eksternArbeidsforholdId: '',
                   arbeidsgiverNavn: '',
                   refusjon: 0,
                   sisteUtbetalingsdato: '2018-03-31',
                   tilSoker: 1846,
-                  uttak: [
-                    {
-                      stonadskontoType: '',
-                      periodeResultatType: 'INNVILGET',
-                      gradering: false,
-                    },
-                  ],
+                  uttak: [],
                   utbetalingsgrad: 100,
-                } as BeregningsresultatPeriodeAndel,
+                } as BeregningsresultatPeriodeAndelDto,
               ],
             },
           ] as PeriodeMedId[]
         }
         groups={[]}
-        intl={intlMock}
-        arbeidsgiverOpplysningerPerId={{}}
         kodeverkNavnFraKode={kodeverkNavnFraKode}
+        arbeidsgiverOpplysningerPerId={{}}
       />,
-      { messages },
     );
 
     expect(screen.getByText('Forrige periode')).toBeInTheDocument();

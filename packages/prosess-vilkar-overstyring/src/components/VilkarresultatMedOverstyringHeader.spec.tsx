@@ -22,6 +22,15 @@ describe('<VilkarresultatMedOverstyringHeader>', () => {
           panelTittelKode="Inngangsvilkar.Medlemskapsvilkaret"
           erOverstyrt
           aksjonspunkter={[]}
+          periode={{
+            avslagKode: '',
+            begrunnelse: '',
+            vurderesIBehandlingen: true,
+            merknad: '',
+            merknadParametere: {},
+            periode: { fom: '', tom: '' },
+            vilkarStatus: '',
+          }}
           status=""
         />
       </Provider>,

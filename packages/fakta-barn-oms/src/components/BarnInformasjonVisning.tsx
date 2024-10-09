@@ -1,9 +1,8 @@
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { formatereLukketPeriode, visningsdato } from '@fpsak-frontend/utils';
+import { formatDate, formatereLukketPeriode } from '@fpsak-frontend/utils';
 import KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import { BodyShort } from '@navikt/ds-react';
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 interface BarnInputProps {
@@ -52,7 +51,7 @@ const BarnInformasjonVisning = ({ barnet }: BarnInputProps) => {
 
       {dødsdato && (
         <BodyShort size="small">
-          <FormattedMessage id="FaktaBarn.Død" values={{ dødsdato: visningsdato(dødsdato) }} />
+          <FormattedMessage id="FaktaBarn.Død" values={{ dødsdato: formatDate(dødsdato) }} />
         </BodyShort>
       )}
       {barnType === BarnType.FOSTERBARN && (

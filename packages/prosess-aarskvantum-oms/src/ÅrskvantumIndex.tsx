@@ -1,5 +1,4 @@
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import {
   Aksjonspunkt,
   ArbeidsforholdV2,
@@ -13,7 +12,6 @@ import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import messages from '../i18n/nb_NO.json';
-import AksjonspunktForm from './components/AksjonspunktForm';
 import AksjonspunktForm9014 from './components/AksjonspunktForm9014';
 import Uttaksplan from './components/Uttaksplan';
 import SaerligeSmittevernhensynMikrofrontend from './components/saerlige-smittevernhensyn/SaerligeSmittevernhensynMikrofrontend';
@@ -61,42 +59,27 @@ const ÅrskvantumIndex = ({
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
 
-  const apForVurderÅrskvantumDok: Aksjonspunkt | undefined = aksjonspunkterForSteg.find(
-    ap => ap.definisjon === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
-  );
-  const aksjonspunkter: Aksjonspunkt[] = aksjonspunkterForSteg.filter(
-    ap => ap.definisjon !== aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
-  );
+  const årskvantumDok = aksjonspunkt => aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK;
+
+  const apForVurderÅrskvantum: Aksjonspunkt = aksjonspunkterForSteg.find(ap => årskvantumDok(ap));
+  const aksjonspunkter: Aksjonspunkt[] = aksjonspunkterForSteg.filter(ap => !årskvantumDok(ap));
   const åpenAksjonspunkt = aksjonspunkter.find(ap => ap.status !== aksjonspunktStatus.UTFORT) !== undefined;
 
   const visAPVurderÅrskvantumDokIOmsorgsdagerFrontend =
-    apForVurderÅrskvantumDok !== undefined &&
-    (!åpenAksjonspunkt || apForVurderÅrskvantumDok.status === aksjonspunktStatus.UTFORT);
-  const [featureToggles] = useFeatureToggles();
+    apForVurderÅrskvantum !== undefined &&
+    (!åpenAksjonspunkt || apForVurderÅrskvantum.status === aksjonspunktStatus.UTFORT);
 
   const propsTilMikrofrontend = {
     submitCallback,
     behandling,
-    saerligSmittevernAp: apForVurderÅrskvantumDok,
+    saerligSmittevernAp: apForVurderÅrskvantum,
     aktiviteter: sisteUttaksplan?.aktiviteter,
-    featureToggles,
   };
 
   return (
     <RawIntlProvider value={årskvantumIntl}>
-      {aksjonspunkter.length > 0 && featureToggles?.AKSJONSPUNKT_9014 && (
+      {aksjonspunkter.length > 0 && (
         <AksjonspunktForm9014
-          aktiviteter={sisteUttaksplan?.aktiviteter || []}
-          behandlingId={behandling.id}
-          behandlingVersjon={behandling.versjon}
-          submitCallback={submitCallback}
-          aksjonspunkterForSteg={aksjonspunkter}
-          isAksjonspunktOpen={isAksjonspunktOpen && !visAPVurderÅrskvantumDokIOmsorgsdagerFrontend}
-          fosterbarn={fosterbarn || []}
-        />
-      )}
-      {aksjonspunkter.length > 0 && !featureToggles?.AKSJONSPUNKT_9014 && (
-        <AksjonspunktForm
           aktiviteter={sisteUttaksplan?.aktiviteter || []}
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}

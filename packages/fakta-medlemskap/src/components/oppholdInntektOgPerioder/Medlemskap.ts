@@ -1,3 +1,4 @@
+import { PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
 import { Periode } from './Periode';
 
 export interface MedlemskapPeriode {
@@ -13,4 +14,7 @@ export interface Medlemskap {
   fom: string;
   medlemskapPerioder: MedlemskapPeriode[];
   perioder: Periode[];
+  personopplysninger?: {
+    [key: string]: PersonopplysningDto;
+  };
 }

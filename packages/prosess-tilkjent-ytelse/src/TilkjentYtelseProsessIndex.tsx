@@ -1,25 +1,21 @@
-import React from 'react';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import {
-  ArbeidsgiverOpplysningerPerId,
-  Behandling,
-  BeregningsresultatUtbetalt,
-  Aksjonspunkt,
-  KodeverkMedNavn,
-  Fagsak,
-} from '@k9-sak-web/types';
+  AksjonspunktDto,
+  BehandlingDto,
+  BeregningsresultatMedUtbetaltePeriodeDto,
+  FagsakDto,
+} from '@navikt/k9-sak-typescript-client';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
-import messages from '../i18n/nb_NO.json';
 
 interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  behandling: Behandling;
-  beregningsresultat: BeregningsresultatUtbetalt;
-  fagsak: Fagsak;
-  aksjonspunkter: Aksjonspunkt[];
+  behandling: BehandlingDto;
+  beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto;
+  fagsak: FagsakDto;
+  aksjonspunkter: AksjonspunktDto[];
   isReadOnly: boolean;
-  submitCallback: () => void;
+  submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
 }
 
@@ -28,17 +24,13 @@ const cache = createIntlCache();
 const intl = createIntl(
   {
     locale: 'nb-NO',
-    messages,
   },
   cache,
 );
 
 const TilkjentYtelseProsessIndex = ({
-  behandling,
   beregningsresultat,
-  fagsak,
   aksjonspunkter,
-  alleKodeverk,
   isReadOnly,
   submitCallback,
   readOnlySubmitButton,
@@ -46,12 +38,8 @@ const TilkjentYtelseProsessIndex = ({
 }: OwnProps) => (
   <RawIntlProvider value={intl}>
     <TilkjentYtelsePanel
-      behandlingId={behandling.id}
-      behandlingVersjon={behandling.versjon}
       beregningsresultat={beregningsresultat}
-      fagsakYtelseTypeKode={fagsak.sakstype}
       aksjonspunkter={aksjonspunkter}
-      alleKodeverk={alleKodeverk}
       readOnly={isReadOnly}
       submitCallback={submitCallback}
       readOnlySubmitButton={readOnlySubmitButton}
@@ -59,4 +47,5 @@ const TilkjentYtelseProsessIndex = ({
     />
   </RawIntlProvider>
 );
+
 export default TilkjentYtelseProsessIndex;

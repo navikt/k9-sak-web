@@ -1,6 +1,6 @@
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, VerticalSpacer, useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { guid } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Button } from '@navikt/ds-react';
@@ -8,6 +8,7 @@ import { Form } from '@navikt/ft-form-hooks';
 import React, { useMemo, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { OppholdInntektOgPeriodeFormState, OppholdInntektOgPerioderFormState } from './FormState';
+import GrunnlagForAutomatiskVurdering from './GrunnlagForAutomatiskVurdering';
 import { Medlemskap } from './Medlemskap';
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';
 import { MerknaderFraBeslutter } from './MerknaderFraBeslutter';
@@ -152,6 +153,7 @@ export const OppholdInntektOgPerioderForm = ({
   medlemskap,
   submitCallback,
 }: OppholdInntektOgPerioderFormProps) => {
+  const [featureToggles] = useFeatureToggles();
   const initialPerioder = useMemo(
     () =>
       (medlemskap.perioder || []).map(periode => ({
@@ -236,6 +238,11 @@ export const OppholdInntektOgPerioderForm = ({
 
   const isApOpen = hasOpenAksjonspunkter || !submittable;
 
+  const erAutomatiskVurdert =
+    medlemskap?.medlemskapPerioder?.length === 0 &&
+    medlemskap?.perioder?.length === 0 &&
+    Object.keys(medlemskap?.personopplysninger).length > 0;
+
   return (
     <Form formMethods={formMethods} onSubmit={handleSubmit} data-testid="OppholdInntektOgPerioderForm">
       <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
@@ -261,16 +268,21 @@ export const OppholdInntektOgPerioderForm = ({
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
         />
       )}
+      {featureToggles?.AUTOMATISK_VURDERT_MEDLEMSKAP && erAutomatiskVurdert && (
+        <GrunnlagForAutomatiskVurdering personopplysninger={medlemskap.personopplysninger} soknad={soknad} />
+      )}
 
       <VerticalSpacer twentyPx />
-      <Button
-        variant="primary"
-        size="small"
-        disabled={isConfirmButtonDisabled()}
-        loading={formMethods.formState.isSubmitting}
-      >
-        Bekreft og fortsett
-      </Button>
+      {!erAutomatiskVurdert && (
+        <Button
+          variant="primary"
+          size="small"
+          disabled={isConfirmButtonDisabled()}
+          loading={formMethods.formState.isSubmitting}
+        >
+          Bekreft og fortsett
+        </Button>
+      )}
     </Form>
   );
 };

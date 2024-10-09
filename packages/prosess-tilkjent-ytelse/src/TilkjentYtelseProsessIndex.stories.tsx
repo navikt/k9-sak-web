@@ -1,24 +1,17 @@
 import { action } from '@storybook/addon-actions';
-import React from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
-import { Aksjonspunkt, Behandling, BeregningsresultatUtbetalt, Fagsak } from '@k9-sak-web/types';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
+import { AksjonspunktDto, BehandlingDto } from '@navikt/k9-sak-typescript-client';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
-
-const fagsak = {
-  saksnummer: '123456',
-  sakstype: fagsakYtelsesType.FP, // FAGSAK_YTELSE
-  status: fagsakStatus.UNDER_BEHANDLING, // FAGSAK_STATUS
-} as Fagsak;
 
 const behandling = {
   id: 1,
   versjon: 1,
-} as Behandling;
+} as BehandlingDto;
 
 const beregningsresultat = {
   opphoersdato: '2021-03-27',
@@ -26,11 +19,11 @@ const beregningsresultat = {
     {
       andeler: [
         {
-          aktivitetStatus: 'AT', // AKTIVITET_STATUS
-          inntektskategori: 'ARBEIDSTAKER', // INNTEKTSKATEGORI
+          aktivitetStatus: 'AT', // kodeverk: 'AKTIVITET_STATUS'
+          inntektskategori: 'ARBEIDSTAKER', // kodeverk: 'INNTEKTSKATEGORI'
           aktørId: null,
           arbeidsforholdId: null,
-          arbeidsforholdType: '-', // OPPTJENING_AKTIVITET_TYPE
+          arbeidsforholdType: '-', // kodeverk: 'OPPTJENING_AKTIVITET_TYPE'
           arbeidsgiverNavn: 'BEDRIFT1 AS',
           arbeidsgiverOrgnr: '123456789',
           eksternArbeidsforholdId: null,
@@ -46,7 +39,7 @@ const beregningsresultat = {
                 tom: '2021-03-14',
               },
               utbetalingsgrad: 100,
-              utfall: 'INNVILGET',
+              utfall: 'INNVILGET', // kodeverk: 'UTTAK_UTFALL'
             },
             {
               periode: {
@@ -54,16 +47,16 @@ const beregningsresultat = {
                 tom: '2021-03-15',
               },
               utbetalingsgrad: 100,
-              utfall: 'INNVILGET',
+              utfall: 'INNVILGET', // kodeverk: 'UTTAK_UTFALL'
             },
           ],
         },
         {
-          aktivitetStatus: 'AT', // AKTIVITET_STATUS
-          inntektskategori: 'ARBEIDSTAKER', // INNTEKTSKATEGORI
+          aktivitetStatus: 'AT', // kodeverk: 'AKTIVITET_STATUS'
+          inntektskategori: 'ARBEIDSTAKER', // kodeverk: 'INNTEKTSKATEGORI'
           aktørId: null,
           arbeidsforholdId: null,
-          arbeidsforholdType: '-', // OPPTJENING_AKTIVITET_TYPE
+          arbeidsforholdType: '-', // kodeverk: 'OPPTJENING_AKTIVITET_TYPE'
           arbeidsgiverNavn: 'BEDRIFT2 AS',
           arbeidsgiverOrgnr: '234567890',
           eksternArbeidsforholdId: null,
@@ -91,11 +84,11 @@ const beregningsresultat = {
     {
       andeler: [
         {
-          aktivitetStatus: 'AT', // AKTIVITET_STATUS
-          inntektskategori: 'ARBEIDSTAKER', // INNTEKTSKATEGORI
+          aktivitetStatus: 'AT', // kodeverk: 'AKTIVITET_STATUS'
+          inntektskategori: 'ARBEIDSTAKER', // kodeverk: 'INNTEKTSKATEGORI'
           aktørId: null,
           arbeidsforholdId: null,
-          arbeidsforholdType: '-', // OPPTJENING_AKTIVITET_TYPE
+          arbeidsforholdType: '-', // kodeverk: 'OPPTJENING_AKTIVITET_TYPE'
           arbeidsgiverNavn: 'BEDRIFT1 AS',
           arbeidsgiverOrgnr: '123456789',
           eksternArbeidsforholdId: null,
@@ -139,7 +132,7 @@ const beregningsresultat = {
   ],
   skalHindreTilbaketrekk: false,
   utbetaltePerioder: [],
-} as BeregningsresultatUtbetalt;
+};
 
 const arbeidsgiverOpplysningerPerId = {
   12345678: {
@@ -163,7 +156,6 @@ export default {
 export const visUtenAksjonspunkt = args => (
   <TilkjentYtelseProsessIndex
     beregningsresultat={beregningsresultat}
-    fagsak={fagsak}
     aksjonspunkter={[]}
     alleKodeverk={alleKodeverk as any}
     submitCallback={action('button-click')}
@@ -178,17 +170,16 @@ visUtenAksjonspunkt.args = {
   readOnlySubmitButton: true,
 };
 
-export const visÅpentAksjonspunkt = args => (
+export const visÅpentAksjonspunktTilbaketrekk = args => (
   <TilkjentYtelseProsessIndex
     beregningsresultat={beregningsresultat}
-    fagsak={fagsak}
     aksjonspunkter={
       [
         {
-          definisjon: aksjonspunktCodes.VURDER_TILBAKETREKK,
-          status: aksjonspunktStatus.OPPRETTET,
+          definisjon: aksjonspunktCodes.VURDER_TILBAKETREKK, // kodeverk: ''
+          status: aksjonspunktStatus.OPPRETTET, // kodeverk: ''
         },
-      ] as Aksjonspunkt[]
+      ] as AksjonspunktDto[]
     }
     alleKodeverk={alleKodeverk as any}
     submitCallback={action('button-click')}
@@ -197,7 +188,37 @@ export const visÅpentAksjonspunkt = args => (
   />
 );
 
-visÅpentAksjonspunkt.args = {
+visÅpentAksjonspunktTilbaketrekk.args = {
+  behandling,
+  isReadOnly: false,
+  readOnlySubmitButton: true,
+};
+
+export const visÅpentAksjonspunktManuellTilkjentYtelse = args => (
+  <KodeverkProvider
+    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+    kodeverk={alleKodeverk}
+    klageKodeverk={{}}
+    tilbakeKodeverk={{}}
+  >
+    <TilkjentYtelseProsessIndex
+      beregningsresultat={beregningsresultat}
+      aksjonspunkter={
+        [
+          {
+            definisjon: aksjonspunktCodes.MANUELL_TILKJENT_YTELSE, // kodeverk: ''
+            status: aksjonspunktStatus.OPPRETTET, // kodeverk: ''
+          },
+        ] as AksjonspunktDto[]
+      }
+      submitCallback={action('button-click')}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      {...args}
+    />
+  </KodeverkProvider>
+);
+
+visÅpentAksjonspunktManuellTilkjentYtelse.args = {
   behandling,
   isReadOnly: false,
   readOnlySubmitButton: true,

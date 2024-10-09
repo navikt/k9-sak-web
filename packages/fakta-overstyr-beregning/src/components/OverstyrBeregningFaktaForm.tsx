@@ -4,7 +4,6 @@ import { AksjonspunktHelpText, BorderBox, VerticalSpacer } from '@fpsak-frontend
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Alert, Button, Table, Tag, Textarea } from '@navikt/ds-react';
 import { Field, FieldArray, Form, Formik } from 'formik';
-import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import * as Yup from 'yup';
 import { OverstyrInputBeregningDto } from '../types/OverstyrInputBeregningDto';
@@ -78,7 +77,7 @@ const OverstyrBeregningFaktaForm = ({
   const behandleOverstyrInputBeregning = (input: OverstyrInputBeregningDto[]): OverstyrInputBeregningDto[] =>
     input.map(periode => ({
       ...periode,
-      aktivitetliste: periode.aktivitetliste.map(aktivitet => ({
+      aktivitetliste: periode?.aktivitetliste?.map(aktivitet => ({
         ...aktivitet,
         inntektPrAar: aktivitet.inntektPrAar || '',
         refusjonPrAar: aktivitet.refusjonPrAar || '',
@@ -142,7 +141,7 @@ const OverstyrBeregningFaktaForm = ({
                             </div>
                           )}
                           <VerticalSpacer twentyPx />
-                          {aktivitetliste.length > 0 && (
+                          {aktivitetliste?.length > 0 && (
                             <FieldArray name={`perioder[${periodeIndex}].aktivitetliste`}>
                               {() => (
                                 <Table zebraStripes>

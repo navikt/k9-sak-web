@@ -1,18 +1,17 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { render, screen } from '@testing-library/react';
+import BostedSokerFaktaIndex from './BostedSokerFaktaIndex';
+import { BostedSokerPersonopplysninger } from './types';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import { behandlingType} from "@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js";
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
-import BostedSokerFaktaIndex, { BostedSokerPersonopplysninger } from './BostedSokerFaktaIndex';
-import messages from '../i18n/nb_NO.json';
 
 describe('<BostedSokerFaktaIndex>', () => {
   it('vise rendre komponent korrekt', () => {
     // requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
-    renderWithIntl(
+    render(
       <KodeverkProvider
         behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
@@ -29,7 +28,6 @@ describe('<BostedSokerFaktaIndex>', () => {
           }
         />
       </KodeverkProvider>,
-      { messages },
     );
 
     expect(screen.getByText('Søker')).toBeInTheDocument();

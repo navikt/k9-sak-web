@@ -1,7 +1,5 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../../i18n/nb_NO.json';
 import { createArbeidsgiverVisningsnavnForAndel } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData';
@@ -9,10 +7,10 @@ import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData';
 const selectedItemDataFL = {
   andeler: [
     {
-      aktivitetStatus: 'FL', // 'AKTIVITET_STATUS'
+      aktivitetStatus: 'FL', // AKTIIVITET_STATUS
       aktørId: null,
       arbeidsforholdId: null,
-      arbeidsforholdType: '-', // 'OPPTJENING_AKTIVITET_TYPE',
+      arbeidsforholdType: '-', // OPPTJENING_AKTIVITET_TYPE
       arbeidsgiverNavn: null,
       arbeidsgiverOrgnr: '',
       eksternArbeidsforholdId: null,
@@ -69,7 +67,6 @@ describe('<TilkjentYtelseTimeLineData>', () => {
         selectedItemEndDate={selectedItemEndDate}
         arbeidsgiverOpplysningerPerId={{}}
       />,
-      { messages },
     );
 
     expect(screen.getByText('Aktivitetsstatus:')).toBeInTheDocument();

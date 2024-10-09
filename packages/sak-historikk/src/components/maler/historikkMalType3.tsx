@@ -2,7 +2,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { HistorikkInnslagAksjonspunkt } from '@k9-sak-web/types';
 import { BodyShort, Label } from '@navikt/ds-react';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { IntlShape, WrappedComponentProps, injectIntl } from 'react-intl';
 
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
@@ -47,6 +47,7 @@ const aksjonspunktCodesToTextCode = {
     'Historikk.BeregningsgrunnlagManueltSNNYIArbeidslivet',
   [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: 'Historikk.VurderFaktaATFLSN',
   [aksjonspunktCodes.FORESLA_VEDTAK]: 'Historikk.Vedtak.Fritekstbrev',
+  [aksjonspunktCodes.MEDISINSK_VILKAAR]: 'Historikk.Sykdom',
 };
 
 const tilbakekrevingsAksjonspunktCodesToTextCode = {};

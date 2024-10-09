@@ -1,15 +1,23 @@
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { BeregningsresultatPeriodeAndelDto } from '@navikt/k9-sak-typescript-client';
+import { NyPeriodeFormAndeler } from './manuellePerioder/FormState';
 
-export const getAktivitet = (aktivitetStatus, kodeverkNavnFraKode) =>
+export const getAktivitet = (
+  aktivitetStatus: BeregningsresultatPeriodeAndelDto['aktivitetStatus'],
+  kodeverkNavnFraKode,
+) =>
   // hvis valgtAndel ikke satt ennå return tom string.
   aktivitetStatus === undefined ? '' : kodeverkNavnFraKode(aktivitetStatus, KodeverkType.AKTIVITET_STATUS);
 
-export const getInntektskategori = (inntektkategori, kodeverkNavnFraKode) =>
+export const getInntektskategori = (
+  inntektkategori: NyPeriodeFormAndeler['inntektskategori'],
+  kodeverkNavnFraKode,
+): string =>
   // hvis valgtAndel ikke satt ennå return tom string.
   inntektkategori === undefined ? '' : kodeverkNavnFraKode(inntektkategori, KodeverkType.INNTEKTSKATEGORI);
 
-const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
+const getEndCharFromId = (id: string) => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
 export const createArbeidsgiverVisningsnavnForAndel = (andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId) => {
   if (!andel) return '';

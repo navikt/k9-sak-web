@@ -1,13 +1,9 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { screen } from '@testing-library/react';
-import React from 'react';
+import { render, screen } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Periode } from './Periode';
 import StatusForBorgerFaktaPanel from './StatusForBorgerFaktaPanel';
-
-import messages from '../../../i18n/nb_NO.json';
 
 describe('<StatusForBorgerFaktaPanel>', () => {
   const Wrapper = props => {
@@ -24,11 +20,10 @@ describe('<StatusForBorgerFaktaPanel>', () => {
     return <FormProvider {...formMethods}>{props.children}</FormProvider>;
   };
   it('skal vise radioknapper for vurdering av oppholdsrett', () => {
-    renderWithIntl(
+    render(
       <Wrapper apKode={aksjonspunktCodes.AVKLAR_OPPHOLDSRETT} erEosBorger isBorgerAksjonspunktClosed={false}>
         <StatusForBorgerFaktaPanel readOnly={false} alleMerknaderFraBeslutter={{ notAccepted: false }} />
       </Wrapper>,
-      { messages },
     );
 
     expect(screen.getAllByRole('radio').length).toBe(4);
@@ -39,11 +34,10 @@ describe('<StatusForBorgerFaktaPanel>', () => {
   });
 
   it('skal vise radioknapper for vurdering av lovlig opphold', () => {
-    renderWithIntl(
+    render(
       <Wrapper apKode={aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD} erEosBorger={false} isBorgerAksjonspunktClosed={false}>
         <StatusForBorgerFaktaPanel readOnly={false} alleMerknaderFraBeslutter={{ notAccepted: false }} />
       </Wrapper>,
-      { messages },
     );
 
     expect(screen.getAllByRole('radio').length).toBe(4);

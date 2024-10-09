@@ -5,7 +5,7 @@ import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePer
 import { Aksjonspunkt, Behandling, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
-import React, { SetStateAction, useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringFormPeriodisert';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
@@ -79,10 +79,6 @@ const VilkarresultatMedOverstyringProsessIndex = ({
     }
   }, [activeTab, visAllePerioder]);
 
-  if (perioder.length === 0) {
-    return null;
-  }
-
   useEffect(() => {
     if (perioder.length > 1) {
       const førsteIkkeVurdertPeriodeIndex = perioder.findIndex(
@@ -94,6 +90,9 @@ const VilkarresultatMedOverstyringProsessIndex = ({
     }
   }, []);
 
+  if (perioder.length === 0) {
+    return null;
+  }
   const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
 
   return (
@@ -119,6 +118,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
             overrideReadOnly={overrideReadOnly}
             overstyringApKode={overstyringApKode}
             panelTittelKode={panelTittelKode}
+            periode={activePeriode}
             status={activePeriode.vilkarStatus}
             toggleOverstyring={toggleOverstyring}
           />

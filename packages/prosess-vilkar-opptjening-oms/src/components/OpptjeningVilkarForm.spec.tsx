@@ -4,12 +4,13 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
-import OpptjeningVilkarForm from './OpptjeningVilkarForm';
 import messages from '../../i18n/nb_NO.json';
+import OpptjeningVilkarForm from './OpptjeningVilkarForm';
 
 const periode = {
   avslagKode: '1035',
   begrunnelse: null,
+  merknad: '-', // et eller annet
   merknadParametere: {
     antattGodkjentArbeid: 'P9D',
     antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<2020-03-27, 2020-04-04 [1]> = [[2020-03-27, 2020-04-04]]',

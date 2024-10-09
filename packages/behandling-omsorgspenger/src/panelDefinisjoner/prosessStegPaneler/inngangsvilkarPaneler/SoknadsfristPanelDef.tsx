@@ -1,21 +1,26 @@
-import React from 'react';
-
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import SoknadsfristVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-soknadsfrist';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import { Vilkar } from '@k9-sak-web/types';
-import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types/AlleKodeverk.js';
-
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import SoknadsfristVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-soknadsfrist';
+import SoknadsfristVilkarProsessIndexV2 from '@k9-sak-web/prosess-vilkar-soknadsfrist-v2';
 import { OmsorgspengerBehandlingApiKeys } from '../../../data/omsorgspengerBehandlingApi';
 
 class SoknadsfristPanelDef extends ProsessStegPanelDef {
   getId = () => 'SOKNADSFRIST';
 
-  getTekstKode = () => 'Inngangsvilkar.Soknadsfrist';
+  getTekstKode = () => 'Søknadsfrist';
 
-  getKomponent = props => <SoknadsfristVilkarProsessIndex {...props} />;
+  getKomponent = props => {
+    if (props.featureToggles?.PROSESS_VILKAR_SOKNADSFRIST) {
+      const deepCopyProps = JSON.parse(JSON.stringify(props));
+      konverterKodeverkTilKode(deepCopyProps, false);
+      return <SoknadsfristVilkarProsessIndexV2 {...props} {...deepCopyProps} />;
+    }
+    return <SoknadsfristVilkarProsessIndex {...props} />;
+  };
 
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR,
@@ -36,23 +41,25 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
     overrideReadOnly,
     kanOverstyreAccess,
     toggleOverstyring,
-  }: {
-    vilkarForSteg: Vilkar[];
-    alleKodeverk: AlleKodeverk;
-    overstyrteAksjonspunktKoder: string[];
-    prosessStegTekstKode: string;
-    overrideReadOnly: boolean;
-    kanOverstyreAccess: { isEnabled: boolean };
-    toggleOverstyring: (fn: () => void) => void;
-  }): any => ({
-    avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType],
-    erOverstyrt: overstyrteAksjonspunktKoder.some(o => this.getAksjonspunktKoder().some(a => a === o)),
-    panelTittelKode: this.getTekstKode() ? this.getTekstKode() : prosessStegTekstKode,
-    lovReferanse: vilkarForSteg.length > 0 ? vilkarForSteg[0].lovReferanse : undefined,
-    overrideReadOnly,
-    kanOverstyreAccess,
-    toggleOverstyring,
-  });
+    behandling,
+    rettigheter,
+    featureToggles,
+  }): any => {
+    const behandlingenErAvsluttet = behandlingStatus.AVSLUTTET === behandling.status;
+    const kanEndrePåSøknadsopplysninger = rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet;
+
+    return {
+      avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType],
+      erOverstyrt: overstyrteAksjonspunktKoder.some(o => this.getAksjonspunktKoder().some(a => a === o)),
+      panelTittelKode: this.getTekstKode() ? this.getTekstKode() : prosessStegTekstKode,
+      lovReferanse: vilkarForSteg.length > 0 ? vilkarForSteg[0].lovReferanse : undefined,
+      overrideReadOnly,
+      kanOverstyreAccess,
+      toggleOverstyring,
+      kanEndrePåSøknadsopplysninger,
+      featureToggles,
+    };
+  };
 }
 
 export default SoknadsfristPanelDef;

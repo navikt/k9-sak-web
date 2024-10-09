@@ -38,10 +38,6 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_LOS_MARKER_BEHANDLING_SUBMIT,
   },
   {
-    key: 'AKSJONSPUNKT_9014',
-    value: process.env.VITE_AKSJONSPUNKT_9014,
-  },
-  {
     key: 'AKSJONSPUNKT_9015',
     value: process.env.VITE_AKSJONSPUNKT_9015,
   },
@@ -78,11 +74,19 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_NYE_NOKKELTALL,
   },
   {
+    key: 'PROSESS_VILKAR_SOKNADSFRIST',
+    value: process.env.VITE_PROSESS_VILKAR_SOKNADSFRIST,
+  },
+  {
     key: 'UTVIDET_VARSELFELT',
     value: process.env.VITE_UTVIDET_VARSELFELT,
   },
   {
     key: 'SKILL_UT_PRIVATPERSON',
     value: process.env.VITE_SKILL_UT_PRIVATPERSON,
+  },
+  {
+    key: 'AUTOMATISK_VURDERT_MEDLEMSKAP',
+    value: process.env.AUTOMATISK_VURDERT_MEDLEMSKAP,
   },
 ];

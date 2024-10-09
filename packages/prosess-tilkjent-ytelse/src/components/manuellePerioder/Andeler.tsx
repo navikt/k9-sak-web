@@ -1,54 +1,43 @@
-import { ArbeidsgiverOpplysningerPerId, Kodeverk } from '@k9-sak-web/types';
-import { Alert, BodyShort, Table } from '@navikt/ds-react';
-import React from 'react';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { WrappedComponentProps, useIntl } from 'react-intl';
-import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Alert, BodyShort, Table } from '@navikt/ds-react';
+import { useFormContext } from 'react-hook-form';
 import {
   createArbeidsgiverVisningsnavnForAndel,
   createPrivatarbeidsgiverVisningsnavnForAndel,
   getInntektskategori,
 } from '../TilkjentYteleseUtils';
+import { TilkjentYtelseFormState } from './FormState';
 
 interface OwnProps {
-  fields: FieldArrayFieldsProps<any>;
-  meta: FieldArrayMetaProps;
-  openSlettPeriodeModalCallback: (...args: any[]) => any;
-  updatePeriode: (...args: any[]) => any;
-  editPeriode: (...args: any[]) => any;
-  cancelEditPeriode: (...args: any[]) => any;
-  readOnly: boolean;
-  perioder: any[];
-  isNyPeriodeFormOpen: boolean;
-  behandlingVersjon: number;
-  behandlingId: number;
-  behandlingStatus: Kodeverk;
+  name: string;
   arbeidsgivere: ArbeidsgiverOpplysningerPerId;
 }
 
 const headerTextCodes = [
-  'TilkjentYtelse.NyPeriode.Inntektskategori',
-  'TilkjentYtelse.NyPeriode.Arbeidsgiver',
-  'TilkjentYtelse.NyPeriode.ArbeidsgiverPrivatperson',
-  'TilkjentYtelse.NyPeriode.TilSoker',
-  'TilkjentYtelse.NyPeriode.Refusjon',
-  'TilkjentYtelse.NyPeriode.Ubetalingsgrad',
+  'Inntektskategori',
+  'Arbeidsgiver',
+  'Arbeidsgiver (privatperson)',
+  'Til søker',
+  'Refusjon',
+  'Uttaksgrad',
 ];
 
-const Andeler = ({ fields, meta, arbeidsgivere }: Partial<OwnProps> & WrappedComponentProps) => {
-  const intl = useIntl();
+const Andeler = ({ name, arbeidsgivere }: Partial<OwnProps>) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
+  const {
+    formState: { errors },
+    watch,
+  } = useFormContext<TilkjentYtelseFormState>();
 
+  const error = errors?.[name];
+
+  const andeler = watch(name as 'perioder.0.andeler');
   return (
     <div>
-      {meta.error && (
+      {error && (
         <Alert size="small" variant="error">
-          {meta.error}
-        </Alert>
-      )}
-      {meta.warning && (
-        <Alert size="small" variant="info">
-          {meta.warning}
+          {error}
         </Alert>
       )}
 
@@ -57,14 +46,13 @@ const Andeler = ({ fields, meta, arbeidsgivere }: Partial<OwnProps> & WrappedCom
           <Table.Row>
             {headerTextCodes.map(textCode => (
               <Table.HeaderCell scope="col" key={textCode}>
-                {intl.formatMessage({ id: textCode })}
+                {textCode}
               </Table.HeaderCell>
             ))}
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {fields.map((fieldId: string, index: number, field: FieldArrayFieldsProps<any>) => {
-            const andel = field.get(index);
+          {andeler.map(andel => {
             const inntektskategori = getInntektskategori(andel.inntektskategori, kodeverkNavnFraKode);
             const arbeidsgiver = createArbeidsgiverVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgivere);
             const arbeidsgiverPrivatperson = createPrivatarbeidsgiverVisningsnavnForAndel(
@@ -74,7 +62,7 @@ const Andeler = ({ fields, meta, arbeidsgivere }: Partial<OwnProps> & WrappedCom
             );
 
             return (
-              <Table.Row key={fieldId}>
+              <Table.Row key={andel.arbeidsgiverOrgnr}>
                 <Table.DataCell>
                   <BodyShort size="small">{inntektskategori}</BodyShort>
                 </Table.DataCell>

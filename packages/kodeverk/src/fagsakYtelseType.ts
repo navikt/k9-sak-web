@@ -10,6 +10,7 @@ const fagsakYtelseType = {
   FRISINN: 'FRISINN',
   PLEIEPENGER_SLUTTFASE: 'PPN',
   OPPLAERINGSPENGER: 'OLP',
+  UNGDOMSYTELSE: 'UNG',
 };
 
 export default fagsakYtelseType;

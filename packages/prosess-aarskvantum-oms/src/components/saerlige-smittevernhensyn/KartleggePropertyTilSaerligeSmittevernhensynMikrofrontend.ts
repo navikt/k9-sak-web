@@ -2,8 +2,8 @@ import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { Aksjonspunkt, Behandling, UtfallEnum, Uttaksperiode } from '@k9-sak-web/types';
 import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
+import { Aksjonspunkt, Behandling, UtfallEnum, Uttaksperiode } from '@k9-sak-web/types';
 import { isAfter, parse } from 'date-fns';
 import Aktivitet from '../../dto/Aktivitet';
 import PeriodeBekreftetStatus from '../../dto/PeriodeBekreftetStatus';
@@ -101,13 +101,21 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
 
   if (eksistererInnvilgetPeriode && perioderAvslått.length > 0) {
     perioderInnvilget.forEach(period => {
-      dagerDelvisInnvilget += parseInt(antallDager(period.periode), 10);
+      const daysToAdd = antallDager(period.periode);
+      if (typeof daysToAdd === 'string') {
+        dagerDelvisInnvilget += parseInt(daysToAdd, 10);
+      } else {
+        dagerDelvisInnvilget += daysToAdd;
+      }
     });
   }
 
   const behandlingsID: string = behandling.id.toString();
 
-  if (typeof aksjonspunkt !== 'undefined' && aksjonspunkt.definisjon === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK) {
+  const årskvantumDokEllerKvote = aksjonspunkt =>
+    aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK;
+
+  if (typeof aksjonspunkt !== 'undefined' && årskvantumDokEllerKvote(aksjonspunkt)) {
     const isAksjonspunktOpen = aksjonspunkt.status === aksjonspunktStatus.OPPRETTET && aksjonspunkt.kanLoses;
     const aksjonspunktLost = behandling.status === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
 

@@ -1,16 +1,13 @@
-import React, { SetStateAction } from 'react';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { Aksjonspunkt } from '@k9-sak-web/types';
+import { CheckmarkCircleFillIcon, KeyHorizontalIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
+import { Button, Detail, Heading, HStack, Label } from '@navikt/ds-react';
+import { SetStateAction } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Detail, Heading, Label } from '@navikt/ds-react';
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
-import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg';
-import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Aksjonspunkt } from '@k9-sak-web/types';
 import styles from './SoknadsfristVilkarForm.module.css';
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
   aksjonspunktCodes.some(code => code === aksjonspunktCode);
@@ -64,25 +61,25 @@ const SoknadsfristVilkarHeader = ({
   return (
     <>
       <FlexContainer>
-        <FlexRow>
+        <HStack gap="4">
           {!erOverstyrt && originalErVilkarOk !== undefined && (
-            <FlexColumn>
-              <Image className={styles.status} src={originalErVilkarOk ? innvilgetImage : avslattImage} />
-            </FlexColumn>
+            <>
+              {originalErVilkarOk ? (
+                <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+              ) : (
+                <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+              )}
+            </>
           )}
-          <FlexColumn>
-            <Heading size="small" level="2">
-              <FormattedMessage id={panelTittelKode} />
-            </Heading>
-          </FlexColumn>
+          <Heading size="small" level="2">
+            <FormattedMessage id={panelTittelKode} />
+          </Heading>
           {lovReferanse && (
-            <FlexColumn>
-              <Detail className={styles.vilkar}>
-                <Lovreferanse>{lovReferanse}</Lovreferanse>
-              </Detail>
-            </FlexColumn>
+            <Detail className={styles.vilkar}>
+              <Lovreferanse>{lovReferanse}</Lovreferanse>
+            </Detail>
           )}
-        </FlexRow>
+        </HStack>
         <FlexRow>
           <FlexColumn>
             <VerticalSpacer eightPx />
@@ -94,13 +91,20 @@ const SoknadsfristVilkarHeader = ({
                 {!erOverstyrt && !overrideReadOnly && (
                   <FlexColumn>
                     <VerticalSpacer eightPx />
-                    <Image className={styles.key} src={keyImage} onClick={togglePa} />
+                    <Button
+                      size="small"
+                      type="button"
+                      variant="tertiary"
+                      icon={<KeyHorizontalIcon className="-rotate-45 text-3xl" />}
+                      onClick={togglePa}
+                      aria-label="Overstyring av søknadsfristvilkåret"
+                    />
                   </FlexColumn>
                 )}
                 {(erOverstyrt || overrideReadOnly) && (
                   <FlexColumn>
                     <VerticalSpacer eightPx />
-                    <Image className={styles.keyWithoutCursor} src={keyUtgraetImage} />
+                    <KeyHorizontalIcon className="-rotate-45 text-3xl text-[#b7b1a9] -mt-1" />
                   </FlexColumn>
                 )}
               </>

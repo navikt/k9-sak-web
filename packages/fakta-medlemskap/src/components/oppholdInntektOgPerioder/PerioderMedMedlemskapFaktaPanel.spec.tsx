@@ -14,8 +14,6 @@ import { Periode } from './Periode';
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
 import { Soknad } from './Soknad';
 
-import messages from '../../../i18n/nb_NO.json';
-
 describe('<PerioderMedMedlemskapFaktaPanel>', () => {
   const Wrapper = props => {
     const formMethods = useForm({
@@ -54,7 +52,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       <Wrapper perioder={perioder}>
         <PerioderMedMedlemskapFaktaPanel readOnly={false} alleMerknaderFraBeslutter={{ notAccepted: false }} />
       </Wrapper>,
-      { messages },
     );
 
     expect(screen.getByText('Full')).toBeInTheDocument();
@@ -84,7 +81,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
           alleMerknaderFraBeslutter={{ notAccepted: false }}
         />
       </Wrapper>,
-      { messages },
     );
 
     expect(screen.getByText('Fødselsdato: 16.10.2016')).toBeInTheDocument();
@@ -105,7 +101,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       <Wrapper perioder={perioder}>
         <PerioderMedMedlemskapFaktaPanel readOnly={false} alleMerknaderFraBeslutter={{ notAccepted: false }} />
       </Wrapper>,
-      { messages },
     );
 
     expect(screen.getByRole('table')).toBeInTheDocument();
@@ -118,7 +113,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       <Wrapper perioder={perioder}>
         <PerioderMedMedlemskapFaktaPanel readOnly={false} alleMerknaderFraBeslutter={{ notAccepted: false }} />
       </Wrapper>,
-      { messages },
     );
 
     expect(screen.queryByRole('table')).not.toBeInTheDocument();

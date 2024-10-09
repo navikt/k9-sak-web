@@ -18,14 +18,14 @@ import { required } from '@navikt/ft-form-validators';
 import moment from 'moment';
 import { FunctionComponent, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkType } from '../../../../v2/lib/src/kodeverk/types';
 import { OppholdInntektOgPerioderFormState, PerioderMedMedlemskapFaktaPanelFormState } from './FormState';
 import { MedlemskapPeriode } from './Medlemskap';
 import { MerknaderFraBeslutter } from './MerknaderFraBeslutter';
 import { Periode } from './Periode';
 import { Soknad } from './Soknad';
-import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkType } from '../../../../v2/lib/src/kodeverk/types';
 
 const headerTextCodes = ['Periode', 'Dekning', 'Status', 'Beslutningsdato'];
 
@@ -166,8 +166,7 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
   const filteredAp = aksjonspunkter.filter(
     ap =>
       periode?.aksjonspunkter.includes(ap.definisjon) ||
-      (periode?.aksjonspunkter.length > 0 &&
-        periode?.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE) &&
+      (periode?.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE) &&
         ap.definisjon === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
   );
 
