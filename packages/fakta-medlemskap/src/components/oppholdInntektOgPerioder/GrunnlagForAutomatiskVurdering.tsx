@@ -19,11 +19,7 @@ interface GrunnlagForAutomatiskVurderingProps {
   };
 }
 
-const GrunnlagForAutomatiskVurdering = ({
-  alleKodeverk,
-  soknad,
-  personopplysninger,
-}: GrunnlagForAutomatiskVurderingProps) => {
+const GrunnlagForAutomatiskVurdering = ({ soknad, personopplysninger }: GrunnlagForAutomatiskVurderingProps) => {
   const personopplysningerKeys = Object.keys(personopplysninger);
   const [valgtPeriode, setValgtPeriode] = useState<string>(personopplysningerKeys[0]);
   let opphold = {};
@@ -66,7 +62,6 @@ const GrunnlagForAutomatiskVurdering = ({
         </Table.Body>
       </Table>
       <OppholdINorgeOgAdresser
-        alleKodeverk={alleKodeverk}
         foreldre={foreldre}
         hasBosattAksjonspunkt={false}
         isBosattAksjonspunktClosed={false}

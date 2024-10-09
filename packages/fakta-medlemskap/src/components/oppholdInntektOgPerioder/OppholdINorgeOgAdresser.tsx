@@ -2,7 +2,6 @@ import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaGruppe, PeriodLabel } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import { RadioGroupPanel } from '@navikt/ft-form-hooks';
 import countries from 'i18n-iso-countries';
@@ -47,7 +46,6 @@ const lagOppholdIUtland = (utlandsOpphold: Opphold['utlandsopphold']) =>
 
 interface OppholdINorgeOgAdresserProps {
   readOnly: boolean;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   alleMerknaderFraBeslutter?: MerknaderFraBeslutter;
   opphold: {
     utlandsopphold?: any[];
@@ -60,7 +58,6 @@ interface OppholdINorgeOgAdresserProps {
 const OppholdINorgeOgAdresser = ({
   alleMerknaderFraBeslutter,
   opphold,
-  alleKodeverk,
   hasBosattAksjonspunkt,
   readOnly,
   isBosattAksjonspunktClosed,
@@ -79,15 +76,9 @@ const OppholdINorgeOgAdresser = ({
         <FaktaGruppe withoutBorder titleCode="Bostedsadresse fra folkeregisteret" useIntl={false}>
           {foreldre.map(f => (
             <div key={f.personopplysning.navn}>
-              {f.isApplicant && (
-                <BostedSokerFaktaIndex personopplysninger={f.personopplysning} alleKodeverk={alleKodeverk} />
-              )}
+              {f.isApplicant && <BostedSokerFaktaIndex personopplysninger={f.personopplysning} />}
               {!f.isApplicant && (
-                <BostedSokerFaktaIndex
-                  sokerTypeText="Den andre forelderen"
-                  personopplysninger={f.personopplysning}
-                  alleKodeverk={alleKodeverk}
-                />
+                <BostedSokerFaktaIndex sokerTypeText="Den andre forelderen" personopplysninger={f.personopplysning} />
               )}
             </div>
           ))}
