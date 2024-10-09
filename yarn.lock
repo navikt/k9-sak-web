@@ -2547,6 +2547,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formatjs/intl@npm:2.10.4":
+  version: 2.10.4
+  resolution: "@formatjs/intl@npm:2.10.4"
+  dependencies:
+    "@formatjs/ecma402-abstract": 2.0.0
+    "@formatjs/fast-memoize": 2.2.0
+    "@formatjs/icu-messageformat-parser": 2.7.8
+    "@formatjs/intl-displaynames": 6.6.8
+    "@formatjs/intl-listformat": 7.5.7
+    intl-messageformat: 10.5.14
+    tslib: ^2.4.0
+  peerDependencies:
+    typescript: ^4.7 || 5
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 13a1fada258c528c1617c0a3b49af3d0a6c4ed610e8fc2bd9d6f75909556d9dc1442ec5cb016c81fe1f9482e41611bd7841485d04c1ddbec9f4b2310f80e7259
+  languageName: node
+  linkType: hard
+
 "@formatjs/intl@npm:2.10.5":
   version: 2.10.5
   resolution: "@formatjs/intl@npm:2.10.5"
@@ -4528,6 +4548,8 @@ __metadata:
   dependencies:
     "@k9-sak-web/backend": "workspace:^"
     "@k9-sak-web/lib": 1.0.0
+    "@navikt/ft-form-validators": 2.4.1
+    "@navikt/ft-utils": 2.4.0
     react: 18.3.1
   languageName: unknown
   linkType: soft
@@ -5199,6 +5221,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ft-kodeverk@npm:^2.5.0, @navikt/ft-kodeverk@npm:^2.5.2":
+  version: 2.5.2
+  resolution: "@navikt/ft-kodeverk@npm:2.5.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F2.5.2%2F89d52f10c40b546949b0007adb4516c0caa0b9cb"
+  checksum: cce993d7b1dd8ae199fd66b10d07b1695b915a3b37f78e2e0c2a0df7ebb5d6a153e9236d9817b6df2082cc16120c944950ace25bd8d58214a26998a51441d171
+  languageName: node
+  linkType: hard
+
 "@navikt/ft-kodeverk@npm:^2.5.1":
   version: 2.5.1
   resolution: "@navikt/ft-kodeverk@npm:2.5.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F2.5.1%2F429136ca90588e110a93c00175d51c05abd8a006"
@@ -5324,6 +5353,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ft-types@npm:^2.5.0":
+  version: 2.5.2
+  resolution: "@navikt/ft-types@npm:2.5.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-types%2F2.5.2%2F7df7c092f05d9d1c1411433cb213dff3c38d6e04"
+  dependencies:
+    "@navikt/ft-kodeverk": ^2.5.2
+  peerDependencies:
+    "@navikt/ft-kodeverk": 2.x
+  checksum: 2bac8acf22dd69f7f64f472abc1f17be5d61d3b271e20d26f939cb31884c18f9ea191898bcbcddc22a7182adeb6eabbf77653b01648e05a8f03a155fe59f9f6f
+  languageName: node
+  linkType: hard
+
 "@navikt/ft-ui-komponenter@npm:2.5.1, @navikt/ft-ui-komponenter@npm:^2.5.1":
   version: 2.5.1
   resolution: "@navikt/ft-ui-komponenter@npm:2.5.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F2.5.1%2F2a659002ceb44cdb44f1f05745cfa43112f4a0bf"
@@ -5346,6 +5386,23 @@ __metadata:
     react-intl: 6.6.8
     react-modal: 3.16.1
   checksum: b922175f172afe9bc8223aa1b8edf786361a5fb93e90e91dd7862109b7760f9513c54b348f9a78e362d48cad3a110f4da0d416fd867ce82e9caae1f2fa5e8314
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-utils@npm:2.4.0":
+  version: 2.4.0
+  resolution: "@navikt/ft-utils@npm:2.4.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-utils%2F2.4.0%2F73d041fdc711d9f5f7e42c027fd7949537076bb4"
+  dependencies:
+    "@navikt/ft-kodeverk": ^2.5.0
+    "@navikt/ft-types": ^2.5.0
+    dayjs: 1.11.13
+    react-intl: 6.6.8
+  peerDependencies:
+    "@navikt/ft-kodeverk": 2.x
+    "@navikt/ft-types": 2.x
+    dayjs: 1.11.11
+    react-intl: 6.6.8
+  checksum: a141e1a5cf6d9c848c4ea345899fc2138d3e14a52b6f98540c95a9d32225fc14c3b9118bf4c3644765222f126ec7010768c0898075624e3588059b6d2cd4f2ce
   languageName: node
   linkType: hard
 
@@ -15895,6 +15952,30 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
   checksum: 84d67fb79bad03d0aa809b5e411d97fb081fc13cd2b6d063a988f81f6fbef8545463e05360afa9d8d58fff19f08fa919930dcdc98a9e68bf74048c9f63e10ad5
+  languageName: node
+  linkType: hard
+
+"react-intl@npm:6.6.8":
+  version: 6.6.8
+  resolution: "react-intl@npm:6.6.8"
+  dependencies:
+    "@formatjs/ecma402-abstract": 2.0.0
+    "@formatjs/icu-messageformat-parser": 2.7.8
+    "@formatjs/intl": 2.10.4
+    "@formatjs/intl-displaynames": 6.6.8
+    "@formatjs/intl-listformat": 7.5.7
+    "@types/hoist-non-react-statics": ^3.3.1
+    "@types/react": 16 || 17 || 18
+    hoist-non-react-statics: ^3.3.2
+    intl-messageformat: 10.5.14
+    tslib: ^2.4.0
+  peerDependencies:
+    react: ^16.6.0 || 17 || 18
+    typescript: ^4.7 || 5
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 41e43d1d15f33f4b5abb619645e96f1d81f64bba62745e19a289ea84c1580bf39fd5da6b94104c391ed689f1f1daec512dcb396cac3df58322bc060b9f5bdb01
   languageName: node
   linkType: hard
 

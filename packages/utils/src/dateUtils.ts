@@ -74,7 +74,7 @@ export const convertHoursToDays = (hoursToConvert: number) => {
   return { days, hours };
 };
 
-export const calcDaysAndWeeks = (fraDatoPeriode: string, tilDatoPeriode: string) => {
+export const calcDaysAndWeeks = (fraDatoPeriode?: string, tilDatoPeriode?: string) => {
   if (!fraDatoPeriode || !tilDatoPeriode) {
     return 'Antall uker og dager -';
   }
