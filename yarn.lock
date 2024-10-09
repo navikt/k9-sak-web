@@ -2486,6 +2486,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formatjs/ecma402-abstract@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@formatjs/ecma402-abstract@npm:2.1.0"
+  dependencies:
+    "@formatjs/fast-memoize": 2.2.0
+    "@formatjs/intl-localematcher": 0.5.4
+    tslib: ^2.4.0
+  checksum: 39bad1a40fdb8f4b5af5eed868548c17a7120730fa8593e7a2a40ec80f02e19dfdd2fa82083156aad18e73a4e610fe55292283e06a9dc586a0a43b1b18066ed4
+  languageName: node
+  linkType: hard
+
 "@formatjs/fast-memoize@npm:2.2.0":
   version: 2.2.0
   resolution: "@formatjs/fast-memoize@npm:2.2.0"
@@ -2506,6 +2517,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formatjs/icu-messageformat-parser@npm:2.7.9":
+  version: 2.7.9
+  resolution: "@formatjs/icu-messageformat-parser@npm:2.7.9"
+  dependencies:
+    "@formatjs/ecma402-abstract": 2.1.0
+    "@formatjs/icu-skeleton-parser": 1.8.3
+    tslib: ^2.4.0
+  checksum: 22e42886128e35a2eb3a6b12d97af4a51758b8c2361920ef6c29b3e8ba0dedee58687ede23f79dd5924220a33f23ba24edf9fda668ab2029ef05b0327cee1036
+  languageName: node
+  linkType: hard
+
 "@formatjs/icu-skeleton-parser@npm:1.8.2":
   version: 1.8.2
   resolution: "@formatjs/icu-skeleton-parser@npm:1.8.2"
@@ -2513,6 +2535,16 @@ __metadata:
     "@formatjs/ecma402-abstract": 2.0.0
     tslib: ^2.4.0
   checksum: 8735322fa93ddd471822ba77400411660cb6221c87955cdcea159e8f9b72188106b4d4bf57d737d248810ae1974e1df4974914a6fb6045e91bf5ea22cc7fd30f
+  languageName: node
+  linkType: hard
+
+"@formatjs/icu-skeleton-parser@npm:1.8.3":
+  version: 1.8.3
+  resolution: "@formatjs/icu-skeleton-parser@npm:1.8.3"
+  dependencies:
+    "@formatjs/ecma402-abstract": 2.1.0
+    tslib: ^2.4.0
+  checksum: 236e29a12298fa888a1cf04090b9a88289291347a29fb0b185db77fbf51b2f24058433a01c19315ed0e3a868d5a4d2f0dfa5e0f3ca5fb13077f1f50eb024234d
   languageName: node
   linkType: hard
 
@@ -2527,6 +2559,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formatjs/intl-displaynames@npm:6.6.9":
+  version: 6.6.9
+  resolution: "@formatjs/intl-displaynames@npm:6.6.9"
+  dependencies:
+    "@formatjs/ecma402-abstract": 2.1.0
+    "@formatjs/intl-localematcher": 0.5.4
+    tslib: ^2.4.0
+  checksum: 95d575afa2e724f24e2bf37d2c7323d143f3344a9a2c823a86d3ce555be93b2ee890688b69f540f4c75ba57729222f72a7b7cf013703023a34ff01f59dffbb19
+  languageName: node
+  linkType: hard
+
 "@formatjs/intl-listformat@npm:7.5.7":
   version: 7.5.7
   resolution: "@formatjs/intl-listformat@npm:7.5.7"
@@ -2535,6 +2578,17 @@ __metadata:
     "@formatjs/intl-localematcher": 0.5.4
     tslib: ^2.4.0
   checksum: f1f920442b553ec2d9d04ed081ee3fd650039cc55316e52cc7c2b76e03eb4c654006c4338d8ade4c6134eaa68e1d4945e0d3e473935547fd2e21d9c0ce9721a4
+  languageName: node
+  linkType: hard
+
+"@formatjs/intl-listformat@npm:7.5.8":
+  version: 7.5.8
+  resolution: "@formatjs/intl-listformat@npm:7.5.8"
+  dependencies:
+    "@formatjs/ecma402-abstract": 2.1.0
+    "@formatjs/intl-localematcher": 0.5.4
+    tslib: ^2.4.0
+  checksum: cc4a5ab4f038bd0b33d9243b154fee9d4e2a4cd4fd1d2b1498c21235d3394786f1b6c6c8c3384caf69767ef35238459027469161319a9761de2ab3da7b0070f4
   languageName: node
   linkType: hard
 
@@ -2567,6 +2621,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formatjs/intl@npm:2.10.7":
+  version: 2.10.7
+  resolution: "@formatjs/intl@npm:2.10.7"
+  dependencies:
+    "@formatjs/ecma402-abstract": 2.1.0
+    "@formatjs/fast-memoize": 2.2.0
+    "@formatjs/icu-messageformat-parser": 2.7.9
+    "@formatjs/intl-displaynames": 6.6.9
+    "@formatjs/intl-listformat": 7.5.8
+    intl-messageformat: 10.6.0
+    tslib: ^2.4.0
+  peerDependencies:
+    typescript: ^4.7 || 5
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 353b81f6f3b2660bcd51e90d694cd89ef8d290b9dae9f5567aed5002cf93ecc18d6d3c4e6ecb05c9a33d0ef17abc177e8ad2a49460adb3a00c5c7d5ba584c2a9
+  languageName: node
+  linkType: hard
+
 "@fpsak-frontend/assets@1.0.0, @fpsak-frontend/assets@workspace:packages/assets":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/assets@workspace:packages/assets"
@@ -2586,7 +2660,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -2615,7 +2689,7 @@ __metadata:
     dayjs: 1.11.13
     formik: 2.4.6
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     yup: 1.4.0
   peerDependencies:
     dayjs: 1.10.7
@@ -2635,7 +2709,7 @@ __metadata:
     moment: 2.30.1
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -2651,7 +2725,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     moment: 2.30.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -2673,7 +2747,7 @@ __metadata:
     moment: 2.30.1
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -2693,7 +2767,7 @@ __metadata:
     classnames: 2.5.1
     moment: 2.30.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -2715,7 +2789,7 @@ __metadata:
     object-hash: 3.0.0
     react: 18.3.1
     react-dom: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -2735,7 +2809,7 @@ __metadata:
     date-fns: 4.1.0
     formik: 2.4.6
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     yup: 1.4.0
   languageName: unknown
   linkType: soft
@@ -2753,7 +2827,7 @@ __metadata:
     "@k9-sak-web/fakta-felles": 1.0.0
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     reselect: 5.1.1
@@ -2773,7 +2847,7 @@ __metadata:
     moment: 2.30.1
     react: 18.3.1
     react-hook-form: 7.53.0
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -2811,7 +2885,7 @@ __metadata:
     classnames: 2.5.1
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -2831,7 +2905,7 @@ __metadata:
     classnames: 2.5.1
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -2853,7 +2927,7 @@ __metadata:
     moment: 2.30.1
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -2876,7 +2950,7 @@ __metadata:
     moment: 2.30.1
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -2901,7 +2975,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-dom: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -2923,7 +2997,7 @@ __metadata:
     moment: 2.30.1
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -2945,7 +3019,7 @@ __metadata:
     classnames: 2.5.1
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -2967,7 +3041,7 @@ __metadata:
     moment: 2.30.1
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -2991,7 +3065,7 @@ __metadata:
     moment: 2.30.1
     react: 18.3.1
     react-dom: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -3015,7 +3089,7 @@ __metadata:
     moment: 2.30.1
     react: 18.3.1
     react-dom: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -3038,7 +3112,7 @@ __metadata:
     moment: 2.30.1
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -3059,7 +3133,7 @@ __metadata:
     classnames: 2.5.1
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -3080,7 +3154,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -3112,7 +3186,7 @@ __metadata:
     moment: 2.30.1
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     reselect: 5.1.1
@@ -3137,7 +3211,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-dom: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -3162,7 +3236,7 @@ __metadata:
     classnames: 2.5.1
     moment: 2.30.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -3181,7 +3255,7 @@ __metadata:
     "@k9-sak-web/konstanter": 1.0.0
     "@navikt/ft-plattform-komponenter": 3.1.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     uuid: 10.0.0
   languageName: unknown
   linkType: soft
@@ -3197,7 +3271,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@tanstack/react-query": ^5.59.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -3210,7 +3284,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -3225,7 +3299,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     history: 5.3.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-router-dom: 6.26.2
   languageName: unknown
   linkType: soft
@@ -3240,7 +3314,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -3260,7 +3334,7 @@ __metadata:
     "@k9-sak-web/behandling-klage": 1.0.0
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -3280,7 +3354,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -3295,7 +3369,7 @@ __metadata:
     "@k9-sak-web/modal-sett-pa-vent": 1.0.0
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     react-router-dom: 6.26.2
     redux: 5.0.1
@@ -3310,7 +3384,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -3321,7 +3395,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -3334,7 +3408,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@navikt/ft-plattform-komponenter": 3.1.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -3350,7 +3424,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -3368,7 +3442,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux-form: 8.3.10
   languageName: unknown
@@ -3389,7 +3463,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     history: 5.3.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     react-router-dom: 6.26.2
     redux: 5.0.1
@@ -3411,7 +3485,7 @@ __metadata:
     dayjs: 1.11.13
     moment: 2.30.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -3436,7 +3510,7 @@ __metadata:
     date-fns-tz: 3.2.0
     moment: 2.30.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux-form: 8.3.10
   languageName: unknown
@@ -3452,7 +3526,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     moment: 2.30.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     vis-data: 7.1.9
     vis-timeline: 7.7.3
   languageName: unknown
@@ -3464,7 +3538,7 @@ __metadata:
   dependencies:
     "@tanstack/react-query": ^5.59.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -3478,7 +3552,7 @@ __metadata:
     "@navikt/ft-types": 2.5.1
     moment: 2.30.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -3953,7 +4027,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -3974,7 +4048,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 3.1.1
     classnames: 2.5.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux-form: 8.3.10
   languageName: unknown
@@ -4000,7 +4074,7 @@ __metadata:
     "@navikt/ft-fakta-beregning-redesign": 1.3.2
     "@navikt/ft-prosess-beregningsgrunnlag": 6.6.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -4021,7 +4095,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -4058,7 +4132,7 @@ __metadata:
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.6.2
     "@navikt/ft-prosess-beregningsgrunnlag": 6.6.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -4100,7 +4174,7 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.6.1
     axios: 1.7.7
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -4138,7 +4212,7 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.6.1
     axios: 1.7.7
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -4181,7 +4255,7 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.6.1
     axios: 1.7.7
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -4203,7 +4277,7 @@ __metadata:
     "@navikt/ft-kodeverk": ^2.5.1
     "@navikt/ft-prosess-tilbakekreving-foreldelse": 3.4.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -4226,7 +4300,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     axios: 1.7.7
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -4259,7 +4333,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -4301,7 +4375,7 @@ __metadata:
     just-is-empty: 3.4.1
     moment: 2.30.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux-form: 8.3.10
   languageName: unknown
@@ -4321,7 +4395,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     uuid: 10.0.0
   languageName: unknown
   linkType: soft
@@ -4357,7 +4431,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
   languageName: unknown
@@ -4464,7 +4538,7 @@ __metadata:
     react-collapse: 5.1.1
     react-dom: 18.3.1
     react-hook-form: 7.53.0
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-popper: 2.3.0
     vite: ^5.4.8
     vite-plugin-node-polyfills: ^0.22.0
@@ -4484,7 +4558,7 @@ __metadata:
     classnames: 2.5.1
     dayjs: 1.11.13
     formik: 2.4.6
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-outside-click-handler: 1.3.0
     uuid: 10.0.0
     yup: 1.4.0
@@ -4499,7 +4573,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -4559,7 +4633,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     moment: 2.30.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -4583,7 +4657,7 @@ __metadata:
     moment: 2.30.1
     react: 18.3.1
     react-dom: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     react-router-dom: 6.26.2
     redux-form: 8.3.10
@@ -4602,7 +4676,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
   languageName: unknown
@@ -4640,7 +4714,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     prop-types: 15.8.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -4656,7 +4730,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/fremdriftslinje": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -4696,7 +4770,7 @@ __metadata:
     "@navikt/ft-form-validators": 2.4.1
     react: 18.3.1
     react-hook-form: 7.53.0
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -4720,7 +4794,7 @@ __metadata:
     object-hash: 3.0.0
     react: 18.3.1
     react-hook-form: 7.53.0
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -4741,7 +4815,7 @@ __metadata:
     moment: 2.30.1
     object-hash: 3.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -4761,7 +4835,7 @@ __metadata:
     classnames: 2.5.1
     lodash: 4.17.21
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -4793,7 +4867,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -4857,7 +4931,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-dom: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     react-router-dom: 6.26.2
     redux: 5.0.1
@@ -4881,7 +4955,7 @@ __metadata:
     history: 5.3.0
     moment: 2.30.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-router-dom: 6.26.2
   languageName: unknown
   linkType: soft
@@ -4900,7 +4974,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     react-redux: 9.1.2
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -4917,7 +4991,7 @@ __metadata:
     "@navikt/ds-react": 7.1.0
     formik: 2.4.6
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
     yup: 1.4.0
   languageName: unknown
   linkType: soft
@@ -4936,7 +5010,7 @@ __metadata:
     date-fns: 4.1.0
     react: 18.3.1
     react-hook-form: 7.53.0
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -4949,7 +5023,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
-    react-intl: 6.7.0
+    react-intl: 6.7.2
   languageName: unknown
   linkType: soft
 
@@ -12198,6 +12272,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"intl-messageformat@npm:10.6.0":
+  version: 10.6.0
+  resolution: "intl-messageformat@npm:10.6.0"
+  dependencies:
+    "@formatjs/ecma402-abstract": 2.1.0
+    "@formatjs/fast-memoize": 2.2.0
+    "@formatjs/icu-messageformat-parser": 2.7.9
+    tslib: ^2.4.0
+  checksum: 32e367958e92ff941d41280a478ddd4d4876ce8f44f71fa5d0e27e3461d08f89af0576f0d73cb83a4934ec734a730865f5cca3671a861d54be363831d7f37781
+  languageName: node
+  linkType: hard
+
 "invariant@npm:^2.2.4":
   version: 2.2.4
   resolution: "invariant@npm:2.2.4"
@@ -15963,6 +16049,30 @@ __metadata:
     typescript:
       optional: true
   checksum: d76cffefb660c3b7126a46b2adbd95066b375d48351ac1a42d96b60da0ec351ac2a055d6f170f9debdf90f17e21454bb944044246ddd06c6e965805ba928cbd4
+  languageName: node
+  linkType: hard
+
+"react-intl@npm:6.7.2":
+  version: 6.7.2
+  resolution: "react-intl@npm:6.7.2"
+  dependencies:
+    "@formatjs/ecma402-abstract": 2.1.0
+    "@formatjs/icu-messageformat-parser": 2.7.9
+    "@formatjs/intl": 2.10.7
+    "@formatjs/intl-displaynames": 6.6.9
+    "@formatjs/intl-listformat": 7.5.8
+    "@types/hoist-non-react-statics": ^3.3.1
+    "@types/react": 16 || 17 || 18
+    hoist-non-react-statics: ^3.3.2
+    intl-messageformat: 10.6.0
+    tslib: ^2.4.0
+  peerDependencies:
+    react: ^16.6.0 || 17 || 18
+    typescript: ^4.7 || 5
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 6e4fdf878c97abc6f127a4c8559e8720e37d95eb2383e2edd77909a1205401bbdeb7530102c12b37bcca31ba116b0133843e1510426f9fba8b5c5cf44fc82ff3
   languageName: node
   linkType: hard
 
