@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import saksopplysningAksjonspunkterPropType from './propTypes/saksopplysningAksjonspunkterPropType';
 import saksopplysningBehandlingPropType from './propTypes/saksopplysningBehandlingPropType';
 import saksopplysningMedlemskapPropType from './propTypes/saksopplysningMedlemskapPropType';
@@ -11,10 +11,13 @@ import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const CheckPersonStatusIndex = ({
   behandling,
@@ -25,22 +28,26 @@ const CheckPersonStatusIndex = ({
   submitCallback,
   isReadOnly,
   readOnlySubmitButton,
-}) => (
-  <RawIntlProvider value={intl}>
-    <CheckPersonStatusForm
-      behandlingId={behandling.id}
-      behandlingVersjon={behandling.versjon}
-      behandlingHenlagt={behandling.behandlingHenlagt}
-      gjeldeneFom={medlemskap.fom}
-      personopplysninger={personopplysninger}
-      alleKodeverk={alleKodeverk}
-      aksjonspunkter={aksjonspunkter}
-      submitCallback={submitCallback}
-      readOnly={isReadOnly}
-      readOnlySubmitButton={readOnlySubmitButton}
-    />
-  </RawIntlProvider>
-);
+}) => {
+  const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
+  return (
+    <RawIntlProvider value={intl}>
+      <CheckPersonStatusForm
+        behandlingId={behandling.id}
+        behandlingVersjon={behandling.versjon}
+        behandlingHenlagt={behandling.behandlingHenlagt}
+        gjeldeneFom={medlemskap.fom}
+        personopplysninger={personopplysninger}
+        alleKodeverk={alleKodeverk}
+        aksjonspunkter={aksjonspunkter}
+        submitCallback={submitCallback}
+        readOnly={isReadOnly}
+        readOnlySubmitButton={readOnlySubmitButton}
+        kodeverkNavnFraKode={getKodeverkNavnFraKodeFn()}
+      />
+    </RawIntlProvider>
+  );
+};
 
 CheckPersonStatusIndex.propTypes = {
   behandling: saksopplysningBehandlingPropType.isRequired,

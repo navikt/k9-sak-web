@@ -27,7 +27,7 @@ const newStickyState = (): FritekstInputProps['stickyState'] => ({
 
 export const Default: Story = {
   args: {
-    språk: { kode: 'NB', kodeverk: 'SPRAAK_KODE' },
+    språk: 'NB', // SPRAAK_KODE
     show: true,
     fritekstModus: 'EnkelFritekst',
     showValidation: true,

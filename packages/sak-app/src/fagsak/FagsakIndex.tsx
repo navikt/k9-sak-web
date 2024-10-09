@@ -1,3 +1,8 @@
+import React, { useCallback, useMemo, useState } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
@@ -12,21 +17,21 @@ import Soknadsperiodestripe from '@k9-sak-web/sak-soknadsperiodestripe';
 import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingPerioderårsakMedVilkår,
-  Fagsak,
   FagsakPerson,
   FeatureToggles,
-  Kodeverk,
   KodeverkMedNavn,
   MerknadFraLos,
   NavAnsatt,
   Personopplysninger,
+  Fagsak as FagsakV1,
 } from '@k9-sak-web/types';
 import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
 import RelatertFagsak from '@k9-sak-web/types/src/relatertFagsak';
-import React, { useCallback, useMemo, useState } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
+import { useBehandlingContext } from '@k9-sak-web/gui/behandling/index.js';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
+
 import {
   behandlingerRoutePath,
   erBehandlingValgt,
@@ -44,23 +49,20 @@ import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
 import FagsakGrid from './components/FagsakGrid';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
-import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 
-const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
+const erTilbakekreving = (behandlingType: string): boolean =>
   behandlingType &&
-  (BehandlingType.TILBAKEKREVING === behandlingType.kode ||
-    BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
+  (BehandlingType.TILBAKEKREVING === behandlingType || BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType);
 
-const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER;
-const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) =>
-  fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
+const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelseType.PLEIEPENGER;
+const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
 const erOmsorgspenger = (fagsak: Fagsak) =>
   [
     fagsakYtelseType.OMSORGSPENGER,
     fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN,
     fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN,
     fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE,
-  ].includes(fagsak?.sakstype?.kode);
+  ].includes(fagsak?.sakstype);
 
 /**
  * FagsakIndex
@@ -68,17 +70,11 @@ const erOmsorgspenger = (fagsak: Fagsak) =>
  * Container komponent. Er rot for fagsakdelen av hovedvinduet, og har ansvar å legge valgt saksnummer fra URL-en i staten.
  */
 const FagsakIndex = () => {
+  const { behandlingId, behandlingVersjon } = useBehandlingContext();
+
   const [behandlingerTeller, setBehandlingTeller] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [requestPendingMessage, setRequestPendingMessage] = useState<string>();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [behandlingIdOgVersjon, setIdOgVersjon] = useState({ behandlingId: undefined, behandlingVersjon: undefined });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const setBehandlingIdOgVersjon = useCallback(
-    (behandlingId, behandlingVersjon) => setIdOgVersjon({ behandlingId, behandlingVersjon }),
-    [],
-  );
-  const { behandlingId, behandlingVersjon } = behandlingIdOgVersjon;
 
   const oppfriskBehandlinger = useCallback(() => setBehandlingTeller(behandlingerTeller + 1), [behandlingerTeller]);
 
@@ -107,7 +103,8 @@ const FagsakIndex = () => {
     },
   );
 
-  const { data: fagsak, state: fagsakState } = restApiHooks.useRestApi<Fagsak>(
+  // Midlertidig kombinere gammel og ny Fagsak ts type
+  const { data: fagsak, state: fagsakState } = restApiHooks.useRestApi<Fagsak & FagsakV1>(
     K9sakApiKeys.FETCH_FAGSAK,
     { saksnummer: selectedSaksnummer },
     {
@@ -246,7 +243,7 @@ const FagsakIndex = () => {
   return (
     <>
       <KodeverkProvider
-        behandlingType={behandling ? behandling?.type?.kode : undefined}
+        behandlingType={behandling ? behandling.type : undefined}
         kodeverk={alleKodeverkK9Sak}
         klageKodeverk={alleKodeverkKlage}
         tilbakeKodeverk={alleKodeverkTilbake}
@@ -261,7 +258,6 @@ const FagsakIndex = () => {
                     fagsak={fagsak}
                     alleBehandlinger={alleBehandlinger}
                     arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-                    setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
                     setRequestPendingMessage={setRequestPendingMessage}
                   />
                 }
@@ -286,7 +282,6 @@ const FagsakIndex = () => {
             if (isRequestNotDone(personopplysningerState)) {
               return <LoadingPanel />;
             }
-
             return (
               <BehandlingSupportIndex
                 fagsak={fagsak}
@@ -314,9 +309,8 @@ const FagsakIndex = () => {
               <div style={{ overflow: 'hidden' }}>
                 <VisittkortSakIndex
                   personopplysninger={behandlingPersonopplysninger}
-                  alleKodeverk={alleKodeverkK9Sak}
                   sprakkode={behandling?.sprakkode}
-                  fagsakPerson={fagsakPerson || fagsak.person}
+                  fagsakPerson={(fagsakPerson as FagsakPerson) || (fagsak.person as FagsakPerson)}
                   harTilbakekrevingVerge={erTilbakekreving(behandling?.type) && harVerge}
                   relaterteFagsaker={relaterteFagsaker}
                   direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
@@ -331,7 +325,7 @@ const FagsakIndex = () => {
                       <AndreSakerPåSøkerStripe
                         søkerIdent={fagsakPerson.personnummer}
                         saksnummer={fagsak.saksnummer}
-                        fagsakYtelseType={fagsak.sakstype.kode}
+                        fagsakYtelseType={fagsak.sakstype}
                       />
                     )}
                   </>

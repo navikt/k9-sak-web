@@ -23,10 +23,7 @@ const mockProps = {
 };
 
 describe('<MessagesTilbakekreving>', () => {
-  const sprakkode = {
-    kode: 'en',
-    kodeverk: 'Engelsk',
-  };
+  const sprakkode = 'en';
 
   const aktorer: Mottaker[] = [
     { id: '00000000', type: 'AKTØRID' },

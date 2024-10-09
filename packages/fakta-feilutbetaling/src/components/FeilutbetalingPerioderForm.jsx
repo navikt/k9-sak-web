@@ -5,10 +5,12 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import styles from './feilutbetalingPerioderTable.module.css';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 
 const getHendelseUndertyper = (årsakNavn, årsaker) => {
-  const årsak = årsaker.find(a => a.hendelseType.kode === årsakNavn);
+  const årsak = årsaker.find(a => a.hendelseType === årsakNavn);
   return årsak && årsak.hendelseUndertyper.length > 0 ? årsak.hendelseUndertyper : null;
 };
 
@@ -21,6 +23,7 @@ export const FeilutbetalingPerioderFormImpl = ({
   onChangeÅrsak,
   onChangeUnderÅrsak,
 }) => {
+  const { kodeverkNavnFraKode } = useKodeverkContext();
   const hendelseUndertyper = getHendelseUndertyper(årsak, årsaker);
   return (
     <Table.Row shadeOnHover={false}>
@@ -31,8 +34,8 @@ export const FeilutbetalingPerioderFormImpl = ({
         <SelectField
           name={`perioder.${elementId}.årsak`}
           selectValues={årsaker.map(a => (
-            <option key={a.hendelseType.kode} value={a.hendelseType.kode}>
-              {a.hendelseType.navn}
+            <option key={a.hendelseType} value={a.hendelseType}>
+              {kodeverkNavnFraKode(a.hendelseType, KodeverkType.HENDELSE_TYPE, 'kodeverkTilbake')}
             </option>
           ))}
           validate={[required]}
@@ -41,12 +44,13 @@ export const FeilutbetalingPerioderFormImpl = ({
           bredde="m"
           label=""
         />
+
         {hendelseUndertyper && (
           <SelectField
             name={`perioder.${elementId}.${årsak}.underÅrsak`}
-            selectValues={hendelseUndertyper.map(a => (
-              <option key={a.kode} value={a.kode}>
-                {a.navn}
+            selectValues={hendelseUndertyper.map(hendelseUndertype => (
+              <option key={hendelseUndertype} value={hendelseUndertype}>
+                {kodeverkNavnFraKode(hendelseUndertype, KodeverkType.HENDELSE_UNDERTYPE, 'kodeverkTilbake')}
               </option>
             ))}
             validate={[required]}

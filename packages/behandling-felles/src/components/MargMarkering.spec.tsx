@@ -10,14 +10,7 @@ describe('<MargMarkering>', () => {
 
   it('skal rendre rendre children uten marg når det ikke finnes aksjonspunkter', () => {
     const { container } = render(
-      <MargMarkering
-        behandlingStatus={{
-          kode: behandlingStatus.BEHANDLING_UTREDES,
-          kodeverk: 'BEHANDLING_STATUS',
-        }}
-        aksjonspunkter={[]}
-        isReadOnly={false}
-      >
+      <MargMarkering behandlingStatus={behandlingStatus.BEHANDLING_UTREDES} aksjonspunkter={[]} isReadOnly={false}>
         {elmt}
       </MargMarkering>,
     );
@@ -27,20 +20,11 @@ describe('<MargMarkering>', () => {
   it('skal rendre rendre children med gul marg når det finnes åpne og løsbare aksjonspunkter', () => {
     const { container } = render(
       <MargMarkering
-        behandlingStatus={{
-          kode: behandlingStatus.BEHANDLING_UTREDES,
-          kodeverk: 'BEHANDLING_STATUS',
-        }}
+        behandlingStatus={behandlingStatus.BEHANDLING_UTREDES}
         aksjonspunkter={[
           {
-            status: {
-              kode: aksjonspunktStatus.OPPRETTET,
-              kodeverk: 'AKSJONSPUNKT_STATUS',
-            },
-            definisjon: {
-              kode: aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT,
-              kodeverk: 'AKSJONSPUNKT_KODE',
-            },
+            status: aksjonspunktStatus.OPPRETTET,
+            definisjon: aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT,
             kanLoses: true,
             erAktivt: true,
           },
@@ -57,20 +41,11 @@ describe('<MargMarkering>', () => {
   it('skal rendre rendre children med rød marg når et aksjonspunkt er sendt tilbake fra beslutter', () => {
     const { container } = render(
       <MargMarkering
-        behandlingStatus={{
-          kode: behandlingStatus.BEHANDLING_UTREDES,
-          kodeverk: 'BEHANDLING_STATUS',
-        }}
+        behandlingStatus={behandlingStatus.BEHANDLING_UTREDES}
         aksjonspunkter={[
           {
-            status: {
-              kode: aksjonspunktStatus.OPPRETTET,
-              kodeverk: 'AKSJONSPUNKT_STATUS',
-            },
-            definisjon: {
-              kode: aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT,
-              kodeverk: 'AKSJONSPUNKT_KODE',
-            },
+            status: aksjonspunktStatus.OPPRETTET,
+            definisjon: aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT,
             kanLoses: true,
             erAktivt: true,
             toTrinnsBehandling: true,

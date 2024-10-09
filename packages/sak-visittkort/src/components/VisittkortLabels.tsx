@@ -35,7 +35,7 @@ const VisittkortLabels = ({
         </Tooltip>
       )}
       {personopplysninger &&
-        personopplysninger.diskresjonskode?.kode === diskresjonskodeType.KODE6 &&
+        personopplysninger.diskresjonskode === diskresjonskodeType.KODE6 &&
         !personopplysninger.dodsdato && (
           <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.Diskresjon6Tittel' })} alignBottom>
             <Tag variant="error" className={styles.etikett}>
@@ -44,7 +44,7 @@ const VisittkortLabels = ({
           </Tooltip>
         )}
       {personopplysninger &&
-        personopplysninger.diskresjonskode?.kode === diskresjonskodeType.KODE7 &&
+        personopplysninger.diskresjonskode === diskresjonskodeType.KODE7 &&
         !personopplysninger.dodsdato && (
           <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.Diskresjon7Tittel' })} alignBottom>
             <Tag variant="warning" className={styles.etikett}>

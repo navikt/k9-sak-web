@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import { safeJSONParse } from '@fpsak-frontend/utils';
@@ -32,8 +32,8 @@ interface OwnProps {
     begrunnelse: string;
   }) => Promise<any>;
   forhandsvisHenleggBehandling: (erHenleggelse: boolean, data: any) => void;
-  ytelseType: Kodeverk;
-  behandlingType: Kodeverk;
+  ytelseType: string;
+  behandlingType: string;
   behandlingUuid: string;
   behandlingResultatTyper: KodeverkMedNavn[];
   gaaTilSokeside: () => void;

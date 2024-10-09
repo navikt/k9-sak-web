@@ -9,7 +9,7 @@ import AktoerIndex from '../../aktoer/AktoerIndex';
 import FagsakIndex from '../../fagsak/FagsakIndex';
 import { aktoerRoutePath, fagsakRoutePath } from '../paths';
 import DashboardResolver from './DashboardResolver';
-
+import { BehandlingProvider } from '@k9-sak-web/gui/behandling/index.js';
 import styles from './home.module.css';
 import { UnhandledRejectionCatcher } from '@k9-sak-web/gui/app/UnhandledRejectionCatcher.js';
 
@@ -37,7 +37,14 @@ const Home = ({ headerHeight }: OwnProps) => (
     <QueryClientProvider client={queryClient}>
       <SentryRoutes>
         <Route path="/" element={<DashboardResolver />} />
-        <Route path={fagsakRoutePath} element={<FagsakIndex />} />
+        <Route
+          path={fagsakRoutePath}
+          element={
+            <BehandlingProvider>
+              <FagsakIndex />
+            </BehandlingProvider>
+          }
+        />
         {/* OBS: AktoerRoutePath brukes av NKS fra Salesforce til K9-sak-web. Kanskje andre også */}
         <Route path={aktoerRoutePath} element={<AktoerIndex />} />
         <Route path="/close" element={<CloseWindow />} />

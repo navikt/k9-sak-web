@@ -12,7 +12,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VilkarResultPickerPeriodisertRHF } from '@k9-sak-web/prosess-felles';
-import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, SubmitCallback } from '@k9-sak-web/types';
+import { Aksjonspunkt, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { BodyShort, Button, Label } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
@@ -39,13 +39,12 @@ export const vilkarUtfallPeriodisert = {
 
 interface VilkarresultatMedOverstyringFormProps {
   aksjonspunkter: Aksjonspunkt[];
-  avslagsarsaker: KodeverkMedNavn[];
   behandlingsresultat: {
-    type: Kodeverk;
+    type: string;
   };
   behandlingId: number;
   behandlingVersjon: number;
-  behandlingType: Kodeverk;
+  behandlingType: string;
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
   erMedlemskapsPanel: boolean;
@@ -76,7 +75,6 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
 > = ({
   aksjonspunkter,
   avslagKode,
-  avslagsarsaker,
   behandlingType,
   erMedlemskapsPanel,
   erOverstyrt,
@@ -90,7 +88,7 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
   visPeriodisering,
 }) => {
   const buildInitialValues = (): VilkarresultatMedOverstyringFormState => {
-    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
+    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === overstyringApKode);
     return {
       isOverstyrt: aksjonspunkt !== undefined,
       ...VilkarresultatMedBegrunnelse.buildInitialValues(avslagKode, aksjonspunkter, status, periode),
@@ -124,11 +122,11 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
 
   const customVilkarOppfyltText = getCustomVilkarTextForOppfylt(medlemskapFom, behandlingType);
   const customVilkarIkkeOppfyltText = getCustomVilkarTextForIkkeOppfylt(medlemskapFom, behandlingType);
-  const overstyringAksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
+  const overstyringAksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === overstyringApKode);
   const isSolvable =
     erOverstyrt ||
     (overstyringAksjonspunkt !== undefined
-      ? !(overstyringAksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !overstyringAksjonspunkt.kanLoses)
+      ? !(overstyringAksjonspunkt.status === aksjonspunktStatus.OPPRETTET && !overstyringAksjonspunkt.kanLoses)
       : false);
 
   const isReadOnly = overrideReadOnly || !periode?.vurderesIBehandlingen;
@@ -151,7 +149,6 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
             customVilkarOppfyltText={customVilkarOppfyltText}
             erMedlemskapsPanel={erMedlemskapsPanel}
             visPeriodisering={visPeriodisering}
-            avslagsarsaker={avslagsarsaker}
             periodeFom={periodeFom}
             periodeTom={periodeTom}
             valgtPeriodeFom={valgtPeriodeFom}
@@ -217,10 +214,9 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<
   );
 };
 
-const getCustomVilkarText = (medlemskapFom: string, behandlingType: Kodeverk, erOppfylt: boolean) => {
+const getCustomVilkarText = (medlemskapFom: string, behandlingType: string, erOppfylt: boolean) => {
   const customVilkarText = { id: '', values: null };
-  const isBehandlingRevurderingFortsattMedlemskap =
-    behandlingType.kode === BehandlingType.REVURDERING && !!medlemskapFom;
+  const isBehandlingRevurderingFortsattMedlemskap = behandlingType === BehandlingType.REVURDERING && !!medlemskapFom;
   if (isBehandlingRevurderingFortsattMedlemskap) {
     customVilkarText.id = erOppfylt
       ? 'VilkarResultPicker.VilkarOppfyltRevurderingFom'
@@ -230,10 +226,10 @@ const getCustomVilkarText = (medlemskapFom: string, behandlingType: Kodeverk, er
   return customVilkarText.id ? customVilkarText : undefined;
 };
 
-const getCustomVilkarTextForOppfylt = (medlemskapFom: string, behandlingType: Kodeverk) =>
+const getCustomVilkarTextForOppfylt = (medlemskapFom: string, behandlingType: string) =>
   getCustomVilkarText(medlemskapFom, behandlingType, true);
 
-const getCustomVilkarTextForIkkeOppfylt = (medlemskapFom: string, behandlingType: Kodeverk) =>
+const getCustomVilkarTextForIkkeOppfylt = (medlemskapFom: string, behandlingType: string) =>
   getCustomVilkarText(medlemskapFom, behandlingType, false);
 
 const transformValues = (

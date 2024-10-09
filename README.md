@@ -43,6 +43,7 @@ Aktiveres ved å definere en eller flere features i `.env.development`fil i _env
 ## Pakkeoppdatering
 
 ### Avhengigheter som må ha samme versjon
+
 Noen sub-pakker i dette prosjekt har avhengigheter til kode fra [ft-frontend-saksbehandling](https://github.com/navikt/ft-frontend-saksbehandling).
 
 Samtidig har disse sub-pakkene felles avhengigheter med koden i [ft-frontend-saksbehandling](https://github.com/navikt/ft-frontend-saksbehandling).
@@ -74,6 +75,7 @@ måten får vi gjort en gradvis overgang til bedre kontrollert typescript.
 Mer info om dette i [v2/README](./packages/v2/README.md)
 
 ## Bygg og utrulling
+
 Ved merge av **PR til master** branch blir koden bygd inn i et Docker image og rulla ut til testmiljø på https://k9.dev.intern.nav.no.
 Etter godkjenning i pipeline blir samme Docker image rulla ut i produksjon på https://k9.intern.nav.no/.
 
@@ -82,6 +84,7 @@ skjer automatisk ved merge av **PR til dev-next1** branch. Denne utrulling lever
 hver nye utrulling her stenges servicen ned inntil det skjer en ny utrulling.
 
 ### Storybook
+
 Katalog med brukergrensesnitt-komponenter blir publisert i storybook på https://navikt.github.io/k9-sak-web/
 
 ## For NAV-ansatte

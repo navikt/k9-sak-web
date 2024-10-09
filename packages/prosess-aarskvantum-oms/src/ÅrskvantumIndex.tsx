@@ -63,11 +63,11 @@ const ÅrskvantumIndex = ({
 
   const apForVurderÅrskvantum: Aksjonspunkt = aksjonspunkterForSteg.find(ap => årskvantumDok(ap));
   const aksjonspunkter: Aksjonspunkt[] = aksjonspunkterForSteg.filter(ap => !årskvantumDok(ap));
-  const åpenAksjonspunkt = aksjonspunkter.find(ap => ap.status.kode !== aksjonspunktStatus.UTFORT) !== undefined;
+  const åpenAksjonspunkt = aksjonspunkter.find(ap => ap.status !== aksjonspunktStatus.UTFORT) !== undefined;
 
   const visAPVurderÅrskvantumDokIOmsorgsdagerFrontend =
     apForVurderÅrskvantum !== undefined &&
-    (!åpenAksjonspunkt || apForVurderÅrskvantum.status.kode === aksjonspunktStatus.UTFORT);
+    (!åpenAksjonspunkt || apForVurderÅrskvantum.status === aksjonspunktStatus.UTFORT);
 
   const propsTilMikrofrontend = {
     submitCallback,
@@ -80,13 +80,13 @@ const ÅrskvantumIndex = ({
     <RawIntlProvider value={årskvantumIntl}>
       {aksjonspunkter.length > 0 && (
         <AksjonspunktForm9014
-          aktiviteter={sisteUttaksplan?.aktiviteter}
+          aktiviteter={sisteUttaksplan?.aktiviteter || []}
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
           submitCallback={submitCallback}
           aksjonspunkterForSteg={aksjonspunkter}
           isAksjonspunktOpen={isAksjonspunktOpen && !visAPVurderÅrskvantumDokIOmsorgsdagerFrontend}
-          fosterbarn={fosterbarn}
+          fosterbarn={fosterbarn || []}
         />
       )}
 
@@ -96,10 +96,10 @@ const ÅrskvantumIndex = ({
 
       <Uttaksplan
         behandlingUuid={behandling.uuid}
-        aktiviteterBehandling={sisteUttaksplan?.aktiviteter}
-        aktiviteterHittilIÅr={fullUttaksplan?.aktiviteter}
+        aktiviteterBehandling={sisteUttaksplan?.aktiviteter || []}
+        aktiviteterHittilIÅr={fullUttaksplan?.aktiviteter || []}
         aktivitetsstatuser={aktivitetsstatuser}
-        aktiv={sisteUttaksplan?.aktiv}
+        aktiv={sisteUttaksplan?.aktiv || false}
         arbeidsforhold={arbeidsforhold}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />

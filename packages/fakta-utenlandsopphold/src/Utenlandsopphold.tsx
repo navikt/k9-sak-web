@@ -1,31 +1,32 @@
 /* eslint-disable react/jsx-curly-brace-presence */
 import ytelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn, UtenlandsoppholdPerioder, UtenlandsoppholdType } from '@k9-sak-web/types';
+import { UtenlandsoppholdPerioder, UtenlandsoppholdType } from '@k9-sak-web/types';
 import { Alert, Heading, ReadMore } from '@navikt/ds-react';
 import { PeriodList } from '@navikt/ft-plattform-komponenter';
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
 import React from 'react';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import styles from './utenlandsopphold.module.css';
 
 countries.registerLocale(norwegianLocale);
 
 const Utenlandsopphold = ({
   utenlandsopphold,
-  kodeverk,
   fagsakYtelseType,
 }: {
   utenlandsopphold: UtenlandsoppholdPerioder;
-  kodeverk: { UtenlandsoppholdÅrsak: KodeverkMedNavn[] };
   fagsakYtelseType?: string;
 }) => {
+  const { kodeverkNavnFraKode } = useKodeverkContext();
+
   const finnÅrsaker = (periode: UtenlandsoppholdType, erEØS: boolean) => {
-    if (erEØS || periode.landkode.kode === 'CHE') {
+    if (erEØS || periode.landkode === 'CHE') {
       return 'Periode telles ikke.';
     }
-
-    return kodeverk?.UtenlandsoppholdÅrsak?.find(v => v.kode === periode?.årsak)?.navn || 'Ukjent årsak';
+    return kodeverkNavnFraKode(periode.årsak, KodeverkType.UTLANDSOPPHOLD_AARSAK, undefined, 'Ukjent årsak');
   };
 
   // Sveits vurderes på lik linje med EØS-land
@@ -39,19 +40,18 @@ const Utenlandsopphold = ({
 
   const mapItems = (periode: UtenlandsoppholdType) => {
     // Storbritannia ligger som EØS-land i kodeverket. Frem til det er fjernet derfra må det spesialhåndteres her.
-    const erEØS = () =>
-      periode.region.kode === 'NORDEN' || (periode.region.kode === 'EOS' && periode.landkode.kode !== 'GBR');
+    const erEØS = () => periode.region === 'NORDEN' || (periode.region === 'EOS' && periode.landkode !== 'GBR');
 
     const hentLand = () => {
       // Kosovo har en spesiell kode i kodeverk som ikke samsvarer med ISO-koden i i18n-iso-countries
-      if (periode.landkode.kode === 'XXK') {
+      if (periode.landkode === 'XXK') {
         return { label: 'Land', value: 'Kosovo' };
       }
-      return { label: 'Land', value: countries.getName(periode.landkode.kode, 'no') };
+      return { label: 'Land', value: countries.getName(periode.landkode, 'no') };
     };
 
     const hentEØSStatus = () => {
-      const eøsStatus = erEØS() ? 'Ja' : `Nei${vurderesMotEØSRegelverk(periode.landkode.kode)}`;
+      const eøsStatus = erEØS() ? 'Ja' : `Nei${vurderesMotEØSRegelverk(periode.landkode)}`;
       return { label: 'EØS', value: eøsStatus };
     };
 
@@ -111,7 +111,7 @@ const Utenlandsopphold = ({
       {harUtenlandsopphold ? (
         <>
           <PeriodList perioder={[...perioderMedItems]} tittel="Perioder i utlandet" />
-          {perioder.some(periode => vurderesMotEØSRegelverk(periode.landkode.kode)) && (
+          {perioder.some(periode => vurderesMotEØSRegelverk(periode.landkode)) && (
             <div>{`*) Ikke en del av EØS, men vurderes mot EØS-regelverk`}</div>
           )}
         </>

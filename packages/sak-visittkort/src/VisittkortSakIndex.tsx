@@ -1,7 +1,7 @@
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { Kodeverk, KodeverkMedNavn, Personopplysninger, FagsakPerson, RelatertFagsak } from '@k9-sak-web/types';
+import { Personopplysninger, FagsakPerson, RelatertFagsak } from '@k9-sak-web/types';
 import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
 
 import VisittkortPanel from './components/VisittkortPanel';
@@ -19,8 +19,7 @@ const intl = createIntl(
 
 interface OwnProps {
   fagsakPerson: FagsakPerson;
-  sprakkode?: Kodeverk;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  sprakkode?: string;
   personopplysninger?: Personopplysninger;
   harTilbakekrevingVerge?: boolean;
   relaterteFagsaker?: RelatertFagsak;
@@ -32,7 +31,6 @@ interface OwnProps {
 const VisittkortSakIndex = ({
   fagsakPerson,
   sprakkode,
-  alleKodeverk,
   personopplysninger,
   harTilbakekrevingVerge,
   relaterteFagsaker,
@@ -44,7 +42,6 @@ const VisittkortSakIndex = ({
     <VisittkortPanel
       personopplysninger={personopplysninger}
       fagsakPerson={fagsakPerson}
-      alleKodeverk={alleKodeverk}
       sprakkode={sprakkode}
       harTilbakekrevingVerge={harTilbakekrevingVerge}
       relaterteFagsaker={relaterteFagsaker}

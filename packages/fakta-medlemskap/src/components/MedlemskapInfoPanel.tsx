@@ -1,5 +1,5 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { Aksjonspunkt, FagsakPerson, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Aksjonspunkt, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import React from 'react';
 import { Medlemskap } from './oppholdInntektOgPerioder/Medlemskap';
 import { MerknaderFraBeslutter } from './oppholdInntektOgPerioder/MerknaderFraBeslutter';
@@ -15,7 +15,7 @@ interface MedlemskapInfoPanelProps {
   behandlingId: number;
   behandlingVersjon: number;
   fagsakPerson: FagsakPerson;
-  behandlingType: Kodeverk;
+  behandlingType: string;
   soknad?: Soknad;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   medlemskap: Medlemskap;
@@ -52,7 +52,7 @@ const MedlemskapInfoPanel = ({
     alleKodeverk={alleKodeverk}
     medlemskap={medlemskap}
     fagsakPerson={fagsakPerson}
-    isRevurdering={behandlingTypeProp.kode === behandlingType.REVURDERING && !!medlemskap.fom}
+    isRevurdering={behandlingTypeProp === behandlingType.REVURDERING && !!medlemskap.fom}
   />
 );
 

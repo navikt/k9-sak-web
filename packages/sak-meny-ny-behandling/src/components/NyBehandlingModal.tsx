@@ -2,7 +2,7 @@ import { CheckboxField, DatepickerField, SelectField } from '@fpsak-frontend/for
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { required } from '@fpsak-frontend/utils';
-import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
 import { ModalBody, ModalFooter } from '@navikt/ds-react/Modal';
 import { ReactElement, useEffect } from 'react';
@@ -20,7 +20,7 @@ const createOptions = (bt: KodeverkMedNavn, enabledBehandlingstyper: KodeverkMed
 };
 
 export type BehandlingOppretting = Readonly<{
-  behandlingType: Kodeverk;
+  behandlingType: string;
   kanOppretteBehandling: boolean;
 }>;
 
@@ -34,13 +34,13 @@ export type FormValues = {
 };
 
 interface PureOwnProps {
-  ytelseType: Kodeverk;
+  ytelseType: string;
   saksnummer: number;
   cancelEvent: () => void;
   submitCallback: (
     data: {
       eksternUuid?: string;
-      fagsakYtelseType: Kodeverk;
+      fagsakYtelseType: string;
     } & FormValues,
   ) => void;
   behandlingOppretting: BehandlingOppretting[];
@@ -51,7 +51,7 @@ interface PureOwnProps {
     kanBehandlingOpprettes: boolean;
     kanRevurderingOpprettes: boolean;
   };
-  behandlingType?: Kodeverk;
+  behandlingType?: string;
   behandlingId?: number;
   behandlingUuid?: string;
   uuidForSistLukkede?: string;
@@ -261,8 +261,7 @@ export const getBehandlingTyper = createSelector(
 const kanOppretteBehandlingstype = (
   behandlingOppretting: BehandlingOppretting[],
   behandlingTypeKode: string,
-): boolean =>
-  behandlingOppretting.some(bo => bo.behandlingType.kode === behandlingTypeKode && bo.kanOppretteBehandling);
+): boolean => behandlingOppretting.some(bo => bo.behandlingType === behandlingTypeKode && bo.kanOppretteBehandling);
 
 export const getEnabledBehandlingstyper = createSelector(
   [
@@ -318,8 +317,8 @@ const mapStateToPropsFactory = (_, initialOwnProps: PureOwnProps) => {
     fom: formValueSelector(formName)(state, 'fom'),
     erTilbakekreving:
       ownProps.behandlingType &&
-      (ownProps.behandlingType.kode === bType.TILBAKEKREVING ||
-        ownProps.behandlingType.kode === bType.TILBAKEKREVING_REVURDERING),
+      (ownProps.behandlingType === bType.TILBAKEKREVING ||
+        ownProps.behandlingType === bType.TILBAKEKREVING_REVURDERING),
   });
 };
 

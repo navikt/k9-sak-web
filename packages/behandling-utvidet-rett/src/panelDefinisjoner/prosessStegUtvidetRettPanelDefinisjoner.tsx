@@ -14,7 +14,7 @@ const prosessStegUtvidetRettPanelDefinisjoner = (
   if (featureToggles.AKSJONSPUNKT_9015) {
     const visAlderProsessSteg =
       erFagytelseTypeAleneOmOmsorgen || (erFagytelseTypeKroniskSyk && featureToggles.ALDERSVILKAR_KRONISK_SYK);
-    const harAldersvilkår = vilkar.some(v => v.vilkarType.kode === vilkarType.ALDERSVILKAR_BARN);
+    const harAldersvilkår = vilkar.some(v => v.vilkarType === vilkarType.ALDERSVILKAR_BARN);
 
     return visAlderProsessSteg && harAldersvilkår
       ? [

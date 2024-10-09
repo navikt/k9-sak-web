@@ -26,10 +26,10 @@ describe('<VilkarresultatMedOverstyringHeader>', () => {
             avslagKode: '',
             begrunnelse: '',
             vurderesIBehandlingen: true,
-            merknad: { kode: '', kodeverk: '' },
+            merknad: '',
             merknadParametere: {},
             periode: { fom: '', tom: '' },
-            vilkarStatus: { kode: '', kodeverk: '' },
+            vilkarStatus: '',
           }}
           status=""
         />

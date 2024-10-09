@@ -3,7 +3,7 @@ import React from 'react';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
+import { mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { BeregningFaktaIndex } from '@navikt/ft-fakta-beregning-redesign';
 import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
@@ -23,20 +23,28 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
   ];
 
   getKomponent = props => {
-    const deepCopyProps = JSON.parse(JSON.stringify(props));
-    konverterKodeverkTilKode(deepCopyProps);
-    const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
+    const {
+      vilkar,
+      alleKodeverk,
+      beregningsgrunnlag,
+      arbeidsgiverOpplysningerPerId,
+      submitCallback,
+      formData,
+      setFormData,
+      beregningreferanserTilVurdering,
+    } = props;
+    const bgVilkaret = vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
 
     return (
       <BeregningFaktaIndex
-        {...deepCopyProps}
-        kodeverkSamling={deepCopyProps.alleKodeverk}
-        beregningsgrunnlag={deepCopyProps.beregningsgrunnlag}
-        arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-        submitCallback={aksjonspunktData => props.submitCallback(transformBeregningValues(aksjonspunktData))}
-        formData={props.formData}
-        setFormData={props.setFormData}
-        vilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
+        {...props}
+        kodeverkSamling={alleKodeverk}
+        beregningsgrunnlag={beregningsgrunnlag}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        submitCallback={aksjonspunktData => submitCallback(transformBeregningValues(aksjonspunktData))}
+        formData={formData}
+        setFormData={setFormData}
+        vilkar={mapVilkar(bgVilkaret, beregningreferanserTilVurdering)}
         skalKunneOverstyreAktiviteter={false}
         skalKunneAvbryteOverstyring
       />

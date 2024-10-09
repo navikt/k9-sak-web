@@ -5,6 +5,7 @@ import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-til
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import { BeregningsresultatTilbakekreving } from '@k9-sak-web/types';
 
 import VedtakResultatType from '../../kodeverk/vedtakResultatType';
 import { TilbakekrevingBehandlingApiKeys } from '../../data/tilbakekrevingBehandlingApi';
@@ -14,12 +15,12 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getOverstyrtStatus = ({ beregningsresultat }) => {
+  getOverstyrtStatus = ({ beregningsresultat }: { beregningsresultat: BeregningsresultatTilbakekreving }) => {
     if (!beregningsresultat) {
       return vilkarUtfallType.IKKE_VURDERT;
     }
     const { vedtakResultatType } = beregningsresultat;
-    return vedtakResultatType.kode === VedtakResultatType.INGEN_TILBAKEBETALING
+    return vedtakResultatType === VedtakResultatType.INGEN_TILBAKEBETALING
       ? vilkarUtfallType.IKKE_OPPFYLT
       : vilkarUtfallType.OPPFYLT;
   };

@@ -12,14 +12,8 @@ describe('<readOnlyUtils>', () => {
   const behandling = {
     id: 1,
     versjon: 1,
-    status: {
-      kode: behandlingStatus.BEHANDLING_UTREDES,
-      kodeverk: 'BEHANDLING_STATUS',
-    },
-    type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: 'BEHANDLING_TYPE',
-    },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     behandlingHenlagt: false,
     links: [],
@@ -27,14 +21,8 @@ describe('<readOnlyUtils>', () => {
 
   const aksjonspunkter = [
     {
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-        kodeverk: 'AKSJONSPUNKT_STATUS',
-      },
-      definisjon: {
-        kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
-        kodeverk: 'AKSJONSPUNKT_KODE',
-      },
+      status: aksjonspunktStatus.OPPRETTET,
+      definisjon: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
       kanLoses: true,
       erAktivt: true,
       toTrinnsBehandling: true,
@@ -44,11 +32,11 @@ describe('<readOnlyUtils>', () => {
 
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.BEREGNINGSGRUNNLAGVILKARET, kodeverk: 'test' },
+      vilkarType: vilkarType.BEREGNINGSGRUNNLAGVILKARET,
       overstyrbar: true,
       perioder: [
         {
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           merknadParametere: {
             antattGodkjentArbeid: 'P0D',
             antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',

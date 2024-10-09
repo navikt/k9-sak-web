@@ -17,7 +17,6 @@ describe('<FormkravKlageFormKa>', () => {
         intl={intlMock}
         behandlingId={1}
         behandlingVersjon={1}
-        alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
         fagsakPerson={{}}
         avsluttedeBehandlinger={[]}

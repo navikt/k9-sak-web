@@ -1,6 +1,10 @@
+import React from 'react';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
@@ -21,47 +25,41 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       },
     });
 
-    return <FormProvider {...formMethods}>{props.children}</FormProvider>;
+    return (
+      <KodeverkProvider
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={alleKodeverkV2}
+        tilbakeKodeverk={alleKodeverkV2}
+      >
+        <FormProvider {...formMethods}>{props.children}</FormProvider>
+      </KodeverkProvider>
+    );
   };
-
-  const manuelleVurderingstyper = [
-    {
-      kode: 'test1',
-      kodeverk: '',
-      navn: 'navn1',
-    },
-    {
-      kode: 'test2',
-      kodeverk: '',
-      navn: 'navn2',
-    },
-  ];
 
   it('skal vise periode og manuelle-vurderingstyper i form', () => {
     const perioder = [
       {
         fom: '2016-01-15',
         tom: '2016-10-15',
-        dekning: 'testdekning',
-        status: 'testStatus',
+        dekning: 'FULL',
+        status: 'FORELOPIG',
         beslutningsdato: '2016-10-16',
       },
     ];
 
     renderWithIntl(
       <Wrapper perioder={perioder}>
-        <PerioderMedMedlemskapFaktaPanel
-          readOnly={false}
-          alleKodeverk={{ [kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE]: manuelleVurderingstyper }}
-          alleMerknaderFraBeslutter={{ notAccepted: false }}
-        />
+        <PerioderMedMedlemskapFaktaPanel readOnly={false} alleMerknaderFraBeslutter={{ notAccepted: false }} />
       </Wrapper>,
     );
 
-    expect(screen.getByText('testdekning')).toBeInTheDocument();
-    expect(screen.getByText('testStatus')).toBeInTheDocument();
+    expect(screen.getByText('Full')).toBeInTheDocument();
+    expect(screen.getByText('Foreløpig')).toBeInTheDocument();
     expect(screen.getByText('15.01.2016-15.10.2016')).toBeInTheDocument();
-    expect(screen.getAllByRole('radio', { name: /navn/i }).length).toBe(2);
+    expect(screen.getAllByRole('radio', { name: 'Ikke relevant periode' }).length).toBe(1);
+    expect(screen.getAllByRole('radio', { name: 'Periode med medlemskap' }).length).toBe(1);
+    expect(screen.getAllByRole('radio', { name: 'Periode med unntak fra medlemskap' }).length).toBe(1);
   });
 
   it('skal vise fødselsdato når en har dette', () => {
@@ -69,8 +67,8 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       {
         fom: '2016-01-15',
         tom: '2016-10-15',
-        dekning: 'testdekning',
-        status: 'testStatus',
+        dekning: 'Full',
+        status: 'Foreløpig',
         beslutningsdato: '2016-10-16',
       },
     ];
@@ -80,7 +78,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         <PerioderMedMedlemskapFaktaPanel
           readOnly={false}
           fodselsdato="2016-10-16"
-          alleKodeverk={{ [kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE]: manuelleVurderingstyper }}
           alleMerknaderFraBeslutter={{ notAccepted: false }}
         />
       </Wrapper>,
@@ -94,19 +91,15 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       {
         fom: '2017-08-01',
         tom: '2017-08-31',
-        dekning: 'testDekning',
-        status: 'testStatus',
+        dekning: 'Full',
+        status: 'Foreløpig',
         beslutningsdato: '2017-06-01',
       },
     ];
 
     renderWithIntl(
       <Wrapper perioder={perioder}>
-        <PerioderMedMedlemskapFaktaPanel
-          readOnly={false}
-          alleKodeverk={{ [kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE]: manuelleVurderingstyper }}
-          alleMerknaderFraBeslutter={{ notAccepted: false }}
-        />
+        <PerioderMedMedlemskapFaktaPanel readOnly={false} alleMerknaderFraBeslutter={{ notAccepted: false }} />
       </Wrapper>,
     );
 
@@ -118,11 +111,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
 
     renderWithIntl(
       <Wrapper perioder={perioder}>
-        <PerioderMedMedlemskapFaktaPanel
-          readOnly={false}
-          alleKodeverk={{ [kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE]: manuelleVurderingstyper }}
-          alleMerknaderFraBeslutter={{ notAccepted: false }}
-        />
+        <PerioderMedMedlemskapFaktaPanel readOnly={false} alleMerknaderFraBeslutter={{ notAccepted: false }} />
       </Wrapper>,
     );
 
@@ -132,7 +121,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
   it('skal sette opp initielle verdier og sorterte perioder etter periodestart', () => {
     const periode: Periode = {
       aksjonspunkter: [aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE],
-      medlemskapManuellVurderingType: { kode: 'manuellType', kodeverk: '' },
+      medlemskapManuellVurderingType: 'manuellType',
       id: '',
       vurderingsdato: '',
       årsaker: [],
@@ -149,28 +138,16 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       {
         fom: '2016-01-15',
         tom: '2016-10-15',
-        dekningType: {
-          kode: 'DEK_TYPE',
-          kodeverk: '',
-        },
-        medlemskapType: {
-          kode: 'M_STATUS',
-          kodeverk: '',
-        },
+        dekningType: 'FTL_2_9_1_b',
+        medlemskapType: 'ENDELIG',
         beslutningsdato: '2016-10-16',
         kildeType: undefined,
       },
       {
         fom: '2017-01-15',
         tom: '2017-10-15',
-        dekningType: {
-          kode: 'DEK_TYPE2',
-          kodeverk: '',
-        },
-        medlemskapType: {
-          kode: 'M_STATUS2',
-          kodeverk: '',
-        },
+        dekningType: 'FTL_2_6',
+        medlemskapType: 'FORELOPIG',
         beslutningsdato: '2017-10-16',
         kildeType: undefined,
       },
@@ -188,38 +165,17 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
 
     const aksjonspunkter: Aksjonspunkt[] = [
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-          kodeverk: '',
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-          kodeverk: '',
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: false,
         erAktivt: false,
       },
     ];
-    const getKodeverknavn = kodeverk => {
-      if (kodeverk.kode === 'DEK_TYPE') {
-        return 'testdekning';
-      }
-      if (kodeverk.kode === 'DEK_TYPE2') {
-        return 'testdekning2017';
-      }
-      if (kodeverk.kode === 'M_STATUS') {
-        return 'testStatus';
-      }
-      if (kodeverk.kode === 'M_STATUS2') {
-        return 'testStatus2017';
-      }
-      return '';
-    };
+
     const initialValues = PerioderMedMedlemskapFaktaPanel.buildInitialValues(
       medlemskapPerioder,
       soknad,
       aksjonspunkter,
-      getKodeverknavn,
       periode,
     );
 
@@ -228,15 +184,15 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         {
           fom: '2016-01-15',
           tom: '2016-10-15',
-          dekning: 'testdekning',
-          status: 'testStatus',
+          dekning: 'FTL_2_9_1_b',
+          status: 'ENDELIG',
           beslutningsdato: '2016-10-16',
         },
         {
           fom: '2017-01-15',
           tom: '2017-10-15',
-          dekning: 'testdekning2017',
-          status: 'testStatus2017',
+          dekning: 'FTL_2_6',
+          status: 'FORELOPIG',
           beslutningsdato: '2017-10-16',
         },
       ],

@@ -29,8 +29,8 @@ const vilkårResultatText = (originalErVilkarOk: boolean, periode: Vilkarperiode
   if (originalErVilkarOk === false) {
     text = 'Vilkåret er avslått';
   }
-  if (Object.values(opptjeningMidlertidigInaktivKoder).includes(periode?.merknad?.kode)) {
-    text = hent847Text(periode.merknad.kode);
+  if (Object.values(opptjeningMidlertidigInaktivKoder).includes(periode?.merknad)) {
+    text = hent847Text(periode.merknad);
   }
   return (
     <Label size="small" as="p">
@@ -66,8 +66,8 @@ const VilkarresultatMedOverstyringHeader = ({
   aksjonspunkter,
   periode,
 }: Partial<VilkarresultatMedOverstyringHeaderProps>) => {
-  const aksjonspunktCodes = aksjonspunkter.map(a => a.definisjon.kode);
-  const status = periode?.vilkarStatus?.kode;
+  const aksjonspunktCodes = aksjonspunkter.map(a => a.definisjon);
+  const status = periode?.vilkarStatus;
   const erOppfylt = vilkarUtfallType.OPPFYLT === status;
   const erVilkarOk = vilkarUtfallType.IKKE_VURDERT !== status ? erOppfylt : undefined;
   const togglePa = () => {

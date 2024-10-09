@@ -7,11 +7,10 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { TIDENES_ENDE, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { TIDENES_ENDE } from '@fpsak-frontend/utils';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
@@ -19,14 +18,17 @@ const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
   (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
 
 export const findTilbakekrevingText = createSelector(
-  [ownProps => ownProps.simuleringResultat, ownProps => ownProps.tilbakekrevingvalg, ownProps => ownProps.alleKodeverk],
-  (simuleringResultat, tilbakekrevingValg, alleKodeverk) => {
+  [
+    ownProps => ownProps.simuleringResultat,
+    ownProps => ownProps.tilbakekrevingvalg,
+    ownProps => ownProps.kodeverkNavnFraKode,
+  ],
+  (simuleringResultat, tilbakekrevingValg, kodeverkNavnFraKode) => {
     if (tilbakekrevingValg !== null && tilbakekrevingValg !== undefined) {
-      if (tilbakekrevingMedInntrekk(tilbakekrevingValg.videreBehandling.kode, simuleringResultat)) {
+      if (tilbakekrevingMedInntrekk(tilbakekrevingValg.videreBehandling, simuleringResultat)) {
         return 'VedtakForm.TilbakekrInfotrygdOgInntrekk';
       }
-      const getKodeverkNavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-      return getKodeverkNavn(tilbakekrevingValg.videreBehandling);
+      return kodeverkNavnFraKode(tilbakekrevingValg.videreBehandling, KodeverkType.TILBAKEKR_VIDERE_BEH);
     }
     return null;
   },
@@ -128,9 +130,9 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
 export const hasIkkeOppfyltSoknadsfristvilkar = vilkar =>
   vilkar.some(
     v =>
-      v.vilkarType.kode === vilkarType.SOKNADFRISTVILKARET &&
+      v.vilkarType === vilkarType.SOKNADFRISTVILKARET &&
       Array.isArray(v.perioder) &&
-      v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT),
+      v.perioder.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_OPPFYLT),
   );
 
 export const medholdIKlage = klageVurderingResultat =>
@@ -156,7 +158,7 @@ export const skalSkriveFritekstGrunnetFastsettingAvBeregning = (beregningsgrunnl
     return false;
   }
   const behandlingHarLøstBGAP = aksjonspunkter.find(
-    ap => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon.kode) && ap.status.kode === aksjonspunktStatus.UTFORT,
+    ap => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon) && ap.status === aksjonspunktStatus.UTFORT,
   );
 
   const alleAndelerFørstePerioder = beregningsgrunnlag

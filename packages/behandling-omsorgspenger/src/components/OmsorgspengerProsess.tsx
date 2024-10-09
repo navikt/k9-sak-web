@@ -11,14 +11,8 @@ import {
   prosessStegHooks,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import {
-  ArbeidsgiverOpplysningerPerId,
-  Behandling,
-  Fagsak,
-  FagsakPerson,
-  FeatureToggles,
-  KodeverkMedNavn,
-} from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, FeatureToggles } from '@k9-sak-web/types';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
 import { useCallback, useMemo, useState } from 'react';
 
 import { bestemAvsenderApp, forhandsvis, getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
@@ -31,7 +25,7 @@ interface OwnProps {
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: AlleKodeverk;
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;
@@ -73,7 +67,7 @@ const getHentFritekstbrevHtmlCallback =
       ytelseType: fagsak.sakstype,
       saksnummer: fagsak.saksnummer,
       aktørId: fagsakPerson.aktørId,
-      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type),
     });
 
 const getLagringSideeffekter =
@@ -239,7 +233,7 @@ const OmsorgspengerProsess = ({
         behandlingsresultat={behandling.behandlingsresultat}
       />
       <FatterVedtakStatusModal
-        visModal={visFatterVedtakModal && behandling.status.kode === behandlingStatus.FATTER_VEDTAK}
+        visModal={visFatterVedtakModal && behandling.status === behandlingStatus.FATTER_VEDTAK}
         lukkModal={useCallback(() => {
           toggleFatterVedtakModal(false);
           opneSokeside();

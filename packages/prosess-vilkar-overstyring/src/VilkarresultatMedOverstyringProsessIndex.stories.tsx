@@ -23,24 +23,20 @@ const avslagsarsaker = [
 
 const vilkarOpptjening = [
   {
-    vilkarType: { kode: vilkarType.OPPTJENINGSVILKARET, kodeverk: 'test' },
+    vilkarType: vilkarType.OPPTJENINGSVILKARET,
     overstyrbar: true,
     perioder: [
       {
-        vilkarStatus: { kode: vilkarUtfallType.OPPFYLT, kodeverk: 'test' },
-        merknad: {
-          kode: '7847B',
-        },
+        vilkarStatus: vilkarUtfallType.OPPFYLT,
+        merknad: '7847B',
         periode: {
           fom: '2020-01-30',
           tom: '2020-02-29',
         },
       },
       {
-        vilkarStatus: { kode: vilkarUtfallType.OPPFYLT, kodeverk: 'test' },
-        merknad: {
-          kode: '-',
-        },
+        vilkarStatus: vilkarUtfallType.OPPFYLT,
+        merknad: '-',
         periode: {
           fom: '2020-03-01',
           tom: '2020-03-31',
@@ -52,11 +48,11 @@ const vilkarOpptjening = [
 
 const vilkarMedlemskap = [
   {
-    vilkarType: { kode: vilkarType.MEDLEMSKAPSVILKARET, kodeverk: 'test' },
+    vilkarType: vilkarType.MEDLEMSKAPSVILKARET,
     overstyrbar: true,
     perioder: [
       {
-        vilkarStatus: { kode: vilkarUtfallType.OPPFYLT, kodeverk: 'test' },
+        vilkarStatus: vilkarUtfallType.OPPFYLT,
         periode: {
           fom: '2020-01-30',
           tom: '2020-02-29',
@@ -74,7 +70,7 @@ export default {
 const behandling = {
   id: 1,
   versjon: 1,
-  type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
+  type: behandlingType.FØRSTEGANGSSØKNAD,
 } as Behandling;
 
 export const visOverstyringspanelForOpptjening = args => {
@@ -149,9 +145,7 @@ export const visOverstyrtAksjonspunktSomErBekreftet = args => {
         {
           ...behandling,
           behandlingsresultat: {
-            avslagsarsak: {
-              kode: 'AVSLAG_TEST_1',
-            },
+            avslagsarsak: 'AVSLAG_TEST_1',
           },
         } as Behandling
       }
@@ -161,14 +155,8 @@ export const visOverstyrtAksjonspunktSomErBekreftet = args => {
       aksjonspunkter={
         [
           {
-            definisjon: {
-              kode: aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET,
-              kodeverk: '',
-            },
-            status: {
-              kode: aksjonspunktStatus.UTFORT,
-              kodeverk: '',
-            },
+            definisjon: aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET,
+            status: aksjonspunktStatus.UTFORT,
             kanLoses: false,
             begrunnelse: 'Dette er en begrunnelse',
           },

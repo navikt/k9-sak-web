@@ -1,5 +1,5 @@
 import React from 'react';
-import utenlandsoppholdMock, { utenlandsoppholdÅrsakMock } from '../../mocks/mockdata/utenlandsoppholdMock';
+import utenlandsoppholdMock from '../../mocks/mockdata/utenlandsoppholdMock';
 import Utenlandsopphold from './Utenlandsopphold';
 
 export default {
@@ -7,6 +7,4 @@ export default {
   component: Utenlandsopphold,
 };
 
-export const UtenlandsoppholdVisning = () => (
-  <Utenlandsopphold utenlandsopphold={utenlandsoppholdMock} kodeverk={utenlandsoppholdÅrsakMock} />
-);
+export const UtenlandsoppholdVisning = () => <Utenlandsopphold utenlandsopphold={utenlandsoppholdMock} />;

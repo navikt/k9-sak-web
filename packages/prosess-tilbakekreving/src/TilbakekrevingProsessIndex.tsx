@@ -58,7 +58,7 @@ const TilbakekrevingProsessIndex = ({
       vilkarvurdering={vilkarvurdering}
       submitCallback={submitCallback}
       readOnly={isReadOnly}
-      apCodes={Array.isArray(aksjonspunkter) && aksjonspunkter.map(a => a.definisjon.kode)}
+      apCodes={Array.isArray(aksjonspunkter) && aksjonspunkter.map(a => a.definisjon)}
       readOnlySubmitButton={readOnlySubmitButton}
       navBrukerKjonn={navBrukerKjonn}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}

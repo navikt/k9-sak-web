@@ -4,7 +4,6 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-
 import React from 'react';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
@@ -25,6 +24,10 @@ describe('<CheckPersonStatusForm>', () => {
       },
     ],
   };
+
+  // Mock
+  const kodeverkNavnFraKode = (kode, kodeverkType) =>
+    alleKodeverk[`${kodeverkType}`].find(item => item.kode === kode).navn;
 
   it('skal vise hjelpetekst med original personstatus og begrunnelse/submit', () => {
     renderWithIntlAndReduxForm(
@@ -138,29 +141,16 @@ describe('<CheckPersonStatusForm>', () => {
   it('skal sette opp initielle verdier gitt behandling og behandlingspunkt', () => {
     const behandlingHenlagt = true;
     const personopplysning = {
-      personstatus: {
-        kode: 'UKJENT',
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
+      personstatus: 'UKJENT',
       avklartPersonstatus: {
-        orginalPersonstatus: {
-          kode: 'UKJENT',
-          kodeverk: 'PERSONSTATUS_TYPE',
-        },
-        overstyrtPersonstatus: {
-          kode: personstatusType.BOSATT,
-          kodeverk: 'PERSONSTATUS_TYPE',
-        },
+        orginalPersonstatus: 'UKJENT',
+        overstyrtPersonstatus: personstatusType.BOSATT,
       },
     };
     const aksjonspunkter = [
       {
-        definisjon: {
-          kode: 'test',
-        },
-        status: {
-          kode: aksjonspunktStatus.AVBRUTT,
-        },
+        definisjon: 'test',
+        status: aksjonspunktStatus.AVBRUTT,
         begrunnelse: 'Dette er en begrunnelse',
       },
     ];
@@ -169,7 +159,7 @@ describe('<CheckPersonStatusForm>', () => {
       behandlingHenlagt,
       aksjonspunkter,
       personopplysning,
-      alleKodeverk,
+      kodeverkNavnFraKode,
     );
 
     expect(initialValues).toEqual({
@@ -183,29 +173,16 @@ describe('<CheckPersonStatusForm>', () => {
   it('skal fortsette behandlingen når aksjonspunkt er lukket og behandlingsstatus er ulik avsluttet', () => {
     const behandlingHenlagt = false;
     const personopplysning = {
-      personstatus: {
-        kode: 'UKJENT',
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
+      personstatus: 'UKJENT',
       avklartPersonstatus: {
-        orginalPersonstatus: {
-          kode: 'UKJENT',
-          kodeverk: 'PERSONSTATUS_TYPE',
-        },
-        overstyrtPersonstatus: {
-          kode: personstatusType.BOSATT,
-          kodeverk: 'PERSONSTATUS_TYPE',
-        },
+        orginalPersonstatus: 'UKJENT',
+        overstyrtPersonstatus: personstatusType.BOSATT,
       },
     };
     const aksjonspunkter = [
       {
-        definisjon: {
-          kode: 'test',
-        },
-        status: {
-          kode: aksjonspunktStatus.AVBRUTT,
-        },
+        definisjon: 'test',
+        status: aksjonspunktStatus.AVBRUTT,
         begrunnelse: 'Dette er en begrunnelse',
       },
     ];
@@ -214,7 +191,7 @@ describe('<CheckPersonStatusForm>', () => {
       behandlingHenlagt,
       aksjonspunkter,
       personopplysning,
-      alleKodeverk,
+      kodeverkNavnFraKode,
     );
 
     expect(initialValues).toEqual({
@@ -228,19 +205,12 @@ describe('<CheckPersonStatusForm>', () => {
   it('skal ikke ha satt verdi for om behandlingen skal fortsette om aksjonspunktet er åpent', () => {
     const behandlingHenlagt = false;
     const personopplysning = {
-      personstatus: {
-        kode: 'UKJENT',
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
+      personstatus: 'UKJENT',
     };
     const aksjonspunkter = [
       {
-        definisjon: {
-          kode: 'test',
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: 'test',
+        status: aksjonspunktStatus.OPPRETTET,
         begrunnelse: 'Dette er en begrunnelse',
       },
     ];
@@ -249,7 +219,7 @@ describe('<CheckPersonStatusForm>', () => {
       behandlingHenlagt,
       aksjonspunkter,
       personopplysning,
-      alleKodeverk,
+      kodeverkNavnFraKode,
     );
 
     expect(initialValues).toEqual({

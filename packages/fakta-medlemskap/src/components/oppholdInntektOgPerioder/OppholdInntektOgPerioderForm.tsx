@@ -68,12 +68,12 @@ const medlemAksjonspunkter = [
 
 export const transformValues = (values: OppholdInntektOgPerioderFormState, aksjonspunkter: Aksjonspunkt[]) => {
   const aktiveMedlemAksjonspunkter = aksjonspunkter
-    .filter(ap => medlemAksjonspunkter.includes(ap.definisjon.kode))
+    .filter(ap => medlemAksjonspunkter.includes(ap.definisjon))
     .filter(ap => ap.erAktivt)
-    .filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
+    .filter(ap => ap.definisjon !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
 
   return aktiveMedlemAksjonspunkter.map(aksjonspunkt => ({
-    kode: aksjonspunkt.definisjon.kode,
+    kode: aksjonspunkt.definisjon,
     bekreftedePerioder: values.perioder
       .map(periode => {
         const {
@@ -100,9 +100,9 @@ export const transformValues = (values: OppholdInntektOgPerioderFormState, aksjo
       })
       .filter(
         periode =>
-          periode.aksjonspunkter.includes(aksjonspunkt.definisjon.kode) ||
+          periode.aksjonspunkter.includes(aksjonspunkt.definisjon) ||
           (periode.aksjonspunkter.length > 0 &&
-            aksjonspunkt.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
+            aksjonspunkt.definisjon === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
       ),
   }));
 };
@@ -113,7 +113,6 @@ const buildInitialValues = (
   medlemskap: Medlemskap,
   perioder: Periode[],
   aksjonspunkter: Aksjonspunkt[],
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] },
   valgtPeriode?: Periode,
 ): OppholdInntektOgPerioderFormState => ({
   soknad,
@@ -125,7 +124,6 @@ const buildInitialValues = (
     soknad,
     medlemskap.medlemskapPerioder,
     medlemskap.fom,
-    alleKodeverk,
     valgtPeriode,
   ),
 });
@@ -149,7 +147,6 @@ export const OppholdInntektOgPerioderForm = ({
   readOnly,
   submittable,
   aksjonspunkter,
-  alleKodeverk,
   alleMerknaderFraBeslutter,
   soknad,
   fagsakPerson,
@@ -174,7 +171,6 @@ export const OppholdInntektOgPerioderForm = ({
       medlemskap,
       oppdatertePerioder || initialPerioder,
       aksjonspunkter,
-      alleKodeverk,
       nyValgtPeriode || valgtPeriode,
     );
 
@@ -182,7 +178,7 @@ export const OppholdInntektOgPerioderForm = ({
     defaultValues: getInitialValues(),
   });
 
-  const hasOpenAksjonspunkter = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const hasOpenAksjonspunkter = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status));
 
   const handleSubmit = (formState: OppholdInntektOgPerioderFormState) => {
     submitCallback(transformValues(formState, aksjonspunkter));
@@ -269,16 +265,11 @@ export const OppholdInntektOgPerioderForm = ({
           submittable={submittable}
           updateOppholdInntektPeriode={updateOppholdInntektPeriode}
           periodeResetCallback={periodeResetCallback}
-          alleKodeverk={alleKodeverk}
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
         />
       )}
       {featureToggles?.AUTOMATISK_VURDERT_MEDLEMSKAP && erAutomatiskVurdert && (
-        <GrunnlagForAutomatiskVurdering
-          alleKodeverk={alleKodeverk}
-          personopplysninger={medlemskap.personopplysninger}
-          soknad={soknad}
-        />
+        <GrunnlagForAutomatiskVurdering personopplysninger={medlemskap.personopplysninger} soknad={soknad} />
       )}
 
       <VerticalSpacer twentyPx />

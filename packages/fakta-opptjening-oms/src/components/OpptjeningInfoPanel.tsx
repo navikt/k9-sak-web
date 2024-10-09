@@ -1,6 +1,12 @@
+import React from 'react';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
+import { connect } from 'react-redux';
+import moment from 'moment';
 import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { addDaysToDate, omit } from '@fpsak-frontend/utils';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import {
   Aksjonspunkt,
   ArbeidsgiverOpplysningerPerId,
@@ -11,11 +17,6 @@ import {
   UtlandDokStatus,
 } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
-import moment from 'moment';
-import React from 'react';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
 import OpptjeningFaktaForm from './OpptjeningFaktaForm';
 
 export const formName = 'OpptjeningInfoPanelForm';
@@ -64,25 +65,30 @@ export const OpptjeningInfoPanel = ({
   submitting,
   dirty,
   handleSubmit,
-}: Partial<OpptjeningInfoPanelProps> & InjectedFormProps & StateProps) => (
-  <form onSubmit={handleSubmit}>
-    <OpptjeningFaktaForm
-      behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
-      opptjeningList={opptjeningList}
-      dokStatus={dokStatus}
-      readOnly={readOnly}
-      harApneAksjonspunkter={harApneAksjonspunkter}
-      hasAksjonspunkt={aksjonspunkt !== undefined}
-      formName={formName}
-      submitting={submitting}
-      isDirty={dirty}
-      alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-      alleKodeverk={alleKodeverk}
-      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-    />
-  </form>
-);
+}: Partial<OpptjeningInfoPanelProps> & InjectedFormProps & StateProps) => {
+  const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
+  const kodeverkNavnFraKode = getKodeverkNavnFraKodeFn();
+  return (
+    <form onSubmit={handleSubmit}>
+      <OpptjeningFaktaForm
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        opptjeningList={opptjeningList}
+        dokStatus={dokStatus}
+        readOnly={readOnly}
+        harApneAksjonspunkter={harApneAksjonspunkter}
+        hasAksjonspunkt={aksjonspunkt !== undefined}
+        formName={formName}
+        submitting={submitting}
+        isDirty={dirty}
+        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+        alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        kodeverkNavnFraKode={kodeverkNavnFraKode}
+      />
+    </form>
+  );
+};
 
 const addDay = (date: string) => addDaysToDate(date, 1);
 const getOpptjeningsperiodeIfEqual = (activityDate: string, opptjeningsperiodeDate: string) =>
@@ -129,7 +135,7 @@ export const buildInitialValues = createSelector(
     return {
       opptjeningList: filteredOpptjeningList,
       aksjonspunkter:
-        aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) || null,
+        aksjonspunkter.filter(ap => ap.definisjon === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) || null,
     };
   },
 );
@@ -183,7 +189,7 @@ const transformValues = (values: Values) => {
   }
   return {
     opptjeningListe: opptjeninger,
-    kode: values.aksjonspunkter[0].definisjon.kode,
+    kode: values.aksjonspunkter[0].definisjon,
   };
 };
 

@@ -1,7 +1,5 @@
 export type OpptjeningAktivitet = Readonly<{
-  aktivitetType: {
-    kode: string;
-  };
+  aktivitetType: string;
   arbeidsforholdRef: string;
   arbeidsgiver: string;
   arbeidsgiverIdentifikator: string;

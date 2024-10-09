@@ -27,9 +27,7 @@ const opptjeningNårEnHarAksjonspunkt = {
       },
       opptjeningAktivitetList: [
         {
-          aktivitetType: {
-            kode: opptjeningAktivitetType.NÆRING,
-          },
+          aktivitetType: opptjeningAktivitetType.NÆRING,
           originalFom: null,
           originalTom: null,
           opptjeningFom: '1995-09-14',
@@ -49,9 +47,7 @@ const opptjeningNårEnHarAksjonspunkt = {
           begrunnelse: null,
         },
         {
-          aktivitetType: {
-            kode: opptjeningAktivitetType.ARBEID,
-          },
+          aktivitetType: opptjeningAktivitetType.ARBEID,
           originalFom: null,
           originalTom: null,
           opptjeningFom: '2018-01-01',
@@ -71,9 +67,7 @@ const opptjeningNårEnHarAksjonspunkt = {
           begrunnelse: null,
         },
         {
-          aktivitetType: {
-            kode: opptjeningAktivitetType.ARBEID,
-          },
+          aktivitetType: opptjeningAktivitetType.ARBEID,
           originalFom: null,
           originalTom: null,
           opptjeningFom: '2019-10-25',
@@ -113,9 +107,7 @@ const opptjeningUtenAksjonspunkt = {
         {
           opptjeningFom: '2017-01-01',
           opptjeningTom: '9999-12-31',
-          aktivitetType: {
-            kode: opptjeningAktivitetType.ARBEID,
-          },
+          aktivitetType: opptjeningAktivitetType.ARBEID,
           arbeidsforholdRef: 'bf623ff9-6ffb-4a81-b9f1-2648e5530a47',
           arbeidsgiver: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
           arbeidsgiverIdentifikator: '973861778',
@@ -129,17 +121,14 @@ const opptjeningUtenAksjonspunkt = {
         {
           opptjeningFom: '2017-01-01',
           opptjeningTom: '9999-12-31',
-          aktivitetType: {
-            kode: opptjeningAktivitetType.DAGPENGER,
-          },
+          aktivitetType: opptjeningAktivitetType.DAGPENGER,
           arbeidsforholdRef: 'bf623ff9-6ffb-4a81-b9f1-2648e5530a47',
           arbeidsgiver: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
           arbeidsgiverIdentifikator: '973861778',
           erEndret: false,
           erGodkjent: true,
           erManueltOpprettet: false,
-
-          aringRegistreringsdato: '1995-09-14',
+          naringRegistreringsdato: '1995-09-14',
           oppdragsgiverOrg: '973861778',
           stillingsandel: 50,
         },
@@ -163,12 +152,8 @@ export const visAksjonspunktForOpptjeningsvilkåret = args => (
     aksjonspunkter={
       [
         {
-          definisjon: {
-            kode: aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
+          definisjon: aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING,
+          status: aksjonspunktStatus.OPPRETTET,
           begrunnelse: undefined,
           kanLoses: true,
           erAktivt: true,

@@ -1,13 +1,12 @@
-import { Kodeverk } from '@k9-sak-web/types';
 import { PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
 import { Periode } from './Periode';
 
 export interface MedlemskapPeriode {
   fom: string;
   tom: string;
-  medlemskapType: Kodeverk;
-  dekningType: Kodeverk;
-  kildeType: Kodeverk;
+  medlemskapType: string;
+  dekningType: string;
+  kildeType: string;
   beslutningsdato: string | null;
 }
 

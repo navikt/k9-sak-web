@@ -1,5 +1,3 @@
-import Kodeverk from './kodeverkTsType';
-
 export type KlageVurderingResultat = Readonly<{
   klageVurdertAv: string;
   klageVurdering?: string;
@@ -18,7 +16,7 @@ export type KlageVurdering = Readonly<{
       navn?: string;
     }[];
     paKlagdBehandlingId: number;
-    paklagdBehandlingType: Kodeverk;
+    paklagdBehandlingType: string;
     begrunnelse: string;
     erKlagerPart: boolean;
     erKlageKonkret: boolean;
@@ -30,7 +28,7 @@ export type KlageVurdering = Readonly<{
       navn?: string;
     }[];
     paKlagdBehandlingId: number;
-    paklagdBehandlingType: Kodeverk;
+    paklagdBehandlingType: string;
     begrunnelse: string;
     erKlagerPart: boolean;
     erKlageKonkret: boolean;

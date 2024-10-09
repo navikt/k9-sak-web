@@ -128,7 +128,7 @@ VilkarResultPickerRHF.buildInitialValues = (
   aksjonspunkter: Aksjonspunkt[],
   status: string,
 ): VilkarResultPickerFormState => {
-  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status));
   const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
   return {
     erVilkarOk,

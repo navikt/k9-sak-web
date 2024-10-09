@@ -1,16 +1,12 @@
 import PropTypes from 'prop-types';
 
 const feilutbetalingAarsakPropType = PropTypes.shape({
-  hendelseTyper: PropTypes.arrayOf(PropTypes.shape({
-    hendelseType: PropTypes.shape({
-      kode: PropTypes.string.isRequired,
-      navn: PropTypes.string.isRequired,
+  hendelseTyper: PropTypes.arrayOf(
+    PropTypes.shape({
+      hendelseType: PropTypes.string.isRequired,
+      hendelseUndertyper: PropTypes.arrayOf(PropTypes.string.isRequired),
     }),
-    hendelseUndertyper: PropTypes.arrayOf(PropTypes.shape({
-      kode: PropTypes.string.isRequired,
-      navn: PropTypes.string.isRequired,
-    })),
-  })).isRequired,
+  ).isRequired,
 });
 
 export default feilutbetalingAarsakPropType;

@@ -13,6 +13,7 @@ import isEqual from 'lodash/isEqual';
 import React from 'react';
 import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
+
 import styles from './sykdomProsessIndex.module.css';
 
 const cx = classNames.bind(styles);
@@ -54,7 +55,7 @@ interface SykdomProsessIndexProps {
 
 const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomProsessIndexProps) => {
   const [activePeriode, setActivePeriode] = React.useState(perioder[0]);
-  const status = activePeriode?.vilkarStatus.kode || vilkarUtfallType.IKKE_VURDERT;
+  const status = activePeriode?.vilkarStatus || vilkarUtfallType.IKKE_VURDERT;
   const erOppfylt = vilkarUtfallType.OPPFYLT === status;
   const erVilkarOk = vilkarUtfallType.IKKE_VURDERT !== status ? erOppfylt : undefined;
   const skalBrukeSidemeny = perioder.length > 1;

@@ -1,16 +1,16 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
-import { Aksjonspunkt, Behandling, Venteaarsak } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
 import SettPaVentParams from '../../types/settPaVentParamsTsType';
 
 interface BehandlingPaVentProps {
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
-  kodeverk: { [key: string]: Venteaarsak[] };
+  kodeverk: AlleKodeverk;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   erTilbakekreving?: boolean;
 }
@@ -18,7 +18,6 @@ interface BehandlingPaVentProps {
 const BehandlingPaVent = ({
   behandling,
   aksjonspunkter,
-  kodeverk,
   settPaVent,
   erTilbakekreving = false,
 }: BehandlingPaVentProps) => {
@@ -42,16 +41,16 @@ const BehandlingPaVent = ({
   const erManueltSattPaVent = useMemo(
     () =>
       (aksjonspunkter || [])
-        .filter(ap => isAksjonspunktOpen(ap.status.kode))
-        .some(ap => ap.definisjon.kode === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT),
+        .filter(ap => isAksjonspunktOpen(ap.status))
+        .some(ap => ap.definisjon === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT),
     [aksjonspunkter],
   );
 
   const ventearsakVariant = useMemo(
     () =>
       (aksjonspunkter || [])
-        .filter(ap => isAksjonspunktOpen(ap.status.kode))
-        .find(ap => ap.definisjon.kode === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT)?.venteårsakVariant,
+        .filter(ap => isAksjonspunktOpen(ap.status))
+        .find(ap => ap.definisjon === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT)?.venteårsakVariant,
     [aksjonspunkter],
   );
 
@@ -66,7 +65,6 @@ const BehandlingPaVent = ({
       frist={behandling.fristBehandlingPaaVent}
       ventearsak={behandling.venteArsakKode}
       hasManualPaVent={erManueltSattPaVent}
-      ventearsaker={kodeverk[kodeverkTyper.VENT_AARSAK]}
       erTilbakekreving={erTilbakekreving}
       ventearsakVariant={ventearsakVariant}
       showModal

@@ -2,7 +2,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { FunctionComponent } from 'react';
 
-import { Aksjonspunkt, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
+import { Aksjonspunkt, Personopplysninger } from '@k9-sak-web/types';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { OppholdInntektOgPerioderFormState, OppholdINorgeOgAdresserFaktaPanelFormState } from './FormState';
 import { MerknaderFraBeslutter } from './MerknaderFraBeslutter';
@@ -12,7 +12,6 @@ import { Soknad } from './Soknad';
 
 interface OppholdINorgeOgAdresserFaktaPanelProps {
   readOnly: boolean;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   alleMerknaderFraBeslutter: MerknaderFraBeslutter;
 }
 
@@ -31,7 +30,7 @@ interface StaticFunctions {
  * Viser opphold i innland og utland som er relevante for søker. ReadOnly.
  */
 const OppholdINorgeOgAdresserFaktaPanel: FunctionComponent<OppholdINorgeOgAdresserFaktaPanelProps> &
-  StaticFunctions = ({ readOnly, alleKodeverk, alleMerknaderFraBeslutter }) => {
+  StaticFunctions = ({ readOnly, alleMerknaderFraBeslutter }) => {
   const { control } = useFormContext<OppholdInntektOgPerioderFormState>();
   const { foreldre, opphold, hasBosattAksjonspunkt, isBosattAksjonspunktClosed } = useWatch({
     control,
@@ -39,7 +38,6 @@ const OppholdINorgeOgAdresserFaktaPanel: FunctionComponent<OppholdINorgeOgAdress
   });
   return (
     <OppholdINorgeOgAdresser
-      alleKodeverk={alleKodeverk}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       foreldre={foreldre}
       hasBosattAksjonspunkt={hasBosattAksjonspunkt}
@@ -76,15 +74,15 @@ OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (
 
   const filteredAp = aksjonspunkter.filter(
     ap =>
-      ap.definisjon.kode === aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT ||
+      ap.definisjon === aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT ||
       (periode?.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT) &&
-        ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
+        ap.definisjon === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
   );
 
   return {
     opphold,
     hasBosattAksjonspunkt: filteredAp.length > 0,
-    isBosattAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status.kode)),
+    isBosattAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status)),
     foreldre: parents,
     bosattVurdering:
       periode?.bosattVurdering || periode?.bosattVurdering === false ? periode.bosattVurdering : undefined,

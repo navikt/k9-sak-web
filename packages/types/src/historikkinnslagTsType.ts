@@ -1,7 +1,7 @@
-import Kodeverk from './kodeverkTsType';
+import SkjermlenkeTyper from './totrinnskontroll/SkjermlenkeType';
 
 export type HistorikkinnslagEndretFelt = {
-  endretFeltNavn: Kodeverk;
+  endretFeltNavn: string;
   navnVerdi?: string;
   klNavn?: string;
   fraVerdi?: string | number | boolean;
@@ -11,7 +11,7 @@ export type HistorikkinnslagEndretFelt = {
 };
 
 export type HistorikkInnslagOpplysning = {
-  opplysningType?: Kodeverk;
+  opplysningType?: string;
   tilVerdi?: string;
 };
 
@@ -22,22 +22,24 @@ export type HistorikkInnslagAksjonspunkt = {
 };
 
 export type HistorikkinnslagDel = {
-  begrunnelse?: Kodeverk;
+  begrunnelse?: string; // Dette er en kodeverkkode, men var avhengig av objektet, begrunnelseKodeverkType er lagt til for å kunne slå opp
+  begrunnelseKodeverkType?: string; // Kodeverktype trengs for å slå opp begrunnelseskoden i kodeverk, er lagt til i backend ifm. kodverksendringene
   begrunnelseFritekst?: string;
   hendelse?: {
-    navn?: Kodeverk;
+    navn?: string;
     verdi?: string;
   };
   opplysninger?: HistorikkInnslagOpplysning[];
   soeknadsperiode?: {
-    soeknadsperiodeType?: Kodeverk;
+    soeknadsperiodeType?: string;
     navnVerdi?: string;
     tilVerdi?: string;
   };
-  skjermlenke?: Kodeverk;
-  aarsak?: Kodeverk;
+  skjermlenke?: SkjermlenkeTyper;
+  aarsak?: string;
+  aarsakKodeverkType?: string; // Kodeverktype trengs for å slå opp årsakskoden i kodeverk, er lagt til i backend ifm. kodverksendringene
   tema?: {
-    endretFeltNavn: Kodeverk;
+    endretFeltNavn: string;
     klNavn: string;
     navnVerdi: string;
   };
@@ -62,10 +64,10 @@ export type HistorikkInnslagDokumentLink = Readonly<{
 export type Historikkinnslag = Readonly<{
   opprettetAv?: string;
   opprettetTidspunkt: string;
-  type: Kodeverk;
+  type: string;
   behandlingId?: number;
-  kjoenn: Kodeverk;
-  aktoer: Kodeverk;
+  kjoenn: string;
+  aktoer: string;
   dokumentLinks?: HistorikkInnslagDokumentLink[];
   historikkinnslagDeler: HistorikkinnslagDel[];
 }>;

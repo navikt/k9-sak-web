@@ -3,14 +3,14 @@ import React, { useMemo } from 'react';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { Aksjonspunkt, Kodeverk } from '@k9-sak-web/types';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 
 import styles from './margMarkering.module.css';
 
 const classNames = classnames.bind(styles);
 
 interface OwnProps {
-  behandlingStatus: Kodeverk;
+  behandlingStatus: string;
   aksjonspunkter: Aksjonspunkt[];
   isReadOnly: boolean;
   visAksjonspunktMarkering?: boolean;
@@ -29,12 +29,12 @@ const MargMarkering = ({
   }
 
   const ikkeAkseptertAvBeslutter =
-    behandlingStatus.kode === BehandlingStatus.BEHANDLING_UTREDES &&
+    behandlingStatus === BehandlingStatus.BEHANDLING_UTREDES &&
     aksjonspunkter[0].toTrinnsBehandling &&
     aksjonspunkter[0].toTrinnsBehandlingGodkjent === false;
 
   const harApnentAksjonspunktSomKanLoses = useMemo(
-    () => aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses),
+    () => aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status) && ap.kanLoses),
     [aksjonspunkter],
   );
   const visAksjonspunkt = visAksjonspunktMarkering && harApnentAksjonspunktSomKanLoses && !isReadOnly;

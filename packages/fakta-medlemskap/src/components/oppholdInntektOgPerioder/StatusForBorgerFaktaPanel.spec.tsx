@@ -66,14 +66,8 @@ describe('<StatusForBorgerFaktaPanel>', () => {
     };
     const aksjonspunkter: Aksjonspunkt[] = [
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
-          kodeverk: '',
-        },
-        status: {
-          kode: 'UTFO',
-          kodeverk: '',
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
+        status: 'UTFO',
         kanLoses: false,
         erAktivt: false,
       },
@@ -140,14 +134,8 @@ describe('<StatusForBorgerFaktaPanel>', () => {
     };
     const aksjonspunkter: Aksjonspunkt[] = [
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
-          kodeverk: '',
-        },
-        status: {
-          kode: 'UTFO',
-          kodeverk: '',
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
+        status: 'UTFO',
         kanLoses: false,
         erAktivt: false,
       },

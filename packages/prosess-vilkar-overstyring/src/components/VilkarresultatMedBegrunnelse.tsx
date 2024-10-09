@@ -2,7 +2,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { VerticalSpacer, useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import { VilkarResultPickerRHF } from '@k9-sak-web/prosess-felles';
-import { Aksjonspunkt, KodeverkMedNavn, Vilkarperiode } from '@k9-sak-web/types';
+import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 
 import { FunctionComponent } from 'react';
@@ -14,7 +14,6 @@ interface VilkarresultatMedBegrunnelseProps {
   erVilkarOk?: boolean;
   readOnly: boolean;
   erMedlemskapsPanel: boolean;
-  avslagsarsaker: KodeverkMedNavn[];
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
   skalViseBegrunnelse?: boolean;
@@ -40,7 +39,6 @@ interface StaticFunctions {
 export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBegrunnelseProps> & StaticFunctions = ({
   erVilkarOk,
   readOnly,
-  avslagsarsaker,
   erMedlemskapsPanel,
   skalViseBegrunnelse = true,
   customVilkarIkkeOppfyltText,
@@ -58,7 +56,6 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
         </>
       )}
       <VilkarResultPickerRHF
-        avslagsarsaker={avslagsarsaker}
         customVilkarOppfyltText={
           <FormattedMessage
             id={customVilkarOppfyltText ? customVilkarOppfyltText.id : 'VilkarresultatMedOverstyringForm.ErOppfylt'}

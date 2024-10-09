@@ -1,8 +1,6 @@
 import React, { ReactNode } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { KodeverkMedNavn } from '@k9-sak-web/types';
-
 import FagsakProfile from './components/FagsakProfile';
 import messages from '../i18n/nb_NO.json';
 
@@ -18,8 +16,8 @@ const intl = createIntl(
 
 interface OwnProps {
   saksnummer: string;
-  fagsakYtelseType: KodeverkMedNavn;
-  fagsakStatus: KodeverkMedNavn;
+  fagsakYtelseType: string;
+  fagsakStatus: string;
   renderBehandlingMeny: () => ReactNode;
   renderBehandlingVelger: () => ReactNode;
   dekningsgrad?: number;

@@ -1,8 +1,6 @@
 import { action } from '@storybook/addon-actions';
 import React from 'react';
-
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aktsomhet from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/aktsomhet';
 import { Behandling, BeregningsresultatTilbakekreving } from '@k9-sak-web/types';
 import VedtakTilbakekrevingProsessIndex from './VedtakTilbakekrevingProsessIndex';
@@ -154,10 +152,7 @@ const beregningsresultat = {
         tom: '2019-01-01',
       },
       feilutbetaltBeløp: 10000,
-      vurdering: {
-        kode: aktsomhet.FORSETT,
-        kodeverk: 'AKTSOMHET',
-      },
+      vurdering: aktsomhet.FORSETT, // AKTSOMHET
       andelAvBeløp: 50,
       renterProsent: 0,
       tilbakekrevingBeløp: 5000,
@@ -169,38 +164,15 @@ const beregningsresultat = {
         tom: '2019-01-01',
       },
       feilutbetaltBeløp: 1000,
-      vurdering: {
-        kode: aktsomhet.FORSETT,
-        kodeverk: 'AKTSOMHET',
-      },
+      vurdering: aktsomhet.FORSETT, // AKTSOMHET
       andelAvBeløp: 50,
       renterProsent: 80,
       tilbakekrevingBeløp: 500,
       tilbakekrevingBeløpEtterSkatt: 400,
     },
   ],
-  vedtakResultatType: {
-    kode: vedtakResultatType.DELVIS_TILBAKEBETALING,
-    kodeverk: 'VEDTAK_RESULTAT_TYPE',
-  },
+  vedtakResultatType: vedtakResultatType.DELVIS_TILBAKEBETALING, // 'VEDTAK_RESULTAT_TYPE'
 } as BeregningsresultatTilbakekreving;
-
-const alleKodeverk = {
-  [kodeverkTyper.VEDTAK_RESULTAT_TYPE]: [
-    {
-      kode: vedtakResultatType.DELVIS_TILBAKEBETALING,
-      navn: 'Delvis tilbakebetaling',
-      kodeverk: 'VEDTAK_RESULTAT_TYPE',
-    },
-  ],
-  [kodeverkTyper.AKTSOMHET]: [
-    {
-      kode: aktsomhet.FORSETT,
-      navn: 'Forsett',
-      kodeverk: 'AKTSOMHET',
-    },
-  ],
-};
 
 export default {
   title: 'prosess/tilbakekreving/prosess-vedtak-tilbakekreving',
@@ -218,7 +190,6 @@ export const visVedtakspanel = args => (
     beregningsresultat={beregningsresultat}
     vedtaksbrev={vedtaksbrev}
     submitCallback={action('button-click') as () => Promise<any>}
-    alleKodeverk={alleKodeverk}
     fetchPreviewVedtaksbrev={action('button-click') as () => Promise<any>}
     aksjonspunktKodeForeslaVedtak={aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK}
     {...args}

@@ -1,4 +1,4 @@
-import { FagsakPerson, Kodeverk } from '@k9-sak-web/types';
+import { FagsakPerson } from '@k9-sak-web/types';
 import { Periode } from './Periode';
 import { Soknad } from './Soknad';
 
@@ -42,7 +42,7 @@ export type PerioderMedMedlemskapFaktaPanelFormState = {
   fixedMedlemskapPerioder?: FixedMedlemskapPerioder[];
   hasPeriodeAksjonspunkt?: boolean;
   isPeriodAksjonspunktClosed?: boolean;
-  medlemskapManuellVurderingType: Kodeverk;
+  medlemskapManuellVurderingType: string;
 };
 
 export type OppholdInntektOgPerioderFormState = {

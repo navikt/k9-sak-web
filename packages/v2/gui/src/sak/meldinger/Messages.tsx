@@ -269,9 +269,9 @@ const Messages = ({
     const loadFritekstForslag = async () => {
       if (valgtMalkode !== undefined) {
         const innhold = await api.hentInnholdBrevmal(
-          fagsak.sakstype.kode,
+          fagsak.sakstype,
           behandling.uuid,
-          bestemAvsenderApp(behandling.type.kode),
+          bestemAvsenderApp(behandling.type),
           valgtMalkode,
         );
         setFritekstForslag(innhold);
@@ -342,7 +342,6 @@ const Messages = ({
     // Ut frå oppførsel til gammal kode ser det ut til at fritekst skal settast når valgt mal ikkje støtter tittel.
     // Ellers skal fritekstbrev prop settast.
     const fritekst = fritekstModus === 'EnkelFritekst' ? fritekstInputValue?.tekst : undefined;
-
     const overstyrtMottaker = resolveOvertyrtMottaker();
     if (overstyrtMottaker === undefined) {
       return undefined;
@@ -399,7 +398,7 @@ const Messages = ({
             fritekstbrev: values.fritekstbrev,
           },
           aktørId: fagsak.person.aktørId,
-          avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+          avsenderApplikasjon: bestemAvsenderApp(behandling.type),
         };
         const pdfBlob = await api.lagForhåndsvisningPdf(forhåndsvisDto);
         window.open(URL.createObjectURL(pdfBlob));

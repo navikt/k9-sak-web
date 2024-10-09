@@ -40,12 +40,12 @@ interface SoknadsfristVilkarFormProps {
   periode?: Vilkarperiode;
   erOverstyrt?: boolean;
   erVilkarOk?: boolean;
-  harAksjonspunkt: boolean;
+  harAksjonspunkt?: boolean;
   harÅpentAksjonspunkt: boolean;
-  isReadOnly: boolean;
+  isReadOnly?: boolean;
   overrideReadOnly: boolean;
   status: string;
-  invalid: boolean;
+  invalid?: boolean;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   alleDokumenter?: DokumentStatus[];
   dokumenterIAktivPeriode?: DokumentStatus[];
@@ -223,7 +223,7 @@ const buildInitialValues = createSelector(
   ],
   (aksjonspunkter, alleDokumenter, status) => {
     const overstyrtAksjonspunkt = aksjonspunkter.find(
-      ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR,
+      ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR,
     );
 
     return {
@@ -290,17 +290,17 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilk
   const periodeFom = periode?.periode?.fom;
   const periodeTom = periode?.periode?.tom;
 
-  return (state, ownProps) => {
+  return (state: any, ownProps: SoknadsfristVilkarFormProps) => {
     const { behandlingId, behandlingVersjon, aksjonspunkter, harÅpentAksjonspunkt, erOverstyrt, overrideReadOnly } =
       ownProps;
 
     const aksjonspunkt = harÅpentAksjonspunkt
-      ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST)
-      : aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR);
+      ? aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST)
+      : aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR);
 
     const isSolvable =
       harÅpentAksjonspunkt || aksjonspunkt !== undefined
-        ? !(aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses)
+        ? !(aksjonspunkt.status === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses)
         : false;
 
     const aksjonspunktCode = harÅpentAksjonspunkt

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
@@ -10,10 +12,6 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
       <VilkarresultatMedOverstyringFormPeriodisert
         isReadOnly
         overstyringApKode="5011"
-        avslagsarsaker={[
-          { kode: 'test1', navn: 'test1', kodeverk: 'test' },
-          { kode: 'test2', navn: 'test1', kodeverk: 'test' },
-        ]}
         lovReferanse="§23"
         hasAksjonspunkt
         overrideReadOnly={false}
@@ -21,15 +19,10 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         visPeriodisering={false}
         erOverstyrt
         aksjonspunkter={[]}
-        behandlingsresultat={{
-          type: { kode: 'test', kodeverk: 'test' },
-        }}
+        behandlingsresultat={{ type: 'test' }}
         behandlingId={1}
         behandlingVersjon={2}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
         medlemskapFom="10.10.2010"
         status=""
         submitCallback={() => undefined}
@@ -39,7 +32,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
             tom: '2020-01-31',
           },
           merknadParametere: {},
-          vilkarStatus: { kode: 'test', kodeverk: 'test' },
+          vilkarStatus: 'test',
         }}
       />,
       { messages },

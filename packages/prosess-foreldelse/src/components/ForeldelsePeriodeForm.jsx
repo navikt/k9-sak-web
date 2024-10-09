@@ -130,7 +130,7 @@ ForeldelsePeriodeFormImpl.propTypes = {
   ...formPropTypes,
 };
 
-const oldForeldetValue = fvType => (fvType.kode !== foreldelseVurderingType.UDEFINERT ? fvType.kode : null);
+const oldForeldetValue = fvType => (fvType !== foreldelseVurderingType.UDEFINERT ? fvType : null);
 const checkForeldetValue = selectedItemData =>
   selectedItemData.foreldet ? selectedItemData.foreldet : oldForeldetValue(selectedItemData.foreldelseVurderingType);
 

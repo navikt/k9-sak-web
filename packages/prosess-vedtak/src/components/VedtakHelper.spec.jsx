@@ -13,19 +13,9 @@ describe('<VedtakHelper>', () => {
   it('hasIkkeOppfyltSoknadsfristvilkar skal returnere true når søknadfristvilkår ikkje er oppfylt', () => {
     const vilkarListe = [
       {
-        vilkarType: {
-          kode: vilkarType.SOKNADFRISTVILKARET,
-          navn: 'Medlemskapsvilkåret',
-        },
+        vilkarType: vilkarType.SOKNADFRISTVILKARET,
         lovReferanse: '§ 22-13, 2. ledd',
-        perioder: [
-          {
-            vilkarStatus: {
-              kode: vilkarUtfallType.IKKE_OPPFYLT,
-              navn: 'test',
-            },
-          },
-        ],
+        perioder: [{ vilkarStatus: vilkarUtfallType.IKKE_OPPFYLT }],
       },
     ];
 
@@ -83,8 +73,8 @@ describe('<VedtakHelper>', () => {
     const beregningsgrunnlagListe = [bg1, bg2];
     const aksjonspunkt = [
       {
-        definisjon: { kode: aksjonspunktKoder.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS },
-        status: { kode: aksjonspunktStatus.UTFORT },
+        definisjon: aksjonspunktKoder.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+        status: aksjonspunktStatus.UTFORT,
       },
     ];
 

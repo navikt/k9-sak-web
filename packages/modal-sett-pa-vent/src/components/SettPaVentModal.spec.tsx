@@ -19,7 +19,6 @@ describe('<SettPaVentModal>', () => {
         ventearsak="ventearsak"
         originalVentearsak="ventearsak"
         hasManualPaVent
-        ventearsaker={[]}
         erTilbakekreving={false}
         showModal
         {...reduxFormPropsMock}
@@ -43,7 +42,6 @@ describe('<SettPaVentModal>', () => {
         ventearsak="ventearsak"
         originalVentearsak="ventearsak"
         hasManualPaVent
-        ventearsaker={[]}
         erTilbakekreving={false}
         {...reduxFormPropsMock}
       />,
@@ -65,7 +63,6 @@ describe('<SettPaVentModal>', () => {
         ventearsak="ventearsak"
         originalVentearsak="ventearsak"
         hasManualPaVent
-        ventearsaker={[]}
         erTilbakekreving={false}
         {...reduxFormPropsMock}
       />,
@@ -87,7 +84,6 @@ describe('<SettPaVentModal>', () => {
         ventearsak="ventearsak"
         originalVentearsak="ventearsak"
         hasManualPaVent
-        ventearsaker={[]}
         erTilbakekreving={false}
         {...reduxFormPropsMock}
       />,
@@ -109,7 +105,6 @@ describe('<SettPaVentModal>', () => {
         ventearsak="ventearsak"
         originalVentearsak="ventearsak"
         hasManualPaVent
-        ventearsaker={[]}
         erTilbakekreving={false}
         {...reduxFormPropsMock}
       />,
@@ -128,7 +123,6 @@ describe('<SettPaVentModal>', () => {
         ventearsak="ventearsak"
         originalVentearsak="ventearsak"
         hasManualPaVent={false}
-        ventearsaker={[]}
         erTilbakekreving={false}
         {...reduxFormPropsMock}
       />,
@@ -145,7 +139,6 @@ describe('<SettPaVentModal>', () => {
         cancelEvent={vi.fn()}
         frist="2015-10-10"
         originalFrist="2015-10-10"
-        ventearsaker={[]}
         hasManualPaVent={false}
         erTilbakekreving={false}
         {...reduxFormPropsMock}
@@ -163,7 +156,6 @@ describe('<SettPaVentModal>', () => {
         showModal
         cancelEvent={vi.fn()}
         frist="2015-10-10"
-        ventearsaker={[]}
         hasManualPaVent={false}
         erTilbakekreving={false}
         {...reduxFormPropsMock}
@@ -181,13 +173,6 @@ describe('<SettPaVentModal>', () => {
         showModal
         cancelEvent={vi.fn()}
         frist="2015-10-10"
-        ventearsaker={[
-          {
-            kode: 'VENT_PÅ_TILBAKEKREVINGSGRUNNLAG',
-            kodeverk: 'VENT_AARSAK',
-            navn: 'Venter på kravgrunnlag',
-          },
-        ]}
         ventearsak="VENT_PÅ_TILBAKEKREVINGSGRUNNLAG"
         hasManualPaVent={false}
         erTilbakekreving

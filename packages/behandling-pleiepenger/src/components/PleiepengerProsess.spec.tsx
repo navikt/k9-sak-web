@@ -2,8 +2,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
@@ -20,15 +19,34 @@ import FetchedData from '../types/FetchedData';
 import PleiepengerProsess from './PleiepengerProsess';
 
 describe('<PleiepengerProsess>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
-  } as Fagsak;
+    sakstype: fagsakYtelsesType.OMP,
+    status: fagsakStatus.UNDER_BEHANDLING,
+    relasjonsRolleType: '',
+    barnFodt: '',
+    person: {
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+      diskresjonskode: '',
+      dodsdato: '',
+      aktørId: '',
+    },
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
+  };
 
   const fagsakPerson = {
     alder: 30,
-    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    personstatusType: personstatusType.BOSATT,
     erDod: false,
     erKvinne: true,
     navn: 'Espen Utvikler',
@@ -37,8 +55,8 @@ describe('<PleiepengerProsess>', () => {
   const behandling = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -58,86 +76,86 @@ describe('<PleiepengerProsess>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+      definisjon: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
   ];
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.SOKERSOPPLYSNINGSPLIKT, kodeverk: 'test' },
+      vilkarType: vilkarType.SOKERSOPPLYSNINGSPLIKT,
       overstyrbar: true,
       perioder: [
         {
           merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
     },
     {
-      vilkarType: { kode: vilkarType.BEREGNINGSGRUNNLAGVILKARET, kodeverk: 'test' },
+      vilkarType: vilkarType.BEREGNINGSGRUNNLAGVILKARET,
       overstyrbar: true,
       perioder: [
         {
           merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
     },
     {
-      vilkarType: { kode: vilkarType.MEDLEMSKAPSVILKARET, kodeverk: 'test' },
+      vilkarType: vilkarType.MEDLEMSKAPSVILKARET,
       overstyrbar: true,
       perioder: [
         {
           merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
     },
     {
-      vilkarType: { kode: vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, kodeverk: 'test' },
+      vilkarType: vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
       overstyrbar: true,
       perioder: [
         {
           merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
     },
     {
-      vilkarType: { kode: vilkarType.OPPTJENINGSVILKARET, kodeverk: 'test' },
+      vilkarType: vilkarType.OPPTJENINGSVILKARET,
       overstyrbar: true,
       perioder: [
         {
           merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
     },
     {
-      vilkarType: { kode: vilkarType.OMSORGENFORVILKARET, kodeverk: 'test' },
+      vilkarType: vilkarType.OMSORGENFORVILKARET,
       overstyrbar: true,
       perioder: [
         {
           merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
     },
     {
-      vilkarType: { kode: vilkarType.SOKNADSFRISTVILKARET, kodeverk: 'test' },
+      vilkarType: vilkarType.SOKNADSFRISTVILKARET,
       overstyrbar: true,
       perioder: [
         {
           merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
@@ -149,10 +167,7 @@ describe('<PleiepengerProsess>', () => {
       0: '2019-01-01',
     } as Record<number, string>,
     antallBarn: 1,
-    soknadType: {
-      kode: soknadType.FODSEL,
-      kodeverk: 'test',
-    },
+    soknadType: soknadType.FODSEL,
   } as Soknad;
 
   const arbeidsgiverOpplysningerPerId = {
@@ -179,9 +194,6 @@ describe('<PleiepengerProsess>', () => {
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
-        alleKodeverk={{
-          [kodeverkTyper.AVSLAGSARSAK]: [],
-        }}
         rettigheter={rettigheter}
         valgtProsessSteg="inngangsvilkar"
         valgtFaktaSteg="arbeidsforhold"
@@ -216,9 +228,6 @@ describe('<PleiepengerProsess>', () => {
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
-        alleKodeverk={{
-          [kodeverkTyper.AVSLAGSARSAK]: [],
-        }}
         rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"

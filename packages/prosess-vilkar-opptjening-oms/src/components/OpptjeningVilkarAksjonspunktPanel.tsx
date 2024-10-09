@@ -128,9 +128,9 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       isDirty={dirty}
       readOnlySubmitButton={readOnlySubmitButton || !vilkårPerioder[periodeIndex].vurderesIBehandlingen}
       readOnly={readOnly || !vilkårPerioder[periodeIndex].vurderesIBehandlingen}
-      originalErVilkarOk={vilkårPerioder[periodeIndex].vilkarStatus.kode === 'OPPFYLT'}
+      originalErVilkarOk={vilkårPerioder[periodeIndex].vilkarStatus === 'OPPFYLT'}
       aksjonspunktErLøst={aksjonspunkter.some(
-        ap => aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET === ap.definisjon.kode && ap.status.kode === 'UTFO',
+        ap => aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET === ap.definisjon && ap.status === 'UTFO',
       )}
       lovReferanse={lovReferanse}
       behandlingId={behandlingId}
@@ -207,7 +207,7 @@ const transformValues = (
         tom: opptjening.fastsattOpptjening.opptjeningTom,
       }))
     : [],
-  ...{ kode: Array.isArray(aksjonspunkter) && aksjonspunkter.length ? aksjonspunkter[0].definisjon.kode : null },
+  ...{ kode: Array.isArray(aksjonspunkter) && aksjonspunkter.length ? aksjonspunkter[0].definisjon : null },
 });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps: OpptjeningVilkarAksjonspunktPanelImplProps) => {

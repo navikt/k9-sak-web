@@ -7,7 +7,9 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, KodeverkMedNavn, Periode, Vilkarperiode, vilkarUtfallPeriodisert } from '@k9-sak-web/types';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkType, KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
+import { Aksjonspunkt, Periode, Vilkarperiode, vilkarUtfallPeriodisert } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
 import { parse } from 'date-fns';
 import getPackageIntl from '../../i18n/getPackageIntl';
@@ -31,7 +33,6 @@ type TransformedValues = {
 };
 
 interface OwnProps {
-  avslagsarsaker?: KodeverkMedNavn[];
   erVilkarOk?: string;
   periodeVilkarStatus?: boolean;
   customVilkarIkkeOppfyltText: string | ReactNode;
@@ -63,7 +64,6 @@ interface StaticFunctions {
  * Presentasjonskomponent. Lar NAV-ansatt velge om vilkåret skal oppfylles eller avvises.
  */
 const VilkarResultPicker: FunctionComponent<OwnProps> & StaticFunctions = ({
-  avslagsarsaker,
   erVilkarOk,
   periodeVilkarStatus,
   customVilkarIkkeOppfyltText,
@@ -76,7 +76,9 @@ const VilkarResultPicker: FunctionComponent<OwnProps> & StaticFunctions = ({
   periodeTom,
   valgtPeriodeFom,
   valgtPeriodeTom,
-}) => {
+}: OwnProps) => {
+  const { hentKodeverkForKode } = useKodeverkContext();
+  const avslagsarsaker = hentKodeverkForKode(KodeverkType.AVSLAGSARSAK) as KodeverkObject[];
   const intl = getPackageIntl();
 
   const gyldigFomDatoer = () => ({
@@ -237,7 +239,7 @@ VilkarResultPicker.buildInitialValues = (
   status: string,
   periode: Vilkarperiode,
 ): VilkarResultPickerFormState => {
-  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status));
   let erVilkarOk;
 
   if (status === vilkarUtfallType.OPPFYLT) {

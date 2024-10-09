@@ -1,8 +1,11 @@
+import React from 'react';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { render, screen } from '@testing-library/react';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { BostedSokerPersonopplysninger } from '../types';
 import { BostedSokerView } from './BostedSokerView';
 
@@ -11,96 +14,50 @@ describe('<BostedsokerView>', () => {
     navn: 'Espen Utvikler',
     adresser: [
       {
-        adresseType: {
-          kode: opplysningAdresseType.POSTADRESSE,
-          navn: 'Bostedsadresse',
-        },
+        adresseType: opplysningAdresseType.POSTADRESSE,
         adresselinje1: 'Vei 1',
         postNummer: '1000',
         poststed: 'Oslo',
       },
     ],
-    sivilstand: {
-      kode: sivilstandType.UGIFT,
-      navn: 'Ugift',
-    },
-    region: {
-      kode: 'NORDEN',
-      navn: 'Norden',
-    },
-    personstatus: {
-      kode: 'BOSA',
-      navn: 'Bosatt',
-    },
+    sivilstand: sivilstandType.UGIFT,
+    region: 'NORDEN',
+    personstatus: 'BOSA',
     avklartPersonstatus: {
-      overstyrtPersonstatus: {
-        kode: personstatusType.BOSATT,
-        navn: 'Bosatt',
-      },
+      overstyrtPersonstatus: personstatusType.BOSATT,
     },
   } as BostedSokerPersonopplysninger;
 
-  const regionTypes = [
-    {
-      kode: 'NORDEN',
-      navn: 'Norden',
-    },
-  ] as KodeverkMedNavn[];
-
-  const sivilstandTypes = [
-    {
-      kode: sivilstandType.UGIFT,
-      navn: 'Ugift',
-    },
-  ] as KodeverkMedNavn[];
-
-  const personstatusTypes = [
-    {
-      kode: personstatusType.BOSATT,
-      navn: 'Bosatt',
-    },
-    {
-      kode: personstatusType.DOD,
-      navn: 'Bosatt',
-    },
-  ] as KodeverkMedNavn[];
-
   it('vise navn', () => {
     render(
-      <BostedSokerView
-        personopplysninger={soker}
-        regionTypes={regionTypes}
-        sivilstandTypes={sivilstandTypes}
-        personstatusTypes={personstatusTypes}
-        sokerTypeText="BostedSokerFaktaIndex.Soker"
-      />,
+      <KodeverkProvider
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <BostedSokerView personopplysninger={soker} sokerTypeText="BostedSokerFaktaIndex.Soker" />
+      </KodeverkProvider>,
     );
 
     expect(screen.getByText('Espen Utvikler')).toBeInTheDocument();
   });
 
   it('skal vise  adresse informasjon', () => {
-    render(
-      <BostedSokerView
-        personopplysninger={soker}
-        regionTypes={regionTypes}
-        sivilstandTypes={sivilstandTypes}
-        personstatusTypes={personstatusTypes}
-        sokerTypeText="BostedSokerFaktaIndex.Soker"
-      />,
-    );
+    render(<BostedSokerView personopplysninger={soker} sokerTypeText="BostedSokerFaktaIndex.Soker" />);
     expect(screen.getByText('Vei 1, 1000 Oslo')).toBeInTheDocument();
   });
 
   it('skal vise etiketter', () => {
     render(
-      <BostedSokerView
-        personopplysninger={soker}
-        regionTypes={regionTypes}
-        sivilstandTypes={sivilstandTypes}
-        personstatusTypes={personstatusTypes}
-        sokerTypeText="BostedSokerFaktaIndex.Soker"
-      />,
+      <KodeverkProvider
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <BostedSokerView personopplysninger={soker} sokerTypeText="BostedSokerFaktaIndex.Soker" />
+      </KodeverkProvider>,
     );
     expect(screen.getByText('Bosatt')).toBeInTheDocument();
     expect(screen.getByText('Ugift')).toBeInTheDocument();
@@ -109,19 +66,17 @@ describe('<BostedsokerView>', () => {
 
   it('skal vise ukjent når personstatus ukjent', () => {
     soker.avklartPersonstatus = null;
-    soker.personstatus = {
-      navn: '',
-      kode: '-',
-    } as KodeverkMedNavn;
+    soker.personstatus = '-';
 
     render(
-      <BostedSokerView
-        personopplysninger={soker}
-        regionTypes={regionTypes}
-        sivilstandTypes={sivilstandTypes}
-        personstatusTypes={personstatusTypes}
-        sokerTypeText="BostedSokerFaktaIndex.Soker"
-      />,
+      <KodeverkProvider
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <BostedSokerView personopplysninger={soker} sokerTypeText="BostedSokerFaktaIndex.Soker" />
+      </KodeverkProvider>,
     );
     expect(screen.getByText('Ukjent')).toBeInTheDocument();
     expect(screen.getByText('Ugift')).toBeInTheDocument();

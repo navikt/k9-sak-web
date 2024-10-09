@@ -146,12 +146,12 @@ export const getBekreftAksjonspunktCallback =
 
     if (lagreOverstyrteAksjonspunkter) {
       const aksjonspunkterTilLagring = aksjonspunkter.filter(ap =>
-        aksjonspunktModels.some(apModel => apModel.kode === ap.definisjon.kode),
+        aksjonspunktModels.some(apModel => apModel.kode === ap.definisjon),
       );
       const erOverstyringsaksjonspunkter = aksjonspunkterTilLagring.some(
         ap =>
-          ap.aksjonspunktType.kode === aksjonspunktType.OVERSTYRING ||
-          ap.aksjonspunktType.kode === aksjonspunktType.SAKSBEHANDLEROVERSTYRING,
+          ap.aksjonspunktType === aksjonspunktType.OVERSTYRING ||
+          ap.aksjonspunktType === aksjonspunktType.SAKSBEHANDLEROVERSTYRING,
       );
 
       if (aksjonspunkterTilLagring.length === 0 || erOverstyringsaksjonspunkter) {

@@ -2,16 +2,18 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { dateFormat } from '@fpsak-frontend/utils';
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
-import { Aksjonspunkt, Behandling, KodeverkMedNavn, SubmitCallback, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import { SetStateAction, useEffect, useState } from 'react';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
-import messages from '../i18n/nb_NO.json';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringFormPeriodisert';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
 import VilkarresultatMedOverstyringHeader from './components/VilkarresultatMedOverstyringHeader';
+
 import styles from './vilkarresultatMedOverstyringProsessIndex.module.css';
+
+import messages from '../i18n/nb_NO.json';
 
 const cx = classNames.bind(styles);
 
@@ -37,7 +39,6 @@ interface VilkarresultatMedOverstyringProsessIndexProps {
     isEnabled: boolean;
   };
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
-  avslagsarsaker: KodeverkMedNavn[];
   lovReferanse?: string;
   erOverstyrt: boolean;
   panelTittelKode: string;
@@ -56,7 +57,6 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   overrideReadOnly,
   kanOverstyreAccess,
   toggleOverstyring,
-  avslagsarsaker,
   erOverstyrt,
   panelTittelKode,
   overstyringApKode,
@@ -82,7 +82,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   useEffect(() => {
     if (perioder.length > 1) {
       const førsteIkkeVurdertPeriodeIndex = perioder.findIndex(
-        periode => periode.vurderesIBehandlingen && periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT,
+        periode => periode.vurderesIBehandlingen && periode.vilkarStatus === vilkarUtfallType.IKKE_VURDERT,
       );
       if (førsteIkkeVurdertPeriodeIndex > 0) {
         setActiveTab(førsteIkkeVurdertPeriodeIndex);
@@ -119,6 +119,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
             overstyringApKode={overstyringApKode}
             panelTittelKode={panelTittelKode}
             periode={activePeriode}
+            status={activePeriode.vilkarStatus}
             toggleOverstyring={toggleOverstyring}
           />
           {featureToggles?.OMSORGEN_FOR_PERIODISERT && (
@@ -133,8 +134,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
               submitCallback={submitCallback}
               overrideReadOnly={overrideReadOnly}
               toggleOverstyring={toggleOverstyring}
-              avslagsarsaker={avslagsarsaker}
-              status={activePeriode.vilkarStatus.kode}
+              status={activePeriode.vilkarStatus}
               erOverstyrt={erOverstyrt}
               overstyringApKode={overstyringApKode}
               lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
@@ -157,8 +157,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
               submitCallback={submitCallback}
               overrideReadOnly={overrideReadOnly}
               toggleOverstyring={toggleOverstyring}
-              avslagsarsaker={avslagsarsaker}
-              status={activePeriode.vilkarStatus.kode}
+              status={activePeriode.vilkarStatus}
               erOverstyrt={erOverstyrt}
               overstyringApKode={overstyringApKode}
               lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}

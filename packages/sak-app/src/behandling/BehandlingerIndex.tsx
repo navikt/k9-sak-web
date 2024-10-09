@@ -11,7 +11,6 @@ interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
-  setBehandlingIdOgVersjon: (behandlingId: number, behandlingVersjon: number) => void;
   setRequestPendingMessage: (message: string) => void;
 }
 
@@ -19,7 +18,6 @@ export const BehandlingerIndex = ({
   fagsak,
   alleBehandlinger,
   arbeidsgiverOpplysninger,
-  setBehandlingIdOgVersjon,
   setRequestPendingMessage,
 }: OwnProps) => (
   <Routes>
@@ -30,7 +28,6 @@ export const BehandlingerIndex = ({
           fagsak={fagsak}
           alleBehandlinger={alleBehandlinger}
           arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-          setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
           setRequestPendingMessage={setRequestPendingMessage}
         />
       }

@@ -35,13 +35,13 @@ describe('Soknadsperiodestripe skal formatere perioder', () => {
       periodeMedUtfall: [
         {
           periode: { fom: '2022-01-05', tom: '2022-04-05' },
-          utfall: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          utfall: 'OPPFYLT', // VILKAR_UTFALL_TYPE
         },
       ],
       forrigeVedtak: [
         {
           periode: { fom: '2022-01-05', tom: '2022-02-05' },
-          utfall: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          utfall: 'OPPFYLT', // 'VILKAR_UTFALL_TYPE'
         },
       ],
     };
@@ -95,7 +95,7 @@ describe('Soknadsperiodestripe skal formatere perioder', () => {
       periodeMedUtfall: [
         {
           periode: { fom: '2022-01-05', tom: '2022-02-05' },
-          utfall: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          utfall: 'OPPFYLT', // VILKAR_UTFALL_TYPE'
         },
       ],
       forrigeVedtak: [],
@@ -143,7 +143,7 @@ describe('Soknadsperiodestripe skal formatere perioder', () => {
       periodeMedUtfall: [
         {
           periode: { fom: '2022-01-05', tom: '2022-04-05' },
-          utfall: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          utfall: 'IKKE_OPPFYLT', // VILKAR_UTFALL_TYPE
         },
       ],
       forrigeVedtak: [],
@@ -192,17 +192,17 @@ describe('Soknadsperiodestripe skal ha navigasjon', () => {
       periodeMedUtfall: [
         {
           periode: { fom: '2022-01-11', tom: '2022-04-11' },
-          utfall: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          utfall: 'IKKE_VURDERT', // VILKAR_UTFALL_TYPE
         },
       ],
       forrigeVedtak: [
         {
           periode: { fom: '2022-01-11', tom: '2022-02-11' },
-          utfall: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          utfall: 'OPPFYLT', // VILKAR_UTFALL_TYPE
         },
         {
           periode: { fom: '2022-02-14', tom: '2022-04-11' },
-          utfall: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          utfall: 'IKKE_OPPFYLT', // VILKAR_UTFALL_TYPE
         },
       ],
     };

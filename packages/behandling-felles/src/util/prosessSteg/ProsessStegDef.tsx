@@ -66,15 +66,14 @@ export abstract class ProsessStegPanelDef {
 
   public finnAksjonspunkterForSteg = (aksjonspunkter: Aksjonspunkt[]) => {
     const panelDef = this.skalBrukeOverstyringspanel(aksjonspunkter) ? this.getOverstyringspanelDef() : this;
-    return aksjonspunkter.filter(ap => panelDef.getAksjonspunktKoder().includes(ap.definisjon.kode));
+    return aksjonspunkter.filter(ap => panelDef.getAksjonspunktKoder().includes(ap.definisjon));
   };
 
-  public finnVilkarForSteg = (vilkar: Vilkar[]) =>
-    vilkar.filter(v => this.getVilkarKoder().includes(v.vilkarType.kode));
+  public finnVilkarForSteg = (vilkar: Vilkar[]) => vilkar.filter(v => this.getVilkarKoder().includes(v.vilkarType));
 
   public skalBrukeOverstyringspanel = (aksjonspunkter: Aksjonspunkt[]) =>
     this.getOverstyringspanelDef() &&
-    !this.getAksjonspunktKoder().some(ac => aksjonspunkter.some(a => a.definisjon.kode === ac));
+    !this.getAksjonspunktKoder().some(ac => aksjonspunkter.some(a => a.definisjon === ac));
 
   public skalVisePanel = (
     fagsak: Fagsak,
@@ -98,14 +97,12 @@ export abstract class ProsessStegPanelDef {
       return true;
     }
 
-    const harAksjonspunkter = panelDef
-      .getAksjonspunktKoder()
-      .some(ac => aksjonspunkter.some(a => a.definisjon.kode === ac));
+    const harAksjonspunkter = panelDef.getAksjonspunktKoder().some(ac => aksjonspunkter.some(a => a.definisjon === ac));
     if (panelDef.getVilkarKoder().length === 0) {
       return harAksjonspunkter;
     }
 
-    const harVilkar = panelDef.getVilkarKoder().some(vc => vilkar.some(v => v.vilkarType.kode === vc));
+    const harVilkar = panelDef.getVilkarKoder().some(vc => vilkar.some(v => v.vilkarType === vc));
     if (harVilkar && !harAksjonspunkter /* && panel.overridePanel */) {
       return true;
     }
@@ -117,7 +114,7 @@ export abstract class ProsessStegPanelDef {
     const panelDef = this.skalBrukeOverstyringspanel(aksjonspunkter) ? this.getOverstyringspanelDef() : this;
     return (
       panelDef.getAksjonspunktKoder().some(apKode => overstyrteAksjonspunktKoder.includes(apKode)) ||
-      this.finnAksjonspunkterForSteg(aksjonspunkter).some(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET)
+      this.finnAksjonspunkterForSteg(aksjonspunkter).some(ap => ap.status === aksjonspunktStatus.OPPRETTET)
     );
   };
 }

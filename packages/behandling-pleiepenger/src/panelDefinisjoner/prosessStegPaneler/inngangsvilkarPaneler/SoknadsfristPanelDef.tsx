@@ -35,7 +35,6 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
 
   getData = ({
     vilkarForSteg,
-    alleKodeverk,
     overstyrteAksjonspunktKoder,
     prosessStegTekstKode,
     overrideReadOnly,
@@ -45,11 +44,10 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
     behandling,
     rettigheter,
   }): any => {
-    const behandlingenErAvsluttet = behandlingStatus.AVSLUTTET === behandling.status.kode;
+    const behandlingenErAvsluttet = behandlingStatus.AVSLUTTET === behandling.status;
     const kanEndrePåSøknadsopplysninger = rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet;
 
     return {
-      avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType.kode],
       erOverstyrt: overstyrteAksjonspunktKoder.some(o => this.getAksjonspunktKoder().some(a => a === o)),
       panelTittelKode: this.getTekstKode() ? this.getTekstKode() : prosessStegTekstKode,
       lovReferanse: vilkarForSteg.length > 0 ? vilkarForSteg[0].lovReferanse : undefined,

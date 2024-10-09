@@ -48,9 +48,7 @@ describe('MedlemskapFaktaIndex', () => {
             begrunnelse: 'Dette er en begrunnelse',
             erEosBorger: null,
             lovligOppholdVurdering: null,
-            medlemskapManuellVurderingType: {
-              kode: 'UNNTAK',
-            },
+            medlemskapManuellVurderingType: 'UNNTAK',
             oppholdsrettVurdering: null,
             vurderingsdato: '2018-11-07',
           },
@@ -59,9 +57,7 @@ describe('MedlemskapFaktaIndex', () => {
             begrunnelse: 'Dette er en begrunnelse',
             erEosBorger: null,
             lovligOppholdVurdering: null,
-            medlemskapManuellVurderingType: {
-              kode: 'MEDLEM',
-            },
+            medlemskapManuellVurderingType: 'MEDLEM',
             oppholdsrettVurdering: null,
             vurderingsdato: '2019-11-07',
           },
@@ -75,9 +71,7 @@ describe('MedlemskapFaktaIndex', () => {
             begrunnelse: 'Dette er en begrunnelse',
             erEosBorger: null,
             lovligOppholdVurdering: null,
-            medlemskapManuellVurderingType: {
-              kode: 'UNNTAK',
-            },
+            medlemskapManuellVurderingType: 'UNNTAK',
             oppholdsrettVurdering: null,
             vurderingsdato: '2018-11-07',
           },
@@ -86,9 +80,7 @@ describe('MedlemskapFaktaIndex', () => {
             begrunnelse: 'Dette er en begrunnelse',
             erEosBorger: null,
             lovligOppholdVurdering: null,
-            medlemskapManuellVurderingType: {
-              kode: 'MEDLEM',
-            },
+            medlemskapManuellVurderingType: 'MEDLEM',
             oppholdsrettVurdering: null,
             vurderingsdato: '2019-11-07',
           },

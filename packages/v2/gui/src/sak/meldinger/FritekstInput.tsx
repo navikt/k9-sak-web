@@ -89,8 +89,8 @@ const validateTekst = (tekst: string | undefined, fritekstModus: FritekstModus):
 const tekstReducer = (_: Valid | Error, newValue: { tekst: string | undefined; modus: FritekstModus }): Valid | Error =>
   validateTekst(newValue.tekst, newValue.modus);
 
-const resolveLanguageName = (språk: Språkkode): string => {
-  switch (språk.kode.toUpperCase()) {
+const resolveLanguageName = (språk: string): string => {
+  switch (språk.toUpperCase()) {
     case 'NB':
       return 'Bokmål';
     case 'NO':
@@ -104,7 +104,7 @@ const resolveLanguageName = (språk: Språkkode): string => {
   }
 };
 
-const resolveLanguageTagVariant = (språk: Språkkode): TagProps['variant'] =>
+const resolveLanguageTagVariant = (språk: string): TagProps['variant'] =>
   resolveLanguageName(språk) === 'Ukjent' ? 'warning' : 'info';
 
 /**

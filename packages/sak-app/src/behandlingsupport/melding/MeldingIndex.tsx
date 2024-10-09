@@ -107,8 +107,8 @@ const MeldingIndex = ({
       personopplysninger={personopplysninger}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
       erTilbakekreving={
-        behandling.type.kode === BehandlingType.TILBAKEKREVING ||
-        behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
+        behandling.type === BehandlingType.TILBAKEKREVING ||
+        behandling.type === BehandlingType.TILBAKEKREVING_REVURDERING
       }
       featureToggles={featureToggles}
       fagsak={fagsak}

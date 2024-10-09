@@ -5,19 +5,17 @@ import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { getAlleMerknaderFraBeslutter, ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import { konverterKodeverkTilKode } from '@fpsak-frontend/utils';
 import ForeldelseProsessIndexWrapper from '../../components/ForeldelseProsessIndexWrapper';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
-    const deepCopyProps = JSON.parse(JSON.stringify(props));
-    konverterKodeverkTilKode(deepCopyProps, true);
+    const { alleKodeverk, submitCallback, beregnBelop } = props;
     return (
       <ForeldelseProsessIndexWrapper
-        {...deepCopyProps}
-        kodeverkSamling={props.alleKodeverk}
-        submitCallback={props.submitCallback}
-        beregnBelop={props.beregnBelop}
+        {...props}
+        kodeverkSamling={alleKodeverk}
+        submitCallback={submitCallback}
+        beregnBelop={beregnBelop}
       />
     );
   };

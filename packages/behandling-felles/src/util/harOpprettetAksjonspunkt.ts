@@ -1,7 +1,9 @@
-const harOpprettetAksjonspunkt = (aksjonspunkter, aksjonspunktKode: number) =>
+import { Aksjonspunkt } from '@k9-sak-web/types';
+
+const harOpprettetAksjonspunkt = (aksjonspunkter: Aksjonspunkt[], aksjonspunktKode: number) =>
   aksjonspunkter.some(aksjonspunkt => {
-    const erSammeAksjonspunkt = +aksjonspunkt.definisjon.kode === aksjonspunktKode;
-    const aksjonspunktetErOpprettet = aksjonspunkt.status.kode === 'OPPR';
+    const erSammeAksjonspunkt = +aksjonspunkt.definisjon === aksjonspunktKode;
+    const aksjonspunktetErOpprettet = aksjonspunkt.status === 'OPPR';
     return erSammeAksjonspunkt && aksjonspunktetErOpprettet;
   });
 

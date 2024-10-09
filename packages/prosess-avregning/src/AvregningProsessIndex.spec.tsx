@@ -1,39 +1,47 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { Fagsak } from '@k9-sak-web/types';
 import messages from '../i18n/nb_NO.json';
 import AvregningProsessIndex from './AvregningProsessIndex';
 
 describe('<AvregningProsessIndex>', () => {
-  const fagsak = {
+  const fagsak: Fagsak = {
     saksnummer: '123',
-    sakstype: {
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: '',
+    sakstype: fagsakYtelsesType.FP,
+    relasjonsRolleType: '',
+    status: 'OPPR',
+    barnFodt: '',
+    person: {
+      erDod: false,
+      navn: '',
+      alder: 0,
+      personnummer: '',
+      erKvinne: false,
+      personstatusType: '',
+      diskresjonskode: '',
+      dodsdato: '',
+      aktørId: '',
     },
-    fagsakYtelseType: {
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: '',
-    },
+    opprettet: '',
+    endret: '',
+    antallBarn: 0,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 0,
   };
 
   const behandling = {
     id: 1,
     versjon: 1,
-    sprakkode: {
-      kode: 'NO',
-      kodeverk: '',
-    },
+    sprakkode: 'NO',
   };
 
   const aksjonspunkter = [
     {
-      definisjon: {
-        kode: aksjonspunktCodes.VURDER_FEILUTBETALING,
-        kodeverk: '',
-      },
+      definisjon: aksjonspunktCodes.VURDER_FEILUTBETALING,
       begrunnelse: 'test',
     },
   ];

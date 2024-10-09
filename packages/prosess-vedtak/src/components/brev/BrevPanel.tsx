@@ -15,7 +15,7 @@ import {
   kanOverstyreMottakere,
   lagVisningsnavnForMottaker,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { ArbeidsgiverOpplysningerPerId, Behandlingsresultat, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Behandlingsresultat, Personopplysninger } from '@k9-sak-web/types';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Alert, ErrorMessage } from '@navikt/ds-react';
 
@@ -38,7 +38,7 @@ const kanResultatForhåndsvises = behandlingResultat => {
   if (!type) {
     return true;
   }
-  return type.kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' && type.kode !== 'INGEN_ENDRING';
+  return type !== 'ENDRING_I_FORDELING_AV_YTELSEN' && type !== 'INGEN_ENDRING';
 };
 
 export const manuellBrevPreview = ({
@@ -140,7 +140,7 @@ const getHentHtmlMalCallback =
 interface BrevPanelProps {
   intl: IntlShape;
   readOnly: boolean;
-  sprakkode: Kodeverk;
+  sprakkode: string;
   personopplysninger: Personopplysninger;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;

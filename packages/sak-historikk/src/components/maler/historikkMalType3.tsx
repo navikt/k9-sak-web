@@ -86,7 +86,7 @@ const HistorikkMalType3 = ({
   intl,
   historikkinnslag,
   behandlingLocation,
-  getKodeverknavn,
+  kodeverkNavnFraKodeFn,
   createLocationForSkjermlenke,
   erTilbakekreving,
 }: HistorikkMal & WrappedComponentProps) => (
@@ -98,7 +98,7 @@ const HistorikkMalType3 = ({
           {historikkinnslagDel.hendelse && (
             <>
               <Label size="small" as="p">
-                {findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}
+                {findHendelseText(historikkinnslagDel.hendelse, kodeverkNavnFraKodeFn)}
               </Label>
               <VerticalSpacer fourPx />
             </>
@@ -107,7 +107,7 @@ const HistorikkMalType3 = ({
             <Skjermlenke
               skjermlenke={historikkinnslagDel.skjermlenke}
               behandlingLocation={behandlingLocation}
-              getKodeverknavn={getKodeverknavn}
+              kodeverkNavnFraKodeFn={kodeverkNavnFraKodeFn}
               scrollUpOnClick
               createLocationForSkjermlenke={createLocationForSkjermlenke}
             />
