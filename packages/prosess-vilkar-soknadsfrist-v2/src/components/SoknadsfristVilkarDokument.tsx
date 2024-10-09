@@ -1,5 +1,4 @@
 import { RadioGroupPanelRHF } from '@fpsak-frontend/form';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import { initializeDate } from '@fpsak-frontend/utils';
 import { CheckmarkIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button } from '@navikt/ds-react';
@@ -58,8 +57,6 @@ export const SoknadsfristVilkarDokument = ({
   kanEndrePåSøknadsopplysninger,
 }: SoknadsfristVilkarDokumentProps) => {
   const erVilkarOk = readOnly && dokumentErVurdert && periode.vilkarStatus === 'OPPFYLT';
-  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
-  const opprettetAv = hentSaksbehandlerNavn(dokument?.avklarteOpplysninger?.opprettetAv);
   const opprettetTidspunkt = dokument?.avklarteOpplysninger?.opprettetTidspunkt;
   const minDate = useMemo(
     () =>
@@ -99,7 +96,7 @@ export const SoknadsfristVilkarDokument = ({
                 readOnly={readOnly}
                 placeholder="Begrunn vurderingen din"
               />
-              <AssessedBy name={opprettetAv} date={opprettetTidspunkt} />
+              <AssessedBy ident={dokument?.avklarteOpplysninger?.opprettetAv} date={opprettetTidspunkt} />
             </div>
           </div>
         </>
