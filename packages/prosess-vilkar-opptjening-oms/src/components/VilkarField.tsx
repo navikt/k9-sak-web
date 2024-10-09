@@ -153,12 +153,12 @@ export const VilkarField = ({
 VilkarField.buildInitialValues = (vilkårPerioder: Vilkarperiode[], opptjening: Opptjening[]): FormValues => {
   const utledKode = (periode: Vilkarperiode) => {
     if (
-      periode.merknad.kode === opptjeningMidlertidigInaktivKoder.TYPE_A ||
-      periode.merknad.kode === opptjeningMidlertidigInaktivKoder.TYPE_B
+      periode.merknad === opptjeningMidlertidigInaktivKoder.TYPE_A ||
+      periode.merknad === opptjeningMidlertidigInaktivKoder.TYPE_B
     ) {
-      return periode.merknad.kode as '7847A' | '7847B';
+      return periode.merknad as '7847A' | '7847B';
     }
-    return periode.vilkarStatus.kode as 'OPPFYLT' | 'IKKE_OPPFYLT';
+    return periode.vilkarStatus as 'OPPFYLT' | 'IKKE_OPPFYLT';
   };
 
   return {

@@ -1,7 +1,5 @@
-import KodeverkMedNavn from '@k9-sak-web/types/src/kodeverkMedNavnTsType';
-
 export interface Adresse {
-  adresseType: KodeverkMedNavn;
+  adresseType: string;
   adresselinje1: string;
   adresselinje2?: string;
   adresselinje3?: string;
@@ -13,10 +11,10 @@ export interface Adresse {
 export type BostedSokerPersonopplysninger = {
   navn: string;
   adresser: Adresse[];
-  sivilstand: KodeverkMedNavn;
-  region: KodeverkMedNavn;
-  personstatus: KodeverkMedNavn;
+  sivilstand: string;
+  region: string;
+  personstatus: string;
   avklartPersonstatus: {
-    overstyrtPersonstatus: KodeverkMedNavn;
+    overstyrtPersonstatus: string;
   };
 };

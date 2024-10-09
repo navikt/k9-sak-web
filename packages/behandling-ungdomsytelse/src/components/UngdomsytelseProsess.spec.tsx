@@ -21,13 +21,13 @@ import UngdomsytelseProsess from './UngdomsytelseProsess';
 describe('<UngdomsytelseProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
+    sakstype: fagsakYtelsesType.FP, // FAGSAK_YTELSE
+    status: fagsakStatus.UNDER_BEHANDLING, // FAGSAK_STATUS
   } as Fagsak;
 
   const fagsakPerson = {
     alder: 30,
-    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    personstatusType: personstatusType.BOSATT,
     erDod: false,
     erKvinne: true,
     navn: 'Espen Utvikler',
@@ -36,8 +36,8 @@ describe('<UngdomsytelseProsess>', () => {
   const behandling = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -57,20 +57,20 @@ describe('<UngdomsytelseProsess>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+      definisjon: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
   ];
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.ALDERSVILKARET, kodeverk: 'test' },
+      vilkarType: vilkarType.ALDERSVILKARET,
       overstyrbar: true,
       perioder: [
         {
           merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
@@ -82,10 +82,7 @@ describe('<UngdomsytelseProsess>', () => {
       0: '2019-01-01',
     } as Record<number, string>,
     antallBarn: 1,
-    soknadType: {
-      kode: soknadType.FODSEL,
-      kodeverk: 'test',
-    },
+    soknadType: soknadType.FODSEL,
   } as Soknad;
 
   const arbeidsgiverOpplysningerPerId = {

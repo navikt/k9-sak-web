@@ -3,14 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import {
-  ArbeidsgiverOpplysningerWrapper,
-  Behandling,
-  Fagsak,
-  FagsakPerson,
-  FeatureToggles,
-  KodeverkMedNavn,
-} from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerWrapper, Behandling, Fagsak, FagsakPerson, FeatureToggles } from '@k9-sak-web/types';
 
 import UngdomsytelsePaneler from './components/UngdomsytelsePaneler';
 import {
@@ -19,6 +12,7 @@ import {
   restApiUngdomsytelseHooks,
 } from './data/ungdomsytelseBehandlingApi';
 import { FetchedData } from './types';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
 
 const ungdomsytelseData = [
   { key: UngdomsytelseBehandlingApiKeys.AKSJONSPUNKTER },
@@ -45,7 +39,7 @@ interface OwnProps {
   };
   opneSokeside: () => void;
   featureToggles: FeatureToggles;
-  kodeverk?: { [key: string]: KodeverkMedNavn[] };
+  kodeverk?: AlleKodeverk;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setRequestPendingMessage: (message: string) => void;
 }

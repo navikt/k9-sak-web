@@ -1,5 +1,4 @@
 import { DateLabel } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Table } from '@navikt/ds-react';
 import { PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
 import { useState } from 'react';
@@ -12,7 +11,6 @@ const createParent = (isApplicant: boolean, personopplysning?: PersonopplysningD
 });
 
 interface GrunnlagForAutomatiskVurderingProps {
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   soknad: Soknad;
   personopplysninger: {
     [key: string]: PersonopplysningDto;

@@ -4,6 +4,7 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { BehandlingAppKontekst } from '@k9-sak-web/types';
+
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
@@ -12,6 +13,7 @@ import { vi } from 'vitest';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import FagsakIndex from './FagsakIndex';
 import type useTrackRouteParam from '../app/useTrackRouteParam.js';
+import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 
 vi.mock('react-router-dom', async () => {
   const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
@@ -101,7 +103,7 @@ describe('<FagsakIndex>', () => {
   const behandling: BehandlingAppKontekst = {
     id: 1,
     uuid: '1',
-    type: behandlingType.FORSTEGANGSSOKNAD,
+    type: behandlingType.FORSTEGANGSSOKNAD as BehandlingType,
     status: behandlingStatus.AVSLUTTET,
     links: [],
     behandlendeEnhetId: 'test',
@@ -119,7 +121,7 @@ describe('<FagsakIndex>', () => {
   const behandling2: BehandlingAppKontekst = {
     id: 2,
     uuid: '2',
-    type: behandlingType.FORSTEGANGSSOKNAD,
+    type: behandlingType.FORSTEGANGSSOKNAD as BehandlingType,
     status: behandlingStatus.AVSLUTTET,
     links: [],
     behandlendeEnhetId: 'test',
@@ -137,7 +139,7 @@ describe('<FagsakIndex>', () => {
   const behandling3: BehandlingAppKontekst = {
     id: 3,
     uuid: '3',
-    type: behandlingType.FORSTEGANGSSOKNAD,
+    type: behandlingType.FORSTEGANGSSOKNAD as BehandlingType,
     status: behandlingStatus.AVSLUTTET,
     links: [],
     behandlendeEnhetId: 'test',

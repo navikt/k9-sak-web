@@ -265,10 +265,7 @@ describe('<NyBehandlingModal>', () => {
         submitCallback={vi.fn()}
         behandlingOppretting={[
           {
-            behandlingType: {
-              kode: behandlingType.FORSTEGANGSSOKNAD,
-              kodeverk: '',
-            },
+            behandlingType: behandlingType.FORSTEGANGSSOKNAD,
             kanOppretteBehandling: true,
           },
         ]}
@@ -312,15 +309,7 @@ describe('<NyBehandlingModal>', () => {
         sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
         ytelseType={ytelseType}
         submitCallback={vi.fn()}
-        behandlingOppretting={[
-          {
-            behandlingType: {
-              kode: behandlingType.FORSTEGANGSSOKNAD,
-              kodeverk: '',
-            },
-            kanOppretteBehandling: true,
-          },
-        ]}
+        behandlingOppretting={[{ behandlingType: behandlingType.FORSTEGANGSSOKNAD, kanOppretteBehandling: true }]}
         tilbakekrevingRevurderingArsaker={[]}
         revurderingArsaker={[]}
         kanTilbakekrevingOpprettes={{
@@ -361,10 +350,7 @@ describe('<NyBehandlingModal>', () => {
         submitCallback={vi.fn()}
         behandlingOppretting={[
           {
-            behandlingType: {
-              kode: behandlingType.FORSTEGANGSSOKNAD,
-              kodeverk: '',
-            },
+            behandlingType: behandlingType.FORSTEGANGSSOKNAD,
             kanOppretteBehandling: true,
           },
         ]}

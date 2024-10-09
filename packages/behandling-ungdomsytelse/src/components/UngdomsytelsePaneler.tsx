@@ -1,21 +1,15 @@
 import { BehandlingPaVent, Rettigheter, SettPaVentParams } from '@k9-sak-web/behandling-felles';
-import {
-  ArbeidsgiverOpplysningerPerId,
-  Behandling,
-  Fagsak,
-  FagsakPerson,
-  FeatureToggles,
-  KodeverkMedNavn,
-} from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, FeatureToggles } from '@k9-sak-web/types';
 import FetchedData from '../types/FetchedData';
 import UngdomsytelseProsess from './UngdomsytelseProsess';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
 
 interface OwnProps {
   fetchedData: FetchedData;
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: AlleKodeverk;
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;

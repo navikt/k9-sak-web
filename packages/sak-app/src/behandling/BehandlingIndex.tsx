@@ -328,7 +328,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype.kode === FagsakYtelseType.UNGDOMSYTELSE) {
+  if (fagsak.sakstype === FagsakYtelseType.UNGDOMSYTELSE) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
