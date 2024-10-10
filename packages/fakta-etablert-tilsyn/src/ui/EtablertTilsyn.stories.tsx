@@ -3,11 +3,11 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 import { handlers } from '../../mock/api-mock';
 import { mockUrlPrepend } from '../../mock/constants';
-import MainComponent from './MainComponent';
+import EtablertTilsynContainer from './EtablertTilsynContainer';
 
-const meta: Meta<typeof MainComponent> = {
+const meta: Meta<typeof EtablertTilsynContainer> = {
   title: 'fakta/fakta-etablert-tilsyn',
-  component: MainComponent,
+  component: EtablertTilsynContainer,
   args: {
     data: {
       readOnly: false,
@@ -31,7 +31,7 @@ const meta: Meta<typeof MainComponent> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof MainComponent>;
+type Story = StoryObj<typeof EtablertTilsynContainer>;
 
 export const EtablertTilsyn: Story = {
   play: async ({ canvasElement, step }) => {
@@ -75,7 +75,7 @@ export const EtablertTilsyn: Story = {
   },
 };
 
-EtablertTilsyn.parameters = {
+EtablertTilsynContainer.parameters = {
   msw: {
     handlers,
   },

@@ -6,7 +6,7 @@ import {
   httpErrorHandler as httpErrorHandlerFn,
 } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { EtablertTilsyn } from '@k9-sak-web/fakta-etablert-tilsyn';
+import { EtablertTilsynContainer } from '@k9-sak-web/fakta-etablert-tilsyn';
 import React from 'react';
 
 export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
@@ -29,7 +29,7 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
   const harAksjonspunkt = !!beredskapAksjonspunktkode || !!nattevåkAksjonspunktkode;
 
   return (
-    <EtablertTilsyn
+    <EtablertTilsynContainer
       data={{
         httpErrorHandler: httpErrorHandlerCaller,
         readOnly: readOnly || !harAksjonspunkt,
