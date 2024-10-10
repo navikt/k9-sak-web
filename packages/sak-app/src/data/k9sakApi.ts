@@ -32,7 +32,6 @@ export enum K9sakApiKeys {
   BEHANDLINGER_KLAGE = 'BEHANDLINGER_KLAGE',
   BEHANDLING_PERSONOPPLYSNINGER = 'BEHANDLING_PERSONOPPLYSNINGER',
   NEW_BEHANDLING_K9SAK = 'NEW_BEHANDLING_K9SAK',
-  NEW_BEHANDLING_REVURDERING_FRA_STEG_K9SAK = 'NEW_BEHANDLING_REVURDERING_FRA_STEG_K9SAK',
   NEW_BEHANDLING_UNNTAK = 'NEW_BEHANDLING_UNNTAK',
   NEW_BEHANDLING_TILBAKE = 'NEW_BEHANDLING_TILBAKE',
   NEW_BEHANDLING_KLAGE = 'NEW_BEHANDLING_KLAGE',
@@ -132,10 +131,6 @@ const endpoints = new RestApiConfigBuilder()
     { isResponseBlob: true },
   )
   .withAsyncPost('/k9/tilbake/api/behandlinger/opprett', K9sakApiKeys.NEW_BEHANDLING_TILBAKE)
-  .withAsyncPost(
-    '/k9/tilbake/api/behandlinger/revurder-periode-fra-steg',
-    K9sakApiKeys.NEW_BEHANDLING_REVURDERING_FRA_STEG_K9SAK,
-  )
   .withAsyncPut('/k9/sak/api/behandlinger', K9sakApiKeys.NEW_BEHANDLING_K9SAK)
   .withAsyncPut('/k9/sak/api/behandlinger/unntak', K9sakApiKeys.NEW_BEHANDLING_UNNTAK)
   .withAsyncPut('/k9/klage/api/behandlinger', K9sakApiKeys.NEW_BEHANDLING_KLAGE)
