@@ -75,7 +75,7 @@ export const EtablertTilsyn: Story = {
   },
 };
 
-EtablertTilsynContainer.parameters = {
+EtablertTilsyn.parameters = {
   msw: {
     handlers,
   },
