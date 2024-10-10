@@ -25,8 +25,11 @@ describe('<NyBehandlingModal>', () => {
     kodeverk: '',
   };
 
+  beforeEach(() => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'DELVIS_REVURDERING', value: true }]);
+  });
+
   it('skal rendre komponent korrekt', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
@@ -70,11 +73,10 @@ describe('<NyBehandlingModal>', () => {
 
     expect(screen.getByRole('dialog', { name: 'Ny behandling' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Opprett behandling' })).toBeInTheDocument();
-    expect(screen.getAllByRole('combobox').length).toBe(2);
+    expect(screen.getAllByRole('combobox').length).toBe(1);
   });
 
   it('skal bruke submit-callback når en trykker lagre', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
@@ -123,7 +125,6 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal lukke modal ved klikk på avbryt-knapp', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
@@ -172,7 +173,6 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal vise checkbox for behandling etter klage når førstegangsbehandling er valgt', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
@@ -219,7 +219,6 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal vise dropdown for revurderingsårsaker når revurdering er valgt', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
     const behandlingstyper = [{ kode: behandlingType.REVURDERING, navn: 'REVURDERING', kodeverk: 'BEHANDLING_TYPE' }];
     renderWithIntlAndReduxForm(
       <NyBehandlingModal
@@ -265,7 +264,6 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal rendre steg-dropdown når revurdering er valgt', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
@@ -315,7 +313,6 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal rendre årsak for revurdering fra steg når revurdering fra inngangsvilkår er valgt', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
@@ -363,7 +360,6 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal rendre fra- og til-dato når revurdering fra uttakssteg er valgt', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];

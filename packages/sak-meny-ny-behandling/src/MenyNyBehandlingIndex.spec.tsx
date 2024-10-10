@@ -8,7 +8,7 @@ import MenyNyBehandlingIndex from './MenyNyBehandlingIndex';
 
 describe('<MenyNyBehandlingIndex>', () => {
   beforeEach(() => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'DELVIS_REVURDERING', value: true }]);
   });
   it('skal vise modal og så lage ny behandling', async () => {
     const lagNyBehandlingCallback = vi.fn().mockImplementation(() => Promise.resolve());

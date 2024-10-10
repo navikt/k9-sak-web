@@ -111,9 +111,9 @@ export const NyBehandlingModal = ({
   const erFørstegangsbehandling = valgtBehandlingTypeKode === bType.FORSTEGANGSSOKNAD;
   const erRevurdering = valgtBehandlingTypeKode === bType.REVURDERING;
   const erDelvisRevurderingToggleAktivert = featureToggles.DELVIS_REVURDERING;
-  console.log('erDelvisRevurderingToggleAktivert', featureToggles);
   const visÅrsak =
-    erDelvisRevurderingToggleAktivert && erRevurdering && steg === 'inngangsvilkår' && behandlingArsakTyper.length > 0;
+    (erDelvisRevurderingToggleAktivert && erRevurdering && steg === 'inngangsvilkår') ||
+    (!erDelvisRevurderingToggleAktivert && behandlingArsakTyper.length > 0);
   return (
     <Modal
       className={styles.modal}
