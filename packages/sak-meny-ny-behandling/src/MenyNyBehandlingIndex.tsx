@@ -6,18 +6,21 @@ import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import NyBehandlingModal, { BehandlingOppretting, FormValues } from './components/NyBehandlingModal';
 
+import messages from '../i18n/nb_NO.json';
+
 const TILBAKEKREVING_BEHANDLINGSTYPER = [BehandlingType.TILBAKEKREVING, BehandlingType.TILBAKEKREVING_REVURDERING];
 
-// Intl brukes ikke lenger i denne komponenten, men kan ikke fjernes fordi redux-form wrapperne krever en intlProvider
+const cache = createIntlCache();
+
 const intl = createIntl(
   {
     locale: 'nb-NO',
-    messages: {},
+    messages,
   },
-  createIntlCache(),
+  cache,
 );
 
-export const getMenytekst = (): string => 'Opprett ny behandling';
+export const getMenytekst = (): string => intl.formatMessage({ id: 'MenyNyBehandlingIndex.NyForstegangsbehandling' });
 
 interface OwnProps {
   ytelseType: Kodeverk;
