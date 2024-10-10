@@ -1,4 +1,3 @@
-import React from 'react';
 import ContainerContract from '../types/ContainerContract';
 import MedisinskVilkår from './components/medisinsk-vilkår/MedisinskVilkår';
 import ContainerContext from './context/ContainerContext';
@@ -7,7 +6,7 @@ interface MainComponentProps {
   data: ContainerContract;
 }
 
-const MainComponent = ({ data }: MainComponentProps): JSX.Element => (
+const MedisinskVilkårContainer = ({ data }: MainComponentProps): JSX.Element => (
   <div id="medisinskVilkår">
     <ContainerContext.Provider value={data}>
       <MedisinskVilkår />
@@ -15,4 +14,4 @@ const MainComponent = ({ data }: MainComponentProps): JSX.Element => (
   </div>
 );
 
-export default MainComponent;
+export default MedisinskVilkårContainer;
