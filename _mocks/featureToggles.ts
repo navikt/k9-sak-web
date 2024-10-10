@@ -89,4 +89,8 @@ export const featureTogglesFactory = () => [
     key: 'AUTOMATISK_VURDERT_MEDLEMSKAP',
     value: process.env.AUTOMATISK_VURDERT_MEDLEMSKAP,
   },
+  {
+    key: 'DELVIS_REVURDERING',
+    value: process.env.VITE_DELVIS_REVURDERING,
+  },
 ];

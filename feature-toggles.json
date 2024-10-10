@@ -94,5 +94,9 @@
   {
     "key": "AUTOMATISK_VURDERT_MEDLEMSKAP",
     "value": "${AUTOMATISK_VURDERT_MEDLEMSKAP}"
+  },
+  {
+    "key": "DELVIS_REVURDERING",
+    "value": "${DELVIS_REVURDERING}"
   }
 ]

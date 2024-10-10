@@ -4,9 +4,9 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import {
   NyBehandlingModal,
   getBehandlingAarsaker,
@@ -24,6 +24,10 @@ describe('<NyBehandlingModal>', () => {
     kode: fagsakYtelseType.FORELDREPENGER,
     kodeverk: '',
   };
+
+  beforeEach(() => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'DELVIS_REVURDERING', value: true }]);
+  });
 
   it('skal rendre komponent korrekt', () => {
     const behandlingstyper = [
@@ -69,7 +73,7 @@ describe('<NyBehandlingModal>', () => {
 
     expect(screen.getByRole('dialog', { name: 'Ny behandling' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Opprett behandling' })).toBeInTheDocument();
-    expect(screen.getAllByRole('combobox').length).toBe(2);
+    expect(screen.getAllByRole('combobox').length).toBe(1);
   });
 
   it('skal bruke submit-callback når en trykker lagre', async () => {
