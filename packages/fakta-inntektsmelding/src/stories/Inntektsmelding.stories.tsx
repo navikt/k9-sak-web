@@ -1,7 +1,6 @@
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 import { HttpResponse, http } from 'msw';
-import React from 'react';
 import inntektsmeldingPropsMock, {
   aksjonspunkt9071FerdigProps,
   aksjonspunkt9071Props,
@@ -13,18 +12,18 @@ import ferdigvisning, {
   manglerFlereInntektsmeldinger,
   manglerInntektsmelding,
 } from '../../mock/mockedKompletthetsdata';
-import MainComponent, { MainComponentProps } from '../ui/MainComponent';
+import InntektsmeldingContainer, { MainComponentProps } from '../ui/InntektsmeldingContainer';
 
-const meta: Meta<typeof MainComponent> = {
+const meta: Meta<typeof InntektsmeldingContainer> = {
   args: { data: { ...inntektsmeldingPropsMock, onFinished: action('clicked') } },
-  title: 'Inntektsmelding',
-  component: MainComponent,
+  title: 'Fakta/fakta-inntektsmelding',
+  component: InntektsmeldingContainer,
 };
 
 export default meta;
 
-const Template = (args: MainComponentProps) => <MainComponent {...args} />;
-type Story = StoryObj<typeof MainComponent>;
+const Template = (args: MainComponentProps) => <InntektsmeldingContainer {...args} />;
+type Story = StoryObj<typeof InntektsmeldingContainer>;
 
 export const IkkePaakrevd: Story = Template.bind({});
 export const Mangler9069: Story = Template.bind({});
