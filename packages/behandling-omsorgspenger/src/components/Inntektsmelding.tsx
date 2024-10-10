@@ -1,7 +1,6 @@
 import { findEndpointsForMicrofrontend, httpErrorHandler as httpErrorHandlerFn } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import React from 'react';
-import { Inntektsmelding } from '@k9-sak-web/fakta-inntektsmelding';
+import { InntektsmeldingContainer } from '@k9-sak-web/fakta-inntektsmelding';
 
 export default ({
   behandling,
@@ -18,7 +17,7 @@ export default ({
   const løsAksjonspunkt = aksjonspunktArgs => submitCallback([{ ...aksjonspunktArgs }]);
 
   return (
-    <Inntektsmelding
+    <InntektsmeldingContainer
       data={{
         httpErrorHandler: httpErrorHandlerCaller,
         arbeidsforhold: arbeidsgiverOpplysningerPerId,
