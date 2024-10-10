@@ -1,6 +1,6 @@
 import { FormattedMessage } from 'react-intl';
 
-import { VerticalSpacer, useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { VilkarResultPickerRHF } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, KodeverkMedNavn, Vilkarperiode } from '@k9-sak-web/types';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
@@ -47,13 +47,12 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
   customVilkarOppfyltText,
   opprettetAv,
 }) => {
-  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   return (
     <>
       {skalViseBegrunnelse && (
         <>
           <VilkarBegrunnelse isReadOnly={readOnly} />
-          <AssessedBy name={hentSaksbehandlerNavn(opprettetAv)} />
+          <AssessedBy ident={opprettetAv} />
           <VerticalSpacer eightPx />
         </>
       )}
