@@ -4,7 +4,6 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import messages from '../i18n/nb_NO.json';
 import MenyNyBehandlingIndex from './MenyNyBehandlingIndex';
 
 describe('<MenyNyBehandlingIndex>', () => {
@@ -63,11 +62,10 @@ describe('<MenyNyBehandlingIndex>', () => {
         sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
         lukkModal={lukkModalCallback}
       />,
-      { messages },
     );
     await act(async () => {
       await userEvent.selectOptions(screen.getByRole('combobox'), 'BT-002');
-      await userEvent.click(screen.getByRole('button', { name: 'OK' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Opprett behandling' }));
     });
 
     const kall = lagNyBehandlingCallback.mock.calls;
