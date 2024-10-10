@@ -4,9 +4,9 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import {
   NyBehandlingModal,
   getBehandlingAarsaker,
@@ -26,6 +26,7 @@ describe('<NyBehandlingModal>', () => {
   };
 
   it('skal rendre komponent korrekt', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
@@ -73,6 +74,7 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal bruke submit-callback når en trykker lagre', async () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
@@ -121,6 +123,7 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal lukke modal ved klikk på avbryt-knapp', async () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
@@ -169,6 +172,7 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal vise checkbox for behandling etter klage når førstegangsbehandling er valgt', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
@@ -215,6 +219,7 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal vise dropdown for revurderingsårsaker når revurdering er valgt', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
     const behandlingstyper = [{ kode: behandlingType.REVURDERING, navn: 'REVURDERING', kodeverk: 'BEHANDLING_TYPE' }];
     renderWithIntlAndReduxForm(
       <NyBehandlingModal
@@ -260,6 +265,7 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal rendre steg-dropdown når revurdering er valgt', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
@@ -309,6 +315,7 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal rendre årsak for revurdering fra steg når revurdering fra inngangsvilkår er valgt', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];
@@ -356,6 +363,7 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal rendre fra- og til-dato når revurdering fra uttakssteg er valgt', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
     const behandlingstyper = [
       { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
     ];

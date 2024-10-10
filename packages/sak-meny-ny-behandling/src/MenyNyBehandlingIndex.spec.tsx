@@ -1,12 +1,15 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import MenyNyBehandlingIndex from './MenyNyBehandlingIndex';
 
 describe('<MenyNyBehandlingIndex>', () => {
+  beforeEach(() => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ DELVIS_REVURDERING: true }]);
+  });
   it('skal vise modal og så lage ny behandling', async () => {
     const lagNyBehandlingCallback = vi.fn().mockImplementation(() => Promise.resolve());
     const lukkModalCallback = vi.fn();
