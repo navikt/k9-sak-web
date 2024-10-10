@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { AnnenPart, Utfall, Årsaker } from '../constants';
 import { Endringsstatus } from '../types';
-import MainComponent from './MainComponent';
+import UttakContainer from './UttakContainer';
 
-const meta: Meta<typeof MainComponent> = {
+const meta: Meta<typeof UttakContainer> = {
   title: 'prosess/prosess-uttak',
-  component: MainComponent,
+  component: UttakContainer,
 };
 
 export default meta;
-type Story = StoryObj<typeof MainComponent>;
+type Story = StoryObj<typeof UttakContainer>;
 
 export const Uttak: Story = {
   args: {

@@ -8,7 +8,7 @@ import {
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import React from 'react';
 
-import { EtablertTilsyn } from '@k9-sak-web/fakta-etablert-tilsyn';
+import { EtablertTilsynContainer } from '@k9-sak-web/fakta-etablert-tilsyn';
 
 export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
@@ -30,7 +30,7 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
   const harAksjonspunkt = !!beredskapAksjonspunktkode || !!nattevåkAksjonspunktkode;
 
   return (
-    <EtablertTilsyn
+    <EtablertTilsynContainer
       data={{
         httpErrorHandler: httpErrorHandlerCaller,
         readOnly: readOnly || !harAksjonspunkt,

@@ -1,1 +1,1 @@
-export { default as OmsorgenFor } from './src/ui/MainComponent';
+export { default as OmsorgenFor } from './src/ui/OmsorgenForContainer';

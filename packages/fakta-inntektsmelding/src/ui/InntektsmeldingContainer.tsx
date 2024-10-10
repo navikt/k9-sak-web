@@ -29,7 +29,7 @@ export interface MainComponentProps {
   data: ContainerContract;
 }
 
-const MainComponent = ({ data }: MainComponentProps): JSX.Element => {
+const InntektsmeldingContainer = ({ data }: MainComponentProps): JSX.Element => {
   const [state, dispatch] = React.useReducer(mainComponentReducer, {
     isLoading: true,
     kompletthetsoversiktHarFeilet: false,
@@ -79,4 +79,4 @@ const MainComponent = ({ data }: MainComponentProps): JSX.Element => {
   );
 };
 
-export default MainComponent;
+export default InntektsmeldingContainer;

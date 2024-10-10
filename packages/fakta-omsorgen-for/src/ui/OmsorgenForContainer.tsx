@@ -17,7 +17,7 @@ interface MainComponentProps {
   data: ContainerContract;
 }
 
-const MainComponent = ({ data }: MainComponentProps): JSX.Element => {
+const OmsorgenForContainer = ({ data }: MainComponentProps): JSX.Element => {
   const { sakstype } = data;
   const [state, dispatch] = React.useReducer(mainComponentReducer, {
     isLoading: true,
@@ -70,4 +70,4 @@ const MainComponent = ({ data }: MainComponentProps): JSX.Element => {
   );
 };
 
-export default MainComponent;
+export default OmsorgenForContainer;

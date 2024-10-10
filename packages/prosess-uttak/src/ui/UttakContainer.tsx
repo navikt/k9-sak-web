@@ -18,7 +18,7 @@ interface MainComponentProps {
   containerData: ContainerContract;
 }
 
-const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
+const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
   const {
     featureToggles,
     uttaksperioder,
@@ -80,4 +80,4 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
   );
 };
 
-export default MainComponent;
+export default UttakContainer;
