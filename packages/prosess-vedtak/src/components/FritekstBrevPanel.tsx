@@ -58,7 +58,7 @@ const FritekstBrevPanel = ({
   const { formatMessage } = intl;
   const [featureToggles] = useFeatureToggles();
   const kanRedigereFritekstbrev = kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev);
-  console.log('tester', featureToggles);
+
   // useCallback to avoid re-initializing FritekstRedigering editorjs on every re-render of this component
   const handleFritekstSubmit = useCallback(
     async (html: string, request) => {
