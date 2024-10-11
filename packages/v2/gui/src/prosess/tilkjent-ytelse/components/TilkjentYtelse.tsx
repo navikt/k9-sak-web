@@ -1,3 +1,4 @@
+import type { PersonopplysningDto } from '@k9-sak-web/backend/k9sak/generated';
 import { calcDaysAndWeeksWithWeekends } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
@@ -75,14 +76,14 @@ const prepareTimelineData = (
   content: '',
 });
 
+const finnRolle = (personopplysninger: PersonopplysningDto): string =>
+  personopplysninger.navn ? personopplysninger.navn : 'Søker';
+
 interface OwnProps {
   items: PeriodeMedId[];
-  groups: {
-    id: number;
-    content: string;
-  }[];
   kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  personopplysninger: PersonopplysningDto;
 }
 
 /**
@@ -91,7 +92,12 @@ interface OwnProps {
  * Presentationskomponent. Masserer data og populerer felten samt formatterar tidslinjen for tilkjent ytelse
  */
 
-export const TilkjentYtelse = ({ arbeidsgiverOpplysningerPerId, items, kodeverkNavnFraKode }: OwnProps) => {
+export const TilkjentYtelse = ({
+  arbeidsgiverOpplysningerPerId,
+  items,
+  kodeverkNavnFraKode,
+  personopplysninger,
+}: OwnProps) => {
   const [valgtPeriode, setValgtPeriode] = useState<PeriodeMedId | null>();
   const timelineData = items.map((periode, index) =>
     prepareTimelineData(periode, index, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId),
@@ -162,24 +168,22 @@ export const TilkjentYtelse = ({ arbeidsgiverOpplysningerPerId, items, kodeverkN
   return (
     <div className={styles['timelineContainer']}>
       <div className="mt-8">
-        <div className={styles['timeLineWrapper']}>
-          <Timeline startDate={startDato.toDate()} endDate={endDato.add(1, 'days').toDate()}>
-            <Timeline.Row label="Test">
-              {timelineData.map(periode => (
-                <Timeline.Period
-                  key={periode.id}
-                  id={`${periode.id}`}
-                  start={periode.start}
-                  end={periode.end}
-                  title={periode.title}
-                  className={periode.className}
-                  onSelectPeriod={() => selectHandler(periode.id)}
-                  isActive={valgtPeriode?.id === periode.id}
-                />
-              ))}
-            </Timeline.Row>
-          </Timeline>
-        </div>
+        <Timeline startDate={startDato.toDate()} endDate={endDato.add(1, 'days').toDate()}>
+          <Timeline.Row label={finnRolle(personopplysninger)}>
+            {timelineData.map(periode => (
+              <Timeline.Period
+                key={periode.id}
+                id={`${periode.id}`}
+                start={periode.start}
+                end={periode.end}
+                title={periode.title}
+                className={periode.className}
+                onSelectPeriod={() => selectHandler(periode.id)}
+                isActive={valgtPeriode?.id === periode.id}
+              />
+            ))}
+          </Timeline.Row>
+        </Timeline>
 
         <TimeLineControl
           goBackwardCallback={goBackward}
@@ -187,6 +191,7 @@ export const TilkjentYtelse = ({ arbeidsgiverOpplysningerPerId, items, kodeverkN
           zoomInCallback={zoomIn}
           zoomOutCallback={zoomOut}
           openPeriodInfo={openPeriodInfo}
+          selectedPeriod={!!valgtPeriode}
         />
         {valgtPeriode && (
           <TilkjentYtelseTimelineData

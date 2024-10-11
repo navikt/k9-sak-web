@@ -1,5 +1,4 @@
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import type { FeatureToggles } from '@k9-sak-web/lib/kodeverk/types/FeatureTogglesType.js';
 import { Form } from '@navikt/ft-form-hooks';
@@ -18,7 +17,6 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   beregningsresultat: BeregningsresultatMedUtbetaltePeriodeDto;
   submitCallback: (...args: any[]) => any;
-  kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string;
   featureToggles?: FeatureToggles;
 }
 
@@ -80,7 +78,6 @@ export const transformValues = (values: TilkjentYtelseFormState) => [
     tilkjentYtelse: {
       perioder: values.perioder,
     },
-    begrunnelse: '',
   },
 ];
 

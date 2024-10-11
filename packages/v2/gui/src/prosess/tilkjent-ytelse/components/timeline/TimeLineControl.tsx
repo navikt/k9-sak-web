@@ -13,7 +13,7 @@ interface TimeLineControlProps {
   goBackwardCallback: MouseEventHandler<HTMLButtonElement>;
   goForwardCallback: MouseEventHandler<HTMLButtonElement>;
   openPeriodInfo: MouseEventHandler<HTMLButtonElement>;
-  selectedPeriod?: any;
+  selectedPeriod?: boolean;
   zoomInCallback: MouseEventHandler<HTMLButtonElement>;
   zoomOutCallback: MouseEventHandler<HTMLButtonElement>;
 }
@@ -41,9 +41,9 @@ const TimeLineControl = ({
             type="button"
             icon={
               selectedPeriod ? (
-                <ChevronUpIcon title="Åpne info om første periode" fontSize="1.5rem" />
+                <ChevronUpIcon title="Lukk info om periode" fontSize="1.5rem" />
               ) : (
-                <ChevronDownIcon title="Åpne info om første periode" fontSize="1.5rem" />
+                <ChevronDownIcon title="Åpne info om periode" fontSize="1.5rem" />
               )
             }
             onClick={openPeriodInfo}

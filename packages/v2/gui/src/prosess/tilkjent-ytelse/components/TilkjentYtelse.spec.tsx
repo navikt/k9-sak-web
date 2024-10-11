@@ -47,9 +47,9 @@ describe('<TilkjentYtelse>', () => {
             },
           ] as PeriodeMedId[]
         }
-        groups={[]}
         kodeverkNavnFraKode={kodeverkNavnFraKode}
         arbeidsgiverOpplysningerPerId={{}}
+        personopplysninger={{ aktoerId: '123', fnr: '12345678901' }}
       />,
     );
 

@@ -15,9 +15,8 @@ import NyArbeidsgiverModal from './NyArbeidsgiverModal';
 const minValue0 = minValue(0);
 const maxValue100 = maxValue(100);
 const maxValue3999 = maxValue(3999);
-export const isEmpty = (text?: string | null) =>
-  text === null || text === undefined || text.toString().trim().length === 0;
-export const atLeastOneRequired = (value: string, otherValue?: string | null) =>
+const isEmpty = (text?: string | null) => text === null || text === undefined || text.toString().trim().length === 0;
+const atLeastOneRequired = (value: string, otherValue?: string | null) =>
   isEmpty(value) && isEmpty(otherValue) ? 'Feltet må fylles ut' : undefined;
 
 const mapArbeidsgivere = (arbeidsgivere: ArbeidsgiverOpplysningerPerId) =>
@@ -51,13 +50,12 @@ const mapArbeidsgiverePrivatperson = (arbeidsgivere: ArbeidsgiverOpplysningerPer
         ))
     : [];
 
-const getInntektskategori = (inntektskategorier: KodeverkObject[]) => {
-  return inntektskategorier.map(ik => (
+const getInntektskategori = (inntektskategorier: KodeverkObject[]) =>
+  inntektskategorier.map(ik => (
     <option value={ik.kode} key={ik.kode}>
       {ik.navn}
     </option>
   ));
-};
 
 const erSelvstendigNæringsdrivende = (inntektskategori: Inntektskategori) =>
   [
@@ -120,7 +118,7 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere, feat
             const erSN = erSelvstendigNæringsdrivende(field.inntektskategori);
             const erFL = erFrilans(field.inntektskategori);
             return (
-              <HStack gap="2">
+              <HStack gap="2" key={field.fieldId}>
                 <SelectField
                   label="Inntektskategori"
                   name={`nyPeriodeForm.andeler.${index}.inntektskategori`}

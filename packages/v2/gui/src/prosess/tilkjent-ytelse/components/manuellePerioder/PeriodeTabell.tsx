@@ -126,12 +126,7 @@ export const PeriodeTabell = ({ readOnly, featureToggles }: OwnProps) => {
         )}
 
         {periodeSlett && (
-          <SlettPeriodeModal
-            showModal={showModalSlettPeriode}
-            periode={periodeSlett}
-            cancelEvent={hideModal}
-            closeEvent={removePeriode}
-          />
+          <SlettPeriodeModal showModal={showModalSlettPeriode} cancelEvent={hideModal} closeEvent={removePeriode} />
         )}
       </div>
     </>

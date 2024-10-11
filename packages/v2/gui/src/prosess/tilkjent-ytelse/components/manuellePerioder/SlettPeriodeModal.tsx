@@ -1,11 +1,9 @@
 import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HStack, Modal, VStack } from '@navikt/ds-react';
-import type { BeriketBeregningsresultatPeriode } from './FormState';
 import styles from './periode.module.css';
 
 interface OwnProps {
   showModal?: boolean;
-  periode: BeriketBeregningsresultatPeriode;
   closeEvent: () => void;
   cancelEvent: () => void;
 }

@@ -4,7 +4,7 @@ import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import type { FeatureToggles } from '@k9-sak-web/lib/kodeverk/types/FeatureTogglesType.js';
 import { Heading } from '@navikt/ds-react';
-import type { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import type { AksjonspunktDto, PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from '../types/BeregningsresultatMedUtbetaltePeriode';
 import type { BeregningsresultatPeriodeDto } from '../types/BeregningsresultatPeriodeDto';
 import type { ArbeidsgiverOpplysningerPerId } from '../types/arbeidsgiverOpplysningerType';
@@ -24,11 +24,6 @@ const formatPerioder = (perioder?: BeregningsresultatPeriodeDto[]): PeriodeMedId
   return perioderMedClassName;
 };
 
-const groups = [
-  { id: 1, content: '' },
-  { id: 2, content: '' },
-];
-
 const { MANUELL_TILKJENT_YTELSE } = AksjonspunktCodes;
 
 const finnTilbaketrekkAksjonspunkt = (alleAksjonspunkter?: AksjonspunktDto[]): AksjonspunktDto | undefined =>
@@ -47,6 +42,7 @@ interface PureOwnProps {
   readOnlySubmitButton: boolean;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles?: FeatureToggles;
+  personopplysninger: PersonopplysningDto;
 }
 
 const TilkjentYtelsePanelImpl = ({
@@ -57,6 +53,7 @@ const TilkjentYtelsePanelImpl = ({
   readOnly,
   arbeidsgiverOpplysningerPerId,
   featureToggles,
+  personopplysninger,
 }: PureOwnProps) => {
   const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
   const kodeverkNavnFraKode = getKodeverkNavnFraKodeFn();
@@ -71,9 +68,9 @@ const TilkjentYtelsePanelImpl = ({
       {beregningsresultat && (
         <TilkjentYtelse
           items={formatPerioder(beregningsresultat.perioder)}
-          groups={groups}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           kodeverkNavnFraKode={kodeverkNavnFraKode}
+          personopplysninger={personopplysninger}
         />
       )}
 
@@ -85,7 +82,6 @@ const TilkjentYtelsePanelImpl = ({
           readOnly={readOnly}
           submitCallback={submitCallback}
           readOnlySubmitButton={readOnlySubmitButton}
-          kodeverkNavnFraKode={kodeverkNavnFraKode}
           featureToggles={featureToggles}
         />
       )}
