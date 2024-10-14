@@ -9,14 +9,14 @@ describe('AksjonspunktHelpText', () => {
 
   test('renders closed action points correctly', () => {
     render(<AksjonspunktHelpText isAksjonspunktOpen={false} children={['Action point 1', 'Action point 2']} />);
-    expect(screen.getByText('Behandlet aksjonspunkt:')).toBeInTheDocument();
+    expect(screen.getAllByText('Behandlet aksjonspunkt:')).toHaveLength(2);
     expect(screen.getByText('Action point 1')).toBeInTheDocument();
     expect(screen.getByText('Action point 2')).toBeInTheDocument();
   });
 
   test('renders open action points correctly', () => {
     render(<AksjonspunktHelpText isAksjonspunktOpen={true} children={['Action point 1', 'Action point 2']} />);
-    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'Advarsel' })).toBeInTheDocument();
     expect(screen.getByText('Action point 1')).toBeInTheDocument();
     expect(screen.getByText('Action point 2')).toBeInTheDocument();
   });
