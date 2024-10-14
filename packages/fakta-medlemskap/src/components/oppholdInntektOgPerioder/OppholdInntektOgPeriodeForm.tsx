@@ -1,14 +1,7 @@
 import FaktaBegrunnelseTextFieldRHF from '@fpsak-frontend/form/src/hook-form/FaktaBegrunnelseTextFieldRHF';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import {
-  BorderBox,
-  FlexColumn,
-  FlexContainer,
-  FlexRow,
-  VerticalSpacer,
-  useSaksbehandlerOppslag,
-} from '@fpsak-frontend/shared-components';
+import { BorderBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ISO_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Alert, Button } from '@navikt/ds-react';
@@ -70,7 +63,6 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
   alleMerknaderFraBeslutter,
 }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   const { control, formState, trigger } = useFormContext<OppholdInntektOgPerioderFormState>();
   const oppholdInntektOgPeriodeFormValues = useWatch({ control, name: 'oppholdInntektOgPeriodeForm' });
   const handleSubmit = () => {
@@ -114,9 +106,7 @@ export const OppholdInntektOgPeriodeForm: FunctionComponent<OppholdInntektOgPeri
             name="oppholdInntektOgPeriodeForm.begrunnelse"
             label="Begrunn endringene"
           />
-          {!!begrunnelse && (
-            <AssessedBy name={hentSaksbehandlerNavn(valgtPeriode?.vurdertAv)} date={valgtPeriode?.vurdertTidspunkt} />
-          )}
+          {!!begrunnelse && <AssessedBy ident={valgtPeriode?.vurdertAv} date={valgtPeriode?.vurdertTidspunkt} />}
         </>
       )}
 
