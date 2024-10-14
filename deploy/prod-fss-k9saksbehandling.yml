@@ -110,3 +110,5 @@ spec:
       value: "false"
     - name: AUTOMATISK_VURDERT_MEDLEMSKAP
       value: "true"
+    - name: DELVIS_REVURDERING
+      value: "false"
