@@ -1,6 +1,5 @@
 import type { FeatureToggles } from '@k9-sak-web/lib/kodeverk/types/FeatureTogglesType.js';
 import type { AksjonspunktDto, BehandlingDto, PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import type { ArbeidsgiverOpplysningerPerId } from './types/arbeidsgiverOpplysningerType';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';
@@ -17,15 +16,6 @@ interface OwnProps {
   personopplysninger: PersonopplysningDto;
 }
 
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-  },
-  cache,
-);
-
 const TilkjentYtelseProsessIndex = ({
   beregningsresultat,
   aksjonspunkter,
@@ -36,18 +26,16 @@ const TilkjentYtelseProsessIndex = ({
   featureToggles,
   personopplysninger,
 }: OwnProps) => (
-  <RawIntlProvider value={intl}>
-    <TilkjentYtelsePanel
-      beregningsresultat={beregningsresultat}
-      aksjonspunkter={aksjonspunkter}
-      readOnly={isReadOnly}
-      submitCallback={submitCallback}
-      readOnlySubmitButton={readOnlySubmitButton}
-      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-      featureToggles={featureToggles}
-      personopplysninger={personopplysninger}
-    />
-  </RawIntlProvider>
+  <TilkjentYtelsePanel
+    beregningsresultat={beregningsresultat}
+    aksjonspunkter={aksjonspunkter}
+    readOnly={isReadOnly}
+    submitCallback={submitCallback}
+    readOnlySubmitButton={readOnlySubmitButton}
+    arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+    featureToggles={featureToggles}
+    personopplysninger={personopplysninger}
+  />
 );
 
 export default TilkjentYtelseProsessIndex;

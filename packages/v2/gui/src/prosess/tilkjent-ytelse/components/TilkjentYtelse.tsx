@@ -3,7 +3,7 @@ import { calcDaysAndWeeksWithWeekends } from '@k9-sak-web/lib/dateUtils/dateUtil
 import { DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { Timeline } from '@navikt/ds-react';
+import { Timeline, VStack } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import type { BeregningsresultatPeriodeDto } from '../types/BeregningsresultatPeriodeDto';
@@ -168,31 +168,33 @@ export const TilkjentYtelse = ({
   return (
     <div className={styles['timelineContainer']}>
       <div className="mt-8">
-        <Timeline startDate={startDato.toDate()} endDate={endDato.add(1, 'days').toDate()}>
-          <Timeline.Row label={finnRolle(personopplysninger)}>
-            {timelineData.map(periode => (
-              <Timeline.Period
-                key={periode.id}
-                id={`${periode.id}`}
-                start={periode.start}
-                end={periode.end}
-                title={periode.title}
-                className={periode.className}
-                onSelectPeriod={() => selectHandler(periode.id)}
-                isActive={valgtPeriode?.id === periode.id}
-              />
-            ))}
-          </Timeline.Row>
-        </Timeline>
+        <VStack gap="2">
+          <Timeline startDate={startDato.toDate()} endDate={endDato.add(1, 'days').toDate()}>
+            <Timeline.Row label={finnRolle(personopplysninger)}>
+              {timelineData.map(periode => (
+                <Timeline.Period
+                  key={periode.id}
+                  id={`${periode.id}`}
+                  start={periode.start}
+                  end={periode.end}
+                  title={periode.title}
+                  className={periode.className}
+                  onSelectPeriod={() => selectHandler(periode.id)}
+                  isActive={valgtPeriode?.id === periode.id}
+                />
+              ))}
+            </Timeline.Row>
+          </Timeline>
 
-        <TimeLineControl
-          goBackwardCallback={goBackward}
-          goForwardCallback={goForward}
-          zoomInCallback={zoomIn}
-          zoomOutCallback={zoomOut}
-          openPeriodInfo={openPeriodInfo}
-          selectedPeriod={!!valgtPeriode}
-        />
+          <TimeLineControl
+            goBackwardCallback={goBackward}
+            goForwardCallback={goForward}
+            zoomInCallback={zoomIn}
+            zoomOutCallback={zoomOut}
+            openPeriodInfo={openPeriodInfo}
+            selectedPeriod={!!valgtPeriode}
+          />
+        </VStack>
         {valgtPeriode && (
           <TilkjentYtelseTimelineData
             selectedItemStartDate={valgtPeriode.fom?.toString() ?? ''}
