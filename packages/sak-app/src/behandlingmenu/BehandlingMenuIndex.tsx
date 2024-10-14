@@ -148,6 +148,9 @@ export const BehandlingMenuIndex = ({
   const { startRequest: lagNyBehandlingK9Sak } = restApiHooks.useRestApiRunner<boolean>(
     K9sakApiKeys.NEW_BEHANDLING_K9SAK,
   );
+  const { startRequest: lagRevurderingFraStegK9Sak } = restApiHooks.useRestApiRunner<boolean>(
+    K9sakApiKeys.NEW_BEHANDLING_REVURDERING_FRA_STEG_K9SAK,
+  );
   const { startRequest: lagNyBehandlingTilbake } = restApiHooks.useRestApiRunner<boolean>(
     K9sakApiKeys.NEW_BEHANDLING_TILBAKE,
   );
@@ -185,6 +188,9 @@ export const BehandlingMenuIndex = ({
     let lagNy = lagNyBehandlingK9Sak;
     if (bTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING || bTypeKode === BehandlingType.TILBAKEKREVING) {
       lagNy = lagNyBehandlingTilbake;
+    }
+    if (bTypeKode === BehandlingType.REVURDERING && params.steg === 'RE-ENDRET-FORDELING') {
+      lagNy = lagRevurderingFraStegK9Sak;
     }
     if (bTypeKode === BehandlingType.KLAGE) {
       lagNy = lagNyBehandlingKlage;

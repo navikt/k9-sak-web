@@ -78,7 +78,6 @@ export const transformValues = (values: TilkjentYtelseFormState) => [
     tilkjentYtelse: {
       perioder: values.perioder,
     },
-    begrunnelse: '',
   },
 ];
 

@@ -1,5 +1,6 @@
 import { Dayjs } from 'dayjs';
-import { ISO_DATE_FORMAT } from './formats';
+import 'moment/locale/nb';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from './formats';
 import { initializeDate } from './initializeDate';
 
 export const calcDays = (fraDatoPeriode: Dayjs | string, tilDatoPeriode: Dayjs | string, notWeekends = true) => {
@@ -92,3 +93,8 @@ export const calcDaysAndWeeks = (fraDatoPeriode?: string, tilDatoPeriode?: strin
   const days = numOfDays % 5;
   return checkDays(weeks, days);
 };
+
+export const formatDate = (date: string): string => initializeDate(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT);
+
+export const formatPeriod = (fomDate: string, tomDate: string): string =>
+  `${formatDate(fomDate)} - ${formatDate(tomDate)}`;

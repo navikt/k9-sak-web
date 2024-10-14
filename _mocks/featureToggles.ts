@@ -38,10 +38,6 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_LOS_MARKER_BEHANDLING_SUBMIT,
   },
   {
-    key: 'AKSJONSPUNKT_9014',
-    value: process.env.VITE_AKSJONSPUNKT_9014,
-  },
-  {
     key: 'AKSJONSPUNKT_9015',
     value: process.env.VITE_AKSJONSPUNKT_9015,
   },

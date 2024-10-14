@@ -12,7 +12,6 @@ import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import messages from '../i18n/nb_NO.json';
-import AksjonspunktForm from './components/AksjonspunktForm';
 import AksjonspunktForm9014 from './components/AksjonspunktForm9014';
 import Uttaksplan from './components/Uttaksplan';
 import SaerligeSmittevernhensynMikrofrontend from './components/saerlige-smittevernhensyn/SaerligeSmittevernhensynMikrofrontend';
@@ -81,17 +80,6 @@ const ÅrskvantumIndex = ({
     <RawIntlProvider value={årskvantumIntl}>
       {aksjonspunkter.length > 0 && (
         <AksjonspunktForm9014
-          aktiviteter={sisteUttaksplan?.aktiviteter}
-          behandlingId={behandling.id}
-          behandlingVersjon={behandling.versjon}
-          submitCallback={submitCallback}
-          aksjonspunkterForSteg={aksjonspunkter}
-          isAksjonspunktOpen={isAksjonspunktOpen && !visAPVurderÅrskvantumDokIOmsorgsdagerFrontend}
-          fosterbarn={fosterbarn}
-        />
-      )}
-      {aksjonspunkter.length > 0 && (
-        <AksjonspunktForm
           aktiviteter={sisteUttaksplan?.aktiviteter}
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
