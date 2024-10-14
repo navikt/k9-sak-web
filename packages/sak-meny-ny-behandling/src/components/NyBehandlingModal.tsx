@@ -110,7 +110,7 @@ export const NyBehandlingModal = ({
   const [featureToggles] = useFeatureToggles();
   const erFørstegangsbehandling = valgtBehandlingTypeKode === bType.FORSTEGANGSSOKNAD;
   const erRevurdering = valgtBehandlingTypeKode === bType.REVURDERING;
-  const erDelvisRevurderingToggleAktivert = featureToggles.DELVIS_REVURDERING;
+  const erDelvisRevurderingToggleAktivert = featureToggles?.DELVIS_REVURDERING;
   const visÅrsak =
     (erDelvisRevurderingToggleAktivert && erRevurdering && steg === 'inngangsvilkår') ||
     (!erDelvisRevurderingToggleAktivert && behandlingArsakTyper.length > 0);
