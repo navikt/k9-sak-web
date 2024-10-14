@@ -167,6 +167,7 @@ export const visUtenAksjonspunkt = () => (
     aksjonspunkter={[]}
     submitCallback={action('button-click') as (data: any) => Promise<any>}
     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+    personopplysninger={{ aktoerId: '1', fnr: '12345678901' }}
   />
 );
 
@@ -186,6 +187,7 @@ export const visÅpentAksjonspunktTilbaketrekk = () => (
     behandling={behandling}
     isReadOnly={false}
     readOnlySubmitButton
+    personopplysninger={{ aktoerId: '1', fnr: '12345678901' }}
   />
 );
 
@@ -211,6 +213,7 @@ export const visÅpentAksjonspunktManuellTilkjentYtelse = () => (
       behandling={behandling}
       isReadOnly={false}
       readOnlySubmitButton
+      personopplysninger={{ aktoerId: '1', fnr: '12345678901' }}
     />
   </KodeverkProvider>
 );

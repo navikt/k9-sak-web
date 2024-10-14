@@ -19,6 +19,7 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         readOnlySubmitButton
         aksjonspunkter={[]}
         arbeidsgiverOpplysningerPerId={{}}
+        personopplysninger={{ aktoerId: '1', fnr: '12345678901' }}
       />,
     );
 
@@ -34,6 +35,7 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         submitCallback={vi.fn()}
         readOnlySubmitButton
         arbeidsgiverOpplysningerPerId={{}}
+        personopplysninger={{ aktoerId: '1', fnr: '12345678901' }}
       />,
     );
     expect(screen.getByRole('heading', { name: 'Tilkjent ytelse' })).toBeInTheDocument();
