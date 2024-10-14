@@ -1,11 +1,9 @@
-import React from 'react';
-
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { BeregningFaktaIndex } from '@navikt/ft-fakta-beregning-redesign';
+import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
+import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import { BeregningFaktaIndex } from '@navikt/ft-fakta-beregning';
 import { FrisinnBehandlingApiKeys } from '../../data/frisinnBehandlingApi';
 
 class BeregningFaktaPanelDef extends FaktaPanelDef {
