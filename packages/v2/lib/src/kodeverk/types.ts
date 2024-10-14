@@ -1,3 +1,4 @@
+export * from './types/AksjonspunktCodes';
 export * from './types/AlleKodeverk';
 export * from './types/GetKodeverkNavnFraKodeFnType';
 export * from './types/HentKodeverkForKodeType';
