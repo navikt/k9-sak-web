@@ -72,7 +72,6 @@ const PeriodeRad = ({
                         }
                         variant="tertiary"
                         size="small"
-                        className={styles['removeIcon']}
                         onClick={
                           isAnyFormOrNyPeriodeOpen ? () => undefined : () => openSlettPeriodeModalCallback(item.id)
                         }
