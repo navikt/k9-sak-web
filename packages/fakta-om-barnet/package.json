@@ -25,7 +25,7 @@
     "react-dom": "18.3.1",
     "react-hook-form": "7.53.0",
     "react-popper": "2.3.0",
-    "tailwindcss": "^3.4.13"
+    "tailwindcss": "^3.4.14"
   },
   "msw": {
     "workerDirectory": "public"

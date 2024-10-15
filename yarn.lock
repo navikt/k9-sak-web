@@ -3269,7 +3269,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.59.13
+    "@tanstack/react-query": ^5.59.14
     react: 18.3.1
     react-intl: 6.7.2
   languageName: unknown
@@ -3536,7 +3536,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@tanstack/react-query": ^5.59.13
+    "@tanstack/react-query": ^5.59.14
     react: 18.3.1
     react-intl: 6.7.2
   languageName: unknown
@@ -4506,7 +4506,7 @@ __metadata:
     "@navikt/ds-react": 7.2.0
     "@navikt/ft-plattform-komponenter": 5.0.0
     "@popperjs/core": 2.11.8
-    "@tanstack/react-query": ^5.59.13
+    "@tanstack/react-query": ^5.59.14
     axios: 1.7.7
     classnames: 2.5.1
     cors: ^2.8.5
@@ -4538,7 +4538,7 @@ __metadata:
     react-dom: 18.3.1
     react-hook-form: 7.53.0
     react-popper: 2.3.0
-    tailwindcss: ^3.4.13
+    tailwindcss: ^3.4.14
     vite: ^5.4.9
     vite-plugin-node-polyfills: ^0.22.0
   languageName: unknown
@@ -4626,7 +4626,7 @@ __metadata:
   dependencies:
     "@k9-sak-web/backend": "workspace:^"
     "@k9-sak-web/lib": 1.0.0
-    "@tanstack/react-query": ^5.59.13
+    "@tanstack/react-query": ^5.59.14
     axios: 1.7.7
     react: 18.3.1
   languageName: unknown
@@ -4947,7 +4947,7 @@ __metadata:
     "@navikt/ft-ui-komponenter": 2.5.4
     "@sentry/browser": 8.34.0
     "@sentry/react": ^8.34.0
-    "@tanstack/react-query": ^5.59.13
+    "@tanstack/react-query": ^5.59.14
     axios: 1.7.7
     classnames: 2.5.1
     history: 5.3.0
@@ -4974,7 +4974,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.59.13
+    "@tanstack/react-query": ^5.59.14
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
@@ -5030,7 +5030,7 @@ __metadata:
     "@navikt/ds-react": 7.2.0
     "@navikt/ft-form-hooks": 5.1.8
     "@navikt/ft-form-validators": 2.4.4
-    "@tanstack/react-query": ^5.59.13
+    "@tanstack/react-query": ^5.59.14
     date-fns: 4.1.0
     react: 18.3.1
     react-hook-form: 7.53.0
@@ -6891,14 +6891,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.59.13":
-  version: 5.59.13
-  resolution: "@tanstack/react-query@npm:5.59.13"
+"@tanstack/react-query@npm:^5.59.14":
+  version: 5.59.14
+  resolution: "@tanstack/react-query@npm:5.59.14"
   dependencies:
     "@tanstack/query-core": 5.59.13
   peerDependencies:
     react: ^18 || ^19
-  checksum: 8b8d0c4dc71abb760ade6503a1416d20449217a738474bd747a2d81ba7b48f6fb896df71c60cc36d605124e2a86e2cc3e72a2a30c35421d52b6ca28e3ce09dc8
+  checksum: 9ff0f0c51262842b922ffd4386d5cd4482ced6a560865fc076de14606ed3bdb479732808e52c31cc1fd2727c882708d6c5c716566950d14e68681bf92eb446ec
   languageName: node
   linkType: hard
 
@@ -13785,7 +13785,7 @@ __metadata:
     stylelint: 16.10.0
     stylelint-config-standard: ^36.0.1
     stylelint-order: 6.0.4
-    tailwindcss: ^3.4.13
+    tailwindcss: ^3.4.14
     typed-css-modules: ^0.9.1
     typescript: 5.6.3
     typescript-eslint: ^7.18.0
@@ -17763,9 +17763,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.4.13":
-  version: 3.4.13
-  resolution: "tailwindcss@npm:3.4.13"
+"tailwindcss@npm:^3.4.14":
+  version: 3.4.14
+  resolution: "tailwindcss@npm:3.4.14"
   dependencies:
     "@alloc/quick-lru": ^5.2.0
     arg: ^5.0.2
@@ -17792,7 +17792,7 @@ __metadata:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: 0e85717b4276b884c3ba762a72fececcf6c27f54fe4deb660e22b7f278f33e6f806af4e4c4fad27e8de74fa28872cea75fe121b5751ef861cb2cc423a2fc8fc4
+  checksum: dc1e935bda1c530f820147886fb21a009bca3ca96f5dbad037c05826ddc0a96dd2b08ae4160b9f48484c7f118aefa531dfa04b761988bff59b69c14dff45d3ab
   languageName: node
   linkType: hard
 
