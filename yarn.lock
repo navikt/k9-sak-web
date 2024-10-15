@@ -4096,7 +4096,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 6.0.0
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.6.9
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.6.11
     react: 18.3.1
     react-intl: 6.7.2
   languageName: unknown
@@ -4154,7 +4154,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 6.0.0
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.6.8
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.6.9
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.6.11
     react: 18.3.1
     react-intl: 6.7.2
   languageName: unknown
@@ -4195,7 +4195,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 6.0.0
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.6.8
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.6.9
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.6.11
     axios: 1.7.7
     react: 18.3.1
     react-intl: 6.7.2
@@ -4233,7 +4233,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 6.0.0
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.6.8
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.6.9
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.6.11
     axios: 1.7.7
     react: 18.3.1
     react-intl: 6.7.2
@@ -4276,7 +4276,7 @@ __metadata:
     "@navikt/diagnosekoder": ^1.2024.0
     "@navikt/ft-fakta-beregning": 6.0.0
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.6.8
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.6.9
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.6.11
     axios: 1.7.7
     react: 18.3.1
     react-intl: 6.7.2
@@ -4943,7 +4943,7 @@ __metadata:
     "@navikt/ft-fakta-beregning": 6.0.0
     "@navikt/ft-form-hooks": 5.1.8
     "@navikt/ft-plattform-komponenter": 5.0.0
-    "@navikt/ft-prosess-beregningsgrunnlag": 6.6.9
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.6.11
     "@navikt/ft-ui-komponenter": 2.5.4
     "@sentry/browser": 8.34.0
     "@sentry/react": ^8.34.0
@@ -5372,34 +5372,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-plattform-komponenter@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "@navikt/ft-plattform-komponenter@npm:4.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-plattform-komponenter%2F4.0.0%2F7cf13261586f82927021c6386f096855e23811b0"
-  dependencies:
-    "@navikt/aksel-icons": 7.1.2
-    "@navikt/ds-css": 7.1.2
-    "@navikt/ds-react": 7.1.2
-    "@navikt/ft-utils": ^2.4.4
-    classnames: 2.5.1
-  peerDependencies:
-    "@navikt/aksel-icons": 7.x
-    "@navikt/ds-css": 7.x
-    "@navikt/ds-react": 7.x
-    "@popperjs/core": 2.11.8
-    classnames: 2.5.1
-    dayjs: 1.11.x
-    lodash.throttle: 4.1.1
-    prop-types: 15.8.1
-    react: 18.3.1
-    react-dom: 18.3.1
-    react-popper: 2.3.0
-  checksum: 7bfba900b360f22c18bc470455cdbd0ef7842a0421d45545e5721d68e9b50b7ff0819ee9acd17859839d3de3b44df80ff1b9ec965448d5e7e07b2a4508e615b0
-  languageName: node
-  linkType: hard
-
-"@navikt/ft-prosess-beregningsgrunnlag@npm:6.6.9":
-  version: 6.6.9
-  resolution: "@navikt/ft-prosess-beregningsgrunnlag@npm:6.6.9::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-beregningsgrunnlag%2F6.6.9%2F8329320d8995c6c2d3936811f67b5c80246271ef"
+"@navikt/ft-prosess-beregningsgrunnlag@npm:6.6.11":
+  version: 6.6.11
+  resolution: "@navikt/ft-prosess-beregningsgrunnlag@npm:6.6.11::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-prosess-beregningsgrunnlag%2F6.6.11%2Fbbd5e432b6ab8887b0f9e5c49c72238c17cee856"
   dependencies:
     "@navikt/aksel-icons": 7.1.2
     "@navikt/ds-css": 7.1.2
@@ -5407,7 +5382,7 @@ __metadata:
     "@navikt/ft-form-hooks": ^5.1.8
     "@navikt/ft-form-validators": ^2.4.4
     "@navikt/ft-kodeverk": ^2.5.3
-    "@navikt/ft-plattform-komponenter": ^4.0.0
+    "@navikt/ft-plattform-komponenter": ^5.0.0
     "@navikt/ft-types": ^2.5.4
     "@navikt/ft-ui-komponenter": ^2.5.4
     "@navikt/ft-utils": ^2.4.4
@@ -5434,7 +5409,7 @@ __metadata:
     react: 18.3.1
     react-hook-form: 7.x
     react-intl: 6.x
-  checksum: 37f8bc706e1db794812c579830f27f33f6ef0c0155766576e5983fffa512a9bcabf469661154252cbc1d1b1c6cc4aef4d092085cb0f371484fcb1bf261a53e3e
+  checksum: d8273f7c08c00a302c93c839a3079b11864c5477c9bcb0a1852eea8ef611b48c16818d34854952642333e9f68c1bf0da4abd58277614c8a4511b5ab27796f642
   languageName: node
   linkType: hard
 
