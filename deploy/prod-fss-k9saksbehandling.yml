@@ -83,7 +83,7 @@ spec:
     - name: AKSJONSPUNKT_9015
       value: "true"
     - name: ALDERSVILKAR_KRONISK_SYK
-      value: "false"
+      value: "true"
     - name: FRITEKST_REDIGERING
       value: "true"
     - name: INKLUDER_KALENDER_PILS
