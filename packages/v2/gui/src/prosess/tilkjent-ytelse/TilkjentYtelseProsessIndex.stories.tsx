@@ -6,6 +6,8 @@ import { inntektskategorier } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektsk
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { action } from '@storybook/addon-actions';
+import type { Meta, StoryObj } from '@storybook/react';
+import { expect, userEvent, within } from '@storybook/test';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';
 
@@ -65,60 +67,97 @@ const arbeidsgiverOpplysningerPerId = {
   },
 };
 
-export default {
+const meta = {
   title: 'prosess/prosess-tilkjent-ytelse-v2',
   component: TilkjentYtelseProsessIndex,
+} satisfies Meta<typeof TilkjentYtelseProsessIndex>;
+
+type Story = StoryObj<typeof meta>;
+
+export const VisUtenAksjonspunkt: Story = {
+  args: {
+    isReadOnly: false,
+    readOnlySubmitButton: true,
+    beregningsresultat,
+    aksjonspunkter: [],
+    submitCallback: action('button-click') as (data: any) => Promise<any>,
+    arbeidsgiverOpplysningerPerId,
+    personopplysninger: { aktoerId: '1', fnr: '12345678901' },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
+  },
+  render: props => <TilkjentYtelseProsessIndex {...props} />,
 };
 
-export const visUtenAksjonspunkt = () => (
-  <TilkjentYtelseProsessIndex
-    isReadOnly={false}
-    readOnlySubmitButton
-    beregningsresultat={beregningsresultat}
-    aksjonspunkter={[]}
-    submitCallback={action('button-click') as (data: any) => Promise<any>}
-    arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-    personopplysninger={{ aktoerId: '1', fnr: '12345678901' }}
-  />
-);
-
-export const visÅpentAksjonspunktTilbaketrekk = () => (
-  <TilkjentYtelseProsessIndex
-    beregningsresultat={beregningsresultat}
-    aksjonspunkter={[
+export const VisÅpentAksjonspunktTilbaketrekk: Story = {
+  args: {
+    isReadOnly: false,
+    readOnlySubmitButton: true,
+    beregningsresultat,
+    aksjonspunkter: [
       {
         definisjon: aksjonspunktkodeDefinisjonType.VURDER_TILBAKETREKK, // kodeverk: ''
         status: aksjonspunktStatus.OPPRETTET, // kodeverk: ''
       },
-    ]}
-    submitCallback={action('button-click') as (data: any) => Promise<any>}
-    arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-    isReadOnly={false}
-    readOnlySubmitButton
-    personopplysninger={{ aktoerId: '1', fnr: '12345678901' }}
-  />
-);
+    ],
+    submitCallback: action('button-click') as (data: any) => Promise<any>,
+    arbeidsgiverOpplysningerPerId,
+    personopplysninger: { aktoerId: '1', fnr: '12345678901' },
+  },
+  play: async ({ canvasElement }) => {
+    it('Skal vise skjemaelementer for tilbaketrekk', async () => {
+      const canvas = within(canvasElement);
+      expect(canvas.getByRole('heading', { name: 'Tilkjent ytelse' })).toBeInTheDocument();
+      expect(
+        canvas.getByText(
+          'Pleiepengene er utbetalt til søker, arbeidsgiver krever nå refusjon fra startdato av pleiepengene. Vurder om beløpet som er feilutbetalt skal tilbakekreves fra søker eller om dette er en sak mellom arbeidstaker og arbeidsgiver.',
+        ),
+      ).toBeInTheDocument();
+      expect(canvas.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
+      expect(canvas.getByRole('radio', { name: 'Tilbakekrev fra søker' })).toBeInTheDocument();
+      expect(canvas.getByRole('radio', { name: 'Ikke tilbakekrev fra søker' })).toBeInTheDocument();
+      expect(canvas.getByRole('textbox', { name: 'Vurdering' })).toBeInTheDocument();
+    });
+  },
+  render: props => <TilkjentYtelseProsessIndex {...props} />,
+};
 
-export const visÅpentAksjonspunktManuellTilkjentYtelse = () => (
-  <KodeverkProvider
-    behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
-    kodeverk={alleKodeverkV2}
-    klageKodeverk={{}}
-    tilbakeKodeverk={{}}
-  >
-    <TilkjentYtelseProsessIndex
-      beregningsresultat={beregningsresultat}
-      aksjonspunkter={[
-        {
-          definisjon: aksjonspunktkodeDefinisjonType.MANUELL_TILKJENT_YTELSE, // kodeverk: ''
-          status: aksjonspunktStatus.OPPRETTET, // kodeverk: ''
-        },
-      ]}
-      submitCallback={action('button-click') as (data: any) => Promise<any>}
-      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-      isReadOnly={false}
-      readOnlySubmitButton
-      personopplysninger={{ aktoerId: '1', fnr: '12345678901' }}
-    />
-  </KodeverkProvider>
-);
+export const VisÅpentAksjonspunktManuellTilkjentYtelse: Story = {
+  args: {
+    isReadOnly: false,
+    readOnlySubmitButton: true,
+    beregningsresultat,
+    aksjonspunkter: [
+      {
+        definisjon: aksjonspunktkodeDefinisjonType.MANUELL_TILKJENT_YTELSE, // kodeverk: ''
+        status: aksjonspunktStatus.OPPRETTET, // kodeverk: ''
+      },
+    ],
+    submitCallback: action('button-click') as (data: any) => Promise<any>,
+    arbeidsgiverOpplysningerPerId,
+    personopplysninger: { aktoerId: '1', fnr: '12345678901' },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
+    expect(canvas.getByRole('button', { name: 'Legg til ny periode' })).toBeInTheDocument();
+    expect(canvas.queryByText('Ny periode')).not.toBeInTheDocument();
+    await userEvent.click(canvas.getByRole('button', { name: 'Legg til ny periode' }));
+    expect(canvas.getByText('Ny periode')).toBeInTheDocument();
+    expect(canvas.getByRole('button', { name: 'Avbryt' })).toBeInTheDocument();
+  },
+  render: props => (
+    <KodeverkProvider
+      behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+      kodeverk={alleKodeverkV2}
+      klageKodeverk={{}}
+      tilbakeKodeverk={{}}
+    >
+      <TilkjentYtelseProsessIndex {...props} />
+    </KodeverkProvider>
+  ),
+};
+
+export default meta;

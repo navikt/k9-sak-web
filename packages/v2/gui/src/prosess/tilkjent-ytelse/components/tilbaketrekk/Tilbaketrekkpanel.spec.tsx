@@ -1,7 +1,6 @@
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import type { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
-import { render, screen } from '@testing-library/react';
-import { Tilbaketrekkpanel, buildInitialValues, transformValues } from './Tilbaketrekkpanel';
+import { buildInitialValues, transformValues } from './Tilbaketrekkpanel';
 
 const lagAksjonspunktTilbaketrekk = (begrunnelse: string): AksjonspunktDto => ({
   definisjon: '5090',
@@ -12,29 +11,8 @@ const lagAksjonspunktTilbaketrekk = (begrunnelse: string): AksjonspunktDto => ({
 });
 
 describe('<Tilbaketrekkpanel>', () => {
-  it('skal teste at komponent vises korrekt', () => {
-    render(
-      <Tilbaketrekkpanel
-        readOnly={false}
-        submitCallback={vi.fn()}
-        readOnlySubmitButton={false}
-        vurderTilbaketrekkAP={lagAksjonspunktTilbaketrekk('')}
-      />,
-    );
-
-    expect(screen.getAllByRole('radio').length).toBe(2);
-    expect(screen.getByRole('textbox', { name: 'Vurdering' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        'Pleiepengene er utbetalt til søker, arbeidsgiver krever nå refusjon fra startdato av pleiepengene. Vurder om beløpet som er feilutbetalt skal tilbakekreves fra søker eller om dette er en sak mellom arbeidstaker og arbeidsgiver.',
-      ),
-    ).toBeInTheDocument();
-  });
-
   it('skal teste at komponent bygger korrekte initial values dersom alle data mangler', () => {
     const expectedInitialValues = undefined;
-
     const actualInitialValues = buildInitialValues();
     expect(actualInitialValues).toEqual(expectedInitialValues);
   });

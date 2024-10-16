@@ -13,7 +13,7 @@ export const getAktivitet = (
     : kodeverkNavnFraKode(aktivitetStatus, KodeverkType.AKTIVITET_STATUS);
 
 export const getInntektskategori = (
-  inntektkategori: NyPeriodeFormAndeler['inntektskategori'],
+  inntektkategori: NyPeriodeFormAndeler['inntektskategori'] | undefined,
   kodeverkNavnFraKode: KodeverkNavnFraKodeType,
 ): string =>
   // hvis valgtAndel ikke satt ennå return tom string.
@@ -22,7 +22,7 @@ export const getInntektskategori = (
 const getEndCharFromId = (id?: string | null) => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
 export const createArbeidsgiverVisningsnavnForAndel = (
-  andel: NyPeriodeFormAndeler,
+  andel: NyPeriodeFormAndeler | undefined,
   kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string,
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 ) => {
@@ -52,7 +52,7 @@ export const createArbeidsgiverVisningsnavnForAndel = (
 };
 
 export const createPrivatarbeidsgiverVisningsnavnForAndel = (
-  andel: NyPeriodeFormAndeler & { arbeidsgiverPersonIdent?: string },
+  andel: (NyPeriodeFormAndeler & { arbeidsgiverPersonIdent?: string }) | undefined,
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 ) => {
   if (!andel) return '';
