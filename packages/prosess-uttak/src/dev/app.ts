@@ -200,7 +200,6 @@ const data = {
   erFagytelsetypeLivetsSluttfase: false,
   løsAksjonspunktVurderDatoNyRegelUttak: undefined,
   virkningsdatoUttakNyeRegler: '',
-  featureToggles: {},
 };
 
 (window as Partial<ExtendedWindow>).renderUttakApp = async appId => {

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Margin, BasicList, LabelledContent, AssessedBy } from '@navikt/ft-plattform-komponenter';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import Vurdering from '../../../types/Vurdering';
 import DokumentLink from '../dokument-link/DokumentLink';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
@@ -18,8 +17,6 @@ const VurderingsoppsummeringForSluttfase = ({
   redigerVurdering,
   erInnleggelsesperiode,
 }: VurderingsoppsummeringForSluttfaseProps): JSX.Element => {
-  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
-
   const gjeldendeVurdering = vurdering.versjoner[0];
   const { dokumenter, perioder, tekst, resultat } = gjeldendeVurdering;
   const brukerId = gjeldendeVurdering.endretAv;
@@ -60,7 +57,7 @@ const VurderingsoppsummeringForSluttfase = ({
             content={<span className="whitespace-pre-wrap">{tekst}</span>}
             indentContent
           />
-          <AssessedBy name={hentSaksbehandlerNavn(brukerId)} date={gjeldendeVurdering?.endretTidspunkt} />
+          <AssessedBy ident={brukerId} date={gjeldendeVurdering?.endretTidspunkt} />
         </Box>
       </Box>
     </DetailViewVurdering>

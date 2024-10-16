@@ -12,15 +12,15 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-form-hooks": "5.1.1",
-    "@navikt/ft-form-validators": "2.4.1",
-    "@navikt/ft-plattform-komponenter": "3.1.1",
+    "@navikt/ft-form-hooks": "5.1.8",
+    "@navikt/ft-form-validators": "2.4.4",
+    "@navikt/ft-plattform-komponenter": "5.0.0",
     "classnames": "2.5.1",
     "dayjs": "1.11.13",
     "object-hash": "3.0.0",
     "react": "18.3.1",
     "react-hook-form": "7.53.0",
-    "react-intl": "6.7.0"
+    "react-intl": "6.8.0"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0"

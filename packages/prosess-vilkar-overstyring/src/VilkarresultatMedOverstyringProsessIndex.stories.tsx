@@ -28,6 +28,9 @@ const vilkarOpptjening = [
     perioder: [
       {
         vilkarStatus: { kode: vilkarUtfallType.OPPFYLT, kodeverk: 'test' },
+        merknad: {
+          kode: '7847B',
+        },
         periode: {
           fom: '2020-01-30',
           tom: '2020-02-29',
@@ -35,13 +38,16 @@ const vilkarOpptjening = [
       },
       {
         vilkarStatus: { kode: vilkarUtfallType.OPPFYLT, kodeverk: 'test' },
+        merknad: {
+          kode: '-',
+        },
         periode: {
           fom: '2020-03-01',
           tom: '2020-03-31',
         },
       },
     ],
-  } as Vilkar,
+  },
 ];
 
 const vilkarMedlemskap = [
@@ -87,7 +93,7 @@ export const visOverstyringspanelForOpptjening = args => {
       panelTittelKode="Inngangsvilkar.Opptjeningsvilkaret"
       lovReferanse="§§ Dette er en lovreferanse"
       overstyringApKode={aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET}
-      visPeriodisering={false}
+      visPeriodisering={true}
       vilkar={vilkarOpptjening}
       visAllePerioder
       erMedlemskapsPanel={false}

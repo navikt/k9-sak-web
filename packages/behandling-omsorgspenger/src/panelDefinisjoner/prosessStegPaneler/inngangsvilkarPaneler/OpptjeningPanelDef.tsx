@@ -1,5 +1,3 @@
-import React from 'react';
-
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening-oms';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

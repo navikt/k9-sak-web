@@ -1,13 +1,9 @@
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
-import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../../i18n/nb_NO.json';
-import { BostedSokerPersonopplysninger } from '../BostedSokerFaktaIndex';
+import { render, screen } from '@testing-library/react';
+import { BostedSokerPersonopplysninger } from '../types';
 import { BostedSokerView } from './BostedSokerView';
 
 describe('<BostedsokerView>', () => {
@@ -70,47 +66,41 @@ describe('<BostedsokerView>', () => {
   ] as KodeverkMedNavn[];
 
   it('vise navn', () => {
-    renderWithIntl(
+    render(
       <BostedSokerView
-        intl={intlMock}
         personopplysninger={soker}
         regionTypes={regionTypes}
         sivilstandTypes={sivilstandTypes}
         personstatusTypes={personstatusTypes}
-        sokerTypeTextId="BostedSokerFaktaIndex.Soker"
+        sokerTypeText="BostedSokerFaktaIndex.Soker"
       />,
-      { messages },
     );
 
     expect(screen.getByText('Espen Utvikler')).toBeInTheDocument();
   });
 
   it('skal vise  adresse informasjon', () => {
-    renderWithIntl(
+    render(
       <BostedSokerView
-        intl={intlMock}
         personopplysninger={soker}
         regionTypes={regionTypes}
         sivilstandTypes={sivilstandTypes}
         personstatusTypes={personstatusTypes}
-        sokerTypeTextId="BostedSokerFaktaIndex.Soker"
+        sokerTypeText="BostedSokerFaktaIndex.Soker"
       />,
-      { messages },
     );
     expect(screen.getByText('Vei 1, 1000 Oslo')).toBeInTheDocument();
   });
 
   it('skal vise etiketter', () => {
-    renderWithIntl(
+    render(
       <BostedSokerView
-        intl={intlMock}
         personopplysninger={soker}
         regionTypes={regionTypes}
         sivilstandTypes={sivilstandTypes}
         personstatusTypes={personstatusTypes}
-        sokerTypeTextId="BostedSokerFaktaIndex.Soker"
+        sokerTypeText="BostedSokerFaktaIndex.Soker"
       />,
-      { messages },
     );
     expect(screen.getByText('Bosatt')).toBeInTheDocument();
     expect(screen.getByText('Ugift')).toBeInTheDocument();
@@ -124,16 +114,14 @@ describe('<BostedsokerView>', () => {
       kode: '-',
     } as KodeverkMedNavn;
 
-    renderWithIntl(
+    render(
       <BostedSokerView
-        intl={intlMock}
         personopplysninger={soker}
         regionTypes={regionTypes}
         sivilstandTypes={sivilstandTypes}
         personstatusTypes={personstatusTypes}
-        sokerTypeTextId="BostedSokerFaktaIndex.Soker"
+        sokerTypeText="BostedSokerFaktaIndex.Soker"
       />,
-      { messages },
     );
     expect(screen.getByText('Ukjent')).toBeInTheDocument();
     expect(screen.getByText('Ugift')).toBeInTheDocument();

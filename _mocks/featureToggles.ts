@@ -38,10 +38,6 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_LOS_MARKER_BEHANDLING_SUBMIT,
   },
   {
-    key: 'AKSJONSPUNKT_9014',
-    value: process.env.VITE_AKSJONSPUNKT_9014,
-  },
-  {
     key: 'AKSJONSPUNKT_9015',
     value: process.env.VITE_AKSJONSPUNKT_9015,
   },
@@ -70,10 +66,6 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_OVERSTYR_BEREGNING,
   },
   {
-    key: 'OVERSTYRING_UTTAK',
-    value: process.env.VITE_OVERSTYRING_UTTAK,
-  },
-  {
     key: 'NYE_NOKKELTALL',
     value: process.env.VITE_NYE_NOKKELTALL,
   },
@@ -90,11 +82,11 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_SKILL_UT_PRIVATPERSON,
   },
   {
-    key: 'NYTT_SKJEMA_FOR_9003',
-    value: process.env.VITE_NYTT_SKJEMA_FOR_9003,
-  },
-  {
     key: 'AUTOMATISK_VURDERT_MEDLEMSKAP',
     value: process.env.AUTOMATISK_VURDERT_MEDLEMSKAP,
+  },
+  {
+    key: 'DELVIS_REVURDERING',
+    value: process.env.VITE_DELVIS_REVURDERING,
   },
 ];

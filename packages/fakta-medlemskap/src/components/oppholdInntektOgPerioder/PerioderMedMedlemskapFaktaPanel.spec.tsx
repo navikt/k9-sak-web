@@ -5,7 +5,6 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
-import messages from '../../../i18n/nb_NO.json';
 import { MedlemskapPeriode } from './Medlemskap';
 import { Periode } from './Periode';
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
@@ -57,7 +56,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
           alleMerknaderFraBeslutter={{ notAccepted: false }}
         />
       </Wrapper>,
-      { messages },
     );
 
     expect(screen.getByText('testdekning')).toBeInTheDocument();
@@ -86,7 +84,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
           alleMerknaderFraBeslutter={{ notAccepted: false }}
         />
       </Wrapper>,
-      { messages },
     );
 
     expect(screen.getByText('Fødselsdato: 16.10.2016')).toBeInTheDocument();
@@ -111,7 +108,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
           alleMerknaderFraBeslutter={{ notAccepted: false }}
         />
       </Wrapper>,
-      { messages },
     );
 
     expect(screen.getByRole('table')).toBeInTheDocument();
@@ -128,7 +124,6 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
           alleMerknaderFraBeslutter={{ notAccepted: false }}
         />
       </Wrapper>,
-      { messages },
     );
 
     expect(screen.queryByRole('table')).not.toBeInTheDocument();

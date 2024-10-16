@@ -36,10 +36,6 @@
     "value": "${LOS_MARKER_BEHANDLING_SUBMIT}"
   },
   {
-    "key": "AKSJONSPUNKT_9014",
-    "value": "${AKSJONSPUNKT_9014}"
-  },
-  {
     "key": "AKSJONSPUNKT_9015",
     "value": "${AKSJONSPUNKT_9015}"
   },
@@ -76,10 +72,6 @@
     "value": "${OVERSTYR_BEREGNING}"
   },
   {
-    "key": "OVERSTYRING_UTTAK",
-    "value": "${OVERSTYRING_UTTAK}"
-  },
-  {
     "key": "NYE_NOKKELTALL",
     "value": "${NYE_NOKKELTALL}"
   },
@@ -96,11 +88,11 @@
     "value": "${SKILL_UT_PRIVATPERSON}"
   },
   {
-    "key": "NYTT_SKJEMA_FOR_9003",
-    "value": "${NYTT_SKJEMA_FOR_9003}"
-  },
-  {
     "key": "AUTOMATISK_VURDERT_MEDLEMSKAP",
     "value": "${AUTOMATISK_VURDERT_MEDLEMSKAP}"
+  },
+  {
+    "key": "DELVIS_REVURDERING",
+    "value": "${DELVIS_REVURDERING}"
   }
 ]

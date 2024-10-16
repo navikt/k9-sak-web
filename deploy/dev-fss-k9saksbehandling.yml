@@ -83,8 +83,6 @@ spec:
       value: "true"
     - name: LOS_MARKER_BEHANDLING_SUBMIT
       value: "true"
-    - name: AKSJONSPUNKT_9014
-      value: "true"
     - name: AKSJONSPUNKT_9015
       value: "true"
     - name: ALDERSVILKAR_KRONISK_SYK
@@ -101,8 +99,6 @@ spec:
       value: "true"
     - name: OVERSTYR_BEREGNING
       value: "true"
-    - name: "OVERSTYRING_UTTAK"
-      value: "true"
     - name: "BRUK_V2_MELDINGER"
       value: "true"
     - name: NYE_NOKKELTALL
@@ -113,7 +109,7 @@ spec:
       value: "true"
     - name: SKILL_UT_PRIVATPERSON
       value: "true"
-    - name: NYTT_SKJEMA_FOR_9003
-      value: "true"
     - name: AUTOMATISK_VURDERT_MEDLEMSKAP
+      value: "true"
+    - name: DELVIS_REVURDERING
       value: "true"

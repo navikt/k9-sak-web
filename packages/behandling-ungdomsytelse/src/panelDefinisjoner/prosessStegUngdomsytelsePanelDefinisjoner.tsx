@@ -1,3 +1,4 @@
+import BeregningProsessStegPanelDef from './prosessStegPaneler/BeregningProsessStegPanelDef';
 import InngangsvilkarProsessStegPanelDef from './prosessStegPaneler/InngangsvilkarProsessStegPanelDef';
 import SaksopplysningerProsessStegPanelDef from './prosessStegPaneler/SaksopplysningerProsessStegPanelDef';
 import SimuleringProsessStegPanelDef from './prosessStegPaneler/SimuleringProsessStegPanelDef';
@@ -7,6 +8,7 @@ import VedtakProsessStegPanelDef from './prosessStegPaneler/VedtakProsessStegPan
 const prosessStegPanelDefinisjoner = [
   new SaksopplysningerProsessStegPanelDef(),
   new InngangsvilkarProsessStegPanelDef(),
+  new BeregningProsessStegPanelDef(),
   new TilkjentYtelseProsessStegPanelDef(),
   new SimuleringProsessStegPanelDef(),
   new VedtakProsessStegPanelDef(),

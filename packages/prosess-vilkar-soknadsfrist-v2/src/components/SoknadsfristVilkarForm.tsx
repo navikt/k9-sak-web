@@ -4,7 +4,7 @@ import { decodeHtmlEntity, initializeDate } from '@fpsak-frontend/utils';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { Periode, SubmitCallback } from '@k9-sak-web/types';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
-import { Button, Label } from '@navikt/ds-react';
+import { Button, HStack, Label } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import { AksjonspunktDto, KravDokumentStatus } from '@navikt/k9-sak-typescript-client';
 import { Dayjs } from 'dayjs';
@@ -260,7 +260,7 @@ export const SoknadsfristVilkarForm = ({
                 </Label>
               </div>
               <div className="mt-4" />
-              <div className="flex gap-4">
+              <HStack gap="4">
                 <OverstyrBekreftKnappPanel
                   disabled={!formMethods.formState.isValid}
                   submitting={formMethods.formState.isSubmitting}
@@ -277,11 +277,11 @@ export const SoknadsfristVilkarForm = ({
                 >
                   Avbryt
                 </Button>
-              </div>
+              </HStack>
             </>
           )}
           {(harÅpentAksjonspunkt || editForm) && !erOverstyrt && (
-            <div className="flex gap-4">
+            <HStack gap="4">
               <Button
                 variant="primary"
                 size="small"
@@ -304,7 +304,7 @@ export const SoknadsfristVilkarForm = ({
                   Avbryt
                 </Button>
               )}
-            </div>
+            </HStack>
           )}
         </AksjonspunktBox>
       )}

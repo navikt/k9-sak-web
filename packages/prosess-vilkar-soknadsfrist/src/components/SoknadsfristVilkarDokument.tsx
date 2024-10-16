@@ -1,14 +1,7 @@
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 import { DatepickerField, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
-import {
-  FlexColumn,
-  FlexContainer,
-  FlexRow,
-  Image,
-  VerticalSpacer,
-  useSaksbehandlerOppslag,
-} from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   dateAfterOrEqual,
   dateBeforeOrEqual,
@@ -23,7 +16,7 @@ import { DokumentStatus } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import moment from 'moment';
-import React, { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { formatDate } from '../utils';
@@ -58,8 +51,6 @@ export const SoknadsfristVilkarDokument = ({
   dokumentIndex,
 }: SoknadsfristVilkarDokumentProps) => {
   const intl = useIntl();
-  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
-  const opprettetAv = hentSaksbehandlerNavn(dokument?.avklarteOpplysninger?.opprettetAv);
   const opprettetTidspunkt = dokument?.avklarteOpplysninger?.opprettetTidspunkt;
   const minDate = useMemo(
     () =>
@@ -97,7 +88,7 @@ export const SoknadsfristVilkarDokument = ({
             readOnly={readOnly}
             placeholder={intl.formatMessage({ id: 'VilkarBegrunnelse.BegrunnVurdering' })}
           />
-          <AssessedBy name={opprettetAv} date={opprettetTidspunkt} />
+          <AssessedBy ident={dokument?.avklarteOpplysninger?.opprettetAv} date={opprettetTidspunkt} />
         </>
       )}
       <VerticalSpacer sixteenPx />

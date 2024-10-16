@@ -1,11 +1,9 @@
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
-import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../i18n/nb_NO.json';
-import BostedSokerFaktaIndex, { BostedSokerPersonopplysninger } from './BostedSokerFaktaIndex';
+import { render, screen } from '@testing-library/react';
+import BostedSokerFaktaIndex from './BostedSokerFaktaIndex';
+import { BostedSokerPersonopplysninger } from './types';
 
 describe('<BostedSokerFaktaIndex>', () => {
   const personstatusTypes = [
@@ -19,7 +17,7 @@ describe('<BostedSokerFaktaIndex>', () => {
     },
   ] as KodeverkMedNavn[];
   it('vise rendre komponent korrekt', () => {
-    renderWithIntl(
+    render(
       <BostedSokerFaktaIndex
         personopplysninger={
           {
@@ -38,7 +36,6 @@ describe('<BostedSokerFaktaIndex>', () => {
         }
         alleKodeverk={{ PersonstatusType: personstatusTypes }}
       />,
-      { messages },
     );
 
     expect(screen.getByText('Søker')).toBeInTheDocument();
