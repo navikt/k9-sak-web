@@ -1826,12 +1826,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/list@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@editorjs/list@npm:1.10.0"
+"@editorjs/list@npm:1.9.0":
+  version: 1.9.0
+  resolution: "@editorjs/list@npm:1.9.0"
   dependencies:
     "@codexteam/icons": ^0.0.4
-  checksum: d3b5444d7fc820f2bd5dbc2473cca0d38780bace1e3b908b4ad539ffad32600f1f5181a7405f0c170d8443dd81de5651b6a7393c62e1f1cc4d1667185eb23a86
+  checksum: a856f73a1abd42d0550afdc4fda355911abff8b25d30b0cdefdbebfea765182395d5afb08f7fef67597d88c31857408525a8cde28696374a2610297d54a93ce9
   languageName: node
   linkType: hard
 
@@ -3185,7 +3185,7 @@ __metadata:
   dependencies:
     "@editorjs/editorjs": 2.30.6
     "@editorjs/header": 2.8.8
-    "@editorjs/list": 1.10.0
+    "@editorjs/list": 1.9.0
     "@editorjs/paragraph": 2.11.6
     "@fpsak-frontend/form": 1.0.0
     "@fpsak-frontend/kodeverk": 1.0.0
