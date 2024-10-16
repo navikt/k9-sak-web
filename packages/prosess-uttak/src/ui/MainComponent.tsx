@@ -47,9 +47,7 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
         <Heading size="small" level="1">
           Uttak
         </Heading>
-        {featureToggles?.OVERSTYRING_UTTAK && erOverstyrer && (
-          <OverstyringKnapp erOverstyrt={overstyringAktiv} onClick={toggleOverstyring} />
-        )}
+        {erOverstyrer && <OverstyringKnapp erOverstyrt={overstyringAktiv} onClick={toggleOverstyring} />}
       </HStack>
 
       <Infostripe harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt} />
