@@ -1,5 +1,6 @@
 import type { Inntektskategori } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektskategori.js';
-import type { ArbeidsgiverDto, BeregningsresultatPeriodeAndelDto } from '@navikt/k9-sak-typescript-client';
+import type { AktivitetStatusType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/AktivitetStatus.js';
+import type { ArbeidsgiverDto } from '@navikt/k9-sak-typescript-client';
 import type { BeregningsresultatPeriodeDto } from '../../types/BeregningsresultatPeriodeDto';
 import type { ArbeidsgiverOpplysninger, ArbeidsgiverOpplysningerPerId } from '../../types/arbeidsgiverOpplysningerType';
 
@@ -22,10 +23,16 @@ export type TilkjentYtelseFormState = {
   nyArbeidsgiverForm?: NyArbeidsgiverFormState;
 };
 
-export type NyPeriodeFormAndeler = Omit<BeregningsresultatPeriodeAndelDto, 'inntektskategori' | 'arbeidsgiver'> & {
-  inntektskategori: Inntektskategori;
-  arbeidsgiverPersonIdent?: string;
+export type NyPeriodeFormAndeler = {
+  aktivitetStatus?: AktivitetStatusType;
   arbeidsgiver?: ArbeidsgiverDto & { arbeidsgiverOrgnr?: string; arbeidsgiverPersonIdent?: string };
+  arbeidsgiverOrgnr: string;
+  arbeidsgiverPersonIdent?: string;
+  eksternArbeidsforholdId: string;
+  inntektskategori: Inntektskategori;
+  refusjon: number;
+  tilSoker: number;
+  utbetalingsgrad: number;
 };
 
 export type NyPeriodeFormState = {

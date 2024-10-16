@@ -68,21 +68,13 @@ const erSelvstendigNæringsdrivende = (inntektskategori: Inntektskategori) =>
 const erFrilans = (inntektskategori: string) => inntektskategori === inntektskategorier.FRILANSER;
 
 const defaultAndel: NyPeriodeFormAndeler = {
-  aktivitetStatus: undefined,
-  aktørId: '',
-  arbeidsforholdId: '',
-  arbeidsforholdType: undefined,
-  arbeidsgiverNavn: '',
-  arbeidsgiverOrgnr: undefined,
+  arbeidsgiverOrgnr: '',
   arbeidsgiverPersonIdent: undefined,
   eksternArbeidsforholdId: '',
   inntektskategori: inntektskategorier['-'],
   refusjon: 0,
-  sisteUtbetalingsdato: '',
-  stillingsprosent: 0,
   tilSoker: 0,
   utbetalingsgrad: 0,
-  uttak: [],
 };
 
 interface OwnProps {

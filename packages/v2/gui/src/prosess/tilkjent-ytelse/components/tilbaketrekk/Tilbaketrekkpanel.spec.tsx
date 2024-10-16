@@ -1,4 +1,4 @@
-import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
+import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import type { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import { render, screen } from '@testing-library/react';
 import { Tilbaketrekkpanel, buildInitialValues, transformValues } from './Tilbaketrekkpanel';
@@ -83,7 +83,7 @@ describe('<Tilbaketrekkpanel>', () => {
 
   it('skal teste at transformvalues settes korrekt', () => {
     const expectedTransformedValues = {
-      kode: AksjonspunktCodes.VURDER_TILBAKETREKK,
+      kode: aksjonspunktkodeDefinisjonType.VURDER_TILBAKETREKK,
       begrunnelse: 'Test',
       hindreTilbaketrekk: false,
     };

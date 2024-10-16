@@ -51,7 +51,6 @@ export const PeriodeTabell = ({ readOnly, featureToggles }: OwnProps) => {
           identifikator: nyArbeidsgivere.orgNr,
           navn: nyArbeidsgivere.navn,
           erPrivatPerson: nyArbeidsgivere.erPrivatPerson,
-          arbeidsforholdreferanser: nyArbeidsgivere.arbeidsforholdreferanser,
         },
       });
       resetField('nyArbeidsgiverForm', {
@@ -59,7 +58,6 @@ export const PeriodeTabell = ({ readOnly, featureToggles }: OwnProps) => {
           navn: '',
           orgNr: '',
           erPrivatPerson: false,
-          arbeidsforholdreferanser: [],
           identifikator: '',
         },
       });

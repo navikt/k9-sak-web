@@ -1,13 +1,13 @@
-import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
-import { type AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { render, screen } from '@testing-library/react';
 import TilkjentYtelsePanelImpl from './TilkjentYtelsePanel';
 
 const tilbaketrekkAP = {
-  definisjon: AksjonspunktCodes.VURDER_TILBAKETREKK,
-  status: 'OPPR',
+  definisjon: aksjonspunktkodeDefinisjonType.VURDER_TILBAKETREKK,
+  status: aksjonspunktStatus.OPPRETTET,
   begrunnelse: undefined,
-} as AksjonspunktDto;
+};
 
 describe('<TilkjentYtelsePanelImpl>', () => {
   it('skall innehålla rätt undertekst', () => {

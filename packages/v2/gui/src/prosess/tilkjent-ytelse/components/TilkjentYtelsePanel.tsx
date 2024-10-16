@@ -1,3 +1,4 @@
+import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
@@ -28,7 +29,7 @@ const { MANUELL_TILKJENT_YTELSE } = AksjonspunktCodes;
 
 const finnTilbaketrekkAksjonspunkt = (alleAksjonspunkter?: AksjonspunktDto[]): AksjonspunktDto | undefined =>
   alleAksjonspunkter
-    ? alleAksjonspunkter.find(ap => ap.definisjon === AksjonspunktCodes.VURDER_TILBAKETREKK)
+    ? alleAksjonspunkter.find(ap => ap.definisjon === aksjonspunktkodeDefinisjonType.VURDER_TILBAKETREKK)
     : undefined;
 
 export const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: AksjonspunktDto[]): boolean =>

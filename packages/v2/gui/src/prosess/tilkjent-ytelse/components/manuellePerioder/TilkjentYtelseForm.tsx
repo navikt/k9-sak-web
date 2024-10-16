@@ -1,5 +1,5 @@
+import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
-import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import type { FeatureToggles } from '@k9-sak-web/lib/kodeverk/types/FeatureTogglesType.js';
 import { Form } from '@navikt/ft-form-hooks';
 import { guid } from '@navikt/ft-utils';
@@ -45,7 +45,6 @@ export const TilkjentYtelseForm = ({
       navn: '',
       orgNr: '',
       erPrivatPerson: false,
-      arbeidsforholdreferanser: [],
       identifikator: '',
     },
     nyPeriodeForm: { fom: '', tom: '', andeler: [] },
@@ -74,7 +73,7 @@ export const TilkjentYtelseForm = ({
 
 export const transformValues = (values: TilkjentYtelseFormState) => [
   {
-    kode: AksjonspunktCodes.MANUELL_TILKJENT_YTELSE,
+    kode: aksjonspunktkodeDefinisjonType.MANUELL_TILKJENT_YTELSE,
     tilkjentYtelse: {
       perioder: values.perioder,
     },

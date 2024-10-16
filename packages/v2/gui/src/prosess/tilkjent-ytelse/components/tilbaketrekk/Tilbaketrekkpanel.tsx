@@ -1,5 +1,5 @@
+import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
-import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Alert, Button, HGrid } from '@navikt/ds-react';
 import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
@@ -19,7 +19,7 @@ export const transformValues = (values: TilbaketrekkpanelFormState): TransformVa
   const hindreTilbaketrekk = values[radioFieldName];
   const begrunnelse = values[begrunnelseFieldName];
   return {
-    kode: AksjonspunktCodes.VURDER_TILBAKETREKK,
+    kode: aksjonspunktkodeDefinisjonType.VURDER_TILBAKETREKK,
     begrunnelse,
     hindreTilbaketrekk,
   };

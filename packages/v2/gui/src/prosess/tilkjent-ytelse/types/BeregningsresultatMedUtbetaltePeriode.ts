@@ -4,5 +4,4 @@ export type BeregningsresultatMedUtbetaltePeriodeDto = {
   opphoersdato?: string;
   perioder?: Array<BeregningsresultatPeriodeDto>;
   skalHindreTilbaketrekk?: boolean;
-  utbetaltePerioder?: Array<BeregningsresultatPeriodeDto>;
 };

@@ -1,40 +1,27 @@
+import { aktivitetStatusType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/AktivitetStatus.js';
+import { inntektskategorier } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektskategori.js';
 import { render, screen } from '@testing-library/react';
 import { createArbeidsgiverVisningsnavnForAndel } from './TilkjentYteleseUtils';
-import { type PeriodeMedId } from './TilkjentYtelse';
+import type { PeriodeMedId } from './TilkjentYtelse';
 import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData';
 
-const selectedItemDataFL = {
+const selectedItemDataFL: PeriodeMedId = {
   andeler: [
     {
-      aktivitetStatus: 'FL', // AKTIIVITET_STATUS
-      aktørId: null,
-      arbeidsforholdId: null,
-      arbeidsforholdType: '-', // OPPTJENING_AKTIVITET_TYPE
-      arbeidsgiverNavn: null,
+      aktivitetStatus: aktivitetStatusType.FL, // AKTIIVITET_STATUS
       arbeidsgiverOrgnr: '',
-      eksternArbeidsforholdId: null,
+      eksternArbeidsforholdId: '',
       refusjon: 768,
-      sisteUtbetalingsdato: '2020-04-28',
-      stillingsprosent: 0,
+      inntektskategori: inntektskategorier.FRILANSER,
       tilSoker: 0,
       utbetalingsgrad: 100,
-      uttak: [
-        {
-          periode: {
-            fom: '2020-04-20',
-            tom: '2020-04-24',
-          },
-          utbetalingsgrad: 100,
-          utfall: 'INNVILGET',
-        },
-      ],
     },
   ],
   dagsats: 768,
   fom: '2020-04-20',
   tom: '2020-04-24',
   id: 0,
-} as PeriodeMedId;
+};
 
 const selectedItemStartDate = '2020-04-24';
 const selectedItemEndDate = '2020-04-24';

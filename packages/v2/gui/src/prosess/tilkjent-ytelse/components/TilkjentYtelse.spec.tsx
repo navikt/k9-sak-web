@@ -1,6 +1,5 @@
-import type { BeregningsresultatPeriodeAndelDto } from '@navikt/k9-sak-typescript-client';
 import { render, screen } from '@testing-library/react';
-import { type PeriodeMedId, TilkjentYtelse } from './TilkjentYtelse';
+import { TilkjentYtelse } from './TilkjentYtelse';
 
 describe('<TilkjentYtelse>', () => {
   const kodeverkNavnFraKode = (kodeverk: string) => {
@@ -18,35 +17,27 @@ describe('<TilkjentYtelse>', () => {
   it('skall innehålla korrekt antal felter', () => {
     render(
       <TilkjentYtelse
-        items={
-          [
-            {
-              tom: '2018-10-01',
-              fom: '2018-02-02',
-              dagsats: 10000,
-              andeler: [
-                {
-                  inntektskategori: 'ARBEIDSTAKER', // INNTEKTSKATEGORI
-                  aktørId: '',
-                  arbeidsforholdType: 'ARBEID',
-                  stillingsprosent: 100,
-                  arbeidsgiver: '973861778',
-                  arbeidsgiverOrgnr: '',
-                  arbeidsgiverPersonIdent: '',
-                  aktivitetStatus: 'AT',
-                  arbeidsforholdId: '',
-                  eksternArbeidsforholdId: '',
-                  arbeidsgiverNavn: '',
-                  refusjon: 0,
-                  sisteUtbetalingsdato: '2018-03-31',
-                  tilSoker: 1846,
-                  uttak: [],
-                  utbetalingsgrad: 100,
-                } as BeregningsresultatPeriodeAndelDto,
-              ],
-            },
-          ] as PeriodeMedId[]
-        }
+        items={[
+          {
+            tom: '2018-10-01',
+            fom: '2018-02-02',
+            dagsats: 10000,
+            id: 1,
+            andeler: [
+              {
+                inntektskategori: 'ARBEIDSTAKER', // INNTEKTSKATEGORI
+                arbeidsgiver: { arbeidsgiverOrgnr: '973861778' },
+                arbeidsgiverOrgnr: '',
+                arbeidsgiverPersonIdent: '',
+                aktivitetStatus: 'AT',
+                eksternArbeidsforholdId: '',
+                refusjon: 0,
+                tilSoker: 1846,
+                utbetalingsgrad: 100,
+              },
+            ],
+          },
+        ]}
         kodeverkNavnFraKode={kodeverkNavnFraKode}
         arbeidsgiverOpplysningerPerId={{}}
         personopplysninger={{ aktoerId: '123', fnr: '12345678901' }}
