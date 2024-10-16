@@ -66,10 +66,6 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_OVERSTYR_BEREGNING,
   },
   {
-    key: 'OVERSTYRING_UTTAK',
-    value: process.env.VITE_OVERSTYRING_UTTAK,
-  },
-  {
     key: 'NYE_NOKKELTALL',
     value: process.env.VITE_NYE_NOKKELTALL,
   },

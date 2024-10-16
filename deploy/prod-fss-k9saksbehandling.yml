@@ -96,8 +96,6 @@ spec:
       value: "true"
     - name: OVERSTYR_BEREGNING
       value: "false"
-    - name: "OVERSTYRING_UTTAK"
-      value: "true"
     - name: BRUK_V2_MELDINGER
       value: "true"
     - name: NYE_NOKKELTALL

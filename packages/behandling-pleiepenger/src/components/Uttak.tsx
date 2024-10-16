@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId, Behandling } from '@k9-sak-web/types';
@@ -41,7 +40,6 @@ export default ({
   relevanteAksjonspunkter,
   erOverstyrer,
 }: UttakProps) => {
-  const [featureToggles] = useFeatureToggles();
   const { versjon, links, status: behandlingStatus } = behandling;
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
@@ -86,7 +84,6 @@ export default ({
         aksjonspunkter: funnedeRelevanteAksjonspunkter,
         handleOverstyringAksjonspunkt,
         versjon,
-        featureToggles,
         erOverstyrer,
         status: behandlingStatus.kode,
       }}
