@@ -6,7 +6,7 @@ import React, { useMemo } from 'react';
 import ContainerContract from '../types/ContainerContract';
 import { InnleggelsesperiodeResponse, SykdomResponse, TilsynResponse } from '../types/TilsynResponse';
 import Beredskapsperiodeoversikt from './components/beredskap/beredskapsperioderoversikt/Beredskapsperiodeoversikt';
-import EtablertTilsyn from './components/etablertTilsyn/EtablertTilsynMedSmoring';
+import EtablertTilsynMedSmoring from './components/etablertTilsyn/EtablertTilsynMedSmoring';
 import Nattevåksperiodeoversikt from './components/nattevåk/nattevåksperiodeoversikt/Nattevåksperiodeoversikt';
 import ContainerContext from './context/ContainerContext';
 import ActionType from './mainActionTypes';
@@ -46,7 +46,7 @@ const getDefaultActiveTab = ({ harAksjonspunktForBeredskap, harAksjonspunktForNa
   return tabs[0];
 };
 
-const MainComponent = ({ data }: MainComponentProps) => {
+const EtablertTilsynContainer = ({ data }: MainComponentProps) => {
   const [state, dispatch] = React.useReducer(mainComponentReducer, {
     isLoading: true,
     etablertTilsyn: null,
@@ -161,7 +161,7 @@ const MainComponent = ({ data }: MainComponentProps) => {
           <PageContainer isLoading={isLoading}>
             <div className={styles.mainComponent__contentContainer}>
               <Tabs.Panel value={tabs[0]}>
-                <EtablertTilsyn
+                <EtablertTilsynMedSmoring
                   etablertTilsynData={etablertTilsyn}
                   smurtEtablertTilsynPerioder={smurtEtablertTilsynPerioder}
                   sykdomsperioderSomIkkeErOppfylt={sykdomsperioderSomIkkeErOppfylt}
@@ -182,4 +182,4 @@ const MainComponent = ({ data }: MainComponentProps) => {
   );
 };
 
-export default MainComponent;
+export default EtablertTilsynContainer;

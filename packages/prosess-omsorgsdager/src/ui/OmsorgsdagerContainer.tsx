@@ -14,7 +14,7 @@ interface MainComponentProps {
   containerData: ContainerContract;
 }
 
-const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
+const OmsorgsdagerContainer = ({ containerData }: MainComponentProps): JSX.Element => {
   let innhold;
   switch (containerData.visKomponent) {
     case Komponenter.KORRIGERE_PERIODER:
@@ -47,4 +47,4 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
   );
 };
 
-export default MainComponent;
+export default OmsorgsdagerContainer;
