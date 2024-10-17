@@ -1,15 +1,16 @@
 import { action } from '@storybook/addon-actions';
-import React from 'react';
 
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { Meta } from '@storybook/react';
 import MenyNyBehandlingIndex from './MenyNyBehandlingIndex';
 
 export default {
   title: 'sak/sak-meny-ny-behandling',
   component: MenyNyBehandlingIndex,
-};
+  parameters: {},
+} satisfies Meta;
 
 const behandlingstyper = [
   {

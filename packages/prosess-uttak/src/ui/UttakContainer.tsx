@@ -19,14 +19,8 @@ interface MainComponentProps {
 }
 
 const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
-  const {
-    featureToggles,
-    uttaksperioder,
-    aksjonspunktkoder,
-    aksjonspunkter,
-    virkningsdatoUttakNyeRegler,
-    erOverstyrer,
-  } = containerData;
+  const { uttaksperioder, aksjonspunktkoder, aksjonspunkter, virkningsdatoUttakNyeRegler, erOverstyrer } =
+    containerData;
   const [redigerVirkningsdato, setRedigervirkningsdato] = React.useState<boolean>(false);
   const aksjonspunktVurderDato = aksjonspunkter?.find(ap => ap.definisjon.kode === aksjonspunktVurderDatoKode);
 
@@ -47,9 +41,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
         <Heading size="small" level="1">
           Uttak
         </Heading>
-        {featureToggles?.OVERSTYRING_UTTAK && erOverstyrer && (
-          <OverstyringKnapp erOverstyrt={overstyringAktiv} onClick={toggleOverstyring} />
-        )}
+        {erOverstyrer && <OverstyringKnapp erOverstyrt={overstyringAktiv} onClick={toggleOverstyring} />}
       </HStack>
 
       <Infostripe harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt} />
