@@ -1,7 +1,7 @@
 import { type FagsakDto } from '../generated';
 import type { Kodeverk } from '../../shared/Kodeverk.ts';
 
-export type FagsakYtelsesType = FagsakDto['sakstype'];
+export type FagsakYtelsesType = FagsakDto['sakstype'] | 'UNG';
 
 // Oppretter Kodeverk type med verdier frå openapi generert union type
 export type FagsakYtelsesTypeKodeverk = Kodeverk<FagsakYtelsesType, 'FAGSAK_YTELSE'>;
@@ -24,6 +24,7 @@ export const fagsakYtelsesType: Readonly<Record<FagsakYtelsesType, FagsakYtelses
   FP: 'FP',
   SVP: 'SVP',
   EF: 'EF',
+  UNG: 'UNG',
   OBSOLETE: 'OBSOLETE',
   '-': '-',
 };
