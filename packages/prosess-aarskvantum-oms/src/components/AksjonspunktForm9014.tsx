@@ -1,11 +1,11 @@
-import { CheckboxField, RadioGroupField, TextAreaField } from '@fpsak-frontend/form/index';
+import { RadioGroupField, TextAreaField } from '@fpsak-frontend/form/index';
 import { behandlingForm, getBehandlingFormName } from '@fpsak-frontend/form/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidText, hasValidValue, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
+import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Button, Label, Table } from '@navikt/ds-react';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { ConfigProps, FieldArray, InjectedFormProps, SubmitHandler, formValueSelector } from 'redux-form';
@@ -37,11 +37,6 @@ interface FormContentProps {
 
 const årskvantumAksjonspunktFormName = 'årskvantumAksjonspunktFormName';
 
-const vilkårHarOverlappendePerioderIInfotrygd = (uttaksperiode: Uttaksperiode) =>
-  Object.entries(uttaksperiode.vurderteVilkår.vilkår).some(
-    ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART,
-  ) && !uttaksperiode.hjemler.some(hjemmel => hjemmel === 'FTRL_9_7__4');
-
 const utledAksjonspunktKode = (aksjonspunkter: Aksjonspunkt[]) => {
   // 9014 skal ha presedens
   if (aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN))
@@ -55,69 +50,14 @@ const utledAksjonspunktKode = (aksjonspunkter: Aksjonspunkt[]) => {
 
 export const FormContent = ({
   handleSubmit,
-  aktiviteter = [],
   isAksjonspunktOpen,
   fosterbarn,
   aksjonspunktKode,
   valgValue,
   initialValues,
 }: FormContentProps) => {
-  const uavklartePerioderPgaInfotrygd = useMemo(
-    () =>
-      aktiviteter
-        .flatMap(({ uttaksperioder }) => uttaksperioder)
-        .filter(
-          ({ utfall, hjemler }) =>
-            utfall === UtfallEnum.UAVKLART && !hjemler.some(hjemmelen => hjemmelen === 'FTRL_9_7__4'),
-        ),
-    [aktiviteter],
-  );
 
   const erÅF = aksjonspunktKode === aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN;
-  const harUavklartePerioder = uavklartePerioderPgaInfotrygd.length > 0;
-
-  if (harUavklartePerioder) {
-    const harOverlappendePerioderIInfotrygd = uavklartePerioderPgaInfotrygd.some(uttaksperiode =>
-      vilkårHarOverlappendePerioderIInfotrygd(uttaksperiode),
-    );
-
-    return (
-      <>
-        <AksjonspunktHelpText isAksjonspunktOpen={isAksjonspunktOpen}>
-          {[
-            <FormattedMessage
-              key={1}
-              id={
-                harOverlappendePerioderIInfotrygd
-                  ? 'Årskvantum.Aksjonspunkt.Uavklart.OverlappInfotrygd'
-                  : 'Årskvantum.Aksjonspunkt.Uavklart.UidentifiserteRammemeldinger'
-              }
-            />,
-          ]}
-        </AksjonspunktHelpText>
-        {isAksjonspunktOpen && (
-          <>
-            <VerticalSpacer sixteenPx />
-            <div className={styles.spaceBetween}>
-              <CheckboxField
-                // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-                validate={[hasValidValue(true)]}
-                name="bekreftInfotrygd"
-                label={{
-                  id: harOverlappendePerioderIInfotrygd
-                    ? 'Årskvantum.Aksjonspunkt.Overlapp.BekreftInfotrygd'
-                    : 'Årskvantum.Aksjonspunkt.Uavklart.BekreftInfotrygd',
-                }}
-              />
-              <Button size="small" variant="primary" onClick={handleSubmit} type="submit">
-                <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.KjørPåNytt" />
-              </Button>
-            </div>
-          </>
-        )}
-      </>
-    );
-  }
 
   return (
     <>
