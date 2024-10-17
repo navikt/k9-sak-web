@@ -4,7 +4,7 @@ import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import { Behandling, KlageVurdering, TotrinnskontrollAksjonspunkt } from '@k9-sak-web/types';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
+import { expect, fn, userEvent, waitFor } from '@storybook/test';
 import TotrinnskontrollSakIndex from './TotrinnskontrollSakIndex';
 
 const data = [
@@ -166,8 +166,7 @@ export const SenderBehandlingTilbakeTilSaksbehandler: Story = {
     createLocationForSkjermlenke: () => location,
     readOnly: false,
   },
-  play: async ({ canvasElement, args }) => {
-    const canvas = within(canvasElement);
+  play: async ({ args, canvas }) => {
     await userEvent.click(canvas.getAllByLabelText('Godkjent')[0]);
     await userEvent.click(canvas.getAllByLabelText('Godkjent')[1]);
     await userEvent.click(canvas.getAllByLabelText('Godkjent')[2]);
@@ -218,21 +217,9 @@ export const SenderBehandlingTilbakeTilSaksbehandler: Story = {
 
 export const GodkjennerVedtak: Story = {
   args: {
-    behandling,
-    totrinnskontrollSkjermlenkeContext: data,
-    location,
-    onSubmit: fn(),
-    behandlingKlageVurdering: {
-      klageVurderingResultatNFP: {
-        klageVurdering: 'STADFESTE_YTELSESVEDTAK',
-      },
-    } as KlageVurdering,
-    alleKodeverk: alleKodeverk as any,
-    createLocationForSkjermlenke: () => location,
-    readOnly: false,
+    ...SenderBehandlingTilbakeTilSaksbehandler.args,
   },
-  play: async ({ canvasElement, args }) => {
-    const canvas = within(canvasElement);
+  play: async ({ canvas, args }) => {
     await userEvent.click(canvas.getAllByLabelText('Godkjent')[0]);
     await userEvent.click(canvas.getAllByLabelText('Godkjent')[1]);
     await userEvent.click(canvas.getAllByLabelText('Godkjent')[2]);
@@ -279,21 +266,9 @@ export const GodkjennerVedtak: Story = {
 
 export const ViserFeilmeldingDersomCheckboxMangler: Story = {
   args: {
-    behandling,
-    totrinnskontrollSkjermlenkeContext: data,
-    location,
-    onSubmit: fn(),
-    behandlingKlageVurdering: {
-      klageVurderingResultatNFP: {
-        klageVurdering: 'STADFESTE_YTELSESVEDTAK',
-      },
-    } as KlageVurdering,
-    alleKodeverk: alleKodeverk as any,
-    createLocationForSkjermlenke: () => location,
-    readOnly: false,
+    ...SenderBehandlingTilbakeTilSaksbehandler.args,
   },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+  play: async ({ canvas }) => {
     await userEvent.click(canvas.getAllByLabelText('Godkjent')[0]);
     await userEvent.click(canvas.getAllByLabelText('Godkjent')[1]);
     await userEvent.click(canvas.getAllByLabelText('Godkjent')[2]);
