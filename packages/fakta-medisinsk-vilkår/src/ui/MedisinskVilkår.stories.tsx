@@ -6,11 +6,11 @@ import { mockUrlPrepend } from '../../mock/constants';
 import { handlers } from '../../mock/handlers';
 import BehandlingType from '../constants/BehandlingType';
 import FagsakYtelseType from '../constants/FagsakYtelseType';
-import MainComponent from './MainComponent';
+import MedisinskVilkårContainer from './MedisinskVilkårContainer';
 
-const meta: Meta<typeof MainComponent> = {
+const meta: Meta<typeof MedisinskVilkårContainer> = {
   title: 'fakta/fakta-medisinsk-vilkår',
-  component: MainComponent,
+  component: MedisinskVilkårContainer,
   args: {
     data: {
       endpoints: {
@@ -42,7 +42,7 @@ const meta: Meta<typeof MainComponent> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof MainComponent>;
+type Story = StoryObj<typeof MedisinskVilkårContainer>;
 
 export const MedisinskVilkår: Story = {
   play: async ({ canvasElement, step }) => {

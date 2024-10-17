@@ -3,11 +3,10 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
-import React from 'react';
 import inntektsmeldingPropsMock from '../mock/inntektsmeldingPropsMock';
 import { manglerInntektsmelding } from '../mock/mockedKompletthetsdata';
-import * as stories from '../src/stories/MainComponent.stories';
-import MainComponent from '../src/ui/MainComponent';
+import * as stories from '../src/stories/Inntektsmelding.stories';
+import InntektsmeldingContainer from '../src/ui/InntektsmeldingContainer';
 
 const server = setupServer(http.get('http://localhost:3000/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
 
@@ -19,7 +18,7 @@ describe('9069 - Mangler inntektsmelding', () => {
   afterAll(() => server.close());
 
   const { Mangler9069 } = composeStories(stories) as {
-    [key: string]: StoryFn<Partial<typeof MainComponent>>;
+    [key: string]: StoryFn<Partial<typeof InntektsmeldingContainer>>;
   };
 
   test('Viser ikke knapp for å sende inn når beslutning ikke er valgt', async () => {
