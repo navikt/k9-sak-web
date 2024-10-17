@@ -27,6 +27,7 @@ interface KompletthetsoversiktProps {
 const Kompletthetsoversikt = ({ kompletthetsoversikt, onFormSubmit }: KompletthetsoversiktProps): JSX.Element => {
   const { aksjonspunkter, readOnly } = React.useContext(ContainerContext);
   const { tilstand: tilstander } = kompletthetsoversikt;
+  console.log(tilstander);
 
   const periods = tilstander.map(({ periode }) => periode);
   const statuses = tilstander.map(({ status }) => status);

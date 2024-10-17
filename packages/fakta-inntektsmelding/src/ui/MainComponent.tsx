@@ -11,7 +11,7 @@ import mainComponentReducer from './reducer';
 
 function initKompletthetsdata({ tilstand }: KompletthetResponse): KompletthetData {
   return {
-    tilstand: tilstand.map(({ periode, status, begrunnelse, tilVurdering, vurdering }) => {
+    tilstand: tilstand.map(({ periode, status, begrunnelse, tilVurdering, vurdering, vurdertAv, vurdertTidspunkt }) => {
       const [fom, tom] = periode.split('/');
       return {
         periode: new Period(fom, tom),
@@ -20,6 +20,8 @@ function initKompletthetsdata({ tilstand }: KompletthetResponse): KompletthetDat
         tilVurdering,
         vurdering,
         periodeOpprinneligFormat: periode,
+        vurdertAv,
+        vurdertTidspunkt,
       };
     }),
   };
