@@ -1,9 +1,7 @@
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { Behandling, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../../i18n/nb_NO.json';
 import { TotrinnskontrollBeslutterForm } from './TotrinnskontrollBeslutterForm';
 
 const location = {
@@ -64,9 +62,7 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
         lagLenke={() => location}
         arbeidsforholdHandlingTyper={[]}
         skjermlenkeTyper={[]}
-        aksjonspunktGodkjenning={[]}
       />,
-      { messages },
     );
     expect(screen.queryByRole('button', { name: 'Forhåndsvis' })).not.toBeInTheDocument();
   });
