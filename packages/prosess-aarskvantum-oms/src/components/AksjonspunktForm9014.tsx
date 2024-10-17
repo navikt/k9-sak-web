@@ -50,7 +50,6 @@ const utledAksjonspunktKode = (aksjonspunkter: Aksjonspunkt[]) => {
 
 export const FormContent = ({
   handleSubmit,
-  aktiviteter = [],
   isAksjonspunktOpen,
   fosterbarn,
   aksjonspunktKode,
