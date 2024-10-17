@@ -1,11 +1,11 @@
-import { CheckboxField, RadioGroupField, TextAreaField } from '@fpsak-frontend/form/index';
+import { RadioGroupField, TextAreaField } from '@fpsak-frontend/form/index';
 import { behandlingForm, getBehandlingFormName } from '@fpsak-frontend/form/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidText, hasValidValue, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
+import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Button, Label, Table } from '@navikt/ds-react';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { ConfigProps, FieldArray, InjectedFormProps, SubmitHandler, formValueSelector } from 'redux-form';

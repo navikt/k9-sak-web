@@ -1,35 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
-import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
 import { FormValues, begrunnelseUavklartePerioder, transformValues } from './AksjonspunktForm9014';
 
 describe('<AksjonspunktForm>', () => {
-  const uavklartPeriode: Uttaksperiode = {
-    utfall: UtfallEnum.UAVKLART,
-    fraværÅrsak: FraværÅrsakEnum.ORDINÆRT_FRAVÆR,
-    periode: '2020-03-01/2020-03-31',
-    utbetalingsgrad: 0,
-    hjemler: [],
-    vurderteVilkår: {
-      vilkår: {
-        [VilkårEnum.NOK_DAGER]: UtfallEnum.UAVKLART,
-      },
-    },
-  };
-
-  const innvilgetPeriode: Uttaksperiode = {
-    utfall: UtfallEnum.INNVILGET,
-    fraværÅrsak: FraværÅrsakEnum.ORDINÆRT_FRAVÆR,
-    periode: '2020-03-01/2020-03-31',
-    utbetalingsgrad: 100,
-    hjemler: [],
-    vurderteVilkår: {
-      vilkår: {
-        [VilkårEnum.ALDERSVILKÅR_BARN]: UtfallEnum.INNVILGET,
-      },
-    },
-  };
-
   describe('transformValues', () => {
     it('mapper valg', () => {
       const valgtReBehandling: FormValues = {
