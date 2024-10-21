@@ -80,6 +80,7 @@ export enum KodeverkType {
   ÅRSAK_TIL_VURDERING = 'ÅrsakTilVurdering',
   UTLANDSOPPHOLD_AARSAK = 'UtenlandsoppholdÅrsak',
   HISTORIKK_BEGRUNNELSE_TYPE = 'HistorikkBegrunnelseType',
+  OPPGAVE_AARSAK = 'OppgaveÅrsak',
 }
 
 /*
