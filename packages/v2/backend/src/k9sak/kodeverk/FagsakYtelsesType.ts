@@ -1,7 +1,7 @@
 import { type FagsakDto } from '../generated';
 import type { Kodeverk } from '../../shared/Kodeverk.ts';
 
-export type FagsakYtelsesType = FagsakDto['sakstype'] | 'UNG';
+export type FagsakYtelsesType = FagsakDto['sakstype'];
 
 // Oppretter Kodeverk type med verdier frå openapi generert union type
 export type FagsakYtelsesTypeKodeverk = Kodeverk<FagsakYtelsesType, 'FAGSAK_YTELSE'>;
