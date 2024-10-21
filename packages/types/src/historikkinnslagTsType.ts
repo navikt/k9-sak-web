@@ -1,5 +1,3 @@
-import SkjermlenkeTyper from './totrinnskontroll/SkjermlenkeType';
-
 export type HistorikkinnslagEndretFelt = {
   endretFeltNavn: string;
   navnVerdi?: string;
@@ -35,7 +33,7 @@ export type HistorikkinnslagDel = {
     navnVerdi?: string;
     tilVerdi?: string;
   };
-  skjermlenke?: SkjermlenkeTyper;
+  skjermlenke?: string;
   aarsak?: string;
   aarsakKodeverkType?: string; // Kodeverktype trengs for å slå opp årsakskoden i kodeverk, er lagt til i backend ifm. kodverksendringene
   tema?: {
