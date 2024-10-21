@@ -17,7 +17,7 @@ describe('<AleneOmOmsorgen>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       informasjonTilLesemodus: {
         begrunnelse: '',
@@ -65,7 +65,7 @@ describe('<AleneOmOmsorgen>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
@@ -102,7 +102,7 @@ describe('<AleneOmOmsorgen>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
@@ -142,7 +142,7 @@ describe('<AleneOmOmsorgen>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
@@ -195,7 +195,7 @@ describe('<AleneOmOmsorgen>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
@@ -248,7 +248,7 @@ describe('<AleneOmOmsorgen>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
@@ -281,7 +281,7 @@ describe('<AleneOmOmsorgen>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
@@ -323,7 +323,7 @@ describe('<AleneOmOmsorgen>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: false,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
@@ -362,7 +362,7 @@ describe('<AleneOmOmsorgen>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
