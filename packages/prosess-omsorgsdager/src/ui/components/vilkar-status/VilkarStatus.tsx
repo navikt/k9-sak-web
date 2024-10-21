@@ -5,6 +5,8 @@ import SjekkIkon from '../../icons/SjekkIkon';
 import Suksessikon from '../../icons/Suksessikon';
 import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
 import styles from './vilkarStatus.module.css';
+import { Vilkarperiode } from '@k9-sak-web/types';
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 
 interface OwnProps {
   aksjonspunktNavn: string;
@@ -14,6 +16,7 @@ interface OwnProps {
   vilkarOppfylt: boolean;
   vilkarReferanse: string;
   periode?: string;
+  vilkarperiode?: Vilkarperiode;
 }
 
 const VilkarStatus: React.FunctionComponent<OwnProps> = ({
@@ -24,6 +27,7 @@ const VilkarStatus: React.FunctionComponent<OwnProps> = ({
   vilkarOppfylt,
   vilkarReferanse,
   periode,
+  vilkarperiode,
 }) => (
   <>
     <div className={styles.vilkarStatusOverskrift}>
@@ -50,6 +54,7 @@ const VilkarStatus: React.FunctionComponent<OwnProps> = ({
       <>
         <p className={styles.begrunnelseOverskrift}>Vurdering</p>
         <p className={classNames(styleLesemodus.fritekst, styles.begrunnelse)}>{begrunnelse}</p>
+        <AssessedBy ident={vilkarperiode?.vurdertAv} date={vilkarperiode?.vurdertTidspunkt} />
       </>
     )}
   </>

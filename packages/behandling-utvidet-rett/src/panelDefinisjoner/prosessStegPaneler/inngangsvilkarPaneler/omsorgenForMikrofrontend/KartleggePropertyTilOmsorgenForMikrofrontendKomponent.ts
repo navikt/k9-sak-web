@@ -10,8 +10,8 @@ import {
   VilkarInformasjon,
 } from '../../../../types/utvidetRettMikrofrontend/KartleggePropertyTilMikrofrontendTypes';
 import { OmsorgenForProps } from '../../../../types/utvidetRettMikrofrontend/OmsorgProps';
-import { InformasjonTilLesemodus } from '../../../../types/utvidetRettMikrofrontend/informasjonTilLesemodus';
 import { generereInfoForVurdertVilkar } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
+import { InformasjonTilLesemodus } from '@k9-sak-web/prosess-omsorgsdager/src/types/informasjonTilLesemodus';
 
 interface PropTypes {
   isReadOnly: boolean;
@@ -68,6 +68,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
         informasjonTilLesemodus: {
           begrunnelse: aksjonspunkt.begrunnelse ? aksjonspunkt.begrunnelse : '',
           vilkarOppfylt: status === vilkarUtfallType.OPPFYLT,
+          vilkarperiode: omsorgenForVilkar.perioder[0],
         } as InformasjonTilLesemodus,
         barn: angitteBarn.map(barn => barn.personIdent),
         harBarnSoktForRammevedtakOmKroniskSyk,

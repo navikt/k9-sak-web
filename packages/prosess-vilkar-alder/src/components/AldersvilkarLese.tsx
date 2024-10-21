@@ -1,7 +1,9 @@
-import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import styleLesemodus from './AldersvilkarLese.module.css';
+import { AssessedBy, LabelledContent } from '@navikt/ft-plattform-komponenter';
+import { Vilkar } from '@k9-sak-web/types';
+import { Label } from '@navikt/ds-react';
 
 type Props = {
   aktiverRedigering: (boolean) => void;
@@ -9,6 +11,7 @@ type Props = {
   aksjonspunktLost: boolean;
   vilkarOppfylt: boolean;
   begrunnelseTekst: string;
+  vilkår: Vilkar;
 };
 
 const AldersvilkarLese = ({
@@ -17,9 +20,12 @@ const AldersvilkarLese = ({
   aksjonspunktLost,
   vilkarOppfylt,
   begrunnelseTekst,
-  intl,
-}: Props & WrappedComponentProps) => {
+  vilkår,
+}: Props) => {
+  const vurdertAv = vilkår?.perioder[0].vurdertAv;
+  const vurdertTidspunkt = vilkår?.perioder[0].vurdertTidspunkt;
   const sokersBarn = angitteBarn ? angitteBarn.map(barn => barn.personIdent).join(', ') : '';
+  const intl = useIntl();
 
   const handleKlikk = e => {
     e.preventDefault();
@@ -55,13 +61,17 @@ const AldersvilkarLese = ({
         <p>{sokersBarn}</p>
       </div>
 
-      <p className={styleLesemodus.label}>
-        <FormattedMessage id="AlderVilkar.Lese.Etikett.Vurdering" />
-      </p>
-      <p className={styleLesemodus.fritekst}>{begrunnelseTekst}</p>
-      <p className={styleLesemodus.label}>
-        <FormattedMessage id="AlderVilkar.Lese.Etikett.KroniskSyk" />
-      </p>
+      <LabelledContent
+        label={<FormattedMessage id="AlderVilkar.Lese.Etikett.Vurdering" />}
+        content={begrunnelseTekst}
+        indentContent
+      />
+      <AssessedBy ident={vurdertAv} date={vurdertTidspunkt} />
+      <div className="mt-8">
+        <Label>
+          <FormattedMessage id="AlderVilkar.Lese.Etikett.KroniskSyk" />
+        </Label>
+      </div>
       <p className={styleLesemodus.text}>
         {vilkarOppfylt
           ? intl.formatMessage({ id: 'AlderVilkar.KroniskSyk.Ja' })
@@ -71,4 +81,4 @@ const AldersvilkarLese = ({
   );
 };
 
-export default injectIntl(AldersvilkarLese);
+export default AldersvilkarLese;

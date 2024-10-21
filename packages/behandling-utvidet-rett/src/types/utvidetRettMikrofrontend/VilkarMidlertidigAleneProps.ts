@@ -1,5 +1,6 @@
 import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
-import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
+import { InformasjonOmVurdertVilkar } from '@k9-sak-web/prosess-omsorgsdager/src/types/InformasjonOmVurdertVilkar';
+import { VilkarMidlertidigInformasjonTilLesemodus } from '@k9-sak-web/prosess-omsorgsdager/src/types/VilkarMidlertidigAleneProps';
 
 export interface VilkarMidlertidigAleneProps {
   behandlingsID: string;
@@ -23,10 +24,4 @@ export interface VilkarMidlertidigSoknadsopplysninger {
   beskrivelse?: string;
   periode: string;
   soknadsdato: string;
-}
-
-export interface VilkarMidlertidigInformasjonTilLesemodus {
-  begrunnelse: string;
-  vilkarOppfylt: boolean;
-  dato: VilkarMidlertidigAleneDato;
 }

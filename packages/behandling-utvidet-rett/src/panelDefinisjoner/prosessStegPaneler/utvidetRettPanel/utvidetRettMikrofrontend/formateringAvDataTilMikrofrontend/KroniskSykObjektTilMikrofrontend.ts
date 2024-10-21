@@ -3,11 +3,9 @@ import { FormState } from '@fpsak-frontend/form/index';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
 import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
-import {
-  InformasjonTilLesemodusKroniskSyk,
-  VilkarKroniskSyktBarnProps,
-} from '../../../../../types/utvidetRettMikrofrontend/VilkarKroniskSyktBarnProps';
+import { VilkarKroniskSyktBarnProps } from '../../../../../types/utvidetRettMikrofrontend/VilkarKroniskSyktBarnProps';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
+import { InformasjonTilLesemodusKroniskSyk } from '@k9-sak-web/prosess-omsorgsdager/src/types/VilkarKroniskSyktBarnProps';
 
 interface OwnProps {
   behandlingsID: string;
@@ -55,6 +53,7 @@ const formatereLesemodusObjektForKroniskSyk = (vilkar: Vilkar, aksjonspunkt: Aks
     return {
       begrunnelse: aksjonspunkt.begrunnelse,
       vilkarOppfylt: vilkar.perioder[0].vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
+      vilkarperiode: vilkar.perioder[0],
       avslagsårsakKode: vilkar.perioder[0].avslagKode,
       fraDato: vilkar.perioder[0].periode.fom,
     } as InformasjonTilLesemodusKroniskSyk;

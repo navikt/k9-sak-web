@@ -77,6 +77,7 @@ const AldersVilkarProsessIndex = ({
           erVurdert={erVurdert}
           vilkarOppfylt={vilkarOppfylt}
           begrunnelseTekst={begrunnelseTekst}
+          vilkår={aldersVilkarBarn}
         />
       )}
     </RawIntlProvider>

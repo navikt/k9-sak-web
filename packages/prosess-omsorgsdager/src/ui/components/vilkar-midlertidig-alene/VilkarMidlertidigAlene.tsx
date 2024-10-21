@@ -30,7 +30,7 @@ type FormData = {
 export enum AvslagskoderMidlertidigAlene {
   REGNES_IKKE_SOM_Å_HA_ALENEOMSORG = '1076',
   VARIGHET_UNDER_SEKS_MÅN = '1075',
-  ANNET = '1093'
+  ANNET = '1093',
 }
 
 const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProps> = ({
@@ -62,9 +62,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
       erSokerenMidlertidigAleneOmOmsorgen: harAksjonspunktOgVilkarLostTidligere
         ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt)
         : '',
-      avslagsårsakKode: harAksjonspunktOgVilkarLostTidligere
-        ? informasjonTilLesemodus.avslagsårsakKode
-        : '',
+      avslagsårsakKode: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.avslagsårsakKode : '',
       åpenForRedigering: false,
     },
   });
@@ -79,8 +77,10 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   const sokerenMidlertidigAleneOmOmsorgen = watch('erSokerenMidlertidigAleneOmOmsorgen');
   const åpenForRedigering = watch('åpenForRedigering');
 
-  const { erDatoFyltUt, erDatoGyldig, erDatoSisteDagenIÅret } =
-    valideringsFunksjoner(getValues, 'erSokerenMidlertidigAleneOmOmsorgen');
+  const { erDatoFyltUt, erDatoGyldig, erDatoSisteDagenIÅret } = valideringsFunksjoner(
+    getValues,
+    'erSokerenMidlertidigAleneOmOmsorgen',
+  );
 
   const mellomlagringFormState = useFormSessionStorage(
     formStateKey,
@@ -129,7 +129,8 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         <VilkarStatus
           vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
           aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}
-          vilkarReferanse={informasjonOmVilkar.vilkar}
+          vilkarReferanse={informasjonOmVilkar.lovReferanse}
+          vilkarperiode={informasjonOmVilkar.vilkarperiode}
           begrunnelse={informasjonOmVilkar.begrunnelse}
           erVilkaretForOmsorgenFor={false}
         />
@@ -178,10 +179,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                 !tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen) && (
                   <div>
                     <RadioGroup
-                      className={classNames(
-                        styleRadioknapper.horisontalPlassering,
-                        styles.avslagsårsakKode,
-                      )}
+                      className={classNames(styleRadioknapper.horisontalPlassering, styles.avslagsårsakKode)}
                       legend={tekst.velgArsak}
                       size="small"
                       name="avslagsårsakKode"

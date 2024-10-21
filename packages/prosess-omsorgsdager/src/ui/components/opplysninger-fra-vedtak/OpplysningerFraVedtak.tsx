@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './opplysningerFraVedtak.module.css';
 import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
+import { Vilkarperiode } from '@k9-sak-web/types';
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 
 interface Props {
   tekstBegrunnelseLesemodus: string;
@@ -11,6 +13,7 @@ interface Props {
   informasjonVilkarOppfylt?: string;
   textVilkarIkkeOppfylt?: string;
   årsakVilkarIkkeOppfylt?: string;
+  vilkarperiode?: Vilkarperiode;
 }
 
 const OpplysningerFraVedtak: React.FunctionComponent<Props> = ({
@@ -22,10 +25,12 @@ const OpplysningerFraVedtak: React.FunctionComponent<Props> = ({
   informasjonVilkarOppfylt,
   textVilkarIkkeOppfylt,
   årsakVilkarIkkeOppfylt,
+  vilkarperiode,
 }) => (
   <div className={styles.opplysningerFraVedtak}>
     <h4>{tekstBegrunnelseLesemodus}</h4>
     <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
+    <AssessedBy ident={vilkarperiode?.vurdertAv} date={vilkarperiode?.vurdertTidspunkt} />
 
     <h4>{tekstVilkarOppfylt}</h4>
     <p>{erVilkarOppfylt ? 'Ja' : 'Nei'}</p>

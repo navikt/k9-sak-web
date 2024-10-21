@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { AksjonspunktBox } from '@fpsak-frontend/shared-components';
 import AldersvilkarForm from './AldersvilkarForm';
@@ -17,6 +17,7 @@ interface AldersVilkarAPProps {
   erVurdert: boolean;
   vilkarOppfylt: boolean;
   begrunnelseTekst: string;
+  vilkår: Vilkar;
 }
 
 const AldersVilkarAP = ({
@@ -29,6 +30,7 @@ const AldersVilkarAP = ({
   erVurdert,
   vilkarOppfylt,
   begrunnelseTekst,
+  vilkår,
 }: AldersVilkarAPProps) => {
   const [redigering, setRedigering] = useState<boolean>(false);
   const lesemodus = isReadOnly || !isAksjonspunktOpen;
@@ -60,6 +62,7 @@ const AldersVilkarAP = ({
       angitteBarn={angitteBarn}
       aksjonspunktLost={aksjonspunktLost}
       vilkarOppfylt={vilkarOppfylt}
+      vilkår={vilkår}
     />
   );
 };

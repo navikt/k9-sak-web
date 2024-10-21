@@ -302,7 +302,7 @@ describe('<AleneOmOmsorgen>', () => {
     const hentetNavnPåAksjonspunkt = screen.getByText(props.informasjonOmVilkar.navnPåAksjonspunkt);
     expect(hentetNavnPåAksjonspunkt).toBeInTheDocument();
 
-    const hentetVilkar = screen.getByText(props.informasjonOmVilkar.vilkar);
+    const hentetVilkar = screen.getByText(props.informasjonOmVilkar.lovReferanse);
     expect(hentetVilkar).toBeInTheDocument();
 
     const hentetBegrunnelse = screen.getByText(props.informasjonOmVilkar.begrunnelse);
@@ -341,7 +341,7 @@ describe('<AleneOmOmsorgen>', () => {
 
     render(<AleneOmOmsorgen {...props} />);
 
-    const hentetVilkar = screen.getByText(props.informasjonOmVilkar.vilkar);
+    const hentetVilkar = screen.getByText(props.informasjonOmVilkar.lovReferanse);
     expect(hentetVilkar).toBeInTheDocument();
 
     const hentetBegrunnelse = screen.getByText(props.informasjonOmVilkar.begrunnelse);

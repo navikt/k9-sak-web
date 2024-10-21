@@ -25,7 +25,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       formState: FormStateTilTest,
     } as VilkarKroniskSyktBarnProps;
@@ -67,7 +67,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       formState: FormStateTilTest,
     } as VilkarKroniskSyktBarnProps;
@@ -97,7 +97,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       formState: FormStateTilTest,
     } as VilkarKroniskSyktBarnProps;
@@ -148,7 +148,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       formState: FormStateTilTest,
     } as VilkarKroniskSyktBarnProps;
@@ -181,7 +181,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       formState: FormStateTilTest,
     } as VilkarKroniskSyktBarnProps;
@@ -211,7 +211,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       formState: FormStateTilTest,
     } as VilkarKroniskSyktBarnProps;
@@ -221,7 +221,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
     const hentetNavnPåAksjonspunkt = screen.getByText(props.informasjonOmVilkar.navnPåAksjonspunkt);
     expect(hentetNavnPåAksjonspunkt).toBeInTheDocument();
 
-    const hentetVilkar = screen.getByText(props.informasjonOmVilkar.vilkar);
+    const hentetVilkar = screen.getByText(props.informasjonOmVilkar.lovReferanse);
     expect(hentetVilkar).toBeInTheDocument();
 
     const hentetBegrunnelse = screen.getByText(props.informasjonOmVilkar.begrunnelse);
@@ -250,14 +250,14 @@ describe('<VilkarKroniskSyktBarn>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: false,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       formState: FormStateTilTest,
     } as VilkarKroniskSyktBarnProps;
 
     render(<VilkarKroniskSyktBarn {...props} />);
 
-    const hentetVilkar = screen.getByText(props.informasjonOmVilkar.vilkar);
+    const hentetVilkar = screen.getByText(props.informasjonOmVilkar.lovReferanse);
     expect(hentetVilkar).toBeInTheDocument();
 
     const hentetBegrunnelse = screen.getByText(props.informasjonOmVilkar.begrunnelse);
@@ -286,7 +286,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: false,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       formState: FormStateTilTest,
     } as VilkarKroniskSyktBarnProps;

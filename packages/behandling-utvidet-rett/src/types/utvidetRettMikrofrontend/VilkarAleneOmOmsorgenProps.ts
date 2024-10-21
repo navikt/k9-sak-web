@@ -1,5 +1,6 @@
 import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
-import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
+import { AleneOmOmsorgenAksjonspunktObjekt } from '@k9-sak-web/prosess-omsorgsdager/src/types/AleneOmOmsorgenProps';
+import { InformasjonOmVurdertVilkar } from '@k9-sak-web/prosess-omsorgsdager/src/types/InformasjonOmVurdertVilkar';
 
 export interface AleneOmOmsorgenProps {
   behandlingsID: string;
@@ -13,14 +14,6 @@ export interface AleneOmOmsorgenProps {
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;
   losAksjonspunkt?: (AleneOmOmsorgenAksjonspunktObjekt) => void;
   formState: FormStateType;
-}
-
-export interface AleneOmOmsorgenAksjonspunktObjekt {
-  begrunnelse: string;
-  avslagsårsakKode: string;
-  vilkarOppfylt: boolean;
-  fraDato: string;
-  tilDato: string;
 }
 
 export interface AleneOmOmsorgenLosAksjonspunktK9Format {

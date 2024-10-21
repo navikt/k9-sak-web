@@ -1,3 +1,4 @@
+import { Vilkarperiode } from '@k9-sak-web/types';
 import { FormState } from './FormState';
 import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
 
@@ -22,5 +23,6 @@ export interface InformasjonTilLesemodusKroniskSyk {
   begrunnelse: string;
   vilkarOppfylt: boolean;
   avslagsårsakKode: string;
+  vilkarperiode?: Vilkarperiode;
   fraDato: string;
 }

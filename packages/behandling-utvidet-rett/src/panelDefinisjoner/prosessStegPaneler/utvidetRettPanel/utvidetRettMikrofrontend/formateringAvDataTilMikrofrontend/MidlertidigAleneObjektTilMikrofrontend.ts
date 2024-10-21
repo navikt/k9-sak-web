@@ -23,11 +23,12 @@ const formatereLesemodusObjektForMidlertidigAlene = (vilkar: Vilkar, aksjonspunk
     return {
       begrunnelse: aksjonspunkt.begrunnelse,
       vilkarOppfylt: status === vilkarUtfallType.OPPFYLT,
+      vilkarperiode: vilkar.perioder[0],
       dato: {
         fra: vilkar.perioder[0].periode.fom,
         til: vilkar.perioder[0].periode.tom,
       },
-      avslagsårsakKode: vilkar.perioder[0]?.avslagKode
+      avslagsårsakKode: vilkar.perioder[0]?.avslagKode,
     };
   }
   return {
@@ -48,14 +49,14 @@ const formatereLosAksjonspunktObjektForMidlertidigAlene = (
     fom: string;
     tom: string;
   },
-  avslagsårsakKode: string
+  avslagsårsakKode: string,
 ) => {
   const losAksjonspunktObjekt = {
     kode: aksjonspunktKode,
     begrunnelse,
     erVilkarOk,
     periode,
-    avslagsårsak: erVilkarOk ? null : avslagsårsakKode
+    avslagsårsak: erVilkarOk ? null : avslagsårsakKode,
   };
 
   return losAksjonspunktObjekt;
@@ -96,13 +97,7 @@ const MidlertidigAleneObjektTilMikrofrontend = ({
         'Utvidet Rett',
       ),
       informasjonTilLesemodus: formatereLesemodusObjektForMidlertidigAlene(vilkar, aksjonspunkt, status),
-      losAksjonspunkt: ({
-        begrunnelse,
-        erSokerenMidlertidigAleneOmOmsorgen,
-        fra,
-        til,
-        avslagsårsakKode
-      }) => {
+      losAksjonspunkt: ({ begrunnelse, erSokerenMidlertidigAleneOmOmsorgen, fra, til, avslagsårsakKode }) => {
         submitCallback([
           formatereLosAksjonspunktObjektForMidlertidigAlene(
             aksjonspunkt.definisjon.kode,
@@ -112,7 +107,7 @@ const MidlertidigAleneObjektTilMikrofrontend = ({
               fom: fra,
               tom: til,
             },
-            avslagsårsakKode
+            avslagsårsakKode,
           ),
         ]);
       },
