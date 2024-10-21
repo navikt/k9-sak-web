@@ -4551,8 +4551,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/gui@workspace:packages/v2/gui"
   dependencies:
+    "@hookform/error-message": ^2.0.1
     "@k9-sak-web/backend": "workspace:^"
     "@k9-sak-web/lib": 1.0.0
+    "@navikt/ft-form-validators": 2.4.5
+    "@navikt/ft-utils": 2.4.5
     "@tanstack/react-query": ^5.59.15
     axios: 1.7.7
     react: 18.3.1
@@ -5384,7 +5387,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-utils@npm:^2.4.5":
+"@navikt/ft-utils@npm:2.4.5, @navikt/ft-utils@npm:^2.4.5":
   version: 2.4.5
   resolution: "@navikt/ft-utils@npm:2.4.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-utils%2F2.4.5%2Fb938f10c0389a31660c4d17b6c440cb0f9f712bd"
   dependencies:
