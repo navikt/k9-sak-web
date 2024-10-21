@@ -83,6 +83,8 @@ const defaultArgs = {
     employeeHasAccess: true,
     isEnabled: true,
   },
+  panelTittelKode: 'Søknadsfrist',
+  kanEndrePåSøknadsopplysninger: true,
 };
 
 export const visOverstyringspanelForSoknadsfrist: Story = {
@@ -112,9 +114,7 @@ export const visOverstyringspanelForSoknadsfrist: Story = {
         toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
         erOverstyrt={erOverstyrt}
         soknadsfristStatus={soknadsStatus}
-        panelTittelKode="Søknadsfrist"
         vilkar={vilkarSoknadsfrist}
-        kanEndrePåSøknadsopplysninger
       />
     );
   },
@@ -134,9 +134,7 @@ export const visOverstyringspanelForSoknadsfristUtenDokumenter: Story = {
         toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
         erOverstyrt={erOverstyrt}
         soknadsfristStatus={{ dokumentStatus: [] }}
-        panelTittelKode="Søknadsfrist"
         vilkar={vilkarSoknadsfrist}
-        kanEndrePåSøknadsopplysninger
       />
     );
   },
@@ -279,7 +277,6 @@ export const VisSoknadsfristAksjonspunkt5077: Story = {
             },
           ],
         }}
-        panelTittelKode="Søknadsfrist"
         vilkar={[
           {
             perioder: [
@@ -302,7 +299,6 @@ export const VisSoknadsfristAksjonspunkt5077: Story = {
             ],
           },
         ]}
-        kanEndrePåSøknadsopplysninger
       />
     );
   },
@@ -365,7 +361,6 @@ export const visSoknadsfristAksjonspunkt5077Delvis: Story = {
             },
           ],
         }}
-        panelTittelKode="Søknadsfrist"
         vilkar={[
           {
             perioder: [
@@ -396,7 +391,6 @@ export const visSoknadsfristAksjonspunkt5077Delvis: Story = {
             ],
           },
         ]}
-        kanEndrePåSøknadsopplysninger
       />
     );
   },
@@ -468,7 +462,6 @@ export const VisSoknadsfristAksjonspunkt5077FlereSøknader: Story = {
             },
           ],
         }}
-        panelTittelKode="Søknadsfrist"
         vilkar={[
           {
             lovReferanse: '§ 22-13 tredje ledd',
@@ -500,7 +493,6 @@ export const VisSoknadsfristAksjonspunkt5077FlereSøknader: Story = {
             ],
           },
         ]}
-        kanEndrePåSøknadsopplysninger
       />
     );
   },
