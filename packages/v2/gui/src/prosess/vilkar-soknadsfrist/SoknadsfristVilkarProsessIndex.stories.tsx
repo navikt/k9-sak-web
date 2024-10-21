@@ -77,13 +77,17 @@ const meta: Meta<typeof SoknadsfristVilkarProsessIndex> = {
 
 type Story = StoryObj<typeof meta>;
 
+const defaultArgs = {
+  overrideReadOnly: false,
+  kanOverstyreAccess: {
+    employeeHasAccess: true,
+    isEnabled: true,
+  },
+};
+
 export const visOverstyringspanelForSoknadsfrist: Story = {
   args: {
-    overrideReadOnly: false,
-    kanOverstyreAccess: {
-      employeeHasAccess: true,
-      isEnabled: true,
-    },
+    ...defaultArgs,
   },
   play: async ({ canvas, step }) => {
     await step('skal vise overskrift og lovparagraf', async () => {
@@ -118,11 +122,7 @@ export const visOverstyringspanelForSoknadsfrist: Story = {
 
 export const visOverstyringspanelForSoknadsfristUtenDokumenter: Story = {
   args: {
-    overrideReadOnly: false,
-    kanOverstyreAccess: {
-      employeeHasAccess: true,
-      isEnabled: true,
-    },
+    ...defaultArgs,
   },
   render: props => {
     const [erOverstyrt, toggleOverstyring] = React.useState(false);
@@ -144,11 +144,7 @@ export const visOverstyringspanelForSoknadsfristUtenDokumenter: Story = {
 
 export const VisSoknadsfristAksjonspunkt5077: Story = {
   args: {
-    overrideReadOnly: false,
-    kanOverstyreAccess: {
-      employeeHasAccess: true,
-      isEnabled: true,
-    },
+    ...defaultArgs,
     submitCallback: fn(),
   },
 
@@ -314,11 +310,7 @@ export const VisSoknadsfristAksjonspunkt5077: Story = {
 
 export const visSoknadsfristAksjonspunkt5077Delvis: Story = {
   args: {
-    overrideReadOnly: false,
-    kanOverstyreAccess: {
-      employeeHasAccess: true,
-      isEnabled: true,
-    },
+    ...defaultArgs,
   },
   render: props => {
     const [erOverstyrt, toggleOverstyring] = React.useState(false);
@@ -412,11 +404,7 @@ export const visSoknadsfristAksjonspunkt5077Delvis: Story = {
 
 export const VisSoknadsfristAksjonspunkt5077FlereSøknader: Story = {
   args: {
-    overrideReadOnly: false,
-    kanOverstyreAccess: {
-      employeeHasAccess: true,
-      isEnabled: true,
-    },
+    ...defaultArgs,
   },
   render: props => {
     const [erOverstyrt, toggleOverstyring] = React.useState(false);
