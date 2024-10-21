@@ -4557,7 +4557,9 @@ __metadata:
     "@navikt/ft-form-validators": 2.4.5
     "@navikt/ft-utils": 2.4.5
     "@tanstack/react-query": ^5.59.15
+    "@types/object-hash": ^3.0.6
     axios: 1.7.7
+    object-hash: ^3.0.0
     react: 18.3.1
   languageName: unknown
   linkType: soft
@@ -7145,6 +7147,13 @@ __metadata:
   dependencies:
     undici-types: ~6.19.2
   checksum: 77ac225c38c428200036780036da0bc6764e2721cfa8f528c7e7da7cfefe01a32a5791e28a54efbeedbc977949058d7db902b2e00139298225d4686cee4ae6db
+  languageName: node
+  linkType: hard
+
+"@types/object-hash@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "@types/object-hash@npm:3.0.6"
+  checksum: 2c7979d4e540af817b99c09fb4c2fed1c0b0e14342df474d8dcde4165a82c440b038341fd66fe998d9f86acdd5cccc65ba8092315e39e7c2114f945fa70aaa56
   languageName: node
   linkType: hard
 

@@ -6,10 +6,11 @@ import initializeDate from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Button, HStack, Label } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
-import { decodeHtmlEntity, guid } from '@navikt/ft-utils';
+import { decodeHtmlEntity } from '@navikt/ft-utils';
 import type { Periode, VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client';
 import { Dayjs } from 'dayjs';
-import { useMemo, useState, type SetStateAction } from 'react';
+import hash from 'object-hash';
+import { useState, type SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 
 import type { KravDokument } from '../types/KravDokumentStatus';
@@ -147,19 +148,15 @@ export const SoknadsfristVilkarForm = ({
   submitCallback,
   kanEndrePåSøknadsopplysninger,
 }: SoknadsfristVilkarFormProps) => {
-  const alleDokumenterMedId = useMemo(
-    () => alleDokumenter.map(dokument => ({ ...dokument, id: guid() })),
-    [alleDokumenter],
-  );
   const formMethods = useForm<FormState>({
-    defaultValues: buildInitialValues(aksjonspunkter, alleDokumenterMedId, status),
+    defaultValues: buildInitialValues(aksjonspunkter, alleDokumenter, status),
   });
   const [editForm, setEditForm] = useState(false);
 
   const toggleEditForm = (shouldEdit: boolean) => {
     setEditForm(shouldEdit);
     if (!shouldEdit) {
-      formMethods.reset(buildInitialValues(aksjonspunkter, alleDokumenterMedId, status));
+      formMethods.reset(buildInitialValues(aksjonspunkter, alleDokumenter, status));
     }
   };
   const aksjonspunkt = erOverstyrt
@@ -199,7 +196,7 @@ export const SoknadsfristVilkarForm = ({
   };
 
   const handleSubmit = (values: FormState) => {
-    submitCallback([transformValues(values, alleDokumenterMedId, aksjonspunktCode, periodeFom, periodeTom)]);
+    submitCallback([transformValues(values, alleDokumenter, aksjonspunktCode, periodeFom, periodeTom)]);
   };
 
   const AksjonspunktText = () => {
@@ -238,12 +235,13 @@ export const SoknadsfristVilkarForm = ({
           className={`${styles.aksjonspunkt} ${erOverstyrt || harÅpentAksjonspunkt || editForm ? styles.apentAksjonspunkt : ''}`}
         >
           {(erOverstyrt || harÅpentAksjonspunkt || editForm) && <AksjonspunktText />}
-          {Array.isArray(alleDokumenterMedId) && alleDokumenterMedId.length > 0
-            ? alleDokumenterMedId.map((dokument, index) => {
+          {Array.isArray(alleDokumenter) && alleDokumenter.length > 0
+            ? alleDokumenter.map((dokument, index) => {
+                const documentHash = hash(dokument);
                 return (
                   <SoknadsfristVilkarDokument
-                    key={dokument.id}
-                    erAktivtDokument={dokumenterIAktivPeriode.findIndex(d => d.id === dokument.id) > -1}
+                    key={documentHash}
+                    erAktivtDokument={dokumenterIAktivPeriode.findIndex(d => hash(d) === documentHash) > -1}
                     skalViseBegrunnelse={erOverstyrt || harAksjonspunkt || editForm}
                     readOnly={(isReadOnly || (!erOverstyrt && !harÅpentAksjonspunkt)) && !editForm}
                     dokumentIndex={index}

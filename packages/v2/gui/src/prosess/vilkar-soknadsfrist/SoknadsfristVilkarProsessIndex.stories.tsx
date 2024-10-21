@@ -7,7 +7,7 @@ import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Vilkå
 import { kravDokumentStatusType } from '@k9-sak-web/backend/k9sak/kodeverk/KravDokumentStatus.js';
 import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
+import { expect, fn, userEvent, waitFor } from '@storybook/test';
 import SoknadsfristVilkarProsessIndex from './SoknadsfristVilkarProsessIndex';
 
 const vilkarSoknadsfrist = [
@@ -71,7 +71,7 @@ const soknadsStatus = {
 };
 
 const meta: Meta<typeof SoknadsfristVilkarProsessIndex> = {
-  title: 'prosess/prosess-vilkar-soknadsfrist-v2',
+  title: 'gui/prosess/vilkar-soknadsfrist',
   component: SoknadsfristVilkarProsessIndex,
 };
 
@@ -139,8 +139,13 @@ export const VisSoknadsfristAksjonspunkt5077: Story = {
     submitCallback: fn(),
   },
 
-  play: async ({ canvasElement, step, args }) => {
-    const canvas = within(canvasElement);
+  play: async ({ canvas, step, args }) => {
+    await step('skal vise overskrift og lovparagraf', async () => {
+      expect(canvas.getByRole('heading', { name: 'Søknadsfrist' })).toBeInTheDocument();
+      expect(canvas.getByText('§')).toBeInTheDocument();
+      expect(canvas.getByText('22-13')).toBeInTheDocument();
+    });
+
     await step('skal formatere data ved innsending ved oppfylt vilkår', async () => {
       await userEvent.click(canvas.getByText('28.04.2021 - 30.04.2021'));
       await userEvent.click(canvas.getByText('Vilkåret er oppfylt for hele perioden'));
