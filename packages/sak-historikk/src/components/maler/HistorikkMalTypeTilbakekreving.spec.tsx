@@ -12,7 +12,7 @@ describe('HistorikkMalTypeTilbakekreving', () => {
   it('skal vise alle historikkelement korrekt', () => {
     const historikkinnslagDeler = [
       {
-        skjermlenke: { kode: 'TILBAKEKREVING', navn: 'Tilbakekreving' },
+        skjermlenke: 'TILBAKEKREVING',
         endredeFelter: [
           {
             endretFeltNavn: historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT,
