@@ -1,19 +1,17 @@
+import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { aksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktType.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
+import initializeDate from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Button, HStack, Label } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
-import type { Periode } from '@navikt/k9-sak-typescript-client';
+import { decodeHtmlEntity, guid } from '@navikt/ft-utils';
+import type { Periode, VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client';
 import { Dayjs } from 'dayjs';
 import { useMemo, useState, type SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
-import type { VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client';
-
-import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
-import { aksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktType.js';
-import initializeDate from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import { decodeHtmlEntity, guid } from '@navikt/ft-utils';
 import type { KravDokument } from '../types/KravDokumentStatus';
 import type { SoknadsfristAksjonspunktType } from '../types/SoknadsfristAksjonspunktType';
 import type { SubmitCallback } from '../types/submitCallback';
@@ -118,7 +116,6 @@ const transformValues = (
 
 interface SoknadsfristVilkarFormProps {
   aksjonspunkter: SoknadsfristAksjonspunktType[];
-  behandlingVersjon: number;
   submitCallback: (props: SubmitCallback[]) => void;
   periode: VilkårPeriodeDto;
   erOverstyrt?: boolean;
@@ -245,7 +242,7 @@ export const SoknadsfristVilkarForm = ({
             ? alleDokumenterMedId.map((dokument, index) => {
                 return (
                   <SoknadsfristVilkarDokument
-                    key={dokument?.id}
+                    key={dokument.id}
                     erAktivtDokument={dokumenterIAktivPeriode.findIndex(d => d.id === dokument.id) > -1}
                     skalViseBegrunnelse={erOverstyrt || harAksjonspunkt || editForm}
                     readOnly={(isReadOnly || (!erOverstyrt && !harÅpentAksjonspunkt)) && !editForm}

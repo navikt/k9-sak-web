@@ -77,10 +77,6 @@ const meta: Meta<typeof SoknadsfristVilkarProsessIndex> = {
 
 type Story = StoryObj<typeof meta>;
 
-const behandling = {
-  versjon: 1,
-};
-
 export const visOverstyringspanelForSoknadsfrist: Story = {
   args: {
     overrideReadOnly: false,
@@ -94,7 +90,6 @@ export const visOverstyringspanelForSoknadsfrist: Story = {
     return (
       <SoknadsfristVilkarProsessIndex
         {...props}
-        behandling={behandling}
         aksjonspunkter={[]}
         submitCallback={action('button-click')}
         toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
@@ -121,7 +116,6 @@ export const visOverstyringspanelForSoknadsfristUtenDokumenter: Story = {
     return (
       <SoknadsfristVilkarProsessIndex
         {...props}
-        behandling={behandling}
         aksjonspunkter={[]}
         submitCallback={action('button-click')}
         toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
@@ -241,7 +235,6 @@ export const VisSoknadsfristAksjonspunkt5077: Story = {
     return (
       <SoknadsfristVilkarProsessIndex
         {...props}
-        behandling={behandling}
         aksjonspunkter={[
           {
             aksjonspunktType: aksjonspunktType.MANUELL,
@@ -314,7 +307,6 @@ export const visSoknadsfristAksjonspunkt5077Delvis: Story = {
     return (
       <SoknadsfristVilkarProsessIndex
         {...props}
-        behandling={behandling}
         aksjonspunkter={[
           {
             aksjonspunktType: 'MANU', // kodeverk: 'AKSJONSPUNKT_TYPE'
@@ -413,9 +405,6 @@ export const VisSoknadsfristAksjonspunkt5077FlereSøknader: Story = {
     return (
       <SoknadsfristVilkarProsessIndex
         {...props}
-        behandling={{
-          versjon: 40,
-        }}
         aksjonspunkter={[
           {
             aksjonspunktType: 'MANU', // kodeverk: 'AKSJONSPUNKT_TYPE'

@@ -41,7 +41,6 @@ describe('<SoknadsfristVilkarForm>', () => {
   it('skal rendre form med knapp når vilkåret er overstyrt', () => {
     render(
       <SoknadsfristVilkarForm
-        behandlingVersjon={2}
         erOverstyrt
         harÅpentAksjonspunkt={false}
         overrideReadOnly={false}

@@ -77,6 +77,9 @@ export const SoknadsfristVilkarDokument = ({
 
   const isAtleastDate = useCallback(v => dateAfterOrEqual(minDate)(v), [minDate]);
   const isAtmostDate = useCallback(v => dateBeforeOrEqual(maxDate)(v), [maxDate]);
+  const showRedigerVurderingButton =
+    !erOverstyrt && dokumentErVurdert && !redigerVurdering && kanEndrePåSøknadsopplysninger;
+
   return (
     <div style={{ display: erAktivtDokument ? 'block' : 'none' }}>
       <p>
@@ -166,7 +169,7 @@ export const SoknadsfristVilkarDokument = ({
           ]}
         />
       )}
-      {!erOverstyrt && dokumentErVurdert && !redigerVurdering && kanEndrePåSøknadsopplysninger && (
+      {showRedigerVurderingButton && (
         <div>
           <div className="mt-2" />
           <Button

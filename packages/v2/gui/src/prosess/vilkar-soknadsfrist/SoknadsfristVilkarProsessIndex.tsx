@@ -31,7 +31,6 @@ const intl = createIntl(
 const lovReferanse = '§ 22-13';
 
 interface SoknadsfristVilkarProsessIndexProps {
-  behandling: { versjon: number };
   aksjonspunkter: SoknadsfristAksjonspunktType[];
   submitCallback: (props: SubmitCallback[]) => void;
   overrideReadOnly: boolean;
@@ -67,7 +66,6 @@ const erRelevantForPeriode = (
 };
 
 const SoknadsfristVilkarProsessIndex = ({
-  behandling,
   aksjonspunkter,
   submitCallback,
   overrideReadOnly,
@@ -196,7 +194,6 @@ const SoknadsfristVilkarProsessIndex = ({
               toggleOverstyring={toggleOverstyring}
             />
             <SoknadsfristVilkarForm
-              behandlingVersjon={behandling.versjon}
               aksjonspunkter={aksjonspunkter}
               harÅpentAksjonspunkt={harÅpentUløstAksjonspunkt}
               erOverstyrt={erOverstyrt}
