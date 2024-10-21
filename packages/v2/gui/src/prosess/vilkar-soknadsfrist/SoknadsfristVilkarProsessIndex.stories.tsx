@@ -85,6 +85,19 @@ export const visOverstyringspanelForSoknadsfrist: Story = {
       isEnabled: true,
     },
   },
+  play: async ({ canvas, step }) => {
+    await step('skal vise overskrift og lovparagraf', async () => {
+      await userEvent.click(canvas.getByText('26.02.2020 - 27.02.2020'));
+      await userEvent.click(canvas.getByRole('button', { name: 'Overstyring av søknadsfristvilkåret' }));
+      expect(
+        canvas.getAllByText(
+          (_, element) => element?.textContent === 'SØKNAD innsendt 01.06.2020 (journalpostId: 23456)',
+        )[0],
+      ).toBeInTheDocument();
+      expect(canvas.getAllByText('Vilkåret er oppfylt for hele perioden').length).toBe(2);
+      expect(canvas.getByRole('button', { name: 'Bekreft overstyring' })).toBeInTheDocument();
+    });
+  },
   render: props => {
     const [erOverstyrt, toggleOverstyring] = React.useState(false);
     return (
@@ -140,7 +153,7 @@ export const VisSoknadsfristAksjonspunkt5077: Story = {
   },
 
   play: async ({ canvas, step, args }) => {
-    await step('skal vise overskrift og lovparagraf', async () => {
+    await step('skal vise overskrift og lovparagraf', () => {
       expect(canvas.getByRole('heading', { name: 'Søknadsfrist' })).toBeInTheDocument();
       expect(canvas.getByText('§')).toBeInTheDocument();
       expect(canvas.getByText('22-13')).toBeInTheDocument();
