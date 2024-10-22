@@ -6,7 +6,6 @@ import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtel
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { utledKodeverkNavnFraKode } from '@k9-sak-web/lib/kodeverk/kodeverkUtils.js';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
@@ -54,7 +53,8 @@ const feilutbetalingFakta = {
 
 describe('<FeilutbetalingInfoPanel>', () => {
   it('skal rendre komponent korrekt', () => {
-    requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverkV2);
+    // requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverkV2);
+    // requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, alleKodeverkV2);
 
     const kodeverkKlageNavnFraKode = vi
       .fn()
