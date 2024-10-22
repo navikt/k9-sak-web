@@ -2,7 +2,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import styleLesemodus from './AldersvilkarLese.module.css';
 import { AssessedBy, LabelledContent } from '@navikt/ft-plattform-komponenter';
-import { Vilkar } from '@k9-sak-web/types';
+import { Vilkarperiode } from '@k9-sak-web/types';
 import { Label } from '@navikt/ds-react';
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
   aksjonspunktLost: boolean;
   vilkarOppfylt: boolean;
   begrunnelseTekst: string;
-  vilkår: Vilkar;
+  vilkarperiode: Vilkarperiode;
 };
 
 const AldersvilkarLese = ({
@@ -20,10 +20,8 @@ const AldersvilkarLese = ({
   aksjonspunktLost,
   vilkarOppfylt,
   begrunnelseTekst,
-  vilkår,
+  vilkarperiode,
 }: Props) => {
-  const vurdertAv = vilkår?.perioder[0].vurdertAv;
-  const vurdertTidspunkt = vilkår?.perioder[0].vurdertTidspunkt;
   const sokersBarn = angitteBarn ? angitteBarn.map(barn => barn.personIdent).join(', ') : '';
   const intl = useIntl();
 
@@ -66,7 +64,7 @@ const AldersvilkarLese = ({
         content={begrunnelseTekst}
         indentContent
       />
-      <AssessedBy ident={vurdertAv} date={vurdertTidspunkt} />
+      <AssessedBy ident={vilkarperiode?.vurdertAv} date={vilkarperiode.vurdertTidspunkt} />
       <div className="mt-8">
         <Label>
           <FormattedMessage id="AlderVilkar.Lese.Etikett.KroniskSyk" />
