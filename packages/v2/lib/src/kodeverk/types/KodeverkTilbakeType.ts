@@ -1,3 +1,3 @@
 export enum KodeverkTilbakeType {
-  TILBAKEKR_VIDERE_BEH = 'VidereBehandling',
+  TILBAKEKR_VIDERE_BEH = 'TilbakekrevingVidereBehandling',
 }
