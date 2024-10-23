@@ -3,10 +3,15 @@ import { action } from '@storybook/addon-actions';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import { AksjonspunktDto, BehandlingDto } from '@navikt/k9-sak-typescript-client';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
+
+const fagsak = {
+  sakstype: { kode: fagsakYtelsesType.PSB, kodeverk: 'FAGSAK_YTELSE' },
+};
 
 const behandling = {
   id: 1,
@@ -160,6 +165,7 @@ export const visUtenAksjonspunkt = args => (
     alleKodeverk={alleKodeverk as any}
     submitCallback={action('button-click')}
     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+    fagsak={fagsak}
     {...args}
   />
 );
@@ -184,6 +190,7 @@ export const visÅpentAksjonspunktTilbaketrekk = args => (
     alleKodeverk={alleKodeverk as any}
     submitCallback={action('button-click')}
     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+    fagsak={fagsak}
     {...args}
   />
 );
@@ -213,6 +220,7 @@ export const visÅpentAksjonspunktManuellTilkjentYtelse = args => (
       }
       submitCallback={action('button-click')}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      fagsak={fagsak}
       {...args}
     />
   </KodeverkProvider>
