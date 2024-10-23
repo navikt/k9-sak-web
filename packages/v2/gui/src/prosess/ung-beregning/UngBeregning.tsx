@@ -21,12 +21,6 @@ const formatCurrencyNoKr = (value: number) => {
   return Number(Math.round(+newVal)).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
 };
 
-const parseCurrencyInput = (input: number) => {
-  const inputNoSpace = input.toString().replace(/\s/g, '');
-  const parsedValue = parseInt(inputNoSpace, 10);
-  return Number.isNaN(parsedValue) ? '' : formatCurrencyNoKr(parsedValue);
-};
-
 interface Props {
   behandling: { uuid: string };
   api: UngBeregningBackendApiType;
@@ -61,10 +55,14 @@ const UngBeregning = ({ api, behandling }: Props) => {
           <Table>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell>Periode</Table.HeaderCell>
-                <Table.HeaderCell>Sats</Table.HeaderCell>
-                <Table.HeaderCell>Grunnbeløp</Table.HeaderCell>
-                <Table.HeaderCell>Dagsats</Table.HeaderCell>
+                <Table.HeaderCell scope="col">Periode</Table.HeaderCell>
+                <Table.HeaderCell scope="col">Sats</Table.HeaderCell>
+                <Table.HeaderCell scope="col" align="right">
+                  Grunnbeløp
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col" align="right">
+                  Dagsats
+                </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -72,8 +70,8 @@ const UngBeregning = ({ api, behandling }: Props) => {
                 <Table.Row key={`${fom}_${tom}`}>
                   <Table.DataCell>{fom && tom && formatPeriod(fom, tom)}</Table.DataCell>
                   <Table.DataCell>{satsType}</Table.DataCell>
-                  <Table.DataCell>{grunnbeløp && formatCurrencyWithKr(grunnbeløp)}</Table.DataCell>
-                  <Table.DataCell>{dagsats && parseCurrencyInput(dagsats)} kr</Table.DataCell>
+                  <Table.DataCell align="right">{grunnbeløp && formatCurrencyWithKr(grunnbeløp)}</Table.DataCell>
+                  <Table.DataCell align="right">{dagsats && formatCurrencyNoKr(dagsats)} kr</Table.DataCell>
                 </Table.Row>
               ))}
             </Table.Body>
