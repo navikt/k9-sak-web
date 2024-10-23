@@ -51,6 +51,7 @@ describe('<TilkjentYtelse>', () => {
         groups={[]}
         kodeverkNavnFraKode={kodeverkNavnFraKode}
         arbeidsgiverOpplysningerPerId={{}}
+        isUngdomsytelseFagsak={false}
       />,
     );
 
