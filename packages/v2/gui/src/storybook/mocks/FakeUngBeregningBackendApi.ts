@@ -1,7 +1,7 @@
-import type { SatserData } from '../../prosess/ung-beregning/SatserData';
+import type { UngdomsytelseSatsPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
 
 export class FakeUngBeregningBackendApi {
-  async getSatser(): Promise<SatserData[]> {
+  async getSatser(): Promise<UngdomsytelseSatsPeriodeDto[]> {
     return [
       {
         fom: '2024-01-01',

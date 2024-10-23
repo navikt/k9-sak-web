@@ -1,7 +1,7 @@
+import type { UngdomsytelseSatsPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
 import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { Alert, Heading, Loader, Table } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
-import type { SatserData } from './SatserData';
 import type { UngBeregningBackendApiType } from './UngBeregningBackendApiType';
 
 const formatCurrencyWithKr = (value: number) => {
@@ -38,7 +38,7 @@ const UngBeregning = ({ api, behandling }: Props) => {
     isLoading: satserIsLoading,
     isSuccess: satserSuccess,
     isError: satserIsError,
-  } = useQuery<SatserData[]>({
+  } = useQuery<UngdomsytelseSatsPeriodeDto[]>({
     queryKey: ['satser'],
     queryFn: () => api.getSatser(behandling.uuid),
   });
@@ -70,10 +70,10 @@ const UngBeregning = ({ api, behandling }: Props) => {
             <Table.Body>
               {satser.map(({ fom, tom, satsType, dagsats, grunnbeløp }) => (
                 <Table.Row key={`${fom}_${tom}`}>
-                  <Table.DataCell>{formatPeriod(fom, tom)}</Table.DataCell>
+                  <Table.DataCell>{fom && tom && formatPeriod(fom, tom)}</Table.DataCell>
                   <Table.DataCell>{satsType}</Table.DataCell>
-                  <Table.DataCell>{formatCurrencyWithKr(grunnbeløp)}</Table.DataCell>
-                  <Table.DataCell>{parseCurrencyInput(dagsats)} kr</Table.DataCell>
+                  <Table.DataCell>{grunnbeløp && formatCurrencyWithKr(grunnbeløp)}</Table.DataCell>
+                  <Table.DataCell>{dagsats && parseCurrencyInput(dagsats)} kr</Table.DataCell>
                 </Table.Row>
               ))}
             </Table.Body>
