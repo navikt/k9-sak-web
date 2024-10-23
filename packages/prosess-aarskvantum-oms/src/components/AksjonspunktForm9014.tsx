@@ -125,7 +125,7 @@ export const FormContent = ({
         {[
           <FormattedMessage
             key={1}
-            id={erÅF ? 'Årskvantum.Aksjonspunkt.Avslått.Fosterbarn' : 'Årskvantum.Aksjonspunkt.Avslått'}
+            id={erÅF ? 'Årskvantum.Aksjonspunkt.Uavklart.Fosterbarn' : 'Årskvantum.Aksjonspunkt.Uavklart'}
           />,
         ]}
       </AksjonspunktHelpText>
@@ -136,7 +136,7 @@ export const FormContent = ({
           validate={[required]}
           label={
             <Label size="small" as="p">
-              <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Valg" />
+              <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.Valg" />
             </Label>
           }
           radios={[
@@ -146,8 +146,8 @@ export const FormContent = ({
                 <FormattedMessage
                   id={
                     erÅF
-                      ? 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling.Fosterbarn'
-                      : 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling'
+                      ? 'Årskvantum.Aksjonspunkt.Uavklart.ReBehandling.Fosterbarn'
+                      : 'Årskvantum.Aksjonspunkt.Uavklart.ReBehandling'
                   }
                 />
               ),
@@ -158,8 +158,8 @@ export const FormContent = ({
                 <FormattedMessage
                   id={
                     erÅF
-                      ? 'Årskvantum.Aksjonspunkt.Avslått.Fortsett.Fosterbarn'
-                      : 'Årskvantum.Aksjonspunkt.Avslått.Fortsett'
+                      ? 'Årskvantum.Aksjonspunkt.Uavklart.Fortsett.Fosterbarn'
+                      : 'Årskvantum.Aksjonspunkt.Uavklart.Fortsett'
                   }
                 />
               ),
@@ -168,7 +168,7 @@ export const FormContent = ({
         />
       )}
       <TextAreaField
-        label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.Begrunnelse' }}
+        label={{ id: 'Årskvantum.Aksjonspunkt.Uavklart.Begrunnelse' }}
         name="begrunnelse"
         validate={[required, minLength(3), maxLength(1500), hasValidText]}
         maxLength={1500}
@@ -199,7 +199,7 @@ export const FormContent = ({
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell scope="col">
-                  <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.FosterbarnTittel" />
+                  <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.FosterbarnTittel" />
                 </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
@@ -222,7 +222,7 @@ export const FormContent = ({
       {isAksjonspunktOpen && (
         <div className={styles.spaceBetween}>
           <Button size="small" variant="primary" onClick={handleSubmit} type="submit">
-            <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Bekreft" />
+            <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.Bekreft" />
           </Button>
         </div>
       )}
