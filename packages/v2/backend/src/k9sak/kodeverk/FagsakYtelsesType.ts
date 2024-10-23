@@ -2,7 +2,7 @@ import {
   type fagsakYtelseType as generatedFagsakYtelseTypeEnumUnion,
   fagsakYtelseType as generatedFagsakYtelseType,
 } from '../generated';
-import type { Kodeverk } from '../../shared/Kodeverk.ts';
+import type { Kodeverk } from '../../shared/Kodeverk.js';
 
 export type FagsakYtelsesType = generatedFagsakYtelseTypeEnumUnion;
 
