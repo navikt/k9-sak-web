@@ -22,7 +22,7 @@ describe('<Omsorg>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
       formState: FormStateTilTest,
@@ -69,7 +69,7 @@ describe('<Omsorg>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
       formState: FormStateTilTest,
@@ -98,7 +98,7 @@ describe('<Omsorg>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
       formState: FormStateTilTest,
@@ -145,7 +145,7 @@ describe('<Omsorg>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
       formState: FormStateTilTest,
@@ -194,7 +194,7 @@ describe('<Omsorg>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
       formState: FormStateTilTest,
@@ -243,7 +243,7 @@ describe('<Omsorg>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
       formState: FormStateTilTest,
@@ -272,7 +272,7 @@ describe('<Omsorg>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
       formState: FormStateTilTest,
@@ -283,7 +283,7 @@ describe('<Omsorg>', () => {
     const hentetNavnPåAksjonspunkt = screen.getByText(props.informasjonOmVilkar.navnPåAksjonspunkt);
     expect(hentetNavnPåAksjonspunkt).toBeInTheDocument();
 
-    const hentetVilkar = screen.getByText(props.informasjonOmVilkar.vilkar);
+    const hentetVilkar = screen.getByText(props.informasjonOmVilkar.lovReferanse);
     expect(hentetVilkar).toBeInTheDocument();
 
     const hentetBegrunnelse = screen.getByText(props.informasjonOmVilkar.begrunnelse);
@@ -313,7 +313,7 @@ describe('<Omsorg>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: false,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
       formState: FormStateTilTest,
@@ -321,7 +321,7 @@ describe('<Omsorg>', () => {
 
     render(<Omsorg {...props} />);
 
-    const hentetVilkar = screen.getByText(props.informasjonOmVilkar.vilkar);
+    const hentetVilkar = screen.getByText(props.informasjonOmVilkar.lovReferanse);
     expect(hentetVilkar).toBeInTheDocument();
 
     const hentetBegrunnelse = screen.getByText(props.informasjonOmVilkar.begrunnelse);
@@ -348,7 +348,7 @@ describe('<Omsorg>', () => {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar',
+        lovReferanse: '§ 9-3 vilkar',
       },
       losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
       formState: FormStateTilTest,

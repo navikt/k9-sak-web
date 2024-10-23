@@ -11,6 +11,7 @@ import TextArea from '../react-hook-form-wrappers/TextArea';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styles from './omsorg.module.css';
+import { AssessedBy, LabelledContent } from '@navikt/ft-plattform-komponenter';
 
 type FormData = {
   harOmsorgen: string;
@@ -133,8 +134,15 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
 
         {opplysningerFraSoknaden}
         <hr />
-        <p className={styleLesemodus.label}>{tekst.begrunnelseLesemodus}</p>
-        <p className={styleLesemodus.fritekst}>{informasjonTilLesemodus.begrunnelse}</p>
+        <LabelledContent
+          label={tekst.begrunnelseLesemodus}
+          content={informasjonTilLesemodus.begrunnelse}
+          indentContent
+        />
+        <AssessedBy
+          ident={informasjonTilLesemodus.vilkarperiode?.vurdertAv}
+          date={informasjonTilLesemodus.vilkarperiode?.vurdertTidspunkt}
+        />
         <p className={styleLesemodus.label}>{tekst.sporsmalHarOmsorgen}</p>
         <p className={styleLesemodus.text}>{informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
       </div>
@@ -147,7 +155,8 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
         <VilkarStatus
           vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
           aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}
-          vilkarReferanse={informasjonOmVilkar.vilkar}
+          vilkarperiode={informasjonOmVilkar.vilkarperiode}
+          vilkarReferanse={informasjonOmVilkar.lovReferanse}
           begrunnelse={informasjonOmVilkar.begrunnelse}
           erVilkaretForOmsorgenFor
           beskrivelseForOmsorgenFor={tekst.beskrivelseTilVedtakVilkar}

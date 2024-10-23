@@ -1,3 +1,4 @@
+import { Vilkarperiode } from '@k9-sak-web/types';
 import { FormState } from './FormState';
 import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
 
@@ -28,6 +29,7 @@ export interface VilkarMidlertidigSoknadsopplysninger {
 export interface VilkarMidlertidigInformasjonTilLesemodus {
   begrunnelse: string;
   vilkarOppfylt: boolean;
+  vilkarperiode?: Vilkarperiode;
   dato: VilkarMidlertidigAleneDato;
   avslagsårsakKode?: string;
 }

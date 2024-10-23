@@ -8,6 +8,8 @@ export type Vilkarperiode = Readonly<{
   merknadParametere: { [name: string]: string };
   periode: { fom: string; tom: string };
   vilkarStatus: Kodeverk;
+  vurdertAv?: string;
+  vurdertTidspunkt?: string;
 }>;
 
 export default Vilkarperiode;
