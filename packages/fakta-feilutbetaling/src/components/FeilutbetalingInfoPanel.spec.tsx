@@ -10,6 +10,7 @@ import { utledKodeverkNavnFraKode } from '@k9-sak-web/lib/kodeverk/kodeverkUtils
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import alleKodeverkTilbakeV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkTilbakeV2.json';
 import { screen } from '@testing-library/react';
 import messages from '../../i18n/nb_NO.json';
 import { FeilutbetalingInfoPanelImpl } from './FeilutbetalingInfoPanel';
@@ -61,7 +62,7 @@ describe('<FeilutbetalingInfoPanel>', () => {
       .mockImplementation((kode, kodeverkType) => utledKodeverkNavnFraKode(kode, alleKodeverkV2[kodeverkType]));
     const kodeverkTilbakekNavnFraKode = vi
       .fn()
-      .mockImplementation((kode, kodeverkType) => utledKodeverkNavnFraKode(kode, alleKodeverkV2[kodeverkType]));
+      .mockImplementation((kode, kodeverkType) => utledKodeverkNavnFraKode(kode, alleKodeverkTilbakeV2[kodeverkType]));
 
     renderWithIntlAndReduxForm(
       <FeilutbetalingInfoPanelImpl
