@@ -2,20 +2,15 @@ import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjon
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-// import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import alleKodeverkTilbakeV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkTilbakeV2.json';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import FeilutbetalingFaktaIndex from './FeilutbetalingFaktaIndex';
-
-// const BEHANDLING_AARSAK_KODEVERK = 'BEHANDLING_AARSAK';
-// const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';
-// const BEHANDLING_RESULTAT_TYPE_KODEVERK = 'BEHANDLING_RESULTAT_TYPE';
-// const KONSEKVENS_FOR_YTELSEN_KODEVERK = 'KONSEKVENS_FOR_YTELSEN';
 
 const behandling = {
   id: 1,
@@ -71,42 +66,6 @@ const feilutbetalingAarsak = {
   ],
 };
 
-// const alleKodeverk = {
-//   [kodeverkTyper.BEHANDLING_AARSAK]: [
-//     {
-//       kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
-//       navn: 'Feil i lovanvendelse',
-//       kodeverk: BEHANDLING_AARSAK_KODEVERK,
-//     },
-//   ],
-//   [kodeverkTyper.TILBAKEKR_VIDERE_BEH]: [
-//     {
-//       kode: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
-//       navn: 'Tilbakekreving inntrekk',
-//       kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
-//     },
-//   ],
-//   [kodeverkTyper.BEHANDLING_RESULTAT_TYPE]: [
-//     {
-//       kode: behandlingResultatType.INNVILGET,
-//       navn: 'Innvilget',
-//       kodeverk: BEHANDLING_RESULTAT_TYPE_KODEVERK,
-//     },
-//   ],
-//   [kodeverkTyper.KONSEKVENS_FOR_YTELSEN]: [
-//     {
-//       kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
-//       navn: 'Foreldrepenger opphører',
-//       kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
-//     },
-//     {
-//       kode: konsekvensForYtelsen.ENDRING_I_BEREGNING,
-//       navn: 'Endring i beregning',
-//       kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
-//     },
-//   ],
-// };
-
 const merknaderFraBeslutter = {
   notAccepted: false,
 };
@@ -121,7 +80,7 @@ export const visAksjonspunktForFeilutbetaling = args => (
     behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
     kodeverk={alleKodeverkV2}
     klageKodeverk={alleKodeverkV2}
-    tilbakeKodeverk={alleKodeverkV2}
+    tilbakeKodeverk={alleKodeverkTilbakeV2}
   >
     <FeilutbetalingFaktaIndex
       behandling={behandling}
