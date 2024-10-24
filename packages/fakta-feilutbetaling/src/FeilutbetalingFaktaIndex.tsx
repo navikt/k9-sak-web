@@ -41,8 +41,6 @@ const FeilutbetalingFaktaIndex: FC<Props> = ({
   fagsakYtelseTypeKode,
   aksjonspunkter,
   alleMerknaderFraBeslutter,
-  alleKodeverk,
-  fpsakKodeverk,
   submitCallback,
   readOnly,
   hasOpenAksjonspunkter,
@@ -61,8 +59,6 @@ const FeilutbetalingFaktaIndex: FC<Props> = ({
         }
         aksjonspunkter={aksjonspunkter}
         alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-        alleKodeverk={alleKodeverk}
-        fpsakKodeverk={fpsakKodeverk}
         submitCallback={submitCallback}
         readOnly={readOnly}
         hasOpenAksjonspunkter={hasOpenAksjonspunkter}
