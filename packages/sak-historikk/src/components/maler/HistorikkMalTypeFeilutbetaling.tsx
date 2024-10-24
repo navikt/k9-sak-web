@@ -5,7 +5,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { HistorikkinnslagDel } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
-import { KodeverkNavnFraKodeFnType, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KodeverkNavnFraKodeFnType, KodeverkTilbakeType, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import HistorikkMal from '../HistorikkMalTsType';
@@ -33,17 +33,26 @@ const buildEndretFeltText = (
     felt => felt.endretFeltNavn === historikkEndretFeltTypeCodes.FAKTA_OM_FEILUTBETALING_UNDERAARSAK.kode,
   )[0];
   const underÅrsakFraVerdi = underÅrsakFelt
-    ? kodeverkNavnFraKodeFn(underÅrsakFelt.fraVerdi as string, underÅrsakFelt.klFraVerdi as KodeverkType)
+    ? kodeverkNavnFraKodeFn(
+        underÅrsakFelt.fraVerdi as string,
+        KodeverkTilbakeType[underÅrsakFelt.klFraVerdi] as KodeverkType,
+      )
     : null;
   const underÅrsakTilVerdi = underÅrsakFelt
-    ? kodeverkNavnFraKodeFn(underÅrsakFelt.tilVerdi as string, underÅrsakFelt.klTilVerdi as KodeverkType)
+    ? kodeverkNavnFraKodeFn(
+        underÅrsakFelt.tilVerdi as string,
+        KodeverkTilbakeType[underÅrsakFelt.klTilVerdi] as KodeverkType,
+      )
     : null;
   const endret = endredeFelter.filter(felt => felt.fraVerdi !== null).length > 0;
 
-  const tilVerdiNavn = kodeverkNavnFraKodeFn(årsakFelt.tilVerdi as string, årsakFelt.klTilVerdi as KodeverkType);
+  const tilVerdiNavn = kodeverkNavnFraKodeFn(
+    årsakFelt.tilVerdi as string,
+    KodeverkTilbakeType[årsakFelt.klTilVerdi] as KodeverkType,
+  );
   if (endret) {
     const årsakVerdi = årsakFelt.fraVerdi ? årsakFelt.fraVerdi : årsakFelt.tilVerdi;
-    const fraVerdi = `${kodeverkNavnFraKodeFn(årsakVerdi as string, årsakFelt.klFraVerdi as KodeverkType)} ${
+    const fraVerdi = `${kodeverkNavnFraKodeFn(årsakVerdi as string, KodeverkTilbakeType[årsakFelt.klFraVerdi] as KodeverkType)} ${
       underÅrsakFraVerdi ? `(${underÅrsakFraVerdi})` : ''
     }`;
     const tilVerdi = `${tilVerdiNavn} ${underÅrsakTilVerdi ? `(${underÅrsakTilVerdi})` : ''}`;
