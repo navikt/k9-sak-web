@@ -9,11 +9,11 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "workspace:^",
     "@k9-sak-web/types": "workspace:^",
-    "@navikt/ds-react": "7.2.1",
+    "@navikt/ds-react": "7.4.0",
     "date-fns": "4.1.0",
     "formik": "2.4.6",
     "react": "18.3.1",
-    "react-intl": "6.8.0",
+    "react-intl": "6.8.2",
     "yup": "1.4.0"
   }
 }
