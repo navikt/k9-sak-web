@@ -5,7 +5,8 @@ import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
 import { Location } from 'history';
-import React from 'react';
+import React, { ReactNode } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
@@ -35,7 +36,12 @@ const TotrinnskontrollSaksbehandlerPanel = ({
 }: OwnProps) => (
   <>
     <div className={styles.resultatFraGodkjenningTextContainer}>
-      <b>Løst aksjonspunkt:</b> Kontroller endrede opplysninger og faglige vurderinger
+      <FormattedMessage
+        id="ToTrinnsForm.LøstAksjonspunkt"
+        values={{
+          b: (chunks: any) => <b>{chunks}</b>,
+        }}
+      />
     </div>
     {totrinnskontrollSkjermlenkeContext.map(context => {
       const aksjonspunkter = context.totrinnskontrollAksjonspunkter;
@@ -64,7 +70,7 @@ const TotrinnskontrollSaksbehandlerPanel = ({
 
               return (
                 <div key={aksjonspunkt.aksjonspunktKode} className={styles.approvalItemContainer}>
-                  {aksjonspunktTexts.map((formattedMessage: string, index: number) => (
+                  {aksjonspunktTexts.map((formattedMessage: ReactNode, index: number) => (
                     <div
                       key={aksjonspunkt.aksjonspunktKode.concat('_'.concat(index.toString()))}
                       className={styles.aksjonspunktTextContainer}
@@ -78,7 +84,9 @@ const TotrinnskontrollSaksbehandlerPanel = ({
                         <span>
                           <Image src={checkImg} className={styles.image} />
                         </span>
-                        <span>Godkjent</span>
+                        <span>
+                          <FormattedMessage id="ToTrinnsForm.Godkjent" />
+                        </span>
                       </div>
                     ) : (
                       <div className={styles.approvalItem}>

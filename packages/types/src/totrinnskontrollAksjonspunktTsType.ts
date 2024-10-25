@@ -26,12 +26,12 @@ export type TotrinnsBeregningDto = Readonly<{
 
 export type TotrinnskontrollAksjonspunkt = Readonly<{
   aksjonspunktKode: string;
-  arbeidsforholdDtos?: TotrinnskontrollArbeidsforhold[];
-  beregningDtoer?: TotrinnsBeregningDto[];
-  besluttersBegrunnelse?: string;
   opptjeningAktiviteter?: OpptjeningAktiviteter[];
+  besluttersBegrunnelse?: string;
   totrinnskontrollGodkjent?: boolean;
   vurderPaNyttArsaker?: Kodeverk[];
+  arbeidsforholdDtos?: TotrinnskontrollArbeidsforhold[];
+  beregningDtoer?: TotrinnsBeregningDto[];
 }>;
 
 export default TotrinnskontrollAksjonspunkt;
