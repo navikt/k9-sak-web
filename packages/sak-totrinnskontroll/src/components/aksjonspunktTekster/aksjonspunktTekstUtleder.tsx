@@ -1,11 +1,13 @@
 import { Label } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   KlageVurdering,
   Kodeverk,
@@ -15,22 +17,47 @@ import {
   TotrinnskontrollArbeidsforhold,
 } from '@k9-sak-web/types';
 
-import hash from 'object-hash';
 import vurderFaktaOmBeregningTotrinnText from '../../VurderFaktaBeregningTotrinnText';
-import totrinnskontrollaksjonspunktTextCodes from '../../totrinnskontrollaksjonspunktTextCodes';
+import totrinnskontrollaksjonspunktTextCodes, {
+  totrinnsTilbakekrevingkontrollaksjonspunktTextCodes,
+} from '../../totrinnskontrollaksjonspunktTextCodes';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 
 const buildVarigEndringBeregningText = (beregningDto: TotrinnskontrollAksjonspunkt['beregningDtoer'][number]) =>
-  beregningDto?.fastsattVarigEndringNaering || beregningDto?.fastsattVarigEndring
-    ? `Det er fastsatt varig endret/nyoppstartet næring fom ${beregningDto.skjæringstidspunkt}.`
-    : `Det er fastsatt at det ikke er varig endring i næring fom ${beregningDto.skjæringstidspunkt}.`;
+  beregningDto?.fastsattVarigEndringNaering || beregningDto?.fastsattVarigEndring ? (
+    <FormattedMessage
+      id="ToTrinnsForm.Beregning.VarigEndring"
+      values={{
+        dato: beregningDto.skjæringstidspunkt,
+      }}
+    />
+  ) : (
+    <FormattedMessage
+      id="ToTrinnsForm.Beregning.IkkeVarigEndring"
+      values={{
+        dato: beregningDto.skjæringstidspunkt,
+      }}
+    />
+  );
 
 const buildVarigEndretArbeidssituasjonBeregningText = (
   beregningDto: TotrinnskontrollAksjonspunkt['beregningDtoer'][number],
 ) =>
-  beregningDto?.fastsattVarigEndring
-    ? `Det er fastsatt varig endret arbeidssituasjon fom ${beregningDto.skjæringstidspunkt}.`
-    : `Det er fastsatt at det ikke er varig endret arbeidssituasjon fom ${beregningDto.skjæringstidspunkt}.`;
+  beregningDto?.fastsattVarigEndring ? (
+    <FormattedMessage
+      id="ToTrinnsForm.Beregning.VarigEndretArbeidssituasjon"
+      values={{
+        dato: beregningDto.skjæringstidspunkt,
+      }}
+    />
+  ) : (
+    <FormattedMessage
+      id="ToTrinnsForm.Beregning.IkkeVarigEndretArbeidssituasjon"
+      values={{
+        dato: beregningDto.skjæringstidspunkt,
+      }}
+    />
+  );
 
 // Eksportert kun for test
 export const getFaktaOmArbeidsforholdMessages = (
@@ -40,18 +67,37 @@ export const getFaktaOmArbeidsforholdMessages = (
   const formattedMessages = [];
   const { kode } = arbeidforholdDto.arbeidsforholdHandlingType;
   if (arbeidforholdDto.brukPermisjon === true) {
-    formattedMessages.push(<b>Søker er i permisjon.</b>);
+    formattedMessages.push(
+      <FormattedMessage
+        id="ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIPermisjon"
+        values={{
+          b: (chunks: any) => <b>{chunks}</b>,
+        }}
+      />,
+    );
     return formattedMessages;
   }
   if (arbeidforholdDto.brukPermisjon === false) {
-    formattedMessages.push(<b> Søker er ikke i permisjon.</b>);
+    formattedMessages.push(
+      <FormattedMessage
+        id="ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIkkeIPermisjon"
+        values={{
+          b: (chunks: any) => <b>{chunks}</b>,
+        }}
+      />,
+    );
     if (kode === arbeidsforholdHandlingType.BRUK) {
       return formattedMessages;
     }
   }
   const type = arbeidsforholdHandlingTyper.find(t => t.kode === kode);
   const melding = type !== undefined && type !== null ? type.navn : '';
-  formattedMessages.push(<b> {melding}.</b>);
+  formattedMessages.push(
+    <FormattedMessage
+      id="ToTrinnsForm.FaktaOmArbeidsforhold.Melding"
+      values={{ melding, b: (chunks: any) => <b>{chunks}</b> }}
+    />,
+  );
   return formattedMessages;
 };
 
@@ -62,37 +108,55 @@ const buildArbeidsforholdText = (
   aksjonspunkt.arbeidsforholdDtos.map(arbeidforholdDto => {
     const formattedMessages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
     return (
-      <React.Fragment key={arbeidforholdDto.arbeidsforholdId}>
-        <b>{`Arbeidsforhold hos ${arbeidforholdDto.navn}(${arbeidforholdDto.organisasjonsnummer})${
-          arbeidforholdDto.arbeidsforholdId ? `...${arbeidforholdDto.arbeidsforholdId.slice(-4)}` : ''
-        }`}</b>
-        {` er satt til`}
+      <>
+        <FormattedMessage
+          id="ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold"
+          values={{
+            orgnavn: arbeidforholdDto.navn,
+            orgnummer: arbeidforholdDto.organisasjonsnummer,
+            arbeidsforholdId: arbeidforholdDto.arbeidsforholdId
+              ? `...${arbeidforholdDto.arbeidsforholdId.slice(-4)}`
+              : '',
+            b: (chunks: any) => <b>{chunks}</b>,
+          }}
+        />
         {formattedMessages.map(formattedMessage => (
           <React.Fragment key={formattedMessage.props.id}>{formattedMessage}</React.Fragment>
         ))}
-      </React.Fragment>
+      </>
     );
   });
 
 const buildOpptjeningText = (aksjonspunkt: TotrinnskontrollAksjonspunkt): ReactNode[] =>
-  aksjonspunkt.opptjeningAktiviteter.map(aktivitet => (
-    <OpptjeningTotrinnText key={hash(aktivitet)} aktivitet={aktivitet} />
-  ));
+  aksjonspunkt.opptjeningAktiviteter.map(aktivitet => <OpptjeningTotrinnText aktivitet={aktivitet} />);
 
 const getTextFromAksjonspunktkode = (aksjonspunkt: TotrinnskontrollAksjonspunkt): ReactNode => {
-  const aksjonspunktText = totrinnskontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktKode];
-  return aksjonspunktText ? aksjonspunktText : null;
+  const aksjonspunktTextId = totrinnskontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktKode];
+  return aksjonspunktTextId ? <FormattedMessage id={aksjonspunktTextId} /> : null;
+};
+
+const getTextFromTilbakekrevingAksjonspunktkode = (aksjonspunkt: TotrinnskontrollAksjonspunkt) => {
+  const aksjonspunktTextId = totrinnsTilbakekrevingkontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktKode];
+  return aksjonspunktTextId ? <FormattedMessage id={aksjonspunktTextId} /> : null;
 };
 
 const lagBgTilfelleTekst = (bg: TotrinnsBeregningDto): ReactNode => {
-  const aksjonspunktTexts = bg.faktaOmBeregningTilfeller.map(({ kode }) => vurderFaktaOmBeregningTotrinnText[kode]);
+  const aksjonspunktTextIds = bg.faktaOmBeregningTilfeller.map(({ kode }) => vurderFaktaOmBeregningTotrinnText[kode]);
   return (
-    <React.Fragment key={hash(aksjonspunktTexts)}>
+    <>
       <Label size="small" as="p">
-        {`Vurderinger av beregningsgrunnlag med skjæringstidspunkt ${bg.skjæringstidspunkt}.`}
+        <FormattedMessage
+          id="ToTrinnsForm.Beregning.Tittel"
+          values={{
+            dato: bg.skjæringstidspunkt,
+          }}
+        />
       </Label>
-      <div className="mt-2">{aksjonspunktTexts.map(aksjonspunktTextId => aksjonspunktTextId ?? '')}</div>
-    </React.Fragment>
+      <VerticalSpacer eightPx />
+      {aksjonspunktTextIds.map(aksjonspunktTextId =>
+        aksjonspunktTextId ? <FormattedMessage id={aksjonspunktTextId} /> : null,
+      )}
+    </>
   );
 };
 
@@ -104,42 +168,42 @@ const getFaktaOmBeregningTextFlereGrunnlag = (beregningDtoer: TotrinnsBeregningD
 };
 
 const omgjoerTekstMap = {
-  DELVIS_MEDHOLD_I_KLAGE: 'Delvis omgjøring, til gunst',
-  GUNST_MEDHOLD_I_KLAGE: 'Omgjort til gunst',
-  UGUNST_MEDHOLD_I_KLAGE: 'Omgjort til ugunst',
+  DELVIS_MEDHOLD_I_KLAGE: 'ToTrinnsForm.Klage.DelvisOmgjortTilGunst',
+  GUNST_MEDHOLD_I_KLAGE: 'ToTrinnsForm.Klage.OmgjortTilGunst',
+  UGUNST_MEDHOLD_I_KLAGE: 'ToTrinnsForm.Klage.OmgjortTilUgunst',
 };
 
 const getTextForKlageHelper = (
   klageVurderingResultat: KlageVurdering['klageVurderingResultatNK'] | KlageVurdering['klageVurderingResultatNFP'],
 ) => {
-  let aksjonspunktText = '';
+  let aksjonspunktTextId = '';
   switch (klageVurderingResultat.klageVurdering) {
     case klageVurderingCodes.STADFESTE_YTELSESVEDTAK:
-      aksjonspunktText = 'Stadfest ytelsesvedtak';
+      aksjonspunktTextId = 'ToTrinnsForm.Klage.StadfesteYtelsesVedtak';
       break;
     case klageVurderingCodes.OPPHEVE_YTELSESVEDTAK:
-      aksjonspunktText = 'Opphev ytelsesvedtak';
+      aksjonspunktTextId = 'ToTrinnsForm.Klage.OppheveYtelsesVedtak';
       break;
     case klageVurderingCodes.AVVIS_KLAGE:
-      aksjonspunktText = 'Klagen avvist fordi den ikke oppfyller formkravene';
+      aksjonspunktTextId = 'ToTrinnsForm.Klage.Avvist';
       break;
     case klageVurderingCodes.HJEMSENDE_UTEN_Å_OPPHEVE:
-      aksjonspunktText = 'Hjemsend uten å oppheve';
+      aksjonspunktTextId = 'ToTrinnsForm.Klage.HjemsendUtenOpphev';
       break;
     case klageVurderingCodes.MEDHOLD_I_KLAGE:
       if (
         klageVurderingResultat.klageVurderingOmgjoer &&
         klageVurderingResultat.klageVurderingOmgjoer !== klageVurderingOmgjoerCodes.UDEFINERT
       ) {
-        aksjonspunktText = omgjoerTekstMap[klageVurderingResultat.klageVurderingOmgjoer];
+        aksjonspunktTextId = omgjoerTekstMap[klageVurderingResultat.klageVurderingOmgjoer];
         break;
       }
-      aksjonspunktText = 'Vedtaket er omgjort';
+      aksjonspunktTextId = 'VedtakForm.ResultatKlageMedhold';
       break;
     default:
       break;
   }
-  return aksjonspunktText;
+  return <FormattedMessage id={aksjonspunktTextId} />;
 };
 
 const getTextForKlage = (klagebehandlingVurdering: KlageVurdering, behandlingStaus: Kodeverk) => {
@@ -189,7 +253,9 @@ const getAksjonspunkttekst = (
   if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD) {
     return buildArbeidsforholdText(aksjonspunkt, arbeidsforholdHandlingTyper);
   }
-
+  if (erTilbakekreving) {
+    return [getTextFromTilbakekrevingAksjonspunktkode(aksjonspunkt)];
+  }
   return [getTextFromAksjonspunktkode(aksjonspunkt)];
 };
 

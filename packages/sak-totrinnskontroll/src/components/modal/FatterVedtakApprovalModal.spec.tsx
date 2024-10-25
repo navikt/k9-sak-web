@@ -3,6 +3,8 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
+import React from 'react';
+import messages from '../../../i18n/nb_NO.json';
 import FatterVedtakApprovalModal from './FatterVedtakApprovalModal';
 
 describe('<FatterVedtakApprovalModal>', () => {
@@ -20,6 +22,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         }}
         erKlageWithKA
       />,
+      { messages },
     );
 
     expect(screen.getByText('Klagen returneres til saksbehandler for iverksettelse.')).toBeInTheDocument();
@@ -39,6 +42,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         }}
         erKlageWithKA
       />,
+      { messages },
     );
 
     expect(screen.getByText('Omsorgspenger er innvilget og vedtaket blir iverksatt')).toBeInTheDocument();
@@ -60,6 +64,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         }}
         erKlageWithKA
       />,
+      { messages },
     );
 
     expect(screen.getByText('Ekstra omsorgsdager er innvilget og vedtaket blir iverksatt')).toBeInTheDocument();
