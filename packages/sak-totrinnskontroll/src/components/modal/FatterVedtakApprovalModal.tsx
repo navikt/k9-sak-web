@@ -7,6 +7,8 @@ import { Image } from '@fpsak-frontend/shared-components';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import { Behandling, Kodeverk } from '@k9-sak-web/types';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
+import React from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './fatterVedtakApprovalModal.module.css';
 
 const getInfoTextCode = (
@@ -19,69 +21,69 @@ const getInfoTextCode = (
 ) => {
   // HVIS TILBAKEKREVING
   if (behandlingtypeKode === BehandlingType.TILBAKEKREVING) {
-    return 'Tilbakekreving er vedtatt og iverksatt';
+    return 'FatterVedtakApprovalModal.Tilbakekreving';
   }
   if (behandlingtypeKode === BehandlingType.TILBAKEKREVING_REVURDERING) {
-    return 'Tilbakekreving revurdering er vedtatt og iverksatt';
+    return 'FatterVedtakApprovalModal.TilbakekrevingRevurdering';
   }
   // HVIS KLAGE
   if (behandlingtypeKode === BehandlingType.KLAGE) {
     if (erKlageWithKA) {
-      return 'Klagen returneres til saksbehandler for iverksettelse.';
+      return 'FatterVedtakApprovalModal.ModalDescriptionKlageKA';
     }
-    return 'Resultatet av klagebehandlingen blir iverksatt.';
+    return 'FatterVedtakApprovalModal.ModalDescriptionKlage';
   }
   // HVIS INGEN ENDRING
   if (harSammeResultatSomOriginalBehandling) {
-    return 'Resultat: Ingen endring, behandlingen avsluttes';
+    return 'FatterVedtakApprovalModal.UendretUtfall';
   }
   // HVIS AVSLÅTT
   if (behandlingsresultat?.type.kode === behandlingResultatType.AVSLATT) {
     if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
-      return 'Pleiepenger er avslått';
+      return 'FatterVedtakApprovalModal.IkkeInnvilgetPleiepenger';
     }
     if (ytelseType.kode === FagsakYtelseType.FRISINN) {
-      return 'FRISINN er avslått';
+      return 'FatterVedtakApprovalModal.IkkeInnvilgetFRISINN';
     }
     if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
-      return 'Ekstra omsorgsdager er avslått';
+      return 'FatterVedtakApprovalModal.IkkeInnvilgetUtvidetRett';
     }
     if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
-      return 'Pleiepenger i livets sluttfase er avslått';
+      return 'FatterVedtakApprovalModal.IkkeInnvilgetLivetsSluttfase';
     }
-    return 'Omsorgspenger er avslått';
+    return 'FatterVedtakApprovalModal.IkkeInnvilgetOmsorgspenger';
   }
   // HVIS OPPHØRT
   if (isOpphor) {
     if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
-      return 'Pleiepenger er opphørt.';
+      return 'FatterVedtakApprovalModal.OpphortPleiepenger';
     }
     if (ytelseType.kode === FagsakYtelseType.FRISINN) {
-      return 'FRISINN er opphørt.';
+      return 'FatterVedtakApprovalModal.OpphortFRISINN';
     }
     if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
-      return 'Ekstra omsorgsdager er opphørt.';
+      return 'FatterVedtakApprovalModal.OpphortUtvidetRett';
     }
     if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
-      return 'Pleiepenger i livet sluttfase er opphørt.';
+      return 'FatterVedtakApprovalModal.OpphortLivetsSluttfase';
     }
-    return 'Omsorgspenger er opphørt.';
+    return 'FatterVedtakApprovalModal.OpphortOmsorgpenger';
   }
 
   // HVIS INNVILGET
   if (ytelseType.kode === FagsakYtelseType.FRISINN) {
-    return 'Engangsstønad er innvilget og vedtaket blir iverksatt';
+    return 'FatterVedtakApprovalModal.InnvilgetFRISINN';
   }
   if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
-    return 'Pleiepenger er innvilget og vedtaket blir iverksatt';
+    return 'FatterVedtakApprovalModal.InnvilgetPleiepenger';
   }
   if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
-    return 'Ekstra omsorgsdager er innvilget og vedtaket blir iverksatt';
+    return 'FatterVedtakApprovalModal.InnvilgetUtvidetRett';
   }
   if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
-    return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt';
+    return 'FatterVedtakApprovalModal.InnvilgetLivetsSluttfase';
   }
-  return 'Omsorgspenger er innvilget og vedtaket blir iverksatt';
+  return 'FatterVedtakApprovalModal.InnvilgetOmsorgspenger';
 };
 
 const getModalDescriptionTextCode = (
@@ -92,26 +94,26 @@ const getModalDescriptionTextCode = (
 ) => {
   if (behandlingTypeKode === BehandlingType.KLAGE) {
     if (erKlageWithKA) {
-      return 'Klagen returneres til saksbehandler for iverksettelse.';
+      return 'FatterVedtakApprovalModal.ModalDescriptionKlageKA';
     }
-    return 'Resultatet av klagebehandlingen blir iverksatt.';
+    return 'FatterVedtakApprovalModal.ModalDescriptionKlage';
   }
   if (isOpphor) {
-    return 'Pleiepenger er opphørt. Du kommer nå til forsiden.';
+    return 'FatterVedtakApprovalModal.ModalDescriptionOpphort';
   }
   if (ytelseType.kode === FagsakYtelseType.FRISINN) {
-    return 'FRISINN er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
+    return 'FatterVedtakApprovalModal.ModalDescriptionFRISINNApproval';
   }
   if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
-    return 'Pleiepenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
+    return 'FatterVedtakApprovalModal.ModalDescriptionPleiePengerApproval';
   }
   if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
-    return 'Ekstra omsorgsdager er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
+    return 'FatterVedtakApprovalModal.ModalDescriptionUtvidetRettApproval';
   }
   if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
-    return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
+    return 'FatterVedtakApprovalModal.ModalDescriptionLivetsSluttfase';
   }
-  return 'Omsorgspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
+  return 'FatterVedtakApprovalModal.ModalDescriptionOMSApproval';
 };
 
 const isStatusFatterVedtak = (behandlingStatusKode: string) => behandlingStatusKode === behandlingStatus.FATTER_VEDTAK;
@@ -138,19 +140,19 @@ const utledInfoTextCode = (
         )
       : '';
   }
-  return 'Vedtak returneres til saksbehandler for ny vurdering.';
+  return 'FatterVedtakApprovalModal.VedtakReturneresTilSaksbehandler';
 };
 
 const getAltImgTextCode = (ytelseType: Kodeverk) => {
   switch (ytelseType.kode) {
     case FagsakYtelseType.FRISINN:
-      return 'Engangsstønad er innvilget og vedtaket blir iverksatt';
+      return 'FatterVedtakApprovalModal.InnvilgetFRISINN';
     case FagsakYtelseType.PLEIEPENGER:
-      return 'Pleiepenger er innvilget og vedtaket blir iverksatt';
+      return 'FatterVedtakApprovalModal.InnvilgetPleiepenger';
     case FagsakYtelseType.PLEIEPENGER_SLUTTFASE:
-      return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt';
+      return 'FatterVedtakApprovalModal.InnvilgetLivetsSluttfase';
     default:
-      return 'Omsorgspenger er innvilget og vedtaket blir iverksatt';
+      return 'FatterVedtakApprovalModal.InnvilgetOmsorgspenger';
   }
 };
 
@@ -166,7 +168,7 @@ const utledModalDescriptionTextCode = (
 ) =>
   isStatusFatterVedtak(behandlingStatusKode)
     ? getModalDescriptionTextCode(isBehandlingsresultatOpphor, fagsakYtelseType, erKlageWithKA, behandlingTypeKode)
-    : 'Forslag til vedtak er sendt til beslutter. Du kommer nå til forsiden.';
+    : 'FatterVedtakApprovalModal.ModalDescription';
 
 interface OwnProps {
   closeEvent: () => void;
@@ -186,6 +188,7 @@ interface OwnProps {
  * med totrinnskontroll. Ved å trykke på knapp blir beslutter tatt tilbake til sokesiden.
  */
 const FatterVedtakApprovalModal = ({
+  intl,
   closeEvent,
   allAksjonspunktApproved,
   behandlingStatusKode,
@@ -194,7 +197,7 @@ const FatterVedtakApprovalModal = ({
   harSammeResultatSomOriginalBehandling,
   fagsakYtelseType,
   erKlageWithKA,
-}: OwnProps) => {
+}: OwnProps & WrappedComponentProps) => {
   const isBehandlingsresultatOpphor =
     behandlingsresultat && behandlingsresultat.type.kode === behandlingResultatType.OPPHOR;
   const infoTextCode = utledInfoTextCode(
@@ -208,9 +211,9 @@ const FatterVedtakApprovalModal = ({
     isBehandlingsresultatOpphor,
   );
 
-  const altImgText = utledAltImgTextCode(behandlingStatusKode, fagsakYtelseType);
+  const altImgTextCode = utledAltImgTextCode(behandlingStatusKode, fagsakYtelseType);
 
-  const modalDescriptionText = utledModalDescriptionTextCode(
+  const modalDescriptionTextCode = utledModalDescriptionTextCode(
     behandlingStatusKode,
     fagsakYtelseType,
     erKlageWithKA,
@@ -219,20 +222,33 @@ const FatterVedtakApprovalModal = ({
   );
 
   return (
-    <Modal className={styles.modal} open aria-label={modalDescriptionText} onClose={closeEvent}>
+    <Modal
+      className={styles.modal}
+      open
+      aria-label={intl.formatMessage({ id: modalDescriptionTextCode })}
+      onClose={closeEvent}
+    >
       <Modal.Body>
         <HGrid gap="1" columns={{ xs: '1fr 10fr 1fr' }}>
           <div className="relative">
-            <Image className={styles.image} alt={altImgText ?? ''} src={innvilgetImageUrl} />
+            <Image
+              className={styles.image}
+              alt={altImgTextCode ? intl.formatMessage({ id: altImgTextCode }) : ''}
+              src={innvilgetImageUrl}
+            />
             <div className={styles.divider} />
           </div>
           <div>
-            <BodyShort size="small">{infoTextCode}</BodyShort>
-            <BodyShort size="small">Du kommer nå til forsiden.</BodyShort>
+            <BodyShort size="small">
+              <FormattedMessage id={infoTextCode} />
+            </BodyShort>
+            <BodyShort size="small">
+              <FormattedMessage id="FatterVedtakApprovalModal.GoToSearchPage" />
+            </BodyShort>
           </div>
           <div>
             <Button variant="primary" size="small" className={styles.button} onClick={closeEvent} autoFocus>
-              OK
+              <FormattedMessage id="FatterVedtakApprovalModal.Ok" />
             </Button>
           </div>
         </HGrid>
@@ -241,4 +257,4 @@ const FatterVedtakApprovalModal = ({
   );
 };
 
-export default FatterVedtakApprovalModal;
+export default injectIntl(FatterVedtakApprovalModal);

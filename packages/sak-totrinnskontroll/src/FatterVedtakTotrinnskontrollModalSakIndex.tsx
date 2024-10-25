@@ -1,13 +1,16 @@
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { BehandlingAppKontekst, Kodeverk } from '@k9-sak-web/types';
 import FatterVedtakApprovalModal from './components/modal/FatterVedtakApprovalModal';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
 const intl = createIntl(
   {
     locale: 'nb-NO',
+    messages,
   },
   cache,
 );
