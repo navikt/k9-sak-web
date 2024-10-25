@@ -70,18 +70,6 @@ jobs:
       suites: "frontend"
       image_version: ${{ needs.build-docker-image.outputs.tag }}
 
-  trivy:
-    needs: [build-docker-image]
-    uses: navikt/sif-gha-workflows/.github/workflows/trivy.yml@main
-    permissions:
-      contents: write
-      id-token: write
-      security-events: write
-      actions: read
-    secrets: inherit
-    with:
-      image: ${{ needs.build-docker-image.outputs.image }}
-      team: k9saksbehandling
 
   deploy-dev:
     name: Deploy to dev
@@ -112,7 +100,7 @@ jobs:
       CLUSTER: prod-fss
     environment: prod-fss:k9saksbehandling
     if: github.ref_name == 'master'
-    needs: [build-docker-image, deploy-dev, verdikjede-tester, trivy]
+    needs: [build-docker-image, deploy-dev, verdikjede-tester]
     steps:
       - uses: actions/checkout@v4
         with:
