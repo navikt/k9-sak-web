@@ -4,8 +4,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { Button, Label, Table } from '@navikt/ds-react';
-import React, {useEffect, useState} from 'react';
+import { Button, Label } from '@navikt/ds-react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { ConfigProps, FieldArray, InjectedFormProps, SubmitHandler, formValueSelector } from 'redux-form';
@@ -224,7 +224,7 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
   ): Partial<ConfigProps<FormValues>> & AksjonspunktFormImplProps => {
     const selector = formValueSelector(formNavn);
     const { valg: valgValue, fosterbarn: formFosterbarn } = selector(state, 'valg', 'fosterbarn');
-    const harEndretFosterbarn = formFosterbarn.length !== initialProps.fosterbarn.length || (
+    const harEndretFosterbarn = formFosterbarn?.length !== initialProps.fosterbarn.length || (
       // Kopier, sorter og konverter til streng for sammenligning
       formFosterbarn.slice().sort().join('') !== initialProps.fosterbarn.map(barn => barn.fnr).slice().sort().join('')
     )
