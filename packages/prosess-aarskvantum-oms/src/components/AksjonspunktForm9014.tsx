@@ -19,7 +19,7 @@ interface AksjonspunktFormImplProps {
   aktiviteter: Aktivitet[];
   isAksjonspunktOpen: boolean;
   fosterbarn: fosterbarnDto[];
-  harLagtTilEllerFjernetFosterbarn: boolean;
+  harEndretFosterbarn: boolean;
   aksjonspunktKode: string;
   valgValue: string;
 }
@@ -29,7 +29,7 @@ interface FormContentProps {
   aktiviteter: Aktivitet[];
   isAksjonspunktOpen: boolean;
   fosterbarn: fosterbarnDto[];
-  harLagtTilEllerFjernetFosterbarn: boolean;
+  harEndretFosterbarn: boolean;
   aksjonspunktKode: string;
   valgValue: string;
   initialValues: { begrunnelse: string; fosterbarn: fosterbarnDto[] } | any;
@@ -54,7 +54,7 @@ export const FormContent = ({
   handleSubmit,
   isAksjonspunktOpen,
   fosterbarn,
-  harLagtTilEllerFjernetFosterbarn,
+  harEndretFosterbarn,
   aksjonspunktKode,
   valgValue
 }: FormContentProps) => {
@@ -90,7 +90,7 @@ export const FormContent = ({
             },
             {
               value: valgValues.fortsett,
-              disabled: harLagtTilEllerFjernetFosterbarn,
+              disabled: harEndretFosterbarn,
               label: (
                 <FormattedMessage
                   id="Årskvantum.Aksjonspunkt.Uavklart.Fortsett"
@@ -141,7 +141,7 @@ const AksjonspunktFormImpl = ({
   handleSubmit,
   isAksjonspunktOpen,
   fosterbarn,
-  harLagtTilEllerFjernetFosterbarn,
+  harEndretFosterbarn,
   aksjonspunktKode,
   valgValue,
   initialValues,
@@ -155,7 +155,7 @@ const AksjonspunktFormImpl = ({
         aktiviteter={aktiviteter}
         isAksjonspunktOpen={isAksjonspunktOpen}
         fosterbarn={fosterbarn}
-        harLagtTilEllerFjernetFosterbarn={harLagtTilEllerFjernetFosterbarn}
+        harEndretFosterbarn={harEndretFosterbarn}
         aksjonspunktKode={aksjonspunktKode}
         valgValue={valgValue}
         initialValues={initialValues}
@@ -223,8 +223,10 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
     { aktiviteter, isAksjonspunktOpen, aksjonspunkterForSteg = [], fosterbarn }: AksjonspunktFormProps,
   ): Partial<ConfigProps<FormValues>> & AksjonspunktFormImplProps => {
     const selector = formValueSelector(formNavn);
-    const { valg: valgValue } = selector(state, 'valg', 'fosterbarn');
-    const harLagtTilEllerFjernetFosterbarn = selector(state, 'fosterbarn')?.length !== initialProps.fosterbarn.length
+    const { valg: valgValue, fosterbarn: formFosterbarn } = selector(state, 'valg', 'fosterbarn');
+    const harEndretFosterbarn = formFosterbarn.length !== initialProps.fosterbarn.length || (
+      formFosterbarn.sort().join('') !== initialProps.fosterbarn.map(barn => barn.fnr).sort().join('')
+    )
 
     return {
       onSubmit,
@@ -235,7 +237,7 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
         fosterbarn: fosterbarn.map(barn => barn.fnr),
       },
       fosterbarn,
-      harLagtTilEllerFjernetFosterbarn,
+      harEndretFosterbarn,
       aksjonspunktKode,
       valgValue,
     };
