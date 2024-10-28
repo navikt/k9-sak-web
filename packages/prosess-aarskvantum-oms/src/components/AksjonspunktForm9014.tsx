@@ -225,7 +225,8 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
     const selector = formValueSelector(formNavn);
     const { valg: valgValue, fosterbarn: formFosterbarn } = selector(state, 'valg', 'fosterbarn');
     const harEndretFosterbarn = formFosterbarn.length !== initialProps.fosterbarn.length || (
-      formFosterbarn.sort().join('') !== initialProps.fosterbarn.map(barn => barn.fnr).sort().join('')
+      // Kopier, sorter og konverter til streng for sammenligning
+      formFosterbarn.slice().sort().join('') !== initialProps.fosterbarn.map(barn => barn.fnr).slice().sort().join('')
     )
 
     return {
