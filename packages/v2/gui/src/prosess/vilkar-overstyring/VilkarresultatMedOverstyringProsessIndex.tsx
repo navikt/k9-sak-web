@@ -10,22 +10,12 @@ import type { FeatureToggles } from '@k9-sak-web/lib/kodeverk/types/FeatureToggl
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import { useEffect, useState, type SetStateAction } from 'react';
-import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringFormPeriodisert';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
 import VilkarresultatMedOverstyringHeader from './components/VilkarresultatMedOverstyringHeader';
 import styles from './vilkarresultatMedOverstyringProsessIndex.module.css';
 
 const cx = classNames.bind(styles);
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-  },
-  cache,
-);
 
 const hentAktivePerioderFraVilkar = (vilkar: VilkårMedPerioderDto[], visAllePerioder: boolean): VilkårPeriodeDto[] => {
   const [activeVilkår] = vilkar;
@@ -114,70 +104,68 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   }
 
   return (
-    <RawIntlProvider value={intl}>
-      <div className={cx('mainContainer--withSideMenu')}>
-        <div className={styles.sideMenuContainer}>
-          <SideMenu
-            links={perioder.map((periode, index) => ({
-              active: activeTab === index,
-              label: `${periode.periode.fom && formatDate(periode.periode.fom)} - ${periode.periode.tom && formatDate(periode.periode.tom)}`,
-            }))}
-            onClick={setActiveTab}
-            theme="arrow"
-            heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
-          />
-        </div>
-        <div className={styles.contentContainer}>
-          <VilkarresultatMedOverstyringHeader
-            aksjonspunkter={aksjonspunkter}
-            erOverstyrt={erOverstyrt}
-            kanOverstyreAccess={kanOverstyreAccess}
-            lovReferanse={activeVilkår?.lovReferanse ?? lovReferanse}
-            overrideReadOnly={overrideReadOnly}
-            overstyringApKode={overstyringApKode}
-            panelTittel={panelTittel}
-            periode={activePeriode}
-            toggleOverstyring={toggleOverstyring}
-          />
-          {featureToggles?.['OMSORGEN_FOR_PERIODISERT'] && (
-            <VilkarresultatMedOverstyringFormPeriodisert
-              key={`${activePeriode?.periode?.fom}-${activePeriode?.periode?.tom}`}
-              behandlingType={behandling.type}
-              medlemskapFom={medlemskap?.fom}
-              aksjonspunkter={aksjonspunkter}
-              submitCallback={submitCallback}
-              overrideReadOnly={overrideReadOnly}
-              toggleOverstyring={toggleOverstyring}
-              status={activePeriode?.vilkarStatus ?? ''}
-              erOverstyrt={erOverstyrt}
-              overstyringApKode={overstyringApKode}
-              erMedlemskapsPanel={erMedlemskapsPanel}
-              visPeriodisering={visPeriodisering}
-              avslagKode={activePeriode?.avslagKode ?? ''}
-              periode={activePeriode}
-            />
-          )}
-
-          {!featureToggles?.['OMSORGEN_FOR_PERIODISERT'] && (
-            <VilkarresultatMedOverstyringForm
-              key={`${activePeriode?.periode?.fom}-${activePeriode?.periode?.tom}`}
-              behandlingType={behandling.type}
-              medlemskapFom={medlemskap?.fom}
-              aksjonspunkter={aksjonspunkter}
-              submitCallback={submitCallback}
-              overrideReadOnly={overrideReadOnly}
-              toggleOverstyring={toggleOverstyring}
-              status={activePeriode.vilkarStatus}
-              erOverstyrt={erOverstyrt}
-              overstyringApKode={overstyringApKode}
-              erMedlemskapsPanel={erMedlemskapsPanel}
-              avslagKode={activePeriode.avslagKode ?? ''}
-              periode={activePeriode}
-            />
-          )}
-        </div>
+    <div className={cx('mainContainer--withSideMenu')}>
+      <div className={styles.sideMenuContainer}>
+        <SideMenu
+          links={perioder.map((periode, index) => ({
+            active: activeTab === index,
+            label: `${periode.periode.fom && formatDate(periode.periode.fom)} - ${periode.periode.tom && formatDate(periode.periode.tom)}`,
+          }))}
+          onClick={setActiveTab}
+          theme="arrow"
+          heading="Perioder"
+        />
       </div>
-    </RawIntlProvider>
+      <div className={styles.contentContainer}>
+        <VilkarresultatMedOverstyringHeader
+          aksjonspunkter={aksjonspunkter}
+          erOverstyrt={erOverstyrt}
+          kanOverstyreAccess={kanOverstyreAccess}
+          lovReferanse={activeVilkår?.lovReferanse ?? lovReferanse}
+          overrideReadOnly={overrideReadOnly}
+          overstyringApKode={overstyringApKode}
+          panelTittel={panelTittel}
+          periode={activePeriode}
+          toggleOverstyring={toggleOverstyring}
+        />
+        {featureToggles?.['OMSORGEN_FOR_PERIODISERT'] && (
+          <VilkarresultatMedOverstyringFormPeriodisert
+            key={`${activePeriode?.periode?.fom}-${activePeriode?.periode?.tom}`}
+            behandlingType={behandling.type}
+            medlemskapFom={medlemskap?.fom}
+            aksjonspunkter={aksjonspunkter}
+            submitCallback={submitCallback}
+            overrideReadOnly={overrideReadOnly}
+            toggleOverstyring={toggleOverstyring}
+            status={activePeriode?.vilkarStatus ?? ''}
+            erOverstyrt={erOverstyrt}
+            overstyringApKode={overstyringApKode}
+            erMedlemskapsPanel={erMedlemskapsPanel}
+            visPeriodisering={visPeriodisering}
+            avslagKode={activePeriode?.avslagKode ?? ''}
+            periode={activePeriode}
+          />
+        )}
+
+        {!featureToggles?.['OMSORGEN_FOR_PERIODISERT'] && (
+          <VilkarresultatMedOverstyringForm
+            key={`${activePeriode?.periode?.fom}-${activePeriode?.periode?.tom}`}
+            behandlingType={behandling.type}
+            medlemskapFom={medlemskap?.fom}
+            aksjonspunkter={aksjonspunkter}
+            submitCallback={submitCallback}
+            overrideReadOnly={overrideReadOnly}
+            toggleOverstyring={toggleOverstyring}
+            status={activePeriode.vilkarStatus}
+            erOverstyrt={erOverstyrt}
+            overstyringApKode={overstyringApKode}
+            erMedlemskapsPanel={erMedlemskapsPanel}
+            avslagKode={activePeriode.avslagKode ?? ''}
+            periode={activePeriode}
+          />
+        )}
+      </div>
+    </div>
   );
 };
 
