@@ -16,6 +16,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/behandling-utvidet-rett": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
+    "@k9-sak-web/lib": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "classnames": "2.5.1",
     "css-tree": "3.0.0",

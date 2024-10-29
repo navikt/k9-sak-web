@@ -44,7 +44,7 @@ const AvregningProsessIndex = ({
       submitCallback={submitCallback}
       readOnly={isReadOnly}
       readOnlySubmitButton={readOnlySubmitButton}
-      apCodes={aksjonspunkter.map(a => a.definisjon.kode)}
+      apCodes={aksjonspunkter.map(a => a.definisjon)}
       isApOpen={isAksjonspunktOpen}
       previewCallback={previewFptilbakeCallback}
       featureToggles={featureToggles}

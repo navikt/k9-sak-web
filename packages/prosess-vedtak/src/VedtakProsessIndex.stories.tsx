@@ -9,7 +9,6 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -17,35 +16,23 @@ import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import VedtakProsessIndex from './VedtakProsessIndex';
 
-const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';
-
 const behandling = {
   id: 1,
   versjon: 1,
-  type: {
-    kode: behandlingType.FORSTEGANGSSOKNAD,
-  },
-  status: {
-    kode: behandlingStatus.BEHANDLING_UTREDES,
-  },
-  sprakkode: {
-    kode: 'NO',
-  },
+  type: behandlingType.FORSTEGANGSSOKNAD,
+  status: behandlingStatus.BEHANDLING_UTREDES,
+  sprakkode: 'NO',
   behandlingsresultat: {
     vedtaksbrev: {
       kode: 'FRITEKST',
     },
-    type: {
-      kode: behandlingResultatType.INNVILGET,
-    },
+    type: behandlingResultatType.INNVILGET,
   },
   behandlingPaaVent: false,
   behandlingHenlagt: false,
   behandlingArsaker: [
     {
-      behandlingArsakType: {
-        kode: klageBehandlingArsakType.ETTER_KLAGE,
-      },
+      behandlingArsakType: klageBehandlingArsakType.ETTER_KLAGE,
     },
   ],
 };
@@ -53,13 +40,8 @@ const behandling = {
 const vilkar = [
   {
     lovReferanse: '§§Dette er en lovreferanse',
-    vilkarType: {
-      kode: vilkarType.OMSORGENFORVILKARET,
-      kodeverk: kodeverkTyper.VILKAR_TYPE,
-    },
-    vilkarStatus: {
-      kode: vilkarUtfallType.OPPFYLT,
-    },
+    vilkarType: vilkarType.OMSORGENFORVILKARET,
+    vilkarStatus: vilkarUtfallType.OPPFYLT,
   },
 ];
 
@@ -87,7 +69,7 @@ export const visÅpentAksjonspunktOgInnvilgetForForeldrepenger = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+        ytelseType={fagsakYtelseType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -116,9 +98,7 @@ export const visDelvisInnvilgetForOmsorgspenger = args => {
             vedtaksbrev: {
               kode: 'FRITEKST',
             },
-            type: {
-              kode: behandlingResultatType.DELVIS_INNVILGET,
-            },
+            type: behandlingResultatType.DELVIS_INNVILGET,
           },
         }}
         vilkar={vilkar}
@@ -155,28 +135,21 @@ export const visAvslagForForeldrepenger = args => {
             vedtaksbrev: {
               kode: 'FRITEKST',
             },
-            type: {
-              kode: behandlingResultatType.AVSLATT,
-            },
-            avslagsarsak: {
-              kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-              kodeverk: kodeverkTyper.AVSLAGSARSAK,
-            },
+            type: behandlingResultatType.AVSLATT,
+            avslagsarsak: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
           },
         }}
         vilkar={[
           {
             ...vilkar[0],
-            vilkarStatus: {
-              kode: vilkarUtfallType.IKKE_OPPFYLT,
-            },
+            vilkarStatus: vilkarUtfallType.IKKE_OPPFYLT,
           },
         ]}
         beregningresultatForeldrepenger={resultatstruktur}
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+        ytelseType={fagsakYtelseType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -206,18 +179,14 @@ export const visÅpentAksjonspunktForSvangerskapspenger = args => {
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[
           {
-            definisjon: {
-              kode: aksjonspunktCodes.FORESLA_VEDTAK,
-            },
-            status: {
-              kode: aksjonspunktStatus.OPPRETTET,
-            },
+            definisjon: aksjonspunktCodes.FORESLA_VEDTAK,
+            status: aksjonspunktStatus.OPPRETTET,
             begrunnelse: undefined,
             kanLoses: true,
             erAktivt: true,
           },
         ]}
-        ytelseType={{ kode: fagsakYtelseType.SVANGERSKAPSPENGER }}
+        ytelseType={fagsakYtelseType.SVANGERSKAPSPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -246,21 +215,14 @@ export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = args => 
             vedtaksbrev: {
               kode: 'FRITEKST',
             },
-            type: {
-              kode: behandlingResultatType.AVSLATT,
-            },
-            avslagsarsak: {
-              kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-              kodeverk: kodeverkTyper.AVSLAGSARSAK,
-            },
+            type: behandlingResultatType.AVSLATT,
+            avslagsarsak: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
           },
         }}
         vilkar={[
           {
             ...vilkar[0],
-            vilkarStatus: {
-              kode: vilkarUtfallType.IKKE_OPPFYLT,
-            },
+            vilkarStatus: vilkarUtfallType.IKKE_OPPFYLT,
           },
         ]}
         beregningresultatForeldrepenger={resultatstruktur}
@@ -268,18 +230,14 @@ export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = args => 
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[
           {
-            definisjon: {
-              kode: aksjonspunktCodes.FORESLA_VEDTAK,
-            },
-            status: {
-              kode: aksjonspunktStatus.OPPRETTET,
-            },
+            definisjon: aksjonspunktCodes.FORESLA_VEDTAK,
+            status: aksjonspunktStatus.OPPRETTET,
             begrunnelse: undefined,
             kanLoses: true,
             erAktivt: true,
           },
         ]}
-        ytelseType={{ kode: fagsakYtelseType.SVANGERSKAPSPENGER }}
+        ytelseType={fagsakYtelseType.SVANGERSKAPSPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -309,18 +267,14 @@ export const visÅpentAksjonspunktForEngangsstønad = args => {
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[
           {
-            definisjon: {
-              kode: aksjonspunktCodes.FORESLA_VEDTAK,
-            },
-            status: {
-              kode: aksjonspunktStatus.OPPRETTET,
-            },
+            definisjon: aksjonspunktCodes.FORESLA_VEDTAK,
+            status: aksjonspunktStatus.OPPRETTET,
             begrunnelse: undefined,
             kanLoses: true,
             erAktivt: true,
           },
         ]}
-        ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
+        ytelseType={fagsakYtelseType.ENGANGSSTONAD}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -353,18 +307,14 @@ export const visAtBehandlingErHenlagt = args => {
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[
           {
-            definisjon: {
-              kode: aksjonspunktCodes.FORESLA_VEDTAK,
-            },
-            status: {
-              kode: aksjonspunktStatus.OPPRETTET,
-            },
+            definisjon: aksjonspunktCodes.FORESLA_VEDTAK,
+            status: aksjonspunktStatus.OPPRETTET,
             begrunnelse: undefined,
             kanLoses: true,
             erAktivt: true,
           },
         ]}
-        ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+        ytelseType={fagsakYtelseType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -389,16 +339,12 @@ export const visInnvilgetForForeldrepengerRevurdering = args => {
       <VedtakProsessIndex
         behandling={{
           ...behandling,
-          type: {
-            kode: behandlingType.REVURDERING,
-          },
+          type: behandlingType.REVURDERING,
           behandlingsresultat: {
             vedtaksbrev: {
               kode: 'FRITEKST',
             },
-            type: {
-              kode: behandlingResultatType.INNVILGET,
-            },
+            type: behandlingResultatType.INNVILGET,
           },
         }}
         vilkar={vilkar}
@@ -407,22 +353,15 @@ export const visInnvilgetForForeldrepengerRevurdering = args => {
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[
           {
-            definisjon: {
-              kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-            },
-            status: {
-              kode: aksjonspunktStatus.OPPRETTET,
-            },
+            definisjon: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+            status: aksjonspunktStatus.OPPRETTET,
             begrunnelse: undefined,
             kanLoses: true,
             erAktivt: true,
           },
         ]}
         tilbakekrevingvalg={{
-          videreBehandling: {
-            kode: tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
-            kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
-          },
+          videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
         }}
         ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
         previewCallback={action('button-click')}
@@ -449,16 +388,12 @@ export const visOpphørtForForeldrepengerRevurdering = args => {
       <VedtakProsessIndex
         behandling={{
           ...behandling,
-          type: {
-            kode: behandlingType.REVURDERING,
-          },
+          type: behandlingType.REVURDERING,
           behandlingsresultat: {
             vedtaksbrev: {
               kode: 'FRITEKST',
             },
-            type: {
-              kode: behandlingResultatType.OPPHOR,
-            },
+            type: behandlingResultatType.OPPHOR,
           },
         }}
         vilkar={vilkar}
@@ -466,7 +401,7 @@ export const visOpphørtForForeldrepengerRevurdering = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+        ytelseType={fagsakYtelseType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -491,16 +426,14 @@ export const visInnvilgetForEngangsstønadRevurdering = args => {
       <VedtakProsessIndex
         behandling={{
           ...behandling,
-          type: {
-            kode: behandlingType.REVURDERING,
-          },
+          type: behandlingType.REVURDERING,
         }}
         vilkar={vilkar}
         beregningresultatEngangsstonad={resultatstruktur}
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
+        ytelseType={fagsakYtelseType.ENGANGSSTONAD}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -525,35 +458,26 @@ export const visAvslåttForEngangsstønadRevurdering = args => {
       <VedtakProsessIndex
         behandling={{
           ...behandling,
-          type: {
-            kode: behandlingType.REVURDERING,
-          },
+          type: behandlingType.REVURDERING,
           behandlingsresultat: {
             vedtaksbrev: {
               kode: 'FRITEKST',
             },
-            type: {
-              kode: behandlingResultatType.AVSLATT,
-            },
-            avslagsarsak: {
-              kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-              kodeverk: kodeverkTyper.AVSLAGSARSAK,
-            },
+            type: behandlingResultatType.AVSLATT,
+            avslagsarsak: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
           },
         }}
         vilkar={[
           {
             ...vilkar[0],
-            vilkarStatus: {
-              kode: vilkarUtfallType.IKKE_OPPFYLT,
-            },
+            vilkarStatus: vilkarUtfallType.IKKE_OPPFYLT,
           },
         ]}
         beregningresultatEngangsstonad={resultatstruktur}
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
+        ytelseType={fagsakYtelseType.ENGANGSSTONAD}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -574,34 +498,25 @@ export const visOverlappendeYtelser = args => {
   const value = useMemo(() => ({ vedtakFormState, setVedtakFormState }), [vedtakFormState, setVedtakFormState]);
 
   const aksjonspunkt5040 = {
-    aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
+    aksjonspunktType: 'MANU',
     begrunnelse: null,
     besluttersBegrunnelse: null,
-    definisjon: {
-      kode: '5040',
-      kodeverk: 'AKSJONSPUNKT_DEF',
-    },
+    definisjon: '5040',
     erAktivt: true,
     fristTid: null,
     kanLoses: true,
-    status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
+    status: 'OPPR',
     toTrinnsBehandling: false,
     toTrinnsBehandlingGodkjent: null,
     vilkarType: null,
     vurderPaNyttArsaker: null,
-    venteårsak: { kode: '-', kodeverk: 'VENT_AARSAK' },
+    venteårsak: '-',
   };
 
   const overlappendeYtelser = [
     {
-      ytelseType: {
-        kode: 'PSB',
-        kodeverk: 'FAGSAK_YTELSE',
-      },
-      kilde: {
-        kode: 'INFOTRYGD',
-        kodeverk: 'FAGSYSTEM',
-      },
+      ytelseType: 'PSB', // FAGSAK_YTELSE
+      kilde: 'INFOTRYGD', // FAGSYSTEM
       saksnummer: null,
       overlappendePerioder: [
         {
@@ -611,14 +526,8 @@ export const visOverlappendeYtelser = args => {
       ],
     },
     {
-      ytelseType: {
-        kode: 'PSB',
-        kodeverk: 'FAGSAK_YTELSE',
-      },
-      kilde: {
-        kode: 'INFOTRYGD',
-        kodeverk: 'FAGSYSTEM',
-      },
+      ytelseType: 'PSB', // FAGSAK_YTELSE
+      kilde: 'INFOTRYGD', // FAGSYSTEM
       saksnummer: null,
       overlappendePerioder: [
         {
@@ -632,14 +541,8 @@ export const visOverlappendeYtelser = args => {
       ],
     },
     {
-      ytelseType: {
-        kode: 'PSB',
-        kodeverk: 'FAGSAK_YTELSE',
-      },
-      kilde: {
-        kode: 'INFOTRYGD',
-        kodeverk: 'FAGSYSTEM',
-      },
+      ytelseType: 'PSB', // FAGSAK_YTELSE
+      kilde: 'INFOTRYGD', // FAGSYSTEM
       saksnummer: null,
       overlappendePerioder: [
         {
@@ -653,14 +556,8 @@ export const visOverlappendeYtelser = args => {
       ],
     },
     {
-      ytelseType: {
-        kode: 'PSB',
-        kodeverk: 'FAGSAK_YTELSE',
-      },
-      kilde: {
-        kode: 'INFOTRYGD',
-        kodeverk: 'FAGSYSTEM',
-      },
+      ytelseType: 'PSB', // FAGSAK_YTELSE
+      kilde: 'INFOTRYGD', // FAGSYSTEM
       saksnummer: null,
       overlappendePerioder: [
         {
@@ -680,35 +577,26 @@ export const visOverlappendeYtelser = args => {
       <VedtakProsessIndex
         behandling={{
           ...behandling,
-          type: {
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-          },
+          type: behandlingType.FORSTEGANGSSOKNAD,
           behandlingsresultat: {
             vedtaksbrev: {
               kode: 'FRITEKST',
             },
-            type: {
-              kode: behandlingResultatType.INNVILGET,
-            },
-            avslagsarsak: {
-              kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-              kodeverk: kodeverkTyper.AVSLAGSARSAK,
-            },
+            type: behandlingResultatType.INNVILGET,
+            avslagsarsak: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
           },
         }}
         vilkar={[
           {
             ...vilkar[0],
-            vilkarStatus: {
-              kode: vilkarUtfallType.IKKE_OPPFYLT,
-            },
+            vilkarStatus: vilkarUtfallType.IKKE_OPPFYLT,
           },
         ]}
         beregningresultatEngangsstonad={resultatstruktur}
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[aksjonspunkt5040]}
-        ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
+        ytelseType={fagsakYtelseType.ENGANGSSTONAD}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -738,7 +626,7 @@ export const brevMedFritekstfelt = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={{ kode: fagsakYtelseType.PLEIEPENGER }}
+        ytelseType={fagsakYtelseType.PLEIEPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
