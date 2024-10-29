@@ -9,13 +9,17 @@ import styles from './vilkarresultatMedOverstyringForm.module.css';
 
 const opptjeningMidlertidigInaktivKoder = {
   TYPE_A: '7847A',
+  TYPE_A_NEW: 'VM_7847_A',
   TYPE_B: '7847B',
+  TYPE_B_NEW: 'VM_7847_B',
 };
 
 const hent847Text = (kode: string) => {
   const kodeTekster: { [key: string]: string } = {
     [opptjeningMidlertidigInaktivKoder.TYPE_A]: 'Vilkåret beregnes jf § 8-47 bokstav A',
+    [opptjeningMidlertidigInaktivKoder.TYPE_A_NEW]: 'Vilkåret beregnes jf § 8-47 bokstav A',
     [opptjeningMidlertidigInaktivKoder.TYPE_B]: 'Vilkåret beregnes jf § 8-47 bokstav B',
+    [opptjeningMidlertidigInaktivKoder.TYPE_B_NEW]: 'Vilkåret beregnes jf § 8-47 bokstav B',
   };
 
   return kodeTekster[kode] || '';
@@ -57,13 +61,13 @@ interface VilkarresultatMedOverstyringHeaderProps {
   lovReferanse?: string;
   overrideReadOnly: boolean;
   overstyringApKode: string;
-  panelTittel: string;
+  panelTittelKode: string;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   periode?: VilkårPeriodeDto;
 }
 
 const VilkarresultatMedOverstyringHeader = ({
-  panelTittel,
+  panelTittelKode,
   erOverstyrt,
   overstyringApKode,
   lovReferanse,
@@ -83,47 +87,49 @@ const VilkarresultatMedOverstyringHeader = ({
     toggleOverstyring(oldArray => [...oldArray, overstyringApKode]);
   };
   return (
-    <VStack gap="4">
-      <HStack gap="4">
-        {!erOverstyrt && erVilkarOk !== undefined && (
-          <>
-            {erVilkarOk ? (
-              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
-            ) : (
-              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
-            )}
-          </>
-        )}
-        <Heading size="small" level="2">
-          {panelTittel}
-        </Heading>
-        {lovReferanse && (
-          <Detail className={styles.vilkar}>
-            <Lovreferanse>{lovReferanse}</Lovreferanse>
-          </Detail>
-        )}
-      </HStack>
-      <HStack gap="4">
-        <Box marginBlock={'2 0'}>{vilkårResultatText(erVilkarOk, periode)}</Box>
-        {erVilkarOk !== undefined &&
-          !isHidden(
-            !!kanOverstyreAccess?.isEnabled,
-            aksjonspunktCodes,
-            overstyringApKode,
-            !!periode?.vurderesIBehandlingen,
-          ) && (
-            <Box marginBlock={'1 0'}>
-              <Button
-                variant="tertiary"
-                size="xsmall"
-                onClick={togglePa}
-                icon={<KeyHorizontalIcon className="-rotate-45 text-3xl" />}
-                disabled={erOverstyrt || overrideReadOnly}
-              />
-            </Box>
+    <Box marginBlock={'0 2'}>
+      <VStack gap="2">
+        <HStack gap="4">
+          {!erOverstyrt && erVilkarOk !== undefined && (
+            <>
+              {erVilkarOk ? (
+                <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+              ) : (
+                <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
+              )}
+            </>
           )}
-      </HStack>
-    </VStack>
+          <Heading size="small" level="2">
+            {panelTittelKode}
+          </Heading>
+          {lovReferanse && (
+            <Detail className={styles.vilkar}>
+              <Lovreferanse>{lovReferanse}</Lovreferanse>
+            </Detail>
+          )}
+        </HStack>
+        <HStack gap="4">
+          <Box marginBlock={'2 0'}>{vilkårResultatText(erVilkarOk, periode)}</Box>
+          {erVilkarOk !== undefined &&
+            !isHidden(
+              !!kanOverstyreAccess?.isEnabled,
+              aksjonspunktCodes,
+              overstyringApKode,
+              !!periode?.vurderesIBehandlingen,
+            ) && (
+              <Box marginBlock={'1 0'}>
+                <Button
+                  variant="tertiary"
+                  size="xsmall"
+                  onClick={togglePa}
+                  icon={<KeyHorizontalIcon className="-rotate-45 text-3xl" />}
+                  disabled={erOverstyrt || overrideReadOnly}
+                />
+              </Box>
+            )}
+        </HStack>
+      </VStack>
+    </Box>
   );
 };
 

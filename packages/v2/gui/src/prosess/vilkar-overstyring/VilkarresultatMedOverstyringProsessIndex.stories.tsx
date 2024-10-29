@@ -4,6 +4,7 @@ import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspu
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { action } from '@storybook/addon-actions';
+import type { Meta } from '@storybook/react';
 import React from 'react';
 import VilkarresultatMedOverstyringProsessIndex from './VilkarresultatMedOverstyringProsessIndex';
 
@@ -14,7 +15,7 @@ const vilkarOpptjening = [
     perioder: [
       {
         vilkarStatus: vilkårStatus.OPPFYLT,
-        merknad: merknad['UDEFINERT'],
+        merknad: merknad['VM_7847_B'],
         periode: {
           fom: '2020-01-30',
           tom: '2020-02-29',
@@ -48,10 +49,12 @@ const vilkarMedlemskap = [
   },
 ];
 
-export default {
-  title: 'prosess/prosess-vilkar-overstyring',
+const meta = {
+  title: 'gui/prosess/prosess-vilkar-overstyring/VilkarresultatMedOverstyringProsessIndex.tsx',
   component: VilkarresultatMedOverstyringProsessIndex,
-};
+} satisfies Meta<typeof VilkarresultatMedOverstyringProsessIndex>;
+
+export default meta;
 
 const behandling = {
   id: 1,
@@ -75,7 +78,7 @@ export const visOverstyringspanelForOpptjening = () => {
       submitCallback={action('button-click')}
       toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
       erOverstyrt={erOverstyrt}
-      panelTittel="Inngangsvilkar.Opptjeningsvilkaret"
+      panelTittelKode="Opptjening"
       lovReferanse="§§ Dette er en lovreferanse"
       overstyringApKode={aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET}
       visPeriodisering={true}
@@ -103,7 +106,7 @@ export const visOverstyringspanelForMedlemskap = () => {
       submitCallback={action('button-click')}
       toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
       erOverstyrt={erOverstyrt}
-      panelTittel="Inngangsvilkar.Medlemskapsvilkaret"
+      panelTittelKode="Medlemskap"
       lovReferanse="§§ Dette er en lovreferanse"
       overstyringApKode={aksjonspunktkodeDefinisjonType.OVERSTYR_MEDLEMSKAPSVILKAR}
       visPeriodisering
@@ -139,7 +142,7 @@ export const visOverstyrtAksjonspunktSomErBekreftet = () => {
       ]}
       submitCallback={action('button-click')}
       toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
-      panelTittel="Inngangsvilkar.Opptjeningsvilkaret"
+      panelTittelKode="Opptjening"
       lovReferanse="§§ Dette er en lovreferanse"
       overstyringApKode={aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET}
       visPeriodisering={false}

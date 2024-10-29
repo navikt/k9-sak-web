@@ -54,9 +54,9 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
   const { hentKodeverkForKode } = useKodeverkContext();
   const avslagsarsaker = hentKodeverkForKode(KodeverkType.AVSLAGSARSAK) as KodeverkObject[];
   return (
-    <Box paddingBlock={'4 0'} paddingInline={'4 0'}>
+    <Box paddingBlock={'4 0'} paddingInline={'0 4'}>
       {readOnly && erVilkarOk !== undefined && (
-        <Alert variant={erVilkarOk ? 'success' : 'error'}>
+        <Alert variant={erVilkarOk ? 'success' : 'error'} inline>
           <BodyShort size="small">{erVilkarOk ? customVilkarOppfyltText : customVilkarIkkeOppfyltText}</BodyShort>
         </Alert>
       )}

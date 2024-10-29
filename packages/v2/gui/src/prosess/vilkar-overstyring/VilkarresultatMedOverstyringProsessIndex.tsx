@@ -48,7 +48,7 @@ interface VilkarresultatMedOverstyringProsessIndexProps {
   lovReferanse?: string;
   erOverstyrt: boolean;
   /** Skal være den faktiske teksten og ikke en id til react-intl */
-  panelTittel: string;
+  panelTittelKode: string;
   overstyringApKode: string;
   erMedlemskapsPanel: boolean;
   visPeriodisering: boolean;
@@ -57,7 +57,7 @@ interface VilkarresultatMedOverstyringProsessIndexProps {
   featureToggles: FeatureToggles;
 }
 
-const VilkarresultatMedOverstyringProsessIndex = ({
+export const VilkarresultatMedOverstyringProsessIndex = ({
   behandling,
   medlemskap = { fom: '' },
   aksjonspunkter,
@@ -66,7 +66,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   kanOverstyreAccess,
   toggleOverstyring,
   erOverstyrt,
-  panelTittel,
+  panelTittelKode,
   overstyringApKode,
   lovReferanse = '',
   erMedlemskapsPanel,
@@ -124,7 +124,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
           lovReferanse={activeVilkår?.lovReferanse ?? lovReferanse}
           overrideReadOnly={overrideReadOnly}
           overstyringApKode={overstyringApKode}
-          panelTittel={panelTittel}
+          panelTittelKode={panelTittelKode}
           periode={activePeriode}
           toggleOverstyring={toggleOverstyring}
         />

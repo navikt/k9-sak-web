@@ -12,7 +12,7 @@ describe('<VilkarresultatMedOverstyringHeader>', () => {
           isEnabled: true,
         }}
         toggleOverstyring={() => undefined}
-        panelTittel="Medlemskap"
+        panelTittelKode="Medlemskap"
         erOverstyrt
         aksjonspunkter={[]}
         periode={{
