@@ -1,4 +1,3 @@
-import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -77,6 +76,7 @@ const AldersVilkarProsessIndex = ({
           erVurdert={erVurdert}
           vilkarOppfylt={vilkarOppfylt}
           begrunnelseTekst={begrunnelseTekst}
+          vilkarperiode={periode}
         />
       )}
     </RawIntlProvider>

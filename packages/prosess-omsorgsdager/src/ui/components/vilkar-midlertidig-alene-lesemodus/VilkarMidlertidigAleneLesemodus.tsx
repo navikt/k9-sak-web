@@ -8,7 +8,7 @@ import {
   VilkarMidlertidigSoknadsopplysninger,
 } from '../../../types/VilkarMidlertidigAleneProps';
 import tekst from '../vilkar-midlertidig-alene/vilkar-midlertidig-alene-tekst';
-import {AvslagskoderMidlertidigAlene} from "../vilkar-midlertidig-alene/VilkarMidlertidigAlene";
+import { AvslagskoderMidlertidigAlene } from '../vilkar-midlertidig-alene/VilkarMidlertidigAlene';
 
 interface OwnProps {
   soknadsopplysninger: VilkarMidlertidigSoknadsopplysninger;
@@ -37,15 +37,18 @@ const VilkarMidlertidigAleneLesemodus: React.FunctionComponent<OwnProps> = ({
       begrunnelse={informasjonTilLesemodus.begrunnelse}
       tekstVilkarOppfylt={tekst.sporsmålVilkarOppfylt}
       erVilkarOppfylt={informasjonTilLesemodus.vilkarOppfylt}
+      vilkarperiode={informasjonTilLesemodus.vilkarperiode}
       textVilkarOppfylt="I hvilken periode er vedtaket gyldig?"
       informasjonVilkarOppfylt={`${formatereDatoTilLesemodus(
         informasjonTilLesemodus.dato.fra,
       )} - ${formatereDatoTilLesemodus(informasjonTilLesemodus.dato.til)}`}
       textVilkarIkkeOppfylt={tekst.arsak}
       årsakVilkarIkkeOppfylt={
-        informasjonTilLesemodus.avslagsårsakKode === AvslagskoderMidlertidigAlene.VARIGHET_UNDER_SEKS_MÅN ? tekst.arsakPeriodeIkkeOverSeksMån
-        : informasjonTilLesemodus.avslagsårsakKode === AvslagskoderMidlertidigAlene.REGNES_IKKE_SOM_Å_HA_ALENEOMSORG ? tekst.arsakIkkeAleneOmsorg
-        : tekst.arsakIkkeAleneOmsorgAnnet
+        informasjonTilLesemodus.avslagsårsakKode === AvslagskoderMidlertidigAlene.VARIGHET_UNDER_SEKS_MÅN
+          ? tekst.arsakPeriodeIkkeOverSeksMån
+          : informasjonTilLesemodus.avslagsårsakKode === AvslagskoderMidlertidigAlene.REGNES_IKKE_SOM_Å_HA_ALENEOMSORG
+            ? tekst.arsakIkkeAleneOmsorg
+            : tekst.arsakIkkeAleneOmsorgAnnet
       }
     />
   </>

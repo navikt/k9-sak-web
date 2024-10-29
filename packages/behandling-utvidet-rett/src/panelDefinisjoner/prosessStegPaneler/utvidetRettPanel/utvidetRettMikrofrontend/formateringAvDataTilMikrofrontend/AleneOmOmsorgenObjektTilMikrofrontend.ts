@@ -7,11 +7,11 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
 import {
-  AleneOmOmsorgenAksjonspunktObjekt,
   AleneOmOmsorgenLosAksjonspunktK9Format,
   AleneOmOmsorgenProps,
 } from '../../../../../types/utvidetRettMikrofrontend/VilkarAleneOmOmsorgenProps';
 import AvslagskoderAleneOmOmsorgen from '../../../../../types/utvidetRettMikrofrontend/AvslagskoderAleneOmOmsorgen';
+import { AleneOmOmsorgenAksjonspunktObjekt } from '@k9-sak-web/prosess-omsorgsdager/src/types/AleneOmOmsorgenProps';
 
 interface OwnProps {
   behandling: Behandling;
@@ -30,6 +30,7 @@ const formatereLesemodusObjekt = (vilkar: Vilkar, aksjonspunkt: Aksjonspunkt, st
     return {
       begrunnelse: aksjonspunkt.begrunnelse,
       vilkarOppfylt: status === vilkarUtfallType.OPPFYLT,
+      vilkarperiode: vilkar.perioder[0],
       avslagsårsakKode: vilkar.perioder[0].avslagKode,
       fraDato: vilkar.perioder[0].periode.fom,
       tilDato: vilkar.perioder[0].periode.tom,

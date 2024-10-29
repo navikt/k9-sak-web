@@ -35,6 +35,7 @@ const AleneOmOmsorgenLesemodus: React.FunctionComponent<OwnProps> = ({
       begrunnelse={informasjonTilLesemodus.begrunnelse}
       tekstVilkarOppfylt={tekst.sporsmålVilkarOppfylt}
       erVilkarOppfylt={informasjonTilLesemodus.vilkarOppfylt}
+      vilkarperiode={informasjonTilLesemodus.vilkarperiode}
       textVilkarOppfylt={
         erBehandlingstypeRevurdering ? 'I hvilken periode er vedtaket gyldig?' : 'Fra hvilken dato er vedtaket gyldig?'
       }

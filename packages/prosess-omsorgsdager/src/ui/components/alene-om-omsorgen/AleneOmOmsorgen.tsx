@@ -147,7 +147,8 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
         <VilkarStatus
           vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
           aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}
-          vilkarReferanse={informasjonOmVilkar.vilkar}
+          vilkarReferanse={informasjonOmVilkar.lovReferanse}
+          vilkarperiode={informasjonOmVilkar.vilkarperiode}
           begrunnelse={informasjonOmVilkar.begrunnelse}
           erVilkaretForOmsorgenFor={false}
           periode={informasjonOmVilkar.periode}
@@ -163,7 +164,6 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
             åpneForRedigereInformasjon={() => setValue('åpenForRedigering', true)}
             erBehandlingstypeRevurdering={erBehandlingstypeRevurdering}
           />
-
 
           {!informasjonTilLesemodus.vilkarOppfylt && informasjonTilLesemodus.avslagsårsakKode !== '' && (
             <>
@@ -205,29 +205,29 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
               </div>
 
               {erSokerAleneOmOmsorgen.length > 0 && !tekstTilBoolean(erSokerAleneOmOmsorgen) && (
-                  <div>
-                    <RadioGroup
-                      className={styleRadioknapper.horisontalPlassering}
-                      legend={tekst.velgArsak}
-                      size="small"
-                      name="avslagsårsakKode"
-                    >
-                      <HStack gap="1">
-                        <RadioButtonWithBooleanValue
-                          label={tekst.foreldreBorSammen}
-                          value={AvslagskoderAleneOmOmsorgen.FORELDRE_BOR_SAMMEN}
-                          name="avslagsårsakKode"
-                        />
-                        <RadioButtonWithBooleanValue
-                          label={tekst.avltaleOmDeltBosted}
-                          value={AvslagskoderAleneOmOmsorgen.AVTALE_OM_DELT_BOSTED}
-                          name="avslagsårsakKode"
-                        />
-                        <RadioButtonWithBooleanValue label={tekst.annet} value="1077" name="avslagsårsakKode" />
-                      </HStack>
-                    </RadioGroup>
-                  </div>
-                )}
+                <div>
+                  <RadioGroup
+                    className={styleRadioknapper.horisontalPlassering}
+                    legend={tekst.velgArsak}
+                    size="small"
+                    name="avslagsårsakKode"
+                  >
+                    <HStack gap="1">
+                      <RadioButtonWithBooleanValue
+                        label={tekst.foreldreBorSammen}
+                        value={AvslagskoderAleneOmOmsorgen.FORELDRE_BOR_SAMMEN}
+                        name="avslagsårsakKode"
+                      />
+                      <RadioButtonWithBooleanValue
+                        label={tekst.avltaleOmDeltBosted}
+                        value={AvslagskoderAleneOmOmsorgen.AVTALE_OM_DELT_BOSTED}
+                        name="avslagsårsakKode"
+                      />
+                      <RadioButtonWithBooleanValue label={tekst.annet} value="1077" name="avslagsårsakKode" />
+                    </HStack>
+                  </RadioGroup>
+                </div>
+              )}
 
               {tekstTilBoolean(erSokerAleneOmOmsorgen) && (
                 <Fieldset

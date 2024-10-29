@@ -1,5 +1,6 @@
 import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
-import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
+import { InformasjonOmVurdertVilkar } from '@k9-sak-web/prosess-omsorgsdager/src/types/InformasjonOmVurdertVilkar';
+import { InformasjonTilLesemodusKroniskSyk } from '@k9-sak-web/prosess-omsorgsdager/src/types/VilkarKroniskSyktBarnProps';
 
 export interface VilkarKroniskSyktBarnProps {
   behandlingsID: string;
@@ -16,11 +17,4 @@ export interface VilkarKroniskSyktBarnProps {
     fraDato: string,
   ) => void;
   formState: FormStateType;
-}
-
-export interface InformasjonTilLesemodusKroniskSyk {
-  begrunnelse: string;
-  vilkarOppfylt: boolean;
-  avslagsårsakKode: string;
-  fraDato: string;
 }

@@ -1,3 +1,4 @@
+import { Vilkarperiode } from '@k9-sak-web/types';
 import { FormState } from './FormState';
 import { InformasjonOmVurdertVilkar } from './InformasjonOmVurdertVilkar';
 
@@ -17,6 +18,7 @@ export interface AleneOmOmsorgenProps {
 export interface AleneOmOmsorgenAksjonspunktObjekt {
   begrunnelse: string;
   vilkarOppfylt: boolean;
+  vilkarperiode?: Vilkarperiode;
   avslagsårsakKode: string;
   fraDato: string;
   tilDato: string;
