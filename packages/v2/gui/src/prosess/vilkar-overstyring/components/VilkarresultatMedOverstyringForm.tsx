@@ -1,0 +1,189 @@
+import type { AksjonspunktDto, VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import { behandlingType as BehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import initializeDate from '@k9-sak-web/lib/dateUtils/initializeDate.js';
+import { Alert, BodyShort, Box, Button, HStack, Label, VStack } from '@navikt/ds-react';
+import { Form } from '@navikt/ft-form-hooks';
+import { type SetStateAction, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { FormattedMessage } from 'react-intl';
+import { EditedIcon } from '../../../shared/EditedIcon';
+import { type VilkarresultatMedOverstyringFormState } from './FormState';
+import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
+import VilkarresultatMedBegrunnelse from './VilkarresultatMedBegrunnelse';
+import styles from './vilkarresultatMedOverstyringForm.module.css';
+import VilkarResultPickerRHF from './VilkarResultPickerRHF';
+
+export interface CustomVilkarText {
+  id: string;
+  values?: any;
+}
+
+interface VilkarresultatMedOverstyringFormProps {
+  aksjonspunkter: AksjonspunktDto[];
+  behandlingType: string;
+  erMedlemskapsPanel: boolean;
+  erOverstyrt?: boolean;
+  medlemskapFom: string;
+  overrideReadOnly: boolean;
+  overstyringApKode: string;
+  status: string;
+  submitCallback: (props: any[]) => void;
+  toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
+  avslagKode?: string;
+  periode: VilkårPeriodeDto;
+}
+
+/**
+ * VilkarresultatForm
+ *
+ * Presentasjonskomponent. Viser resultat av vilkårskjøring når det ikke finnes tilknyttede aksjonspunkter.
+ * Resultatet kan overstyres av Nav-ansatt med overstyr-rettighet.
+ */
+export const VilkarresultatMedOverstyringForm = ({
+  aksjonspunkter,
+  avslagKode,
+  behandlingType,
+  erMedlemskapsPanel,
+  erOverstyrt,
+  medlemskapFom,
+  overrideReadOnly,
+  overstyringApKode,
+  periode,
+  submitCallback,
+  status,
+  toggleOverstyring,
+}: VilkarresultatMedOverstyringFormProps) => {
+  const buildInitialValues = (): VilkarresultatMedOverstyringFormState => {
+    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === overstyringApKode);
+    return {
+      isOverstyrt: aksjonspunkt !== undefined,
+      ...VilkarresultatMedBegrunnelse.buildInitialValues(aksjonspunkter, status, periode, avslagKode),
+    };
+  };
+  const formMethods = useForm<VilkarresultatMedOverstyringFormState>({
+    defaultValues: buildInitialValues(),
+  });
+  const toggleAv = () => {
+    formMethods.reset(buildInitialValues());
+    toggleOverstyring(oldArray => oldArray.filter(code => code !== overstyringApKode));
+  };
+
+  const periodeFom = periode?.periode?.fom ?? '';
+  const periodeTom = periode?.periode?.tom ?? '';
+
+  const onSubmit = (values: VilkarresultatMedOverstyringFormState) =>
+    submitCallback([transformValues(values, overstyringApKode, periodeFom, periodeTom)]);
+
+  useEffect(
+    () => () => {
+      formMethods.reset(buildInitialValues());
+    },
+    [periodeFom, periodeTom],
+  );
+
+  const erVilkarOk = formMethods.watch('erVilkarOk');
+
+  const customVilkarOppfyltText = getCustomVilkarTextForOppfylt(medlemskapFom, behandlingType);
+  const customVilkarIkkeOppfyltText = getCustomVilkarTextForIkkeOppfylt(medlemskapFom, behandlingType);
+  const overstyringAksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === overstyringApKode);
+  const isReadOnly = overrideReadOnly || !periode?.vurderesIBehandlingen;
+  const opprettetAv = overstyringAksjonspunkt ? overstyringAksjonspunkt.opprettetAv : '';
+  const isSolvable =
+    erOverstyrt ||
+    (overstyringAksjonspunkt !== undefined
+      ? !(overstyringAksjonspunkt.status === aksjonspunktStatus.OPPRETTET && !overstyringAksjonspunkt.kanLoses)
+      : false);
+
+  return (
+    <Form formMethods={formMethods} onSubmit={onSubmit}>
+      {(erOverstyrt || !!overstyringAksjonspunkt) && (
+        <div className={`${styles.aksjonspunktBox} ${erOverstyrt ? styles.aksjonspunktBoxOpen : ''}`}>
+          <Label data-testid="overstyringform" size="small" as="p">
+            <FormattedMessage id="VilkarresultatMedOverstyringForm.AutomatiskVurdering" />
+          </Label>
+          <Box marginBlock={'2 0'}>
+            <VilkarresultatMedBegrunnelse
+              skalViseBegrunnelse={erOverstyrt || !!overstyringAksjonspunkt}
+              readOnly={isReadOnly || !erOverstyrt}
+              erVilkarOk={erVilkarOk}
+              customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
+              customVilkarOppfyltText={customVilkarOppfyltText}
+              erMedlemskapsPanel={erMedlemskapsPanel}
+              opprettetAv={opprettetAv ?? ''}
+            />
+          </Box>
+          <Box marginBlock={'4 0'}>
+            {!erOverstyrt && erVilkarOk !== undefined && (
+              <Box marginBlock={'1 0'}>
+                <HStack gap="4">
+                  <EditedIcon />
+                  <BodyShort size="small">
+                    <FormattedMessage id="VilkarresultatMedOverstyringForm.Endret" />
+                  </BodyShort>
+                </HStack>
+              </Box>
+            )}
+            {erOverstyrt && (
+              <VStack gap="4">
+                <Alert size="small" inline variant="warning">
+                  <FormattedMessage id="VilkarresultatMedOverstyringForm.Unntakstilfeller" />
+                </Alert>
+                <HStack gap="4">
+                  <OverstyrBekreftKnappPanel
+                    submitting={formMethods.formState.isSubmitting}
+                    pristine={!isSolvable || !formMethods.formState.isDirty}
+                    overrideReadOnly={overrideReadOnly}
+                  />
+                  <Button
+                    size="small"
+                    variant="secondary"
+                    type="button"
+                    loading={formMethods.formState.isSubmitting}
+                    disabled={formMethods.formState.isSubmitting}
+                    onClick={toggleAv}
+                  >
+                    <FormattedMessage id="VilkarresultatMedOverstyringForm.Avbryt" />
+                  </Button>
+                </HStack>
+              </VStack>
+            )}
+          </Box>
+        </div>
+      )}
+    </Form>
+  );
+};
+
+const getCustomVilkarText = (medlemskapFom: string, behandlingType: string, erOppfylt: boolean) => {
+  const customVilkarText = { id: '', values: {} };
+  const isBehandlingRevurderingFortsattMedlemskap = behandlingType === BehandlingType.REVURDERING && !!medlemskapFom;
+  if (isBehandlingRevurderingFortsattMedlemskap) {
+    customVilkarText.id = erOppfylt
+      ? 'VilkarResultPicker.VilkarOppfyltRevurderingFom'
+      : 'VilkarResultPicker.VilkarIkkeOppfyltRevurderingFom';
+    customVilkarText.values = { fom: initializeDate(medlemskapFom).format(DDMMYYYY_DATE_FORMAT) };
+  }
+  return customVilkarText.id ? customVilkarText : undefined;
+};
+
+const getCustomVilkarTextForOppfylt = (medlemskapFom: string, behandlingType: string) =>
+  getCustomVilkarText(medlemskapFom, behandlingType, true);
+
+const getCustomVilkarTextForIkkeOppfylt = (medlemskapFom: string, behandlingType: string) =>
+  getCustomVilkarText(medlemskapFom, behandlingType, false);
+
+const transformValues = (
+  values: VilkarresultatMedOverstyringFormState,
+  overstyringApKode: string,
+  periodeFom: string,
+  periodeTom: string,
+) => ({
+  kode: overstyringApKode,
+  ...VilkarResultPickerRHF.transformValues(values),
+  ...VilkarresultatMedBegrunnelse.transformValues(values),
+  periode: periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : undefined,
+});
+
+export default VilkarresultatMedOverstyringForm;
