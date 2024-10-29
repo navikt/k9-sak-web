@@ -1,23 +1,31 @@
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import {
-  hent847Text,
-  opptjeningMidlertidigInaktivKoder,
-} from '@fpsak-frontend/prosess-vilkar-opptjening-oms/src/components/VilkarField';
-import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import type { AksjonspunktDto, VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
-import type { AksjonspunktCode } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import type { AksjonspunktCodes } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktCodes.js';
+import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import { CheckmarkCircleFillIcon, KeyHorizontalIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
-import { Button, Detail, Heading, HStack, Label } from '@navikt/ds-react';
+import { Box, Button, Detail, Heading, HStack, Label, VStack } from '@navikt/ds-react';
 import { type SetStateAction } from 'react';
-import { FormattedMessage } from 'react-intl';
 import styles from './vilkarresultatMedOverstyringForm.module.css';
 
-const isOverridden = (aksjonspunktCodes: AksjonspunktCode[], aksjonspunktCode: string) =>
+const opptjeningMidlertidigInaktivKoder = {
+  TYPE_A: '7847A',
+  TYPE_B: '7847B',
+};
+
+const hent847Text = (kode: string) => {
+  const kodeTekster: { [key: string]: string } = {
+    [opptjeningMidlertidigInaktivKoder.TYPE_A]: 'Vilkåret beregnes jf § 8-47 bokstav A',
+    [opptjeningMidlertidigInaktivKoder.TYPE_B]: 'Vilkåret beregnes jf § 8-47 bokstav B',
+  };
+
+  return kodeTekster[kode] || '';
+};
+
+const isOverridden = (aksjonspunktCodes: AksjonspunktCodes[], aksjonspunktCode: string) =>
   aksjonspunktCodes.some(code => code === aksjonspunktCode);
 const isHidden = (
   kanOverstyre: boolean,
-  aksjonspunktCodes: AksjonspunktCode[],
+  aksjonspunktCodes: AksjonspunktCodes[],
   aksjonspunktCode: string,
   vurderesIBehandlingen: boolean,
 ) => (!isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre) || !vurderesIBehandlingen;
@@ -49,13 +57,13 @@ interface VilkarresultatMedOverstyringHeaderProps {
   lovReferanse?: string;
   overrideReadOnly: boolean;
   overstyringApKode: string;
-  panelTittelKode: string;
+  panelTittel: string;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   periode?: VilkårPeriodeDto;
 }
 
 const VilkarresultatMedOverstyringHeader = ({
-  panelTittelKode,
+  panelTittel,
   erOverstyrt,
   overstyringApKode,
   lovReferanse,
@@ -66,63 +74,56 @@ const VilkarresultatMedOverstyringHeader = ({
   periode,
 }: VilkarresultatMedOverstyringHeaderProps) => {
   const aksjonspunktCodes = aksjonspunkter
-    .filter((a): a is { definisjon: AksjonspunktCode } => a.definisjon !== undefined)
+    .filter((a): a is { definisjon: AksjonspunktCodes } => a.definisjon !== undefined)
     .map(a => a.definisjon);
   const status = periode?.vilkarStatus;
-  const erOppfylt = vilkarUtfallType.OPPFYLT === status;
-  const erVilkarOk = vilkarUtfallType.IKKE_VURDERT !== status ? erOppfylt : undefined;
+  const erOppfylt = vilkårStatus.OPPFYLT === status;
+  const erVilkarOk = vilkårStatus.IKKE_VURDERT !== status ? erOppfylt : undefined;
   const togglePa = () => {
     toggleOverstyring(oldArray => [...oldArray, overstyringApKode]);
   };
   return (
-    <>
-      <FlexContainer>
-        <HStack gap="4">
-          {!erOverstyrt && erVilkarOk !== undefined && (
-            <>
-              {erVilkarOk ? (
-                <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
-              ) : (
-                <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
-              )}
-            </>
-          )}
-          <Heading size="small" level="2">
-            <FormattedMessage id={panelTittelKode} />
-          </Heading>
-          {lovReferanse && (
-            <Detail className={styles.vilkar}>
-              <Lovreferanse>{lovReferanse}</Lovreferanse>
-            </Detail>
-          )}
-        </HStack>
-        <FlexRow>
-          <FlexColumn>
-            <VerticalSpacer eightPx />
-            {vilkårResultatText(erVilkarOk, periode)}
-          </FlexColumn>
-          {erVilkarOk !== undefined &&
-            !isHidden(
-              !!kanOverstyreAccess?.isEnabled,
-              aksjonspunktCodes,
-              overstyringApKode,
-              !!periode?.vurderesIBehandlingen,
-            ) && (
-              <FlexColumn>
-                <VerticalSpacer fourPx />
-                <Button
-                  variant="tertiary"
-                  size="xsmall"
-                  onClick={togglePa}
-                  icon={<KeyHorizontalIcon className="-rotate-45 text-3xl" />}
-                  disabled={erOverstyrt || overrideReadOnly}
-                />
-              </FlexColumn>
+    <VStack gap="4">
+      <HStack gap="4">
+        {!erOverstyrt && erVilkarOk !== undefined && (
+          <>
+            {erVilkarOk ? (
+              <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+            ) : (
+              <XMarkOctagonFillIcon fontSize={24} style={{ color: 'var(--a-surface-danger)' }} />
             )}
-        </FlexRow>
-      </FlexContainer>
-      <VerticalSpacer eightPx />
-    </>
+          </>
+        )}
+        <Heading size="small" level="2">
+          {panelTittel}
+        </Heading>
+        {lovReferanse && (
+          <Detail className={styles.vilkar}>
+            <Lovreferanse>{lovReferanse}</Lovreferanse>
+          </Detail>
+        )}
+      </HStack>
+      <HStack gap="4">
+        <Box marginBlock={'2 0'}>{vilkårResultatText(erVilkarOk, periode)}</Box>
+        {erVilkarOk !== undefined &&
+          !isHidden(
+            !!kanOverstyreAccess?.isEnabled,
+            aksjonspunktCodes,
+            overstyringApKode,
+            !!periode?.vurderesIBehandlingen,
+          ) && (
+            <Box marginBlock={'1 0'}>
+              <Button
+                variant="tertiary"
+                size="xsmall"
+                onClick={togglePa}
+                icon={<KeyHorizontalIcon className="-rotate-45 text-3xl" />}
+                disabled={erOverstyrt || overrideReadOnly}
+              />
+            </Box>
+          )}
+      </HStack>
+    </VStack>
   );
 };
 

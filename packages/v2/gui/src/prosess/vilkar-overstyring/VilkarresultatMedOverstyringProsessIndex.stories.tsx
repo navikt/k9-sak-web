@@ -1,46 +1,28 @@
-import aksjonspunktCode from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { behandlingStatus, merknad, sakstype, vilkarType } from '@k9-sak-web/backend/k9sak/generated';
+import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
+import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
+import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
 import VilkarresultatMedOverstyringProsessIndex from './VilkarresultatMedOverstyringProsessIndex';
 
-const avslagsarsaker = [
-  {
-    kode: 'AVSLAG_TEST_1',
-    navn: 'Dette er en avslagsårsak',
-    kodeverk: '',
-  },
-  {
-    kode: 'AVSLAG_TEST_2',
-    navn: 'Dette er en annen avslagsårsak',
-    kodeverk: '',
-  },
-];
-
 const vilkarOpptjening = [
   {
-    vilkarType: { kode: vilkarType.OPPTJENINGSVILKARET, kodeverk: 'test' },
+    vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
     overstyrbar: true,
     perioder: [
       {
-        vilkarStatus: { kode: vilkarUtfallType.OPPFYLT, kodeverk: 'test' },
-        merknad: {
-          kode: '7847B',
-        },
+        vilkarStatus: vilkårStatus.OPPFYLT,
+        merknad: merknad['UDEFINERT'],
         periode: {
           fom: '2020-01-30',
           tom: '2020-02-29',
         },
       },
       {
-        vilkarStatus: { kode: vilkarUtfallType.OPPFYLT, kodeverk: 'test' },
-        merknad: {
-          kode: '-',
-        },
+        vilkarStatus: vilkårStatus.OPPFYLT,
+        merknad: merknad['UDEFINERT'],
         periode: {
           fom: '2020-03-01',
           tom: '2020-03-31',
@@ -52,18 +34,18 @@ const vilkarOpptjening = [
 
 const vilkarMedlemskap = [
   {
-    vilkarType: { kode: vilkarType.MEDLEMSKAPSVILKARET, kodeverk: 'test' },
+    vilkarType: vilkarType.MEDLEMSKAPSVILKÅRET,
     overstyrbar: true,
     perioder: [
       {
-        vilkarStatus: { kode: vilkarUtfallType.OPPFYLT, kodeverk: 'test' },
+        vilkarStatus: vilkårStatus.OPPFYLT,
         periode: {
           fom: '2020-01-30',
           tom: '2020-02-29',
         },
       },
     ],
-  } as Vilkar,
+  },
 ];
 
 export default {
@@ -74,10 +56,14 @@ export default {
 const behandling = {
   id: 1,
   versjon: 1,
-  type: { kode: behandlingType.FØRSTEGANGSSØKNAD, kodeverk: 'BEHANDLING_TYPE' },
-} as Behandling;
+  type: behandlingType.FØRSTEGANGSSØKNAD,
+  opprettet: '2020-01-01',
+  sakstype: sakstype['_'],
+  status: behandlingStatus['OPPRE'],
+  uuid: 'testUuid',
+};
 
-export const visOverstyringspanelForOpptjening = args => {
+export const visOverstyringspanelForOpptjening = () => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <VilkarresultatMedOverstyringProsessIndex
@@ -89,27 +75,23 @@ export const visOverstyringspanelForOpptjening = args => {
       submitCallback={action('button-click')}
       toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
       erOverstyrt={erOverstyrt}
-      avslagsarsaker={avslagsarsaker}
-      panelTittelKode="Inngangsvilkar.Opptjeningsvilkaret"
+      panelTittel="Inngangsvilkar.Opptjeningsvilkaret"
       lovReferanse="§§ Dette er en lovreferanse"
-      overstyringApKode={aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET}
+      overstyringApKode={aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET}
       visPeriodisering={true}
       vilkar={vilkarOpptjening}
       visAllePerioder
       erMedlemskapsPanel={false}
-      {...args}
+      overrideReadOnly={false}
+      kanOverstyreAccess={{
+        isEnabled: true,
+      }}
+      featureToggles={{}}
     />
   );
 };
 
-visOverstyringspanelForOpptjening.args = {
-  overrideReadOnly: false,
-  kanOverstyreAccess: {
-    isEnabled: true,
-  },
-};
-
-export const visOverstyringspanelForMedlemskap = args => {
+export const visOverstyringspanelForMedlemskap = () => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <VilkarresultatMedOverstyringProsessIndex
@@ -121,78 +103,55 @@ export const visOverstyringspanelForMedlemskap = args => {
       submitCallback={action('button-click')}
       toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
       erOverstyrt={erOverstyrt}
-      avslagsarsaker={avslagsarsaker}
-      panelTittelKode="Inngangsvilkar.Medlemskapsvilkaret"
+      panelTittel="Inngangsvilkar.Medlemskapsvilkaret"
       lovReferanse="§§ Dette er en lovreferanse"
-      overstyringApKode={aksjonspunktCode.OVERSTYR_MEDLEMSKAPSVILKAR}
+      overstyringApKode={aksjonspunktkodeDefinisjonType.OVERSTYR_MEDLEMSKAPSVILKAR}
       visPeriodisering
       vilkar={vilkarMedlemskap}
       visAllePerioder
       erMedlemskapsPanel={false}
-      {...args}
+      overrideReadOnly={false}
+      kanOverstyreAccess={{
+        isEnabled: true,
+      }}
+      featureToggles={{}}
     />
   );
 };
 
-visOverstyringspanelForMedlemskap.args = {
-  overrideReadOnly: false,
-  kanOverstyreAccess: {
-    isEnabled: true,
-  },
-};
-
-export const visOverstyrtAksjonspunktSomErBekreftet = args => {
+export const visOverstyrtAksjonspunktSomErBekreftet = () => {
   const [erOverstyrt, toggleOverstyring] = React.useState(false);
   return (
     <VilkarresultatMedOverstyringProsessIndex
-      behandling={
-        {
-          ...behandling,
-          behandlingsresultat: {
-            avslagsarsak: {
-              kode: 'AVSLAG_TEST_1',
-            },
-          },
-        } as Behandling
-      }
+      behandling={{
+        ...behandling,
+      }}
       medlemskap={{
         fom: '2019-01-01',
       }}
-      aksjonspunkter={
-        [
-          {
-            definisjon: {
-              kode: aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET,
-              kodeverk: '',
-            },
-            status: {
-              kode: aksjonspunktStatus.UTFORT,
-              kodeverk: '',
-            },
-            kanLoses: false,
-            begrunnelse: 'Dette er en begrunnelse',
-          },
-        ] as Aksjonspunkt[]
-      }
+      aksjonspunkter={[
+        {
+          definisjon: aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET,
+          status: aksjonspunktStatus.UTFORT,
+          kanLoses: false,
+          begrunnelse: 'Dette er en begrunnelse',
+        },
+      ]}
       submitCallback={action('button-click')}
       toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
-      avslagsarsaker={avslagsarsaker}
-      panelTittelKode="Inngangsvilkar.Opptjeningsvilkaret"
+      panelTittel="Inngangsvilkar.Opptjeningsvilkaret"
       lovReferanse="§§ Dette er en lovreferanse"
-      overstyringApKode={aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET}
+      overstyringApKode={aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET}
       visPeriodisering={false}
       vilkar={vilkarOpptjening}
       visAllePerioder
       erMedlemskapsPanel={false}
-      {...args}
+      overrideReadOnly={false}
+      kanOverstyreAccess={{
+        isEnabled: true,
+      }}
+      erOverstyrt={false}
+      featureToggles={{}}
     />
   );
-};
-
-visOverstyrtAksjonspunktSomErBekreftet.args = {
-  overrideReadOnly: false,
-  kanOverstyreAccess: {
-    isEnabled: true,
-  },
-  erOverstyrt: false,
 };

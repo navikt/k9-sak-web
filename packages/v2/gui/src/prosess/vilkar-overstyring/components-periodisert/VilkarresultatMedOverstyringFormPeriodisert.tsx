@@ -2,23 +2,17 @@ import type { AksjonspunktDto, VilkårPeriodeDto } from '@k9-sak-web/backend/k9s
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { behandlingType as BehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import initializeDate from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { Alert, BodyShort, Box, Button, HStack, Label, VStack } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
-import moment from 'moment';
 import { type FunctionComponent, type SetStateAction, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { FormattedMessage } from 'react-intl';
 import { EditedIcon } from '../../../shared/EditedIcon';
 import { type VilkarresultatMedOverstyringFormState } from './FormState';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import styles from './vilkarresultatMedOverstyringFormPeriodisert.module.css';
 import VilkarResultPickerPeriodisertRHF from './VilkarResultPickerPeriodisertRHF';
-
-export interface CustomVilkarText {
-  id: string;
-  values?: any;
-}
 
 export const vilkarUtfallPeriodisert = {
   OPPFYLT: 'OPPFYLT',
@@ -115,7 +109,7 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<Vilk
       {(erOverstyrt || hasAksjonspunkt) && (
         <div className={`${styles.aksjonspunktBox} ${erOverstyrt ? styles.aksjonspunktBoxOpen : ''}`}>
           <Label data-testid="overstyringform" size="small" as="p">
-            <FormattedMessage id="VilkarresultatMedOverstyringForm.AutomatiskVurdering" />
+            Manuell overstyring av automatisk vurdering
           </Label>
           <Box marginBlock={'2 0'}>
             <VilkarresultatMedBegrunnelse
@@ -139,16 +133,14 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<Vilk
               <Box marginBlock={'1 0'}>
                 <HStack gap="4">
                   <EditedIcon />
-                  <BodyShort size="small">
-                    <FormattedMessage id="VilkarresultatMedOverstyringForm.Endret" />
-                  </BodyShort>
+                  <BodyShort size="small">Endret av saksbehandler</BodyShort>
                 </HStack>
               </Box>
             )}
             {erOverstyrt && (
               <VStack gap="4">
                 <Alert size="small" inline variant="warning">
-                  <FormattedMessage id="VilkarresultatMedOverstyringForm.Unntakstilfeller" />
+                  Overstyring skal kun gjøres i unntakstilfeller
                 </Alert>
                 <HStack gap="4">
                   <OverstyrBekreftKnappPanel
@@ -164,7 +156,7 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<Vilk
                     disabled={formMethods.formState.isSubmitting}
                     onClick={toggleAv}
                   >
-                    <FormattedMessage id="VilkarresultatMedOverstyringForm.Avbryt" />
+                    Avbryt
                   </Button>
                 </HStack>
               </VStack>
@@ -177,15 +169,17 @@ export const VilkarresultatMedOverstyringFormPeriodisert: FunctionComponent<Vilk
 };
 
 const getCustomVilkarText = (medlemskapFom: string, behandlingType: string, erOppfylt: boolean) => {
-  const customVilkarText = { id: '', values: {} };
   const isBehandlingRevurderingFortsattMedlemskap = behandlingType === BehandlingType.REVURDERING && !!medlemskapFom;
   if (isBehandlingRevurderingFortsattMedlemskap) {
-    customVilkarText.id = erOppfylt
-      ? 'VilkarResultPicker.VilkarOppfyltRevurderingFom'
-      : 'VilkarResultPicker.VilkarIkkeOppfyltRevurderingFom';
-    customVilkarText.values = { fom: moment(medlemskapFom).format(DDMMYYYY_DATE_FORMAT) };
+    return erOppfylt ? (
+      `Vilkåret er oppfylt f.o.m. ${initializeDate(medlemskapFom).format(DDMMYYYY_DATE_FORMAT)}`
+    ) : (
+      <>
+        Vilkåret er <b>ikke</b> oppfylt f.o.m. {`${initializeDate(medlemskapFom).format(DDMMYYYY_DATE_FORMAT)}`}
+      </>
+    );
   }
-  return customVilkarText.id ? customVilkarText : undefined;
+  return undefined;
 };
 
 const getCustomVilkarTextForOppfylt = (medlemskapFom: string, behandlingType: string) =>

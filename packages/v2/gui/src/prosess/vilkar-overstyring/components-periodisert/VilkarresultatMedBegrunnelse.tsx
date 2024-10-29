@@ -2,10 +2,8 @@ import type { AksjonspunktDto, VilkårPeriodeDto } from '@k9-sak-web/backend/k9s
 import { Box } from '@navikt/ds-react';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { type FunctionComponent } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { type VilkarresultatMedBegrunnelseState } from './FormState';
 import VilkarBegrunnelse from './VilkarBegrunnelse';
-import { type CustomVilkarText } from './VilkarresultatMedOverstyringFormPeriodisert';
 import VilkarResultPickerPeriodisertRHF from './VilkarResultPickerPeriodisertRHF';
 
 interface VilkarresultatMedBegrunnelseProps {
@@ -14,8 +12,8 @@ interface VilkarresultatMedBegrunnelseProps {
   readOnly: boolean;
   erMedlemskapsPanel: boolean;
   visPeriodisering: boolean;
-  customVilkarIkkeOppfyltText?: CustomVilkarText;
-  customVilkarOppfyltText?: CustomVilkarText;
+  customVilkarIkkeOppfyltText?: string | React.ReactElement;
+  customVilkarOppfyltText?: string | React.ReactElement;
   skalViseBegrunnelse?: boolean;
   periodeFom: string;
   periodeTom: string;
@@ -65,34 +63,40 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
       )}
       <VilkarResultPickerPeriodisertRHF
         customVilkarOppfyltText={
-          <FormattedMessage
-            id={customVilkarOppfyltText ? customVilkarOppfyltText.id : 'VilkarresultatMedOverstyringForm.ErOppfylt'}
-            values={
-              customVilkarOppfyltText
-                ? {
-                    b: chunks => <b>{chunks}</b>,
-                    ...customVilkarIkkeOppfyltText?.values,
-                  }
-                : { b: chunks => <b>{chunks}</b> }
-            }
-          />
+          customVilkarOppfyltText ?? 'Vilkåret er oppfylt'
+          // <FormattedMessage
+          //   id={customVilkarOppfyltText ? customVilkarOppfyltText.id : 'VilkarresultatMedOverstyringForm.ErOppfylt'}
+          //   values={
+          //     customVilkarOppfyltText
+          //       ? {
+          //           b: chunks => <b>{chunks}</b>,
+          //           ...customVilkarIkkeOppfyltText?.values,
+          //         }
+          //       : { b: chunks => <b>{chunks}</b> }
+          //   }
+          // />
         }
         customVilkarIkkeOppfyltText={
-          <FormattedMessage
-            id={
-              customVilkarIkkeOppfyltText
-                ? customVilkarOppfyltText?.id
-                : 'VilkarresultatMedOverstyringForm.VilkarIkkeOppfylt'
-            }
-            values={
-              customVilkarIkkeOppfyltText
-                ? {
-                    b: chunks => <b>{chunks}</b>,
-                    ...customVilkarIkkeOppfyltText.values,
-                  }
-                : { b: chunks => <b>{chunks}</b> }
-            }
-          />
+          customVilkarIkkeOppfyltText ?? (
+            <>
+              Vilkåret er <b>ikke</b> oppfylt
+            </>
+          )
+          // <FormattedMessage
+          //   id={
+          //     customVilkarIkkeOppfyltText
+          //       ? customVilkarOppfyltText?.id
+          //       : 'VilkarresultatMedOverstyringForm.VilkarIkkeOppfylt'
+          //   }
+          //   values={
+          //     customVilkarIkkeOppfyltText
+          //       ? {
+          //           b: chunks => <b>{chunks}</b>,
+          //           ...customVilkarIkkeOppfyltText.values,
+          //         }
+          //       : { b: chunks => <b>{chunks}</b> }
+          //   }
+          // />
         }
         erVilkarOk={erVilkarOk}
         readOnly={readOnly}

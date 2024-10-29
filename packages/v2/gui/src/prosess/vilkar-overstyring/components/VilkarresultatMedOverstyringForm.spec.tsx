@@ -1,40 +1,30 @@
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
-import messages from '../../i18n/nb_NO.json';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { render, screen } from '@testing-library/react';
 import { VilkarresultatMedOverstyringForm } from './VilkarresultatMedOverstyringForm';
 
 describe('<VilkarresultatMedOverstyringForm>', () => {
   it('skal rendre form med knapp når vilkåret er overstyrt', () => {
-    renderWithIntlAndReduxForm(
+    render(
       <VilkarresultatMedOverstyringForm
-        {...reduxFormPropsMock}
         overstyringApKode="5011"
-        avslagsarsaker={[
-          { kode: 'test1', navn: 'test1', kodeverk: 'test' },
-          { kode: 'test2', navn: 'test1', kodeverk: 'test' },
-        ]}
-        lovReferanse="§23"
         overrideReadOnly={false}
         toggleOverstyring={() => undefined}
         erMedlemskapsPanel={false}
         erOverstyrt
         aksjonspunkter={[]}
-        behandlingsresultat={{
-          type: { kode: 'test', kodeverk: 'test' },
-        }}
-        behandlingId={1}
-        behandlingVersjon={2}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
         medlemskapFom="10.10.2010"
         status=""
         submitCallback={() => undefined}
+        periode={{
+          periode: {
+            fom: '2020-01-01',
+            tom: '2020-01-31',
+          },
+          merknadParametere: {},
+          vilkarStatus: 'IKKE_VURDERT',
+        }}
       />,
-      { messages },
     );
 
     expect(screen.getByText('Manuell overstyring av automatisk vurdering')).toBeInTheDocument();

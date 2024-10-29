@@ -1,28 +1,20 @@
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import { Behandling } from '@k9-sak-web/types';
-import { screen } from '@testing-library/react';
-import React from 'react';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import messages from '../i18n/nb_NO.json';
+import { render, screen } from '@testing-library/react';
 import VilkarresultatMedOverstyringProsessIndex from './VilkarresultatMedOverstyringProsessIndex';
 
 describe('<VilkarresultatMedOverstyringForm>', () => {
-  requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-
   it('skal rendre tabs dersom bare en periode', () => {
-    renderWithIntlAndReduxForm(
+    render(
       <VilkarresultatMedOverstyringProsessIndex
-        behandling={
-          {
-            id: 1,
-            versjon: 1,
-            type: {
-              kode: behandlingType.FØRSTEGANGSSØKNAD,
-              kodeverk: 'BEHANDLING_TYPE',
-            },
-          } as Behandling
-        }
+        behandling={{
+          id: 1,
+          versjon: 1,
+          type: behandlingType.FØRSTEGANGSSØKNAD,
+          opprettet: '2020-01-01',
+          sakstype: '-',
+          status: 'OPPRE',
+          uuid: 'testUuid',
+        }}
         medlemskap={{
           fom: '2020-05-05',
         }}
@@ -32,13 +24,13 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         toggleOverstyring={vi.fn()}
         submitCallback={vi.fn()}
         aksjonspunkter={[]}
-        avslagsarsaker={[]}
-        panelTittelKode="tittel"
+        panelTittel="tittel"
         overstyringApKode=""
         lovReferanse=""
         erOverstyrt={false}
         overrideReadOnly={false}
         visPeriodisering={false}
+        featureToggles={{}}
         vilkar={[
           {
             perioder: [
@@ -47,10 +39,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
                   fom: '2020-03-01',
                   tom: '2020-04-01',
                 },
-                vilkarStatus: {
-                  kode: 'test',
-                  kodeverk: 'test',
-                },
+                vilkarStatus: 'UDEFINERT',
                 avslagKode: 'test',
                 vurderesIBehandlingen: true,
                 merknadParametere: {
@@ -59,16 +48,12 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
               },
             ],
             overstyrbar: true,
-            vilkarType: {
-              kode: 'test',
-              kodeverk: 'test',
-            },
+            vilkarType: 'UDEFINERT',
           },
         ]}
         visAllePerioder={false}
         erMedlemskapsPanel={false}
       />,
-      { messages },
     );
 
     expect(screen.getByText('Perioder')).toBeInTheDocument();

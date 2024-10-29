@@ -55,10 +55,10 @@ interface VilkarresultatMedOverstyringProsessIndexProps {
     isEnabled: boolean;
   };
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
-  // avslagsarsaker: KodeverkMedNavn[];
   lovReferanse?: string;
   erOverstyrt: boolean;
-  panelTittelKode: string;
+  /** Skal være den faktiske teksten og ikke en id til react-intl */
+  panelTittel: string;
   overstyringApKode: string;
   erMedlemskapsPanel: boolean;
   visPeriodisering: boolean;
@@ -75,9 +75,8 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   overrideReadOnly,
   kanOverstyreAccess,
   toggleOverstyring,
-  // avslagsarsaker,
   erOverstyrt,
-  panelTittelKode,
+  panelTittel,
   overstyringApKode,
   lovReferanse = '',
   erMedlemskapsPanel,
@@ -136,7 +135,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
             lovReferanse={activeVilkår?.lovReferanse ?? lovReferanse}
             overrideReadOnly={overrideReadOnly}
             overstyringApKode={overstyringApKode}
-            panelTittelKode={panelTittelKode}
+            panelTittel={panelTittel}
             periode={activePeriode}
             toggleOverstyring={toggleOverstyring}
           />

@@ -1,4 +1,3 @@
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import type { VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
 import { TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
@@ -34,7 +33,7 @@ const VilkarBegrunnelse: FunctionComponent<OwnProps> & StaticFunctions = ({ isRe
 );
 
 VilkarBegrunnelse.buildInitialValues = (periode: VilkårPeriodeDto) => ({
-  begrunnelse: decodeHtmlEntity(periode && periode.begrunnelse ? periode.begrunnelse : ''),
+  begrunnelse: periode && periode.begrunnelse ? periode.begrunnelse : '',
 });
 
 VilkarBegrunnelse.transformValues = (values: VilkarBegrunnelseFormState) => ({
