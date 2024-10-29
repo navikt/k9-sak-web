@@ -55,6 +55,7 @@ const PeriodeInformasjon = ({ fom, tom, feilutbetaling, arsak }: OwnProps) => {
                       kodeverkNavnFraKode(
                         arsak.hendelseType,
                         KodeverkType.HENDELSE_TYPE,
+                        'kodeverkTilbake',
                       ) /* Kodeverk: kan være denne skal slå opp i et annet kodeverk, tilbake? */
                     }
                   </BodyShort>

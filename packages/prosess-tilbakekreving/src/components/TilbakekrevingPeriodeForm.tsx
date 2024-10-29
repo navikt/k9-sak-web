@@ -6,7 +6,6 @@ import {
   behandlingForm,
   behandlingFormValueSelector,
 } from '@fpsak-frontend/form';
-import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 import { AdvarselModal, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   DDMMYYYY_DATE_FORMAT,
@@ -41,6 +40,7 @@ import AktsomhetFormPanel, {
 import BelopetMottattIGodTroFormPanel, {
   InitialValuesGodTroForm,
 } from './tilbakekrevingPeriodePaneler/godTro/BelopetMottattIGodTroFormPanel';
+import { KodeverkTilbakeType } from '@k9-sak-web/lib/kodeverk/types.js';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
@@ -497,9 +497,10 @@ interface PureOwnProps {
 }
 
 const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
-  const sarligGrunnTyper = ownProps.alleKodeverk[tilbakekrevingKodeverkTyper.SARLIG_GRUNN];
-  const vilkarResultatTyper = ownProps.alleKodeverk[tilbakekrevingKodeverkTyper.VILKAR_RESULTAT];
-  const aktsomhetTyper = ownProps.alleKodeverk[tilbakekrevingKodeverkTyper.AKTSOMHET];
+  console.log('kodeverk', ownProps.alleKodeverk);
+  const sarligGrunnTyper = ownProps.alleKodeverk[KodeverkTilbakeType.SAERLIG_GRUNN];
+  const vilkarResultatTyper = ownProps.alleKodeverk[KodeverkTilbakeType.VILKAAR_RESULTAT];
+  const aktsomhetTyper = ownProps.alleKodeverk[KodeverkTilbakeType.AKTSOMHET];
   const sorterteAktsomhetTyper = AKTSOMHET_REKKEFØLGE.map((a: Aktsomhet) =>
     aktsomhetTyper.find((el: KodeverkMedNavn) => el.kode === a),
   );
