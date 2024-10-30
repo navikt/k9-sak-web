@@ -25,8 +25,7 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { BodyShort, Button, Detail, HGrid, Label } from '@navikt/ds-react';
-import KodeverkKlageType from '@k9-sak-web/lib/kodeverk/types/KodeverkKlageType.js';
-import KodeverkTilbakeType from '@k9-sak-web/lib/kodeverk/types/KodeverkTilbakeType.js';
+import { KodeverkKlageType, KodeverkTilbakeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
 import styles from './feilutbetalingInfoPanel.module.css';
 
