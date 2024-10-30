@@ -25,6 +25,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
           vilkarStatus: 'IKKE_VURDERT',
         }}
         erMedlemskapsPanel={false}
+        vilkarType="K9_VK_1"
       />,
     );
 

@@ -24,6 +24,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
           merknadParametere: {},
           vilkarStatus: 'IKKE_VURDERT',
         }}
+        vilkarType="K9_VK_1"
       />,
     );
 
