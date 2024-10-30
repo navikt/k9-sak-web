@@ -78,7 +78,6 @@ describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
   ];
 
   it('skal vise tekstfelt for begrunnelse og godkjenningsknapp', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ UTVIDET_VARSELTEKST: true }]);
     renderWithIntlAndReduxForm(
       <TilbakekrevingEditerVedtaksbrevPanel
         vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
@@ -100,7 +99,6 @@ describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
   });
 
   it('skal automatisk åpne panel som ikke har obligatorisk verdi utfylt', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ UTVIDET_VARSELTEKST: true }]);
     renderWithIntlAndReduxForm(
       <TilbakekrevingEditerVedtaksbrevPanel
         vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}

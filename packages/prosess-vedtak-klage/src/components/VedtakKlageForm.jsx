@@ -74,7 +74,7 @@ export const VedtakKlageFormImpl = ({
             <Detail>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilAvvisning' })}</Detail>
             {avvistArsaker.map(arsak => (
               <BodyShort size="small" key={arsak}>
-                {kodeverkNavnFraKode(arsak, KodeverkKlageType.KLAGE_AVVIST_AARSAK)}
+                {kodeverkNavnFraKode(arsak, KodeverkKlageType.KLAGE_AVVIST_AARSAK, 'kodeverkKlage')}
               </BodyShort>
             ))}
             <VerticalSpacer sixteenPx />
