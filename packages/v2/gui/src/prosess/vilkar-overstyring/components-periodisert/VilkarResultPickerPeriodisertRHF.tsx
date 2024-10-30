@@ -87,7 +87,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
   return (
     <Box paddingBlock={'4 0'} paddingInline={'4 0'}>
       {readOnly && erVilkarOk !== undefined && (
-        <Alert variant={erVilkarOk === vilkårStatusPeriodisert.OPPFYLT ? 'success' : 'error'}>
+        <Alert variant={erVilkarOk === vilkårStatusPeriodisert.OPPFYLT ? 'success' : 'error'} inline>
           {erVilkarOk === vilkårStatusPeriodisert.OPPFYLT && (
             <BodyShort size="small">{customVilkarOppfyltText}</BodyShort>
           )}

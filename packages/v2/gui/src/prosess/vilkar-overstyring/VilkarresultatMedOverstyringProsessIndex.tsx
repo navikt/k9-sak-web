@@ -33,7 +33,7 @@ const hentAktivePerioderFraVilkar = (vilkar: VilkårMedPerioderDto[], visAllePer
     .reverse();
 };
 
-interface VilkarresultatMedOverstyringProsessIndexProps {
+export interface VilkarresultatMedOverstyringProsessIndexProps {
   behandling: BehandlingDto;
   medlemskap?: {
     fom: string;
