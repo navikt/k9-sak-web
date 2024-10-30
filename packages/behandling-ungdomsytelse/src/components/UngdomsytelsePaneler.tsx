@@ -2,13 +2,13 @@ import { BehandlingPaVent, Rettigheter, SettPaVentParams } from '@k9-sak-web/beh
 import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, FeatureToggles } from '@k9-sak-web/types';
 import FetchedData from '../types/FetchedData';
 import UngdomsytelseProsess from './UngdomsytelseProsess';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 
 interface OwnProps {
   fetchedData: FetchedData;
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
   behandling: Behandling;
-  alleKodeverk: AlleKodeverk;
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;
@@ -27,7 +27,6 @@ const UngdomsytelsePaneler = ({
   fagsak,
   fagsakPerson,
   behandling,
-  alleKodeverk,
   rettigheter,
   valgtProsessSteg,
   oppdaterProsessStegOgFaktaPanelIUrl,
@@ -40,12 +39,13 @@ const UngdomsytelsePaneler = ({
   arbeidsgiverOpplysningerPerId,
   featureToggles,
 }: OwnProps) => {
+  const { kodeverk } = useKodeverkContext();
   return (
     <>
       <BehandlingPaVent
         behandling={behandling}
         aksjonspunkter={fetchedData?.aksjonspunkter}
-        kodeverk={alleKodeverk}
+        kodeverk={kodeverk}
         settPaVent={settPaVent}
       />
 
@@ -54,7 +54,7 @@ const UngdomsytelsePaneler = ({
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
         behandling={behandling}
-        alleKodeverk={alleKodeverk}
+        alleKodeverk={kodeverk}
         rettigheter={rettigheter}
         valgtProsessSteg={valgtProsessSteg}
         valgtFaktaSteg={valgtFaktaSteg}

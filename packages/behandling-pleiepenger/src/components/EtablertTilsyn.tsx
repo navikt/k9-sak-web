@@ -11,17 +11,7 @@ import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 import { EtablertTilsynContainer } from '@k9-sak-web/fakta-etablert-tilsyn';
 
-export default ({
-  aksjonspunkter,
-  behandling,
-  readOnly,
-  submitCallback,
-}: {
-  aksjonspunkter: Aksjonspunkt[];
-  behandling: BehandlingAppKontekst;
-  readOnly: boolean;
-  submitCallback: (params: any) => void;
-}) => {
+export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandlerFn(status, addErrorMessage, locationHeader);

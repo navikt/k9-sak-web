@@ -27,7 +27,9 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal rendre komponent korrekt', () => {
-    const behandlingstyper = [behandlingType.FORSTEGANGSSOKNAD];
+    const behandlingstyper = [
+      { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
+    ];
     renderWithIntlAndReduxForm(
       <NyBehandlingModal
         {...reduxFormPropsMock}
@@ -36,7 +38,9 @@ describe('<NyBehandlingModal>', () => {
         intl={intlMock}
         behandlingTyper={behandlingstyper}
         behandlingstyper={behandlingstyper}
-        behandlingArsakTyper={[behandlingArsakType.FEIL_I_LOVANDVENDELSE]}
+        behandlingArsakTyper={[
+          { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
+        ]}
         enabledBehandlingstyper={behandlingstyper}
         erTilbakekrevingAktivert={false}
         saksnummer={123}
@@ -67,7 +71,9 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal bruke submit-callback når en trykker lagre', async () => {
-    const behandlingstyper = [behandlingType.FORSTEGANGSSOKNAD];
+    const behandlingstyper = [
+      { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
+    ];
     renderWithIntlAndReduxForm(
       <NyBehandlingModal
         {...reduxFormPropsMock}
@@ -76,7 +82,9 @@ describe('<NyBehandlingModal>', () => {
         intl={intlMock}
         behandlingTyper={behandlingstyper}
         behandlingstyper={behandlingstyper}
-        behandlingArsakTyper={[behandlingArsakType.FEIL_I_LOVANDVENDELSE]}
+        behandlingArsakTyper={[
+          { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
+        ]}
         enabledBehandlingstyper={behandlingstyper}
         sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
         sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
@@ -153,7 +161,9 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal vise checkbox for behandling etter klage når førstegangsbehandling er valgt', () => {
-    const behandlingstyper = [behandlingType.FORSTEGANGSSOKNAD];
+    const behandlingstyper = [
+      { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
+    ];
     renderWithIntlAndReduxForm(
       <NyBehandlingModal
         {...reduxFormPropsMock}
@@ -162,7 +172,9 @@ describe('<NyBehandlingModal>', () => {
         intl={intlMock}
         behandlingTyper={behandlingstyper}
         behandlingstyper={behandlingstyper}
-        behandlingArsakTyper={[behandlingArsakType.FEIL_I_LOVANDVENDELSE]}
+        behandlingArsakTyper={[
+          { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
+        ]}
         enabledBehandlingstyper={behandlingstyper}
         sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
         sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
@@ -192,7 +204,7 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal vise dropdown for revurderingsårsaker når revurdering er valgt', () => {
-    const behandlingstyper = [behandlingType.REVURDERING];
+    const behandlingstyper = [{ kode: behandlingType.REVURDERING, navn: 'REVURDERING', kodeverk: 'BEHANDLING_TYPE' }];
     renderWithIntlAndReduxForm(
       <NyBehandlingModal
         {...reduxFormPropsMock}
@@ -201,7 +213,9 @@ describe('<NyBehandlingModal>', () => {
         intl={intlMock}
         behandlingTyper={behandlingstyper}
         behandlingstyper={behandlingstyper}
-        behandlingArsakTyper={[behandlingArsakType.FEIL_I_LOVANDVENDELSE]}
+        behandlingArsakTyper={[
+          { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
+        ]}
         enabledBehandlingstyper={behandlingstyper}
         sjekkOmTilbakekrevingKanOpprettes={vi.fn()}
         sjekkOmTilbakekrevingRevurderingKanOpprettes={vi.fn()}
@@ -232,7 +246,9 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal rendre steg-dropdown når revurdering er valgt', () => {
-    const behandlingstyper = [behandlingType.FORSTEGANGSSOKNAD];
+    const behandlingstyper = [
+      { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
+    ];
     renderWithIntlAndReduxForm(
       <NyBehandlingModal
         {...reduxFormPropsMock}
@@ -241,7 +257,9 @@ describe('<NyBehandlingModal>', () => {
         intl={intlMock}
         behandlingTyper={behandlingstyper}
         behandlingstyper={behandlingstyper}
-        behandlingArsakTyper={[behandlingArsakType.FEIL_I_LOVANDVENDELSE]}
+        behandlingArsakTyper={[
+          { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
+        ]}
         enabledBehandlingstyper={behandlingstyper}
         erTilbakekrevingAktivert={false}
         saksnummer={123}
@@ -262,17 +280,21 @@ describe('<NyBehandlingModal>', () => {
           kanRevurderingOpprettes: true,
         }}
         valgtBehandlingTypeKode={behandlingType.REVURDERING}
-        steg="inngangsvilkår"
         erTilbakekreving={false}
       />,
     );
-    expect(screen.getAllByRole('combobox').length).toBe(3);
-    expect(screen.getByRole('option', { name: 'Revurderingsbehandling' })).toBeInTheDocument();
-    expect(screen.getByRole('option', { name: 'FEIL_I_LOVANDVENDELSE' })).toBeInTheDocument();
+
+    expect(screen.getAllByRole('combobox').length).toBe(2);
+    expect(screen.getByRole('option', { name: 'Fra inngangsvilkår (full revurdering)' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('option', { name: 'Fra uttak, refusjon og fordeling-steget (delvis revurdering)' }),
+    ).toBeInTheDocument();
   });
 
   it('skal rendre årsak for revurdering fra steg når revurdering fra inngangsvilkår er valgt', () => {
-    const behandlingstyper = [behandlingType.FORSTEGANGSSOKNAD];
+    const behandlingstyper = [
+      { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
+    ];
     renderWithIntlAndReduxForm(
       <NyBehandlingModal
         {...reduxFormPropsMock}
@@ -281,7 +303,9 @@ describe('<NyBehandlingModal>', () => {
         intl={intlMock}
         behandlingTyper={behandlingstyper}
         behandlingstyper={behandlingstyper}
-        behandlingArsakTyper={[behandlingArsakType.FEIL_I_LOVANDVENDELSE]}
+        behandlingArsakTyper={[
+          { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
+        ]}
         enabledBehandlingstyper={behandlingstyper}
         erTilbakekrevingAktivert={false}
         saksnummer={123}
@@ -312,7 +336,9 @@ describe('<NyBehandlingModal>', () => {
   });
 
   it('skal rendre fra- og til-dato når revurdering fra uttakssteg er valgt', () => {
-    const behandlingstyper = [behandlingType.FORSTEGANGSSOKNAD];
+    const behandlingstyper = [
+      { kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' },
+    ];
     renderWithIntlAndReduxForm(
       <NyBehandlingModal
         {...reduxFormPropsMock}
@@ -321,7 +347,9 @@ describe('<NyBehandlingModal>', () => {
         intl={intlMock}
         behandlingTyper={behandlingstyper}
         behandlingstyper={behandlingstyper}
-        behandlingArsakTyper={[behandlingArsakType.FEIL_I_LOVANDVENDELSE]}
+        behandlingArsakTyper={[
+          { kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
+        ]}
         enabledBehandlingstyper={behandlingstyper}
         erTilbakekrevingAktivert={false}
         saksnummer={123}

@@ -11,8 +11,8 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrtStatus = ({ vilkar }: { vilkar: Vilkar[] }) => {
     return vilkar
-      ?.find(v => v.vilkarType.kode === vilkarType.UNGDOMSPROGRAMVILKARET)
-      ?.perioder?.some(p => p.vilkarStatus.kode === vilkarUtfallType.OPPFYLT)
+      ?.find(v => v.vilkarType === vilkarType.UNGDOMSPROGRAMVILKARET)
+      ?.perioder?.some(p => p.vilkarStatus === vilkarUtfallType.OPPFYLT)
       ? vilkarUtfallType.OPPFYLT
       : vilkarUtfallType.IKKE_VURDERT;
   };
