@@ -9,7 +9,7 @@ class OmsorgenForPanelDef extends ProsessStegPanelDef {
 
   getId = () => 'OMSORGENFOR';
 
-  getTekstKode = () => 'Inngangsvilkar.OmsorgenFor';
+  getTekstKode = () => 'Omsorg';
 
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
