@@ -25,6 +25,12 @@ const config: StorybookConfig = {
     name: '@storybook/react-vite',
     options: {},
   },
+  viteFinal: async (config) => {
+    if (config.resolve) {
+      config.resolve.preserveSymlinks = true;
+    }
+    return config;
+  },
 };
 
 export default config;
