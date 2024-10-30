@@ -126,9 +126,6 @@ export default ({ mode }) => {
         );
       },
     },
-    resolve: {
-      preserveSymlinks: true,
-    },
     optimizeDeps: {
       include: ['@k9-sak-web/lib'],
     },
