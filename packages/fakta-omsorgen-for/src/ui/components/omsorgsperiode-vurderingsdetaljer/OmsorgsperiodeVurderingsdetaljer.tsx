@@ -1,7 +1,6 @@
 import { Box, Margin, DetailView, LabelledContent, LinkButton, AssessedBy } from '@navikt/ft-plattform-komponenter';
 import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import Relasjon from '../../../types/Relasjon';
 import Ytelsestype from '../../../types/Ytelsestype';
@@ -22,7 +21,6 @@ const OmsorgsperiodeVurderingsdetaljer = ({
 }: OmsorgsperiodeVurderingsdetaljerProps): JSX.Element => {
   const intl = useIntl();
   const { sakstype } = useContext(ContainerContext);
-  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   const erOMP = sakstype === Ytelsestype.OMP;
   const begrunnelseRenderer = () => {
     let label = intl.formatMessage({ id: 'vurdering.hjemmel' });
@@ -44,7 +42,7 @@ const OmsorgsperiodeVurderingsdetaljer = ({
           content={<span className="whitespace-pre-wrap">{begrunnelse}</span>}
           indentContent
         />
-        <AssessedBy name={hentSaksbehandlerNavn(omsorgsperiode?.vurdertAv)} date={omsorgsperiode?.vurdertTidspunkt} />
+        <AssessedBy ident={omsorgsperiode?.vurdertAv} date={omsorgsperiode?.vurdertTidspunkt} />
       </>
     );
   };

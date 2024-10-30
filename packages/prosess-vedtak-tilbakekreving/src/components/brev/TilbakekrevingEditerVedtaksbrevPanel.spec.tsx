@@ -5,6 +5,10 @@ import TilbakekrevingEditerVedtaksbrevPanel from './TilbakekrevingEditerVedtaksb
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
 describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
+  beforeEach(() => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'UTVIDET_VARSELTEKST', value: true }]);
+  });
+
   const vedtaksbrevAvsnitt = [
     {
       avsnittstype: 'OPPSUMMERING',

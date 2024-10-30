@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import FeatureToggles from '@k9-sak-web/types/src/featureTogglesTsType';
+import { useMemo } from 'react';
 
 const useFeatureToggles = (): [FeatureToggles] => {
   const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
@@ -16,7 +16,7 @@ const useFeatureToggles = (): [FeatureToggles] => {
     [featureTogglesData],
   );
 
-  return [featureToggles];
+  return [featureToggles ?? {}];
 };
 
 export default useFeatureToggles;

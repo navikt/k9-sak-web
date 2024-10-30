@@ -1,11 +1,14 @@
-import type { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import {
+  type status as GeneratedAksjonspunktStatusEnumUnion,
+  status as generatedAksjonspunktStatus,
+} from '../generated';
 
-export type AksjonspunktStatus = Exclude<AksjonspunktDto['status'], undefined>;
+export type AksjonspunktStatus = GeneratedAksjonspunktStatusEnumUnion;
 
 export type AksjonspunktStatusName = 'AVBRUTT' | 'OPPRETTET' | 'UTFORT';
 
 export const aksjonspunktStatus: Readonly<Record<AksjonspunktStatusName, AksjonspunktStatus>> = {
-  OPPRETTET: 'OPPR',
-  UTFORT: 'UTFO',
-  AVBRUTT: 'AVBR',
+  OPPRETTET: generatedAksjonspunktStatus.OPPR,
+  UTFORT: generatedAksjonspunktStatus.UTFO,
+  AVBRUTT: generatedAksjonspunktStatus.AVBR,
 };

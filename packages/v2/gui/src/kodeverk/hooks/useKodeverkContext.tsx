@@ -19,22 +19,20 @@ export const useKodeverkContext = () => {
 
   const { behandlingType, kodeverk, klageKodeverk, tilbakeKodeverk } = kodeverkContext;
 
-  const hentKodeverkForKode: HentKodeverkForKodeType = (kodeverkType, kilde = undefined) => {
+  const hentKodeverkForKode: HentKodeverkForKodeType = (kodeverkType, kilde) => {
     let kodeverkForKilde: AlleKodeverk | undefined;
 
-    if (kilde !== undefined) {
-      switch (kilde) {
-        case 'kodeverkTilbake':
-          kodeverkForKilde = tilbakeKodeverk;
-          break;
-        case 'kodeverkKlage':
-          kodeverkForKilde = klageKodeverk;
-          break;
-        case 'kodeverk':
-        default:
-          kodeverkForKilde = kodeverk;
-          break;
-      }
+    switch (kilde) {
+      case 'kodeverkTilbake':
+        kodeverkForKilde = tilbakeKodeverk;
+        break;
+      case 'kodeverkKlage':
+        kodeverkForKilde = klageKodeverk;
+        break;
+      case 'kodeverk':
+      default:
+        kodeverkForKilde = kodeverk;
+        break;
     }
 
     if (kodeverkForKilde === undefined) {
@@ -78,7 +76,7 @@ export const useKodeverkContext = () => {
    * Returnerer en funksjon for oppslag i kodeverk som kan sendes ned til eldre komponenter som for eksempel
    * ikke har tilgang til kodeverkContext eller ikke kan bruke hooks
    */
-  const getKodeverkNavnFraKodeFn: GetKodeverkNavnFraKodeFnType = (kilde = undefined) => {
+  const getKodeverkNavnFraKodeFn: GetKodeverkNavnFraKodeFnType = kilde => {
     let kodeverkForKilde: AlleKodeverk | undefined;
 
     switch (kilde) {

@@ -2,9 +2,8 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import { VilkarresultatMedOverstyringForm } from './VilkarresultatMedOverstyringForm';
-
 import messages from '../../i18n/nb_NO.json';
+import { VilkarresultatMedOverstyringForm } from './VilkarresultatMedOverstyringForm';
 
 describe('<VilkarresultatMedOverstyringForm>', () => {
   it('skal rendre form med knapp når vilkåret er overstyrt', () => {

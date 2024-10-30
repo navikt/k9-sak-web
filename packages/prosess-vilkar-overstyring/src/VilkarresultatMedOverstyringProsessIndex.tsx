@@ -7,13 +7,12 @@ import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import { SetStateAction, useEffect, useState } from 'react';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
+import messages from '../i18n/nb_NO.json';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringFormPeriodisert';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
 import VilkarresultatMedOverstyringHeader from './components/VilkarresultatMedOverstyringHeader';
 
 import styles from './vilkarresultatMedOverstyringProsessIndex.module.css';
-
-import messages from '../i18n/nb_NO.json';
 
 const cx = classNames.bind(styles);
 
@@ -119,7 +118,6 @@ const VilkarresultatMedOverstyringProsessIndex = ({
             overstyringApKode={overstyringApKode}
             panelTittelKode={panelTittelKode}
             periode={activePeriode}
-            status={activePeriode.vilkarStatus}
             toggleOverstyring={toggleOverstyring}
           />
           {featureToggles?.OMSORGEN_FOR_PERIODISERT && (

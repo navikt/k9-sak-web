@@ -13,7 +13,6 @@ import {
 import React, { useContext } from 'react';
 
 import { useIntl } from 'react-intl';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import DokumentLink from '../components/DokumentLink';
 import styles from './noedvendighetFerdigVisning.module.css';
 
@@ -23,8 +22,6 @@ interface OwnProps {
 }
 
 const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
-  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
-
   const { readOnly, opplaeringDokumenter } = useContext(FaktaOpplaeringContext);
   const intl = useIntl();
 
@@ -68,7 +65,7 @@ const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
           content={<span className="whitespace-pre-wrap">{vurdering.begrunnelse}</span>}
           indentContent
         />
-        <AssessedBy name={hentSaksbehandlerNavn(vurdering.vurdertAv)} date={vurdering?.vurdertTidspunkt} />
+        <AssessedBy ident={vurdering.vurdertAv} date={vurdering?.vurdertTidspunkt} />
       </Box>
       <Box marginTop={Margin.xLarge}>
         <LabelledContent

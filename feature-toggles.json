@@ -72,10 +72,6 @@
     "value": "${OVERSTYR_BEREGNING}"
   },
   {
-    "key": "OVERSTYRING_UTTAK",
-    "value": "${OVERSTYRING_UTTAK}"
-  },
-  {
     "key": "NYE_NOKKELTALL",
     "value": "${NYE_NOKKELTALL}"
   },
@@ -94,5 +90,9 @@
   {
     "key": "AUTOMATISK_VURDERT_MEDLEMSKAP",
     "value": "${AUTOMATISK_VURDERT_MEDLEMSKAP}"
+  },
+  {
+    "key": "DELVIS_REVURDERING",
+    "value": "${DELVIS_REVURDERING}"
   }
 ]

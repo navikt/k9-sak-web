@@ -13,7 +13,6 @@ import {
   LinkButton,
   Margin,
 } from '@navikt/ft-plattform-komponenter';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
 import DokumentLink from '../components/DokumentLink';
@@ -25,8 +24,6 @@ interface OwnProps {
 }
 
 const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
-  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
-
   const { readOnly, opplaeringDokumenter } = useContext<FaktaOpplaeringContextTypes>(FaktaOpplaeringContext);
   const intl = useIntl();
 
@@ -69,7 +66,7 @@ const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => 
           content={<span className="whitespace-pre-wrap">{vurdering.begrunnelse}</span>}
           indentContent
         />
-        <AssessedBy name={hentSaksbehandlerNavn(vurdering.vurdertAv)} date={vurdering?.vurdertTidspunkt} />
+        <AssessedBy ident={vurdering.vurdertAv} date={vurdering?.vurdertTidspunkt} />
       </Box>
       <Box marginTop={Margin.xLarge}>
         <LabelledContent
