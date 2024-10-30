@@ -2,7 +2,7 @@ import { DDMMYYYY_DATE_FORMAT, calcDaysAndWeeks, formatCurrencyNoKr, initializeD
 import { BodyShort, HGrid, Label } from '@navikt/ds-react';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { FormattedMessage } from 'react-intl';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType';
 import DataForPeriode from '../../types/dataForPeriodeTsType';
 
 import styles from './periodeInformasjon.module.css';

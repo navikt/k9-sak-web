@@ -1,8 +1,8 @@
 import { Label } from '@navikt/ds-react';
 import { Location } from 'history';
 import React from 'react';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
-import { KodeverkNavnFraKodeFnType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType';
+import { KodeverkNavnFraKodeFnType } from '@k9-sak-web/lib/kodeverk/types';
 import { NavLink } from 'react-router-dom';
 import { scrollUp } from './historikkUtils';
 

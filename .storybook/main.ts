@@ -1,3 +1,4 @@
+import { resolve } from 'path';
 import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
@@ -26,9 +27,14 @@ const config: StorybookConfig = {
     options: {},
   },
   viteFinal: async (config) => {
-    if (config.resolve) {
-      config.resolve.preserveSymlinks = true;
-    }
+    config.resolve = {
+      ...config.resolve,
+      alias: {
+        ...config.resolve?.alias,
+        '@k9-sak-web/lib': resolve(__dirname, '../packages/v2/lib/src'),
+      },
+    };
+
     return config;
   },
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType';
 import { Label } from '@navikt/ds-react';
 import HistorikkMal from '../HistorikkMalTsType';
 import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';

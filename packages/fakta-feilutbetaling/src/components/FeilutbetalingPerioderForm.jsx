@@ -7,7 +7,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import styles from './feilutbetalingPerioderTable.module.css';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types';
 
 const getHendelseUndertyper = (årsakNavn, årsaker) => {
   const årsak = årsaker.find(a => a.hendelseType === årsakNavn);

@@ -40,7 +40,7 @@ import AktsomhetFormPanel, {
 import BelopetMottattIGodTroFormPanel, {
   InitialValuesGodTroForm,
 } from './tilbakekrevingPeriodePaneler/godTro/BelopetMottattIGodTroFormPanel';
-import { KodeverkTilbakeType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KodeverkTilbakeType } from '@k9-sak-web/lib/kodeverk/types';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);

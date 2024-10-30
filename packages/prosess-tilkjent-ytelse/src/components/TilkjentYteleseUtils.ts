@@ -1,4 +1,4 @@
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { BeregningsresultatPeriodeAndelDto } from '@navikt/k9-sak-typescript-client';
 import { NyPeriodeFormAndeler } from './manuellePerioder/FormState';

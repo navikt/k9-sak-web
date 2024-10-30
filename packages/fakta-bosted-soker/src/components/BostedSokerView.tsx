@@ -7,7 +7,7 @@ import { BodyShort, Detail, HGrid, Label, Tag } from '@navikt/ds-react';
 
 import { Adresse, BostedSokerPersonopplysninger } from '../types';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType';
 import styles from './bostedSokerView.module.css';
 
 interface OwnProps {

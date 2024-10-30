@@ -6,7 +6,7 @@ import {
   type HentKodeverkForKodeType,
   type KodeverkNavnFraKodeType,
   type KodeverkNavnFraUndertypeKodeType,
-} from '@k9-sak-web/lib/kodeverk/types.js';
+} from '@k9-sak-web/lib/kodeverk/types';
 import { behandlingType as klageBehandlingstyper } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { KodeverkContext } from '../context/KodeverkContext';
 

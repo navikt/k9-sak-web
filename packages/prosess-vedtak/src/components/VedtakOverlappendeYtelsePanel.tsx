@@ -7,7 +7,7 @@ import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { Accordion, Alert, BodyLong, Checkbox, CheckboxGroup, Heading, Tag } from '@navikt/ds-react';
 import { useFormikContext } from 'formik';
 import React from 'react';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType';
 import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types/KodeverkV2.js';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { sorterOverlappendeRader } from '../utils/periodeUtils';

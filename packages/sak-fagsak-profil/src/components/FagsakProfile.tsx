@@ -3,7 +3,7 @@ import { FlexColumn, FlexContainer, FlexRow, Tooltip, VerticalSpacer } from '@fp
 import { BodyShort, Heading, Tag } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 
 const visSakDekningsgrad = (saksKode: string, dekningsgrad?: number): boolean => {

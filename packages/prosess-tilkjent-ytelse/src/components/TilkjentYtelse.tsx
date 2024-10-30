@@ -6,7 +6,7 @@ import {
   calcDaysAndWeeksWithWeekends,
   initializeDate,
 } from '@fpsak-frontend/utils';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { BeregningsresultatPeriodeDto } from '@navikt/k9-sak-typescript-client';
 import moment from 'moment';
