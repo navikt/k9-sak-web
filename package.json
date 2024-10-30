@@ -43,6 +43,7 @@
   ],
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
+    "@k9-sak-web/lib": "workspace:^",
     "@navikt/aksel-icons": "7.4.0",
     "@navikt/ds-css": "7.4.0",
     "@navikt/ds-react": "7.4.0",

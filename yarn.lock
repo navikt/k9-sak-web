@@ -4098,7 +4098,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/lib@1.0.0, @k9-sak-web/lib@workspace:packages/v2/lib":
+"@k9-sak-web/lib@1.0.0, @k9-sak-web/lib@workspace:^, @k9-sak-web/lib@workspace:packages/v2/lib":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/lib@workspace:packages/v2/lib"
   languageName: unknown
@@ -12865,6 +12865,7 @@ __metadata:
   resolution: "k9-sak-web@workspace:."
   dependencies:
     "@hookform/error-message": ^2.0.1
+    "@k9-sak-web/lib": "workspace:^"
     "@navikt/aksel-icons": 7.4.0
     "@navikt/ds-css": 7.4.0
     "@navikt/ds-react": 7.4.0
