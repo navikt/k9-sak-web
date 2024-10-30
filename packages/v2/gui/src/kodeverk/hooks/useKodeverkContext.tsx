@@ -81,19 +81,17 @@ export const useKodeverkContext = () => {
   const getKodeverkNavnFraKodeFn: GetKodeverkNavnFraKodeFnType = (kilde = undefined) => {
     let kodeverkForKilde: AlleKodeverk | undefined;
 
-    if (kilde !== undefined) {
-      switch (kilde) {
-        case 'kodeverkTilbake':
-          kodeverkForKilde = tilbakeKodeverk;
-          break;
-        case 'kodeverkKlage':
-          kodeverkForKilde = klageKodeverk;
-          break;
-        case 'kodeverk':
-        default:
-          kodeverkForKilde = kodeverk;
-          break;
-      }
+    switch (kilde) {
+      case 'kodeverkTilbake':
+        kodeverkForKilde = tilbakeKodeverk;
+        break;
+      case 'kodeverkKlage':
+        kodeverkForKilde = klageKodeverk;
+        break;
+      case 'kodeverk':
+      default:
+        kodeverkForKilde = kodeverk;
+        break;
     }
 
     if (kodeverkForKilde === undefined) {
