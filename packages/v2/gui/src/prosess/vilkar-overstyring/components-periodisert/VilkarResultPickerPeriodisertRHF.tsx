@@ -1,8 +1,8 @@
 import type { AksjonspunktDto, VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
 import { vilkårStatusPeriodisert } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatusPeriodisert.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { type KodeverkObject, KodeverkType, type Periode } from '@k9-sak-web/lib/kodeverk/types.js';
-import { Alert, BodyShort, Box, Label } from '@navikt/ds-react';
+import { type KodeverkMedUndertype, KodeverkType, type Periode } from '@k9-sak-web/lib/kodeverk/types.js';
+import { Alert, BodyShort, Box } from '@navikt/ds-react';
 import { Datepicker, RadioGroupPanel, SelectField } from '@navikt/ft-form-hooks';
 import { hasValidDate, required } from '@navikt/ft-form-validators';
 import { isAfter, isBefore, parse } from 'date-fns';
@@ -38,6 +38,7 @@ interface OwnProps {
   periodeTom: string;
   valgtPeriodeFom: string;
   valgtPeriodeTom: string;
+  vilkarType: string;
 }
 
 interface StaticFunctions {
@@ -68,10 +69,11 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
   periodeTom,
   valgtPeriodeFom,
   valgtPeriodeTom,
+  vilkarType,
 }) => {
   const { hentKodeverkForKode } = useKodeverkContext();
-  const avslagsarsaker = hentKodeverkForKode(KodeverkType.AVSLAGSARSAK) as KodeverkObject[];
-
+  const avslagsarsaker = hentKodeverkForKode(KodeverkType.AVSLAGSARSAK) as KodeverkMedUndertype;
+  const avslagsårsakerForVilkar = avslagsarsaker[vilkarType];
   const ugyldigeFomDatoer = () => [
     (date: Date) => isBefore(date, parse(periodeFom, 'yyyy-MM-dd', new Date())),
     (date: Date) => isAfter(date, parse(valgtPeriodeTom, 'yyyy-MM-dd', new Date())),
@@ -103,7 +105,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
           radios={[
             {
               value: vilkårStatusPeriodisert.OPPFYLT,
-              label: <Label>{customVilkarOppfyltText}</Label>,
+              label: customVilkarOppfyltText,
             },
             ...(visPeriodisering
               ? [
@@ -123,7 +125,7 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
               : []),
             {
               value: vilkårStatusPeriodisert.IKKE_OPPFYLT,
-              label: <Label>{customVilkarIkkeOppfyltText}</Label>,
+              label: customVilkarIkkeOppfyltText,
             },
           ]}
         />
@@ -131,15 +133,17 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
 
       {erVilkarOk !== undefined && (
         <>
-          {erVilkarOk === vilkårStatusPeriodisert.DELVIS_IKKE_OPPFYLT && avslagsarsaker && (
+          {erVilkarOk === vilkårStatusPeriodisert.DELVIS_IKKE_OPPFYLT && avslagsårsakerForVilkar && (
             <SelectField
               name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
               label="Avslagsårsak"
-              selectValues={avslagsarsaker.map(aa => (
-                <option key={aa.kode} value={aa.kode}>
-                  {aa.navn}
-                </option>
-              ))}
+              selectValues={avslagsårsakerForVilkar
+                .filter((avslagsårsak): avslagsårsak is string => typeof avslagsårsak === 'string')
+                .map(avslagsårsak => (
+                  <option key={avslagsårsak} value={avslagsårsak}>
+                    {avslagsårsak}
+                  </option>
+                ))}
               readOnly={readOnly}
               validate={[required]}
             />
@@ -164,16 +168,18 @@ const VilkarResultPickerPeriodisertRHF: FunctionComponent<OwnProps> & StaticFunc
             </Box>
           )}
 
-          {erVilkarOk === vilkårStatusPeriodisert.IKKE_OPPFYLT && avslagsarsaker && (
+          {erVilkarOk === vilkårStatusPeriodisert.IKKE_OPPFYLT && avslagsårsakerForVilkar && (
             <Box marginBlock={'2 0'}>
               <SelectField
                 name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
                 label="Avslagsårsak"
-                selectValues={avslagsarsaker.map(aa => (
-                  <option key={aa.kode} value={aa.kode}>
-                    {aa.navn}
-                  </option>
-                ))}
+                selectValues={avslagsårsakerForVilkar
+                  .filter((avslagsårsak): avslagsårsak is string => typeof avslagsårsak === 'string')
+                  .map(avslagsårsak => (
+                    <option key={avslagsårsak} value={avslagsårsak}>
+                      {avslagsårsak}
+                    </option>
+                  ))}
                 readOnly={readOnly}
                 validate={[required]}
               />

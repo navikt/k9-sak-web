@@ -20,6 +20,7 @@ interface VilkarresultatMedBegrunnelseProps {
   valgtPeriodeFom: string;
   valgtPeriodeTom: string;
   opprettetAv?: string;
+  vilkarType: string;
 }
 
 interface StaticFunctions {
@@ -52,6 +53,7 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
   valgtPeriodeFom,
   valgtPeriodeTom,
   opprettetAv,
+  vilkarType,
 }: VilkarresultatMedBegrunnelseProps) => {
   return (
     <>
@@ -62,41 +64,13 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
         </Box>
       )}
       <VilkarResultPickerPeriodisertRHF
-        customVilkarOppfyltText={
-          customVilkarOppfyltText ?? 'Vilkåret er oppfylt'
-          // <FormattedMessage
-          //   id={customVilkarOppfyltText ? customVilkarOppfyltText.id : 'VilkarresultatMedOverstyringForm.ErOppfylt'}
-          //   values={
-          //     customVilkarOppfyltText
-          //       ? {
-          //           b: chunks => <b>{chunks}</b>,
-          //           ...customVilkarIkkeOppfyltText?.values,
-          //         }
-          //       : { b: chunks => <b>{chunks}</b> }
-          //   }
-          // />
-        }
+        customVilkarOppfyltText={customVilkarOppfyltText ?? 'Vilkåret er oppfylt'}
         customVilkarIkkeOppfyltText={
           customVilkarIkkeOppfyltText ?? (
             <>
               Vilkåret er <b>ikke</b> oppfylt
             </>
           )
-          // <FormattedMessage
-          //   id={
-          //     customVilkarIkkeOppfyltText
-          //       ? customVilkarOppfyltText?.id
-          //       : 'VilkarresultatMedOverstyringForm.VilkarIkkeOppfylt'
-          //   }
-          //   values={
-          //     customVilkarIkkeOppfyltText
-          //       ? {
-          //           b: chunks => <b>{chunks}</b>,
-          //           ...customVilkarIkkeOppfyltText.values,
-          //         }
-          //       : { b: chunks => <b>{chunks}</b> }
-          //   }
-          // />
         }
         erVilkarOk={erVilkarOk}
         readOnly={readOnly}
@@ -107,6 +81,7 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
         valgtPeriodeFom={valgtPeriodeFom}
         valgtPeriodeTom={valgtPeriodeTom}
         periodeVilkarStatus={periodeVilkarStatus}
+        vilkarType={vilkarType}
       />
     </>
   );

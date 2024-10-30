@@ -1,6 +1,6 @@
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import { KodeverkType, type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
-import { Alert, BodyShort, Box, Label } from '@navikt/ds-react';
+import { KodeverkType, type KodeverkMedUndertype, type KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
+import { Alert, BodyShort, Box } from '@navikt/ds-react';
 import { Datepicker, RadioGroupPanel, SelectField } from '@navikt/ft-form-hooks';
 import { hasValidDate, required } from '@navikt/ft-form-validators';
 import { type AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
@@ -27,6 +27,7 @@ interface OwnProps {
   readOnly: boolean;
   erMedlemskapsPanel?: boolean;
   fieldNamePrefix?: string;
+  vilkarType: string;
 }
 
 interface StaticFunctions {
@@ -50,9 +51,12 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
   readOnly,
   erMedlemskapsPanel = false,
   fieldNamePrefix,
+  vilkarType,
 }) => {
   const { hentKodeverkForKode } = useKodeverkContext();
-  const avslagsarsaker = hentKodeverkForKode(KodeverkType.AVSLAGSARSAK) as KodeverkObject[];
+  const avslagsarsaker = hentKodeverkForKode(KodeverkType.AVSLAGSARSAK) as KodeverkMedUndertype;
+  const avslagsårsakerForVilkar = avslagsarsaker[vilkarType];
+
   return (
     <Box paddingBlock={'4 0'} paddingInline={'0 4'}>
       {readOnly && erVilkarOk !== undefined && (
@@ -69,26 +73,30 @@ const VilkarResultPickerRHF: FunctionComponent<OwnProps> & StaticFunctions = ({
           radios={[
             {
               value: 'true',
-              label: <Label>{customVilkarOppfyltText}</Label>,
+              label: customVilkarOppfyltText,
             },
             {
               value: 'false',
-              label: <Label>{customVilkarIkkeOppfyltText}</Label>,
+              label: customVilkarIkkeOppfyltText,
             },
           ]}
         />
       )}
-      {erVilkarOk !== undefined && !erVilkarOk && avslagsarsaker && (
+      {erVilkarOk !== undefined && !erVilkarOk && avslagsårsakerForVilkar && (
         <>
           <Box marginBlock={'4 0'}>
             <SelectField
               name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
               label="Avslagsårsak"
-              selectValues={avslagsarsaker.map(aa => (
-                <option key={aa.kode} value={aa.kode}>
-                  {aa.navn}
-                </option>
-              ))}
+              selectValues={avslagsårsakerForVilkar
+                .filter(
+                  (avslagsårsak): avslagsårsak is KodeverkObject => (avslagsårsak as KodeverkObject).kode !== undefined,
+                )
+                .map(avslagsårsak => (
+                  <option key={avslagsårsak.kode} value={avslagsårsak.kode}>
+                    {avslagsårsak.navn}
+                  </option>
+                ))}
               readOnly={readOnly}
               validate={[required]}
             />

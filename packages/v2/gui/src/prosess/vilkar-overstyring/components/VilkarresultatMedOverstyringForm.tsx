@@ -27,6 +27,7 @@ interface VilkarresultatMedOverstyringFormProps {
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   avslagKode?: string;
   periode: VilkårPeriodeDto;
+  vilkarType: string;
 }
 
 /**
@@ -48,6 +49,7 @@ export const VilkarresultatMedOverstyringForm = ({
   submitCallback,
   status,
   toggleOverstyring,
+  vilkarType,
 }: VilkarresultatMedOverstyringFormProps) => {
   const buildInitialValues = (): VilkarresultatMedOverstyringFormState => {
     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === overstyringApKode);
@@ -106,12 +108,13 @@ export const VilkarresultatMedOverstyringForm = ({
               customVilkarOppfyltText={customVilkarOppfyltText}
               erMedlemskapsPanel={erMedlemskapsPanel}
               opprettetAv={opprettetAv ?? ''}
+              vilkarType={vilkarType}
             />
           </Box>
           <Box marginBlock={'4 0'}>
             {!erOverstyrt && erVilkarOk !== undefined && (
               <Box marginBlock={'1 0'}>
-                <HStack gap="4">
+                <HStack gap="4" align="center">
                   <EditedIcon />
                   <BodyShort size="small">Endret av saksbehandler</BodyShort>
                 </HStack>

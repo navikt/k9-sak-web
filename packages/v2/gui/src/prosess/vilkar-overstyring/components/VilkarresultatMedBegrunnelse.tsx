@@ -14,6 +14,7 @@ interface VilkarresultatMedBegrunnelseProps {
   customVilkarOppfyltText?: string | React.ReactElement;
   skalViseBegrunnelse?: boolean;
   opprettetAv?: string;
+  vilkarType: string;
 }
 
 interface StaticFunctions {
@@ -40,6 +41,7 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
   customVilkarIkkeOppfyltText,
   customVilkarOppfyltText,
   opprettetAv,
+  vilkarType,
 }) => {
   return (
     <>
@@ -50,45 +52,18 @@ export const VilkarresultatMedBegrunnelse: FunctionComponent<VilkarresultatMedBe
         </Box>
       )}
       <VilkarResultPickerRHF
-        customVilkarOppfyltText={
-          customVilkarOppfyltText ?? 'Vilkåret er oppfylt'
-          // <FormattedMessage
-          //   id={customVilkarOppfyltText ? customVilkarOppfyltText.id : 'VilkarresultatMedOverstyringForm.ErOppfylt'}
-          //   values={
-          //     customVilkarOppfyltText
-          //       ? {
-          //           b: chunks => <b>{chunks}</b>,
-          //           ...customVilkarIkkeOppfyltText?.values,
-          //         }
-          //       : { b: chunks => <b>{chunks}</b> }
-          //   }
-          // />
-        }
+        customVilkarOppfyltText={customVilkarOppfyltText ?? 'Vilkåret er oppfylt'}
         customVilkarIkkeOppfyltText={
           customVilkarIkkeOppfyltText ?? (
             <>
               Vilkåret er <b>ikke</b> oppfylt
             </>
           )
-          // <FormattedMessage
-          //   id={
-          //     customVilkarIkkeOppfyltText
-          //       ? customVilkarOppfyltText?.id
-          //       : 'VilkarresultatMedOverstyringForm.VilkarIkkeOppfylt'
-          //   }
-          //   values={
-          //     customVilkarIkkeOppfyltText
-          //       ? {
-          //           b: chunks => <b>{chunks}</b>,
-          //           ...customVilkarIkkeOppfyltText.values,
-          //         }
-          //       : { b: chunks => <b>{chunks}</b> }
-          //   }
-          // />
         }
         erVilkarOk={erVilkarOk}
         readOnly={readOnly}
         erMedlemskapsPanel={erMedlemskapsPanel}
+        vilkarType={vilkarType}
       />
     </>
   );

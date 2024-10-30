@@ -99,7 +99,7 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
 
   const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
 
-  if (!activePeriode) {
+  if (!activePeriode || !activeVilkår) {
     return null;
   }
 
@@ -121,7 +121,7 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
           aksjonspunkter={aksjonspunkter}
           erOverstyrt={erOverstyrt}
           kanOverstyreAccess={kanOverstyreAccess}
-          lovReferanse={activeVilkår?.lovReferanse ?? lovReferanse}
+          lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
           overrideReadOnly={overrideReadOnly}
           overstyringApKode={overstyringApKode}
           panelTittelKode={panelTittelKode}
@@ -144,6 +144,7 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
             visPeriodisering={visPeriodisering}
             avslagKode={activePeriode?.avslagKode ?? ''}
             periode={activePeriode}
+            vilkarType={activeVilkår.vilkarType}
           />
         )}
 
@@ -162,6 +163,7 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
             erMedlemskapsPanel={erMedlemskapsPanel}
             avslagKode={activePeriode.avslagKode ?? ''}
             periode={activePeriode}
+            vilkarType={activeVilkår.vilkarType}
           />
         )}
       </div>
