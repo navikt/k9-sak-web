@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import { HelpText, Label, Tag } from '@navikt/ds-react';
 import { ContentWithTooltip, GreenCheckIcon, OnePersonIconBlue } from '@navikt/ft-plattform-komponenter';
-import { arbeidstypeTilVisning } from '../../../constants/Arbeidstype';
+import Arbeidstype, { arbeidstypeTilVisning } from '../../../constants/Arbeidstype';
 import BarnetsDødsfallÅrsakerMedTekst from '../../../constants/BarnetsDødsfallÅrsakerMedTekst';
 import IkkeOppfylteÅrsakerMedTekst from '../../../constants/IkkeOppfylteÅrsakerMedTekst';
 import OverseEtablertTilsynÅrsak from '../../../constants/OverseEtablertTilsynÅrsak';
@@ -138,18 +138,39 @@ const formatAvkortingMotArbeid = (
         const arbeidsgiverInfo = arbeidsgivernavn ? `${arbeidsgivernavn} (${orgnr || arbeidsgiverFnr})` : '';
         const beregnetNormalArbeidstid = beregnDagerTimer(normalArbeidstid);
         const beregnetFaktiskArbeidstid = beregnDagerTimer(faktiskArbeidstid);
+        const erNyInntekt = utbetalingsgradItem?.tilkommet;
         const faktiskOverstigerNormal = beregnetNormalArbeidstid < beregnetFaktiskArbeidstid;
         const prosentFravær = Math.round(
           (Math.max(beregnetNormalArbeidstid - beregnetFaktiskArbeidstid, 0) / beregnetNormalArbeidstid) * 100,
         );
 
+        const nyInntektTekst = () => {
+          if (arbeidsforhold?.type === Arbeidstype.AT) {
+            return 'Nytt arbeidsforhold';
+          }
+          if (arbeidsforhold?.type === Arbeidstype.FL) {
+            return 'Ny frilansaktivitet';
+          }
+          if (arbeidsforhold?.type === Arbeidstype.SN) {
+            return 'Ny virksomhet';
+          }
+          return '';
+        };
+
         return (
           // eslint-disable-next-line react/no-array-index-key
           <div key={index}>
-            <Label size="small" as="p" className={styles.uttakDetaljer__avkortingMotArbeid__heading}>
-              <span>{arbeidstype}</span>
-              <span>{arbeidsgiverInfo || orgnr || arbeidsgiverFnr}</span>
-            </Label>
+            <div className="flex gap-[6px]">
+              <Label className="flex items-end" size="small">
+                {arbeidstype}
+              </Label>
+              {erNyInntekt && (
+                <Tag size="small" variant="info">
+                  {nyInntektTekst()}
+                </Tag>
+              )}
+            </div>
+            <span>{arbeidsgiverInfo || orgnr || arbeidsgiverFnr}</span>
             <p className={styles.uttakDetaljer__data}>{`Normal arbeidstid: ${beregnetNormalArbeidstid} timer`}</p>
             <span className={styles.uttakDetaljer__data}>
               <span>Faktisk arbeidstid:</span>
