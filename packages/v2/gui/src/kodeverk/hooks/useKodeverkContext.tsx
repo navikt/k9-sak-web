@@ -104,6 +104,7 @@ export const useKodeverkContext = () => {
         return ukjentTekst || 'Ukjent kodeverk';
       };
     }
+
     return (kode, kodeverkType, ukjentTekst = undefined) => {
       const kodeverkForType = kodeverkForKilde[kodeverkType];
       if (kodeverkForType) return utledKodeverkNavnFraKode(kode, kodeverkForType, ukjentTekst);
