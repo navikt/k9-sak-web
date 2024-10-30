@@ -20,7 +20,7 @@ import { FunctionComponent, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkType } from '../../../../v2/lib/src/kodeverk/types';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types';
 import { OppholdInntektOgPerioderFormState, PerioderMedMedlemskapFaktaPanelFormState } from './FormState';
 import { MedlemskapPeriode } from './Medlemskap';
 import { MerknaderFraBeslutter } from './MerknaderFraBeslutter';
