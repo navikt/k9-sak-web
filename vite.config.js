@@ -101,7 +101,7 @@ export default ({ mode }) => {
       outDir: './dist/k9/web',
       sourcemap: true,
       rollupOptions: {
-        external: ['mockServiceWorker.js', '@k9-sak-web/lib/kodeverk/types.js'],
+        external: ['mockServiceWorker.js'],
       },
     },
     test: {
