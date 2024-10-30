@@ -113,7 +113,7 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
   const behandlingsID: string = behandling.id.toString();
 
   const årskvantumDokEllerKvote = aksjonspunkt =>
-    aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK;
+    aksjonspunkt.definisjon === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK;
 
   if (typeof aksjonspunkt !== 'undefined' && årskvantumDokEllerKvote(aksjonspunkt)) {
     const isAksjonspunktOpen = aksjonspunkt.status === aksjonspunktStatus.OPPRETTET && aksjonspunkt.kanLoses;
