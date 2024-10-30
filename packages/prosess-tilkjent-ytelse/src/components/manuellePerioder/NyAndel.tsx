@@ -4,7 +4,7 @@ import { FlexColumn, FlexRow, Image, useFeatureToggles, VerticalSpacer } from '@
 import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
 import { atLeastOneRequired } from '@fpsak-frontend/utils/src/validation/validators';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/types';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Button, Detail, Fieldset, HGrid } from '@navikt/ds-react';
 import { InputField, SelectField } from '@navikt/ft-form-hooks';

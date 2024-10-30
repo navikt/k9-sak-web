@@ -136,8 +136,8 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
               )}
               <Uttak
                 uttak={uttak}
-                erValgt={valgtPeriodeIndex === index}
-                velgPeriode={() => velgPeriode(index)}
+                erValgt={valgtPeriodeIndex === (afterOrCovering.length ? afterOrCovering.length + index : index)}
+                velgPeriode={() => velgPeriode(afterOrCovering.length ? afterOrCovering.length + index : index)}
                 withBorderTop={index === 0 && !!virkningsdatoUttakNyeRegler}
               />
             </React.Fragment>

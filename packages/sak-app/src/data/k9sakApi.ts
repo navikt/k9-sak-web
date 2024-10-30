@@ -133,7 +133,7 @@ const endpoints = new RestApiConfigBuilder()
   )
   .withAsyncPost('/k9/tilbake/api/behandlinger/opprett', K9sakApiKeys.NEW_BEHANDLING_TILBAKE)
   .withAsyncPost(
-    '/k9/tilbake/api/behandlinger/revurder-periode-fra-steg',
+    '/k9/sak/api/behandlinger/revurder-periode-fra-steg',
     K9sakApiKeys.NEW_BEHANDLING_REVURDERING_FRA_STEG_K9SAK,
   )
   .withAsyncPut('/k9/sak/api/behandlinger', K9sakApiKeys.NEW_BEHANDLING_K9SAK)

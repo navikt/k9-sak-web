@@ -1,6 +1,5 @@
 import { Box, Margin, DetailView, LabelledContent, LinkButton, AssessedBy } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import Beskrivelse from '../../../../types/Beskrivelse';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';
 import Vurderingsresultat from '../../../../types/Vurderingsresultat';
@@ -19,7 +18,6 @@ const BeredskapsperiodeVurderingsdetaljer = ({
   onEditClick,
   beskrivelser,
 }: BeredskapsperiodeVurderingsdetaljerProps): JSX.Element => {
-  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   const { opprettetAv, opprettetTidspunkt } = beredskapsperiode;
   return (
     <DetailView
@@ -43,7 +41,7 @@ const BeredskapsperiodeVurderingsdetaljer = ({
           content={<span className="whitespace-pre-wrap">{beredskapsperiode.begrunnelse}</span>}
           indentContent
         />
-        <AssessedBy name={hentSaksbehandlerNavn(opprettetAv)} date={opprettetTidspunkt} />
+        <AssessedBy ident={opprettetAv} date={opprettetTidspunkt} />
       </Box>
       <Box marginTop={Margin.xLarge}>
         <LabelledContent

@@ -1,1 +1,1 @@
-export { default as Inntektsmelding } from './src/ui/MainComponent';
+export { default as InntektsmeldingContainer } from './src/ui/InntektsmeldingContainer';

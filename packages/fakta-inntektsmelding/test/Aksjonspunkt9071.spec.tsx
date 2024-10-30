@@ -7,8 +7,8 @@ import { setupServer } from 'msw/node';
 import React from 'react';
 import { aksjonspunkt9071Props } from '../mock/inntektsmeldingPropsMock';
 import { alleErMottatt, manglerInntektsmelding } from '../mock/mockedKompletthetsdata';
-import * as stories from '../src/stories/MainComponent.stories';
-import MainComponent from '../src/ui/MainComponent';
+import * as stories from '../src/stories/Inntektsmelding.stories';
+import InntektsmeldingContainer from '../src/ui/InntektsmeldingContainer';
 
 const server = setupServer();
 
@@ -20,7 +20,7 @@ describe('9071 - Mangler inntektsmelding', () => {
   afterAll(() => server.close());
 
   const { Mangler9071, AlleInntektsmeldingerMottatt } = composeStories(stories) as {
-    [key: string]: StoryFn<Partial<typeof MainComponent>>;
+    [key: string]: StoryFn<Partial<typeof InntektsmeldingContainer>>;
   };
 
   test('Viser ikke knapp for å sende inn når beslutning ikke er valgt', async () => {

@@ -6,7 +6,7 @@ import {
   calcDaysAndWeeksWithWeekends,
   initializeDate,
 } from '@fpsak-frontend/utils';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { BeregningsresultatPeriodeDto } from '@navikt/k9-sak-typescript-client';
 import moment from 'moment';
@@ -112,6 +112,7 @@ interface OwnProps {
   }[];
   kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  isUngdomsytelseFagsak: boolean;
 }
 
 interface OwnState {
@@ -237,7 +238,7 @@ export class TilkjentYtelse extends Component<OwnProps, OwnState> {
       goBackward,
       goForward,
       openPeriodInfo,
-      props: { groups, items, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId },
+      props: { groups, items, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId, isUngdomsytelseFagsak },
       selectHandler,
       state: { selectedItem },
       zoomIn,
@@ -277,6 +278,7 @@ export class TilkjentYtelse extends Component<OwnProps, OwnState> {
             callbackForward={nextPeriod}
             callbackBackward={prevPeriod}
             arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+            isUngdomsytelseFagsak={isUngdomsytelseFagsak}
           />
         )}
       </div>

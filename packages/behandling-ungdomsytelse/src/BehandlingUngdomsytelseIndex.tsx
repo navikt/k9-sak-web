@@ -12,7 +12,6 @@ import {
   restApiUngdomsytelseHooks,
 } from './data/ungdomsytelseBehandlingApi';
 import { FetchedData } from './types';
-import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
 
 const ungdomsytelseData = [
   { key: UngdomsytelseBehandlingApiKeys.AKSJONSPUNKTER },
@@ -39,7 +38,6 @@ interface OwnProps {
   };
   opneSokeside: () => void;
   featureToggles: FeatureToggles;
-  kodeverk?: AlleKodeverk;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setRequestPendingMessage: (message: string) => void;
 }
@@ -48,7 +46,6 @@ const BehandlingUngdomsytelseIndex = ({
   behandlingEventHandler,
   behandlingId,
   oppdaterBehandlingVersjon,
-  kodeverk,
   fagsak,
   fagsakPerson,
   rettigheter,
@@ -143,7 +140,6 @@ const BehandlingUngdomsytelseIndex = ({
         fetchedData={data}
         fagsak={fagsak}
         fagsakPerson={fagsakPerson}
-        alleKodeverk={kodeverk}
         rettigheter={rettigheter}
         valgtProsessSteg={valgtProsessSteg}
         valgtFaktaSteg={valgtFaktaSteg}

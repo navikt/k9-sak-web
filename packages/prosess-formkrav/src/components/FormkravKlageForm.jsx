@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType';
 import lagVisningsnavnForKlagepart from '../utils/lagVisningsnavnForKlagepart';
 
 import styles from './formkravKlageForm.module.css';

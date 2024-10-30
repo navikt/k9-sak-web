@@ -2,7 +2,7 @@ import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { Location } from 'history';
 import { Historikkinnslag } from '@k9-sak-web/types';
-import { KodeverkNavnFraKodeFnType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KodeverkNavnFraKodeFnType } from '@k9-sak-web/lib/kodeverk/types';
 
 import History from './components/History';
 import messages from '../i18n/nb_NO.json';

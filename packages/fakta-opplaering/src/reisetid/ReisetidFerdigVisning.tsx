@@ -5,7 +5,6 @@ import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
 
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 
 import { Vurderingsresultat } from '@k9-sak-web/types';
 import BeskrivelseFraSoeker from './BeskrivelseFraSoeker';
@@ -19,8 +18,6 @@ interface OwnProps {
 }
 
 const ReisetidFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
-  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
-
   const { readOnly } = useContext(FaktaOpplaeringContext);
   const intl = useIntl();
   return (
@@ -95,7 +92,7 @@ const ReisetidFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
             content={<span className="whitespace-pre-wrap">{vurdering.begrunnelse}</span>}
             indentContent
           />
-          <AssessedBy name={hentSaksbehandlerNavn(vurdering.vurdertAv)} date={vurdering?.vurdertTidspunkt} />
+          <AssessedBy ident={vurdering.vurdertAv} date={vurdering?.vurdertTidspunkt} />
         </Box>
       )}
     </DetailView>

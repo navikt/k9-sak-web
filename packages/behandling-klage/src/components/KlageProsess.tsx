@@ -12,7 +12,7 @@ import {
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
 import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, FeatureToggles } from '@k9-sak-web/types';
-import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types';
 
 import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { KlageBehandlingApiKeys, restApiKlageHooks } from '../data/klageBehandlingApi';

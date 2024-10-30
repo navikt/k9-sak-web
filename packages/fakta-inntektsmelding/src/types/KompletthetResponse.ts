@@ -9,4 +9,6 @@ export interface Tilstand {
   tilVurdering: boolean;
   begrunnelse: string;
   vurdering: Vurdering;
+  vurdertAv?: string;
+  vurdertTidspunkt?: string;
 }

@@ -13,7 +13,7 @@ import { Behandling } from '@k9-sak-web/types';
 import { HGrid, Tabs } from '@navikt/ds-react';
 import React, { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types';
 import messages from '../i18n/nb_NO.json';
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import styles from './inngangsvilkarPanel.module.css';

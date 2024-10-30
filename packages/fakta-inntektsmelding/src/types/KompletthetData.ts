@@ -12,6 +12,8 @@ export interface Tilstand {
   tilVurdering: boolean;
   vurdering: Vurdering;
   periodeOpprinneligFormat: string;
+  vurdertAv?: string;
+  vurdertTidspunkt?: string;
 }
 
 export interface TilstandBeriket extends Tilstand {

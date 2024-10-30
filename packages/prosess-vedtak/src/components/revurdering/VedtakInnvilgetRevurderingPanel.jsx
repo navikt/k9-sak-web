@@ -9,7 +9,7 @@ import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType';
 import { findTilbakekrevingText } from '../VedtakHelper';
 
 const mapFraAvslagskodeTilTekst = kode => {

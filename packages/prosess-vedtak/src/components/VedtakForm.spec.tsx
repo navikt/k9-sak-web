@@ -23,6 +23,10 @@ import { VedtakForm } from './VedtakForm';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
 
 describe('<VedtakForm>', () => {
+  beforeEach(() => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'FRITEKST_REDIGERING', value: true }]);
+  });
+
   const sprakkode = 'NO';
 
   const ingenTilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler = {
@@ -77,8 +81,6 @@ describe('<VedtakForm>', () => {
   };
 
   it('skal vise at vedtak er innvilget, beløp og antall barn når en har et beregningsresultat', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
-
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
@@ -126,8 +128,6 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal vise avslagsgrunn for søknadsfristvilkåret', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
-
     const previewCallback = vi.fn();
 
     const behandlingsresultat = {
@@ -183,8 +183,6 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal vise knapper for å avslutt behandling då behandlingen er innvilget', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
-
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
@@ -235,8 +233,6 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal ikke vise knapper for å avslutt behandling når behandlingen er avvist med årsakkode 1099', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
-
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
@@ -288,8 +284,6 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal vise knapper for å fatte vedtak når foreslå avslag', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
-
     const previewCallback = vi.fn();
 
     const behandlingsresultat = {
@@ -347,8 +341,6 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal ikke vise knapper når status er avsluttet', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
-
     const previewCallback = vi.fn();
 
     const behandlingsresultat = {
@@ -407,8 +399,6 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal ikke vise knapper når status er iverksetter vedtak', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
-
     const behandlingsresultat = {
       id: 1,
       type: BehandlingResultatType.INNVILGET,
@@ -466,8 +456,6 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal ikke vise knapper når status er fatter vedtak', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
-
     const previewCallback = vi.fn();
 
     const behandlingsresultat = {
@@ -555,8 +543,6 @@ describe('<VedtakForm>', () => {
   };
 
   it('skal vise avkrysningsboks for overstyring', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
-
     renderWithIntlAndReduxForm(
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
@@ -598,8 +584,6 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal vise avkrysningsboks for å hindre brevutsending', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
-
     renderWithIntlAndReduxForm(
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
@@ -642,8 +626,6 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal disable checkboxer i readonly', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
-
     renderWithIntlAndReduxForm(
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
@@ -688,8 +670,6 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal ikke kunne avhuke checkbox hvis automatisk brev ikke kan sendes', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
-
     const vedtaksbrevmalerUtenAutomatisk: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler = {
       begrunnelse: null,
       alternativeMottakere: [],

@@ -9,20 +9,9 @@ import {
 } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
-import { EtablertTilsyn } from '@k9-sak-web/fakta-etablert-tilsyn';
-import { Aksjonspunkt, BehandlingAppKontekst } from '@k9-sak-web/types';
+import { EtablertTilsynContainer } from '@k9-sak-web/fakta-etablert-tilsyn';
 
-export default ({
-  aksjonspunkter,
-  behandling,
-  readOnly,
-  submitCallback,
-}: {
-  aksjonspunkter: Aksjonspunkt[];
-  behandling: BehandlingAppKontekst;
-  readOnly: boolean;
-  submitCallback: (params: any) => void;
-}) => {
+export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandlerFn(status, addErrorMessage, locationHeader);
@@ -42,7 +31,7 @@ export default ({
   const harAksjonspunkt = !!beredskapAksjonspunktkode || !!nattevåkAksjonspunktkode;
 
   return (
-    <EtablertTilsyn
+    <EtablertTilsynContainer
       data={{
         httpErrorHandler: httpErrorHandlerCaller,
         readOnly: readOnly || !harAksjonspunkt,

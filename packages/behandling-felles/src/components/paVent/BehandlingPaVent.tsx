@@ -4,7 +4,7 @@ import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types';
 import SettPaVentParams from '../../types/settPaVentParamsTsType';
 
 interface BehandlingPaVentProps {

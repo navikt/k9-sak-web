@@ -1,6 +1,5 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
@@ -35,7 +34,6 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
 
   getData = ({
     vilkarForSteg,
-    alleKodeverk,
     overstyrteAksjonspunktKoder,
     prosessStegTekstKode,
     overrideReadOnly,
@@ -49,7 +47,6 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
     const kanEndrePåSøknadsopplysninger = rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet;
 
     return {
-      avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType],
       erOverstyrt: overstyrteAksjonspunktKoder.some(o => this.getAksjonspunktKoder().some(a => a === o)),
       panelTittelKode: this.getTekstKode() ? this.getTekstKode() : prosessStegTekstKode,
       lovReferanse: vilkarForSteg.length > 0 ? vilkarForSteg[0].lovReferanse : undefined,

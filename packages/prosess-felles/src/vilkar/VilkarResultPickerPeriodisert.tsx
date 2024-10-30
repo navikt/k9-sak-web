@@ -8,7 +8,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkType, KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KodeverkType, KodeverkObject } from '@k9-sak-web/lib/kodeverk/types';
 import { Aksjonspunkt, Periode, Vilkarperiode, vilkarUtfallPeriodisert } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
 import { parse } from 'date-fns';

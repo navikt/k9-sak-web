@@ -13,7 +13,7 @@ import { vi } from 'vitest';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import FagsakIndex from './FagsakIndex';
 import type useTrackRouteParam from '../app/useTrackRouteParam.js';
-import { BehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
+import { BehandlingType } from '../../../v2/backend/src/k9sak/kodeverk/behandling/BehandlingType';
 
 vi.mock('react-router-dom', async () => {
   const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;

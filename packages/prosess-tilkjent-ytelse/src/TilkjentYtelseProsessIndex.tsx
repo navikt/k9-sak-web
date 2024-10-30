@@ -1,3 +1,4 @@
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import {
   AksjonspunktDto,
@@ -35,6 +36,7 @@ const TilkjentYtelseProsessIndex = ({
   submitCallback,
   readOnlySubmitButton,
   arbeidsgiverOpplysningerPerId,
+  fagsak,
 }: OwnProps) => (
   <RawIntlProvider value={intl}>
     <TilkjentYtelsePanel
@@ -44,6 +46,7 @@ const TilkjentYtelseProsessIndex = ({
       submitCallback={submitCallback}
       readOnlySubmitButton={readOnlySubmitButton}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      isUngdomsytelseFagsak={fagsak.sakstype === fagsakYtelsesType.UNG}
     />
   </RawIntlProvider>
 );

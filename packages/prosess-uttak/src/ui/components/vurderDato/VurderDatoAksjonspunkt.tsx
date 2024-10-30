@@ -1,6 +1,6 @@
 import { Button } from '@navikt/ds-react';
 import { Datepicker, Form, TextAreaField } from '@navikt/ft-form-hooks';
-import { maxLength, minLength, required } from '@navikt/ft-form-validators';
+import { hasValidDate, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import ContainerContext from '../../context/ContainerContext';
@@ -37,8 +37,8 @@ const VurderDatoAksjonspunkt = ({ avbryt, initialValues }: Props) => {
           label="Endringsdato"
           defaultMonth={new Date()}
           fromDate={new Date('1 Jan 2019')}
-          toDate={new Date('31 Dec 2024')}
-          validate={[required]}
+          toDate={new Date('31 Dec 2025')}
+          validate={[required, hasValidDate]}
         />
         <TextAreaField
           name="begrunnelse"

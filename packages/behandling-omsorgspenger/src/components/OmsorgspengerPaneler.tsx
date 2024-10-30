@@ -9,7 +9,7 @@ import {
   ArbeidsgiverOpplysningerPerId,
   Dokument,
 } from '@k9-sak-web/types';
-import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types';
 import OmsorgspengerProsess from './OmsorgspengerProsess';
 import OmsorgspengerFakta from './OmsorgspengerFakta';
 import FetchedData from '../types/fetchedDataTsType';

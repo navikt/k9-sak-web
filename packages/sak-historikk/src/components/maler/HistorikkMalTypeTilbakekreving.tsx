@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { BodyShort } from '@navikt/ds-react';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType';
 import historikkEndretFeltType from '../../kodeverk/historikkEndretFeltType';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import HistorikkMal from '../HistorikkMalTsType';

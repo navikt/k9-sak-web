@@ -4,7 +4,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkKlageType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KodeverkKlageType } from '@k9-sak-web/lib/kodeverk/types';
 import { BodyShort, Detail, Heading } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -74,7 +74,7 @@ export const VedtakKlageFormImpl = ({
             <Detail>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilAvvisning' })}</Detail>
             {avvistArsaker.map(arsak => (
               <BodyShort size="small" key={arsak}>
-                {kodeverkNavnFraKode(arsak, KodeverkKlageType.KLAGE_AVVIST_AARSAK)}
+                {kodeverkNavnFraKode(arsak, KodeverkKlageType.KLAGE_AVVIST_AARSAK, 'kodeverkKlage')}
               </BodyShort>
             ))}
             <VerticalSpacer sixteenPx />

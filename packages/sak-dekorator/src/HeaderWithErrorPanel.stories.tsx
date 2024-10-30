@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import HeaderWithErrorPanel from './HeaderWithErrorPanel';
 
 export default {
@@ -21,7 +21,13 @@ export const visDekoratorUtenFeilmeldinger = () => (
 );
 
 export const visDekoratorMedFeilmeldinger = () => {
-  const [errorMessages, removeErrorMessages] = useState([{ message: 'Feilmelding 1' }, { message: 'Feilmelding 2' }]);
+  const [errorMessages, removeErrorMessages] = useState([
+    { message: 'Feilmelding 1' },
+    {
+      message: 'En lang feilmelding som også har ekstra informasjon som kan åpnes i en popup.',
+      additionalInfo: { feilmelding: 'Detaljert feilmelding', url: '' },
+    },
+  ]);
   return (
     <div style={{ marginLeft: '-56px' }}>
       <HeaderWithErrorPanel

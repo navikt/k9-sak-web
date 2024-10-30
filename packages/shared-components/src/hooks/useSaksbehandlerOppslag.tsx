@@ -1,19 +1,17 @@
-import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-data/useGlobalStateRestApiData';
-import { K9sakApiKeys } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import { SaksbehandlereInfo } from '@k9-sak-web/types';
+import { SaksbehandlernavnContext } from '@navikt/ft-plattform-komponenter';
+import { useContext } from 'react';
 
 export const useSaksbehandlerOppslag = () => {
-  const data = useGlobalStateRestApiData<SaksbehandlereInfo>(K9sakApiKeys.HENT_SAKSBEHANDLERE);
-  const saksbehandlere = data?.saksbehandlere;
+  const navnPaaSaksbehandlereIBehandlingen = useContext(SaksbehandlernavnContext);
 
   const hentSaksbehandlerNavn = (saksbehandler: string): string => {
-    if (saksbehandlere && saksbehandlere[saksbehandler]) {
-      return saksbehandlere[saksbehandler];
+    if (navnPaaSaksbehandlereIBehandlingen?.[saksbehandler]) {
+      return navnPaaSaksbehandlereIBehandlingen[saksbehandler];
     }
     return saksbehandler;
   };
 
-  return { saksbehandlere, hentSaksbehandlerNavn };
+  return { saksbehandlere: navnPaaSaksbehandlereIBehandlingen, hentSaksbehandlerNavn };
 };
 
 export default useSaksbehandlerOppslag;

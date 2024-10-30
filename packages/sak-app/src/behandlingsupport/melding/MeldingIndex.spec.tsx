@@ -45,6 +45,57 @@ interface ExtendedWindow {
 }
 
 describe('<MeldingIndex>', () => {
+  const aktorer: Mottaker[] = [
+    { id: '00000000', type: 'AKTØRID' },
+    { id: '123456789', type: 'ORGNR' },
+  ];
+
+  const templates = {
+    [dokumentMalType.INNHENT_DOK]: {
+      navn: 'Innhent dokumentasjon',
+      mottakere: aktorer,
+      linker: [],
+      støtterFritekst: true,
+      støtterTittelOgFritekst: false,
+      støtterTredjepartsmottaker: true,
+      kode: dokumentMalType.INNHENT_DOK,
+    },
+    [dokumentMalType.REVURDERING_DOK]: {
+      navn: 'Revurdering Dok',
+      mottakere: aktorer,
+      linker: [],
+      støtterFritekst: true,
+      støtterTittelOgFritekst: false,
+      støtterTredjepartsmottaker: true,
+      kode: dokumentMalType.REVURDERING_DOK,
+    },
+    [dokumentMalType.AVSLAG]: {
+      navn: 'Avslag',
+      mottakere: aktorer,
+      linker: [],
+      støtterFritekst: false,
+      støtterTittelOgFritekst: false,
+      støtterTredjepartsmottaker: false,
+      kode: dokumentMalType.AVSLAG,
+    },
+    [dokumentMalType.FORLENGET_DOK]: {
+      navn: 'Forlenget',
+      mottakere: aktorer,
+      linker: [],
+      støtterFritekst: false,
+      støtterTittelOgFritekst: false,
+      støtterTredjepartsmottaker: true,
+      kode: dokumentMalType.FORLENGET_DOK,
+    },
+  } satisfies Brevmaler;
+
+  beforeEach(() => {
+    requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
+    requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'TYPE_MEDISINSKE_OPPLYSNINGER_BREV', value: true }]);
+    requestApi.mock(K9sakApiKeys.BREVMALER, templates);
+  });
+
   /* eslint-disable @typescript-eslint/no-unused-vars -- Fordi alt er ikkje implementert i fake backend */
   const meldingBackend = {
     async getBrevMottakerinfoEreg(orgnr: string, abort?: AbortSignal) {
@@ -94,49 +145,6 @@ describe('<MeldingIndex>', () => {
     [kodeverkTyper.REVURDERING_VARSLING_ÅRSAK]: [{ kode: 'kode', navn: 'Årsak 1', kodeverk: 'kode' }],
   };
 
-  const aktorer: Mottaker[] = [
-    { id: '00000000', type: 'AKTØRID' },
-    { id: '123456789', type: 'ORGNR' },
-  ];
-  const templates = {
-    [dokumentMalType.INNHENT_DOK]: {
-      navn: 'Innhent dokumentasjon',
-      mottakere: aktorer,
-      linker: [],
-      støtterFritekst: true,
-      støtterTittelOgFritekst: false,
-      støtterTredjepartsmottaker: true,
-      kode: dokumentMalType.INNHENT_DOK,
-    },
-    [dokumentMalType.REVURDERING_DOK]: {
-      navn: 'Revurdering Dok',
-      mottakere: aktorer,
-      linker: [],
-      støtterFritekst: true,
-      støtterTittelOgFritekst: false,
-      støtterTredjepartsmottaker: true,
-      kode: dokumentMalType.REVURDERING_DOK,
-    },
-    [dokumentMalType.AVSLAG]: {
-      navn: 'Avslag',
-      mottakere: aktorer,
-      linker: [],
-      støtterFritekst: false,
-      støtterTittelOgFritekst: false,
-      støtterTredjepartsmottaker: false,
-      kode: dokumentMalType.AVSLAG,
-    },
-    [dokumentMalType.FORLENGET_DOK]: {
-      navn: 'Forlenget',
-      mottakere: aktorer,
-      linker: [],
-      støtterFritekst: false,
-      støtterTittelOgFritekst: false,
-      støtterTredjepartsmottaker: true,
-      kode: dokumentMalType.FORLENGET_DOK,
-    },
-  } satisfies Brevmaler;
-
   const featureToggles = { BRUK_V2_MELDINGER: false } satisfies FeatureToggles;
 
   const assignMock = vi.fn();
@@ -149,11 +157,6 @@ describe('<MeldingIndex>', () => {
   });
 
   it('skal vise messages når mottakere og brevmaler har blitt hentet fra server', async () => {
-    requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
-    requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
-    requestApi.mock(K9sakApiKeys.BREVMALER, templates);
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true }]);
-
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
         <MemoryRouter>
@@ -173,11 +176,7 @@ describe('<MeldingIndex>', () => {
   });
 
   it('skal sette default tom streng ved forhåndsvisning dersom fritekst ikke er fylt ut', async () => {
-    requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
-    requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
-    requestApi.mock(K9sakApiKeys.BREVMALER, templates);
     requestApi.mock(K9sakApiKeys.PREVIEW_MESSAGE_FORMIDLING, {});
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true }]);
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
@@ -204,11 +203,7 @@ describe('<MeldingIndex>', () => {
   });
 
   it('skal sende melding', async () => {
-    requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
-    requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
-    requestApi.mock(K9sakApiKeys.BREVMALER, templates);
     requestApi.mock(K9sakApiKeys.SUBMIT_MESSAGE);
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true }]);
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
@@ -246,11 +241,7 @@ describe('<MeldingIndex>', () => {
   });
 
   it('skal sende melding til tredjepartsmottaker hvis det er valgt og utfyllt', async () => {
-    requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
-    requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
-    requestApi.mock(K9sakApiKeys.BREVMALER, templates);
     requestApi.mock(K9sakApiKeys.SUBMIT_MESSAGE);
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true }]);
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>

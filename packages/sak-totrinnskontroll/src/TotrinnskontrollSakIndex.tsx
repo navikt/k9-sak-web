@@ -10,7 +10,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { BehandlingAppKontekst, KlageVurdering, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType';
 import { KodeverkObject, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types/KodeverkV2.js';
 
 import TotrinnskontrollBeslutterForm, { FormValues } from './components/TotrinnskontrollBeslutterForm';

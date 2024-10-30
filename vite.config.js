@@ -24,7 +24,7 @@ const createProxy = (target, pathRewrite) => ({
       // går til dev server istadenfor proxied server. Dette for å unngå CORS feil når request går direkte til proxied server.
       if (proxyRes.headers.location?.startsWith(target)) {
         // eslint-disable-next-line no-param-reassign
-        proxyRes.headers.location = proxyRes.headers.location.replace(target, "")
+        proxyRes.headers.location = proxyRes.headers.location.replace(target, '');
       }
     });
   },
@@ -125,6 +125,9 @@ export default ({ mode }) => {
           'Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools',
         );
       },
+    },
+    optimizeDeps: {
+      include: ['@k9-sak-web/lib'],
     },
   });
 };

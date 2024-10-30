@@ -134,7 +134,7 @@
   "ValidationMessage.InvalidOrganisasjonsnummer": "Ugyldig organisasjonsnummer.",
   "ValidationMessage.BekreftIkkeRelevantFritekst": "Du må bekrefte at det ikke er relevant med fritekstbeskrivelse i brevet",
   "SakGårIkkeTilBeslutterModal.IngenToTrinnskontroll": "Denne behandlingen har ikke totrinnskontroll.",
-  "SakGårIkkeTilBeslutterModal.BrevBlirIkkeSendt": "Eventuelt brev blir sendt direkte til søker",
+  "SakGårIkkeTilBeslutterModal.BrevBlirIkkeSendt": "Eventuelt brev blir sendt direkte til søker.",
   "SakGårIkkeTilBeslutterModal.FattVedtak": "Fatt vedtak",
   "SakGårIkkeTilBeslutterModal.Avbryt": "Avbryt",
   "SakGårIkkeTilBeslutterModal.ModalAriaLabel": "Modal, sak går ikke til beslutter",

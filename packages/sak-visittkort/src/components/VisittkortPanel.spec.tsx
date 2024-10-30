@@ -9,10 +9,8 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import region from '@fpsak-frontend/kodeverk/src/region';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import { renderWithIntl, screen } from '@fpsak-frontend/utils-test/test-utils';
-
-import VisittkortPanel from './VisittkortPanel';
-
 import messages from '../../i18n/nb_NO.json';
+import VisittkortPanel from './VisittkortPanel';
 
 describe('<VisittkortPanel>', () => {
   const fagsakPerson = {
@@ -56,8 +54,7 @@ describe('<VisittkortPanel>', () => {
     });
 
     expect(screen.getByText(fagsakPerson.navn)).toBeInTheDocument();
-    expect(screen.getByText(fagsakPerson.personnummer)).toBeInTheDocument();
-    expect(screen.getByText('Kvinne')).toBeInTheDocument();
+    expect(screen.getByText('123456 7')).toBeInTheDocument();
   });
 
   it('skal vise visittkort når en har harTilbakekrevingVerge', () => {
@@ -85,8 +82,7 @@ describe('<VisittkortPanel>', () => {
     );
 
     expect(screen.getByText(personopplysningerSoker.navn)).toBeInTheDocument();
-    expect(screen.getByText(personopplysningerSoker.fnr)).toBeInTheDocument();
-    expect(screen.getByText('Kvinne')).toBeInTheDocument();
+    expect(screen.getByText('987738 95')).toBeInTheDocument();
     expect(screen.getByText(fagsakPerson.navn)).toBeInTheDocument();
   });
 });

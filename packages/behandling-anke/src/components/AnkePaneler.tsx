@@ -2,7 +2,7 @@ import React from 'react';
 
 import { BehandlingPaVent, SettPaVentParams, Rettigheter } from '@k9-sak-web/behandling-felles';
 import { Fagsak, Behandling, FagsakPerson } from '@k9-sak-web/types';
-import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types';
 import AnkeProsess from './AnkeProsess';
 import FetchedData from '../types/fetchedDataTsType';
 

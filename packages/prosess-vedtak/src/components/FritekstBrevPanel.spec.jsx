@@ -11,11 +11,13 @@ import messages from '../../i18n/nb_NO.json';
 import FritekstBrevPanel from './FritekstBrevPanel';
 
 describe('<FritekstBrevPanel>', () => {
+  beforeEach(() => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'FRITEKST_REDIGERING', value: true }]);
+  });
+
   const eventCallback = vi.fn();
 
   it('skal vise manuelt fritekstbrev i read only', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: false }]);
-
     const alleTilgjengeligeVedtaksbrev = {
       vedtaksbrevmaler: {
         [vedtaksbrevtype.MANUELL]: dokumentMalType.REDIGERTBREV,
@@ -49,8 +51,6 @@ describe('<FritekstBrevPanel>', () => {
   });
 
   it('skal vise manuelt fritekstbrev', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
-
     const alleTilgjengeligeVedtaksbrev = {
       vedtaksbrevmaler: {
         [vedtaksbrevtype.MANUELL]: dokumentMalType.REDIGERTBREV,
@@ -83,8 +83,6 @@ describe('<FritekstBrevPanel>', () => {
   });
 
   it('skal vise manuelt brev uten automatisk vedtaksbrev', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
-
     const alleTilgjengeligeVedtaksbrev = {
       vedtaksbrevmaler: {
         [vedtaksbrevtype.MANUELL]: dokumentMalType.REDIGERTBREV,

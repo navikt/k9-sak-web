@@ -52,9 +52,11 @@ const arbeidsgivere = {
 };
 
 describe('<ÅrskvantumIndex>', () => {
-  it('rendrer aksjonspunkt-form hvis det finnes aksjonspunkter', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ AKSJONSPUNKT_9014: true }]);
+  beforeEach(() => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'AKSJONSPUNKT_9014', value: true }]);
+  });
 
+  it('rendrer aksjonspunkt-form hvis det finnes aksjonspunkter', () => {
     renderWithIntlAndReduxForm(
       <ÅrskvantumIndex
         årskvantum={årskvantum}
@@ -82,8 +84,6 @@ describe('<ÅrskvantumIndex>', () => {
   });
 
   it('rendrer ikke aksjonspunkt-form hvis det ikke finnes aksjonspunkter', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ AKSJONSPUNKT_9014: true }]);
-
     renderWithIntl(
       <ÅrskvantumIndex
         årskvantum={årskvantum}

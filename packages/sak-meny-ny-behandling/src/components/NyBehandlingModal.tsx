@@ -1,6 +1,7 @@
 import { CheckboxField, DatepickerField, SelectField } from '@fpsak-frontend/form';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
@@ -106,8 +107,13 @@ export const NyBehandlingModal = ({
       }
     }
   }, []);
+  const [featureToggles] = useFeatureToggles();
   const erFørstegangsbehandling = valgtBehandlingTypeKode === bType.FORSTEGANGSSOKNAD;
   const erRevurdering = valgtBehandlingTypeKode === bType.REVURDERING;
+  const erDelvisRevurderingToggleAktivert = featureToggles?.DELVIS_REVURDERING;
+  const visÅrsak =
+    (erDelvisRevurderingToggleAktivert && erRevurdering && steg === 'inngangsvilkår') ||
+    (!erDelvisRevurderingToggleAktivert && behandlingArsakTyper.length > 0);
   return (
     <Modal
       className={styles.modal}
@@ -129,7 +135,7 @@ export const NyBehandlingModal = ({
               validate={[required]}
               selectValues={behandlingTyper.map(bt => createOptions(bt, enabledBehandlingstyper))}
             />
-            {erRevurdering && (
+            {erDelvisRevurderingToggleAktivert && erRevurdering && (
               <SelectField
                 name="steg"
                 label="Hvor i prosessen vil du starte revurderingen?"
@@ -151,10 +157,10 @@ export const NyBehandlingModal = ({
                 label="Behandlingen opprettes som et resultat av klagebehandling"
               />
             )}
-            {behandlingArsakTyper.length > 0 && (!erRevurdering || steg === 'inngangsvilkår') && (
+            {visÅrsak && (
               <SelectField
                 name="behandlingArsakType"
-                label="Hva er årsaken til revurderingen?"
+                label="Hva er årsaken til den nye behandlingen?"
                 placeholder="Velg årsak"
                 validate={[required]}
                 selectValues={behandlingArsakTyper.map(b => (
@@ -164,7 +170,7 @@ export const NyBehandlingModal = ({
                 ))}
               />
             )}
-            {erRevurdering && steg === 'RE-ENDRET-FORDELING' && (
+            {erDelvisRevurderingToggleAktivert && erRevurdering && steg === 'RE-ENDRET-FORDELING' && (
               <Fieldset className={styles.datePickerContainer} legend="Hvilken periode vil du revurdere?">
                 <DatepickerField name="fom" disabledDays={{ before: null, after: new Date() }} label="Fra og med" />
                 <DatepickerField
@@ -236,7 +242,6 @@ export const getBehandlingAarsaker = createSelector(
         .map(ar => alleTilbakekrevingRevurderingArsaker.find(el => el.kode === ar))
         .filter(ar => ar);
     }
-    // TODO lage en egen for UNNTAK når vi vet hvilke det skal være
     if (valgtBehandlingType === bType.REVURDERING) {
       return alleRevurderingArsaker
         .filter(bat => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)

@@ -7,7 +7,7 @@ import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsa
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/types';
 import { BodyShort } from '@navikt/ds-react';
 import React, { ReactNode } from 'react';
 

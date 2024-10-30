@@ -2,10 +2,10 @@ import React from 'react';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import { render, screen } from '@testing-library/react';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { render, screen } from '@testing-library/react';
 import { BostedSokerPersonopplysninger } from '../types';
 import { BostedSokerView } from './BostedSokerView';
 

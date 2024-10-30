@@ -2,7 +2,6 @@ import React from 'react';
 import { InstitusjonVurderingMedPerioder, Vurderingsresultat } from '@k9-sak-web/types';
 import { Calender } from '@navikt/ds-icons';
 import { AssessedBy, Box, DetailView, LabelledContent, LinkButton, Margin } from '@navikt/ft-plattform-komponenter';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import styles from './institusjonFerdigVisning.module.css';
 
 interface OwnProps {
@@ -12,7 +11,6 @@ interface OwnProps {
 }
 
 const InstitusjonFerdigVisning = ({ vurdering, readOnly, rediger }: OwnProps) => {
-  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
   const visEndreLink = !readOnly && vurdering.resultat !== Vurderingsresultat.GODKJENT_AUTOMATISK;
 
   return (
@@ -45,7 +43,7 @@ const InstitusjonFerdigVisning = ({ vurdering, readOnly, rediger }: OwnProps) =>
           content={<span className="whitespace-pre-wrap">{vurdering.begrunnelse}</span>}
           indentContent
         />
-        <AssessedBy name={hentSaksbehandlerNavn(vurdering?.vurdertAv)} date={vurdering?.vurdertTidspunkt} />
+        <AssessedBy ident={vurdering?.vurdertAv} date={vurdering?.vurdertTidspunkt} />
       </Box>
       <Box marginTop={Margin.xLarge}>
         <LabelledContent

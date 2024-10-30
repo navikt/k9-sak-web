@@ -18,7 +18,7 @@ import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, Featur
 import { UngdomsytelseBehandlingApiKeys, restApiUngdomsytelseHooks } from '../data/ungdomsytelseBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegUngdomsytelsePanelDefinisjoner';
 import FetchedData from '../types/FetchedData';
-import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types.js';
+import { AlleKodeverk } from '@k9-sak-web/lib/kodeverk/types';
 
 interface OwnProps {
   data: FetchedData;
