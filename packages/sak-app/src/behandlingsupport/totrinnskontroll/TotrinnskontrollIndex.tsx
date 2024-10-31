@@ -1,5 +1,6 @@
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
+import { FormState } from '@fpsak-frontend/sak-totrinnskontroll/src/components/FormState';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import {
@@ -47,6 +48,8 @@ interface OwnProps {
   alleBehandlinger: BehandlingAppKontekst[];
   behandlingId: number;
   behandlingVersjon: number;
+  toTrinnFormState?: FormState;
+  setToTrinnFormState?: React.Dispatch<FormState>;
 }
 
 /**
@@ -54,7 +57,14 @@ interface OwnProps {
  *
  * Containerklass ansvarlig for att rita opp vilkår og aksjonspunkter med toTrinnskontroll
  */
-const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandlingVersjon }: OwnProps) => {
+const TotrinnskontrollIndex = ({
+  fagsak,
+  alleBehandlinger,
+  behandlingId,
+  behandlingVersjon,
+  toTrinnFormState,
+  setToTrinnFormState,
+}: OwnProps) => {
   const [visBeslutterModal, setVisBeslutterModal] = useState(false);
   const [erAlleAksjonspunktGodkjent, setAlleAksjonspunktTilGodkjent] = useState(false);
 
@@ -128,6 +138,8 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
         alleKodeverk={alleKodeverk}
         behandlingKlageVurdering={totrinnsKlageVurdering}
         createLocationForSkjermlenke={createLocationForSkjermlenke}
+        toTrinnFormState={toTrinnFormState}
+        setToTrinnFormState={setToTrinnFormState}
       />
       {visBeslutterModal && (
         <BeslutterModalIndex

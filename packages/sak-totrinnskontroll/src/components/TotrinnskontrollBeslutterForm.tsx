@@ -12,6 +12,7 @@ import {
 import { Button } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import { Location } from 'history';
+import { useEffect } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import AksjonspunktGodkjenningFieldArray from './AksjonspunktGodkjenningFieldArray';
 import { FormState } from './FormState';
@@ -45,6 +46,8 @@ interface PureOwnProps {
   skjermlenkeTyper: KodeverkMedNavn[];
   lagLenke: (skjermlenkeCode: string) => Location;
   handleSubmit: (formValues: FormState) => void;
+  toTrinnFormState?: FormState;
+  setToTrinnFormState?: React.Dispatch<FormState>;
 }
 
 /*
@@ -62,15 +65,25 @@ export const TotrinnskontrollBeslutterForm = ({
   erTilbakekreving,
   totrinnskontrollSkjermlenkeContext,
   lagLenke,
+  toTrinnFormState,
+  setToTrinnFormState,
 }: PureOwnProps) => {
   const formMethods = useForm<FormState>({
-    defaultValues: buildInitialValues(totrinnskontrollSkjermlenkeContext),
+    defaultValues: toTrinnFormState || buildInitialValues(totrinnskontrollSkjermlenkeContext),
   });
   const aksjonspunktGodkjenning = useWatch({
     control: formMethods.control,
     name: 'aksjonspunktGodkjenning',
   });
   const { formState } = formMethods;
+  useEffect(
+    () => () => {
+      if (setToTrinnFormState) {
+        setToTrinnFormState({ aksjonspunktGodkjenning });
+      }
+    },
+    [aksjonspunktGodkjenning, setToTrinnFormState],
+  );
   if (!behandling.toTrinnsBehandling) {
     return null;
   }

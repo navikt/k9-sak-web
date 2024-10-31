@@ -4,7 +4,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { Button, Label, Table } from '@navikt/ds-react';
+import { Button, Label } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -19,6 +19,7 @@ interface AksjonspunktFormImplProps {
   aktiviteter: Aktivitet[];
   isAksjonspunktOpen: boolean;
   fosterbarn: fosterbarnDto[];
+  harEndretFosterbarn: boolean;
   aksjonspunktKode: string;
   valgValue: string;
 }
@@ -28,6 +29,7 @@ interface FormContentProps {
   aktiviteter: Aktivitet[];
   isAksjonspunktOpen: boolean;
   fosterbarn: fosterbarnDto[];
+  harEndretFosterbarn: boolean;
   aksjonspunktKode: string;
   valgValue: string;
   initialValues: { begrunnelse: string; fosterbarn: fosterbarnDto[] } | any;
@@ -52,22 +54,14 @@ export const FormContent = ({
   handleSubmit,
   isAksjonspunktOpen,
   fosterbarn,
+  harEndretFosterbarn,
   aksjonspunktKode,
   valgValue,
-  initialValues,
 }: FormContentProps) => {
-
-  const erÅF = aksjonspunktKode === aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN;
-
   return (
     <>
       <AksjonspunktHelpText isAksjonspunktOpen={isAksjonspunktOpen}>
-        {[
-          <FormattedMessage
-            key={1}
-            id={erÅF ? 'Årskvantum.Aksjonspunkt.Uavklart.Fosterbarn' : 'Årskvantum.Aksjonspunkt.Uavklart'}
-          />,
-        ]}
+        {[<FormattedMessage key={1} id="Årskvantum.Aksjonspunkt.Uavklart" />]}
       </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
       {isAksjonspunktOpen && (
@@ -82,27 +76,12 @@ export const FormContent = ({
           radios={[
             {
               value: valgValues.reBehandling,
-              label: (
-                <FormattedMessage
-                  id={
-                    erÅF
-                      ? 'Årskvantum.Aksjonspunkt.Uavklart.ReBehandling.Fosterbarn'
-                      : 'Årskvantum.Aksjonspunkt.Uavklart.ReBehandling'
-                  }
-                />
-              ),
+              label: <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.ReBehandling" />,
             },
             {
               value: valgValues.fortsett,
-              label: (
-                <FormattedMessage
-                  id={
-                    erÅF
-                      ? 'Årskvantum.Aksjonspunkt.Uavklart.Fortsett.Fosterbarn'
-                      : 'Årskvantum.Aksjonspunkt.Uavklart.Fortsett'
-                  }
-                />
-              ),
+              disabled: harEndretFosterbarn,
+              label: <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.Fortsett" />,
             },
           ]}
         />
@@ -116,7 +95,7 @@ export const FormContent = ({
       />
       <VerticalSpacer sixteenPx />
 
-      {isAksjonspunktOpen && (!erÅF || valgValue === valgValues.reBehandling) && (
+      {isAksjonspunktOpen && (
         <>
           <BorderBox>
             <FieldArray
@@ -129,33 +108,6 @@ export const FormContent = ({
             />
           </BorderBox>
           <VerticalSpacer sixteenPx />
-        </>
-      )}
-
-      {erÅF && (valgValue === valgValues.fortsett || !valgValue) && initialValues.fosterbarn.length > 0 && (
-        <>
-          <VerticalSpacer eightPx />
-          <Table>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell scope="col">
-                  <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.FosterbarnTittel" />
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            {initialValues.fosterbarn.map((fosterbarnFnr, index) => {
-              const fosterbarnObj = fosterbarn.find(barn => barn.fnr === fosterbarnFnr);
-              const navn = fosterbarnObj && fosterbarnObj.navn ? fosterbarnObj.navn : `Fosterbarn ${index + 1}`;
-              return (
-                <Table.Row key={`${navn}`}>
-                  <Table.DataCell className={styles.vertikaltSentrert}>
-                    {navn} ({fosterbarnObj.fnr})
-                  </Table.DataCell>
-                </Table.Row>
-              );
-            })}
-          </Table>
-          <VerticalSpacer eightPx />
         </>
       )}
 
@@ -175,6 +127,7 @@ const AksjonspunktFormImpl = ({
   handleSubmit,
   isAksjonspunktOpen,
   fosterbarn,
+  harEndretFosterbarn,
   aksjonspunktKode,
   valgValue,
   initialValues,
@@ -188,6 +141,7 @@ const AksjonspunktFormImpl = ({
         aktiviteter={aktiviteter}
         isAksjonspunktOpen={isAksjonspunktOpen}
         fosterbarn={fosterbarn}
+        harEndretFosterbarn={harEndretFosterbarn}
         aksjonspunktKode={aksjonspunktKode}
         valgValue={valgValue}
         initialValues={initialValues}
@@ -255,7 +209,16 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
     { aktiviteter, isAksjonspunktOpen, aksjonspunkterForSteg = [], fosterbarn }: AksjonspunktFormProps,
   ): Partial<ConfigProps<FormValues>> & AksjonspunktFormImplProps => {
     const selector = formValueSelector(formNavn);
-    const { valg: valgValue } = selector(state, 'valg', 'fosterbarn');
+    const { valg: valgValue, fosterbarn: formFosterbarn } = selector(state, 'valg', 'fosterbarn');
+    const harEndretFosterbarn =
+      formFosterbarn?.length !== initialProps.fosterbarn.length ||
+      // Kopier, sorter og konverter til streng for sammenligning
+      formFosterbarn.slice().sort().join('') !==
+        initialProps.fosterbarn
+          .map(barn => barn.fnr)
+          .slice()
+          .sort()
+          .join('');
 
     return {
       onSubmit,
@@ -266,6 +229,7 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
         fosterbarn: fosterbarn.map(barn => barn.fnr),
       },
       fosterbarn,
+      harEndretFosterbarn,
       aksjonspunktKode,
       valgValue,
     };

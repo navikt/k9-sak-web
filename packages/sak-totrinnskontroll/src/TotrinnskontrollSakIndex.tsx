@@ -63,6 +63,8 @@ interface OwnProps {
   readOnly: boolean;
   onSubmit: (...args: any[]) => any;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
+  toTrinnFormState?: FormState;
+  setToTrinnFormState?: React.Dispatch<FormState>;
 }
 
 const TotrinnskontrollSakIndex = ({
@@ -74,6 +76,8 @@ const TotrinnskontrollSakIndex = ({
   behandlingKlageVurdering,
   alleKodeverk,
   createLocationForSkjermlenke,
+  toTrinnFormState,
+  setToTrinnFormState,
 }: OwnProps) => {
   const erTilbakekreving =
     BehandlingType.TILBAKEKREVING === behandling.type.kode ||
@@ -137,6 +141,8 @@ const TotrinnskontrollSakIndex = ({
           skjermlenkeTyper={skjermlenkeTyper}
           erTilbakekreving={erTilbakekreving}
           lagLenke={lagLenke}
+          toTrinnFormState={toTrinnFormState}
+          setToTrinnFormState={setToTrinnFormState}
         />
       )}
       {!erStatusFatterVedtak && (
