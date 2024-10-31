@@ -1,11 +1,10 @@
-import React from 'react';
 import { httpUtils } from '@fpsak-frontend/utils';
-import { render, fireEvent, waitFor, screen } from '@testing-library/react';
-import VilkårsvurderingAvToOmsorgspersoner from '../VilkårsvurderingAvToOmsorgspersoner.js';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { dokumentSteg } from '../../../../types/Step';
+import Vurderingstype from '../../../../types/Vurderingstype';
 import ContainerContext from '../../../context/ContainerContext';
 import VurderingContext from '../../../context/VurderingContext';
-import Vurderingstype from '../../../../types/Vurderingstype';
-import { dokumentSteg } from '../../../../types/Step';
+import VilkårsvurderingAvToOmsorgspersoner from '../VilkårsvurderingAvToOmsorgspersoner.js';
 
 const vurderingsoversiktEndpoint = 'vurderingsoversikt-mock';
 const vurderingsopprettelseEndpoint = 'vurderingsopprettelse-mock';

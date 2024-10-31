@@ -1,6 +1,5 @@
-import { render, waitFor } from '@testing-library/react';
-import React from 'react';
 import { httpUtils } from '@fpsak-frontend/utils';
+import { render, waitFor } from '@testing-library/react';
 import ContainerContext from '../../../context/ContainerContext';
 import StruktureringAvDokumentasjon from '../StruktureringAvDokumentasjon';
 
