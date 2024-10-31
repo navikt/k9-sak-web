@@ -14,7 +14,7 @@
     "vite-plugin-node-polyfills": "^0.22.0"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.9.0",
+    "@hookform/resolvers": "^3.9.1",
     "@navikt/ds-css": "7.4.0",
     "@navikt/ds-react": "7.4.0",
     "@navikt/ft-form-hooks": "5.1.10",
