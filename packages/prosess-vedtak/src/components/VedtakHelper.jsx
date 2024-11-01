@@ -13,7 +13,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
-import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
   tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT &&

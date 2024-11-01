@@ -1,6 +1,6 @@
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { calcDaysAndWeeks } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import { calcDaysAndWeeks } from '@k9-sak-web/lib/dateUtils/dateUtils';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import { BodyShort, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';

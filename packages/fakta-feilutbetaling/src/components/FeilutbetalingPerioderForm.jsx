@@ -1,6 +1,6 @@
 import { SelectField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import { Table } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';

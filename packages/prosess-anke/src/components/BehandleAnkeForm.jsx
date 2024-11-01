@@ -30,7 +30,7 @@ import FritekstBrevTextField from './FritekstAnkeBrevTextField';
 import PreviewAnkeLink from './PreviewAnkeLink';
 import TempsaveAnkeButton from './TempsaveAnkeButton';
 
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import styles from './behandleAnkeForm.module.css';
 
 const omgjorArsakValues = [

@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import lagVisningsnavnForKlagepart from '../utils/lagVisningsnavnForKlagepart';
 
-import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import styles from './formkravKlageForm.module.css';
 
 export const IKKE_PAKLAGD_VEDTAK = 'ikkePaklagdVedtak';
