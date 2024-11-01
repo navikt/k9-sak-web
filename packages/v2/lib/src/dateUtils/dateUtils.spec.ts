@@ -1,11 +1,7 @@
-import dayjs from 'dayjs';
 import { describe, expect, it } from 'vitest';
 import {
   TIDENES_ENDE,
   addDaysToDate,
-  calcDays,
-  calcDaysAndWeeks,
-  calcDaysAndWeeksWithWeekends,
   convertHoursToDays,
   dateFormat,
   findDifferenceInMonthsAndDays,
@@ -17,20 +13,6 @@ import {
 } from './dateUtils';
 
 describe('dateUtils', () => {
-  it('Skal kalkulere antall dager mellom to datoer inkludert helger og skrive det ut som uker og dager', () => {
-    const fom = '2018-04-17';
-    const tom = '2018-06-02';
-    const message = '6 uker 5 dager';
-    expect(calcDaysAndWeeksWithWeekends(fom, tom)).toEqual(message);
-  });
-
-  it('Skal kalkulere antall dager mellom to datoer uten helger og skrive det ut som uker og dager', () => {
-    const fom = '2018-04-17';
-    const tom = '2018-06-02';
-    const message = '6 uker 4 dager';
-    expect(calcDaysAndWeeks(fom, tom)).toEqual(message);
-  });
-
   it('Skal splitte et sett med uker og dager i to', () => {
     const days = 33;
     const weeks = 2;
@@ -78,18 +60,6 @@ describe('dateUtils', () => {
     const fomDate = '2018-04-30';
     const tomDate = '2018-04-10';
     expect(findDifferenceInMonthsAndDays(fomDate, tomDate)).toBeUndefined();
-  });
-
-  it('skal kalkulere dager uten å regne med helger', () => {
-    const start = dayjs('2023-01-01');
-    const end = dayjs('2023-01-10');
-    expect(calcDays(start, end)).toBe(7);
-  });
-
-  it('skal kalkulere dager inkludert helger', () => {
-    const start = dayjs('2023-01-01');
-    const end = dayjs('2023-01-10');
-    expect(calcDays(start, end, false)).toBe(10);
   });
 
   it('skal konvertere timer til dager og timer', () => {

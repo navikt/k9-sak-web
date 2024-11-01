@@ -1,10 +1,12 @@
 import { Dayjs } from 'dayjs';
-import 'moment/locale/nb';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from './formats';
+import { DDMMYYYY_DATE_FORMAT, HHMM_TIME_FORMAT, ISO_DATE_FORMAT, YYYY_MM_FORMAT } from './formats';
 import { initializeDate } from './initializeDate';
 
+export const TIDENES_ENDE = '9999-12-31';
+export const TIMER_PER_DAG = 7.5;
+
 export const calcDays = (fraDatoPeriode: Dayjs | string, tilDatoPeriode: Dayjs | string, notWeekends = true) => {
-  if (tilDatoPeriode === '9999-12-31') {
+  if (tilDatoPeriode === TIDENES_ENDE) {
     return checkDays(undefined, undefined);
   }
 
@@ -34,7 +36,7 @@ export const calcDays = (fraDatoPeriode: Dayjs | string, tilDatoPeriode: Dayjs |
   return numOfDays;
 };
 
-const checkDays = (weeks?: number, days?: number): string => {
+export const checkDays = (weeks?: number, days?: number): string => {
   let tekst = `${weeks} uker ${days} dager`;
 
   if (weeks === undefined && days === undefined) {
@@ -98,3 +100,79 @@ export const formatDate = (date: string): string => initializeDate(date, ISO_DAT
 
 export const formatPeriod = (fomDate: string, tomDate: string): string =>
   `${formatDate(fomDate)} - ${formatDate(tomDate)}`;
+
+export const convertHoursToDays = (hoursToConvert: number) => {
+  const days = Math.floor(hoursToConvert / TIMER_PER_DAG);
+  const hours = hoursToConvert % TIMER_PER_DAG;
+  return { days, hours };
+};
+
+export const splitWeeksAndDays = (weeks: number, days: number) => {
+  const returnArray = [];
+  const allDays = weeks ? weeks * 5 + days : days;
+  const firstPeriodDays = allDays % 2 === 0 ? allDays / 2 : allDays / 2 + 0.5;
+  const secondPeriodDays = allDays % 2 === 0 ? allDays / 2 : allDays / 2 - 0.5;
+  const firstPeriodWeeksAndDays = { weeks: Math.trunc(firstPeriodDays / 5), days: firstPeriodDays % 5 };
+  const secondPeriodWeeksAndDays = { weeks: Math.trunc(secondPeriodDays / 5), days: secondPeriodDays % 5 };
+  returnArray.push(secondPeriodWeeksAndDays, firstPeriodWeeksAndDays);
+  return returnArray;
+};
+
+export const dateFormat = (date: string) => initializeDate(date).format(DDMMYYYY_DATE_FORMAT);
+
+export const timeFormat = (date: string) => initializeDate(date, '', false, true).format(HHMM_TIME_FORMAT);
+
+// Skal ikke legge til dag når dato er tidenes ende
+export const addDaysToDate = (dateString: string, nrOfDays: number) =>
+  dateString === TIDENES_ENDE
+    ? dateString
+    : initializeDate(dateString, ISO_DATE_FORMAT).add(nrOfDays, 'days').format(ISO_DATE_FORMAT);
+
+export const findDifferenceInMonthsAndDays = (fomDate: string, tomDate: string) => {
+  const fDate = initializeDate(fomDate, ISO_DATE_FORMAT, true);
+  const tDate = initializeDate(tomDate, ISO_DATE_FORMAT, true).add(1, 'days');
+  if (!fDate.isValid() || !tDate.isValid() || fDate.isAfter(tDate)) {
+    return undefined;
+  }
+
+  const months = tDate.diff(fDate, 'months');
+  const updatedFDate = fDate.add(months, 'months');
+
+  return {
+    months,
+    days: tDate.diff(updatedFDate, 'days'),
+  };
+};
+
+export const getRangeOfMonths = (fom: string, tom: string) => {
+  const fraMåned = initializeDate(fom, YYYY_MM_FORMAT);
+  const tilMåned = initializeDate(tom, YYYY_MM_FORMAT);
+  let currentMonth = fraMåned;
+  const range = [
+    {
+      month: currentMonth.format('MMMM'),
+      year: currentMonth.format('YY'),
+    },
+  ];
+
+  while (currentMonth.isBefore(tilMåned)) {
+    currentMonth = currentMonth.add(1, 'month');
+    range.push({
+      month: currentMonth.format('MMMM'),
+      year: currentMonth.format('YY'),
+    });
+  }
+
+  return range;
+};
+
+export const isValidDate = (date: string) => initializeDate(date, ISO_DATE_FORMAT, true).isValid();
+
+// Eksempel på lukket periode fra Årskvantum: 2022-02-07/2022-02-08
+export const formatereLukketPeriode = (periode: string): string => {
+  const [fom, tom] = periode.split('/');
+  if (!fom || !tom) {
+    return periode;
+  }
+  return `${formatDate(fom)} - ${formatDate(tom)}`;
+};

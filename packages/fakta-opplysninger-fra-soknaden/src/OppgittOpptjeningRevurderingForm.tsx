@@ -5,8 +5,6 @@ import TextAreaField from '@fpsak-frontend/form/src/TextAreaField';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  ISO_DATE_FORMAT,
-  dateFormat,
   hasValidDate,
   hasValidDecimalMaxNumberOfDecimals,
   hasValidText,
@@ -15,6 +13,8 @@ import {
   minLength,
   required,
 } from '@fpsak-frontend/utils';
+import { dateFormat } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Aksjonspunkt, Behandling, SubmitCallback } from '@k9-sak-web/types';
 import OpplysningerFraSøknaden, { Måned } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import { Button, Tabs } from '@navikt/ds-react';

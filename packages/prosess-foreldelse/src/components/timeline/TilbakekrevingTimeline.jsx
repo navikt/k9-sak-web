@@ -8,7 +8,7 @@ import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { Image } from '@fpsak-frontend/shared-components';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 
 import { Timeline, TimeLineControl } from '@fpsak-frontend/tidslinje';
 

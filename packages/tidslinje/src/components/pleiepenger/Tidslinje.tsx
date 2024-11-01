@@ -1,9 +1,9 @@
 import { FlexRow, Image } from '@fpsak-frontend/shared-components';
 import { Timeline } from '@fpsak-frontend/tidslinje';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { HGrid } from '@navikt/ds-react';
 import moment from 'moment';
-import React, { ReactNode, useEffect, useMemo, useRef } from 'react';
+import { ReactNode, useEffect, useMemo, useRef } from 'react';
 import styles from './tidslinje.module.css';
 import Periode from './types/Periode';
 import TidslinjeRad from './types/TidslinjeRad';

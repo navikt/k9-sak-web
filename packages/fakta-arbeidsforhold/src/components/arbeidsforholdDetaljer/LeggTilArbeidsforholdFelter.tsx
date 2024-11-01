@@ -1,18 +1,11 @@
 import moment from 'moment';
-import React from 'react';
 
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import {
-  DDMMYYYY_DATE_FORMAT,
-  hasValidDate,
-  hasValidInteger,
-  maxValue,
-  minValue,
-  required,
-} from '@fpsak-frontend/utils';
+import { hasValidDate, hasValidInteger, maxValue, minValue, required } from '@fpsak-frontend/utils';
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
 
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
 import styles from './leggTilArbeidsforholdFelter.module.css';
 

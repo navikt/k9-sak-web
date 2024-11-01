@@ -1,4 +1,4 @@
-import initializeDate from '../date-utils/initialize';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import Period from './Period';
 import sortPeriodsByFomDate from './sortPeriodsByFomDate';
 
