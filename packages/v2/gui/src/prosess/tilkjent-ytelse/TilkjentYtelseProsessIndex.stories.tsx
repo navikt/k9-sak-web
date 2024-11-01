@@ -7,7 +7,6 @@ import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent } from '@storybook/test';
-import { it } from 'vitest';
 import { asyncAction } from '../../storybook/asyncAction';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';
@@ -106,8 +105,8 @@ export const VisÅpentAksjonspunktTilbaketrekk: Story = {
     arbeidsgiverOpplysningerPerId,
     personopplysninger: { aktoerId: '1', fnr: '12345678901' },
   },
-  play: async ({ canvas }) => {
-    it('Skal vise skjemaelementer for tilbaketrekk', async () => {
+  play: async ({ canvas, step }) => {
+    step('Skal vise skjemaelementer for tilbaketrekk', async () => {
       expect(canvas.getByRole('heading', { name: 'Tilkjent ytelse' })).toBeInTheDocument();
       expect(
         canvas.getByText(
