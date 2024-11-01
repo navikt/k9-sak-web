@@ -1,12 +1,3 @@
-import type { Kodeverk } from '../../shared/Kodeverk.ts';
-import { type UttakDto } from '../generated';
-
+import { type UttakDto, utfall2 as GeneratedUtfall } from '../generated';
 export type UttakUtfallType = UttakDto['utfall'];
-
-export type UttakUtfallTypeKodeverk = Kodeverk<UttakUtfallType, 'UTTAK_UTFALL'>;
-
-export const uttakUtfallType: Readonly<Record<UttakUtfallType, UttakUtfallType>> = {
-  INNVILGET: 'INNVILGET',
-  AVSLÅTT: 'AVSLÅTT',
-  UDEFINERT: 'UDEFINERT',
-};
+export const uttakUtfallType: Readonly<Record<UttakUtfallType, UttakUtfallType>> = GeneratedUtfall;

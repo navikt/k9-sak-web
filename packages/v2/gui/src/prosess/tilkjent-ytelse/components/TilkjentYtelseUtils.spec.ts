@@ -12,7 +12,7 @@ import {
 
 describe('TilkjentYteleseUtils', () => {
   const kodeverkNavnFraKodeMock = vi.fn(
-    (kode: string, kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType) => {
+    (_: string, kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType) => {
       if (kodeverkType === KodeverkType.AKTIVITET_STATUS) {
         return 'AktivitetStatus';
       }

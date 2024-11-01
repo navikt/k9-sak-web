@@ -1,6 +1,6 @@
 import { calcDaysAndWeeks } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
-import type { FeatureToggles } from '@k9-sak-web/lib/kodeverk/types/FeatureTogglesType.js';
+import type { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
 import { Button, ErrorMessage, HStack, Label, VStack } from '@navikt/ds-react';
 import { Datepicker } from '@navikt/ft-form-hooks';
 import { dateAfterOrEqual, hasValidDate, required } from '@navikt/ft-form-validators';

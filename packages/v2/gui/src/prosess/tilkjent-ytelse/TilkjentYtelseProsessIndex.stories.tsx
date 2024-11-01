@@ -7,7 +7,7 @@ import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent, within } from '@storybook/test';
+import { expect, userEvent } from '@storybook/test';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';
 
@@ -84,8 +84,7 @@ export const VisUtenAksjonspunkt: Story = {
     arbeidsgiverOpplysningerPerId,
     personopplysninger: { aktoerId: '1', fnr: '12345678901' },
   },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+  play: async ({ canvas }) => {
     expect(canvas.queryByRole('button', { name: 'Bekreft og fortsett' })).not.toBeInTheDocument();
   },
   render: props => <TilkjentYtelseProsessIndex {...props} />,
@@ -106,9 +105,8 @@ export const VisÅpentAksjonspunktTilbaketrekk: Story = {
     arbeidsgiverOpplysningerPerId,
     personopplysninger: { aktoerId: '1', fnr: '12345678901' },
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvas }) => {
     it('Skal vise skjemaelementer for tilbaketrekk', async () => {
-      const canvas = within(canvasElement);
       expect(canvas.getByRole('heading', { name: 'Tilkjent ytelse' })).toBeInTheDocument();
       expect(
         canvas.getByText(
@@ -139,8 +137,7 @@ export const VisÅpentAksjonspunktManuellTilkjentYtelse: Story = {
     arbeidsgiverOpplysningerPerId,
     personopplysninger: { aktoerId: '1', fnr: '12345678901' },
   },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+  play: async ({ canvas }) => {
     expect(canvas.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
     expect(canvas.getByRole('button', { name: 'Legg til ny periode' })).toBeInTheDocument();
     expect(canvas.queryByText('Ny periode')).not.toBeInTheDocument();
