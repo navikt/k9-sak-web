@@ -166,7 +166,7 @@ describe('VilkårsvurderingAvToOmsorgspersoner', () => {
     it('should render vurderingsoversikt presentation properly during and after the data has been fetched', async () => {
       mockResolvedGetApiCallOnce(vurderingsoversiktMock);
       const { getByText } = renderVilkårsvurderingComponent();
-      expect(getByText(/Venter.../i)).toBeInTheDocument();
+      expect(getByText('venter', { exact: false })).toBeInTheDocument();
       await waitFor(() => expect(getByText(/Ingen perioder å vurdere/i)).toBeInTheDocument());
     });
   });
@@ -175,7 +175,7 @@ describe('VilkårsvurderingAvToOmsorgspersoner', () => {
     it('should render vurderingsoversikt presentation properly after error handling', async () => {
       mockResolvedGetApiCallOnce({});
       const { getByText } = renderVilkårsvurderingComponent();
-      expect(getByText(/Venter.../i)).toBeInTheDocument();
+      expect(getByText('venter', { exact: false })).toBeInTheDocument();
       await waitFor(() => expect(getByText(/Noe gikk galt, vennligst prøv igjen senere/i)).toBeInTheDocument());
     });
   });
@@ -184,7 +184,7 @@ describe('VilkårsvurderingAvToOmsorgspersoner', () => {
     it('should render vurderingsoversikt properly after error handling', async () => {
       mockRejectedGetApiCallOnce();
       const { getByText } = renderVilkårsvurderingComponent();
-      expect(getByText(/Venter.../i)).toBeInTheDocument();
+      expect(getByText('venter', { exact: false })).toBeInTheDocument();
       await waitFor(() => expect(getByText(/Noe gikk galt, vennligst prøv igjen senere/i)).toBeInTheDocument());
     });
   });
