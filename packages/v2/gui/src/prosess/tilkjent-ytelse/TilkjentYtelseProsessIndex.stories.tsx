@@ -5,9 +5,9 @@ import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Be
 import { inntektskategorier } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektskategori.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
-import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent } from '@storybook/test';
+import { asyncAction } from '../../storybook/asyncAction';
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
 import type { BeregningsresultatMedUtbetaltePeriodeDto } from './types/BeregningsresultatMedUtbetaltePeriode';
 
@@ -80,7 +80,7 @@ export const VisUtenAksjonspunkt: Story = {
     readOnlySubmitButton: true,
     beregningsresultat,
     aksjonspunkter: [],
-    submitCallback: action('button-click') as (data: any) => Promise<any>,
+    submitCallback: asyncAction('button-click'),
     arbeidsgiverOpplysningerPerId,
     personopplysninger: { aktoerId: '1', fnr: '12345678901' },
   },
@@ -101,7 +101,7 @@ export const VisÅpentAksjonspunktTilbaketrekk: Story = {
         status: aksjonspunktStatus.OPPRETTET, // kodeverk: ''
       },
     ],
-    submitCallback: action('button-click') as (data: any) => Promise<any>,
+    submitCallback: asyncAction('button-click'),
     arbeidsgiverOpplysningerPerId,
     personopplysninger: { aktoerId: '1', fnr: '12345678901' },
   },
@@ -133,7 +133,7 @@ export const VisÅpentAksjonspunktManuellTilkjentYtelse: Story = {
         status: aksjonspunktStatus.OPPRETTET, // kodeverk: ''
       },
     ],
-    submitCallback: action('button-click') as (data: any) => Promise<any>,
+    submitCallback: asyncAction('button-click'),
     arbeidsgiverOpplysningerPerId,
     personopplysninger: { aktoerId: '1', fnr: '12345678901' },
   },
