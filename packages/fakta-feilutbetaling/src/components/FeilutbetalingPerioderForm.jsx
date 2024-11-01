@@ -1,9 +1,9 @@
 import { SelectField, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+import { required } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Table } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { connect } from 'react-redux';
 import styles from './feilutbetalingPerioderTable.module.css';
 
