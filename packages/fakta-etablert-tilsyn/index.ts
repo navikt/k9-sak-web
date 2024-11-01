@@ -1,1 +1,1 @@
-export { default as EtablertTilsyn } from './src/ui/MainComponent';
+export { default as EtablertTilsynContainer } from './src/ui/EtablertTilsynContainer';

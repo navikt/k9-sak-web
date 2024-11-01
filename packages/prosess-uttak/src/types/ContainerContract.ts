@@ -29,7 +29,6 @@ interface ContainerContract {
   virkningsdatoUttakNyeRegler: string;
   aksjonspunkter?: Aksjonspunkt[];
   versjon?: number;
-  featureToggles: { [key: string]: boolean };
   erOverstyrer?: boolean;
   status?: string | false;
 }

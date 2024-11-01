@@ -252,7 +252,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
           beregnBelop={beregnBelop}
         />
         <VerticalSpacer twentyPx />
-        {reduserteBelop.map(belop => (
+        {reduserteBelop?.map(belop => (
           <React.Fragment key={belop.belop}>
             <BodyShort size="small">
               <FormattedMessage

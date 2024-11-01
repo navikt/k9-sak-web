@@ -47,6 +47,7 @@ interface PureOwnProps {
   submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  isUngdomsytelseFagsak: boolean;
 }
 
 const TilkjentYtelsePanelImpl = ({
@@ -56,6 +57,7 @@ const TilkjentYtelsePanelImpl = ({
   aksjonspunkter,
   readOnly,
   arbeidsgiverOpplysningerPerId,
+  isUngdomsytelseFagsak,
 }: Partial<PureOwnProps>) => {
   const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
   const kodeverkNavnFraKode = getKodeverkNavnFraKodeFn();
@@ -73,6 +75,7 @@ const TilkjentYtelsePanelImpl = ({
           groups={groups}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           kodeverkNavnFraKode={kodeverkNavnFraKode}
+          isUngdomsytelseFagsak={isUngdomsytelseFagsak}
         />
       )}
 
