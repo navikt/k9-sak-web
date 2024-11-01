@@ -1,10 +1,9 @@
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { BodyShort, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';

@@ -1,16 +1,9 @@
 import { DatepickerField, behandlingForm } from '@fpsak-frontend/form';
-import {
-  DDMMYYYY_DATE_FORMAT,
-  ISO_DATE_FORMAT,
-  dateAfterOrEqual,
-  dateBeforeOrEqual,
-  hasValidDate,
-  required,
-} from '@fpsak-frontend/utils';
+import { dateAfterOrEqual, dateBeforeOrEqual, hasValidDate, required } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Alert, BodyShort, Button, Detail, Label, Modal } from '@navikt/ds-react';
 import moment from 'moment/moment';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';

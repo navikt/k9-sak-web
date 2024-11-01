@@ -10,7 +10,6 @@ import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjon
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpText, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  DDMMYYYY_DATE_FORMAT,
   decodeHtmlEntity,
   getKodeverknavnFn,
   hasValidText,
@@ -18,10 +17,11 @@ import {
   minLength,
   required,
 } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { BodyShort, Button, Detail, HGrid, Label } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

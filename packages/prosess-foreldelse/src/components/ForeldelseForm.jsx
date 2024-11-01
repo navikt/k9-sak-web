@@ -1,7 +1,7 @@
 import { Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -25,13 +25,14 @@ import {
   FlexRow,
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, decodeHtmlEntity, omit } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity, omit } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 
 import ForeldelsePeriodeForm, { FORELDELSE_PERIODE_FORM_NAME } from './ForeldelsePeriodeForm';
 import ForeldelseTidslinjeHjelpetekster from './ForeldelseTidslinjeHjelpetekster';
 import TilbakekrevingTimelinePanel from './timeline/TilbakekrevingTimelinePanel';
 
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import styles from './foreldelseForm.module.css';
 
 const FORELDELSE_FORM_NAME = 'ForeldelseForm';
