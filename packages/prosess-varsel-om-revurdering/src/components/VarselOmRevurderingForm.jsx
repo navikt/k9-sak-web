@@ -3,13 +3,8 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpText, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import {
-  ISO_DATE_FORMAT,
-  getLanguageCodeFromSprakkode,
-  hasValidText,
-  minLength,
-  required,
-} from '@fpsak-frontend/utils';
+import { getLanguageCodeFromSprakkode, hasValidText, minLength, required } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 import { BodyShort, Button, Detail, Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
