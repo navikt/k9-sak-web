@@ -1,5 +1,5 @@
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
-import initializeDate from '@k9-sak-web/lib/dateUtils/initializeDate.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { Dayjs } from 'dayjs';
 import type { SoknadsfristVilkarType } from './types/SoknadsfristVilkarType';
 

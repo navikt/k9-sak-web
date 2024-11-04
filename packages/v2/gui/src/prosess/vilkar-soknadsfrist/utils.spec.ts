@@ -1,5 +1,5 @@
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import initializeDate from '@k9-sak-web/lib/dateUtils/initializeDate.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { formatDate, hentAktivePerioderFraVilkar, utledInnsendtSoknadsfrist } from './utils';
 
 describe('formatDate', () => {

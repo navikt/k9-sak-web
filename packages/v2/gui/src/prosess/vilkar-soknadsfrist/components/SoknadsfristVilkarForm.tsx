@@ -2,7 +2,7 @@ import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeve
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { aksjonspunktType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktType.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import initializeDate from '@k9-sak-web/lib/dateUtils/initializeDate.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { Alert, Button, HStack, Label } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';

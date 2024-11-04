@@ -13207,6 +13207,7 @@ __metadata:
     "@testing-library/react": 16.0.1
     "@testing-library/user-event": 14.5.2
     "@types/history": 5.0.0
+    "@types/object-hash": ^3.0.6
     "@types/prop-types": 15.7.13
     "@types/react": 18.3.12
     "@types/react-collapse": 5.0.4
