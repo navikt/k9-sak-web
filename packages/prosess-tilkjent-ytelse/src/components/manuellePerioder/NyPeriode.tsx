@@ -22,7 +22,9 @@ interface Periode {
 }
 
 export const sjekkOverlappendePerioder = (index: number, nestePeriode: Periode, forrigePeriode: Periode) =>
-  index !== 0 && initializeDate(nestePeriode.fom).isSameOrBefore(initializeDate(forrigePeriode.tom));
+  index !== 0
+  && initializeDate(nestePeriode.fom).isSameOrBefore(initializeDate(forrigePeriode.tom))
+  && initializeDate(nestePeriode.tom).isSameOrAfter(initializeDate(forrigePeriode.fom))
 
 const validateForm = (perioder: BeriketBeregningsresultatPeriode[], nyPeriodeFom: string, nyPeriodeTom: string) => {
   let feilmelding = '';
