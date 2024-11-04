@@ -1,10 +1,10 @@
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { formatDate } from '@fpsak-frontend/utils';
 import KvoteInfo from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/types/KvoteInfo';
 import Fremdriftslinje from '@k9-sak-web/fremdriftslinje';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 
+import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import styles from './antallDagerLivetsSluttfaseIndex.module.css';
 
 const cache = createIntlCache();

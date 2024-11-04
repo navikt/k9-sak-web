@@ -1,4 +1,4 @@
-import initializeDate from './initialize';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { prettifyDate } from './format';
 
 const addYearsToDate = (date: string, yearsToAdd: number) => {
