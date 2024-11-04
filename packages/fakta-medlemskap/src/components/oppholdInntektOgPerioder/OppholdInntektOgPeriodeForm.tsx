@@ -2,7 +2,8 @@ import FaktaBegrunnelseTextFieldRHF from '@fpsak-frontend/form/src/hook-form/Fak
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { BorderBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { ISO_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Alert, Button } from '@navikt/ds-react';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';

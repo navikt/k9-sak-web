@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { describe, expect, it } from 'vitest';
-import initializeDate, { dateToday } from './initialize';
+import { dateToday, initializeDate } from './initializeDate';
 
 describe('initializeDate', () => {
   it('should initialize date with default format and start of day', () => {

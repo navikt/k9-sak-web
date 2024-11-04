@@ -10,7 +10,7 @@ import {
   Image,
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { VilkarResultPickerRHF } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';

@@ -1,9 +1,7 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import { MemoryRouter } from 'react-router';
-import messages from '../../i18n/nb_NO.json';
 import TotrinnskontrollSaksbehandlerPanel from './TotrinnskontrollSaksbehandlerPanel';
 
 const getTotrinnsaksjonspunkterFødsel = () => [
@@ -127,7 +125,6 @@ describe('<TotrinnskontrollSaksbehandlerPanel>', () => {
           lagLenke={() => location}
         />
       </MemoryRouter>,
-      { messages },
     );
 
     expect(screen.getByRole('link', { name: 'Fødsel' })).toBeInTheDocument();

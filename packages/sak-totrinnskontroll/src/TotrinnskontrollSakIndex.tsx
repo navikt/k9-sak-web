@@ -1,32 +1,31 @@
-import React, { useCallback, useMemo } from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { Location } from 'history';
+import { useCallback, useMemo } from 'react';
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
+import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
 import {
   BehandlingAppKontekst,
-  KodeverkMedNavn,
   KlageVurdering,
+  KodeverkMedNavn,
   TotrinnskontrollSkjermlenkeContext,
 } from '@k9-sak-web/types';
 
-import TotrinnskontrollBeslutterForm, { FormValues } from './components/TotrinnskontrollBeslutterForm';
 import { AksjonspunktGodkjenningData } from './components/AksjonspunktGodkjenningFieldArray';
+import { FormState } from './components/FormState';
+import TotrinnskontrollBeslutterForm from './components/TotrinnskontrollBeslutterForm';
 import TotrinnskontrollSaksbehandlerPanel from './components/TotrinnskontrollSaksbehandlerPanel';
-import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
 const intl = createIntl(
   {
     locale: 'nb-NO',
-    messages,
   },
   cache,
 );
@@ -64,6 +63,8 @@ interface OwnProps {
   readOnly: boolean;
   onSubmit: (...args: any[]) => any;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
+  toTrinnFormState?: FormState;
+  setToTrinnFormState?: React.Dispatch<FormState>;
 }
 
 const TotrinnskontrollSakIndex = ({
@@ -75,13 +76,15 @@ const TotrinnskontrollSakIndex = ({
   behandlingKlageVurdering,
   alleKodeverk,
   createLocationForSkjermlenke,
+  toTrinnFormState,
+  setToTrinnFormState,
 }: OwnProps) => {
   const erTilbakekreving =
     BehandlingType.TILBAKEKREVING === behandling.type.kode ||
     BehandlingType.TILBAKEKREVING_REVURDERING === behandling.type.kode;
 
   const submitHandler = useCallback(
-    (values: FormValues) => {
+    (values: FormState) => {
       const aksjonspunktGodkjenningDtos = values.aksjonspunktGodkjenning.map(apData => ({
         aksjonspunktKode: apData.aksjonspunktKode,
         godkjent: apData.totrinnskontrollGodkjent,
@@ -130,16 +133,16 @@ const TotrinnskontrollSakIndex = ({
       {erStatusFatterVedtak && (
         <TotrinnskontrollBeslutterForm
           behandling={behandling}
-          behandlingId={behandling.id}
-          behandlingVersjon={behandling.versjon}
           totrinnskontrollSkjermlenkeContext={sorterteTotrinnskontrollSkjermlenkeContext}
           readOnly={readOnly}
-          onSubmit={submitHandler}
+          handleSubmit={submitHandler}
           behandlingKlageVurdering={behandlingKlageVurdering}
           arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
           skjermlenkeTyper={skjermlenkeTyper}
           erTilbakekreving={erTilbakekreving}
           lagLenke={lagLenke}
+          toTrinnFormState={toTrinnFormState}
+          setToTrinnFormState={setToTrinnFormState}
         />
       )}
       {!erStatusFatterVedtak && (

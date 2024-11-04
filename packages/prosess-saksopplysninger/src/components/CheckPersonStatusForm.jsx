@@ -11,17 +11,17 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { AksjonspunktHelpText, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-frontend/utils';
+import { getKodeverknavnFn, required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { BodyShort, Detail, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import styles from './checkPersonStatusForm.module.css';
 
 /**

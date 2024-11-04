@@ -2,7 +2,8 @@ import hide from '@fpsak-frontend/assets/images/hide.svg';
 import show from '@fpsak-frontend/assets/images/show.svg';
 import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
 import { Image } from '@fpsak-frontend/shared-components/index';
-import { calcDays, convertHoursToDays, formatereLukketPeriode, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
+import { utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
+import { calcDays, convertHoursToDays, formatereLukketPeriode } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import {
   ArbeidsforholdV2,
   ArbeidsgiverOpplysningerPerId,

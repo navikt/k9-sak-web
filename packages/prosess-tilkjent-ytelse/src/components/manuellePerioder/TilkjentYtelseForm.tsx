@@ -77,7 +77,7 @@ export const transformValues = (values: TilkjentYtelseFormState) => [
     kode: aksjonspunktCodes.MANUELL_TILKJENT_YTELSE,
     tilkjentYtelse: {
       perioder: values.perioder,
-    }
+    },
   },
 ];
 

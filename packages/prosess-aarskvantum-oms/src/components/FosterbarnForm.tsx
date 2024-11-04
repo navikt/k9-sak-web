@@ -34,10 +34,10 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue, aksjonspu
               <Table.Row>
                 <Table.DataCell />
                 <Table.DataCell>
-                  <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.Fnr" />
+                  <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.Fosterbarn.Fnr" />
                 </Table.DataCell>
                 <Table.DataCell className={styles.sentrert}>
-                  <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.Fjern" />
+                  <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.Fosterbarn.Fjern" />
                 </Table.DataCell>
               </Table.Row>
             </Table.Header>
@@ -83,7 +83,7 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue, aksjonspu
         </>
       )}
       <Button variant="tertiary" type="button" onClick={() => fields.push('')} size="small">
-        <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.LeggTil" />
+        <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.Fosterbarn.LeggTil" />
       </Button>
     </>
   );

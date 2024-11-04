@@ -1,5 +1,5 @@
 import { RadioGroupPanelRHF } from '@fpsak-frontend/form';
-import { initializeDate } from '@fpsak-frontend/utils';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { CheckmarkIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button } from '@navikt/ds-react';
 import { Datepicker, TextAreaField } from '@navikt/ft-form-hooks';

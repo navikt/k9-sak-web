@@ -28,7 +28,7 @@ import {
 import { BodyShort, Tabs, Tooltip } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
@@ -165,6 +165,17 @@ const BehandlingSupportIndex = ({
   const k9SakClient = useContext(K9SakClientContext);
   const formidlingClient = useContext(FormidlingClientContext);
   const meldingerBackendClient = new MeldingerBackendClient(k9SakClient, formidlingClient);
+  const [toTrinnskontrollFormState, setToTrinnskontrollFormState] = useState(undefined);
+
+  const currentResetValue = `${fagsak.saksnummer}-${behandlingId}-${personopplysninger?.aktoerId}`;
+  const prevResetValue = useRef(currentResetValue);
+
+  useEffect(() => {
+    if (currentResetValue !== prevResetValue.current) {
+      setToTrinnskontrollFormState(undefined);
+    }
+    prevResetValue.current = currentResetValue;
+  }, [currentResetValue]);
 
   const getNotater = (signal: AbortSignal) =>
     axios
@@ -278,6 +289,8 @@ const BehandlingSupportIndex = ({
               alleBehandlinger={alleBehandlinger}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
+              toTrinnFormState={toTrinnskontrollFormState}
+              setToTrinnFormState={setToTrinnskontrollFormState}
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.FRA_BESLUTTER}>
