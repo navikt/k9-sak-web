@@ -1,4 +1,5 @@
-import { DDMMYYYY_DATE_FORMAT, initializeDate } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 
 export const formatDate = (dato: string) => initializeDate(dato).format(DDMMYYYY_DATE_FORMAT);
 

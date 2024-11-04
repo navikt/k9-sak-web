@@ -1,4 +1,4 @@
-import { initializeDate } from '@fpsak-frontend/utils';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import Period from '../types/Period';
 import { Uttaksperiode } from '../types/Uttaksperiode';
 import Uttaksperioder from '../types/Uttaksperioder';

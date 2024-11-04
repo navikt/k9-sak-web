@@ -1,7 +1,7 @@
 import moment from 'moment';
 
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { expect } from 'vitest';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '../formats';
 import {
   dateAfterOrEqual,
   dateAfterOrEqualToToday,
@@ -13,9 +13,9 @@ import {
   dateRangesNotOverlapping,
   hasValidDate,
   hasValidDecimal,
+  hasValidDecimalMaxNumberOfDecimals,
   hasValidFodselsnummer,
   hasValidFodselsnummerFormat,
-  hasValidDecimalMaxNumberOfDecimals,
   hasValidInteger,
   hasValidName,
   hasValidPeriod,

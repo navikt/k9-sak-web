@@ -9,7 +9,6 @@ import {
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 import { AdvarselModal, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  DDMMYYYY_DATE_FORMAT,
   decodeHtmlEntity,
   formatCurrencyNoKr,
   hasValidText,
@@ -17,6 +16,7 @@ import {
   minLength,
   required,
 } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, Button, Label as DSLabel, Detail, HGrid } from '@navikt/ds-react';
 import moment from 'moment';
@@ -252,7 +252,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
           beregnBelop={beregnBelop}
         />
         <VerticalSpacer twentyPx />
-        {reduserteBelop.map(belop => (
+        {reduserteBelop?.map(belop => (
           <React.Fragment key={belop.belop}>
             <BodyShort size="small">
               <FormattedMessage

@@ -1,11 +1,8 @@
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineControl, Timeline } from '@fpsak-frontend/tidslinje';
-import {
-  DDMMYY_DATE_FORMAT,
-  ISO_DATE_FORMAT,
-  calcDaysAndWeeksWithWeekends,
-  initializeDate,
-} from '@fpsak-frontend/utils';
+import { calcDaysAndWeeksWithWeekends } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { BeregningsresultatPeriodeDto } from '@navikt/k9-sak-typescript-client';
@@ -112,6 +109,7 @@ interface OwnProps {
   }[];
   kodeverkNavnFraKode: (kode: string, kodeverkType: KodeverkType) => string;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  isUngdomsytelseFagsak: boolean;
 }
 
 interface OwnState {
@@ -237,7 +235,7 @@ export class TilkjentYtelse extends Component<OwnProps, OwnState> {
       goBackward,
       goForward,
       openPeriodInfo,
-      props: { groups, items, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId },
+      props: { groups, items, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId, isUngdomsytelseFagsak },
       selectHandler,
       state: { selectedItem },
       zoomIn,
@@ -277,6 +275,7 @@ export class TilkjentYtelse extends Component<OwnProps, OwnState> {
             callbackForward={nextPeriod}
             callbackBackward={prevPeriod}
             arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+            isUngdomsytelseFagsak={isUngdomsytelseFagsak}
           />
         )}
       </div>

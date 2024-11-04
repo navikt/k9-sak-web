@@ -66,6 +66,7 @@ describe('<TilkjentYtelseTimeLineData>', () => {
         selectedItemStartDate={selectedItemStartDate}
         selectedItemEndDate={selectedItemEndDate}
         arbeidsgiverOpplysningerPerId={{}}
+        isUngdomsytelseFagsak={false}
       />,
     );
 

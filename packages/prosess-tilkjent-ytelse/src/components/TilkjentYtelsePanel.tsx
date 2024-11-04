@@ -1,8 +1,9 @@
-import { DDMMYYYY_DATE_FORMAT, initializeDate } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { Heading } from '@navikt/ds-react';
 import {
   AksjonspunktDto,
@@ -47,6 +48,7 @@ interface PureOwnProps {
   submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  isUngdomsytelseFagsak: boolean;
 }
 
 const TilkjentYtelsePanelImpl = ({
@@ -56,6 +58,7 @@ const TilkjentYtelsePanelImpl = ({
   aksjonspunkter,
   readOnly,
   arbeidsgiverOpplysningerPerId,
+  isUngdomsytelseFagsak,
 }: Partial<PureOwnProps>) => {
   const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
   const kodeverkNavnFraKode = getKodeverkNavnFraKodeFn();
@@ -73,6 +76,7 @@ const TilkjentYtelsePanelImpl = ({
           groups={groups}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           kodeverkNavnFraKode={kodeverkNavnFraKode}
+          isUngdomsytelseFagsak={isUngdomsytelseFagsak}
         />
       )}
 

@@ -14,31 +14,8 @@ export {
   parseCurrencyInput,
   removeSpacesFromNumber,
 } from './src/currencyUtils';
-export {
-  addDaysToDate,
-  calcDays,
-  calcDaysAndWeeks,
-  calcDaysAndWeeksWithWeekends,
-  dateFormat,
-  findDifferenceInMonthsAndDays,
-  splitWeeksAndDays,
-  TIDENES_ENDE,
-  timeFormat,
-  getRangeOfMonths,
-  isValidDate,
-  convertHoursToDays,
-  formatereLukketPeriode,
-  formatDate,
-} from './src/dateUtils';
 export { default as decodeHtmlEntity } from './src/decodeHtmlEntity';
 export { fodselsnummerPattern, isValidFodselsnummer } from './src/fodselsnummerUtils';
-export {
-  ISO_DATE_FORMAT,
-  DDMMYYYY_DATE_FORMAT,
-  DDMMYY_DATE_FORMAT,
-  HHMM_TIME_FORMAT,
-  ACCEPTED_DATE_INPUT_FORMATS,
-} from './src/formats';
 export { default as guid } from './src/guid';
 export { utledArbeidsforholdNavn } from './src/arbeidsforholdUtils';
 export {
@@ -145,7 +122,6 @@ export { default as getHumanReadablePeriodString } from './src/period-utils/getH
 export { default as sortPeriodsByFomDate } from './src/period-utils/sortPeriodsByFomDate';
 export { default as prettifyPeriodList } from './src/period-utils/prettifyPeriodList';
 export { default as findHolesInPeriods } from './src/period-utils/findHolesInPeriods';
-export { default as initializeDate, dateToday } from './src/date-utils/initialize';
 export { prettifyDateString, prettifyDate } from './src/date-utils/format';
 export { default as dateConstants } from './src/date-utils/dateConstants';
 export { default as addYearsToDate } from './src/date-utils/addYearsToDate';

@@ -1,11 +1,13 @@
 import { FloatRight, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
-import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT, initializeDate } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { BodyShort, HGrid, Label, Tabs, Tag } from '@navikt/ds-react';
 import React, { useEffect } from 'react';
 
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { calcDaysAndWeeksWithWeekends } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { createArbeidsgiverVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
 import styles from './tilkjentYtelse.module.css';
@@ -18,6 +20,7 @@ interface OwnProps {
   callbackForward: (...args: any[]) => any;
   callbackBackward: (...args: any[]) => any;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  isUngdomsytelseFagsak: boolean;
 }
 
 /**
@@ -38,6 +41,7 @@ const TilkjentYtelseTimeLineData = ({
   callbackForward,
   callbackBackward,
   arbeidsgiverOpplysningerPerId,
+  isUngdomsytelseFagsak,
 }: OwnProps) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
   const { andeler } = selectedItemData;
@@ -145,45 +149,47 @@ const TilkjentYtelseTimeLineData = ({
             </div>
           ))}
       </div>
-      <Tabs className="mt-12" value={String(selectedAndelIndex)} onChange={setSelectedAndelIndex}>
-        <Tabs.List>
-          {andeler.map((andel, index) => {
-            const label = createArbeidsgiverVisningsnavnForAndel(
-              andel,
-              kodeverkNavnFraKode,
-              arbeidsgiverOpplysningerPerId,
-            );
-            return <Tabs.Tab value={String(index)} key={label} label={label} />;
-          })}
-        </Tabs.List>
-        {andeler.map((andel, index) => (
-          <Tabs.Panel
-            key={createArbeidsgiverVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId)}
-            value={String(index)}
-          >
-            <div className="p-4">
-              <BodyShort size="small">
-                {`Utbetalt refusjon: `}
-                <span className="font-semibold inline-block">{andel?.refusjon} kr</span>
-              </BodyShort>
-              <BodyShort size="small">
-                {`Utbetalt til søker: `}
-                <span className="font-semibold inline-block">{andel?.tilSoker} kr</span>
-              </BodyShort>
-              <BodyShort size="small">
-                {`Utbetalingsgrad: `}
-                <span className="font-semibold inline-block">{andel?.utbetalingsgrad} %</span>
-              </BodyShort>
-              <BodyShort size="small">
-                {`Aktivitetsstatus: `}
-                <span className="font-semibold inline-block">
-                  {getAktivitet(andel?.aktivitetStatus, kodeverkNavnFraKode)}
-                </span>
-              </BodyShort>
-            </div>
-          </Tabs.Panel>
-        ))}
-      </Tabs>
+      {!isUngdomsytelseFagsak && (
+        <Tabs className="mt-12" value={String(selectedAndelIndex)} onChange={setSelectedAndelIndex}>
+          <Tabs.List>
+            {andeler.map((andel, index) => {
+              const label = createArbeidsgiverVisningsnavnForAndel(
+                andel,
+                kodeverkNavnFraKode,
+                arbeidsgiverOpplysningerPerId,
+              );
+              return <Tabs.Tab value={String(index)} key={label} label={label} />;
+            })}
+          </Tabs.List>
+          {andeler.map((andel, index) => (
+            <Tabs.Panel
+              key={createArbeidsgiverVisningsnavnForAndel(andel, kodeverkNavnFraKode, arbeidsgiverOpplysningerPerId)}
+              value={String(index)}
+            >
+              <div className="p-4">
+                <BodyShort size="small">
+                  {`Utbetalt refusjon: `}
+                  <span className="font-semibold inline-block">{andel?.refusjon} kr</span>
+                </BodyShort>
+                <BodyShort size="small">
+                  {`Utbetalt til søker: `}
+                  <span className="font-semibold inline-block">{andel?.tilSoker} kr</span>
+                </BodyShort>
+                <BodyShort size="small">
+                  {`Utbetalingsgrad: `}
+                  <span className="font-semibold inline-block">{andel?.utbetalingsgrad} %</span>
+                </BodyShort>
+                <BodyShort size="small">
+                  {`Aktivitetsstatus: `}
+                  <span className="font-semibold inline-block">
+                    {getAktivitet(andel?.aktivitetStatus, kodeverkNavnFraKode)}
+                  </span>
+                </BodyShort>
+              </div>
+            </Tabs.Panel>
+          ))}
+        </Tabs>
+      )}
     </TimeLineDataContainer>
   );
 };

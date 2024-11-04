@@ -1,11 +1,11 @@
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { AssessedBy, Box, DetailView, LabelledContent, LinkButton, Margin } from '@navikt/ft-plattform-komponenter';
 import dayjs from 'dayjs';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { useIntl } from 'react-intl';
 
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Vurderingsresultat } from '@k9-sak-web/types';
 import BeskrivelseFraSoeker from './BeskrivelseFraSoeker';
 import FraSoeknad from './FraSoeknad';

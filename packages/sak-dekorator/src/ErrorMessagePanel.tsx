@@ -1,6 +1,6 @@
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { XMarkIcon } from '@navikt/aksel-icons';
-import { Button, Detail, HGrid } from '@navikt/ds-react';
+import { Button, Detail, HStack } from '@navikt/ds-react';
 import React, { useMemo, useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
@@ -49,7 +49,7 @@ export const ErrorMessagePanel = (props: OwnProps & WrappedComponentProps) => {
   return (
     <div className={styles.container}>
       {errorMessagesWithId.map((message, index) => (
-        <HGrid gap="1" columns={{ xs: '11fr 1fr' }} key={message.id}>
+        <HStack gap="3" key={message.id}>
           <Detail className={styles.wordWrap}>{`${decodeHtmlEntity(message.message)} `}</Detail>
           {message.additionalInfo && (
             <Detail>
@@ -64,7 +64,7 @@ export const ErrorMessagePanel = (props: OwnProps & WrappedComponentProps) => {
               </a>
             </Detail>
           )}
-        </HGrid>
+        </HStack>
       ))}
       <div className={styles.lukkContainer}>
         <Button

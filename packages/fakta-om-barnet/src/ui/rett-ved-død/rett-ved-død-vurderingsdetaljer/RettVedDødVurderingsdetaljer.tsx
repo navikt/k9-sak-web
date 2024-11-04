@@ -1,5 +1,4 @@
-import { GreenCheckIcon } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
+import { AssessedBy, GreenCheckIcon, LabelledContent } from '@navikt/ft-plattform-komponenter';
 import { RettVedDød } from '../../../types/RettVedDød';
 import RettVedDødUtfallType from '../../../types/RettVedDødType';
 
@@ -23,8 +22,8 @@ const RettVedDødVurderingsdetaljer = ({ rettVedDød }: RettVedDødVurderingsdet
         <p className="my-0 ml-1.5">{getRettVedDødUtfallTekst()}</p>
       </div>
       <div className="mt-6">
-        <p className="font-semibold my-0 leading-6">Vurdering</p>
-        <p className="mt-2 mb-0">{rettVedDød.vurdering}</p>
+        <LabelledContent label="Vurdering" content={rettVedDød.vurdering} indentContent />
+        <AssessedBy ident={rettVedDød.vurdertAv} date={rettVedDød.vurdertTidspunkt} />
       </div>
     </>
   );

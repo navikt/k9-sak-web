@@ -1,4 +1,4 @@
-import { initializeDate } from '@fpsak-frontend/utils';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import type { VilkårMedPerioderDto } from '@navikt/k9-sak-typescript-client';
 import { formatDate, hentAktivePerioderFraVilkar, utledInnsendtSoknadsfrist } from './utils';
 
