@@ -1,3 +1,4 @@
+import { utledKodeverkNavnFraKode } from '../kodeverkUtils';
 import type {
   AlleKodeverk,
   KodeverkKlageType,
@@ -5,7 +6,6 @@ import type {
   KodeverkTilbakeType,
   KodeverkType,
 } from '../types';
-import { utledKodeverkNavnFraKode } from '../kodeverkUtils';
 
 export const kodeverkNavnFraKodeMock = (
   kode: string,

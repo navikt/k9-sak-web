@@ -56,18 +56,12 @@ export const FormContent = ({
   fosterbarn,
   harEndretFosterbarn,
   aksjonspunktKode,
-  valgValue
+  valgValue,
 }: FormContentProps) => {
-
   return (
     <>
       <AksjonspunktHelpText isAksjonspunktOpen={isAksjonspunktOpen}>
-        {[
-          <FormattedMessage
-            key={1}
-            id="Årskvantum.Aksjonspunkt.Uavklart"
-          />,
-        ]}
+        {[<FormattedMessage key={1} id="Årskvantum.Aksjonspunkt.Uavklart" />]}
       </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
       {isAksjonspunktOpen && (
@@ -82,20 +76,12 @@ export const FormContent = ({
           radios={[
             {
               value: valgValues.reBehandling,
-              label: (
-                <FormattedMessage
-                  id="Årskvantum.Aksjonspunkt.Uavklart.ReBehandling"
-                />
-              ),
+              label: <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.ReBehandling" />,
             },
             {
               value: valgValues.fortsett,
               disabled: harEndretFosterbarn,
-              label: (
-                <FormattedMessage
-                  id="Årskvantum.Aksjonspunkt.Uavklart.Fortsett"
-                />
-              ),
+              label: <FormattedMessage id="Årskvantum.Aksjonspunkt.Uavklart.Fortsett" />,
             },
           ]}
         />
@@ -224,10 +210,15 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
   ): Partial<ConfigProps<FormValues>> & AksjonspunktFormImplProps => {
     const selector = formValueSelector(formNavn);
     const { valg: valgValue, fosterbarn: formFosterbarn } = selector(state, 'valg', 'fosterbarn');
-    const harEndretFosterbarn = formFosterbarn?.length !== initialProps.fosterbarn.length || (
+    const harEndretFosterbarn =
+      formFosterbarn?.length !== initialProps.fosterbarn.length ||
       // Kopier, sorter og konverter til streng for sammenligning
-      formFosterbarn.slice().sort().join('') !== initialProps.fosterbarn.map(barn => barn.fnr).slice().sort().join('')
-    )
+      formFosterbarn.slice().sort().join('') !==
+        initialProps.fosterbarn
+          .map(barn => barn.fnr)
+          .slice()
+          .sort()
+          .join('');
 
     return {
       onSubmit,
