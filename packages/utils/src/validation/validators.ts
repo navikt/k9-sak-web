@@ -1,8 +1,8 @@
-import moment from 'moment';
 import { validateTextCharacters } from '@k9-sak-web/gui/utils/validation/validateTextCharacters.js';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import moment from 'moment';
 import { removeSpacesFromNumber } from '../currencyUtils';
 import { fodselsnummerPattern, isValidFodselsnummer } from '../fodselsnummerUtils';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '../formats';
 import {
   arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage,
   arrayMinLengthMessage,

@@ -1,5 +1,7 @@
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { calcDaysAndWeeks, guid, initializeDate } from '@fpsak-frontend/utils';
+import { guid } from '@fpsak-frontend/utils';
+import { calcDaysAndWeeks } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Button, ErrorMessage, Label } from '@navikt/ds-react';
 import { Datepicker } from '@navikt/ft-form-hooks';
@@ -20,7 +22,9 @@ interface Periode {
 }
 
 export const sjekkOverlappendePerioder = (index: number, nestePeriode: Periode, forrigePeriode: Periode) =>
-  index !== 0 && initializeDate(nestePeriode.fom).isSameOrBefore(initializeDate(forrigePeriode.tom));
+  index !== 0
+  && initializeDate(nestePeriode.fom).isSameOrBefore(initializeDate(forrigePeriode.tom))
+  && initializeDate(nestePeriode.tom).isSameOrAfter(initializeDate(forrigePeriode.fom))
 
 const validateForm = (perioder: BeriketBeregningsresultatPeriode[], nyPeriodeFom: string, nyPeriodeTom: string) => {
   let feilmelding = '';

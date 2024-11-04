@@ -1,7 +1,10 @@
 import { Datepicker } from '@fpsak-frontend/shared-components';
-import { ACCEPTED_DATE_INPUT_FORMATS, DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import {
+  ACCEPTED_DATE_INPUT_FORMATS,
+  DDMMYYYY_DATE_FORMAT,
+  ISO_DATE_FORMAT,
+} from '@k9-sak-web/lib/dateUtils/formats.js';
 import moment from 'moment';
-import React from 'react';
 import { Field } from 'redux-form';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';

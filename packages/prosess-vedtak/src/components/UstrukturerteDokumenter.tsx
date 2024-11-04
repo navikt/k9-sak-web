@@ -1,7 +1,6 @@
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { BodyShort, Heading, Link } from '@navikt/ds-react';
 import moment from 'moment';
-import React from 'react';
 import styles from './ustrukturerteDokumenter.module.css';
 
 export interface Link {

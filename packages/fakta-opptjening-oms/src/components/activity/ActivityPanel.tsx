@@ -13,7 +13,6 @@ import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAkti
 import { FaktaGruppe, FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 import {
-  findDifferenceInMonthsAndDays,
   hasValidPeriod,
   hasValidText,
   isEqual,
@@ -24,13 +23,14 @@ import {
   required,
   requiredIfCustomFunctionIsTrue,
 } from '@fpsak-frontend/utils';
+import { findDifferenceInMonthsAndDays } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import type { OpptjeningAktivitetType } from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
 import { CheckmarkCircleIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Label, Tag } from '@navikt/ds-react';
 import moment from 'moment';
-import React, { KeyboardEvent, MouseEvent } from 'react';
+import { KeyboardEvent, MouseEvent } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';

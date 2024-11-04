@@ -15,8 +15,8 @@
     "vite-plugin-node-polyfills": "^0.22.0"
   },
   "dependencies": {
-    "@navikt/ds-react": "7.4.0",
-    "@navikt/ft-plattform-komponenter": "5.0.3",
+    "@navikt/ds-react": "7.4.2",
+    "@navikt/ft-plattform-komponenter": "5.0.5",
     "@popperjs/core": "2.11.8",
     "classnames": "2.5.1",
     "dayjs": "1.11.13",
