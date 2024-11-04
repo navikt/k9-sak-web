@@ -1,5 +1,5 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated';
+import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
@@ -35,11 +35,11 @@ const AldersVilkarProsessIndex = ({
   vilkar,
   status,
 }: AldersVilkarProsessIndexProps) => {
-  const aldersVilkarBarn = vilkar.find(v => v.vilkarType === vilkarType.ALDERSVILKAR_BARN);
+  const aldersVilkarBarn = vilkar.find(v => v.vilkarType === vilkarType.ALDERSVILKÅR_BARN);
   const periode = aldersVilkarBarn?.perioder?.[0];
   const erVurdert = periode?.vilkarStatus !== vilkårStatus.IKKE_VURDERT;
   const vilkarOppfylt = erVurdert ? status === vilkårStatus.OPPFYLT : false;
-  const relevantAksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.ALDERSVILKÅR);
+  const relevantAksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === aksjonspunktkodeDefinisjonType.ALDERSVILKÅR);
   const skalVilkarsUtfallVises = behandling.status === fagsakStatus.AVSLUTTET;
   const vilkaretErAutomatiskInnvilget =
     !relevantAksjonspunkt && aldersVilkarBarn && periode?.vilkarStatus === vilkårStatus.OPPFYLT;

@@ -1,12 +1,10 @@
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { useForm } from 'react-hook-form';
-
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated';
+import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
+import { Box, Button } from '@navikt/ds-react';
 import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
-
-import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated';
-import { Button } from '@navikt/ds-react';
+import { useForm } from 'react-hook-form';
+import AksjonspunktHelpText from '../../../shared/aksjonspunktHelpText/AksjonspunktHelpText';
 import style from './AldersvilkarForm.module.css';
 
 type Inputs = {
@@ -39,54 +37,57 @@ const AldersvilkarForm = ({ submitCallback, begrunnelseTekst, erVilkaretOk, erVu
       erVilkarOk: getErVilkaretOk(),
     },
   });
-  const bekreftAksjonspunkt = (data: Inputs) => submitCallback([{ kode: aksjonspunktCodes.ALDERSVILKÅR, ...data }]);
+  const bekreftAksjonspunkt = (data: Inputs) => {
+    submitCallback([{ kode: aksjonspunktkodeDefinisjonType.ALDERSVILKÅR, ...data }]);
+  };
 
   return (
     <Form<Inputs> formMethods={methods} onSubmit={bekreftAksjonspunkt}>
       <AksjonspunktHelpText isAksjonspunktOpen>
         {[
-          'Vurder om aldersvilkåret er oppfylt. På grunn av barnets alder, må det være innvilget vedtak om at barnet er kronisk syk.',
+          'Vurder om aldersvilkåret er oppfylt.',
+          'På grunn av barnets alder, må det være innvilget vedtak om at barnet er kronisk syk.',
         ]}
       </AksjonspunktHelpText>
 
-      <VerticalSpacer sixteenPx />
+      <Box marginBlock={'4 0'}>
+        <div className={style.opplysninger}>
+          <p className="label">Opplysninger fra søknaden:</p>
+          <b>Søkers barn:</b>
+          {angitteBarn.map(barn => (
+            <p className={style.barn} key={barn.personIdent}>
+              {barn.personIdent}
+            </p>
+          ))}
+        </div>
 
-      <div className={style.opplysninger}>
-        <p className="label">Opplysninger fra søknaden:</p>
-        <b>Søkers barn:</b>
-        {angitteBarn.map(barn => (
-          <p className={style.barn} key={barn.personIdent}>
-            {barn.personIdent}
-          </p>
-        ))}
-      </div>
-
-      <div className={style.vurdering}>
-        <TextAreaField
-          label="Vurder om aldersvilkåret er oppfylt"
-          name="begrunnelse"
-          validate={[required, minLength3, maxLength2000]}
-          maxLength={2000}
+        <div className={style.vurdering}>
+          <TextAreaField
+            label="Vurder om aldersvilkåret er oppfylt"
+            name="begrunnelse"
+            validate={[required, minLength3, maxLength2000]}
+            maxLength={2000}
+          />
+        </div>
+      </Box>
+      <Box marginBlock={'4 0'}>
+        <RadioGroupPanel
+          isHorizontal
+          label="Er aldersvilkåret oppfylt?"
+          name="erVilkarOk"
+          validate={[required]}
+          isTrueOrFalseSelection
+          radios={[
+            { value: 'true', label: 'Ja' },
+            { value: 'false', label: 'Nei' },
+          ]}
         />
-      </div>
-      <VerticalSpacer sixteenPx />
-
-      <RadioGroupPanel
-        isHorizontal
-        label="Er aldersvilkåret oppfylt?"
-        name="erVilkarOk"
-        validate={[required]}
-        isTrueOrFalseSelection
-        radios={[
-          { value: 'true', label: 'Ja' },
-          { value: 'false', label: 'Nei' },
-        ]}
-      />
-      <VerticalSpacer sixteenPx />
-
-      <Button size="small" variant="primary" type="submit">
-        Bekreft og fortsett
-      </Button>
+      </Box>
+      <Box marginBlock={'4 0'}>
+        <Button size="small" variant="primary" type="submit">
+          Bekreft og fortsett
+        </Button>
+      </Box>
     </Form>
   );
 };

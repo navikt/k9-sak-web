@@ -1,7 +1,7 @@
+import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { Detail, Heading, HStack } from '@navikt/ds-react';
 import Feilikon from '../icons/Feilikon';
 import Suksessikon from '../icons/Suksessikon';
-
-import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
 import styles from './AldersvilkarStatus.module.css';
 
 interface AldersVilkarAPProps {
@@ -13,11 +13,17 @@ interface AldersVilkarAPProps {
 
 const AldersVilkarStatus = ({ vilkarOppfylt, vilkarReferanse, periode, begrunnelse }: AldersVilkarAPProps) => (
   <>
-    <div className={styles.vilkarStatusOverskrift}>
+    <HStack gap="4">
       {vilkarOppfylt ? <Suksessikon /> : <Feilikon />}
-      <h2 className={styles.aksjonspunktNavn}>Aldersvilkår</h2>
-      <p className={styles.vilkar}>{vilkarReferanse && <Lovreferanse>{vilkarReferanse}</Lovreferanse>}</p>
-    </div>
+      <Heading size="small" level="2">
+        Aldersvilkår
+      </Heading>
+      {vilkarReferanse && (
+        <Detail className={styles.vilkar}>
+          <Lovreferanse>{vilkarReferanse}</Lovreferanse>
+        </Detail>
+      )}
+    </HStack>
     <p className={styles.vilkarStatus}>{vilkarOppfylt ? 'Vilkåret er oppfylt' : 'Vilkåret er ikke oppfylt'}</p>
 
     {periode && (

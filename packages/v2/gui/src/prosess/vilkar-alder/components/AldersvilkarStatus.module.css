@@ -21,11 +21,7 @@
 }
 
 .vilkar {
-  font-size: 0.875rem;
-  font-weight: 400;
-  padding-top: 0.188rem;
-  text-transform: uppercase;
-  margin-left: 1.25rem;
+  margin-top: 3px;
 }
 
 .vilkarStatus {

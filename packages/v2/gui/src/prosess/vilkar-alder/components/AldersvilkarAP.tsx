@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
-
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { AksjonspunktBox } from '@fpsak-frontend/shared-components';
 import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated';
+import { BehandlingStatus } from '@k9-sak-web/backend/k9sak/kodeverk/BehandlingStatus.js';
+import { useEffect, useState } from 'react';
+import AksjonspunktBox from '../../../shared/aksjonspunktBox/AksjonspunktBox';
 import type { AldersVilkårBehandlingType } from '../types/AldersVilkårBehandlingType';
 import AldersvilkarForm from './AldersvilkarForm';
 import AldersvilkarLese from './AldersvilkarLese';
@@ -32,11 +31,14 @@ const AldersVilkarAP = ({
 }: AldersVilkarAPProps) => {
   const [redigering, setRedigering] = useState<boolean>(false);
   const lesemodus = isReadOnly || !isAksjonspunktOpen;
-  const aksjonspunktLost = behandling.status === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
+  const aksjonspunktLost = behandling.status === BehandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
 
   useEffect(() => {
-    if (lesemodus) setRedigering(false);
-    else if (relevantAksjonspunkt.kanLoses) setRedigering(true);
+    if (lesemodus) {
+      setRedigering(false);
+    } else if (relevantAksjonspunkt.kanLoses) {
+      setRedigering(true);
+    }
   }, [lesemodus, relevantAksjonspunkt.kanLoses]);
 
   if (redigering)
