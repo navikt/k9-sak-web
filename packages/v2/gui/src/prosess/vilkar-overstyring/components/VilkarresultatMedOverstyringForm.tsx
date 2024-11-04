@@ -2,7 +2,7 @@ import type { AksjonspunktDto, VilkårPeriodeDto } from '@k9-sak-web/backend/k9s
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { behandlingType as BehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
-import initializeDate from '@k9-sak-web/lib/dateUtils/initializeDate.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { Alert, BodyShort, Box, Button, HStack, Label, VStack } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 import { type SetStateAction, useEffect } from 'react';
