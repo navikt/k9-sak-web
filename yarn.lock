@@ -2469,16 +2469,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/ecma402-abstract@npm:2.0.0":
-  version: 2.0.0
-  resolution: "@formatjs/ecma402-abstract@npm:2.0.0"
-  dependencies:
-    "@formatjs/intl-localematcher": 0.5.4
-    tslib: ^2.4.0
-  checksum: 0bba3b4f1a966c72d3f53173d650294fe313825b6451396c1040fb92bb86b2f771729888a1dadbc0a0074ef809229033fe8ff17c86dcb07a8ad42253b0c3a269
-  languageName: node
-  linkType: hard
-
 "@formatjs/ecma402-abstract@npm:2.2.1":
   version: 2.2.1
   resolution: "@formatjs/ecma402-abstract@npm:2.2.1"
@@ -2490,32 +2480,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/fast-memoize@npm:2.2.0":
-  version: 2.2.0
-  resolution: "@formatjs/fast-memoize@npm:2.2.0"
-  dependencies:
-    tslib: ^2.4.0
-  checksum: 8697fe72a7ece252d600a7d08105f2a2f758e2dd96f54ac0a4c508b1205a559fc08835635e1f8e5ca9dcc3ee61ce1fca4a0e7047b402f29fc96051e293a280ff
-  languageName: node
-  linkType: hard
-
 "@formatjs/fast-memoize@npm:2.2.2":
   version: 2.2.2
   resolution: "@formatjs/fast-memoize@npm:2.2.2"
   dependencies:
     tslib: 2
   checksum: c6e958753eb41bb0875734762a44126a0d570706a31b32bb409e759cd372184c28e294b02fce0b0f0999c171ef717d513eaf7936862c498d78428b97db446ff8
-  languageName: node
-  linkType: hard
-
-"@formatjs/icu-messageformat-parser@npm:2.7.8":
-  version: 2.7.8
-  resolution: "@formatjs/icu-messageformat-parser@npm:2.7.8"
-  dependencies:
-    "@formatjs/ecma402-abstract": 2.0.0
-    "@formatjs/icu-skeleton-parser": 1.8.2
-    tslib: ^2.4.0
-  checksum: 404d6732653632eae3b10cfa70dc57c4fb0fe500c6ef9e687e938e4cb29e18b4e5d46633c88a2c06864328eb2f4713fbb6be404c6033682370d568971e2dda0d
   languageName: node
   linkType: hard
 
@@ -2530,16 +2500,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/icu-skeleton-parser@npm:1.8.2":
-  version: 1.8.2
-  resolution: "@formatjs/icu-skeleton-parser@npm:1.8.2"
-  dependencies:
-    "@formatjs/ecma402-abstract": 2.0.0
-    tslib: ^2.4.0
-  checksum: 8735322fa93ddd471822ba77400411660cb6221c87955cdcea159e8f9b72188106b4d4bf57d737d248810ae1974e1df4974914a6fb6045e91bf5ea22cc7fd30f
-  languageName: node
-  linkType: hard
-
 "@formatjs/icu-skeleton-parser@npm:1.8.5":
   version: 1.8.5
   resolution: "@formatjs/icu-skeleton-parser@npm:1.8.5"
@@ -2547,17 +2507,6 @@ __metadata:
     "@formatjs/ecma402-abstract": 2.2.1
     tslib: 2
   checksum: 8ecb2b7f9b3fb27c7ff9f5ce1576d9c3d6125198b20f911acc8b306ab1687ecab940716bcab39c028655dc6eedd39064dcc85de3ba6a7e00874f19a5efa43d6f
-  languageName: node
-  linkType: hard
-
-"@formatjs/intl-displaynames@npm:6.6.8":
-  version: 6.6.8
-  resolution: "@formatjs/intl-displaynames@npm:6.6.8"
-  dependencies:
-    "@formatjs/ecma402-abstract": 2.0.0
-    "@formatjs/intl-localematcher": 0.5.4
-    tslib: ^2.4.0
-  checksum: c68bf238034ccac36be83baf27b9561cab4925018fd6a41782532d5d901ca2c8790d01c40dc8eaea7156dd6aa1f5a8942f62242597704e2c267f0296092b49fd
   languageName: node
   linkType: hard
 
@@ -2572,17 +2521,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/intl-listformat@npm:7.5.7":
-  version: 7.5.7
-  resolution: "@formatjs/intl-listformat@npm:7.5.7"
-  dependencies:
-    "@formatjs/ecma402-abstract": 2.0.0
-    "@formatjs/intl-localematcher": 0.5.4
-    tslib: ^2.4.0
-  checksum: f1f920442b553ec2d9d04ed081ee3fd650039cc55316e52cc7c2b76e03eb4c654006c4338d8ade4c6134eaa68e1d4945e0d3e473935547fd2e21d9c0ce9721a4
-  languageName: node
-  linkType: hard
-
 "@formatjs/intl-listformat@npm:7.7.1":
   version: 7.7.1
   resolution: "@formatjs/intl-listformat@npm:7.7.1"
@@ -2591,15 +2529,6 @@ __metadata:
     "@formatjs/intl-localematcher": 0.5.6
     tslib: 2
   checksum: 8fc0cc5e1bf934bff92d818e72fb9084f997b451c085db4440d4418b7de6b860d97d16169acaecc355284885209acd05aaa06bceb90eabbe38529ea6416b4d1f
-  languageName: node
-  linkType: hard
-
-"@formatjs/intl-localematcher@npm:0.5.4":
-  version: 0.5.4
-  resolution: "@formatjs/intl-localematcher@npm:0.5.4"
-  dependencies:
-    tslib: ^2.4.0
-  checksum: a0af57874fcd163add5f7a0cb1c008e9b09feb1d24cbce1263379ae0393cddd6681197a7f2f512f351a97666fc8675ed52cc17d1834266ee8fc65e9edf3435f6
   languageName: node
   linkType: hard
 
@@ -2629,26 +2558,6 @@ __metadata:
     typescript:
       optional: true
   checksum: 2e6dd3ccef2bda77c9dbf0e3e61746e2c53ee18602eb9990a3f89682b2f1f9f3b979fa8ee4e160f97ae9645ae9324c11ac76464a354298a2b8e833a87f175c13
-  languageName: node
-  linkType: hard
-
-"@formatjs/intl@npm:2.10.4":
-  version: 2.10.4
-  resolution: "@formatjs/intl@npm:2.10.4"
-  dependencies:
-    "@formatjs/ecma402-abstract": 2.0.0
-    "@formatjs/fast-memoize": 2.2.0
-    "@formatjs/icu-messageformat-parser": 2.7.8
-    "@formatjs/intl-displaynames": 6.6.8
-    "@formatjs/intl-listformat": 7.5.7
-    intl-messageformat: 10.5.14
-    tslib: ^2.4.0
-  peerDependencies:
-    typescript: ^4.7 || 5
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 13a1fada258c528c1617c0a3b49af3d0a6c4ed610e8fc2bd9d6f75909556d9dc1442ec5cb016c81fe1f9482e41611bd7841485d04c1ddbec9f4b2310f80e7259
   languageName: node
   linkType: hard
 
@@ -4637,8 +4546,8 @@ __metadata:
   dependencies:
     "@k9-sak-web/backend": "workspace:^"
     "@k9-sak-web/lib": 1.0.0
-    "@navikt/ft-form-validators": 2.4.1
-    "@navikt/ft-utils": 2.4.0
+    "@navikt/ft-form-validators": 2.4.8
+    "@navikt/ft-utils": 2.4.8
     "@tanstack/react-query": ^5.59.19
     axios: 1.7.7
     react: 18.3.1
@@ -5305,19 +5214,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-form-validators@npm:2.4.1":
-  version: 2.4.1
-  resolution: "@navikt/ft-form-validators@npm:2.4.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F2.4.1%2F5ceb0774eaa023a7a2b23efa6c404432a4c0fee9"
-  dependencies:
-    "@navikt/ft-utils": ^2.4.1
-    moment: 2.30.1
-  peerDependencies:
-    "@navikt/ft-utils": 2.x
-    moment: 2.30.1
-  checksum: dbe94a40c0e6ecc19be3026a965441bed492378704d3e0ecae8d5242d83024e43070d236b12216ea3e19237bf462ca46cadbe6972d7a50b7a507b6b6352a6c66
-  languageName: node
-  linkType: hard
-
 "@navikt/ft-form-validators@npm:2.4.8, @navikt/ft-form-validators@npm:^2.4.8":
   version: 2.4.8
   resolution: "@navikt/ft-form-validators@npm:2.4.8::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F2.4.8%2F99a2d33802bfe71531eb3ab189fd1bc0382ff6f9"
@@ -5331,7 +5227,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-kodeverk@npm:^2.5.0, @navikt/ft-kodeverk@npm:^2.5.6":
+"@navikt/ft-kodeverk@npm:^2.5.6":
   version: 2.5.6
   resolution: "@navikt/ft-kodeverk@npm:2.5.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F2.5.6%2F30482afc3b26e7b1358a9117898d1c2e7897d8de"
   checksum: c17f6636458f7330470d50dbc99f094910d1addf205a2de6624d56a7c11e33b616c5679dbfc458b5d51b157d2b2c708207a1aedbdf3752223a614e31eaa6e252
@@ -5446,7 +5342,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-types@npm:2.5.7, @navikt/ft-types@npm:^2.5.0, @navikt/ft-types@npm:^2.5.7":
+"@navikt/ft-types@npm:2.5.7, @navikt/ft-types@npm:^2.5.7":
   version: 2.5.7
   resolution: "@navikt/ft-types@npm:2.5.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-types%2F2.5.7%2Fd3dca3f2e7b2b38fbd8b7b774cd382dcb0647782"
   dependencies:
@@ -5484,24 +5380,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-utils@npm:2.4.0":
-  version: 2.4.0
-  resolution: "@navikt/ft-utils@npm:2.4.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-utils%2F2.4.0%2F73d041fdc711d9f5f7e42c027fd7949537076bb4"
-  dependencies:
-    "@navikt/ft-kodeverk": ^2.5.0
-    "@navikt/ft-types": ^2.5.0
-    dayjs: 1.11.13
-    react-intl: 6.6.8
-  peerDependencies:
-    "@navikt/ft-kodeverk": 2.x
-    "@navikt/ft-types": 2.x
-    dayjs: 1.11.11
-    react-intl: 6.6.8
-  checksum: a141e1a5cf6d9c848c4ea345899fc2138d3e14a52b6f98540c95a9d32225fc14c3b9118bf4c3644765222f126ec7010768c0898075624e3588059b6d2cd4f2ce
-  languageName: node
-  linkType: hard
-
-"@navikt/ft-utils@npm:^2.4.1, @navikt/ft-utils@npm:^2.4.8":
+"@navikt/ft-utils@npm:2.4.8, @navikt/ft-utils@npm:^2.4.8":
   version: 2.4.8
   resolution: "@navikt/ft-utils@npm:2.4.8::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-utils%2F2.4.8%2Ff62af50f42384f22c910903742cd3e0e2a49da7a"
   dependencies:
@@ -11817,18 +11696,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"intl-messageformat@npm:10.5.14":
-  version: 10.5.14
-  resolution: "intl-messageformat@npm:10.5.14"
-  dependencies:
-    "@formatjs/ecma402-abstract": 2.0.0
-    "@formatjs/fast-memoize": 2.2.0
-    "@formatjs/icu-messageformat-parser": 2.7.8
-    tslib: ^2.4.0
-  checksum: 7aaed153283eb83720d72df7757390515a79a1823ea9f4191c69859f1e5dd0d9a7463e5f9186fe77a31414ed98fc81619fb4c838ffdf6d481b1b370403337ca3
-  languageName: node
-  linkType: hard
-
 "intl-messageformat@npm:10.7.3":
   version: 10.7.3
   resolution: "intl-messageformat@npm:10.7.3"
@@ -15448,30 +15315,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-intl@npm:6.6.8":
-  version: 6.6.8
-  resolution: "react-intl@npm:6.6.8"
-  dependencies:
-    "@formatjs/ecma402-abstract": 2.0.0
-    "@formatjs/icu-messageformat-parser": 2.7.8
-    "@formatjs/intl": 2.10.4
-    "@formatjs/intl-displaynames": 6.6.8
-    "@formatjs/intl-listformat": 7.5.7
-    "@types/hoist-non-react-statics": ^3.3.1
-    "@types/react": 16 || 17 || 18
-    hoist-non-react-statics: ^3.3.2
-    intl-messageformat: 10.5.14
-    tslib: ^2.4.0
-  peerDependencies:
-    react: ^16.6.0 || 17 || 18
-    typescript: ^4.7 || 5
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 41e43d1d15f33f4b5abb619645e96f1d81f64bba62745e19a289ea84c1580bf39fd5da6b94104c391ed689f1f1daec512dcb396cac3df58322bc060b9f5bdb01
-  languageName: node
-  linkType: hard
-
 "react-intl@npm:6.8.4":
   version: 6.8.4
   resolution: "react-intl@npm:6.8.4"
@@ -17363,13 +17206,6 @@ __metadata:
   version: 2.7.0
   resolution: "tslib@npm:2.7.0"
   checksum: 1606d5c89f88d466889def78653f3aab0f88692e80bb2066d090ca6112ae250ec1cfa9dbfaab0d17b60da15a4186e8ec4d893801c67896b277c17374e36e1d28
-  languageName: node
-  linkType: hard
-
-"tslib@npm:^2.4.0":
-  version: 2.8.1
-  resolution: "tslib@npm:2.8.1"
-  checksum: e4aba30e632b8c8902b47587fd13345e2827fa639e7c3121074d5ee0880723282411a8838f830b55100cbe4517672f84a2472667d355b81e8af165a55dc6203a
   languageName: node
   linkType: hard
 
