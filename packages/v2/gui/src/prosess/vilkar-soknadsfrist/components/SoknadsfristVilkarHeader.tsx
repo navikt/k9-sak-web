@@ -4,7 +4,6 @@ import { CheckmarkCircleFillIcon, KeyHorizontalIcon, XMarkOctagonFillIcon } from
 import { Button, Detail, Heading, HStack, Label } from '@navikt/ds-react';
 import type { SetStateAction } from 'react';
 import type { SoknadsfristAksjonspunktType } from '../types/SoknadsfristAksjonspunktType';
-import styles from './SoknadsfristVilkarForm.module.css';
 
 const isOverridden = (aksjonspunktCode: string, aksjonspunktCodes?: string[]) =>
   aksjonspunktCodes?.some(code => code === aksjonspunktCode);
@@ -61,7 +60,7 @@ const SoknadsfristVilkarHeader = ({
   return (
     <>
       <>
-        <HStack gap="4">
+        <HStack gap="4" align="center">
           {!erOverstyrt && originalErVilkarOk !== undefined && (
             <>
               {originalErVilkarOk ? (
@@ -75,7 +74,7 @@ const SoknadsfristVilkarHeader = ({
             {panelTittelKode}
           </Heading>
           {lovReferanse && (
-            <Detail className={styles.vilkar}>
+            <Detail>
               <Lovreferanse>{lovReferanse}</Lovreferanse>
             </Detail>
           )}

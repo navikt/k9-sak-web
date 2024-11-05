@@ -10,7 +10,7 @@
   height: auto;
 }
 
-.mainContainer--withSideMenu {
+.mainContainerWithSideMenu {
   display: flex;
   margin-left: -32px;
 }

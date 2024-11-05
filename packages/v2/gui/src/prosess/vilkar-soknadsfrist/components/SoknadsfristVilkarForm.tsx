@@ -15,7 +15,7 @@ import { useForm } from 'react-hook-form';
 
 import type { KravDokument } from '../types/KravDokumentStatus';
 import type { SoknadsfristAksjonspunktType } from '../types/SoknadsfristAksjonspunktType';
-import type { SubmitCallback } from '../types/submitCallback';
+import type { SubmitData } from '../types/submitCallback';
 import { utledInnsendtSoknadsfrist } from '../utils';
 import type { FormState } from './FormState';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
@@ -108,7 +108,7 @@ const transformValues = (
       erVilkarOk,
       godkjent: erVilkarOk,
       // fjern 'minusEnDag' hvis backend oppdateres..
-      fraDato: minusEnDag(fraDato ?? ''),
+      fraDato: fraDato ? minusEnDag(fraDato) : '',
     };
   }),
   erVilkarOk: !values.avklarteKrav.some(krav => !krav.erVilkarOk || krav.erVilkarOk === 'false'),
@@ -117,7 +117,7 @@ const transformValues = (
 
 interface SoknadsfristVilkarFormProps {
   aksjonspunkter: SoknadsfristAksjonspunktType[];
-  submitCallback: (props: SubmitCallback[]) => void;
+  submitCallback: (props: SubmitData[]) => void;
   periode: VilkårPeriodeDto;
   erOverstyrt?: boolean;
   harÅpentAksjonspunkt: boolean;

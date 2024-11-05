@@ -1,4 +1,4 @@
-export type SubmitCallback = Readonly<{
+export type SubmitData = Readonly<{
   kode: string;
   begrunnelse?: string;
 }>;

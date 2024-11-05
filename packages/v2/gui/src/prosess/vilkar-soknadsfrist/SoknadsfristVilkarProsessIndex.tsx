@@ -4,35 +4,22 @@ import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Vil
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
-import classNames from 'classnames/bind';
 import { Dayjs } from 'dayjs';
 import { useEffect, useState, type SetStateAction } from 'react';
-import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
 import styles from './SoknadsfristVilkarProsessIndex.module.css';
 import type { SoknadsfristAksjonspunktType } from './types/SoknadsfristAksjonspunktType';
 import type { SoknadsfristVilkarType } from './types/SoknadsfristVilkarType';
-import type { SubmitCallback } from './types/submitCallback';
+import type { SubmitData } from './types/submitCallback';
 import type { SøknadsfristTilstand } from './types/SøknadsfristTilstand';
 import { formatDate, hentAktivePerioderFraVilkar, utledInnsendtSoknadsfrist } from './utils';
-
-const cx = classNames.bind(styles);
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-  },
-  cache,
-);
 
 const lovReferanse = '§ 22-13';
 
 interface SoknadsfristVilkarProsessIndexProps {
   aksjonspunkter: SoknadsfristAksjonspunktType[];
-  submitCallback: (props: SubmitCallback[]) => void;
+  submitCallback: (props: SubmitData[]) => void;
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
     employeeHasAccess: boolean;
@@ -156,60 +143,58 @@ const SoknadsfristVilkarProsessIndex = ({
   );
 
   return (
-    <RawIntlProvider value={intl}>
-      <div className={cx('mainContainer--withSideMenu')}>
-        <div className={styles.sideMenuContainer}>
-          <SideMenu
-            links={perioder.map(({ periode, vilkarStatus }, index) => ({
-              active: activeTab === index,
-              label:
-                periode.fom && periode.tom
-                  ? `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`
-                  : `Periode ${index + 1}`,
-              icon:
-                (erOverstyrt || harÅpentUløstAksjonspunkt) && vilkarStatus === vilkårStatus.IKKE_VURDERT ? (
-                  <ExclamationmarkTriangleFillIcon
-                    title="Aksjonspunkt"
-                    fontSize="1.5rem"
-                    className="text-[var(--ac-alert-icon-warning-color,var(--a-icon-warning))] text-2xl ml-2"
-                  />
-                ) : null,
-            }))}
-            onClick={setActiveTab}
-            theme="arrow"
-            heading="Perioder"
+    <div className={styles.mainContainerWithSideMenu}>
+      <div className={styles.sideMenuContainer}>
+        <SideMenu
+          links={perioder.map(({ periode, vilkarStatus }, index) => ({
+            active: activeTab === index,
+            label:
+              periode.fom && periode.tom
+                ? `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`
+                : `Periode ${index + 1}`,
+            icon:
+              (erOverstyrt || harÅpentUløstAksjonspunkt) && vilkarStatus === vilkårStatus.IKKE_VURDERT ? (
+                <ExclamationmarkTriangleFillIcon
+                  title="Aksjonspunkt"
+                  fontSize="1.5rem"
+                  className="text-[var(--ac-alert-icon-warning-color,var(--a-icon-warning))] text-2xl ml-2"
+                />
+              ) : null,
+          }))}
+          onClick={setActiveTab}
+          theme="arrow"
+          heading="Perioder"
+        />
+      </div>
+      {activePeriode && (
+        <div className={styles.contentContainer}>
+          <SoknadsfristVilkarHeader
+            aksjonspunkter={aksjonspunkter}
+            erOverstyrt={erOverstyrt}
+            kanOverstyreAccess={kanOverstyreAccess}
+            lovReferanse={activeVilkår?.lovReferanse ?? lovReferanse}
+            overrideReadOnly={overrideReadOnly || dokumenterSomSkalVurderes.length === 0}
+            overstyringApKode={aksjonspunktkodeDefinisjonType.OVERSTYR_SOKNADSFRISTVILKAR}
+            panelTittelKode={panelTittelKode}
+            status={activePeriode.vilkarStatus}
+            toggleOverstyring={toggleOverstyring}
+          />
+          <SoknadsfristVilkarForm
+            aksjonspunkter={aksjonspunkter}
+            harÅpentAksjonspunkt={harÅpentUløstAksjonspunkt}
+            erOverstyrt={erOverstyrt}
+            submitCallback={submitCallback}
+            overrideReadOnly={overrideReadOnly}
+            toggleOverstyring={toggleOverstyring}
+            status={activePeriode.vilkarStatus}
+            alleDokumenter={dokumenterSomSkalVurderes}
+            dokumenterIAktivPeriode={dokumenterIAktivPeriode}
+            periode={activePeriode}
+            kanEndrePåSøknadsopplysninger={kanEndrePåSøknadsopplysninger}
           />
         </div>
-        {activePeriode && (
-          <div className={styles.contentContainer}>
-            <SoknadsfristVilkarHeader
-              aksjonspunkter={aksjonspunkter}
-              erOverstyrt={erOverstyrt}
-              kanOverstyreAccess={kanOverstyreAccess}
-              lovReferanse={activeVilkår?.lovReferanse ?? lovReferanse}
-              overrideReadOnly={overrideReadOnly || dokumenterSomSkalVurderes.length === 0}
-              overstyringApKode={aksjonspunktkodeDefinisjonType.OVERSTYR_SOKNADSFRISTVILKAR}
-              panelTittelKode={panelTittelKode}
-              status={activePeriode.vilkarStatus}
-              toggleOverstyring={toggleOverstyring}
-            />
-            <SoknadsfristVilkarForm
-              aksjonspunkter={aksjonspunkter}
-              harÅpentAksjonspunkt={harÅpentUløstAksjonspunkt}
-              erOverstyrt={erOverstyrt}
-              submitCallback={submitCallback}
-              overrideReadOnly={overrideReadOnly}
-              toggleOverstyring={toggleOverstyring}
-              status={activePeriode.vilkarStatus}
-              alleDokumenter={dokumenterSomSkalVurderes}
-              dokumenterIAktivPeriode={dokumenterIAktivPeriode}
-              periode={activePeriode}
-              kanEndrePåSøknadsopplysninger={kanEndrePåSøknadsopplysninger}
-            />
-          </div>
-        )}
-      </div>
-    </RawIntlProvider>
+      )}
+    </div>
   );
 };
 
