@@ -51,10 +51,12 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
       </OverstyrUttakContextProvider>
 
       <UtsattePerioderStripe />
-      {harAksjonspunktVurderDatoMedStatusOpprettet && <VurderDato />}
-      {virkningsdatoUttakNyeRegler && redigerVirkningsdato && (
+      {/* Allerede løst og har klikket rediger, eller har uløst aksjonspunkt */}
+      {((virkningsdatoUttakNyeRegler && redigerVirkningsdato) || harAksjonspunktVurderDatoMedStatusOpprettet) && (
         <VurderDato
-          avbryt={() => setRedigervirkningsdato(false)}
+          avbryt={
+            virkningsdatoUttakNyeRegler && redigerVirkningsdato ? () => setRedigervirkningsdato(false) : undefined
+          }
           initialValues={{
             begrunnelse: aksjonspunktVurderDato?.begrunnelse,
             virkningsdato: virkningsdatoUttakNyeRegler,
