@@ -8,14 +8,11 @@ import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Vil
 import { dateStringSorter, formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import type { FeatureToggles } from '@k9-sak-web/lib/kodeverk/types/FeatureTogglesType.js';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
-import classNames from 'classnames/bind';
 import { useEffect, useState, type SetStateAction } from 'react';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringFormPeriodisert';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
 import VilkarresultatMedOverstyringHeader from './components/VilkarresultatMedOverstyringHeader';
 import styles from './vilkarresultatMedOverstyringProsessIndex.module.css';
-
-const cx = classNames.bind(styles);
 
 const hentAktivePerioderFraVilkar = (vilkar: VilkårMedPerioderDto[], visAllePerioder: boolean): VilkårPeriodeDto[] => {
   const [activeVilkår] = vilkar;
@@ -104,7 +101,7 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
   }
 
   return (
-    <div className={cx('mainContainer--withSideMenu')}>
+    <div className={styles.mainContainerWithSideMenu}>
       <div className={styles.sideMenuContainer}>
         <SideMenu
           links={perioder.map((periode, index) => ({
