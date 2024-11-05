@@ -13,7 +13,7 @@ import {
   minLength,
   required,
 } from '@fpsak-frontend/utils';
-import { dateFormat } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { Aksjonspunkt, Behandling, SubmitCallback } from '@k9-sak-web/types';
 import OpplysningerFraSøknaden, { Måned } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
@@ -146,11 +146,11 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
           <Tabs.List>
             {oppgittOpptjening.måneder.map((currentOppgittOpptjening, currentOppgittOpptjeningIndex) => (
               <Tabs.Tab
-                key={`${dateFormat(currentOppgittOpptjening.måned.fom)} - ${dateFormat(
+                key={`${formatDate(currentOppgittOpptjening.måned.fom)} - ${formatDate(
                   currentOppgittOpptjening.måned.tom,
                 )}`}
                 value={`${currentOppgittOpptjeningIndex}`}
-                label={`${dateFormat(currentOppgittOpptjening.måned.fom)} - ${dateFormat(
+                label={`${formatDate(currentOppgittOpptjening.måned.fom)} - ${formatDate(
                   currentOppgittOpptjening.måned.tom,
                 )}`}
                 onClick={() => setActiveTab(currentOppgittOpptjeningIndex)}
