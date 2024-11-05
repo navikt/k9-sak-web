@@ -170,12 +170,10 @@ VilkarField.buildInitialValues = (vilkårPerioder: Vilkarperiode[], opptjening: 
             o => dayjs(o?.fastsattOpptjening?.opptjeningTom).add(1, 'day').format('YYYY-MM-DD') === skjæringstidspunkt,
           );
 
-          const vurderesIAksjonspunkt = opptjeningForPeriode?.fastsattOpptjening?.vurderesIAksjonspunkt;
-
           return {
             begrunnelse: periode.begrunnelse,
             vurderesIBehandlingen: periode.vurderesIBehandlingen,
-            vurderesIAksjonspunkt: opptjeningForPeriode?.fastsattOpptjening ? vurderesIAksjonspunkt : true,
+            vurderesIAksjonspunkt: opptjeningForPeriode?.fastsattOpptjening.vurderesIAksjonspunkt,
             kode: utledKode(periode),
           };
         })
