@@ -3,9 +3,9 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import SoknadsfristVilkarProsessIndexV2 from '@k9-sak-web/gui/prosess/vilkar-soknadsfrist/SoknadsfristVilkarProsessIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import SoknadsfristVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-soknadsfrist';
-import SoknadsfristVilkarProsessIndexV2 from '@k9-sak-web/prosess-vilkar-soknadsfrist-v2';
+import SoknadsfristVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-soknadsfrist-v2';
 import { OmsorgspengerBehandlingApiKeys } from '../../../data/omsorgspengerBehandlingApi';
 
 class SoknadsfristPanelDef extends ProsessStegPanelDef {
@@ -14,12 +14,12 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
   getTekstKode = () => 'Søknadsfrist';
 
   getKomponent = props => {
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
     if (props.featureToggles?.PROSESS_VILKAR_SOKNADSFRIST) {
-      const deepCopyProps = JSON.parse(JSON.stringify(props));
-      konverterKodeverkTilKode(deepCopyProps, false);
       return <SoknadsfristVilkarProsessIndexV2 {...props} {...deepCopyProps} />;
     }
-    return <SoknadsfristVilkarProsessIndex {...props} />;
+    return <SoknadsfristVilkarProsessIndex {...props} {...deepCopyProps} />;
   };
 
   getAksjonspunktKoder = () => [
