@@ -46,7 +46,7 @@ const VurderDato = ({ avbryt, initialValues }: Props) => {
       </Alert>
       <Alert variant="info" className={styles.info}>
         <Accordion className={styles.alertAccordion} indent={false}>
-          <Accordion.Item>
+          <Accordion.Item className="!shadow-none">
             <Accordion.Header>
               <Label size="small">Hva innebærer endringene i uttak?</Label>
             </Accordion.Header>
