@@ -1,19 +1,20 @@
-import arrowLeftPurpleImageUrl from '@fpsak-frontend/assets/images/arrow_left_purple.svg';
-import eksternLinkImageUrl from '@fpsak-frontend/assets/images/ekstern_link_pil_boks.svg';
-import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg';
-import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
-import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
-import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import DateTimeLabel from '@k9-sak-web/gui/shared/dateTimeLabel/DateTimeLabel.js';
+import { type FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/kodeverk/Kommunikasjonsretning.js';
 import { StarFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Label, Link, Select, Table, Tooltip } from '@navikt/ds-react';
-import { DokumentDto, PersonDto } from '@navikt/k9-sak-typescript-client';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
-import { Kompletthet } from '../types/Kompletthetsperioder';
+import DateTimeLabel from '../../../shared/dateTimeLabel/DateTimeLabel';
+import type { Document } from '../types/Document';
+import type { FagsakPerson } from '../types/FagsakPerson';
+import { type Kompletthet } from '../types/Kompletthetsperioder';
 import styles from './documentList.module.css';
+import arrowLeftPurpleImageUrl from './icons/arrow_left_purple.svg';
+import eksternLinkImageUrl from './icons/ekstern_link_pil_boks.svg';
+import internDokumentImageUrl from './icons/intern_dokument.svg';
+import mottaDokumentImageUrl from './icons/motta_dokument.svg';
+import sendDokumentImageUrl from './icons/send_dokument.svg';
 
 const headerTexts = ['Inn/ut', 'Dokument', 'Gjelder', 'Sendt/mottatt'];
 
@@ -23,35 +24,35 @@ const vedtaksdokumenter = ['INNVILGELSE', 'AVSLAG', 'FRITKS', 'ENDRING', 'MANUEL
 
 const inntektsmeldingBrevkode = '4936';
 
-const isVedtaksdokument = (document: DokumentDto) =>
+const isVedtaksdokument = (document: Document) =>
   vedtaksdokumenter.some(vedtaksdokument => vedtaksdokument === document.brevkode);
 
-const isTextMoreThan25char = (text: string): boolean => text && text.length > 25;
-const trimText = (text: string): string => `${text.substring(0, 24)}...`;
+const isTextMoreThan25char = (text?: string): boolean => !!text && text.length > 25;
+const trimText = (text: string): string => `${text?.substring(0, 24)}...`;
 
-const getDirectionImage = (document: DokumentDto): string => {
+const getDirectionImage = (document: Document): string => {
   if (isVedtaksdokument(document)) {
     return arrowLeftPurpleImageUrl;
   }
-  if (document.kommunikasjonsretning === kommunikasjonsretning.INN) {
+  if (document.kommunikasjonsretning === Kommunikasjonsretning.INN) {
     return mottaDokumentImageUrl;
   }
-  if (document.kommunikasjonsretning === kommunikasjonsretning.UT) {
+  if (document.kommunikasjonsretning === Kommunikasjonsretning.UT) {
     return sendDokumentImageUrl;
   }
   return internDokumentImageUrl;
 };
-const getDirectionText = (document: DokumentDto): string => {
-  if (document.kommunikasjonsretning === kommunikasjonsretning.INN) {
+const getDirectionText = (document: Document): string => {
+  if (document.kommunikasjonsretning === Kommunikasjonsretning.INN) {
     return 'Inn';
   }
-  if (document.kommunikasjonsretning === kommunikasjonsretning.UT) {
+  if (document.kommunikasjonsretning === Kommunikasjonsretning.UT) {
     return 'Ut';
   }
   return 'Intern';
 };
 
-const getModiaPath = (fødselsnummer: string) => {
+const getModiaPath = (fødselsnummer?: string) => {
   const { host } = window.location;
   if (host === 'app-q1.adeo.no' || host === 'k9.dev.intern.nav.no') {
     return `https://app-q1.adeo.no/modiapersonoversikt/person/${fødselsnummer}/meldinger/`;
@@ -59,13 +60,13 @@ const getModiaPath = (fødselsnummer: string) => {
   if (host === 'app.adeo.no' || host === 'k9.intern.nav.no') {
     return `https://app.adeo.no/modiapersonoversikt/person/${fødselsnummer}/meldinger/`;
   }
-  return null;
+  return '#';
 };
 
 interface OwnProps {
-  documents: DokumentDto[];
+  documents: Document[];
   behandlingId?: number;
-  fagsakPerson?: PersonDto;
+  fagsakPerson?: FagsakPerson;
   saksnummer: number;
   behandlingUuid: string;
   sakstype: FagsakYtelsesType;
@@ -126,10 +127,10 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
     );
   }
 
-  const makeDocumentURL = (document: DokumentDto) =>
+  const makeDocumentURL = (document: Document) =>
     `/k9/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
 
-  const erInntektsmeldingOgBruktIDenneBehandlingen = (document: DokumentDto) =>
+  const erInntektsmeldingOgBruktIDenneBehandlingen = (document: Document) =>
     document.brevkode === inntektsmeldingBrevkode &&
     inntektsmeldingerIBruk &&
     inntektsmeldingerIBruk.length > 0 &&
@@ -163,7 +164,7 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
           {documents
             .filter(document =>
               `${behandlingId}` === selectedFilter
-                ? document.behandlinger.some(behandling => behandling === behandlingId)
+                ? document.behandlinger?.some(behandling => behandling === behandlingId)
                 : true,
             )
             .map(document => {
@@ -220,12 +221,12 @@ const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behan
                       rel="noopener noreferrer"
                       tabIndex={-1}
                     >
-                      {isTextMoreThan25char(document.gjelderFor) && (
+                      {document?.gjelderFor && isTextMoreThan25char(document.gjelderFor) && (
                         <Tooltip content={document.gjelderFor} placement="left">
                           <BodyShort>{trimText(document.gjelderFor)}</BodyShort>
                         </Tooltip>
                       )}
-                      {!isTextMoreThan25char(document.gjelderFor) && document.gjelderFor}
+                      {!isTextMoreThan25char(document?.gjelderFor) && document.gjelderFor}
                     </a>
                   </Table.DataCell>
                   <Table.DataCell>
