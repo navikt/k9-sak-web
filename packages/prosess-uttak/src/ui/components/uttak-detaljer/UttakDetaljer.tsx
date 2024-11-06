@@ -145,13 +145,13 @@ const formatAvkortingMotArbeid = (
         );
 
         const nyInntektTekst = () => {
-          if (arbeidsforhold?.type === Arbeidstype.AT) {
+          if (arbeidsforhold?.type === Arbeidstype.ARBEIDSTAKER) {
             return 'Nytt arbeidsforhold';
           }
-          if (arbeidsforhold?.type === Arbeidstype.FL) {
+          if (arbeidsforhold?.type === Arbeidstype.FRILANSER) {
             return 'Ny frilansaktivitet';
           }
-          if (arbeidsforhold?.type === Arbeidstype.SN) {
+          if (arbeidsforhold?.type === Arbeidstype.SELVSTENDIG_NÆRINGSDRIVENDE) {
             return 'Ny virksomhet';
           }
           return '';
