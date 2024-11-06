@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { kommunikasjonsretning } from '@navikt/k9-sak-typescript-client';
+import { Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/kodeverk/Kommunikasjonsretning.js';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import DocumentList from './DocumentList';
@@ -26,7 +26,7 @@ describe('<DocumentList>', () => {
       dokumentId: '1',
       tittel: 'Terminbekreftelse',
       tidspunkt: new Date().toDateString(),
-      kommunikasjonsretning: 'I' as kommunikasjonsretning,
+      kommunikasjonsretning: Kommunikasjonsretning.INN,
     };
 
     const anotherDocument = {
@@ -34,7 +34,7 @@ describe('<DocumentList>', () => {
       dokumentId: '2',
       tittel: 'Førstegangssøknad',
       tidspunkt: new Date().toDateString(),
-      kommunikasjonsretning: 'U' as kommunikasjonsretning,
+      kommunikasjonsretning: Kommunikasjonsretning.UT,
     };
 
     render(
@@ -60,7 +60,7 @@ describe('<DocumentList>', () => {
       dokumentId: '1',
       tittel: 'Terminbekreftelse',
       tidspunkt: '',
-      kommunikasjonsretning: 'I' as kommunikasjonsretning,
+      kommunikasjonsretning: Kommunikasjonsretning.INN,
     };
 
     render(
