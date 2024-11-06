@@ -1,6 +1,7 @@
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Kommunikasjonsretning } from '@k9-sak-web/backend/k9sak/kodeverk/Kommunikasjonsretning.js';
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect, userEvent } from '@storybook/test';
 import DokumenterSakIndex from './DokumenterSakIndex';
 
 const behandlingId = 1;
@@ -57,6 +58,16 @@ export const DefaultStory: Story = {
     behandlingId: behandlingId,
     behandlingUuid: '1',
     fagsak: fagsak,
+  },
+  play: async ({ canvas }) => {
+    expect(canvas.getByText('Dette er et dokument')).toBeInTheDocument();
+    expect(canvas.getByText('Dette er et tredje dokument')).toBeInTheDocument();
+    expect(canvas.getByText('02.01.2017 - 10:54')).toBeInTheDocument();
+    await userEvent.selectOptions(canvas.getByRole('combobox'), 'Denne behandlingen');
+    expect(canvas.getByText('Dette er et dokument')).toBeInTheDocument();
+    expect(canvas.queryByText('Dette er et tredje dokument')).not.toBeInTheDocument();
+    await userEvent.selectOptions(canvas.getByRole('combobox'), 'Alle behandlinger');
+    expect(canvas.getByText('Dette er et tredje dokument')).toBeInTheDocument();
   },
   render: props => (
     <div
