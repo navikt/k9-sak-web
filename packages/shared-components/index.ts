@@ -5,7 +5,6 @@ export { default as ArrowBox } from './src/ArrowBox';
 export { default as BorderBox } from './src/BorderBox';
 export { default as DataFetchPendingModal } from './src/DataFetchPendingModal';
 export { default as DateLabel } from './src/DateLabel';
-export { default as DateTimeLabel } from './src/DateTimeLabel';
 export { default as EditedIcon } from './src/EditedIcon';
 export { default as FadingPanel } from './src/FadingPanel';
 export { default as FaktaGruppe } from './src/FaktaGruppe';

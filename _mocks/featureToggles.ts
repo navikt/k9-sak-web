@@ -89,4 +89,8 @@ export const featureTogglesFactory = () => [
     key: 'DELVIS_REVURDERING',
     value: process.env.VITE_DELVIS_REVURDERING,
   },
+  {
+    key: 'BRUK_V2_SAK_DOKUMENTER',
+    value: process.env.VITE_BRUK_V2_SAK_DOKUMENTER,
+  },
 ];

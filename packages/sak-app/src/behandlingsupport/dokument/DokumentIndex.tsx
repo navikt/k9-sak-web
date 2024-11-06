@@ -1,6 +1,8 @@
 import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
 import { LoadingPanel, requireProps, usePrevious } from '@fpsak-frontend/shared-components';
+import DokumenterSakIndexV2 from '@k9-sak-web/gui/sak/dokumenter/DokumenterSakIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { DokumentDto, FagsakDto } from '@navikt/k9-sak-typescript-client';
 import { useMemo } from 'react';
@@ -24,6 +26,7 @@ interface OwnProps {
   behandlingVersjon?: number;
   fagsak: FagsakDto;
   behandlingUuid: string;
+  featureToggles?: FeatureToggles;
 }
 
 const EMPTY_ARRAY = [];
@@ -33,7 +36,14 @@ const EMPTY_ARRAY = [];
  *
  * Container komponent. Har ansvar for å hente sakens dokumenter fra state og rendre det i en liste.
  */
-export const DokumentIndex = ({ behandlingId, behandlingVersjon, fagsak, saksnummer, behandlingUuid }: OwnProps) => {
+export const DokumentIndex = ({
+  behandlingId,
+  behandlingVersjon,
+  fagsak,
+  saksnummer,
+  behandlingUuid,
+  featureToggles,
+}: OwnProps) => {
   const forrigeSaksnummer = usePrevious(saksnummer);
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
   const { data: alleDokumenter = EMPTY_ARRAY, state } = restApiHooks.useRestApi<DokumentDto[]>(
@@ -55,6 +65,18 @@ export const DokumentIndex = ({ behandlingId, behandlingVersjon, fagsak, saksnum
 
   if (state === RestApiState.LOADING) {
     return <LoadingPanel />;
+  }
+
+  if (featureToggles?.BRUK_V2_SAK_DOKUMENTER) {
+    return (
+      <DokumenterSakIndexV2
+        documents={sorterteDokumenter}
+        behandlingId={behandlingId}
+        fagsak={kodeverkKonvertertFagsak}
+        saksnummer={saksnummer}
+        behandlingUuid={behandlingUuid}
+      />
+    );
   }
 
   return (
