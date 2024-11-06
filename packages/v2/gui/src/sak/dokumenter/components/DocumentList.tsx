@@ -75,8 +75,7 @@ interface OwnProps {
 /**
  * DocumentList
  *
- * Presentasjonskomponent. Viser dokumenter i en liste. Tar også inn en callback-funksjon som blir
- * trigget når saksbehandler velger et dokument. Finnes ingen dokumenter blir det kun vist en label
+ * Presentasjonskomponent. Viser dokumenter i en liste. Finnes ingen dokumenter blir det kun vist en label
  * som viser at ingen dokumenter finnes på fagsak.
  */
 const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behandlingUuid, sakstype }: OwnProps) => {
