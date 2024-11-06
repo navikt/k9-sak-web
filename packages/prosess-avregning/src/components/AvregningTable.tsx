@@ -1,9 +1,10 @@
 import mottakerTyper from '@fpsak-frontend/kodeverk/src/mottakerTyper';
-import { formatCurrencyNoKr, getRangeOfMonths, initializeDate } from '@fpsak-frontend/utils';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { getRangeOfMonths } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { Kodeverk, Periode, SimuleringMottaker, SimuleringResultatRad } from '@k9-sak-web/types';
 import { BodyShort, Table } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
-import moment from 'moment/moment';
 import { FormattedMessage } from 'react-intl';
 import CollapseButton from './CollapseButton';
 import styles from './avregningTable.module.css';
@@ -25,7 +26,7 @@ export const avregningCodes = {
 };
 
 const isNextPeriod = (month: RangeOfMonths, nextPeriod: string) =>
-  `${month.month}${month.year}` === (nextPeriod ? moment(nextPeriod).format('MMMMYY') : false);
+  `${month.month}${month.year}` === (nextPeriod ? initializeDate(nextPeriod).format('MMMMYY') : false);
 
 const getHeaderCodes = (
   showCollapseButton: boolean,
@@ -70,11 +71,13 @@ const createColumns = (
   nextPeriod: string,
   boldText?: boolean,
 ) => {
-  const nextPeriodFormatted = `${moment(nextPeriod).format('MMMMYY')}`;
+  const nextPeriodFormatted = `${initializeDate(nextPeriod).format('MMMMYY')}`;
 
   const perioderData = rangeOfMonths.map(month => {
     const periodeExists = perioder.find(
-      periode => moment(periode.periode.tom).format('MMMMYY') === `${month.month}${month.year}`,
+      periode =>
+        initializeDate(periode.periode.tom).format('MMMMYY').toLowerCase() ===
+        `${month.month}${month.year}`.toLowerCase(),
     );
     return periodeExists || { måned: `${month.month}${month.year}`, beløp: null };
   });
@@ -87,7 +90,7 @@ const createColumns = (
         lastColumn:
           'måned' in måned && måned.måned
             ? måned.måned === nextPeriodFormatted
-            : 'periode' in måned && moment(måned.periode.tom).format('MMMMYY') === nextPeriodFormatted,
+            : 'periode' in måned && initializeDate(måned.periode.tom).format('MMMMYY') === nextPeriodFormatted,
         'font-bold': boldText,
       })}
     >

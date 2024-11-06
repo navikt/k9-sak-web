@@ -1,6 +1,6 @@
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { isSameOrBefore } from '../date-utils/dateComparison';
 import { prettifyDateString } from '../date-utils/format';
-import initializeDate from '../date-utils/initialize';
 import isValid from '../date-utils/isValid';
 
 class Period {

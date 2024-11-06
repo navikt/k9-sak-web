@@ -1,6 +1,6 @@
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { getArrayDifference, makeArrayWithoutDuplicates } from '../arrayUtils';
 import { isDayAfter } from '../date-utils/dateComparison';
-import initializeDate from '../date-utils/initialize';
 import { dateStringSorter } from '../date-utils/sort';
 import Period from './Period';
 

@@ -49,7 +49,18 @@ describe('<OpptjeningVilkarForm>', () => {
         lovReferanse="Dette er en lovreferanse"
         periodeIndex={0}
         vilkårPerioder={[periode]}
-        opptjeninger={[]}
+        opptjeninger={[
+          {
+            opptjeningAktivitetList: [],
+            fastsattOpptjening: {
+              opptjeningFom: '2017-08-15',
+              opptjeningTom: '2017-08-31',
+              opptjeningperiode: { dager: 16, måneder: 0 },
+              fastsattOpptjeningAktivitetList: [],
+              vurderesIAksjonspunkt: true,
+            },
+          },
+        ]}
       />,
       { messages },
     );

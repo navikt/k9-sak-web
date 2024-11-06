@@ -1,19 +1,12 @@
 import { DatepickerField, DecimalField, InputField } from '@fpsak-frontend/form';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import {
-  DDMMYYYY_DATE_FORMAT,
-  ISO_DATE_FORMAT,
-  hasValidDecimal,
-  maxValue,
-  minValue,
-  required,
-} from '@fpsak-frontend/utils';
+import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import { BodyShort, Detail, HGrid } from '@navikt/ds-react';
 import moment from 'moment';
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './activityDataSubPanel.module.css';
 

@@ -1,5 +1,4 @@
-import { dateFormat, timeFormat } from '@fpsak-frontend/utils';
-
+import { dateFormat, timeFormat } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import ErrorEventType from './errorEventType';
 import ErrorMessage from './ErrorMessage';
 import Formatter from './Formatter';

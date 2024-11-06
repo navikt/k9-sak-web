@@ -8,13 +8,14 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Image } from '@fpsak-frontend/shared-components';
-import { dateFormat, initializeDate } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Behandling, DokumentStatus, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { utledInnsendtSoknadsfrist } from './utils';
 
+import { dateFormat } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import messages from '../i18n/nb_NO.json';
 import styles from './SoknadsfristVilkarProsessIndex.module.css';
 import SoknadsfristVilkarFormV1 from './components/SoknadsfristVilkarForm';

@@ -1,13 +1,12 @@
 import { behandlingFormValueSelector, CheckboxField, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Label } from '@fpsak-frontend/form/src/Label';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { OpplysningerFraSøknaden, SubmitCallback } from '@k9-sak-web/types';
 import { Måned, Periode } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import { Label as DSLabel } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import moment from 'moment';
-import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { FormAction, WrappedFieldArrayProps } from 'redux-form';

@@ -1,7 +1,5 @@
+import { ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import moment from 'moment';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-
-export const formatDate = (date: string): string => moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT);
 
 export const durationTilTimerMed7ogEnHalvTimesDagsbasis = (delvisFravær: string): number => {
   const antallTimerMedFulleDager = moment.duration(delvisFravær).asHours();

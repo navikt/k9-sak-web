@@ -1,8 +1,11 @@
-import { DDMMYYYY_DATE_FORMAT, calcDaysAndWeeks, formatCurrencyNoKr, initializeDate } from '@fpsak-frontend/utils';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { BodyShort, HGrid, Label } from '@navikt/ds-react';
 import { FormattedMessage } from 'react-intl';
 import DataForPeriode from '../../types/dataForPeriodeTsType';
 
+import { calcDaysAndWeeks } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import styles from './periodeInformasjon.module.css';
 
 interface OwnProps {
