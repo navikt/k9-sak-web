@@ -1,3 +1,3 @@
 export type FagsakPerson = {
-  personnummer: string;
+  personnummer?: string;
 };

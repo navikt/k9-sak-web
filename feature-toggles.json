@@ -94,5 +94,9 @@
   {
     "key": "DELVIS_REVURDERING",
     "value": "${DELVIS_REVURDERING}"
+  },
+  {
+    "key": "BRUK_V2_SAK_DOKUMENTER",
+    "value": "${BRUK_V2_SAK_DOKUMENTER}"
   }
 ]

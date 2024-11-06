@@ -110,3 +110,5 @@ spec:
       value: "true"
     - name: DELVIS_REVURDERING
       value: "false"
+    - name: "BRUK_V2_SAK_DOKUMENTER"
+      value: "false"

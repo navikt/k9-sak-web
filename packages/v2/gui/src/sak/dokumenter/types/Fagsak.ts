@@ -2,6 +2,6 @@ import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/Fagsa
 import type { FagsakPerson } from './FagsakPerson';
 
 export type Fagsak = {
-  person: FagsakPerson;
+  person?: FagsakPerson;
   sakstype: FagsakYtelsesType;
 };
