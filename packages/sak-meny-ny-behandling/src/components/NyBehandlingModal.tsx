@@ -172,11 +172,17 @@ export const NyBehandlingModal = ({
             )}
             {erDelvisRevurderingToggleAktivert && erRevurdering && steg === 'RE-ENDRET-FORDELING' && (
               <Fieldset className={styles.datePickerContainer} legend="Hvilken periode vil du revurdere?">
-                <DatepickerField name="fom" disabledDays={{ before: null, after: new Date() }} label="Fra og med" />
+                <DatepickerField
+                  name="fom"
+                  disabledDays={{ before: null, after: new Date() }}
+                  label="Fra og med"
+                  validate={[required]}
+                />
                 <DatepickerField
                   name="tom"
                   disabledDays={{ before: new Date(fom), after: new Date() }}
                   label="Til og med"
+                  validate={[required]}
                 />
               </Fieldset>
             )}
