@@ -1,16 +1,16 @@
-import React from 'react';
 import {
   HistorikkinnslagDel,
-  HistorikkInnslagOpplysning,
   HistorikkinnslagEndretFelt,
+  HistorikkInnslagOpplysning,
   Kodeverk,
 } from '@k9-sak-web/types';
+import React from 'react';
 
 import { IntlShape } from 'react-intl';
-import historikkResultatTypeCodes from '../../../kodeverk/historikkResultatTypeCodes';
-import historikkEndretFeltVerdiTypeCodes from '../../../kodeverk/historikkEndretFeltVerdiTypeCodes';
 import historikkEndretFeltTypeCodes from '../../../kodeverk/historikkEndretFeltTypeCodes';
+import historikkEndretFeltVerdiTypeCodes from '../../../kodeverk/historikkEndretFeltVerdiTypeCodes';
 import historikkOpplysningTypeCodes from '../../../kodeverk/historikkOpplysningTypeCodes';
+import historikkResultatTypeCodes from '../../../kodeverk/historikkResultatTypeCodes';
 
 export const findIdForOpplysningCode = (opplysning: HistorikkInnslagOpplysning): string => {
   if (!opplysning) {
@@ -28,7 +28,7 @@ export const findResultatText = (
   resultat: string,
   intl: IntlShape,
   getKodeverknavn: (kodeverk: Kodeverk) => string,
-): string => {
+): string | React.ReactNode[] => {
   if (!resultat) {
     return null;
   }
@@ -49,7 +49,7 @@ export const findResultatText = (
   }
   const fieldId = resultatCode.feltId;
   const msg = intl.formatMessage({ id: fieldId }, { b: chunks => <b>{chunks}</b>, br: <br /> });
-  return msg as string;
+  return msg;
 };
 
 export const findHendelseText = (
