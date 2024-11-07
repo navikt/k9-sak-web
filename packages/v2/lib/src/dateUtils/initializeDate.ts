@@ -13,7 +13,7 @@ dayjs.extend(isSameOrBefore);
 const supportedFormats = [ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT];
 
 export const initializeDate = (
-  date: string | Dayjs,
+  date: string | Dayjs | Date,
   customFormat?: string,
   strict?: boolean,
   keepHoursAndMinutes?: boolean,

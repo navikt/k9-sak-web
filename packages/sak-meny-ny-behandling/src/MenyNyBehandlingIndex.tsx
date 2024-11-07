@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import messages from './i18n/nb_NO.json';
 
 import NyBehandlingModal, { BehandlingOppretting, FormValues } from './components/NyBehandlingModal';
 
@@ -12,7 +13,7 @@ const TILBAKEKREVING_BEHANDLINGSTYPER = [BehandlingType.TILBAKEKREVING, Behandli
 const intl = createIntl(
   {
     locale: 'nb-NO',
-    messages: {},
+    messages,
   },
   createIntlCache(),
 );
