@@ -105,7 +105,7 @@ spec:
     - name: UTVIDET_VARSELFELT
       value: "true"
     - name: SKILL_UT_PRIVATPERSON
-      value: "false"
+      value: "true"
     - name: AUTOMATISK_VURDERT_MEDLEMSKAP
       value: "true"
     - name: DELVIS_REVURDERING
