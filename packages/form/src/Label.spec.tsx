@@ -1,10 +1,9 @@
-import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
+import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { render, screen } from '@testing-library/react';
-import React from 'react';
 import { Label } from './Label';
 
 const FORMATTED_MESSAGE = 'En formatert melding';
-const intl = { ...intlMock, formatMessage: () => FORMATTED_MESSAGE };
+const intl = { ...intlWithMessages({ Hei: FORMATTED_MESSAGE }) };
 
 describe('<Label>', () => {
   it('skal ikke formatere input hvis den er en node', () => {
