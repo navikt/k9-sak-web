@@ -205,6 +205,7 @@ export const Uttak: Story = {
       erFagytelsetypeLivetsSluttfase: false,
       løsAksjonspunktVurderDatoNyRegelUttak: undefined,
       virkningsdatoUttakNyeRegler: '',
+      readOnly: false,
     },
   },
 };

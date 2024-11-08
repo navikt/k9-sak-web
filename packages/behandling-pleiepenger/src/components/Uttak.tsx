@@ -1,12 +1,10 @@
-import React from 'react';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId, Behandling } from '@k9-sak-web/types';
-import { Uttak } from '@k9-sak-web/prosess-uttak';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
 import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
+import { Uttak } from '@k9-sak-web/prosess-uttak';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId, Behandling } from '@k9-sak-web/types';
 import { OverstyringUttakRequest } from '../types';
 
 interface UttakProps {
@@ -23,6 +21,7 @@ interface UttakProps {
   lagreOverstyringUttak: (values: any) => void;
   relevanteAksjonspunkter: string[];
   erOverstyrer: boolean;
+  readOnly: boolean;
 }
 
 export default ({
@@ -39,6 +38,7 @@ export default ({
   lagreOverstyringUttak,
   relevanteAksjonspunkter,
   erOverstyrer,
+  readOnly,
 }: UttakProps) => {
   const { versjon, links, status: behandlingStatus } = behandling;
   const { addErrorMessage } = useRestApiErrorDispatcher();
@@ -86,6 +86,7 @@ export default ({
         versjon,
         erOverstyrer,
         status: behandlingStatus.kode,
+        readOnly,
       }}
     />
   );
