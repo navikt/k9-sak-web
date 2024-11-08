@@ -1,8 +1,15 @@
 import { RadioGroupField } from '@fpsak-frontend/form';
-import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  FlexColumn,
+  FlexContainer,
+  FlexRow,
+  Image,
+  useFeatureToggles,
+  VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
-import { Opptjening, Vilkarperiode } from '@k9-sak-web/types';
+import { FeatureToggles, Opptjening, Vilkarperiode } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -63,6 +70,7 @@ export const VilkarField = ({
   skalValgMidlertidigInaktivTypeBVises,
 }: VilkarFieldsProps & Partial<FormValues>) => {
   const intl = useIntl();
+  const [featureToggles] = useFeatureToggles();
   const erIkkeOppfyltText = (
     <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt" values={{ b: chunks => <b>{chunks}</b> }} />
   );
@@ -117,12 +125,11 @@ export const VilkarField = ({
             Så de gangene man får løse aksjonspunktet manuelt har ikke brukeren 28 dager med opptjening.
             Velger man at vilkåret er oppfylt i de tilfellene får man feil i beregning.
             Valget fjernes midlertidig, men skal tilbake igjen når EØS-saker kan behandles i K9. 
-            
+            */
             {
               value: 'OPPFYLT',
               label: erOppfyltText,
             },
-            */
             {
               value: 'IKKE_OPPFYLT',
               label: erIkkeOppfyltText,
@@ -143,7 +150,12 @@ export const VilkarField = ({
                   },
                 ]
               : []),
-          ]}
+          ].filter(v => {
+            if (featureToggles?.OPPTJENING_READ_ONLY_PERIODER) {
+              return v.value !== 'OPPFYLT';
+            }
+            return true;
+          })}
         />
       )}
       <VerticalSpacer sixteenPx />
@@ -151,7 +163,11 @@ export const VilkarField = ({
   );
 };
 
-VilkarField.buildInitialValues = (vilkårPerioder: Vilkarperiode[], opptjening: Opptjening[]): FormValues => {
+VilkarField.buildInitialValues = (
+  vilkårPerioder: Vilkarperiode[],
+  opptjening: Opptjening[],
+  featureToggles: FeatureToggles,
+): FormValues => {
   const utledKode = (periode: Vilkarperiode) => {
     if (
       periode.merknad.kode === opptjeningMidlertidigInaktivKoder.TYPE_A ||
@@ -173,7 +189,9 @@ VilkarField.buildInitialValues = (vilkårPerioder: Vilkarperiode[], opptjening: 
           return {
             begrunnelse: periode.begrunnelse,
             vurderesIBehandlingen: periode.vurderesIBehandlingen,
-            vurderesIAksjonspunkt: opptjeningForPeriode?.fastsattOpptjening.vurderesIAksjonspunkt,
+            vurderesIAksjonspunkt: featureToggles?.OPPTJENING_READ_ONLY_PERIODER
+              ? opptjeningForPeriode?.fastsattOpptjening.vurderesIAksjonspunkt
+              : true,
             kode: utledKode(periode),
           };
         })

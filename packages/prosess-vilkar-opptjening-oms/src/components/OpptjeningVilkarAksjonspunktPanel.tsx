@@ -1,7 +1,7 @@
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
-import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
+import { Aksjonspunkt, FeatureToggles, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
 import { HelpText, Label } from '@navikt/ds-react';
 import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -35,6 +35,7 @@ interface OpptjeningVilkarAksjonspunktPanelImplProps {
   vilkårPerioder: Vilkarperiode[];
   opptjeninger: Opptjening[];
   vilkarFields: VilkårFieldType[];
+  featureToggles: FeatureToggles;
 }
 
 interface StateProps {
@@ -173,9 +174,10 @@ export const buildInitialValues = createSelector(
     (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.aksjonspunkter,
     (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.vilkårPerioder,
     (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.opptjeninger,
+    (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.featureToggles,
   ],
-  (aksjonspunkter, vilkårPerioder, opptjeninger) => ({
-    ...VilkarField.buildInitialValues(vilkårPerioder, opptjeninger),
+  (aksjonspunkter, vilkårPerioder, opptjeninger, featureToggles) => ({
+    ...VilkarField.buildInitialValues(vilkårPerioder, opptjeninger, featureToggles),
     ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),
 );
