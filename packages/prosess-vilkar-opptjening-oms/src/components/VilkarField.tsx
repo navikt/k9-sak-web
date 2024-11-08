@@ -1,8 +1,15 @@
 import { RadioGroupField } from '@fpsak-frontend/form';
-import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  FlexColumn,
+  FlexContainer,
+  FlexRow,
+  Image,
+  useFeatureToggles,
+  VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
-import { Opptjening, Vilkarperiode } from '@k9-sak-web/types';
+import { FeatureToggles, Opptjening, Vilkarperiode } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -20,7 +27,7 @@ export const opptjeningMidlertidigInaktivKoder = {
 export type VilkårFieldType = {
   begrunnelse: string;
   vurderesIBehandlingen: boolean;
-  periodeHar28DagerOgTrengerIkkeVurderesManuelt: boolean;
+  vurderesIAksjonspunkt: boolean;
   kode: '7847A' | '7847B' | 'OPPFYLT' | 'IKKE_OPPFYLT';
 };
 
@@ -63,6 +70,7 @@ export const VilkarField = ({
   skalValgMidlertidigInaktivTypeBVises,
 }: VilkarFieldsProps & Partial<FormValues>) => {
   const intl = useIntl();
+  const [featureToggles] = useFeatureToggles();
   const erIkkeOppfyltText = (
     <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt" values={{ b: chunks => <b>{chunks}</b> }} />
   );
@@ -142,7 +150,12 @@ export const VilkarField = ({
                   },
                 ]
               : []),
-          ]}
+          ].filter(v => {
+            if (featureToggles?.OPPTJENING_READ_ONLY_PERIODER) {
+              return v.value !== 'OPPFYLT';
+            }
+            return true;
+          })}
         />
       )}
       <VerticalSpacer sixteenPx />
@@ -150,7 +163,11 @@ export const VilkarField = ({
   );
 };
 
-VilkarField.buildInitialValues = (vilkårPerioder: Vilkarperiode[], opptjening: Opptjening[]): FormValues => {
+VilkarField.buildInitialValues = (
+  vilkårPerioder: Vilkarperiode[],
+  opptjening: Opptjening[],
+  featureToggles: FeatureToggles,
+): FormValues => {
   const utledKode = (periode: Vilkarperiode) => {
     if (
       periode.merknad.kode === opptjeningMidlertidigInaktivKoder.TYPE_A ||
@@ -169,16 +186,12 @@ VilkarField.buildInitialValues = (vilkårPerioder: Vilkarperiode[], opptjening: 
             o => dayjs(o?.fastsattOpptjening?.opptjeningTom).add(1, 'day').format('YYYY-MM-DD') === skjæringstidspunkt,
           );
 
-          // Ble litt trøbbel med denne, fjerner midlertidig for å få ut hotfix
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const periodeHar28DagerOgTrengerIkkeVurderesManuelt =
-            opptjeningForPeriode?.fastsattOpptjening?.opptjeningperiode?.dager >= 28 ||
-            opptjeningForPeriode?.fastsattOpptjening?.opptjeningperiode?.måneder > 0;
-
           return {
             begrunnelse: periode.begrunnelse,
             vurderesIBehandlingen: periode.vurderesIBehandlingen,
-            periodeHar28DagerOgTrengerIkkeVurderesManuelt: false,
+            vurderesIAksjonspunkt: featureToggles?.OPPTJENING_READ_ONLY_PERIODER
+              ? opptjeningForPeriode?.fastsattOpptjening.vurderesIAksjonspunkt
+              : true,
             kode: utledKode(periode),
           };
         })

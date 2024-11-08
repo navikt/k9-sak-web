@@ -112,3 +112,5 @@ spec:
       value: "false"
     - name: "BRUK_V2_SAK_DOKUMENTER"
       value: "false"
+    - name: OPPTJENING_READ_ONLY_PERIODER
+      value: "false"
