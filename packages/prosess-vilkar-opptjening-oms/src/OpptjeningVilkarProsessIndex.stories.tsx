@@ -14,7 +14,6 @@ const opptjening = {
       måneder: 2,
       dager: 3,
     },
-    vurderesIAksjonspunkt: true,
     fastsattOpptjeningAktivitetList: [
       {
         id: 1,

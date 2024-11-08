@@ -20,7 +20,7 @@ export const opptjeningMidlertidigInaktivKoder = {
 export type VilkårFieldType = {
   begrunnelse: string;
   vurderesIBehandlingen: boolean;
-  vurderesIAksjonspunkt: boolean;
+  periodeHar28DagerOgTrengerIkkeVurderesManuelt: boolean;
   kode: '7847A' | '7847B' | 'OPPFYLT' | 'IKKE_OPPFYLT';
 };
 
@@ -117,12 +117,11 @@ export const VilkarField = ({
             Så de gangene man får løse aksjonspunktet manuelt har ikke brukeren 28 dager med opptjening.
             Velger man at vilkåret er oppfylt i de tilfellene får man feil i beregning.
             Valget fjernes midlertidig, men skal tilbake igjen når EØS-saker kan behandles i K9. 
-            
+            */
             {
               value: 'OPPFYLT',
               label: erOppfyltText,
             },
-            */
             {
               value: 'IKKE_OPPFYLT',
               label: erIkkeOppfyltText,
@@ -170,10 +169,16 @@ VilkarField.buildInitialValues = (vilkårPerioder: Vilkarperiode[], opptjening: 
             o => dayjs(o?.fastsattOpptjening?.opptjeningTom).add(1, 'day').format('YYYY-MM-DD') === skjæringstidspunkt,
           );
 
+          // Ble litt trøbbel med denne, fjerner midlertidig for å få ut hotfix
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const periodeHar28DagerOgTrengerIkkeVurderesManuelt =
+            opptjeningForPeriode?.fastsattOpptjening?.opptjeningperiode?.dager >= 28 ||
+            opptjeningForPeriode?.fastsattOpptjening?.opptjeningperiode?.måneder > 0;
+
           return {
             begrunnelse: periode.begrunnelse,
             vurderesIBehandlingen: periode.vurderesIBehandlingen,
-            vurderesIAksjonspunkt: opptjeningForPeriode?.fastsattOpptjening.vurderesIAksjonspunkt,
+            periodeHar28DagerOgTrengerIkkeVurderesManuelt: false,
             kode: utledKode(periode),
           };
         })

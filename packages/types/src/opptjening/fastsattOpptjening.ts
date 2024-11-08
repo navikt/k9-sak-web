@@ -6,7 +6,6 @@ export type FastsattOpptjening = Readonly<{
   opptjeningTom: string;
   opptjeningperiode: Opptjeningperiode;
   fastsattOpptjeningAktivitetList: FastsattOpptjeningAktivitet[];
-  vurderesIAksjonspunkt: boolean;
 }>;
 
 export default FastsattOpptjening;

@@ -79,7 +79,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       ? !vilkarFields.some(
           vilkarField =>
             vilkarField.vurderesIBehandlingen &&
-            vilkarField.vurderesIAksjonspunkt &&
+            !vilkarField.periodeHar28DagerOgTrengerIkkeVurderesManuelt &&
             (!vilkarField.begrunnelse || !vilkarField.kode),
         )
       : false;
@@ -136,7 +136,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
       isPeriodisertFormComplete={allePerioderHarVurdering()}
-      skjulAksjonspunktVisning={!vilkarField?.vurderesIAksjonspunkt}
+      skjulAksjonspunktVisning={vilkarField?.periodeHar28DagerOgTrengerIkkeVurderesManuelt}
     >
       <div className={styles.titelOgHjelpetekstFlexbox}>
         <Label size="small" as="p">
@@ -160,7 +160,9 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       <VilkarField
         erOmsorgspenger={erOmsorgspenger}
         field={vilkarField}
-        readOnly={readOnly || !vilkarField?.vurderesIBehandlingen || !vilkarField?.vurderesIAksjonspunkt}
+        readOnly={
+          readOnly || !vilkarField?.vurderesIBehandlingen || vilkarField?.periodeHar28DagerOgTrengerIkkeVurderesManuelt
+        }
         fieldPrefix={`vilkarFields[${periodeIndex}]`}
         skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidOpptjeningTom}
       />
