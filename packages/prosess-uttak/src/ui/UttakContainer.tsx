@@ -19,7 +19,7 @@ interface MainComponentProps {
 }
 
 const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
-  const { uttaksperioder, aksjonspunktkoder, aksjonspunkter, virkningsdatoUttakNyeRegler, erOverstyrer } =
+  const { uttaksperioder, aksjonspunktkoder, aksjonspunkter, virkningsdatoUttakNyeRegler, erOverstyrer, readOnly } =
     containerData;
   const [redigerVirkningsdato, setRedigervirkningsdato] = React.useState<boolean>(false);
   const aksjonspunktVurderDato = aksjonspunkter?.find(ap => ap.definisjon.kode === aksjonspunktVurderDatoKode);
@@ -61,6 +61,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
             begrunnelse: aksjonspunktVurderDato?.begrunnelse,
             virkningsdato: virkningsdatoUttakNyeRegler,
           }}
+          readOnly={readOnly}
         />
       )}
       {!harVentAnnenPSBSakAksjonspunkt && (
