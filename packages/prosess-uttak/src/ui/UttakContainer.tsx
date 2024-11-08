@@ -52,7 +52,9 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
 
       <UtsattePerioderStripe />
       {/* Allerede løst og har klikket rediger, eller har uløst aksjonspunkt */}
-      {((virkningsdatoUttakNyeRegler && redigerVirkningsdato) || harAksjonspunktVurderDatoMedStatusOpprettet) && (
+      {((virkningsdatoUttakNyeRegler && redigerVirkningsdato) ||
+        harAksjonspunktVurderDatoMedStatusOpprettet ||
+        readOnly) && (
         <VurderDato
           avbryt={
             virkningsdatoUttakNyeRegler && redigerVirkningsdato ? () => setRedigervirkningsdato(false) : undefined
@@ -69,6 +71,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
           uttaksperioder={lagUttaksperiodeliste(uttaksperioder)}
           redigerVirkningsdatoFunc={() => setRedigervirkningsdato(true)}
           redigerVirkningsdato={redigerVirkningsdato}
+          readOnly={readOnly}
         />
       )}
     </ContainerContext.Provider>
