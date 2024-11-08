@@ -76,6 +76,7 @@ describe('<OpptjeningFaktaForm>', () => {
         opptjeningTom: '2017-08-31',
         opptjeningperiode: { dager: 16, måneder: 0 },
         fastsattOpptjeningAktivitetList: [],
+        vurderesIAksjonspunkt: true,
       },
     },
   ];
