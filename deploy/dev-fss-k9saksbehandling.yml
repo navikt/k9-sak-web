@@ -113,3 +113,7 @@ spec:
       value: "true"
     - name: DELVIS_REVURDERING
       value: "true"
+    - name: BRUK_V2_SAK_DOKUMENTER
+      value: "true"
+    - name: OPPTJENING_READ_ONLY_PERIODER
+      value: "true"

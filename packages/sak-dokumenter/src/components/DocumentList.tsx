@@ -4,8 +4,8 @@ import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokumen
 import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
 import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import { DateTimeLabel } from '@fpsak-frontend/shared-components';
 import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import DateTimeLabel from '@k9-sak-web/gui/shared/dateTimeLabel/DateTimeLabel.js';
 import { StarFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Label, Link, Select, Table, Tooltip } from '@navikt/ds-react';
 import { DokumentDto, PersonDto } from '@navikt/k9-sak-typescript-client';

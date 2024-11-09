@@ -1,8 +1,8 @@
-import { Aksjonspunkt } from '@k9-sak-web/types';
 import { OverstyringUttakRequest } from '@k9-sak-web/behandling-pleiepenger';
-import Uttaksperioder from './Uttaksperioder';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import ArbeidsgiverOpplysninger from './ArbeidsgiverOpplysninger';
 import KodeverkMedNavn from './kodeverkMedNavnTsType';
+import Uttaksperioder from './Uttaksperioder';
 
 interface ContainerContract {
   httpErrorHandler?: (status: number, locationHeader?: string) => void;
@@ -31,6 +31,7 @@ interface ContainerContract {
   versjon?: number;
   erOverstyrer?: boolean;
   status?: string | false;
+  readOnly: boolean;
 }
 
 export default ContainerContract;

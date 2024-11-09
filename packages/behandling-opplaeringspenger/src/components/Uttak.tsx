@@ -1,9 +1,7 @@
-import React from 'react';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Uttak } from '@k9-sak-web/prosess-uttak';
+import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 
 interface UttakProps {
   uuid: string;
@@ -15,6 +13,7 @@ interface UttakProps {
   alleKodeverk: AlleKodeverk;
   submitCallback: (data: { kode: string; begrunnelse: string; virkningsdato: string }[]) => void;
   virkningsdatoUttakNyeRegler?: string;
+  readOnly: boolean;
 }
 
 export default ({
@@ -27,6 +26,7 @@ export default ({
   alleKodeverk,
   submitCallback,
   virkningsdatoUttakNyeRegler,
+  readOnly,
 }: UttakProps) => {
   const relevanteAksjonspunkter = [aksjonspunktCodes.VENT_ANNEN_PSB_SAK, aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK];
   const funnedeRelevanteAksjonspunkter = aksjonspunkter.filter(aksjonspunkt =>
@@ -53,6 +53,7 @@ export default ({
         løsAksjonspunktVurderDatoNyRegelUttak,
         virkningsdatoUttakNyeRegler,
         erOverstyrer: false, // Overstyring er ikke implementert for Pleiepenger
+        readOnly,
       }}
     />
   );
