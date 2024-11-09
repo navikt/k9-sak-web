@@ -1,7 +1,7 @@
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
-import { dateFormat } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { Aksjonspunkt, Behandling, KodeverkMedNavn, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
@@ -102,7 +102,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
           <SideMenu
             links={perioder.map((periode, index) => ({
               active: activeTab === index,
-              label: `${dateFormat(periode.periode.fom)} - ${dateFormat(periode.periode.tom)}`,
+              label: `${formatDate(periode.periode.fom)} - ${formatDate(periode.periode.tom)}`,
             }))}
             onClick={setActiveTab}
             theme="arrow"

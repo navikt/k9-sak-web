@@ -14,7 +14,7 @@ import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { utledInnsendtSoknadsfrist } from './utils';
 
-import { dateFormat } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import messages from '../i18n/nb_NO.json';
 import styles from './SoknadsfristVilkarProsessIndex.module.css';
@@ -164,7 +164,7 @@ const SoknadsfristVilkarProsessIndex = ({
           <SideMenu
             links={perioder.map(({ periode, vilkarStatus }, index) => ({
               active: activeTab === index,
-              label: `${dateFormat(periode.fom)} - ${dateFormat(periode.tom)}`,
+              label: `${formatDate(periode.fom)} - ${formatDate(periode.tom)}`,
               icon:
                 (erOverstyrt || harÅpentAksjonspunkt) && vilkarStatus.kode !== vilkarUtfallType.OPPFYLT ? (
                   <Image src={advarselIcon} className={styles.warningIcon} alt="Aksjonspunkt" />
