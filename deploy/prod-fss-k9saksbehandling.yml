@@ -109,7 +109,7 @@ spec:
     - name: AUTOMATISK_VURDERT_MEDLEMSKAP
       value: "true"
     - name: DELVIS_REVURDERING
-      value: "false"
+      value: "true"
     - name: "BRUK_V2_SAK_DOKUMENTER"
       value: "false"
     - name: OPPTJENING_READ_ONLY_PERIODER
