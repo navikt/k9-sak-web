@@ -14,6 +14,15 @@ import VilkarresultatMedBegrunnelse from './VilkarresultatMedBegrunnelse';
 import styles from './vilkarresultatMedOverstyringForm.module.css';
 import VilkarResultPickerRHF from './VilkarResultPickerRHF';
 
+export type SubmitData = Readonly<{
+  begrunnelse: string;
+  avslagskode?: string;
+  avslagDato?: string;
+  kode: string;
+  erVilkarOk: boolean;
+  periode: { tom: string; fom: string } | undefined;
+}>;
+
 interface VilkarresultatMedOverstyringFormProps {
   aksjonspunkter: AksjonspunktDto[];
   behandlingType: string;
@@ -23,7 +32,7 @@ interface VilkarresultatMedOverstyringFormProps {
   overrideReadOnly: boolean;
   overstyringApKode: string;
   status: string;
-  submitCallback: (props: any[]) => void;
+  submitCallback: (props: SubmitData[]) => void;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   avslagKode?: string;
   periode: VilkårPeriodeDto;
@@ -176,7 +185,7 @@ const transformValues = (
   overstyringApKode: string,
   periodeFom: string,
   periodeTom: string,
-) => ({
+): SubmitData => ({
   kode: overstyringApKode,
   ...VilkarResultPickerRHF.transformValues(values),
   ...VilkarresultatMedBegrunnelse.transformValues(values),
