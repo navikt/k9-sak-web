@@ -12,10 +12,13 @@
     "./k9sak/errorhandling/*": "./src/k9sak/errorhandling/*",
     "./k9formidling/*": "./src/k9formidling/*",
     "./k9klage/generated": "./src/k9klage/generated/index.js",
-    "./k9klage/kodeverk/*": "./src/k9klage/kodeverk/*"
+    "./k9klage/kodeverk/*": "./src/k9klage/kodeverk/*",
+    "./ungsak/generated": "./src/ungsak/generated/index.js",
+    "./ungsak/errorhandling/*": "./src/ungsak/errorhandling/*"
   },
   "dependencies": {
     "@navikt/k9-klage-typescript-client": "1.0.20240513162434-997f3da",
-    "@navikt/k9-sak-typescript-client": "1.0.20241028110915"
+    "@navikt/k9-sak-typescript-client": "1.0.20241028110915",
+    "@navikt/ung-sak-typescript-client": "0.1.20241111135827"
   }
 }

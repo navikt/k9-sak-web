@@ -1,0 +1,37 @@
+.container {
+  background-color: #262626;
+  color: var(--a-white);
+  font-size: 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 101;
+}
+
+.endringsloggContainer {
+  display: grid;
+}
+
+.endringsloggContainer :global(.endringslogg) {
+  margin-right: 0.5rem;
+}
+
+.endringsloggContainer :global(.endringslogg-dropDown) {
+  transform: scale(0.65);
+}
+
+.endringsloggContainer :global(.collapse-header) {
+  background-color: #3e3832;
+}
+
+.endringsloggContainer :global(.ringring) {
+  border: 3px solid #ba3a26;
+}
+
+.endringsloggContainer :global(.circle) {
+  background-color: #ba3a26;
+}
+
+.containerDev header {
+  background-color: #0a0;
+}
