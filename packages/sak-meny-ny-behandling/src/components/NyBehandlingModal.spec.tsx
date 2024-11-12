@@ -4,7 +4,6 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
@@ -24,10 +23,6 @@ describe('<NyBehandlingModal>', () => {
     kode: fagsakYtelseType.FORELDREPENGER,
     kodeverk: '',
   };
-
-  beforeEach(() => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'DELVIS_REVURDERING', value: true }]);
-  });
 
   it('skal rendre komponent korrekt', () => {
     const behandlingstyper = [
