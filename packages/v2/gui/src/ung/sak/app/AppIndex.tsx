@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
@@ -20,9 +20,11 @@ import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 import { parseQueryString } from '@navikt/ft-utils';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import Dekorator from './Dekorator';
 import ErrorBoundary from './ErrorBoundary';
+import Home from './Home';
+import UngSakBackendClient from './UngSakBackendClient';
+import { UngSakClientContext } from './UngSakClientContext';
 
 /**
  * AppIndex
@@ -31,13 +33,15 @@ import ErrorBoundary from './ErrorBoundary';
  * og home-komponentene. Home-komponenten vil rendre barn-komponenter via ruter.
  */
 const AppIndex = () => {
+  const ungSakClient = useContext(UngSakClientContext);
+  const ungSakBackendClient = new UngSakBackendClient(ungSakClient);
   const location = useLocation();
   const [headerHeight, setHeaderHeight] = useState(0);
   const [hasCrashed, setCrashed] = useState(false);
 
   const { data: navAnsatt, error: navAnsattError } = useQuery<InnloggetAnsattDto>({
     queryKey: ['navAnsatt'],
-    queryFn: () => axios.get('/api/nav-ansatt'),
+    queryFn: () => ungSakBackendClient.getNavAnsatt(),
   });
 
   console.log('navAnsattErrors', navAnsattError);
@@ -86,7 +90,7 @@ const AppIndex = () => {
         setSiteHeight={setSiteHeight}
         pathname={location.pathname}
       />
-      {shouldRenderHome && <Home headerHeight={headerHeight} />}
+      {shouldRenderHome && <Home headerHeight={headerHeight} ungSakBackendClient={ungSakBackendClient} />}
       {/* {forbiddenErrors.length > 0 && <ForbiddenPage />}
         {unauthorizedErrors.length > 0 && <UnauthorizedPage />} */}
       {/* </AppConfigResolver> */}

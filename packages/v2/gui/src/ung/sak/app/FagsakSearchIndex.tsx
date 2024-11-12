@@ -1,10 +1,14 @@
 import type { FagsakDto } from '@k9-sak-web/backend/k9sak/generated';
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FagsakSearch from '../sok/FagsakSearch';
 import { pathToFagsak } from './paths';
+import type UngSakBackendClient from './UngSakBackendClient';
+
+interface FagsakSearchIndexProps {
+  ungSakBackendClient: UngSakBackendClient;
+}
 
 /**
  * FagsakSearchIndex
@@ -12,7 +16,7 @@ import { pathToFagsak } from './paths';
  * Container komponent. Har ansvar for å vise søkeskjermbildet og å håndtere fagsaksøket
  * mot server og lagringen av resultatet i klientens state.
  */
-const FagsakSearchIndex = () => {
+const FagsakSearchIndex = ({ ungSakBackendClient }: FagsakSearchIndexProps) => {
   const navigate = useNavigate();
   // const { removeErrorMessages } = useRestApiErrorDispatcher();
   const goToFagsak = (saksnummer: string) => {
@@ -22,7 +26,7 @@ const FagsakSearchIndex = () => {
 
   const searchFagsakerMutation = useMutation({
     mutationFn: ({ saksnummer }: { saksnummer: string }): Promise<FagsakDto[]> =>
-      axios.post('/k9/sak/api/fagsak/sok', { saksnummer }),
+      ungSakBackendClient.søkFagsak(saksnummer),
   });
 
   const searchFagsaker = (saksnummer: string) => searchFagsakerMutation.mutate({ saksnummer });

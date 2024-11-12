@@ -3,6 +3,8 @@ import type {
   HentBrukerForFagsakResponse,
   HentFagsakResponse,
   HentRettigheterResponse,
+  InnloggetBrukerResponse,
+  SøkFagsakerResponse,
   UngSakClient,
 } from '@k9-sak-web/backend/ungsak/generated';
 
@@ -25,7 +27,15 @@ export default class UngSakBackendClient {
     return this.#ungsak.kodeverk.alleKodeverdierSomObjekt();
   }
 
-  async getSakRettigheterUngSak(saksnummer: string): Promise<HentRettigheterResponse> {
+  async getSakRettigheterSak(saksnummer: string): Promise<HentRettigheterResponse> {
     return this.#ungsak.fagsak.hentRettigheter({ saksnummer });
+  }
+
+  async getNavAnsatt(): Promise<InnloggetBrukerResponse> {
+    return this.#ungsak.navAnsatt.innloggetBruker();
+  }
+
+  async søkFagsak(searchString: string): Promise<SøkFagsakerResponse> {
+    return this.#ungsak.fagsak.søkFagsaker({ searchString });
   }
 }

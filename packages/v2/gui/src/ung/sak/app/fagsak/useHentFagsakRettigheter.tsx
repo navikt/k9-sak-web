@@ -20,7 +20,7 @@ const useHentFagsakRettigheter = (
 
   const { data: sakRettigheterK9Sak, isFetched: sakRettigheterK9SakIsFinished } = useQuery({
     queryKey: ['sak-rettigheter', saksnummer, behandlingId, behandlingVersjon],
-    queryFn: () => ungSakBackendClient.getSakRettigheterUngSak(saksnummer),
+    queryFn: () => ungSakBackendClient.getSakRettigheterSak(saksnummer),
     enabled: !!saksnummer && !erBehandlingEndretFraUndefined,
     // TODO: keepData: true,
   });

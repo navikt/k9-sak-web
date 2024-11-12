@@ -48,20 +48,23 @@
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import { SaksbehandlernavnContext } from '@navikt/ft-plattform-komponenter';
 import { useQuery } from '@tanstack/react-query';
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useLocation } from 'react-router';
 import useHentFagsakRettigheter from './fagsak/useHentFagsakRettigheter';
 import UngSakBackendClient from './UngSakBackendClient';
-import { UngSakClientContext } from './UngSakClientContext';
 import useBehandlingEndret from './useBehandlingEndret';
 import useTrackRouteParam from './useTrackRouteParam';
+
+interface FagsakIndexProps {
+  ungSakBackendClient: UngSakBackendClient;
+}
 
 /**
  * FagsakIndex
  *
  * Container komponent. Er rot for fagsakdelen av hovedvinduet, og har ansvar å legge valgt saksnummer fra URL-en i staten.
  */
-const FagsakIndex = () => {
+const FagsakIndex = ({ ungSakBackendClient }: FagsakIndexProps) => {
   const [behandlingerTeller, setBehandlingTeller] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [requestPendingMessage, setRequestPendingMessage] = useState<string>();
@@ -75,9 +78,6 @@ const FagsakIndex = () => {
   const { behandlingId, behandlingVersjon } = behandlingIdOgVersjon;
 
   const oppfriskBehandlinger = useCallback(() => setBehandlingTeller(behandlingerTeller + 1), [behandlingerTeller]);
-
-  const ungSakClient = useContext(UngSakClientContext);
-  const ungSakBackendClient = new UngSakBackendClient(ungSakClient);
 
   const { selected: selectedSaksnummer } = useTrackRouteParam<string>({
     paramName: 'saksnummer',
