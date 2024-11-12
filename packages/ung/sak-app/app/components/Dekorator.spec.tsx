@@ -15,7 +15,7 @@
 
 describe.skip('<Dekorator>', () => {
   // it('skal vise søkeskjermbildet, men ikke systemstatuser', () => {
-  //   requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);
+  //   requestApi.mock(UngSakApiKeys.NAV_ANSATT, navAnsatt);
   //   const wrapper = shallowWithIntl(
   //     <Dekorator.WrappedComponent
   //       intl={intlMock}
@@ -28,7 +28,7 @@ describe.skip('<Dekorator>', () => {
   //   expect(header.length).toBe(1);
   // });
   // it('skal vise feilmeldinger', () => {
-  //   requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);
+  //   requestApi.mock(UngSakApiKeys.NAV_ANSATT, navAnsatt);
   //   contextStubHistory = sinon.stub(useRestApiError, 'default').returns([
   //     {
   //       type: EventType.REQUEST_ERROR,

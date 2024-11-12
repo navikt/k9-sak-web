@@ -1,12 +1,12 @@
-import React from 'react';
 import { Location } from 'history';
 
-import { Historikkinnslag, Kodeverk } from '@k9-sak-web/types';
 import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
+import { Historikkinnslag, Kodeverk } from '@k9-sak-web/types';
 
 import historikkinnslagType from '../kodeverk/historikkinnslagType';
 import SnakkebobleContainer from './maler/felles/SnakkebobleContainer';
 import HistorikkMalType1 from './maler/historikkMalType1';
+import HistorikkMalType10 from './maler/HistorikkMalType10';
 import HistorikkMalType2 from './maler/historikkMalType2';
 import HistorikkMalType3 from './maler/historikkMalType3';
 import HistorikkMalType4 from './maler/historikkMalType4';
@@ -15,10 +15,9 @@ import HistorikkMalType6 from './maler/HistorikkMalType6';
 import HistorikkMalType7 from './maler/HistorikkMalType7';
 import HistorikkMalType8 from './maler/HistorikkMalType8';
 import HistorikkMalType9 from './maler/HistorikkMalType9';
-import HistorikkMalType10 from './maler/HistorikkMalType10';
 import HistorikkMalTypeFeilutbetaling from './maler/HistorikkMalTypeFeilutbetaling';
-import HistorikkMalTypeTilbakekreving from './maler/HistorikkMalTypeTilbakekreving';
 import HistorikkMalTypeForeldelse from './maler/HistorikkMalTypeForeldelse';
+import HistorikkMalTypeTilbakekreving from './maler/HistorikkMalTypeTilbakekreving';
 import PlaceholderHistorikkMal from './maler/placeholderHistorikkMal';
 
 const velgHistorikkMal = (histType: Kodeverk) => {
