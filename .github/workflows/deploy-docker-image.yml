@@ -112,7 +112,7 @@ jobs:
       CLUSTER: prod-fss
     environment: prod-fss:k9saksbehandling
     if: github.ref_name == 'master'
-    needs: [build-docker-image, deploy-dev, verdikjede-tester, trivy]
+    needs: [build-docker-image, deploy-dev, verdikjede-tester]
     steps:
       - uses: actions/checkout@v4
         with:
