@@ -16,6 +16,7 @@ export const visDekoratorUtenFeilmeldinger = () => (
       getPathToK9Punsj={() => undefined}
       ainntektPath="test"
       aaregPath="test"
+      ytelse="Pleiepenger og omsorgspenger"
     />
   </div>
 );
@@ -39,6 +40,7 @@ export const visDekoratorMedFeilmeldinger = () => {
         getPathToK9Punsj={() => undefined}
         ainntektPath="test"
         aaregPath="test"
+        ytelse="Pleiepenger og omsorgspenger"
       />
     </div>
   );

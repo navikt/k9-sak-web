@@ -99,6 +99,7 @@ const Dekorator = ({
       getPathToK9Punsj={getPathToK9Punsj}
       ainntektPath={getAinntektPath()}
       aaregPath={getAaregPath()}
+      ytelse="Ungdomsytelse"
     />
   );
 };

@@ -1,7 +1,7 @@
 import { RETTSKILDE_URL, SHAREPOINT_URL } from '@k9-sak-web/konstanter';
 import Endringslogg from '@navikt/familie-endringslogg';
 import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/ft-plattform-komponenter';
-import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import { useLocation } from 'react-router';
 import messages from '../i18n/nb_NO.json';
@@ -69,6 +69,7 @@ interface OwnProps {
   getPathToK9Punsj: () => string | null;
   ainntektPath: string;
   aaregPath: string;
+  ytelse: string;
 }
 
 /**
@@ -88,6 +89,7 @@ const HeaderWithErrorPanel = ({
   getPathToK9Punsj,
   ainntektPath,
   aaregPath,
+  ytelse,
 }: OwnProps) => {
   const [erLenkepanelApent, setLenkePanelApent] = useState(false);
   const wrapperRef = useOutsideClickEvent(erLenkepanelApent, setLenkePanelApent);
@@ -160,10 +162,7 @@ const HeaderWithErrorPanel = ({
     >
       <RawIntlProvider value={intl}>
         <div ref={wrapperRef}>
-          <Header
-            title={intl.formatMessage({ id: 'HeaderWithErrorPanel.Ytelse' })}
-            titleHref={getHeaderTitleHref(getPathToFplos)}
-          >
+          <Header title={ytelse} titleHref={getHeaderTitleHref(getPathToFplos)}>
             {/*
             Går mot en backend som BAKS styrer.
             https://github.com/navikt/familie-endringslogg
