@@ -16,10 +16,8 @@ import Home from './components/Home';
 
 import '@fpsak-frontend/assets/styles/global.css';
 import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
-import '@navikt/ft-fakta-beregning/dist/style.css';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
-import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 import { restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
 

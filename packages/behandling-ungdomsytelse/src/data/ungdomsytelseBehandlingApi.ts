@@ -60,15 +60,15 @@ const endpoints = new RestApiConfigBuilder()
 
   // TODO Flytt alle endepunkter under til backend på same måte som i fp-frontend
   .withPost('/ung/sak/api/behandlinger/endre-pa-vent', UngdomsytelseBehandlingApiKeys.UPDATE_ON_HOLD)
-  .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', UngdomsytelseBehandlingApiKeys.SAVE_AKSJONSPUNKT)
+  .withAsyncPost('/ung/sak/api/behandling/aksjonspunkt', UngdomsytelseBehandlingApiKeys.SAVE_AKSJONSPUNKT)
   .withAsyncPost(
-    '/k9/sak/api/behandling/aksjonspunkt/overstyr',
+    '/ung/sak/api/behandling/aksjonspunkt/overstyr',
     UngdomsytelseBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
   )
 
   .withPost('/ung/sak/api/behandlinger/bytt-enhet', UngdomsytelseBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withPost('/ung/sak/api/behandlinger/henlegg', UngdomsytelseBehandlingApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', UngdomsytelseBehandlingApiKeys.RESUME_BEHANDLING)
+  .withAsyncPost('/ung/sak/api/behandlinger/gjenoppta', UngdomsytelseBehandlingApiKeys.RESUME_BEHANDLING)
   .withPost('/ung/sak/api/behandlinger/sett-pa-vent', UngdomsytelseBehandlingApiKeys.BEHANDLING_ON_HOLD)
 
   /* FPTILBAKE */
