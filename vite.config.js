@@ -72,6 +72,24 @@ export default ({ mode }) => {
             });
           },
         },
+        '/ung/sak': {
+          target: process.env.APP_URL_UNG_SAK || 'http://localhost:8085',
+          changeOrigin: !!process.env.APP_URL_UNG_SAK,
+          ws: false,
+          secure: false,
+          configure: proxy => {
+            proxy.on('proxyRes', (proxyRes, req, res) => {
+              if (proxyRes.headers.location && proxyRes.headers.location.startsWith(process.env.APP_URL_UNG_SAK)) {
+                // eslint-disable-next-line no-param-reassign, prefer-destructuring
+                proxyRes.headers.location = proxyRes.headers.location.split(process.env.APP_URL_UNG_SAK)[1];
+              }
+              if (proxyRes.statusCode === 401) {
+                // eslint-disable-next-line no-param-reassign
+                proxyRes.headers.location = '/ung/sak/resource/login';
+              }
+            });
+          },
+        },
         '/k9/oppdrag': createProxy(process.env.APP_URL_K9OPPDRAG || 'http://localhost:8070'),
         '/k9/klage': createProxy(process.env.APP_URL_KLAGE || 'http://localhost:8701'),
         '/k9/tilbake': createProxy(process.env.APP_URL_K9TILBAKE || 'http://localhost:8030'),
@@ -82,6 +100,7 @@ export default ({ mode }) => {
           },
         ),
         '/k9/feature-toggle/toggles.json': createMockResponder('http://localhost:8080', staticJsonResponse(featureTogglesFactory())),
+        '/ung/feature-toggle/toggles.json': createMockResponder('http://localhost:8085', staticJsonResponse(featureTogglesFactory())),
       },
     },
     base: '/k9/web',

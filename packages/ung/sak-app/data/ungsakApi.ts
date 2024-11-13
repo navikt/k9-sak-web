@@ -144,7 +144,7 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/ung/formidling/api/brev/forhaandsvis', UngSakApiKeys.PREVIEW_MESSAGE_FORMIDLING, { isResponseBlob: true })
 
   // Språkfil (ligg på klient - Skal fjernast - Det som ligg i denne skal flyttes til spesifikke pakker)
-  .withGet('/ung/web/sprak/nb_NO.json', UngSakApiKeys.LANGUAGE_FILE)
+  .withGet('/k9/web/sprak/nb_NO.json', UngSakApiKeys.LANGUAGE_FILE)
 
   // Kun brukt for søk på localhost
   .withPost('/ung/sak/api/fagsak/sok', UngSakApiKeys.SEARCH_FAGSAK)
