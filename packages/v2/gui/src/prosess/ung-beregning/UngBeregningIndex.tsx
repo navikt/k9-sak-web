@@ -1,6 +1,6 @@
-import type { BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/generated';
 import { useContext } from 'react';
-import { K9SakClientContext } from '../../app/K9SakClientContext';
+import { UngSakClientContext } from '../../app/UngSakClientContext';
 import UngBeregning from './UngBeregning';
 import UngBeregningBackendClient from './UngBeregningBackendClient';
 
@@ -9,8 +9,8 @@ interface Props {
 }
 
 const UngBeregningIndex = ({ behandling }: Props) => {
-  const k9SakClient = useContext(K9SakClientContext);
-  const ungBeregningBackendClient = new UngBeregningBackendClient(k9SakClient);
+  const ungSakClient = useContext(UngSakClientContext);
+  const ungBeregningBackendClient = new UngBeregningBackendClient(ungSakClient);
   return <UngBeregning behandling={behandling} api={ungBeregningBackendClient} />;
 };
 

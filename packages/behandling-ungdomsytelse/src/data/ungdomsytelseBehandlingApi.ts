@@ -35,7 +35,7 @@ export enum UngdomsytelseBehandlingApiKeys {
 }
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/k9/sak/api/behandlinger', UngdomsytelseBehandlingApiKeys.BEHANDLING_UU)
+  .withAsyncPost('/ung/sak/api/behandlinger', UngdomsytelseBehandlingApiKeys.BEHANDLING_UU)
 
   // behandlingsdata
   .withRel('beregningsresultat-utbetalt', UngdomsytelseBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING)
@@ -59,30 +59,30 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('dokumentdata-hente', UngdomsytelseBehandlingApiKeys.DOKUMENTDATA_HENTE)
 
   // TODO Flytt alle endepunkter under til backend på same måte som i fp-frontend
-  .withPost('/k9/sak/api/behandlinger/endre-pa-vent', UngdomsytelseBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withPost('/ung/sak/api/behandlinger/endre-pa-vent', UngdomsytelseBehandlingApiKeys.UPDATE_ON_HOLD)
   .withAsyncPost('/k9/sak/api/behandling/aksjonspunkt', UngdomsytelseBehandlingApiKeys.SAVE_AKSJONSPUNKT)
   .withAsyncPost(
     '/k9/sak/api/behandling/aksjonspunkt/overstyr',
     UngdomsytelseBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
   )
 
-  .withPost('/k9/sak/api/behandlinger/bytt-enhet', UngdomsytelseBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withPost('/k9/sak/api/behandlinger/henlegg', UngdomsytelseBehandlingApiKeys.HENLEGG_BEHANDLING)
+  .withPost('/ung/sak/api/behandlinger/bytt-enhet', UngdomsytelseBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withPost('/ung/sak/api/behandlinger/henlegg', UngdomsytelseBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', UngdomsytelseBehandlingApiKeys.RESUME_BEHANDLING)
-  .withPost('/k9/sak/api/behandlinger/sett-pa-vent', UngdomsytelseBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  .withPost('/ung/sak/api/behandlinger/sett-pa-vent', UngdomsytelseBehandlingApiKeys.BEHANDLING_ON_HOLD)
 
   /* FPTILBAKE */
   .withPost(
-    '/k9/tilbake/api/dokument/forhandsvis-varselbrev',
+    '/ung/tilbake/api/dokument/forhandsvis-varselbrev',
     UngdomsytelseBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
     { isResponseBlob: true },
   )
 
   /* K9FORMIDLING */
-  .withPost('/k9/formidling/api/brev/forhaandsvis', UngdomsytelseBehandlingApiKeys.PREVIEW_MESSAGE, {
+  .withPost('/ung/formidling/api/brev/forhaandsvis', UngdomsytelseBehandlingApiKeys.PREVIEW_MESSAGE, {
     isResponseBlob: true,
   })
-  .withPost('/k9/formidling/api/brev/html', UngdomsytelseBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
+  .withPost('/ung/formidling/api/brev/html', UngdomsytelseBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
 
   .build();
 

@@ -1,13 +1,13 @@
-import type { K9SakClient, UngdomsytelseSatsPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { UngSakClient, UngdomsytelseSatsPeriodeDto } from '@k9-sak-web/backend/ungsak/generated';
 
 export default class UngBeregningBackendClient {
-  #k9sak: K9SakClient;
+  #ungsak: UngSakClient;
 
-  constructor(k9sakClient: K9SakClient) {
-    this.#k9sak = k9sakClient;
+  constructor(ungsakClient: UngSakClient) {
+    this.#ungsak = ungsakClient;
   }
 
   async getSatser(behandlingUuid: string): Promise<UngdomsytelseSatsPeriodeDto[]> {
-    return this.#k9sak.ung.getUngdomsytelseInnvilgetSats(behandlingUuid);
+    return this.#ungsak.ung.getUngdomsytelseInnvilgetSats(behandlingUuid);
   }
 }

@@ -49,7 +49,6 @@
     "@navikt/ft-form-hooks": "5.2.1",
     "@navikt/ft-plattform-komponenter": "5.1.0",
     "@navikt/ft-prosess-beregningsgrunnlag": "7.1.1",
-    "@k9-sak-web/ung-sak-app": "1.0.0",
     "@navikt/ft-ui-komponenter": "2.6.0",
     "@sentry/browser": "8.37.1",
     "@sentry/react": "^8.37.1",
