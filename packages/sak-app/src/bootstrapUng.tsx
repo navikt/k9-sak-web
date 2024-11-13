@@ -82,7 +82,7 @@ const renderFunc = Component => {
    * Vil kunne forekomme lokalt og i tester
    */
   if (window.location.pathname === '/') {
-    window.location.assign('/k9/web');
+    window.location.assign('/ung/web');
   }
 
   const app = document.getElementById('app');
@@ -102,7 +102,7 @@ const renderFunc = Component => {
     const root = createRoot(app);
     root.render(
       <Provider store={store}>
-        <BrowserRouter basename="/k9/web">
+        <BrowserRouter basename="/ung/web">
           <RestApiProvider>
             <RestApiErrorProvider>
               <Component />

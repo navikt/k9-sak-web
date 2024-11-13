@@ -2,11 +2,11 @@ import react from '@vitejs/plugin-react';
 import fs from 'fs/promises';
 import path from 'path';
 import { loadEnv } from 'vite';
+import { createHtmlPlugin } from "vite-plugin-html";
 import svgr from 'vite-plugin-svgr';
 import { defineConfig } from 'vitest/config';
 import { createMockResponder, staticJsonResponse } from "./_mocks/createMockResponder.js";
 import { featureTogglesFactory } from "./_mocks/featureToggles.js";
-import {createHtmlPlugin} from "vite-plugin-html";
 
 const createProxy = (target, pathRewrite) => ({
   target,
@@ -19,7 +19,7 @@ const createProxy = (target, pathRewrite) => ({
     proxy.on('proxyRes', (proxyRes, req, res) => {
       if (proxyRes.statusCode === 401) {
         // eslint-disable-next-line no-param-reassign
-        proxyRes.headers.location = `/k9/sak/resource/login?original=${req.originalUrl}`;
+        proxyRes.headers.location = `/ung/sak/resource/login?original=${req.originalUrl}`;
       }
       // Viss respons frå proxied server inneheld location header med server adresse, fjern server addressa slik at redirect
       // går til dev server istadenfor proxied server. Dette for å unngå CORS feil når request går direkte til proxied server.
@@ -68,7 +68,7 @@ export default ({ mode }) => {
               }
               if (proxyRes.statusCode === 401) {
                 // eslint-disable-next-line no-param-reassign
-                proxyRes.headers.location = '/k9/sak/resource/login';
+                proxyRes.headers.location = '/ung/sak/resource/login';
               }
             });
           },
@@ -104,7 +104,7 @@ export default ({ mode }) => {
         '/ung/feature-toggle/toggles.json': createMockResponder('http://localhost:8085', staticJsonResponse(featureTogglesFactory())),
       },
     },
-    base: '/k9/web',
+    base: '/ung/web',
     publicDir: './public',
     plugins: [
       createHtmlPlugin({
@@ -120,16 +120,16 @@ export default ({ mode }) => {
         // Endre namn på bygd entrypoint html frå ung.html til index.html
         name: "rename-html-entry",
         closeBundle: async () => {
-          const buildDir = path.join(__dirname, "dist/k9/web")
+          const buildDir = path.join(__dirname, "dist/ung/web")
           const oldPath = path.join(buildDir, "ung.html")
           const newPath = path.join(buildDir, "index.html")
           await fs.rename(oldPath, newPath)
         }
-}
+      }
     ],
     build: {
       // Relative to the root
-      outDir: './dist/k9/web',
+      outDir: './dist/ung/web',
       sourcemap: true,
       rollupOptions: {
         input: './ung.html',

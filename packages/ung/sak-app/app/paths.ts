@@ -116,5 +116,5 @@ export const goToLos = () => {
 };
 
 export const goToSearch = () => {
-  window.location.assign('/k9/web');
+  window.location.assign('/ung/web');
 };
