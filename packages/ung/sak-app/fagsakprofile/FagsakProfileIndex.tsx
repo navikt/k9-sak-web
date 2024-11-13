@@ -21,7 +21,7 @@ import {
 } from '../app/paths';
 import BehandlingMenuIndex, { BehandlendeEnheter } from '../behandlingmenu/BehandlingMenuIndex';
 import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
-import { useFpSakKodeverkMedNavn, useGetKodeverkFn } from '../data/useKodeverk';
+import { useGetKodeverkFn, useUngSakKodeverkMedNavn } from '../data/useKodeverk';
 import styles from './fagsakProfileIndex.module.css';
 
 const findPathToBehandling = (saksnummer: string, location: Location, alleBehandlinger: BehandlingAppKontekst[]) => {
@@ -64,8 +64,8 @@ export const FagsakProfileIndex = ({
 
   const getKodeverkFn = useGetKodeverkFn();
 
-  const fagsakStatusMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
-  const fagsakYtelseTypeMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.sakstype);
+  const fagsakStatusMedNavn = useUngSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
+  const fagsakYtelseTypeMedNavn = useUngSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.sakstype);
 
   const { data: behandlendeEnheter } = restApiHooks.useRestApi<BehandlendeEnheter>(UngSakApiKeys.BEHANDLENDE_ENHETER, {
     ytelseType: fagsak.sakstype.kode,

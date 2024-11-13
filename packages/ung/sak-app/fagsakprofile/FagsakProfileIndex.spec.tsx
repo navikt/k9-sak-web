@@ -163,20 +163,18 @@ describe('<FagsakProfileIndex>', () => {
     behandlingTypeKanOpprettes: [],
   };
 
-  it('skal rendre komponent og vise alle behandlinger når ingen behandling er valgt', async () => {
+  beforeAll(() => {
     requestApi.mock(UngSakApiKeys.KODEVERK, alleKodeverk);
-    requestApi.mock(UngSakApiKeys.KODEVERK_TILBAKE, {});
-    requestApi.mock(UngSakApiKeys.KODEVERK_KLAGE, {});
     requestApi.mock(UngSakApiKeys.RISIKO_AKSJONSPUNKT, lagRisikoklassifisering(kontrollresultatKode.UDEFINERT));
     requestApi.mock(UngSakApiKeys.KONTROLLRESULTAT, {});
     requestApi.mock(UngSakApiKeys.BEHANDLENDE_ENHETER, {});
     requestApi.mock(UngSakApiKeys.NAV_ANSATT, {});
-    requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
-    requestApi.mock(UngSakApiKeys.INIT_FETCH_KLAGE, {});
     requestApi.mock(UngSakApiKeys.FEATURE_TOGGLE, [{ key: 'BEHANDLINGSVELGER_NY', value: 'true' }]);
     requestApi.mock(UngSakApiKeys.SAK_BRUKER, {});
     requestApi.mock(UngSakApiKeys.LOS_HENTE_MERKNAD, {});
+  });
 
+  it('skal rendre komponent og vise alle behandlinger når ingen behandling er valgt', async () => {
     renderWithIntlAndReactQueryClient(
       <MemoryRouter>
         <IntlProvider locale="nb-NO">
@@ -200,19 +198,6 @@ describe('<FagsakProfileIndex>', () => {
   });
 
   it('skal ikke vise alle behandlinger når behandling er valgt', async () => {
-    requestApi.mock(UngSakApiKeys.KODEVERK, alleKodeverk);
-    requestApi.mock(UngSakApiKeys.KODEVERK_TILBAKE, {});
-    requestApi.mock(UngSakApiKeys.KODEVERK_KLAGE, {});
-    requestApi.mock(UngSakApiKeys.RISIKO_AKSJONSPUNKT, lagRisikoklassifisering(kontrollresultatKode.UDEFINERT));
-    requestApi.mock(UngSakApiKeys.KONTROLLRESULTAT, {});
-    requestApi.mock(UngSakApiKeys.BEHANDLENDE_ENHETER, {});
-    requestApi.mock(UngSakApiKeys.NAV_ANSATT, {});
-    requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
-    requestApi.mock(UngSakApiKeys.INIT_FETCH_KLAGE, {});
-    requestApi.mock(UngSakApiKeys.FEATURE_TOGGLE, [{ key: 'BEHANDLINGSVELGER_NY', value: 'true' }]);
-    requestApi.mock(UngSakApiKeys.SAK_BRUKER, {});
-    requestApi.mock(UngSakApiKeys.LOS_HENTE_MERKNAD, {});
-
     renderWithIntlAndReactQueryClient(
       <MemoryRouter>
         <IntlProvider locale="nb-NO">

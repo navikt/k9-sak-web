@@ -15,7 +15,7 @@ import { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import { UngSakApiKeys, requestApi } from '../../data/ungsakApi';
+import { requestApi, UngSakApiKeys } from '../../data/ungsakApi';
 import MeldingIndex, { type BackendApi } from './MeldingIndex';
 
 const mockHistoryPush = vi.fn();
@@ -88,7 +88,7 @@ describe('<MeldingIndex>', () => {
     },
   } satisfies Brevmaler;
 
-  beforeEach(() => {
+  beforeAll(() => {
     requestApi.mock(UngSakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
     requestApi.mock(UngSakApiKeys.KODEVERK, kodeverk);
     requestApi.mock(UngSakApiKeys.FEATURE_TOGGLE, [{ key: 'TYPE_MEDISINSKE_OPPLYSNINGER_BREV', value: true }]);
@@ -240,6 +240,7 @@ describe('<MeldingIndex>', () => {
   });
 
   it('skal sende melding til tredjepartsmottaker hvis det er valgt og utfyllt', async () => {
+    requestApi.clearMockData(UngSakApiKeys.SUBMIT_MESSAGE);
     requestApi.mock(UngSakApiKeys.SUBMIT_MESSAGE);
 
     render(

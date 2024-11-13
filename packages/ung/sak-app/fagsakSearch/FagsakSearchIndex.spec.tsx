@@ -43,10 +43,12 @@ describe('<FagsakSearchIndex>', () => {
   };
   const fagsaker = [fagsak, fagsak2];
 
-  it('skal søke opp fagsaker', async () => {
+  beforeAll(() => {
     requestApi.mock(UngSakApiKeys.KODEVERK, {});
     requestApi.mock(UngSakApiKeys.SEARCH_FAGSAK, fagsaker);
+  });
 
+  it('skal søke opp fagsaker', async () => {
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
         <MemoryRouter>
@@ -69,9 +71,6 @@ describe('<FagsakSearchIndex>', () => {
   });
 
   it('skal gå til valgt fagsak', async () => {
-    requestApi.mock(UngSakApiKeys.KODEVERK, {});
-    requestApi.mock(UngSakApiKeys.SEARCH_FAGSAK, fagsaker);
-
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
         <MemoryRouter>

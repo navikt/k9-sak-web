@@ -19,11 +19,7 @@ vi.mock('react-router-dom', async () => {
 
 describe('<HistorikkIndex>', () => {
   it('skal slå sammen og sortere historikk for k9sak, tilbake og klage', () => {
-    requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
-    requestApi.mock(UngSakApiKeys.INIT_FETCH_KLAGE, {});
     requestApi.mock(UngSakApiKeys.KODEVERK, {});
-    requestApi.mock(UngSakApiKeys.KODEVERK_TILBAKE, {});
-    requestApi.mock(UngSakApiKeys.KODEVERK_KLAGE, {});
     requestApi.mock(UngSakApiKeys.HISTORY_K9SAK, [
       {
         opprettetTidspunkt: '2019-01-01',
@@ -42,26 +38,6 @@ describe('<HistorikkIndex>', () => {
         aktoer: { kode: HistorikkAktor.VEDTAKSLOSNINGEN },
       },
     ]);
-    requestApi.mock(UngSakApiKeys.HISTORY_TILBAKE, [
-      {
-        opprettetTidspunkt: '2019-01-04',
-        historikkinnslagDeler: [{ skjermlenke: '123' }],
-        type: {
-          kode: 'FORSLAG_VEDTAK',
-        },
-        aktoer: { kode: HistorikkAktor.VEDTAKSLOSNINGEN },
-      },
-    ]);
-    requestApi.mock(UngSakApiKeys.HISTORY_KLAGE, [
-      {
-        opprettetTidspunkt: '2018-01-04',
-        historikkinnslagDeler: [{ skjermlenke: '123' }],
-        type: {
-          kode: 'FORSLAG_VEDTAK',
-        },
-        aktoer: { kode: HistorikkAktor.VEDTAKSLOSNINGEN },
-      },
-    ]);
 
     render(
       <MemoryRouter>
@@ -70,8 +46,6 @@ describe('<HistorikkIndex>', () => {
     );
 
     expect(screen.getByText(/06.01.2019/i)).toBeInTheDocument();
-    expect(screen.getByText(/04.01.2019/i)).toBeInTheDocument();
     expect(screen.getByText(/01.01.2019/i)).toBeInTheDocument();
-    expect(screen.getByText(/04.01.2018/i)).toBeInTheDocument();
   });
 });

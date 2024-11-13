@@ -76,15 +76,11 @@ vi.mock('react-router-dom', async () => {
 
 describe('BehandlingMenuIndex', () => {
   it('skal vise meny der alle menyhandlinger er synlige', async () => {
-    requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
-    requestApi.mock(UngSakApiKeys.INIT_FETCH_KLAGE, {});
     requestApi.mock(UngSakApiKeys.NAV_ANSATT, navAnsatt);
     requestApi.mock(UngSakApiKeys.BEHANDLENDE_ENHETER, []);
     requestApi.mock(UngSakApiKeys.FEATURE_TOGGLE, []);
     requestApi.mock(UngSakApiKeys.SAK_BRUKER, []);
     requestApi.mock(UngSakApiKeys.KODEVERK, {});
-    requestApi.mock(UngSakApiKeys.KODEVERK_TILBAKE, {});
-    requestApi.mock(UngSakApiKeys.KODEVERK_KLAGE, {});
     requestApi.mock(UngSakApiKeys.KAN_TILBAKEKREVING_OPPRETTES, false);
     requestApi.mock(UngSakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES, false);
     requestApi.mock(UngSakApiKeys.LOS_HENTE_MERKNAD, false);
@@ -135,7 +131,6 @@ describe('BehandlingMenuIndex', () => {
     expect(screen.queryByText('Endre behandlende enhet')).not.toBeVisible();
     // expect(screen.queryByText('Marker behandling')).not.toBeVisible();
     expect(screen.queryByText('Opprett ny behandling')).not.toBeVisible();
-    expect(screen.queryByText('Opprett verge/fullmektig')).not.toBeVisible();
 
     /**
      * Åpne behandlingsmenyen
@@ -150,6 +145,5 @@ describe('BehandlingMenuIndex', () => {
     expect(screen.queryByRole('button', { name: 'Endre behandlende enhet' })).toBeVisible();
     // expect(screen.queryByRole('button', { name: 'Marker behandling' })).toBeVisible();
     expect(screen.queryByRole('button', { name: 'Opprett ny behandling' })).toBeVisible();
-    expect(screen.queryByRole('button', { name: 'Opprett verge/fullmektig' })).toBeVisible();
   });
 });
