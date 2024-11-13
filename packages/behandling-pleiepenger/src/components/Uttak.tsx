@@ -5,7 +5,11 @@ import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
 import { Inntektsgradering, Uttak } from '@k9-sak-web/prosess-uttak';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId, Behandling } from '@k9-sak-web/types';
+import VurderOverlappendeSakIndex from '@k9-sak-web/gui/prosess/uttak/vurder-overlappende-sak/VurderOverlappendeSakIndex.js';
 import { OverstyringUttakRequest } from '../types';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { VStack } from '@navikt/ds-react';
+import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 
 interface UttakProps {
   uuid: string;
@@ -42,6 +46,7 @@ export default ({
   erOverstyrer,
   readOnly,
 }: UttakProps) => {
+  const { featureToggles } = useFeatureToggles();
   const { versjon, links, status: behandlingStatus } = behandling;
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
@@ -63,6 +68,24 @@ export default ({
       ...VilkarResultPicker.transformValues(values),
       ...values,
     });
+  };
+
+  const VurderOverlappendeSakComponent = () => {
+    const deepCopyProps = JSON.parse(
+      JSON.stringify({
+        behandling: behandling,
+        aksjonspunkt: aksjonspunkter.find(
+          aksjonspunkt => aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE === aksjonspunkt.definisjon.kode,
+        ),
+      }),
+    );
+    konverterKodeverkTilKode(deepCopyProps, false);
+
+    return (
+      <VStack>
+        <VurderOverlappendeSakIndex behandling={deepCopyProps.behandling} aksjonspunkt={deepCopyProps.aksjonspunkt} />
+      </VStack>
+    );
   };
 
   return (
@@ -90,6 +113,7 @@ export default ({
         erOverstyrer,
         status: behandlingStatus.kode,
         readOnly,
+        vurderOverlappendeSakComponent: VurderOverlappendeSakComponent(),
       }}
     />
   );
