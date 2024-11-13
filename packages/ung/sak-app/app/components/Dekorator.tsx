@@ -63,7 +63,7 @@ const Dekorator = ({
   const isFagsakFraUrlValid = fagsakFraUrl?.match(/^[a-zA-Z0-9]{1,19}$/);
 
   const getAinntektPath = () => {
-    const ainntektPath = '/k9/sak/api/register/redirect-to/a-inntekt';
+    const ainntektPath = '/ung/sak/api/register/redirect-to/a-inntekt';
     if (!isFagsakFraUrlValid) {
       return AINNTEKT_URL;
     }
@@ -71,7 +71,7 @@ const Dekorator = ({
   };
 
   const getAaregPath = () => {
-    const aaregPath = '/k9/sak/api/register/redirect-to/aa-reg';
+    const aaregPath = '/ung/sak/api/register/redirect-to/aa-reg';
     if (!isFagsakFraUrlValid) {
       return AAREG_URL;
     }
