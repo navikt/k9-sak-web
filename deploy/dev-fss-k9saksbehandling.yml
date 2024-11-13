@@ -113,3 +113,5 @@ spec:
       value: "true"
     - name: DELVIS_REVURDERING
       value: "true"
+    - name: AKSJONSPUNKT_OVERLAPPENDE_SAKER
+      value: "true"

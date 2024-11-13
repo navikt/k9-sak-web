@@ -3,6 +3,7 @@ import { OverstyringUttakRequest } from '@k9-sak-web/behandling-pleiepenger';
 import Uttaksperioder from './Uttaksperioder';
 import ArbeidsgiverOpplysninger from './ArbeidsgiverOpplysninger';
 import KodeverkMedNavn from './kodeverkMedNavnTsType';
+import { ReactNode } from 'react';
 
 interface ContainerContract {
   httpErrorHandler?: (status: number, locationHeader?: string) => void;
@@ -31,6 +32,7 @@ interface ContainerContract {
   versjon?: number;
   erOverstyrer?: boolean;
   status?: string | false;
+  vurderOverlappendeSakComponent: ReactNode;
 }
 
 export default ContainerContract;

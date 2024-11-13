@@ -1,4 +1,4 @@
-import { HStack, Heading } from '@navikt/ds-react';
+import { HStack, Heading, VStack } from '@navikt/ds-react';
 import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
 import React from 'react';
 import { aksjonspunktVurderDatoKode, aksjonspunktkodeVentAnnenPSBSakKode } from '../constants/Aksjonspunkter';
@@ -19,8 +19,14 @@ interface MainComponentProps {
 }
 
 const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
-  const { uttaksperioder, aksjonspunktkoder, aksjonspunkter, virkningsdatoUttakNyeRegler, erOverstyrer } =
-    containerData;
+  const {
+    uttaksperioder,
+    aksjonspunktkoder,
+    aksjonspunkter,
+    virkningsdatoUttakNyeRegler,
+    erOverstyrer,
+    vurderOverlappendeSakComponent,
+  } = containerData;
   const [redigerVirkningsdato, setRedigervirkningsdato] = React.useState<boolean>(false);
   const aksjonspunktVurderDato = aksjonspunkter?.find(ap => ap.definisjon.kode === aksjonspunktVurderDatoKode);
 
@@ -37,37 +43,41 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
 
   return (
     <ContainerContext.Provider value={containerData}>
-      <HStack justify="start" className={styles.overstyringsHeader}>
-        <Heading size="small" level="1">
-          Uttak
-        </Heading>
-        {erOverstyrer && <OverstyringKnapp erOverstyrt={overstyringAktiv} onClick={toggleOverstyring} />}
-      </HStack>
+      <VStack gap="4">
+        <HStack justify="start" className={styles.overstyringsHeader}>
+          <Heading size="small" level="1">
+            Uttak
+          </Heading>
+          {erOverstyrer && <OverstyringKnapp erOverstyrt={overstyringAktiv} onClick={toggleOverstyring} />}
+        </HStack>
+        <Infostripe harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt} />
 
-      <Infostripe harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt} />
+        {vurderOverlappendeSakComponent && (
+          <div className={styles.overlappendeSakContainer}>{vurderOverlappendeSakComponent}</div>
+        )}
 
-      <OverstyrUttakContextProvider>
-        <OverstyrUttakForm overstyringAktiv={overstyringAktiv} />
-      </OverstyrUttakContextProvider>
-
-      <UtsattePerioderStripe />
-      {harAksjonspunktVurderDatoMedStatusOpprettet && <VurderDato />}
-      {virkningsdatoUttakNyeRegler && redigerVirkningsdato && (
-        <VurderDato
-          avbryt={() => setRedigervirkningsdato(false)}
-          initialValues={{
-            begrunnelse: aksjonspunktVurderDato?.begrunnelse,
-            virkningsdato: virkningsdatoUttakNyeRegler,
-          }}
-        />
-      )}
-      {!harVentAnnenPSBSakAksjonspunkt && (
-        <UttaksperiodeListe
-          uttaksperioder={lagUttaksperiodeliste(uttaksperioder)}
-          redigerVirkningsdatoFunc={() => setRedigervirkningsdato(true)}
-          redigerVirkningsdato={redigerVirkningsdato}
-        />
-      )}
+        <OverstyrUttakContextProvider>
+          <OverstyrUttakForm overstyringAktiv={overstyringAktiv} />
+        </OverstyrUttakContextProvider>
+        <UtsattePerioderStripe />
+        {harAksjonspunktVurderDatoMedStatusOpprettet && <VurderDato />}
+        {virkningsdatoUttakNyeRegler && redigerVirkningsdato && (
+          <VurderDato
+            avbryt={() => setRedigervirkningsdato(false)}
+            initialValues={{
+              begrunnelse: aksjonspunktVurderDato?.begrunnelse,
+              virkningsdato: virkningsdatoUttakNyeRegler,
+            }}
+          />
+        )}
+        {!harVentAnnenPSBSakAksjonspunkt && (
+          <UttaksperiodeListe
+            uttaksperioder={lagUttaksperiodeliste(uttaksperioder)}
+            redigerVirkningsdatoFunc={() => setRedigervirkningsdato(true)}
+            redigerVirkningsdato={redigerVirkningsdato}
+          />
+        )}
+      </VStack>
     </ContainerContext.Provider>
   );
 };

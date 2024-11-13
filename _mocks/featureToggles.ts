@@ -89,4 +89,8 @@ export const featureTogglesFactory = () => [
     key: 'DELVIS_REVURDERING',
     value: process.env.VITE_DELVIS_REVURDERING,
   },
+  {
+    key: 'AKSJONSPUNKT_OVERLAPPENDE_SAKER',
+    value: process.env.VITE_AKSJONSPUNKT_OVERLAPPENDE_SAKER,
+  },
 ];

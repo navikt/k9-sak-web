@@ -94,5 +94,9 @@
   {
     "key": "DELVIS_REVURDERING",
     "value": "${DELVIS_REVURDERING}"
+  },
+  {
+    "key": "AKSJONSPUNKT_OVERLAPPENDE_SAKER",
+    "value": "${AKSJONSPUNKT_OVERLAPPENDE_SAKER}"
   }
 ]

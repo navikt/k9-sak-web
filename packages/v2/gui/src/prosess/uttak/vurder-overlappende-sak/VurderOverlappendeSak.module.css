@@ -1,0 +1,31 @@
+.apContainer {
+  border-radius: 3px;
+  padding: var(--a-spacing-5);
+}
+
+.apActive {
+  border: 2px solid var(--a-orange-500);
+}
+
+.apReadOnly {
+  border-radius: 3px;
+  border: 1px solid var(--a-border-default);
+}
+
+.apContainer a {
+  color: var(--a-text-default);
+}
+
+.apContainer ul {
+  margin: 0 0;
+  padding-left: var(--a-spacing-6) 0;
+}
+
+.apContainer li {
+  list-style-position: inside;
+  padding-left: var(--a-spacing-2);
+}
+
+.uttaksgradField input {
+  max-width: var(--a-spacing-12);
+}

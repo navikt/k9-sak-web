@@ -42,6 +42,7 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.VENT_ANNEN_PSB_SAK,
     aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK,
     aksjonspunktCodes.OVERSTYRING_AV_UTTAK_KODE,
+    aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE,
   ];
 
   getOverstyrVisningAvKomponent = () => true;
