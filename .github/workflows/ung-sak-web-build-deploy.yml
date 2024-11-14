@@ -30,14 +30,14 @@ jobs:
         run: yarn build:ung
 
       - name: Build and push to docker registry
-        uses: nais/docker-build-push@v0
+        uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@custom-image-name
         id: docker-push
         with:
-          tag: 'ung-sak-web:latest'
+          image_base_name: 'ung-sak-web'
           team: k9saksbehandling
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
-          push: false # for initial test
+          push_image: false # for initial test
 
 # TODO enable when build is tested to work and deploy config for ung-sak-web is prepared
 #      - name: Deploy to nais
