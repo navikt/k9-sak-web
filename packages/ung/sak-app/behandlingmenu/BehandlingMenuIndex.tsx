@@ -135,7 +135,7 @@ export const BehandlingMenuIndex = ({
   }, []);
 
   const { startRequest: lagNyBehandlingK9Sak } = restApiHooks.useRestApiRunner<boolean>(
-    UngSakApiKeys.NEW_BEHANDLING_K9SAK,
+    UngSakApiKeys.NEW_BEHANDLING_UNGSAK,
   );
   const { startRequest: hentMottakere } = restApiHooks.useRestApiRunner<KlagePart[]>(
     UngSakApiKeys.PARTER_MED_KLAGERETT,

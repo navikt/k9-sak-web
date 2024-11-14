@@ -47,7 +47,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
   const erBehandlingEndret = forrigeSaksnummer && erBehandlingEndretFraUndefined;
 
   const { data: historikkK9Sak, state: historikkK9SakState } = restApiHooks.useRestApi<Historikkinnslag[]>(
-    UngSakApiKeys.HISTORY_K9SAK,
+    UngSakApiKeys.HISTORY_UNGSAK,
     { saksnummer },
     {
       updateTriggers: [behandlingId, behandlingVersjon],

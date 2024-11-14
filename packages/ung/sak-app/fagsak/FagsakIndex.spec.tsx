@@ -125,78 +125,19 @@ describe('<FagsakIndex>', () => {
     toTrinnsBehandling: undefined,
     behandlingÅrsaker: undefined,
   };
-  const behandling2 = {
-    id: 2,
-    type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: 'BEHANDLING_TYPE',
-    },
-    status: {
-      kode: behandlingStatus.AVSLUTTET,
-      kodeverk: 'BEHANDLING_STATUS',
-    },
-    links: [],
-    behandlendeEnhetId: 'test',
-    behandlendeEnhetNavn: 'NAV Viken',
-    opprettet: '2020-02-01T00:54:25.455',
-    versjon: 1,
-    behandlingPaaVent: false,
-    behandlingHenlagt: false,
-    gjeldendeVedtak: true,
-    sprakkode: undefined,
-    behandlingKoet: undefined,
-    toTrinnsBehandling: undefined,
-    behandlingÅrsaker: undefined,
-  };
-  const behandling3 = {
-    id: 3,
-    type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: 'BEHANDLING_TYPE',
-    },
-    status: {
-      kode: behandlingStatus.AVSLUTTET,
-      kodeverk: 'BEHANDLING_STATUS',
-    },
-    links: [],
-    behandlendeEnhetId: 'test',
-    behandlendeEnhetNavn: 'NAV Viken',
-    opprettet: '2020-02-01T00:54:25.455',
-    versjon: 1,
-    behandlingPaaVent: false,
-    behandlingHenlagt: false,
-    gjeldendeVedtak: true,
-    sprakkode: undefined,
-    behandlingKoet: undefined,
-    toTrinnsBehandling: undefined,
-    behandlingÅrsaker: undefined,
-  };
 
-  it('skal hente alle behandlinger fra k9sak, tilbake og klage', () => {
+  it('skal hente alle behandlinger fra ungsak, tilbake og klage', () => {
     requestApi.mock(UngSakApiKeys.KODEVERK, kodeverk);
     requestApi.mock(UngSakApiKeys.FETCH_FAGSAK, fagsak);
     requestApi.mock(UngSakApiKeys.SAK_BRUKER, {});
     requestApi.mock(UngSakApiKeys.SAK_RETTIGHETER, {
       behandlingTypeKanOpprettes: [],
     });
-    requestApi.mock(UngSakApiKeys.SAK_RETTIGHETER_TILBAKE, {
-      behandlingTypeKanOpprettes: [],
-    });
-    requestApi.mock(UngSakApiKeys.SAK_RETTIGHETER_KLAGE, {
-      behandlingTypeKanOpprettes: [],
-    });
-    requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
-    requestApi.mock(UngSakApiKeys.INIT_FETCH_KLAGE, {});
-    requestApi.mock(UngSakApiKeys.KODEVERK_TILBAKE, kodeverk);
-    requestApi.mock(UngSakApiKeys.KODEVERK_KLAGE, kodeverk);
-    requestApi.mock(UngSakApiKeys.BEHANDLINGER_K9SAK, [behandling]);
-    requestApi.mock(UngSakApiKeys.BEHANDLINGER_TILBAKE, [behandling2]);
-    requestApi.mock(UngSakApiKeys.BEHANDLINGER_KLAGE, [behandling3]);
+    requestApi.mock(UngSakApiKeys.BEHANDLINGER_UNGSAK, [behandling]);
     requestApi.mock(UngSakApiKeys.HENT_SAKSBEHANDLERE, {});
     requestApi.mock(UngSakApiKeys.FEATURE_TOGGLE, []);
     requestApi.mock(UngSakApiKeys.LOS_HENTE_MERKNAD, []);
     requestApi.mock(UngSakApiKeys.NAV_ANSATT, {});
-    requestApi.mock(UngSakApiKeys.RISIKO_AKSJONSPUNKT, {});
     requestApi.mock(UngSakApiKeys.KONTROLLRESULTAT, {});
     requestApi.mock(UngSakApiKeys.BEHANDLENDE_ENHETER, {});
 
@@ -208,12 +149,6 @@ describe('<FagsakIndex>', () => {
 
     expect(
       screen.getByRole('heading', { name: '1. Førstegangsbehandling (automatisk behandlet)' }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('heading', { name: '2. Førstegangsbehandling (automatisk behandlet)' }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('heading', { name: '3. Førstegangsbehandling (automatisk behandlet)' }),
     ).toBeInTheDocument();
   });
 });

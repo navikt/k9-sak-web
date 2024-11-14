@@ -46,7 +46,7 @@ describe('<BehandlingSupportIndex>', () => {
     requestApi.mock(UngSakApiKeys.KODEVERK, {});
     requestApi.mock(UngSakApiKeys.KODEVERK_TILBAKE, {});
     requestApi.mock(UngSakApiKeys.KODEVERK_KLAGE, {});
-    requestApi.mock(UngSakApiKeys.HISTORY_K9SAK, []);
+    requestApi.mock(UngSakApiKeys.HISTORY_UNGSAK, []);
     requestApi.mock(UngSakApiKeys.HISTORY_TILBAKE, []);
     requestApi.mock(UngSakApiKeys.HISTORY_KLAGE, []);
 

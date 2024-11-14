@@ -26,16 +26,16 @@ export enum UngSakApiKeys {
   MATCH_FAGSAK = 'MATCH_FAGSAK',
   FETCH_FAGSAK = 'FETCH_FAGSAK',
   SAK_BRUKER = 'SAK_BRUKER',
-  BEHANDLINGER_K9SAK = 'BEHANDLINGER_K9SAK',
+  BEHANDLINGER_UNGSAK = 'BEHANDLINGER_UNGSAK',
   BEHANDLINGER_TILBAKE = 'BEHANDLINGER_TILBAKE',
   BEHANDLINGER_KLAGE = 'BEHANDLINGER_KLAGE',
   BEHANDLING_PERSONOPPLYSNINGER = 'BEHANDLING_PERSONOPPLYSNINGER',
-  NEW_BEHANDLING_K9SAK = 'NEW_BEHANDLING_K9SAK',
-  NEW_BEHANDLING_REVURDERING_FRA_STEG_K9SAK = 'NEW_BEHANDLING_REVURDERING_FRA_STEG_K9SAK',
+  NEW_BEHANDLING_UNGSAK = 'NEW_BEHANDLING_UNGSAK',
+  NEW_BEHANDLING_REVURDERING_FRA_STEG_UNGSAK = 'NEW_BEHANDLING_REVURDERING_FRA_STEG_UNGSAK',
   NEW_BEHANDLING_UNNTAK = 'NEW_BEHANDLING_UNNTAK',
   NEW_BEHANDLING_TILBAKE = 'NEW_BEHANDLING_TILBAKE',
   NEW_BEHANDLING_KLAGE = 'NEW_BEHANDLING_KLAGE',
-  HISTORY_K9SAK = 'HISTORY_K9SAK',
+  HISTORY_UNGSAK = 'HISTORY_UNGSAK',
   HISTORY_TILBAKE = 'HISTORY_TILBAKE',
   HISTORY_KLAGE = 'HISTORY_KLAGE',
   KONTROLLRESULTAT = 'KONTROLLRESULTAT',
@@ -94,11 +94,11 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('sak-rettigheter', UngSakApiKeys.SAK_RETTIGHETER)
   .withRel('tilbake-sak-rettigheter', UngSakApiKeys.SAK_RETTIGHETER_TILBAKE)
   .withRel('klage-sak-rettigheter', UngSakApiKeys.SAK_RETTIGHETER_KLAGE)
-  .withRel('sak-historikk', UngSakApiKeys.HISTORY_K9SAK)
+  .withRel('sak-historikk', UngSakApiKeys.HISTORY_UNGSAK)
   .withRel('tilbake-historikk', UngSakApiKeys.HISTORY_TILBAKE)
   .withRel('klage-historikk', UngSakApiKeys.HISTORY_KLAGE)
   .withRel('sak-dokumentliste', UngSakApiKeys.ALL_DOCUMENTS)
-  .withRel('sak-alle-behandlinger', UngSakApiKeys.BEHANDLINGER_K9SAK)
+  .withRel('sak-alle-behandlinger', UngSakApiKeys.BEHANDLINGER_UNGSAK)
   .withRel('tilbake-alle-behandlinger', UngSakApiKeys.BEHANDLINGER_TILBAKE)
   .withRel('klage-alle-behandlinger', UngSakApiKeys.BEHANDLINGER_KLAGE)
   .withRel('tilbake-kan-opprette-behandling', UngSakApiKeys.KAN_TILBAKEKREVING_OPPRETTES)
@@ -133,9 +133,9 @@ const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/ung/tilbake/api/behandlinger/opprett', UngSakApiKeys.NEW_BEHANDLING_TILBAKE)
   .withAsyncPost(
     '/ung/sak/api/behandlinger/revurder-periode-fra-steg',
-    UngSakApiKeys.NEW_BEHANDLING_REVURDERING_FRA_STEG_K9SAK,
+    UngSakApiKeys.NEW_BEHANDLING_REVURDERING_FRA_STEG_UNGSAK,
   )
-  .withAsyncPut('/ung/sak/api/behandlinger', UngSakApiKeys.NEW_BEHANDLING_K9SAK)
+  .withAsyncPut('/ung/sak/api/behandlinger', UngSakApiKeys.NEW_BEHANDLING_UNGSAK)
   .withAsyncPut('/ung/sak/api/behandlinger/unntak', UngSakApiKeys.NEW_BEHANDLING_UNNTAK)
   .withAsyncPut('/ung/klage/api/behandlinger', UngSakApiKeys.NEW_BEHANDLING_KLAGE)
   .withGet('/ung/sak/api/aktoer-info', UngSakApiKeys.AKTOER_INFO)

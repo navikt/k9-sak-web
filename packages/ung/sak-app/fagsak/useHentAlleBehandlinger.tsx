@@ -14,7 +14,7 @@ const useHentAlleBehandlinger = (
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
 
   const { data: behandlingerK9Sak, state: behandlingerK9SakState } = restApiHooks.useRestApi<BehandlingAppKontekst[]>(
-    UngSakApiKeys.BEHANDLINGER_K9SAK,
+    UngSakApiKeys.BEHANDLINGER_UNGSAK,
     { saksnummer },
     {
       updateTriggers: [saksnummer, behandlingId, behandlingVersjon, oppfriskIndikator],

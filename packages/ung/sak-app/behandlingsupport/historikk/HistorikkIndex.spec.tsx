@@ -20,7 +20,7 @@ vi.mock('react-router-dom', async () => {
 describe('<HistorikkIndex>', () => {
   it('skal slå sammen og sortere historikk for k9sak, tilbake og klage', () => {
     requestApi.mock(UngSakApiKeys.KODEVERK, {});
-    requestApi.mock(UngSakApiKeys.HISTORY_K9SAK, [
+    requestApi.mock(UngSakApiKeys.HISTORY_UNGSAK, [
       {
         opprettetTidspunkt: '2019-01-01',
         historikkinnslagDeler: [{ skjermlenke: '123' }],
