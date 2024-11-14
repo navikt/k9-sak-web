@@ -23,7 +23,7 @@ console.debug('************** bootstrapUng');
 
 init({
   environment,
-  dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
+  dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://e0b47ccba910402c81fcae9bf04d2427@sentry.gc.nav.no/176',
   release: VITE_SENTRY_RELEASE || 'unknown',
   // tracesSampleRate: isDevelopment ? 1.0 : 0.5, // Consider adjusting this in production
   tracesSampleRate: 1.0,
