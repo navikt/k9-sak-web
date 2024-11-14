@@ -68,7 +68,7 @@ describe('<NyBehandlingModal>', () => {
 
     expect(screen.getByRole('dialog', { name: 'Ny behandling' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Opprett behandling' })).toBeInTheDocument();
-    expect(screen.getAllByRole('combobox').length).toBe(1);
+    expect(screen.getAllByRole('combobox').length).toBe(2);
   });
 
   it('skal bruke submit-callback når en trykker lagre', async () => {
