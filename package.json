@@ -42,6 +42,7 @@
   },
   "workspaces": [
     "packages/*",
+    "packages/ung/*",
     "packages/v2/*"
   ],
   "dependencies": {

@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, createRoutesFromChildren, matchRoutes, useLocation, useNavigationType } from 'react-router-dom';
 
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/ExtendedApiError.js';
-import { AppIndex } from '../../ung/sak-app';
+import { AppIndex } from '@k9-sak-web/ung-sak-app';
 import configureStore from './configureStore';
 import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
 
