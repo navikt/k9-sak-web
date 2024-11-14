@@ -1,0 +1,187 @@
+# Trenger ikke accesslogger på NAIS siden dette er innebygd i platformen
+access_log off;
+error_log /dev/stdout info;
+charset utf-8;
+
+client_body_buffer_size 20M; # Default er satt veldig lavt. Får problemer med enkelte dokument queries.
+
+# Expires map
+map $sent_http_content_type $expires {
+    default                    off;
+    text/html                  epoch;
+    text/css                   max;
+    application/javascript     max;
+    ~image/                    max;
+}
+
+# Cache-control map
+map $upstream_http_cache_control $custom_cache_control {
+    ''        'no-cache, must-revalidate, proxy-revalidate, max-age=0';
+}
+
+server {
+  listen       "${APP_PORT}";
+  server_name  "${APP_HOSTNAME}";
+
+  # Proxy headers. Will be overwritten if you set them in blocks.
+  proxy_buffers 16 32k;
+  proxy_buffer_size 32k;
+  proxy_pass_header       Nav-Callid;
+  proxy_set_header        Referer $http_referer;
+  proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header        X-Real-IP $remote_addr;
+
+  # complete disable cache and send some debug headers
+  add_header              X-Cache-Status $upstream_cache_status;
+  add_header              X-Application-Id "${APP_NAME}:${APP_VERSION}, pod=${APP_HOSTNAME}";
+  add_header              Content-Security-Policy "default-src 'self'; img-src 'self' data:; font-src 'self' https://cdn.nav.no data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://sentry.gc.nav.no";
+  add_header              X-Content-Type-Options "nosniff";
+  add_header              X-XSS-Protection "1;mode=block";
+  add_header              Strict-Transport-Security "max-age=31536000";
+
+  add_header              Cache-Control $custom_cache_control;
+
+  # Health check for NAIS
+  location = /ung/feature-toggle/toggles.json {
+    add_header Content-Type application/json;
+    alias /tmp/feature-toggle/toggles.json;
+  }
+
+  location = /isAlive {
+    return 200 "Application:UP";
+    add_header Content-Type text/plain;
+  }
+
+  # Readiness check for NAIS
+  location = /isReady {
+    return 200 "Application:READY";
+    add_header Content-Type text/plain;
+  }
+
+  location  "/ung/sak/" {
+    proxy_set_header Host	$http_host;
+    proxy_pass "${APP_URL}";
+    proxy_intercept_errors on;
+    error_page 401 = @401_json;
+    error_page 403 = @403_json;
+    error_page 404 = @404_json;
+    error_page 504 = @504_json;
+  }
+  # TODO Vurder om ein del av location deklarasjoner under her skal fjernast.
+  location  "/k9/formidling/" {
+    proxy_set_header Host	$http_host;
+    proxy_pass "${APP_URL_K9FORMIDLING}";
+    proxy_intercept_errors on;
+    error_page 401 = @401_json;
+    error_page 403 = @403_json;
+    error_page 404 = @404_json;
+    error_page 504 = @504_json;
+  }
+
+    location  "/k9/formidling/dokumentdata" {
+    proxy_set_header Host	$http_host;
+    proxy_pass "${APP_URL_K9FORMIDLING_DD}";
+    proxy_intercept_errors on;
+    error_page 401 = @401_json;
+    error_page 403 = @403_json;
+    error_page 404 = @404_json;
+    error_page 504 = @504_json;
+  }
+
+  location "/k9/oppdrag/" {
+    proxy_set_header Host	$http_host;
+    proxy_pass "${APP_URL_K9OPPDRAG}";
+    proxy_intercept_errors on;
+    error_page 401 = @401_json;
+    error_page 403 = @403_json;
+    error_page 404 = @404_json;
+    error_page 504 = @504_json;
+  }
+
+  location "/k9/klage/" {
+    proxy_set_header Host	$http_host;
+    proxy_pass "${APP_URL_KLAGE}";
+    proxy_intercept_errors on;
+    error_page 401 = @401_json;
+    error_page 403 = @403_json;
+    error_page 404 = @404_json;
+    error_page 504 = @504_json;
+  }
+
+  location "/k9/tilbake/" {
+    proxy_set_header Host	$http_host;
+    proxy_pass "${APP_URL_K9TILBAKE}";
+    proxy_intercept_errors on;
+    error_page 401 = @401_json;
+    error_page 403 = @403_json;
+    error_page 404 = @404_json;
+    error_page 504 = @504_json;
+  }
+
+  location  "/k9/fordel/" {
+    proxy_set_header Host  $http_host;
+    proxy_pass "${APP_URL_K9FORDEL}";
+    proxy_intercept_errors on;
+    error_page 401 = @401_json;
+    error_page 403 = @403_json;
+    error_page 404 = @404_json;
+    error_page 504 = @504_json;
+  }
+
+  location  "/k9/endringslogg/" {
+    proxy_ssl_server_name on;
+    proxy_pass "${ENDRINGSLOGG_URL}";
+    proxy_intercept_errors on;
+    proxy_http_version 1.1;
+    error_page 401 = @401_json;
+    error_page 403 = @403_json;
+    error_page 404 = @404_json;
+    error_page 504 = @504_json;
+  }
+
+  # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!
+  location @rewrites {
+    rewrite ^(.+)$ "/ung/web/index.html" last;
+  }
+
+  location @401_json {
+    default_type application/json;
+    add_header Location /ung/sak/resource/login?original=$request_uri always;
+    return 401 '{"feilmelding":"Bruker ikke innlogget","type":"MANGLER_TILGANG_FEIL"}';
+  }
+
+  location @403_json {
+    default_type application/json;
+    return 403 '{"feilmelding":"Innlogget bruker har ikke tilgang til ressursen","type":"MANGLER_TILGANG_FEIL"}';
+  }
+
+  location @404_json {
+    default_type application/json;
+    return 404 '{"feilmelding":"Kunne ikke finne ressursen, beklager.","type":"IKKE_FUNNET_FEIL"}';
+  }
+
+  location @504_json {
+    default_type application/json;
+    return 504 '{"feilmelding":"Timet ut","type":"GENERELL_FEIL"}';
+  }
+
+  location / {
+
+
+	expires                 $expires;
+	etag                    on;
+	if_modified_since       off;
+	sendfile                on;
+
+	add_header              X-Application-Id "${APP_NAME}:${APP_VERSION}, pod=${APP_HOSTNAME}";
+  add_header              Content-Security-Policy "default-src 'self'; img-src 'self' data:; font-src 'self' https://cdn.nav.no data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://sentry.gc.nav.no";
+	add_header              X-Content-Type-Options "nosniff";
+	add_header              X-XSS-Protection "1;mode=block";
+	add_header              Strict-Transport-Security "max-age=31536000";
+
+    # beholder default root slik at vi kan swappe ut med stock nginx
+    root   /usr/share/nginx/html;
+    index  index.html index.htm;
+    try_files $uri @rewrites;
+  }
+}

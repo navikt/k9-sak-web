@@ -1,0 +1,102 @@
+[
+  {
+    "key": "BRUK_V2_MELDINGER",
+    "value": "${BRUK_V2_MELDINGER}"
+  },
+  {
+    "key": "KLAGE_KABAL",
+    "value": "${KLAGE_KABAL}"
+  },
+  {
+    "key": "VARSELTEKST",
+    "value": "${VARSELTEKST}"
+  },
+  {
+    "key": "DOKUMENTDATA",
+    "value": "${DOKUMENTDATA}"
+  },
+  {
+    "key": "UNNTAKSBEHANDLING",
+    "value": "${UNNTAKSBEHANDLING}"
+  },
+  {
+    "key": "SOKNADPERIODESTRIPE",
+    "value": "${SOKNADPERIODESTRIPE}"
+  },
+  {
+    "key": "TYPE_MEDISINSKE_OPPLYSNINGER_BREV",
+    "value": "${TYPE_MEDISINSKE_OPPLYSNINGER_BREV}"
+  },
+  {
+    "key": "LOS_MARKER_BEHANDLING",
+    "value": "${LOS_MARKER_BEHANDLING}"
+  },
+  {
+    "key": "LOS_MARKER_BEHANDLING_SUBMIT",
+    "value": "${LOS_MARKER_BEHANDLING_SUBMIT}"
+  },
+  {
+    "key": "AKSJONSPUNKT_9015",
+    "value": "${AKSJONSPUNKT_9015}"
+  },
+  {
+    "key": "ALDERSVILKAR_KRONISK_SYK",
+    "value": "${ALDERSVILKAR_KRONISK_SYK}"
+  },
+  {
+    "key": "FRITEKST_REDIGERING",
+    "value": "${FRITEKST_REDIGERING}"
+  },
+  {
+    "key": "FIX_SOKNADSFRIST_KALENDER_OG_READONLY",
+    "value": "${FIX_SOKNADSFRIST_KALENDER_OG_READONLY}"
+  },
+  {
+    "key": "OPPLAERINGSPENGER",
+    "value": "${OPPLAERINGSPENGER}"
+  },
+  {
+    "key": "SKJUL_AVSLUTTET_ARBEIDSGIVER",
+    "value": "${SKJUL_AVSLUTTET_ARBEIDSGIVER}"
+  },
+  {
+    "key": "OMS_PUNSJSTRIPE",
+    "value": "${OMS_PUNSJSTRIPE}"
+  },
+  {
+    "key": "OMSORGEN_FOR_PERIODISERT",
+    "value": "${OMSORGEN_FOR_PERIODISERT}"
+  },
+  {
+    "key": "OVERSTYR_BEREGNING",
+    "value": "${OVERSTYR_BEREGNING}"
+  },
+  {
+    "key": "NYE_NOKKELTALL",
+    "value": "${NYE_NOKKELTALL}"
+  },
+  {
+    "key": "PROSESS_VILKAR_SOKNADSFRIST",
+    "value": "${PROSESS_VILKAR_SOKNADSFRIST}"
+  },
+  {
+    "key": "UTVIDET_VARSELFELT",
+    "value": "${UTVIDET_VARSELFELT}"
+  },
+  {
+    "key": "SKILL_UT_PRIVATPERSON",
+    "value": "${SKILL_UT_PRIVATPERSON}"
+  },
+  {
+    "key": "AUTOMATISK_VURDERT_MEDLEMSKAP",
+    "value": "${AUTOMATISK_VURDERT_MEDLEMSKAP}"
+  },
+  {
+    "key": "BRUK_V2_SAK_DOKUMENTER",
+    "value": "${BRUK_V2_SAK_DOKUMENTER}"
+  },
+  {
+    "key": "OPPTJENING_READ_ONLY_PERIODER",
+    "value": "${OPPTJENING_READ_ONLY_PERIODER}"
+  }
+]
