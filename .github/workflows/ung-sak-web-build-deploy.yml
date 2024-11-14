@@ -1,0 +1,48 @@
+name: Build and deploy ung-sak-web
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+      - 'CODEOWNERS'
+    branches:
+      - ung-sak-legacy-entrypoint-deploy
+
+jobs:
+  build-deploy:
+    name: Build and deploy Docker image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      CLUSTER: dev-gcp
+    steps:
+      - name: Hente kode
+        uses: actions/checkout@v4
+
+      - name: Setup + Install
+        uses: ./.github/actions/setup-install
+        with:
+          npmAuthToken: ${{ secrets.READER_TOKEN }}
+
+      - name: Bygge dist
+        run: yarn build:ung
+
+      - name: Build and push to docker registry
+        uses: nais/docker-build-push@v0
+        id: docker-push
+        with:
+          tag: 'ung-sak-web:latest'
+          team: k9saksbehandling
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          push: false # for initial test
+# TODO enable when build is tested to work and deploy config for ung-sak-web is prepared
+#      - name: Deploy to nais
+#        uses: nais/deploy/actions/deploy@v2
+#        env:
+#          CLUSTER: ${{ env.CLUSTER }}
+#          RESOURCE: deploy/${{ env.CLUSTER }}-k9saksbehandling.yml
+#          VARS: deploy/dev-next1.yaml
+#          VAR: image=${{ steps.docker-push.outputs.image }}
