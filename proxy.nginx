@@ -44,7 +44,7 @@ server {
   # Health check for NAIS
   location = /k9/feature-toggle/toggles.json {
     add_header Content-Type application/json;
-    root /tmp/;
+    alias /tmp/feature-toggle/toggles.json;
   }
 
   location = /isAlive {
