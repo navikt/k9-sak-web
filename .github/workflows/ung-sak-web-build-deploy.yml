@@ -34,6 +34,11 @@ jobs:
         id: docker-push
         with:
           image_base_name: 'ung-sak-web'
+          #Konfigurerer for bygging av ung docker image:
+          build-args: |
+            featureToggles=ung.feature-toggles.json
+            proxyConfig=ung.proxy.nginx
+            appVariant=ung
           labels: |
             org.opencontainers.image.title=ung-sak-web
             org.opencontainers.image.description=Frontend for ung-sak
