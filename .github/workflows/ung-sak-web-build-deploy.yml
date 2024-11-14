@@ -34,10 +34,12 @@ jobs:
         id: docker-push
         with:
           image_base_name: 'ung-sak-web'
-          team: k9saksbehandling
+          labels: |
+            org.opencontainers.image.title=ung-sak-web
+            org.opencontainers.image.description=Frontend for ung-sak
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
-          push_image: false # for initial test
+          push-image: false # for initial test
 
 # TODO enable when build is tested to work and deploy config for ung-sak-web is prepared
 #      - name: Deploy to nais
