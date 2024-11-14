@@ -54,7 +54,7 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
       {/* Allerede løst og har klikket rediger, eller har uløst aksjonspunkt */}
       {((virkningsdatoUttakNyeRegler && redigerVirkningsdato) ||
         harAksjonspunktVurderDatoMedStatusOpprettet ||
-        readOnly) && (
+        (readOnly && aksjonspunktVurderDato)) && (
         <VurderDato
           avbryt={
             virkningsdatoUttakNyeRegler && redigerVirkningsdato ? () => setRedigervirkningsdato(false) : undefined
