@@ -1,7 +1,8 @@
 import react from '@vitejs/plugin-react';
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 import { loadEnv } from 'vite';
+import { createHtmlPlugin } from "vite-plugin-html";
 import svgr from 'vite-plugin-svgr';
 import { defineConfig } from 'vitest/config';
 import { createMockResponder, staticJsonResponse } from "./_mocks/createMockResponder.js";
@@ -18,7 +19,7 @@ const createProxy = (target, pathRewrite) => ({
     proxy.on('proxyRes', (proxyRes, req, res) => {
       if (proxyRes.statusCode === 401) {
         // eslint-disable-next-line no-param-reassign
-        proxyRes.headers.location = `/k9/sak/resource/login?original=${req.originalUrl}`;
+        proxyRes.headers.location = `/ung/sak/resource/login?original=${req.originalUrl}`;
       }
       // Viss respons frå proxied server inneheld location header med server adresse, fjern server addressa slik at redirect
       // går til dev server istadenfor proxied server. Dette for å unngå CORS feil når request går direkte til proxied server.
@@ -40,7 +41,7 @@ function excludeMsw() {
       const outDir = outputOptions.dir;
       if (!outDir.includes('storybook')) {
         const msWorker = path.resolve(outDir, "mockServiceWorker.js");
-        fs.rm(msWorker, () => console.log(`Deleted ${msWorker}`));
+        fs.rm(msWorker).then(() => console.log(`Deleted ${msWorker}`));
       }
     },
   };
@@ -67,7 +68,25 @@ export default ({ mode }) => {
               }
               if (proxyRes.statusCode === 401) {
                 // eslint-disable-next-line no-param-reassign
-                proxyRes.headers.location = '/k9/sak/resource/login';
+                proxyRes.headers.location = '/ung/sak/resource/login';
+              }
+            });
+          },
+        },
+        '/ung/sak': {
+          target: process.env.APP_URL_UNG_SAK || 'http://localhost:8085',
+          changeOrigin: !!process.env.APP_URL_UNG_SAK,
+          ws: false,
+          secure: false,
+          configure: proxy => {
+            proxy.on('proxyRes', (proxyRes, req, res) => {
+              if (proxyRes.headers.location && proxyRes.headers.location.startsWith(process.env.APP_URL_UNG_SAK)) {
+                // eslint-disable-next-line no-param-reassign, prefer-destructuring
+                proxyRes.headers.location = proxyRes.headers.location.split(process.env.APP_URL_UNG_SAK)[1];
+              }
+              if (proxyRes.statusCode === 401) {
+                // eslint-disable-next-line no-param-reassign
+                proxyRes.headers.location = '/ung/sak/resource/login';
               }
             });
           },
@@ -82,49 +101,42 @@ export default ({ mode }) => {
           },
         ),
         '/k9/feature-toggle/toggles.json': createMockResponder('http://localhost:8080', staticJsonResponse(featureTogglesFactory())),
+        '/ung/feature-toggle/toggles.json': createMockResponder('http://localhost:8085', staticJsonResponse(featureTogglesFactory())),
       },
     },
-    base: '/k9/web',
+    base: '/ung/web',
     publicDir: './public',
     plugins: [
+      createHtmlPlugin({
+        template: 'ung.html'
+      }),
       react({
         include: [/\.jsx$/, /\.tsx?$/],
 
       }),
       svgr(),
-      excludeMsw()
+      excludeMsw(),
+      {
+        // Endre namn på bygd entrypoint html frå ung.html til index.html
+        name: "rename-html-entry",
+        closeBundle: async () => {
+          const buildDir = path.join(__dirname, "dist/ung/web")
+          const oldPath = path.join(buildDir, "ung.html")
+          const newPath = path.join(buildDir, "index.html")
+          await fs.rename(oldPath, newPath)
+        }
+      }
     ],
     build: {
       // Relative to the root
-      outDir: './dist/k9/web',
+      outDir: './dist/ung/web',
       sourcemap: true,
       rollupOptions: {
+        input: './ung.html',
         external: [
           "mockServiceWorker.js"
         ],
       },
     },
-    test: {
-      deps: {
-        inline: ['@navikt/k9-sak-typescript-client', '@navikt/ung-sak-typescript-client'], // Without this, tests using *-sak-typescript-client through backend project failed.
-        interopDefault: true
-      },
-      environment: 'jsdom',
-      css: {
-        modules: {
-          classNameStrategy: 'non-scoped',
-        },
-      },
-      globals: true,
-      setupFiles: ['./vitest-setup.ts', './packages/utils-test/src/setup-test-env-hooks.ts'],
-      watch: false,
-      testTimeout: 15000,
-      onConsoleLog(log) {
-        // if (log.includes('Warning: ReactDOM.render is no longer supported in React 18.')) return false
-        return !log.includes(
-          'Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools',
-        );
-      },
-    }
   });
 };
