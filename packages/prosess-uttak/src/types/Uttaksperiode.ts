@@ -34,3 +34,23 @@ export interface Uttaksperiode extends Uttaksperiodeelement {
   periode: Period;
   harOppholdTilNestePeriode?: boolean;
 }
+
+export interface Inntektsforhold {
+  arbeidstidprosent: number;
+  løpendeInntekt: number;
+  bruttoInntekt: number;
+  erNytt: boolean;
+}
+export interface Inntektsgradering {
+  periode: Period;
+  inntektsforhold: Inntektsforhold[];
+  beregningsgrunnlag: number;
+  løpendeInntekt: number;
+  bortfaltInntekt: number;
+  reduksjonsProsent: number;
+  graderingsProsent: number;
+}
+
+export interface UttaksperiodeMedInntektsgradering extends Uttaksperiode {
+  inntektsgradering?: Inntektsgradering;
+}
