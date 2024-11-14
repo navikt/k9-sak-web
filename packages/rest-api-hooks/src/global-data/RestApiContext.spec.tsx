@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import { AbstractRequestApi } from '@k9-sak-web/rest-api';
 import { render } from '@testing-library/react';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
 import { RestApiErrorProvider } from '../error/RestApiErrorContext';
 import { RestApiProvider } from './RestApiContext';
@@ -41,6 +41,10 @@ class RequestApiTestMock extends AbstractRequestApi {
   };
 
   public getRequestMockData = () => {
+    throw new Error('Not Implemented');
+  };
+
+  public clearMockData = () => {
     throw new Error('Not Implemented');
   };
 

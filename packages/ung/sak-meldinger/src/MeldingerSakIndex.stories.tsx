@@ -16,7 +16,7 @@ import personopplysninger from '../../../storybook/stories/mocks/personopplysnin
 import MeldingerSakIndex, { BackendApi } from './MeldingerSakIndex';
 
 const meta: Meta<typeof MeldingerSakIndex> = {
-  title: 'sak/sak-meldinger',
+  title: 'ung/sak/sak-meldinger',
   component: MeldingerSakIndex,
   decorators: [withMaxWidth(500)],
   argTypes: {

@@ -74,7 +74,7 @@ const TotrinnskontrollIndex = ({
 
   const { brukernavn, kanVeilede } = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(UngSakApiKeys.NAV_ANSATT);
 
-  const alleKodeverk = useKodeverk(behandling.type);
+  const alleKodeverk = useKodeverk();
 
   const { data: totrinnArsaker } = restApiHooks.useRestApi<TotrinnskontrollSkjermlenkeContext[]>(
     UngSakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER,
