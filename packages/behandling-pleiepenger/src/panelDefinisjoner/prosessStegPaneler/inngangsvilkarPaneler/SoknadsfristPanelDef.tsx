@@ -14,7 +14,7 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
   getTekstKode = () => 'Søknadsfrist';
 
   getKomponent = props => {
-    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    const deepCopyProps = structuredClone(props);
     konverterKodeverkTilKode(deepCopyProps, false);
     if (props.featureToggles?.PROSESS_VILKAR_SOKNADSFRIST) {
       return <SoknadsfristVilkarProsessIndexV2 {...props} {...deepCopyProps} />;

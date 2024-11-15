@@ -10,6 +10,7 @@ import {
   Image,
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
+import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { VilkarResultPickerPeriodisertRHF } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, SubmitCallback } from '@k9-sak-web/types';
@@ -21,7 +22,6 @@ import { FunctionComponent, SetStateAction, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 import { VilkarresultatMedOverstyringFormState } from './FormState';
-import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import styles from './vilkarresultatMedOverstyringFormPeriodisert.module.css';
 

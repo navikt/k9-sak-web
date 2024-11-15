@@ -10,7 +10,7 @@ class UngdomsprogramPanelDef extends ProsessStegPanelDef {
   getTekstKode = () => 'Ungdomsprogram';
 
   getKomponent = props => {
-    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    const deepCopyProps = structuredClone(props);
     konverterKodeverkTilKode(deepCopyProps, false);
     return this.overstyringDef.getKomponent({ ...props, ...deepCopyProps, usev2Panel: true });
   };

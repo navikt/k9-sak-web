@@ -1,6 +1,7 @@
 import type { AksjonspunktDto, VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { behandlingType as BehandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { Alert, BodyShort, Box, Button, HStack, Label, VStack } from '@navikt/ds-react';
@@ -9,7 +10,6 @@ import { type SetStateAction, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { EditedIcon } from '../../../shared/EditedIcon';
 import { type VilkarresultatMedOverstyringFormState } from './FormState';
-import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import VilkarresultatMedBegrunnelse from './VilkarresultatMedBegrunnelse';
 import styles from './vilkarresultatMedOverstyringForm.module.css';
 import VilkarResultPickerRHF from './VilkarResultPickerRHF';

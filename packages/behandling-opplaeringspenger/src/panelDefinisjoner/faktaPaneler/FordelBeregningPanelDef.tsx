@@ -1,5 +1,3 @@
-import React from 'react';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { konverterKodeverkTilKode, transformBeregningValues } from '@fpsak-frontend/utils';
@@ -20,7 +18,7 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
   ];
 
   getKomponent = props => {
-    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    const deepCopyProps = structuredClone(props);
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
     return (
