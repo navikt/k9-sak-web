@@ -44,7 +44,7 @@ jobs:
             org.opencontainers.image.description=Frontend for ung-sak
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
-          push-image: false # for initial test
+          push-image: true
 
 # TODO enable when build is tested to work and deploy config for ung-sak-web is prepared
 #      - name: Deploy to nais
