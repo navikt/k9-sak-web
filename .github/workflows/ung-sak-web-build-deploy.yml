@@ -46,6 +46,7 @@ jobs:
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
           push-image: true
+          build-version: "build-version-xoxo"
 
 # TODO enable when build is tested to work and deploy config for ung-sak-web is prepared
 #      - name: Deploy to nais
