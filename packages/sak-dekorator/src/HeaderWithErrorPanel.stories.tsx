@@ -17,6 +17,7 @@ export const visDekoratorUtenFeilmeldinger = () => (
       ainntektPath="test"
       aaregPath="test"
       ytelse="Pleiepenger og omsorgspenger"
+      headerTitleHref="/k9/web"
     />
   </div>
 );
@@ -41,6 +42,7 @@ export const visDekoratorMedFeilmeldinger = () => {
         ainntektPath="test"
         aaregPath="test"
         ytelse="Pleiepenger og omsorgspenger"
+        headerTitleHref="/k9/web"
       />
     </div>
   );

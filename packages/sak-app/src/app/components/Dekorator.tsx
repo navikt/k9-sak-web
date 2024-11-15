@@ -100,6 +100,7 @@ const Dekorator = ({
       ainntektPath={getAinntektPath()}
       aaregPath={getAaregPath()}
       ytelse="Pleiepenger og omsorgspenger"
+      headerTitleHref="/k9/web"
     />
   );
 };

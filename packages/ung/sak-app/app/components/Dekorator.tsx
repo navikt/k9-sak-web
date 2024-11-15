@@ -100,6 +100,7 @@ const Dekorator = ({
       ainntektPath={getAinntektPath()}
       aaregPath={getAaregPath()}
       ytelse="Ungdomsytelse"
+      headerTitleHref="/ung/web"
     />
   );
 };

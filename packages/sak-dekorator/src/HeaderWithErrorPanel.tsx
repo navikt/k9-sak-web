@@ -52,11 +52,11 @@ const isInDevelopmentMode = () =>
   window.location.hostname === 'localhost' ||
   window.location.hostname === 'app-q1.adeo.no' ||
   window.location.hostname === 'k9.dev.intern.nav.no';
-const getHeaderTitleHref = getPathToFplos => {
+const getHeaderTitleHref = (getPathToFplos, headerTitleHref) => {
   if (!isRunningOnLocalhost()) {
-    return getPathToFplos() || '/k9/web';
+    return getPathToFplos() || headerTitleHref;
   }
-  return '/k9/web';
+  return headerTitleHref;
 };
 
 interface OwnProps {
@@ -70,6 +70,7 @@ interface OwnProps {
   ainntektPath: string;
   aaregPath: string;
   ytelse: string;
+  headerTitleHref: string;
 }
 
 /**
@@ -90,6 +91,7 @@ const HeaderWithErrorPanel = ({
   ainntektPath,
   aaregPath,
   ytelse,
+  headerTitleHref,
 }: OwnProps) => {
   const [erLenkepanelApent, setLenkePanelApent] = useState(false);
   const wrapperRef = useOutsideClickEvent(erLenkepanelApent, setLenkePanelApent);
@@ -162,7 +164,7 @@ const HeaderWithErrorPanel = ({
     >
       <RawIntlProvider value={intl}>
         <div ref={wrapperRef}>
-          <Header title={ytelse} titleHref={getHeaderTitleHref(getPathToFplos)}>
+          <Header title={ytelse} titleHref={getHeaderTitleHref(getPathToFplos, headerTitleHref)}>
             {/*
             Går mot en backend som BAKS styrer.
             https://github.com/navikt/familie-endringslogg
