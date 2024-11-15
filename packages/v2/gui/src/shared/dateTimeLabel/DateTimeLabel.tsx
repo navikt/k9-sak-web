@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 
 interface OwnProps {
   dateTimeString: string;
@@ -19,11 +19,12 @@ const DateTimeLabel = ({ dateTimeString, useNewFormat = false }: OwnProps) => {
   const date = new Date(dateTimeString);
   const hours = String(date.getHours()).padStart(2, '0');
   const minutes = String(date.getMinutes()).padStart(2, '0');
+  const dateAsDayjs = initializeDate(date, '', false, true);
   return (
     <>
-      {format(date, 'dd.MM.yyyy')}
+      {dateAsDayjs.format('DD.MM.YYYY')}
       {!useNewFormat && ` - ${hours}:${minutes}`}
-      {useNewFormat && ` Kl.${format(date, 'HH:mm:ss')}`}
+      {useNewFormat && ` Kl.${dateAsDayjs.format('HH:mm:ss')}`}
     </>
   );
 };

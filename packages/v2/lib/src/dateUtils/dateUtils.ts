@@ -96,8 +96,6 @@ export const calcDaysAndWeeks = (fraDatoPeriode?: string, tilDatoPeriode?: strin
   return checkDays(weeks, days);
 };
 
-export const formatDate = (date: string): string => initializeDate(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT);
-
 export const formatPeriod = (fomDate: string, tomDate: string): string =>
   `${formatDate(fomDate)} - ${formatDate(tomDate)}`;
 
@@ -133,7 +131,7 @@ export const splitWeeksAndDays = (weeks: number, days: number) => {
   return returnArray;
 };
 
-export const dateFormat = (date: string) => initializeDate(date).format(DDMMYYYY_DATE_FORMAT);
+export const formatDate = (date: string) => initializeDate(date).format(DDMMYYYY_DATE_FORMAT);
 
 export const timeFormat = (date: string) => initializeDate(date, '', false, true).format(HHMM_TIME_FORMAT);
 

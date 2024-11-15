@@ -1,7 +1,7 @@
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
-import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
+import { Aksjonspunkt, FeatureToggles, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
 import { HelpText, Label } from '@navikt/ds-react';
 import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -35,6 +35,7 @@ interface OpptjeningVilkarAksjonspunktPanelImplProps {
   vilkårPerioder: Vilkarperiode[];
   opptjeninger: Opptjening[];
   vilkarFields: VilkårFieldType[];
+  featureToggles: FeatureToggles;
 }
 
 interface StateProps {
@@ -79,7 +80,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       ? !vilkarFields.some(
           vilkarField =>
             vilkarField.vurderesIBehandlingen &&
-            !vilkarField.periodeHar28DagerOgTrengerIkkeVurderesManuelt &&
+            vilkarField.vurderesIAksjonspunkt &&
             (!vilkarField.begrunnelse || !vilkarField.kode),
         )
       : false;
@@ -136,7 +137,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
       isPeriodisertFormComplete={allePerioderHarVurdering()}
-      skjulAksjonspunktVisning={vilkarField?.periodeHar28DagerOgTrengerIkkeVurderesManuelt}
+      skjulAksjonspunktVisning={!vilkarField?.vurderesIAksjonspunkt}
     >
       <div className={styles.titelOgHjelpetekstFlexbox}>
         <Label size="small" as="p">
@@ -160,9 +161,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       <VilkarField
         erOmsorgspenger={erOmsorgspenger}
         field={vilkarField}
-        readOnly={
-          readOnly || !vilkarField?.vurderesIBehandlingen || vilkarField?.periodeHar28DagerOgTrengerIkkeVurderesManuelt
-        }
+        readOnly={readOnly || !vilkarField?.vurderesIBehandlingen || !vilkarField?.vurderesIAksjonspunkt}
         fieldPrefix={`vilkarFields[${periodeIndex}]`}
         skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidOpptjeningTom}
       />
@@ -175,9 +174,10 @@ export const buildInitialValues = createSelector(
     (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.aksjonspunkter,
     (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.vilkårPerioder,
     (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.opptjeninger,
+    (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.featureToggles,
   ],
-  (aksjonspunkter, vilkårPerioder, opptjeninger) => ({
-    ...VilkarField.buildInitialValues(vilkårPerioder, opptjeninger),
+  (aksjonspunkter, vilkårPerioder, opptjeninger, featureToggles) => ({
+    ...VilkarField.buildInitialValues(vilkårPerioder, opptjeninger, featureToggles),
     ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),
 );

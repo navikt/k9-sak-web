@@ -1,0 +1,27 @@
+.status {
+  height: 20px;
+  width: 20px;
+}
+
+.key {
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+}
+
+.keyWithoutCursor {
+  height: 20px;
+  width: 20px;
+}
+
+.aksjonspunkt {
+  padding: 0 20px 20px;
+  margin-left: -20px;
+  min-width: 400px;
+}
+
+.apentAksjonspunkt {
+  padding-top: 20px;
+  border: 3px solid #fa3;
+  border-radius: 4px;
+}

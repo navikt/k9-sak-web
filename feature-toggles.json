@@ -92,7 +92,11 @@
     "value": "${AUTOMATISK_VURDERT_MEDLEMSKAP}"
   },
   {
-    "key": "DELVIS_REVURDERING",
-    "value": "${DELVIS_REVURDERING}"
+    "key": "BRUK_V2_SAK_DOKUMENTER",
+    "value": "${BRUK_V2_SAK_DOKUMENTER}"
+  },
+  {
+    "key": "OPPTJENING_READ_ONLY_PERIODER",
+    "value": "${OPPTJENING_READ_ONLY_PERIODER}"
   }
 ]

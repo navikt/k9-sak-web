@@ -68,7 +68,7 @@ const arbeidsgiverOpplysningerPerId = {
 };
 
 const meta = {
-  title: 'prosess/prosess-tilkjent-ytelse-v2',
+  title: 'gui/prosess/prosess-tilkjent-ytelse-v2',
   component: TilkjentYtelseProsessIndex,
 } satisfies Meta<typeof TilkjentYtelseProsessIndex>;
 

@@ -5,6 +5,7 @@ export interface Utbetalingsgrad {
   normalArbeidstid: string;
   faktiskArbeidstid: string;
   utbetalingsgrad: number;
+  tilkommet: boolean;
 }
 
 export default Utbetalingsgrad;
