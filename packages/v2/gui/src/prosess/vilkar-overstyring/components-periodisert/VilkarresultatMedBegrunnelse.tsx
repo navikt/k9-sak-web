@@ -2,8 +2,8 @@ import type { AksjonspunktDto, VilkårPeriodeDto } from '@k9-sak-web/backend/k9s
 import { Box } from '@navikt/ds-react';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { type FunctionComponent } from 'react';
+import VilkarBegrunnelse from '../components/VilkarBegrunnelse';
 import { type VilkarresultatMedBegrunnelseState } from './FormState';
-import VilkarBegrunnelse from './VilkarBegrunnelse';
 import VilkarResultPickerPeriodisertRHF from './VilkarResultPickerPeriodisertRHF';
 
 interface VilkarresultatMedBegrunnelseProps {
