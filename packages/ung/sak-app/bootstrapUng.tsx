@@ -8,12 +8,13 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, createRoutesFromChildren, matchRoutes, useLocation, useNavigationType } from 'react-router-dom';
 
 import { ExtendedApiError } from '@k9-sak-web/backend/shared/instrumentation/ExtendedApiError.js';
-import { AppIndex } from '@k9-sak-web/ung-sak-app';
-import configureStore from './configureStore';
+
 import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
 
 import { isAlertInfo } from '@k9-sak-web/gui/app/alerts/AlertInfo.js';
+import configureStore from '@k9-sak-web/sak-app/src/configureStore';
 import { AxiosError } from 'axios';
+import AppIndex from './app/AppIndex';
 
 /* eslint no-undef: "error" */
 const isDevelopment = IS_DEV;
