@@ -40,6 +40,7 @@ jobs:
             featureToggles=ung.feature-toggles.json
             proxyConfig=ung.proxy.nginx
             appVariant=ung
+            port=9005
           labels: |
             org.opencontainers.image.title=ung-sak-web
             org.opencontainers.image.description=Frontend for ung-sak
