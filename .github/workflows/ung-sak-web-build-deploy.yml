@@ -6,7 +6,7 @@ on:
       - '.gitignore'
       - 'CODEOWNERS'
     branches:
-      - ung-sak-legacy-entrypoint-deploy-WIP
+      - dev-ung
 
 jobs:
   build-deploy:
