@@ -3,6 +3,7 @@ FROM nginxinc/nginx-unprivileged:stable-alpine-slim
 ARG proxyConfig=proxy.nginx
 ARG featureToggles=feature-toggles.json
 ARG appVariant=k9
+ARG port=9000
 
 LABEL org.opencontainers.image.source=https://github.com/navikt/k9-sak-web
 
@@ -17,7 +18,7 @@ ENV APP_DIR="/app" \
 
 COPY dist /usr/share/nginx/html
 
-EXPOSE 9000
+EXPOSE $port
 
 # using bash over sh for better signal-handling
 CMD sh /start-server.sh
