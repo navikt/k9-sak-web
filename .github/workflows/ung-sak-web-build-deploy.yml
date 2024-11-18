@@ -30,7 +30,7 @@ jobs:
         run: yarn build:ung
 
       - name: Build and push to docker registry
-        uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@output-image-tag # < TODO TEMP TESTING
+        uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@main
         id: docker-push
         with:
           image_base_name: 'ung-sak-web'
@@ -53,5 +53,4 @@ jobs:
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
-          # TODO Lag dedikert output frå build-push-docker action som kan brukast her istaden
           VAR: image=${{ steps.docker-push.outputs.image }}
