@@ -1,5 +1,4 @@
 import { HttpResponse, delay, http } from 'msw';
-import React from 'react';
 import NotatISakIndex from './NotaterIndex';
 
 export default {
@@ -31,6 +30,7 @@ export const VisNotatISakPanel = () => (
         kanVeilede: false,
         navn: 'Sara Saksbehandler',
       }}
+      sakstype="PSB"
     />
   </div>
 );
