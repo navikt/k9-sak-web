@@ -47,11 +47,13 @@ jobs:
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
           push-image: true
 
-# TODO enable when build is tested to work and deploy config for ung-sak-web is prepared
+      - name: Sjekk build utputt
+        run: |
+          echo "BYGD_IMAGE=${{ steps.docker-push.outputs.image }}" >> $GITHUB_OUTPUT
+          echo "BYGD_TAG=${{ steps.docker-push.outputs.tag }}" >> $GITHUB_OUTPUT
 #      - name: Deploy to nais
 #        uses: nais/deploy/actions/deploy@v2
 #        env:
 #          CLUSTER: ${{ env.CLUSTER }}
-#          RESOURCE: deploy/${{ env.CLUSTER }}-k9saksbehandling.yml
-#          VARS: deploy/dev-next1.yaml
+#          RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
 #          VAR: image=${{ steps.docker-push.outputs.image }}
