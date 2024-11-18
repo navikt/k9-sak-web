@@ -34,6 +34,7 @@ jobs:
         id: docker-push
         with:
           image_base_name: 'ung-sak-web'
+          additional-tag: 'latest' # For å få latest sjølv om vi ikkje ruller ut frå master branch endå. Fjernast når utrulling skal skje frå master.
           without_navikt_prefix: true
           #Konfigurerer for bygging av ung docker image:
           build-args: |
@@ -52,4 +53,5 @@ jobs:
         env:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
+          # TODO Lag dedikert output frå build-push-docker action som kan brukast her istaden
           VAR: image=${{ env.DOCKER_METADATA_OUTPUT_TAGS }}
