@@ -46,14 +46,9 @@ jobs:
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
           push-image: true
-
-      - name: Sjekk build utputt
-        run: |
-          echo "BYGD_IMAGE=${{ steps.docker-push.outputs.image }}" >> $GITHUB_OUTPUT
-          echo "BYGD_TAG=${{ steps.docker-push.outputs.tag }}" >> $GITHUB_OUTPUT
-#      - name: Deploy to nais
-#        uses: nais/deploy/actions/deploy@v2
-#        env:
-#          CLUSTER: ${{ env.CLUSTER }}
-#          RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
-#          VAR: image=${{ steps.docker-push.outputs.image }}
+      - name: Deploy to nais
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: ${{ env.CLUSTER }}
+          RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
+          VAR: image=${{ env.DOCKER_METADATA_OUTPUT_TAGS }}
