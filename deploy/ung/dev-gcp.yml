@@ -43,20 +43,6 @@ spec:
       value: "http://ung-sak"
     - name: APP_PORT
       value: "9005"
-    - name: APP_URL_K9FORMIDLING
-      value: "http://k9-formidling"
-    - name: APP_URL_K9FORMIDLING_DD
-      value: "http://k9-formidling-dokumentdata.k9saksbehandling"
-    - name: APP_URL_K9OPPDRAG
-      value: "http://k9-oppdrag.default"
-    - name: APP_URL_KLAGE
-      value: "http://k9-klage.k9saksbehandling"
-    - name: APP_URL_K9TILBAKE
-      value: "http://k9-tilbake.default"
-    - name: APP_URL_K9FORDEL
-      value: "http://k9-fordel.k9saksbehandling"
-    - name: ENDRINGSLOGG_URL
-      value: "https://familie-endringslogg.intern.dev.nav.no/"
 
     # Feature-flag
     - name: KLAGE_KABAL
