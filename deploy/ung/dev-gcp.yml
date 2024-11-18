@@ -16,8 +16,10 @@ spec:
   port: 9005
   liveness:
     path: /isAlive
+    initialDelay: 10
   readiness:
     path: /isReady
+    initialDelay: 10
   replicas:
     disableAutoScaling: true
     min: 2
