@@ -54,4 +54,4 @@ jobs:
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/ung/${{ env.CLUSTER }}.yml
           # TODO Lag dedikert output frå build-push-docker action som kan brukast her istaden
-          VAR: image=${{ steps.docker-push.image }}
+          VAR: image=${{ steps.docker-push.outputs.image }}
