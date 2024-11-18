@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
 import type { Feilmelding } from './feilmeldingTsType';
 
+import decodeHtmlEntity from '@k9-sak-web/lib/decodeHtmlEntity/decodeHtmlEntity.js';
 import styles from './errorMessagePanel.module.css';
 
 interface OwnProps {
@@ -48,7 +49,7 @@ export const ErrorMessagePanel = (props: OwnProps) => {
     <div className={styles.container}>
       {errorMessagesWithId.map((message, index) => (
         <HStack gap="3" key={message.id}>
-          <Detail className={styles.wordWrap}>{`${message.message} `}</Detail>
+          <Detail className={styles.wordWrap}>{`${decodeHtmlEntity(message.message)} `}</Detail>
           {message.additionalInfo && (
             <Detail>
               <button
