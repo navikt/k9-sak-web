@@ -108,8 +108,7 @@ export const NyBehandlingModal = ({
   }, []);
   const erFørstegangsbehandling = valgtBehandlingTypeKode === bType.FORSTEGANGSSOKNAD;
   const erRevurdering = valgtBehandlingTypeKode === bType.REVURDERING;
-  const visÅrsak =
-    (erRevurdering && steg === 'inngangsvilkår') || (!erRevurdering && behandlingArsakTyper.length > 0);
+  const visÅrsak = (erRevurdering && steg === 'inngangsvilkår') || (!erRevurdering && behandlingArsakTyper.length > 0);
   return (
     <Modal
       className={styles.modal}
