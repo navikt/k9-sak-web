@@ -1,16 +1,14 @@
-import React from 'react';
-
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import { getAlleMerknaderFraBeslutter, ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { konverterKodeverkTilKode } from '@fpsak-frontend/utils';
+import { getAlleMerknaderFraBeslutter, ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import ForeldelseProsessIndexWrapper from '../../components/ForeldelseProsessIndexWrapper';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
-    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    const deepCopyProps = structuredClone(props);
     konverterKodeverkTilKode(deepCopyProps, true);
     return (
       <ForeldelseProsessIndexWrapper
