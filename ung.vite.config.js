@@ -51,28 +51,8 @@ export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, `${process.cwd()}/envDir`) };
   return defineConfig({
     server: {
-      port: 9000,
+      port: 9005,
       proxy: {
-        '/k9/formidling/dokumentdata': createProxy(process.env.APP_URL_K9FORMIDLING_DD || 'http://localhost:8294'),
-        '/k9/formidling': createProxy(process.env.APP_URL_K9FORMIDLING || 'http://localhost:8290'),
-        '/k9/sak': {
-          target: process.env.APP_URL_SAK || 'http://localhost:8080',
-          changeOrigin: !!process.env.APP_URL_SAK,
-          ws: false,
-          secure: false,
-          configure: proxy => {
-            proxy.on('proxyRes', (proxyRes, req, res) => {
-              if (proxyRes.headers.location && proxyRes.headers.location.startsWith(process.env.APP_URL_SAK)) {
-                // eslint-disable-next-line no-param-reassign, prefer-destructuring
-                proxyRes.headers.location = proxyRes.headers.location.split(process.env.APP_URL_SAK)[1];
-              }
-              if (proxyRes.statusCode === 401) {
-                // eslint-disable-next-line no-param-reassign
-                proxyRes.headers.location = '/ung/sak/resource/login';
-              }
-            });
-          },
-        },
         '/ung/sak': {
           target: process.env.APP_URL_UNG_SAK || 'http://localhost:8085',
           changeOrigin: !!process.env.APP_URL_UNG_SAK,
@@ -91,16 +71,6 @@ export default ({ mode }) => {
             });
           },
         },
-        '/k9/oppdrag': createProxy(process.env.APP_URL_K9OPPDRAG || 'http://localhost:8070'),
-        '/k9/klage': createProxy(process.env.APP_URL_KLAGE || 'http://localhost:8701'),
-        '/k9/tilbake': createProxy(process.env.APP_URL_K9TILBAKE || 'http://localhost:8030'),
-        'k9/endringslogg': createProxy(
-          process.env.ENDRINGSLOGG_URL || 'https://familie-endringslogg.intern.dev.nav.no',
-          {
-            '^/k9/endringslogg': '',
-          },
-        ),
-        '/k9/feature-toggle/toggles.json': createMockResponder('http://localhost:8080', staticJsonResponse(featureTogglesFactory())),
         '/ung/feature-toggle/toggles.json': createMockResponder('http://localhost:8085', staticJsonResponse(featureTogglesFactory())),
       },
     },
