@@ -4867,7 +4867,6 @@ __metadata:
     "@k9-sak-web/sak-notat": 1.0.0
     "@k9-sak-web/sak-soknadsperiodestripe": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@k9-sak-web/ung-sak-app": 1.0.0
     "@navikt/ds-react": 7.4.3
     "@navikt/ft-fakta-beregning": 7.1.1
     "@navikt/ft-form-hooks": 5.2.1
@@ -4986,7 +4985,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/ung-sak-app@1.0.0, @k9-sak-web/ung-sak-app@workspace:packages/ung/sak-app":
+"@k9-sak-web/ung-sak-app@workspace:packages/ung/sak-app":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/ung-sak-app@workspace:packages/ung/sak-app"
   dependencies:
@@ -5013,6 +5012,7 @@ __metadata:
     "@k9-sak-web/modal-sett-pa-vent": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
+    "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/sak-behandling-velger": 1.0.0
     "@k9-sak-web/sak-meldinger": 1.0.0
     "@k9-sak-web/sak-meny-marker-behandling": 1.0.0

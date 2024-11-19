@@ -42,7 +42,7 @@ server {
   add_header              Cache-Control $custom_cache_control;
 
   # Health check for NAIS
-  location = /k9/feature-toggle/toggles.json {
+  location = /ung/feature-toggle/toggles.json {
     add_header Content-Type application/json;
     alias /tmp/feature-toggle/toggles.json;
   }
@@ -58,7 +58,7 @@ server {
     add_header Content-Type text/plain;
   }
 
-  location  "/k9/sak/" {
+  location  "/ung/sak/" {
     proxy_set_header Host	$http_host;
     proxy_pass "${APP_URL}";
     proxy_intercept_errors on;
@@ -68,85 +68,14 @@ server {
     error_page 504 = @504_json;
   }
 
-  location  "/k9/formidling/" {
-    proxy_set_header Host	$http_host;
-    proxy_pass "${APP_URL_K9FORMIDLING}";
-    proxy_intercept_errors on;
-    error_page 401 = @401_json;
-    error_page 403 = @403_json;
-    error_page 404 = @404_json;
-    error_page 504 = @504_json;
-  }
-
-    location  "/k9/formidling/dokumentdata" {
-    proxy_set_header Host	$http_host;
-    proxy_pass "${APP_URL_K9FORMIDLING_DD}";
-    proxy_intercept_errors on;
-    error_page 401 = @401_json;
-    error_page 403 = @403_json;
-    error_page 404 = @404_json;
-    error_page 504 = @504_json;
-  }
-
-  location "/k9/oppdrag/" {
-    proxy_set_header Host	$http_host;
-    proxy_pass "${APP_URL_K9OPPDRAG}";
-    proxy_intercept_errors on;
-    error_page 401 = @401_json;
-    error_page 403 = @403_json;
-    error_page 404 = @404_json;
-    error_page 504 = @504_json;
-  }
-
-  location "/k9/klage/" {
-    proxy_set_header Host	$http_host;
-    proxy_pass "${APP_URL_KLAGE}";
-    proxy_intercept_errors on;
-    error_page 401 = @401_json;
-    error_page 403 = @403_json;
-    error_page 404 = @404_json;
-    error_page 504 = @504_json;
-  }
-
-  location "/k9/tilbake/" {
-    proxy_set_header Host	$http_host;
-    proxy_pass "${APP_URL_K9TILBAKE}";
-    proxy_intercept_errors on;
-    error_page 401 = @401_json;
-    error_page 403 = @403_json;
-    error_page 404 = @404_json;
-    error_page 504 = @504_json;
-  }
-
-  location  "/k9/fordel/" {
-    proxy_set_header Host  $http_host;
-    proxy_pass "${APP_URL_K9FORDEL}";
-    proxy_intercept_errors on;
-    error_page 401 = @401_json;
-    error_page 403 = @403_json;
-    error_page 404 = @404_json;
-    error_page 504 = @504_json;
-  }
-
-  location  "/k9/endringslogg/" {
-    proxy_ssl_server_name on;
-    proxy_pass "${ENDRINGSLOGG_URL}";
-    proxy_intercept_errors on;
-    proxy_http_version 1.1;
-    error_page 401 = @401_json;
-    error_page 403 = @403_json;
-    error_page 404 = @404_json;
-    error_page 504 = @504_json;
-  }
-
   # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!
   location @rewrites {
-    rewrite ^(.+)$ "/k9/web/index.html" last;
+    rewrite ^(.+)$ "/ung/web/index.html" last;
   }
 
   location @401_json {
     default_type application/json;
-    add_header Location /k9/sak/resource/login?original=$request_uri always;
+    add_header Location /ung/sak/resource/login?original=$request_uri always;
     return 401 '{"feilmelding":"Bruker ikke innlogget","type":"MANGLER_TILGANG_FEIL"}';
   }
 

@@ -44,7 +44,6 @@
     "@k9-sak-web/sak-notat": "1.0.0",
     "@k9-sak-web/sak-soknadsperiodestripe": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@k9-sak-web/ung-sak-app": "1.0.0",
     "@navikt/ds-react": "7.4.3",
     "@navikt/ft-fakta-beregning": "7.1.1",
     "@navikt/ft-form-hooks": "5.2.1",

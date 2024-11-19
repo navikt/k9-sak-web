@@ -1,0 +1,100 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: ung-sak-web
+  namespace: k9saksbehandling
+  labels:
+    team: k9saksbehandling
+  annotations:
+    nais.io/run-as-user: "101" #nginx
+    nais.io/read-only-file-system: "false" #nginx
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+spec:
+  image: {{ image }}
+  port: 9005
+  liveness:
+    path: /isAlive
+    initialDelay: 10
+  readiness:
+    path: /isReady
+    initialDelay: 10
+  replicas:
+    disableAutoScaling: true
+    min: 2
+    max: 2
+  resources:
+    requests:
+      cpu: 200m
+      memory: 32Mi
+    limits:
+      memory: 64Mi
+  ingresses:
+    - "https://ung.intern.dev.nav.no"
+  accessPolicy:
+    outbound:
+      rules:
+        - application: ung-sak
+  env:
+    - name: APP_NAME
+      value: ung-sak-web
+    - name: APP_URL
+      value: "http://ung-sak"
+    - name: APP_PORT
+      value: "9005"
+
+    # Feature-flag
+    - name: KLAGE_KABAL
+      value: "true"
+    - name: VARSELTEKST
+      value: "true"
+    - name: DOKUMENTDATA
+      value: "true"
+    - name: UNNTAKSBEHANDLING
+      value: "true"
+    - name: KLAGEBEHANDLING
+      value: "true"
+    - name: TILBAKE
+      value: "true"
+    - name: SOKNADPERIODESTRIPE
+      value: "false"
+    - name: TYPE_MEDISINSKE_OPPLYSNINGER_BREV
+      value: "true"
+    - name: LOS_MARKER_BEHANDLING
+      value: "true"
+    - name: LOS_MARKER_BEHANDLING_SUBMIT
+      value: "true"
+    - name: AKSJONSPUNKT_9015
+      value: "true"
+    - name: ALDERSVILKAR_KRONISK_SYK
+      value: "true"
+    - name: FRITEKST_REDIGERING
+      value: "true"
+    - name: INKLUDER_KALENDER_PILS
+      value: "true"
+    - name: SKJUL_AVSLUTTET_ARBEIDSGIVER
+      value: "true"
+    - name: OMS_PUNSJSTRIPE
+      value: "true"
+    - name: OMSORGEN_FOR_PERIODISERT
+      value: "true"
+    - name: OVERSTYR_BEREGNING
+      value: "true"
+    - name: "BRUK_V2_MELDINGER"
+      value: "true"
+    - name: NYE_NOKKELTALL
+      value: "true"
+    - name: PROSESS_VILKAR_SOKNADSFRIST
+      value: "true"
+    - name: UTVIDET_VARSELFELT
+      value: "true"
+    - name: SKILL_UT_PRIVATPERSON
+      value: "true"
+    - name: AUTOMATISK_VURDERT_MEDLEMSKAP
+      value: "true"
+    - name: BRUK_V2_SAK_DOKUMENTER
+      value: "true"
+    - name: OPPTJENING_READ_ONLY_PERIODER
+      value: "true"
+
