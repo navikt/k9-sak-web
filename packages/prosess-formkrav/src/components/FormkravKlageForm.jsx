@@ -29,13 +29,14 @@ export const getPaklagdVedtak = (klageFormkravResultat, avsluttedeBehandlinger) 
 };
 
 const getKlagbareVedtak = (avsluttedeBehandlinger, intl, getKodeverknavn) => {
+  const sorterNyesteOpprettetFørst = (a, b) => (new Date(a.opprettet) < new Date(b.opprettet) ? 1 : -1);
   const klagBareVedtak = [
     <option key="formkrav" value={IKKE_PAKLAGD_VEDTAK}>
       {intl.formatMessage({ id: 'Klage.Formkrav.IkkePåklagdVedtak' })}
     </option>,
   ];
   return klagBareVedtak.concat(
-    avsluttedeBehandlinger.map(behandling => (
+    avsluttedeBehandlinger.toSorted(sorterNyesteOpprettetFørst).map(behandling => (
       <option key={behandling.uuid} value={`${behandling.uuid}`}>
         {`${getKodeverknavn(behandling.type)} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
       </option>
