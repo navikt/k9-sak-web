@@ -71,6 +71,12 @@ export default ({ mode }) => {
             });
           },
         },
+        'ung/endringslogg': createProxy(
+          process.env.ENDRINGSLOGG_URL || 'https://familie-endringslogg.intern.dev.nav.no',
+          {
+            '^/ung/endringslogg': '',
+          },
+        ),
         '/ung/feature-toggle/toggles.json': createMockResponder('http://localhost:8085', staticJsonResponse(featureTogglesFactory())),
       },
     },
