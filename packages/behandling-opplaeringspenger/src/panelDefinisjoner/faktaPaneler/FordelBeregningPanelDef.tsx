@@ -18,7 +18,7 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
   ];
 
   getKomponent = props => {
-    const deepCopyProps = structuredClone(props);
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
     return (

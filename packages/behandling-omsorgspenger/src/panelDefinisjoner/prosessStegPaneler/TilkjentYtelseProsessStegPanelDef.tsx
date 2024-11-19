@@ -20,7 +20,7 @@ const harKunAvslåtteUttak = beregningsresultatUtbetaling => {
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
-    const deepCopyProps = structuredClone(props);
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
     return <TilkjentYtelseProsessIndex {...props} {...deepCopyProps} />;
   };

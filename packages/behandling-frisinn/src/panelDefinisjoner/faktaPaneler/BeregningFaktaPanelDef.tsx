@@ -16,7 +16,7 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN];
 
   getKomponent = props => {
-    const deepCopyProps = structuredClone(props);
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
 

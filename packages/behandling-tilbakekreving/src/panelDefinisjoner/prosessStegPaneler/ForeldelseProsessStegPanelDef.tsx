@@ -8,7 +8,7 @@ import ForeldelseProsessIndexWrapper from '../../components/ForeldelseProsessInd
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
-    const deepCopyProps = structuredClone(props);
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, true);
     return (
       <ForeldelseProsessIndexWrapper
