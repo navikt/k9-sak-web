@@ -71,6 +71,7 @@ interface OwnProps {
   aaregPath: string;
   ytelse: string;
   headerTitleHref: string;
+  showEndringslogg?: boolean;
 }
 
 /**
@@ -92,6 +93,7 @@ const HeaderWithErrorPanel = ({
   aaregPath,
   ytelse,
   headerTitleHref,
+  showEndringslogg = true,
 }: OwnProps) => {
   const [erLenkepanelApent, setLenkePanelApent] = useState(false);
   const wrapperRef = useOutsideClickEvent(erLenkepanelApent, setLenkePanelApent);
@@ -155,7 +157,7 @@ const HeaderWithErrorPanel = ({
     [erLenkepanelApent],
   );
 
-  const skalViseEndringslogg = !location.pathname.includes('/close') && !!navBrukernavn;
+  const skalViseEndringslogg = !location.pathname.includes('/close') && !!navBrukernavn && showEndringslogg;
 
   return (
     <div
