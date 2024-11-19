@@ -96,11 +96,24 @@ export const calcDaysAndWeeks = (fraDatoPeriode?: string, tilDatoPeriode?: strin
   return checkDays(weeks, days);
 };
 
-export const formatDate = (date: string): string => initializeDate(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT);
-
 export const formatPeriod = (fomDate: string, tomDate: string): string =>
   `${formatDate(fomDate)} - ${formatDate(tomDate)}`;
 
+export default function dateSorter(date1: Dayjs, date2: Dayjs) {
+  if (date1.isBefore(date2)) {
+    return -1;
+  }
+  if (date2.isBefore(date1)) {
+    return 1;
+  }
+  return 0;
+}
+
+export function dateStringSorter(date1: string, date2: string) {
+  const date1AsDayjs = initializeDate(date1);
+  const date2AsDayjs = initializeDate(date2);
+  return dateSorter(date1AsDayjs, date2AsDayjs);
+}
 export const convertHoursToDays = (hoursToConvert: number) => {
   const days = Math.floor(hoursToConvert / TIMER_PER_DAG);
   const hours = hoursToConvert % TIMER_PER_DAG;
@@ -118,7 +131,7 @@ export const splitWeeksAndDays = (weeks: number, days: number) => {
   return returnArray;
 };
 
-export const dateFormat = (date: string) => initializeDate(date).format(DDMMYYYY_DATE_FORMAT);
+export const formatDate = (date: string) => initializeDate(date).format(DDMMYYYY_DATE_FORMAT);
 
 export const timeFormat = (date: string) => initializeDate(date, '', false, true).format(HHMM_TIME_FORMAT);
 

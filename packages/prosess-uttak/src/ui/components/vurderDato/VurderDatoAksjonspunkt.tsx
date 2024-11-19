@@ -17,9 +17,10 @@ interface Props {
     virkningsdato: string;
     begrunnelse: string;
   };
+  readOnly: boolean;
 }
 
-const VurderDatoAksjonspunkt = ({ avbryt, initialValues }: Props) => {
+const VurderDatoAksjonspunkt = ({ avbryt, initialValues, readOnly }: Props) => {
   const { løsAksjonspunktVurderDatoNyRegelUttak } = React.useContext(ContainerContext);
   const formMethods = useForm<FormData>({
     defaultValues: initialValues,
@@ -39,6 +40,7 @@ const VurderDatoAksjonspunkt = ({ avbryt, initialValues }: Props) => {
           fromDate={new Date('1 Jan 2019')}
           toDate={new Date('31 Dec 2025')}
           validate={[required, hasValidDate]}
+          isReadOnly={readOnly}
         />
         <TextAreaField
           name="begrunnelse"
@@ -46,17 +48,20 @@ const VurderDatoAksjonspunkt = ({ avbryt, initialValues }: Props) => {
           size="small"
           maxLength={1500}
           validate={[required, minLength(5), maxLength(1500)]}
+          readOnly={readOnly}
         />
-        <div className={styles.knapper}>
-          <Button size="small" type="submit" className={styles.bekreft}>
-            Bekreft og fortsett
-          </Button>
-          {avbryt && (
-            <Button variant="secondary" type="button" size="small" onClick={avbryt}>
-              Avbryt
+        {!readOnly && (
+          <div className={styles.knapper}>
+            <Button size="small" type="submit" className={styles.bekreft}>
+              Bekreft og fortsett
             </Button>
-          )}
-        </div>
+            {avbryt && (
+              <Button variant="secondary" type="button" size="small" onClick={avbryt}>
+                Avbryt
+              </Button>
+            )}
+          </div>
+        )}
       </div>
     </Form>
   );

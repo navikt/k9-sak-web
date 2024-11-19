@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { AnnenPart, Utfall, Årsaker } from '../constants';
+import { AnnenPart, Arbeidstype, Utfall, Årsaker } from '../constants';
 import { Endringsstatus } from '../types';
 import UttakContainer from './UttakContainer';
 
@@ -22,7 +22,7 @@ export const Uttak: Story = {
           utbetalingsgrader: [
             {
               arbeidsforhold: {
-                type: 'AT',
+                type: Arbeidstype.ARBEIDSTAKER,
                 organisasjonsnummer: '123456',
                 aktørId: null,
                 arbeidsforholdId: null,
@@ -30,6 +30,7 @@ export const Uttak: Story = {
               normalArbeidstid: 'PT7H30M',
               faktiskArbeidstid: 'PT2H37M',
               utbetalingsgrad: 50.0,
+              tilkommet: false,
             },
           ],
           søkersTapteArbeidstid: 65.11,
@@ -63,7 +64,7 @@ export const Uttak: Story = {
           utbetalingsgrader: [
             {
               arbeidsforhold: {
-                type: 'AT',
+                type: Arbeidstype.ARBEIDSTAKER,
                 organisasjonsnummer: '123456',
                 aktørId: null,
                 arbeidsforholdId: null,
@@ -71,6 +72,7 @@ export const Uttak: Story = {
               normalArbeidstid: 'PT7H30M',
               faktiskArbeidstid: 'PT9H37M',
               utbetalingsgrad: 65.0,
+              tilkommet: false,
             },
           ],
           søkersTapteArbeidstid: 65.11,
@@ -104,7 +106,7 @@ export const Uttak: Story = {
           utbetalingsgrader: [
             {
               arbeidsforhold: {
-                type: 'AT',
+                type: Arbeidstype.ARBEIDSTAKER,
                 organisasjonsnummer: '123456',
                 aktørId: null,
                 arbeidsforholdId: null,
@@ -112,6 +114,7 @@ export const Uttak: Story = {
               normalArbeidstid: 'PT7H30M',
               faktiskArbeidstid: 'PT2H37M',
               utbetalingsgrad: 0.0,
+              tilkommet: false,
             },
           ],
           søkersTapteArbeidstid: 65.11,
@@ -140,7 +143,7 @@ export const Uttak: Story = {
           utbetalingsgrader: [
             {
               arbeidsforhold: {
-                type: 'AT',
+                type: Arbeidstype.ARBEIDSTAKER,
                 organisasjonsnummer: '123456',
                 aktørId: null,
                 arbeidsforholdId: null,
@@ -148,6 +151,7 @@ export const Uttak: Story = {
               normalArbeidstid: 'PT7H30M',
               faktiskArbeidstid: 'PT2H37M',
               utbetalingsgrad: 0.0,
+              tilkommet: false,
             },
           ],
           søkersTapteArbeidstid: 65.11,
@@ -201,6 +205,7 @@ export const Uttak: Story = {
       erFagytelsetypeLivetsSluttfase: false,
       løsAksjonspunktVurderDatoNyRegelUttak: undefined,
       virkningsdatoUttakNyeRegler: '',
+      readOnly: false,
     },
   },
 };

@@ -1,7 +1,6 @@
 import { CheckboxField, DatepickerField, SelectField } from '@fpsak-frontend/form';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
@@ -107,13 +106,9 @@ export const NyBehandlingModal = ({
       }
     }
   }, []);
-  const [featureToggles] = useFeatureToggles();
   const erFørstegangsbehandling = valgtBehandlingTypeKode === bType.FORSTEGANGSSOKNAD;
   const erRevurdering = valgtBehandlingTypeKode === bType.REVURDERING;
-  const erDelvisRevurderingToggleAktivert = featureToggles?.DELVIS_REVURDERING;
-  const visÅrsak =
-    (erDelvisRevurderingToggleAktivert && erRevurdering && steg === 'inngangsvilkår') ||
-    (!erDelvisRevurderingToggleAktivert && behandlingArsakTyper.length > 0);
+  const visÅrsak = (erRevurdering && steg === 'inngangsvilkår') || (!erRevurdering && behandlingArsakTyper.length > 0);
   return (
     <Modal
       className={styles.modal}
@@ -135,7 +130,7 @@ export const NyBehandlingModal = ({
               validate={[required]}
               selectValues={behandlingTyper.map(bt => createOptions(bt, enabledBehandlingstyper))}
             />
-            {erDelvisRevurderingToggleAktivert && erRevurdering && (
+            {erRevurdering && (
               <SelectField
                 name="steg"
                 label="Hvor i prosessen vil du starte revurderingen?"
@@ -170,13 +165,19 @@ export const NyBehandlingModal = ({
                 ))}
               />
             )}
-            {erDelvisRevurderingToggleAktivert && erRevurdering && steg === 'RE-ENDRET-FORDELING' && (
+            {erRevurdering && steg === 'RE-ENDRET-FORDELING' && (
               <Fieldset className={styles.datePickerContainer} legend="Hvilken periode vil du revurdere?">
-                <DatepickerField name="fom" disabledDays={{ before: null, after: new Date() }} label="Fra og med" />
+                <DatepickerField
+                  name="fom"
+                  disabledDays={{ before: null, after: new Date() }}
+                  label="Fra og med"
+                  validate={[required]}
+                />
                 <DatepickerField
                   name="tom"
                   disabledDays={{ before: new Date(fom), after: new Date() }}
                   label="Til og med"
+                  validate={[required]}
                 />
               </Fieldset>
             )}

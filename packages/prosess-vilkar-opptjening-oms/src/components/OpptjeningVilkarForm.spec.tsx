@@ -5,6 +5,7 @@ import { Aksjonspunkt } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
 import messages from '../../i18n/nb_NO.json';
 import OpptjeningVilkarForm from './OpptjeningVilkarForm';
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
 const periode = {
   avslagKode: '1035',
@@ -24,6 +25,8 @@ const periode = {
 
 describe('<OpptjeningVilkarForm>', () => {
   it('skal vise OpptjeningVilkarAksjonspunktPanel når en har aksjonspunkt', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
+
     renderWithIntlAndReduxForm(
       <OpptjeningVilkarForm
         readOnlySubmitButton
@@ -49,7 +52,18 @@ describe('<OpptjeningVilkarForm>', () => {
         lovReferanse="Dette er en lovreferanse"
         periodeIndex={0}
         vilkårPerioder={[periode]}
-        opptjeninger={[]}
+        opptjeninger={[
+          {
+            opptjeningAktivitetList: [],
+            fastsattOpptjening: {
+              opptjeningFom: '2017-08-15',
+              opptjeningTom: '2017-08-31',
+              opptjeningperiode: { dager: 16, måneder: 0 },
+              fastsattOpptjeningAktivitetList: [],
+              vurderesIAksjonspunkt: true,
+            },
+          },
+        ]}
       />,
       { messages },
     );

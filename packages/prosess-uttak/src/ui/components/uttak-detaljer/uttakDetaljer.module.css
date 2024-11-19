@@ -80,14 +80,6 @@
   column-gap: 2rem;
 }
 
-.uttakDetaljer__avkortingMotArbeid__heading {
-  margin: 0.5rem 0;
-}
-
-.uttakDetaljer__avkortingMotArbeid__heading span {
-  display: block;
-}
-
 .uttakDetaljer__etikettBarnetsDødsfall {
   background: #cde7d8;
   border: 1px solid #06893a;

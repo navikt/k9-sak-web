@@ -14,11 +14,11 @@ import { useForm } from 'react-hook-form';
 
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client';
 import { utledInnsendtSoknadsfrist } from '../utils';
 import { FormState } from './FormState';
-import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import SoknadsfristVilkarDokument, { DELVIS_OPPFYLT } from './SoknadsfristVilkarDokument';
 import styles from './SoknadsfristVilkarForm.module.css';
 
