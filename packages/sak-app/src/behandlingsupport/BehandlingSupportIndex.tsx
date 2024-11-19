@@ -179,7 +179,7 @@ const BehandlingSupportIndex = ({
 
   const getNotater = (signal: AbortSignal) =>
     axios
-      .get<NotatResponse[]>(apiPaths.notatISak, {
+      .get<NotatResponse[]>(apiPaths.notatISakK9, {
         signal,
         params: {
           saksnummer: fagsak.saksnummer,

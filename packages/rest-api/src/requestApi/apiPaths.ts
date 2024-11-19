@@ -1,5 +1,6 @@
 const apiPaths = {
-  notatISak: '/k9/sak/api/notat',
+  notatISakK9: '/k9/sak/api/notat',
+  notatISakUng: '/ung/sak/api/notat',
 };
 
 export default apiPaths;
