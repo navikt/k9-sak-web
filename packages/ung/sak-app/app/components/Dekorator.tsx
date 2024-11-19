@@ -101,6 +101,7 @@ const Dekorator = ({
       aaregPath={getAaregPath()}
       ytelse="Ungdomsytelse"
       headerTitleHref="/ung/web"
+      showEndringslogg={false}
     />
   );
 };

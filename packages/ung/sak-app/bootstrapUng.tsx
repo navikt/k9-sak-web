@@ -103,7 +103,13 @@ const renderFunc = Component => {
     const root = createRoot(app);
     root.render(
       <Provider store={store}>
-        <BrowserRouter basename="/ung/web">
+        <BrowserRouter
+          basename="/ung/web"
+          future={{
+            v7_relativeSplatPath: true,
+            v7_startTransition: true,
+          }}
+        >
           <RestApiProvider>
             <RestApiErrorProvider>
               <Component />
