@@ -2,6 +2,7 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import MeldingerSakIndex, { MeldingerSakIndexBackendApi } from '@k9-sak-web/sak-meldinger';
 import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
@@ -11,7 +12,6 @@ import {
   Personopplysninger,
 } from '@k9-sak-web/types';
 import { Alert } from '@navikt/ds-react';
-import MeldingerSakIndex, { MeldingerSakIndexBackendApi } from '../../../sak-meldinger';
 import { UngSakApiKeys, requestApi, restApiHooks } from '../../data/ungsakApi';
 import { useUngSakKodeverk } from '../../data/useKodeverk';
 
@@ -84,6 +84,7 @@ const MeldingIndex = ({
       updateTriggers: [behandlingId, behandlingVersjon],
     },
   );
+  const { startRequest: submitMessage } = restApiHooks.useRestApiRunner(UngSakApiKeys.SUBMIT_MESSAGE);
 
   if (
     (skalHenteBrevmaler && (stateBrevmaler === RestApiState.NOT_STARTED || stateBrevmaler === RestApiState.LOADING)) ||
@@ -112,6 +113,7 @@ const MeldingIndex = ({
       fagsak={fagsak}
       behandling={behandling}
       backendApi={backendApi}
+      submitMessage={submitMessage}
     />
   );
 };
