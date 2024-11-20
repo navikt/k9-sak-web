@@ -13,10 +13,17 @@
   background-color: var(--a-deepblue-50);
 }
 
+.uttakDetaljer__graderingDetaljer__notHighlighted {
+  padding-top: var(--a-spacing-10);
+}
+
 .uttakDetaljer__graderingDetaljer svg {
   color: var(--a-lightblue-800);
   font-size: x-large;
   margin: 0 var(--a-spacing-1) 0;
+}
+
+.uttakDetaljer__graderingDetaljer .navds-help-text {
 }
 
 .uttakDetaljer__detailItem {
@@ -30,6 +37,8 @@
 .uttakDetaljer__detailSum {
   padding: var(--a-spacing-6) 0 var(--a-spacing-1);
   border-bottom: 3px solid var(--a-lightblue-700);
+  display: inline-block;
+  vertical-align: middle;
   display: inline-block;
 }
 
@@ -100,4 +109,20 @@
 
 .uttakDetaljer__beregningSum {
   padding-top: var(--a-spacing-1);
+}
+
+.uttakDetaljer__utnullet {
+  text-decoration: line-through;
+  color: var(--a-gray-500);
+}
+
+.uttakDetaljer__nyTag {
+  margin-left: var(--a-spacing-1);
+  display: inline-block;
+}
+
+.uttakDetaljer__detailtext {
+  color: var(--a-text-subtle);
+  padding-top: var(--a-spacing-3);
+  display: inline-block;
 }

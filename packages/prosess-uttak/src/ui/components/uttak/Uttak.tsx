@@ -11,27 +11,30 @@ import {
 import classNames from 'classnames/bind';
 import * as React from 'react';
 import { Collapse } from 'react-collapse';
+import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import AnnenPart from '../../../constants/AnnenPart';
 import Årsaker from '../../../constants/Årsaker';
-import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { harÅrsak } from '../../../util/årsakUtils';
 import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
 import ContainerContext from '../../context/ContainerContext';
 import Endringsstatus from '../icons/Endringsstatus';
-import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
+import NyUttakDetaljer from '../uttak-detaljer/NyUttakDetaljer';
+import GammelUttakDetaljer from '../uttak-detaljer/GammelUttakDetaljer';
+import { UttaksperiodeMedInntektsgradering } from '../../../types';
 
 import styles from './uttak.module.css';
 
 const cx = classNames.bind(styles);
 
 interface UttakProps {
-  uttak: Uttaksperiode;
+  uttak: UttaksperiodeMedInntektsgradering;
   erValgt: boolean;
   velgPeriode: () => void;
   withBorderTop?: boolean;
 }
 
 const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
+  const [featureToggles] = useFeatureToggles();
   const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, endringsstatus, manueltOverstyrt } = uttak;
   const { erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
 
@@ -120,11 +123,17 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
         </Table.DataCell>
       </Table.Row>
       <tr className={`${erValgt ? '' : styles.collapseRow} ${styles.expandedRow}`}>
-        <td colSpan={erFagytelsetypeLivetsSluttfase ? 7 : 6}>
+        <td colSpan={erFagytelsetypeLivetsSluttfase ? 8 : 7}>
           <Collapse isOpened={erValgt}>
             <div className={styles.expanded}>
               {harOppfyltAlleInngangsvilkår ? (
-                <UttakDetaljer uttak={uttak} />
+                <>
+                  {featureToggles.BRUK_INNTEKTSGRADERING_I_UTTAK ? (
+                    <NyUttakDetaljer uttak={uttak} />
+                  ) : (
+                    <GammelUttakDetaljer uttak={uttak} />
+                  )}
+                </>
               ) : (
                 <Vilkårsliste inngangsvilkår={inngangsvilkår} />
               )}
