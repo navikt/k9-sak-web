@@ -45,9 +45,7 @@ import {
 
 const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
   BehandlingType.FORSTEGANGSSOKNAD,
-  BehandlingType.KLAGE,
   BehandlingType.REVURDERING,
-  BehandlingType.ANKE,
   BehandlingType.TILBAKEKREVING,
   BehandlingType.TILBAKEKREVING_REVURDERING,
 ];
@@ -157,9 +155,6 @@ export const BehandlingMenuIndex = ({
       }, {}),
     [featureTogglesData],
   );
-  if (featureToggles?.UNNTAKSBEHANDLING && !BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.includes(BehandlingType.UNNTAK)) {
-    BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.push(BehandlingType.UNNTAK);
-  }
 
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(UngSakApiKeys.SAK_BRUKER);
 
