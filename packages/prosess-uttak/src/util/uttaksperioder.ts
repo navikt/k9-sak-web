@@ -1,6 +1,6 @@
 import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import Period from '../types/Period';
-import { Uttaksperiode } from '../types/Uttaksperiode';
+import { Inntektsgradering, Uttaksperiode, UttaksperiodeMedInntektsgradering } from '../types/Uttaksperiode';
 import Uttaksperioder from '../types/Uttaksperioder';
 import { sortPeriodsByNewest, sortPeriodsChronological } from './periodUtils';
 
@@ -14,7 +14,23 @@ const sjekkOmPerioderErKantIKant = (periode: Period, nestePeriode: Period) => {
   );
 };
 
-const lagUttaksperiodeliste = (uttaksperioder: Uttaksperioder): Uttaksperiode[] => {
+const injectInntektsgradering = (uttaksperioder, inntektsgraderinger) => {
+  uttaksperioder.forEach(uttaksperiode => {
+    uttaksperiode.inntektsgradering =
+      inntektsgraderinger === undefined
+        ? undefined
+        : inntektsgraderinger.find(
+            gradering =>
+              uttaksperiode.periode.fom === gradering.periode.fom &&
+              uttaksperiode.periode.tom === gradering.periode.tom,
+          );
+  });
+};
+
+const lagUttaksperiodeliste = (
+  uttaksperioder: Uttaksperioder,
+  inntektsgraderinger: Inntektsgradering[],
+): Uttaksperiode[] | UttaksperiodeMedInntektsgradering[] => {
   const perioder = Object.keys(uttaksperioder).map(periodenøkkel => {
     const uttaksperiode = new Period(periodenøkkel);
     const andreUttaksperiodeData = uttaksperioder[periodenøkkel];
@@ -37,7 +53,13 @@ const lagUttaksperiodeliste = (uttaksperioder: Uttaksperioder): Uttaksperiode[] 
   const reversertKronologiskSortertePerioder = perioderMedOppholdFlagg.sort((p1, p2) =>
     sortPeriodsByNewest(p1.periode, p2.periode),
   );
-  return reversertKronologiskSortertePerioder;
+
+  /*
+   * Injiserer data fra endepunktet for inntektsgradering inn i uttaksperiodene.
+   */
+  injectInntektsgradering(reversertKronologiskSortertePerioder, inntektsgraderinger);
+
+  return reversertKronologiskSortertePerioder as UttaksperiodeMedInntektsgradering[];
 };
 
 export default lagUttaksperiodeliste;

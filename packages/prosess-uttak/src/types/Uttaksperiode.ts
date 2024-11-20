@@ -36,6 +36,7 @@ export interface Uttaksperiode extends Uttaksperiodeelement {
 }
 
 export interface Inntektsforhold {
+  arbeidsgiverIdentifikator: string;
   arbeidstidprosent: number;
   løpendeInntekt: number;
   bruttoInntekt: number;
@@ -52,5 +53,5 @@ export interface Inntektsgradering {
 }
 
 export interface UttaksperiodeMedInntektsgradering extends Uttaksperiode {
-  inntektsgradering?: Inntektsgradering;
+  inntektsgradering?: Inntektsgradering | undefined;
 }
