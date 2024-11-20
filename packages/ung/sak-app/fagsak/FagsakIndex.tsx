@@ -1,5 +1,9 @@
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import { DataFetchPendingModal, LoadingPanel } from '@fpsak-frontend/shared-components';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
+import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
+import FagsakGrid from '@k9-sak-web/sak-app/src/fagsak/components/FagsakGrid';
 import {
   ArbeidsgiverOpplysningerWrapper,
   Fagsak,
@@ -10,16 +14,9 @@ import {
   Personopplysninger,
   SaksbehandlereInfo,
 } from '@k9-sak-web/types';
-import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
-import RelatertFagsak from '@k9-sak-web/types/src/relatertFagsak';
+import { SaksbehandlernavnContext } from '@navikt/ft-plattform-komponenter';
 import { useCallback, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
-import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
-import FagsakGrid from '@k9-sak-web/sak-app/src/fagsak/components/FagsakGrid';
-import { SaksbehandlernavnContext } from '@navikt/ft-plattform-komponenter';
 import { behandlingerRoutePath, erBehandlingValgt, erUrlUnderBehandling, pathToMissingPage } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
@@ -37,11 +34,11 @@ import useHentFagsakRettigheter from './useHentFagsakRettigheter';
  */
 const FagsakIndex = () => {
   const [behandlingerTeller, setBehandlingTeller] = useState(0);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const [requestPendingMessage, setRequestPendingMessage] = useState<string>();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const [behandlingIdOgVersjon, setIdOgVersjon] = useState({ behandlingId: undefined, behandlingVersjon: undefined });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const setBehandlingIdOgVersjon = useCallback(
     (behandlingId, behandlingVersjon) => setIdOgVersjon({ behandlingId, behandlingVersjon }),
     [],
@@ -126,24 +123,6 @@ const FagsakIndex = () => {
     UngSakApiKeys.HENT_SAKSBEHANDLERE,
     { behandlingUuid: behandling?.uuid },
     options,
-  );
-
-  const { data: relaterteFagsaker } = restApiHooks.useRestApi<RelatertFagsak>(
-    UngSakApiKeys.FAGSAK_RELATERTE_SAKER,
-    {},
-    {
-      updateTriggers: [behandlingId],
-      suspendRequest: !behandling,
-    },
-  );
-
-  const { data: direkteOvergangFraInfotrygd } = restApiHooks.useRestApi<OvergangFraInfotrygd>(
-    UngSakApiKeys.DIREKTE_OVERGANG_FRA_INFOTRYGD,
-    {},
-    {
-      updateTriggers: [!behandling],
-      suspendRequest: !behandling,
-    },
   );
 
   const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
@@ -247,8 +226,6 @@ const FagsakIndex = () => {
                     alleKodeverk={alleKodeverkUngSak}
                     sprakkode={behandling?.sprakkode}
                     fagsakPerson={fagsakPerson || fagsak.person}
-                    relaterteFagsaker={relaterteFagsaker}
-                    direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
                     erPbSak={fagsak.erPbSak}
                   />
                 </div>

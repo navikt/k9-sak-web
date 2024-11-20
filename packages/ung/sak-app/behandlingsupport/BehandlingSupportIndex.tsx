@@ -329,7 +329,6 @@ const BehandlingSupportIndex = ({
               behandlingVersjon={behandlingVersjon}
               fagsak={fagsak}
               behandlingUuid={behandling?.uuid}
-              featureToggles={featureToggles}
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.NOTATER}>
