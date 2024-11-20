@@ -1,10 +1,8 @@
-import React from 'react';
-
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import MeldingerSakIndex, { type MeldingerSakIndexBackendApi } from '@k9-sak-web/sak-meldinger';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import MeldingerSakIndex, { type MeldingerSakIndexBackendApi } from '@k9-sak-web/sak-meldinger';
 import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
@@ -13,9 +11,10 @@ import {
   FeatureToggles,
   Personopplysninger,
 } from '@k9-sak-web/types';
-import { useFpSakKodeverk } from '../../data/useKodeverk';
-import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
 import { Alert } from '@navikt/ds-react';
+import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
+import { useFpSakKodeverk } from '../../data/useKodeverk';
+import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
 
 export interface BackendApi extends MeldingerSakIndexBackendApi {}
 
@@ -86,6 +85,8 @@ const MeldingIndex = ({
       updateTriggers: [behandlingId, behandlingVersjon],
     },
   );
+  const { startRequest: submitMessage } = restApiHooks.useRestApiRunner(K9sakApiKeys.SUBMIT_MESSAGE);
+  const fetchPreview = useVisForhandsvisningAvMelding(behandling, fagsak);
 
   if (
     (skalHenteBrevmaler && (stateBrevmaler === RestApiState.NOT_STARTED || stateBrevmaler === RestApiState.LOADING)) ||
@@ -114,6 +115,8 @@ const MeldingIndex = ({
       fagsak={fagsak}
       behandling={behandling}
       backendApi={backendApi}
+      submitMessage={submitMessage}
+      fetchPreview={fetchPreview}
     />
   );
 };
