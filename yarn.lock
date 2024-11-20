@@ -3424,7 +3424,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/aksel-icons": 7.4.3
     "@navikt/ds-react": 7.4.3
-    "@navikt/fnrvalidator": 2.1.2
+    "@navikt/fnrvalidator": 2.1.3
     "@navikt/ft-plattform-komponenter": 5.1.0
     axios: 1.7.7
     classnames: 2.5.1
@@ -4471,7 +4471,7 @@ __metadata:
     "@navikt/ds-css": 7.4.3
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 7.4.3
-    "@navikt/fnrvalidator": 2.1.2
+    "@navikt/fnrvalidator": 2.1.3
     "@navikt/ft-plattform-komponenter": 5.1.0
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
@@ -5089,10 +5089,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/fnrvalidator@npm:2.1.2":
-  version: 2.1.2
-  resolution: "@navikt/fnrvalidator@npm:2.1.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffnrvalidator%2F2.1.2%2Fa13f1f064fdb91ffaf9bf8bc28c82a1816fe095f"
-  checksum: 29f7a418c2bc849e48526bbcf6a654749759de929b3564acc4e7eb463a0da1021c930c0917896cab805096a4a7bfc742c92534a7ed1c1ef7a2e6c23bade57a22
+"@navikt/fnrvalidator@npm:2.1.3":
+  version: 2.1.3
+  resolution: "@navikt/fnrvalidator@npm:2.1.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffnrvalidator%2F2.1.3%2Fb9dfea8da4a54dfbb4a03e3a189d79f5e12625b2"
+  checksum: c7c12dc51508fb139c3f3004228affd5b572a8a3f1b66dedb695fe83cc8d0f450373da3dbc5ff380053c7eb0d10403578867526cd5ed44445182d3685b72cee7
   languageName: node
   linkType: hard
 
