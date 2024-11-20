@@ -14,6 +14,7 @@ import {
 import { Alert } from '@navikt/ds-react';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
 import { useFpSakKodeverk } from '../../data/useKodeverk';
+import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
 
 export interface BackendApi extends MeldingerSakIndexBackendApi {}
 
@@ -85,6 +86,7 @@ const MeldingIndex = ({
     },
   );
   const { startRequest: submitMessage } = restApiHooks.useRestApiRunner(K9sakApiKeys.SUBMIT_MESSAGE);
+  const fetchPreview = useVisForhandsvisningAvMelding(behandling, fagsak);
 
   if (
     (skalHenteBrevmaler && (stateBrevmaler === RestApiState.NOT_STARTED || stateBrevmaler === RestApiState.LOADING)) ||
@@ -114,6 +116,7 @@ const MeldingIndex = ({
       behandling={behandling}
       backendApi={backendApi}
       submitMessage={submitMessage}
+      fetchPreview={fetchPreview}
     />
   );
 };

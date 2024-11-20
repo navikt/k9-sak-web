@@ -16,7 +16,6 @@ import V2Messages, {
   MessagesProps as V2MessagesProps,
 } from '@k9-sak-web/gui/sak/meldinger/Messages.js';
 import { StickyStateReducer } from '@k9-sak-web/gui/utils/StickyStateReducer.js';
-import useVisForhandsvisningAvMelding from '@k9-sak-web/sak-app/src/data/useVisForhandsvisningAvMelding.js';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
 import messages from '../i18n/nb_NO.json';
@@ -49,6 +48,7 @@ interface OwnProps {
   readonly behandling: BehandlingInfo;
   readonly backendApi: BackendApi;
   submitMessage: (params?: any, keepData?: boolean) => Promise<unknown>;
+  fetchPreview: (erHenleggelse: boolean, data: any) => void;
 }
 
 // Held på state oppretta inni reducers i Messages og FritekstInput komponenter.
@@ -79,8 +79,8 @@ const MeldingerSakIndex = ({
   behandling,
   backendApi,
   submitMessage,
+  fetchPreview,
 }: OwnProps) => {
-  const fetchPreview = useVisForhandsvisningAvMelding(behandling, fagsak);
   const erTilbakekreving = erTilbakekrevingType({ kode: behandling.type.kode });
   // Vis ny komponent for meldingssending viss dette ikkje er tilbakekreving, og featureflag er satt
   if (!erTilbakekreving && featureToggles.BRUK_V2_MELDINGER) {
