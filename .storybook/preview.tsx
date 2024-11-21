@@ -7,8 +7,11 @@ import { initialize, mswLoader } from 'msw-storybook-addon';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
+import { switchOnTestMode } from '@k9-sak-web/rest-api';
 
 const { VITE_LOCAL_STORYBOOK } = import.meta.env;
+
+switchOnTestMode();
 
 initialize({
   onUnhandledRequest: 'bypass',
@@ -21,7 +24,7 @@ const queryClient = new QueryClient();
 
 const preview: Preview = {
   parameters: {
-    margin: '40px'
+    margin: '40px',
   },
   decorators: [
     Story => {
@@ -39,12 +42,14 @@ const preview: Preview = {
     // Decorator som legger på ekstra margin. Kan overstyrast med parameter på komponentnivå/enkeltstories ved behov.
     // Feks viss ein lager stories for komponenter som skal vise på toppnivå på sida kan det vere lurt å sette parameter
     // layout: "fullscreen", som også fjerner margin her.
-    (Story, {parameters}) => {
-      return parameters.margin !== null && parameters.layout !== 'fullscreen'  ?
-        <div style={{margin: parameters.margin}}>
+    (Story, { parameters }) => {
+      return parameters.margin !== null && parameters.layout !== 'fullscreen' ? (
+        <div style={{ margin: parameters.margin }}>
           <Story />
-        </div> :
+        </div>
+      ) : (
         <Story />
+      );
     },
   ],
   loaders: [
