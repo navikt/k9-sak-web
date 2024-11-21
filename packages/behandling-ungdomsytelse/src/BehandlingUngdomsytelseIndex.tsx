@@ -103,9 +103,6 @@ const BehandlingUngdomsytelseIndex = ({
   const { startRequest: settPaVent } = restApiUngdomsytelseHooks.useRestApiRunner(
     UngdomsytelseBehandlingApiKeys.UPDATE_ON_HOLD,
   );
-  const { startRequest: lagreRisikoklassifiseringAksjonspunkt } = restApiUngdomsytelseHooks.useRestApiRunner(
-    UngdomsytelseBehandlingApiKeys.SAVE_AKSJONSPUNKT,
-  );
 
   useEffect(() => {
     behandlingEventHandler.setHandler({
@@ -114,7 +111,6 @@ const BehandlingUngdomsytelseIndex = ({
       taBehandlingAvVent: params =>
         taBehandlingAvVent(params).then(behandlingResTaAvVent => setBehandling(behandlingResTaAvVent)),
       henleggBehandling: params => henleggBehandling(params),
-      lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 
     requestUngdomsytelseApi.setRequestPendingHandler(setRequestPendingMessage);
