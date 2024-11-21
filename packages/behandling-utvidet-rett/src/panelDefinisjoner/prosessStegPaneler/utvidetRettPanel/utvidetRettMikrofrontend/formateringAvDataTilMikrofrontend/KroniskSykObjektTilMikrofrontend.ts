@@ -1,13 +1,15 @@
-import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
-import { FormState } from '@fpsak-frontend/form/index';
+import {Aksjonspunkt, Vilkar} from '@k9-sak-web/types';
+import {FormState} from '@fpsak-frontend/form/index';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
-import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
+import {KomponenterEnum} from '@k9-sak-web/prosess-omsorgsdager';
+import {generereInfoForVurdertVilkar} from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import {
   InformasjonTilLesemodusKroniskSyk,
   VilkarKroniskSyktBarnProps,
 } from '../../../../../types/utvidetRettMikrofrontend/VilkarKroniskSyktBarnProps';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
+import aksjonspunktCodes from "@fpsak-frontend/kodeverk/src/aksjonspunktCodes";
+import Komponenter from "@k9-sak-web/prosess-omsorgsdager/src/types/Komponenter";
 
 interface OwnProps {
   behandlingsID: string;
@@ -79,36 +81,63 @@ const KroniskSykObjektTilMikrofrontend = ({
 }: OwnProps): {
   visKomponent: KomponenterEnum.VILKAR_KRONISK_SYKT_BARN;
   props: VilkarKroniskSyktBarnProps;
-} => ({
-  visKomponent: KomponenterEnum.VILKAR_KRONISK_SYKT_BARN,
-  props: {
-    behandlingsID,
-    aksjonspunktLost,
-    lesemodus,
-    soknadsdato: soknad.soknadsdato,
-    informasjonTilLesemodus: formatereLesemodusObjektForKroniskSyk(vilkar, aksjonspunkt),
-    vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
-    informasjonOmVilkar: generereInfoForVurdertVilkar(
-      skalVilkarsUtfallVises,
-      vilkar,
-      aksjonspunkt.begrunnelse,
-      'Utvidet Rett',
-    ),
-    losAksjonspunkt: (harDokumentasjonOgFravaerRisiko, begrunnelse, avslagsårsakKode, fraDato) => {
-      submitCallback([
-        formatereLosAksjonspunktObjektForKroniskSyk(
-          aksjonspunkt.definisjon.kode,
-          begrunnelse,
-          harDokumentasjonOgFravaerRisiko,
-          fraDato || soknad.soknadsdato,
+} => {
+
+  const vilkaretVurderesManuelltMedAksjonspunkt =
+    aksjonspunkt && vilkar && aksjonspunkt.definisjon.kode === aksjonspunktCodes.UTVIDET_RETT;
+  // Vilkåret kan kun bli automatisk innvilget. Dersom det blir automatiskt avslått resulterer det i manuell vurdering via aksjonspunkt.
+  const vilkaretErAutomatiskInnvilget =
+    !aksjonspunkt && vilkar && vilkar.perioder[0]?.vilkarStatus.kode === vilkarUtfallType.OPPFYLT;
+
+  if (vilkaretVurderesManuelltMedAksjonspunkt) {
+    return {
+      visKomponent: KomponenterEnum.VILKAR_KRONISK_SYKT_BARN,
+      props: {
+        behandlingsID,
+        aksjonspunktLost,
+        lesemodus,
+        soknadsdato: soknad.soknadsdato,
+        informasjonTilLesemodus: formatereLesemodusObjektForKroniskSyk(vilkar, aksjonspunkt),
+        vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
+        informasjonOmVilkar: generereInfoForVurdertVilkar(
+          skalVilkarsUtfallVises,
           vilkar,
-          avslagsårsakKode,
-          soknad,
+          aksjonspunkt.begrunnelse,
+          'Utvidet Rett',
         ),
-      ]);
-    },
-    formState: FormState,
-  } as VilkarKroniskSyktBarnProps,
-});
+        losAksjonspunkt: (harDokumentasjonOgFravaerRisiko, begrunnelse, avslagsårsakKode, fraDato) => {
+          submitCallback([
+            formatereLosAksjonspunktObjektForKroniskSyk(
+              aksjonspunkt.definisjon.kode,
+              begrunnelse,
+              harDokumentasjonOgFravaerRisiko,
+              fraDato || soknad.soknadsdato,
+              vilkar,
+              avslagsårsakKode,
+              soknad,
+            ),
+          ]);
+        },
+        formState: FormState,
+      } as VilkarKroniskSyktBarnProps,
+    }
+  }
+
+  if (vilkaretErAutomatiskInnvilget) {
+    return {
+      visKomponent: Komponenter.VILKAR_KRONISK_SYKT_BARN,
+      props: {
+        behandlingsID: behandlingsID,
+        aksjonspunktLost: false,
+        fraDatoFraVilkar: vilkar?.perioder[0]?.periode?.fom,
+        vedtakFattetVilkarOppfylt: true,
+        informasjonOmVilkar: generereInfoForVurdertVilkar(true, vilkar, '', 'Utvidet Rett'),
+        formState: FormState,
+      } as VilkarKroniskSyktBarnProps
+    }
+  }
+
+  return null
+}
 
 export default KroniskSykObjektTilMikrofrontend;
