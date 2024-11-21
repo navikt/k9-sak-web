@@ -129,7 +129,7 @@ const KroniskSykObjektTilMikrofrontend = ({
       props: {
         behandlingsID: behandlingsID,
         aksjonspunktLost: false,
-        fraDatoFraVilkar: vilkar?.perioder[0]?.periode?.fom,
+        soknadsdato: soknad.soknadsdato,
         vedtakFattetVilkarOppfylt: true,
         informasjonOmVilkar: generereInfoForVurdertVilkar(true, vilkar, '', 'Utvidet Rett'),
         formState: FormState,
