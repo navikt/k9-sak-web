@@ -1,9 +1,6 @@
 import { SimpleLink } from '@k9-sak-web/types';
 
-export function findEndpointsForMicrofrontend<T>(
-  links: SimpleLink[],
-  desiredRels: { rel: string; desiredName: string }[],
-): T {
+export function findEndpointsFromRels<T>(links: SimpleLink[], desiredRels: { rel: string; desiredName: string }[]): T {
   const endpoints = {};
   desiredRels.forEach(desiredRel => {
     const matchingLink = links.find(({ rel }) => rel === desiredRel.rel);
@@ -13,5 +10,3 @@ export function findEndpointsForMicrofrontend<T>(
   });
   return endpoints as T;
 }
-
-export default findEndpointsForMicrofrontend;
