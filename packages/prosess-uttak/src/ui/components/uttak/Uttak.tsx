@@ -40,11 +40,14 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
 
   const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsaker.UTENOM_PLEIEBEHOV);
   const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
+  const erGradertMotInntekt = uttak.inntektsgradering !== undefined;
 
   const uttakGradIndikatorCls = cx('uttak__indikator', {
     uttak__indikator__avslått: uttaksgrad === 0,
     uttak__indikator__innvilget: uttaksgrad > 0,
-    'uttak__indikator__innvilget--delvis': årsaker.some(årsak => årsak === Årsaker.GRADERT_MOT_TILSYN),
+    'uttak__indikator__innvilget--delvis--inntekt': erGradertMotInntekt,
+    'uttak__indikator__innvilget--delvis':
+      !erGradertMotInntekt && årsaker.some(årsak => årsak === Årsaker.GRADERT_MOT_TILSYN),
   });
 
   const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsaker.INNGANGSVILKÅR_IKKE_OPPFYLT);
