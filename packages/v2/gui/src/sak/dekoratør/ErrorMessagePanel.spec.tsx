@@ -21,22 +21,6 @@ describe('<ErrorMessagePanel>', () => {
     expect(screen.queryByTestId('errorDetailsLink')).not.toBeInTheDocument();
   });
 
-  it('skal erstatte spesialtegn i feilmelding', () => {
-    render(
-      <ErrorMessagePanel
-        errorMessages={[
-          {
-            message: 'Høna &amp; egget og &#34;test1&#34; og &#39;test2&#39;',
-            additionalInfo: undefined,
-          },
-        ]}
-        removeErrorMessage={() => undefined}
-      />,
-    );
-
-    expect(screen.getByText('Høna & egget og "test1" og \'test2\'')).toBeInTheDocument();
-  });
-
   it('skal vise lenke for å se feildetaljer når dette er konfigurert og en har info', () => {
     render(
       <ErrorMessagePanel
