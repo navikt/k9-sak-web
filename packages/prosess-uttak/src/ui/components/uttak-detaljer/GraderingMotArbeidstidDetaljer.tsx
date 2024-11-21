@@ -32,9 +32,10 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
           const { normalArbeidstid, faktiskArbeidstid, arbeidsforhold } = utbetalingsgradItem;
           const beregnetNormalArbeidstid = beregnDagerTimer(normalArbeidstid);
           const beregnetFaktiskArbeidstid = beregnDagerTimer(faktiskArbeidstid);
-          const prosentFravær = Math.round(
-            (Math.max(beregnetNormalArbeidstid - beregnetFaktiskArbeidstid, 0) / beregnetNormalArbeidstid) * 100,
-          );
+          const prosentFravær =
+            Math.round(
+              (Math.max(beregnetNormalArbeidstid - beregnetFaktiskArbeidstid, 0) / beregnetNormalArbeidstid) * 100,
+            ) || 0;
           const faktiskOverstigerNormal = beregnetNormalArbeidstid < beregnetFaktiskArbeidstid;
           const arbeidstype = arbeidstypeTilVisning[arbeidsforhold?.type];
           const erNyInntekt = utbetalingsgradItem?.tilkommet;
@@ -50,10 +51,10 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
                 )}
               </BodyShort>
               <BodyShort size="small" weight="semibold">
-                {arbeidsforholdData.navn || 'Mangler navn'} (
-                {arbeidsforholdData.identifikator || arbeidsgiverIdentifikator})
+                {arbeidsforholdData?.navn || 'Mangler navn'} (
+                {arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})
               </BodyShort>
-              <BodyShort size="small">Normal arbeidstid: {beregnetNormalArbeidstid}</BodyShort>
+              <BodyShort size="small">Normal arbeidstid: {beregnetNormalArbeidstid} timer</BodyShort>
               <BodyShort as="div" size="small" className={cx({ uttakDetaljer__beregningStrek: true })}>
                 <HStack gap="1">
                   Faktisk arbeidstid:

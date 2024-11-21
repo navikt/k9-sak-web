@@ -1,3 +1,4 @@
+import { Periode } from '@k9-sak-web/types';
 import AnnenPart from '../constants/AnnenPart';
 import Utfall from '../constants/Utfall';
 import Årsaker from '../constants/Årsaker';
@@ -41,9 +42,10 @@ export interface Inntektsforhold {
   løpendeInntekt: number;
   bruttoInntekt: number;
   erNytt: boolean;
+  type: string;
 }
 export interface Inntektsgradering {
-  periode: Period;
+  periode: Periode;
   inntektsforhold: Inntektsforhold[];
   beregningsgrunnlag: number;
   løpendeInntekt: number;
