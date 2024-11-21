@@ -97,7 +97,7 @@ export {
   dateNotAfterOrEqualMessage,
 } from './src/validation/messages';
 
-export { findEndpointsForMicrofrontend } from './src/micro-frontends/findEndpointsForMicrofrontend';
+export { findEndpointsFromRels } from './src/micro-frontends/findEndpointsFromRels';
 export { httpErrorHandler } from './src/micro-frontends/httpErrorHandler';
 export { findAksjonspunkt } from './src/micro-frontends/findAksjonspunkt';
 
