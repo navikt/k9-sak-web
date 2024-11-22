@@ -9,7 +9,10 @@ import type { Feilmelding } from './feilmeldingTsType';
 import styles from './headerWithErrorPanel.module.css';
 
 const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
-const isInDevelopmentMode = () => isRunningOnLocalhost() || window.location.hostname === 'k9.dev.intern.nav.no';
+const isInDevelopmentModeOrTestEnvironment = () =>
+  isRunningOnLocalhost() ||
+  window.location.hostname === 'k9.dev.intern.nav.no' ||
+  window.location.hostname === 'ung.intern.dev.nav.no';
 const getHeaderTitleHref = (getPathToLos: () => string, headerTitleHref: string) => {
   if (!isRunningOnLocalhost()) {
     return getPathToLos() || headerTitleHref;
@@ -66,7 +69,7 @@ const HeaderWithErrorPanel = ({
 
   return (
     <div>
-      <InternalHeader className={isInDevelopmentMode() ? styles.containerDev : ''}>
+      <InternalHeader className={isInDevelopmentModeOrTestEnvironment() ? styles.containerDev : ''}>
         <InternalHeader.Title href={getHeaderTitleHref(getPathToLos, headerTitleHref)}>{ytelse}</InternalHeader.Title>
         <Spacer />
         {/*
