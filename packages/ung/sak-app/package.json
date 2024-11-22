@@ -7,6 +7,7 @@
   "dependencies": {
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
+    "@fpsak-frontend/sak-dekorator": "1.0.0",
     "@fpsak-frontend/sak-dokumenter": "1.0.0",
     "@fpsak-frontend/sak-fagsak-profil": "1.0.0",
     "@fpsak-frontend/sak-historikk": "1.0.0",

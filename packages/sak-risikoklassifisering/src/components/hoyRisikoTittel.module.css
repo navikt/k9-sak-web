@@ -1,0 +1,20 @@
+.hoyRisikoPanelTittel {
+  background-color: #f3cccc;
+  border: 1px solid #f3cccc;
+  margin-bottom: 0;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.hoyRisikoPanelTittel > button {
+  background-color: #f3cccc;
+}
+
+.hoyRisikoPanelTittel > div {
+  background-color: white;
+  width: 100%;
+}
+
+.hoyRisikoPanelTittel > div > div > article {
+  padding: 6px;
+}

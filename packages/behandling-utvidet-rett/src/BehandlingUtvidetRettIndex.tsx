@@ -1,23 +1,23 @@
-import { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import {
-  ArbeidsgiverOpplysningerWrapper,
   Behandling,
+  KodeverkMedNavn,
+  FeatureToggles,
   Fagsak,
   FagsakPerson,
-  FeatureToggles,
-  KodeverkMedNavn,
+  ArbeidsgiverOpplysningerWrapper,
 } from '@k9-sak-web/types';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import FetchedData from './types/fetchedDataTsType';
 import UtvidetRettPaneler from './components/UtvidetRettPaneler';
 import {
-  requestUtvidetRettApi,
   restApiUtvidetRettHooks,
+  requestUtvidetRettApi,
   UtvidetRettBehandlingApiKeys,
 } from './data/utvidetRettBehandlingApi';
-import FetchedData from './types/fetchedDataTsType';
 
 const utvidetRettData = [
   { key: UtvidetRettBehandlingApiKeys.AKSJONSPUNKTER },
@@ -104,7 +104,9 @@ const BehandlingUtvidetRettIndex = ({
   const { startRequest: fjernVerge } = restApiUtvidetRettHooks.useRestApiRunner(
     UtvidetRettBehandlingApiKeys.VERGE_FJERN,
   );
-
+  const { startRequest: lagreRisikoklassifiseringAksjonspunkt } = restApiUtvidetRettHooks.useRestApiRunner(
+    UtvidetRettBehandlingApiKeys.SAVE_AKSJONSPUNKT,
+  );
   const { startRequest: opprettVerge } = restApiUtvidetRettHooks.useRestApiRunner(
     UtvidetRettBehandlingApiKeys.VERGE_OPPRETT,
   );
@@ -119,6 +121,7 @@ const BehandlingUtvidetRettIndex = ({
       opprettVerge: params =>
         opprettVerge(params).then(behandlingResOpprettVerge => setBehandling(behandlingResOpprettVerge)),
       fjernVerge: params => fjernVerge(params).then(behandlingResFjernVerge => setBehandling(behandlingResFjernVerge)),
+      lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 
     requestUtvidetRettApi.setRequestPendingHandler(setRequestPendingMessage);

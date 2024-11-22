@@ -13,12 +13,12 @@ import hash from 'object-hash';
 import { useState, type SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 
-import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';
 import type { KravDokument } from '../types/KravDokumentStatus';
 import type { SoknadsfristAksjonspunktType } from '../types/SoknadsfristAksjonspunktType';
 import type { SubmitData } from '../types/submitCallback';
 import { utledInnsendtSoknadsfrist } from '../utils';
 import type { FormState } from './FormState';
+import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import SoknadsfristVilkarDokument, { DELVIS_OPPFYLT } from './SoknadsfristVilkarDokument';
 import styles from './SoknadsfristVilkarForm.module.css';
 

@@ -1,6 +1,6 @@
-import { KlageBehandlingApiKeys } from '@k9-sak-web/behandling-klage/src/data/klageBehandlingApi';
 import { RestApiConfigBuilder, createRequestApi } from '@k9-sak-web/rest-api';
 import { RestApiHooks } from '@k9-sak-web/rest-api-hooks';
+import { KlageBehandlingApiKeys } from '@k9-sak-web/behandling-klage/src/data/klageBehandlingApi';
 
 // NB! ALDRI BRUK DETTE UTENFOR PAKKEN 'SAK-APP'
 
@@ -108,6 +108,7 @@ const endpoints = new RestApiConfigBuilder()
   // Behandling
   .withRel('soeker-personopplysninger', K9sakApiKeys.BEHANDLING_PERSONOPPLYSNINGER)
   .withRel('kontrollresultat', K9sakApiKeys.KONTROLLRESULTAT)
+  .withRel('risikoklassifisering-aksjonspunkt', K9sakApiKeys.RISIKO_AKSJONSPUNKT)
   .withRel('klage-vurdering', K9sakApiKeys.TOTRINNS_KLAGE_VURDERING)
   .withRel('totrinnskontroll-arsaker', K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER)
   .withRel('totrinnskontroll-arsaker-readOnly', K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY)

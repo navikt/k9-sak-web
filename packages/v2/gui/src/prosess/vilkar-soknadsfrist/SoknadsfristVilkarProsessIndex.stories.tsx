@@ -12,7 +12,7 @@ import SoknadsfristVilkarProsessIndex from './SoknadsfristVilkarProsessIndex';
 
 const vilkarSoknadsfrist = [
   {
-    vilkarType: vilkarType.SØKNADSFRIST, // kodeverk: 'test'
+    vilkarType: vilkarType.SOKNADSFRISTVILKARET, // kodeverk: 'test'
     overstyrbar: true,
     perioder: [
       {

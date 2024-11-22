@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
@@ -128,6 +128,9 @@ const BehandlingOpplaeringspengerIndex = ({
   const { startRequest: fjernVerge } = restApiOpplaeringspengerHooks.useRestApiRunner(
     OpplaeringspengerBehandlingApiKeys.VERGE_FJERN,
   );
+  const { startRequest: lagreRisikoklassifiseringAksjonspunkt } = restApiOpplaeringspengerHooks.useRestApiRunner(
+    OpplaeringspengerBehandlingApiKeys.SAVE_AKSJONSPUNKT,
+  );
 
   useEffect(() => {
     behandlingEventHandler.setHandler({
@@ -139,6 +142,7 @@ const BehandlingOpplaeringspengerIndex = ({
       opprettVerge: params =>
         opprettVerge(params).then(behandlingResOpprettVerge => setBehandling(behandlingResOpprettVerge)),
       fjernVerge: params => fjernVerge(params).then(behandlingResFjernVerge => setBehandling(behandlingResFjernVerge)),
+      lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 
     requestOpplaeringspengerApi.setRequestPendingHandler(setRequestPendingMessage);

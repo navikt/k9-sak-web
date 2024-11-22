@@ -1,26 +1,26 @@
-import { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
-import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import {
-  ArbeidsgiverOpplysningerWrapper,
   Behandling,
-  Dokument,
+  KodeverkMedNavn,
+  FeatureToggles,
   Fagsak,
   FagsakPerson,
-  FeatureToggles,
-  KodeverkMedNavn,
+  ArbeidsgiverOpplysningerWrapper,
+  Dokument,
 } from '@k9-sak-web/types';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import OmsorgspengerPaneler from './components/OmsorgspengerPaneler';
 import {
-  OmsorgspengerBehandlingApiKeys,
-  requestOmsorgApi,
   restApiOmsorgHooks,
+  requestOmsorgApi,
+  OmsorgspengerBehandlingApiKeys,
 } from './data/omsorgspengerBehandlingApi';
+import OmsorgspengerPaneler from './components/OmsorgspengerPaneler';
 import FetchedData from './types/fetchedDataTsType';
 
 const omsorgspengerData = [
@@ -128,6 +128,9 @@ const BehandlingOmsorgspengerIndex = ({
     OmsorgspengerBehandlingApiKeys.VERGE_OPPRETT,
   );
   const { startRequest: fjernVerge } = restApiOmsorgHooks.useRestApiRunner(OmsorgspengerBehandlingApiKeys.VERGE_FJERN);
+  const { startRequest: lagreRisikoklassifiseringAksjonspunkt } = restApiOmsorgHooks.useRestApiRunner(
+    OmsorgspengerBehandlingApiKeys.SAVE_AKSJONSPUNKT,
+  );
 
   useEffect(() => {
     behandlingEventHandler.setHandler({
@@ -139,6 +142,7 @@ const BehandlingOmsorgspengerIndex = ({
       opprettVerge: params =>
         opprettVerge(params).then(behandlingResOpprettVerge => setBehandling(behandlingResOpprettVerge)),
       fjernVerge: params => fjernVerge(params).then(behandlingResFjernVerge => setBehandling(behandlingResFjernVerge)),
+      lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 
     requestOmsorgApi.setRequestPendingHandler(setRequestPendingMessage);

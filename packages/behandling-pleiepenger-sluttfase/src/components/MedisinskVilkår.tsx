@@ -1,8 +1,9 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { findAksjonspunkt, findEndpointsFromRels, httpErrorHandler } from '@fpsak-frontend/utils';
-import { MedisinskVilkår } from '@k9-sak-web/fakta-medisinsk-vilkar';
+import { findAksjonspunkt, findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { MedisinskVilkår } from '@k9-sak-web/fakta-medisinsk-vilkar';
+import React from 'react';
 
 export default ({
   behandling: { links, uuid },
@@ -32,7 +33,7 @@ export default ({
     <MedisinskVilkår
       data={{
         httpErrorHandler: httpErrorHandlerCaller,
-        endpoints: findEndpointsFromRels(links, [
+        endpoints: findEndpointsForMicrofrontend(links, [
           { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'vurderingsoversiktKontinuerligTilsynOgPleie' },
           { rel: 'sykdom-vurdering-oversikt-too', desiredName: 'vurderingsoversiktBehovForToOmsorgspersoner' },
           { rel: 'sykdom-vurdering-oversikt-slu', desiredName: 'vurderingsoversiktLivetsSluttfase' },

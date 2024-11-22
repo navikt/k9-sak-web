@@ -1,9 +1,11 @@
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import React from 'react';
+
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { konverterKodeverkTilKode } from '@fpsak-frontend/utils';
-import { getAlleMerknaderFraBeslutter, ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import { getAlleMerknaderFraBeslutter, ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { konverterKodeverkTilKode } from '@fpsak-frontend/utils';
 import ForeldelseProsessIndexWrapper from '../../components/ForeldelseProsessIndexWrapper';
 
 class PanelDef extends ProsessStegPanelDef {
