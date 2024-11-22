@@ -3130,22 +3130,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fpsak-frontend/sak-dekorator@1.0.0, @fpsak-frontend/sak-dekorator@workspace:packages/sak-dekorator":
-  version: 0.0.0-use.local
-  resolution: "@fpsak-frontend/sak-dekorator@workspace:packages/sak-dekorator"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/konstanter": 1.0.0
-    "@navikt/ft-plattform-komponenter": 5.3.0
-    react: 18.3.1
-    react-intl: 7.0.1
-    uuid: 11.0.3
-  languageName: unknown
-  linkType: soft
-
 "@fpsak-frontend/sak-dokumenter@1.0.0, @fpsak-frontend/sak-dokumenter@workspace:packages/sak-dokumenter":
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/sak-dokumenter@workspace:packages/sak-dokumenter"
@@ -4671,7 +4655,6 @@ __metadata:
   dependencies:
     "@fpsak-frontend/assets": 1.0.0
     "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/sak-dekorator": 1.0.0
     "@fpsak-frontend/sak-dokumenter": 1.0.0
     "@fpsak-frontend/sak-fagsak-profil": 1.0.0
     "@fpsak-frontend/sak-historikk": 1.0.0
