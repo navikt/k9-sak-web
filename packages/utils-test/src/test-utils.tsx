@@ -18,14 +18,6 @@ export function renderWithIntl(ui: ReactElement, { locale, messages, ...renderOp
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
 }
 
-export function renderWithReduxForm(ui: ReactElement, { ...renderOptions } = {}) {
-  const Wrapper = ({ children }) => (
-    <Provider store={createStore(combineReducers({ form: reducer }))}>{children}</Provider>
-  );
-
-  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
-}
-
 export function renderWithIntlAndReduxForm(
   ui: ReactElement,
   { locale, messages, initialValues, ...renderOptions }: any = {},
