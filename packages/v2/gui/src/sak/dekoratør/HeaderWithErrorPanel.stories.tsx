@@ -23,11 +23,7 @@ export const VisDekoratorUtenFeilmeldinger: Story = {
     ytelse: 'Pleiepenger og omsorgspenger',
     headerTitleHref: '/k9/web',
   },
-  render: args => (
-    <div style={{ marginLeft: '-56px' }}>
-      <HeaderWithErrorPanel {...args} />
-    </div>
-  ),
+  render: args => <HeaderWithErrorPanel {...args} />,
 };
 
 export const VisDekoratorMedFeilmeldinger: Story = {
@@ -51,13 +47,11 @@ export const VisDekoratorMedFeilmeldinger: Story = {
       },
     ]);
     return (
-      <div style={{ marginLeft: '-56px' }}>
-        <HeaderWithErrorPanel
-          {...args}
-          removeErrorMessage={() => removeErrorMessages([])}
-          errorMessages={errorMessages}
-        />
-      </div>
+      <HeaderWithErrorPanel
+        {...args}
+        removeErrorMessage={() => removeErrorMessages([])}
+        errorMessages={errorMessages}
+      />
     );
   },
 };
