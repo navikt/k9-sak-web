@@ -1,12 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import {
-  findAksjonspunkt,
-  findEndpointsForMicrofrontend,
-  httpErrorHandler as httpErrorHandlerFn,
-} from '@fpsak-frontend/utils';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { findAksjonspunkt, findEndpointsFromRels, httpErrorHandler as httpErrorHandlerFn } from '@fpsak-frontend/utils';
 import { EtablertTilsynContainer } from '@k9-sak-web/fakta-etablert-tilsyn';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
@@ -32,7 +28,7 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
       data={{
         httpErrorHandler: httpErrorHandlerCaller,
         readOnly: readOnly || !harAksjonspunkt,
-        endpoints: findEndpointsForMicrofrontend(behandling.links, [
+        endpoints: findEndpointsFromRels(behandling.links, [
           { rel: 'opplaeringspenger-sykt-barn-tilsyn', desiredName: 'tilsyn' },
           { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'sykdom' },
           { rel: 'sykdom-innleggelse', desiredName: 'sykdomInnleggelse' },

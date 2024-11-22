@@ -1,6 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
+import { findEndpointsFromRels, httpErrorHandler } from '@fpsak-frontend/utils';
 import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
 import { Inntektsgradering, Uttak } from '@k9-sak-web/prosess-uttak';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
@@ -69,7 +69,7 @@ export default ({
     <Uttak
       containerData={{
         httpErrorHandler: httpErrorHandlerCaller,
-        endpoints: findEndpointsForMicrofrontend(links, [
+        endpoints: findEndpointsFromRels(links, [
           { rel: 'pleiepenger-overstyrtbare-aktiviteter', desiredName: 'behandlingUttakOverstyrbareAktiviteter' },
           { rel: 'pleiepenger-overstyrt-uttak', desiredName: 'behandlingUttakOverstyrt' },
         ]),

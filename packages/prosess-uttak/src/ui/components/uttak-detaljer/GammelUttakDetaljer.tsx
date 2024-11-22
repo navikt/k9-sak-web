@@ -140,9 +140,10 @@ const formatAvkortingMotArbeid = (
         const beregnetFaktiskArbeidstid = beregnDagerTimer(faktiskArbeidstid);
         const erNyInntekt = utbetalingsgradItem?.tilkommet;
         const faktiskOverstigerNormal = beregnetNormalArbeidstid < beregnetFaktiskArbeidstid;
-        const prosentFravær = Math.round(
-          (Math.max(beregnetNormalArbeidstid - beregnetFaktiskArbeidstid, 0) / beregnetNormalArbeidstid) * 100,
-        );
+        const prosentFravær =
+          Math.round(
+            (Math.max(beregnetNormalArbeidstid - beregnetFaktiskArbeidstid, 0) / beregnetNormalArbeidstid) * 100,
+          ) || 0;
 
         const nyInntektTekst = () => {
           if (arbeidsforhold?.type === Arbeidstype.ARBEIDSTAKER) {
