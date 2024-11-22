@@ -1,20 +1,20 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import {
-  Fagsak,
-  Behandling,
-  KodeverkMedNavn,
-  FeatureToggles,
-  FagsakPerson,
-  ArbeidsgiverOpplysningerWrapper,
-} from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import {
+  ArbeidsgiverOpplysningerWrapper,
+  Behandling,
+  Fagsak,
+  FagsakPerson,
+  FeatureToggles,
+  KodeverkMedNavn,
+} from '@k9-sak-web/types';
 
-import FetchedData from './types/fetchedDataTsType';
-import { restApiUnntakHooks, requestUnntakApi, UnntakBehandlingApiKeys } from './data/unntakBehandlingApi';
 import UnntakPaneler from './components/UnntakPaneler';
+import { requestUnntakApi, restApiUnntakHooks, UnntakBehandlingApiKeys } from './data/unntakBehandlingApi';
+import FetchedData from './types/fetchedDataTsType';
 
 const unntakData = [
   { key: UnntakBehandlingApiKeys.AKSJONSPUNKTER },
@@ -99,9 +99,6 @@ const BehandlingUnntakIndex = ({
   const { startRequest: settPaVent } = restApiUnntakHooks.useRestApiRunner(UnntakBehandlingApiKeys.UPDATE_ON_HOLD);
   const { startRequest: opprettVerge } = restApiUnntakHooks.useRestApiRunner(UnntakBehandlingApiKeys.VERGE_OPPRETT);
   const { startRequest: fjernVerge } = restApiUnntakHooks.useRestApiRunner(UnntakBehandlingApiKeys.VERGE_FJERN);
-  const { startRequest: lagreRisikoklassifiseringAksjonspunkt } = restApiUnntakHooks.useRestApiRunner(
-    UnntakBehandlingApiKeys.SAVE_AKSJONSPUNKT,
-  );
 
   useEffect(() => {
     behandlingEventHandler.setHandler({
@@ -113,7 +110,6 @@ const BehandlingUnntakIndex = ({
       opprettVerge: params =>
         opprettVerge(params).then(behandlingResOpprettVerge => setBehandling(behandlingResOpprettVerge)),
       fjernVerge: params => fjernVerge(params).then(behandlingResFjernVerge => setBehandling(behandlingResFjernVerge)),
-      lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 
     requestUnntakApi.setRequestPendingHandler(setRequestPendingMessage);
