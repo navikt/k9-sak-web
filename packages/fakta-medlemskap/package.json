@@ -11,7 +11,6 @@
     "@fpsak-frontend/prop-types": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "@k9-sak-web/fakta-felles": "1.0.0",
     "@navikt/ft-form-hooks": "5.2.1",
     "@navikt/ft-plattform-komponenter": "5.1.0",
     "i18n-iso-countries": "7.13.0",
