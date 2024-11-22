@@ -1,4 +1,5 @@
-import HeaderWithErrorPanel, { Feilmelding } from '@fpsak-frontend/sak-dekorator';
+import { Feilmelding } from '@k9-sak-web/gui/sak/dekoratør/feilmeldingTsType.js';
+import HeaderWithErrorPanel from '@k9-sak-web/gui/sak/dekoratør/HeaderWithErrorPanel.js';
 import { AAREG_URL, AINNTEKT_URL } from '@k9-sak-web/konstanter';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import ErrorFormatter from '@k9-sak-web/sak-app/src/app/feilhandtering/ErrorFormatter';
@@ -95,7 +96,7 @@ const Dekorator = ({
       removeErrorMessage={removeErrorMessages}
       errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
       setSiteHeight={setSiteHeight}
-      getPathToFplos={getPathToK9Los}
+      getPathToLos={getPathToK9Los}
       getPathToK9Punsj={getPathToK9Punsj}
       ainntektPath={getAinntektPath()}
       aaregPath={getAaregPath()}
