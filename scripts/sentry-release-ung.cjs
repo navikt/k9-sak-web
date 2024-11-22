@@ -13,7 +13,7 @@ async function opprettReleaseTilSentry() {
     throw new Error('"SENTRY_AUTH_TOKEN" er ikke satt');
   }
 
-  const cli = new SentryCli();
+  const cli = new SentryCli(null, { project: 'ung-sak-web' });
 
   try {
     console.log(`Oppretter Sentry-release ${release}`);

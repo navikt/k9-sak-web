@@ -2,7 +2,6 @@ import { Location } from 'history';
 import { Suspense, useCallback, useEffect, useMemo } from 'react';
 import { NavigateFunction, useLocation, useNavigate } from 'react-router-dom';
 
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
@@ -98,9 +97,6 @@ const BehandlingIndex = ({
   );
 
   const kodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(UngSakApiKeys.KODEVERK);
-  const klageKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(
-    UngSakApiKeys.KODEVERK_KLAGE,
-  );
 
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(UngSakApiKeys.SAK_BRUKER);
   const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
@@ -133,13 +129,11 @@ const BehandlingIndex = ({
 
   const query = parseQueryString(location.search);
 
-  const behandlingTypeKode = behandling?.type ? behandling.type.kode : undefined;
-
   const defaultProps = {
     behandlingId,
     oppdaterBehandlingVersjon,
     behandlingEventHandler,
-    kodeverk: behandlingTypeKode === BehandlingType.KLAGE ? klageKodeverk : kodeverk,
+    kodeverk: kodeverk,
     fagsak,
     fagsakPerson,
     rettigheter,

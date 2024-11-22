@@ -9,6 +9,7 @@ interface NotaterIndexProps {
   fagsakId: string;
   navAnsatt: NavAnsatt;
   fagsakHarPleietrengende: boolean;
+  sakstype: string;
 }
 
 interface postNotatMutationVariables {
@@ -18,7 +19,7 @@ interface postNotatMutationVariables {
   versjon?: number;
 }
 
-const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsakHarPleietrengende }) => {
+const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsakHarPleietrengende, sakstype }) => {
   const queryClient = useQueryClient();
 
   const notaterQueryKey = ['notater', fagsakId];
@@ -36,13 +37,13 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsak
     data: notater,
   } = useQuery({
     queryKey: notaterQueryKey,
-    queryFn: ({ signal }) => getNotater(signal, fagsakId),
+    queryFn: ({ signal }) => getNotater(signal, fagsakId, sakstype),
     enabled: !!fagsakId,
   });
 
   const postNotatMutation = useMutation({
     mutationFn: ({ data, id, fagsakIdFraRedigertNotat, versjon }: postNotatMutationVariables) =>
-      postNotat(data, fagsakId, id, fagsakIdFraRedigertNotat, versjon),
+      postNotat(data, fagsakId, sakstype, id, fagsakIdFraRedigertNotat, versjon),
 
     onSuccess: () => {
       formMethods.reset();
@@ -52,7 +53,7 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsak
 
   const skjulNotatMutation = useMutation({
     mutationFn: ({ skjul, id, saksnummer, versjon }: skjulNotatMutationVariables) =>
-      skjulNotat(skjul, id, saksnummer, versjon),
+      skjulNotat(skjul, id, saksnummer, versjon, sakstype),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: notaterQueryKey });

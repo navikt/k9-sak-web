@@ -29,6 +29,11 @@ jobs:
       - name: Bygge dist
         run: yarn build:ung
 
+      - name: Opprett release med Sentry
+        run: yarn sentry-release-ung
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
       - name: Build and push to docker registry
         uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@main
         id: docker-push

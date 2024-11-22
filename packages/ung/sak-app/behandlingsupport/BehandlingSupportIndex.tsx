@@ -1,6 +1,9 @@
+import { httpErrorHandler } from '@fpsak-frontend/utils';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
 import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
+import { apiPaths } from '@k9-sak-web/rest-api';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import {
   ArbeidsgiverOpplysningerWrapper,
@@ -8,6 +11,7 @@ import {
   Fagsak,
   FeatureToggles,
   NavAnsatt,
+  NotatResponse,
   Personopplysninger,
 } from '@k9-sak-web/types';
 import {
@@ -23,6 +27,8 @@ import {
   PersonGavelIcon,
 } from '@navikt/aksel-icons';
 import { BodyShort, Tabs, Tooltip } from '@navikt/ds-react';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getSupportPanelLocationCreator } from '../app/paths';
@@ -31,6 +37,7 @@ import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
 import HistorikkIndex from './historikk/HistorikkIndex';
 import MeldingIndex from './melding/MeldingIndex';
+import NotaterIndex from './notater/NotaterIndex';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
 
@@ -149,8 +156,12 @@ const BehandlingSupportIndex = ({
   behandlingRettigheter,
   personopplysninger,
   arbeidsgiverOpplysninger,
+  navAnsatt,
   featureToggles,
 }: OwnProps) => {
+  const { addErrorMessage } = useRestApiErrorDispatcher();
+  const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
+
   const k9SakClient = useContext(K9SakClientContext);
   const formidlingClient = useContext(FormidlingClientContext);
   const meldingerBackendClient = new MeldingerBackendClient(k9SakClient, formidlingClient);
@@ -166,6 +177,27 @@ const BehandlingSupportIndex = ({
     prevResetValue.current = currentResetValue;
   }, [currentResetValue]);
 
+  const getNotater = (signal: AbortSignal) =>
+    axios
+      .get<NotatResponse[]>(apiPaths.notatISakUng, {
+        signal,
+        params: {
+          saksnummer: fagsak.saksnummer,
+        },
+      })
+      .then(({ data }) => data)
+      .catch(error => {
+        httpErrorHandler(error?.response?.status, addErrorMessage, error?.response?.headers?.location);
+      });
+
+  const notaterQueryKey = ['notater', fagsak?.saksnummer];
+  const { data: notater } = useQuery({
+    queryKey: notaterQueryKey,
+    queryFn: ({ signal }) => getNotater(signal),
+    enabled: !!fagsak,
+    refetchOnWindowFocus: false,
+  });
+
   const lagTabs = (tilgjengeligeTabs: string[], valgtIndex?: number) =>
     Object.keys(TABS)
       .filter(key => tilgjengeligeTabs.includes(key))
@@ -173,8 +205,14 @@ const BehandlingSupportIndex = ({
         getSvg: TABS[key].getSvg,
         tooltip: TABS[key].tooltipTextCode,
         isActive: index === valgtIndex,
+        antallUlesteNotater,
         tabKey: TABS[key].tabKey,
       }));
+
+  useEffect(() => {
+    const ulesteNotater = (notater || []).filter(notat => !notat.skjult);
+    setAntallUlesteNotater(ulesteNotater?.length);
+  }, [notater]);
 
   const { selected: valgtSupportPanel, location } = useTrackRouteParam<string>({
     paramName: 'stotte',
@@ -210,7 +248,10 @@ const BehandlingSupportIndex = ({
 
   const valgtIndex = synligeSupportPaneler.findIndex(p => p === aktivtSupportPanel);
 
-  const tabs = useMemo(() => lagTabs(synligeSupportPaneler, valgtIndex), [synligeSupportPaneler, valgtIndex]);
+  const tabs = useMemo(
+    () => lagTabs(synligeSupportPaneler, valgtIndex),
+    [synligeSupportPaneler, valgtIndex, antallUlesteNotater],
+  );
 
   const isPanelDisabled = () => (valgtSupportPanel ? !valgbareSupportPaneler.includes(valgtSupportPanel) : false);
 
@@ -226,6 +267,7 @@ const BehandlingSupportIndex = ({
                 <Tooltip content={tab.tooltip}>
                   {tab.getSvg({
                     tooltip: tab.tooltip,
+                    antallUlesteNotater: tab.antallUlesteNotater,
                     isActive: tab.isActive,
                   })}
                 </Tooltip>
@@ -287,8 +329,10 @@ const BehandlingSupportIndex = ({
               behandlingVersjon={behandlingVersjon}
               fagsak={fagsak}
               behandlingUuid={behandling?.uuid}
-              featureToggles={featureToggles}
             />
+          </Tabs.Panel>
+          <Tabs.Panel value={SupportTabs.NOTATER}>
+            <NotaterIndex navAnsatt={navAnsatt} fagsak={fagsak} />
           </Tabs.Panel>
         </div>
       </div>
