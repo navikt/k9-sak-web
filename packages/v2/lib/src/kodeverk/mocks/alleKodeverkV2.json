@@ -188,6 +188,11 @@
       "kodeverk": "HISTORIKKINNSLAG_TYPE"
     },
     {
+      "kode": "INNTEKTSMELDING_FORESPURT",
+      "navn": "Systemet har varslet arbeidsgiver om at inntektsmelding må sendes inn.",
+      "kodeverk": "HISTORIKKINNSLAG_TYPE"
+    },
+    {
       "kode": "KØET_BEH_GJEN",
       "navn": "Køet behandling er gjenopptatt",
       "kodeverk": "HISTORIKKINNSLAG_TYPE"
