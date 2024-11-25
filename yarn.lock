@@ -3165,7 +3165,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.61.0
+    "@tanstack/react-query": ^5.61.3
     react: 18.3.1
     react-intl: 7.0.1
   languageName: unknown
@@ -3414,7 +3414,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@tanstack/react-query": ^5.61.0
+    "@tanstack/react-query": ^5.61.3
     react: 18.3.1
     react-intl: 7.0.1
   languageName: unknown
@@ -4349,7 +4349,7 @@ __metadata:
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
     dayjs: 1.11.13
-    msw: 2.6.5
+    msw: 2.6.6
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
@@ -4382,12 +4382,12 @@ __metadata:
     "@navikt/ds-react": 7.5.3
     "@navikt/ft-plattform-komponenter": 5.1.3
     "@popperjs/core": 2.11.8
-    "@tanstack/react-query": ^5.61.0
+    "@tanstack/react-query": ^5.61.3
     axios: 1.7.7
     classnames: 2.5.1
     cors: ^2.8.5
     dayjs: 1.11.13
-    msw: 2.6.5
+    msw: 2.6.6
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
@@ -4408,7 +4408,7 @@ __metadata:
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
     dayjs: 1.11.13
-    msw: 2.6.5
+    msw: 2.6.6
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
@@ -4432,7 +4432,7 @@ __metadata:
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
     dayjs: 1.11.13
-    msw: 2.6.5
+    msw: 2.6.6
     object-hash: 3.0.0
     react: 18.3.1
     react-collapse: 5.1.1
@@ -4505,7 +4505,7 @@ __metadata:
     "@k9-sak-web/lib": 1.0.0
     "@navikt/ft-form-validators": 2.5.5
     "@navikt/ft-utils": 2.5.2
-    "@tanstack/react-query": ^5.61.0
+    "@tanstack/react-query": ^5.61.3
     "@types/object-hash": ^3.0.6
     axios: 1.7.7
     object-hash: ^3.0.0
@@ -4829,7 +4829,7 @@ __metadata:
     "@navikt/ft-ui-komponenter": 2.6.3
     "@sentry/browser": 8.40.0
     "@sentry/react": ^8.40.0
-    "@tanstack/react-query": ^5.61.0
+    "@tanstack/react-query": ^5.61.3
     axios: 1.7.7
     classnames: 2.5.1
     history: 5.3.0
@@ -4856,7 +4856,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.61.0
+    "@tanstack/react-query": ^5.61.3
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
@@ -4912,7 +4912,7 @@ __metadata:
     "@navikt/ds-react": 7.5.3
     "@navikt/ft-form-hooks": 5.2.7
     "@navikt/ft-form-validators": 2.5.5
-    "@tanstack/react-query": ^5.61.0
+    "@tanstack/react-query": ^5.61.3
     date-fns: 4.1.0
     react: 18.3.1
     react-hook-form: 7.53.2
@@ -5728,66 +5728,66 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/cli-darwin@npm:2.38.2":
-  version: 2.38.2
-  resolution: "@sentry/cli-darwin@npm:2.38.2"
+"@sentry/cli-darwin@npm:2.39.0":
+  version: 2.39.0
+  resolution: "@sentry/cli-darwin@npm:2.39.0"
   conditions: os=darwin
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-arm64@npm:2.38.2":
-  version: 2.38.2
-  resolution: "@sentry/cli-linux-arm64@npm:2.38.2"
+"@sentry/cli-linux-arm64@npm:2.39.0":
+  version: 2.39.0
+  resolution: "@sentry/cli-linux-arm64@npm:2.39.0"
   conditions: (os=linux | os=freebsd) & cpu=arm64
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-arm@npm:2.38.2":
-  version: 2.38.2
-  resolution: "@sentry/cli-linux-arm@npm:2.38.2"
+"@sentry/cli-linux-arm@npm:2.39.0":
+  version: 2.39.0
+  resolution: "@sentry/cli-linux-arm@npm:2.39.0"
   conditions: (os=linux | os=freebsd) & cpu=arm
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-i686@npm:2.38.2":
-  version: 2.38.2
-  resolution: "@sentry/cli-linux-i686@npm:2.38.2"
+"@sentry/cli-linux-i686@npm:2.39.0":
+  version: 2.39.0
+  resolution: "@sentry/cli-linux-i686@npm:2.39.0"
   conditions: (os=linux | os=freebsd) & (cpu=x86 | cpu=ia32)
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-x64@npm:2.38.2":
-  version: 2.38.2
-  resolution: "@sentry/cli-linux-x64@npm:2.38.2"
+"@sentry/cli-linux-x64@npm:2.39.0":
+  version: 2.39.0
+  resolution: "@sentry/cli-linux-x64@npm:2.39.0"
   conditions: (os=linux | os=freebsd) & cpu=x64
   languageName: node
   linkType: hard
 
-"@sentry/cli-win32-i686@npm:2.38.2":
-  version: 2.38.2
-  resolution: "@sentry/cli-win32-i686@npm:2.38.2"
+"@sentry/cli-win32-i686@npm:2.39.0":
+  version: 2.39.0
+  resolution: "@sentry/cli-win32-i686@npm:2.39.0"
   conditions: os=win32 & (cpu=x86 | cpu=ia32)
   languageName: node
   linkType: hard
 
-"@sentry/cli-win32-x64@npm:2.38.2":
-  version: 2.38.2
-  resolution: "@sentry/cli-win32-x64@npm:2.38.2"
+"@sentry/cli-win32-x64@npm:2.39.0":
+  version: 2.39.0
+  resolution: "@sentry/cli-win32-x64@npm:2.39.0"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@sentry/cli@npm:2.38.2":
-  version: 2.38.2
-  resolution: "@sentry/cli@npm:2.38.2"
+"@sentry/cli@npm:2.39.0":
+  version: 2.39.0
+  resolution: "@sentry/cli@npm:2.39.0"
   dependencies:
-    "@sentry/cli-darwin": 2.38.2
-    "@sentry/cli-linux-arm": 2.38.2
-    "@sentry/cli-linux-arm64": 2.38.2
-    "@sentry/cli-linux-i686": 2.38.2
-    "@sentry/cli-linux-x64": 2.38.2
-    "@sentry/cli-win32-i686": 2.38.2
-    "@sentry/cli-win32-x64": 2.38.2
+    "@sentry/cli-darwin": 2.39.0
+    "@sentry/cli-linux-arm": 2.39.0
+    "@sentry/cli-linux-arm64": 2.39.0
+    "@sentry/cli-linux-i686": 2.39.0
+    "@sentry/cli-linux-x64": 2.39.0
+    "@sentry/cli-win32-i686": 2.39.0
+    "@sentry/cli-win32-x64": 2.39.0
     https-proxy-agent: ^5.0.0
     node-fetch: ^2.6.7
     progress: ^2.0.3
@@ -5810,7 +5810,7 @@ __metadata:
       optional: true
   bin:
     sentry-cli: bin/sentry-cli
-  checksum: 6f58c3fd4838b195b0424459b1f64db6b90b238e61283eeb5c0dd9c05ef0d16ed2ee72475108d3b9e9188b3e99575ee081d8003475096b385306f093c04cfb08
+  checksum: ee103617f25af9ccdc529b024df592995e0729afb6782602294807ce423b91fd649b6da3208acd604231f8ad48920e104cafdc746101fd5a0e2a826f5bb1453b
   languageName: node
   linkType: hard
 
@@ -6667,14 +6667,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.61.0":
-  version: 5.61.0
-  resolution: "@tanstack/react-query@npm:5.61.0"
+"@tanstack/react-query@npm:^5.61.3":
+  version: 5.61.3
+  resolution: "@tanstack/react-query@npm:5.61.3"
   dependencies:
     "@tanstack/query-core": 5.60.6
   peerDependencies:
     react: ^18 || ^19
-  checksum: e63e5676aa6afe262845f064fd2c1624393511f027aa04a41f204966f677f37a268979dde212cf145b7827b527b2d444ec1bb245b6079ac757e4522bf6f09e6f
+  checksum: cdfcd7efa57b324b7374b575f6f296f9daed2ff8163041d3c53dcb6e7a4910a3082aef257204bb68b2a1a1e202a46217313b8d14468c32a86c0a04514061d8f8
   languageName: node
   linkType: hard
 
@@ -13064,7 +13064,7 @@ __metadata:
     "@playwright/test": ^1.49.0
     "@popperjs/core": 2.11.8
     "@sentry/browser": 8.40.0
-    "@sentry/cli": 2.38.2
+    "@sentry/cli": 2.39.0
     "@sentry/react": ^8.40.0
     "@storybook/addon-a11y": ^8.4.5
     "@storybook/addon-actions": ^8.4.5
@@ -13106,7 +13106,7 @@ __metadata:
     i18n-iso-countries: 7.13.0
     jsdom: 25.0.1
     lint-staged: 15.2.10
-    msw: 2.6.5
+    msw: 2.6.6
     msw-storybook-addon: ^2.0.4
     node-cache: 5.1.2
     postcss: ^8.4.49
@@ -13123,7 +13123,7 @@ __metadata:
     stylelint-order: 6.0.4
     tailwindcss: ^3.4.15
     typed-css-modules: ^0.9.1
-    typescript: 5.6.3
+    typescript: 5.7.2
     typescript-eslint: ^7.18.0
     vite: ^5.4.11
     vite-plugin-html: ^3.2.2
@@ -13841,9 +13841,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw@npm:2.6.5":
-  version: 2.6.5
-  resolution: "msw@npm:2.6.5"
+"msw@npm:2.6.6":
+  version: 2.6.6
+  resolution: "msw@npm:2.6.6"
   dependencies:
     "@bundled-es-modules/cookie": ^2.0.1
     "@bundled-es-modules/statuses": ^1.0.1
@@ -13870,7 +13870,7 @@ __metadata:
       optional: true
   bin:
     msw: cli/index.js
-  checksum: 7396dd90fc021dba94daf194806ad9049dedfcf16017af1e4b8e58aef16e83e3c807baef6afc9b0b2f359f228cd31b46cfc3b43aab9cc7e1398841f63d1e8755
+  checksum: 803d60ca38fb8b3b35a81e5f95739ccb2a8935957f9a29e9baf3948fda1839e54a1164af305cbab1e75fa957f45258a609bc3ea5b1f97cb09a671a12e964ada8
   languageName: node
   linkType: hard
 
@@ -17336,23 +17336,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.6.3":
-  version: 5.6.3
-  resolution: "typescript@npm:5.6.3"
+"typescript@npm:5.7.2":
+  version: 5.7.2
+  resolution: "typescript@npm:5.7.2"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: ba302f8822777ebefb28b554105f3e074466b671e7444ec6b75dadc008a62f46f373d9e57ceced1c433756d06c8b7dc569a7eefdf3a9573122a49205ff99021a
+  checksum: b55300c4cefee8ee380d14fa9359ccb41ff8b54c719f6bc49b424899d662a5ce62ece390ce769568c7f4d14af844085255e63788740084444eb12ef423b13433
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@5.6.3#~builtin<compat/typescript>":
-  version: 5.6.3
-  resolution: "typescript@patch:typescript@npm%3A5.6.3#~builtin<compat/typescript>::version=5.6.3&hash=1f5320"
+"typescript@patch:typescript@5.7.2#~builtin<compat/typescript>":
+  version: 5.7.2
+  resolution: "typescript@patch:typescript@npm%3A5.7.2#~builtin<compat/typescript>::version=5.7.2&hash=1f5320"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: ade87bce2363ee963eed0e4ca8a312ea02c81873ebd53609bc3f6dc0a57f6e61ad7e3fb8cbb7f7ab8b5081cbee801b023f7c4823ee70b1c447eae050e6c7622b
+  checksum: 803430c6da2ba73c25a21880d8d4f08a56d9d2444e6db2ea949ac4abceeece8e4a442b7b9b585db7d8a0b47ebda2060e45fe8ee8b8aca23e27ec1d4844987ee6
   languageName: node
   linkType: hard
 
