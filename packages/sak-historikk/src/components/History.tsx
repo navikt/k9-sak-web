@@ -36,6 +36,7 @@ const velgHistorikkMal = (histType: Kodeverk) => {
     case historikkinnslagType.VEDLEGG_MOTTATT:
     case historikkinnslagType.BREV_SENT:
     case historikkinnslagType.BREV_BESTILT:
+    case historikkinnslagType.INNTEKTSMELDING_FORESPURT:
     case historikkinnslagType.REVURD_OPPR:
     case historikkinnslagType.MANGELFULL_SOKNAD:
     case historikkinnslagType.INNSYN_OPPR:
