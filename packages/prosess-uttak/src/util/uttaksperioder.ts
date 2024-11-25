@@ -14,19 +14,6 @@ const sjekkOmPerioderErKantIKant = (periode: Period, nestePeriode: Period) => {
   );
 };
 
-const injectInntektsgradering = (uttaksperioder, inntektsgraderinger) => {
-  uttaksperioder.forEach(uttaksperiode => {
-    uttaksperiode.inntektsgradering =
-      inntektsgraderinger === undefined
-        ? undefined
-        : inntektsgraderinger.find(
-            gradering =>
-              uttaksperiode.periode.fom === gradering.periode.fom &&
-              uttaksperiode.periode.tom === gradering.periode.tom,
-          );
-  });
-};
-
 const lagUttaksperiodeliste = (
   uttaksperioder: Uttaksperioder,
   inntektsgraderinger: Inntektsgradering[],
@@ -57,9 +44,19 @@ const lagUttaksperiodeliste = (
   /*
    * Injiserer data fra endepunktet for inntektsgradering inn i uttaksperiodene.
    */
-  injectInntektsgradering(reversertKronologiskSortertePerioder, inntektsgraderinger);
-
-  return reversertKronologiskSortertePerioder as UttaksperiodeMedInntektsgradering[];
+  return reversertKronologiskSortertePerioder.map(uttaksperiode => {
+    return {
+      ...uttaksperiode,
+      inntektsgradering:
+        inntektsgraderinger === undefined
+          ? undefined
+          : inntektsgraderinger.find(
+              gradering =>
+                uttaksperiode.periode.fom === gradering.periode.fom &&
+                uttaksperiode.periode.tom === gradering.periode.tom,
+            ),
+    };
+  });
 };
 
 export default lagUttaksperiodeliste;
