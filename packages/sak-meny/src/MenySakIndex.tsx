@@ -3,7 +3,7 @@ import openImage from '@fpsak-frontend/assets/images/pil_opp.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import { Button } from '@navikt/ds-react';
 import { BoxedListWithSelection, Popover } from '@navikt/ft-plattform-komponenter';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import MenyData from './MenyData';

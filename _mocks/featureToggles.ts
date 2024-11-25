@@ -97,4 +97,8 @@ export const featureTogglesFactory = () => [
     key: 'BRUK_INNTEKTSGRADERING_I_UTTAK',
     value: process.env.VITE_BRUK_INNTEKTSGRADERING_I_UTTAK,
   },
+  {
+    key: 'SAK_MENY_V2',
+    value: process.env.VITE_SAK_MENY_V2,
+  },
 ];
