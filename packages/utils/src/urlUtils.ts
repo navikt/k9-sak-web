@@ -40,7 +40,3 @@ export const buildPath = (path, params = {}) =>
     .filter(segment => segment !== '')
     .join('/')
     .trim();
-
-export const formatArray = array => array.join(',');
-
-export const parseArray = formattedArray => formattedArray.split(',');
