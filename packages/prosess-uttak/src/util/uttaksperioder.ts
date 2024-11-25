@@ -47,14 +47,13 @@ const lagUttaksperiodeliste = (
   return reversertKronologiskSortertePerioder.map(uttaksperiode => {
     return {
       ...uttaksperiode,
-      inntektsgradering:
-        inntektsgraderinger === undefined
-          ? undefined
-          : inntektsgraderinger.find(
-              gradering =>
-                uttaksperiode.periode.fom === gradering.periode.fom &&
-                uttaksperiode.periode.tom === gradering.periode.tom,
-            ),
+      inntektsgradering: !inntektsgraderinger
+        ? undefined
+        : inntektsgraderinger.find(
+            gradering =>
+              uttaksperiode.periode.fom === gradering.periode.fom &&
+              uttaksperiode.periode.tom === gradering.periode.tom,
+          ),
     };
   });
 };
