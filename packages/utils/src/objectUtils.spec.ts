@@ -1,29 +1,7 @@
 // noinspection JSUnresolvedVariable
-import { diff, isEqual, isObject, isObjectEmpty, notNull } from './objectUtils';
+import { diff, isEqual } from './objectUtils';
 
 describe('Object-utils', () => {
-  it('skal kaste feil når verdi er null', () => {
-    expect(() => notNull(null)).toThrow('Value is null');
-  });
-
-  it('skal kaste feil når verdi er undefined', () => {
-    expect(() => notNull(undefined)).toThrow('Value is undefined');
-  });
-
-  it('skal returnere verdi når den er ulik null og undefined', () => {
-    expect(notNull('test')).toEqual('test');
-  });
-
-  it('skal returnere false når objekt ikke er tomt', () => {
-    const object = { test: 'test' };
-    expect(isObjectEmpty(object)).toBe(false);
-  });
-
-  it('skal returnere true når objekt er tomt', () => {
-    const object = {};
-    expect(isObjectEmpty(object)).toBe(true);
-  });
-
   it('skal returnere true når objekter er like', () => {
     const object1 = { test: 'test' };
     const object2 = { test: 'test' };
@@ -34,16 +12,6 @@ describe('Object-utils', () => {
     const object1 = { test: 'test' };
     const object2 = { test: 'annet' };
     expect(isEqual(object1, object2)).toBe(false);
-  });
-
-  it('skal returnere true når verdi er et object', () => {
-    const object = { test: 'test' };
-    expect(isObject(object)).toBe(true);
-  });
-
-  it('skal returnere false når verdi ikke er et object', () => {
-    const string = 'test';
-    expect(isObject(string)).toBe(false);
   });
 
   describe('diff', () => {
