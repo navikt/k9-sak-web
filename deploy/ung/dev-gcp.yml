@@ -43,6 +43,8 @@ spec:
       value: "http://ung-sak"
     - name: APP_PORT
       value: "9005"
+    - name: ENDRINGSLOGG_URL
+      value: "https://familie-endringslogg.intern.nav.no/"
 
     # Feature-flag
     - name: KLAGE_KABAL
