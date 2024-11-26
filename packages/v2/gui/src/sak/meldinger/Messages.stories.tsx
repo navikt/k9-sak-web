@@ -14,7 +14,7 @@ import {
   type Mottaker,
   type UtilgjengeligÅrsak,
   utilgjengeligÅrsaker,
-} from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
+} from '@k9-sak-web/backend/k9formidling/models/Mottaker.ts';
 import { makeFakeExtendedApiError } from '../../storybook/mocks/fakeExtendedApiError.js';
 import { action } from '@storybook/addon-actions';
 import { StickyStateReducer } from '../../utils/StickyStateReducer.js';

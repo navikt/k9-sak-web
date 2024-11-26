@@ -3,11 +3,11 @@ import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/Fagsa
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.ts';
 import type { FormidlingClient } from '@k9-sak-web/backend/k9formidling/client/FormidlingClient.ts';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.ts';
-import { type AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.js';
+import { type AvsenderApplikasjon } from '@k9-sak-web/backend/k9formidling/models/AvsenderApplikasjon.ts';
 import {
   requestIntentionallyAborted,
   type RequestIntentionallyAborted,
-} from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
+} from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.ts';
 import type { EregOrganizationLookupResponse } from './EregOrganizationLookupResponse.js';
 
 export default class MeldingerBackendClient {

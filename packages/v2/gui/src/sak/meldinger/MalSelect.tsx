@@ -1,5 +1,5 @@
 import { Select } from '@navikt/ds-react';
-import { type Template } from '@k9-sak-web/backend/k9formidling/models/Template.js';
+import { type Template } from '@k9-sak-web/backend/k9formidling/models/Template.ts';
 
 interface MalSelectProps {
   readonly maler: Template[];
