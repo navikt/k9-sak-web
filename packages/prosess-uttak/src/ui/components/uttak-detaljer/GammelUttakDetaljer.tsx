@@ -17,7 +17,7 @@ import { beregnDagerTimer } from '../../../util/dateUtils';
 import { harÅrsak } from '../../../util/årsakUtils';
 import ContainerContext from '../../context/ContainerContext';
 import UttakUtregning from './UttakUtregning';
-import styles from './uttakDetaljer.module.css';
+import styles from './GammelUttakDetaljer.module.css';
 
 const cx = classNames.bind(styles);
 
@@ -234,7 +234,7 @@ interface UttakDetaljerProps {
   uttak: Uttaksperiode;
 }
 
-const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
+const GammelUttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
   const { arbeidsforhold, erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
   const {
     utbetalingsgrader,
@@ -280,4 +280,4 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
     </div>
   );
 };
-export default UttakDetaljer;
+export default GammelUttakDetaljer;
