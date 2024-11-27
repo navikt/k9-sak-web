@@ -1,12 +1,9 @@
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../../i18n/nb_NO.json';
+import { render, screen } from '@testing-library/react';
 import { FaktaSubmitButton } from './FaktaSubmitButton';
 
 describe('<FaktaSubmitButton>', () => {
   it('skal ikke vise knapp når readonly', () => {
-    renderWithIntlAndReduxForm(
+    render(
       <FaktaSubmitButton
         isReadOnly
         isSubmittable
@@ -17,14 +14,13 @@ describe('<FaktaSubmitButton>', () => {
         behandlingId={1}
         behandlingVersjon={2}
       />,
-      { messages },
     );
 
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });
 
   it('skal vise knapp som trykkbar når en kan avklare aksjonspunkt og en har gjort endringer', () => {
-    renderWithIntlAndReduxForm(
+    render(
       <FaktaSubmitButton
         isReadOnly={false}
         isSubmittable
@@ -35,14 +31,13 @@ describe('<FaktaSubmitButton>', () => {
         behandlingId={1}
         behandlingVersjon={2}
       />,
-      { messages },
     );
 
     expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).not.toBeDisabled();
   });
 
   it('skal vise knapp som utgrået når en ikke kan avklare aksjonspunkt', () => {
-    renderWithIntlAndReduxForm(
+    render(
       <FaktaSubmitButton
         isReadOnly={false}
         isSubmittable={false}
@@ -53,14 +48,13 @@ describe('<FaktaSubmitButton>', () => {
         behandlingId={1}
         behandlingVersjon={2}
       />,
-      { messages },
     );
 
     expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeDisabled();
   });
 
   it('skal vise knapp som utgrået når en har trykket på knapp', () => {
-    renderWithIntlAndReduxForm(
+    render(
       <FaktaSubmitButton
         isReadOnly={false}
         isSubmittable
@@ -71,14 +65,13 @@ describe('<FaktaSubmitButton>', () => {
         behandlingId={1}
         behandlingVersjon={2}
       />,
-      { messages },
     );
 
     expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeDisabled();
   });
 
   it('skal vise knapp som utgrået når en ikke har gjort endringer og det er tomme obligatoriske felter', () => {
-    renderWithIntlAndReduxForm(
+    render(
       <FaktaSubmitButton
         isReadOnly={false}
         isSubmittable
@@ -89,14 +82,13 @@ describe('<FaktaSubmitButton>', () => {
         behandlingId={1}
         behandlingVersjon={2}
       />,
-      { messages },
     );
 
     expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeDisabled();
   });
 
   it('skal vise knapp som trykkbar når en ikke har gjort endringer men alle obligatoriske felter er utfylte', () => {
-    renderWithIntlAndReduxForm(
+    render(
       <FaktaSubmitButton
         isReadOnly={false}
         isSubmittable
@@ -107,14 +99,13 @@ describe('<FaktaSubmitButton>', () => {
         behandlingId={1}
         behandlingVersjon={2}
       />,
-      { messages },
     );
 
     expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).not.toBeDisabled();
   });
 
   it('skal vise knapp som utgrået når en ikke har gjort endringer og aksjonspunktet er løst tidligere', () => {
-    renderWithIntlAndReduxForm(
+    render(
       <FaktaSubmitButton
         isReadOnly={false}
         isSubmittable
@@ -125,7 +116,6 @@ describe('<FaktaSubmitButton>', () => {
         behandlingId={1}
         behandlingVersjon={2}
       />,
-      { messages },
     );
 
     expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeDisabled();

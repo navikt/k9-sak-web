@@ -1,21 +1,8 @@
 import { TextAreaField } from '@fpsak-frontend/form';
 import { decodeHtmlEntity, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import React from 'react';
-import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import messages from '../../i18n/nb_NO.json';
 import styles from './faktaBegrunnelseTextField.module.css';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
@@ -48,10 +35,10 @@ const FaktaBegrunnelseTextField = ({
   hasVurderingText = false,
   name = 'begrunnelse',
 }: OwnProps) => {
-  const code = hasVurderingText ? 'FaktaBegrunnelseTextField.Vurdering' : 'FaktaBegrunnelseTextField.BegrunnEndringene';
-  const textAreaLabel = label || { id: code };
+  const defaultLabel = hasVurderingText ? 'Vurdering' : 'Begrunn endringene';
+  const textAreaLabel = label || defaultLabel;
   return (
-    <RawIntlProvider value={intl}>
+    <>
       {(isSubmittable || hasBegrunnelse) && (
         <div className={styles.begrunnelseTextField}>
           <TextAreaField
@@ -63,7 +50,7 @@ const FaktaBegrunnelseTextField = ({
           />
         </div>
       )}
-    </RawIntlProvider>
+    </>
   );
 };
 
