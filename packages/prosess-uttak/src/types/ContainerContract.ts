@@ -3,6 +3,7 @@ import { Aksjonspunkt } from '@k9-sak-web/types';
 import ArbeidsgiverOpplysninger from './ArbeidsgiverOpplysninger';
 import KodeverkMedNavn from './kodeverkMedNavnTsType';
 import Uttaksperioder from './Uttaksperioder';
+import { Inntektsgradering } from '.';
 
 interface ContainerContract {
   httpErrorHandler?: (status: number, locationHeader?: string) => void;
@@ -11,6 +12,7 @@ interface ContainerContract {
     behandlingUttakOverstyrt: string;
   };
   uttaksperioder: Uttaksperioder;
+  inntektsgraderinger?: Inntektsgradering[];
   perioderTilVurdering?: string[];
   utsattePerioder: string[];
   aktivBehandlingUuid: string;

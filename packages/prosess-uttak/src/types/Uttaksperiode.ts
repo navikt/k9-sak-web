@@ -1,3 +1,4 @@
+import { Periode } from '@k9-sak-web/types';
 import AnnenPart from '../constants/AnnenPart';
 import Utfall from '../constants/Utfall';
 import Årsaker from '../constants/Årsaker';
@@ -33,4 +34,26 @@ export interface Uttaksperiodeelement {
 export interface Uttaksperiode extends Uttaksperiodeelement {
   periode: Period;
   harOppholdTilNestePeriode?: boolean;
+}
+
+export interface Inntektsforhold {
+  arbeidsgiverIdentifikator: string;
+  arbeidstidprosent: number;
+  løpendeInntekt: number;
+  bruttoInntekt: number;
+  erNytt: boolean;
+  type: string;
+}
+export interface Inntektsgradering {
+  periode: Periode;
+  inntektsforhold: Inntektsforhold[];
+  beregningsgrunnlag: number;
+  løpendeInntekt: number;
+  bortfaltInntekt: number;
+  reduksjonsProsent: number;
+  graderingsProsent: number;
+}
+
+export interface UttaksperiodeMedInntektsgradering extends Uttaksperiode {
+  inntektsgradering?: Inntektsgradering | undefined;
 }

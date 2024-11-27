@@ -3,7 +3,7 @@ import { ErrorMessage, TextField } from '@navikt/ds-react';
 import {
   requestIntentionallyAborted,
   type RequestIntentionallyAborted,
-} from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.ts';
+} from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
 import type { utilgjengeligÅrsak } from '@k9-sak-web/backend/k9sak/generated';
 import styles from './TredjepartsmottakerInput.module.css';
 import type { EregOrganizationLookupResponse } from './EregOrganizationLookupResponse.js';

@@ -1,17 +1,4 @@
-const throwError = message => {
-  throw new Error(message);
-};
-
-export const notNull = value => (value === undefined || value === null ? throwError(`Value is ${value}`) : value);
-
-export const isObjectEmpty = object => Object.keys(object).length === 0;
-
 export const isEqual = (obj1, obj2) => JSON.stringify(obj1) === JSON.stringify(obj2);
-
-export const isObject = variable => variable !== undefined && variable !== null && variable.constructor === Object;
-
-export const isEqualToOneOf = (value, acceptedValues) =>
-  !acceptedValues.includes(value) ? throwError(`${value} is not one of ${acceptedValues}`) : value;
 
 export const omit = (object, ...keysToOmit) =>
   Object.keys(object)
@@ -69,12 +56,3 @@ export const diff = (a, b) => {
       return thing1 !== thing2;
   }
 };
-
-export const arrayToObject = (array, keyFunction, valueFunction) =>
-  array.reduce(
-    (acc, data) => ({
-      ...acc,
-      ...{ [keyFunction(data)]: valueFunction(data) },
-    }),
-    {},
-  );

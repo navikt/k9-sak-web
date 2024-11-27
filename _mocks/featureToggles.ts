@@ -93,4 +93,8 @@ export const featureTogglesFactory = () => [
     key: 'OPPTJENING_READ_ONLY_PERIODER',
     value: process.env.VITE_OPPTJENING_READ_ONLY_PERIODER,
   },
+  {
+    key: 'BRUK_INNTEKTSGRADERING_I_UTTAK',
+    value: process.env.VITE_BRUK_INNTEKTSGRADERING_I_UTTAK,
+  },
 ];
