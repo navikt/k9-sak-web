@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -31,7 +31,7 @@ export const DashboardResolver = ({ intl }: WrappedComponentProps) => {
         const url = getPathToK9Los();
         await axios.get(url); // Sjekk om LOS er oppe
         window.location.assign(url);
-      } catch (e) {
+      } catch {
         setLoading(false);
         addErrorMessage(intl.formatMessage({ id: 'DashboardResolver.FpLosErNede' }));
       }

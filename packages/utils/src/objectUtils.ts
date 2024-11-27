@@ -13,7 +13,7 @@ const redefineIfUndefined = (obj, otherObjOfType) => {
   if (isNullOrUndefined(obj) && isNotNullAndObject(otherObjOfType)) {
     try {
       return new otherObjOfType.constructor();
-    } catch (e) {
+    } catch {
       return null;
     }
   }

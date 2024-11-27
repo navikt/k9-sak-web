@@ -1,23 +1,23 @@
-import { act, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React from 'react';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
-import { combineReducers, createStore } from 'redux';
-import { reducer as formReducer } from 'redux-form';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import type { BehandlingAppKontekst, Brevmaler, Fagsak, FeatureToggles } from '@k9-sak-web/types';
 import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
+import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
+import { combineReducers, createStore } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 
 import type { ForhåndsvisDto } from '@k9-sak-web/backend/k9formidling/models/ForhåndsvisDto.js';
 import type { FritekstbrevDokumentdata } from '@k9-sak-web/backend/k9formidling/models/FritekstbrevDokumentdata.js';
+import { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { MeldingerSakIndexBackendApi } from '@k9-sak-web/sak-meldinger';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
-import MeldingIndex, { type BackendApi } from './MeldingIndex';
-import { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
+import MeldingIndex from './MeldingIndex';
 
 const mockHistoryPush = vi.fn();
 
@@ -117,7 +117,7 @@ describe('<MeldingIndex>', () => {
     ): Promise<FritekstbrevDokumentdata[]> {
       throw new Error('Not implemented for test');
     },
-  } satisfies BackendApi;
+  } satisfies MeldingerSakIndexBackendApi;
   /* eslint-enable */
 
   const meldingMal: SendMeldingPayload = {

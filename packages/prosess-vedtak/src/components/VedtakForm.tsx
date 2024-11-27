@@ -416,7 +416,7 @@ export const VedtakForm: React.FC<Props> = ({
         await getPreviewManuellBrevCallback(values);
         submitCallback(createPayload(values));
         return;
-      } catch (e) {
+      } catch {
         setErrorOnSubmit('Noe gikk galt ved innsending.');
         actions.setSubmitting(false);
         return;
@@ -440,7 +440,7 @@ export const VedtakForm: React.FC<Props> = ({
         await getPreviewAutomatiskBrevCallback(values)({ aapneINyttVindu: false })(undefined);
         submitCallback(createPayload(values));
         return;
-      } catch (e) {
+      } catch {
         setErrorOnSubmit('Noe gikk galt ved innsending.');
         actions.setSubmitting(false);
         return;
