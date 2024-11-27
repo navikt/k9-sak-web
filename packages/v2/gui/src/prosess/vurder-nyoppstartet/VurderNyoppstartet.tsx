@@ -1,5 +1,5 @@
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
-import { Box, Button, HStack, VStack } from '@navikt/ds-react';
+import { Alert, Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import { Datepicker, Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidDate, minLength, required } from '@navikt/ft-form-validators';
 import { useForm, useWatch } from 'react-hook-form';
@@ -7,7 +7,7 @@ import { useForm, useWatch } from 'react-hook-form';
 interface FormValues {
   begrunnelse: string;
   erNyoppstartet: boolean;
-  nyoppstartetFom: string;
+  fom: string;
 }
 
 interface SubmitValues extends FormValues {
@@ -15,59 +15,88 @@ interface SubmitValues extends FormValues {
 }
 
 interface VurderNyoppstartetProps {
-  submitCallback: (data: SubmitValues) => void;
+  submitCallback: (data: SubmitValues[]) => void;
+  harApneAksjonspunkter: boolean;
+  readOnly: boolean;
 }
 
-export const VurderNyoppstartet = ({ submitCallback }: VurderNyoppstartetProps) => {
+export const VurderNyoppstartet = ({ submitCallback, harApneAksjonspunkter, readOnly }: VurderNyoppstartetProps) => {
   const formMethods = useForm<FormValues>({
     defaultValues: {
       begrunnelse: '',
       erNyoppstartet: undefined,
-      nyoppstartetFom: '',
+      fom: '',
     },
   });
 
   const erNyoppstartet = useWatch({ control: formMethods.control, name: 'erNyoppstartet' });
 
   const onSubmit = (values: FormValues) => {
-    submitCallback({
-      ...values,
-      nyoppstartetFom: values.erNyoppstartet ? values.nyoppstartetFom : '',
-      kode: AksjonspunktCodes.VURDER_NYOPPSTARTET,
-    });
+    submitCallback([
+      {
+        ...values,
+        fom: values.erNyoppstartet ? values.fom : '',
+        kode: AksjonspunktCodes.VURDER_NYOPPSTARTET,
+        fortsettBehandling: true, // skal mest sannsynlig bort
+      },
+    ]);
   };
 
   return (
-    <Form<FormValues> formMethods={formMethods} onSubmit={onSubmit}>
-      <VStack gap="4">
-        <RadioGroupPanel
-          name="erNyoppstartet"
-          label="Er søker nyoppstartet?"
-          isTrueOrFalseSelection
-          radios={[
-            {
-              label: 'Ja',
-              value: 'true',
-            },
-            {
-              label: 'Nei',
-              value: 'false',
-            },
-          ]}
-          validate={[required]}
-        />
-        {erNyoppstartet && (
-          <Datepicker name="nyoppstartetFom" label="Dato for nyoppstartet" validate={[required, hasValidDate]} />
-        )}
-        <Box maxWidth="70ch">
-          <TextAreaField name="begrunnelse" label="Begrunnelse" validate={[required, minLength(3)]} maxLength={1500} />
-        </Box>
-        <HStack>
-          <Button type="submit" size="small">
-            Bekreft
-          </Button>
-        </HStack>
-      </VStack>
-    </Form>
+    <VStack gap="4">
+      <Heading level="1" size="medium">
+        Nyoppstartet
+      </Heading>
+      {harApneAksjonspunkter && (
+        <Alert size="small" variant="warning">
+          Vurder om søker er nyoppstartet
+        </Alert>
+      )}
+      <Form<FormValues> formMethods={formMethods} onSubmit={onSubmit}>
+        <VStack gap="4">
+          <RadioGroupPanel
+            name="erNyoppstartet"
+            label="Er søker nyoppstartet?"
+            isTrueOrFalseSelection
+            radios={[
+              {
+                label: 'Ja',
+                value: 'true',
+              },
+              {
+                label: 'Nei',
+                value: 'false',
+              },
+            ]}
+            validate={[required]}
+            isReadOnly={readOnly}
+          />
+          {erNyoppstartet && (
+            <Datepicker
+              name="fom"
+              label="Dato for nyoppstartet"
+              validate={[required, hasValidDate]}
+              isReadOnly={readOnly}
+            />
+          )}
+          <Box maxWidth="70ch">
+            <TextAreaField
+              name="begrunnelse"
+              label="Begrunnelse"
+              validate={[required, minLength(3)]}
+              maxLength={1500}
+              readOnly={readOnly}
+            />
+          </Box>
+          {!readOnly && (
+            <HStack>
+              <Button type="submit" size="small">
+                Bekreft
+              </Button>
+            </HStack>
+          )}
+        </VStack>
+      </Form>
+    </VStack>
   );
 };
