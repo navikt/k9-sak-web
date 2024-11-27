@@ -1,10 +1,8 @@
-import React from 'react';
-
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import MeldingerSakIndex, { type MeldingerSakIndexBackendApi } from '@k9-sak-web/sak-meldinger';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import MeldingerSakIndex, { type MeldingerSakIndexBackendApi } from '@k9-sak-web/sak-meldinger';
 import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
@@ -13,11 +11,9 @@ import {
   FeatureToggles,
   Personopplysninger,
 } from '@k9-sak-web/types';
-import { useFpSakKodeverk } from '../../data/useKodeverk';
-import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
 import { Alert } from '@navikt/ds-react';
-
-export interface BackendApi extends MeldingerSakIndexBackendApi {}
+import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
+import { useFpSakKodeverk } from '../../data/useKodeverk';
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -27,7 +23,7 @@ interface OwnProps {
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   readonly featureToggles?: FeatureToggles;
-  readonly backendApi: BackendApi;
+  readonly backendApi: MeldingerSakIndexBackendApi;
 }
 
 /**
