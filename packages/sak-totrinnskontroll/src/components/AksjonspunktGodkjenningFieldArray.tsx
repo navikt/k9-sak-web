@@ -92,7 +92,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
               return 'Brev';
             }
             return skjermlenkeTypeKodeverk.navn;
-          } catch (err) {
+          } catch {
             Sentry.captureEvent({
               message: 'Kunne ikke hente skjermlenkeTypeKodeverk.navn',
               extra: { skjermlenkeTyper, skjermlenkeTypeKodeverk, skjermlenkeTypeContext: context.skjermlenkeType },
