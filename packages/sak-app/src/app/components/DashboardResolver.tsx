@@ -29,8 +29,12 @@ export const DashboardResolver = ({ intl }: WrappedComponentProps) => {
     const gotoLosOrSetErrorMsg = async () => {
       try {
         const url = getPathToK9Los();
-        await axios.get(url); // Sjekk om LOS er oppe
-        window.location.assign(url);
+        if (url) {
+          await axios.get(url); // Sjekk om LOS er oppe
+          window.location.assign(url);
+        } else {
+          setLoading(false);
+        }
       } catch {
         setLoading(false);
         addErrorMessage(intl.formatMessage({ id: 'DashboardResolver.FpLosErNede' }));
