@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { BodyShort, Box, Detail, HelpText, HStack, Tag, VStack } from '@navikt/ds-react';
 import { beregnDagerTimer } from '../../../util/dateUtils';
-import { arbeidstypeTilVisning } from '../../../constants';
+import { Arbeidstype, arbeidstypeTilVisning } from '../../../constants';
 import { Utbetalingsgrad } from '../../../types';
 import classNames from 'classnames/bind';
 
@@ -50,10 +50,12 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
                   </Tag>
                 )}
               </BodyShort>
-              <BodyShort size="small" weight="semibold">
-                {arbeidsforholdData?.navn || 'Mangler navn'} (
-                {arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})
-              </BodyShort>
+              {arbeidsforhold.type !== Arbeidstype.FRILANSER && (
+                <BodyShort size="small" weight="semibold">
+                  {arbeidsforholdData?.navn || 'Mangler navn'} (
+                  {arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})
+                </BodyShort>
+              )}
               <BodyShort size="small">Normal arbeidstid: {beregnetNormalArbeidstid} timer</BodyShort>
               <BodyShort as="div" size="small" className={cx({ uttakDetaljer__beregningStrek: true })}>
                 <HStack gap="1">
