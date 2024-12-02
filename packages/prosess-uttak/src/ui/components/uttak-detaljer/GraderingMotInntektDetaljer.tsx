@@ -5,6 +5,7 @@ import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
 import { ArbeidsgiverOpplysninger, Inntektsgradering } from '../../../types';
 
 import styles from './nyUttakDetaljer.module.css';
+import { Arbeidstype } from '../../../constants';
 
 interface ownProps {
   alleArbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
@@ -48,10 +49,11 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
           const arbeidsforholdData = alleArbeidsforhold[arbeidsgiverIdentifikator];
           return (
             <React.Fragment key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_utbetalt`}>
-              <Box className={styles.uttakDetaljer__beregningFirma}>
+              <Box className={`${styles.uttakDetaljer__beregningFirma} p-1`}>
                 <BodyShort size="small" weight="semibold">
-                  {arbeidsforholdData?.navn || 'Mangler navn'} ( (
-                  {arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator}){' '}
+                  {inntForhold.type !== Arbeidstype.FRILANSER
+                    ? `${arbeidsforholdData?.navn || 'Mangler navn'} (${arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})`
+                    : 'Frilanser'}{' '}
                   {inntForhold.erNytt && (
                     <Tag size="small" variant="info">
                       Ny
