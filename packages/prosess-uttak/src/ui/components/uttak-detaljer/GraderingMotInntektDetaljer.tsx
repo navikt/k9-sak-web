@@ -13,7 +13,7 @@ interface ownProps {
 }
 
 const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntektsgradering }) => {
-  const { reduksjonsProsent, inntektsforhold } = inntektsgradering; // graderingsProsent
+  const { graderingsProsent, reduksjonsProsent, inntektsforhold } = inntektsgradering; // graderingsProsent
   const beregningsgrunnlag = tilNOK.format(inntektsgradering.beregningsgrunnlag);
   const løpendeInntekt = tilNOK.format(inntektsgradering.løpendeInntekt);
   const bortfaltInntekt = tilNOK.format(inntektsgradering.bortfaltInntekt);
@@ -102,7 +102,7 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
 
       <Box>
         <BodyShort as="div" className={styles.uttakDetaljer__detailSum} size="small">
-          = {reduksjonsProsent} % totalt inntektstap
+          = {graderingsProsent} % totalt inntektstap
         </BodyShort>
       </Box>
     </VStack>
