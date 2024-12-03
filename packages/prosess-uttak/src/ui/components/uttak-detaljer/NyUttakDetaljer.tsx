@@ -116,7 +116,7 @@ const NyUttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
    * henholdsvis GRADERT_MOT_TILSYN og AVKORTET_MOT_INNTEKT
    * AVKORTET_MOT_INNTEKT er årsaken som definerer om det er Gradert mot arbeidstid.
    */
-  const shouldHighlightInntekt = inntektsgradering;
+  const shouldHighlightInntekt = !!inntektsgradering;
   const shouldHighlightTilsyn = !shouldHighlightInntekt && shouldHighlight(Årsaker.GRADERT_MOT_TILSYN, årsaker);
   const shouldHighlightArbeidstid = !shouldHighlightInntekt && shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT, årsaker);
 
