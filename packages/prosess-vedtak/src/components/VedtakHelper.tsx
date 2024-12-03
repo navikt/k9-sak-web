@@ -1,33 +1,30 @@
 import moment from 'moment';
 import { createSelector } from 'reselect';
 
-import { isBGAksjonspunktSomGirFritekstfelt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
-import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils';
+import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { AvslagsårsakPrPeriodeDto, BeregningsgrunnlagPeriodeDto } from '@navikt/k9-sak-typescript-client';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
   tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT &&
   (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
 
 export const findTilbakekrevingText = createSelector(
-  [ownProps => ownProps.simuleringResultat, ownProps => ownProps.tilbakekrevingvalg, ownProps => ownProps.alleKodeverk],
-  (simuleringResultat, tilbakekrevingValg, alleKodeverk) => {
+  [
+    ownProps => ownProps.simuleringResultat,
+    ownProps => ownProps.tilbakekrevingvalg,
+    ownProps => ownProps.kodeverkNavnFraKode,
+  ],
+  (simuleringResultat, tilbakekrevingValg, kodeverkNavnFraKode) => {
     if (tilbakekrevingValg !== null && tilbakekrevingValg !== undefined) {
-      if (tilbakekrevingMedInntrekk(tilbakekrevingValg.videreBehandling.kode, simuleringResultat)) {
+      if (tilbakekrevingMedInntrekk(tilbakekrevingValg.videreBehandling, simuleringResultat)) {
         return 'VedtakForm.TilbakekrInfotrygdOgInntrekk';
       }
-      const getKodeverkNavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-      return getKodeverkNavn(tilbakekrevingValg.videreBehandling);
+      return kodeverkNavnFraKode(tilbakekrevingValg.videreBehandling, KodeverkType.TILBAKEKR_VIDERE_BEH);
     }
     return null;
   },
@@ -60,7 +57,7 @@ export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode, ytel
   return 'VedtakForm.VilkarStatusDelvisInnvilgetPleiepenger';
 };
 
-export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType) => {
+export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, ytelseType: string) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
   }
@@ -84,14 +81,10 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType
     return 'VedtakForm.VilkarStatusInnvilgetLivetsSluttfase';
   }
 
-  if (ytelseType === fagsakYtelseType.UNGDOMSYTELSE) {
-    return 'VedtakForm.VilkarStatusInnvilgetUngdomsytelse';
-  }
-
   return 'VedtakForm.VilkarStatusInnvilgetPleiepenger';
 };
 
-export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) => {
+export const findAvslagResultatText = (behandlingResultatTypeKode: string, ytelseType: string) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET) {
     return 'VedtakForm.ResultatKlageYtelsesvedtakOpphevet';
   }
@@ -119,63 +112,25 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
     return 'VedtakForm.LivetsSluttfaseIkkeInnvilget';
   }
 
-  if (ytelseType === fagsakYtelseType.UNGDOMSYTELSE) {
-    return 'VedtakForm.UngdomsytelseIkkeInnvilget';
-  }
-
   return 'VedtakForm.PleiepengerIkkeInnvilget';
 };
 
-export const hasIkkeOppfyltSoknadsfristvilkar = vilkar =>
-  vilkar.some(
-    v =>
-      v.vilkarType.kode === vilkarType.SOKNADFRISTVILKARET &&
-      Array.isArray(v.perioder) &&
-      v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT),
-  );
-
-export const medholdIKlage = klageVurderingResultat =>
-  klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurdering.MEDHOLD_I_KLAGE;
-
-export const hasKlageVurderingSomIkkeErAvvist = (klageVurderingResultatNFP, klageVurderingResultatNK) => {
-  const isKlageVurderingNfpAvvisKlage =
-    klageVurderingResultatNFP && klageVurderingResultatNFP.klageVurdering === klageVurdering.AVVIS_KLAGE;
-  const isKlageVurderingNkAvvisKlage =
-    klageVurderingResultatNK && klageVurderingResultatNK.klageVurdering === klageVurdering.AVVIS_KLAGE;
-  const isKlageVurderingNkMedholdKlage =
-    klageVurderingResultatNK && klageVurderingResultatNK.klageVurdering === klageVurdering.MEDHOLD_I_KLAGE;
-  return !(isKlageVurderingNfpAvvisKlage || isKlageVurderingNkAvvisKlage || isKlageVurderingNkMedholdKlage);
-};
-
-export const shouldGiveBegrunnelse = (klageVurderingResultatNK, klageVurderingResultatNFP, vilkar, behandlingStatus) =>
-  behandlingStatus === behandlingStatusCode.BEHANDLING_UTREDES &&
-  (hasIkkeOppfyltSoknadsfristvilkar(vilkar) ||
-    hasKlageVurderingSomIkkeErAvvist(klageVurderingResultatNFP, klageVurderingResultatNK));
-
-export const skalSkriveFritekstGrunnetFastsettingAvBeregning = (beregningsgrunnlag, aksjonspunkter) => {
-  if (!beregningsgrunnlag || !aksjonspunkter || beregningsgrunnlag.length === 0) {
-    return false;
-  }
-  const behandlingHarLøstBGAP = aksjonspunkter.find(
-    ap => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon.kode) && ap.status.kode === aksjonspunktStatus.UTFORT,
-  );
-
-  const alleAndelerFørstePerioder = beregningsgrunnlag
-    .map(bg => bg.beregningsgrunnlagPeriode[0])
-    .flatMap(periode => periode.beregningsgrunnlagPrStatusOgAndel);
-  const andelSomErManueltFastsatt = alleAndelerFørstePerioder.find(
-    andel => andel.overstyrtPrAar || andel.overstyrtPrAar === 0,
-  );
-  return !!behandlingHarLøstBGAP || !!andelSomErManueltFastsatt;
-};
-
-export const finnSistePeriodeMedAvslagsårsakBeregning = (perioderMedAvslag, bgPerioder) => {
+export const finnSistePeriodeMedAvslagsårsakBeregning = (
+  perioderMedAvslag: AvslagsårsakPrPeriodeDto[],
+  bgPerioder: BeregningsgrunnlagPeriodeDto[],
+) => {
   if (!perioderMedAvslag || perioderMedAvslag.length < 1) {
     return null;
   }
   const kronologiskeBGPerioder = bgPerioder
     .filter(periode => periode.beregningsgrunnlagPeriodeTom !== TIDENES_ENDE)
-    .sort((a, b) => moment(a.beregningsgrunnlagPeriodeFom) - moment(b.beregningsgrunnlagPeriodeFom));
+    .sort((a, b) => {
+      const dateA = moment(a.beregningsgrunnlagPeriodeFom);
+      const dateB = moment(b.beregningsgrunnlagPeriodeFom);
+      if (dateA.isBefore(dateB)) return -1;
+      if (dateA.isAfter(dateB)) return 1;
+      return 0;
+    });
   if (kronologiskeBGPerioder.length < 1) {
     return null;
   }

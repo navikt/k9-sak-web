@@ -1,13 +1,11 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { BodyShort, Label } from '@navikt/ds-react';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 
 import styles from './vedtakForm.module.css';
 
-const findHelpTexts = (intl, aksjonspunktKoder) => {
+const findHelpTexts = (intl: IntlShape, aksjonspunktKoder: string[]) => {
   const helpTexts = [];
   if (aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_ANNEN_YTELSE)) {
     helpTexts.push(intl.formatMessage({ id: 'VedtakForm.VurderAnnenYtelse' }));
@@ -25,11 +23,22 @@ const findHelpTexts = (intl, aksjonspunktKoder) => {
   return helpTexts;
 };
 
+interface VedtakHelpTextPanelProps {
+  readOnly: boolean;
+  aksjonspunktKoder: string[];
+  viseFlereSjekkbokserForBrev: boolean;
+}
+
 /**
  * Det er i denne filen teksten vises ...
  */
 
-export const VedtakHelpTextPanelImpl = ({ intl, readOnly, aksjonspunktKoder, viseFlereSjekkbokserForBrev }) => {
+export const VedtakHelpTextPanelImpl = ({
+  intl,
+  readOnly,
+  aksjonspunktKoder,
+  viseFlereSjekkbokserForBrev,
+}: VedtakHelpTextPanelProps & WrappedComponentProps) => {
   const helpTexts = findHelpTexts(intl, aksjonspunktKoder);
   if (!readOnly && helpTexts.length > 0) {
     return (
@@ -58,13 +67,6 @@ export const VedtakHelpTextPanelImpl = ({ intl, readOnly, aksjonspunktKoder, vis
     );
   }
   return null;
-};
-
-VedtakHelpTextPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  aksjonspunktKoder: PropTypes.arrayOf(PropTypes.string).isRequired,
-  viseFlereSjekkbokserForBrev: PropTypes.bool,
 };
 
 export default injectIntl(VedtakHelpTextPanelImpl);

@@ -1,6 +1,5 @@
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { HGrid, Heading } from '@navikt/ds-react';
 import React from 'react';
 import { IntlShape, injectIntl } from 'react-intl';
@@ -18,7 +17,7 @@ interface Props {
   aksjonspunktKoder: string[];
   readOnly: boolean;
   overlappendeYtelser;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  // alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   viseFlereSjekkbokserForBrev: boolean;
   harVurdertOverlappendeYtelse: boolean;
   setHarVurdertOverlappendeYtelse: (harVurdertOverlappendeYtelse: boolean) => void;
@@ -33,7 +32,7 @@ export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
   aksjonspunktKoder,
   readOnly,
   overlappendeYtelser,
-  alleKodeverk,
+  // alleKodeverk,
   viseFlereSjekkbokserForBrev,
   harVurdertOverlappendeYtelse,
   setHarVurdertOverlappendeYtelse,
@@ -55,7 +54,7 @@ export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
         )}
         {harOverlappendeYtelser && (
           <VedtakOverlappendeYtelsePanel
-            alleKodeverk={alleKodeverk}
+            // alleKodeverk={alleKodeverk}
             overlappendeYtelser={overlappendeYtelser}
             harVurdertOverlappendeYtelse={harVurdertOverlappendeYtelse}
             setHarVurdertOverlappendeYtelse={setHarVurdertOverlappendeYtelse}

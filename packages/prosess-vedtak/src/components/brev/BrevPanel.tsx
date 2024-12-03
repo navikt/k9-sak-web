@@ -15,10 +15,11 @@ import {
   kanOverstyreMottakere,
   lagVisningsnavnForMottaker,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { ArbeidsgiverOpplysningerPerId, Behandlingsresultat, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Alert, ErrorMessage } from '@navikt/ds-react';
 
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
+import { BehandlingsresultatDto, PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
 import { FormikProps, setNestedObjectValues, useField } from 'formik';
 import React, { useState } from 'react';
 import { IntlShape, injectIntl } from 'react-intl';
@@ -138,28 +139,28 @@ const getHentHtmlMalCallback =
   };
 
 interface BrevPanelProps {
-  intl: IntlShape;
-  readOnly: boolean;
-  sprakkode: Kodeverk;
-  personopplysninger: Personopplysninger;
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
-  informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
-  informasjonsbehovValues: any[];
-  skalBrukeOverstyrendeFritekstBrev: boolean;
-  begrunnelse: string;
-  previewCallback: (values, aapneINyttVindu) => void;
-  hentFritekstbrevHtmlCallback: (parameters: any) => any;
-  brødtekst: string;
-  overskrift: string;
-  behandlingResultat: Behandlingsresultat;
-  overstyrtMottaker?: Brevmottaker;
-  formikProps: FormikProps<any>;
-  ytelseTypeKode: string;
-  dokumentdata: DokumentDataType;
   aktiverteInformasjonsbehov: any;
-  lagreDokumentdata: (any) => void;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  begrunnelse: string;
+  behandlingResultat: BehandlingsresultatDto;
+  brødtekst: string;
+  dokumentdata: DokumentDataType;
+  formikProps: FormikProps<any>;
   getPreviewAutomatiskBrevCallback: (any) => (any) => (event: React.SyntheticEvent<Element, Event>) => void;
+  hentFritekstbrevHtmlCallback: (parameters: any) => any;
+  informasjonsbehovValues: any[];
+  informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
+  intl: IntlShape;
+  lagreDokumentdata: (any) => void;
+  overskrift: string;
+  overstyrtMottaker?: Brevmottaker;
+  personopplysninger: PersonopplysningDto;
+  previewCallback: (values, aapneINyttVindu) => void;
+  readOnly: boolean;
+  skalBrukeOverstyrendeFritekstBrev: boolean;
+  sprakkode: string;
+  tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
+  ytelseTypeKode: string;
 }
 
 export const BrevPanel: React.FC<BrevPanelProps> = props => {

@@ -4,7 +4,7 @@ import { FlexColumn, FlexContainer, FlexRow, Tooltip, VerticalSpacer } from '@fp
 import { Adresser, getAddresses, getKodeverknavnFn, getLanguageFromSprakkode } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 import { BodyShort, Label, Tag } from '@navikt/ds-react';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
 import styles from './visittkortDetaljerPopup.module.css';
@@ -92,7 +92,7 @@ const VisittkortDetaljerPopup = ({
           <FlexColumn>
             <Tooltip content={intl.formatMessage({ id: 'VisittkortDetaljerPopup.Malform.Beskrivelse' })} alignBottom>
               <Tag variant="info" className={styles.etikett} size="small">
-                {getLanguageFromSprakkode(sprakkode)}
+                {getLanguageFromSprakkode(sprakkode?.kode)}
               </Tag>
             </Tooltip>
           </FlexColumn>

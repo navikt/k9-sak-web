@@ -1,12 +1,13 @@
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { BodyShort, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { BeregningResultat } from '../../types/BeregningResultat';
+import { VedtakVarsel } from '../../types/VedtakVarsel';
 
 const ytelseNavnMap = kode => {
   switch (kode) {
@@ -21,7 +22,22 @@ const ytelseNavnMap = kode => {
   }
 };
 
-export const VedtakOpphorRevurderingPanelImpl = ({ intl, opphoersdato = '', ytelseTypeKode }) => (
+interface VedtakOpphorRevurderingPanelProps {
+  ytelseTypeKode: string;
+  resultatstruktur: BeregningResultat;
+  medlemskapFom: string;
+  vedtakVarsel: VedtakVarsel;
+}
+
+interface OwnState {
+  opphoersdato?: string;
+}
+
+export const VedtakOpphorRevurderingPanelImpl = ({
+  intl,
+  opphoersdato = '',
+  ytelseTypeKode,
+}: VedtakOpphorRevurderingPanelProps & OwnState & WrappedComponentProps) => (
   <div data-testid="opphorRevurdering">
     <Label size="small" as="p">
       {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
@@ -50,12 +66,6 @@ export const VedtakOpphorRevurderingPanelImpl = ({ intl, opphoersdato = '', ytel
   </div>
 );
 
-VedtakOpphorRevurderingPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  opphoersdato: PropTypes.string,
-  ytelseTypeKode: PropTypes.string.isRequired,
-};
-
 const getOpphorsdato = createSelector(
   [ownProps => ownProps.resultatstruktur, ownProps => ownProps.medlemskapFom, ownProps => ownProps.vedtakVarsel],
   (resultatstruktur, medlemskapFom, vedtakVarsel) => {
@@ -69,7 +79,7 @@ const getOpphorsdato = createSelector(
   },
 );
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, ownProps: VedtakOpphorRevurderingPanelProps) => ({
   opphoersdato: getOpphorsdato(ownProps),
 });
 

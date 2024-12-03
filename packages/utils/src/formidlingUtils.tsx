@@ -1,14 +1,18 @@
-import { ArbeidsgiverOpplysningerPerId, Behandling, Personopplysninger } from '@k9-sak-web/types';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
-import { dokumentdatatype } from '@k9-sak-web/konstanter';
-import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
-import { bestemAvsenderApp as v2BestemAvsenderApp } from '@k9-sak-web/gui/utils/formidling.js';
 import { isBehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
+import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import type { BehandlingInfo } from '@k9-sak-web/gui/sak/BehandlingInfo.js';
 import type { Fagsak } from '@k9-sak-web/gui/sak/Fagsak.js';
 import { lagVisningsnavnForMottaker as v2LagvisningsnavnForMottaker } from '@k9-sak-web/gui/sak/meldinger/MottakerSelect.js';
-import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
+import {
+  ArbeidsgiverOpplysningerPerId,
+  Personopplysninger,
+  bestemAvsenderApp as v2BestemAvsenderApp,
+} from '@k9-sak-web/gui/utils/formidling.js';
+import { dokumentdatatype } from '@k9-sak-web/konstanter';
+import { Behandling } from '@k9-sak-web/types';
+import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
 
 export interface VedtaksbrevMal {
   dokumentMalType: string;

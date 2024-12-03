@@ -1,15 +1,27 @@
 import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
 import { CheckboxGroup } from '@navikt/ds-react';
-import PropTypes from 'prop-types';
-import React from 'react';
+import { IntlShape } from 'react-intl';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 import styles from './vedtakRedusertUtbetalingArsaker.module.css';
 
-const VedtakRedusertUtbetalingArsaker = ({ intl, readOnly, values, erSendtInnUtenArsaker }) => {
+interface VedtakRedusertUtbetalingArsakerProps {
+  intl: IntlShape;
+  readOnly: boolean;
+  values: Map<any, any>;
+  erSendtInnUtenArsaker: boolean;
+}
+
+const VedtakRedusertUtbetalingArsaker = ({
+  intl,
+  readOnly,
+  values,
+  erSendtInnUtenArsaker,
+}: VedtakRedusertUtbetalingArsakerProps) => {
   const ingenArsakErValgt = !Array.from(values.values()).includes(true);
 
   return (
     <CheckboxGroup
+      legend=""
       className={styles.wrapper}
       error={
         erSendtInnUtenArsaker &&
@@ -24,18 +36,10 @@ const VedtakRedusertUtbetalingArsaker = ({ intl, readOnly, values, erSendtInnUte
           key={name}
           label={{ id: `VedtakForm.RedusertUtbetalingArsak.${name}` }}
           disabled={readOnly}
-          checked={values[name]}
         />
       ))}
     </CheckboxGroup>
   );
-};
-
-VedtakRedusertUtbetalingArsaker.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  values: PropTypes.instanceOf(Map),
-  erSendtInnUtenArsaker: PropTypes.bool.isRequired,
 };
 
 export default VedtakRedusertUtbetalingArsaker;

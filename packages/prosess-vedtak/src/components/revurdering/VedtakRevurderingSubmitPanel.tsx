@@ -1,20 +1,18 @@
 import { Button, ErrorMessage } from '@navikt/ds-react';
-import React from 'react';
-import { IntlShape, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Aksjonspunkt } from '@k9-sak-web/types';
 
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 
+import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import styles from '../vedtakForm.module.css';
 
 interface OwnProps {
-  intl: IntlShape;
   formikValues: any;
   readOnly: boolean;
   harRedusertUtbetaling: boolean;
@@ -22,8 +20,8 @@ interface OwnProps {
   behandlingStatusKode: string;
   isSubmitting: boolean;
   handleSubmit: (event: any) => void;
-  aksjonspunkter: Aksjonspunkt[];
-  errorOnSubmit: boolean;
+  aksjonspunkter: AksjonspunktDto[];
+  errorOnSubmit: string;
 }
 
 export const submitKnappTekst = aksjonspunkter =>
@@ -42,7 +40,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   handleSubmit,
   aksjonspunkter,
   errorOnSubmit,
-}: OwnProps): JSX.Element => {
+}: OwnProps & WrappedComponentProps): JSX.Element => {
   const onClick = event =>
     !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formikValues[a])
       ? handleSubmit(event)
@@ -98,7 +96,7 @@ const erArsakTypeBehandlingEtterKlage = createSelector(
       ),
 );
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, ownProps: OwnProps) => ({
   erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(ownProps),
 });
 

@@ -1,24 +1,66 @@
-import React, { useState } from 'react';
-// eslint-disable-next-line import/no-duplicates
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 import { Alert, Button } from '@navikt/ds-react';
 
-// eslint-disable-next-line import/no-duplicates
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
-import vedtakAksjonspunkterPropType from '../propTypes/vedtakAksjonspunkterPropType';
-import vedtakBeregningsgrunnlagPropType from '../propTypes/vedtakBeregningsgrunnlagPropType';
-import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
-import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
-import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
+import {
+  AksjonspunktDto,
+  BehandlingsresultatDto,
+  BehandlingÅrsakDto,
+  DokumentMedUstrukturerteDataDto,
+  OverlappendeYtelseDto,
+  PersonopplysningDto,
+  TilbakekrevingValgDto,
+  VilkårMedPerioderDto,
+} from '@navikt/k9-sak-typescript-client';
+import { BeregningResultat } from '../types/BeregningResultat';
+import { Beregningsgrunnlag } from '../types/Beregningsgrunnlag';
+import { LagreDokumentdataType } from '../types/Dokumentdata';
+import { VedtakSimuleringResultat } from '../types/VedtakSimuleringResultat';
+import { VedtakVarsel } from '../types/VedtakVarsel';
+import { Vedtaksbrev } from '../types/Vedtaksbrev';
 import VedtakForm from './VedtakForm';
 import { finnSistePeriodeMedAvslagsårsakBeregning } from './VedtakHelper';
 import VedtakSjekkTilbakekreving from './VedtakSjekkTilbakekreving';
+import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
+
+interface VedtakPanelsProps {
+  aksjonspunkter: AksjonspunktDto[];
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  behandlingArsaker: BehandlingÅrsakDto[];
+  behandlingPaaVent: boolean;
+  behandlingresultat: BehandlingsresultatDto;
+  behandlingStatus: string;
+  behandlingTypeKode: string;
+  beregningsgrunnlag: Beregningsgrunnlag[];
+  dokumentdata: any;
+  employeeHasAccess: boolean;
+  fritekstdokumenter: DokumentMedUstrukturerteDataDto[];
+  hentFritekstbrevHtmlCallback: () => void;
+  informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
+  lagreDokumentdata: LagreDokumentdataType;
+  medlemskapFom: string | undefined;
+  overlappendeYtelser: Array<OverlappendeYtelseDto>;
+  personopplysninger: PersonopplysningDto;
+  previewCallback: () => void;
+  readOnly: boolean;
+  resultatstruktur: BeregningResultat;
+  resultatstrukturOriginalBehandling: object;
+  sendVarselOmRevurdering?: boolean;
+  simuleringResultat: VedtakSimuleringResultat;
+  sprakkode: string;
+  submitCallback: (data) => void;
+  tilbakekrevingvalg: TilbakekrevingValgDto;
+  tilgjengeligeVedtaksbrev: Vedtaksbrev;
+  vedtakVarsel: VedtakVarsel;
+  vilkar: VilkårMedPerioderDto[];
+  ytelseTypeKode: string;
+}
 
 /*
  * VedtakPanels
@@ -31,8 +73,6 @@ const VedtakPanels = ({
   hentFritekstbrevHtmlCallback,
   submitCallback,
   behandlingTypeKode,
-  behandlingId,
-  behandlingVersjon,
   behandlingresultat,
   sprakkode,
   behandlingStatus,
@@ -44,8 +84,7 @@ const VedtakPanels = ({
   medlemskapFom,
   aksjonspunkter,
   ytelseTypeKode,
-  employeeHasAccess,
-  alleKodeverk,
+  // alleKodeverk,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
   vilkar,
@@ -58,7 +97,7 @@ const VedtakPanels = ({
   fritekstdokumenter,
   lagreDokumentdata,
   overlappendeYtelser,
-}) => {
+}: VedtakPanelsProps) => {
   const [redigerSjekkTilbakekreving, setRedigerSjekkTilbakekreving] = useState(false);
   const toggleSjekkTilbakekreving = () => setRedigerSjekkTilbakekreving(!redigerSjekkTilbakekreving);
 
@@ -74,18 +113,18 @@ const VedtakPanels = ({
 
   const skalViseSjekkTilbakekreving = !!aksjonspunkter.find(
     ap =>
-      ap.definisjon.kode === aksjonspunktCodes.SJEKK_TILBAKEKREVING &&
+      ap.definisjon === aksjonspunktCodes.SJEKK_TILBAKEKREVING &&
       ap.erAktivt &&
       ap.kanLoses &&
-      ap.status.kode === aksjonspunktStatus.OPPRETTET,
+      ap.status === aksjonspunktStatus.OPPRETTET,
   );
 
   const skalKunneRedigereSjekkTilbakekreving = !!aksjonspunkter.find(
     ap =>
-      ap.definisjon.kode === aksjonspunktCodes.SJEKK_TILBAKEKREVING &&
+      ap.definisjon === aksjonspunktCodes.SJEKK_TILBAKEKREVING &&
       ap.erAktivt &&
       ap.kanLoses &&
-      ap.status.kode === aksjonspunktStatus.UTFORT,
+      ap.status === aksjonspunktStatus.UTFORT,
   );
 
   if (skalViseSjekkTilbakekreving || redigerSjekkTilbakekreving)
@@ -115,8 +154,6 @@ const VedtakPanels = ({
         readOnly={readOnly}
         previewCallback={previewCallback}
         hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
         behandlingresultat={behandlingresultat}
         behandlingStatus={behandlingStatus}
         sprakkode={sprakkode}
@@ -127,8 +164,7 @@ const VedtakPanels = ({
         behandlingArsaker={behandlingArsaker}
         aksjonspunkter={aksjonspunkter}
         ytelseTypeKode={ytelseTypeKode}
-        kanOverstyre={employeeHasAccess}
-        alleKodeverk={alleKodeverk}
+        // alleKodeverk={alleKodeverk}
         personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         vilkar={vilkar}
@@ -146,43 +182,6 @@ const VedtakPanels = ({
       />
     </>
   );
-};
-
-VedtakPanels.propTypes = {
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  behandlingresultat: PropTypes.shape().isRequired,
-  sprakkode: kodeverkObjektPropType.isRequired,
-  behandlingStatus: kodeverkObjektPropType.isRequired,
-  behandlingPaaVent: PropTypes.bool.isRequired,
-  behandlingArsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  tilbakekrevingvalg: PropTypes.shape(),
-  simuleringResultat: PropTypes.shape(),
-  resultatstruktur: vedtakBeregningsresultatPropType,
-  medlemskapFom: PropTypes.string,
-  aksjonspunkter: PropTypes.arrayOf(vedtakAksjonspunkterPropType).isRequired,
-  ytelseTypeKode: PropTypes.string.isRequired,
-  employeeHasAccess: PropTypes.bool.isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
-  personopplysninger: PropTypes.shape(),
-  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
-  vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
-  resultatstrukturOriginalBehandling: vedtakBeregningsresultatPropType,
-  readOnly: PropTypes.bool.isRequired,
-  previewCallback: PropTypes.func.isRequired,
-  submitCallback: PropTypes.func.isRequired,
-  behandlingTypeKode: PropTypes.string.isRequired,
-  beregningsgrunnlag: PropTypes.arrayOf(vedtakBeregningsgrunnlagPropType),
-  vedtakVarsel: vedtakVarselPropType,
-  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
-  informasjonsbehovVedtaksbrev: PropTypes.shape({
-    informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
-  }),
-  dokumentdata: PropTypes.shape(),
-  fritekstdokumenter: PropTypes.arrayOf(PropTypes.shape()),
-  lagreDokumentdata: PropTypes.func.isRequired,
-  overlappendeYtelser: PropTypes.arrayOf(PropTypes.shape()),
-  hentFritekstbrevHtmlCallback: PropTypes.func.isRequired,
 };
 
 export default VedtakPanels;

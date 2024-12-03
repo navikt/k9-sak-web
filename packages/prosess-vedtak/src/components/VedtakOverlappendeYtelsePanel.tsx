@@ -2,7 +2,10 @@ import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import Tidslinje from '@fpsak-frontend/tidslinje/src/components/pleiepenger/Tidslinje';
 import Periode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
 import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
-import { KodeverkMedNavn, OverlappendePeriode } from '@k9-sak-web/types';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types/KodeverkV2.js';
+import { OverlappendePeriode } from '@k9-sak-web/types';
 import { Accordion, Alert, BodyLong, Checkbox, CheckboxGroup, Heading, Tag } from '@navikt/ds-react';
 import { useFormikContext } from 'formik';
 import React from 'react';
@@ -12,31 +15,38 @@ import styles from './VedtakOverlappendeYtelsePanel.module.css';
 
 interface Props {
   overlappendeYtelser: any;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  // alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   harVurdertOverlappendeYtelse: boolean;
   setHarVurdertOverlappendeYtelse: (harVurdertOverlappendeYtelse: boolean) => void;
 }
 
 const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = ({
   overlappendeYtelser,
-  alleKodeverk,
+  // alleKodeverk,
   intl,
   harVurdertOverlappendeYtelse,
   setHarVurdertOverlappendeYtelse,
 }) => {
+  const { hentKodeverkForKode } = useKodeverkContext();
   const [valgtPeriode, setValgtPeriode] = React.useState<Periode<OverlappendePeriode> | null>(null);
   const { submitCount } = useFormikContext();
 
   const utledYtelseType = (ytelseTypeKode: string) => {
-    if (alleKodeverk.FagsakYtelseType && alleKodeverk.FagsakYtelseType.length > 0) {
-      return alleKodeverk.FagsakYtelseType.find(ytelseType => ytelseType.kode === ytelseTypeKode).navn;
+    const fagsakYtelseTyper = hentKodeverkForKode(KodeverkType.FAGSAK_YTELSE);
+    if (fagsakYtelseTyper && Array.isArray(fagsakYtelseTyper) && fagsakYtelseTyper.length > 0) {
+      const fagsakYtelseType = fagsakYtelseTyper.find(
+        (ytelseType: KodeverkObject) => ytelseType.kode === ytelseTypeKode,
+      );
+      return typeof fagsakYtelseType !== 'string' ? fagsakYtelseType.navn : ytelseTypeKode;
     }
     return ytelseTypeKode;
   };
 
   const utledFagSystem = (fagSystemKode: string) => {
-    if (alleKodeverk.Fagsystem && alleKodeverk.Fagsystem.length > 0) {
-      return alleKodeverk.Fagsystem.find(system => system.kode === fagSystemKode).navn;
+    const fagSystemer = hentKodeverkForKode(KodeverkType.FAGSYSTEM);
+    if (fagSystemer && Array.isArray(fagSystemer) && fagSystemer.length > 0) {
+      const fagSystem = fagSystemer.find((system: KodeverkObject) => system.kode === fagSystemKode);
+      return typeof fagSystem !== 'string' ? fagSystem.navn : fagSystemKode;
     }
     return fagSystemKode;
   };
