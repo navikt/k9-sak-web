@@ -1,6 +1,6 @@
 import { Location } from 'history';
 import React, { Suspense, useCallback, useEffect, useMemo } from 'react';
-import { NavigateFunction, useLocation, useNavigate } from 'react-router-dom';
+import { NavigateFunction, useLocation, useNavigate } from 'react-router';
 
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';

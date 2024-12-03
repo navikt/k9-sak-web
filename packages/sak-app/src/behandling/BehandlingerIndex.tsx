@@ -1,11 +1,10 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router';
 
-import { BehandlingAppKontekst, Fagsak, ArbeidsgiverOpplysningerWrapper } from '@k9-sak-web/types';
 import IngenBehandlingValgtPanel from '@k9-sak-web/gui/sak/feilmeldinger/IngenBehandlingValgtPanel.js';
+import { ArbeidsgiverOpplysningerWrapper, BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
-import BehandlingIndex from './BehandlingIndex';
 import { behandlingRoutePath } from '../app/paths';
+import BehandlingIndex from './BehandlingIndex';
 
 interface OwnProps {
   fagsak: Fagsak;

@@ -1,6 +1,6 @@
 import moment from 'moment';
-import React, { useCallback, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useCallback, useMemo } from 'react';
+import { useLocation } from 'react-router';
 
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
