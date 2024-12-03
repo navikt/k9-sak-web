@@ -56,7 +56,7 @@ const RadioGroupPanel = ({
             {radios.map(radio => (
               <React.Fragment key={radio.value}>
                 <Radio
-                  id={radio.id || radio.value}
+                  id={radio.id ? `${name}-${radio.id}` : `${name}-${radio.value}`}
                   name={name}
                   onChange={() => {
                     if (customOnChange) {
