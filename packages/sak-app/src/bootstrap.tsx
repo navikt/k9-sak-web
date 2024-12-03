@@ -100,13 +100,7 @@ const renderFunc = Component => {
     const root = createRoot(app);
     root.render(
       <Provider store={store}>
-        <BrowserRouter
-          basename="/k9/web"
-          future={{
-            v7_relativeSplatPath: true,
-            v7_startTransition: true,
-          }}
-        >
+        <BrowserRouter basename="/k9/web">
           <RestApiProvider>
             <RestApiErrorProvider>
               <Component />
