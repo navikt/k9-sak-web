@@ -1,6 +1,26 @@
-import { vilkarType as GeneratedVilkarType } from '../../generated';
+type VilkårTypeNames =
+  | 'ALDERSVILKÅR_BARN'
+  | 'ALDERSVILKÅR'
+  | 'BEREGNINGSGRUNNLAGVILKÅR'
+  | 'GJENNOMGÅ_OPPLÆRING'
+  | 'GODKJENT_OPPLÆRINGSINSTITUSJON'
+  | 'I_LIVETS_SLUTTFASE'
+  | 'K9_VILKÅRET'
+  | 'LANGVARIG_SYKDOM'
+  | 'MEDISINSKEVILKÅR_18_ÅR'
+  | 'MEDISINSKEVILKÅR_UNDER_18_ÅR'
+  | 'MEDLEMSKAPSVILKÅRET'
+  | 'NØDVENDIG_OPPLÆRING'
+  | 'OMSORGEN_FOR'
+  | 'OPPTJENINGSPERIODEVILKÅR'
+  | 'OPPTJENINGSVILKÅRET'
+  | 'SØKERSOPPLYSNINGSPLIKT'
+  | 'SØKNADSFRIST'
+  | 'UDEFINERT'
+  | 'UNGDOMSPROGRAMVILKÅRET'
+  | 'UTVIDETRETT';
 
-export const vilkarType: Readonly<Record<GeneratedVilkarType, string>> = {
+export const vilkarType: Readonly<Record<VilkårTypeNames, string>> = {
   ALDERSVILKÅR_BARN: 'K9_VK_5_3',
   ALDERSVILKÅR: 'K9_VK_3',
   BEREGNINGSGRUNNLAGVILKÅR: 'FP_VK_41',
