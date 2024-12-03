@@ -3369,7 +3369,7 @@ __metadata:
     history: 5.3.0
     react: 18.3.1
     react-intl: 7.0.1
-    react-router-dom: 6.28.0
+    react-router: 7.0.2
   languageName: unknown
   linkType: soft
 
@@ -3440,7 +3440,7 @@ __metadata:
     react: 18.3.1
     react-intl: 7.0.1
     react-redux: 9.1.2
-    react-router-dom: 6.28.0
+    react-router: 7.0.2
     redux: 5.0.1
     redux-form: 8.3.10
   languageName: unknown
@@ -3516,7 +3516,7 @@ __metadata:
     react: 18.3.1
     react-intl: 7.0.1
     react-redux: 9.1.2
-    react-router-dom: 6.28.0
+    react-router: 7.0.2
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -4722,7 +4722,7 @@ __metadata:
     react-dom: 18.3.1
     react-intl: 7.0.1
     react-redux: 9.1.2
-    react-router-dom: 6.28.0
+    react-router: 7.0.2
     redux-form: 8.3.10
   languageName: unknown
   linkType: soft
@@ -4995,7 +4995,7 @@ __metadata:
     react-dom: 18.3.1
     react-intl: 7.0.1
     react-redux: 9.1.2
-    react-router-dom: 6.28.0
+    react-router: 7.0.2
     redux: 5.0.1
     redux-form: 8.3.10
     redux-thunk: 3.1.0
@@ -5018,7 +5018,7 @@ __metadata:
     moment: 2.30.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-router-dom: 6.28.0
+    react-router: 7.0.2
   languageName: unknown
   linkType: soft
 
@@ -5648,13 +5648,6 @@ __metadata:
   version: 2.0.13
   resolution: "@portabletext/types@npm:2.0.13"
   checksum: bc9b76461be3efb7697a4e796c2f012c241c1e138b87c7ec59a9f9f7380bd36301d83495bbf27a2e183027510a8da4815e59f5bb0c442b20d9d36f0da3fc836a
-  languageName: node
-  linkType: hard
-
-"@remix-run/router@npm:1.21.0":
-  version: 1.21.0
-  resolution: "@remix-run/router@npm:1.21.0"
-  checksum: d9477a7772053ad0ffcf03385cfb1a54e56f8a56d1f9f5062de3b1dfcbd019dd73282a00a5a72aa55c120771110982448c165c1405d64540aaef13051a8e45cc
   languageName: node
   linkType: hard
 
@@ -6969,13 +6962,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/history@npm:^4.7.11":
-  version: 4.7.11
-  resolution: "@types/history@npm:4.7.11"
-  checksum: c92e2ba407dcab0581a9afdf98f533aa41b61a71133420a6d92b1ca9839f741ab1f9395b17454ba5b88cb86020b70b22d74a1950ccfbdfd9beeaa5459fdc3464
-  languageName: node
-  linkType: hard
-
 "@types/hoist-non-react-statics@npm:3, @types/hoist-non-react-statics@npm:^3.3.1":
   version: 3.3.5
   resolution: "@types/hoist-non-react-statics@npm:3.3.5"
@@ -7061,27 +7047,6 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: b4fecc3245fea612caa940d34deae6d4673068d622e44959d1b716b11431c65e7a5b9ad8f4247cce6adc70d26dca76b629da9701f30f6796402e5f0272c5f788
-  languageName: node
-  linkType: hard
-
-"@types/react-router-dom@npm:5.3.3":
-  version: 5.3.3
-  resolution: "@types/react-router-dom@npm:5.3.3"
-  dependencies:
-    "@types/history": ^4.7.11
-    "@types/react": "*"
-    "@types/react-router": "*"
-  checksum: 28c4ea48909803c414bf5a08502acbb8ba414669b4b43bb51297c05fe5addc4df0b8fd00e0a9d1e3535ec4073ef38aaafac2c4a2b95b787167d113bc059beff3
-  languageName: node
-  linkType: hard
-
-"@types/react-router@npm:*":
-  version: 5.1.20
-  resolution: "@types/react-router@npm:5.1.20"
-  dependencies:
-    "@types/history": ^4.7.11
-    "@types/react": "*"
-  checksum: 128764143473a5e9457ddc715436b5d49814b1c214dde48939b9bef23f0e77f52ffcdfa97eb8d3cc27e2c229869c0cdd90f637d887b62f2c9f065a87d6425419
   languageName: node
   linkType: hard
 
@@ -9010,6 +8975,13 @@ __metadata:
   version: 0.7.2
   resolution: "cookie@npm:0.7.2"
   checksum: 9bf8555e33530affd571ea37b615ccad9b9a34febbf2c950c86787088eb00a8973690833b0f8ebd6b69b753c62669ea60cec89178c1fb007bf0749abed74f93e
+  languageName: node
+  linkType: hard
+
+"cookie@npm:^1.0.1":
+  version: 1.0.2
+  resolution: "cookie@npm:1.0.2"
+  checksum: 2c5a6214147ffa7135ce41860c781de17e93128689b0d080d3116468274b3593b607bcd462ac210d3a61f081db3d3b09ae106e18d60b1f529580e95cf2db8a55
   languageName: node
   linkType: hard
 
@@ -13279,7 +13251,6 @@ __metadata:
     "@types/prop-types": 15.7.13
     "@types/react": 18.3.12
     "@types/react-collapse": 5.0.4
-    "@types/react-router-dom": 5.3.3
     "@types/redux-form": 8.3.11
     "@vitejs/plugin-react": ^4.3.4
     autoprefixer: ^10.4.20
@@ -13308,8 +13279,7 @@ __metadata:
     react: 18.3.1
     react-dom: 18.3.1
     react-popper: 2.3.0
-    react-router: 6.28.0
-    react-router-dom: 6.28.0
+    react-router: 7.0.2
     storybook: ^8.4.6
     stylelint: 16.11.0
     stylelint-config-standard: ^36.0.1
@@ -15626,27 +15596,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:6.28.0":
-  version: 6.28.0
-  resolution: "react-router-dom@npm:6.28.0"
+"react-router@npm:7.0.2":
+  version: 7.0.2
+  resolution: "react-router@npm:7.0.2"
   dependencies:
-    "@remix-run/router": 1.21.0
-    react-router: 6.28.0
+    "@types/cookie": ^0.6.0
+    cookie: ^1.0.1
+    set-cookie-parser: ^2.6.0
+    turbo-stream: 2.4.0
   peerDependencies:
-    react: ">=16.8"
-    react-dom: ">=16.8"
-  checksum: 0cf4658a92bc66f50ec9d8518c36aa5a402bcadce71fb624ed6f900d73a29ea87ff904a4f2c42279107e75e80cc08c6192563fadcc5d4e642e6d476e38e83b21
-  languageName: node
-  linkType: hard
-
-"react-router@npm:6.28.0":
-  version: 6.28.0
-  resolution: "react-router@npm:6.28.0"
-  dependencies:
-    "@remix-run/router": 1.21.0
-  peerDependencies:
-    react: ">=16.8"
-  checksum: 23246ca957b5c2bc8d6f9a81fee2df2ce4fc3feca3ec27c2fd85999568fc1299a4e8273e4ab70b6f3acd43a1fb45e0c93cb01ef77e68c9f9e1f7e4f42a1419ea
+    react: ">=18"
+    react-dom: ">=18"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+  checksum: a3b42f25fa345bfc51abf608f14ded463f5a32345de8519b7beb35e713f09032e0a2af265e40c51ba9cde5d75c534697cded6f1c7988a1197b1392f2e32225ef
   languageName: node
   linkType: hard
 
@@ -16293,6 +16257,13 @@ __metadata:
   version: 2.0.0
   resolution: "set-blocking@npm:2.0.0"
   checksum: 6e65a05f7cf7ebdf8b7c75b101e18c0b7e3dff4940d480efed8aad3a36a4005140b660fa1d804cb8bce911cac290441dc728084a30504d3516ac2ff7ad607b02
+  languageName: node
+  linkType: hard
+
+"set-cookie-parser@npm:^2.6.0":
+  version: 2.7.1
+  resolution: "set-cookie-parser@npm:2.7.1"
+  checksum: 2ef8b351094712f8f7df6d63ed4b10350b24a5b515772690e7dec227df85fcef5bc451c7765f484fd9f36694ece5438d1456407d017f237d0d3351d7dbbd3587
   languageName: node
   linkType: hard
 
@@ -17394,6 +17365,13 @@ __metadata:
   version: 0.0.1
   resolution: "tty-browserify@npm:0.0.1"
   checksum: 93b745d43fa5a7d2b948fa23be8d313576d1d884b48acd957c07710bac1c0d8ac34c0556ad4c57c73d36e11741763ef66b3fb4fb97b06b7e4d525315a3cd45f5
+  languageName: node
+  linkType: hard
+
+"turbo-stream@npm:2.4.0":
+  version: 2.4.0
+  resolution: "turbo-stream@npm:2.4.0"
+  checksum: e36f52ed40589f01bede79757a143bef484914d579927235be1fd0c205618994cb5779a39ff8c2a80a87a1464d05771cd75320a9412b15bca03c7ff432e3cdf7
   languageName: node
   linkType: hard
 

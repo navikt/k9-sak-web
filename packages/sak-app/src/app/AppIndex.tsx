@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import { parseQueryString } from '@fpsak-frontend/utils';
 import ForbiddenPage from '@k9-sak-web/gui/sak/feilmeldinger/ForbiddenPage.js';

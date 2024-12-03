@@ -10,7 +10,7 @@ import axios from 'axios';
 import { Location } from 'history';
 import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';

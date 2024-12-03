@@ -10,7 +10,7 @@ import classnames from 'classnames/bind';
 import { Location } from 'history';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router';
 import styles from './behandlingSelected.module.css';
 import { getFormattedSøknadserioder, getStatusIcon, getStatusText } from './behandlingVelgerUtils';
 

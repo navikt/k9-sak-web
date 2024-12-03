@@ -1,5 +1,5 @@
-import { useLocation, useParams, Params } from 'react-router-dom';
 import { Location } from 'history';
+import { Params, useLocation, useParams } from 'react-router';
 
 import { parseQueryString } from '@fpsak-frontend/utils';
 

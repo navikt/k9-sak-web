@@ -5,12 +5,11 @@ import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-util
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import TotrinnskontrollIndex from './TotrinnskontrollIndex';
 
-vi.mock('react-router-dom', async () => {
-  const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
+vi.mock('react-router', async () => {
+  const actual = (await vi.importActual('react-router')) as Record<string, unknown>;
   return {
     ...actual,
     useHistory: () => ({
