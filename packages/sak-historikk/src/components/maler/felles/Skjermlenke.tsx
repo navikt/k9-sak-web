@@ -1,8 +1,7 @@
 import { Kodeverk } from '@k9-sak-web/types';
 import { Label } from '@navikt/ds-react';
 import { Location } from 'history';
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router';
 import { scrollUp } from './historikkUtils';
 
 interface SkjermlenkeProps {

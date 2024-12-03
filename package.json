@@ -61,8 +61,7 @@
     "postcss-import": "^16.1.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-router": "6.28.0",
-    "react-router-dom": "6.28.0",
+    "react-router": "7.0.2",
     "vite-plugin-svgr": "4.3.0"
   },
   "devDependencies": {
@@ -88,7 +87,6 @@
     "@types/prop-types": "15.7.13",
     "@types/react": "18.3.12",
     "@types/react-collapse": "5.0.4",
-    "@types/react-router-dom": "5.3.3",
     "@types/redux-form": "8.3.11",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
