@@ -20,6 +20,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
   utbetalingsgrader,
   søkersTapteArbeidstid,
 }) => {
+  const harNyInntekt = utbetalingsgrader.some(utbetalingsgrad => utbetalingsgrad.tilkommet);
   return (
     <VStack>
       <VStack gap="8" className={styles.uttakDetaljer__detailItem}>
@@ -78,12 +79,14 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
       </VStack>
       <Box>
         <BodyShort size="small" className={styles.uttakDetaljer__detailSum}>
-          = {søkersTapteArbeidstid}% tapt arbeidstid *
+          = {søkersTapteArbeidstid}% tapt arbeidstid {harNyInntekt ? '*' : ''}
         </BodyShort>
-        <Detail className={styles.uttakDetaljer__detailtext}>
-          * Tapt arbeidstid vurderes kun ut ifra aktiviteter på skjæringstidspunktet. Arbeidstid for nye aktiviteter
-          blir ikke tatt med i utregningen av tapt arbeidstid.
-        </Detail>
+        {harNyInntekt && (
+          <Detail className={styles.uttakDetaljer__detailtext}>
+            * Tapt arbeidstid vurderes kun ut ifra aktiviteter på skjæringstidspunktet. Arbeidstid for nye aktiviteter
+            blir ikke tatt med i utregningen av tapt arbeidstid.
+          </Detail>
+        )}
       </Box>
     </VStack>
   );

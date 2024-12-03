@@ -49,7 +49,7 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
           const arbeidsforholdData = alleArbeidsforhold[arbeidsgiverIdentifikator];
           return (
             <React.Fragment key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_utbetalt`}>
-              <Box className={`${styles.uttakDetaljer__beregningFirma} p-1`}>
+              <Box className={`${styles.uttakDetaljer__beregningFirma}`}>
                 <BodyShort size="small" weight="semibold">
                   {inntForhold.type !== Arbeidstype.FRILANSER
                     ? `${arbeidsforholdData?.navn || 'Mangler navn'} (${arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})`
