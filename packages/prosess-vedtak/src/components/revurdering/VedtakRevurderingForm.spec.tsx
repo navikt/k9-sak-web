@@ -1,59 +1,60 @@
-import React from 'react';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/test-utils';
 import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
+import { behandlingResultatType, behandlingType, videreBehandling } from '@navikt/k9-sak-typescript-client';
 import VedtakForm from '../VedtakForm';
 
-const createBehandling = (behandlingResultatType, behandlingHenlagt) => ({
+const createBehandling = behandlingResultatType => ({
   id: 1,
   versjon: 123,
   fagsakId: 1,
   aksjonspunkter: [],
   behandlingPaaVent: false,
-  behandlingHenlagt,
-  sprakkode: {
-    kode: 'NO',
-    kodeverk: '',
-  },
+  sprakkode: 'NO',
   behandlingsresultat: {
     id: 1,
-    type: {
-      kode: behandlingResultatType,
-      navn: 'test',
-    },
-    avslagsarsak:
-      behandlingResultatType === BehandlingResultatType.AVSLATT
-        ? {
-            kode: '1019',
-            navn: 'Manglende dokumentasjon',
-          }
-        : null,
+    type: behandlingResultatType,
+    avslagsarsak: behandlingResultatType === BehandlingResultatType.AVSLATT ? '1019' : null,
     avslagsarsakFritekst: null,
   },
-  status: {
-    kode: behandlingStatus.BEHANDLING_UTREDES,
-    navn: 'test',
-  },
-  type: {
-    kode: 'test',
-    navn: 'test',
-  },
+  status: behandlingStatus.BEHANDLING_UTREDES,
+  type: 'test',
   opprettet: '16‎.‎07‎.‎2004‎ ‎17‎:‎35‎:‎21',
 });
 
 const resultatstruktur = {
   antallBarn: 1,
   opphoersdato: '2018-01-01',
+  type: behandlingResultatType.IKKE_FASTSATT,
 };
 
-const tilgjengeligeVedtaksbrev = { vedtaksbrevmaler: {} };
+const personopplysninger = { aktoerId: '', fnr: '' };
+
+const tilgjengeligeVedtaksbrev = { vedtaksbrevmaler: {}, begrunnelse: '', alternativeMottakere: [] };
+
+const informasjonsbehovVedtaksbrev = {
+  informasjonsbehov: [],
+  mangler: [],
+};
+
+const vedtakVarselBase = {
+  avslagsarsak: '1019',
+  avslagsarsakFritekst: null,
+  id: 0,
+  overskrift: 'overskrift',
+  fritekstbrev: 'fritekstbrev',
+  skjæringstidspunkt: {
+    dato: '2024-04-01',
+  },
+  redusertUtbetalingÅrsaker: [],
+  vedtaksbrev: 'FRITEKST',
+  vedtaksdato: '2024-05-01',
+};
 
 const createBehandlingAvslag = () => createBehandling(BehandlingResultatType.AVSLATT);
 const createBehandlingOpphor = () => createBehandling(BehandlingResultatType.OPPHOR);
@@ -64,10 +65,7 @@ describe('<VedtakRevurderingForm>', () => {
     const previewCallback = vi.fn();
     const revurdering = createBehandlingAvslag();
 
-    revurdering.type = {
-      kode: 'BT-004',
-      navn: 'Revurdering',
-    };
+    revurdering.type = behandlingType.BT_004;
 
     revurdering.aksjonspunkter.push({
       id: 0,
@@ -84,9 +82,8 @@ describe('<VedtakRevurderingForm>', () => {
     });
 
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={vi.fn()}>
         <VedtakForm
-          intl={intlMock}
           behandlingStatus={revurdering.status}
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
@@ -98,10 +95,22 @@ describe('<VedtakRevurderingForm>', () => {
           resultatstruktur={resultatstruktur}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-          personopplysninger={{}}
+          personopplysninger={personopplysninger}
           vilkar={[]}
-          alleKodeverk={{}}
           erRevurdering
+          behandlingArsaker={[]}
+          dokumentdata={{}}
+          fritekstdokumenter={[]}
+          hentFritekstbrevHtmlCallback={vi.fn()}
+          lagreDokumentdata={vi.fn()}
+          simuleringResultat={{}}
+          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+          medlemskapFom={null}
+          overlappendeYtelser={[]}
+          resultatstrukturOriginalBehandling={null}
+          submitCallback={() => undefined}
+          vedtakVarsel={vedtakVarselBase}
         />
       </ProsessStegContainer>,
     );
@@ -120,46 +129,49 @@ describe('<VedtakRevurderingForm>', () => {
     const revurdering = createBehandlingAvslag();
 
     revurdering.behandlingsresultat = {
+      ...revurdering.behandlingsresultat,
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'Innvilget',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
     revurdering.aksjonspunkter.push({
       id: 0,
-      definisjon: {
-        navn: 'Foreslå vedtak',
-        kode: aksjonspunktCodes.FORESLA_VEDTAK,
-      },
-      status: {
-        navn: 'Opprettet',
-        kode: '',
-      },
+      definisjon: aksjonspunktCodes.FORESLA_VEDTAK,
+      status: '',
       kanLoses: true,
       erAktivt: true,
       toTrinnsBehandling: true,
     });
 
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={vi.fn()}>
         <VedtakForm
-          intl={intlMock}
           behandlingStatus={revurdering.status}
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
           sprakkode={revurdering.sprakkode}
           behandlingPaaVent={revurdering.behandlingPaaVent}
-          personopplysninger={{}}
+          personopplysninger={personopplysninger}
           previewCallback={previewCallback}
           readOnly={false}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           resultatstruktur={resultatstruktur}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-          alleKodeverk={{}}
           vilkar={[]}
           erRevurdering
+          behandlingArsaker={[]}
+          dokumentdata={{}}
+          fritekstdokumenter={[]}
+          hentFritekstbrevHtmlCallback={vi.fn()}
+          lagreDokumentdata={vi.fn()}
+          simuleringResultat={{}}
+          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+          medlemskapFom={null}
+          overlappendeYtelser={[]}
+          resultatstrukturOriginalBehandling={null}
+          submitCallback={() => undefined}
+          vedtakVarsel={vedtakVarselBase}
         />
       </ProsessStegContainer>,
     );
@@ -178,31 +190,41 @@ describe('<VedtakRevurderingForm>', () => {
     const previewCallback = vi.fn();
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
+      ...revurdering.behandlingsresultat,
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'Innvilget',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
 
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={vi.fn()}>
         <VedtakForm
-          intl={intlMock}
           behandlingStatus={revurdering.status}
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
           sprakkode={revurdering.sprakkode}
           behandlingPaaVent={revurdering.behandlingPaaVent}
-          personopplysninger={{}}
+          personopplysninger={personopplysninger}
           previewCallback={previewCallback}
           readOnly={false}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           resultatstruktur={resultatstruktur}
           arbeidsgiverOpplysningerPerId={{}}
-          alleKodeverk={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+          vilkar={[]}
           erRevurdering
+          behandlingArsaker={[]}
+          dokumentdata={{}}
+          fritekstdokumenter={[]}
+          hentFritekstbrevHtmlCallback={vi.fn()}
+          lagreDokumentdata={vi.fn()}
+          simuleringResultat={{}}
+          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+          medlemskapFom={null}
+          overlappendeYtelser={[]}
+          resultatstrukturOriginalBehandling={null}
+          submitCallback={() => undefined}
+          vedtakVarsel={vedtakVarselBase}
         />
       </ProsessStegContainer>,
     );
@@ -220,31 +242,41 @@ describe('<VedtakRevurderingForm>', () => {
     const previewCallback = vi.fn();
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
+      ...revurdering.behandlingsresultat,
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'Innvilget',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
 
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={vi.fn()}>
         <VedtakForm
-          intl={intlMock}
           behandlingStatus={revurdering.status}
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
           sprakkode={revurdering.sprakkode}
           behandlingPaaVent={revurdering.behandlingPaaVent}
-          personopplysninger={{}}
+          personopplysninger={personopplysninger}
           previewCallback={previewCallback}
           readOnly={false}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           resultatstruktur={resultatstruktur}
-          alleKodeverk={{}}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
           erRevurdering
+          behandlingArsaker={[]}
+          dokumentdata={{}}
+          fritekstdokumenter={[]}
+          hentFritekstbrevHtmlCallback={vi.fn()}
+          lagreDokumentdata={vi.fn()}
+          simuleringResultat={{}}
+          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+          medlemskapFom={null}
+          overlappendeYtelser={[]}
+          resultatstrukturOriginalBehandling={null}
+          submitCallback={() => undefined}
+          vedtakVarsel={vedtakVarselBase}
+          vilkar={[]}
         />
       </ProsessStegContainer>,
     );
@@ -263,15 +295,14 @@ describe('<VedtakRevurderingForm>', () => {
     const revurdering = createBehandlingOpphor();
 
     renderWithIntlAndReduxForm(
-      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={vi.fn()}>
         <VedtakForm
-          intl={intlMock}
           behandlingStatus={revurdering.status}
           behandlingresultat={revurdering.behandlingsresultat}
           aksjonspunkter={revurdering.aksjonspunkter}
           sprakkode={revurdering.sprakkode}
           behandlingPaaVent={revurdering.behandlingPaaVent}
-          personopplysninger={{}}
+          personopplysninger={personopplysninger}
           previewCallback={previewCallback}
           readOnly={false}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
@@ -279,6 +310,20 @@ describe('<VedtakRevurderingForm>', () => {
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
           erRevurdering
+          behandlingArsaker={[]}
+          dokumentdata={{}}
+          fritekstdokumenter={[]}
+          hentFritekstbrevHtmlCallback={vi.fn()}
+          lagreDokumentdata={vi.fn()}
+          simuleringResultat={{}}
+          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+          medlemskapFom={null}
+          overlappendeYtelser={[]}
+          resultatstrukturOriginalBehandling={null}
+          submitCallback={() => undefined}
+          vedtakVarsel={vedtakVarselBase}
+          vilkar={[]}
         />
       </ProsessStegContainer>,
     );

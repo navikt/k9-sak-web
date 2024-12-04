@@ -1,13 +1,15 @@
 import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/test-utils';
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
-import { utfall } from '@navikt/k9-sak-typescript-client';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { behandlingType, utfall } from '@navikt/k9-sak-typescript-client';
 import AvslagsårsakListe from './AvslagsårsakListe';
 
 describe('<AvslagårsakListe>', () => {
-  it('skal rendre avslagspanel og textArea når en har ikke oppfylt søknadsfristvilkår', () => {
+  it('skal rendre liste med avslagsårsaker', () => {
     const vilkar = [
       {
-        vilkarType: 'FP_VK_23', // VILKAR_TYPE
+        vilkarType: vilkarType.OPPTJENINGSVILKÅRET,
         lovReferanse: '§ 9-2 jamfør 8-2',
         overstyrbar: true,
         perioder: [
@@ -49,7 +51,17 @@ describe('<AvslagårsakListe>', () => {
       },
     ];
 
-    renderWithIntlAndReduxForm(<AvslagsårsakListe vilkar={vilkar} getKodeverknavn={vi.fn()} />);
-    expect(screen.getAllByText(':')).toHaveLength(2);
+    renderWithIntlAndReduxForm(
+      <KodeverkProvider
+        behandlingType={behandlingType.BT_002}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <AvslagsårsakListe vilkar={vilkar} />
+      </KodeverkProvider>,
+    );
+    expect(screen.getByText('Opptjeningsvilkåret: Ikke tilstrekkelig opptjening')).toBeInTheDocument();
+    expect(screen.getByText('Medlemskapsvilkåret: Søker er ikke medlem')).toBeInTheDocument();
   });
 });
