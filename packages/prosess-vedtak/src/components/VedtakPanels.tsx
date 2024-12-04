@@ -11,6 +11,7 @@ import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.
 import {
   AksjonspunktDto,
   BehandlingsresultatDto,
+  BehandlingÅrsakDto,
   DokumentMedUstrukturerteDataDto,
   OverlappendeYtelseDto,
   PersonopplysningDto,
@@ -34,6 +35,7 @@ interface VedtakPanelsProps {
   behandlingresultat: BehandlingsresultatDto;
   behandlingStatus: string;
   behandlingTypeKode: string;
+  behandlingÅrsaker?: BehandlingÅrsakDto[];
   beregningsgrunnlag: Beregningsgrunnlag[];
   dokumentdata: DokumentDataType;
   fritekstdokumenter: DokumentMedUstrukturerteDataDto[];
@@ -86,6 +88,7 @@ const VedtakPanels = ({
   fritekstdokumenter,
   lagreDokumentdata,
   overlappendeYtelser,
+  behandlingÅrsaker,
 }: VedtakPanelsProps) => {
   const [redigerSjekkTilbakekreving, setRedigerSjekkTilbakekreving] = useState(false);
   const toggleSjekkTilbakekreving = () => setRedigerSjekkTilbakekreving(!redigerSjekkTilbakekreving);
@@ -164,6 +167,7 @@ const VedtakPanels = ({
         bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
         medlemskapFom={medlemskapFom}
         erRevurdering={!!(behandlingTypeKode === behandlingType.REVURDERING && bg.length)}
+        behandlingÅrsaker={behandlingÅrsaker}
       />
     </>
   );

@@ -28,6 +28,7 @@ import {
   AksjonspunktDto,
   AvslagsårsakPrPeriodeDto,
   BehandlingsresultatDto,
+  BehandlingÅrsakDto,
   DokumentMedUstrukturerteDataDto,
   OverlappendeYtelseDto,
   PersonopplysningDto,
@@ -74,6 +75,7 @@ interface Props {
   behandlingPaaVent: boolean;
   behandlingresultat: BehandlingsresultatDto;
   behandlingStatus: string;
+  behandlingÅrsaker?: BehandlingÅrsakDto[];
   bgPeriodeMedAvslagsårsak?: AvslagsårsakPrPeriodeDto;
   dokumentdata: DokumentDataType;
   erRevurdering: boolean;
@@ -124,6 +126,7 @@ export const VedtakForm: React.FC<Props> = ({
   bgPeriodeMedAvslagsårsak,
   medlemskapFom,
   erRevurdering,
+  behandlingÅrsaker,
 }) => {
   const vedtakContext = useContext(VedtakFormContext);
   const { kodeverkNavnFraKode } = useKodeverkContext();
@@ -599,6 +602,7 @@ export const VedtakForm: React.FC<Props> = ({
                   visFeilmeldingFordiArsakerMangler={() => setErSendtInnUtenArsaker(true)}
                   aksjonspunkter={aksjonspunkter}
                   errorOnSubmit={errorOnSubmit}
+                  behandlingÅrsaker={behandlingÅrsaker}
                 />
               )}
               {visSakGårIkkeTilBeslutterModal && (

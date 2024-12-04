@@ -9,7 +9,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 
-import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import { AksjonspunktDto, BehandlingÅrsakDto } from '@navikt/k9-sak-typescript-client';
 import { FormikState } from 'formik';
 import styles from '../vedtakForm.module.css';
 
@@ -23,6 +23,7 @@ interface OwnProps {
   handleSubmit: (event: any) => void;
   aksjonspunkter: AksjonspunktDto[];
   errorOnSubmit: string;
+  behandlingÅrsaker: BehandlingÅrsakDto[];
 }
 
 export const submitKnappTekst = (aksjonspunkter: AksjonspunktDto[]) =>
@@ -85,7 +86,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
 };
 
 const erArsakTypeBehandlingEtterKlage = createSelector(
-  [ownProps => ownProps.behandlingArsaker],
+  [ownProps => ownProps.behandlingÅrsaker],
   (behandlingArsakTyper = []) =>
     behandlingArsakTyper
       .map(({ behandlingArsakType }) => behandlingArsakType)
