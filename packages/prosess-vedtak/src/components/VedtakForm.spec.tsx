@@ -1,12 +1,7 @@
-import React from 'react';
-
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatuser from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
@@ -16,7 +11,14 @@ import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi'
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { TilgjengeligeVedtaksbrev, TilgjengeligeVedtaksbrevMedMaler } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { Aksjonspunkt, Personopplysninger } from '@k9-sak-web/types';
+import {
+  definisjon as generatedAksjonspunktDefinisjon,
+  status as generatedAksjonspunktStatus,
+  behandlingResultatType as generatedBehandlingResultatType,
+  type2 as generatedBehandlingsresultatDtoType,
+  behandlingStatus as generatedBehandlingStatus,
+  videreBehandling,
+} from '@navikt/k9-sak-typescript-client';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakForm } from './VedtakForm';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
@@ -26,10 +28,7 @@ describe('<VedtakForm>', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'FRITEKST_REDIGERING', value: true }]);
   });
 
-  const sprakkode = {
-    kode: 'NO',
-    kodeverk: '',
-  };
+  const sprakkode = 'NO';
 
   const ingenTilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler = {
     begrunnelse: 'begrunnelse',
@@ -49,33 +48,23 @@ describe('<VedtakForm>', () => {
     maler: [],
   };
 
-  const behandlingStatusUtredes = { kode: behandlingStatuser.BEHANDLING_UTREDES };
+  const behandlingStatusUtredes = behandlingStatuser.BEHANDLING_UTREDES;
 
-  // This is an incorrect initialization to satisfy typescript during rewrite from jsx to tsx. Should probably be fixed.
-  const personopplysninger = {} as Personopplysninger;
+  const personopplysninger = { aktoerId: '', fnr: '' };
 
   const informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev = {
     informasjonsbehov: [],
     mangler: [],
   };
-  const aksjonspunktBase: Aksjonspunkt = {
-    definisjon: {
-      kodeverk: 'annen ytelse',
-      kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-    },
-    status: {
-      kodeverk: 'Opprettet',
-      kode: aksjonspunktStatus.OPPRETTET,
-    },
+  const aksjonspunktBase = {
+    definisjon: generatedAksjonspunktDefinisjon._5033,
+    status: generatedAksjonspunktStatus.OPPR,
     toTrinnsBehandling: true,
     kanLoses: true,
     erAktivt: true,
   };
   const vedtakVarselBase = {
-    avslagsarsak: {
-      kode: '1019',
-      navn: 'Søkt for sent',
-    },
+    avslagsarsak: '1019',
     avslagsarsakFritekst: null,
     id: 0,
     overskrift: 'overskrift',
@@ -84,21 +73,21 @@ describe('<VedtakForm>', () => {
       dato: '2024-04-01',
     },
     redusertUtbetalingÅrsaker: [],
-    vedtaksbrev: {
-      kode: 'FRITEKST',
-      kodeverk: 'FRITEKST',
-    },
+    vedtaksbrev: 'FRITEKST',
     vedtaksdato: '2024-05-01',
+  };
+
+  const resultatstruktur = {
+    antallBarn: 1,
+    belop: 1000,
+    type: generatedBehandlingsresultatDtoType.IKKE_FASTSATT,
   };
 
   it('skal vise at vedtak er innvilget, beløp og antall barn når en har et beregningsresultat', () => {
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: generatedBehandlingResultatType.INNVILGET,
     };
 
     renderWithIntlAndReduxForm(
@@ -114,10 +103,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -127,10 +115,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
+          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
           resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
           behandlingArsaker={[]}
@@ -147,21 +134,12 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.AVSLATT,
-        navn: 'test',
-      },
+      type: generatedBehandlingResultatType.AVSLÅTT,
     };
-    const aksjonspunkter: Aksjonspunkt[] = [
+    const aksjonspunkter = [
       {
-        definisjon: {
-          kodeverk: 'annen ytelse',
-          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-        },
-        status: {
-          kodeverk: 'Opprettet',
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: generatedAksjonspunktDefinisjon._5033,
+        status: generatedAksjonspunktStatus.OPPR,
         kanLoses: true,
         erAktivt: true,
       },
@@ -179,10 +157,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -192,10 +169,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
+          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
           resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
           behandlingArsaker={[]}
@@ -211,12 +187,9 @@ describe('<VedtakForm>', () => {
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: generatedBehandlingResultatType.INNVILGET,
     };
-    const aksjonspunkter: Aksjonspunkt[] = [aksjonspunktBase];
+    const aksjonspunkter = [aksjonspunktBase];
     const vedtakVarsel = {
       ...vedtakVarselBase,
       avslagsarsak: null,
@@ -234,10 +207,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -247,10 +219,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
+          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
           resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
           behandlingArsaker={[]}
@@ -265,12 +236,9 @@ describe('<VedtakForm>', () => {
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: generatedBehandlingResultatType.INNVILGET,
     };
-    const aksjonspunkter: Aksjonspunkt[] = [aksjonspunktBase];
+    const aksjonspunkter = [aksjonspunktBase];
     const vedtakVarsel = {
       ...vedtakVarselBase,
       avslagsarsak: { kode: '1099', navn: 'xoxo' },
@@ -288,10 +256,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -301,10 +268,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
+          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
           resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
           behandlingArsaker={[]}
@@ -321,12 +287,9 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.AVSLATT,
-        navn: 'test',
-      },
+      type: generatedBehandlingResultatType.AVSLÅTT,
     };
-    const aksjonspunkter: Aksjonspunkt[] = [
+    const aksjonspunkter = [
       {
         ...aksjonspunktBase,
         toTrinnsBehandling: false,
@@ -352,10 +315,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -365,10 +327,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
+          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
           resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
           behandlingArsaker={[]}
@@ -385,12 +346,9 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: generatedBehandlingResultatType.INNVILGET,
     };
-    const aksjonspunkter: Aksjonspunkt[] = [
+    const aksjonspunkter = [
       {
         ...aksjonspunktBase,
         toTrinnsBehandling: undefined,
@@ -405,7 +363,7 @@ describe('<VedtakForm>', () => {
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
-          behandlingStatus={{ kode: behandlingStatuser.AVSLUTTET }}
+          behandlingStatus={generatedBehandlingStatus.AVSLU}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
           behandlingPaaVent={false}
@@ -414,10 +372,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -427,10 +384,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
+          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
           resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
           behandlingArsaker={[]}
@@ -445,12 +401,9 @@ describe('<VedtakForm>', () => {
   it('skal ikke vise knapper når status er iverksetter vedtak', () => {
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: generatedBehandlingResultatType.INNVILGET,
     };
-    const aksjonspunkter: Aksjonspunkt[] = [
+    const aksjonspunkter = [
       {
         ...aksjonspunktBase,
         toTrinnsBehandling: undefined,
@@ -466,7 +419,7 @@ describe('<VedtakForm>', () => {
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
-          behandlingStatus={{ kode: behandlingStatuser.IVERKSETTER_VEDTAK }}
+          behandlingStatus={generatedBehandlingStatus.IVED}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
           behandlingPaaVent={false}
@@ -475,10 +428,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -488,10 +440,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
+          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
           resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
           behandlingArsaker={[]}
@@ -508,12 +459,9 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: generatedBehandlingResultatType.INNVILGET,
     };
-    const aksjonspunkter: Aksjonspunkt[] = [
+    const aksjonspunkter = [
       {
         ...aksjonspunktBase,
         toTrinnsBehandling: undefined,
@@ -527,7 +475,7 @@ describe('<VedtakForm>', () => {
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
-          behandlingStatus={{ kode: behandlingStatuser.FATTER_VEDTAK }}
+          behandlingStatus={generatedBehandlingStatus.FVED}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
           behandlingPaaVent={false}
@@ -536,10 +484,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -549,10 +496,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
+          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
           resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
           behandlingArsaker={[]}
@@ -568,12 +514,9 @@ describe('<VedtakForm>', () => {
   const previewCallback = vi.fn();
   const behandlingsresultat = {
     id: 1,
-    type: {
-      kode: BehandlingResultatType.INNVILGET,
-      navn: 'test',
-    },
+    type: generatedBehandlingResultatType.INNVILGET,
   };
-  const aksjonspunkter: Aksjonspunkt[] = [
+  const aksjonspunkter = [
     {
       ...aksjonspunktBase,
       toTrinnsBehandling: undefined,
@@ -611,10 +554,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -624,10 +566,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
+          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
           resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
           behandlingArsaker={[]}
@@ -653,10 +594,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -666,10 +606,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
+          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
           resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
           behandlingArsaker={[]}
@@ -696,10 +635,9 @@ describe('<VedtakForm>', () => {
           readOnly
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -709,10 +647,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
+          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
           resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
           behandlingArsaker={[]}
@@ -748,10 +685,9 @@ describe('<VedtakForm>', () => {
           readOnly={false}
           sprakkode={sprakkode}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={vedtaksbrevmalerUtenAutomatisk}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -761,10 +697,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur="resultatstruktur"
+          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
           resultatstrukturOriginalBehandling={{}}
-          bgPeriodeMedAvslagsårsak={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
           behandlingArsaker={[]}

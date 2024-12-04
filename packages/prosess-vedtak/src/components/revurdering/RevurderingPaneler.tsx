@@ -26,7 +26,7 @@ interface OwnProps {
   tilbakekrevingvalg: TilbakekrevingValgDto;
   simuleringResultat: any;
   resultatstrukturOriginalBehandling: any;
-  bgPeriodeMedAvslagsårsak: AvslagsårsakPrPeriodeDto;
+  bgPeriodeMedAvslagsårsak?: AvslagsårsakPrPeriodeDto;
   behandlingStatusKode: string;
   vilkar: VilkårMedPerioderDto[];
   aksjonspunkter: AksjonspunktDto[];

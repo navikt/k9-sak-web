@@ -73,7 +73,7 @@ interface Props {
   behandlingPaaVent: boolean;
   behandlingresultat: BehandlingsresultatDto;
   behandlingStatus: string;
-  bgPeriodeMedAvslagsårsak: AvslagsårsakPrPeriodeDto;
+  bgPeriodeMedAvslagsårsak?: AvslagsårsakPrPeriodeDto;
   dokumentdata: DokumentDataType;
   erRevurdering: boolean;
   fritekstdokumenter: DokumentMedUstrukturerteDataDto[];
