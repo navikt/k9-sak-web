@@ -20,6 +20,7 @@ import {
   kanKunVelge,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import { Checkbox, Label } from '@navikt/ds-react';
@@ -131,6 +132,7 @@ export const VedtakForm: React.FC<Props> = ({
   behandlingArsaker,
 }) => {
   const vedtakContext = useContext(VedtakFormContext);
+  const { kodeverkNavnFraKode } = useKodeverkContext();
 
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const [errorOnSubmit, setErrorOnSubmit] = useState('');
@@ -523,7 +525,7 @@ export const VedtakForm: React.FC<Props> = ({
                       ytelseTypeKode={ytelseTypeKode}
                       tilbakekrevingvalg={tilbakekrevingvalg}
                       simuleringResultat={simuleringResultat}
-                      // alleKodeverk={alleKodeverk}
+                      kodeverkNavnFraKode={kodeverkNavnFraKode}
                     />
                   )}
 
@@ -536,6 +538,7 @@ export const VedtakForm: React.FC<Props> = ({
                       tilbakekrevingvalg={tilbakekrevingvalg}
                       simuleringResultat={simuleringResultat}
                       vilkar={vilkar}
+                      kodeverkNavnFraKode={kodeverkNavnFraKode}
                     />
                   )}
                 </>
