@@ -1,6 +1,7 @@
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { HGrid, Heading } from '@navikt/ds-react';
+import { OverlappendeYtelseDto } from '@navikt/k9-sak-typescript-client';
 import React from 'react';
 import { IntlShape, injectIntl } from 'react-intl';
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
@@ -16,7 +17,7 @@ interface Props {
   behandlingStatusKode: string;
   aksjonspunktKoder: string[];
   readOnly: boolean;
-  overlappendeYtelser;
+  overlappendeYtelser: Array<OverlappendeYtelseDto>;
 
   viseFlereSjekkbokserForBrev: boolean;
   harVurdertOverlappendeYtelse: boolean;

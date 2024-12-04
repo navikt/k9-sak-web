@@ -10,10 +10,11 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 
 import { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
+import { FormikState } from 'formik';
 import styles from '../vedtakForm.module.css';
 
 interface OwnProps {
-  formikValues: any;
+  formikValues: FormikState<any>['values'];
   readOnly: boolean;
   harRedusertUtbetaling: boolean;
   visFeilmeldingFordiArsakerMangler: () => void;
@@ -24,7 +25,7 @@ interface OwnProps {
   errorOnSubmit: string;
 }
 
-export const submitKnappTekst = aksjonspunkter =>
+export const submitKnappTekst = (aksjonspunkter: AksjonspunktDto[]) =>
   aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
     ? 'VedtakForm.SendTilBeslutter'
     : 'VedtakForm.FattVedtak';

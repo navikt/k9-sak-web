@@ -67,10 +67,8 @@ describe('<AvslagårsakListe>', () => {
             },
           }}
           vilkar={[]}
-          sendVarselOmRevurdering={false}
           medlemskap={{ fom: '2019-01-01' }}
           aksjonspunkter={[aksjonspunkt5085]}
-          employeeHasAccess={false}
           isReadOnly={false}
           previewCallback={vi.fn()}
           submitCallback={vi.fn()}
@@ -79,7 +77,7 @@ describe('<AvslagårsakListe>', () => {
           lagreDokumentdata={vi.fn()}
           hentFritekstbrevHtmlCallback={vi.fn()}
           beregningsgrunnlag={null}
-          dokumentdataHente={vi.fn()}
+          dokumentdataHente={{}}
           fritekstdokumenter={[]}
           simuleringResultat={null}
           tilbakekrevingvalg={null}
@@ -114,7 +112,6 @@ describe('<AvslagårsakListe>', () => {
             },
           }}
           vilkar={[]}
-          sendVarselOmRevurdering={false}
           medlemskap={{ fom: '2019-01-01' }}
           aksjonspunkter={[
             {
@@ -124,7 +121,6 @@ describe('<AvslagårsakListe>', () => {
               erAktivt: true,
             },
           ]}
-          employeeHasAccess={false}
           isReadOnly={false}
           previewCallback={vi.fn()}
           submitCallback={vi.fn()}
@@ -133,7 +129,7 @@ describe('<AvslagårsakListe>', () => {
           lagreDokumentdata={vi.fn()}
           hentFritekstbrevHtmlCallback={vi.fn()}
           beregningsgrunnlag={null}
-          dokumentdataHente={vi.fn()}
+          dokumentdataHente={{}}
           fritekstdokumenter={[]}
           simuleringResultat={null}
           tilbakekrevingvalg={null}

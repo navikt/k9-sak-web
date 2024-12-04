@@ -14,7 +14,7 @@ import messages from '../i18n/nb_NO.json';
 import VedtakPanels from './components/VedtakPanels';
 import { InformasjonsbehovVedtaksbrev } from './components/brev/InformasjonsbehovAutomatiskVedtaksbrev';
 import { Beregningsgrunnlag } from './types/Beregningsgrunnlag';
-import { LagreDokumentdataType } from './types/Dokumentdata';
+import { DokumentDataType, LagreDokumentdataType } from './types/Dokumentdata';
 import { VedtakSimuleringResultat } from './types/VedtakSimuleringResultat';
 import { VedtakVarsel } from './types/VedtakVarsel';
 import { Vedtaksbrev } from './types/Vedtaksbrev';
@@ -41,8 +41,7 @@ interface VedtakProsessIndexProps {
     behandlingÅrsaker?: Array<BehandlingÅrsakDto>;
   };
   beregningsgrunnlag: Beregningsgrunnlag[];
-  dokumentdataHente: any;
-  employeeHasAccess: boolean;
+  dokumentdataHente: DokumentDataType;
   fritekstdokumenter: DokumentMedUstrukturerteDataDto[];
   hentFritekstbrevHtmlCallback: () => void;
   informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
@@ -54,7 +53,6 @@ interface VedtakProsessIndexProps {
   overlappendeYtelser: Array<OverlappendeYtelseDto>;
   personopplysninger: PersonopplysningDto;
   previewCallback: () => void;
-  sendVarselOmRevurdering?: boolean;
   simuleringResultat: VedtakSimuleringResultat;
   submitCallback: (data) => void;
   tilbakekrevingvalg: TilbakekrevingValgDto;
@@ -70,7 +68,6 @@ const VedtakProsessIndex = ({
   behandling,
   beregningsgrunnlag,
   dokumentdataHente,
-  employeeHasAccess,
   fritekstdokumenter,
   hentFritekstbrevHtmlCallback,
   informasjonsbehovVedtaksbrev,
@@ -80,7 +77,6 @@ const VedtakProsessIndex = ({
   overlappendeYtelser,
   personopplysninger,
   previewCallback,
-  sendVarselOmRevurdering = false,
   simuleringResultat,
   submitCallback,
   tilbakekrevingvalg,
@@ -100,11 +96,9 @@ const VedtakProsessIndex = ({
       vilkar={vilkar}
       tilbakekrevingvalg={tilbakekrevingvalg}
       simuleringResultat={simuleringResultat}
-      sendVarselOmRevurdering={sendVarselOmRevurdering}
       medlemskapFom={medlemskap ? medlemskap.fom : undefined}
       aksjonspunkter={aksjonspunkter}
       ytelseTypeKode={ytelseTypeKode}
-      employeeHasAccess={employeeHasAccess}
       readOnly={isReadOnly}
       previewCallback={previewCallback}
       hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}

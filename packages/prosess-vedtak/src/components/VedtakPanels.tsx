@@ -18,7 +18,7 @@ import {
   VilkårMedPerioderDto,
 } from '@navikt/k9-sak-typescript-client';
 import { Beregningsgrunnlag } from '../types/Beregningsgrunnlag';
-import { LagreDokumentdataType } from '../types/Dokumentdata';
+import { DokumentDataType, LagreDokumentdataType } from '../types/Dokumentdata';
 import { VedtakSimuleringResultat } from '../types/VedtakSimuleringResultat';
 import { VedtakVarsel } from '../types/VedtakVarsel';
 import { Vedtaksbrev } from '../types/Vedtaksbrev';
@@ -35,8 +35,7 @@ interface VedtakPanelsProps {
   behandlingStatus: string;
   behandlingTypeKode: string;
   beregningsgrunnlag: Beregningsgrunnlag[];
-  dokumentdata: any;
-  employeeHasAccess: boolean;
+  dokumentdata: DokumentDataType;
   fritekstdokumenter: DokumentMedUstrukturerteDataDto[];
   hentFritekstbrevHtmlCallback: () => void;
   informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
@@ -46,7 +45,6 @@ interface VedtakPanelsProps {
   personopplysninger: PersonopplysningDto;
   previewCallback: () => void;
   readOnly: boolean;
-  sendVarselOmRevurdering?: boolean;
   simuleringResultat: VedtakSimuleringResultat;
   sprakkode: string;
   submitCallback: (data) => void;

@@ -29,6 +29,7 @@ import {
   AvslagsårsakPrPeriodeDto,
   BehandlingsresultatDto,
   DokumentMedUstrukturerteDataDto,
+  OverlappendeYtelseDto,
   PersonopplysningDto,
   TilbakekrevingValgDto,
   VilkårMedPerioderDto,
@@ -82,7 +83,7 @@ interface Props {
   intl: IntlShape;
   lagreDokumentdata: LagreDokumentdataType;
   medlemskapFom: string;
-  overlappendeYtelser: object[];
+  overlappendeYtelser: Array<OverlappendeYtelseDto>;
   personopplysninger: PersonopplysningDto;
   previewCallback: (values, aapneINyttVindu) => void;
   readOnly: boolean;
@@ -523,7 +524,6 @@ export const VedtakForm: React.FC<Props> = ({
 
                   {isAvslag(behandlingresultat.type) && (
                     <VedtakAvslagPanel
-                      aksjonspunkter={aksjonspunkter}
                       behandlingsresultat={behandlingresultat}
                       ytelseTypeKode={ytelseTypeKode}
                       tilbakekrevingvalg={tilbakekrevingvalg}

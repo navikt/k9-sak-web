@@ -2,14 +2,13 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort, Label } from '@navikt/ds-react';
 import { BehandlingsresultatDto, TilbakekrevingValgDto, VilkårMedPerioderDto } from '@navikt/k9-sak-typescript-client';
-import { injectIntl, IntlShape } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
 import AvslagsårsakListe from './AvslagsårsakListe';
 import { findAvslagResultatText, findTilbakekrevingText } from './VedtakHelper';
 
 interface VedtakAvslagPanelProps {
-  intl: IntlShape;
   vilkar: VilkårMedPerioderDto[];
   behandlingsresultat: BehandlingsresultatDto;
   ytelseTypeKode: string;
@@ -25,7 +24,7 @@ export const VedtakAvslagPanelImpl = ({
   behandlingsresultat,
   ytelseTypeKode,
   tilbakekrevingText = null,
-}: VedtakAvslagPanelProps) => {
+}: VedtakAvslagPanelProps & WrappedComponentProps) => {
   return (
     <div>
       <Label size="small" as="p" data-testid="avslaatt">
@@ -48,7 +47,7 @@ export const VedtakAvslagPanelImpl = ({
   );
 };
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, ownProps: VedtakAvslagPanelProps) => ({
   tilbakekrevingText: findTilbakekrevingText(ownProps),
 });
 

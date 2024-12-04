@@ -9,6 +9,7 @@ import {
   TilbakekrevingValgDto,
   VilkårMedPerioderDto,
 } from '@navikt/k9-sak-typescript-client';
+import { FormikState } from 'formik';
 import { BeregningResultat } from '../../types/BeregningResultat';
 import VedtakSimuleringResultat from '../../types/VedtakSimuleringResultat';
 import { VedtakVarsel } from '../../types/VedtakVarsel';
@@ -29,7 +30,7 @@ interface OwnProps {
   medlemskapFom: string;
   harRedusertUtbetaling: boolean;
   redusertUtbetalingArsak: string[];
-  formikValues: any;
+  formikValues: FormikState<any>['values'];
   erSendtInnUtenArsaker: boolean;
 }
 

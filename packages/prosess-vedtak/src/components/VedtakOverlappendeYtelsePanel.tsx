@@ -5,16 +5,17 @@ import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/t
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types/KodeverkV2.js';
-import { OverlappendePeriode } from '@k9-sak-web/types';
 import { Accordion, Alert, BodyLong, Checkbox, CheckboxGroup, Heading, Tag } from '@navikt/ds-react';
+import { OverlappendeYtelseDto } from '@navikt/k9-sak-typescript-client';
 import { useFormikContext } from 'formik';
 import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
+import { Periodeinfo } from '../types/Periodeinfo';
 import { sorterOverlappendeRader } from '../utils/periodeUtils';
 import styles from './VedtakOverlappendeYtelsePanel.module.css';
 
 interface Props {
-  overlappendeYtelser: any;
+  overlappendeYtelser: Array<OverlappendeYtelseDto>;
 
   harVurdertOverlappendeYtelse: boolean;
   setHarVurdertOverlappendeYtelse: (harVurdertOverlappendeYtelse: boolean) => void;
@@ -22,13 +23,12 @@ interface Props {
 
 const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = ({
   overlappendeYtelser,
-
   intl,
   harVurdertOverlappendeYtelse,
   setHarVurdertOverlappendeYtelse,
 }) => {
   const { hentKodeverkForKode } = useKodeverkContext();
-  const [valgtPeriode, setValgtPeriode] = React.useState<Periode<OverlappendePeriode> | null>(null);
+  const [valgtPeriode, setValgtPeriode] = React.useState<Periode<Periodeinfo> | null>(null);
   const { submitCount } = useFormikContext();
 
   const utledYtelseType = (ytelseTypeKode: string) => {
@@ -55,15 +55,13 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
    * Set opp radene som brukes i Tidslinjen
    */
   const usorterteRader = overlappendeYtelser.map(
-    (rad, radIndex): TidslinjeRad<OverlappendePeriode> => ({
+    (rad, radIndex): TidslinjeRad<Periodeinfo> => ({
       id: `rad-${radIndex}`,
       perioder: rad.overlappendePerioder.map((periode, periodeIndex) => ({
         fom: periode.fom,
         tom: periode.tom,
         id: `rad-${radIndex}-periode-${periodeIndex}`,
-        hoverText: `${intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserKilde' })} ${utledFagSystem(
-          rad.kilde.kode,
-        )}`,
+        hoverText: `${intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserKilde' })} ${utledFagSystem(rad.kilde)}`,
         periodeinfo: {
           kilde: rad.kilde,
           ytelseType: rad.ytelseType,
@@ -82,11 +80,11 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
    * Sett opp korresponderende rader til sidekolonnen
    */
   const sideKolonneRader = overlappendeYtelser.map(rad => (
-    <span className={styles.sideKolonne}>{`${utledYtelseType(rad.ytelseType.kode)}`}</span>
+    <span className={styles.sideKolonne}>{`${utledYtelseType(rad.ytelseType)}`}</span>
   ));
 
   const velgPeriodeHandler = (eventProps: any) => {
-    const raden: TidslinjeRad<OverlappendePeriode> = rader.find(rad =>
+    const raden: TidslinjeRad<Periodeinfo> = rader.find(rad =>
       rad.perioder.find(periode => periode.id === eventProps.items[0]),
     );
     if (raden) {
@@ -123,11 +121,11 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
               <div className={styles.periodeDetaljer}>
                 <Tag variant="warning" className={styles.periodeDetalj}>
                   <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserKilde' })}</strong>
-                  {utledFagSystem(valgtPeriode.periodeinfo.kilde.kode)}
+                  {utledFagSystem(valgtPeriode.periodeinfo.kilde)}
                 </Tag>
                 <Tag variant="info" className={styles.periodeDetalj}>
                   <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserYtelse' })}</strong>
-                  {utledYtelseType(valgtPeriode.periodeinfo.ytelseType.kode)}
+                  {utledYtelseType(valgtPeriode.periodeinfo.ytelseType)}
                 </Tag>
                 <Tag variant="info" className={styles.periodeDetalj}>
                   <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserPeriode' })}</strong>

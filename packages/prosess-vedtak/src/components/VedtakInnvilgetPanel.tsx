@@ -40,7 +40,7 @@ export const VedtakInnvilgetPanelImpl = ({
   </>
 );
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, ownProps: VedtakInnvilgetPanelProps) => ({
   tilbakekrevingText: findTilbakekrevingText(ownProps),
 });
 

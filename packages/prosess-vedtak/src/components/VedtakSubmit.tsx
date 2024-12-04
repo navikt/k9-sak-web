@@ -17,7 +17,7 @@ interface Props {
   errorOnSubmit: string;
 }
 
-const kanSendesTilGodkjenning = behandlingStatusKode =>
+const kanSendesTilGodkjenning = (behandlingStatusKode: string) =>
   behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
 
 const VedtakSubmit = ({

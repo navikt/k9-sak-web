@@ -1,4 +1,5 @@
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
+import { InformasjonsbehovVedtaksbrev } from '@fpsak-frontend/prosess-vedtak/src/components/brev/InformasjonsbehovAutomatiskVedtaksbrev';
 import { isBehandlingType } from '@k9-sak-web/backend/combined/kodeverk/behandling/BehandlingType.js';
 import type { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import type { BehandlingInfo } from '@k9-sak-web/gui/sak/BehandlingInfo.js';
@@ -102,7 +103,10 @@ export function kanOverstyreMottakere(tilgjengeligeVedtaksbrev: TilgjengeligeVed
   );
 }
 
-export const filterInformasjonsbehov = (formikValues, aktiverteInformasjonsbehov) => {
+export const filterInformasjonsbehov = (
+  formikValues,
+  aktiverteInformasjonsbehov: InformasjonsbehovVedtaksbrev['informasjonsbehov'],
+) => {
   const aktiveVerdier = [];
   const keys = Object.keys(formikValues);
 

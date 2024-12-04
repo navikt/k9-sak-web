@@ -20,7 +20,7 @@ import { Alert, ErrorMessage } from '@navikt/ds-react';
 
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
 import { BehandlingsresultatDto, PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
-import { setNestedObjectValues, useField } from 'formik';
+import { FormikValues, setNestedObjectValues, useField } from 'formik';
 import React, { useState } from 'react';
 import { IntlShape, injectIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
@@ -55,7 +55,7 @@ export const manuellBrevPreview = ({
 }: {
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   previewCallback: (values, aapneINyttVindu) => void;
-  values: any;
+  values: FormikValues;
   redigertHtml: any;
   overstyrtMottaker: Brevmottaker;
   brødtekst: string;
@@ -140,7 +140,7 @@ const getHentHtmlMalCallback =
   };
 
 interface BrevPanelProps {
-  aktiverteInformasjonsbehov: any;
+  aktiverteInformasjonsbehov: InformasjonsbehovVedtaksbrev['informasjonsbehov'];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   begrunnelse: string;
   behandlingResultat: BehandlingsresultatDto;

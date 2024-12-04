@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
@@ -9,12 +7,17 @@ import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import {
   AvslagsårsakPrPeriodeDto,
+  BehandlingsresultatDto,
   BeregningsgrunnlagPeriodeDto,
   TilbakekrevingValgDto,
 } from '@navikt/k9-sak-typescript-client';
+import moment from 'moment';
 import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
 
-const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
+const tilbakekrevingMedInntrekk = (
+  tilbakekrevingKode: TilbakekrevingValgDto['videreBehandling'],
+  simuleringResultat: VedtakSimuleringResultat,
+) =>
   tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT &&
   (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
 
@@ -33,7 +36,10 @@ export const findTilbakekrevingText = (props: {
   return null;
 };
 
-export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType) => {
+export const findDelvisInnvilgetResultatText = (
+  behandlingResultatTypeKode: BehandlingsresultatDto['type'],
+  ytelseType: string,
+) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
   }
@@ -60,7 +66,10 @@ export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode, ytel
   return 'VedtakForm.VilkarStatusDelvisInnvilgetPleiepenger';
 };
 
-export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, ytelseType: string) => {
+export const findInnvilgetResultatText = (
+  behandlingResultatTypeKode: BehandlingsresultatDto['type'],
+  ytelseType: string,
+) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
   }
@@ -87,7 +96,10 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, yt
   return 'VedtakForm.VilkarStatusInnvilgetPleiepenger';
 };
 
-export const findAvslagResultatText = (behandlingResultatTypeKode: string, ytelseType: string) => {
+export const findAvslagResultatText = (
+  behandlingResultatTypeKode: BehandlingsresultatDto['type'],
+  ytelseType: string,
+) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET) {
     return 'VedtakForm.ResultatKlageYtelsesvedtakOpphevet';
   }
