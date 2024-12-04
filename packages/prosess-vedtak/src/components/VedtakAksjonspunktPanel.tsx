@@ -17,7 +17,7 @@ interface Props {
   aksjonspunktKoder: string[];
   readOnly: boolean;
   overlappendeYtelser;
-  // alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+
   viseFlereSjekkbokserForBrev: boolean;
   harVurdertOverlappendeYtelse: boolean;
   setHarVurdertOverlappendeYtelse: (harVurdertOverlappendeYtelse: boolean) => void;
@@ -32,7 +32,7 @@ export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
   aksjonspunktKoder,
   readOnly,
   overlappendeYtelser,
-  // alleKodeverk,
+
   viseFlereSjekkbokserForBrev,
   harVurdertOverlappendeYtelse,
   setHarVurdertOverlappendeYtelse,
@@ -54,7 +54,6 @@ export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
         )}
         {harOverlappendeYtelser && (
           <VedtakOverlappendeYtelsePanel
-            // alleKodeverk={alleKodeverk}
             overlappendeYtelser={overlappendeYtelser}
             harVurdertOverlappendeYtelse={harVurdertOverlappendeYtelse}
             setHarVurdertOverlappendeYtelse={setHarVurdertOverlappendeYtelse}

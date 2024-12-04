@@ -47,7 +47,7 @@ const RevurderingPaneler = ({
   resultatstruktur,
   tilbakekrevingvalg,
   simuleringResultat,
-  // alleKodeverk,
+
   resultatstrukturOriginalBehandling,
   bgPeriodeMedAvslagsårsak,
   vilkar,

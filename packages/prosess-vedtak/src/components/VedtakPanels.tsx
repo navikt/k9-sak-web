@@ -84,7 +84,7 @@ const VedtakPanels = ({
   medlemskapFom,
   aksjonspunkter,
   ytelseTypeKode,
-  // alleKodeverk,
+
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
   vilkar,
@@ -164,7 +164,6 @@ const VedtakPanels = ({
         behandlingArsaker={behandlingArsaker}
         aksjonspunkter={aksjonspunkter}
         ytelseTypeKode={ytelseTypeKode}
-        // alleKodeverk={alleKodeverk}
         personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         vilkar={vilkar}

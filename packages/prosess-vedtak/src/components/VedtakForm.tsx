@@ -68,7 +68,7 @@ const transformRedusertUtbetalingÅrsaker = formikValues =>
 
 interface Props {
   aksjonspunkter: AksjonspunktDto[];
-  // alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   behandlingArsaker: object[];
   behandlingPaaVent: boolean;
@@ -111,7 +111,7 @@ export const VedtakForm: React.FC<Props> = ({
   hentFritekstbrevHtmlCallback,
   sprakkode,
   ytelseTypeKode,
-  // alleKodeverk,
+
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
   tilbakekrevingvalg,
@@ -503,7 +503,6 @@ export const VedtakForm: React.FC<Props> = ({
               aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon)}
               readOnly={readOnly}
               overlappendeYtelser={overlappendeYtelser}
-              // alleKodeverk={alleKodeverk}
               viseFlereSjekkbokserForBrev={
                 (kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) || kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) &&
                 kanHindreUtsending(tilgjengeligeVedtaksbrev)
@@ -534,7 +533,6 @@ export const VedtakForm: React.FC<Props> = ({
                       aksjonspunkter={aksjonspunkter}
                       behandlingsresultat={behandlingresultat}
                       ytelseTypeKode={ytelseTypeKode}
-                      // alleKodeverk={alleKodeverk}
                       tilbakekrevingvalg={tilbakekrevingvalg}
                       simuleringResultat={simuleringResultat}
                       vilkar={vilkar}
@@ -549,7 +547,6 @@ export const VedtakForm: React.FC<Props> = ({
                   resultatstruktur={resultatstruktur}
                   tilbakekrevingvalg={tilbakekrevingvalg}
                   simuleringResultat={simuleringResultat}
-                  // alleKodeverk={alleKodeverk}
                   resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
                   bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
                   behandlingStatusKode={behandlingStatus}

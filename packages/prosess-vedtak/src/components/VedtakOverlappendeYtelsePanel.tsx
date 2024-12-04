@@ -15,14 +15,14 @@ import styles from './VedtakOverlappendeYtelsePanel.module.css';
 
 interface Props {
   overlappendeYtelser: any;
-  // alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+
   harVurdertOverlappendeYtelse: boolean;
   setHarVurdertOverlappendeYtelse: (harVurdertOverlappendeYtelse: boolean) => void;
 }
 
 const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = ({
   overlappendeYtelser,
-  // alleKodeverk,
+
   intl,
   harVurdertOverlappendeYtelse,
   setHarVurdertOverlappendeYtelse,
