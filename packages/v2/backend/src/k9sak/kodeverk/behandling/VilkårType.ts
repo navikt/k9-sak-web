@@ -1,30 +1,6 @@
-/*
 import { type vilkarType as generatedVilkarTypeEnumUnion } from '@k9-sak-web/backend/k9sak/generated';
 
 export type VilkårType = generatedVilkarTypeEnumUnion;
- */
-
-// Midlertidig kopiert inn for å få pipeline til å gå gjennom før ny generert kode er publisert. TODO Fjern denne og ta inn utkommentert kode over.
-export type VilkårType =
-  | 'FP_VK_0'
-  | 'FP_VK_2'
-  | 'K9_VK_1'
-  | 'K9_VK_3'
-  | 'K9_VK_5_3'
-  | 'K9_VK_2_a'
-  | 'K9_VK_2_b'
-  | 'FP_VK_3'
-  | 'FP_VK_34'
-  | 'FP_VK_21'
-  | 'FP_VK_23'
-  | 'FP_VK_41'
-  | 'K9_VK_16'
-  | 'K9_VK_20'
-  | 'K9_VK_21'
-  | 'K9_VK_22'
-  | 'K9_VK_17'
-  | 'K9_VK_9_6'
-  | '-';
 
 type VilkårTypeNames =
   | 'ALDERSVILKÅR_BARN'

@@ -1,4 +1,9 @@
-import type { AksjonspunktDto, BehandlingDto, VilkårPeriodeDto } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  AksjonspunktDto,
+  BehandlingDto,
+  VilkårMedPerioderDto,
+  VilkårPeriodeDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { dateStringSorter, formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import type { FeatureToggles } from '@k9-sak-web/lib/kodeverk/types/FeatureTogglesType.js';
@@ -8,12 +13,8 @@ import VilkarresultatMedOverstyringFormPeriodisert from './components-periodiser
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
 import VilkarresultatMedOverstyringHeader from './components/VilkarresultatMedOverstyringHeader';
 import styles from './vilkarresultatMedOverstyringProsessIndex.module.css';
-import type { VilkårType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 
-const hentAktivePerioderFraVilkar = (
-  vilkar: TempVilkårMedPerioderDto[],
-  visAllePerioder: boolean,
-): VilkårPeriodeDto[] => {
+const hentAktivePerioderFraVilkar = (vilkar: VilkårMedPerioderDto[], visAllePerioder: boolean): VilkårPeriodeDto[] => {
   const [activeVilkår] = vilkar;
 
   if (!activeVilkår?.perioder) {
@@ -27,14 +28,6 @@ const hentAktivePerioderFraVilkar = (
     )
     .sort((a, b) => (a.periode.fom && b.periode.fom ? dateStringSorter(a.periode.fom, b.periode.fom) : 0))
     .reverse();
-};
-
-// TODO Fjern denne og bruk VilkårMedPerioderDto direkte istadenfor
-type TempVilkårMedPerioderDto = {
-  lovReferanse?: string | null;
-  overstyrbar?: boolean | null;
-  perioder?: Array<VilkårPeriodeDto> | null;
-  vilkarType: VilkårType;
 };
 
 export interface VilkarresultatMedOverstyringProsessIndexProps {
@@ -56,7 +49,7 @@ export interface VilkarresultatMedOverstyringProsessIndexProps {
   overstyringApKode: string;
   erMedlemskapsPanel: boolean;
   visPeriodisering: boolean;
-  vilkar: TempVilkårMedPerioderDto[];
+  vilkar: VilkårMedPerioderDto[];
   visAllePerioder: boolean;
   featureToggles: FeatureToggles;
 }
