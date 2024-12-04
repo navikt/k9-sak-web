@@ -1,16 +1,19 @@
-import React from 'react';
-
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 
-import findStatusForVedtak from '../vedtakStatusUtlederFrisinn';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { FrisinnBehandlingApiKeys } from '../../data/frisinnBehandlingApi';
+import findStatusForVedtak from '../vedtakStatusUtlederFrisinn';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = props => <VedtakProsessIndex {...props} />;
+  getKomponent = props => {
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return <VedtakProsessIndex {...props} {...deepCopyProps} />;
+  };
 
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.FORESLA_VEDTAK,
