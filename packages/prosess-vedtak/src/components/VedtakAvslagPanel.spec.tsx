@@ -1,11 +1,9 @@
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 
-import React from 'react';
+import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
+import { behandlingResultatType, vilkarStatus } from '@navikt/k9-sak-typescript-client';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakAvslagPanelImpl } from './VedtakAvslagPanel';
@@ -16,75 +14,14 @@ const kroniskSyktBarn = fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN;
 const midlertidigAlene = fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE;
 
 describe('<VedtakAvslagPanel>', () => {
-  const behandling = {
-    id: 1,
-    versjon: 1,
-    fagsakId: 1,
-    aksjonspunkter: [],
-    behandlingPaaVent: false,
-    behandlingHenlagt: false,
-    sprakkode: {
-      kode: 'NO',
-      navn: 'norsk',
-    },
-    behandlingsresultat: {
-      id: 1,
-      type: {
-        kode: 'test',
-        navn: 'test',
-      },
-      avslagsarsak: {
-        kode: '1019',
-        navn: 'Manglende dokumentasjon',
-      },
-      avslagsarsakFritekst: null,
-    },
-    vilkar: [
-      {
-        vilkarType: {
-          kode: vilkarType.MEDLEMSKAPSVILKARET,
-          navn: 'Medlemskapsvilkåret',
-        },
-        lovReferanse: '§ 22-13, 2. ledd',
-        perioder: [
-          {
-            vilkarStatus: {
-              kode: vilkarUtfallType.IKKE_OPPFYLT,
-              navn: 'test',
-            },
-          },
-        ],
-      },
-    ],
-    status: {
-      kode: behandlingStatus.BEHANDLING_UTREDES,
-      navn: 'test',
-    },
-    type: {
-      kode: 'test',
-      navn: 'test',
-    },
-    opprettet: '16‎.‎07‎.‎2004‎ ‎17‎:‎35‎:‎21',
-  };
-
-  const sprakkode = {
-    kode: 'NO',
-    navn: 'norsk',
-  };
-
   const vilkarUtenSoknadsfrist = [
     {
-      vilkarType: {
-        kode: vilkarType.MEDLEMSKAPSVILKARET,
-        navn: 'Medlemskapsvilkåret',
-      },
+      vilkarType: vilkarType.MEDLEMSKAPSVILKÅRET,
       lovReferanse: '§ 22-13, 2. ledd',
       perioder: [
         {
-          vilkarStatus: {
-            kode: vilkarUtfallType.IKKE_OPPFYLT,
-            navn: 'test',
-          },
+          vilkarStatus: vilkarStatus.IKKE_OPPFYLT,
+          periode: { fom: '', tom: '' },
         },
       ],
     },
@@ -92,10 +29,7 @@ describe('<VedtakAvslagPanel>', () => {
 
   const behandlingsresultat = {
     id: 1,
-    type: {
-      kode: 'test',
-      navn: 'test',
-    },
+    type: behandlingResultatType.IKKE_FASTSATT,
   };
 
   it('skal rendre avslagspanel for pleiepenger', () => {
@@ -104,11 +38,10 @@ describe('<VedtakAvslagPanel>', () => {
         intl={intlMock}
         vilkar={vilkarUtenSoknadsfrist}
         behandlingsresultat={behandlingsresultat}
-        sprakkode={sprakkode}
-        readOnly
-        behandlinger={[behandling]}
         ytelseTypeKode={pleiepenger}
-        alleKodeverk={{}}
+        simuleringResultat={{}}
+        kodeverkNavnFraKode={vi.fn()}
+        tilbakekrevingvalg={{ erTilbakekrevingVilkårOppfylt: false }}
       />,
       { messages },
     );
@@ -124,11 +57,10 @@ describe('<VedtakAvslagPanel>', () => {
         intl={intlMock}
         vilkar={vilkarUtenSoknadsfrist}
         behandlingsresultat={behandlingsresultat}
-        sprakkode={sprakkode}
-        readOnly
-        behandlinger={[behandling]}
         ytelseTypeKode={omsorgspenger}
-        alleKodeverk={{}}
+        simuleringResultat={{}}
+        kodeverkNavnFraKode={vi.fn()}
+        tilbakekrevingvalg={{ erTilbakekrevingVilkårOppfylt: false }}
       />,
       { messages },
     );
@@ -144,11 +76,10 @@ describe('<VedtakAvslagPanel>', () => {
         intl={intlMock}
         vilkar={vilkarUtenSoknadsfrist}
         behandlingsresultat={behandlingsresultat}
-        sprakkode={sprakkode}
-        readOnly
-        behandlinger={[behandling]}
         ytelseTypeKode={kroniskSyktBarn}
-        alleKodeverk={{}}
+        simuleringResultat={{}}
+        kodeverkNavnFraKode={vi.fn()}
+        tilbakekrevingvalg={{ erTilbakekrevingVilkårOppfylt: false }}
       />,
       { messages },
     );
@@ -164,11 +95,10 @@ describe('<VedtakAvslagPanel>', () => {
         intl={intlMock}
         vilkar={vilkarUtenSoknadsfrist}
         behandlingsresultat={behandlingsresultat}
-        sprakkode={sprakkode}
-        readOnly
-        behandlinger={[behandling]}
         ytelseTypeKode={midlertidigAlene}
-        alleKodeverk={{}}
+        simuleringResultat={{}}
+        kodeverkNavnFraKode={vi.fn()}
+        tilbakekrevingvalg={{ erTilbakekrevingVilkårOppfylt: false }}
       />,
       { messages },
     );

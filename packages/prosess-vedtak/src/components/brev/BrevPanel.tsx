@@ -20,13 +20,14 @@ import { Alert, ErrorMessage } from '@navikt/ds-react';
 
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
 import { BehandlingsresultatDto, PersonopplysningDto } from '@navikt/k9-sak-typescript-client';
-import { FormikProps, setNestedObjectValues, useField } from 'formik';
+import { setNestedObjectValues, useField } from 'formik';
 import React, { useState } from 'react';
 import { IntlShape, injectIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
 import styles from './BrevPanel.module.css';
+import { CustomFormikProps } from './CustomFormikProps';
 import InformasjonsbehovAutomatiskVedtaksbrev, {
   InformasjonsbehovVedtaksbrev,
 } from './InformasjonsbehovAutomatiskVedtaksbrev';
@@ -107,7 +108,7 @@ const getManuellBrevCallback =
     brødtekst: string;
     overskrift: string;
     overstyrtMottaker?: Brevmottaker;
-    formProps: FormikProps<any>;
+    formProps: CustomFormikProps;
     previewCallback: (values, aapneINyttVindu) => void;
     tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   }) =>
@@ -145,7 +146,7 @@ interface BrevPanelProps {
   behandlingResultat: BehandlingsresultatDto;
   brødtekst: string;
   dokumentdata: DokumentDataType;
-  formikProps: FormikProps<any>;
+  formikProps: CustomFormikProps;
   getPreviewAutomatiskBrevCallback: (any) => (any) => (event: React.SyntheticEvent<Element, Event>) => void;
   hentFritekstbrevHtmlCallback: (parameters: any) => any;
   informasjonsbehovValues: any[];

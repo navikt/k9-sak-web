@@ -2,7 +2,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 
-import React from 'react';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakHelpTextPanelImpl } from './VedtakHelpTextPanel';
@@ -14,6 +13,7 @@ describe('<VedtakHelpTextPanel>', () => {
         intl={intlMock}
         aksjonspunktKoder={[aksjonspunktCodes.VURDERE_DOKUMENT]}
         readOnly={false}
+        viseFlereSjekkbokserForBrev={false}
       />,
       { messages },
     );
@@ -27,6 +27,7 @@ describe('<VedtakHelpTextPanel>', () => {
         intl={intlMock}
         aksjonspunktKoder={[aksjonspunktCodes.VURDERE_ANNEN_YTELSE, aksjonspunktCodes.VURDERE_DOKUMENT]}
         readOnly={false}
+        viseFlereSjekkbokserForBrev={false}
       />,
       { messages },
     );
@@ -43,6 +44,7 @@ describe('<VedtakHelpTextPanel>', () => {
         intl={intlMock}
         aksjonspunktKoder={[aksjonspunktCodes.FORESLA_VEDTAK]}
         readOnly={false}
+        viseFlereSjekkbokserForBrev={false}
       />,
       { messages },
     );

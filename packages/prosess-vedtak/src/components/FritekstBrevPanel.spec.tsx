@@ -4,9 +4,7 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { act, screen } from '@testing-library/react';
 
-import React from 'react';
 import { MemoryRouter } from 'react-router';
-import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import FritekstBrevPanel from './FritekstBrevPanel';
 
@@ -20,22 +18,32 @@ describe('<FritekstBrevPanel>', () => {
   it('skal vise manuelt fritekstbrev i read only', async () => {
     const alleTilgjengeligeVedtaksbrev = {
       vedtaksbrevmaler: {
-        [vedtaksbrevtype.MANUELL]: dokumentMalType.REDIGERTBREV,
+        [vedtaksbrevtype.MANUELL]: dokumentMalType.MANUELL,
         [vedtaksbrevtype.AUTOMATISK]: dokumentMalType.INNVILGELSE,
       },
       maler: [{ dokumentMalType: dokumentMalType.MANUELL, redigerbarMalType: 'test' }],
+      begrunnelse: '',
+      alternativeMottakere: [],
     };
 
     await act(() => {
       renderWithIntl(
         <MemoryRouter>
           <FritekstBrevPanel
-            intl={intlMock}
             previewBrev={eventCallback}
             readOnly
             harAutomatiskVedtaksbrev
-            formikProps={{ values: { skalBrukeOverstyrendeFritekstBrev: true }, setFieldValue: vi.fn() }}
+            formikProps={{
+              values: { skalBrukeOverstyrendeFritekstBrev: true },
+              setFieldValue: vi.fn(),
+              validateForm: vi.fn(),
+              setTouched: vi.fn(),
+            }}
             tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
+            lagreDokumentdata={vi.fn()}
+            kanInkludereKalender={false}
+            dokumentdata={{}}
+            dokumentdataInformasjonsbehov={[]}
             setForhaandsvisningKlart={vi.fn()}
             hentFritekstbrevHtmlCallback={vi.fn()}
           />
@@ -53,22 +61,32 @@ describe('<FritekstBrevPanel>', () => {
   it('skal vise manuelt fritekstbrev', async () => {
     const alleTilgjengeligeVedtaksbrev = {
       vedtaksbrevmaler: {
-        [vedtaksbrevtype.MANUELL]: dokumentMalType.REDIGERTBREV,
+        [vedtaksbrevtype.MANUELL]: dokumentMalType.MANUELL,
         [vedtaksbrevtype.AUTOMATISK]: dokumentMalType.INNVILGELSE,
       },
       maler: [{ dokumentMalType: dokumentMalType.MANUELL, redigerbarMalType: 'test' }],
+      begrunnelse: '',
+      alternativeMottakere: [],
     };
 
     await act(() => {
       renderWithIntl(
         <MemoryRouter>
           <FritekstBrevPanel
-            intl={intlMock}
             previewBrev={eventCallback}
             readOnly={false}
             harAutomatiskVedtaksbrev
-            formikProps={{ values: { skalBrukeOverstyrendeFritekstBrev: true }, setFieldValue: vi.fn() }}
+            formikProps={{
+              values: { skalBrukeOverstyrendeFritekstBrev: true },
+              setFieldValue: vi.fn(),
+              validateForm: vi.fn(),
+              setTouched: vi.fn(),
+            }}
             tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
+            lagreDokumentdata={vi.fn()}
+            kanInkludereKalender={false}
+            dokumentdata={{}}
+            dokumentdataInformasjonsbehov={[]}
             setForhaandsvisningKlart={vi.fn()}
             hentFritekstbrevHtmlCallback={vi.fn()}
           />
@@ -85,21 +103,31 @@ describe('<FritekstBrevPanel>', () => {
   it('skal vise manuelt brev uten automatisk vedtaksbrev', async () => {
     const alleTilgjengeligeVedtaksbrev = {
       vedtaksbrevmaler: {
-        [vedtaksbrevtype.MANUELL]: dokumentMalType.REDIGERTBREV,
+        [vedtaksbrevtype.MANUELL]: dokumentMalType.MANUELL,
       },
       maler: [{ dokumentMalType: dokumentMalType.MANUELL, redigerbarMalType: 'test' }],
+      begrunnelse: '',
+      alternativeMottakere: [],
     };
 
     await act(() => {
       renderWithIntl(
         <MemoryRouter>
           <FritekstBrevPanel
-            intl={intlMock}
             previewBrev={eventCallback}
             readOnly={false}
             harAutomatiskVedtaksbrev={false}
-            formikProps={{ values: { skalBrukeOverstyrendeFritekstBrev: true }, setFieldValue: vi.fn() }}
+            formikProps={{
+              values: { skalBrukeOverstyrendeFritekstBrev: true },
+              setFieldValue: vi.fn(),
+              validateForm: vi.fn(),
+              setTouched: vi.fn(),
+            }}
             tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
+            lagreDokumentdata={vi.fn()}
+            kanInkludereKalender={false}
+            dokumentdata={{}}
+            dokumentdataInformasjonsbehov={[]}
             setForhaandsvisningKlart={vi.fn()}
             hentFritekstbrevHtmlCallback={vi.fn()}
           />

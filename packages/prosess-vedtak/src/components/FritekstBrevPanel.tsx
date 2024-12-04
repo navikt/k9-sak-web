@@ -1,5 +1,4 @@
 import { Alert, Heading } from '@navikt/ds-react';
-import { FormikProps, FormikValues } from 'formik';
 import React, { useCallback } from 'react';
 import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 
@@ -19,6 +18,7 @@ import FritekstRedigering from './FritekstRedigering/FritekstRedigering';
 import styles from './vedtakForm.module.css';
 
 import { fieldnames } from '../konstanter';
+import { CustomFormikProps } from './brev/CustomFormikProps';
 
 const maxLength200 = maxLength(200);
 const maxLength100000 = maxLength(100000);
@@ -33,7 +33,7 @@ interface OwnProps {
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   kanInkludereKalender: boolean;
   intl: IntlShape;
-  formikProps: FormikProps<FormikValues>;
+  formikProps: CustomFormikProps;
   dokumentdata: DokumentDataType;
   dokumentdataInformasjonsbehov: any;
   overstyrtMottaker?: Brevmottaker;

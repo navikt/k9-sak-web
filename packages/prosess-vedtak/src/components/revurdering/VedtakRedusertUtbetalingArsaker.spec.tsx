@@ -3,7 +3,6 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 
 import { Formik } from 'formik';
-import React from 'react';
 import messages from '../../../i18n/nb_NO.json';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
@@ -18,7 +17,7 @@ describe('VedtakRedusertUtbetalingArsaker', () => {
   ) => {
     const attributter = { intl: intlMock, vedtakVarsel, readOnly, values, erSendtInnUtenArsaker, merkedeArsaker };
     renderWithIntl(
-      <Formik initialValues={[]}>
+      <Formik onSubmit={vi.fn()} initialValues={[]}>
         <VedtakRedusertUtbetalingArsaker {...attributter} />
       </Formik>,
       { messages },
@@ -35,7 +34,7 @@ describe('VedtakRedusertUtbetalingArsaker', () => {
     const readOnly = false;
 
     vedtakRedusertUtbetalingArsaker(readOnly);
-    const checkboxes = screen.getAllByRole('checkbox');
+    const checkboxes = screen.getAllByRole<HTMLInputElement>('checkbox');
     const disabled = checkboxes.filter(c => c.disabled);
     expect(disabled).toHaveLength(0);
   });
@@ -44,7 +43,7 @@ describe('VedtakRedusertUtbetalingArsaker', () => {
     const readOnly = true;
     const expectedLength = Object.keys(redusertUtbetalingArsak).length;
     vedtakRedusertUtbetalingArsaker(readOnly);
-    const checkboxes = screen.getAllByRole('checkbox');
+    const checkboxes = screen.getAllByRole<HTMLInputElement>('checkbox');
     const disabled = checkboxes.filter(c => c.disabled);
     expect(disabled).toHaveLength(expectedLength);
   });

@@ -1,7 +1,6 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakAksjonspunktPanelImpl } from './VedtakAksjonspunktPanel';
@@ -15,7 +14,11 @@ describe('<VedtakAksjonspunktPanel>', () => {
         behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
         readOnly={false}
         aksjonspunktKoder={aksjonspunktKoder}
-        isBehandlingReadOnly={false}
+        overlappendeYtelser={[]}
+        viseFlereSjekkbokserForBrev={false}
+        harVurdertOverlappendeYtelse={false}
+        setHarVurdertOverlappendeYtelse={vi.fn()}
+        submitCallback={vi.fn()}
       />,
       { messages },
     );

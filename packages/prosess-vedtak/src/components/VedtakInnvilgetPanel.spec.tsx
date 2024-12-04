@@ -1,18 +1,15 @@
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 
-import React from 'react';
+import { behandlingResultatType } from '@navikt/k9-sak-typescript-client';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakInnvilgetPanelImpl } from './VedtakInnvilgetPanel';
 
 const foreldrepenger = fagsakYtelseType.FORELDREPENGER;
 const behandlingsresultat = {
-  type: {
-    kode: 'INNVILGET',
-  },
+  type: behandlingResultatType.INNVILGET,
 };
 
 describe('<VedtakInnvilgetPanel>', () => {
@@ -20,18 +17,8 @@ describe('<VedtakInnvilgetPanel>', () => {
     renderWithIntl(
       <VedtakInnvilgetPanelImpl
         intl={intlMock}
-        behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-        beregningResultat={{
-          beregnetTilkjentYtelse: 100,
-        }}
-        behandlingsresultatTypeKode="test"
-        antallBarn={1}
-        behandlinger={[]}
         ytelseTypeKode={foreldrepenger}
         behandlingsresultat={behandlingsresultat}
-        skalBrukeOverstyrendeFritekstBrev
-        readOnly
-        beregningErManueltFastsatt={false}
       />,
       { messages },
     );

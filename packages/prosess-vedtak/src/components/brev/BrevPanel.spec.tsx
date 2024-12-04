@@ -5,47 +5,63 @@ import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi'
 import { screen } from '@testing-library/react';
 
 import { Formik } from 'formik';
-import React from 'react';
 import { intlMock } from '../../../i18n/index';
 import messages from '../../../i18n/nb_NO.json';
 import { BrevPanel } from './BrevPanel';
 
 describe('<BrevPanel>', () => {
-  const ingenTilgjengeligeVedtaksbrev = { vedtaksbrevmaler: [] };
+  const ingenTilgjengeligeVedtaksbrev = {
+    vedtaksbrevmaler: {},
+    begrunnelse: '',
+    alternativeMottakere: [],
+  };
   const alleTilgjengeligeVedtaksbrev = {
     vedtaksbrevmaler: {
       [vedtaksbrevtype.AUTOMATISK]: dokumentMalType.INNVILGELSE,
       [vedtaksbrevtype.FRITEKST]: dokumentMalType.FRITKS,
     },
+    begrunnelse: '',
+    alternativeMottakere: [],
   };
   const automatiskInnvilgelsebrevTilgjengelig = {
     vedtaksbrevmaler: { [vedtaksbrevtype.AUTOMATISK]: dokumentMalType.INNVILGELSE },
+    begrunnelse: '',
+    alternativeMottakere: [],
   };
-  const fritekstbrevTilgjenglig = { vedtaksbrevmaler: { [vedtaksbrevtype.FRITEKST]: dokumentMalType.FRITKS } };
+  const fritekstbrevTilgjenglig = {
+    vedtaksbrevmaler: { [vedtaksbrevtype.FRITEKST]: dokumentMalType.FRITKS },
+    begrunnelse: '',
+    alternativeMottakere: [],
+  };
 
   it('skal forhåndsvise brev når ingen behandlingsresultat', async () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
 
     renderWithIntl(
-      <Formik initialValues={[]}>
+      <Formik onSubmit={vi.fn()} initialValues={[]}>
         <BrevPanel
           intl={intlMock}
           readOnly={false}
-          sprakkode={{ kode: 'NB' }}
-          beregningErManueltFastsatt={false}
+          sprakkode="NB"
           dokumentdata={{}}
           tilgjengeligeVedtaksbrev={automatiskInnvilgelsebrevTilgjengelig}
           informasjonsbehovValues={[]}
           skalBrukeOverstyrendeFritekstBrev={false}
           begrunnelse=""
           previewCallback={vi.fn()}
-          redusertUtbetalingÅrsaker={[]}
           brødtekst={null}
           overskrift={null}
           behandlingResultat={null}
           overstyrtMottaker={null}
-          formikProps={{ values: [] }}
-          getPreviewAutomatiskBrevCallback={() => () => {}}
+          formikProps={{ values: [], setFieldValue: vi.fn(), validateForm: vi.fn(), setTouched: vi.fn() }}
+          getPreviewAutomatiskBrevCallback={vi.fn(() => vi.fn())}
+          aktiverteInformasjonsbehov={[]}
+          arbeidsgiverOpplysningerPerId={{}}
+          hentFritekstbrevHtmlCallback={vi.fn()}
+          informasjonsbehovVedtaksbrev={{ informasjonsbehov: [], mangler: [] }}
+          lagreDokumentdata={vi.fn()}
+          personopplysninger={{ aktoerId: '', fnr: '' }}
+          ytelseTypeKode=""
         />
       </Formik>,
       { messages },
@@ -57,25 +73,30 @@ describe('<BrevPanel>', () => {
   it('skal vise fritekstpanel når overstyrt', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     renderWithIntl(
-      <Formik initialValues={[]}>
+      <Formik onSubmit={vi.fn()} initialValues={[]}>
         <BrevPanel
           intl={intlMock}
           readOnly={false}
-          sprakkode={{ kode: 'NB' }}
-          beregningErManueltFastsatt={false}
+          sprakkode="NB"
           dokumentdata={{}}
           tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
           informasjonsbehovValues={[]}
           skalBrukeOverstyrendeFritekstBrev
           begrunnelse=""
           previewCallback={vi.fn()}
-          redusertUtbetalingÅrsaker={[]}
           brødtekst={null}
           overskrift={null}
           behandlingResultat={null}
           overstyrtMottaker={null}
-          formikProps={{ values: [] }}
-          getPreviewAutomatiskBrevCallback={() => () => {}}
+          formikProps={{ values: [], setFieldValue: vi.fn(), validateForm: vi.fn(), setTouched: vi.fn() }}
+          getPreviewAutomatiskBrevCallback={vi.fn(() => vi.fn())}
+          aktiverteInformasjonsbehov={[]}
+          arbeidsgiverOpplysningerPerId={{}}
+          hentFritekstbrevHtmlCallback={vi.fn()}
+          informasjonsbehovVedtaksbrev={{ informasjonsbehov: [], mangler: [] }}
+          lagreDokumentdata={vi.fn()}
+          personopplysninger={{ aktoerId: '', fnr: '' }}
+          ytelseTypeKode=""
         />
       </Formik>,
       { messages },
@@ -87,25 +108,30 @@ describe('<BrevPanel>', () => {
   it('skal vise fritekstpanel selv om ikke overstyrt når fritekst er eneste typen', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     renderWithIntl(
-      <Formik initialValues={[]}>
+      <Formik onSubmit={vi.fn()} initialValues={[]}>
         <BrevPanel
           intl={intlMock}
           readOnly={false}
-          sprakkode={{ kode: 'NB' }}
-          beregningErManueltFastsatt={false}
+          sprakkode="NB"
           dokumentdata={{}}
           tilgjengeligeVedtaksbrev={fritekstbrevTilgjenglig}
           informasjonsbehovValues={[]}
           skalBrukeOverstyrendeFritekstBrev={false}
           begrunnelse=""
           previewCallback={vi.fn()}
-          redusertUtbetalingÅrsaker={[]}
           brødtekst={null}
           overskrift={null}
           behandlingResultat={null}
           overstyrtMottaker={null}
-          formikProps={{ values: [] }}
-          getPreviewAutomatiskBrevCallback={() => () => {}}
+          formikProps={{ values: [], setFieldValue: vi.fn(), validateForm: vi.fn(), setTouched: vi.fn() }}
+          getPreviewAutomatiskBrevCallback={vi.fn(() => vi.fn())}
+          aktiverteInformasjonsbehov={[]}
+          arbeidsgiverOpplysningerPerId={{}}
+          hentFritekstbrevHtmlCallback={vi.fn()}
+          informasjonsbehovVedtaksbrev={{ informasjonsbehov: [], mangler: [] }}
+          lagreDokumentdata={vi.fn()}
+          personopplysninger={{ aktoerId: '', fnr: '' }}
+          ytelseTypeKode=""
         />
       </Formik>,
       { messages },
@@ -120,25 +146,30 @@ describe('<BrevPanel>', () => {
   it('skal vise varsel om ingen brev når ingen brev', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     renderWithIntl(
-      <Formik initialValues={[]}>
+      <Formik onSubmit={vi.fn()} initialValues={[]}>
         <BrevPanel
           intl={intlMock}
           readOnly={false}
-          sprakkode={{ kode: 'NB' }}
-          beregningErManueltFastsatt={false}
+          sprakkode="NB"
           dokumentdata={{}}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovValues={[]}
           skalBrukeOverstyrendeFritekstBrev={false}
           begrunnelse=""
           previewCallback={vi.fn()}
-          redusertUtbetalingÅrsaker={[]}
           brødtekst={null}
           overskrift={null}
           behandlingResultat={null}
           overstyrtMottaker={null}
-          formikProps={{ values: [] }}
-          getPreviewAutomatiskBrevCallback={() => () => {}}
+          formikProps={{ values: [], setFieldValue: vi.fn(), validateForm: vi.fn(), setTouched: vi.fn() }}
+          getPreviewAutomatiskBrevCallback={vi.fn(() => vi.fn())}
+          aktiverteInformasjonsbehov={[]}
+          arbeidsgiverOpplysningerPerId={{}}
+          hentFritekstbrevHtmlCallback={vi.fn()}
+          informasjonsbehovVedtaksbrev={{ informasjonsbehov: [], mangler: [] }}
+          lagreDokumentdata={vi.fn()}
+          personopplysninger={{ aktoerId: '', fnr: '' }}
+          ytelseTypeKode=""
         />
       </Formik>,
       { messages },
@@ -151,12 +182,11 @@ describe('<BrevPanel>', () => {
   it('skal vise valg av mottaker hvis alternative mottakere er definert', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     renderWithIntl(
-      <Formik initialValues={[]}>
+      <Formik onSubmit={vi.fn()} initialValues={[]}>
         <BrevPanel
           intl={intlMock}
           readOnly={false}
-          sprakkode={{ kode: 'NB' }}
-          beregningErManueltFastsatt={false}
+          sprakkode="NB"
           dokumentdata={{}}
           tilgjengeligeVedtaksbrev={{
             vedtaksbrevmaler: alleTilgjengeligeVedtaksbrev.vedtaksbrevmaler,
@@ -164,11 +194,11 @@ describe('<BrevPanel>', () => {
             alternativeMottakere: [
               {
                 id: '00000000000',
-                idType: 'AKTØRID',
+                type: 'ORGNR',
               },
               {
                 id: '979312059',
-                idType: 'ORGNR',
+                type: 'ORGNR',
               },
             ],
           }}
@@ -176,13 +206,19 @@ describe('<BrevPanel>', () => {
           skalBrukeOverstyrendeFritekstBrev={false}
           begrunnelse=""
           previewCallback={vi.fn()}
-          redusertUtbetalingÅrsaker={[]}
           brødtekst={null}
           overskrift={null}
           behandlingResultat={null}
           overstyrtMottaker={null}
-          formikProps={{ values: [] }}
-          getPreviewAutomatiskBrevCallback={() => () => {}}
+          formikProps={{ values: [], setFieldValue: vi.fn(), validateForm: vi.fn(), setTouched: vi.fn() }}
+          getPreviewAutomatiskBrevCallback={vi.fn(() => vi.fn())}
+          aktiverteInformasjonsbehov={[]}
+          arbeidsgiverOpplysningerPerId={{}}
+          hentFritekstbrevHtmlCallback={vi.fn()}
+          informasjonsbehovVedtaksbrev={{ informasjonsbehov: [], mangler: [] }}
+          lagreDokumentdata={vi.fn()}
+          personopplysninger={{ aktoerId: '', fnr: '' }}
+          ytelseTypeKode=""
         />
       </Formik>,
       { messages },
