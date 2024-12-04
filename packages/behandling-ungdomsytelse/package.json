@@ -13,7 +13,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/behandling-felles": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
-    "@k9-sak-web/prosess-vilkar-soknadsfrist": "1.0.0",
+    "@k9-sak-web/prosess-vilkar-soknadsfrist-v2": "1.0.0",
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/sak-app": "1.0.0",
