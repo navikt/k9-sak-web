@@ -1,7 +1,11 @@
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import { avslagsårsak, AvslagsårsakPrPeriodeDto, BeregningsgrunnlagPeriodeDto } from '@navikt/k9-sak-typescript-client';
+import {
+  avslagsårsak,
+  AvslagsårsakPrPeriodeDto,
+  BeregningsgrunnlagPeriodeDto,
+  videreBehandling,
+} from '@navikt/k9-sak-typescript-client';
 import {
   findAvslagResultatText,
   findDelvisInnvilgetResultatText,
@@ -17,10 +21,13 @@ describe('VedtakHelper', () => {
         simuleringResultat: { sumInntrekk: 1000 },
         simuleringResultatUtenInntrekk: null,
       };
-      const tilbakekrevingValg = { videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT };
+      const tilbakekrevingvalg = {
+        videreBehandling: videreBehandling.OPPRETT_TILBAKEKREVING,
+        erTilbakekrevingVilkårOppfylt: false,
+      };
       const kodeverkNavnFraKode = vi.fn().mockReturnValue('Tilbakekreving');
 
-      const result = findTilbakekrevingText.resultFunc(simuleringResultat, tilbakekrevingValg, kodeverkNavnFraKode);
+      const result = findTilbakekrevingText({ simuleringResultat, tilbakekrevingvalg, kodeverkNavnFraKode });
       expect(result).toBe('VedtakForm.TilbakekrInfotrygdOgInntrekk');
     });
 
@@ -29,10 +36,13 @@ describe('VedtakHelper', () => {
         simuleringResultat: { sumInntrekk: 0 },
         simuleringResultatUtenInntrekk: null,
       };
-      const tilbakekrevingValg = { videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT };
+      const tilbakekrevingvalg = {
+        videreBehandling: videreBehandling.OPPRETT_TILBAKEKREVING,
+        erTilbakekrevingVilkårOppfylt: false,
+      };
       const kodeverkNavnFraKode = vi.fn().mockReturnValue('Tilbakekreving');
 
-      const result = findTilbakekrevingText.resultFunc(simuleringResultat, tilbakekrevingValg, kodeverkNavnFraKode);
+      const result = findTilbakekrevingText({ simuleringResultat, tilbakekrevingvalg, kodeverkNavnFraKode });
       expect(result).toBe('Tilbakekreving');
     });
   });

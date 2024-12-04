@@ -41,6 +41,7 @@ import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
 import { fieldnames } from '../konstanter';
 import { BeregningResultat } from '../types/BeregningResultat';
 import { DokumentDataType, LagreDokumentdataType } from '../types/Dokumentdata';
+import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
 import { VedtakVarsel } from '../types/VedtakVarsel';
 import { validerManueltRedigertBrev } from './FritekstRedigering/RedigeringUtils';
 import LagreVedtakFormIContext, {
@@ -89,7 +90,7 @@ interface Props {
   readOnly: boolean;
   resultatstruktur: BeregningResultat;
   resultatstrukturOriginalBehandling: object;
-  simuleringResultat: object;
+  simuleringResultat: VedtakSimuleringResultat;
   sprakkode: string;
   submitCallback: (object: any) => void;
   tilbakekrevingvalg: TilbakekrevingValgDto;
@@ -111,7 +112,6 @@ export const VedtakForm: React.FC<Props> = ({
   hentFritekstbrevHtmlCallback,
   sprakkode,
   ytelseTypeKode,
-
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
   tilbakekrevingvalg,

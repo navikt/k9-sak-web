@@ -7,6 +7,7 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import vedtakResultType from '../../kodeverk/vedtakResultType';
 import { BeregningResultat } from '../../types/BeregningResultat';
+import VedtakSimuleringResultat from '../../types/VedtakSimuleringResultat';
 import AvslagsårsakListe from '../AvslagsårsakListe';
 import { findAvslagResultatText, findTilbakekrevingText } from '../VedtakHelper';
 
@@ -40,7 +41,7 @@ interface VedtakAvslagRevurderingPanelProps {
   beregningResultat: BeregningResultat;
   ytelseTypeKode: string;
   originaltBeregningResultat: BeregningResultat;
-  simuleringResultat: any;
+  simuleringResultat: VedtakSimuleringResultat;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   kodeverkNavnFraKode: KodeverkNavnFraKodeType;
 }

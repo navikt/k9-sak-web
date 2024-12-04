@@ -3,12 +3,18 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import { BodyShort, Label } from '@navikt/ds-react';
-import { AvslagsårsakPrPeriodeDto, BehandlingsresultatDto } from '@navikt/k9-sak-typescript-client';
+import {
+  AvslagsårsakPrPeriodeDto,
+  BehandlingsresultatDto,
+  TilbakekrevingValgDto,
+} from '@navikt/k9-sak-typescript-client';
 import moment from 'moment';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
+import VedtakSimuleringResultat from '../../types/VedtakSimuleringResultat';
 import { findTilbakekrevingText } from '../VedtakHelper';
 
 const mapFraAvslagskodeTilTekst = kode => {
@@ -53,6 +59,9 @@ interface VedtakInnvilgetRevurderingPanelProps {
   konsekvenserForYtelsen?: [BehandlingsresultatDto];
   tilbakekrevingText?: string;
   bgPeriodeMedAvslagsårsak?: AvslagsårsakPrPeriodeDto;
+  simuleringResultat: VedtakSimuleringResultat;
+  tilbakekrevingvalg: TilbakekrevingValgDto;
+  kodeverkNavnFraKode: KodeverkNavnFraKodeType;
 }
 
 export const VedtakInnvilgetRevurderingPanelImpl = ({

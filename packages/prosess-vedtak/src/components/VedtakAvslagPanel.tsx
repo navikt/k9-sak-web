@@ -4,6 +4,7 @@ import { BodyShort, Label } from '@navikt/ds-react';
 import { BehandlingsresultatDto, TilbakekrevingValgDto, VilkårMedPerioderDto } from '@navikt/k9-sak-typescript-client';
 import { injectIntl, IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
+import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
 import AvslagsårsakListe from './AvslagsårsakListe';
 import { findAvslagResultatText, findTilbakekrevingText } from './VedtakHelper';
 
@@ -13,7 +14,7 @@ interface VedtakAvslagPanelProps {
   behandlingsresultat: BehandlingsresultatDto;
   ytelseTypeKode: string;
   tilbakekrevingText?: string;
-  simuleringResultat: any;
+  simuleringResultat: VedtakSimuleringResultat;
   kodeverkNavnFraKode: KodeverkNavnFraKodeType;
   tilbakekrevingvalg: TilbakekrevingValgDto;
 }

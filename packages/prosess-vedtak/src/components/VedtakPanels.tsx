@@ -84,7 +84,6 @@ const VedtakPanels = ({
   medlemskapFom,
   aksjonspunkter,
   ytelseTypeKode,
-
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
   vilkar,

@@ -1,34 +1,37 @@
 import moment from 'moment';
-import { createSelector } from 'reselect';
 
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
-import { AvslagsårsakPrPeriodeDto, BeregningsgrunnlagPeriodeDto } from '@navikt/k9-sak-typescript-client';
+import {
+  AvslagsårsakPrPeriodeDto,
+  BeregningsgrunnlagPeriodeDto,
+  TilbakekrevingValgDto,
+} from '@navikt/k9-sak-typescript-client';
+import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
   tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT &&
   (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
 
-export const findTilbakekrevingText = createSelector(
-  [
-    ownProps => ownProps.simuleringResultat,
-    ownProps => ownProps.tilbakekrevingvalg,
-    ownProps => ownProps.kodeverkNavnFraKode,
-  ],
-  (simuleringResultat, tilbakekrevingValg, kodeverkNavnFraKode) => {
-    if (tilbakekrevingValg !== null && tilbakekrevingValg !== undefined) {
-      if (tilbakekrevingMedInntrekk(tilbakekrevingValg.videreBehandling, simuleringResultat)) {
-        return 'VedtakForm.TilbakekrInfotrygdOgInntrekk';
-      }
-      return kodeverkNavnFraKode(tilbakekrevingValg.videreBehandling, KodeverkType.TILBAKEKR_VIDERE_BEH);
+export const findTilbakekrevingText = (props: {
+  simuleringResultat: VedtakSimuleringResultat;
+  tilbakekrevingvalg?: TilbakekrevingValgDto;
+  kodeverkNavnFraKode: KodeverkNavnFraKodeType;
+}) => {
+  const { simuleringResultat, tilbakekrevingvalg, kodeverkNavnFraKode } = props;
+  if (tilbakekrevingvalg !== null && tilbakekrevingvalg !== undefined) {
+    if (tilbakekrevingMedInntrekk(tilbakekrevingvalg.videreBehandling, simuleringResultat)) {
+      return 'VedtakForm.TilbakekrInfotrygdOgInntrekk';
     }
-    return null;
-  },
-);
+    return kodeverkNavnFraKode(tilbakekrevingvalg.videreBehandling, KodeverkType.TILBAKEKR_VIDERE_BEH);
+  }
+  return null;
+};
 
 export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {

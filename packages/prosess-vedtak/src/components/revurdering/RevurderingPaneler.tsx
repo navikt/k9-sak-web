@@ -13,6 +13,7 @@ import {
   VilkårMedPerioderDto,
 } from '@navikt/k9-sak-typescript-client';
 import { BeregningResultat } from '../../types/BeregningResultat';
+import VedtakSimuleringResultat from '../../types/VedtakSimuleringResultat';
 import { VedtakVarsel } from '../../types/VedtakVarsel';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
@@ -24,7 +25,7 @@ interface OwnProps {
   behandlingresultat: BeregningResultat;
   resultatstruktur: BeregningResultat;
   tilbakekrevingvalg: TilbakekrevingValgDto;
-  simuleringResultat: any;
+  simuleringResultat: VedtakSimuleringResultat;
   resultatstrukturOriginalBehandling: any;
   bgPeriodeMedAvslagsårsak?: AvslagsårsakPrPeriodeDto;
   behandlingStatusKode: string;
@@ -47,7 +48,6 @@ const RevurderingPaneler = ({
   resultatstruktur,
   tilbakekrevingvalg,
   simuleringResultat,
-
   resultatstrukturOriginalBehandling,
   bgPeriodeMedAvslagsårsak,
   vilkar,

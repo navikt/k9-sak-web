@@ -7,18 +7,24 @@ import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakInnvilgetPanelImpl } from './VedtakInnvilgetPanel';
 
-const foreldrepenger = fagsakYtelseType.FORELDREPENGER;
+const foreldrepenger = fagsakYtelseType.PLEIEPENGER;
 const behandlingsresultat = {
   type: behandlingResultatType.INNVILGET,
 };
 
 describe('<VedtakInnvilgetPanel>', () => {
-  it('skal rendre innvilget panel for foreldrepenger', () => {
+  it('skal rendre innvilget panel for pleiepenger', () => {
     renderWithIntl(
       <VedtakInnvilgetPanelImpl
         intl={intlMock}
         ytelseTypeKode={foreldrepenger}
         behandlingsresultat={behandlingsresultat}
+        simuleringResultat={{
+          simuleringResultat: undefined,
+          simuleringResultatUtenInntrekk: undefined,
+          slåttAvInntrekk: undefined,
+        }}
+        kodeverkNavnFraKode={vi.fn()}
       />,
       { messages },
     );
