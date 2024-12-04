@@ -1,3 +1,7 @@
+import { type vilkarType as generatedVilkarTypeEnumUnion } from '@k9-sak-web/backend/k9sak/generated';
+
+export type VilkårType = generatedVilkarTypeEnumUnion;
+
 type VilkårTypeNames =
   | 'ALDERSVILKÅR_BARN'
   | 'ALDERSVILKÅR'
@@ -17,17 +21,16 @@ type VilkårTypeNames =
   | 'SØKERSOPPLYSNINGSPLIKT'
   | 'SØKNADSFRIST'
   | 'UDEFINERT'
-  | 'UNGDOMSPROGRAMVILKÅRET'
   | 'UTVIDETRETT';
 
-export const vilkarType: Readonly<Record<VilkårTypeNames, string>> = {
+export const vilkarType: Readonly<Record<VilkårTypeNames, VilkårType>> = {
+  K9_VILKÅRET: 'FP_VK_0',
   ALDERSVILKÅR_BARN: 'K9_VK_5_3',
   ALDERSVILKÅR: 'K9_VK_3',
   BEREGNINGSGRUNNLAGVILKÅR: 'FP_VK_41',
   GJENNOMGÅ_OPPLÆRING: 'K9_VK_22',
   GODKJENT_OPPLÆRINGSINSTITUSJON: 'K9_VK_21',
   I_LIVETS_SLUTTFASE: 'K9_VK_16',
-  K9_VILKÅRET: 'K9_VILKÅRET',
   LANGVARIG_SYKDOM: 'K9_VK_17',
   MEDISINSKEVILKÅR_18_ÅR: 'K9_VK_2_b',
   MEDISINSKEVILKÅR_UNDER_18_ÅR: 'K9_VK_2_a',
@@ -39,6 +42,5 @@ export const vilkarType: Readonly<Record<VilkårTypeNames, string>> = {
   SØKERSOPPLYSNINGSPLIKT: 'FP_VK_34',
   SØKNADSFRIST: 'FP_VK_3',
   UDEFINERT: '-',
-  UNGDOMSPROGRAMVILKÅRET: 'UNG_VK_XXX',
   UTVIDETRETT: 'K9_VK_9_6',
 };
