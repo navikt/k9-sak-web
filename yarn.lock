@@ -4009,9 +4009,9 @@ __metadata:
     "@k9-sak-web/fakta-barn-oms": 1.0.0
     "@k9-sak-web/fakta-inntektsmelding": 1.0.0
     "@k9-sak-web/fakta-omsorgen-for": 1.0.0
+    "@k9-sak-web/gui": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/prosess-aarskvantum-oms": 1.0.0
-    "@k9-sak-web/prosess-vilkar-soknadsfrist-v2": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
@@ -4047,9 +4047,9 @@ __metadata:
     "@k9-sak-web/fakta-medisinsk-vilkar": 1.0.0
     "@k9-sak-web/fakta-om-barnet": 1.0.0
     "@k9-sak-web/fakta-omsorgen-for": 1.0.0
+    "@k9-sak-web/gui": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/prosess-uttak": 1.0.0
-    "@k9-sak-web/prosess-vilkar-soknadsfrist-v2": 1.0.0
     "@k9-sak-web/prosess-vilkar-sykdom": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
@@ -4084,9 +4084,9 @@ __metadata:
     "@k9-sak-web/fakta-inntektsmelding": 1.0.0
     "@k9-sak-web/fakta-medisinsk-vilkar": 1.0.0
     "@k9-sak-web/fakta-utenlandsopphold": 1.0.0
+    "@k9-sak-web/gui": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/prosess-uttak": 1.0.0
-    "@k9-sak-web/prosess-vilkar-soknadsfrist-v2": 1.0.0
     "@k9-sak-web/prosess-vilkar-sykdom": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
@@ -4125,9 +4125,9 @@ __metadata:
     "@k9-sak-web/fakta-om-barnet": 1.0.0
     "@k9-sak-web/fakta-omsorgen-for": 1.0.0
     "@k9-sak-web/fakta-utenlandsopphold": 1.0.0
+    "@k9-sak-web/gui": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/prosess-uttak": 1.0.0
-    "@k9-sak-web/prosess-vilkar-soknadsfrist-v2": 1.0.0
     "@k9-sak-web/prosess-vilkar-sykdom": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
@@ -4441,7 +4441,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/gui@workspace:^, @k9-sak-web/gui@workspace:packages/v2/gui":
+"@k9-sak-web/gui@1.0.0, @k9-sak-web/gui@workspace:^, @k9-sak-web/gui@workspace:packages/v2/gui":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/gui@workspace:packages/v2/gui"
   dependencies:
@@ -4620,30 +4620,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-form-hooks": 5.2.8
     "@navikt/ft-form-validators": 2.5.6
-    react: 18.3.1
-    react-hook-form: 7.53.2
-    react-intl: 7.0.1
-  languageName: unknown
-  linkType: soft
-
-"@k9-sak-web/prosess-vilkar-soknadsfrist-v2@1.0.0, @k9-sak-web/prosess-vilkar-soknadsfrist-v2@workspace:packages/prosess-vilkar-soknadsfrist-v2":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/prosess-vilkar-soknadsfrist-v2@workspace:packages/prosess-vilkar-soknadsfrist-v2"
-  dependencies:
-    "@fpsak-frontend/assets": 1.0.0
-    "@fpsak-frontend/form": 1.0.0
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@fpsak-frontend/utils-test": 1.0.0
-    "@k9-sak-web/sak-app": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-form-hooks": 5.2.8
-    "@navikt/ft-form-validators": 2.5.6
-    "@navikt/ft-plattform-komponenter": 5.1.5
-    classnames: 2.5.1
-    dayjs: 1.11.13
-    object-hash: 3.0.0
     react: 18.3.1
     react-hook-form: 7.53.2
     react-intl: 7.0.1
