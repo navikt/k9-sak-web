@@ -15,7 +15,6 @@ import {
   definisjon as generatedAksjonspunktDefinisjon,
   status as generatedAksjonspunktStatus,
   behandlingResultatType as generatedBehandlingResultatType,
-  type2 as generatedBehandlingsresultatDtoType,
   behandlingStatus as generatedBehandlingStatus,
   videreBehandling,
 } from '@navikt/k9-sak-typescript-client';
@@ -77,12 +76,6 @@ describe('<VedtakForm>', () => {
     vedtaksdato: '2024-05-01',
   };
 
-  const resultatstruktur = {
-    antallBarn: 1,
-    belop: 1000,
-    type: generatedBehandlingsresultatDtoType.IKKE_FASTSATT,
-  };
-
   it('skal vise at vedtak er innvilget, beløp og antall barn når en har et beregningsresultat', () => {
     const previewCallback = vi.fn();
     const behandlingsresultat = {
@@ -115,12 +108,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
-          behandlingArsaker={[]}
         />
       </ProsessStegContainer>,
     );
@@ -169,12 +159,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
-          behandlingArsaker={[]}
         />
       </ProsessStegContainer>,
     );
@@ -219,12 +206,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
-          behandlingArsaker={[]}
         />
       </ProsessStegContainer>,
     );
@@ -268,12 +252,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
-          behandlingArsaker={[]}
         />
       </ProsessStegContainer>,
     );
@@ -327,12 +308,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
-          behandlingArsaker={[]}
         />
       </ProsessStegContainer>,
     );
@@ -384,12 +362,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
-          behandlingArsaker={[]}
         />
       </ProsessStegContainer>,
     );
@@ -440,12 +415,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
-          behandlingArsaker={[]}
         />
       </ProsessStegContainer>,
     );
@@ -496,12 +468,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
-          behandlingArsaker={[]}
         />
       </ProsessStegContainer>,
       { messages },
@@ -566,12 +535,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
-          behandlingArsaker={[]}
         />
       </ProsessStegContainer>,
       { messages },
@@ -606,12 +572,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
-          behandlingArsaker={[]}
         />
       </ProsessStegContainer>,
       { messages },
@@ -647,12 +610,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
-          behandlingArsaker={[]}
         />
       </ProsessStegContainer>,
       { messages },
@@ -697,12 +657,9 @@ describe('<VedtakForm>', () => {
           submitCallback={() => undefined}
           lagreDokumentdata={() => Promise.resolve()}
           overlappendeYtelser={[]}
-          resultatstruktur={resultatstruktur}
           simuleringResultat={{}}
-          resultatstrukturOriginalBehandling={{}}
           medlemskapFom="2021-05-02"
           erRevurdering={false}
-          behandlingArsaker={[]}
         />
       </ProsessStegContainer>,
       { messages },

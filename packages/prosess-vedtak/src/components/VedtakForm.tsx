@@ -39,7 +39,6 @@ import { IntlShape, injectIntl } from 'react-intl';
 import * as Yup from 'yup';
 import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
 import { fieldnames } from '../konstanter';
-import { BeregningResultat } from '../types/BeregningResultat';
 import { DokumentDataType, LagreDokumentdataType } from '../types/Dokumentdata';
 import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
 import { VedtakVarsel } from '../types/VedtakVarsel';
@@ -71,7 +70,6 @@ interface Props {
   aksjonspunkter: AksjonspunktDto[];
 
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  behandlingArsaker: object[];
   behandlingPaaVent: boolean;
   behandlingresultat: BehandlingsresultatDto;
   behandlingStatus: string;
@@ -88,8 +86,6 @@ interface Props {
   personopplysninger: PersonopplysningDto;
   previewCallback: (values, aapneINyttVindu) => void;
   readOnly: boolean;
-  resultatstruktur: BeregningResultat;
-  resultatstrukturOriginalBehandling: object;
   simuleringResultat: VedtakSimuleringResultat;
   sprakkode: string;
   submitCallback: (object: any) => void;
@@ -123,13 +119,10 @@ export const VedtakForm: React.FC<Props> = ({
   fritekstdokumenter,
   lagreDokumentdata,
   overlappendeYtelser,
-  resultatstruktur,
   simuleringResultat,
-  resultatstrukturOriginalBehandling,
   bgPeriodeMedAvslagsårsak,
   medlemskapFom,
   erRevurdering,
-  behandlingArsaker,
 }) => {
   const vedtakContext = useContext(VedtakFormContext);
   const { kodeverkNavnFraKode } = useKodeverkContext();
@@ -544,15 +537,10 @@ export const VedtakForm: React.FC<Props> = ({
                 <RevurderingPaneler
                   ytelseTypeKode={ytelseTypeKode}
                   behandlingresultat={behandlingresultat}
-                  resultatstruktur={resultatstruktur}
                   tilbakekrevingvalg={tilbakekrevingvalg}
                   simuleringResultat={simuleringResultat}
-                  resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
                   bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
-                  behandlingStatusKode={behandlingStatus}
                   vilkar={vilkar}
-                  aksjonspunkter={aksjonspunkter}
-                  sprakkode={sprakkode}
                   readOnly={readOnly}
                   vedtakVarsel={vedtakVarsel}
                   medlemskapFom={medlemskapFom}
@@ -560,7 +548,6 @@ export const VedtakForm: React.FC<Props> = ({
                   redusertUtbetalingArsak={redusertUtbetalingArsak}
                   formikValues={formikProps.values}
                   erSendtInnUtenArsaker={erSendtInnUtenArsaker}
-                  behandlingArsaker={behandlingArsaker}
                 />
               )}
 

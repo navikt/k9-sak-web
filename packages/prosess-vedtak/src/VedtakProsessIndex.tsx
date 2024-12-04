@@ -41,7 +41,6 @@ interface VedtakProsessIndexProps {
     behandlingÅrsaker?: Array<BehandlingÅrsakDto>;
   };
   beregningsgrunnlag: Beregningsgrunnlag[];
-  beregningresultatForeldrepenger: any;
   dokumentdataHente: any;
   employeeHasAccess: boolean;
   fritekstdokumenter: DokumentMedUstrukturerteDataDto[];
@@ -55,7 +54,6 @@ interface VedtakProsessIndexProps {
   overlappendeYtelser: Array<OverlappendeYtelseDto>;
   personopplysninger: PersonopplysningDto;
   previewCallback: () => void;
-  resultatstrukturOriginalBehandling: object;
   sendVarselOmRevurdering?: boolean;
   simuleringResultat: VedtakSimuleringResultat;
   submitCallback: (data) => void;
@@ -71,7 +69,6 @@ const VedtakProsessIndex = ({
   arbeidsgiverOpplysningerPerId,
   behandling,
   beregningsgrunnlag,
-  beregningresultatForeldrepenger,
   dokumentdataHente,
   employeeHasAccess,
   fritekstdokumenter,
@@ -83,7 +80,6 @@ const VedtakProsessIndex = ({
   overlappendeYtelser,
   personopplysninger,
   previewCallback,
-  resultatstrukturOriginalBehandling,
   sendVarselOmRevurdering = false,
   simuleringResultat,
   submitCallback,
@@ -100,14 +96,11 @@ const VedtakProsessIndex = ({
       sprakkode={behandling.sprakkode}
       behandlingresultat={behandling.behandlingsresultat}
       behandlingPaaVent={behandling.behandlingPaaVent}
-      behandlingArsaker={behandling.behandlingÅrsaker}
       beregningsgrunnlag={beregningsgrunnlag}
       vilkar={vilkar}
       tilbakekrevingvalg={tilbakekrevingvalg}
       simuleringResultat={simuleringResultat}
-      resultatstruktur={beregningresultatForeldrepenger}
       sendVarselOmRevurdering={sendVarselOmRevurdering}
-      resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
       medlemskapFom={medlemskap ? medlemskap.fom : undefined}
       aksjonspunkter={aksjonspunkter}
       ytelseTypeKode={ytelseTypeKode}

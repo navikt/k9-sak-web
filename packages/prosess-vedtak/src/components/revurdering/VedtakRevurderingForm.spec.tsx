@@ -6,7 +6,7 @@ import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/t
 import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
-import { behandlingResultatType, behandlingType, videreBehandling } from '@navikt/k9-sak-typescript-client';
+import { behandlingType, videreBehandling } from '@navikt/k9-sak-typescript-client';
 import VedtakForm from '../VedtakForm';
 
 const createBehandling = behandlingResultatType => ({
@@ -26,12 +26,6 @@ const createBehandling = behandlingResultatType => ({
   type: 'test',
   opprettet: '16‎.‎07‎.‎2004‎ ‎17‎:‎35‎:‎21',
 });
-
-const resultatstruktur = {
-  antallBarn: 1,
-  opphoersdato: '2018-01-01',
-  type: behandlingResultatType.IKKE_FASTSATT,
-};
 
 const personopplysninger = { aktoerId: '', fnr: '' };
 
@@ -92,13 +86,11 @@ describe('<VedtakRevurderingForm>', () => {
           previewCallback={previewCallback}
           readOnly={false}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          resultatstruktur={resultatstruktur}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
           personopplysninger={personopplysninger}
           vilkar={[]}
           erRevurdering
-          behandlingArsaker={[]}
           dokumentdata={{}}
           fritekstdokumenter={[]}
           hentFritekstbrevHtmlCallback={vi.fn()}
@@ -108,7 +100,6 @@ describe('<VedtakRevurderingForm>', () => {
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
           medlemskapFom={null}
           overlappendeYtelser={[]}
-          resultatstrukturOriginalBehandling={null}
           submitCallback={() => undefined}
           vedtakVarsel={vedtakVarselBase}
         />
@@ -154,12 +145,10 @@ describe('<VedtakRevurderingForm>', () => {
           previewCallback={previewCallback}
           readOnly={false}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          resultatstruktur={resultatstruktur}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
           vilkar={[]}
           erRevurdering
-          behandlingArsaker={[]}
           dokumentdata={{}}
           fritekstdokumenter={[]}
           hentFritekstbrevHtmlCallback={vi.fn()}
@@ -169,7 +158,6 @@ describe('<VedtakRevurderingForm>', () => {
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
           medlemskapFom={null}
           overlappendeYtelser={[]}
-          resultatstrukturOriginalBehandling={null}
           submitCallback={() => undefined}
           vedtakVarsel={vedtakVarselBase}
         />
@@ -207,12 +195,10 @@ describe('<VedtakRevurderingForm>', () => {
           previewCallback={previewCallback}
           readOnly={false}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          resultatstruktur={resultatstruktur}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
           vilkar={[]}
           erRevurdering
-          behandlingArsaker={[]}
           dokumentdata={{}}
           fritekstdokumenter={[]}
           hentFritekstbrevHtmlCallback={vi.fn()}
@@ -222,7 +208,6 @@ describe('<VedtakRevurderingForm>', () => {
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
           medlemskapFom={null}
           overlappendeYtelser={[]}
-          resultatstrukturOriginalBehandling={null}
           submitCallback={() => undefined}
           vedtakVarsel={vedtakVarselBase}
         />
@@ -259,11 +244,9 @@ describe('<VedtakRevurderingForm>', () => {
           previewCallback={previewCallback}
           readOnly={false}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          resultatstruktur={resultatstruktur}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
           erRevurdering
-          behandlingArsaker={[]}
           dokumentdata={{}}
           fritekstdokumenter={[]}
           hentFritekstbrevHtmlCallback={vi.fn()}
@@ -273,7 +256,6 @@ describe('<VedtakRevurderingForm>', () => {
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
           medlemskapFom={null}
           overlappendeYtelser={[]}
-          resultatstrukturOriginalBehandling={null}
           submitCallback={() => undefined}
           vedtakVarsel={vedtakVarselBase}
           vilkar={[]}
@@ -306,11 +288,9 @@ describe('<VedtakRevurderingForm>', () => {
           previewCallback={previewCallback}
           readOnly={false}
           ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-          resultatstruktur={resultatstruktur}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
           erRevurdering
-          behandlingArsaker={[]}
           dokumentdata={{}}
           fritekstdokumenter={[]}
           hentFritekstbrevHtmlCallback={vi.fn()}
@@ -320,7 +300,6 @@ describe('<VedtakRevurderingForm>', () => {
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
           medlemskapFom={null}
           overlappendeYtelser={[]}
-          resultatstrukturOriginalBehandling={null}
           submitCallback={() => undefined}
           vedtakVarsel={vedtakVarselBase}
           vilkar={[]}

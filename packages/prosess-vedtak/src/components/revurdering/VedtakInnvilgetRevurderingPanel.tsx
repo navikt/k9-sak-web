@@ -12,8 +12,9 @@ import {
   TilbakekrevingValgDto,
 } from '@navikt/k9-sak-typescript-client';
 import moment from 'moment';
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
+import { BeregningResultat } from '../../types/BeregningResultat';
 import VedtakSimuleringResultat from '../../types/VedtakSimuleringResultat';
 import { findTilbakekrevingText } from '../VedtakHelper';
 
@@ -54,7 +55,6 @@ const lagPeriodevisning = periodeMedÅrsak => {
 };
 
 interface VedtakInnvilgetRevurderingPanelProps {
-  intl: IntlShape;
   ytelseTypeKode: string;
   konsekvenserForYtelsen?: [BehandlingsresultatDto];
   tilbakekrevingText?: string;
@@ -62,6 +62,7 @@ interface VedtakInnvilgetRevurderingPanelProps {
   simuleringResultat: VedtakSimuleringResultat;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   kodeverkNavnFraKode: KodeverkNavnFraKodeType;
+  behandlingsresultat: BeregningResultat;
 }
 
 export const VedtakInnvilgetRevurderingPanelImpl = ({
@@ -70,7 +71,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   konsekvenserForYtelsen,
   tilbakekrevingText,
   bgPeriodeMedAvslagsårsak,
-}: VedtakInnvilgetRevurderingPanelProps) => {
+}: VedtakInnvilgetRevurderingPanelProps & WrappedComponentProps) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
 
   return (
@@ -103,7 +104,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   );
 };
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, ownProps: VedtakInnvilgetRevurderingPanelProps) => ({
   konsekvenserForYtelsen: ownProps.behandlingsresultat !== undefined ? [ownProps.behandlingsresultat] : undefined,
   tilbakekrevingText: findTilbakekrevingText(ownProps),
 });

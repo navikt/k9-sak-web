@@ -11,14 +11,12 @@ import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.
 import {
   AksjonspunktDto,
   BehandlingsresultatDto,
-  BehandlingÅrsakDto,
   DokumentMedUstrukturerteDataDto,
   OverlappendeYtelseDto,
   PersonopplysningDto,
   TilbakekrevingValgDto,
   VilkårMedPerioderDto,
 } from '@navikt/k9-sak-typescript-client';
-import { BeregningResultat } from '../types/BeregningResultat';
 import { Beregningsgrunnlag } from '../types/Beregningsgrunnlag';
 import { LagreDokumentdataType } from '../types/Dokumentdata';
 import { VedtakSimuleringResultat } from '../types/VedtakSimuleringResultat';
@@ -32,7 +30,6 @@ import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatisk
 interface VedtakPanelsProps {
   aksjonspunkter: AksjonspunktDto[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  behandlingArsaker: BehandlingÅrsakDto[];
   behandlingPaaVent: boolean;
   behandlingresultat: BehandlingsresultatDto;
   behandlingStatus: string;
@@ -49,8 +46,6 @@ interface VedtakPanelsProps {
   personopplysninger: PersonopplysningDto;
   previewCallback: () => void;
   readOnly: boolean;
-  resultatstruktur: BeregningResultat;
-  resultatstrukturOriginalBehandling: object;
   sendVarselOmRevurdering?: boolean;
   simuleringResultat: VedtakSimuleringResultat;
   sprakkode: string;
@@ -77,10 +72,8 @@ const VedtakPanels = ({
   sprakkode,
   behandlingStatus,
   behandlingPaaVent,
-  behandlingArsaker,
   tilbakekrevingvalg,
   simuleringResultat,
-  resultatstruktur,
   medlemskapFom,
   aksjonspunkter,
   ytelseTypeKode,
@@ -88,7 +81,6 @@ const VedtakPanels = ({
   arbeidsgiverOpplysningerPerId,
   vilkar,
   beregningsgrunnlag,
-  resultatstrukturOriginalBehandling,
   vedtakVarsel,
   tilgjengeligeVedtaksbrev,
   informasjonsbehovVedtaksbrev,
@@ -159,8 +151,6 @@ const VedtakPanels = ({
         behandlingPaaVent={behandlingPaaVent}
         tilbakekrevingvalg={tilbakekrevingvalg}
         simuleringResultat={simuleringResultat}
-        resultatstruktur={resultatstruktur}
-        behandlingArsaker={behandlingArsaker}
         aksjonspunkter={aksjonspunkter}
         ytelseTypeKode={ytelseTypeKode}
         personopplysninger={personopplysninger}
@@ -173,7 +163,6 @@ const VedtakPanels = ({
         fritekstdokumenter={fritekstdokumenter}
         lagreDokumentdata={lagreDokumentdata}
         overlappendeYtelser={overlappendeYtelser}
-        resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
         medlemskapFom={medlemskapFom}
         erRevurdering={!!(behandlingTypeKode === behandlingType.REVURDERING && bg.length)}

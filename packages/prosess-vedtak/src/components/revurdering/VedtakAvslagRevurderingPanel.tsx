@@ -27,20 +27,9 @@ export const isNewAmount = (beregningResultat: BeregningResultat, originaltBereg
   return beregningResultat.antallBarn !== originaltBeregningResultat.antallBarn;
 };
 
-const resultText = (beregningResultat: BeregningResultat, originaltBeregningResultat: BeregningResultat) => {
-  if (isNewBehandlingResult(beregningResultat, originaltBeregningResultat)) {
-    return beregningResultat ? 'VedtakForm.Resultat.EndretTilInnvilget' : 'VedtakForm.Resultat.EndretTilAvslag';
-  }
-  return isNewAmount(beregningResultat, originaltBeregningResultat)
-    ? 'VedtakForm.Resultat.EndretAntallBarn'
-    : 'VedtakForm.Resultat.IngenEndring';
-};
-
 interface VedtakAvslagRevurderingPanelProps {
   vilkar: VilkårMedPerioderDto[];
-  beregningResultat: BeregningResultat;
   ytelseTypeKode: string;
-  originaltBeregningResultat: BeregningResultat;
   simuleringResultat: VedtakSimuleringResultat;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   kodeverkNavnFraKode: KodeverkNavnFraKodeType;
@@ -53,10 +42,8 @@ interface OwnState {
 export const VedtakAvslagRevurderingPanelImpl = ({
   intl,
   vilkar,
-  beregningResultat,
   ytelseTypeKode,
   tilbakekrevingText = null,
-  originaltBeregningResultat,
 }: VedtakAvslagRevurderingPanelProps & OwnState & WrappedComponentProps) => (
   <div>
     <Label size="small" as="p">
@@ -69,10 +56,7 @@ export const VedtakAvslagRevurderingPanelImpl = ({
       </BodyShort>
     )}
     {ytelseTypeKode !== fagsakYtelseType.FRISINN && ytelseTypeKode !== fagsakYtelseType.OMSORGSPENGER && (
-      <BodyShort size="small">
-        {intl.formatMessage({ id: resultText(beregningResultat, originaltBeregningResultat) })}
-        {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
-      </BodyShort>
+      <BodyShort size="small">{tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}</BodyShort>
     )}
     <div>
       <VerticalSpacer sixteenPx />

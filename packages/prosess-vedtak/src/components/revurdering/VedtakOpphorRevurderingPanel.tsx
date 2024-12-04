@@ -6,7 +6,6 @@ import moment from 'moment';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { BeregningResultat } from '../../types/BeregningResultat';
 import { VedtakVarsel } from '../../types/VedtakVarsel';
 
 const ytelseNavnMap = kode => {
@@ -24,7 +23,6 @@ const ytelseNavnMap = kode => {
 
 interface VedtakOpphorRevurderingPanelProps {
   ytelseTypeKode: string;
-  resultatstruktur: BeregningResultat;
   medlemskapFom: string;
   vedtakVarsel: VedtakVarsel;
 }
@@ -67,11 +65,8 @@ export const VedtakOpphorRevurderingPanelImpl = ({
 );
 
 const getOpphorsdato = createSelector(
-  [ownProps => ownProps.resultatstruktur, ownProps => ownProps.medlemskapFom, ownProps => ownProps.vedtakVarsel],
-  (resultatstruktur, medlemskapFom, vedtakVarsel) => {
-    if (resultatstruktur && resultatstruktur.opphoersdato) {
-      return resultatstruktur.opphoersdato;
-    }
+  [ownProps => ownProps.medlemskapFom, ownProps => ownProps.vedtakVarsel],
+  (medlemskapFom, vedtakVarsel) => {
     if (medlemskapFom) {
       return medlemskapFom;
     }
