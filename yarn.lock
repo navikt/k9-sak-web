@@ -4352,29 +4352,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/behandling-ungdomsytelse@workspace:packages/behandling-ungdomsytelse":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/behandling-ungdomsytelse@workspace:packages/behandling-ungdomsytelse"
-  dependencies:
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/prosess-saksopplysninger": 1.0.0
-    "@fpsak-frontend/prosess-tilkjent-ytelse": 1.0.0
-    "@fpsak-frontend/prosess-vedtak": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@k9-sak-web/behandling-felles": 1.0.0
-    "@k9-sak-web/gui": 1.0.0
-    "@k9-sak-web/konstanter": 1.0.0
-    "@k9-sak-web/rest-api": 1.0.0
-    "@k9-sak-web/rest-api-hooks": 1.0.0
-    "@k9-sak-web/sak-app": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    axios: 1.7.8
-    react: 18.3.1
-    react-intl: 7.0.1
-  languageName: unknown
-  linkType: soft
-
 "@k9-sak-web/behandling-unntak@1.0.0, @k9-sak-web/behandling-unntak@workspace:packages/behandling-unntak":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/behandling-unntak@workspace:packages/behandling-unntak"
