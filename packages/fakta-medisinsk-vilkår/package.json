@@ -12,7 +12,7 @@
   "devDependencies": {
     "cors": "^2.8.5",
     "msw": "2.6.6",
-    "vite": "^5.4.11",
+    "vite": "^6.0.2",
     "vite-plugin-node-polyfills": "^0.22.0"
   },
   "dependencies": {
