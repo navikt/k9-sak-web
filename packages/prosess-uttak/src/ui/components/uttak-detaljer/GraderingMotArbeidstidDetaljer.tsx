@@ -33,9 +33,14 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
           const { normalArbeidstid, faktiskArbeidstid, arbeidsforhold } = utbetalingsgradItem;
           const beregnetNormalArbeidstid = beregnDagerTimer(normalArbeidstid);
           const beregnetFaktiskArbeidstid = beregnDagerTimer(faktiskArbeidstid);
-          const prosentFravær = (
-            (Math.max(beregnetNormalArbeidstid - beregnetFaktiskArbeidstid, 0) / beregnetNormalArbeidstid) * 100 || 0
-          ).toFixed(2);
+          const prosentFravær = () => {
+            const fravær = Math.max(beregnetNormalArbeidstid - beregnetFaktiskArbeidstid, 0);
+            if (fravær === 0) {
+              return 0;
+            }
+
+            return ((fravær / beregnetNormalArbeidstid) * 100).toFixed(2);
+          };
           const faktiskOverstigerNormal = beregnetNormalArbeidstid < beregnetFaktiskArbeidstid;
           const arbeidstype = arbeidstypeTilVisning[arbeidsforhold?.type];
           const erNyInntekt = utbetalingsgradItem?.tilkommet;
@@ -72,7 +77,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
                 </HStack>
               </BodyShort>
               <BodyShort className="mt-1" size="small">
-                = {prosentFravær} % fravær{' '}
+                = {prosentFravær()} % fravær{' '}
               </BodyShort>
             </Box>
           );
