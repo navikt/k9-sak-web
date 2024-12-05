@@ -21,7 +21,7 @@ const UttakDetaljerEkspanderbar: React.FC<UttakEkspanderbarProps> = ({ title, ch
       <Box className={styles.uttakDetaljer__expandableDetailItem__header}>
         <a href="#" onClick={toggleExpand}>
           <div>
-            <BodyShort className="mx-auto" size="small">
+            <BodyShort className="my-auto" size="small">
               {title}
             </BodyShort>
             {!utvid ? <ChevronDownIcon /> : <ChevronUpIcon />}
