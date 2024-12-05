@@ -1,9 +1,8 @@
 import { formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { Link } from '@navikt/ds-react';
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import Nokkeltall from './Nokkeltall';
 import styles from './nokkeltall.module.css';
 

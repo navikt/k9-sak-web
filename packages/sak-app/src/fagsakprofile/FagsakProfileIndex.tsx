@@ -10,7 +10,7 @@ import {
 } from '@k9-sak-web/types';
 import { Location } from 'history';
 import { useCallback, useEffect, useState } from 'react';
-import { Navigate, useLocation, useMatch } from 'react-router-dom';
+import { Navigate, useLocation, useMatch } from 'react-router';
 import {
   createLocationForSkjermlenke,
   getLocationWithDefaultProsessStegAndFakta,

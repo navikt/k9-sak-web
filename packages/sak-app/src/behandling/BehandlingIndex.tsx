@@ -1,6 +1,6 @@
 import { Location } from 'history';
 import React, { Suspense, useCallback, useEffect, useMemo } from 'react';
-import { NavigateFunction, useLocation, useNavigate } from 'react-router-dom';
+import { NavigateFunction, useLocation, useNavigate } from 'react-router';
 
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -41,9 +41,6 @@ const BehandlingFrisinnIndex = React.lazy(() => import('@k9-sak-web/behandling-f
 const BehandlingUnntakIndex = React.lazy(() => import('@k9-sak-web/behandling-unntak'));
 const BehandlingUtvidetRettIndex = React.lazy(() => import('@k9-sak-web/behandling-utvidet-rett'));
 const BehandlingOpplaeringspengerIndex = React.lazy(() => import('@k9-sak-web/behandling-opplaeringspenger'));
-const BehandlingUngdomsytelseIndex = React.lazy(
-  () => import('@k9-sak-web/behandling-ungdomsytelse/src/BehandlingUngdomsytelseIndex'),
-);
 
 const erTilbakekreving = (behandlingTypeKode: string): boolean =>
   behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
@@ -317,21 +314,6 @@ const BehandlingIndex = ({
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
           <BehandlingOpplaeringspengerIndex
-            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-            valgtFaktaSteg={query.fakta}
-            key={behandlingId}
-            {...defaultProps}
-          />
-        </ErrorBoundary>
-      </Suspense>
-    );
-  }
-
-  if (fagsak.sakstype.kode === FagsakYtelseType.UNGDOMSYTELSE) {
-    return (
-      <Suspense fallback={<LoadingPanel />}>
-        <ErrorBoundary errorMessageCallback={addErrorMessage}>
-          <BehandlingUngdomsytelseIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
             key={behandlingId}

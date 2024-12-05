@@ -72,7 +72,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
                   )}
                 </HStack>
               </BodyShort>
-              <BodyShort size="small">= {prosentFravær} % fravær: </BodyShort>
+              <BodyShort size="small">= {prosentFravær} % fravær </BodyShort>
             </Box>
           );
         })}
