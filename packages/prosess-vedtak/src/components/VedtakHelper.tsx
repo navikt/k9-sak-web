@@ -7,7 +7,6 @@ import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
 import {
   AvslagsårsakPrPeriodeDto,
-  BehandlingsresultatDto,
   BeregningsgrunnlagPeriodeDto,
   TilbakekrevingValgDto,
 } from '@navikt/k9-sak-typescript-client';
@@ -36,10 +35,7 @@ export const findTilbakekrevingText = (props: {
   return null;
 };
 
-export const findDelvisInnvilgetResultatText = (
-  behandlingResultatTypeKode: BehandlingsresultatDto['type'],
-  ytelseType: string,
-) => {
+export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode: string, ytelseType: string) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
   }
@@ -66,10 +62,7 @@ export const findDelvisInnvilgetResultatText = (
   return 'VedtakForm.VilkarStatusDelvisInnvilgetPleiepenger';
 };
 
-export const findInnvilgetResultatText = (
-  behandlingResultatTypeKode: BehandlingsresultatDto['type'],
-  ytelseType: string,
-) => {
+export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, ytelseType: string) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
   }
@@ -96,10 +89,7 @@ export const findInnvilgetResultatText = (
   return 'VedtakForm.VilkarStatusInnvilgetPleiepenger';
 };
 
-export const findAvslagResultatText = (
-  behandlingResultatTypeKode: BehandlingsresultatDto['type'],
-  ytelseType: string,
-) => {
+export const findAvslagResultatText = (behandlingResultatTypeKode: string, ytelseType: string) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET) {
     return 'VedtakForm.ResultatKlageYtelsesvedtakOpphevet';
   }

@@ -57,8 +57,6 @@ const aksjonspunkt5085 = {
 export const visSjekkTilbakekreving: StoryObj<typeof meta> = {
   args: {
     behandling,
-    sendVarselOmRevurdering: false,
-    employeeHasAccess: false,
     isReadOnly: false,
     vilkar: [],
     medlemskap: { fom: '2019-01-01' },
