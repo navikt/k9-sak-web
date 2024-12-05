@@ -47,6 +47,15 @@ const utenlandsoppholdTekst = (utenlandsopphold, kodeverk) => {
   return kodeverk?.find(v => v.kode === utenlandsopphold?.årsak)?.navn;
 };
 
+const beregnFravær = (normalArbeidstid: number, faktiskArbeidstid: number) => {
+  const fravær = Math.max(normalArbeidstid - faktiskArbeidstid, 0);
+  if (fravær === 0) {
+    return 0;
+  }
+
+  return ((fravær / normalArbeidstid) * 100).toFixed(2);
+};
+
 const utenlandsoppholdInfo = (utfall: Utfall, utenlandsopphold: { landkode: string }) => {
   const { kodeverkUtenlandsoppholdÅrsak } = React.useContext(ContainerContext);
 
@@ -138,17 +147,9 @@ const formatAvkortingMotArbeid = (
         const arbeidsgiverInfo = arbeidsgivernavn ? `${arbeidsgivernavn} (${orgnr || arbeidsgiverFnr})` : '';
         const beregnetNormalArbeidstid = beregnDagerTimer(normalArbeidstid);
         const beregnetFaktiskArbeidstid = beregnDagerTimer(faktiskArbeidstid);
+        const fraværsprosent = beregnFravær(beregnetNormalArbeidstid, beregnetFaktiskArbeidstid);
         const erNyInntekt = utbetalingsgradItem?.tilkommet;
         const faktiskOverstigerNormal = beregnetNormalArbeidstid < beregnetFaktiskArbeidstid;
-
-        const prosentFravær = () => {
-          const fravær = Math.max(beregnetNormalArbeidstid - beregnetFaktiskArbeidstid, 0);
-          if (fravær === 0) {
-            return 0;
-          }
-
-          return ((fravær / beregnetNormalArbeidstid) * 100).toFixed(2);
-        };
 
         const nyInntektTekst = () => {
           if (arbeidsforhold?.type === Arbeidstype.ARBEIDSTAKER) {
@@ -197,7 +198,7 @@ const formatAvkortingMotArbeid = (
             </span>
             <hr />
             <div className="inline-flex justify-between w-full mb-6">
-              <div>= {prosentFravær()}% fravær</div>
+              <div>= {fraværsprosent}% fravær</div>
               <div className="inline-flex justify-end">Utbetalingsgrad: {utbetalingsgrad}%</div>
             </div>
           </div>
