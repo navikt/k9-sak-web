@@ -23,7 +23,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
   const harNyInntekt = utbetalingsgrader.some(utbetalingsgrad => utbetalingsgrad.tilkommet);
   return (
     <VStack>
-      <VStack gap="8" className={styles.uttakDetaljer__detailItem}>
+      <VStack gap="8" className={`${styles.uttakDetaljer__detailItem} mt-2`}>
         {utbetalingsgrader.map(utbetalingsgradItem => {
           const arbeidsgiverIdentifikator =
             utbetalingsgradItem.arbeidsforhold.aktørId ||
@@ -72,7 +72,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
                   )}
                 </HStack>
               </BodyShort>
-              <BodyShort size="small">= {prosentFravær} % fravær </BodyShort>
+              <BodyShort className="mt-1" size="small">= {prosentFravær} % fravær </BodyShort>
             </Box>
           );
         })}

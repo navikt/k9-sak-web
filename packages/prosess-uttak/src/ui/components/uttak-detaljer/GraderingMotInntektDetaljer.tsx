@@ -19,7 +19,7 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
   const bortfaltInntekt = tilNOK.format(inntektsgradering.bortfaltInntekt);
 
   return (
-    <VStack>
+    <VStack className={`${styles.uttakDetaljer__detailItem} mt-2`}>
       <UttakDetaljerEkspanderbar title={`Beregningsgrunnlag: ${beregningsgrunnlag}`}>
         {inntektsforhold.map(inntForhold => {
           const { løpendeInntekt, bruttoInntekt, arbeidsgiverIdentifikator } = inntForhold;

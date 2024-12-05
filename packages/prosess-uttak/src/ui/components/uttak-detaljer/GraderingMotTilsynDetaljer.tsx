@@ -40,7 +40,7 @@ const GraderingMotTilsynDetaljer: FC<ownProps> = ({ graderingMotTilsyn, pleiebeh
 
   return (
     <>
-      <BodyShort as="div" className={styles.uttakDetaljer__detailItem} size="small">
+      <BodyShort as="div" className={`${styles.uttakDetaljer__detailItem} mt-2`} size="small">
         Pleiebehov: {pleiebehov} %
       </BodyShort>
       <BodyShort as="div" className={styles.uttakDetaljer__detailItem} size="small">
