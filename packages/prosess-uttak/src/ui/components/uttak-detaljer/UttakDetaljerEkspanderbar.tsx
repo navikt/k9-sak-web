@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './nyUttakDetaljer.module.css';
 import { BodyShort, Box } from '@navikt/ds-react';
-import { ChevronDownIcon } from '@navikt/aksel-icons';
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 
 interface UttakEkspanderbarProps {
   title: string;
@@ -21,18 +21,16 @@ const UttakDetaljerEkspanderbar: React.FC<UttakEkspanderbarProps> = ({ title, ch
       <Box className={styles.uttakDetaljer__expandableDetailItem__header}>
         <a href="#" onClick={toggleExpand}>
           <div>
-            <BodyShort size="small" as="span">
+            <BodyShort className="my-auto" size="small">
               {title}
             </BodyShort>
-            <ChevronDownIcon />
+            {!utvid ? <ChevronDownIcon /> : <ChevronUpIcon />}
           </div>
         </a>
       </Box>
       <div
         className={`uttakDetaljer__expandableDetailItem__content ${
-          utvid
-            ? styles.uttakDetaljer__expandableDetailItem__contentExpanded
-            : styles.uttakDetaljer__expandableDetailItem__contentCollapsed
+          utvid ? '' : styles.uttakDetaljer__expandableDetailItem__contentCollapsed
         }`}
       >
         {children}

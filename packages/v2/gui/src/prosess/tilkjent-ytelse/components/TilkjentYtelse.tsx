@@ -23,18 +23,17 @@ const createTooltipContent = (
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 ) => {
   const periodeDato = `${initializeDate(item.fom).format(DDMMYY_DATE_FORMAT)} - ${initializeDate(item.tom).format(DDMMYY_DATE_FORMAT)}`;
+  const getArbeidsgiverAndeler = () => {
+    let arbeidsgiverAndeler = '';
+    (item.andeler || []).forEach((andel, index) => {
+      arbeidsgiverAndeler += `${index > 0 ? ', ' : ''}${createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}: ${Number(andel.refusjon) + Number(andel.tilSoker)} kr`;
+    });
+    return arbeidsgiverAndeler;
+  };
   return `${periodeDato}
 ${calcDaysAndWeeksWithWeekends(initializeDate(item.fom), initializeDate(item.tom))}
 ${`Dagsats: ${item.dagsats}kr`}
-${
-  (item.andeler || []).length > 1
-    ? item.andeler
-        .map(andel => {
-          `${createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}: ${Number(andel.refusjon) + Number(andel.tilSoker)} kr`;
-        })
-        .join(' ')
-    : ''
-}`;
+${getArbeidsgiverAndeler()}`;
 };
 
 const sumUtBetalingsgrad = (andeler: PeriodeMedId['andeler']) =>

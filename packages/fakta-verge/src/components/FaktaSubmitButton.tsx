@@ -1,22 +1,10 @@
 import React from 'react';
-import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import { connect } from 'react-redux';
 
 import { hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting } from '@fpsak-frontend/form';
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
 
 import { Button } from '@navikt/ds-react';
-import messages from '../../i18n/nb_NO.json';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
 
 const isDisabled = (
   isDirty: boolean,
@@ -69,7 +57,7 @@ export const FaktaSubmitButton = ({
   onClick,
   dataId,
 }: Partial<PureOwnProps> & MappedOwnProps) => (
-  <RawIntlProvider value={intl}>
+  <div>
     {!isReadOnly && (
       <Button
         variant="primary"
@@ -81,10 +69,10 @@ export const FaktaSubmitButton = ({
         data-id={dataId}
       >
         {!!buttonText && buttonText}
-        {!buttonText && <FormattedMessage id="SubmitButton.ConfirmInformation" />}
+        {!buttonText && 'Bekreft og fortsett'}
       </Button>
     )}
-  </RawIntlProvider>
+  </div>
 );
 
 const mapStateToProps = (state: any, ownProps: PureOwnProps): MappedOwnProps => {

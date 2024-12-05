@@ -1,8 +1,7 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { BehandlingAppKontekst } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
-import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 import messages from '../../i18n/nb_NO.json';
 import BehandlingPickerItem from './BehandlingPickerItem';
 

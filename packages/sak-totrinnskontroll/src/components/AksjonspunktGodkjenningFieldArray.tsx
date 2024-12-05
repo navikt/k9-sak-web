@@ -4,7 +4,7 @@ import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeC
 import { BodyShort, Detail, Fieldset } from '@navikt/ds-react';
 import * as Sentry from '@sentry/browser';
 import { Location } from 'history';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router';
 
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 
@@ -92,7 +92,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
               return 'Brev';
             }
             return skjermlenkeTypeKodeverk.navn;
-          } catch (err) {
+          } catch {
             Sentry.captureEvent({
               message: 'Kunne ikke hente skjermlenkeTypeKodeverk.navn',
               extra: { skjermlenkeTyper, skjermlenkeTypeKodeverk, skjermlenkeTypeContext: context.skjermlenkeType },

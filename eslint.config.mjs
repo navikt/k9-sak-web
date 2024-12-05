@@ -2,11 +2,11 @@
 
 import eslint from '@eslint/js';
 import configPrettier from 'eslint-config-prettier';
+import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
+import pluginReact from 'eslint-plugin-react';
+import pluginVitest from 'eslint-plugin-vitest';
 import globals from "globals";
 import tseslint from 'typescript-eslint';
-import pluginReact from 'eslint-plugin-react'
-import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
-import pluginVitest from 'eslint-plugin-vitest';
 // Viss vi ønsker eslint-plugin-jest-dom  aktivert: import pluginJestDom from 'eslint-plugin-jest-dom';
 // ^- Rapporterer ein del feil, så virker ikkje å ha vore aktivert før.
 
@@ -15,7 +15,7 @@ const OFF = 0;
 const WARN = 1;
 const ERROR = 2;
 
-const config =  tseslint.config(
+const config = tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   configPrettier,
@@ -43,12 +43,13 @@ const config =  tseslint.config(
       ],
       'jsx-a11y/no-autofocus': OFF, // Skrudd av ved migrering til jsx-a11y recommended config. Vurder å fikse seinare.
       'jsx-a11y/anchor-is-valid': OFF,
-    }
+    },
   },
   {
     files: ["**/*.cjs"],
     rules: {
       '@typescript-eslint/no-var-requires': OFF,
+      '@typescript-eslint/no-require-imports': OFF,
     },
     languageOptions: {
       globals: {

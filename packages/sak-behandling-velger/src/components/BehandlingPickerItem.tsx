@@ -1,6 +1,6 @@
 import { Location } from 'history';
-import React, { ReactElement } from 'react';
-import { NavLink } from 'react-router-dom';
+import { ReactElement } from 'react';
+import { NavLink } from 'react-router';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';

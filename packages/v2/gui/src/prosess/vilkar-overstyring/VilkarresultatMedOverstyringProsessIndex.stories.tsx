@@ -1,4 +1,4 @@
-import { behandlingStatus, merknad, sakstype, vilkarType } from '@k9-sak-web/backend/k9sak/generated';
+import { behandlingStatus, merknad, sakstype } from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
@@ -10,6 +10,7 @@ import React from 'react';
 import VilkarresultatMedOverstyringProsessIndex, {
   type VilkarresultatMedOverstyringProsessIndexProps,
 } from './VilkarresultatMedOverstyringProsessIndex';
+import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 
 const vilkarOpptjening = [
   {

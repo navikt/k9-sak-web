@@ -5,6 +5,7 @@ import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
 import { ArbeidsgiverOpplysninger, Inntektsgradering } from '../../../types';
 
 import styles from './nyUttakDetaljer.module.css';
+import { Arbeidstype } from '../../../constants';
 
 interface ownProps {
   alleArbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
@@ -12,13 +13,13 @@ interface ownProps {
 }
 
 const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntektsgradering }) => {
-  const { reduksjonsProsent, inntektsforhold } = inntektsgradering; // graderingsProsent
+  const { graderingsProsent, reduksjonsProsent, inntektsforhold } = inntektsgradering; // graderingsProsent
   const beregningsgrunnlag = tilNOK.format(inntektsgradering.beregningsgrunnlag);
   const løpendeInntekt = tilNOK.format(inntektsgradering.løpendeInntekt);
   const bortfaltInntekt = tilNOK.format(inntektsgradering.bortfaltInntekt);
 
   return (
-    <VStack>
+    <VStack className={`${styles.uttakDetaljer__detailItem} mt-2`}>
       <UttakDetaljerEkspanderbar title={`Beregningsgrunnlag: ${beregningsgrunnlag}`}>
         {inntektsforhold.map(inntForhold => {
           const { løpendeInntekt, bruttoInntekt, arbeidsgiverIdentifikator } = inntForhold;
@@ -48,10 +49,11 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
           const arbeidsforholdData = alleArbeidsforhold[arbeidsgiverIdentifikator];
           return (
             <React.Fragment key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_utbetalt`}>
-              <Box className={styles.uttakDetaljer__beregningFirma}>
+              <Box className={`${styles.uttakDetaljer__beregningFirma}`}>
                 <BodyShort size="small" weight="semibold">
-                  {arbeidsforholdData?.navn || 'Mangler navn'} ( (
-                  {arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator}){' '}
+                  {inntForhold.type !== Arbeidstype.FRILANSER
+                    ? `${arbeidsforholdData?.navn || 'Mangler navn'} (${arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})`
+                    : 'Frilanser'}{' '}
                   {inntForhold.erNytt && (
                     <Tag size="small" variant="info">
                       Ny
@@ -100,7 +102,7 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
 
       <Box>
         <BodyShort as="div" className={styles.uttakDetaljer__detailSum} size="small">
-          = {reduksjonsProsent} % totalt inntektstap
+          = {graderingsProsent} % totalt inntektstap
         </BodyShort>
       </Box>
     </VStack>

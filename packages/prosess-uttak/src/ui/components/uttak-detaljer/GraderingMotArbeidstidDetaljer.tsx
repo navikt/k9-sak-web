@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { BodyShort, Box, Detail, HelpText, HStack, Tag, VStack } from '@navikt/ds-react';
 import { beregnDagerTimer } from '../../../util/dateUtils';
-import { arbeidstypeTilVisning } from '../../../constants';
+import { Arbeidstype, arbeidstypeTilVisning } from '../../../constants';
 import { Utbetalingsgrad } from '../../../types';
 import classNames from 'classnames/bind';
 
@@ -20,9 +20,10 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
   utbetalingsgrader,
   søkersTapteArbeidstid,
 }) => {
+  const harNyInntekt = utbetalingsgrader.some(utbetalingsgrad => utbetalingsgrad.tilkommet);
   return (
     <VStack>
-      <VStack gap="8" className={styles.uttakDetaljer__detailItem}>
+      <VStack gap="8" className={`${styles.uttakDetaljer__detailItem} mt-2`}>
         {utbetalingsgrader.map(utbetalingsgradItem => {
           const arbeidsgiverIdentifikator =
             utbetalingsgradItem.arbeidsforhold.aktørId ||
@@ -50,10 +51,12 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
                   </Tag>
                 )}
               </BodyShort>
-              <BodyShort size="small" weight="semibold">
-                {arbeidsforholdData?.navn || 'Mangler navn'} (
-                {arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})
-              </BodyShort>
+              {arbeidsforhold.type !== Arbeidstype.FRILANSER && (
+                <BodyShort size="small" weight="semibold">
+                  {arbeidsforholdData?.navn || 'Mangler navn'} (
+                  {arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})
+                </BodyShort>
+              )}
               <BodyShort size="small">Normal arbeidstid: {beregnetNormalArbeidstid} timer</BodyShort>
               <BodyShort as="div" size="small" className={cx({ uttakDetaljer__beregningStrek: true })}>
                 <HStack gap="1">
@@ -69,19 +72,21 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
                   )}
                 </HStack>
               </BodyShort>
-              <BodyShort size="small">= {prosentFravær} % fravær: </BodyShort>
+              <BodyShort className="mt-1" size="small">= {prosentFravær} % fravær </BodyShort>
             </Box>
           );
         })}
       </VStack>
       <Box>
         <BodyShort size="small" className={styles.uttakDetaljer__detailSum}>
-          = {søkersTapteArbeidstid}% tapt arbeidstid *
+          = {søkersTapteArbeidstid}% tapt arbeidstid {harNyInntekt ? '*' : ''}
         </BodyShort>
-        <Detail className={styles.uttakDetaljer__detailtext}>
-          * Tapt arbeidstid vurderes kun ut ifra aktiviteter på skjæringstidspunktet. Arbeidstid for nye aktiviteter
-          blir ikke tatt med i utregningen av tapt arbeidstid.
-        </Detail>
+        {harNyInntekt && (
+          <Detail className={styles.uttakDetaljer__detailtext}>
+            * Tapt arbeidstid vurderes kun ut ifra aktiviteter på skjæringstidspunktet. Arbeidstid for nye aktiviteter
+            blir ikke tatt med i utregningen av tapt arbeidstid.
+          </Detail>
+        )}
       </Box>
     </VStack>
   );
