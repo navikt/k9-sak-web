@@ -413,5 +413,6 @@
   "Rest.ErrorMessage.GatewayTimeoutOrNotFound": "Får ikke kontakt med {contextPath} ({location})",
   "OMSORGEN_FOR": "Omsorgen for",
   "KONTINUERLIG_TILSYN": "Kontinuerlig tilsyn og pleie",
-  "OmPleietrengendeInfoPanel.Title": "Om pleietrengende"
+  "OmPleietrengendeInfoPanel.Title": "Om pleietrengende",
+  "Nyoppstartet.Title": "Nyoppstartet"
 }
