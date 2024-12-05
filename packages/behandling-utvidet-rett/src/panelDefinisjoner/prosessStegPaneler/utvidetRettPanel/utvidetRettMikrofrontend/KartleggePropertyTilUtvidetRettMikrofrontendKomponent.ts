@@ -2,15 +2,17 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { Behandling } from '@k9-sak-web/types';
+import {Behandling} from '@k9-sak-web/types';
 import {
   AksjonspunktInformasjon,
   SaksinformasjonUtvidetRett,
   VilkarInformasjon,
 } from '../../../../types/utvidetRettMikrofrontend/KartleggePropertyTilMikrofrontendTypes';
-import AleneOmOmsorgenObjektTilMikrofrontend from './formateringAvDataTilMikrofrontend/AleneOmOmsorgenObjektTilMikrofrontend';
+import AleneOmOmsorgenObjektTilMikrofrontend
+  from './formateringAvDataTilMikrofrontend/AleneOmOmsorgenObjektTilMikrofrontend';
 import KroniskSykObjektTilMikrofrontend from './formateringAvDataTilMikrofrontend/KroniskSykObjektTilMikrofrontend';
-import MidlertidigAleneObjektTilMikrofrontend from './formateringAvDataTilMikrofrontend/MidlertidigAleneObjektTilMikrofrontend';
+import MidlertidigAleneObjektTilMikrofrontend
+  from './formateringAvDataTilMikrofrontend/MidlertidigAleneObjektTilMikrofrontend';
 
 const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
   saksInformasjon: SaksinformasjonUtvidetRett,
@@ -30,10 +32,11 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
   const vilkaret = vilkar.find(v => v.vilkarType.kode === vilkarType.UTVIDETRETTVILKARET);
 
   const eksistererAksjonspunktOgVilkar = aksjonspunkt && vilkar;
-  const eksistererVilkarForAutomatiskInnvilgetAleneOmOmsorgen =
-    fagsaksType === FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN && vilkar;
+  const eksistererVilkarForAutomatiskInnvilget =
+    (fagsaksType === FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN || fagsaksType === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN)
+    && vilkar;
 
-  if (eksistererAksjonspunktOgVilkar || eksistererVilkarForAutomatiskInnvilgetAleneOmOmsorgen) {
+  if (eksistererAksjonspunktOgVilkar || eksistererVilkarForAutomatiskInnvilget) {
     const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;
     const lesemodus = isReadOnly || !isAksjonspunktOpen;
     const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
