@@ -1,9 +1,10 @@
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/KlageBehandlingsresultat.js';
 import {
   avslagsårsak,
   AvslagsårsakPrPeriodeDto,
+  behandlingResultatType,
   BeregningsgrunnlagPeriodeDto,
+  fagsakYtelseType,
   videreBehandling,
 } from '@navikt/k9-sak-typescript-client';
 import {
@@ -50,22 +51,19 @@ describe('VedtakHelper', () => {
   describe('findDelvisInnvilgetResultatText', () => {
     it('should return correct text for klage ytelsesvedtak stadfestet', () => {
       const result = findDelvisInnvilgetResultatText(
-        behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET,
-        fagsakYtelseType.OMSORGSPENGER,
+        klageBehandlingsresultat.KLAGE_YTELSESVEDTAK_STADFESTET,
+        fagsakYtelseType.OMP,
       );
       expect(result).toBe('VedtakForm.ResultatOpprettholdVedtak');
     });
 
     it('should return correct text for klage medhold', () => {
-      const result = findDelvisInnvilgetResultatText(
-        behandlingResultatType.KLAGE_MEDHOLD,
-        fagsakYtelseType.OMSORGSPENGER,
-      );
+      const result = findDelvisInnvilgetResultatText(klageBehandlingsresultat.KLAGE_MEDHOLD, fagsakYtelseType.OMP);
       expect(result).toBe('VedtakForm.ResultatKlageMedhold');
     });
 
     it('should return correct text for omsorgspenger', () => {
-      const result = findDelvisInnvilgetResultatText(behandlingResultatType.INNVILGET, fagsakYtelseType.OMSORGSPENGER);
+      const result = findDelvisInnvilgetResultatText(behandlingResultatType.INNVILGET, fagsakYtelseType.OMP);
       expect(result).toBe('VedtakForm.VilkarStatusDelvisInnvilgetOmsorgspenger');
     });
 
@@ -78,19 +76,19 @@ describe('VedtakHelper', () => {
   describe('findInnvilgetResultatText', () => {
     it('should return correct text for klage ytelsesvedtak stadfestet', () => {
       const result = findInnvilgetResultatText(
-        behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET,
-        fagsakYtelseType.OMSORGSPENGER,
+        klageBehandlingsresultat.KLAGE_YTELSESVEDTAK_STADFESTET,
+        fagsakYtelseType.OMP,
       );
       expect(result).toBe('VedtakForm.ResultatOpprettholdVedtak');
     });
 
     it('should return correct text for klage medhold', () => {
-      const result = findInnvilgetResultatText(behandlingResultatType.KLAGE_MEDHOLD, fagsakYtelseType.OMSORGSPENGER);
+      const result = findInnvilgetResultatText(klageBehandlingsresultat.KLAGE_MEDHOLD, fagsakYtelseType.OMP);
       expect(result).toBe('VedtakForm.ResultatKlageMedhold');
     });
 
     it('should return correct text for omsorgspenger', () => {
-      const result = findInnvilgetResultatText(behandlingResultatType.INNVILGET, fagsakYtelseType.OMSORGSPENGER);
+      const result = findInnvilgetResultatText(behandlingResultatType.INNVILGET, fagsakYtelseType.OMP);
       expect(result).toBe('VedtakForm.VilkarStatusInnvilgetOmsorgspenger');
     });
 
@@ -103,24 +101,24 @@ describe('VedtakHelper', () => {
   describe('findAvslagResultatText', () => {
     it('should return correct text for klage ytelsesvedtak opphevet', () => {
       const result = findAvslagResultatText(
-        behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET,
-        fagsakYtelseType.OMSORGSPENGER,
+        klageBehandlingsresultat.KLAGE_YTELSESVEDTAK_OPPHEVET,
+        fagsakYtelseType.OMP,
       );
       expect(result).toBe('VedtakForm.ResultatKlageYtelsesvedtakOpphevet');
     });
 
     it('should return correct text for klage avvist', () => {
-      const result = findAvslagResultatText(behandlingResultatType.KLAGE_AVVIST, fagsakYtelseType.OMSORGSPENGER);
+      const result = findAvslagResultatText(klageBehandlingsresultat.KLAGE_AVVIST, fagsakYtelseType.OMP);
       expect(result).toBe('VedtakForm.ResultatKlageAvvist');
     });
 
     it('should return correct text for omsorgspenger', () => {
-      const result = findAvslagResultatText(behandlingResultatType.AVSLATT, fagsakYtelseType.OMSORGSPENGER);
+      const result = findAvslagResultatText(behandlingResultatType.AVSLÅTT, fagsakYtelseType.OMP);
       expect(result).toBe('VedtakForm.OmsorgspengerIkkeInnvilget');
     });
 
     it('should return correct text for frisinn', () => {
-      const result = findAvslagResultatText(behandlingResultatType.AVSLATT, fagsakYtelseType.FRISINN);
+      const result = findAvslagResultatText(behandlingResultatType.AVSLÅTT, fagsakYtelseType.FRISINN);
       expect(result).toBe('VedtakForm.FrisinnIkkeInnvilget');
     });
   });
