@@ -147,7 +147,7 @@ const NyUttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
               </Box>
             )}
             <HStack>
-              <HandHeartIcon />
+              <HandHeartIcon className="!ml-[-4px]" />
               <Heading size="xsmall"> Gradering mot tilsyn</Heading>
               {harBarnetsDødsfallÅrsak(årsaker) && (
                 <HelpText placement="right" wrapperClassName={styles.uttakDetaljer__data__questionMark}>
@@ -175,7 +175,7 @@ const NyUttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
             </Box>
           )}
           <HStack>
-            <BriefcaseClockIcon />
+            <BriefcaseClockIcon className="!ml-[-4px]" />
             <Heading size="xsmall">Gradering mot arbeidstid</Heading>
           </HStack>
           <GraderingMotArbeidstidDetaljer
@@ -202,7 +202,7 @@ const NyUttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
               </Box>
             )}
             <HStack>
-              <SackKronerIcon />
+              <SackKronerIcon className="!ml-[-4px]" />
               <Heading size="xsmall">Gradering mot arbeidsinntekt</Heading>
             </HStack>
             <GraderingMotInntektDetaljer alleArbeidsforhold={arbeidsforhold} inntektsgradering={inntektsgradering} />
