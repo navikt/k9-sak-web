@@ -1,25 +1,5 @@
-type BehandlingsresultatType =
-  | 'KLAGE_AVVIST'
-  | 'KLAGE_MEDHOLD'
-  | 'KLAGE_YTELSESVEDTAK_OPPHEVET'
-  | 'KLAGE_YTELSESVEDTAK_STADFESTET'
-  | 'KLAGE_TRUKKET'
-  | 'HENLAGT_KLAGE_TRUKKET'
-  | 'DELVIS_MEDHOLD_I_KLAGE'
-  | 'HJEMSENDE_UTEN_OPPHEVE'
-  | 'UGUNST_MEDHOLD_I_KLAGE'
-  | 'IKKE_FASTSATT'
-  | 'INNVILGET'
-  | 'AVSLÅTT'
-  | 'OPPHØR'
-  | 'HENLAGT_SØKNAD_TRUKKET'
-  | 'HENLAGT_FEILOPPRETTET'
-  | 'HENLAGT_BRUKER_DØD'
-  | 'MERGET_OG_HENLAGT'
-  | 'HENLAGT_SØKNAD_MANGLER'
-  | 'INNVILGET_ENDRING'
-  | 'INGEN_ENDRING';
-
+import { type BehandlingsresultatDto } from '../../generated';
+export type BehandlingsresultatType = BehandlingsresultatDto['type'];
 export const klageBehandlingsresultat: Readonly<Record<BehandlingsresultatType, BehandlingsresultatType>> = {
   KLAGE_AVVIST: 'KLAGE_AVVIST',
   KLAGE_MEDHOLD: 'KLAGE_MEDHOLD',
