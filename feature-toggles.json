@@ -76,10 +76,6 @@
     "value": "${NYE_NOKKELTALL}"
   },
   {
-    "key": "PROSESS_VILKAR_SOKNADSFRIST",
-    "value": "${PROSESS_VILKAR_SOKNADSFRIST}"
-  },
-  {
     "key": "UTVIDET_VARSELFELT",
     "value": "${UTVIDET_VARSELFELT}"
   },
