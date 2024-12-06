@@ -29,5 +29,4 @@ export { default as requireProps } from './src/requireProps';
 export { default as Tidslinje } from './src/tidslinje/Tidslinje';
 export { default as TidslinjeZoom } from './src/tidslinje/TidslinjeZoom';
 export { default as TimeLabel } from './src/TimeLabel';
-export { default as Tooltip } from './src/Tooltip';
 export { default as VerticalSpacer } from './src/VerticalSpacer';
