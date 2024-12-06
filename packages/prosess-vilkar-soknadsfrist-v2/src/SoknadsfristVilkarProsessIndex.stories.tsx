@@ -627,4 +627,390 @@ export const VisSoknadsfristAksjonspunkt5077FlereSøknader: Story = {
   },
 };
 
+export const EnSpesiellHistorie: Story = {
+  args: {
+    ...defaultArgs,
+    aksjonspunkter: [
+      {
+        aksjonspunktType: 'SAOV',
+        begrunnelse:
+          'bebebebe\ngbegbebebe\nbebebebebe\nbebebebe\nekte\nbebebebebebbe\nbebebebe\nbebebebebe\nbebebebebebebebe',
+        besluttersBegrunnelse: null,
+        definisjon: '6006',
+        erAktivt: true,
+        fristTid: null,
+        kanLoses: false,
+        status: 'UTFO',
+        toTrinnsBehandling: true,
+        toTrinnsBehandlingGodkjent: null,
+        vilkarType: 'FP_VK_3',
+        vurderPaNyttArsaker: null,
+        venteårsak: {
+          kanVelgesIGui: false,
+          kode: '-',
+          ventekategori: null,
+          kodeverk: 'VENT_AARSAK',
+        },
+        venteårsakVariant: null,
+        opprettetAv: 'Z994588',
+      },
+    ],
+    erOverstyrt: false,
+    kanEndrePåSøknadsopplysninger: true,
+    soknadsfristStatus: {
+      dokumentStatus: [
+        {
+          type: 'SØKNAD',
+          status: [
+            {
+              periode: {
+                fom: '2024-09-17',
+                tom: '2024-09-18',
+              },
+              status: 'OPPFYLT',
+            },
+          ],
+          innsendingstidspunkt: '2024-09-27T10:47:00',
+          journalpostId: '453905499',
+          avklarteOpplysninger: null,
+          overstyrteOpplysninger: null,
+        },
+        {
+          type: 'SØKNAD',
+          status: [
+            {
+              periode: {
+                fom: '2024-04-11',
+                tom: '2024-04-11',
+              },
+              status: 'OPPFYLT',
+            },
+          ],
+          innsendingstidspunkt: '2024-09-27T10:16:00',
+          journalpostId: '453905477',
+          avklarteOpplysninger: {
+            godkjent: false,
+            fraDato: '2024-05-31',
+            begrunnelse: 'bebebebe',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:21:56.667',
+          },
+          overstyrteOpplysninger: {
+            godkjent: true,
+            fraDato: '2024-04-10',
+            begrunnelse: 'bebebebe',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:52:32.476',
+          },
+        },
+        {
+          type: 'SØKNAD',
+          status: [
+            {
+              periode: {
+                fom: '2024-05-06',
+                tom: '2024-05-16',
+              },
+              status: 'OPPFYLT',
+            },
+          ],
+          innsendingstidspunkt: '2024-09-27T10:22:00',
+          journalpostId: '453905500',
+          avklarteOpplysninger: {
+            godkjent: false,
+            fraDato: '2024-05-31',
+            begrunnelse: 'bebebebe',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:21:56.667',
+          },
+          overstyrteOpplysninger: {
+            godkjent: true,
+            fraDato: '2024-05-05',
+            begrunnelse: 'bebebebe',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:52:32.476',
+          },
+        },
+        {
+          type: 'SØKNAD',
+          status: [
+            {
+              periode: {
+                fom: '2024-03-26',
+                tom: '2024-03-27',
+              },
+              status: 'OPPFYLT',
+            },
+          ],
+          innsendingstidspunkt: '2024-09-27T10:05:00',
+          journalpostId: '453905481',
+          avklarteOpplysninger: {
+            godkjent: false,
+            fraDato: '2024-05-31',
+            begrunnelse: 'bebebebebe',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:21:56.668',
+          },
+          overstyrteOpplysninger: {
+            godkjent: true,
+            fraDato: '2024-03-25',
+            begrunnelse: 'bebebebebe',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:52:32.476',
+          },
+        },
+        {
+          type: 'SØKNAD',
+          status: [
+            {
+              periode: {
+                fom: '2024-03-07',
+                tom: '2024-12-31',
+              },
+              status: 'OPPFYLT',
+            },
+          ],
+          innsendingstidspunkt: '2024-11-20T09:24:00',
+          journalpostId: '453905495',
+          avklarteOpplysninger: {
+            godkjent: true,
+            fraDato: '2024-07-31',
+            begrunnelse: 'bababababa',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:21:56.667',
+          },
+          overstyrteOpplysninger: {
+            godkjent: true,
+            fraDato: '2024-03-06',
+            begrunnelse: 'ekte',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:52:32.476',
+          },
+        },
+        {
+          type: 'SØKNAD',
+          status: [
+            {
+              periode: {
+                fom: '2024-05-21',
+                tom: '2024-05-21',
+              },
+              status: 'OPPFYLT',
+            },
+          ],
+          innsendingstidspunkt: '2024-09-27T10:27:00',
+          journalpostId: '453905479',
+          avklarteOpplysninger: {
+            godkjent: false,
+            fraDato: '2024-05-31',
+            begrunnelse: 'gbegbebebe',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:21:56.668',
+          },
+          overstyrteOpplysninger: {
+            godkjent: true,
+            fraDato: '2024-05-20',
+            begrunnelse: 'gbegbebebe',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:52:32.476',
+          },
+        },
+        {
+          type: 'SØKNAD',
+          status: [
+            {
+              periode: {
+                fom: '2024-06-16',
+                tom: '2024-06-19',
+              },
+              status: 'OPPFYLT',
+            },
+          ],
+          innsendingstidspunkt: '2024-09-27T10:40:00',
+          journalpostId: '453905497',
+          avklarteOpplysninger: null,
+          overstyrteOpplysninger: null,
+        },
+        {
+          type: 'SØKNAD',
+          status: [
+            {
+              periode: {
+                fom: '2024-05-02',
+                tom: '2024-05-03',
+              },
+              status: 'OPPFYLT',
+            },
+          ],
+          innsendingstidspunkt: '2024-09-27T10:15:00',
+          journalpostId: '453905498',
+          avklarteOpplysninger: {
+            godkjent: false,
+            fraDato: '2024-05-31',
+            begrunnelse: 'bebebebe',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:21:56.667',
+          },
+          overstyrteOpplysninger: {
+            godkjent: true,
+            fraDato: '2024-05-01',
+            begrunnelse: 'bebebebe',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:52:32.476',
+          },
+        },
+        {
+          type: 'SØKNAD',
+          status: [
+            {
+              periode: {
+                fom: '2024-04-15',
+                tom: '2024-04-23',
+              },
+              status: 'OPPFYLT',
+            },
+          ],
+          innsendingstidspunkt: '2024-09-27T10:10:00',
+          journalpostId: '453905483',
+          avklarteOpplysninger: {
+            godkjent: false,
+            fraDato: '2024-05-31',
+            begrunnelse: 'bebebebebe',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:21:56.667',
+          },
+          overstyrteOpplysninger: {
+            godkjent: true,
+            fraDato: '2024-04-14',
+            begrunnelse: 'bebebebebe',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:52:32.476',
+          },
+        },
+        {
+          type: 'SØKNAD',
+          status: [
+            {
+              periode: {
+                fom: '2024-03-20',
+                tom: '2024-03-20',
+              },
+              status: 'OPPFYLT',
+            },
+          ],
+          innsendingstidspunkt: '2024-09-27T10:02:00',
+          journalpostId: '453905496',
+          avklarteOpplysninger: {
+            godkjent: false,
+            fraDato: '2024-05-31',
+            begrunnelse: 'bebebebebebbe',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:21:56.667',
+          },
+          overstyrteOpplysninger: {
+            godkjent: true,
+            fraDato: '2024-03-19',
+            begrunnelse: 'bebebebebebbe',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:52:32.476',
+          },
+        },
+        {
+          type: 'SØKNAD',
+          status: [
+            {
+              periode: {
+                fom: '2024-05-28',
+                tom: '2024-05-31',
+              },
+              status: 'OPPFYLT',
+            },
+          ],
+          innsendingstidspunkt: '2024-09-27T10:31:00',
+          journalpostId: '453905501',
+          avklarteOpplysninger: {
+            godkjent: false,
+            fraDato: '2024-05-31',
+            begrunnelse: 'bebebebebebebebe',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:21:56.668',
+          },
+          overstyrteOpplysninger: {
+            godkjent: true,
+            fraDato: '2024-05-27',
+            begrunnelse: 'bebebebebebebebe',
+            opprettetAv: 'Z994588',
+            opprettetTidspunkt: '2024-12-06T09:52:32.476',
+          },
+        },
+        {
+          type: 'SØKNAD',
+          status: [
+            {
+              periode: {
+                fom: '2024-09-09',
+                tom: '2024-09-12',
+              },
+              status: 'OPPFYLT',
+            },
+          ],
+          innsendingstidspunkt: '2024-09-27T10:44:00',
+          journalpostId: '453905494',
+          avklarteOpplysninger: null,
+          overstyrteOpplysninger: null,
+        },
+        {
+          type: 'SØKNAD',
+          status: [
+            {
+              periode: {
+                fom: '2024-08-01',
+                tom: '2024-08-01',
+              },
+              status: 'OPPFYLT',
+            },
+          ],
+          innsendingstidspunkt: '2024-09-27T10:42:00',
+          journalpostId: '453905391',
+          avklarteOpplysninger: null,
+          overstyrteOpplysninger: null,
+        },
+      ],
+    },
+    vilkar: [
+      {
+        vilkarType: 'FP_VK_3',
+        lovReferanse: '§ 22-13 tredje ledd',
+        overstyrbar: true,
+        perioder: [
+          {
+            avslagKode: null,
+            merknadParametere: {},
+            vilkarStatus: 'OPPFYLT',
+            periode: {
+              fom: '2024-03-07',
+              tom: '2024-12-31',
+            },
+            begrunnelse: null,
+            vurderesIBehandlingen: true,
+            vurdersIBehandlingen: true,
+            merknad: '-',
+          },
+        ],
+      },
+    ],
+    visAllePerioder: false,
+  },
+  render: props => {
+    const [erOverstyrt, toggleOverstyring] = React.useState(false);
+    return (
+      <SoknadsfristVilkarProsessIndex
+        {...props}
+        submitCallback={action('button-click')}
+        toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
+      />
+    );
+  },
+};
+
 export default meta;
