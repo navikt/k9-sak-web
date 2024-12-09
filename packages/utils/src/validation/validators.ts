@@ -1,12 +1,10 @@
 import { validateTextCharacters } from '@k9-sak-web/gui/utils/validation/validateTextCharacters.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import moment, { Moment } from 'moment';
-import { removeSpacesFromNumber } from '../currencyUtils';
 import { fodselsnummerPattern, isValidFodselsnummer } from '../fodselsnummerUtils';
 import {
   dateNotAfterOrEqualMessage,
   dateNotBeforeOrEqualMessage,
-  dateRangesOverlappingBetweenPeriodTypesMessage,
   dateRangesOverlappingMessage,
   invalidDateMessage,
   invalidDatesInPeriodMessage,
@@ -16,14 +14,12 @@ import {
   invalidIntegerMessage,
   invalidNumberMessage,
   invalidOrgNumberMessage,
-  invalidOrgNumberOrFodselsnrMessage,
   invalidPeriodMessage,
   invalidPeriodRangeMessage,
   invalidSaksnummerOrFodselsnummerFormatMessage,
   invalidTextMessage,
   isRequiredMessage,
   maxLengthMessage,
-  maxLengthOrFodselsnrMessage,
   maxValueMessage,
   minLengthMessage,
   minValueMessage,
@@ -42,12 +38,9 @@ import {
   yesterday,
 } from './validatorsHelper';
 
-export const maxLengthOrFodselsnr = (length: number) => (text: string) =>
-  isEmpty(text) || text.toString().trim().length <= length ? null : maxLengthOrFodselsnrMessage(length);
 export const required = (value: string) => (isEmpty(value) ? isRequiredMessage() : undefined);
 export const atLeastOneRequired = (value: string, otherValue: string) =>
   isEmpty(value) && isEmpty(otherValue) ? isRequiredMessage() : undefined;
-export const notDash = (value: string) => (value === '-' ? isRequiredMessage() : undefined);
 export const requiredIfNotPristine = (value: string, allValues, props: { pristine: boolean }) =>
   props.pristine || !isEmpty(value) ? undefined : isRequiredMessage();
 export const requiredIfCustomFunctionIsTrue = isRequiredFunction => (value: string, allValues, props) =>
@@ -63,17 +56,8 @@ export const minValue = (length: number) => (number: number | string) =>
 export const maxValue = (length: number) => (number: number | string) =>
   +number <= length ? null : maxValueMessage(length);
 
-export const minValueFormatted = (min: number) => (number: number) =>
-  removeSpacesFromNumber(number) >= min ? null : minValueMessage(min);
-export const maxValueFormatted = (max: number) => (number: number) =>
-  removeSpacesFromNumber(number) <= max ? null : maxValueMessage(max);
-
 export const hasValidOrgNumber = (number: number | string) =>
   number.toString().trim().length === 9 ? null : invalidOrgNumberMessage();
-export const hasValidOrgNumberOrFodselsnr = (number: number) =>
-  number.toString().trim().length === 9 || number.toString().trim().length === 11
-    ? null
-    : invalidOrgNumberOrFodselsnrMessage();
 
 const hasValidNumber = (text: string | number) =>
   isEmpty(text) || numberRegex.test(`${text}`) ? null : invalidNumberMessage(text);
@@ -121,8 +105,6 @@ export const dateIsBefore =
 
 export const dateRangesNotOverlapping = (ranges: Array<string[]>) =>
   dateRangesAreSequential(ranges) ? null : dateRangesOverlappingMessage();
-export const dateRangesNotOverlappingCrossTypes = (ranges: Array<string[]>) =>
-  dateRangesAreSequential(ranges) ? null : dateRangesOverlappingBetweenPeriodTypesMessage();
 
 export const dateBeforeToday = (text: string) => dateBeforeOrEqual(yesterday())(text);
 export const dateBeforeOrEqualToToday = (text: string) => dateBeforeOrEqual(moment().startOf('day'))(text);

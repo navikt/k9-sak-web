@@ -27,7 +27,6 @@ export {
   dateBeforeToday,
   dateIsBefore,
   dateRangesNotOverlapping,
-  dateRangesNotOverlappingCrossTypes,
   hasValidDate,
   hasValidDecimal,
   hasValidDecimalMaxNumberOfDecimals,
@@ -36,19 +35,14 @@ export {
   hasValidInteger,
   hasValidName,
   hasValidOrgNumber,
-  hasValidOrgNumberOrFodselsnr,
   hasValidPeriod,
   hasValidSaksnummerOrFodselsnummerFormat,
   hasValidText,
   isWithinOpptjeningsperiode,
   maxLength,
-  maxLengthOrFodselsnr,
   maxValue,
-  maxValueFormatted,
   minLength,
   minValue,
-  minValueFormatted,
-  notDash,
   required,
   requiredIfCustomFunctionIsTrue,
   requiredIfNotPristine,
@@ -57,13 +51,11 @@ export {
 export {
   dateNotAfterOrEqualMessage,
   dateNotBeforeOrEqualMessage,
-  dateRangesOverlappingBetweenPeriodTypesMessage,
   dateRangesOverlappingMessage,
   invalidDateMessage,
   invalidDecimalMessage,
   invalidPeriodMessage,
   isRequiredMessage,
-  sammeFodselsnummerSomSokerMessage,
 } from './src/validation/messages';
 
 export { findAksjonspunkt } from './src/micro-frontends/findAksjonspunkt';
@@ -93,4 +85,3 @@ export { default as Period } from './src/period-utils/Period';
 export { default as prettifyPeriodList } from './src/period-utils/prettifyPeriodList';
 export { default as sortPeriodsByFomDate } from './src/period-utils/sortPeriodsByFomDate';
 export { joinNonNullStrings, safeJSONParse } from './src/stringUtils';
-export * as httpUtils from './src/http-utils/axiosHttpUtils';
