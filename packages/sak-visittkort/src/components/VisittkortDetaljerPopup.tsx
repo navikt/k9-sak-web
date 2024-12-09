@@ -1,10 +1,10 @@
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import { FlexColumn, FlexContainer, FlexRow, Tooltip, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Adresser, getAddresses, getKodeverknavnFn, getLanguageFromSprakkode } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
-import { BodyShort, Label, Tag } from '@navikt/ds-react';
-import React, { useMemo } from 'react';
+import { BodyShort, Label, Tag, Tooltip } from '@navikt/ds-react';
+import { useMemo } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
 import styles from './visittkortDetaljerPopup.module.css';
@@ -50,7 +50,7 @@ const VisittkortDetaljerPopup = ({
             <FlexColumn>
               <Tooltip
                 content={intl.formatMessage({ id: 'VisittkortDetaljerPopup.Statsborgerskap.Hjelpetekst' })}
-                alignBottom
+                placement="bottom"
               >
                 <Tag variant="info" className={styles.etikett} size="small">
                   {getKodeverknavn(personopplysninger.region)}
@@ -61,7 +61,7 @@ const VisittkortDetaljerPopup = ({
           <FlexColumn>
             <Tooltip
               content={intl.formatMessage({ id: 'VisittkortDetaljerPopup.Personstatus.Hjelpetekst' })}
-              alignBottom
+              placement="bottom"
             >
               <Tag variant="info" className={styles.etikett} size="small">
                 {getKodeverknavn(findPersonStatus(personopplysninger))}
@@ -72,7 +72,7 @@ const VisittkortDetaljerPopup = ({
             <FlexColumn>
               <Tooltip
                 content={intl.formatMessage({ id: 'VisittkortDetaljerPopup.Sivilstand.Hjelpetekst' })}
-                alignBottom
+                placement="bottom"
               >
                 <Tag variant="info" className={styles.etikett} size="small">
                   {getKodeverknavn(personopplysninger.sivilstand)}
@@ -82,7 +82,7 @@ const VisittkortDetaljerPopup = ({
           )}
           {borMedBarnet && (
             <FlexColumn>
-              <Tooltip content={intl.formatMessage({ id: 'VisittkortDetaljerPopup.BorMedBarnet' })} alignBottom>
+              <Tooltip content={intl.formatMessage({ id: 'VisittkortDetaljerPopup.BorMedBarnet' })} placement="bottom">
                 <Tag variant="info" className={styles.etikett} size="small">
                   <FormattedMessage id="VisittkortDetaljerPopup.BorMedBarnet" />
                 </Tag>
@@ -90,7 +90,10 @@ const VisittkortDetaljerPopup = ({
             </FlexColumn>
           )}
           <FlexColumn>
-            <Tooltip content={intl.formatMessage({ id: 'VisittkortDetaljerPopup.Malform.Beskrivelse' })} alignBottom>
+            <Tooltip
+              content={intl.formatMessage({ id: 'VisittkortDetaljerPopup.Malform.Beskrivelse' })}
+              placement="bottom"
+            >
               <Tag variant="info" className={styles.etikett} size="small">
                 {getLanguageFromSprakkode(sprakkode)}
               </Tag>

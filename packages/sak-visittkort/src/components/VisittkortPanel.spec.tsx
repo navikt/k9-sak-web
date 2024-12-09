@@ -99,7 +99,7 @@ describe('<VisittkortPanel>', () => {
       />,
       { messages },
     );
-    expect(screen.getByText('Personen har verge')).toBeInTheDocument();
+    expect(screen.getByLabelText('Personen har verge')).toBeInTheDocument();
     expect(screen.getByText('Verge')).toBeInTheDocument();
   });
 

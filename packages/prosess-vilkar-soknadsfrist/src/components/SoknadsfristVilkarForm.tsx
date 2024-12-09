@@ -6,7 +6,6 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
   AksjonspunktBox,
   AksjonspunktHelpText,
-  EditedIcon,
   FlexColumn,
   FlexContainer,
   FlexRow,
@@ -14,6 +13,7 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { EditedIcon } from '@k9-sak-web/gui/shared/EditedIcon.js';
 import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';
 import { Aksjonspunkt, DokumentStatus, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';

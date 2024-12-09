@@ -1,6 +1,5 @@
-import React, { useState, useCallback, ReactNode, KeyboardEvent, MouseEvent } from 'react';
-
-import Tooltip from './Tooltip';
+import { Tooltip } from '@navikt/ds-react';
+import { KeyboardEvent, MouseEvent, useCallback, useState } from 'react';
 
 interface OwnProps {
   className?: string;
@@ -11,7 +10,7 @@ interface OwnProps {
   onClick?: (event: MouseEvent) => void;
   alt?: string;
   tabIndex?: number;
-  tooltip?: string | ReactNode;
+  tooltip?: string;
   alignTooltipLeft?: boolean;
 }
 
@@ -67,12 +66,12 @@ const Image = ({
     />
   );
 
-  if (!tooltip) {
+  if (tooltip === undefined) {
     return image;
   }
 
   return (
-    <Tooltip content={tooltip} alignLeft={alignTooltipLeft}>
+    <Tooltip content={tooltip} placement={alignTooltipLeft ? 'left' : 'right'}>
       {image}
     </Tooltip>
   );

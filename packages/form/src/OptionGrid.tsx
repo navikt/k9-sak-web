@@ -1,5 +1,6 @@
-import { EditedIcon, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import { range } from '@fpsak-frontend/utils';
+import { EditedIcon } from '@k9-sak-web/gui/shared/EditedIcon.js';
 import React from 'react';
 import styles from './optionGrid.module.css';
 
@@ -28,7 +29,7 @@ export const OptionGrid = ({
           {range(numRows).map(rowIndex => (
             <FlexRow key={`row${rowIndex}`} spaceBetween={spaceBetween}>
               {options.filter((option, optionIndex) => optionIndex % numRows === rowIndex)}
-              {isEdited && <EditedIcon className="radioEdited" />}
+              {isEdited && <EditedIcon />}
             </FlexRow>
           ))}
         </FlexColumn>
@@ -44,7 +45,7 @@ export const OptionGrid = ({
             {options.filter((option, optionIndex) => optionIndex % numColumns === columnIndex)}
           </FlexColumn>
         ))}
-        {isEdited && <EditedIcon className="radioEdited" />}
+        {isEdited && <EditedIcon />}
       </FlexRow>
     </FlexContainer>
   );

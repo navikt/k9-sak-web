@@ -5,7 +5,6 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import region from '@fpsak-frontend/kodeverk/src/region';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import { renderWithIntl, screen } from '@fpsak-frontend/utils-test/test-utils';
-import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import VisittkortLabels from './VisittkortLabels';
 
@@ -66,7 +65,7 @@ describe('<VisittkortLabels>', () => {
     const { container } = renderWithIntl(<VisittkortLabels personopplysninger={personopplysningerSoker} />, {
       messages,
     });
-    expect(container.getElementsByClassName('tooltip').length).toBe(0);
+    expect(container.getElementsByClassName('navds-tag').length).toBe(0);
   });
 
   it('skal vise etikett for dødsdato', () => {
@@ -79,7 +78,7 @@ describe('<VisittkortLabels>', () => {
       />,
       { messages },
     );
-    expect(screen.getByText('Personen er død')).toBeInTheDocument();
+    expect(screen.getByLabelText('Personen er død')).toBeInTheDocument();
   });
 
   it('skal vise etikett for kode 6', () => {
@@ -96,7 +95,7 @@ describe('<VisittkortLabels>', () => {
       { messages },
     );
 
-    expect(screen.getByText('Personen har diskresjonsmerking kode 6')).toBeInTheDocument();
+    expect(screen.getByLabelText('Personen har diskresjonsmerking kode 6')).toBeInTheDocument();
   });
 
   it('skal vise etikett for kode 7', () => {
@@ -112,7 +111,7 @@ describe('<VisittkortLabels>', () => {
       />,
       { messages },
     );
-    expect(screen.getByText('Personen har diskresjonsmerking kode 7')).toBeInTheDocument();
+    expect(screen.getByLabelText('Personen har diskresjonsmerking kode 7')).toBeInTheDocument();
   });
 
   it('skal vise etikett for verge', () => {
@@ -125,7 +124,7 @@ describe('<VisittkortLabels>', () => {
       />,
       { messages },
     );
-    expect(screen.getByText('Personen har verge')).toBeInTheDocument();
+    expect(screen.getByLabelText('Personen har verge')).toBeInTheDocument();
   });
 
   it('skal vise etikett for søker under 18', () => {
@@ -138,6 +137,6 @@ describe('<VisittkortLabels>', () => {
       />,
       { messages },
     );
-    expect(screen.getByText('Personen er under 18 år')).toBeInTheDocument();
+    expect(screen.getByLabelText('Personen er under 18 år')).toBeInTheDocument();
   });
 });

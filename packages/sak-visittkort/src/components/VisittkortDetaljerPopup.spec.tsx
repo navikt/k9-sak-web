@@ -6,7 +6,6 @@ import region from '@fpsak-frontend/kodeverk/src/region';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/dom';
-import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 
@@ -71,10 +70,10 @@ describe('<VisittkortDetaljerPopup>', () => {
       />,
       { messages },
     );
-    expect(screen.getByText('Statsborgerskap')).toBeInTheDocument();
-    expect(screen.getByText('Personstatus')).toBeInTheDocument();
-    expect(screen.getByText('Sivilstand')).toBeInTheDocument();
-    expect(screen.getByText('Foretrukket språk')).toBeInTheDocument();
+    expect(screen.getByLabelText('Statsborgerskap')).toBeInTheDocument();
+    expect(screen.getByLabelText('Personstatus')).toBeInTheDocument();
+    expect(screen.getByLabelText('Sivilstand')).toBeInTheDocument();
+    expect(screen.getByLabelText('Foretrukket språk')).toBeInTheDocument();
   });
 
   it('skal vise adresser', () => {

@@ -66,12 +66,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
           {erUnntaksløype ? getUnntaksløypeText() : ''}
         </Heading>
         <div className={styles.dateContainer}>
-          <Image
-            className={styles.kalenderIcon}
-            src={calendarImg}
-            tooltip={<FormattedMessage id="BehandlingPickerItemContent.Kalender" />}
-            alignTooltipLeft
-          />
+          <Image className={styles.kalenderIcon} src={calendarImg} tooltip="Kalender" alignTooltipLeft />
           {søknadsperioder?.length > 0 && (
             <BodyShort size="small">{getFormattedSøknadserioder(søknadsperioder)}</BodyShort>
           )}
@@ -104,12 +99,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
         <BodyShort size="small">
           <FormattedMessage id="BehandlingPickerItemContent.Behandling.Aapne" />
         </BodyShort>
-        <Image
-          className={styles.åpneChevron}
-          src={chevronBlueRightImg}
-          tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.Aapne" />}
-          alignTooltipLeft
-        />
+        <Image className={styles.åpneChevron} src={chevronBlueRightImg} tooltip="Åpne" alignTooltipLeft />
       </div>
     </div>
   </Box>

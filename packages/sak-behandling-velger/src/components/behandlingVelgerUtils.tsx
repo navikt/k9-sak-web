@@ -41,25 +41,11 @@ export const getStatusIcon = (behandlingsresultatTypeKode: string, className: st
   }
 
   if (behandlingsresultatTypeKode === behandlingResultatType.INNVILGET) {
-    return (
-      <Image
-        className={className}
-        src={innvilgetImg}
-        tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.Innvilget" />}
-        alignTooltipLeft
-      />
-    );
+    return <Image className={className} src={innvilgetImg} tooltip="Innvilget" alignTooltipLeft />;
   }
 
   if (behandlingsresultatTypeKode === behandlingResultatType.AVSLATT) {
-    return (
-      <Image
-        className={className}
-        src={avslaattImg}
-        tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.Avslaatt" />}
-        alignTooltipLeft
-      />
-    );
+    return <Image className={className} src={avslaattImg} tooltip="Avslått" alignTooltipLeft />;
   }
 
   return null;

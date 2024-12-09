@@ -297,7 +297,7 @@ const AktivitetTabell = ({
                         <Image
                           className={classNames(styles.starImage)}
                           src={stjerneImg}
-                          tooltip={<FormattedMessage id="Uttaksplan.GjeldendeBehandling" />}
+                          tooltip="Gjeldende behandling"
                         />
                       )}
                       {formatereLukketPeriode(periode)}
