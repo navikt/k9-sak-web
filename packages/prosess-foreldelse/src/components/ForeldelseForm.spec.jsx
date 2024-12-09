@@ -2,7 +2,6 @@ import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurd
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 
-import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import { ForeldelseForm } from './ForeldelseForm';
 
@@ -87,7 +86,7 @@ describe('<ForeldelseForm>', () => {
       { messages },
     );
 
-    expect(screen.getAllByText('Forrige periode').length).toBeGreaterThan(0);
+    expect(screen.getAllByLabelText('Forrige periode').length).toBeGreaterThan(0);
     expect(screen.queryByText('Foreldelsesloven §§ 2 og 3')).not.toBeInTheDocument();
   });
 
