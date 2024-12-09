@@ -2,7 +2,7 @@ import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import Period from './Period';
 import sortPeriodsByFomDate from './sortPeriodsByFomDate';
 
-const checkIfPeriodsAreEdgeToEdge = (period, otherPeriod) => {
+const checkIfPeriodsAreEdgeToEdge = (period: Period, otherPeriod: Period) => {
   const dayAfterPeriod = initializeDate(period.tom).add(1, 'day');
   const startOfNextPeriod = initializeDate(otherPeriod.fom);
   return dayAfterPeriod.isSame(startOfNextPeriod);

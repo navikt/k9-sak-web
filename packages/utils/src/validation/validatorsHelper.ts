@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 
 export const isoDateRegex = /(19|20)\d{2}-(0?[1-9]|1[0-2])-(0?[1-9]|1\d|2\d|3[01])$/;
 export const numberRegex = /^\d+([,.]\d+)?$/;
@@ -11,12 +11,13 @@ export const nameRegex = /^[0-9a-zA-ZæøåÆØÅAaÁáBbCcČčDdĐđEeFfGgHhIiJ
 export const nameGyldigRegex =
   /[0-9a-zA-ZæøåÆØÅAaÁáBbCcČčDdĐđEeFfGgHhIiJjKkLlMmNnŊŋOoPpRrSsŠšTtŦŧUuVvZzŽžéôèÉöüäÖÜÄ .'-]*/g;
 
-export const isEmpty = text => text === null || text === undefined || text.toString().trim().length === 0;
+export const isEmpty = (text: string | number | Moment | null | undefined) =>
+  text === null || text === undefined || text.toString().trim().length === 0;
 
 export const yesterday = () => moment().subtract(1, 'days').startOf('day');
 export const tomorrow = () => moment().add(1, 'days').startOf('day');
 
-export const dateRangesAreSequential = ranges => {
+export const dateRangesAreSequential = (ranges: Array<string[]>) => {
   if (Array.isArray(ranges)) {
     const isBeforeTheNextDate = (element, index, array) => {
       const current = moment(element).startOf('day');

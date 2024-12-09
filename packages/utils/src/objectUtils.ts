@@ -1,18 +1,18 @@
-export const isEqual = (obj1, obj2) => JSON.stringify(obj1) === JSON.stringify(obj2);
+export const isEqual = (obj1: object, obj2: object) => JSON.stringify(obj1) === JSON.stringify(obj2);
 
-export const omit = (object, ...keysToOmit) =>
+export const omit = (object: object, ...keysToOmit: string[]) =>
   Object.keys(object)
     .filter(key => !keysToOmit.includes(key))
     .map(key => ({ [key]: object[key] }))
     .reduce((a, b) => Object.assign(a, b), {});
 
-const isNullOrUndefined = obj => obj === null || typeof obj === 'undefined';
-const isNotNullAndObject = obj => obj !== null && typeof obj === 'object' && obj.constructor;
+const isNullOrUndefined = (value: unknown): boolean => value === null || value === undefined;
+const isNotNullAndObject = (value: unknown): value is object => value !== null && typeof value === 'object';
 
-const redefineIfUndefined = (obj, otherObjOfType) => {
+const redefineIfUndefined = <T>(obj: T, otherObjOfType: T): T | null => {
   if (isNullOrUndefined(obj) && isNotNullAndObject(otherObjOfType)) {
     try {
-      return new otherObjOfType.constructor();
+      return new (otherObjOfType.constructor as { new (): T })();
     } catch {
       return null;
     }
@@ -20,7 +20,7 @@ const redefineIfUndefined = (obj, otherObjOfType) => {
   return obj;
 };
 
-export const diff = (a, b) => {
+export const diff = (a: unknown, b: unknown) => {
   const thing1 = redefineIfUndefined(a, b);
   const thing2 = redefineIfUndefined(b, a);
   if (typeof thing1 !== typeof thing2) {

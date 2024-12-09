@@ -1,9 +1,9 @@
-export const formatCurrencyWithKr = value => {
+export const formatCurrencyWithKr = (value: string | number) => {
   const formattedValue = Number(value).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
   return `${formattedValue} kr`;
 };
 
-export const formatCurrencyNoKr = value => {
+export const formatCurrencyNoKr = (value: string | number) => {
   if (value === null || value === undefined) {
     return undefined;
   }
@@ -12,7 +12,7 @@ export const formatCurrencyNoKr = value => {
   if (Number.isNaN(newVal)) {
     return undefined;
   }
-  return Number(Math.round(newVal)).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
+  return Number(Math.round(+newVal)).toLocaleString('nb-NO').replace(/,|\s/g, ' ');
 };
 
 export const removeSpacesFromNumber = (input: number | string): number => {
@@ -20,10 +20,10 @@ export const removeSpacesFromNumber = (input: number | string): number => {
     return input as number;
   }
   const parsedValue = parseInt((input as string).replace(/\s/g, ''), 10);
-  return Number.isNaN(parsedValue) ? input as number : parsedValue;
+  return Number.isNaN(parsedValue) ? (input as number) : parsedValue;
 };
 
-export const parseCurrencyInput = input => {
+export const parseCurrencyInput = (input: number | string) => {
   const inputNoSpace = input.toString().replace(/\s/g, '');
   const parsedValue = parseInt(inputNoSpace, 10);
   return Number.isNaN(parsedValue) ? '' : formatCurrencyNoKr(parsedValue);
