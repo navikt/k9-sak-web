@@ -3065,7 +3065,7 @@ __metadata:
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
-    css-tree: 3.0.1
+    css-tree: 3.1.0
     date-fns: 4.1.0
     editorjs-html: 3.4.3
     formik: 2.4.6
@@ -3155,7 +3155,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.62.2
+    "@tanstack/react-query": ^5.62.3
     react: 18.3.1
     react-intl: 7.0.1
   languageName: unknown
@@ -3404,7 +3404,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@tanstack/react-query": ^5.62.2
+    "@tanstack/react-query": ^5.62.3
     react: 18.3.1
     react-intl: 7.0.1
   languageName: unknown
@@ -4294,7 +4294,7 @@ __metadata:
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
     dayjs: 1.11.13
-    msw: 2.6.7
+    msw: 2.6.8
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
@@ -4327,12 +4327,12 @@ __metadata:
     "@navikt/ds-react": 7.6.0
     "@navikt/ft-plattform-komponenter": 5.1.5
     "@popperjs/core": 2.11.8
-    "@tanstack/react-query": ^5.62.2
+    "@tanstack/react-query": ^5.62.3
     axios: 1.7.9
     classnames: 2.5.1
     cors: ^2.8.5
     dayjs: 1.11.13
-    msw: 2.6.7
+    msw: 2.6.8
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
@@ -4353,7 +4353,7 @@ __metadata:
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
     dayjs: 1.11.13
-    msw: 2.6.7
+    msw: 2.6.8
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
@@ -4377,7 +4377,7 @@ __metadata:
     "@popperjs/core": 2.11.8
     classnames: 2.5.1
     dayjs: 1.11.13
-    msw: 2.6.7
+    msw: 2.6.8
     object-hash: 3.0.0
     react: 18.3.1
     react-collapse: 5.1.1
@@ -4450,7 +4450,7 @@ __metadata:
     "@k9-sak-web/lib": 1.0.0
     "@navikt/ft-form-validators": 2.5.6
     "@navikt/ft-utils": 2.5.3
-    "@tanstack/react-query": ^5.62.2
+    "@tanstack/react-query": ^5.62.3
     "@types/object-hash": ^3.0.6
     axios: 1.7.9
     object-hash: ^3.0.0
@@ -4774,7 +4774,7 @@ __metadata:
     "@navikt/ft-ui-komponenter": 2.6.4
     "@sentry/browser": 8.42.0
     "@sentry/react": ^8.42.0
-    "@tanstack/react-query": ^5.62.2
+    "@tanstack/react-query": ^5.62.3
     axios: 1.7.9
     classnames: 2.5.1
     history: 5.3.0
@@ -4801,7 +4801,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.62.2
+    "@tanstack/react-query": ^5.62.3
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
@@ -4857,7 +4857,7 @@ __metadata:
     "@navikt/ds-react": 7.6.0
     "@navikt/ft-form-hooks": 5.2.8
     "@navikt/ft-form-validators": 2.5.6
-    "@tanstack/react-query": ^5.62.2
+    "@tanstack/react-query": ^5.62.3
     date-fns: 4.1.0
     react: 18.3.1
     react-hook-form: 7.53.2
@@ -6681,21 +6681,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.62.2":
-  version: 5.62.2
-  resolution: "@tanstack/query-core@npm:5.62.2"
-  checksum: 1d15f007214c65c15360eadfe6ccefb8a2d780b85383b8ce7083950d8648efc95784e36d304792f1b738178b9fb0531e0d062c7f63d69f4577c1f1b9f7c15af7
+"@tanstack/query-core@npm:5.62.3":
+  version: 5.62.3
+  resolution: "@tanstack/query-core@npm:5.62.3"
+  checksum: 6105d00fb6d6a5ffcec86f7781990d805d9d50092f52ae2fa92a0fdbecd55cac757059a1f38cd107c0abbe9a2bd0ce3b8f2ce354fecb1b73a014dea374990305
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.62.2":
-  version: 5.62.2
-  resolution: "@tanstack/react-query@npm:5.62.2"
+"@tanstack/react-query@npm:^5.62.3":
+  version: 5.62.3
+  resolution: "@tanstack/react-query@npm:5.62.3"
   dependencies:
-    "@tanstack/query-core": 5.62.2
+    "@tanstack/query-core": 5.62.3
   peerDependencies:
     react: ^18 || ^19
-  checksum: 4735781dade3a55d0f2992b4f5c4c0e27d89788f2df37f57abeb45126aab54314638a040bae2bd39dda2aa4d27c96439b5df457890f1c0822ea74d290ffe2d9c
+  checksum: dc7ead76788924193bdd791c3a6fe0b85aff51252a1067b87f6a78ebab08d09476c5941773a970afb3700f79077406ce5de81fb7fb6a1131581afe0d92626601
   languageName: node
   linkType: hard
 
@@ -9123,7 +9123,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-tree@npm:3.0.1, css-tree@npm:^3.0.1":
+"css-tree@npm:3.1.0":
+  version: 3.1.0
+  resolution: "css-tree@npm:3.1.0"
+  dependencies:
+    mdn-data: 2.12.2
+    source-map-js: ^1.0.1
+  checksum: 6b8c713c22b7223c0e71179575c3bbf421a13a61641204645d6c3b560bdc4ffed8d676220bbcb83777e07b46a934ec3b1c629aa61d57422c196c8e2e7417ee1a
+  languageName: node
+  linkType: hard
+
+"css-tree@npm:^3.0.1":
   version: 3.0.1
   resolution: "css-tree@npm:3.0.1"
   dependencies:
@@ -13105,7 +13115,7 @@ __metadata:
     i18n-iso-countries: 7.13.0
     jsdom: 25.0.1
     lint-staged: 15.2.10
-    msw: 2.6.7
+    msw: 2.6.8
     msw-storybook-addon: ^2.0.4
     node-cache: 5.1.2
     postcss: ^8.4.49
@@ -13542,6 +13552,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mdn-data@npm:2.12.2":
+  version: 2.12.2
+  resolution: "mdn-data@npm:2.12.2"
+  checksum: 77f38c180292cfbbd41c06641a27940cc293c08f47faa98f80bf64f98bb1b2a804df371e864e31a1ea97bdf181c0b0f85a2d96d1a6261f43c427b32222f33f1f
+  languageName: node
+  linkType: hard
+
 "memoizerific@npm:^1.11.3":
   version: 1.11.3
   resolution: "memoizerific@npm:1.11.3"
@@ -13832,9 +13849,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw@npm:2.6.7":
-  version: 2.6.7
-  resolution: "msw@npm:2.6.7"
+"msw@npm:2.6.8":
+  version: 2.6.8
+  resolution: "msw@npm:2.6.8"
   dependencies:
     "@bundled-es-modules/cookie": ^2.0.1
     "@bundled-es-modules/statuses": ^1.0.1
@@ -13861,7 +13878,7 @@ __metadata:
       optional: true
   bin:
     msw: cli/index.js
-  checksum: 0aca4b1cf4939d6a6dae4901ddbf535f71e6d34d4594ceaf85f09ffaca44da0cb14ce5bb18350be720444330150f14ee9deeddeffa84d6a2dde777fcda17dfb0
+  checksum: 5847c78a19413647edfc215452479b389ecaca155581726ac63c82e61bc388f2dd69f4efce9f9b867fb18405a1d748ecaf6ceab00cca26e743673baa20015a79
   languageName: node
   linkType: hard
 
