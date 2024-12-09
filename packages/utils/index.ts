@@ -19,14 +19,12 @@ export { diff, isEqual, omit } from './src/objectUtils';
 export { buildPath, formatQueryString, parseQueryString } from './src/urlUtils';
 export {
   ariaCheck,
-  arrayMinLength,
   dateAfterOrEqual,
   dateAfterOrEqualToToday,
   dateAfterToday,
   dateBeforeOrEqual,
   dateBeforeOrEqualToToday,
   dateBeforeToday,
-  dateIsAfter,
   dateIsBefore,
   dateRangesNotOverlapping,
   dateRangesNotOverlappingCrossTypes,
@@ -40,18 +38,9 @@ export {
   hasValidOrgNumber,
   hasValidOrgNumberOrFodselsnr,
   hasValidPeriod,
-  hasValidPeriodIncludingOtherErrors,
   hasValidSaksnummerOrFodselsnummerFormat,
   hasValidText,
-  hasValidValue,
-  isArbeidsProsentVidUtsettelse100,
-  isDatesEqual,
-  isTrekkdagerMerEnnNullUtsettelse,
-  isUkerOgDagerVidNullUtbetalningsgrad,
-  isUtbetalingMerEnnNullUtsettelse,
-  isUtbetalingsgradMerSamitidigUttaksprosent,
   isWithinOpptjeningsperiode,
-  isutbetalingPlusArbeidsprosentMerEn100,
   maxLength,
   maxLengthOrFodselsnr,
   maxValue,
@@ -63,8 +52,6 @@ export {
   required,
   requiredIfCustomFunctionIsTrue,
   requiredIfNotPristine,
-  validPeriodeFomTom,
-  validateProsentandel,
 } from './src/validation/validators';
 
 export {
