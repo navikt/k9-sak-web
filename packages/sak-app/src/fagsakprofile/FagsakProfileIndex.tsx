@@ -9,7 +9,7 @@ import {
   Personopplysninger,
 } from '@k9-sak-web/types';
 import { Location } from 'history';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { Navigate, useLocation, useMatch } from 'react-router';
 import {
   createLocationForSkjermlenke,
@@ -59,9 +59,6 @@ export const FagsakProfileIndex = ({
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
 }: OwnProps) => {
-  const [showAll, setShowAll] = useState(!behandlingId);
-  const toggleShowAll = useCallback(() => setShowAll(!showAll), [showAll]);
-
   const getKodeverkFn = useGetKodeverkFn();
 
   const fagsakStatusMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
@@ -70,10 +67,6 @@ export const FagsakProfileIndex = ({
   const { data: behandlendeEnheter } = restApiHooks.useRestApi<BehandlendeEnheter>(K9sakApiKeys.BEHANDLENDE_ENHETER, {
     ytelseType: fagsak.sakstype.kode,
   });
-
-  useEffect(() => {
-    setShowAll(!behandlingId);
-  }, [behandlingId]);
 
   const match = useMatch('/fagsak/:saksnummer/');
   const shouldRedirectToBehandlinger = !!match;
@@ -126,8 +119,6 @@ export const FagsakProfileIndex = ({
               noExistingBehandlinger={alleBehandlinger.length === 0}
               behandlingId={behandlingId}
               getKodeverkFn={getKodeverkFn}
-              showAll={showAll}
-              toggleShowAll={toggleShowAll}
               fagsak={fagsak}
               createLocationForSkjermlenke={createLocationForSkjermlenke}
             />

@@ -81,8 +81,6 @@ describe('<BehandlingPicker>', () => {
           getKodeverkFn={vi.fn()}
           createLocationForSkjermlenke={() => locationMock}
           fagsak={fagsak}
-          showAll={false}
-          toggleShowAll={vi.fn()}
         />
       </MemoryRouter>,
       {
@@ -121,8 +119,6 @@ describe('<BehandlingPicker>', () => {
           getKodeverkFn={vi.fn()}
           createLocationForSkjermlenke={() => locationMock}
           fagsak={fagsak}
-          showAll={false}
-          toggleShowAll={vi.fn()}
         />
       </MemoryRouter>,
       {
@@ -212,8 +208,6 @@ describe('<BehandlingPicker>', () => {
           behandlingId={1}
           createLocationForSkjermlenke={() => locationMock}
           fagsak={fagsak}
-          showAll={false}
-          toggleShowAll={vi.fn()}
         />
       </MemoryRouter>,
       {
