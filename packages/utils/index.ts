@@ -85,3 +85,4 @@ export { default as Period } from './src/period-utils/Period';
 export { default as prettifyPeriodList } from './src/period-utils/prettifyPeriodList';
 export { default as sortPeriodsByFomDate } from './src/period-utils/sortPeriodsByFomDate';
 export { joinNonNullStrings, safeJSONParse } from './src/stringUtils';
+export * as httpUtils from './src/http-utils/axiosHttpUtils';
