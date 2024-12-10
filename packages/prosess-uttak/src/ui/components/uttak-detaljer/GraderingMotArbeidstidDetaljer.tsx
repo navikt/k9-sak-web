@@ -15,6 +15,15 @@ interface ownProps {
   søkersTapteArbeidstid: number;
 }
 
+const beregnFravær = (normalArbeidstid: number, faktiskArbeidstid: number) => {
+  const fravær = Math.max(normalArbeidstid - faktiskArbeidstid, 0);
+  if (fravær === 0) {
+    return 0;
+  }
+
+  return ((fravær / normalArbeidstid) * 100).toFixed(2);
+};
+
 const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
   alleArbeidsforhold,
   utbetalingsgrader,
@@ -33,10 +42,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
           const { normalArbeidstid, faktiskArbeidstid, arbeidsforhold } = utbetalingsgradItem;
           const beregnetNormalArbeidstid = beregnDagerTimer(normalArbeidstid);
           const beregnetFaktiskArbeidstid = beregnDagerTimer(faktiskArbeidstid);
-          const prosentFravær =
-            Math.round(
-              (Math.max(beregnetNormalArbeidstid - beregnetFaktiskArbeidstid, 0) / beregnetNormalArbeidstid) * 100,
-            ) || 0;
+          const fraværsprosent = beregnFravær(beregnetNormalArbeidstid, beregnetFaktiskArbeidstid);
           const faktiskOverstigerNormal = beregnetNormalArbeidstid < beregnetFaktiskArbeidstid;
           const arbeidstype = arbeidstypeTilVisning[arbeidsforhold?.type];
           const erNyInntekt = utbetalingsgradItem?.tilkommet;
@@ -72,7 +78,9 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
                   )}
                 </HStack>
               </BodyShort>
-              <BodyShort className="mt-1" size="small">= {prosentFravær} % fravær </BodyShort>
+              <BodyShort className="mt-1" size="small">
+                = {fraværsprosent} % fravær{' '}
+              </BodyShort>
             </Box>
           );
         })}

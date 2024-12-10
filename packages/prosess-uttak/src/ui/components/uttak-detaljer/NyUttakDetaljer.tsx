@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import * as React from 'react';
 
-import { Box, Heading, HelpText, HGrid, HStack, Tag } from '@navikt/ds-react';
+import { Alert, Box, Heading, HelpText, HGrid, HStack, Tag } from '@navikt/ds-react';
 import { BriefcaseClockIcon, CheckmarkIcon, HandHeartIcon, SackKronerIcon } from '@navikt/aksel-icons';
 import { ContentWithTooltip, GreenCheckIcon, OnePersonIconBlue } from '@navikt/ft-plattform-komponenter';
 import BarnetsDødsfallÅrsakerMedTekst from '../../../constants/BarnetsDødsfallÅrsakerMedTekst';
@@ -92,10 +92,10 @@ const getSøkerBerOmMaksimalt = (søkerBerOmMaksimalt: number, årsaker: Årsake
 
 interface UttakDetaljerProps {
   uttak: UttaksperiodeMedInntektsgradering;
-  // inntektsgradering: any; // FIXME legg til riktig type
+  manueltOverstyrt: boolean;
 }
 
-const NyUttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
+const NyUttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.Element => {
   const { arbeidsforhold, erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
   const {
     utbetalingsgrader,
@@ -116,9 +116,11 @@ const NyUttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
    * henholdsvis GRADERT_MOT_TILSYN og AVKORTET_MOT_INNTEKT
    * AVKORTET_MOT_INNTEKT er årsaken som definerer om det er Gradert mot arbeidstid.
    */
-  const shouldHighlightInntekt = !!inntektsgradering;
-  const shouldHighlightTilsyn = !shouldHighlightInntekt && shouldHighlight(Årsaker.GRADERT_MOT_TILSYN, årsaker);
-  const shouldHighlightArbeidstid = !shouldHighlightInntekt && shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT, årsaker);
+  const shouldHighlightInntekt = !manueltOverstyrt && !!inntektsgradering;
+  const shouldHighlightTilsyn =
+    !manueltOverstyrt && !shouldHighlightInntekt && shouldHighlight(Årsaker.GRADERT_MOT_TILSYN, årsaker);
+  const shouldHighlightArbeidstid =
+    !manueltOverstyrt && !shouldHighlightInntekt && shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT, årsaker);
 
   return (
     <>
@@ -128,6 +130,12 @@ const NyUttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
       <div className={styles.uttakDetaljer__oppsummering}>
         {søkerBerOmMaksimalt && getSøkerBerOmMaksimalt(søkerBerOmMaksimalt, årsaker)}
       </div>
+
+      {manueltOverstyrt && (
+        <Alert variant="info" size="small" className="mx-4">
+          Uttaksgrad og/eller utbetalingsgrad er manuelt overstyrt av saksbehandler.
+        </Alert>
+      )}
 
       <HGrid gap="8" columns={3} align="start" className={styles.uttakDetaljer}>
         {graderingMotTilsyn && !erFagytelsetypeLivetsSluttfase && (

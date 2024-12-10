@@ -132,7 +132,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
               {harOppfyltAlleInngangsvilkår ? (
                 <>
                   {featureToggles.BRUK_INNTEKTSGRADERING_I_UTTAK ? (
-                    <NyUttakDetaljer uttak={uttak} />
+                    <NyUttakDetaljer uttak={uttak} manueltOverstyrt={manueltOverstyrt} />
                   ) : (
                     <GammelUttakDetaljer uttak={uttak} />
                   )}
