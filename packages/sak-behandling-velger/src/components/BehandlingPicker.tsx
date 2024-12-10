@@ -121,6 +121,7 @@ interface OwnProps {
   behandlingId?: number;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
   sakstypeKode: string;
+  hentSøknadsperioder: boolean;
 }
 
 /**
@@ -136,6 +137,7 @@ const BehandlingPicker = ({
   getKodeverkFn,
   createLocationForSkjermlenke,
   sakstypeKode,
+  hentSøknadsperioder,
 }: OwnProps) => {
   const firstRender = useRef(true);
   const navigate = useNavigate();
@@ -197,6 +199,7 @@ const BehandlingPicker = ({
       queryKey: ['behandlingId', behandling.id],
       queryFn: () => getBehandlingPerioderÅrsaker(behandling),
       staleTime: 3 * 60 * 1000,
+      enabled: hentSøknadsperioder,
     })),
   });
 
