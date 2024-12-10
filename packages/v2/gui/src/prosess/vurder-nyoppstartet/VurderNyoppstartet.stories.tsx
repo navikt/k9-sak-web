@@ -14,6 +14,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     submitCallback: fn(),
+    harApneAksjonspunkter: true,
+    aksjonspunkter: [],
   },
   play: async ({ canvas, args, step }) => {
     step('Skal sende inn nyoppstartet dato', async () => {
