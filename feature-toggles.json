@@ -102,5 +102,9 @@
   {
     "key": "BRUK_INNTEKTSGRADERING_I_UTTAK",
     "value": "${BRUK_INNTEKTSGRADERING_I_UTTAK}"
+  },
+  {
+    "key": "OMS_NYOPPSTARTET",
+    "value": "${OMS_NYOPPSTARTET}"
   }
 ]
