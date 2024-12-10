@@ -46,7 +46,7 @@ const UngBeregning = ({ api, behandling }: Props) => {
   }
 
   return (
-    <div className="max-w-[768px]">
+    <div className="max-w-[868px]">
       {satserSuccess && (
         <div>
           <Heading size="small" level="2">
@@ -63,15 +63,25 @@ const UngBeregning = ({ api, behandling }: Props) => {
                 <Table.HeaderCell scope="col" align="right">
                   Dagsats
                 </Table.HeaderCell>
+                <Table.HeaderCell scope="col" align="right">
+                  Antall barn
+                </Table.HeaderCell>
+                <Table.HeaderCell scope="col" align="right">
+                  Dagsats barnetillegg
+                </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {satser.map(({ fom, tom, satsType, dagsats, grunnbeløp }) => (
+              {satser.map(({ fom, tom, satsType, dagsats, grunnbeløp, antallBarn, dagsatsBarnetillegg }) => (
                 <Table.Row key={`${fom}_${tom}`}>
                   <Table.DataCell>{fom && tom && formatPeriod(fom, tom)}</Table.DataCell>
                   <Table.DataCell>{satsType}</Table.DataCell>
                   <Table.DataCell align="right">{grunnbeløp && formatCurrencyWithKr(grunnbeløp)}</Table.DataCell>
                   <Table.DataCell align="right">{dagsats && formatCurrencyNoKr(dagsats)} kr</Table.DataCell>
+                  <Table.DataCell align="right">{antallBarn}</Table.DataCell>
+                  <Table.DataCell align="right">
+                    {dagsatsBarnetillegg ? `${formatCurrencyNoKr(dagsatsBarnetillegg)} kr` : ''}
+                  </Table.DataCell>
                 </Table.Row>
               ))}
             </Table.Body>
