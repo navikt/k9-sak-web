@@ -117,3 +117,5 @@ spec:
       value: "true"
     - name: BRUK_INNTEKTSGRADERING_I_UTTAK
       value: "true"
+    - name: OMS_NYOPPSTARTET
+      value: "true"

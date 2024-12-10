@@ -2,6 +2,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { VurderNyoppstartet } from '@k9-sak-web/gui/prosess/vurder-nyoppstartet/VurderNyoppstartet.js';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 
 class VurderNyoppstartetFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.NYOPPSTARTET;
@@ -12,9 +13,18 @@ class VurderNyoppstartetFaktaPanelDef extends FaktaPanelDef {
 
   getEndepunkter = () => [];
 
-  getKomponent = props => <VurderNyoppstartet {...props} />;
+  getKomponent = props => {
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps, false);
+    return <VurderNyoppstartet {...props} {...deepCopyProps} />;
+  };
 
-  getOverstyrVisningAvKomponent = () => true;
+  getOverstyrVisningAvKomponent = (_, featureToggles) => {
+    if (featureToggles['OMS_NYOPPSTARTET']) {
+      return true;
+    }
+    return false;
+  };
 }
 
 export default VurderNyoppstartetFaktaPanelDef;

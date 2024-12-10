@@ -1,3 +1,4 @@
+import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Alert, Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import { Datepicker, Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
@@ -12,18 +13,26 @@ interface FormValues {
 
 interface SubmitValues extends FormValues {
   kode: string;
+  fortsettBehandling: boolean;
 }
 
 interface VurderNyoppstartetProps {
   submitCallback: (data: SubmitValues[]) => void;
   harApneAksjonspunkter: boolean;
   readOnly: boolean;
+  aksjonspunkter: AksjonspunktDto[];
 }
 
-export const VurderNyoppstartet = ({ submitCallback, harApneAksjonspunkter, readOnly }: VurderNyoppstartetProps) => {
+export const VurderNyoppstartet = ({
+  submitCallback,
+  harApneAksjonspunkter,
+  readOnly,
+  aksjonspunkter,
+}: VurderNyoppstartetProps) => {
+  const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktCodes.VURDER_NYOPPSTARTET);
   const formMethods = useForm<FormValues>({
     defaultValues: {
-      begrunnelse: '',
+      begrunnelse: aksjonspunkt?.begrunnelse || '',
       erNyoppstartet: undefined,
       fom: '',
     },

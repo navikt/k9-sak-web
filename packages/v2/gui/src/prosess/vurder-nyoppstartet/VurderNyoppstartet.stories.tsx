@@ -27,6 +27,7 @@ export const Default: Story = {
         erNyoppstartet: true,
         kode: '9016',
         nyoppstartetFom: '2023-01-01',
+        fortsettBehandling: true,
       });
     });
   },
