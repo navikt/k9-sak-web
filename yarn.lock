@@ -2754,7 +2754,7 @@ __metadata:
     formik: 2.4.6
     moment: 2.30.1
     react: 18.3.1
-    react-hook-form: 7.53.2
+    react-hook-form: 7.54.0
     react-intl: 7.0.1
     react-redux: 9.2.0
     redux: 5.0.1
@@ -4275,7 +4275,7 @@ __metadata:
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
-    react-hook-form: 7.53.2
+    react-hook-form: 7.54.0
     react-popper: 2.3.0
     vite: ^6.0.3
     vite-plugin-node-polyfills: ^0.22.0
@@ -4298,7 +4298,7 @@ __metadata:
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
-    react-hook-form: 7.53.2
+    react-hook-form: 7.54.0
     react-popper: 2.3.0
     vite: ^6.0.3
     vite-plugin-node-polyfills: ^0.22.0
@@ -4336,7 +4336,7 @@ __metadata:
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
-    react-hook-form: 7.53.2
+    react-hook-form: 7.54.0
     react-outside-click-handler: 1.3.0
     react-popper: 2.3.0
     vite: ^6.0.3
@@ -4357,7 +4357,7 @@ __metadata:
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
-    react-hook-form: 7.53.2
+    react-hook-form: 7.54.0
     react-popper: 2.3.0
     tailwindcss: ^3.4.16
     vite: ^6.0.3
@@ -4382,7 +4382,7 @@ __metadata:
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
-    react-hook-form: 7.53.2
+    react-hook-form: 7.54.0
     react-intl: 7.0.1
     react-popper: 2.3.0
     vite: ^6.0.3
@@ -4545,7 +4545,7 @@ __metadata:
     lodash: 4.17.21
     react: 18.3.1
     react-dom: 18.3.1
-    react-hook-form: 7.53.2
+    react-hook-form: 7.54.0
     vite: ^6.0.3
     vite-plugin-node-polyfills: ^0.22.0
     vitest-axe: ^0.1.0
@@ -4602,7 +4602,7 @@ __metadata:
     react: 18.3.1
     react-collapse: 5.1.1
     react-dom: 18.3.1
-    react-hook-form: 7.53.2
+    react-hook-form: 7.54.0
     react-popper: 2.3.0
     vite: ^6.0.3
     vite-plugin-node-polyfills: ^0.22.0
@@ -4621,7 +4621,7 @@ __metadata:
     "@navikt/ft-form-hooks": 5.2.8
     "@navikt/ft-form-validators": 2.5.6
     react: 18.3.1
-    react-hook-form: 7.53.2
+    react-hook-form: 7.54.0
     react-intl: 7.0.1
   languageName: unknown
   linkType: soft
@@ -4645,7 +4645,7 @@ __metadata:
     dayjs: 1.11.13
     object-hash: 3.0.0
     react: 18.3.1
-    react-hook-form: 7.53.2
+    react-hook-form: 7.54.0
     react-intl: 7.0.1
   languageName: unknown
   linkType: soft
@@ -4860,7 +4860,7 @@ __metadata:
     "@tanstack/react-query": ^5.62.7
     date-fns: 4.1.0
     react: 18.3.1
-    react-hook-form: 7.53.2
+    react-hook-form: 7.54.0
     react-intl: 7.0.1
   languageName: unknown
   linkType: soft
@@ -15309,6 +15309,15 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
   checksum: 37e2dd0e79cd8d3376a7a2cb72ad7b59f0594be499daa898d2c6bec896fc30c2f86e62e8b41bc9d325f77220bd8d76cb31e917f77f1c92ad5740adb1a4cc69e2
+  languageName: node
+  linkType: hard
+
+"react-hook-form@npm:7.54.0":
+  version: 7.54.0
+  resolution: "react-hook-form@npm:7.54.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: 7101c7fc3096610f65dec29e52cf007b8bc51aa3d1551c08743d1aff1d87b915c5a35224b83f0ef45d2d511b17549b15e569794b3b547c2883d4f29fe4ffe0e4
   languageName: node
   linkType: hard
 
