@@ -2570,7 +2570,7 @@ __metadata:
     moment: 2.30.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -2620,7 +2620,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -2657,7 +2657,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -2677,7 +2677,7 @@ __metadata:
     moment: 2.30.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
   languageName: unknown
@@ -2699,7 +2699,7 @@ __metadata:
     react: 18.3.1
     react-dom: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -2736,7 +2736,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     reselect: 5.1.1
   languageName: unknown
@@ -2756,7 +2756,7 @@ __metadata:
     react: 18.3.1
     react-hook-form: 7.53.2
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -2794,7 +2794,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -2814,7 +2814,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -2836,7 +2836,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -2859,7 +2859,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -2884,7 +2884,7 @@ __metadata:
     react: 18.3.1
     react-dom: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
   languageName: unknown
@@ -2906,7 +2906,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -2928,7 +2928,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -2952,7 +2952,7 @@ __metadata:
     react: 18.3.1
     react-dom: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -2976,7 +2976,7 @@ __metadata:
     react: 18.3.1
     react-dom: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -2999,7 +2999,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -3020,7 +3020,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux-form: 8.3.10
     reselect: 5.1.1
   languageName: unknown
@@ -3041,7 +3041,7 @@ __metadata:
     classnames: 2.5.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux-form: 8.3.10
     reselect: 5.1.1
   languageName: unknown
@@ -3073,7 +3073,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     reselect: 5.1.1
   languageName: unknown
@@ -3098,7 +3098,7 @@ __metadata:
     react: 18.3.1
     react-dom: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -3123,7 +3123,7 @@ __metadata:
     moment: 2.30.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -3201,7 +3201,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
   languageName: unknown
@@ -3221,7 +3221,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -3241,7 +3241,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -3256,7 +3256,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     react-router: 7.0.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -3310,7 +3310,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux-form: 8.3.10
   languageName: unknown
   linkType: soft
@@ -3332,7 +3332,7 @@ __metadata:
     object-hash: 3.0.0
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     react-router: 7.0.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -3379,7 +3379,7 @@ __metadata:
     moment: 2.30.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux-form: 8.3.10
   languageName: unknown
   linkType: soft
@@ -3937,7 +3937,7 @@ __metadata:
     classnames: 2.5.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux-form: 8.3.10
   languageName: unknown
   linkType: soft
@@ -4194,7 +4194,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -4236,7 +4236,7 @@ __metadata:
     moment: 2.30.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux-form: 8.3.10
   languageName: unknown
   linkType: soft
@@ -4486,7 +4486,7 @@ __metadata:
     moment: 2.30.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
   languageName: unknown
@@ -4510,7 +4510,7 @@ __metadata:
     react: 18.3.1
     react-dom: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     react-router: 7.0.2
     redux-form: 8.3.10
   languageName: unknown
@@ -4529,7 +4529,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
   languageName: unknown
   linkType: soft
@@ -4567,7 +4567,7 @@ __metadata:
     prop-types: 15.8.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -4668,7 +4668,7 @@ __metadata:
     object-hash: 3.0.0
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux: 5.0.1
     redux-form: 8.3.10
     reselect: 5.1.1
@@ -4783,7 +4783,7 @@ __metadata:
     react: 18.3.1
     react-dom: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     react-router: 7.0.2
     redux: 5.0.1
     redux-form: 8.3.10
@@ -4826,7 +4826,7 @@ __metadata:
     classnames: 2.5.1
     react: 18.3.1
     react-intl: 7.0.1
-    react-redux: 9.1.2
+    react-redux: 9.2.0
     redux-form: 8.3.10
     reselect: 5.1.1
   languageName: unknown
@@ -7028,10 +7028,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/use-sync-external-store@npm:^0.0.3":
-  version: 0.0.3
-  resolution: "@types/use-sync-external-store@npm:0.0.3"
-  checksum: 161ddb8eec5dbe7279ac971531217e9af6b99f7783213566d2b502e2e2378ea19cf5e5ea4595039d730aa79d3d35c6567d48599f69773a02ffcff1776ec2a44e
+"@types/use-sync-external-store@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "@types/use-sync-external-store@npm:0.0.6"
+  checksum: a95ce330668501ad9b1c5b7f2b14872ad201e552a0e567787b8f1588b22c7040c7c3d80f142cbb9f92d13c4ea41c46af57a20f2af4edf27f224d352abcfe4049
   languageName: node
   linkType: hard
 
@@ -15406,22 +15406,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-redux@npm:9.1.2":
-  version: 9.1.2
-  resolution: "react-redux@npm:9.1.2"
+"react-redux@npm:9.2.0":
+  version: 9.2.0
+  resolution: "react-redux@npm:9.2.0"
   dependencies:
-    "@types/use-sync-external-store": ^0.0.3
-    use-sync-external-store: ^1.0.0
+    "@types/use-sync-external-store": ^0.0.6
+    use-sync-external-store: ^1.4.0
   peerDependencies:
-    "@types/react": ^18.2.25
-    react: ^18.0
+    "@types/react": ^18.2.25 || ^19
+    react: ^18.0 || ^19
     redux: ^5.0.0
   peerDependenciesMeta:
     "@types/react":
       optional: true
     redux:
       optional: true
-  checksum: 1ee9cf41f29f68267320b4fc3bcf6a76a3825c82441612582678ddd827a2b60834f687d2a8b755c905885dfce476a1eb41af42b36f4dd71f8ee9991296a1e515
+  checksum: 96dfe2929561d7c98d4443722738e4595f08758bde27b7bc20cd98ba9b0dfe9b81b9fa17b6888be94a0c1d2d1305397ae493a8219698536d011a941589eb82bd
   languageName: node
   linkType: hard
 
@@ -17624,12 +17624,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.0.0":
-  version: 1.2.2
-  resolution: "use-sync-external-store@npm:1.2.2"
+"use-sync-external-store@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "use-sync-external-store@npm:1.4.0"
   peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: fe07c071c4da3645f112c38c0e57beb479a8838616ff4e92598256ecce527f2888c08febc7f9b2f0ce2f0e18540ba3cde41eb2035e4fafcb4f52955037098a81
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: dc3843a1b59ac8bd01417bd79498d4c688d5df8bf4801be50008ef4bfaacb349058c0b1605b5b43c828e0a2d62722d7e861573b3f31cea77a7f23e8b0fc2f7e3
   languageName: node
   linkType: hard
 
