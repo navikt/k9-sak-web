@@ -1,0 +1,53 @@
+import { Alert, Heading, Table } from '@navikt/ds-react';
+
+type Barn = {
+  navn: string;
+  fødselsdato: string;
+  dødsdato?: string;
+};
+
+interface Props {
+  barn: Barn[];
+}
+
+const UngBarnFakta = ({ barn }: Props) => {
+  return (
+    <>
+      <Heading level="1" size="medium">
+        Barn
+      </Heading>
+      <div className="flex mt-4">
+        {barn.length === 0 ? (
+          <Alert variant="info" size="small">
+            Det er ingen barn registrert på søker
+          </Alert>
+        ) : (
+          <div>
+            <Table>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell scope="col">Navn</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">Fødselsdato</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">Dødsdato</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {barn.map(({ navn, fødselsdato, dødsdato }) => {
+                  return (
+                    <Table.Row key={navn}>
+                      <Table.HeaderCell scope="row">{navn}</Table.HeaderCell>
+                      <Table.DataCell>{fødselsdato}</Table.DataCell>
+                      <Table.DataCell>{dødsdato}</Table.DataCell>
+                    </Table.Row>
+                  );
+                })}
+              </Table.Body>
+            </Table>
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default UngBarnFakta;

@@ -7,8 +7,15 @@ import {
   FeatureToggles,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
+import { useState } from 'react';
 import FetchedData from '../types/FetchedData';
+import UngdomsytelseFakta from './UngdomsytelseFakta';
 import UngdomsytelseProsess from './UngdomsytelseProsess';
+
+interface FaktaPanelInfo {
+  urlCode: string;
+  textCode: string;
+}
 
 interface OwnProps {
   fetchedData: FetchedData;
@@ -47,6 +54,7 @@ const UngdomsytelsePaneler = ({
   arbeidsgiverOpplysningerPerId,
   featureToggles,
 }: OwnProps) => {
+  const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
   return (
     <>
       <BehandlingPaVent
@@ -69,6 +77,23 @@ const UngdomsytelsePaneler = ({
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         opneSokeside={opneSokeside}
         hasFetchError={hasFetchError}
+        setBehandling={setBehandling}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        featureToggles={featureToggles}
+        apentFaktaPanelInfo={apentFaktaPanelInfo}
+      />
+      <UngdomsytelseFakta
+        behandling={behandling}
+        data={fetchedData}
+        fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
+        alleKodeverk={alleKodeverk}
+        rettigheter={rettigheter}
+        hasFetchError={hasFetchError}
+        valgtFaktaSteg={valgtFaktaSteg}
+        valgtProsessSteg={valgtProsessSteg}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+        setApentFaktaPanel={setApentFaktaPanel}
         setBehandling={setBehandling}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={featureToggles}
