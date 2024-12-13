@@ -1,15 +1,12 @@
 import { screen } from '@testing-library/react';
-import React from 'react';
 import { IntlProvider } from 'react-intl';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
@@ -17,20 +14,8 @@ import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Be
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
 
-const lagRisikoklassifisering = kode => ({
-  kontrollresultat: {
-    kode,
-    kodeverk: 'Kontrollresultat',
-  },
-  medlFaresignaler: undefined,
-  iayFaresignaler: undefined,
-  status: {
-    kode: aksjonspunktStatus.UTFORT,
-  },
-});
-
-vi.mock('react-router-dom', async () => {
-  const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
+vi.mock('react-router', async () => {
+  const actual = (await vi.importActual('react-router')) as Record<string, unknown>;
   return {
     ...actual,
     useRouteMatch: () => ({ isExact: false }),
@@ -168,7 +153,6 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
     requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, {});
     requestApi.mock(K9sakApiKeys.KODEVERK_KLAGE, {});
-    requestApi.mock(K9sakApiKeys.RISIKO_AKSJONSPUNKT, lagRisikoklassifisering(kontrollresultatKode.UDEFINERT));
     requestApi.mock(K9sakApiKeys.KONTROLLRESULTAT, {});
     requestApi.mock(K9sakApiKeys.BEHANDLENDE_ENHETER, {});
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, {});
@@ -204,7 +188,6 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, alleKodeverk);
     requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, {});
     requestApi.mock(K9sakApiKeys.KODEVERK_KLAGE, {});
-    requestApi.mock(K9sakApiKeys.RISIKO_AKSJONSPUNKT, lagRisikoklassifisering(kontrollresultatKode.UDEFINERT));
     requestApi.mock(K9sakApiKeys.KONTROLLRESULTAT, {});
     requestApi.mock(K9sakApiKeys.BEHANDLENDE_ENHETER, {});
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, {});

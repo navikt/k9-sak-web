@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 import { BigError } from '@k9-sak-web/gui/sak/feilmeldinger/BigError.js';
 

@@ -1,17 +1,16 @@
-import React from 'react';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
+import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import { BehandlingMenuIndex } from './BehandlingMenuIndex';
-import { requestApi, K9sakApiKeys } from '../data/k9sakApi';
 
 const navAnsatt = {
   brukernavn: 'Test',
@@ -59,8 +58,8 @@ const alleBehandlinger = [
   },
 ];
 
-vi.mock('react-router-dom', async () => {
-  const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
+vi.mock('react-router', async () => {
+  const actual = (await vi.importActual('react-router')) as Record<string, unknown>;
   return {
     ...actual,
     useHistory: () => ({

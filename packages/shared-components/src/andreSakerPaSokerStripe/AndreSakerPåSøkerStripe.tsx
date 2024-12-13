@@ -1,9 +1,11 @@
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { httpErrorHandler } from '@fpsak-frontend/utils';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { pathToFagsak } from '@k9-sak-web/sak-app/src/app/paths';
-import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { Fagsak } from '@k9-sak-web/types';
 import { Alert, Link } from '@navikt/ds-react';
-import React, { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import React from 'react';
 import styles from './andreSakerPåSøkerStripe.module.css';
 
 interface Props {
@@ -13,28 +15,23 @@ interface Props {
 }
 
 const AndreSakerPåSøkerStripe: React.FC<Props> = ({ søkerIdent, saksnummer, fagsakYtelseType }) => {
+  const { addErrorMessage } = useRestApiErrorDispatcher();
+
   const {
-    startRequest: searchFagsaker,
-    data: fagsaker = [],
-    state: sokeStatus,
+    data: fagsaker,
     error,
-  } = restApiHooks.useRestApiRunner<Fagsak[]>(K9sakApiKeys.MATCH_FAGSAK);
-  useEffect(() => {
-    let isMounted = true;
-
-    setTimeout(() => {
-      if (isMounted) {
-        searchFagsaker({
-          ytelseType: fagsakYtelseType,
-          bruker: søkerIdent,
-        });
-      }
-    }, 3 * 1000);
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+    isSuccess,
+  } = useQuery<Fagsak[]>({
+    queryKey: ['andreFagsaker', saksnummer],
+    queryFn: async ({ signal }) =>
+      axios
+        .post(`/k9/sak/api/fagsak/match`, { ytelseType: fagsakYtelseType, bruker: søkerIdent }, { signal })
+        .then(({ data }) => data)
+        .catch(error => {
+          httpErrorHandler(error?.response?.status, addErrorMessage, error?.response?.headers?.location);
+        }),
+    initialData: [],
+  });
 
   if (error) {
     return (
@@ -43,16 +40,16 @@ const AndreSakerPåSøkerStripe: React.FC<Props> = ({ søkerIdent, saksnummer, f
       </Alert>
     );
   }
-  const fagsakerPåSøker = fagsaker.filter(fagsak => fagsak.saksnummer !== saksnummer);
+  const andreFagsakerPåSøker = fagsaker.filter(fagsak => fagsak.saksnummer !== saksnummer);
 
-  if (sokeStatus !== RestApiState.SUCCESS || fagsakerPåSøker.length === 0) {
+  if (!isSuccess || andreFagsakerPåSøker.length === 0) {
     return null;
   }
 
   const getFagsakLenker = () =>
-    fagsakerPåSøker.map((fagsak, index) => {
-      const harMerEnnEnFagsak = fagsakerPåSøker.length > 1;
-      const fagsakErSisteILista = index === fagsakerPåSøker.length - 1;
+    andreFagsakerPåSøker.map((fagsak, index) => {
+      const harMerEnnEnFagsak = andreFagsakerPåSøker.length > 1;
+      const fagsakErSisteILista = index === andreFagsakerPåSøker.length - 1;
       return (
         <Link
           key={fagsak.saksnummer}

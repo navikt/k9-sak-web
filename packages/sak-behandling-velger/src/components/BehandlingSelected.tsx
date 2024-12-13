@@ -10,7 +10,7 @@ import classnames from 'classnames/bind';
 import { Location } from 'history';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router';
 import styles from './behandlingSelected.module.css';
 import { getFormattedSøknadserioder, getStatusIcon, getStatusText } from './behandlingVelgerUtils';
 
@@ -91,17 +91,17 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
       </Heading>
       <div className={styles.infoContainer}>
         <div>
-          <div className={styles.dateContainer}>
-            <Image
-              className={styles.kalenderIcon}
-              src={calendarImg}
-              tooltip={<FormattedMessage id="BehandlingPickerItemContent.Kalender" />}
-              alignTooltipLeft
-            />
-            {søknadsperioder?.length > 0 && (
+          {søknadsperioder?.length > 0 && (
+            <div className={styles.dateContainer}>
+              <Image
+                className={styles.kalenderIcon}
+                src={calendarImg}
+                tooltip={<FormattedMessage id="BehandlingPickerItemContent.Kalender" />}
+                alignTooltipLeft
+              />
               <BodyShort size="small">{getFormattedSøknadserioder(søknadsperioder)}</BodyShort>
-            )}
-          </div>
+            </div>
+          )}
           <div className={`${styles.resultContainer} ${styles.marginTop8}`}>
             {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage, erFerdigstilt)}
             <BodyShort size="small">

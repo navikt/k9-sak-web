@@ -21,8 +21,3 @@ export const utledArbeidsforholdNavn = (
 
 export const arbeidsforholdHarAksjonspunktÅrsak = (arbeidsforhold: ArbeidsforholdV2): boolean =>
   Array.isArray(arbeidsforhold.aksjonspunktÅrsaker) && arbeidsforhold.aksjonspunktÅrsaker.length > 0;
-
-export const utledArbeidsforholdYrkestittel = (arbeidsforhold: ArbeidsforholdV2) =>
-  arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
-    ? `${arbeidsforhold.yrkestittel} (${getEndCharFromId(arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId)})`
-    : `${arbeidsforhold.yrkestittel}`;

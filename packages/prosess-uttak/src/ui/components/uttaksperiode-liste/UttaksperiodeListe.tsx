@@ -2,13 +2,13 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { Alert, BodyShort, Button, Label, Table } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import React from 'react';
-import { Uttaksperiode } from '../../../types/Uttaksperiode';
+import { Uttaksperiode, UttaksperiodeMedInntektsgradering } from '../../../types/Uttaksperiode';
 import ContainerContext from '../../context/ContainerContext';
 import Uttak from '../uttak/Uttak';
 import styles from './uttaksperiodeListe.module.css';
 
 interface UttaksperiodeListeProps {
-  uttaksperioder: Uttaksperiode[];
+  uttaksperioder: UttaksperiodeMedInntektsgradering[];
   redigerVirkningsdatoFunc: () => void;
   redigerVirkningsdato: boolean;
   readOnly: boolean;

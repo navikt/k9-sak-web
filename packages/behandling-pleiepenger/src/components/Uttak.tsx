@@ -1,8 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
+import { findEndpointsFromRels, httpErrorHandler } from '@fpsak-frontend/utils';
 import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
-import { Uttak } from '@k9-sak-web/prosess-uttak';
+import { Inntektsgradering, Uttak } from '@k9-sak-web/prosess-uttak';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId, Behandling } from '@k9-sak-web/types';
 import { OverstyringUttakRequest } from '../types';
@@ -11,6 +11,7 @@ interface UttakProps {
   uuid: string;
   behandling: Behandling;
   uttaksperioder: any;
+  inntektsgraderinger: Inntektsgradering[];
   perioderTilVurdering?: string[];
   utsattePerioder: string[];
   virkningsdatoUttakNyeRegler?: string;
@@ -28,6 +29,7 @@ export default ({
   uuid,
   behandling,
   uttaksperioder,
+  inntektsgraderinger,
   perioderTilVurdering = [],
   utsattePerioder,
   arbeidsgiverOpplysningerPerId,
@@ -67,11 +69,12 @@ export default ({
     <Uttak
       containerData={{
         httpErrorHandler: httpErrorHandlerCaller,
-        endpoints: findEndpointsForMicrofrontend(links, [
+        endpoints: findEndpointsFromRels(links, [
           { rel: 'pleiepenger-overstyrtbare-aktiviteter', desiredName: 'behandlingUttakOverstyrbareAktiviteter' },
           { rel: 'pleiepenger-overstyrt-uttak', desiredName: 'behandlingUttakOverstyrt' },
         ]),
         uttaksperioder,
+        inntektsgraderinger,
         perioderTilVurdering,
         utsattePerioder,
         aktivBehandlingUuid: uuid,

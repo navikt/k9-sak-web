@@ -10,7 +10,7 @@ import axios from 'axios';
 import { Location } from 'history';
 import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
@@ -121,6 +121,7 @@ interface OwnProps {
   behandlingId?: number;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
   sakstypeKode: string;
+  hentSøknadsperioder: boolean;
 }
 
 /**
@@ -136,6 +137,7 @@ const BehandlingPicker = ({
   getKodeverkFn,
   createLocationForSkjermlenke,
   sakstypeKode,
+  hentSøknadsperioder,
 }: OwnProps) => {
   const firstRender = useRef(true);
   const navigate = useNavigate();
@@ -197,6 +199,7 @@ const BehandlingPicker = ({
       queryKey: ['behandlingId', behandling.id],
       queryFn: () => getBehandlingPerioderÅrsaker(behandling),
       staleTime: 3 * 60 * 1000,
+      enabled: hentSøknadsperioder,
     })),
   });
 

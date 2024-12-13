@@ -13,5 +13,3 @@ export const useSaksbehandlerOppslag = () => {
 
   return { saksbehandlere: navnPaaSaksbehandlereIBehandlingen, hentSaksbehandlerNavn };
 };
-
-export default useSaksbehandlerOppslag;
