@@ -113,4 +113,4 @@ spec:
     - name: OPPTJENING_READ_ONLY_PERIODER
       value: "true"
     - name: BRUK_INNTEKTSGRADERING_I_UTTAK
-      value: "false"
+      value: "true"
