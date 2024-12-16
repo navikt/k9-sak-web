@@ -1,6 +1,6 @@
-export const range = length => [...Array(length).keys()];
+export const range = (length: number) => [...Array(length).keys()];
 
-export const haystack = (object, keys, defaultValue = null) => {
+export const haystack = (object: unknown, keys: string | string[], defaultValue = null) => {
   const keysArray = Array.isArray(keys) ? keys : keys.replace(/(\[(\d+)\])/g, '.$2').split('.');
   const currentObject = object[keysArray[0]];
   if (currentObject && keysArray.length > 1) {
@@ -9,7 +9,7 @@ export const haystack = (object, keys, defaultValue = null) => {
   return currentObject === undefined ? defaultValue : currentObject;
 };
 
-export const makeArrayWithoutDuplicates = (array: any[]) => {
+export const makeArrayWithoutDuplicates = (array: unknown[]) => {
   const arrayWithoutDuplicates = [];
   array.forEach(value => {
     if (!arrayWithoutDuplicates.includes(value)) {
@@ -19,5 +19,5 @@ export const makeArrayWithoutDuplicates = (array: any[]) => {
   return arrayWithoutDuplicates;
 };
 
-export const getArrayDifference = (baseArray: any[], otherArray: any[]) =>
+export const getArrayDifference = (baseArray: string[], otherArray: string[]) =>
   baseArray.filter(value => otherArray.includes(value) === false);
