@@ -11,6 +11,7 @@ interface Props {
 }
 
 const UngBarnFakta = ({ barn }: Props) => {
+  const harBarnMedDødsdato = barn.some(b => !!b.dødsdato);
   return (
     <>
       <Heading level="1" size="medium">
@@ -28,7 +29,7 @@ const UngBarnFakta = ({ barn }: Props) => {
                 <Table.Row>
                   <Table.HeaderCell scope="col">Navn</Table.HeaderCell>
                   <Table.HeaderCell scope="col">Fødselsdato</Table.HeaderCell>
-                  <Table.HeaderCell scope="col">Dødsdato</Table.HeaderCell>
+                  {harBarnMedDødsdato && <Table.HeaderCell scope="col">Dødsdato</Table.HeaderCell>}
                 </Table.Row>
               </Table.Header>
               <Table.Body>
@@ -37,7 +38,7 @@ const UngBarnFakta = ({ barn }: Props) => {
                     <Table.Row key={navn}>
                       <Table.HeaderCell scope="row">{navn}</Table.HeaderCell>
                       <Table.DataCell>{fødselsdato}</Table.DataCell>
-                      <Table.DataCell>{dødsdato}</Table.DataCell>
+                      {harBarnMedDødsdato && <Table.DataCell>{dødsdato}</Table.DataCell>}
                     </Table.Row>
                   );
                 })}
