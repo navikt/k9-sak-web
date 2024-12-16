@@ -49,7 +49,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
 
           return (
             <Box key={`${arbeidsgiverIdentifikator}_avkorting_arbeidstid`}>
-              <BodyShort size="small">
+              <BodyShort size="small" className="text-text-subtle font-semibold leading-6">
                 {arbeidstype}{' '}
                 {erNyInntekt && (
                   <Tag size="small" variant="info">
@@ -58,14 +58,20 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
                 )}
               </BodyShort>
               {arbeidsforhold.type !== Arbeidstype.FRILANSER && (
-                <BodyShort size="small" weight="semibold">
+                <BodyShort size="small" weight="semibold" className="leading-6">
                   {arbeidsforholdData?.navn || 'Mangler navn'} (
                   {arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})
                 </BodyShort>
               )}
-              <BodyShort size="small">Normal arbeidstid: {beregnetNormalArbeidstid} timer</BodyShort>
-              <BodyShort as="div" size="small" className={cx({ uttakDetaljer__beregningStrek: true })}>
-                <HStack gap="1">
+              <BodyShort size="small" className="leading-6">
+                Normal arbeidstid: {beregnetNormalArbeidstid} timer
+              </BodyShort>
+              <BodyShort
+                as="div"
+                size="small"
+                className={cx({ uttakDetaljer__beregningStrek: true, 'leading-6': true })}
+              >
+                <HStack gap="1" className="leading-6">
                   Faktisk arbeidstid:
                   <span className={cx({ uttakDetaljer__utnullet: faktiskOverstigerNormal })}>
                     {beregnetFaktiskArbeidstid}
@@ -78,7 +84,7 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
                   )}
                 </HStack>
               </BodyShort>
-              <BodyShort className="mt-1" size="small">
+              <BodyShort className="mt-1 leading-6" size="small">
                 = {fraværsprosent} % fravær{' '}
               </BodyShort>
             </Box>
