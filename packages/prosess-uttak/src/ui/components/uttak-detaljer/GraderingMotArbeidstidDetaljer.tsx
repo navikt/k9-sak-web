@@ -1,9 +1,9 @@
-import { FC } from 'react';
 import { BodyShort, Box, Detail, HelpText, HStack, Tag, VStack } from '@navikt/ds-react';
-import { beregnDagerTimer } from '../../../util/dateUtils';
+import classNames from 'classnames/bind';
+import { FC } from 'react';
 import { Arbeidstype, arbeidstypeTilVisning } from '../../../constants';
 import { Utbetalingsgrad } from '../../../types';
-import classNames from 'classnames/bind';
+import { beregnDagerTimer } from '../../../util/dateUtils';
 
 import styles from './nyUttakDetaljer.module.css';
 
@@ -14,6 +14,15 @@ interface ownProps {
   utbetalingsgrader: Utbetalingsgrad[];
   søkersTapteArbeidstid: number;
 }
+
+const beregnFravær = (normalArbeidstid: number, faktiskArbeidstid: number) => {
+  const fravær = Math.max(normalArbeidstid - faktiskArbeidstid, 0);
+  if (fravær === 0) {
+    return 0;
+  }
+
+  return ((fravær / normalArbeidstid) * 100).toFixed(2);
+};
 
 const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
   alleArbeidsforhold,
@@ -33,17 +42,14 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
           const { normalArbeidstid, faktiskArbeidstid, arbeidsforhold } = utbetalingsgradItem;
           const beregnetNormalArbeidstid = beregnDagerTimer(normalArbeidstid);
           const beregnetFaktiskArbeidstid = beregnDagerTimer(faktiskArbeidstid);
-          const prosentFravær =
-            Math.round(
-              (Math.max(beregnetNormalArbeidstid - beregnetFaktiskArbeidstid, 0) / beregnetNormalArbeidstid) * 100,
-            ) || 0;
+          const fraværsprosent = beregnFravær(beregnetNormalArbeidstid, beregnetFaktiskArbeidstid);
           const faktiskOverstigerNormal = beregnetNormalArbeidstid < beregnetFaktiskArbeidstid;
           const arbeidstype = arbeidstypeTilVisning[arbeidsforhold?.type];
           const erNyInntekt = utbetalingsgradItem?.tilkommet;
 
           return (
             <Box key={`${arbeidsgiverIdentifikator}_avkorting_arbeidstid`}>
-              <BodyShort size="small">
+              <BodyShort size="small" className="text-text-subtle font-semibold leading-6">
                 {arbeidstype}{' '}
                 {erNyInntekt && (
                   <Tag size="small" variant="info">
@@ -52,14 +58,20 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
                 )}
               </BodyShort>
               {arbeidsforhold.type !== Arbeidstype.FRILANSER && (
-                <BodyShort size="small" weight="semibold">
+                <BodyShort size="small" weight="semibold" className="leading-6">
                   {arbeidsforholdData?.navn || 'Mangler navn'} (
                   {arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator})
                 </BodyShort>
               )}
-              <BodyShort size="small">Normal arbeidstid: {beregnetNormalArbeidstid} timer</BodyShort>
-              <BodyShort as="div" size="small" className={cx({ uttakDetaljer__beregningStrek: true })}>
-                <HStack gap="1">
+              <BodyShort size="small" className="leading-6">
+                Normal arbeidstid: {beregnetNormalArbeidstid} timer
+              </BodyShort>
+              <BodyShort
+                as="div"
+                size="small"
+                className={cx({ uttakDetaljer__beregningStrek: true, 'leading-6': true })}
+              >
+                <HStack gap="1" className="leading-6">
                   Faktisk arbeidstid:
                   <span className={cx({ uttakDetaljer__utnullet: faktiskOverstigerNormal })}>
                     {beregnetFaktiskArbeidstid}
@@ -72,7 +84,9 @@ const GraderingMotArbeidstidDetaljer: FC<ownProps> = ({
                   )}
                 </HStack>
               </BodyShort>
-              <BodyShort className="mt-1" size="small">= {prosentFravær} % fravær </BodyShort>
+              <BodyShort className="mt-1 leading-6" size="small">
+                = {fraværsprosent} % fravær{' '}
+              </BodyShort>
             </Box>
           );
         })}
