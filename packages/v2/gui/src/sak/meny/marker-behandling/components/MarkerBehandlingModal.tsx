@@ -2,13 +2,13 @@ import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
 import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
 import { useFeatureToggles } from '@k9-sak-web/gui/utils/hooks/useFeatureToggles.js';
 import { goToLos, goToSearch } from '@k9-sak-web/sak-app/src/app/paths';
-import { MerknadFraLos } from '@k9-sak-web/types';
 import { Alert, BodyShort, Button, ErrorMessage, Heading, Label, Modal, VStack } from '@navikt/ds-react';
-import { Form, Formik, FormikProps } from 'formik';
+import { Form, Formik, type FormikProps } from 'formik';
 import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import * as Yup from 'yup';
 import Merknadkode from '../Merknadkode';
+import type { MerknadDto } from '../types/MerknadDto';
 import styles from './markerBehandlingModal.module.css';
 
 interface PureOwnProps {
@@ -17,7 +17,7 @@ interface PureOwnProps {
   lukkModal: () => void;
   markerBehandling: (values: any) => Promise<any>;
   behandlingUuid: string;
-  merknaderFraLos: MerknadFraLos;
+  merknaderFraLos: MerknadDto;
   erVeileder?: boolean;
 }
 
@@ -44,10 +44,11 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   }
 
   const MarkerBehandlingSchema = Yup.object().shape({
-    markerSomHastesak: brukHastekøMarkering ? Yup.boolean() : undefined,
-    markerSomVanskelig: brukVanskeligKøMarkering ? Yup.boolean() : undefined,
+    markerSomHastesak: brukHastekøMarkering ? Yup.boolean() : Yup.boolean().notRequired(),
+    markerSomVanskelig: brukVanskeligKøMarkering ? Yup.boolean() : Yup.boolean().notRequired(),
     begrunnelse: Yup.string().when(['markerSomHastesak', 'markerSomVanskelig'], {
-      is: (markerSomHastesak, markerSomVanskelig) => markerSomHastesak === true || markerSomVanskelig === true,
+      is: (markerSomHastesak: boolean, markerSomVanskelig: boolean) =>
+        markerSomHastesak === true || markerSomVanskelig === true,
       then: schema =>
         schema
           .required({ id: 'ValidationMessage.NotEmpty' })
@@ -55,14 +56,14 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
           .max(100000, { id: 'ValidationMessage.Max100000Char' }),
     }),
   });
-  const formRef = useRef<FormikProps<FormValues>>();
+  const formRef = useRef<FormikProps<FormValues>>(null);
 
   const buildInitialValues = (): FormValues => {
     if (merknaderFraLos) {
       return {
-        markerSomHastesak: merknaderFraLos.merknadKoder?.includes(Merknadkode.HASTESAK),
-        markerSomVanskelig: merknaderFraLos.merknadKoder?.includes(Merknadkode.VANSKELIG_SAK),
-        begrunnelse: merknaderFraLos.fritekst,
+        markerSomHastesak: !!merknaderFraLos.merknadKoder?.includes(Merknadkode.HASTESAK),
+        markerSomVanskelig: !!merknaderFraLos.merknadKoder?.includes(Merknadkode.VANSKELIG_SAK),
+        begrunnelse: merknaderFraLos.fritekst ?? '',
       };
     }
     return {
@@ -80,10 +81,13 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
       formKeys.forEach(key => {
         const inkluderBegrunnelse =
           key === 'begrunnelse' &&
-          (formRef.current.values.markerSomHastesak || formRef.current.values.markerSomVanskelig);
+          (formRef.current?.values.markerSomHastesak || formRef.current?.values.markerSomVanskelig);
 
         if (key !== 'begrunnelse' || inkluderBegrunnelse) {
-          if (formRef.current.values[key] !== initialValues[key] && !hasChanges) {
+          if (
+            formRef.current?.values[key as keyof FormValues] !== initialValues[key as keyof FormValues] &&
+            !hasChanges
+          ) {
             hasChanges = true;
           }
         }
@@ -147,7 +151,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
                   <CheckboxFieldFormik
                     name="markerSomHastesak"
                     label={{ id: 'MenyMarkerBehandling.MarkerSomHastesak' }}
-                    disabled={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT}
+                    disabled={!featureToggles?.['LOS_MARKER_BEHANDLING_SUBMIT']}
                   />
                 </VStack>
               )}
@@ -167,7 +171,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
                     label={intl.formatMessage({ id: 'MenyMarkerBehandling.Kommentar' })}
                     validate={[]}
                     maxLength={100000}
-                    readOnly={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT}
+                    readOnly={!featureToggles?.['LOS_MARKER_BEHANDLING_SUBMIT']}
                   />
                 </div>
               )}
@@ -180,8 +184,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
                 <Button
                   variant="primary"
                   size="small"
-                  disabled={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT || formikProps.isSubmitting}
-                  className={styles.submitButton}
+                  disabled={!featureToggles?.['LOS_MARKER_BEHANDLING_SUBMIT'] || formikProps.isSubmitting}
                 >
                   {erVeileder ? 'Lagre, gå til forsiden' : 'Lagre, gå til LOS'}
                 </Button>
