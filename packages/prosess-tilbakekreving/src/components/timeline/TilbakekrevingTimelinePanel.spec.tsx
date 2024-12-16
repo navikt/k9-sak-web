@@ -1,6 +1,5 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import messages from '../../../i18n/nb_NO.json';
 import TilbakekrevingTimelinePanel from './TilbakekrevingTimelinePanel';
 
@@ -43,8 +42,8 @@ describe('<TilbakekrevingTimelinePanel>', () => {
       { messages },
     );
 
-    expect(screen.getByText('Åpne info om første periode')).toBeInTheDocument();
-    expect(screen.getByText('Forrige periode')).toBeInTheDocument();
-    expect(screen.getByText('Neste periode')).toBeInTheDocument();
+    expect(screen.getByLabelText('Åpne info om første periode')).toBeInTheDocument();
+    expect(screen.getByLabelText('Forrige periode')).toBeInTheDocument();
+    expect(screen.getByLabelText('Neste periode')).toBeInTheDocument();
   });
 });

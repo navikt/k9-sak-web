@@ -55,7 +55,7 @@ describe('<TilkjentYtelse>', () => {
       />,
     );
 
-    expect(screen.getByText('Forrige periode')).toBeInTheDocument();
-    expect(screen.getByText('Neste periode')).toBeInTheDocument();
+    expect(screen.getByLabelText('Forrige periode')).toBeInTheDocument();
+    expect(screen.getByLabelText('Neste periode')).toBeInTheDocument();
   });
 });

@@ -6,7 +6,7 @@ export const isDayAfter = (d1: dayjs.Dayjs, d2: dayjs.Dayjs) => {
   return dayAfterD1.isSame(d2Day);
 };
 
-export function isSameOrBefore(date, otherDate) {
+export function isSameOrBefore(date: dayjs.Dayjs | string, otherDate: dayjs.Dayjs | string) {
   const dateFormats = ['YYYY-MM-DD', 'DD.MM.YYYY'];
   const dateInQuestion = dayjs(date, dateFormats).utc(true);
   const formattedOtherDate = dayjs(otherDate, dateFormats).utc(true);
