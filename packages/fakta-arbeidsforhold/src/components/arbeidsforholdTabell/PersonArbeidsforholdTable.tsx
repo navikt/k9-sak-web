@@ -8,7 +8,7 @@ import { arbeidsforholdHarAksjonspunktÅrsak } from '@fpsak-frontend/utils/src/a
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { BodyShort, Table } from '@navikt/ds-react';
-import React, { Fragment, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { FormattedMessage, IntlShape } from 'react-intl';
 import PermisjonerInfo from '../arbeidsforholdDetaljer/PermisjonerInfo';
 import PersonArbeidsforholdDetailForm from '../arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
@@ -157,8 +157,8 @@ const PersonArbeidsforholdTable = ({
                     {a.handlingType && a.handlingType.kode === arbeidsforholdHandlingType.BRUK && !harAksjonspunkt && (
                       <Image
                         src={erIBrukImageUrl}
-                        alt={intl.formatMessage({ id: 'PersonArbeidsforholdTable.ErIBruk' })}
-                        tooltip={<FormattedMessage id="PersonArbeidsforholdTable.ErIBruk" />}
+                        alt="Arbeidsforhold ok"
+                        tooltip="Arbeidsforhold ok"
                         tabIndex={0}
                         alignTooltipLeft
                       />

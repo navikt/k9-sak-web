@@ -93,12 +93,7 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
         <div>
           {søknadsperioder?.length > 0 && (
             <div className={styles.dateContainer}>
-              <Image
-                className={styles.kalenderIcon}
-                src={calendarImg}
-                tooltip={<FormattedMessage id="BehandlingPickerItemContent.Kalender" />}
-                alignTooltipLeft
-              />
+              <Image className={styles.kalenderIcon} src={calendarImg} tooltip="Kalender" alignTooltipLeft />
               <BodyShort size="small">{getFormattedSøknadserioder(søknadsperioder)}</BodyShort>
             </div>
           )}
