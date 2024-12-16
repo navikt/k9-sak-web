@@ -1,7 +1,8 @@
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { AksjonspunktHelpText, VerticalSpacer, useFeatureToggles } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { guid } from '@fpsak-frontend/utils';
+import { useFeatureToggles } from '@k9-sak-web/gui/utils/hooks/useFeatureToggles.js';
 import { Aksjonspunkt, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Button } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';

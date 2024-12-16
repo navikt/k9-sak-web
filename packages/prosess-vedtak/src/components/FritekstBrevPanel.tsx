@@ -1,17 +1,17 @@
-import { Alert, Heading } from '@navikt/ds-react';
-import { FormikProps, FormikValues } from 'formik';
-import React, { useCallback } from 'react';
-import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
-
 import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
-import { VerticalSpacer, useFeatureToggles } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import {
   Brevmottaker,
   TilgjengeligeVedtaksbrev,
   kanHaManueltFritekstbrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { useFeatureToggles } from '@k9-sak-web/gui/utils/hooks/useFeatureToggles.js';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import { Alert, Heading } from '@navikt/ds-react';
+import { FormikProps, FormikValues } from 'formik';
+import React, { useCallback } from 'react';
+import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 

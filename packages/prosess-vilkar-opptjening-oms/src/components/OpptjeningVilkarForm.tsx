@@ -1,7 +1,6 @@
-import { Aksjonspunkt, SubmitCallback, Vilkarperiode, Opptjening } from '@k9-sak-web/types';
-import React from 'react';
+import { useFeatureToggles } from '@k9-sak-web/gui/utils/hooks/useFeatureToggles.js';
+import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 
 /**
  * OpptjeningVilkarForm

@@ -1,9 +1,10 @@
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { behandlingFormValueSelector, TextAreaField } from '@fpsak-frontend/form';
-import { Image, useFeatureToggles, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { useFeatureToggles } from '@k9-sak-web/gui/utils/hooks/useFeatureToggles.js';
 import { Detail } from '@navikt/ds-react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 
