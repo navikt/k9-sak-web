@@ -2,7 +2,7 @@
  * Decoder for decoding html entity navn og entity code
  * på sikkerhetshensyn '<(&lt; &#60;)' og '> (&gt; &#62;)' er ikke decodert
  */
-const decodeHtmlEntity = str => {
+const decodeHtmlEntity = (str: string) => {
   if (str === null || str === undefined) {
     return str;
   }
