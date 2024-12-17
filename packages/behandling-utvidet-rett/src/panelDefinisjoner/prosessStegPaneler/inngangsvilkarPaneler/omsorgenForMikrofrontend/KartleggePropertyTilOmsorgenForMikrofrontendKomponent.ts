@@ -76,6 +76,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
           skalVilkarsUtfallVises,
           omsorgenForVilkar,
           aksjonspunkt.begrunnelse,
+          omsorgenForVilkar?.perioder[0].begrunnelse,
           'Omsorgen for',
         ),
         losAksjonspunkt: (harOmsorgen, begrunnelse) => {
@@ -102,7 +103,13 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
         barn: angitteBarn.map(barn => barn.personIdent),
         harBarnSoktForRammevedtakOmKroniskSyk,
         vedtakFattetVilkarOppfylt: true,
-        informasjonOmVilkar: generereInfoForVurdertVilkar(true, omsorgenForVilkar, '', 'Omsorgen for'),
+        informasjonOmVilkar: generereInfoForVurdertVilkar(
+          true,
+          omsorgenForVilkar,
+          '',
+          omsorgenForVilkar.perioder[0].begrunnelse,
+          'Omsorgen for',
+        ),
         formState: FormState,
       },
     };

@@ -107,6 +107,7 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
           skalVilkarsUtfallVises,
           vilkar,
           aksjonspunkt.begrunnelse,
+          vilkar?.perioder[0].begrunnelse,
           'Utvidet Rett',
         ),
         informasjonTilLesemodus: formatereLesemodusObjekt(vilkar, aksjonspunkt, status),
@@ -136,7 +137,13 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
         fraDatoFraVilkar: vilkar?.perioder[0]?.periode?.fom,
         vedtakFattetVilkarOppfylt: true,
         erBehandlingstypeRevurdering: erBehandlingRevurdering,
-        informasjonOmVilkar: generereInfoForVurdertVilkar(true, vilkar, '', 'Utvidet Rett'),
+        informasjonOmVilkar: generereInfoForVurdertVilkar(
+          true,
+          vilkar,
+          '',
+          vilkar?.perioder[0].begrunnelse,
+          'Utvidet Rett',
+        ),
         formState: FormState,
       } as AleneOmOmsorgenProps,
     };
