@@ -1,15 +1,15 @@
-import {Aksjonspunkt, Vilkar} from '@k9-sak-web/types';
-import {FormState} from '@fpsak-frontend/form/index';
+import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
+import { FormState } from '@fpsak-frontend/form/index';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import {KomponenterEnum} from '@k9-sak-web/prosess-omsorgsdager';
-import {generereInfoForVurdertVilkar} from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
+import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
+import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import {
   InformasjonTilLesemodusKroniskSyk,
   VilkarKroniskSyktBarnProps,
 } from '../../../../../types/utvidetRettMikrofrontend/VilkarKroniskSyktBarnProps';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
-import aksjonspunktCodes from "@fpsak-frontend/kodeverk/src/aksjonspunktCodes";
-import Komponenter from "@k9-sak-web/prosess-omsorgsdager/src/types/Komponenter";
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import Komponenter from '@k9-sak-web/prosess-omsorgsdager/src/types/Komponenter';
 
 interface OwnProps {
   behandlingsID: string;
@@ -82,7 +82,6 @@ const KroniskSykObjektTilMikrofrontend = ({
   visKomponent: KomponenterEnum.VILKAR_KRONISK_SYKT_BARN;
   props: VilkarKroniskSyktBarnProps;
 } => {
-
   const vilkaretVurderesManuelltMedAksjonspunkt =
     aksjonspunkt && vilkar && aksjonspunkt.definisjon.kode === aksjonspunktCodes.UTVIDET_RETT;
   // Vilkåret kan kun bli automatisk innvilget. Dersom det blir automatiskt avslått resulterer det i manuell vurdering via aksjonspunkt.
@@ -103,6 +102,7 @@ const KroniskSykObjektTilMikrofrontend = ({
           skalVilkarsUtfallVises,
           vilkar,
           aksjonspunkt.begrunnelse,
+          vilkar?.perioder[0].begrunnelse,
           'Utvidet Rett',
         ),
         losAksjonspunkt: (harDokumentasjonOgFravaerRisiko, begrunnelse, avslagsårsakKode, fraDato) => {
@@ -120,7 +120,7 @@ const KroniskSykObjektTilMikrofrontend = ({
         },
         formState: FormState,
       } as VilkarKroniskSyktBarnProps,
-    }
+    };
   }
 
   if (vilkaretErAutomatiskInnvilget) {
@@ -131,13 +131,19 @@ const KroniskSykObjektTilMikrofrontend = ({
         aksjonspunktLost: false,
         soknadsdato: soknad.soknadsdato,
         vedtakFattetVilkarOppfylt: true,
-        informasjonOmVilkar: generereInfoForVurdertVilkar(true, vilkar, '', 'Utvidet Rett'),
+        informasjonOmVilkar: generereInfoForVurdertVilkar(
+          true,
+          vilkar,
+          '',
+          vilkar?.perioder[0].begrunnelse,
+          'Utvidet Rett',
+        ),
         formState: FormState,
-      } as VilkarKroniskSyktBarnProps
-    }
+      } as VilkarKroniskSyktBarnProps,
+    };
   }
 
-  return null
-}
+  return null;
+};
 
 export default KroniskSykObjektTilMikrofrontend;
