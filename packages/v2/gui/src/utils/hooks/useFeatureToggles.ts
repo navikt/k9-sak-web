@@ -14,9 +14,11 @@ const transformData = (data: FeatureToggle[]) =>
   }, {});
 
 export const useFeatureToggles = (): [FeatureToggles] => {
+  const backendUrl = window.location.pathname.includes('/ung/web') ? 'ung' : 'k9';
   const { data: featureToggles } = useQuery({
     queryKey: ['featureToggles'],
-    queryFn: ({ signal }) => axios.get('/k9/feature-toggle/toggles.json', { signal }).then(({ data }) => data),
+    queryFn: ({ signal }) =>
+      axios.get(`/${backendUrl}/feature-toggle/toggles.json`, { signal }).then(({ data }) => data),
     select: transformData,
   });
 
