@@ -25,7 +25,7 @@ interface QueryClientWrapperProps {
 }
 
 export const QueryClientWrapper = ({ children }: QueryClientWrapperProps) => {
-  const queryClient = new QueryClient();
+  const queryClient = createTestReactQueryClient();
 
   return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 };
