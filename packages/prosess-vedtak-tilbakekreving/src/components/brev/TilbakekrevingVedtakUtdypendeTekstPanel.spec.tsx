@@ -1,16 +1,11 @@
 import { renderWithIntlAndReactQueryClient, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { QueryClientWrapper } from '@k9-sak-web/gui/utils/test-helpers/reactQueryUtils.js';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { screen } from '@testing-library/react';
 import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
 import { TilbakekrevingVedtakUtdypendeTekstPanel } from './TilbakekrevingVedtakUtdypendeTekstPanel';
 
 describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
-  beforeEach(() => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'UTVIDET_VARSELTEKST', value: true }]);
-  });
-
   it('skal vise lenke for å skrive inn tekst når felt ikke har verdi og en ikke er i readonly-modus', () => {
     renderWithIntlAndReactQueryClient(
       <TilbakekrevingVedtakUtdypendeTekstPanel

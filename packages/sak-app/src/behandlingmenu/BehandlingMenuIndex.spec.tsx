@@ -1,4 +1,4 @@
-import { act, render, screen } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 
@@ -8,6 +8,7 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
+import { renderWithReactQueryClient } from '@k9-sak-web/gui/utils/test-helpers/reactQueryUtils.js';
 import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import { BehandlingMenuIndex } from './BehandlingMenuIndex';
@@ -80,7 +81,7 @@ describe('BehandlingMenuIndex', () => {
     requestApi.mock(K9sakApiKeys.INIT_FETCH_KLAGE, {});
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);
     requestApi.mock(K9sakApiKeys.BEHANDLENDE_ENHETER, []);
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
+
     requestApi.mock(K9sakApiKeys.SAK_BRUKER, []);
     requestApi.mock(K9sakApiKeys.KODEVERK, {});
     requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, {});
@@ -106,7 +107,7 @@ describe('BehandlingMenuIndex', () => {
       vergeBehandlingsmeny: VergeBehandlingmenyValg.OPPRETT,
     };
 
-    render(
+    renderWithReactQueryClient(
       <MemoryRouter>
         <BehandlingMenuIndex
           fagsak={fagsak as Fagsak}
