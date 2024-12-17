@@ -1,20 +1,18 @@
-import { render, screen } from '@testing-library/react';
+import { server } from '@k9-sak-web/gui/utils/test-helpers/mswUtils.js';
+import { renderWithReactQueryClient } from '@k9-sak-web/gui/utils/test-helpers/reactQueryUtils.js';
+import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import { act } from 'react-dom/test-utils';
+import { http, HttpResponse } from 'msw';
 import MenyMarkerBehandling from './MenyMarkerBehandling';
 
 describe('<MenyMarkerBehandling', () => {
   it('skal vise inputfelt for tekst gitt at checkbox er valgt', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [
-      {
-        key: 'LOS_MARKER_BEHANDLING_SUBMIT',
-        value: 'true',
-      },
-    ]);
-
-    render(
+    server.use(
+      http.get('/k9/feature-toggle/toggles.json', () => {
+        return HttpResponse.json([{ key: 'LOS_MARKER_BEHANDLING_SUBMIT', value: 'true' }]);
+      }),
+    );
+    renderWithReactQueryClient(
       <MenyMarkerBehandling
         behandlingUuid="123"
         markerBehandling={() => null}
@@ -23,11 +21,12 @@ describe('<MenyMarkerBehandling', () => {
         merknaderFraLos={null}
       />,
     );
+
     expect(screen.queryByLabelText('Kommentar')).toBe(null);
+    await waitFor(() => expect(screen.getByLabelText('Behandlingen er hastesak')).not.toBeDisabled());
     await act(async () => {
       await userEvent.click(screen.getByLabelText('Behandlingen er hastesak'));
     });
-
     expect(screen.getByLabelText('Kommentar')).toBeInTheDocument();
   });
 });

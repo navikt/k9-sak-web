@@ -1,4 +1,4 @@
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
@@ -11,7 +11,7 @@ describe('<NokkeltallContainer>', () => {
 
   describe('Forbrukte dager', () => {
     const forbrukteDagerPropsForRestTidOgPeriode = (restTid: string, periode: string, smitteverndager?: string) => {
-      renderWithIntl(
+      renderWithIntlAndReactQueryClient(
         <MemoryRouter>
           <NokkeltallContainer
             totaltAntallDager={20}
@@ -28,7 +28,6 @@ describe('<NokkeltallContainer>', () => {
             apneNokkeltall={[Nokkeltalltype.FORBRUKTE_DAGER]}
           />
         </MemoryRouter>,
-
         { messages },
       );
     };

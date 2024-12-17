@@ -1,8 +1,8 @@
-import React from 'react';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { QueryClientWrapper } from '@k9-sak-web/gui/utils/test-helpers/reactQueryUtils.js';
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { screen } from '@testing-library/react';
 import TilbakekrevingEditerVedtaksbrevPanel from './TilbakekrevingEditerVedtaksbrevPanel';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
 describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
   beforeEach(() => {
@@ -79,15 +79,17 @@ describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
 
   it('skal vise tekstfelt for begrunnelse og godkjenningsknapp', () => {
     renderWithIntlAndReduxForm(
-      <TilbakekrevingEditerVedtaksbrevPanel
-        vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
-        formName="testForm"
-        readOnly={false}
-        behandlingId={1}
-        behandlingVersjon={1}
-        perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
-        fritekstOppsummeringPakrevdMenIkkeUtfylt={false}
-      />,
+      <QueryClientWrapper>
+        <TilbakekrevingEditerVedtaksbrevPanel
+          vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
+          formName="testForm"
+          readOnly={false}
+          behandlingId={1}
+          behandlingVersjon={1}
+          perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
+          fritekstOppsummeringPakrevdMenIkkeUtfylt={false}
+        />
+      </QueryClientWrapper>,
     );
 
     expect(screen.getByText('Du må betale tilbake foreldrepenger', { selector: 'h3' })).toBeInTheDocument();
@@ -100,15 +102,17 @@ describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
 
   it('skal automatisk åpne panel som ikke har obligatorisk verdi utfylt', () => {
     renderWithIntlAndReduxForm(
-      <TilbakekrevingEditerVedtaksbrevPanel
-        vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
-        formName="testForm"
-        readOnly={false}
-        behandlingId={1}
-        behandlingVersjon={1}
-        perioderSomIkkeHarUtfyltObligatoriskVerdi={['2019-10-10_2019-11-10']}
-        fritekstOppsummeringPakrevdMenIkkeUtfylt
-      />,
+      <QueryClientWrapper>
+        <TilbakekrevingEditerVedtaksbrevPanel
+          vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
+          formName="testForm"
+          readOnly={false}
+          behandlingId={1}
+          behandlingVersjon={1}
+          perioderSomIkkeHarUtfyltObligatoriskVerdi={['2019-10-10_2019-11-10']}
+          fritekstOppsummeringPakrevdMenIkkeUtfylt
+        />
+      </QueryClientWrapper>,
     );
 
     expect(screen.getAllByRole('button', { expanded: false })).toHaveLength(1);

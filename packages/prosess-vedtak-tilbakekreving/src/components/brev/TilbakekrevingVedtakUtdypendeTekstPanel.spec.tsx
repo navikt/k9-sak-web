@@ -1,10 +1,10 @@
-import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { renderWithIntlAndReactQueryClient, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { QueryClientWrapper } from '@k9-sak-web/gui/utils/test-helpers/reactQueryUtils.js';
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import { intlMock } from '../../../i18n';
 import messages from '../../../i18n/nb_NO.json';
 import { TilbakekrevingVedtakUtdypendeTekstPanel } from './TilbakekrevingVedtakUtdypendeTekstPanel';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
 describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
   beforeEach(() => {
@@ -12,7 +12,7 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
   });
 
   it('skal vise lenke for å skrive inn tekst når felt ikke har verdi og en ikke er i readonly-modus', () => {
-    renderWithIntl(
+    renderWithIntlAndReactQueryClient(
       <TilbakekrevingVedtakUtdypendeTekstPanel
         intl={intlMock}
         isEmpty
@@ -29,13 +29,15 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
 
   it('skal vise textarea når en har trykket på lenke', () => {
     renderWithIntlAndReduxForm(
-      <TilbakekrevingVedtakUtdypendeTekstPanel
-        intl={intlMock}
-        isEmpty={false}
-        type="OPPSUMMERING"
-        readOnly={false}
-        fritekstPakrevet={false}
-      />,
+      <QueryClientWrapper>
+        <TilbakekrevingVedtakUtdypendeTekstPanel
+          intl={intlMock}
+          isEmpty={false}
+          type="OPPSUMMERING"
+          readOnly={false}
+          fritekstPakrevet={false}
+        />
+      </QueryClientWrapper>,
       { messages },
     );
 
@@ -45,13 +47,15 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
 
   it('skal vise textarea når fritekst er påkrevet', () => {
     renderWithIntlAndReduxForm(
-      <TilbakekrevingVedtakUtdypendeTekstPanel
-        intl={intlMock}
-        isEmpty
-        type="OPPSUMMERING"
-        readOnly={false}
-        fritekstPakrevet
-      />,
+      <QueryClientWrapper>
+        <TilbakekrevingVedtakUtdypendeTekstPanel
+          intl={intlMock}
+          isEmpty
+          type="OPPSUMMERING"
+          readOnly={false}
+          fritekstPakrevet
+        />
+      </QueryClientWrapper>,
       { messages },
     );
 
@@ -60,7 +64,7 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
   });
 
   it('skal ikke vise lenke eller textarea når verdi ikke finnes og en er i readonly-modus', () => {
-    renderWithIntl(
+    renderWithIntlAndReactQueryClient(
       <TilbakekrevingVedtakUtdypendeTekstPanel
         intl={intlMock}
         isEmpty

@@ -1,7 +1,7 @@
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { renderWithReactQueryClient } from '@k9-sak-web/gui/utils/test-helpers/reactQueryUtils.js';
 import { composeStories, StoryFn } from '@storybook/react';
 import { userEvent } from '@storybook/test';
-import { act, render, screen } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import * as stories from '../MedlemskapFaktaIndex.stories';
 import MedlemskapInfoPanel from './MedlemskapInfoPanel';
 
@@ -15,8 +15,7 @@ describe('<MedlemskapInfoPanel>', () => {
   };
 
   it('skal vise editeringsmuligheter når det finnes aksjonspunkter', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    render(<VisAksjonspunktForAvklaringOmBrukerErBosatt />);
+    renderWithReactQueryClient(<VisAksjonspunktForAvklaringOmBrukerErBosatt />);
     expect(screen.getByText('Vurder om søker er bosatt i Norge')).toBeInTheDocument();
     expect(screen.getByText('Opplysninger oppgitt i søknaden')).toBeInTheDocument();
     expect(screen.getByRole('textbox', { name: 'Begrunn endringene' })).toBeInTheDocument();
@@ -28,8 +27,7 @@ describe('<MedlemskapInfoPanel>', () => {
   });
 
   it('skal kunne avklare perioder når en har dette aksjonspunktet', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    render(<VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter />);
+    renderWithReactQueryClient(<VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter />);
     expect(screen.getByText('Vurder om søker har gyldig medlemskap i perioden')).toBeInTheDocument();
     expect(screen.getByText('Perioder med medlemskap')).toBeInTheDocument();
     expect(screen.getByRole('textbox', { name: 'Begrunn endringene' })).toBeInTheDocument();
@@ -39,8 +37,7 @@ describe('<MedlemskapInfoPanel>', () => {
   });
 
   it('skal vise informasjon uten editeringsmuligheter når det ikke finnes aksjonspunkter', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    render(<VisPanelUtenAksjonspunkt />);
+    renderWithReactQueryClient(<VisPanelUtenAksjonspunkt />);
     expect(screen.getByText('Opplysninger oppgitt i søknaden')).toBeInTheDocument();
     expect(screen.getByText('Perioder med medlemskap')).toBeInTheDocument();
     expect(screen.queryByText('textbox')).not.toBeInTheDocument();
@@ -48,8 +45,7 @@ describe('<MedlemskapInfoPanel>', () => {
   });
 
   it('skal vise informasjon om opphold og bosatt informasjon', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    render(<VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter />);
+    renderWithReactQueryClient(<VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter />);
     expect(screen.getByText('Opphold utenfor Norge')).toBeInTheDocument();
     expect(screen.getByText('Sverige')).toBeInTheDocument();
     expect(screen.getByText('Mygg Robust')).toBeInTheDocument();
