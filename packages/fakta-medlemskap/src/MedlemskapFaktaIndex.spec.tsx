@@ -1,7 +1,6 @@
-import { renderWithReactQueryClient } from '@k9-sak-web/gui/utils/test-helpers/reactQueryUtils.js';
 import { composeStories, StoryFn } from '@storybook/react';
 import { screen, userEvent } from '@storybook/test';
-import { act } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import MedlemskapFaktaIndex from './MedlemskapFaktaIndex';
 import * as stories from './MedlemskapFaktaIndex.stories';
 
@@ -12,7 +11,7 @@ describe('MedlemskapFaktaIndex', () => {
   it('skal formatere data ved innsending', async () => {
     const onClickSpy = vi.fn();
     const props = { submitCallback: onClickSpy };
-    renderWithReactQueryClient(<VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter {...props} />);
+    render(<VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter {...props} />);
     await act(async () => {
       expect(screen.getByText('Skogvegen 3, 4353 Klepp Stasjon')).toBeInTheDocument();
       await userEvent.click(screen.getByRole('radio', { name: 'Periode med medlemskap' }));

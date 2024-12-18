@@ -1,5 +1,4 @@
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { QueryClientWrapper } from '@k9-sak-web/gui/utils/test-helpers/reactQueryUtils.js';
 import { screen } from '@testing-library/react';
 import TilbakekrevingEditerVedtaksbrevPanel from './TilbakekrevingEditerVedtaksbrevPanel';
 
@@ -74,17 +73,15 @@ describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
 
   it('skal vise tekstfelt for begrunnelse og godkjenningsknapp', () => {
     renderWithIntlAndReduxForm(
-      <QueryClientWrapper>
-        <TilbakekrevingEditerVedtaksbrevPanel
-          vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
-          formName="testForm"
-          readOnly={false}
-          behandlingId={1}
-          behandlingVersjon={1}
-          perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
-          fritekstOppsummeringPakrevdMenIkkeUtfylt={false}
-        />
-      </QueryClientWrapper>,
+      <TilbakekrevingEditerVedtaksbrevPanel
+        vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
+        formName="testForm"
+        readOnly={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
+        fritekstOppsummeringPakrevdMenIkkeUtfylt={false}
+      />,
     );
 
     expect(screen.getByText('Du må betale tilbake foreldrepenger', { selector: 'h3' })).toBeInTheDocument();
@@ -97,17 +94,15 @@ describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
 
   it('skal automatisk åpne panel som ikke har obligatorisk verdi utfylt', () => {
     renderWithIntlAndReduxForm(
-      <QueryClientWrapper>
-        <TilbakekrevingEditerVedtaksbrevPanel
-          vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
-          formName="testForm"
-          readOnly={false}
-          behandlingId={1}
-          behandlingVersjon={1}
-          perioderSomIkkeHarUtfyltObligatoriskVerdi={['2019-10-10_2019-11-10']}
-          fritekstOppsummeringPakrevdMenIkkeUtfylt
-        />
-      </QueryClientWrapper>,
+      <TilbakekrevingEditerVedtaksbrevPanel
+        vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
+        formName="testForm"
+        readOnly={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        perioderSomIkkeHarUtfyltObligatoriskVerdi={['2019-10-10_2019-11-10']}
+        fritekstOppsummeringPakrevdMenIkkeUtfylt
+      />,
     );
 
     expect(screen.getAllByRole('button', { expanded: false })).toHaveLength(1);

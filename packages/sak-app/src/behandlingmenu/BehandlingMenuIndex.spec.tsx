@@ -1,4 +1,4 @@
-import { act, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 
@@ -8,7 +8,6 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
-import { renderWithReactQueryClient } from '@k9-sak-web/gui/utils/test-helpers/reactQueryUtils.js';
 import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import { BehandlingMenuIndex } from './BehandlingMenuIndex';
@@ -107,7 +106,7 @@ describe('BehandlingMenuIndex', () => {
       vergeBehandlingsmeny: VergeBehandlingmenyValg.OPPRETT,
     };
 
-    renderWithReactQueryClient(
+    render(
       <MemoryRouter>
         <BehandlingMenuIndex
           fagsak={fagsak as Fagsak}

@@ -1,7 +1,6 @@
-import { renderWithReactQueryClient } from '@k9-sak-web/gui/utils/test-helpers/reactQueryUtils.js';
 import { composeStories, StoryFn } from '@storybook/react';
 import { userEvent } from '@storybook/test';
-import { act, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import * as stories from '../MedlemskapFaktaIndex.stories';
 import MedlemskapInfoPanel from './MedlemskapInfoPanel';
 
@@ -15,7 +14,7 @@ describe('<MedlemskapInfoPanel>', () => {
   };
 
   it('skal vise editeringsmuligheter når det finnes aksjonspunkter', async () => {
-    renderWithReactQueryClient(<VisAksjonspunktForAvklaringOmBrukerErBosatt />);
+    render(<VisAksjonspunktForAvklaringOmBrukerErBosatt />);
     expect(screen.getByText('Vurder om søker er bosatt i Norge')).toBeInTheDocument();
     expect(screen.getByText('Opplysninger oppgitt i søknaden')).toBeInTheDocument();
     expect(screen.getByRole('textbox', { name: 'Begrunn endringene' })).toBeInTheDocument();
@@ -27,7 +26,7 @@ describe('<MedlemskapInfoPanel>', () => {
   });
 
   it('skal kunne avklare perioder når en har dette aksjonspunktet', async () => {
-    renderWithReactQueryClient(<VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter />);
+    render(<VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter />);
     expect(screen.getByText('Vurder om søker har gyldig medlemskap i perioden')).toBeInTheDocument();
     expect(screen.getByText('Perioder med medlemskap')).toBeInTheDocument();
     expect(screen.getByRole('textbox', { name: 'Begrunn endringene' })).toBeInTheDocument();
@@ -37,7 +36,7 @@ describe('<MedlemskapInfoPanel>', () => {
   });
 
   it('skal vise informasjon uten editeringsmuligheter når det ikke finnes aksjonspunkter', () => {
-    renderWithReactQueryClient(<VisPanelUtenAksjonspunkt />);
+    render(<VisPanelUtenAksjonspunkt />);
     expect(screen.getByText('Opplysninger oppgitt i søknaden')).toBeInTheDocument();
     expect(screen.getByText('Perioder med medlemskap')).toBeInTheDocument();
     expect(screen.queryByText('textbox')).not.toBeInTheDocument();
@@ -45,7 +44,7 @@ describe('<MedlemskapInfoPanel>', () => {
   });
 
   it('skal vise informasjon om opphold og bosatt informasjon', () => {
-    renderWithReactQueryClient(<VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter />);
+    render(<VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter />);
     expect(screen.getByText('Opphold utenfor Norge')).toBeInTheDocument();
     expect(screen.getByText('Sverige')).toBeInTheDocument();
     expect(screen.getByText('Mygg Robust')).toBeInTheDocument();

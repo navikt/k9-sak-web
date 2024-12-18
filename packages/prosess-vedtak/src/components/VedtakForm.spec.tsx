@@ -13,7 +13,6 @@ import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/P
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { TilgjengeligeVedtaksbrev, TilgjengeligeVedtaksbrevMedMaler } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { QueryClientWrapper } from '@k9-sak-web/gui/utils/test-helpers/reactQueryUtils.js';
 import { Aksjonspunkt, Personopplysninger } from '@k9-sak-web/types';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakForm } from './VedtakForm';
@@ -96,42 +95,40 @@ describe('<VedtakForm>', () => {
     };
 
     renderWithIntlAndReduxForm(
-      <QueryClientWrapper>
-        <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
-          <VedtakForm
-            intl={intlWithMessages(messages)}
-            behandlingStatus={behandlingStatusUtredes}
-            aksjonspunkter={[]}
-            behandlingresultat={behandlingsresultat}
-            behandlingPaaVent={false}
-            previewCallback={previewCallback}
-            hentFritekstbrevHtmlCallback={() => undefined}
-            readOnly={false}
-            sprakkode={sprakkode}
-            ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-            alleKodeverk={{}}
-            personopplysninger={personopplysninger}
-            arbeidsgiverOpplysningerPerId={{}}
-            tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
-            vilkar={[]}
-            tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-            informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-            dokumentdata={{}}
-            fritekstdokumenter={[]}
-            vedtakVarsel={vedtakVarselBase}
-            submitCallback={() => undefined}
-            lagreDokumentdata={() => Promise.resolve()}
-            overlappendeYtelser={[]}
-            resultatstruktur="resultatstruktur"
-            simuleringResultat={{}}
-            resultatstrukturOriginalBehandling={{}}
-            bgPeriodeMedAvslagsårsak={{}}
-            medlemskapFom="2021-05-02"
-            erRevurdering={false}
-            behandlingArsaker={[]}
-          />
-        </ProsessStegContainer>
-      </QueryClientWrapper>,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={behandlingStatusUtredes}
+          aksjonspunkter={[]}
+          behandlingresultat={behandlingsresultat}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          hentFritekstbrevHtmlCallback={() => undefined}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={personopplysninger}
+          arbeidsgiverOpplysningerPerId={{}}
+          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          vilkar={[]}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+          dokumentdata={{}}
+          fritekstdokumenter={[]}
+          vedtakVarsel={vedtakVarselBase}
+          submitCallback={() => undefined}
+          lagreDokumentdata={() => Promise.resolve()}
+          overlappendeYtelser={[]}
+          resultatstruktur="resultatstruktur"
+          simuleringResultat={{}}
+          resultatstrukturOriginalBehandling={{}}
+          bgPeriodeMedAvslagsårsak={{}}
+          medlemskapFom="2021-05-02"
+          erRevurdering={false}
+          behandlingArsaker={[]}
+        />
+      </ProsessStegContainer>,
     );
 
     expect(screen.getByTestId('innvilget')).toBeDefined();
@@ -163,42 +160,40 @@ describe('<VedtakForm>', () => {
       },
     ];
     renderWithIntlAndReduxForm(
-      <QueryClientWrapper>
-        <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
-          <VedtakForm
-            intl={intlWithMessages(messages)}
-            behandlingStatus={behandlingStatusUtredes}
-            aksjonspunkter={aksjonspunkter}
-            behandlingresultat={behandlingsresultat}
-            behandlingPaaVent={false}
-            previewCallback={previewCallback}
-            hentFritekstbrevHtmlCallback={() => undefined}
-            readOnly={false}
-            sprakkode={sprakkode}
-            ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-            alleKodeverk={{}}
-            personopplysninger={personopplysninger}
-            arbeidsgiverOpplysningerPerId={{}}
-            tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
-            vilkar={[]}
-            tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-            informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-            dokumentdata={{}}
-            fritekstdokumenter={[]}
-            vedtakVarsel={vedtakVarselBase}
-            submitCallback={() => undefined}
-            lagreDokumentdata={() => Promise.resolve()}
-            overlappendeYtelser={[]}
-            resultatstruktur="resultatstruktur"
-            simuleringResultat={{}}
-            resultatstrukturOriginalBehandling={{}}
-            bgPeriodeMedAvslagsårsak={{}}
-            medlemskapFom="2021-05-02"
-            erRevurdering={false}
-            behandlingArsaker={[]}
-          />
-        </ProsessStegContainer>
-      </QueryClientWrapper>,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={behandlingStatusUtredes}
+          aksjonspunkter={aksjonspunkter}
+          behandlingresultat={behandlingsresultat}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          hentFritekstbrevHtmlCallback={() => undefined}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={personopplysninger}
+          arbeidsgiverOpplysningerPerId={{}}
+          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          vilkar={[]}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+          dokumentdata={{}}
+          fritekstdokumenter={[]}
+          vedtakVarsel={vedtakVarselBase}
+          submitCallback={() => undefined}
+          lagreDokumentdata={() => Promise.resolve()}
+          overlappendeYtelser={[]}
+          resultatstruktur="resultatstruktur"
+          simuleringResultat={{}}
+          resultatstrukturOriginalBehandling={{}}
+          bgPeriodeMedAvslagsårsak={{}}
+          medlemskapFom="2021-05-02"
+          erRevurdering={false}
+          behandlingArsaker={[]}
+        />
+      </ProsessStegContainer>,
     );
 
     expect(screen.getByTestId('avslaatt')).toBeDefined();
@@ -220,42 +215,40 @@ describe('<VedtakForm>', () => {
       avslagsarsak: null,
     };
     renderWithIntlAndReduxForm(
-      <QueryClientWrapper>
-        <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
-          <VedtakForm
-            intl={intlWithMessages(messages)}
-            behandlingStatus={behandlingStatusUtredes}
-            aksjonspunkter={aksjonspunkter}
-            behandlingresultat={behandlingsresultat}
-            behandlingPaaVent={false}
-            previewCallback={previewCallback}
-            hentFritekstbrevHtmlCallback={() => undefined}
-            readOnly={false}
-            sprakkode={sprakkode}
-            ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-            alleKodeverk={{}}
-            personopplysninger={personopplysninger}
-            arbeidsgiverOpplysningerPerId={{}}
-            tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
-            vilkar={[]}
-            tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-            informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-            dokumentdata={{}}
-            fritekstdokumenter={[]}
-            vedtakVarsel={vedtakVarsel}
-            submitCallback={() => undefined}
-            lagreDokumentdata={() => Promise.resolve()}
-            overlappendeYtelser={[]}
-            resultatstruktur="resultatstruktur"
-            simuleringResultat={{}}
-            resultatstrukturOriginalBehandling={{}}
-            bgPeriodeMedAvslagsårsak={{}}
-            medlemskapFom="2021-05-02"
-            erRevurdering={false}
-            behandlingArsaker={[]}
-          />
-        </ProsessStegContainer>
-      </QueryClientWrapper>,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={behandlingStatusUtredes}
+          aksjonspunkter={aksjonspunkter}
+          behandlingresultat={behandlingsresultat}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          hentFritekstbrevHtmlCallback={() => undefined}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+          alleKodeverk={{}}
+          personopplysninger={personopplysninger}
+          arbeidsgiverOpplysningerPerId={{}}
+          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          vilkar={[]}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+          dokumentdata={{}}
+          fritekstdokumenter={[]}
+          vedtakVarsel={vedtakVarsel}
+          submitCallback={() => undefined}
+          lagreDokumentdata={() => Promise.resolve()}
+          overlappendeYtelser={[]}
+          resultatstruktur="resultatstruktur"
+          simuleringResultat={{}}
+          resultatstrukturOriginalBehandling={{}}
+          bgPeriodeMedAvslagsårsak={{}}
+          medlemskapFom="2021-05-02"
+          erRevurdering={false}
+          behandlingArsaker={[]}
+        />
+      </ProsessStegContainer>,
     );
     const fattVedtakButton = screen.getByRole('button');
     expect(fattVedtakButton).toHaveTextContent('VedtakForm.SendTilBeslutter');
@@ -276,42 +269,40 @@ describe('<VedtakForm>', () => {
       avslagsarsak: { kode: '1099', navn: 'xoxo' },
     };
     renderWithIntlAndReduxForm(
-      <QueryClientWrapper>
-        <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
-          <VedtakForm
-            intl={intlWithMessages(messages)}
-            behandlingStatus={behandlingStatusUtredes}
-            aksjonspunkter={aksjonspunkter}
-            behandlingresultat={behandlingsresultat}
-            behandlingPaaVent={false}
-            previewCallback={previewCallback}
-            hentFritekstbrevHtmlCallback={() => undefined}
-            readOnly={false}
-            sprakkode={sprakkode}
-            ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-            alleKodeverk={{}}
-            personopplysninger={personopplysninger}
-            arbeidsgiverOpplysningerPerId={{}}
-            tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
-            vilkar={[]}
-            tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-            informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-            dokumentdata={{}}
-            fritekstdokumenter={[]}
-            vedtakVarsel={vedtakVarsel}
-            submitCallback={() => undefined}
-            lagreDokumentdata={() => Promise.resolve()}
-            overlappendeYtelser={[]}
-            resultatstruktur="resultatstruktur"
-            simuleringResultat={{}}
-            resultatstrukturOriginalBehandling={{}}
-            bgPeriodeMedAvslagsårsak={{}}
-            medlemskapFom="2021-05-02"
-            erRevurdering={false}
-            behandlingArsaker={[]}
-          />
-        </ProsessStegContainer>
-      </QueryClientWrapper>,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={behandlingStatusUtredes}
+          aksjonspunkter={aksjonspunkter}
+          behandlingresultat={behandlingsresultat}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          hentFritekstbrevHtmlCallback={() => undefined}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={personopplysninger}
+          arbeidsgiverOpplysningerPerId={{}}
+          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          vilkar={[]}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+          dokumentdata={{}}
+          fritekstdokumenter={[]}
+          vedtakVarsel={vedtakVarsel}
+          submitCallback={() => undefined}
+          lagreDokumentdata={() => Promise.resolve()}
+          overlappendeYtelser={[]}
+          resultatstruktur="resultatstruktur"
+          simuleringResultat={{}}
+          resultatstrukturOriginalBehandling={{}}
+          bgPeriodeMedAvslagsårsak={{}}
+          medlemskapFom="2021-05-02"
+          erRevurdering={false}
+          behandlingArsaker={[]}
+        />
+      </ProsessStegContainer>,
     );
 
     const fattVedtakButton = screen.getByRole('button');
@@ -342,42 +333,40 @@ describe('<VedtakForm>', () => {
       },
     };
     renderWithIntlAndReduxForm(
-      <QueryClientWrapper>
-        <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
-          <VedtakForm
-            intl={intlWithMessages(messages)}
-            behandlingStatus={behandlingStatusUtredes}
-            aksjonspunkter={aksjonspunkter}
-            behandlingresultat={behandlingsresultat}
-            behandlingPaaVent={false}
-            previewCallback={previewCallback}
-            hentFritekstbrevHtmlCallback={() => undefined}
-            readOnly={false}
-            sprakkode={sprakkode}
-            ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-            alleKodeverk={{}}
-            personopplysninger={personopplysninger}
-            arbeidsgiverOpplysningerPerId={{}}
-            tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
-            vilkar={[]}
-            tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-            informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-            dokumentdata={{}}
-            fritekstdokumenter={[]}
-            vedtakVarsel={vedtakVarsel}
-            submitCallback={() => undefined}
-            lagreDokumentdata={() => Promise.resolve()}
-            overlappendeYtelser={[]}
-            resultatstruktur="resultatstruktur"
-            simuleringResultat={{}}
-            resultatstrukturOriginalBehandling={{}}
-            bgPeriodeMedAvslagsårsak={{}}
-            medlemskapFom="2021-05-02"
-            erRevurdering={false}
-            behandlingArsaker={[]}
-          />
-        </ProsessStegContainer>
-      </QueryClientWrapper>,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={behandlingStatusUtredes}
+          aksjonspunkter={aksjonspunkter}
+          behandlingresultat={behandlingsresultat}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          hentFritekstbrevHtmlCallback={() => undefined}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={personopplysninger}
+          arbeidsgiverOpplysningerPerId={{}}
+          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          vilkar={[]}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+          dokumentdata={{}}
+          fritekstdokumenter={[]}
+          vedtakVarsel={vedtakVarsel}
+          submitCallback={() => undefined}
+          lagreDokumentdata={() => Promise.resolve()}
+          overlappendeYtelser={[]}
+          resultatstruktur="resultatstruktur"
+          simuleringResultat={{}}
+          resultatstrukturOriginalBehandling={{}}
+          bgPeriodeMedAvslagsårsak={{}}
+          medlemskapFom="2021-05-02"
+          erRevurdering={false}
+          behandlingArsaker={[]}
+        />
+      </ProsessStegContainer>,
     );
 
     const fattVedtakButton = screen.getByRole('button');
@@ -406,42 +395,40 @@ describe('<VedtakForm>', () => {
       avslagsarsak: null,
     };
     renderWithIntlAndReduxForm(
-      <QueryClientWrapper>
-        <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
-          <VedtakForm
-            intl={intlWithMessages(messages)}
-            behandlingStatus={{ kode: behandlingStatuser.AVSLUTTET }}
-            aksjonspunkter={aksjonspunkter}
-            behandlingresultat={behandlingsresultat}
-            behandlingPaaVent={false}
-            previewCallback={previewCallback}
-            hentFritekstbrevHtmlCallback={() => undefined}
-            readOnly={false}
-            sprakkode={sprakkode}
-            ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-            alleKodeverk={{}}
-            personopplysninger={personopplysninger}
-            arbeidsgiverOpplysningerPerId={{}}
-            tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
-            vilkar={[]}
-            tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-            informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-            dokumentdata={{}}
-            fritekstdokumenter={[]}
-            vedtakVarsel={vedtakVarsel}
-            submitCallback={() => undefined}
-            lagreDokumentdata={() => Promise.resolve()}
-            overlappendeYtelser={[]}
-            resultatstruktur="resultatstruktur"
-            simuleringResultat={{}}
-            resultatstrukturOriginalBehandling={{}}
-            bgPeriodeMedAvslagsårsak={{}}
-            medlemskapFom="2021-05-02"
-            erRevurdering={false}
-            behandlingArsaker={[]}
-          />
-        </ProsessStegContainer>
-      </QueryClientWrapper>,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={{ kode: behandlingStatuser.AVSLUTTET }}
+          aksjonspunkter={aksjonspunkter}
+          behandlingresultat={behandlingsresultat}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          hentFritekstbrevHtmlCallback={() => undefined}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={personopplysninger}
+          arbeidsgiverOpplysningerPerId={{}}
+          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          vilkar={[]}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+          dokumentdata={{}}
+          fritekstdokumenter={[]}
+          vedtakVarsel={vedtakVarsel}
+          submitCallback={() => undefined}
+          lagreDokumentdata={() => Promise.resolve()}
+          overlappendeYtelser={[]}
+          resultatstruktur="resultatstruktur"
+          simuleringResultat={{}}
+          resultatstrukturOriginalBehandling={{}}
+          bgPeriodeMedAvslagsårsak={{}}
+          medlemskapFom="2021-05-02"
+          erRevurdering={false}
+          behandlingArsaker={[]}
+        />
+      </ProsessStegContainer>,
     );
 
     const hovedknapp = screen.queryByRole('button');
@@ -469,42 +456,40 @@ describe('<VedtakForm>', () => {
     const previewCallback = vi.fn();
 
     renderWithIntlAndReduxForm(
-      <QueryClientWrapper>
-        <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
-          <VedtakForm
-            intl={intlWithMessages(messages)}
-            behandlingStatus={{ kode: behandlingStatuser.IVERKSETTER_VEDTAK }}
-            aksjonspunkter={aksjonspunkter}
-            behandlingresultat={behandlingsresultat}
-            behandlingPaaVent={false}
-            previewCallback={previewCallback}
-            hentFritekstbrevHtmlCallback={() => undefined}
-            readOnly={false}
-            sprakkode={sprakkode}
-            ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-            alleKodeverk={{}}
-            personopplysninger={personopplysninger}
-            arbeidsgiverOpplysningerPerId={{}}
-            tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
-            vilkar={[]}
-            tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-            informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-            dokumentdata={{}}
-            fritekstdokumenter={[]}
-            vedtakVarsel={vedtakVarsel}
-            submitCallback={() => undefined}
-            lagreDokumentdata={() => Promise.resolve()}
-            overlappendeYtelser={[]}
-            resultatstruktur="resultatstruktur"
-            simuleringResultat={{}}
-            resultatstrukturOriginalBehandling={{}}
-            bgPeriodeMedAvslagsårsak={{}}
-            medlemskapFom="2021-05-02"
-            erRevurdering={false}
-            behandlingArsaker={[]}
-          />
-        </ProsessStegContainer>
-      </QueryClientWrapper>,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={{ kode: behandlingStatuser.IVERKSETTER_VEDTAK }}
+          aksjonspunkter={aksjonspunkter}
+          behandlingresultat={behandlingsresultat}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          hentFritekstbrevHtmlCallback={() => undefined}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={personopplysninger}
+          arbeidsgiverOpplysningerPerId={{}}
+          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          vilkar={[]}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+          dokumentdata={{}}
+          fritekstdokumenter={[]}
+          vedtakVarsel={vedtakVarsel}
+          submitCallback={() => undefined}
+          lagreDokumentdata={() => Promise.resolve()}
+          overlappendeYtelser={[]}
+          resultatstruktur="resultatstruktur"
+          simuleringResultat={{}}
+          resultatstrukturOriginalBehandling={{}}
+          bgPeriodeMedAvslagsårsak={{}}
+          medlemskapFom="2021-05-02"
+          erRevurdering={false}
+          behandlingArsaker={[]}
+        />
+      </ProsessStegContainer>,
     );
 
     const hovedknapp = screen.queryByRole('button');
@@ -532,42 +517,40 @@ describe('<VedtakForm>', () => {
       avslagsarsak: null,
     };
     renderWithIntlAndReduxForm(
-      <QueryClientWrapper>
-        <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
-          <VedtakForm
-            intl={intlWithMessages(messages)}
-            behandlingStatus={{ kode: behandlingStatuser.FATTER_VEDTAK }}
-            aksjonspunkter={aksjonspunkter}
-            behandlingresultat={behandlingsresultat}
-            behandlingPaaVent={false}
-            previewCallback={previewCallback}
-            hentFritekstbrevHtmlCallback={() => undefined}
-            readOnly={false}
-            sprakkode={sprakkode}
-            ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-            alleKodeverk={{}}
-            personopplysninger={personopplysninger}
-            arbeidsgiverOpplysningerPerId={{}}
-            tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
-            vilkar={[]}
-            tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-            informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-            dokumentdata={{}}
-            fritekstdokumenter={[]}
-            vedtakVarsel={vedtakVarsel}
-            submitCallback={() => undefined}
-            lagreDokumentdata={() => Promise.resolve()}
-            overlappendeYtelser={[]}
-            resultatstruktur="resultatstruktur"
-            simuleringResultat={{}}
-            resultatstrukturOriginalBehandling={{}}
-            bgPeriodeMedAvslagsårsak={{}}
-            medlemskapFom="2021-05-02"
-            erRevurdering={false}
-            behandlingArsaker={[]}
-          />
-        </ProsessStegContainer>
-      </QueryClientWrapper>,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={{ kode: behandlingStatuser.FATTER_VEDTAK }}
+          aksjonspunkter={aksjonspunkter}
+          behandlingresultat={behandlingsresultat}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          hentFritekstbrevHtmlCallback={() => undefined}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={personopplysninger}
+          arbeidsgiverOpplysningerPerId={{}}
+          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          vilkar={[]}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+          dokumentdata={{}}
+          fritekstdokumenter={[]}
+          vedtakVarsel={vedtakVarsel}
+          submitCallback={() => undefined}
+          lagreDokumentdata={() => Promise.resolve()}
+          overlappendeYtelser={[]}
+          resultatstruktur="resultatstruktur"
+          simuleringResultat={{}}
+          resultatstrukturOriginalBehandling={{}}
+          bgPeriodeMedAvslagsårsak={{}}
+          medlemskapFom="2021-05-02"
+          erRevurdering={false}
+          behandlingArsaker={[]}
+        />
+      </ProsessStegContainer>,
       { messages },
     );
 
@@ -609,42 +592,40 @@ describe('<VedtakForm>', () => {
 
   it('skal vise avkrysningsboks for overstyring', () => {
     renderWithIntlAndReduxForm(
-      <QueryClientWrapper>
-        <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
-          <VedtakForm
-            intl={intlWithMessages(messages)}
-            behandlingStatus={behandlingStatusUtredes}
-            aksjonspunkter={aksjonspunkter}
-            behandlingresultat={behandlingsresultat}
-            behandlingPaaVent={false}
-            previewCallback={previewCallback}
-            hentFritekstbrevHtmlCallback={() => undefined}
-            readOnly={false}
-            sprakkode={sprakkode}
-            ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-            alleKodeverk={{}}
-            personopplysninger={personopplysninger}
-            arbeidsgiverOpplysningerPerId={{}}
-            tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
-            vilkar={[]}
-            tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
-            informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-            dokumentdata={dokumentdata}
-            fritekstdokumenter={[]}
-            vedtakVarsel={vedtakVarsel}
-            submitCallback={() => undefined}
-            lagreDokumentdata={() => Promise.resolve()}
-            overlappendeYtelser={[]}
-            resultatstruktur="resultatstruktur"
-            simuleringResultat={{}}
-            resultatstrukturOriginalBehandling={{}}
-            bgPeriodeMedAvslagsårsak={{}}
-            medlemskapFom="2021-05-02"
-            erRevurdering={false}
-            behandlingArsaker={[]}
-          />
-        </ProsessStegContainer>
-      </QueryClientWrapper>,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={behandlingStatusUtredes}
+          aksjonspunkter={aksjonspunkter}
+          behandlingresultat={behandlingsresultat}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          hentFritekstbrevHtmlCallback={() => undefined}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={personopplysninger}
+          arbeidsgiverOpplysningerPerId={{}}
+          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          vilkar={[]}
+          tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+          dokumentdata={dokumentdata}
+          fritekstdokumenter={[]}
+          vedtakVarsel={vedtakVarsel}
+          submitCallback={() => undefined}
+          lagreDokumentdata={() => Promise.resolve()}
+          overlappendeYtelser={[]}
+          resultatstruktur="resultatstruktur"
+          simuleringResultat={{}}
+          resultatstrukturOriginalBehandling={{}}
+          bgPeriodeMedAvslagsårsak={{}}
+          medlemskapFom="2021-05-02"
+          erRevurdering={false}
+          behandlingArsaker={[]}
+        />
+      </ProsessStegContainer>,
       { messages },
     );
     const overstyringsCheckbox = screen.getByLabelText(messages['VedtakForm.ManuellOverstyring']);
@@ -653,42 +634,40 @@ describe('<VedtakForm>', () => {
 
   it('skal vise avkrysningsboks for å hindre brevutsending', () => {
     renderWithIntlAndReduxForm(
-      <QueryClientWrapper>
-        <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
-          <VedtakForm
-            intl={intlWithMessages(messages)}
-            behandlingStatus={behandlingStatusUtredes}
-            aksjonspunkter={aksjonspunkter}
-            behandlingresultat={behandlingsresultat}
-            behandlingPaaVent={false}
-            previewCallback={previewCallback}
-            hentFritekstbrevHtmlCallback={() => undefined}
-            readOnly={false}
-            sprakkode={sprakkode}
-            ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-            alleKodeverk={{}}
-            personopplysninger={personopplysninger}
-            arbeidsgiverOpplysningerPerId={{}}
-            tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
-            vilkar={[]}
-            tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
-            informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-            dokumentdata={dokumentdata}
-            fritekstdokumenter={[]}
-            vedtakVarsel={vedtakVarsel}
-            submitCallback={() => undefined}
-            lagreDokumentdata={() => Promise.resolve()}
-            overlappendeYtelser={[]}
-            resultatstruktur="resultatstruktur"
-            simuleringResultat={{}}
-            resultatstrukturOriginalBehandling={{}}
-            bgPeriodeMedAvslagsårsak={{}}
-            medlemskapFom="2021-05-02"
-            erRevurdering={false}
-            behandlingArsaker={[]}
-          />
-        </ProsessStegContainer>
-      </QueryClientWrapper>,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={behandlingStatusUtredes}
+          aksjonspunkter={aksjonspunkter}
+          behandlingresultat={behandlingsresultat}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          hentFritekstbrevHtmlCallback={() => undefined}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={personopplysninger}
+          arbeidsgiverOpplysningerPerId={{}}
+          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          vilkar={[]}
+          tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+          dokumentdata={dokumentdata}
+          fritekstdokumenter={[]}
+          vedtakVarsel={vedtakVarsel}
+          submitCallback={() => undefined}
+          lagreDokumentdata={() => Promise.resolve()}
+          overlappendeYtelser={[]}
+          resultatstruktur="resultatstruktur"
+          simuleringResultat={{}}
+          resultatstrukturOriginalBehandling={{}}
+          bgPeriodeMedAvslagsårsak={{}}
+          medlemskapFom="2021-05-02"
+          erRevurdering={false}
+          behandlingArsaker={[]}
+        />
+      </ProsessStegContainer>,
       { messages },
     );
 
@@ -698,42 +677,40 @@ describe('<VedtakForm>', () => {
 
   it('skal disable checkboxer i readonly', () => {
     renderWithIntlAndReduxForm(
-      <QueryClientWrapper>
-        <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
-          <VedtakForm
-            intl={intlWithMessages(messages)}
-            behandlingStatus={behandlingStatusUtredes}
-            aksjonspunkter={aksjonspunkter}
-            behandlingresultat={behandlingsresultat}
-            behandlingPaaVent={false}
-            previewCallback={previewCallback}
-            hentFritekstbrevHtmlCallback={() => undefined}
-            readOnly
-            sprakkode={sprakkode}
-            ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-            alleKodeverk={{}}
-            personopplysninger={personopplysninger}
-            arbeidsgiverOpplysningerPerId={{}}
-            tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
-            vilkar={[]}
-            tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
-            informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-            dokumentdata={dokumentdata}
-            fritekstdokumenter={[]}
-            vedtakVarsel={vedtakVarsel}
-            submitCallback={() => undefined}
-            lagreDokumentdata={() => Promise.resolve()}
-            overlappendeYtelser={[]}
-            resultatstruktur="resultatstruktur"
-            simuleringResultat={{}}
-            resultatstrukturOriginalBehandling={{}}
-            bgPeriodeMedAvslagsårsak={{}}
-            medlemskapFom="2021-05-02"
-            erRevurdering={false}
-            behandlingArsaker={[]}
-          />
-        </ProsessStegContainer>
-      </QueryClientWrapper>,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={behandlingStatusUtredes}
+          aksjonspunkter={aksjonspunkter}
+          behandlingresultat={behandlingsresultat}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          hentFritekstbrevHtmlCallback={() => undefined}
+          readOnly
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={personopplysninger}
+          arbeidsgiverOpplysningerPerId={{}}
+          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          vilkar={[]}
+          tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+          dokumentdata={dokumentdata}
+          fritekstdokumenter={[]}
+          vedtakVarsel={vedtakVarsel}
+          submitCallback={() => undefined}
+          lagreDokumentdata={() => Promise.resolve()}
+          overlappendeYtelser={[]}
+          resultatstruktur="resultatstruktur"
+          simuleringResultat={{}}
+          resultatstrukturOriginalBehandling={{}}
+          bgPeriodeMedAvslagsårsak={{}}
+          medlemskapFom="2021-05-02"
+          erRevurdering={false}
+          behandlingArsaker={[]}
+        />
+      </ProsessStegContainer>,
       { messages },
     );
     const overstyringsCheckbox = screen.getByLabelText(messages['VedtakForm.ManuellOverstyring']);
@@ -752,42 +729,40 @@ describe('<VedtakForm>', () => {
     };
 
     renderWithIntlAndReduxForm(
-      <QueryClientWrapper>
-        <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
-          <VedtakForm
-            intl={intlWithMessages(messages)}
-            behandlingStatus={behandlingStatusUtredes}
-            aksjonspunkter={aksjonspunkter}
-            behandlingresultat={behandlingsresultat}
-            behandlingPaaVent={false}
-            previewCallback={previewCallback}
-            hentFritekstbrevHtmlCallback={() => undefined}
-            readOnly={false}
-            sprakkode={sprakkode}
-            ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-            alleKodeverk={{}}
-            personopplysninger={personopplysninger}
-            arbeidsgiverOpplysningerPerId={{}}
-            tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
-            vilkar={[]}
-            tilgjengeligeVedtaksbrev={vedtaksbrevmalerUtenAutomatisk}
-            informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-            dokumentdata={dokumentdata}
-            fritekstdokumenter={[]}
-            vedtakVarsel={vedtakVarsel}
-            submitCallback={() => undefined}
-            lagreDokumentdata={() => Promise.resolve()}
-            overlappendeYtelser={[]}
-            resultatstruktur="resultatstruktur"
-            simuleringResultat={{}}
-            resultatstrukturOriginalBehandling={{}}
-            bgPeriodeMedAvslagsårsak={{}}
-            medlemskapFom="2021-05-02"
-            erRevurdering={false}
-            behandlingArsaker={[]}
-          />
-        </ProsessStegContainer>
-      </QueryClientWrapper>,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={behandlingStatusUtredes}
+          aksjonspunkter={aksjonspunkter}
+          behandlingresultat={behandlingsresultat}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          hentFritekstbrevHtmlCallback={() => undefined}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={personopplysninger}
+          arbeidsgiverOpplysningerPerId={{}}
+          tilbakekrevingvalg={{ videreBehandling: { kode: 'tilbakekrevingskode' } }}
+          vilkar={[]}
+          tilgjengeligeVedtaksbrev={vedtaksbrevmalerUtenAutomatisk}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+          dokumentdata={dokumentdata}
+          fritekstdokumenter={[]}
+          vedtakVarsel={vedtakVarsel}
+          submitCallback={() => undefined}
+          lagreDokumentdata={() => Promise.resolve()}
+          overlappendeYtelser={[]}
+          resultatstruktur="resultatstruktur"
+          simuleringResultat={{}}
+          resultatstrukturOriginalBehandling={{}}
+          bgPeriodeMedAvslagsårsak={{}}
+          medlemskapFom="2021-05-02"
+          erRevurdering={false}
+          behandlingArsaker={[]}
+        />
+      </ProsessStegContainer>,
       { messages },
     );
     const overstyringsCheckbox = screen.getByLabelText(messages['VedtakForm.ManuellOverstyring']);
