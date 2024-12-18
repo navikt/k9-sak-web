@@ -147,7 +147,7 @@ describe('<UnntakFakta>', () => {
       />,
     );
 
-    expect(screen.getByRole('button', { name: 'Arbeidsforhold Aksjonspunkt' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Arbeidsforhold' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Inntekt og ytelser' })).toBeInTheDocument();
     expect(screen.getByText('Avklar om arbeidsforholdene skal benyttes i behandlingen')).toBeInTheDocument();
   });
