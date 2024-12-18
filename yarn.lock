@@ -3895,6 +3895,7 @@ __metadata:
   dependencies:
     "@navikt/k9-klage-typescript-client": 1.0.20241206133624
     "@navikt/k9-sak-typescript-client": 1.0.20241203201014
+    "@tanstack/eslint-plugin-query": ^5.62.1
   languageName: unknown
   linkType: soft
 
@@ -6622,6 +6623,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/eslint-plugin-query@npm:^5.62.1":
+  version: 5.62.1
+  resolution: "@tanstack/eslint-plugin-query@npm:5.62.1"
+  dependencies:
+    "@typescript-eslint/utils": ^8.15.0
+  peerDependencies:
+    eslint: ^8.57.0 || ^9.0.0
+  checksum: 8270d73ec850d74654d633b003c7f438819e15d96969ceb555b1c5bf758cc8d6c5b453c3d6aa828e58a3eb22b4e18de6f2cd2a6deae030f0d2da525760a2f1b5
+  languageName: node
+  linkType: hard
+
 "@tanstack/query-core@npm:5.62.8":
   version: 5.62.8
   resolution: "@tanstack/query-core@npm:5.62.8"
@@ -7131,7 +7143,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:8.18.1":
+"@typescript-eslint/utils@npm:8.18.1, @typescript-eslint/utils@npm:^8.15.0":
   version: 8.18.1
   resolution: "@typescript-eslint/utils@npm:8.18.1"
   dependencies:
