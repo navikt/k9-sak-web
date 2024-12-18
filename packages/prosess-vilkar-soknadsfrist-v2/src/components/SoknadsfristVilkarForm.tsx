@@ -1,6 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktBox, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity, initializeDate } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { Periode, SubmitCallback } from '@k9-sak-web/types';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
@@ -14,10 +14,11 @@ import { useForm } from 'react-hook-form';
 
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
+import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { VilkårPeriodeDto } from '@navikt/k9-sak-typescript-client';
 import { utledInnsendtSoknadsfrist } from '../utils';
 import { FormState } from './FormState';
-import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import SoknadsfristVilkarDokument, { DELVIS_OPPFYLT } from './SoknadsfristVilkarDokument';
 import styles from './SoknadsfristVilkarForm.module.css';
 

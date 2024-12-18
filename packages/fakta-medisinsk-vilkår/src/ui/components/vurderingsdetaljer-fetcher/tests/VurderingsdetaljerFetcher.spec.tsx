@@ -1,6 +1,5 @@
 import { httpUtils } from '@fpsak-frontend/utils';
-import { render, waitFor, screen } from '@testing-library/react';
-import React from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
 import ContainerContext from '../../../context/ContainerContext';
 import VurderingsdetaljerFetcher from '../VurderingsdetaljerFetcher';
 
@@ -60,7 +59,7 @@ describe('VurderingsdetaljerFetcher', () => {
   it('should render a spinner while data is being fetched, and render specified content after data has been recieved', async () => {
     mockResolvedGetApiCallOnce(vurderingMock);
     const { getByText } = renderVurderingsdetaljerFetcher();
-    expect(getByText(/Venter.../i)).toBeInTheDocument();
+    expect(getByText('venter', { exact: false })).toBeInTheDocument();
     expect(screen.queryByText(mockedContent)).toBeNull();
     await waitFor(() => expect(getByText(mockedContent)).toBeInTheDocument());
   });
@@ -68,7 +67,7 @@ describe('VurderingsdetaljerFetcher', () => {
   it('should render a spinner while data is being fetched, and render an error message when http call has failed', async () => {
     mockRejectedGetApiCallOnce();
     const { getByText, queryByText } = renderVurderingsdetaljerFetcher();
-    expect(getByText(/Venter.../i)).toBeInTheDocument();
+    expect(getByText('venter', { exact: false })).toBeInTheDocument();
     expect(queryByText(mockedContent)).toBeNull();
     await waitFor(() => {
       expect(getByText(/Noe gikk galt, vennligst prøv igjen senere/i)).toBeInTheDocument();

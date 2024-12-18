@@ -1,5 +1,4 @@
-import { dateFormat, timeFormat } from '@fpsak-frontend/utils';
-
+import { formatDate, timeFormat } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import ErrorEventType from './errorEventType';
 import ErrorMessage from './ErrorMessage';
 import Formatter from './Formatter';
@@ -26,7 +25,7 @@ class RestHaltedOrDelayedFormatter implements Formatter<ErrorData> {
     }
     if (status === 'DELAYED') {
       return ErrorMessage.withMessageCode(DELAYED_PROCESS_TASK_MESSAGE_CODE, {
-        date: dateFormat(eta),
+        date: formatDate(eta),
         time: timeFormat(eta),
         message,
       });

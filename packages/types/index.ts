@@ -27,7 +27,6 @@ export type { default as UtlandDokStatus } from './src/opptjening/utlandDokStatu
 export type { default as Vilkårresultat } from './src/opptjening/vilkårresultat';
 export type { default as Periode } from './src/periodeTsType';
 export type { PersonopplysningAdresse, default as Personopplysninger } from './src/personopplysningerTsType';
-export type { default as Risikoklassifisering } from './src/risikoklassifiseringTsType';
 export type {
   Mottaker as SimuleringMottaker,
   default as SimuleringResultat,
@@ -37,21 +36,17 @@ export type { ManglendeVedleggSoknad, default as Soknad } from './src/soknadTsTy
 export type { default as SubmitCallback } from './src/submitCallback';
 export type { default as Sykdom } from './src/sykdom';
 export type { default as UttaksresultatPeriode } from './src/uttaksresultatPeriodeTsType';
-export type { default as Vilkar } from './src/vilkarTsType';
 export type { default as Vilkarperiode } from './src/vilkarperiode';
+export type { default as Vilkar } from './src/vilkarTsType';
 export type { default as Ytelsefordeling } from './src/ytelsefordelingTsType';
 
-export { default as Kilde } from './src/Kilde';
-export type { default as PerioderMedAarsak } from './src/PerioderMedAarsak';
-export type { default as PerioderMedBehandlingsId } from './src/PerioderMedBehandlingsId';
-export { default as Vurderingsresultat } from './src/Vurderingsresultat';
 export type { default as Aktor } from './src/aktorTsType';
 export type { default as AnkeVurdering } from './src/ankeVurderingTsType';
 export * from './src/arbeidsgiverOpplysningerTsType';
 export type { default as Arbeidsgiver } from './src/arbeidsgiverTsType';
 export type { default as BehandlingAppKontekst } from './src/behandlingAppKontekstTsType';
-export type { default as BehandlingPerioder } from './src/behandlingPerioderType';
 export type { default as BehandlingPerioderårsakMedVilkår } from './src/behandlingPerioderarsakMedVilkar';
+export type { default as BehandlingPerioder } from './src/behandlingPerioderType';
 export type { default as BeregningReferanse } from './src/beregning/beregningReferanseTsType';
 export * from './src/beregningsresultatTilbakekrevingTsType';
 export type { default as DokumentStatus } from './src/dokumentStatusTsType';
@@ -59,6 +54,7 @@ export type { default as FeilutbetalingFakta } from './src/feilutbetalingFaktaTs
 export * from './src/feilutbetalingPerioderTsType';
 export * from './src/historikkinnslagTsType';
 export * from './src/innsynTsType';
+export { default as Kilde } from './src/Kilde';
 export * from './src/klageVurderingTsType';
 export * from './src/kodeverk';
 export * from './src/meldingTsType';
@@ -72,13 +68,16 @@ export * from './src/opplaering/InstitusjonTypes';
 export * from './src/opplaering/OpplaeringTypes';
 export type { default as OvergangFraInfotrygd } from './src/overgangFraInfotrygd';
 export * from './src/overlappendePeriode';
+export type { default as PerioderMedAarsak } from './src/PerioderMedAarsak';
+export type { default as PerioderMedBehandlingsId } from './src/PerioderMedBehandlingsId';
 export type { default as RelatertFagsak } from './src/relatertFagsak';
 export type { default as SaksbehandlereInfo } from './src/saksbehandlereInfo';
 export * from './src/tidslinje';
-export type { default as BehandlingStatusType } from './src/totrinnskontroll/BehandlingStatusType';
 export type { default as Behandlingsresultat } from './src/totrinnskontroll/Behandlingsresultat';
+export type { default as BehandlingStatusType } from './src/totrinnskontroll/BehandlingStatusType';
 export * from './src/totrinnskontrollAksjonspunktTsType';
 export type { default as TotrinnskontrollSkjermlenkeContext } from './src/totrinnskontrollSkjermlenkeContextTsType';
 export * from './src/utenlandsopphold/utenlandsoppholdTsType';
 export type { default as Venteaarsak } from './src/venteaarsakTsType';
 export * from './src/vilkarUtfallPeriodisert';
+export { default as Vurderingsresultat } from './src/Vurderingsresultat';

@@ -29,7 +29,7 @@ import { BodyShort, Tabs, Tooltip } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
@@ -329,6 +329,7 @@ const BehandlingSupportIndex = ({
               behandlingVersjon={behandlingVersjon}
               fagsak={fagsak}
               behandlingUuid={behandling?.uuid}
+              featureToggles={featureToggles}
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.NOTATER}>

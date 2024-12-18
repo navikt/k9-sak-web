@@ -21,10 +21,12 @@ interface MainComponentProps {
 const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
   const {
     uttaksperioder,
+    inntektsgraderinger,
     aksjonspunktkoder,
     aksjonspunkter,
     virkningsdatoUttakNyeRegler,
     erOverstyrer,
+    readOnly,
     vurderOverlappendeSakComponent,
   } = containerData;
   const [redigerVirkningsdato, setRedigervirkningsdato] = React.useState<boolean>(false);
@@ -59,22 +61,29 @@ const UttakContainer = ({ containerData }: MainComponentProps): JSX.Element => {
         <OverstyrUttakContextProvider>
           <OverstyrUttakForm overstyringAktiv={overstyringAktiv} />
         </OverstyrUttakContextProvider>
+
         <UtsattePerioderStripe />
-        {harAksjonspunktVurderDatoMedStatusOpprettet && <VurderDato />}
-        {virkningsdatoUttakNyeRegler && redigerVirkningsdato && (
+        {/* Allerede løst og har klikket rediger, eller har uløst aksjonspunkt */}
+        {((virkningsdatoUttakNyeRegler && redigerVirkningsdato) ||
+          harAksjonspunktVurderDatoMedStatusOpprettet ||
+          (readOnly && aksjonspunktVurderDato)) && (
           <VurderDato
-            avbryt={() => setRedigervirkningsdato(false)}
+            avbryt={
+              virkningsdatoUttakNyeRegler && redigerVirkningsdato ? () => setRedigervirkningsdato(false) : undefined
+            }
             initialValues={{
               begrunnelse: aksjonspunktVurderDato?.begrunnelse,
               virkningsdato: virkningsdatoUttakNyeRegler,
             }}
+            readOnly={readOnly}
           />
         )}
         {!harVentAnnenPSBSakAksjonspunkt && (
           <UttaksperiodeListe
-            uttaksperioder={lagUttaksperiodeliste(uttaksperioder)}
+            uttaksperioder={lagUttaksperiodeliste(uttaksperioder, inntektsgraderinger)}
             redigerVirkningsdatoFunc={() => setRedigervirkningsdato(true)}
             redigerVirkningsdato={redigerVirkningsdato}
+            readOnly={readOnly}
           />
         )}
       </VStack>

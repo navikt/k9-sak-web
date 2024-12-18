@@ -6,17 +6,17 @@ import {
   ariaCheck,
   dateAfterOrEqualToToday,
   dateBeforeToday,
-  formatDate,
   hasValidDate,
   hasValidText,
   maxLength,
   required,
 } from '@fpsak-frontend/utils';
+import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
 import { BodyShort, Button, Label, Modal, Select } from '@navikt/ds-react';
 import moment from 'moment';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';

@@ -1,8 +1,7 @@
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import React from 'react';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import Uttak from '../../components/Uttak';
 import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
 
@@ -10,6 +9,7 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = ({
     behandling,
     uttaksperioder,
+    inntektsgraderinger,
     perioderTilVurdering,
     utsattePerioder,
     arbeidsgiverOpplysningerPerId,
@@ -20,11 +20,13 @@ class PanelDef extends ProsessStegPanelDef {
     virkningsdatoUttakNyeRegler,
     relevanteAksjonspunkter,
     erOverstyrer,
+    isReadOnly,
   }) => (
     <Uttak
       uuid={behandling.uuid}
       behandling={behandling}
       uttaksperioder={uttaksperioder}
+      inntektsgraderinger={inntektsgraderinger}
       perioderTilVurdering={perioderTilVurdering}
       utsattePerioder={utsattePerioder}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
@@ -35,6 +37,7 @@ class PanelDef extends ProsessStegPanelDef {
       virkningsdatoUttakNyeRegler={virkningsdatoUttakNyeRegler}
       relevanteAksjonspunkter={relevanteAksjonspunkter}
       erOverstyrer={erOverstyrer}
+      readOnly={isReadOnly}
     />
   );
 
@@ -68,15 +71,20 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
-  getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk }) => ({
-    uttaksperioder: uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder,
-    perioderTilVurdering: uttak?.perioderTilVurdering,
-    utsattePerioder: uttak?.utsattePerioder,
-    virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
-    arbeidsgiverOpplysningerPerId,
-    alleKodeverk,
-    relevanteAksjonspunkter: this.getAksjonspunktKoder(),
-  });
+  getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk, pleiepengerInntektsgradering, featureToggles }) => {
+    return {
+      uttaksperioder: uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder,
+      inntektsgraderinger: featureToggles.BRUK_INNTEKTSGRADERING_I_UTTAK
+        ? pleiepengerInntektsgradering?.perioder
+        : undefined,
+      perioderTilVurdering: uttak?.perioderTilVurdering,
+      utsattePerioder: uttak?.utsattePerioder,
+      virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
+      arbeidsgiverOpplysningerPerId,
+      alleKodeverk,
+      relevanteAksjonspunkter: this.getAksjonspunktKoder(),
+    };
+  };
 }
 
 class UttakProsessStegPanelDef extends ProsessStegDef {

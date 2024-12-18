@@ -1,10 +1,10 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId, Behandling } from '@k9-sak-web/types';
-import { Uttak } from '@k9-sak-web/prosess-uttak';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
+import { findEndpointsFromRels, httpErrorHandler } from '@fpsak-frontend/utils';
 import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
+import { Inntektsgradering, Uttak } from '@k9-sak-web/prosess-uttak';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId, Behandling } from '@k9-sak-web/types';
 import VurderOverlappendeSakIndex from '@k9-sak-web/gui/prosess/uttak/vurder-overlappende-sak/VurderOverlappendeSakIndex.js';
 import { OverstyringUttakRequest } from '../types';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
@@ -15,6 +15,7 @@ interface UttakProps {
   uuid: string;
   behandling: Behandling;
   uttaksperioder: any;
+  inntektsgraderinger: Inntektsgradering[];
   perioderTilVurdering?: string[];
   utsattePerioder: string[];
   virkningsdatoUttakNyeRegler?: string;
@@ -25,12 +26,14 @@ interface UttakProps {
   lagreOverstyringUttak: (values: any) => void;
   relevanteAksjonspunkter: string[];
   erOverstyrer: boolean;
+  readOnly: boolean;
 }
 
 export default ({
   uuid,
   behandling,
   uttaksperioder,
+  inntektsgraderinger,
   perioderTilVurdering = [],
   utsattePerioder,
   arbeidsgiverOpplysningerPerId,
@@ -41,6 +44,7 @@ export default ({
   lagreOverstyringUttak,
   relevanteAksjonspunkter,
   erOverstyrer,
+  readOnly,
 }: UttakProps) => {
   const { featureToggles } = useFeatureToggles();
   const { versjon, links, status: behandlingStatus } = behandling;
@@ -88,11 +92,12 @@ export default ({
     <Uttak
       containerData={{
         httpErrorHandler: httpErrorHandlerCaller,
-        endpoints: findEndpointsForMicrofrontend(links, [
+        endpoints: findEndpointsFromRels(links, [
           { rel: 'pleiepenger-overstyrtbare-aktiviteter', desiredName: 'behandlingUttakOverstyrbareAktiviteter' },
           { rel: 'pleiepenger-overstyrt-uttak', desiredName: 'behandlingUttakOverstyrt' },
         ]),
         uttaksperioder,
+        inntektsgraderinger,
         perioderTilVurdering,
         utsattePerioder,
         aktivBehandlingUuid: uuid,
@@ -107,6 +112,7 @@ export default ({
         versjon,
         erOverstyrer,
         status: behandlingStatus.kode,
+        readOnly,
         vurderOverlappendeSakComponent: VurderOverlappendeSakComponent(),
       }}
     />

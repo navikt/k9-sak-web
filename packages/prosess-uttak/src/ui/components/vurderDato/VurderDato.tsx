@@ -1,7 +1,7 @@
 import { Accordion, Alert, BodyLong, Label } from '@navikt/ds-react';
-import React, { useEffect } from 'react';
-import VurderDatoAksjonspunkt from './VurderDatoAksjonspunkt';
+import { useEffect } from 'react';
 import styles from './VurderDato.module.css';
+import VurderDatoAksjonspunkt from './VurderDatoAksjonspunkt';
 
 interface Props {
   avbryt?: () => void;
@@ -9,6 +9,7 @@ interface Props {
     virkningsdato: string;
     begrunnelse: string;
   };
+  readOnly: boolean;
 }
 
 // eslint-disable-next-line consistent-return
@@ -27,7 +28,7 @@ const scrollToVurderDatoContainer = () => {
     };
   }
 };
-const VurderDato = ({ avbryt, initialValues }: Props) => {
+const VurderDato = ({ avbryt, initialValues, readOnly }: Props) => {
   useEffect(() => {
     // avbryt er kun definert når vi skal redigere et løst aksjonspunkt
     if (typeof avbryt === 'function') {
@@ -46,7 +47,7 @@ const VurderDato = ({ avbryt, initialValues }: Props) => {
       </Alert>
       <Alert variant="info" className={styles.info}>
         <Accordion className={styles.alertAccordion} indent={false}>
-          <Accordion.Item>
+          <Accordion.Item className="!shadow-none">
             <Accordion.Header>
               <Label size="small">Hva innebærer endringene i uttak?</Label>
             </Accordion.Header>
@@ -73,7 +74,7 @@ const VurderDato = ({ avbryt, initialValues }: Props) => {
           </Accordion.Item>
         </Accordion>
       </Alert>
-      <VurderDatoAksjonspunkt avbryt={avbryt} initialValues={initialValues} />
+      <VurderDatoAksjonspunkt avbryt={avbryt} initialValues={initialValues} readOnly={readOnly} />
     </div>
   );
 };

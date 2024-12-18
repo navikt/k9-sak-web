@@ -3,7 +3,7 @@ import React from 'react';
 import { ExternalLink } from '@navikt/ds-icons';
 import { Button, ButtonProps } from '@navikt/ds-react';
 
-import { useHref, useLocation } from 'react-router-dom';
+import { useHref, useLocation } from 'react-router';
 
 type ÅpneSakINyttVinduProps = {
   value?: string;

@@ -86,8 +86,20 @@ export const featureTogglesFactory = () => [
     value: process.env.AUTOMATISK_VURDERT_MEDLEMSKAP,
   },
   {
-    key: 'DELVIS_REVURDERING',
-    value: process.env.VITE_DELVIS_REVURDERING,
+    key: 'BRUK_V2_SAK_DOKUMENTER',
+    value: process.env.VITE_BRUK_V2_SAK_DOKUMENTER,
+  },
+  {
+    key: 'OPPTJENING_READ_ONLY_PERIODER',
+    value: process.env.VITE_OPPTJENING_READ_ONLY_PERIODER,
+  },
+  {
+    key: 'BRUK_INNTEKTSGRADERING_I_UTTAK',
+    value: process.env.VITE_BRUK_INNTEKTSGRADERING_I_UTTAK,
+  },
+  {
+    key: 'AKSJONSPUNKT_OVERLAPPENDE_SAKER',
+    value: process.env.VITE_AKSJONSPUNKT_OVERLAPPENDE_SAKER,
   },
   {
     key: 'AKSJONSPUNKT_OVERLAPPENDE_SAKER',

@@ -5,15 +5,14 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { vi } from 'vitest';
+import type useTrackRouteParam from '../app/useTrackRouteParam.js';
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import FagsakIndex from './FagsakIndex';
-import type useTrackRouteParam from '../app/useTrackRouteParam.js';
 
-vi.mock('react-router-dom', async () => {
-  const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
+vi.mock('react-router', async () => {
+  const actual = (await vi.importActual('react-router')) as Record<string, unknown>;
   return {
     ...actual,
     useLocation: () => ({

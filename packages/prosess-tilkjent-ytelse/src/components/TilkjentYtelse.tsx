@@ -1,11 +1,8 @@
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineControl, Timeline } from '@fpsak-frontend/tidslinje';
-import {
-  DDMMYY_DATE_FORMAT,
-  ISO_DATE_FORMAT,
-  calcDaysAndWeeksWithWeekends,
-  initializeDate,
-} from '@fpsak-frontend/utils';
+import { calcDaysAndWeeksWithWeekends } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
+import { DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
+import { initializeDate } from '@k9-sak-web/lib/dateUtils/initializeDate.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { BeregningsresultatPeriodeDto } from '@navikt/k9-sak-typescript-client';
@@ -41,28 +38,21 @@ const getOptions = (nyePerioder: PeriodeMedId[]) => {
 
 const createTooltipContent = (
   item: PeriodeMedId,
-  getKodeverknavn,
+  getKodeverknavn: (kode: string, kodeverkType: KodeverkType) => string,
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 ) => {
   const periodeDato = `${initializeDate(item.fom).format(DDMMYY_DATE_FORMAT)} - ${initializeDate(item.tom).format(DDMMYY_DATE_FORMAT)}`;
-  return `
-  <p>
-    ${periodeDato}
-     ${calcDaysAndWeeksWithWeekends(initializeDate(item.fom), initializeDate(item.tom))}
-    <br />
-    ${`Dagsats: ${item.dagsats}kr`}
-    <br />
-    ${
-      (item.andeler || []).length > 1
-        ? item.andeler
-            .map(andel => {
-              `${createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}: ${Number(andel.refusjon) + Number(andel.tilSoker)} kr`;
-            })
-            .join('<br />')
-        : ''
-    }
-   </p>
-`;
+  const getArbeidsgiverAndeler = () => {
+    let arbeidsgiverAndeler = '';
+    (item.andeler || []).forEach((andel, index) => {
+      arbeidsgiverAndeler += `${index > 0 ? ', ' : ''}${createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}: ${Number(andel.refusjon) + Number(andel.tilSoker)} kr`;
+    });
+    return arbeidsgiverAndeler;
+  };
+  return `${periodeDato}
+${calcDaysAndWeeksWithWeekends(initializeDate(item.fom), initializeDate(item.tom))}
+${`Dagsats: ${item.dagsats}kr`}
+${getArbeidsgiverAndeler()}`;
 };
 
 const sumUtBetalingsgrad = (andeler: PeriodeMedId['andeler']) =>

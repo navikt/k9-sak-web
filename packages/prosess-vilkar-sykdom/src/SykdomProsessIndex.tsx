@@ -2,8 +2,8 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer } from '@fpsak-frontend/shared-components/index';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
-import { dateFormat } from '@fpsak-frontend/utils';
 import { Lovreferanse } from '@k9-sak-web/gui/shared/lovreferanse/Lovreferanse.js';
+import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { CheckmarkCircleFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons';
 import { Detail, Heading, HStack, Label } from '@navikt/ds-react';
@@ -78,7 +78,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomP
             <SideMenu
               links={perioder.map((currentPeriode, currentPeriodeIndex) => ({
                 active: perioder.findIndex(p => isEqual(p, activePeriode)) === currentPeriodeIndex,
-                label: `${dateFormat(perioder[currentPeriodeIndex].periode.fom)} - ${dateFormat(
+                label: `${formatDate(perioder[currentPeriodeIndex].periode.fom)} - ${formatDate(
                   perioder[currentPeriodeIndex].periode.tom,
                 )}`,
               }))}

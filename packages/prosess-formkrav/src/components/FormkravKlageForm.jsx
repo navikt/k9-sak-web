@@ -8,15 +8,15 @@ import {
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-frontend/utils';
+import { getKodeverknavnFn, required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Detail, HGrid, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import lagVisningsnavnForKlagepart from '../utils/lagVisningsnavnForKlagepart';
 
+import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import styles from './formkravKlageForm.module.css';
 
 export const IKKE_PAKLAGD_VEDTAK = 'ikkePaklagdVedtak';
@@ -29,13 +29,14 @@ export const getPaklagdVedtak = (klageFormkravResultat, avsluttedeBehandlinger) 
 };
 
 const getKlagbareVedtak = (avsluttedeBehandlinger, intl, getKodeverknavn) => {
+  const sorterNyesteOpprettetFørst = (a, b) => (new Date(a.opprettet) < new Date(b.opprettet) ? 1 : -1);
   const klagBareVedtak = [
     <option key="formkrav" value={IKKE_PAKLAGD_VEDTAK}>
       {intl.formatMessage({ id: 'Klage.Formkrav.IkkePåklagdVedtak' })}
     </option>,
   ];
   return klagBareVedtak.concat(
-    avsluttedeBehandlinger.map(behandling => (
+    avsluttedeBehandlinger.toSorted(sorterNyesteOpprettetFørst).map(behandling => (
       <option key={behandling.uuid} value={`${behandling.uuid}`}>
         {`${getKodeverknavn(behandling.type)} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
       </option>

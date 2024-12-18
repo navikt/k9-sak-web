@@ -15,7 +15,7 @@
     "./k9klage/kodeverk/*": "./src/k9klage/kodeverk/*"
   },
   "dependencies": {
-    "@navikt/k9-klage-typescript-client": "1.0.20240513162434-997f3da",
-    "@navikt/k9-sak-typescript-client": "1.0.20241024122219"
+    "@navikt/k9-klage-typescript-client": "1.0.20241206133624",
+    "@navikt/k9-sak-typescript-client": "1.0.20241203201014"
   }
 }

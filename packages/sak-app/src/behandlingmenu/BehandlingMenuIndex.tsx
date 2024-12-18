@@ -26,8 +26,8 @@ import {
   Personopplysninger,
 } from '@k9-sak-web/types';
 import moment from 'moment';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router';
 import ApplicationContextPath from '../app/ApplicationContextPath';
 import { getLocationWithDefaultProsessStegAndFakta, getPathToK9Los, pathToBehandling } from '../app/paths';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';

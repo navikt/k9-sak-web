@@ -1,19 +1,19 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
-  Fagsak,
-  Behandling,
-  FagsakPerson,
   ArbeidsgiverOpplysningerWrapper,
+  Behandling,
+  Fagsak,
+  FagsakPerson,
   FeatureToggles,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
-import { restApiFrisinnHooks, requestFrisinnApi, FrisinnBehandlingApiKeys } from './data/frisinnBehandlingApi';
 import FrisinnPaneler from './components/FrisinnPaneler';
+import { FrisinnBehandlingApiKeys, requestFrisinnApi, restApiFrisinnHooks } from './data/frisinnBehandlingApi';
 import FetchedData from './types/fetchedDataTsType';
 
 const frisinnData = [
@@ -97,9 +97,6 @@ const BehandlingFrisinnIndex = ({
     FrisinnBehandlingApiKeys.HENLEGG_BEHANDLING,
   );
   const { startRequest: settPaVent } = restApiFrisinnHooks.useRestApiRunner(FrisinnBehandlingApiKeys.UPDATE_ON_HOLD);
-  const { startRequest: lagreRisikoklassifiseringAksjonspunkt } = restApiFrisinnHooks.useRestApiRunner(
-    FrisinnBehandlingApiKeys.SAVE_AKSJONSPUNKT,
-  );
 
   useEffect(() => {
     behandlingEventHandler.setHandler({
@@ -108,7 +105,6 @@ const BehandlingFrisinnIndex = ({
       taBehandlingAvVent: params =>
         taBehandlingAvVent(params).then(behandlingResTaAvVent => setBehandling(behandlingResTaAvVent)),
       henleggBehandling: params => henleggBehandling(params),
-      lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 
     requestFrisinnApi.setRequestPendingHandler(setRequestPendingMessage);

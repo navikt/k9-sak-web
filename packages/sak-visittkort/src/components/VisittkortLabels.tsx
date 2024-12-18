@@ -1,10 +1,10 @@
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
 import { Tooltip } from '@fpsak-frontend/shared-components';
-import { dateFormat } from '@fpsak-frontend/utils';
+import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { Personopplysninger } from '@k9-sak-web/types';
 import { Tag } from '@navikt/ds-react';
 import moment from 'moment';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import styles from './visittkortLabels.module.css';
 
@@ -30,7 +30,7 @@ const VisittkortLabels = ({
       {personopplysninger && personopplysninger.dodsdato && (
         <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.DodTittel' })} alignBottom>
           <Tag variant="info" className={styles.etikett}>
-            <FormattedMessage id="VisittkortLabels.Dod" values={{ dato: dateFormat(personopplysninger.dodsdato) }} />
+            <FormattedMessage id="VisittkortLabels.Dod" values={{ dato: formatDate(personopplysninger.dodsdato) }} />
           </Tag>
         </Tooltip>
       )}

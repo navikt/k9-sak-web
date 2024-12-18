@@ -101,14 +101,18 @@ spec:
     - name: NYE_NOKKELTALL
       value: 'false'
     - name: PROSESS_VILKAR_SOKNADSFRIST
-      value: 'true'
+      value: "false"
     - name: UTVIDET_VARSELFELT
       value: 'true'
     - name: SKILL_UT_PRIVATPERSON
-      value: 'false'
+      value: "true"
     - name: AUTOMATISK_VURDERT_MEDLEMSKAP
-      value: 'true'
-    - name: DELVIS_REVURDERING
-      value: 'false'
+      value: "true"
+    - name: "BRUK_V2_SAK_DOKUMENTER"
+      value: "false"
+    - name: OPPTJENING_READ_ONLY_PERIODER
+      value: "true"
+    - name: BRUK_INNTEKTSGRADERING_I_UTTAK
+      value: "false"
     - name: AKSJONSPUNKT_OVERLAPPENDE_SAKER
       value: 'false'

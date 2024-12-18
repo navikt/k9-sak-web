@@ -24,10 +24,12 @@ import {
 } from '@k9-sak-web/types';
 import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
 import RelatertFagsak from '@k9-sak-web/types/src/relatertFagsak';
-import React, { useCallback, useMemo, useState } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { useCallback, useMemo, useState } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
+import { SaksbehandlernavnContext } from '@navikt/ft-plattform-komponenter';
 import {
   behandlingerRoutePath,
   erBehandlingValgt,
@@ -45,8 +47,6 @@ import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
 import FagsakGrid from './components/FagsakGrid';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
-import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import { SaksbehandlernavnContext } from '@navikt/ft-plattform-komponenter';
 
 const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   behandlingType &&

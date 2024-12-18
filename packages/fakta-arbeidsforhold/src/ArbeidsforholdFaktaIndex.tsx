@@ -1,10 +1,17 @@
-import React from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
-import { ArbeidsgiverOpplysningerPerId, Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
-import StandardFaktaProps from '@k9-sak-web/fakta-felles/standardFaktaPropsTsType';
-import ArbeidsforholdInfoPanel from './components/ArbeidsforholdInfoPanel';
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
+import ArbeidsforholdInfoPanel from './components/ArbeidsforholdInfoPanel';
+
+type StandardFaktaProps = Readonly<{
+  aksjonspunkter: Aksjonspunkt[];
+  readOnly: boolean;
+  submittable: boolean;
+  harApneAksjonspunkter: boolean;
+  alleMerknaderFraBeslutter: { [key: string]: { notAccepted?: boolean } };
+  submitCallback?: (aksjonspunktData: any) => Promise<any>;
+}>;
 
 const cache = createIntlCache();
 

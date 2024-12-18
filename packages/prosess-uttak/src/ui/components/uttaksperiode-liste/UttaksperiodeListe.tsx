@@ -2,15 +2,16 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { Alert, BodyShort, Button, Label, Table } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import React from 'react';
-import { Uttaksperiode } from '../../../types/Uttaksperiode';
+import { Uttaksperiode, UttaksperiodeMedInntektsgradering } from '../../../types/Uttaksperiode';
 import ContainerContext from '../../context/ContainerContext';
 import Uttak from '../uttak/Uttak';
 import styles from './uttaksperiodeListe.module.css';
 
 interface UttaksperiodeListeProps {
-  uttaksperioder: Uttaksperiode[];
+  uttaksperioder: UttaksperiodeMedInntektsgradering[];
   redigerVirkningsdatoFunc: () => void;
   redigerVirkningsdato: boolean;
+  readOnly: boolean;
 }
 
 const splitUttakByDate = (
@@ -52,7 +53,7 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
     virkningsdatoUttakNyeRegler,
     status = false,
   } = React.useContext(ContainerContext);
-  const { uttaksperioder, redigerVirkningsdatoFunc, redigerVirkningsdato } = props;
+  const { uttaksperioder, redigerVirkningsdatoFunc, redigerVirkningsdato, readOnly } = props;
 
   const [before, afterOrCovering] = splitUttakByDate(uttaksperioder, virkningsdatoUttakNyeRegler);
 
@@ -111,7 +112,7 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
                         size="small"
                         className={styles.redigerDato}
                         onClick={redigerVirkningsdatoFunc}
-                        disabled={status === behandlingStatus.AVSLUTTET}
+                        disabled={status === behandlingStatus.AVSLUTTET || readOnly}
                       >
                         Rediger
                       </Button>

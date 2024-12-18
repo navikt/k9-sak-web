@@ -15,12 +15,11 @@ import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgj
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+import { required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { BodyShort, HGrid, Heading } from '@navikt/ds-react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
@@ -31,6 +30,7 @@ import FritekstBrevTextField from './FritekstAnkeBrevTextField';
 import PreviewAnkeLink from './PreviewAnkeLink';
 import TempsaveAnkeButton from './TempsaveAnkeButton';
 
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import styles from './behandleAnkeForm.module.css';
 
 const omgjorArsakValues = [

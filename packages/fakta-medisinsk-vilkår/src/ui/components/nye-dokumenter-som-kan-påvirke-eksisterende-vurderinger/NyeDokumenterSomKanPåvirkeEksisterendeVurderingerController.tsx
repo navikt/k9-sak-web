@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
-import { Box, Margin, PageContainer } from '@navikt/ft-plattform-komponenter';
 import { httpUtils } from '@fpsak-frontend/utils';
+import { Box, Margin, PageContainer } from '@navikt/ft-plattform-komponenter';
+import React, { useMemo } from 'react';
 import Dokument from '../../../types/Dokument';
 import ContainerContext from '../../context/ContainerContext';
 import NyeDokumenterSomKanPåvirkeEksisterendeVurderinger from './NyeDokumenterSomKanPåvirkeEksisterendeVurderinger';
@@ -36,7 +36,7 @@ const NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController = ({
       await bekreftAtEndringerErRegistrert();
       afterEndringerRegistrert();
       setIsSubmitting(false);
-    } catch (error) {
+    } catch {
       setHttpErrorHasOccured(true);
       setIsSubmitting(false);
     }

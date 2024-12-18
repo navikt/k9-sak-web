@@ -1,8 +1,9 @@
-import { Aksjonspunkt } from '@k9-sak-web/types';
 import { OverstyringUttakRequest } from '@k9-sak-web/behandling-pleiepenger';
-import Uttaksperioder from './Uttaksperioder';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import ArbeidsgiverOpplysninger from './ArbeidsgiverOpplysninger';
 import KodeverkMedNavn from './kodeverkMedNavnTsType';
+import Uttaksperioder from './Uttaksperioder';
+import { Inntektsgradering } from '.';
 import { ReactNode } from 'react';
 
 interface ContainerContract {
@@ -12,6 +13,7 @@ interface ContainerContract {
     behandlingUttakOverstyrt: string;
   };
   uttaksperioder: Uttaksperioder;
+  inntektsgraderinger?: Inntektsgradering[];
   perioderTilVurdering?: string[];
   utsattePerioder: string[];
   aktivBehandlingUuid: string;
@@ -32,6 +34,7 @@ interface ContainerContract {
   versjon?: number;
   erOverstyrer?: boolean;
   status?: string | false;
+  readOnly: boolean;
   vurderOverlappendeSakComponent: ReactNode;
 }
 

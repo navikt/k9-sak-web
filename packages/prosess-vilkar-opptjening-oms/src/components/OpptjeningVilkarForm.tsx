@@ -1,6 +1,7 @@
 import { Aksjonspunkt, SubmitCallback, Vilkarperiode, Opptjening } from '@k9-sak-web/types';
 import React from 'react';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
+import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 
 /**
  * OpptjeningVilkarForm
@@ -38,22 +39,27 @@ const OpptjeningVilkarForm = ({
   vilkårPerioder,
   periodeIndex,
   opptjeninger,
-}: OpptjeningVilkarFormProps) => (
-  <OpptjeningVilkarAksjonspunktPanel
-    submitCallback={submitCallback}
-    isApOpen={isAksjonspunktOpen}
-    readOnly={readOnly}
-    readOnlySubmitButton={readOnlySubmitButton}
-    behandlingId={behandlingId}
-    behandlingVersjon={behandlingVersjon}
-    aksjonspunkter={aksjonspunkter}
-    status={status}
-    lovReferanse={lovReferanse}
-    fagsakType={fagsakType}
-    vilkårPerioder={vilkårPerioder}
-    periodeIndex={periodeIndex}
-    opptjeninger={opptjeninger}
-  />
-);
+}: OpptjeningVilkarFormProps) => {
+  const [featureToggles] = useFeatureToggles();
+
+  return (
+    <OpptjeningVilkarAksjonspunktPanel
+      submitCallback={submitCallback}
+      isApOpen={isAksjonspunktOpen}
+      readOnly={readOnly}
+      readOnlySubmitButton={readOnlySubmitButton}
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
+      aksjonspunkter={aksjonspunkter}
+      status={status}
+      lovReferanse={lovReferanse}
+      fagsakType={fagsakType}
+      vilkårPerioder={vilkårPerioder}
+      periodeIndex={periodeIndex}
+      opptjeninger={opptjeninger}
+      featureToggles={featureToggles}
+    />
+  );
+};
 
 export default OpptjeningVilkarForm;
