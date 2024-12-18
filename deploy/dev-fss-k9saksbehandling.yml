@@ -119,5 +119,3 @@ spec:
       value: "true"
     - name: AKSJONSPUNKT_OVERLAPPENDE_SAKER
       value: "true"
-    - name: AKSJONSPUNKT_OVERLAPPENDE_SAKER
-      value: "true"

@@ -46,7 +46,7 @@ export default ({
   erOverstyrer,
   readOnly,
 }: UttakProps) => {
-  const { featureToggles } = useFeatureToggles();
+  const [featureToggles] = useFeatureToggles();
   const { versjon, links, status: behandlingStatus } = behandling;
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
@@ -71,21 +71,27 @@ export default ({
   };
 
   const VurderOverlappendeSakComponent = () => {
-    const deepCopyProps = JSON.parse(
-      JSON.stringify({
-        behandling: behandling,
-        aksjonspunkt: aksjonspunkter.find(
-          aksjonspunkt => aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE === aksjonspunkt.definisjon.kode,
-        ),
-      }),
+    const aksjonspunkt = aksjonspunkter.find(
+      aksjonspunkt => aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE === aksjonspunkt.definisjon.kode,
     );
-    konverterKodeverkTilKode(deepCopyProps, false);
 
-    return (
-      <VStack>
-        <VurderOverlappendeSakIndex behandling={deepCopyProps.behandling} aksjonspunkt={deepCopyProps.aksjonspunkt} />
-      </VStack>
-    );
+    if (featureToggles.AKSJONSPUNKT_OVERLAPPENDE_SAKER && aksjonspunkt) {
+      const deepCopyProps = JSON.parse(
+        JSON.stringify({
+          behandling: behandling,
+          aksjonspunkt: aksjonspunkt,
+        }),
+      );
+      konverterKodeverkTilKode(deepCopyProps, false);
+
+      return (
+        <VStack>
+          <VurderOverlappendeSakIndex behandling={deepCopyProps.behandling} aksjonspunkt={deepCopyProps.aksjonspunkt} />
+        </VStack>
+      );
+    }
+
+    return <></>;
   };
 
   return (
