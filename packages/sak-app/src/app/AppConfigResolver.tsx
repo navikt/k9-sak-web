@@ -3,7 +3,8 @@ import { ReactElement, useEffect } from 'react';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
-import { useFeatureToggles } from '@k9-sak-web/gui/utils/hooks/useFeatureToggles.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import { useFeatureToggles } from '@k9-sak-web/gui/utils/featureToggles/useFeatureToggles.js';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../data/k9sakApi';
 import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
@@ -47,7 +48,11 @@ const AppConfigResolver = ({ children }: OwnProps) => {
     sprakFilState === RestApiState.SUCCESS &&
     !!featureToggles;
 
-  return harFeilet || erFerdig ? children : <LoadingPanel />;
+  return (
+    <FeatureTogglesContext.Provider value={featureToggles}>
+      {harFeilet || erFerdig ? children : <LoadingPanel />}
+    </FeatureTogglesContext.Provider>
+  );
 };
 
 export default AppConfigResolver;

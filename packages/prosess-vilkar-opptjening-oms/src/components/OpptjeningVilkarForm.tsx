@@ -1,5 +1,6 @@
-import { useFeatureToggles } from '@k9-sak-web/gui/utils/hooks/useFeatureToggles.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
+import { useContext } from 'react';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
 
 /**
@@ -39,7 +40,7 @@ const OpptjeningVilkarForm = ({
   periodeIndex,
   opptjeninger,
 }: OpptjeningVilkarFormProps) => {
-  const [featureToggles] = useFeatureToggles();
+  const featureToggles = useContext(FeatureTogglesContext);
 
   return (
     <OpptjeningVilkarAksjonspunktPanel

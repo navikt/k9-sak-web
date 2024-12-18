@@ -4,12 +4,12 @@ import { FlexColumn, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shar
 import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
 import { atLeastOneRequired } from '@fpsak-frontend/utils/src/validation/validators';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { useFeatureToggles } from '@k9-sak-web/gui/utils/hooks/useFeatureToggles.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import { KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Button, Detail, Fieldset, HGrid } from '@navikt/ds-react';
 import { InputField, SelectField } from '@navikt/ft-form-hooks';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { NyArbeidsgiverFormState, NyPeriodeFormAndeler, TilkjentYtelseFormState } from './FormState';
 import NyArbeidsgiverModal from './NyArbeidsgiverModal';
@@ -102,7 +102,7 @@ export const NyAndel = ({ newArbeidsgiverCallback, readOnly, arbeidsgivere }: Ow
     name: 'nyPeriodeForm.andeler',
     keyName: 'fieldId',
   });
-  const [featureToggles] = useFeatureToggles();
+  const featureToggles = useContext(FeatureTogglesContext);
   const skillUtPrivatperson = featureToggles?.SKILL_UT_PRIVATPERSON;
 
   useEffect(() => {

@@ -6,11 +6,10 @@ import {
   TilgjengeligeVedtaksbrev,
   kanHaManueltFritekstbrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { useFeatureToggles } from '@k9-sak-web/gui/utils/hooks/useFeatureToggles.js';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Alert, Heading } from '@navikt/ds-react';
 import { FormikProps, FormikValues } from 'formik';
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
@@ -18,6 +17,7 @@ import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 import FritekstRedigering from './FritekstRedigering/FritekstRedigering';
 import styles from './vedtakForm.module.css';
 
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import { fieldnames } from '../konstanter';
 
 const maxLength200 = maxLength(200);
@@ -56,7 +56,7 @@ const FritekstBrevPanel = ({
   setForhaandsvisningKlart,
 }: OwnProps) => {
   const { formatMessage } = intl;
-  const [featureToggles] = useFeatureToggles();
+  const featureToggles = useContext(FeatureTogglesContext);
   const kanRedigereFritekstbrev = kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev);
 
   // useCallback to avoid re-initializing FritekstRedigering editorjs on every re-render of this component

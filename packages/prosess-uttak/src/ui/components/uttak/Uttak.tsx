@@ -1,4 +1,3 @@
-import { useFeatureToggles } from '@k9-sak-web/gui/utils/hooks/useFeatureToggles.js';
 import { PersonPencilFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, HelpText, Table } from '@navikt/ds-react';
 import {
@@ -22,6 +21,7 @@ import Endringsstatus from '../icons/Endringsstatus';
 import GammelUttakDetaljer from '../uttak-detaljer/GammelUttakDetaljer';
 import NyUttakDetaljer from '../uttak-detaljer/NyUttakDetaljer';
 
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import styles from './uttak.module.css';
 
 const cx = classNames.bind(styles);
@@ -34,7 +34,7 @@ interface UttakProps {
 }
 
 const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
-  const [featureToggles] = useFeatureToggles();
+  const featureToggles = React.useContext(FeatureTogglesContext);
   const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, endringsstatus, manueltOverstyrt } = uttak;
   const { erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
 

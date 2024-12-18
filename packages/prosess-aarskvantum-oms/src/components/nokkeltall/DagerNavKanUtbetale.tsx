@@ -1,4 +1,5 @@
-import { useFeatureToggles } from '@k9-sak-web/gui/utils/hooks/useFeatureToggles.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import { useContext } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Nokkeltall from './Nokkeltall';
 import styles from './nokkeltall.module.css';
@@ -20,7 +21,7 @@ const DagerNavKanUtbetale = ({
   visDetaljer,
   viserDetaljer,
 }: DagerNavKanUtbetaleProps) => {
-  const [featureToggles] = useFeatureToggles();
+  const featureToggles = useContext(FeatureTogglesContext);
 
   return (
     <Nokkeltall
