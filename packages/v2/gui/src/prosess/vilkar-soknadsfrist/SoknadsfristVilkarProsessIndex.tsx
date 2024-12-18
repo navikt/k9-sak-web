@@ -162,7 +162,6 @@ const SoknadsfristVilkarProsessIndex = ({
               ) : null,
           }))}
           onClick={setActiveTab}
-          theme="arrow"
           heading="Perioder"
         />
       </div>
