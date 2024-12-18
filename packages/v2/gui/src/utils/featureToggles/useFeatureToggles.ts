@@ -16,7 +16,7 @@ const transformData = (data: FeatureToggle[]) =>
 export const useFeatureToggles = (): [FeatureToggles] => {
   const backendUrl = window.location.pathname.includes('/ung/web') ? 'ung' : 'k9';
   const { data: featureToggles } = useQuery({
-    queryKey: ['featureToggles'],
+    queryKey: ['featureToggles', backendUrl],
     queryFn: ({ signal }) =>
       axios.get(`/${backendUrl}/feature-toggle/toggles.json`, { signal }).then(({ data }) => data),
     select: transformData,
