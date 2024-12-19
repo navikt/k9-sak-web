@@ -1,4 +1,4 @@
-import type { BehandlingDto } from '@k9-sak-web/backend/ungsak/generated';
+import type { BehandlingDto, ForhåndsvisVedtaksbrevResponse } from '@k9-sak-web/backend/ungsak/generated';
 import { Button } from '@navikt/ds-react';
 import type { UngVedtakBackendApiType } from './UngVedtakBackendApiType';
 
@@ -10,7 +10,11 @@ interface UngVedtakProps {
 export const UngVedtak = ({ api, behandling }: UngVedtakProps) => {
   const handleForhåndsvisButtonClick = () => {
     if (behandling.id) {
-      api.forhåndsvisVedtaksbrev(behandling.id);
+      api.forhåndsvisVedtaksbrev(behandling.id).then((response: ForhåndsvisVedtaksbrevResponse) => {
+        if (URL.createObjectURL) {
+          window.open(URL.createObjectURL(response));
+        }
+      });
     }
   };
   return (
