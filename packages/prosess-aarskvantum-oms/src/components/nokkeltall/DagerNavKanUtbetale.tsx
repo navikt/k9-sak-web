@@ -1,6 +1,6 @@
-import React from 'react';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import { useContext } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useFeatureToggles } from "@fpsak-frontend/shared-components";
 import Nokkeltall from './Nokkeltall';
 import styles from './nokkeltall.module.css';
 
@@ -21,37 +21,35 @@ const DagerNavKanUtbetale = ({
   visDetaljer,
   viserDetaljer,
 }: DagerNavKanUtbetaleProps) => {
-  const [featureToggles] = useFeatureToggles();
+  const featureToggles = useContext(FeatureTogglesContext);
 
   return (
     <Nokkeltall
-      overskrift={{antallDager: dagerNavKanUtbetale, overskrifttekstId: 'Nøkkeltall.DagerNavKanUtbetale'}}
+      overskrift={{ antallDager: dagerNavKanUtbetale, overskrifttekstId: 'Nøkkeltall.DagerNavKanUtbetale' }}
       detaljer={[
         {
           antallDager: dagerRettPå,
           overskrifttekstId: 'Nøkkeltall.TotaltAntallDager',
-          infotekstContent: <FormattedMessage id="Nøkkeltall.TotaltAntallDager.InfoText"/>,
+          infotekstContent: <FormattedMessage id="Nøkkeltall.TotaltAntallDager.InfoText" />,
         },
         {
           antallDager: -antallDagerArbeidsgiverDekker,
           overskrifttekstId: 'Nøkkeltall.Ventetid',
           infotekstContent: (
-            <FormattedMessage id="Nøkkeltall.Ventetid.InfoText" values={{dager: antallDagerArbeidsgiverDekker}}/>
+            <FormattedMessage id="Nøkkeltall.Ventetid.InfoText" values={{ dager: antallDagerArbeidsgiverDekker }} />
           ),
         },
-        (featureToggles?.NYE_NOKKELTALL && {
+        featureToggles?.NYE_NOKKELTALL && {
           antallDager: antallDagerFraværRapportertSomNyoppstartet,
           overskrifttekstId: 'Nøkkeltall.AntallDagerFraværRapportertSomNyoppstartet',
-          infotekstContent: (
-            <FormattedMessage id="Nøkkeltall.AntallDagerFraværRapportertSomNyoppstartet.InfoText"/>
-          )
-        }),
+          infotekstContent: <FormattedMessage id="Nøkkeltall.AntallDagerFraværRapportertSomNyoppstartet.InfoText" />,
+        },
       ]}
       viserDetaljer={viserDetaljer}
       visDetaljer={visDetaljer}
       className={styles.dagerNavKanUtbetale}
     />
   );
-}
+};
 
 export default DagerNavKanUtbetale;

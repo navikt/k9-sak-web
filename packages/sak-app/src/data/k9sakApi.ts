@@ -22,7 +22,6 @@ export enum K9sakApiKeys {
   NAV_ANSATT = 'NAV_ANSATT',
   HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
   BEHANDLENDE_ENHETER = 'BEHANDLENDE_ENHETER',
-  FEATURE_TOGGLE = 'FEATURE_TOGGLE',
   SEARCH_FAGSAK = 'SEARCH_FAGSAK',
   MATCH_FAGSAK = 'MATCH_FAGSAK',
   FETCH_FAGSAK = 'FETCH_FAGSAK',
@@ -85,9 +84,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('behandlende-enheter', K9sakApiKeys.BEHANDLENDE_ENHETER)
   .withRel('arbeidsgivere', K9sakApiKeys.ARBEIDSGIVERE)
   .withPost('/k9/sak/api/brev/mottaker-info/ereg', K9sakApiKeys.BREV_MOTTAKER_ORGANISASJON)
-
-  // Feature toggles
-  .withGet('/k9/feature-toggle/toggles.json', K9sakApiKeys.FEATURE_TOGGLE)
 
   // Fagsak
   .withRel('fagsak', K9sakApiKeys.FETCH_FAGSAK)

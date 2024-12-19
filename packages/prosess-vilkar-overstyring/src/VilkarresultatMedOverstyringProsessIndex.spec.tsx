@@ -1,15 +1,11 @@
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { Behandling } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
-import React from 'react';
-import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import messages from '../i18n/nb_NO.json';
 import VilkarresultatMedOverstyringProsessIndex from './VilkarresultatMedOverstyringProsessIndex';
 
 describe('<VilkarresultatMedOverstyringForm>', () => {
-  requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-
   it('skal rendre tabs dersom bare en periode', () => {
     renderWithIntlAndReduxForm(
       <VilkarresultatMedOverstyringProsessIndex

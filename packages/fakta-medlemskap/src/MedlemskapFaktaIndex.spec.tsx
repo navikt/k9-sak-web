@@ -1,4 +1,3 @@
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { composeStories, StoryFn } from '@storybook/react';
 import { screen, userEvent } from '@storybook/test';
 import { act, render } from '@testing-library/react';
@@ -10,7 +9,6 @@ describe('MedlemskapFaktaIndex', () => {
     [key: string]: StoryFn<Partial<typeof MedlemskapFaktaIndex>>;
   };
   it('skal formatere data ved innsending', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const onClickSpy = vi.fn();
     const props = { submitCallback: onClickSpy };
     render(<VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter {...props} />);

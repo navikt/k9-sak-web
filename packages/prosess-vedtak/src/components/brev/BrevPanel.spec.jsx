@@ -1,11 +1,9 @@
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { renderWithIntl, renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 
 import { Formik } from 'formik';
-import React from 'react';
 import { intlMock } from '../../../i18n/index';
 import messages from '../../../i18n/nb_NO.json';
 import { BrevPanel } from './BrevPanel';
@@ -24,9 +22,7 @@ describe('<BrevPanel>', () => {
   const fritekstbrevTilgjenglig = { vedtaksbrevmaler: { [vedtaksbrevtype.FRITEKST]: dokumentMalType.FRITKS } };
 
   it('skal forhåndsvise brev når ingen behandlingsresultat', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-
-    renderWithIntl(
+    renderWithIntlAndReactQueryClient(
       <Formik initialValues={[]}>
         <BrevPanel
           intl={intlMock}
@@ -55,8 +51,7 @@ describe('<BrevPanel>', () => {
   });
 
   it('skal vise fritekstpanel når overstyrt', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    renderWithIntl(
+    renderWithIntlAndReactQueryClient(
       <Formik initialValues={[]}>
         <BrevPanel
           intl={intlMock}
@@ -85,8 +80,7 @@ describe('<BrevPanel>', () => {
   });
 
   it('skal vise fritekstpanel selv om ikke overstyrt når fritekst er eneste typen', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-    renderWithIntl(
+    renderWithIntlAndReactQueryClient(
       <Formik initialValues={[]}>
         <BrevPanel
           intl={intlMock}
@@ -118,7 +112,6 @@ describe('<BrevPanel>', () => {
   });
 
   it('skal vise varsel om ingen brev når ingen brev', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     renderWithIntl(
       <Formik initialValues={[]}>
         <BrevPanel
@@ -149,7 +142,6 @@ describe('<BrevPanel>', () => {
   });
 
   it('skal vise valg av mottaker hvis alternative mottakere er definert', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     renderWithIntl(
       <Formik initialValues={[]}>
         <BrevPanel

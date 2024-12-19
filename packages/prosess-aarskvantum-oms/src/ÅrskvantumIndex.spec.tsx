@@ -1,8 +1,6 @@
 import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { ArbeidsforholdV2, Behandling } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import messages from '../i18n/nb_NO.json';
 import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
 import ÅrskvantumIndex from './ÅrskvantumIndex';
@@ -52,10 +50,6 @@ const arbeidsgivere = {
 };
 
 describe('<ÅrskvantumIndex>', () => {
-  beforeEach(() => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'AKSJONSPUNKT_9014', value: true }]);
-  });
-
   it('rendrer aksjonspunkt-form hvis det finnes aksjonspunkter', () => {
     renderWithIntlAndReduxForm(
       <ÅrskvantumIndex

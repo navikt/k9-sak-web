@@ -1,11 +1,9 @@
 import { screen } from '@testing-library/react';
-import React from 'react';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -73,8 +71,6 @@ const alleKodeverk = {};
 
 describe('<AvslagårsakListe>', () => {
   it('Skal vise ap for sjekk tilbakekreving riktig', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-
     renderWithIntl(
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => {}}>
         <VedtakProsessIndex
@@ -119,8 +115,6 @@ describe('<AvslagårsakListe>', () => {
   });
 
   it('Skal IKKE vise ap for sjekk tilbakekreving', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-
     renderWithIntl(
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => {}}>
         <VedtakProsessIndex

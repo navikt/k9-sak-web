@@ -92,7 +92,6 @@ describe('<MeldingIndex>', () => {
   beforeEach(() => {
     requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
     requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'TYPE_MEDISINSKE_OPPLYSNINGER_BREV', value: true }]);
     requestApi.mock(K9sakApiKeys.BREVMALER, templates);
   });
 
