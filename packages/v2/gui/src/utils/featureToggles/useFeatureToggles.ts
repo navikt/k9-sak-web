@@ -7,13 +7,13 @@ type FeatureToggle = {
   value: string;
 };
 
-const transformData = (data: FeatureToggle[]) =>
+const transformData = (data: FeatureToggle[]): FeatureToggles =>
   data?.reduce((acc: { [x: string]: boolean }, curr: FeatureToggle) => {
     acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
     return acc;
   }, {});
 
-export const useFeatureToggles = (): [FeatureToggles] => {
+export const useFeatureToggles = (): { featureToggles: FeatureToggles | undefined } => {
   const backendUrl = window.location.pathname.includes('/ung/web') ? 'ung' : 'k9';
   const { data: featureToggles } = useQuery({
     queryKey: ['featureToggles', backendUrl],
@@ -22,5 +22,5 @@ export const useFeatureToggles = (): [FeatureToggles] => {
     select: transformData,
   });
 
-  return [featureToggles ?? {}];
+  return { featureToggles };
 };
