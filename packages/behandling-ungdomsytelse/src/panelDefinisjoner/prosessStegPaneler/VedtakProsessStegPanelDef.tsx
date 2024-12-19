@@ -1,14 +1,14 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 
+import { UngVedtakIndex } from '@k9-sak-web/gui/prosess/ung-vedtak/UngVedtakIndex.js';
 import { UngdomsytelseBehandlingApiKeys } from '../../data/ungdomsytelseBehandlingApi';
 import findStatusForVedtak from '../vedtakStatusUtlederUngdomsytelse';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = props => <VedtakProsessIndex {...props} />;
+  getKomponent = props => <UngVedtakIndex {...props} />;
 
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.FORESLA_VEDTAK,
