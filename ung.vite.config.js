@@ -54,7 +54,7 @@ export default ({ mode }) => {
       port: 9005,
       proxy: {
         '/ung/sak': {
-          target: process.env.APP_URL_UNG_SAK || 'http://localhost:8091',
+          target: process.env.APP_URL_UNG_SAK || 'http://localhost:8991',
           changeOrigin: !!process.env.APP_URL_UNG_SAK,
           ws: false,
           secure: false,
@@ -71,7 +71,7 @@ export default ({ mode }) => {
             });
           },
         },
-        '/ung/feature-toggle/toggles.json': createMockResponder('http://localhost:8091', staticJsonResponse(featureTogglesFactory())),
+        '/ung/feature-toggle/toggles.json': createMockResponder('http://localhost:8991', staticJsonResponse(featureTogglesFactory())),
       },
     },
     base: '/ung/web',
