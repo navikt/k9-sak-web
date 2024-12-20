@@ -53,7 +53,7 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
   const { diagnosekoder, links, behandlingUuid, versjon } = data;
   const endreDiagnosekoderLink = findLinkByRel(LinkRel.ENDRE_DIAGNOSEKODER, links);
 
-  const { diagnosekodeObjekter, diagnosekodeObjekterLaster } = useQueries({
+  const {diagnosekodeObjekter, diagnosekodeObjekterLaster} = useQueries({
     queries: diagnosekoder.map(diagnosekode => ({
       queryKey: ['diagnosekode', diagnosekode],
       queryFn: () => fetchDiagnosekoderByQuery(diagnosekode),
@@ -62,9 +62,9 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
     combine: results => {
       return {
         diagnosekodeObjekter: results.map(r => r.data),
-        diagnosekodeObjekterLaster: results.some(r => r.isPending),
-      };
-    },
+        diagnosekodeObjekterLaster: results.some(r => r.isPending)
+      }
+    }
   });
 
   const focusAddButton = () => {
