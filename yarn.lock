@@ -4134,7 +4134,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/diagnosekoder": ^1.2024.1
+    "@navikt/diagnosekoder": ^1.2025.0
     "@navikt/ft-fakta-beregning": 7.1.10
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 8.1.10
     "@navikt/ft-prosess-beregningsgrunnlag": 7.1.10
@@ -4322,7 +4322,7 @@ __metadata:
   resolution: "@k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår"
   dependencies:
     "@fpsak-frontend/form": 1.0.0
-    "@navikt/diagnosekoder": ^1.2024.1
+    "@navikt/diagnosekoder": ^1.2025.0
     "@navikt/ds-css": 7.6.0
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 7.6.0
@@ -4859,10 +4859,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/diagnosekoder@npm:^1.2024.1":
-  version: 1.2024.1
-  resolution: "@navikt/diagnosekoder@npm:1.2024.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fdiagnosekoder%2F1.2024.1%2F9fd2b352dfb354fed52b56d3df15a9420ecc4825"
-  checksum: 71f9e94f3b5f7bc479b6d9bf852f079e5835bc003ec79451f98182b70cf75c062b4432ce746975eca41a183a52f36e84d086167b9bf144fda49f3319adae3dbf
+"@navikt/diagnosekoder@npm:^1.2025.0":
+  version: 1.2025.0
+  resolution: "@navikt/diagnosekoder@npm:1.2025.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fdiagnosekoder%2F1.2025.0%2F2675cb1178884832541008211afed1a73de742b7"
+  checksum: 14c3dcf7ba824b3e9d2e34f258ab527789c6d0b23dd328d3042834f01930b2f3a662b5328aa8a35196592cf536d6260b9b9665f58ff33386ccd4352c0341e827
   languageName: node
   linkType: hard
 
