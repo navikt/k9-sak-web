@@ -51,7 +51,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
 
   const buildInitialValues = (data: EgneOverlappendeSakerDto | undefined): VurderOverlappendeSakFormData => {
     return {
-      begrunnelse: 'Langere begrunnelsere',
+      begrunnelse: aksjonspunkt?.begrunnelse || '',
       perioder:
         data?.perioderMedOverlapp.map(periode => ({
           periode: { fom: periode.periode.fom || '', tom: periode.periode.tom || '' },
@@ -87,7 +87,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
     }
   }, [overlappendeSuccess, egneOverlappendeSaker, reset]);
 
-  const submit = (data: VurderOverlappendeSakFormData) => {
+  const submit = async (data: VurderOverlappendeSakFormData) => {
     const requestBody: BekreftVurderOverlappendeSakerAksjonspunktRequest = {
       behandlingId: `${id}`,
       behandlingVersjon: versjon,
@@ -95,16 +95,15 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
         {
           '@type': aksjonspunkt.definisjon || '',
           kode: aksjonspunkt.definisjon,
-          lagreEllerOppdater: data.perioder.map(periode => ({
+          perioder: data.perioder.map(periode => ({
             begrunnelse: data.begrunnelse,
             periode: { fom: periode.periode.fom || '', tom: periode.periode.tom || '' },
             søkersUttaksgrad: periode.søkersUttaksgrad,
-            utbetalingsgrader: [], // Backend påkrever dette feltet, men det kan være tomt
           })),
         },
       ],
     };
-    api.bekreftAksjonspunkt(requestBody);
+    await api.bekreftAksjonspunkt(requestBody);
     oppdaterBehandling();
   };
 
