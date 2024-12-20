@@ -109,6 +109,7 @@ export const VilkarresultatMedOverstyringProsessIndex = ({
             label: `${periode.periode.fom && formatDate(periode.periode.fom)} - ${periode.periode.tom && formatDate(periode.periode.tom)}`,
           }))}
           onClick={setActiveTab}
+          theme="arrow"
           heading="Perioder"
         />
       </div>

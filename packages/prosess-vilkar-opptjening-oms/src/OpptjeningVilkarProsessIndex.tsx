@@ -88,6 +88,7 @@ const OpptjeningVilkarProsessIndex = ({
                 ) : null,
             }))}
             onClick={setActiveTab}
+            theme="arrow"
             heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
           />
         </div>
