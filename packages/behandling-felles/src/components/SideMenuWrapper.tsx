@@ -1,11 +1,12 @@
-import { SideMenu, WarningIcon } from '@navikt/ft-plattform-komponenter';
-import React, { ReactNode } from 'react';
+import { SideMenu } from '@navikt/ft-plattform-komponenter';
+import { ReactNode } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 
 import FaktaPanelMenyRad from '../types/faktaPanelMenyRadTsType';
 
+import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
 import styles from './sideMenuWrapper.module.css';
 
 interface OwnProps {
@@ -25,7 +26,10 @@ const SideMenuWrapper = ({ intl, paneler, onClick, children }: OwnProps & Wrappe
               label: intl.formatMessage({ id: panel.tekstKode }),
               active: panel.erAktiv,
               icon: panel.harAksjonspunkt ? (
-                <WarningIcon alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })} />
+                <ExclamationmarkTriangleFillIcon
+                  fontSize="1.25rem"
+                  style={{ color: 'var(--ac-alert-icon-warning-color,var(--a-icon-warning))', fontSize: '1.25rem' }}
+                />
               ) : undefined,
             }))}
             onClick={onClick}
