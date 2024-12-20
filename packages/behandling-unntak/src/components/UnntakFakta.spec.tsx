@@ -1,5 +1,3 @@
-import React from 'react';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -9,10 +7,10 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { requestUnntakApi, UnntakBehandlingApiKeys } from '../data/unntakBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
 import UnntakFakta from './UnntakFakta';
@@ -149,7 +147,7 @@ describe('<UnntakFakta>', () => {
       />,
     );
 
-    expect(screen.getByRole('button', { name: 'Arbeidsforhold Aksjonspunkt' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Arbeidsforhold' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Inntekt og ytelser' })).toBeInTheDocument();
     expect(screen.getByText('Avklar om arbeidsforholdene skal benyttes i behandlingen')).toBeInTheDocument();
   });
@@ -181,7 +179,7 @@ describe('<UnntakFakta>', () => {
     );
 
     await act(async () => {
-      await userEvent.click(screen.getByRole('button', { name: 'Arbeidsforhold Aksjonspunkt' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Arbeidsforhold' }));
     });
 
     const { calls } = oppdaterProsessStegOgFaktaPanelIUrl.mock;
