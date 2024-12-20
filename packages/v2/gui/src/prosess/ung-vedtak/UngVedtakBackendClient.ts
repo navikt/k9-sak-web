@@ -15,8 +15,9 @@ export default class UngVedtakBackendClient {
       { behandlingId },
       {
         headers: {
-          Accept: 'application/octet-stream',
+          Accept: 'application/pdf',
         },
+        responseType: 'blob'
       },
     );
   }

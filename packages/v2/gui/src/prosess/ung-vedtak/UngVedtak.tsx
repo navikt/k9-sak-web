@@ -11,9 +11,11 @@ export const UngVedtak = ({ api, behandling }: UngVedtakProps) => {
   const handleForhåndsvisButtonClick = () => {
     if (behandling.id) {
       api.forhåndsvisVedtaksbrev(behandling.id).then((response: ForhåndsvisVedtaksbrevResponse) => {
-        if (URL.createObjectURL) {
-          window.open(URL.createObjectURL(response));
-        }
+        // Create a URL object from the PDF blob
+        const fileURL = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+
+        // Open the PDF in a new tab
+        window.open(fileURL, '_blank');
       });
     }
   };
