@@ -1928,6 +1928,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@codexteam/icons@npm:^0.3.2":
+  version: 0.3.3
+  resolution: "@codexteam/icons@npm:0.3.3"
+  checksum: aa3c2ea96122e981ab6a6544cfe88f2381da4ab56a09230b9123229d85e7f2134409a694e38efe31657d13265198e2391d23347d4be2b64a2bab85b223ef5d83
+  languageName: node
+  linkType: hard
+
 "@csstools/css-parser-algorithms@npm:^3.0.4":
   version: 3.0.4
   resolution: "@csstools/css-parser-algorithms@npm:3.0.4"
@@ -1994,12 +2001,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/list@npm:1.9.0":
-  version: 1.9.0
-  resolution: "@editorjs/list@npm:1.9.0"
+"@editorjs/list@npm:2.0.2":
+  version: 2.0.2
+  resolution: "@editorjs/list@npm:2.0.2"
   dependencies:
-    "@codexteam/icons": ^0.0.4
-  checksum: a856f73a1abd42d0550afdc4fda355911abff8b25d30b0cdefdbebfea765182395d5afb08f7fef67597d88c31857408525a8cde28696374a2610297d54a93ce9
+    "@codexteam/icons": ^0.3.2
+  checksum: 5e69976f98e389337625422f9d416a0046de5d30c5d6598ffa251dfdc39ad0e908ff4b4d6d277d984a43697ed82ac02d2f6b38a6033c7ad8ccda9d5046d2307a
   languageName: node
   linkType: hard
 
@@ -3053,7 +3060,7 @@ __metadata:
   dependencies:
     "@editorjs/editorjs": 2.30.7
     "@editorjs/header": 2.8.8
-    "@editorjs/list": 1.9.0
+    "@editorjs/list": 2.0.2
     "@editorjs/paragraph": 2.11.6
     "@fpsak-frontend/form": 1.0.0
     "@fpsak-frontend/kodeverk": 1.0.0
