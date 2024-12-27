@@ -116,6 +116,12 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
     setRediger(!rediger);
   };
 
+  const saksbehandler =
+    egneOverlappendeSaker?.perioderMedOverlapp.find(periode => periode.saksbehandler)?.saksbehandler || undefined;
+
+  const vurdertTidspunkt =
+    egneOverlappendeSaker?.perioderMedOverlapp.find(periode => periode.vurdertTidspunkt)?.vurdertTidspunkt || undefined;
+
   return (
     <Form formMethods={formMethods} onSubmit={submit}>
       <VStack gap="4">
@@ -200,7 +206,9 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                     readOnly={readOnly}
                   />
                 )}
-                <AssessedBy ident={'Harry Hardkodet'} date={'8.11.2024'} />
+
+                {saksbehandler && <AssessedBy ident={saksbehandler} date={vurdertTidspunkt} />}
+
                 {!readOnly && (
                   <Alert inline variant="info">
                     Ny uttaksgrad vil ikke være synlig i uttak før du har bekreftet.
