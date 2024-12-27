@@ -1,4 +1,4 @@
-import type { AksjonspunktDto, BehandlingDto } from '@k9-sak-web/backend/ungsak/generated';
+import type { AksjonspunktDto, BehandlingDto, VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/generated';
 import { Heading } from '@navikt/ds-react';
 import { useContext } from 'react';
 import { UngSakClientContext } from '../../app/UngSakClientContext';
@@ -12,9 +12,10 @@ interface UngVedtakIndexProps {
     id: number;
   };
   submitCallback: (data: any) => Promise<any>;
+  vilkar: VilkårMedPerioderDto[];
 }
 
-export const UngVedtakIndex = ({ aksjonspunkter, behandling, submitCallback }: UngVedtakIndexProps) => {
+export const UngVedtakIndex = ({ aksjonspunkter, behandling, submitCallback, vilkar }: UngVedtakIndexProps) => {
   const ungSakClient = useContext(UngSakClientContext);
   const ungVedtakBackendClient = new UngVedtakBackendClient(ungSakClient);
   return (
@@ -27,6 +28,7 @@ export const UngVedtakIndex = ({ aksjonspunkter, behandling, submitCallback }: U
         api={ungVedtakBackendClient}
         behandling={behandling}
         submitCallback={submitCallback}
+        vilkår={vilkar}
       />
     </>
   );

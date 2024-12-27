@@ -3,12 +3,14 @@ import {
   type AksjonspunktDto,
   type BehandlingDto,
   type ForhåndsvisVedtaksbrevResponse,
+  type VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Fieldset, HStack, Label, VStack } from '@navikt/ds-react';
 import { CheckboxField, Form } from '@navikt/ft-form-hooks';
 import { useQuery } from '@tanstack/react-query';
 import { useForm, useWatch } from 'react-hook-form';
+import AvslagsårsakListe from './AvslagsårsakListe';
 import type { UngVedtakBackendApiType } from './UngVedtakBackendApiType';
 import styles from './ungVedtak.module.css';
 
@@ -20,6 +22,7 @@ interface UngVedtakProps {
     id: number;
   };
   submitCallback: (data: any) => Promise<any>;
+  vilkår: VilkårMedPerioderDto[];
 }
 
 const buildInitialValues = () => ({
@@ -32,12 +35,13 @@ interface FormData {
   hindreUtsendingAvBrev: boolean;
 }
 
-export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback }: UngVedtakProps) => {
+export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vilkår }: UngVedtakProps) => {
   const formMethods = useForm<FormData>({
     defaultValues: buildInitialValues(),
   });
   const behandlingErInnvilget = behandling.behandlingsresultat?.type === behandlingResultatType.INNVILGET;
-
+  const behandlingErAvslått = behandling.behandlingsresultat?.type === behandlingResultatType.AVSLÅTT;
+  const harAksjonspunkt = aksjonspunkter.filter(ap => ap.kanLoses).length > 0;
   const redigerAutomatiskBrev = useWatch({ control: formMethods.control, name: 'redigerAutomatiskBrev' });
   const hindreUtsendingAvBrev = useWatch({ control: formMethods.control, name: 'hindreUtsendingAvBrev' });
 
@@ -72,6 +76,14 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback }: U
                 {behandlingErInnvilget ? 'Ungdomsytelse er innvilget' : 'Ungdomsytelse er avslått'}
               </BodyShort>
             </div>
+            {behandlingErAvslått && (
+              <div>
+                <Label size="small" as="p">
+                  Årsak til avslag
+                </Label>
+                <AvslagsårsakListe vilkår={vilkår} />
+              </div>
+            )}
             <div>
               <Button
                 variant="tertiary"
@@ -83,11 +95,13 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback }: U
                 Forhåndsvis brev
               </Button>
             </div>
-            <div>
-              <Button type="submit" variant="primary" size="small">
-                Fatt vedtak
-              </Button>
-            </div>
+            {harAksjonspunkt && (
+              <div>
+                <Button type="submit" variant="primary" size="small">
+                  Fatt vedtak
+                </Button>
+              </div>
+            )}
           </VStack>
           <div className={styles.brevCheckboxContainer}>
             <Fieldset legend="Valg for brev" size="small">
