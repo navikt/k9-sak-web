@@ -1,18 +1,17 @@
-import type { AksjonspunktDto, BehandlingDto, VilkårMedPerioderDto } from '@k9-sak-web/backend/ungsak/generated';
+import type { AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated';
 import { Heading } from '@navikt/ds-react';
 import { useContext } from 'react';
 import { UngSakClientContext } from '../../app/UngSakClientContext';
 import { UngVedtak } from './UngVedtak';
 import UngVedtakBackendClient from './UngVedtakBackendClient';
+import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
+import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
 
 interface UngVedtakIndexProps {
   aksjonspunkter: AksjonspunktDto[];
-  behandling: {
-    behandlingsresultat: BehandlingDto['behandlingsresultat'];
-    id: number;
-  };
+  behandling: UngVedtakBehandlingDto;
   submitCallback: (data: any) => Promise<any>;
-  vilkar: VilkårMedPerioderDto[];
+  vilkar: UngVedtakVilkårDto[];
 }
 
 export const UngVedtakIndex = ({ aksjonspunkter, behandling, submitCallback, vilkar }: UngVedtakIndexProps) => {

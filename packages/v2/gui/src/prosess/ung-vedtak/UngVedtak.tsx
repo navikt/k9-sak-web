@@ -1,9 +1,7 @@
 import {
   behandlingResultatType,
   type AksjonspunktDto,
-  type BehandlingDto,
   type ForhåndsvisVedtaksbrevResponse,
-  type VilkårMedPerioderDto,
 } from '@k9-sak-web/backend/ungsak/generated';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Fieldset, HStack, Label, VStack } from '@navikt/ds-react';
@@ -11,18 +9,17 @@ import { CheckboxField, Form } from '@navikt/ft-form-hooks';
 import { useQuery } from '@tanstack/react-query';
 import { useForm, useWatch } from 'react-hook-form';
 import AvslagsårsakListe from './AvslagsårsakListe';
-import type { UngVedtakBackendApiType } from './UngVedtakBackendApiType';
 import styles from './ungVedtak.module.css';
+import type { UngVedtakBackendApiType } from './UngVedtakBackendApiType';
+import type { UngVedtakBehandlingDto } from './UngVedtakBehandlingDto';
+import type { UngVedtakVilkårDto } from './UngVedtakVilkårDto';
 
 interface UngVedtakProps {
   aksjonspunkter: AksjonspunktDto[];
   api: UngVedtakBackendApiType;
-  behandling: {
-    behandlingsresultat: BehandlingDto['behandlingsresultat'];
-    id: number;
-  };
+  behandling: UngVedtakBehandlingDto;
   submitCallback: (data: any) => Promise<any>;
-  vilkår: VilkårMedPerioderDto[];
+  vilkår: UngVedtakVilkårDto[];
 }
 
 const buildInitialValues = () => ({

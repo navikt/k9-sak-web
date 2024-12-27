@@ -1,10 +1,10 @@
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
-import type { VilkårMedPerioderDto, VilkårPeriodeDto } from '@k9-sak-web/backend/ungsak/generated';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { BodyShort } from '@navikt/ds-react';
+import type { UngVedtakVilkårDto, UngVedtakVilkårPeriodeDto } from './UngVedtakVilkårDto';
 
-const finnUnikeAvslagskoder = (avslåttePerioder: VilkårPeriodeDto[] = []) => {
+const finnUnikeAvslagskoder = (avslåttePerioder: UngVedtakVilkårPeriodeDto[] = []) => {
   const funnedeAvslagskoder = new Set();
   const unikeAvslagskoder = avslåttePerioder.filter(el => {
     const erDuplikat = funnedeAvslagskoder.has(el.avslagKode);
@@ -15,13 +15,13 @@ const finnUnikeAvslagskoder = (avslåttePerioder: VilkårPeriodeDto[] = []) => {
 };
 
 interface AvslagsårsakListeProps {
-  vilkår: VilkårMedPerioderDto[];
+  vilkår: UngVedtakVilkårDto[];
 }
 
 const AvslagsårsakListe = ({ vilkår }: AvslagsårsakListeProps) => {
   const { kodeverkNavnFraKode, kodeverkNavnFraUndertypeKode } = useKodeverkContext();
 
-  const visAvslåtteVilkårsperioder = (avslåttVilkår: VilkårMedPerioderDto) => {
+  const visAvslåtteVilkårsperioder = (avslåttVilkår: UngVedtakVilkårDto) => {
     const avslåttePerioder = avslåttVilkår?.perioder?.filter(
       periode => periode.vilkarStatus === vilkårStatus.IKKE_OPPFYLT,
     );
