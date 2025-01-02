@@ -1,12 +1,13 @@
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { behandlingFormValueSelector, TextAreaField } from '@fpsak-frontend/form';
-import { Image, useFeatureToggles, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Detail } from '@navikt/ds-react';
-import React, { useState } from 'react';
+import { useContext, useState } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import styles from './tilbakekrevingVedtakUtdypendeTekstPanel.module.css';
 
 const minLength3 = minLength(3);
@@ -32,7 +33,7 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
   fritekstPakrevet,
   maximumLength,
 }: OwnProps & WrappedComponentProps) => {
-  const [featureToggles] = useFeatureToggles();
+  const featureToggles = useContext(FeatureTogglesContext);
   const utvidetVarseltekst = featureToggles?.UTVIDET_VARSELTEKST;
   const [isTextfieldHidden, hideTextField] = useState(isEmpty && !fritekstPakrevet);
   const valideringsRegler = fritekstPakrevet ? valideringsreglerPakrevet : valideringsregler;

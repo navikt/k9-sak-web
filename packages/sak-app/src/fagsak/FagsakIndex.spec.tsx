@@ -193,7 +193,6 @@ describe('<FagsakIndex>', () => {
     requestApi.mock(K9sakApiKeys.BEHANDLINGER_TILBAKE, [behandling2]);
     requestApi.mock(K9sakApiKeys.BEHANDLINGER_KLAGE, [behandling3]);
     requestApi.mock(K9sakApiKeys.HENT_SAKSBEHANDLERE, {});
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, []);
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, {});
     requestApi.mock(K9sakApiKeys.RISIKO_AKSJONSPUNKT, {});

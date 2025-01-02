@@ -80,7 +80,7 @@ describe('BehandlingMenuIndex', () => {
     requestApi.mock(K9sakApiKeys.INIT_FETCH_KLAGE, {});
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);
     requestApi.mock(K9sakApiKeys.BEHANDLENDE_ENHETER, []);
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
+
     requestApi.mock(K9sakApiKeys.SAK_BRUKER, []);
     requestApi.mock(K9sakApiKeys.KODEVERK, {});
     requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, {});

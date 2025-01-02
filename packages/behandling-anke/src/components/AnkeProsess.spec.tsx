@@ -5,13 +5,11 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import AnkeProsess from './AnkeProsess';
 
 describe('<AnkeProsess>', () => {
@@ -71,7 +69,6 @@ describe('<AnkeProsess>', () => {
   };
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     renderWithIntl(
       <AnkeProsess
         data={{ aksjonspunkter, vilkar, ankeVurdering }}
@@ -94,7 +91,6 @@ describe('<AnkeProsess>', () => {
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     renderWithIntl(
       <AnkeProsess
