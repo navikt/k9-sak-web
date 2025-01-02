@@ -1,6 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import { VurderNyoppstartet } from '@k9-sak-web/gui/prosess/vurder-nyoppstartet/VurderNyoppstartet.js';
+import { VurderNyoppstartet } from '@k9-sak-web/gui/fakta/vurder-nyoppstartet/VurderNyoppstartet.js';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 
