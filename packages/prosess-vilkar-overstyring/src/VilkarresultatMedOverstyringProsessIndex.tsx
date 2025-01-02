@@ -105,7 +105,6 @@ const VilkarresultatMedOverstyringProsessIndex = ({
               label: `${formatDate(periode.periode.fom)} - ${formatDate(periode.periode.tom)}`,
             }))}
             onClick={setActiveTab}
-            theme="arrow"
             heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
           />
         </div>
