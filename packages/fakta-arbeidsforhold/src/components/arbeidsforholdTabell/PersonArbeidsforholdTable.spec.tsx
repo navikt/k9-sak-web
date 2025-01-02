@@ -2,7 +2,6 @@ import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforh
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import messages from '../../../i18n/nb_NO.json';
 import PersonArbeidsforholdTable from './PersonArbeidsforholdTable';
 
@@ -174,7 +173,7 @@ describe('<PersonArbeidsforholdTable>', () => {
       { messages },
     );
 
-    expect(screen.getByAltText('PersonArbeidsforholdTable.ErIBruk')).toBeInTheDocument();
+    expect(screen.getByAltText('Arbeidsforhold ok')).toBeInTheDocument();
   });
 
   it('skal vise IngenArbeidsforholdRegistrert komponent når ingen arbeidsforhold', () => {

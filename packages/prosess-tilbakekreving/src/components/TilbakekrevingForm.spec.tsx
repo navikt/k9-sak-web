@@ -2,7 +2,6 @@ import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import Aktsomhet from '../kodeverk/aktsomhet';
 import VilkarResultat from '../kodeverk/vilkarResultat';
@@ -95,7 +94,7 @@ describe('<TilbakekrevingForm>', () => {
       { messages },
     );
 
-    expect(screen.getByText('Åpne info om første periode')).toBeInTheDocument();
+    expect(screen.getByLabelText('Åpne info om første periode')).toBeInTheDocument();
     expect(screen.getByText('Detaljer for valgt periode')).toBeInTheDocument();
     expect(screen.getByText('Vilkårene for tilbakekreving')).toBeInTheDocument();
   });

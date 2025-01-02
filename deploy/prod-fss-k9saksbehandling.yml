@@ -100,8 +100,6 @@ spec:
       value: "true"
     - name: NYE_NOKKELTALL
       value: "false"
-    - name: PROSESS_VILKAR_SOKNADSFRIST
-      value: "false"
     - name: UTVIDET_VARSELFELT
       value: "true"
     - name: SKILL_UT_PRIVATPERSON
@@ -113,6 +111,6 @@ spec:
     - name: OPPTJENING_READ_ONLY_PERIODER
       value: "true"
     - name: BRUK_INNTEKTSGRADERING_I_UTTAK
-      value: "false"
+      value: "true"
     - name: OMS_NYOPPSTARTET
       value: "false"
