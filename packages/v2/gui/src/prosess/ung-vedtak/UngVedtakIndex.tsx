@@ -12,9 +12,16 @@ interface UngVedtakIndexProps {
   behandling: UngVedtakBehandlingDto;
   submitCallback: (data: any) => Promise<any>;
   vilkar: UngVedtakVilkårDto[];
+  isReadOnly: boolean;
 }
 
-export const UngVedtakIndex = ({ aksjonspunkter, behandling, submitCallback, vilkar }: UngVedtakIndexProps) => {
+export const UngVedtakIndex = ({
+  aksjonspunkter,
+  behandling,
+  submitCallback,
+  vilkar,
+  isReadOnly,
+}: UngVedtakIndexProps) => {
   const ungSakClient = useContext(UngSakClientContext);
   const ungVedtakBackendClient = new UngVedtakBackendClient(ungSakClient);
   return (
@@ -28,6 +35,7 @@ export const UngVedtakIndex = ({ aksjonspunkter, behandling, submitCallback, vil
         behandling={behandling}
         submitCallback={submitCallback}
         vilkår={vilkar}
+        readOnly={isReadOnly}
       />
     </>
   );

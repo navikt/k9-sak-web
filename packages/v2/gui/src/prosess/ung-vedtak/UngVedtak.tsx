@@ -20,6 +20,7 @@ interface UngVedtakProps {
   behandling: UngVedtakBehandlingDto;
   submitCallback: (data: any) => Promise<any>;
   vilkår: UngVedtakVilkårDto[];
+  readOnly: boolean;
 }
 
 const buildInitialValues = () => ({
@@ -32,7 +33,7 @@ interface FormData {
   hindreUtsendingAvBrev: boolean;
 }
 
-export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vilkår }: UngVedtakProps) => {
+export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vilkår, readOnly }: UngVedtakProps) => {
   const formMethods = useForm<FormData>({
     defaultValues: buildInitialValues(),
   });
@@ -106,12 +107,12 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
                 <CheckboxField
                   name="redigerAutomatiskBrev"
                   label="Rediger automatisk brev"
-                  disabled={hindreUtsendingAvBrev}
+                  disabled={hindreUtsendingAvBrev || readOnly}
                 />
                 <CheckboxField
                   name="hindreUtsendingAvBrev"
                   label="Hindre utsending av brev"
-                  disabled={redigerAutomatiskBrev}
+                  disabled={redigerAutomatiskBrev || readOnly}
                 />
               </div>
             </Fieldset>

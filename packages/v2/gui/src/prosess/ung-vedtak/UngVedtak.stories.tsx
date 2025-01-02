@@ -59,6 +59,7 @@ export const InnvilgetStory: Story = {
         ],
       },
     ],
+    readOnly: false,
   },
 };
 
@@ -90,5 +91,6 @@ export const AvslåttStory: Story = {
       },
       id: 3000001,
     },
+    readOnly: false,
   },
 };
