@@ -11,7 +11,8 @@
     "./utils/*": "./src/utils/*",
     "./kodeverk/*": "./src/kodeverk/*",
     "./storybook/*": "./src/storybook/*",
-    "./prosess/*": "./src/prosess/*"
+    "./prosess/*": "./src/prosess/*",
+    "./fakta/*": "./src/fakta/*"
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
