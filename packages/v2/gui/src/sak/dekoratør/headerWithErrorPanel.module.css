@@ -1,0 +1,28 @@
+.endringsloggContainer {
+  display: grid;
+}
+
+.endringsloggContainer :global(.endringslogg) {
+  margin-right: 0.5rem;
+}
+
+.endringsloggContainer :global(.endringslogg-dropDown) {
+  transform: scale(0.66);
+}
+
+.endringsloggContainer :global(.collapse-header) {
+  background-color: #3e3832;
+}
+
+.endringsloggContainer :global(.ringring) {
+  border: 3px solid #ba3a26;
+}
+
+.endringsloggContainer :global(.circle) {
+  background-color: #ba3a26;
+}
+
+.containerDev {
+  --ac-internalheader-bg: #0a0;
+  --ac-internalheader-divider: #59514b;
+}

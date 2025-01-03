@@ -40,6 +40,5 @@
 
 .closeButton {
   --ac-button-secondary-border: white;
-
-  color: white;
+  --ac-button-secondary-text: white;
 }
