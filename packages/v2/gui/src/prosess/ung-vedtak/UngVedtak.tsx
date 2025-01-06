@@ -1,8 +1,4 @@
-import {
-  behandlingResultatType,
-  type AksjonspunktDto,
-  type ForhåndsvisVedtaksbrevResponse,
-} from '@k9-sak-web/backend/ungsak/generated';
+import { behandlingResultatType, type AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Fieldset, HStack, Label, VStack } from '@navikt/ds-react';
 import { CheckboxField, Form } from '@navikt/ft-form-hooks';
@@ -45,14 +41,13 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
 
   const { refetch, isLoading: forhåndsvisningIsLoading } = useQuery({
     queryKey: ['forhandsvisVedtaksbrev', behandling.id],
-    queryFn: () =>
-      api.forhåndsvisVedtaksbrev(behandling.id).then((response: ForhåndsvisVedtaksbrevResponse) => {
-        // Create a URL object from the PDF blob
-        const fileURL = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
-
-        // Open the PDF in a new tab
-        window.open(fileURL, '_blank');
-      }),
+    queryFn: async () => {
+      const response = await api.forhåndsvisVedtaksbrev(behandling.id);
+      // Create a URL object from the PDF blob
+      const fileURL = window.URL.createObjectURL(response);
+      // Open the PDF in a new tab
+      window.open(fileURL, '_blank');
+    },
     enabled: false,
   });
 
