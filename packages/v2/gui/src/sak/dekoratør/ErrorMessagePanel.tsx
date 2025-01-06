@@ -1,12 +1,10 @@
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { XMarkIcon } from '@navikt/aksel-icons';
 import { Button, Detail, HStack } from '@navikt/ds-react';
 import React, { useMemo, useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
 
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
-import Feilmelding from './feilmeldingTsType';
+import type { Feilmelding } from './feilmeldingTsType';
 
 import styles from './errorMessagePanel.module.css';
 
@@ -20,9 +18,9 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Definerer hvordan feilmeldinger vises.
  */
-export const ErrorMessagePanel = (props: OwnProps & WrappedComponentProps) => {
+export const ErrorMessagePanel = (props: OwnProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [selectedErrorMsgIndex, setSelectedErrorMsgIndex] = useState<number>(undefined);
+  const [selectedErrorMsgIndex, setSelectedErrorMsgIndex] = useState<number>(0);
 
   const toggleModalOnClick = (event: React.MouseEvent | React.KeyboardEvent, index: number): void => {
     setIsModalOpen(current => !current);
@@ -39,7 +37,7 @@ export const ErrorMessagePanel = (props: OwnProps & WrappedComponentProps) => {
     }
   };
 
-  const { errorMessages, removeErrorMessage, intl } = props;
+  const { errorMessages, removeErrorMessage } = props;
   const errorMessagesWithId = useMemo(() => errorMessages.map(error => ({ ...error, id: uuidv4() })), [errorMessages]);
 
   if (errorMessagesWithId.length === 0) {
@@ -50,18 +48,17 @@ export const ErrorMessagePanel = (props: OwnProps & WrappedComponentProps) => {
     <div className={styles.container}>
       {errorMessagesWithId.map((message, index) => (
         <HStack gap="3" key={message.id}>
-          <Detail className={styles.wordWrap}>{`${decodeHtmlEntity(message.message)} `}</Detail>
+          <Detail className={styles.wordWrap}>{`${message.message} `}</Detail>
           {message.additionalInfo && (
             <Detail>
-              <a
-                href=""
+              <button
                 onClick={event => toggleModalOnClick(event, index)}
                 onKeyDown={event => toggleModalOnKeyDown(event, index)}
                 className={styles.link}
                 data-testid="errorDetailsLink"
               >
-                <FormattedMessage id="ErrorMessagePanel.ErrorDetails" />
-              </a>
+                Detaljert informasjon
+              </button>
             </Detail>
           )}
         </HStack>
@@ -69,7 +66,7 @@ export const ErrorMessagePanel = (props: OwnProps & WrappedComponentProps) => {
       <div className={styles.lukkContainer}>
         <Button
           variant="secondary"
-          icon={<XMarkIcon title={intl.formatMessage({ id: 'ErrorMessagePanel.Close' })} />}
+          icon={<XMarkIcon title="Lukk" />}
           onClick={removeErrorMessage}
           size="small"
           className={styles.closeButton}
@@ -79,11 +76,11 @@ export const ErrorMessagePanel = (props: OwnProps & WrappedComponentProps) => {
         <ErrorMessageDetailsModal
           showModal={isModalOpen}
           closeModalFn={toggleModalOnClick as () => void}
-          errorDetails={errorMessagesWithId[selectedErrorMsgIndex].additionalInfo}
+          errorDetails={errorMessagesWithId[selectedErrorMsgIndex]?.additionalInfo}
         />
       )}
     </div>
   );
 };
 
-export default injectIntl(ErrorMessagePanel);
+export default ErrorMessagePanel;

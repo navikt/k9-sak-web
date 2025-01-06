@@ -1,16 +1,12 @@
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { act, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
-import { intlMock } from '../i18n/index';
-import messages from '../i18n/nb_NO.json';
+
 import { ErrorMessagePanel } from './ErrorMessagePanel';
 
 describe('<ErrorMessagePanel>', () => {
   it('skal vise feilmelding uten lenke for å vise detaljert info', () => {
-    renderWithIntl(
+    render(
       <ErrorMessagePanel
-        intl={intlMock}
         errorMessages={[
           {
             message: 'Error!',
@@ -19,35 +15,15 @@ describe('<ErrorMessagePanel>', () => {
         ]}
         removeErrorMessage={() => undefined}
       />,
-      { messages },
     );
 
     expect(screen.getByText('Error!')).toBeInTheDocument();
     expect(screen.queryByTestId('errorDetailsLink')).not.toBeInTheDocument();
   });
 
-  it('skal erstatte spesialtegn i feilmelding', () => {
-    renderWithIntl(
-      <ErrorMessagePanel
-        intl={intlMock}
-        errorMessages={[
-          {
-            message: 'Høna &amp; egget og &#34;test1&#34; og &#39;test2&#39;',
-            additionalInfo: undefined,
-          },
-        ]}
-        removeErrorMessage={() => undefined}
-      />,
-      { messages },
-    );
-
-    expect(screen.getByText('Høna & egget og "test1" og \'test2\'')).toBeInTheDocument();
-  });
-
   it('skal vise lenke for å se feildetaljer når dette er konfigurert og en har info', () => {
-    renderWithIntl(
+    render(
       <ErrorMessagePanel
-        intl={intlMock}
         errorMessages={[
           {
             message: 'Høna &amp; egget og &#34;test1&#34; og &#39;test2&#39;',
@@ -59,16 +35,14 @@ describe('<ErrorMessagePanel>', () => {
         ]}
         removeErrorMessage={() => undefined}
       />,
-      { messages },
     );
 
     expect(screen.getByTestId('errorDetailsLink')).toBeInTheDocument();
   });
 
   it('skal åpne, og så lukke, modal for visning av feildetaljer ved klikk på lenke', async () => {
-    renderWithIntl(
+    render(
       <ErrorMessagePanel
-        intl={intlMock}
         errorMessages={[
           {
             message: 'Høna &amp; egget og &#34;test1&#34; og &#39;test2&#39;',
@@ -80,7 +54,6 @@ describe('<ErrorMessagePanel>', () => {
         ]}
         removeErrorMessage={() => undefined}
       />,
-      { messages },
     );
 
     expect(screen.getByTestId('errorDetailsLink')).toBeInTheDocument();
@@ -94,7 +67,10 @@ describe('<ErrorMessagePanel>', () => {
     expect(screen.getByText('Url:')).toBeInTheDocument();
     expect(screen.getByText('www.test.no')).toBeInTheDocument();
     await act(async () => {
-      await userEvent.click(screen.getAllByRole('button', { name: 'Lukk' })[1]);
+      const element = await screen.getAllByRole('button', { name: 'Lukk' })[1];
+      if (element) {
+        await userEvent.click(element);
+      }
     });
     expect(screen.queryByText('Dette er ein feilmelding')).not.toBeInTheDocument();
     expect(screen.queryByText('Url')).not.toBeInTheDocument();
