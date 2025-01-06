@@ -84,6 +84,7 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
                 size="small"
                 icon={<FileSearchIcon aria-hidden fontSize="1.5rem" />}
                 loading={forhåndsvisningIsLoading}
+                type="button"
               >
                 Forhåndsvis brev
               </Button>
