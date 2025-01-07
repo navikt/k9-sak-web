@@ -35,7 +35,7 @@ interface ContainerContract {
   erOverstyrer?: boolean;
   status?: string | false;
   readOnly: boolean;
-  vurderOverlappendeSakComponent: ReactNode;
+  vurderOverlappendeSakComponent?: ReactNode;
 }
 
 export default ContainerContract;
