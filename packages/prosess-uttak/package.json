@@ -19,7 +19,7 @@
     "@navikt/ds-react": "7.6.0",
     "@navikt/ft-form-hooks": "5.2.9",
     "@navikt/ft-form-validators": "2.5.7",
-    "@navikt/ft-plattform-komponenter": "5.3.1",
+    "@navikt/ft-plattform-komponenter": "6.0.0",
     "@popperjs/core": "2.11.8",
     "classnames": "2.5.1",
     "dayjs": "1.11.13",
