@@ -1,4 +1,8 @@
-import type { ForhåndsvisVedtaksbrevResponse, UngSakClient } from '@k9-sak-web/backend/ungsak/generated';
+import type {
+  ForhåndsvisVedtaksbrevResponse,
+  TilgjengeligeVedtaksbrevResponse,
+  UngSakClient,
+} from '@k9-sak-web/backend/ungsak/generated';
 
 export default class UngVedtakBackendClient {
   #ungsak: UngSakClient;
@@ -9,5 +13,9 @@ export default class UngVedtakBackendClient {
 
   async forhåndsvisVedtaksbrev(behandlingId: number): Promise<ForhåndsvisVedtaksbrevResponse> {
     return this.#ungsak.formidling.forhåndsvisVedtaksbrev({ behandlingId });
+  }
+
+  async tilgjengeligeVedtaksbrev(behandlingId: number): Promise<TilgjengeligeVedtaksbrevResponse> {
+    return this.#ungsak.formidling.tilgjengeligeVedtaksbrev(`${behandlingId}`);
   }
 }

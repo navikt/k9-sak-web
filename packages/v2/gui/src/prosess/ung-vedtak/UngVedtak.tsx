@@ -52,6 +52,14 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
     enabled: false,
   });
 
+  const { data: tilgjengeligeVedtaksbrev, isLoading: tilgjengeligeVedtaksbrevIsLoading } = useQuery({
+    queryKey: ['tilgjengeligeVedtaksbrev', behandling.id],
+    queryFn: async () => {
+      const response = await api.tilgjengeligeVedtaksbrev(behandling.id);
+      return response;
+    },
+  });
+
   const transformValues = () => aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ({ kode: ap.definisjon }));
   const handleSubmit = () => {
     submitCallback(transformValues());
@@ -86,6 +94,7 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
                 icon={<FileSearchIcon aria-hidden fontSize="1.5rem" />}
                 loading={forhåndsvisningIsLoading}
                 type="button"
+                disabled={!tilgjengeligeVedtaksbrev?.harBrev || tilgjengeligeVedtaksbrevIsLoading}
               >
                 Forhåndsvis brev
               </Button>
