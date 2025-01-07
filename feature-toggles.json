@@ -98,5 +98,9 @@
   {
     "key": "BRUK_INNTEKTSGRADERING_I_UTTAK",
     "value": "${BRUK_INNTEKTSGRADERING_I_UTTAK}"
+  },
+  {
+    "key": "AKSJONSPUNKT_OVERLAPPENDE_SAKER",
+    "value": "${AKSJONSPUNKT_OVERLAPPENDE_SAKER}"
   }
 ]

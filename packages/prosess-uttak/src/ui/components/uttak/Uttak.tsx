@@ -59,7 +59,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
           {periode.getFirstAndLastWeek()}
         </Table.DataCell>
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
-          <BodyShort>
+          <BodyShort as="div">
             {periode.prettifyPeriod()}
             {manueltOverstyrt && (
               <>
