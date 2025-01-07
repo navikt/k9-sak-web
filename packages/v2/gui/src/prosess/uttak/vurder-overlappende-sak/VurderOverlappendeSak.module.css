@@ -1,3 +1,7 @@
+.vurderOverlappendeSak {
+  max-width: 43.5rem;
+}
+
 .apContainer {
   border-radius: 3px;
   padding: var(--a-spacing-5);

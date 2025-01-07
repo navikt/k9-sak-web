@@ -9,7 +9,6 @@ export default class BehandlingUttakBackendClient {
   #k9sak: K9SakClient;
 
   constructor(k9sakClient: K9SakClient) {
-    console.log('constructing');
     this.#k9sak = k9sakClient;
   }
 
@@ -18,7 +17,6 @@ export default class BehandlingUttakBackendClient {
   }
 
   async bekreftAksjonspunkt(requestBody: BekreftData['requestBody']): Promise<BekreftResponse> {
-    console.log('Submitting', requestBody);
     return this.#k9sak.aksjonspunkt.bekreft(requestBody);
   }
 }

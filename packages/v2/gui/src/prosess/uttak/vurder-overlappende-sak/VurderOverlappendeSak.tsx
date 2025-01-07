@@ -18,14 +18,19 @@ import { Form, NumberField, TextAreaField } from '@navikt/ft-form-hooks';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { hasValidInteger, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import type { AksjonspunktDto, BekreftData, EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/generated';
+import type {
+  AksjonspunktDto,
+  BehandlingDto,
+  BekreftData,
+  EgneOverlappendeSakerDto,
+} from '@k9-sak-web/backend/k9sak/generated';
 import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApiType';
 import { erAksjonspunktReadOnly, kanAksjonspunktRedigeres } from '../../../utils/aksjonspunkt';
 
 import styles from './VurderOverlappendeSak.module.css';
 
 interface Props {
-  behandling: { uuid: string; id?: number | null | undefined; versjon: number };
+  behandling: Pick<BehandlingDto, 'uuid' | 'id' | 'versjon' | 'status'>;
   aksjonspunkt: AksjonspunktDto;
   api: BehandlingUttakBackendApiType;
   oppdaterBehandling: () => void;
@@ -40,14 +45,24 @@ export interface VurderOverlappendeSakFormData {
   }[];
 }
 
-type BekreftVurderOverlappendeSakerAksjonspunktRequest = BekreftData['requestBody'] & {
-  bekreftedeAksjonspunktDtoer: Array<{ '@type': string }>;
+export type BekreftVurderOverlappendeSakerAksjonspunktRequest = BekreftData['requestBody'] & {
+  bekreftedeAksjonspunktDtoer: Array<{
+    '@type': string;
+    kode: string | null | undefined;
+    perioder: Array<{
+      begrunnelse: string;
+      periode: { fom: string; tom: string };
+      søkersUttaksgrad: number | string;
+    }>;
+  }>;
 };
 
 const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppdaterBehandling }) => {
-  const { uuid, id, versjon } = behandling;
+  const [loading, setLoading] = useState<boolean>(false);
+  const { uuid, id, versjon, status } = behandling;
   const [readOnly, setReadOnly] = useState<boolean>(erAksjonspunktReadOnly(aksjonspunkt));
   const [rediger, setRediger] = useState<boolean>(false);
+  const sakAvsluttet = status === 'AVSLU';
 
   const buildInitialValues = (data: EgneOverlappendeSakerDto | undefined): VurderOverlappendeSakFormData => {
     return {
@@ -88,6 +103,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
   }, [overlappendeSuccess, egneOverlappendeSaker, reset]);
 
   const submit = async (data: VurderOverlappendeSakFormData) => {
+    setLoading(true);
     const requestBody: BekreftVurderOverlappendeSakerAksjonspunktRequest = {
       behandlingId: `${id}`,
       behandlingVersjon: versjon,
@@ -95,6 +111,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
         {
           '@type': aksjonspunkt.definisjon || '',
           kode: aksjonspunkt.definisjon,
+          begrunnelse: data.begrunnelse,
           perioder: data.perioder.map(periode => ({
             begrunnelse: data.begrunnelse,
             periode: { fom: periode.periode.fom || '', tom: periode.periode.tom || '' },
@@ -103,8 +120,10 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
         },
       ],
     };
-    await api.bekreftAksjonspunkt(requestBody);
-    oppdaterBehandling();
+    api.bekreftAksjonspunkt(requestBody).then(() => {
+      setLoading(false);
+      oppdaterBehandling();
+    });
   };
 
   if (overlappendeIsError) {
@@ -123,27 +142,28 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
     egneOverlappendeSaker?.perioderMedOverlapp.find(periode => periode.vurdertTidspunkt)?.vurdertTidspunkt || undefined;
 
   return (
-    <Form formMethods={formMethods} onSubmit={submit}>
-      <VStack gap="4">
-        {!readOnly && (
-          <Alert variant={'warning'} contentMaxWidth>
-            <Heading spacing size="xsmall" level="3">
-              Vurder overlappende perioder med annen sak
-            </Heading>
-            <BodyShort>
-              Søker har overlappende perioder i uttak med annen sak. Fordel uttaksgrad i begge saker, så den totale
-              uttaksgraden ikke overstiger 100 %.
-            </BodyShort>
-          </Alert>
-        )}
+    <VStack gap="4" className={`${styles['vurderOverlappendeSak']}`} flexGrow={'1'}>
+      {!readOnly && (
+        <Alert variant={'warning'}>
+          <Heading spacing size="xsmall" level="3">
+            Vurder overlappende perioder med annen sak
+          </Heading>
+          <BodyShort>
+            Søker har overlappende perioder i uttak med annen sak. Fordel uttaksgrad i begge saker, så den totale
+            uttaksgraden ikke overstiger 100 %.
+          </BodyShort>
+        </Alert>
+      )}
 
-        <Box className={`${styles['apContainer']} ${readOnly ? styles['apReadOnly'] : styles['apActive']}`}>
+      <Box className={`${styles['apContainer']} ${readOnly ? styles['apReadOnly'] : styles['apActive']}`}>
+        <Form formMethods={formMethods} onSubmit={submit}>
           <VStack gap="5">
             <Heading size="xsmall">Uttaksgrad for overlappende perioder</Heading>
             {overlappendeIsLoading && <Loader size="large" />}
             {overlappendeSuccess && (
               <>
                 <Alert variant="info">
+                  Perioder som overlapper med sak:
                   {egneOverlappendeSaker?.perioderMedOverlapp.map(periodeMedOverlapp => {
                     const {
                       periode: { fom, tom },
@@ -151,7 +171,6 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                     } = periodeMedOverlapp;
                     return (
                       <React.Fragment key={`${fom}-${tom}-${saksnummer}`}>
-                        Perioder som overlapper med sak:
                         <List as="ul" size="small">
                           <List.Item>
                             <BodyShort as="span">
@@ -209,36 +228,40 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
 
                 {saksbehandler && <AssessedBy ident={saksbehandler} date={vurdertTidspunkt} />}
 
-                {!readOnly && (
-                  <Alert inline variant="info">
-                    Ny uttaksgrad vil ikke være synlig i uttak før du har bekreftet.
-                  </Alert>
-                )}
-                {readOnly && kanAksjonspunktRedigeres(aksjonspunkt) && (
-                  <HStack>
-                    <Button size="small" variant="secondary" onClick={toggleRediger}>
-                      Rediger
-                    </Button>
-                  </HStack>
-                )}
-                {!readOnly && (
-                  <HStack gap="4">
-                    <Button size="small" disabled={readOnly}>
-                      Bekreft og fortsett
-                    </Button>
-                    {rediger && (
-                      <Button size="small" variant="secondary" onClick={toggleRediger}>
-                        Avbryt
-                      </Button>
+                {!sakAvsluttet && (
+                  <>
+                    {!readOnly && (
+                      <Alert inline variant="info">
+                        Ny uttaksgrad vil ikke være synlig i uttak før du har bekreftet.
+                      </Alert>
                     )}
-                  </HStack>
+                    {readOnly && kanAksjonspunktRedigeres(aksjonspunkt) && (
+                      <HStack>
+                        <Button size="small" variant="secondary" onClick={toggleRediger}>
+                          Rediger
+                        </Button>
+                      </HStack>
+                    )}
+                    {!readOnly && (
+                      <HStack gap="4">
+                        <Button size="small" disabled={readOnly} loading={loading}>
+                          Bekreft og fortsett
+                        </Button>
+                        {rediger && (
+                          <Button size="small" variant="secondary" onClick={toggleRediger}>
+                            Avbryt
+                          </Button>
+                        )}
+                      </HStack>
+                    )}
+                  </>
                 )}
               </>
             )}
           </VStack>
-        </Box>
-      </VStack>
-    </Form>
+        </Form>
+      </Box>
+    </VStack>
   );
 };
 
