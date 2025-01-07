@@ -47,6 +47,7 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
       const fileURL = window.URL.createObjectURL(response);
       // Open the PDF in a new tab
       window.open(fileURL, '_blank');
+      return response;
     },
     enabled: false,
   });
