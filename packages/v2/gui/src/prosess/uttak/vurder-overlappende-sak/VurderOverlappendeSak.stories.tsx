@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import type { AksjonspunktDto, BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { AksjonspunktDto, BehandlingDto, EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/generated';
 import VurderOverlappendeSak, { type BekreftVurderOverlappendeSakerAksjonspunktRequest } from './VurderOverlappendeSak';
 import { FakeBehandlingUttakBackendApi } from '../../../storybook/mocks/FakeBehandlingUttakBackendApi';
 import { formatDate, subDays, subWeeks } from 'date-fns';
@@ -85,8 +85,7 @@ const bekreftAksjonspunktRequest: BekreftVurderOverlappendeSakerAksjonspunktRequ
   ],
 };
 
-// @ts-expect-error k9-sak-typescript-client forventer at fastsattUttaksgrad er et tall, men k9-sak returnerer null før aksjonspunktet er løst
-const api = new FakeBehandlingUttakBackendApi(egneOverlappendeSakerDtoer);
+const api = new FakeBehandlingUttakBackendApi(egneOverlappendeSakerDtoer as EgneOverlappendeSakerDto[]);
 const meta = {
   title: 'gui/prosess/Uttak/Overlappende-Saker',
   component: VurderOverlappendeSak,
