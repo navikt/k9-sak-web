@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { findEndpointsFromRels, httpErrorHandler } from '@fpsak-frontend/utils';
@@ -9,7 +10,7 @@ import VurderOverlappendeSakIndex from '@k9-sak-web/gui/prosess/uttak/vurder-ove
 import { OverstyringUttakRequest } from '../types';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { VStack } from '@navikt/ds-react';
-import { useFeatureToggles } from '@k9-sak-web/gui/utils/featureToggles/useFeatureToggles.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 
 interface UttakProps {
   uuid: string;
@@ -46,7 +47,7 @@ export default ({
   erOverstyrer,
   readOnly,
 }: UttakProps) => {
-  const { featureToggles } = useFeatureToggles();
+  const featureToggles = useContext(FeatureTogglesContext);
   const { versjon, links, status: behandlingStatus } = behandling;
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
