@@ -82,7 +82,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
     isSuccess: overlappendeSuccess,
     isError: overlappendeIsError,
   } = useQuery<EgneOverlappendeSakerDto>({
-    queryKey: ['overlappende'],
+    queryKey: ['overlappende', uuid],
     queryFn: async () => await api.getEgneOverlappendeSaker(uuid),
   });
 
