@@ -7,6 +7,8 @@ import pluginReact from 'eslint-plugin-react';
 import pluginVitest from 'eslint-plugin-vitest';
 import globals from "globals";
 import tseslint from 'typescript-eslint';
+import pluginQuery from '@tanstack/eslint-plugin-query'
+
 // Viss vi ønsker eslint-plugin-jest-dom  aktivert: import pluginJestDom from 'eslint-plugin-jest-dom';
 // ^- Rapporterer ein del feil, så virker ikkje å ha vore aktivert før.
 
@@ -16,6 +18,7 @@ const WARN = 1;
 const ERROR = 2;
 
 const config = tseslint.config(
+  ...pluginQuery.configs['flat/recommended'],
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   configPrettier,

@@ -1,11 +1,11 @@
-import { Alert, Button, Fieldset, HStack, RadioGroup } from '@navikt/ds-react';
+import {Alert, Button, Fieldset, HStack, RadioGroup} from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { VilkarKroniskSyktBarnProps } from '../../../types/VilkarKroniskSyktBarnProps';
-import { booleanTilTekst, formatereDato, formatereDatoTilLesemodus, tekstTilBoolean } from '../../../util/stringUtils';
+import {FormProvider, useForm} from 'react-hook-form';
+import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnProps';
+import {booleanTilTekst, formatereDato, formatereDatoTilLesemodus, tekstTilBoolean} from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
-import { valideringsFunksjoner } from '../../../util/validationReactHookFormUtils';
+import {valideringsFunksjoner} from '../../../util/validationReactHookFormUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
 import DatePicker from '../react-hook-form-wrappers/DatePicker';
@@ -79,7 +79,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   formState,
   soknadsdato,
 }) => {
-  const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus.begrunnelse.length > 0;
+  const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus?.begrunnelse.length > 0;
   const methods = useForm<FormData>({
     defaultValues: {
       begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',

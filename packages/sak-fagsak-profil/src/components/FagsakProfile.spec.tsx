@@ -1,6 +1,5 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import { intlMock } from '../../i18n/index';
 import messages from '../../i18n/nb_NO.json';
 import { FagsakProfile } from './FagsakProfile';
@@ -60,7 +59,7 @@ describe('<FagsakProfile>', () => {
 
     expect(screen.getByRole('heading', { name: 'Foreldrepenger' })).toBeInTheDocument();
     expect(screen.getByText('12345 - Opprettet')).toBeInTheDocument();
-    expect(screen.getByText('Dekningsgraden er 100%')).toBeInTheDocument();
+    expect(screen.getByLabelText('Dekningsgraden er 100%')).toBeInTheDocument();
   });
 
   it('skal ikke vise dekningsgrad for foreldrepenger om den ikke eksisterer', () => {
@@ -88,7 +87,7 @@ describe('<FagsakProfile>', () => {
 
     expect(screen.getByRole('heading', { name: 'Foreldrepenger' })).toBeInTheDocument();
     expect(screen.getByText('12345 - Opprettet')).toBeInTheDocument();
-    expect(screen.queryByText(/dekningsgraden/i)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(/dekningsgraden/i)).not.toBeInTheDocument();
   });
 
   it('skal ikke vise ugyldig dekningsgrad for foreldrepenger', () => {
@@ -117,6 +116,6 @@ describe('<FagsakProfile>', () => {
 
     expect(screen.getByRole('heading', { name: 'Foreldrepenger' })).toBeInTheDocument();
     expect(screen.getByText('12345 - Opprettet')).toBeInTheDocument();
-    expect(screen.queryByText(/dekningsgraden/i)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(/dekningsgraden/i)).not.toBeInTheDocument();
   });
 });

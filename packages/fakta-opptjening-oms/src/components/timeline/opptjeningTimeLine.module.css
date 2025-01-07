@@ -52,3 +52,19 @@
 .vis-text {
   border-top: 1px solid darkgray;
 }
+
+:global(.opptjening .undefined) {
+  background-color: rgb(255 145 0 / 80%);
+  border-color: rgb(255 145 0 / 80%);
+  border-radius: 8px;
+}
+
+:global(.opptjening .undefined:active) {
+  background-color: var(--a-orange-200);
+  border-color: var(--a-orange-500);
+}
+
+:global(.opptjening .undefined.vis-item.vis-selected) {
+  background-color: var(--a-orange-500);
+  border: 1px solid #4a4a4a;
+}

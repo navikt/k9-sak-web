@@ -22,6 +22,7 @@ import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const EMPTY_ARRAY = [];
 
@@ -35,6 +36,7 @@ const AppIndex = () => {
   const location = useLocation();
   const [headerHeight, setHeaderHeight] = useState(0);
   const [hasCrashed, setCrashed] = useState(false);
+  const queryClient = new QueryClient();
 
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
 
@@ -70,19 +72,21 @@ const AppIndex = () => {
 
   return (
     <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
-      <AppConfigResolver>
-        <LanguageProvider>
-          <Dekorator
-            hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
-            queryStrings={queryStrings}
-            setSiteHeight={setSiteHeight}
-            pathname={location.pathname}
-          />
-          {shouldRenderHome && <Home headerHeight={headerHeight} />}
-          {forbiddenErrors.length > 0 && <ForbiddenPage />}
-          {unauthorizedErrors.length > 0 && <UnauthorizedPage />}
-        </LanguageProvider>
-      </AppConfigResolver>
+      <QueryClientProvider client={queryClient}>
+        <AppConfigResolver>
+          <LanguageProvider>
+            <Dekorator
+              hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
+              queryStrings={queryStrings}
+              setSiteHeight={setSiteHeight}
+              pathname={location.pathname}
+            />
+            {shouldRenderHome && <Home headerHeight={headerHeight} />}
+            {forbiddenErrors.length > 0 && <ForbiddenPage />}
+            {unauthorizedErrors.length > 0 && <UnauthorizedPage />}
+          </LanguageProvider>
+        </AppConfigResolver>
+      </QueryClientProvider>
     </ErrorBoundary>
   );
 };

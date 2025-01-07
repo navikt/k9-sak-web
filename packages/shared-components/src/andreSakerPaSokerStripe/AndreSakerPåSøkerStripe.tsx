@@ -22,7 +22,7 @@ const AndreSakerPåSøkerStripe: React.FC<Props> = ({ søkerIdent, saksnummer, f
     error,
     isSuccess,
   } = useQuery<Fagsak[]>({
-    queryKey: ['andreFagsaker', saksnummer],
+    queryKey: ['andreFagsaker', { fagsakYtelseType, søkerIdent }],
     queryFn: async ({ signal }) =>
       axios
         .post(`/k9/sak/api/fagsak/match`, { ytelseType: fagsakYtelseType, bruker: søkerIdent }, { signal })

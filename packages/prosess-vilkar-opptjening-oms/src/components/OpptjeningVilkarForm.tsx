@@ -1,7 +1,7 @@
-import { Aksjonspunkt, SubmitCallback, Vilkarperiode, Opptjening } from '@k9-sak-web/types';
-import React from 'react';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
+import { useContext } from 'react';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 
 /**
  * OpptjeningVilkarForm
@@ -40,7 +40,7 @@ const OpptjeningVilkarForm = ({
   periodeIndex,
   opptjeninger,
 }: OpptjeningVilkarFormProps) => {
-  const [featureToggles] = useFeatureToggles();
+  const featureToggles = useContext(FeatureTogglesContext);
 
   return (
     <OpptjeningVilkarAksjonspunktPanel
