@@ -194,7 +194,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                     saksnummer,
                   } = field;
                   return (
-                    <div key={`${fom}-${tom}-${saksnummer}`} className={styles['setUttaksgradWrapper']}>
+                    <div key={`${fom}-${tom}-${saksnummer}`}>
                       {readOnly ? (
                         <TextField
                           label={`Sett uttaksgrad i prosent for perioden ${formatPeriod(fom || '', tom || '')}`}
