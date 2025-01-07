@@ -9,7 +9,7 @@ import VurderOverlappendeSakIndex from '@k9-sak-web/gui/prosess/uttak/vurder-ove
 import { OverstyringUttakRequest } from '../types';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { VStack } from '@navikt/ds-react';
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
+import { useFeatureToggles } from '@k9-sak-web/gui/utils/featureToggles/useFeatureToggles.js';
 
 interface UttakProps {
   uuid: string;
@@ -46,7 +46,7 @@ export default ({
   erOverstyrer,
   readOnly,
 }: UttakProps) => {
-  const [featureToggles] = useFeatureToggles();
+  const { featureToggles } = useFeatureToggles();
   const { versjon, links, status: behandlingStatus } = behandling;
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
