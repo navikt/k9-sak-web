@@ -1,0 +1,9 @@
+.brevCheckboxContainer {
+  align-self: flex-start;
+  border: none;
+  background: var(--a-blue-50);
+  border-radius: 4px;
+  padding: 1.4375rem 1.75rem 0.9375rem;
+  order: 1;
+  margin-right: 30px;
+}
