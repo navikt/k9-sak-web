@@ -12,7 +12,7 @@
     "@navikt/ft-plattform-komponenter": "5.3.1",
     "classnames": "2.5.1",
     "lodash": "4.17.21",
-    "react": "18.3.1",
+    "react": "19.0.0",
     "react-intl": "7.0.1"
   }
 }
