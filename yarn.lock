@@ -2003,12 +2003,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/paragraph@npm:2.11.6":
-  version: 2.11.6
-  resolution: "@editorjs/paragraph@npm:2.11.6"
+"@editorjs/paragraph@npm:2.11.7":
+  version: 2.11.7
+  resolution: "@editorjs/paragraph@npm:2.11.7"
   dependencies:
     "@codexteam/icons": ^0.0.4
-  checksum: 01ee0aae3eb51acd6d6907fb46d5ab5bca8d766c9108f4c13f09822f776a895a7245c68613a0fab8214331ab7c6e4afb19cf305622523b247db013c3318984cc
+  checksum: dc92d01c8089faf56fd2f25fee4e1841b565a62d357e6dbcef4e16f1a22703dcde4bc9fdbb066d5d71d24dab61752a5cf8dffc60a8900e86e1e805836b6f809d
   languageName: node
   linkType: hard
 
@@ -3054,7 +3054,7 @@ __metadata:
     "@editorjs/editorjs": 2.30.7
     "@editorjs/header": 2.8.8
     "@editorjs/list": 1.9.0
-    "@editorjs/paragraph": 2.11.6
+    "@editorjs/paragraph": 2.11.7
     "@fpsak-frontend/form": 1.0.0
     "@fpsak-frontend/kodeverk": 1.0.0
     "@fpsak-frontend/prop-types": 1.0.0
@@ -11101,10 +11101,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globals@npm:^15.13.0":
-  version: 15.13.0
-  resolution: "globals@npm:15.13.0"
-  checksum: 3f98514ce25a21150b246fbd63aeaeb271a93b3340cf7f4f6e9934d3b37dbb4b0fddef9c470183097dcfd2e8757bb86bbae701588f0e376667d8d9d6f665db3b
+"globals@npm:^15.14.0":
+  version: 15.14.0
+  resolution: "globals@npm:15.14.0"
+  checksum: fa993433a01bf4a118904fbafbcff34db487fce83f73da75fb4a8653afc6dcd72905e6208c49bab307ff0980928273d0ecd1cfc67e1a4782dabfbd92c234ab68
   languageName: node
   linkType: hard
 
@@ -13031,7 +13031,7 @@ __metadata:
     eslint-plugin-jsx-a11y: 6.10.2
     eslint-plugin-react: 7.37.2
     eslint-plugin-vitest: ~0.5.4
-    globals: ^15.13.0
+    globals: ^15.14.0
     history: 5.3.0
     husky: 9.1.7
     i18n-iso-countries: 7.13.0
