@@ -27,6 +27,7 @@ describe('<RegistrereVergeFaktaForm>', () => {
         readOnly={false}
         vergetyper={vergetyper}
         alleMerknaderFraBeslutter={{}}
+        valgtVergeType={undefined}
       />,
     );
 
