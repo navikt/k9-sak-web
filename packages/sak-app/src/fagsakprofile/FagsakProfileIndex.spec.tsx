@@ -158,7 +158,6 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, {});
     requestApi.mock(K9sakApiKeys.INIT_FETCH_TILBAKE, {});
     requestApi.mock(K9sakApiKeys.INIT_FETCH_KLAGE, {});
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'BEHANDLINGSVELGER_NY', value: 'true' }]);
     requestApi.mock(K9sakApiKeys.SAK_BRUKER, {});
     requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, {});
 
@@ -193,7 +192,6 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, {});
     requestApi.mock(K9sakApiKeys.INIT_FETCH_TILBAKE, {});
     requestApi.mock(K9sakApiKeys.INIT_FETCH_KLAGE, {});
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'BEHANDLINGSVELGER_NY', value: 'true' }]);
     requestApi.mock(K9sakApiKeys.SAK_BRUKER, {});
     requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, {});
 

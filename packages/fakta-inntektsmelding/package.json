@@ -18,16 +18,15 @@
     "@navikt/ds-css": "7.6.0",
     "@navikt/ds-icons": "3.4.3",
     "@navikt/ds-react": "7.6.0",
-    "@navikt/ft-form-hooks": "5.2.8",
-    "@navikt/ft-plattform-komponenter": "5.1.5",
+    "@navikt/ft-form-hooks": "5.2.9",
+    "@navikt/ft-plattform-komponenter": "5.3.1",
     "@popperjs/core": "2.11.8",
     "classnames": "2.5.1",
     "dayjs": "1.11.13",
     "react": "18.3.1",
     "react-collapse": "5.1.1",
     "react-dom": "18.3.1",
-    "react-hook-form": "7.53.2",
-    "react-popper": "2.3.0"
+    "react-hook-form": "7.53.2"
   },
   "msw": {
     "workerDirectory": "public"

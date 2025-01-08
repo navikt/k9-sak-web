@@ -1,8 +1,9 @@
-import HeaderWithErrorPanel, { Feilmelding } from '@fpsak-frontend/sak-dekorator';
+import { Feilmelding } from '@k9-sak-web/gui/sak/dekoratør/feilmeldingTsType.js';
+import HeaderWithErrorPanel from '@k9-sak-web/gui/sak/dekoratør/HeaderWithErrorPanel.js';
 import { AAREG_URL, AINNTEKT_URL } from '@k9-sak-web/konstanter';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { NavAnsatt } from '@k9-sak-web/types';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
 import ErrorFormatter from '../feilhandtering/ErrorFormatter';
@@ -95,10 +96,12 @@ const Dekorator = ({
       removeErrorMessage={removeErrorMessages}
       errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
       setSiteHeight={setSiteHeight}
-      getPathToFplos={getPathToK9Los}
+      getPathToLos={getPathToK9Los}
       getPathToK9Punsj={getPathToK9Punsj}
       ainntektPath={getAinntektPath()}
       aaregPath={getAaregPath()}
+      ytelse="Pleiepenger og omsorgspenger"
+      headerTitleHref="/k9/web"
     />
   );
 };
