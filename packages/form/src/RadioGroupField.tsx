@@ -2,7 +2,6 @@ import { HStack, Radio, RadioGroup } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import React, { Fragment, ReactElement, ReactNode } from 'react';
 import { Field, WrappedFieldInputProps } from 'redux-form';
-import LabelType from './LabelType';
 import { RadioOptionProps } from './RadioOption';
 import styles from './radioGroupField.module.css';
 import renderNavField from './renderNavField';
@@ -22,7 +21,7 @@ interface RadioProps {
 
 interface RadioGroupFieldProps {
   name: string;
-  label?: LabelType;
+  label?: ReactNode;
   /**
    * columns: Antall kolonner som valgene skal fordeles på. Default er samme som antall valg.
    */
