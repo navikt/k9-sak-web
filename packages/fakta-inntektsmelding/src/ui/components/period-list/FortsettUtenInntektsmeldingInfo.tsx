@@ -1,7 +1,7 @@
 import { Edit } from '@navikt/ds-icons';
 import { Alert, Button } from '@navikt/ds-react';
 import { AssessedBy, LabelledContent } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
+import React, { type JSX } from 'react';
 import ContainerContext from '../../../context/ContainerContext';
 import { Kode, Tilstand } from '../../../types/KompletthetData';
 import styles from './periodList.module.css';

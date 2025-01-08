@@ -1,7 +1,7 @@
 import { Loader } from '@navikt/ds-react';
 import { Box, LinkButton, Margin, PageError, TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
 import { httpUtils, Period } from '@fpsak-frontend/utils';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, type JSX } from 'react';
 import { postInnleggelsesperioder, postInnleggelsesperioderDryRun } from '../../../api/api';
 import LinkRel from '../../../constants/LinkRel';
 import { InnleggelsesperiodeResponse } from '../../../types/InnleggelsesperiodeResponse';

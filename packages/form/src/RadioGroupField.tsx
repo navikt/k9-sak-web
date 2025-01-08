@@ -17,7 +17,7 @@ interface RadioProps {
   value: string | boolean;
   label: string | ReactNode;
   disabled?: boolean;
-  element?: ReactElement;
+  element?: ReactElement<any>;
 }
 
 interface RadioGroupFieldProps {

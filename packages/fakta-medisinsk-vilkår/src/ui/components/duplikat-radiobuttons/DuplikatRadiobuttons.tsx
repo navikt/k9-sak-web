@@ -11,6 +11,8 @@ import { findLinkByRel } from '../../../util/linkUtils';
 import ContainerContext from '../../context/ContainerContext';
 import { required } from '../../form/validators';
 
+import type { JSX } from 'react';
+
 export const ikkeDuplikatValue = 'ikkeDuplikat';
 
 interface DuplikatRadiobuttonsProps {

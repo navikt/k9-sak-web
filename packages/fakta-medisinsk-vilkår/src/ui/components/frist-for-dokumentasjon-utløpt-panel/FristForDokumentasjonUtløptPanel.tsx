@@ -1,6 +1,6 @@
 import { BodyShort, Button, Checkbox } from '@navikt/ds-react';
 import { Box, InfoPanel, Margin } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
+import React, { type JSX } from 'react';
 import styles from './fristForDokumentasjonUtløptPanel.module.css';
 
 interface FristForDokumentasjonUtløptPanelProps {
