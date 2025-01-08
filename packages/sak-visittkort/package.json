@@ -10,10 +10,10 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "5.3.1",
+    "@navikt/ft-plattform-komponenter": "6.0.0",
     "dayjs": "1.11.13",
     "moment": "2.30.1",
     "react": "19.0.0",
-    "react-intl": "7.0.1"
+    "react-intl": "7.1.0"
   }
 }

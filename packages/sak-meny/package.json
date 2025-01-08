@@ -7,9 +7,9 @@
   "dependencies": {
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "5.3.1",
+    "@navikt/ft-plattform-komponenter": "6.0.0",
     "react": "19.0.0",
-    "react-intl": "7.0.1"
+    "react-intl": "7.1.0"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0"

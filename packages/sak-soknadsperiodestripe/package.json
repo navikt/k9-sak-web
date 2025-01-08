@@ -10,6 +10,6 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "react": "19.0.0",
-    "react-intl": "7.0.1"
+    "react-intl": "7.1.0"
   }
 }
