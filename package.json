@@ -48,7 +48,7 @@
     "@navikt/ds-react": "7.6.0",
     "@navikt/ds-tailwind": "^7.6.0",
     "@navikt/familie-endringslogg": "14.0.0",
-    "@navikt/ft-plattform-komponenter": "6.0.0",
+    "@navikt/ft-plattform-komponenter": "7.0.0-alpha.0",
     "@popperjs/core": "2.11.8",
     "@sentry/browser": "8.46.0",
     "@sentry/react": "^8.46.0",
@@ -121,9 +121,7 @@
   "resolutions": {
     "postcss": "8.4.49",
     "parse-url": "8.1.0",
-    "@types/react": "19.0.3",
-    "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "@types/react": "19.0.3"
   },
   "msw": {
     "workerDirectory": "public"
