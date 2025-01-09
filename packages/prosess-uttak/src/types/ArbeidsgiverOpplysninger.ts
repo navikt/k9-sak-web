@@ -4,8 +4,8 @@ export type ArbeidsgiverOpplysninger = Readonly<{
   identifikator?: string;
   personIdentifikator?: string;
   arbeidsforholdreferanser?: {
-    internArbeidsforholdId: string;
-    eksternArbeidsforholdId: string;
+    internArbeidsforholdId?: string;
+    eksternArbeidsforholdId?: string;
   }[];
 }>;
 
