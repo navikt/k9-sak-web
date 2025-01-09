@@ -7,7 +7,12 @@ import GraderingMotTilsyn from './GraderingMotTilsyn';
 import Inngangsvilkår from './Inngangsvilkår';
 import Period from './Period';
 import Utbetalingsgrad from './Utbetalingsgrad';
-import Vurderingsresultat from '@k9-sak-web/fakta-etablert-tilsyn/src/types/Vurderingsresultat';
+
+export enum Vurderingsresultat {
+  OPPFYLT = 'OPPFYLT',
+  IKKE_OPPFYLT = 'IKKE_OPPFYLT',
+  IKKE_VURDERT = 'IKKE_VURDERT',
+}
 
 export interface Uttaksperiodeelement {
   utfall: Utfall;
