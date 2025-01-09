@@ -125,20 +125,20 @@ const avsluttetBehandling: BehandlingDto = {
 const aksjonspunkt: AksjonspunktDto = {
   aksjonspunktType: 'MANU',
   erAktivt: true,
-  besluttersBegrunnelse: null,
+  besluttersBegrunnelse: undefined,
   definisjon: '9292',
-  fristTid: null,
+  fristTid: undefined,
   toTrinnsBehandling: true,
-  toTrinnsBehandlingGodkjent: null,
-  vilkarType: null,
-  vurderPaNyttArsaker: null,
+  toTrinnsBehandlingGodkjent: undefined,
+  vilkarType: undefined,
+  vurderPaNyttArsaker: undefined,
   venteårsak: '-',
-  venteårsakVariant: null,
+  venteårsakVariant: undefined,
   opprettetAv: 'vtp',
 };
 
 const uløstAksjonspunkt: AksjonspunktDto = {
-  begrunnelse: null,
+  begrunnelse: undefined,
   kanLoses: true,
   status: 'OPPR',
   ...aksjonspunkt,

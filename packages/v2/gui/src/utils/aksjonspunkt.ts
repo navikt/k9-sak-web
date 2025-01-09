@@ -3,9 +3,9 @@ import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspu
 
 export const kanAksjonspunktRedigeres = (aksjonspunkt: AksjonspunktDto): boolean => {
   const { status, erAktivt } = aksjonspunkt;
-  return status === aksjonspunktStatus.UTFORT && erAktivt === true;
+  return status === aksjonspunktStatus.UTFØRT && erAktivt === true;
 };
 
 export const erAksjonspunktReadOnly = (aksjonspunkt: AksjonspunktDto): boolean => {
-  return aksjonspunkt.kanLoses === false && aksjonspunkt.status === aksjonspunktStatus.UTFORT;
+  return aksjonspunkt.kanLoses === false && aksjonspunkt.status === aksjonspunktStatus.UTFØRT;
 };
