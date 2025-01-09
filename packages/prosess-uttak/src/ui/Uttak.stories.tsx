@@ -3,7 +3,7 @@ import { AnnenPart, Arbeidstype, Utfall, Årsaker } from '../constants';
 import { Endringsstatus } from '../types';
 import UttakContainer from './UttakContainer';
 import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
-import { userEvent, within, expect, fireEvent, fn, logRoles } from '@storybook/test';
+import { userEvent, within, expect } from '@storybook/test';
 
 const meta: Meta<typeof UttakContainer> = {
   title: 'prosess/prosess-uttak',
