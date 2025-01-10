@@ -17,6 +17,8 @@ import GraderingMotInntektDetaljer from './GraderingMotInntektDetaljer';
 
 import styles from './nyUttakDetaljer.module.css';
 
+import type { JSX } from 'react';
+
 const cx = classNames.bind(styles);
 
 const getÅrsaksetiketter = (årsaker: Årsaker[]) => {

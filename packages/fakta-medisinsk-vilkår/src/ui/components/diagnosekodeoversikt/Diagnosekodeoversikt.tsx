@@ -3,7 +3,7 @@ import { Box, Margin, TitleWithUnderline } from '@navikt/ft-plattform-komponente
 
 import { Alert, Loader } from '@navikt/ds-react';
 import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Diagnosekode from '../../../types/Diagnosekode';
 import { DiagnosekodeResponse } from '../../../types/DiagnosekodeResponse';
@@ -36,7 +36,7 @@ interface DiagnosekodeoversiktProps {
 const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktProps): JSX.Element => {
   const { endpoints, httpErrorHandler } = React.useContext(ContainerContext);
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
-  const addButtonRef = React.useRef<HTMLButtonElement>();
+  const addButtonRef = React.useRef<HTMLButtonElement>(undefined);
 
   const hentDiagnosekoder = () =>
     httpUtils

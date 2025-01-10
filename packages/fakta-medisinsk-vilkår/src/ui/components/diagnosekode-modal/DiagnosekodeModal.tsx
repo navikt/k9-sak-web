@@ -1,6 +1,6 @@
 import { Button, Modal } from '@navikt/ds-react';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import React, { useEffect } from 'react';
+import React, { useEffect, type JSX } from 'react';
 import type { DiagnosekodeSearcherPromise } from '../../../util/diagnosekodeSearcher';
 import DiagnosekodeSelector from '../../form/pure/PureDiagnosekodeSelector';
 import styles from '../diagnosekodeoversikt/diagnosekodeoversikt.module.css';

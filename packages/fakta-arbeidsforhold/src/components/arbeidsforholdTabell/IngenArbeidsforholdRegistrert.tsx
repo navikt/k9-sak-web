@@ -3,7 +3,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 interface OwnProps {
-  headerColumnContent: React.ReactElement[];
+  headerColumnContent: React.ReactElement<any>[];
 }
 
 const IngenArbeidsforholdRegistrert = ({ headerColumnContent }: OwnProps) => (

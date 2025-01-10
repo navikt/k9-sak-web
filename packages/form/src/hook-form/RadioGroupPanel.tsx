@@ -8,7 +8,7 @@ interface RadioProps {
   value: string;
   label: React.ReactNode;
   id?: string;
-  element?: ReactElement;
+  element?: ReactElement<any>;
 }
 
 interface RadioGroupPanelProps {

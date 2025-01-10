@@ -3,7 +3,7 @@ import { Period } from '@fpsak-frontend/utils';
 import { Close } from '@navikt/ds-icons';
 import { Alert, Label, Link } from '@navikt/ds-react';
 import { Box, ContentWithTooltip, Form, Margin, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
-import React, { useState } from 'react';
+import React, { useState, type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
 import { Vurderingsversjon } from '../../../types/Vurdering';

@@ -1,6 +1,6 @@
 import { httpUtils, Period } from '@fpsak-frontend/utils';
 import { Box, Margin, PageContainer } from '@navikt/ft-plattform-komponenter';
-import React, { useMemo } from 'react';
+import React, { useMemo, type JSX } from 'react';
 import Dokument from '../../../types/Dokument';
 import Link from '../../../types/Link';
 import { Vurderingsversjon } from '../../../types/Vurdering';

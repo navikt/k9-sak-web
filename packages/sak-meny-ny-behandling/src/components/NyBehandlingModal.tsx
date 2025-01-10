@@ -12,7 +12,7 @@ import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
 import { createSelector } from 'reselect';
 import styles from './nyBehandlingModal.module.css';
 
-const createOptions = (bt: KodeverkMedNavn, enabledBehandlingstyper: KodeverkMedNavn[]): ReactElement => {
+const createOptions = (bt: KodeverkMedNavn, enabledBehandlingstyper: KodeverkMedNavn[]): ReactElement<any> => {
   const navn = bt.kode === bType.REVURDERING ? 'Revurderingsbehandling' : bt.navn;
 
   const isEnabled = enabledBehandlingstyper.some(b => b.kode === bt.kode);

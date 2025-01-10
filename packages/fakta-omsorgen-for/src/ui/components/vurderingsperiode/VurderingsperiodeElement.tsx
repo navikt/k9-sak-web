@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { Period } from '@fpsak-frontend/utils';
 import { ContentWithTooltip, GreenCheckIconFilled, RedCrossIconFilled } from '@navikt/ft-plattform-komponenter';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
