@@ -3,7 +3,7 @@ import { Image } from '@fpsak-frontend/shared-components';
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { Button, Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, type JSX } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './behandlingFilter.module.css';
 

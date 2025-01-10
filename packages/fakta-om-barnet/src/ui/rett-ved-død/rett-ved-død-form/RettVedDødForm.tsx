@@ -1,6 +1,6 @@
 import { RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Form } from '@navikt/ft-plattform-komponenter';
-import React, { useContext } from 'react';
+import React, { useContext, type JSX } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { RettVedDød } from '../../../types/RettVedDød';
 import RettVedDødUtfallType from '../../../types/RettVedDødType';

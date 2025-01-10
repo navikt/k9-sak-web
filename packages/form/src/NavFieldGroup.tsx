@@ -1,5 +1,5 @@
 import { Fieldset } from '@navikt/ds-react';
-import React, { ReactNode, ReactNodeArray } from 'react';
+import React, { ReactNode } from 'react';
 import { Field } from 'redux-form';
 import renderNavField from './renderNavField';
 
@@ -13,7 +13,7 @@ interface NavFieldGroupProps {
   errorMessageName?: string;
   errorMessage?: string | ReactNode;
   title?: string;
-  children: ReactNodeArray | ReactNode;
+  children: ReadonlyArray<ReactNode> | ReactNode;
   className?: string;
 }
 
