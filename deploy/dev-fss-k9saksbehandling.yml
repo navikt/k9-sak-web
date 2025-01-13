@@ -115,5 +115,7 @@ spec:
       value: "true"
     - name: BRUK_INNTEKTSGRADERING_I_UTTAK
       value: "true"
+    - name: OMS_NYOPPSTARTET
+      value: "true"
     - name: AKSJONSPUNKT_OVERLAPPENDE_SAKER
       value: "true"

@@ -95,6 +95,7 @@ const AksjonspunktCodes = {
   VURDER_GJENNOMGÅTT_OPPLÆRING: '9302',
   VURDER_REISETID: '9303',
   VURDER_DATO_NY_REGEL_UTTAK: '9291',
+  VURDER_NYOPPSTARTET: '9016',
 };
 
 export default AksjonspunktCodes;
