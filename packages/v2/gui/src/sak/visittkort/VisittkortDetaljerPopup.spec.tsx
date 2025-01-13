@@ -1,3 +1,6 @@
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
@@ -20,6 +23,8 @@ describe('<VisittkortDetaljerPopup>', () => {
         adresseType: 'BOSTEDSADRESSE', // ADRESSE_TYPE
         adresselinje1: 'Oslo',
         land: 'Norge',
+        postNummer: '1234',
+        poststed: 'Oslo',
       },
     ],
     fnr: '98773895',
@@ -38,9 +43,18 @@ describe('<VisittkortDetaljerPopup>', () => {
   });
 
   it('skal vise adresser', () => {
-    render(<VisittkortDetaljerPopup personopplysninger={personopplysningerSoker} sprakkode="NN" />);
+    render(
+      <KodeverkProvider
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <VisittkortDetaljerPopup personopplysninger={personopplysningerSoker} sprakkode="NN" />
+      </KodeverkProvider>,
+    );
 
     expect(screen.getByText('Bostedsadresse')).toBeInTheDocument();
-    expect(screen.getByText('Oslo,')).toBeInTheDocument();
+    expect(screen.getByText('Oslo, 1234 Oslo Norge')).toBeInTheDocument();
   });
 });
