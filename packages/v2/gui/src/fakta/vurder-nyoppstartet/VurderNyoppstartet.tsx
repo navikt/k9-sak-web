@@ -32,9 +32,9 @@ export const VurderNyoppstartet = ({
   const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktCodes.VURDER_NYOPPSTARTET);
   const formMethods = useForm<FormValues>({
     defaultValues: {
-      begrunnelse: aksjonspunkt?.begrunnelse || '',
+      begrunnelse: aksjonspunkt?.begrunnelse || undefined,
       erNyoppstartet: undefined,
-      fom: '',
+      fom: undefined,
     },
   });
 
