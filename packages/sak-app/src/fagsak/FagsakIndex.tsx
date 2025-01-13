@@ -161,7 +161,7 @@ const FagsakIndex = () => {
     K9sakApiKeys.ARBEIDSGIVERE,
     {},
     {
-      updateTriggers: [!behandling],
+      updateTriggers: [behandlingId],
       suspendRequest: !behandling,
     },
   );
@@ -191,7 +191,7 @@ const FagsakIndex = () => {
     K9sakApiKeys.DIREKTE_OVERGANG_FRA_INFOTRYGD,
     {},
     {
-      updateTriggers: [!behandling],
+      updateTriggers: [behandlingId],
       suspendRequest: !behandling,
     },
   );
@@ -216,7 +216,7 @@ const FagsakIndex = () => {
     K9sakApiKeys.LOS_HENTE_MERKNAD,
     {},
     {
-      updateTriggers: [!behandling],
+      updateTriggers: [behandlingId],
       suspendRequest: !behandling || !featureToggles?.LOS_MARKER_BEHANDLING,
     },
   );

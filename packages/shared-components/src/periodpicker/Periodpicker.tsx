@@ -3,7 +3,7 @@ import { haystack } from '@fpsak-frontend/utils';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { DatePicker, HStack, Label, VStack, useDatepicker } from '@navikt/ds-react';
 import dayjs from 'dayjs';
-import { FunctionComponent, ReactNode } from 'react';
+import { FunctionComponent, ReactNode, type JSX } from 'react';
 import { useIntl } from 'react-intl';
 import { FieldArrayMetaProps, WrappedFieldInputProps } from 'redux-form';
 

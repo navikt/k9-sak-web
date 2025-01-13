@@ -4,6 +4,8 @@ import * as React from 'react';
 import classnames from 'classnames';
 import styles from './periodList.module.css';
 
+import type { JSX } from 'react';
+
 interface PeriodListProps {
   periods: Period[];
   className?: string;

@@ -7,7 +7,7 @@ import {
   WarningIcon,
 } from '@navikt/ft-plattform-komponenter';
 import { Period, sortPeriodsByFomDate } from '@fpsak-frontend/utils';
-import React, { useEffect } from 'react';
+import React, { useEffect, type JSX } from 'react';
 import ManuellVurdering from '../../../types/ManuellVurdering';
 import Vurderingselement from '../../../types/Vurderingselement';
 import usePrevious from '../../../util/hooks';

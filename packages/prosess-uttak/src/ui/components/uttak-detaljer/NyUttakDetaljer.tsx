@@ -17,6 +17,8 @@ import GraderingMotInntektDetaljer from './GraderingMotInntektDetaljer';
 
 import styles from './nyUttakDetaljer.module.css';
 
+import type { JSX } from 'react';
+
 const cx = classNames.bind(styles);
 
 const getÅrsaksetiketter = (årsaker: Årsaker[]) => {
@@ -130,13 +132,11 @@ const NyUttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.E
       <div className={styles.uttakDetaljer__oppsummering}>
         {søkerBerOmMaksimalt && getSøkerBerOmMaksimalt(søkerBerOmMaksimalt, årsaker)}
       </div>
-
       {manueltOverstyrt && (
         <Alert variant="info" size="small" className="mx-4">
           Uttaksgrad og/eller utbetalingsgrad er manuelt overstyrt av saksbehandler.
         </Alert>
       )}
-
       <HGrid gap="8" columns={3} align="start" className={styles.uttakDetaljer}>
         {graderingMotTilsyn && !erFagytelsetypeLivetsSluttfase && (
           <Box
@@ -145,6 +145,7 @@ const NyUttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.E
               uttakDetaljer__graderingDetaljer__highlight: shouldHighlightTilsyn,
               uttakDetaljer__graderingDetaljer__notHighlighted: !shouldHighlightTilsyn,
             })}
+            title="Gradering mot tilsyn"
           >
             {shouldHighlightTilsyn && (
               <Box className={styles.uttakDetaljer__tag}>
@@ -173,6 +174,7 @@ const NyUttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.E
             uttakDetaljer__graderingDetaljer__highlight: shouldHighlightArbeidstid,
             uttakDetaljer__graderingDetaljer__notHighlighted: !shouldHighlightArbeidstid,
           })}
+          title="Gradering mot arbeidstid"
         >
           {shouldHighlightArbeidstid && (
             <Box className={styles.uttakDetaljer__tag}>
@@ -200,6 +202,7 @@ const NyUttakDetaljer = ({ uttak, manueltOverstyrt }: UttakDetaljerProps): JSX.E
               uttakDetaljer__graderingDetaljer__highlight: shouldHighlightInntekt,
               uttakDetaljer__graderingDetaljer__notHighlighted: !shouldHighlightInntekt,
             })}
+            title="Gradering mot inntekt"
           >
             {shouldHighlightInntekt && (
               <Box className={styles.uttakDetaljer__tag}>

@@ -7,7 +7,7 @@ import {
   TwoPersonsWithOneHighlightedIconGray,
   InstitutionIcon,
 } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
+import React, { type JSX } from 'react';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import ManuellVurdering from '../../../types/ManuellVurdering';
 import InnleggelsesperiodeIkonOverOppfylt from '../innleggelsesperiode-ikon-over-oppfylt/InnleggelsesperiodeIkonOverOppfylt';

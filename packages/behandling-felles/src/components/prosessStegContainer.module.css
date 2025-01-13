@@ -3,11 +3,11 @@
 }
 
 .meny {
-  margin: 15px 25px 23px;
+  margin: 0 25px;
 }
 
 .stepArrowContainer {
-  bottom: -24px !important;
+  bottom: -19px !important;
   filter: drop-shadow(0 -3px 2px rgb(0 0 0 / 10%));
   position: relative;
   z-index: 1;

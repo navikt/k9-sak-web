@@ -1,6 +1,6 @@
 import { Period, get } from '@fpsak-frontend/utils';
 import { PageContainer } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import ContainerContext from '../context/ContainerContext';
 import ContainerContract from '../types/ContainerContract';
 import { Kompletthet as KompletthetData } from '../types/KompletthetData';
@@ -31,7 +31,7 @@ export interface MainComponentProps {
   data: ContainerContract;
 }
 
-const InntektsmeldingContainer = ({ data }: MainComponentProps): JSX.Element => {
+const InntektsmeldingContainer = ({ data }: MainComponentProps): ReactElement<any> => {
   const [state, dispatch] = React.useReducer(mainComponentReducer, {
     isLoading: true,
     kompletthetsoversiktHarFeilet: false,

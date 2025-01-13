@@ -1,6 +1,6 @@
 import { Alert } from '@navikt/ds-react';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
+import React, { type JSX } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Omsorgsperiodeoversikt from '../../../types/Omsorgsperiodeoversikt';
 import { getStringMedPerioder } from '../../../util/periodUtils';
