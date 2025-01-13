@@ -29,7 +29,7 @@ interface OwnProps {
   sprakkode?: string;
   personopplysninger?: Personopplysninger;
   harTilbakekrevingVerge?: boolean;
-  relaterteFagsaker: RelatertSakDto;
+  relaterteFagsaker?: RelatertSakDto;
   direkteOvergangFraInfotrygd?: DirekteOvergangDto;
   erPbSak?: boolean;
   erHastesak?: boolean;

@@ -1,9 +1,9 @@
 import type { RelatertSakDto } from '@k9-sak-web/backend/k9sak/generated';
-import { pathToFagsak } from '@k9-sak-web/sak-app/src/app/paths';
 import { LockedFilled, UnlockedFilled } from '@navikt/ds-icons';
 import { BodyShort, Link, Select } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
+import { pathToFagsak } from '../../../utils/paths';
 import RelatertSøkerIcon from './RelatertSøkerIcon';
 import styles from './relatertFagsak.module.css';
 

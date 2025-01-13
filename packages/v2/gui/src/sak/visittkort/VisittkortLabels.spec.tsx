@@ -1,141 +1,96 @@
-import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import region from '@fpsak-frontend/kodeverk/src/region';
-import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import { renderWithIntl, screen } from '@fpsak-frontend/utils-test/test-utils';
-import messages from '../../i18n/nb_NO.json';
+import { render, screen } from '@testing-library/react';
 import VisittkortLabels from './VisittkortLabels';
+import type { Personopplysninger } from './types/Personopplysninger';
+import diskresjonskodeType from './types/diskresjonskodeType';
 
 describe('<VisittkortLabels>', () => {
-  const personopplysningerSoker = {
+  const personopplysningerSoker: Personopplysninger = {
     fodselsdato: '1990-01-01',
-    navBrukerKjonn: {
-      kode: navBrukerKjonn.KVINNE,
-      kodeverk: 'NAV_BRUKER_KJONN',
-    },
-    statsborgerskap: {
-      kode: 'NORSK',
-      kodeverk: 'STATSBORGERSKAP',
-      navn: 'NORSK',
-    },
+    navBrukerKjonn: 'KVINNE', // NAV_BRUKER_KJONN
     avklartPersonstatus: {
-      orginalPersonstatus: {
-        kode: personstatusType.BOSATT,
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
-      overstyrtPersonstatus: {
-        kode: personstatusType.BOSATT,
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
+      orginalPersonstatus: 'BOSA', // PERSONSTATUS_TYPE
+      overstyrtPersonstatus: 'BOSA', // PERSONSTATUS_TYPE
     },
-    personstatus: {
-      kode: personstatusType.BOSATT,
-      kodeverk: 'PERSONSTATUS_TYPE',
-    },
-    diskresjonskode: {
-      kode: diskresjonskodeType.KLIENT_ADRESSE,
-      kodeverk: 'DISKRESJONSKODE_TYPE',
-    },
-    sivilstand: {
-      kode: sivilstandType.SAMBOER,
-      kodeverk: 'SIVILSTAND_TYPE',
-    },
+    personstatus: 'BOSA', // PERSONSTATUS_TYPE
+    diskresjonskode: 'KLIENT_ADRESSE', // DISKRESJONSKODE_TYPE
+    sivilstand: 'SAMB', // SIVILSTAND_TYPE
     aktoerId: '24sedfs32',
     navn: 'Olga Utvikler',
     adresser: [
       {
-        adresseType: {
-          kode: opplysningAdresseType.BOSTEDSADRESSE,
-          kodeverk: 'ADRESSE_TYPE',
-        },
+        adresseType: 'BOSTEDSADRESSE', // ADRESSE_TYPE
         adresselinje1: 'Oslo',
+        land: 'Norge',
       },
     ],
     fnr: '98773895',
-    region: {
-      kode: region.NORDEN,
-      kodeverk: 'REGION',
-    },
-    barn: [],
+    region: 'NORDEN', // REGION
+    barnSoktFor: [],
+    harVerge: false,
   };
 
   it('skal ikke vise noen etiketter', () => {
-    const { container } = renderWithIntl(<VisittkortLabels personopplysninger={personopplysningerSoker} />, {
-      messages,
-    });
+    const { container } = render(<VisittkortLabels personopplysninger={personopplysningerSoker} />);
     expect(container.getElementsByClassName('navds-tag').length).toBe(0);
   });
 
   it('skal vise etikett for dødsdato', () => {
-    renderWithIntl(
+    render(
       <VisittkortLabels
         personopplysninger={{
           ...personopplysningerSoker,
           dodsdato: '2019-01-01',
         }}
       />,
-      { messages },
     );
     expect(screen.getByLabelText('Personen er død')).toBeInTheDocument();
   });
 
   it('skal vise etikett for kode 6', () => {
-    renderWithIntl(
+    render(
       <VisittkortLabels
         personopplysninger={{
           ...personopplysningerSoker,
-          diskresjonskode: {
-            kode: diskresjonskodeType.KODE6,
-            kodeverk: '',
-          },
+          diskresjonskode: diskresjonskodeType.KODE6,
         }}
       />,
-      { messages },
     );
 
     expect(screen.getByLabelText('Personen har diskresjonsmerking kode 6')).toBeInTheDocument();
   });
 
   it('skal vise etikett for kode 7', () => {
-    renderWithIntl(
+    render(
       <VisittkortLabels
         personopplysninger={{
           ...personopplysningerSoker,
-          diskresjonskode: {
-            kode: diskresjonskodeType.KODE7,
-            kodeverk: '',
-          },
+          diskresjonskode: diskresjonskodeType.KODE7,
         }}
       />,
-      { messages },
     );
     expect(screen.getByLabelText('Personen har diskresjonsmerking kode 7')).toBeInTheDocument();
   });
 
   it('skal vise etikett for verge', () => {
-    renderWithIntl(
+    render(
       <VisittkortLabels
         personopplysninger={{
           ...personopplysningerSoker,
           harVerge: true,
         }}
       />,
-      { messages },
     );
     expect(screen.getByLabelText('Personen har verge')).toBeInTheDocument();
   });
 
   it('skal vise etikett for søker under 18', () => {
-    renderWithIntl(
+    render(
       <VisittkortLabels
         personopplysninger={{
           ...personopplysningerSoker,
           fodselsdato: '2019-01-01',
         }}
       />,
-      { messages },
     );
     expect(screen.getByLabelText('Personen er under 18 år')).toBeInTheDocument();
   });

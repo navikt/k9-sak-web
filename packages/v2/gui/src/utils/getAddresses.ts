@@ -1,8 +1,8 @@
-import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
-import OpplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import type { PersonadresseDto } from '@k9-sak-web/backend/k9sak/generated';
+import { adresseType as OpplysningAdresseType, type PersonadresseDto } from '@k9-sak-web/backend/k9sak/generated';
 
-// TODO (TOR) Flytt ut av util-folder (lag selector)
+const landkoder = {
+  NORGE: 'NOR',
+};
 
 /**
  * personUtils
@@ -19,7 +19,7 @@ export type Adresser = { [key in OpplysningAdresseType]?: string };
 
 const getAddresses = (addresses: PersonadresseDto[] = []): Adresser =>
   addresses.reduce<Adresser>((acc, address) => {
-    if (!address.adresseType || address.adresseType === OpplysningAdresseType.UKJENT) {
+    if (!address.adresseType || address.adresseType === OpplysningAdresseType.UKJENT_ADRESSE) {
       return {
         ...acc,
         [OpplysningAdresseType.BOSTEDSADRESSE]: 'UKJENT',

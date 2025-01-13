@@ -1,12 +1,6 @@
-import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import region from '@fpsak-frontend/kodeverk/src/region';
-import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
-import { renderWithIntl, screen } from '@fpsak-frontend/utils-test/test-utils';
-import messages from '../../i18n/nb_NO.json';
+import { render, screen } from '@testing-library/react';
 import VisittkortPanel from './VisittkortPanel';
+import type { Personopplysninger } from './types/Personopplysninger';
 
 describe('<VisittkortPanel>', () => {
   const fagsakPerson = {
@@ -15,105 +9,49 @@ describe('<VisittkortPanel>', () => {
     alder: 41,
     personnummer: '1234567',
     erKvinne: true,
-    personstatusType: {
-      kode: personstatusType.BOSATT,
-      kodeverk: 'PERSONSTATUS_TYPE',
-    },
+    personstatusType: 'BOSA',
   };
 
-  const personopplysningerSoker = {
+  const personopplysningerSoker: Personopplysninger = {
     fodselsdato: '1990-01-01',
-    navBrukerKjonn: {
-      kode: navBrukerKjonn.KVINNE,
-      kodeverk: 'NAV_BRUKER_KJONN',
-    },
-    statsborgerskap: {
-      kode: 'NORSK',
-      kodeverk: 'STATSBORGERSKAP',
-      navn: 'NORSK',
-    },
+    navBrukerKjonn: 'KVINNE', // NAV_BRUKER_KJONN
     avklartPersonstatus: {
-      orginalPersonstatus: {
-        kode: personstatusType.BOSATT,
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
-      overstyrtPersonstatus: {
-        kode: personstatusType.BOSATT,
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
+      orginalPersonstatus: 'BOSA', // PERSONSTATUS_TYPE
+      overstyrtPersonstatus: 'BOSA', // PERSONSTATUS_TYPE
     },
-    personstatus: {
-      kode: personstatusType.BOSATT,
-      kodeverk: 'PERSONSTATUS_TYPE',
-    },
-    diskresjonskode: {
-      kode: diskresjonskodeType.KLIENT_ADRESSE,
-      kodeverk: 'DISKRESJONSKODE_TYPE',
-    },
-    sivilstand: {
-      kode: sivilstandType.SAMBOER,
-      kodeverk: 'SIVILSTAND_TYPE',
-    },
+    personstatus: 'BOSA', // PERSONSTATUS_TYPE
+    diskresjonskode: 'KLIENT_ADRESSE', // DISKRESJONSKODE_TYPE
+    sivilstand: 'SAMB', // SIVILSTAND_TYPE
     aktoerId: '24sedfs32',
     navn: 'Olga Utvikler',
     adresser: [
       {
-        adresseType: {
-          kode: opplysningAdresseType.BOSTEDSADRESSE,
-          kodeverk: 'ADRESSE_TYPE',
-        },
+        adresseType: 'BOSTEDSADRESSE', // ADRESSE_TYPE
         adresselinje1: 'Oslo',
+        land: 'Norge',
       },
     ],
     fnr: '98773895',
-    region: {
-      kode: region.NORDEN,
-      kodeverk: 'REGION',
-    },
-    barn: [],
+    region: 'NORDEN', // REGION
+    barnSoktFor: [],
+    harVerge: false,
   };
 
   it('skal vise enkelt visittkort når en ikke har personopplysninger', () => {
-    renderWithIntl(
-      <VisittkortPanel
-        fagsakPerson={fagsakPerson}
-        alleKodeverk={{}}
-        sprakkode={{ kode: 'NN', kodeverk: '' }}
-        relaterteFagsaker={null}
-      />,
-      { messages },
-    );
+    render(<VisittkortPanel fagsakPerson={fagsakPerson} sprakkode="NN" />);
 
     expect(screen.getByText(fagsakPerson.navn)).toBeInTheDocument();
     expect(screen.getByText('123456 7')).toBeInTheDocument();
   });
 
   it('skal vise visittkort når en har harTilbakekrevingVerge', () => {
-    renderWithIntl(
-      <VisittkortPanel
-        fagsakPerson={fagsakPerson}
-        alleKodeverk={{}}
-        sprakkode={{ kode: 'NN', kodeverk: '' }}
-        harTilbakekrevingVerge
-        relaterteFagsaker={null}
-      />,
-      { messages },
-    );
+    render(<VisittkortPanel fagsakPerson={fagsakPerson} sprakkode="NN" harTilbakekrevingVerge />);
     expect(screen.getByLabelText('Personen har verge')).toBeInTheDocument();
     expect(screen.getByText('Verge')).toBeInTheDocument();
   });
 
   it('skal vise visittkort når en har personopplysninger', () => {
-    renderWithIntl(
-      <VisittkortPanel
-        fagsakPerson={fagsakPerson}
-        personopplysninger={personopplysningerSoker}
-        alleKodeverk={{}}
-        sprakkode={{ kode: 'NN', kodeverk: '' }}
-        relaterteFagsaker={null}
-      />,
-      { messages },
-    );
+    render(<VisittkortPanel fagsakPerson={fagsakPerson} personopplysninger={personopplysningerSoker} sprakkode="NN" />);
 
     expect(screen.getByText(personopplysningerSoker.navn)).toBeInTheDocument();
     expect(screen.getByText('987738 95')).toBeInTheDocument();

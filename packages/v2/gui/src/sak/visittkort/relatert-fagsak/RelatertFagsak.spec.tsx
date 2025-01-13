@@ -1,14 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
 import RelatertFagsak from './RelatertFagsak';
 
 describe('<RelatertFagsak>', () => {
-  const relaterteFagsakerEnSøker = {
-    relaterteSøkere: [
-      { søkerIdent: '17499944012', søkerNavn: 'SJØLØVE ANINE', saksnummer: '5YD0i', åpenBehandling: true },
-    ],
-  };
-
   const relaterteFagsakerFlereSøkere = {
     relaterteSøkere: [
       { søkerIdent: '12345678910', søkerNavn: 'Sjøløve Anine', saksnummer: '5YD0i', åpenBehandling: true },
@@ -17,8 +10,11 @@ describe('<RelatertFagsak>', () => {
   };
 
   it('skal vise relatert søker dersom bare én relatert søker', () => {
+    const søkerNavn = 'SJØLØVE ANINE';
+    const relaterteFagsakerEnSøker = {
+      relaterteSøkere: [{ søkerIdent: '17499944012', søkerNavn, saksnummer: '5YD0i', åpenBehandling: true }],
+    };
     render(<RelatertFagsak relaterteFagsaker={relaterteFagsakerEnSøker} />);
-    const { søkerNavn } = relaterteFagsakerEnSøker.relaterteSøkere[0];
     expect(screen.getByText(søkerNavn)).toBeInTheDocument();
   });
 
