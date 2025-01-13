@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, type JSX } from 'react';
 import { Field } from 'formik';
 import { IntlShape } from 'react-intl';
 

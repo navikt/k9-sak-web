@@ -94,7 +94,8 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_BRUK_INNTEKTSGRADERING_I_UTTAK,
   },
   {
-    key: 'OMS_NYOPPSTARTET',
-    value: process.env.OMS_NYOPPSTARTET,
+    key: 'AKSJONSPUNKT_OVERLAPPENDE_SAKER',
+    value: process.env.VITE_AKSJONSPUNKT_OVERLAPPENDE_SAKER,
   },
+  { key: 'OMS_NYOPPSTARTET', value: process.env.VITE_OMS_NYOPPSTARTET },
 ];

@@ -17,17 +17,16 @@
     "@hookform/resolvers": "^3.9.1",
     "@navikt/ds-css": "7.6.0",
     "@navikt/ds-react": "7.6.0",
-    "@navikt/ft-form-hooks": "5.2.9",
-    "@navikt/ft-form-validators": "2.5.7",
-    "@navikt/ft-plattform-komponenter": "5.3.0",
+    "@navikt/ft-form-hooks": "^6.0.3-react19beta.0",
+    "@navikt/ft-form-validators": "^3.0.3-react19beta.0",
+    "@navikt/ft-plattform-komponenter": "^7.0.3-react19beta.0",
     "@popperjs/core": "2.11.8",
     "classnames": "2.5.1",
     "dayjs": "1.11.13",
-    "react": "18.3.1",
+    "react": "19.0.0",
     "react-collapse": "5.1.1",
-    "react-dom": "18.3.1",
+    "react-dom": "19.0.0",
     "react-hook-form": "7.53.2",
-    "react-popper": "2.3.0",
     "yup": "1.6.1"
   }
 }

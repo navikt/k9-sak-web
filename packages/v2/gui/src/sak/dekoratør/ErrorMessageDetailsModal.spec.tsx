@@ -1,7 +1,5 @@
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
-import React from 'react';
-import messages from '../i18n/nb_NO.json';
+import { render, screen } from '@testing-library/react';
+
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
 
 describe('<ErrorMessageDetailsModal>', () => {
@@ -10,9 +8,7 @@ describe('<ErrorMessageDetailsModal>', () => {
       feilmelding: 'Dette er feil',
       url: 'test',
     };
-    renderWithIntl(<ErrorMessageDetailsModal showModal closeModalFn={vi.fn()} errorDetails={errorDetails} />, {
-      messages,
-    });
+    render(<ErrorMessageDetailsModal showModal closeModalFn={vi.fn()} errorDetails={errorDetails} />, {});
 
     expect(screen.getByText('Feilmelding:')).toBeInTheDocument();
     expect(screen.getByText('Url:')).toBeInTheDocument();

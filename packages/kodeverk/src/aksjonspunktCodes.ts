@@ -98,6 +98,7 @@ const aksjonspunktCodes = {
   VURDER_REISETID: '9303',
   VURDER_DATO_NY_REGEL_UTTAK: '9291',
   VURDER_NYOPPSTARTET: '9016',
+  VURDER_OVERLAPPENDE_SØSKENSAK_KODE: '9292',
 };
 
 const klageAksjonspunkter = [

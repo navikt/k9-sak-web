@@ -11,18 +11,20 @@ import {
 import classNames from 'classnames/bind';
 import * as React from 'react';
 import { Collapse } from 'react-collapse';
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import AnnenPart from '../../../constants/AnnenPart';
 import Årsaker from '../../../constants/Årsaker';
+import { UttaksperiodeMedInntektsgradering } from '../../../types';
 import { harÅrsak } from '../../../util/årsakUtils';
 import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
 import ContainerContext from '../../context/ContainerContext';
 import Endringsstatus from '../icons/Endringsstatus';
-import NyUttakDetaljer from '../uttak-detaljer/NyUttakDetaljer';
 import GammelUttakDetaljer from '../uttak-detaljer/GammelUttakDetaljer';
-import { UttaksperiodeMedInntektsgradering } from '../../../types';
+import NyUttakDetaljer from '../uttak-detaljer/NyUttakDetaljer';
 
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import styles from './uttak.module.css';
+
+import type { JSX } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -34,7 +36,7 @@ interface UttakProps {
 }
 
 const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
-  const [featureToggles] = useFeatureToggles();
+  const featureToggles = React.useContext(FeatureTogglesContext);
   const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, endringsstatus, manueltOverstyrt } = uttak;
   const { erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
 
@@ -59,7 +61,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
           {periode.getFirstAndLastWeek()}
         </Table.DataCell>
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
-          <BodyShort>
+          <BodyShort as="div">
             {periode.prettifyPeriod()}
             {manueltOverstyrt && (
               <>

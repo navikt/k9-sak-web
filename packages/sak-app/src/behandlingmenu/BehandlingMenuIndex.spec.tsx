@@ -80,7 +80,7 @@ describe('BehandlingMenuIndex', () => {
     requestApi.mock(K9sakApiKeys.INIT_FETCH_KLAGE, {});
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);
     requestApi.mock(K9sakApiKeys.BEHANDLENDE_ENHETER, []);
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
+
     requestApi.mock(K9sakApiKeys.SAK_BRUKER, []);
     requestApi.mock(K9sakApiKeys.KODEVERK, {});
     requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, {});
@@ -130,12 +130,12 @@ describe('BehandlingMenuIndex', () => {
     expect(await knapp).not.toBeNull();
 
     expect(screen.queryByText('Fortsett behandlingen')).toBeNull();
-    expect(screen.queryByText('Sett behandlingen på vent')).not.toBeVisible();
-    expect(screen.queryByText('Henlegg behandlingen og avslutt')).not.toBeVisible();
-    expect(screen.queryByText('Endre behandlende enhet')).not.toBeVisible();
+    expect(screen.queryByText('Sett behandlingen på vent')).not.toBeInTheDocument();
+    expect(screen.queryByText('Henlegg behandlingen og avslutt')).not.toBeInTheDocument();
+    expect(screen.queryByText('Endre behandlende enhet')).not.toBeInTheDocument();
     // expect(screen.queryByText('Marker behandling')).not.toBeVisible();
-    expect(screen.queryByText('Opprett ny behandling')).not.toBeVisible();
-    expect(screen.queryByText('Opprett verge/fullmektig')).not.toBeVisible();
+    expect(screen.queryByText('Opprett ny behandling')).not.toBeInTheDocument();
+    expect(screen.queryByText('Opprett verge/fullmektig')).not.toBeInTheDocument();
 
     /**
      * Åpne behandlingsmenyen
@@ -145,11 +145,11 @@ describe('BehandlingMenuIndex', () => {
     });
 
     expect(screen.queryByText('Fortsett behandlingen')).toBeNull();
-    expect(screen.queryByRole('button', { name: 'Sett behandlingen på vent' })).toBeVisible();
-    expect(screen.queryByRole('button', { name: 'Henlegg behandlingen og avslutt' })).toBeVisible();
-    expect(screen.queryByRole('button', { name: 'Endre behandlende enhet' })).toBeVisible();
+    expect(screen.getByRole('menuitem', { name: 'Sett behandlingen på vent' })).toBeInTheDocument();
+    expect(screen.getByRole('menuitem', { name: 'Henlegg behandlingen og avslutt' })).toBeInTheDocument();
+    expect(screen.getByRole('menuitem', { name: 'Endre behandlende enhet' })).toBeInTheDocument();
     // expect(screen.queryByRole('button', { name: 'Marker behandling' })).toBeVisible();
-    expect(screen.queryByRole('button', { name: 'Opprett ny behandling' })).toBeVisible();
-    expect(screen.queryByRole('button', { name: 'Opprett verge/fullmektig' })).toBeVisible();
+    expect(screen.getByRole('menuitem', { name: 'Opprett ny behandling' })).toBeInTheDocument();
+    expect(screen.getByRole('menuitem', { name: 'Opprett verge/fullmektig' })).toBeInTheDocument();
   });
 });

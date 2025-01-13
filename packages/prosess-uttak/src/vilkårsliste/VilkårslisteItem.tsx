@@ -2,6 +2,8 @@ import * as React from 'react';
 import { GreenCheckIconFilled, RedCrossIconFilled } from '@navikt/ft-plattform-komponenter';
 import styles from './vilkårslisteItem.module.css';
 
+import type { JSX } from 'react';
+
 interface VilkårslisteItemProps {
   vilkår: string;
   erOppfylt: boolean;
