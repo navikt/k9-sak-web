@@ -2,7 +2,7 @@ import { PeriodpickerListRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
 import { Alert, Button, Label, Modal } from '@navikt/ds-react';
 import { Box, Form, Margin } from '@navikt/ft-plattform-komponenter';
-import React, { useRef } from 'react';
+import React, { useRef, type JSX } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { InnleggelsesperiodeDryRunResponse } from '../../../api/api';
 import AddButton from '../add-button/AddButton';
@@ -40,7 +40,7 @@ const InnleggelsesperiodeFormModal = ({
       })),
     },
   });
-  const modalRef = useRef<HTMLDialogElement>();
+  const modalRef = useRef<HTMLDialogElement>(undefined);
 
   const {
     formState: { isDirty },

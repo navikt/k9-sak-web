@@ -1,7 +1,7 @@
 import { Alert } from '@navikt/ds-react';
 import { LinkButton, PageContainer } from '@navikt/ft-plattform-komponenter';
 import { get } from '@fpsak-frontend/utils';
-import React, { useContext, useEffect, useMemo, useReducer } from 'react';
+import React, { useContext, useEffect, useMemo, useReducer, type JSX } from 'react';
 import { RettVedDød } from '../../../types/RettVedDød';
 import ContainerContext from '../../context/ContainerContext';
 import WriteAccessBoundContent from '../../write-access-bound-content/WriteAccessBoundContent';

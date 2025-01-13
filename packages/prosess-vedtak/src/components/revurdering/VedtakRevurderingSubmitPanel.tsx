@@ -1,5 +1,5 @@
 import { Button, ErrorMessage } from '@navikt/ds-react';
-import React from 'react';
+import React, { type JSX } from 'react';
 import { IntlShape, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';

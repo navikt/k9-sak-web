@@ -1,4 +1,4 @@
-import React, { forwardRef, Ref } from 'react';
+import React, { forwardRef, Ref, type JSX } from 'react';
 import { PlusIcon } from '@navikt/ft-plattform-komponenter';
 import styles from './addButton.module.css';
 

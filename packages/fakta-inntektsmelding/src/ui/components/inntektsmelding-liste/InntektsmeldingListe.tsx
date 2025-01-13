@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { Status } from '../../../types/KompletthetData';
 import InntektsmeldingMottattItem from '../inntektsmelding-mottatt-item/InntektsmeldingMottattItem';
 import InntektsmeldingAdvarsel from '../inntektsmelding-mangler-item/InntektsmeldingAdvarselItem';
