@@ -1,6 +1,6 @@
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { Tag, Tooltip } from '@navikt/ds-react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import diskresjonskodeType from './types/diskresjonskodeType';
 import type { Personopplysninger } from './types/Personopplysninger';
@@ -13,7 +13,7 @@ interface OwnProps {
 
 const VisittkortLabels = ({ personopplysninger, harTilbakekrevingVerge = false }: OwnProps) => {
   const erSokerUnder18 = useMemo(
-    () => personopplysninger && moment().diff(personopplysninger.fodselsdato, 'years') < 18,
+    () => personopplysninger && dayjs().diff(personopplysninger.fodselsdato, 'years') < 18,
     [personopplysninger],
   );
   const harVerge = personopplysninger

@@ -8,7 +8,6 @@ import { dateToday, initializeDate } from '@k9-sak-web/lib/dateUtils/initializeD
 import { HStack } from '@navikt/ds-react';
 import { Gender, PersonCard } from '@navikt/ft-plattform-komponenter';
 import { prettifyDateString } from '@navikt/ft-utils';
-import { FormattedMessage } from 'react-intl';
 import RelatertFagsak from './relatert-fagsak/RelatertFagsak';
 import TagContainer from './TagContainer';
 import type { FagsakPerson } from './types/FagsakPerson';
@@ -133,14 +132,7 @@ const VisittkortPanel = ({
                     fodselsnummer={barn.fnr}
                     gender={utledKjonn(barn.navBrukerKjonn)}
                     isChild
-                    childAge={
-                      <FormattedMessage
-                        id="VisittkortBarnInfoFodselPanel.Fodt"
-                        values={{
-                          dato: `${prettifyDateString(barn.fodselsdato)}, ${beregnAlderPåBarn(barn.fodselsdato)}`,
-                        }}
-                      />
-                    }
+                    childAge={`Født ${prettifyDateString(barn.fodselsdato)}, ${beregnAlderPåBarn(barn.fodselsdato)}`}
                   />
                   {barn.dodsdato && (
                     <p className={styles.dødsdatoLabel}>{`Død ${prettifyDateString(barn.dodsdato)}`}</p>
@@ -148,26 +140,10 @@ const VisittkortPanel = ({
                 </div>
               ))}
           </HStack>
-          {erDirekteOvergangFraInfotrygd && (
-            <TagContainer tagVariant="info">
-              <FormattedMessage id="VisittkortPanel.FraInfotrygd" />
-            </TagContainer>
-          )}
-          {erPbSak && (
-            <TagContainer tagVariant="warning">
-              <FormattedMessage id="VisittkortPanel.PB" />
-            </TagContainer>
-          )}
-          {erUtenlandssak && (
-            <TagContainer tagVariant="success">
-              <FormattedMessage id="VisittkortPanel.Utenlandssak" />
-            </TagContainer>
-          )}
-          {erHastesak && (
-            <TagContainer tagVariant="error">
-              <FormattedMessage id="VisittkortPanel.Hastesak" />
-            </TagContainer>
-          )}
+          {erDirekteOvergangFraInfotrygd && <TagContainer tagVariant="info">Fra Infotrygd</TagContainer>}
+          {erPbSak && <TagContainer tagVariant="warning">PB-sak</TagContainer>}
+          {erUtenlandssak && <TagContainer tagVariant="success">Utenlandssak</TagContainer>}
+          {erHastesak && <TagContainer tagVariant="error">Hastesak</TagContainer>}
         </div>
       </HStack>
     </div>
