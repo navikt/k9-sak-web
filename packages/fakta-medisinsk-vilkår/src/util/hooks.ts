@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 type AnyType = any;
 
 const usePrevious = (value: AnyType): undefined => {
-  const ref = useRef(undefined);
+  const ref = useRef();
   useEffect(() => {
     ref.current = value;
   });

@@ -1,7 +1,7 @@
 import { Collapse, Expand, FilterFilled } from '@navikt/ds-icons';
 import { Button, Checkbox, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, { useState, type JSX } from 'react';
+import React, { useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { Dokumenttype, dokumentLabel } from '../../../types/Dokument';
 import styles from './dokumentfilter.module.css';

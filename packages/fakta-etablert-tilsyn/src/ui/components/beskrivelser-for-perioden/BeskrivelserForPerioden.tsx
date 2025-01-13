@@ -9,7 +9,7 @@ import {
   OnePersonIconGray,
   OnePersonOutlineGray,
 } from '@navikt/ft-plattform-komponenter';
-import { useState, type JSX } from 'react';
+import { useState } from 'react';
 import Beskrivelse from '../../../types/Beskrivelse';
 import Kilde from '../../../types/Kilde';
 import { prettifyDate } from '../../../util/formats';

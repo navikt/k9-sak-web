@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, ReactNode, type JSX } from 'react';
+import React, { createContext, useReducer, ReactNode } from 'react';
 
 const defaultInitialState = {
   errors: [],

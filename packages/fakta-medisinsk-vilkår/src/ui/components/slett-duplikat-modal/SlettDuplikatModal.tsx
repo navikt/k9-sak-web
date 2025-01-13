@@ -1,7 +1,7 @@
 import { post } from '@fpsak-frontend/utils';
 import { BodyShort, Button, Modal } from '@navikt/ds-react';
 import { Box, Margin, PageError } from '@navikt/ft-plattform-komponenter';
-import React, { useMemo, useState, type JSX } from 'react';
+import React, { useMemo, useState } from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Dokument from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';

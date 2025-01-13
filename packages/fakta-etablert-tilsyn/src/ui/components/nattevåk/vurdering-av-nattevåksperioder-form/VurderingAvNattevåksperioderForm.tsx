@@ -2,7 +2,7 @@ import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-fro
 import { Period } from '@fpsak-frontend/utils';
 import { Alert } from '@navikt/ds-react';
 import { Box, DetailView, Form, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import React from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Beskrivelse from '../../../../types/Beskrivelse';
 import Vurderingsperiode from '../../../../types/Vurderingsperiode';

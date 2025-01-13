@@ -77,7 +77,7 @@ interface OwnProps {
   kjoenn?: Kodeverk;
   rolleNavn?: string;
   opprettetAv: string;
-  children: React.ReactElement<any>;
+  children: React.ReactElement;
 }
 
 const SnakkebobleContainer = ({ dato, aktoer, rolleNavn = '', opprettetAv, children }: OwnProps) => {

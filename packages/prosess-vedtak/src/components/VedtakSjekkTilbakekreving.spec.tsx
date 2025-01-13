@@ -102,18 +102,6 @@ describe('<AvslagårsakListe>', () => {
           arbeidsgiverOpplysningerPerId={{}}
           lagreDokumentdata={vi.fn()}
           hentFritekstbrevHtmlCallback={vi.fn()}
-          beregningresultatForeldrepenger={undefined}
-          tilbakekrevingvalg={undefined}
-          simuleringResultat={undefined}
-          beregningsgrunnlag={undefined}
-          beregningsresultatOriginalBehandling={undefined}
-          personopplysninger={undefined}
-          vedtakVarsel={undefined}
-          tilgjengeligeVedtaksbrev={undefined}
-          informasjonsbehovVedtaksbrev={undefined}
-          dokumentdataHente={undefined}
-          fritekstdokumenter={undefined}
-          overlappendeYtelser={undefined}
         />
       </ProsessStegContainer>,
     );
@@ -168,18 +156,6 @@ describe('<AvslagårsakListe>', () => {
           arbeidsgiverOpplysningerPerId={{}}
           lagreDokumentdata={vi.fn()}
           hentFritekstbrevHtmlCallback={vi.fn()}
-          beregningresultatForeldrepenger={undefined}
-          tilbakekrevingvalg={undefined}
-          simuleringResultat={undefined}
-          beregningsgrunnlag={undefined}
-          beregningsresultatOriginalBehandling={undefined}
-          personopplysninger={undefined}
-          vedtakVarsel={undefined}
-          tilgjengeligeVedtaksbrev={undefined}
-          informasjonsbehovVedtaksbrev={undefined}
-          dokumentdataHente={undefined}
-          fritekstdokumenter={undefined}
-          overlappendeYtelser={undefined}
         />
       </ProsessStegContainer>,
     );

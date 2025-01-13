@@ -19,8 +19,6 @@ import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 import VisittkortLabels from './VisittkortLabels';
 import styles from './visittkortPanel.module.css';
 
-import type { JSX } from 'react';
-
 const utledKjonn = (kjonn: Kodeverk): Gender => {
   if (kjonn.kode === navBrukerKjonn.KVINNE) {
     return Gender.female;

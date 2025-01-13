@@ -1,4 +1,4 @@
-import React, { type JSX } from 'react';
+import React from 'react';
 import ContainerContract from '../types/ContainerContract';
 import ContainerContext from './context/ContainerContext';
 import OmPleietrengende from './om-pleietrengende/OmPleietrengende';

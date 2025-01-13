@@ -1,4 +1,4 @@
-import React, { type JSX } from 'react';
+import React from 'react';
 import Vurderingselement from '../../../types/Vurderingselement';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 // eslint-disable-next-line max-len

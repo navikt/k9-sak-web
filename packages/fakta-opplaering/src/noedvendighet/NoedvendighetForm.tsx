@@ -11,7 +11,7 @@ import {
 import { NoedvendighetVurdering, Vurderingsresultat } from '@k9-sak-web/types';
 import { Button } from '@navikt/ds-react';
 import { Field, Formik } from 'formik';
-import React, { useContext, useEffect, type JSX } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import DokumenterIVurderingen from '../components/DokumenterIVurderingen';
 

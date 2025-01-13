@@ -1,4 +1,4 @@
-import React, { type JSX } from 'react';
+import React from 'react';
 import ContainerContext from '../../../context/ContainerContext';
 
 interface WriteAccessBoundContentProps {

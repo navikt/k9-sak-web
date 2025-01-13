@@ -2,7 +2,7 @@ import { TextAreaFormik } from '@fpsak-frontend/form';
 import { Calender } from '@navikt/ds-icons';
 import { Box, DetailView, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 import dayjs from 'dayjs';
-import React, { useContext, useEffect, type JSX } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { v4 } from 'uuid';
 import * as yup from 'yup';

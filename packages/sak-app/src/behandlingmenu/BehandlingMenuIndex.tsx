@@ -107,7 +107,7 @@ export const BehandlingMenuIndex = ({
   const navigate = useNavigate();
   const location = useLocation();
 
-  const ref = useRef<number>(undefined);
+  const ref = useRef<number>();
   useEffect(() => {
     // Når antallet har endret seg er det laget en ny behandling og denne må da velges
     if (ref.current > 0) {

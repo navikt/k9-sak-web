@@ -6,8 +6,6 @@ import vilkår from './Vilkår';
 import VilkårslisteItem from './VilkårslisteItem';
 import styles from './vilkårsliste.module.css';
 
-import type { JSX } from 'react';
-
 interface VilkårslisteProps {
   inngangsvilkår: Inngangsvilkår;
 }

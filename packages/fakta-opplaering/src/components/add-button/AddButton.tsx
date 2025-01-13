@@ -1,5 +1,5 @@
 import { PlusIcon } from '@navikt/ft-plattform-komponenter';
-import React, { forwardRef, Ref, type JSX } from 'react';
+import React, { forwardRef, Ref } from 'react';
 import styles from './addButton.module.css';
 
 interface AddButtonProps {

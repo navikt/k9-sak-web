@@ -411,6 +411,7 @@ export const inntektIsValid = (selvstendigNæringsdrivendeInntekt2019, selvstend
   return null;
 };
 
+// @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
 const connectedComponent = connect(mapStateToProps)(SøknadsperiodeFieldArrayComponent);
 
 export default connectedComponent;

@@ -55,7 +55,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
           .max(100000, { id: 'ValidationMessage.Max100000Char' }),
     }),
   });
-  const formRef = useRef<FormikProps<FormValues>>(undefined);
+  const formRef = useRef<FormikProps<FormValues>>();
 
   const buildInitialValues = (): FormValues => {
     if (merknaderFraLos) {

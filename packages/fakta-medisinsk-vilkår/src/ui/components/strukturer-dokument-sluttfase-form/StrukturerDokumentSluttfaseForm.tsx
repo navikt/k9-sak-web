@@ -1,7 +1,7 @@
 import { DatepickerRHF, RadioGroupPanelRHF } from '@fpsak-frontend/form';
 import { dateConstants } from '@fpsak-frontend/utils';
 import { Box, DetailView, Form, Margin } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import LinkRel from '../../../constants/LinkRel';
 import { Dokumenttype } from '../../../types/Dokument';

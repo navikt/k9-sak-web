@@ -1,5 +1,5 @@
 import { Datepicker as SharedDatepicker } from '@fpsak-frontend/shared-components';
-import React, { type JSX } from 'react';
+import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { getError } from './formUtils';
 

@@ -4,8 +4,6 @@ import { KodeverkMedNavn } from '@k9-sak-web/types';
 import BostedSokerView from './components/BostedSokerView';
 import { BostedSokerPersonopplysninger } from './types';
 
-import type { JSX } from 'react';
-
 interface OwnProps {
   personopplysninger: BostedSokerPersonopplysninger;
   sokerTypeText?: string;

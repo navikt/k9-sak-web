@@ -1,6 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
 import { Radio } from '@navikt/ds-react';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, ReactNodeArray } from 'react';
 import Label from './Label';
 import LabelType from './LabelType';
 
@@ -13,7 +13,7 @@ export interface RadioOptionProps {
   disabled?: boolean;
   groupDisabled?: boolean;
   onChange?: (value: string[] | string | number | boolean) => void;
-  children?: ReactNode | ReadonlyArray<ReactNode>;
+  children?: ReactNode | ReactNodeArray;
   style?: any;
   manualHideChildren?: boolean;
   dataId?: string;

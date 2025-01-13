@@ -4,7 +4,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import { action } from '@storybook/addon-actions';
-import MedlemskapFaktaIndex from './MedlemskapFaktaIndex';
+import MedlemskapFaktaIndex, { MedlemskapFaktaIndexProps } from './MedlemskapFaktaIndex';
 
 const behandling = {
   id: 1,
@@ -320,7 +320,7 @@ VisAksjonspunktForAvklaringOmBrukerErBosatt.args = {
   submittable: true,
 };
 
-export const VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = args => (
+export const VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = (args: MedlemskapFaktaIndexProps) => (
   <MedlemskapFaktaIndex
     aksjonspunkter={[
       {

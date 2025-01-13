@@ -6,7 +6,7 @@ import {
   WarningIcon,
 } from '@navikt/ft-plattform-komponenter';
 import { Period } from '@fpsak-frontend/utils';
-import React, { type JSX } from 'react';
+import React from 'react';
 import styles from './periodeRad.module.css';
 
 interface OwnProps {

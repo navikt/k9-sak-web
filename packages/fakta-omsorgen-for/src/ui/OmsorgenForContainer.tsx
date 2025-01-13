@@ -1,6 +1,6 @@
 import { Box, Margin, PageContainer } from '@navikt/ft-plattform-komponenter';
 import { get } from '@fpsak-frontend/utils';
-import React, { type JSX } from 'react';
+import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { ContainerContract } from '../types/ContainerContract';
 import OmsorgsperiodeoversiktType from '../types/Omsorgsperiodeoversikt';

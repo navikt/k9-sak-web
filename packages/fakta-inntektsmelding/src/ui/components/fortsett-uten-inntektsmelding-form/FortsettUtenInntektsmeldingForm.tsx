@@ -2,7 +2,7 @@
 import { Alert, Button, Box as DSBox, Heading } from '@navikt/ds-react';
 import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import ContainerContext from '../../../context/ContainerContext';
 import Aksjonspunkt from '../../../types/Aksjonspunkt';

@@ -5,7 +5,7 @@ import {
   OnePersonOutlineGray,
   WarningIcon,
 } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import React from 'react';
 import { Dokument, dokumentLabel } from '../../../types/Dokument';
 import styles from './ustrukturertDokumentElement.module.css';
 

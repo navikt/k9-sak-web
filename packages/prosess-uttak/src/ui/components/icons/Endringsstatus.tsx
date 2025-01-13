@@ -1,5 +1,5 @@
 import { ContentWithTooltip } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import React from 'react';
 import EndringsstatusType from '../../../types/Endringsstatus';
 import PillIcon from './PillIcon';
 

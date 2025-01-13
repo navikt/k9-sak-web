@@ -1,5 +1,5 @@
 import { DetailView, DetailViewProps, LinkButton } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import React from 'react';
 import { Period } from '@fpsak-frontend/utils';
 import PeriodList from '../period-list/PeriodList';
 import styles from './detailViewVurdering.module.css';

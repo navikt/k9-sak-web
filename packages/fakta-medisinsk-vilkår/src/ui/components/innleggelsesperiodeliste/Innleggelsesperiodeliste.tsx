@@ -1,4 +1,4 @@
-import React, { type JSX } from 'react';
+import React from 'react';
 import { Period, sortPeriodsByFomDate } from '@fpsak-frontend/utils';
 import styles from './innleggelsesperiodeliste.module.css';
 

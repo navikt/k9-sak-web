@@ -10,8 +10,8 @@ interface VilkarresultatMedBegrunnelseProps {
   erVilkarOk?: boolean;
   readOnly: boolean;
   erMedlemskapsPanel: boolean;
-  customVilkarIkkeOppfyltText?: string | React.ReactElement<any>;
-  customVilkarOppfyltText?: string | React.ReactElement<any>;
+  customVilkarIkkeOppfyltText?: string | React.ReactElement;
+  customVilkarOppfyltText?: string | React.ReactElement;
   skalViseBegrunnelse?: boolean;
   opprettetAv?: string;
   vilkarType: string;

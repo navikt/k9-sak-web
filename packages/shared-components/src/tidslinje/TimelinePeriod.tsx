@@ -7,13 +7,13 @@ import Tooltip from './Tooltip';
 
 interface NonClickablePeriodProps {
   period: PositionedPeriod;
-  divRef: RefObject<HTMLDivElement | null>;
+  divRef: RefObject<HTMLDivElement>;
   className?: string;
 }
 
 interface ClickablePeriodProps {
   period: PositionedPeriod;
-  buttonRef: RefObject<HTMLButtonElement | null>;
+  buttonRef: RefObject<HTMLButtonElement>;
   onSelectPeriod: (period: PositionedPeriod) => void;
   className?: string;
 }
@@ -132,13 +132,13 @@ const TimelinePeriod = ({ period, onSelectPeriod, active }: TimelinePeriodProps)
   }, [active]);
   return onSelectPeriod ? (
     <ClickablePeriod
-      buttonRef={ref as RefObject<HTMLButtonElement | null>}
+      buttonRef={ref as RefObject<HTMLButtonElement>}
       period={period}
       onSelectPeriod={onSelectPeriod}
       className={className}
     />
   ) : (
-    <NonClickablePeriod divRef={ref as RefObject<HTMLDivElement | null>} period={period} className={className} />
+    <NonClickablePeriod divRef={ref as RefObject<HTMLDivElement>} period={period} className={className} />
   );
 };
 

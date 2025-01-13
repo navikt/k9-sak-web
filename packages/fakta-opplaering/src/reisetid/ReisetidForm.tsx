@@ -1,7 +1,7 @@
 import { TextAreaFormik } from '@fpsak-frontend/form';
 import { Box, DetailView, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 import dayjs from 'dayjs';
-import { useContext, useEffect, type JSX } from 'react';
+import { useContext, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import * as yup from 'yup';
 

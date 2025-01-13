@@ -2,7 +2,7 @@ import { isDayAfter, Period } from '@fpsak-frontend/utils';
 import { Table } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import uniq from 'lodash/uniq';
-import React, { type JSX } from 'react';
+import React from 'react';
 import EtablertTilsynType from '../../../types/EtablertTilsynType';
 import EtablertTilsynRowContent from './EtablertTilsynRowContent';
 import PartIkon from './PartIkon';

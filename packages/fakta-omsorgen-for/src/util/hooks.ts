@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 export const usePrevious = (value: boolean): boolean => {
-  const ref = useRef<boolean>(undefined);
+  const ref = useRef<boolean>();
   useEffect(() => {
     ref.current = value;
   });

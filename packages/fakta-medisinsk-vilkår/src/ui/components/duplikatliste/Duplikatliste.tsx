@@ -1,7 +1,7 @@
 import { prettifyDateString } from '@fpsak-frontend/utils';
 import { BucketIcon } from '@navikt/ft-plattform-komponenter';
 import { Link } from '@navikt/ds-react';
-import React, { useState, type JSX } from 'react';
+import React, { useState } from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Dokument, { dokumentLabel } from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';

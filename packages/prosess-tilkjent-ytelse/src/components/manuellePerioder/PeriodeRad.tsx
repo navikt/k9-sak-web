@@ -38,7 +38,6 @@ const PeriodeRad = ({
     <div>
       {error && (
         <Alert size="small" variant="error">
-          {/* @ts-expect-error Ser ut som vi forventer en string, men typen er noe annet */}
           {error}
         </Alert>
       )}

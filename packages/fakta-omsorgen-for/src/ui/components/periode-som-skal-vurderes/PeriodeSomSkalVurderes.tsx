@@ -1,4 +1,4 @@
-import React, { type JSX } from 'react';
+import React from 'react';
 import { Period } from '@fpsak-frontend/utils';
 import { ContentWithTooltip, WarningIcon } from '@navikt/ft-plattform-komponenter';
 import styles from './periodeSomSkalVurderes.module.css';

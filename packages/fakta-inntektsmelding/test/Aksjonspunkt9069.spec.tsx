@@ -1,4 +1,4 @@
-import { composeStories } from '@storybook/react';
+import { StoryFn, composeStories } from '@storybook/react';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
@@ -6,6 +6,7 @@ import { setupServer } from 'msw/node';
 import inntektsmeldingPropsMock from '../mock/inntektsmeldingPropsMock';
 import { manglerInntektsmelding } from '../mock/mockedKompletthetsdata';
 import * as stories from '../src/stories/Inntektsmelding.stories';
+import InntektsmeldingContainer from '../src/ui/InntektsmeldingContainer';
 
 const server = setupServer(http.get('http://localhost:3000/tilstand', () => HttpResponse.json(manglerInntektsmelding)));
 
@@ -16,7 +17,9 @@ describe('9069 - Mangler inntektsmelding', () => {
   afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
 
-  const { Mangler9069 } = composeStories(stories);
+  const { Mangler9069 } = composeStories(stories) as {
+    [key: string]: StoryFn<Partial<typeof InntektsmeldingContainer>>;
+  };
 
   test('Viser ikke knapp for å sende inn når beslutning ikke er valgt', async () => {
     // ARRANGE

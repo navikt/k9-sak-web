@@ -1,4 +1,4 @@
-import React, { type JSX } from 'react';
+import React from 'react';
 import { Alert } from '@navikt/ds-react';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import InnleggelsesperiodeVurdering from '../../../types/InnleggelsesperiodeVurdering';

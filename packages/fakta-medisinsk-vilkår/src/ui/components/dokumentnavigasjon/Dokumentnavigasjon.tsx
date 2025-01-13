@@ -1,6 +1,6 @@
 import { Accordion, BodyShort } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import React from 'react';
 import { Dokument, Dokumenttype } from '../../../types/Dokument';
 import Dokumentfilter from '../dokumentfilter/Dokumentfilter';
 import StrukturertDokumentElement from '../strukturet-dokument-element/StrukturertDokumentElement';

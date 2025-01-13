@@ -1,6 +1,6 @@
 import { Alert, BodyShort, Heading } from '@navikt/ds-react';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import React from 'react';
 import { PeriodeMedEndring } from '../../../types/PeriodeMedEndring';
 import ConfirmationModal from '../confirmation-modal/ConfirmationModal';
 

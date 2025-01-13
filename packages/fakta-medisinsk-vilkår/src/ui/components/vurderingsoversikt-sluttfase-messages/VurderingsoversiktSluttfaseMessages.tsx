@@ -1,7 +1,7 @@
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import { getHumanReadablePeriodString } from '@fpsak-frontend/utils';
 import { Alert } from '@navikt/ds-react';
-import React, { type JSX } from 'react';
+import React from 'react';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import IngenPerioderÅVurdereMelding from '../ingen-perioder-å-vurdere-melding/IngenPerioderÅVurdereMelding';
 import ManglerGyldigSignaturMelding from '../mangler-gyldig-signatur-melding/ManglerGyldigSignaturMelding';

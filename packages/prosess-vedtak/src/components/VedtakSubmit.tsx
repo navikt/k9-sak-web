@@ -1,4 +1,4 @@
-import React, { type JSX } from 'react';
+import React from 'react';
 
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { useIntl } from 'react-intl';

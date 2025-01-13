@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, type JSX } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import hash from 'object-hash';
 import OmsorgsperiodeoversiktType from '../../../types/Omsorgsperiodeoversikt';

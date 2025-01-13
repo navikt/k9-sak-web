@@ -1,6 +1,6 @@
 import { Alert } from '@navikt/ds-react';
 import { Box, Margin, TitleWithUnderline } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import React from 'react';
 
 interface SignertSeksjonProps {
   harGyldigSignatur: boolean;

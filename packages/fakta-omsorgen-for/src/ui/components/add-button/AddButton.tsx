@@ -1,4 +1,4 @@
-import React, { type JSX } from 'react';
+import React from 'react';
 import { PlusIcon } from '@navikt/ft-plattform-komponenter';
 import styles from './addButton.module.css';
 

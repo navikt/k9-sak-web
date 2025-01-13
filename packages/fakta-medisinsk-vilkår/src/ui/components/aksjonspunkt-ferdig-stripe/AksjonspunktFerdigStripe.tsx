@@ -4,8 +4,6 @@ import * as React from 'react';
 import FagsakYtelseType from '../../../constants/FagsakYtelseType';
 import ContainerContext from '../../context/ContainerContext';
 
-import type { JSX } from 'react';
-
 const AksjonspunktFerdigStripe = (): JSX.Element => {
   const { onFinished } = React.useContext(ContainerContext);
   const [isSubmitting, setIsSubmitting] = React.useState(false);

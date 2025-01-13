@@ -1,10 +1,13 @@
-import { composeStories } from '@storybook/react';
+import { composeStories, StoryFn } from '@storybook/react';
 import { screen, userEvent } from '@storybook/test';
 import { act, render } from '@testing-library/react';
+import MedlemskapFaktaIndex from './MedlemskapFaktaIndex';
 import * as stories from './MedlemskapFaktaIndex.stories';
 
 describe('MedlemskapFaktaIndex', () => {
-  const { VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter } = composeStories(stories);
+  const { VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter } = composeStories(stories) as {
+    [key: string]: StoryFn<Partial<typeof MedlemskapFaktaIndex>>;
+  };
   it('skal formatere data ved innsending', async () => {
     const onClickSpy = vi.fn();
     const props = { submitCallback: onClickSpy };

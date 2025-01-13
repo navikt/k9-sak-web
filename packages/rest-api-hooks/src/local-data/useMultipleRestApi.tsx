@@ -71,7 +71,7 @@ const getUseMultipleRestApi = (requestApi: AbstractRequestApi) =>
   function useMultipleRestApi<T>(endpoints: EndpointData[], options: Options = defaultOptions): RestApiData<T> {
     const [data, setData] = useState(DEFAULT_STATE);
 
-    const ref = useRef<DependencyList>(undefined);
+    const ref = useRef<DependencyList>();
     useEffect(() => {
       ref.current = options.updateTriggers;
     }, [options.updateTriggers]);

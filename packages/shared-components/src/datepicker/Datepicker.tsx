@@ -13,7 +13,7 @@ interface OwnProps {
   value?: string;
   initialMonth?: Date;
   disabledDays?: { before: Date; after: Date } | { before: Date; after: Date }[];
-  error?: ReactNode;
+  error?: React.Component | string;
   hideLabel?: boolean;
   inputId?: string;
 }

@@ -1,5 +1,5 @@
 import { WarningIcon } from '@navikt/ft-plattform-komponenter';
-import React, { type JSX } from 'react';
+import React from 'react';
 import { Status } from '../../../types/KompletthetData';
 import ListItem from '../list-item/ListItem';
 import styles from '../inntektsmelding-mottatt-item/inntektsmeldingMottattItem.module.css';

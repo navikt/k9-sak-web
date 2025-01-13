@@ -18,7 +18,6 @@ import RadioGroupPanel from '../../../shared/hook-form/RadioGroupPanel';
 import type { KravDokument } from '../types/KravDokumentStatus';
 import { formatDate } from '../utils';
 import styles from './SoknadsfristVilkarDokument.module.css';
-import type { Dayjs } from 'dayjs';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
@@ -76,8 +75,8 @@ export const SoknadsfristVilkarDokument = ({
     [dokument.innsendingstidspunkt, dokument.journalpostId],
   );
 
-  const isAtleastDate = useCallback((v: string | Dayjs | undefined) => dateAfterOrEqual(minDate)(v), [minDate]);
-  const isAtmostDate = useCallback((v: string | Dayjs | undefined) => dateBeforeOrEqual(maxDate)(v), [maxDate]);
+  const isAtleastDate = useCallback(v => dateAfterOrEqual(minDate)(v), [minDate]);
+  const isAtmostDate = useCallback(v => dateBeforeOrEqual(maxDate)(v), [maxDate]);
   const showRedigerVurderingButton =
     !erOverstyrt && dokumentErVurdert && !redigerVurdering && kanEndrePåSøknadsopplysninger;
 

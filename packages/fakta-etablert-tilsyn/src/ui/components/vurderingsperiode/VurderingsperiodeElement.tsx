@@ -1,5 +1,5 @@
 import { Period } from '@fpsak-frontend/utils';
-import React, { type JSX } from 'react';
+import React from 'react';
 import {
   ContentWithTooltip,
   GreenCheckIconFilled,

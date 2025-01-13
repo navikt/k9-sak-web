@@ -4,8 +4,6 @@ import Label from './Label';
 import LabelType from './LabelType';
 import styles from './readOnlyField.module.css';
 
-import type { JSX } from 'react';
-
 export interface ReadOnlyFieldProps {
   label?: LabelType;
   input?: { value: string | number };
