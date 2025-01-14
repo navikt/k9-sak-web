@@ -111,7 +111,7 @@ const VisittkortPanel = ({
           renderLabelContent={() => <VisittkortLabels personopplysninger={søker} />}
         />
 
-        {annenPart && annenPart.aktoerId && (
+        {annenPart?.aktoerId && (
           <PersonCard
             name={annenPart.navn}
             fodselsnummer={annenPart.fnr}
@@ -124,21 +124,18 @@ const VisittkortPanel = ({
         <RelatertFagsak relaterteFagsaker={relaterteFagsaker} />
         <div className={styles.pushRight}>
           <HStack gap="2">
-            {barnSoktFor &&
-              barnSoktFor.map(barn => (
-                <div className={styles.flexContainer} key={barn.aktoerId}>
-                  <PersonCard
-                    name={barn.navn}
-                    fodselsnummer={barn.fnr}
-                    gender={utledKjonn(barn.navBrukerKjonn)}
-                    isChild
-                    childAge={`Født ${prettifyDateString(barn.fodselsdato)}, ${beregnAlderPåBarn(barn.fodselsdato)}`}
-                  />
-                  {barn.dodsdato && (
-                    <p className={styles.dødsdatoLabel}>{`Død ${prettifyDateString(barn.dodsdato)}`}</p>
-                  )}
-                </div>
-              ))}
+            {barnSoktFor?.map(barn => (
+              <div className={styles.flexContainer} key={barn.aktoerId}>
+                <PersonCard
+                  name={barn.navn}
+                  fodselsnummer={barn.fnr}
+                  gender={utledKjonn(barn.navBrukerKjonn)}
+                  isChild
+                  childAge={`Født ${prettifyDateString(barn.fodselsdato)}, ${beregnAlderPåBarn(barn.fodselsdato)}`}
+                />
+                {barn.dodsdato && <p className={styles.dødsdatoLabel}>{`Død ${prettifyDateString(barn.dodsdato)}`}</p>}
+              </div>
+            ))}
           </HStack>
           {erDirekteOvergangFraInfotrygd && <TagContainer tagVariant="info">Fra Infotrygd</TagContainer>}
           {erPbSak && <TagContainer tagVariant="warning">PB-sak</TagContainer>}

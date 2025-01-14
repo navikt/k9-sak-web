@@ -57,6 +57,7 @@ describe('<VisittkortLabels>', () => {
     );
 
     expect(screen.getByLabelText('Personen har diskresjonsmerking kode 6')).toBeInTheDocument();
+    expect(screen.getByText('Kode 6')).toBeInTheDocument();
   });
 
   it('skal vise etikett for kode 7', () => {
@@ -69,6 +70,7 @@ describe('<VisittkortLabels>', () => {
       />,
     );
     expect(screen.getByLabelText('Personen har diskresjonsmerking kode 7')).toBeInTheDocument();
+    expect(screen.getByText('Kode 7')).toBeInTheDocument();
   });
 
   it('skal vise etikett for verge', () => {

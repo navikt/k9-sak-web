@@ -1,5 +1,5 @@
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import { Tag, Tooltip } from '@navikt/ds-react';
+import { Tag, Tooltip, type TagProps, type TooltipProps } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import diskresjonskodeType from './types/diskresjonskodeType';
@@ -12,54 +12,33 @@ interface OwnProps {
 }
 
 const VisittkortLabels = ({ personopplysninger, harTilbakekrevingVerge = false }: OwnProps) => {
-  const erSokerUnder18 = useMemo(
+  const erSøkerUnder18 = useMemo(
     () => personopplysninger && dayjs().diff(personopplysninger.fodselsdato, 'years') < 18,
     [personopplysninger],
   );
   const harVerge = personopplysninger
     ? personopplysninger.harVerge && !personopplysninger.dodsdato
     : harTilbakekrevingVerge;
+
+  const erKode6 = personopplysninger?.diskresjonskode === diskresjonskodeType.KODE6 && !personopplysninger.dodsdato;
+  const ersKode7 = personopplysninger?.diskresjonskode === diskresjonskodeType.KODE7 && !personopplysninger.dodsdato;
+
+  const renderTag = (content: string, variant: TagProps['variant'], tooltipContent: TooltipProps['content']) => (
+    <Tooltip content={tooltipContent} placement="bottom">
+      <Tag variant={variant} className={styles.etikett}>
+        {content}
+      </Tag>
+    </Tooltip>
+  );
+
   return (
     <>
-      {personopplysninger && personopplysninger.dodsdato && (
-        <Tooltip content="Personen er død" placement="bottom">
-          <Tag variant="info" className={styles.etikett}>
-            {`DØD ${formatDate(personopplysninger.dodsdato)}`}
-          </Tag>
-        </Tooltip>
-      )}
-      {personopplysninger &&
-        personopplysninger.diskresjonskode === diskresjonskodeType.KODE6 &&
-        !personopplysninger.dodsdato && (
-          <Tooltip content="Personen har diskresjonsmerking kode 6" placement="bottom">
-            <Tag variant="error" className={styles.etikett}>
-              Kode 6
-            </Tag>
-          </Tooltip>
-        )}
-      {personopplysninger &&
-        personopplysninger.diskresjonskode === diskresjonskodeType.KODE7 &&
-        !personopplysninger.dodsdato && (
-          <Tooltip content="Personen har diskresjonsmerking kode 7" placement="bottom">
-            <Tag variant="warning" className={styles.etikett}>
-              Kode 7
-            </Tag>
-          </Tooltip>
-        )}
-      {harVerge && (
-        <Tooltip content="Personen har verge" placement="bottom">
-          <Tag variant="info" className={styles.etikett}>
-            Verge
-          </Tag>
-        </Tooltip>
-      )}
-      {personopplysninger && erSokerUnder18 && (
-        <Tooltip content="Personen er under 18 år" placement="bottom">
-          <Tag variant="info" className={styles.etikett}>
-            Under 18
-          </Tag>
-        </Tooltip>
-      )}
+      {personopplysninger?.dodsdato &&
+        renderTag(`DØD ${formatDate(personopplysninger.dodsdato)}`, 'info', 'Personen er død')}
+      {erKode6 && renderTag('Kode 6', 'error', 'Personen har diskresjonsmerking kode 6')}
+      {ersKode7 && renderTag('Kode 7', 'warning', 'Personen har diskresjonsmerking kode 7')}
+      {harVerge && renderTag('Verge', 'info', 'Personen har verge')}
+      {erSøkerUnder18 && renderTag('Under 18', 'info', 'Personen er under 18 år')}
     </>
   );
 };
