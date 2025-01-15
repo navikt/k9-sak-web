@@ -5,10 +5,10 @@ import React, { useCallback, useMemo, useState } from 'react';
 import {
   FatterVedtakStatusModal,
   IverksetterVedtakStatusModal,
-  ProsessStegContainer,
-  ProsessStegPanel,
   lagDokumentdata,
+  ProsessStegContainer,
   prosessStegHooks,
+  ProsessStegPanel,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
@@ -16,7 +16,7 @@ import { Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { bestemAvsenderApp, forhandsvis, getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { UtvidetRettBehandlingApiKeys, restApiUtvidetRettHooks } from '../data/utvidetRettBehandlingApi';
+import { restApiUtvidetRettHooks, UtvidetRettBehandlingApiKeys } from '../data/utvidetRettBehandlingApi';
 import prosessStegUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/prosessStegUtvidetRettPanelDefinisjoner';
 import { ProsessProps } from '../types/ProsessProps';
 
@@ -173,7 +173,6 @@ const UtvidetRettProsess = ({
       fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN,
       fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN,
       data.vilkar,
-      featureToggles,
     ),
     dataTilUtledingAvFpPaneler,
     fagsak,
