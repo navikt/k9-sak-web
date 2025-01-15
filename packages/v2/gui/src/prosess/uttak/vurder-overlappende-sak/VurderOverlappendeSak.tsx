@@ -70,7 +70,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
       perioder:
         data?.perioderMedOverlapp.map(periode => ({
           periode: { fom: periode.periode.fom || '', tom: periode.periode.tom || '' },
-          søkersUttaksgrad: periode.fastsattUttaksgrad,
+          søkersUttaksgrad: periode.fastsattUttaksgrad ?? 0,
           saksnummer: periode.saksnummer.map(saksNr => saksNr || ''),
         })) || [],
     };
