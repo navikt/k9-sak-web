@@ -33,7 +33,6 @@ jobs:
         uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@main
         id: docker-push
         with:
-          image_base_name: 'k9-sak-web'
           additional-tag: 'dev-next1'
           without_navikt_prefix: true
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
