@@ -12,11 +12,11 @@ interface RelatertFagsakProps {
 }
 
 const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
+  const { relaterteSøkere } = relaterteFagsaker || {};
+  const [valgtSøkerIdent, setValgtSøkerIdent] = React.useState(relaterteSøkere?.[0]?.søkerIdent);
   if (!relaterteFagsaker || relaterteFagsaker.relaterteSøkere?.length === 0) {
     return null;
   }
-  const { relaterteSøkere } = relaterteFagsaker;
-  const [valgtSøkerIdent, setValgtSøkerIdent] = React.useState(relaterteSøkere[0].søkerIdent);
   const valgtSøker = relaterteSøkere.find(søker => søker.søkerIdent === valgtSøkerIdent);
   const harMerEnnEnRelatertSøker = relaterteSøkere.length > 1;
   const { saksnummer, søkerNavn, søkerIdent, åpenBehandling } = valgtSøker;

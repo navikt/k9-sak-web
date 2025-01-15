@@ -21,7 +21,7 @@ const VisittkortLabels = ({ personopplysninger, harTilbakekrevingVerge = false }
     : harTilbakekrevingVerge;
 
   const erKode6 = personopplysninger?.diskresjonskode === diskresjonskodeType.KODE6 && !personopplysninger.dodsdato;
-  const ersKode7 = personopplysninger?.diskresjonskode === diskresjonskodeType.KODE7 && !personopplysninger.dodsdato;
+  const erKode7 = personopplysninger?.diskresjonskode === diskresjonskodeType.KODE7 && !personopplysninger.dodsdato;
 
   const renderTag = (content: string, variant: TagProps['variant'], tooltipContent: TooltipProps['content']) => (
     <Tooltip content={tooltipContent} placement="bottom">
@@ -36,7 +36,7 @@ const VisittkortLabels = ({ personopplysninger, harTilbakekrevingVerge = false }
       {personopplysninger?.dodsdato &&
         renderTag(`DØD ${formatDate(personopplysninger.dodsdato)}`, 'info', 'Personen er død')}
       {erKode6 && renderTag('Kode 6', 'error', 'Personen har diskresjonsmerking kode 6')}
-      {ersKode7 && renderTag('Kode 7', 'warning', 'Personen har diskresjonsmerking kode 7')}
+      {erKode7 && renderTag('Kode 7', 'warning', 'Personen har diskresjonsmerking kode 7')}
       {harVerge && renderTag('Verge', 'info', 'Personen har verge')}
       {erSøkerUnder18 && renderTag('Under 18', 'info', 'Personen er under 18 år')}
     </>

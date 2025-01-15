@@ -1,7 +1,7 @@
 import { adresseType } from '@k9-sak-web/backend/k9sak/generated';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { BodyShort, HStack, Label, Tag, Tooltip, VStack, type TooltipProps } from '@navikt/ds-react';
+import { BodyShort, HStack, Label, Tag, Tooltip, VStack } from '@navikt/ds-react';
 import { useMemo } from 'react';
 import getAddresses, { type Adresser } from '../../utils/getAddresses';
 import { getLanguageFromSprakkode } from '../../utils/språkUtils';
@@ -34,28 +34,41 @@ const VisittkortDetaljerPopup = ({ personopplysninger, sprakkode }: OwnProps) =>
     ? adresser[adresseType.MIDLERTIDIG_POSTADRESSE_NORGE]
     : adresser[adresseType.MIDLERTIDIG_POSTADRESSE_UTLAND];
 
-  const renderTag = (content: string, tooltip: TooltipProps['content']) => (
-    <Tooltip content={tooltip} placement="bottom">
-      <Tag variant="info" className={styles.etikett} size="small">
-        {content}
-      </Tag>
-    </Tooltip>
-  );
-
   return (
     <div className={styles.container}>
       <VStack gap="4">
         <HStack gap="4">
-          {personopplysninger.region &&
-            renderTag(kodeverkNavnFraKode(personopplysninger.region, KodeverkType.REGION), 'Statsborgerskap')}
-          {renderTag(
-            kodeverkNavnFraKode(findPersonStatus(personopplysninger), KodeverkType.PERSONSTATUS_TYPE),
-            'Personstatus',
+          {personopplysninger.region && (
+            <Tooltip content="Statsborgerskap" placement="bottom">
+              <Tag variant="info" className={styles.etikett} size="small">
+                {kodeverkNavnFraKode(personopplysninger.region, KodeverkType.REGION)}
+              </Tag>
+            </Tooltip>
           )}
-          {personopplysninger.sivilstand &&
-            renderTag(kodeverkNavnFraKode(personopplysninger.sivilstand, KodeverkType.SIVILSTAND_TYPE), 'Sivilstand')}
-          {borMedBarnet && renderTag('Bor med barnet', 'Bor med barnet')}
-          {renderTag(getLanguageFromSprakkode(sprakkode), 'Foretrukket språk')}
+          <Tooltip content="Personstatus" placement="bottom">
+            <Tag variant="info" className={styles.etikett} size="small">
+              {kodeverkNavnFraKode(findPersonStatus(personopplysninger), KodeverkType.PERSONSTATUS_TYPE)}
+            </Tag>
+          </Tooltip>
+          {personopplysninger.sivilstand && (
+            <Tooltip content="Sivilstand" placement="bottom">
+              <Tag variant="info" className={styles.etikett} size="small">
+                {kodeverkNavnFraKode(personopplysninger.sivilstand, KodeverkType.SIVILSTAND_TYPE)}
+              </Tag>
+            </Tooltip>
+          )}
+          {borMedBarnet && (
+            <Tooltip content="Bor med barnet" placement="bottom">
+              <Tag variant="info" className={styles.etikett} size="small">
+                Bor med barnet
+              </Tag>
+            </Tooltip>
+          )}
+          <Tooltip content="Foretrukket språk" placement="bottom">
+            <Tag variant="info" className={styles.etikett} size="small">
+              {getLanguageFromSprakkode(sprakkode)}
+            </Tag>
+          </Tooltip>
         </HStack>
         <VStack gap="2">
           <HStack gap="4">

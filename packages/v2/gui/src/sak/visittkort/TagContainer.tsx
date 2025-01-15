@@ -1,9 +1,9 @@
-import { Tag } from '@navikt/ds-react';
+import { Tag, type TagProps } from '@navikt/ds-react';
 import React from 'react';
 import styles from './tagContainer.module.css';
 
 interface Props {
-  tagVariant: 'warning' | 'error' | 'info' | 'success';
+  tagVariant: TagProps['variant'];
   size?: 'small' | 'medium';
   children?: React.ReactNode;
 }
