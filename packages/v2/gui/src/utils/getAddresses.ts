@@ -4,12 +4,6 @@ const landkoder = {
   NORGE: 'NOR',
 };
 
-/**
- * personUtils
- *
- * Utils klasse med diverse støttefunksjoner til person komponentene
- */
-
 const emptyIfnull = (text?: string): string => (text == null ? '' : text);
 
 const constructAddress = (adresse = '', postnummer = '', poststed = '', land = ''): string =>
