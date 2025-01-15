@@ -24,6 +24,8 @@ import NyUttakDetaljer from '../uttak-detaljer/NyUttakDetaljer';
 import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import styles from './uttak.module.css';
 
+import type { JSX } from 'react';
+
 const cx = classNames.bind(styles);
 
 interface UttakProps {
@@ -59,7 +61,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
           {periode.getFirstAndLastWeek()}
         </Table.DataCell>
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
-          <BodyShort>
+          <BodyShort as="div">
             {periode.prettifyPeriod()}
             {manueltOverstyrt && (
               <>

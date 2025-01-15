@@ -1,17 +1,14 @@
-import { composeStories, StoryFn } from '@storybook/react';
+import { composeStories } from '@storybook/react';
 import { userEvent } from '@storybook/test';
 import { act, render, screen } from '@testing-library/react';
 import * as stories from '../MedlemskapFaktaIndex.stories';
-import MedlemskapInfoPanel from './MedlemskapInfoPanel';
 
 describe('<MedlemskapInfoPanel>', () => {
   const {
     VisPanelUtenAksjonspunkt,
     VisAksjonspunktForAvklaringOmBrukerErBosatt,
     VisAksjonspunktForAlleAndreMedlemskapsaksjonspunkter,
-  } = composeStories(stories) as {
-    [key: string]: StoryFn<Partial<typeof MedlemskapInfoPanel>>;
-  };
+  } = composeStories(stories);
 
   it('skal vise editeringsmuligheter når det finnes aksjonspunkter', async () => {
     render(<VisAksjonspunktForAvklaringOmBrukerErBosatt />);

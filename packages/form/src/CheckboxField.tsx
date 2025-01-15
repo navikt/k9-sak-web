@@ -15,7 +15,7 @@ interface CheckboxFieldProps {
 
 interface RenderCheckboxFieldProps {
   onChange: (isChecked: boolean) => void;
-  label: React.ReactElement;
+  label: React.ReactElement<any>;
   value: string | number | string[];
   isEdited: boolean;
 }

@@ -33,6 +33,7 @@ const faktaPanelCodes = {
   SOKNADSPERIODER: 'soknadsperioder',
   INSTITUSJON: 'institusjon',
   OPPLAERING: 'opplaering',
+  NYOPPSTARTET: 'nyoppstartet',
 };
 
 export default faktaPanelCodes;

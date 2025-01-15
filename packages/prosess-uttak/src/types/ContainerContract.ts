@@ -4,6 +4,7 @@ import ArbeidsgiverOpplysninger from './ArbeidsgiverOpplysninger';
 import KodeverkMedNavn from './kodeverkMedNavnTsType';
 import Uttaksperioder from './Uttaksperioder';
 import { Inntektsgradering } from '.';
+import { ReactNode } from 'react';
 
 interface ContainerContract {
   httpErrorHandler?: (status: number, locationHeader?: string) => void;
@@ -34,6 +35,7 @@ interface ContainerContract {
   erOverstyrer?: boolean;
   status?: string | false;
   readOnly: boolean;
+  vurderOverlappendeSakComponent?: ReactNode;
 }
 
 export default ContainerContract;
