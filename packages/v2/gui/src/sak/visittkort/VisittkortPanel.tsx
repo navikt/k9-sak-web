@@ -23,7 +23,7 @@ const utledKjonn = (kjonn: string): Gender => {
   return kjonn === navBrukerKjonn.M ? Gender.male : Gender.unknown;
 };
 
-interface OwnProps {
+export interface VisittkortPanelProps {
   fagsakPerson: FagsakPerson;
   sprakkode?: string;
   personopplysninger?: Personopplysninger;
@@ -43,7 +43,7 @@ const VisittkortPanel = ({
   direkteOvergangFraInfotrygd,
   erPbSak,
   erHastesak,
-}: OwnProps) => {
+}: VisittkortPanelProps) => {
   if (!personopplysninger && !harTilbakekrevingVerge) {
     return (
       <div className={styles.container}>
