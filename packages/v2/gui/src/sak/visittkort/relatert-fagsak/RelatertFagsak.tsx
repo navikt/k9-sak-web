@@ -1,14 +1,14 @@
-import { pathToFagsak } from '@k9-sak-web/sak-app/src/app/paths';
-import { RelatertFagsak as RelatertFagsakType } from '@k9-sak-web/types';
+import type { RelatertSakDto } from '@k9-sak-web/backend/k9sak/generated';
 import { LockedFilled, UnlockedFilled } from '@navikt/ds-icons';
 import { BodyShort, Link, Select } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React from 'react';
+import { pathToFagsak } from '../../../utils/paths';
 import RelatertSøkerIcon from './RelatertSøkerIcon';
 import styles from './relatertFagsak.module.css';
 
 interface RelatertFagsakProps {
-  relaterteFagsaker?: RelatertFagsakType;
+  relaterteFagsaker?: RelatertSakDto;
 }
 
 const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
@@ -16,23 +16,23 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
     return null;
   }
   const { relaterteSøkere } = relaterteFagsaker;
-  const [valgtSøkerIdent, setValgtSøkerIdent] = React.useState(relaterteSøkere[0].søkerIdent);
-  const valgtSøker = relaterteSøkere.find(søker => søker.søkerIdent === valgtSøkerIdent);
-  const harMerEnnEnRelatertSøker = relaterteSøkere.length > 1;
-  const { saksnummer, søkerNavn, søkerIdent, åpenBehandling } = valgtSøker;
+  const [valgtSøkerIdent, setValgtSøkerIdent] = React.useState(relaterteSøkere ? relaterteSøkere[0]?.søkerIdent : '');
+  const valgtSøker = relaterteSøkere?.find(søker => søker.søkerIdent === valgtSøkerIdent);
+  const harMerEnnEnRelatertSøker = relaterteSøkere && relaterteSøkere.length > 1;
+  const { saksnummer, søkerNavn, søkerIdent, åpenBehandling } = valgtSøker || {};
 
-  const behandlingsstatus = (søker: RelatertFagsakType['relaterteSøkere'][number]) =>
+  const behandlingsstatus = (søker: NonNullable<RelatertSakDto['relaterteSøkere']>[number]) =>
     søker.åpenBehandling ? '(Åpen behandling)' : '(Lukket behandling)';
 
   const visRelaterteSøkere = () => {
     if (!harMerEnnEnRelatertSøker) {
       return (
         <Link
-          className={classNames([styles.relatertFagsak__selector, styles.relatertFagsak__marginLeft])}
-          href={`/k9/web${pathToFagsak(saksnummer)}`}
+          className={classNames([styles.relatertFagsakSelector, styles.relatertFagsakMarginLeft])}
+          href={`/k9/web${pathToFagsak(saksnummer ?? '')}`}
           target="_blank"
         >
-          <BodyShort size="small" as="span" className={styles.relatertFagsak__name}>
+          <BodyShort size="small" as="span" className={styles.relatertFagsakName}>
             {søkerNavn}
           </BodyShort>
         </Link>
@@ -42,8 +42,9 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
       <Select
         label="Velg relatert søker"
         onChange={e => setValgtSøkerIdent(e.target.value)}
-        className={styles.relatertFagsak__søkerSelect}
+        className={styles.relatertFagsakSøkerSelect}
         size="small"
+        hideLabel
       >
         {relaterteSøkere.map(søker => (
           <option key={søker.søkerIdent} value={søker.søkerIdent}>
@@ -63,9 +64,9 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
 
   return (
     <div className={styles.relatertFagsak}>
-      <div className={styles.relatertFagsak__nameGenderContainer}>
-        <RelatertSøkerIcon classname={styles.relatertFagsak__icon} />
-        <BodyShort size="small" className={styles.relatertFagsak__description}>
+      <div className={styles.relatertFagsakNameGenderContainer}>
+        <RelatertSøkerIcon classname={styles.relatertFagsakIcon} />
+        <BodyShort size="small" className={styles.relatertFagsakDescription}>
           {andreParterTekst()}
         </BodyShort>
         {visRelaterteSøkere()}
@@ -73,17 +74,17 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
       <BodyShort size="small" as="span">
         /
       </BodyShort>
-      <div className={styles.relatertFagsak__centeredFlex}>
+      <div className={styles.relatertFagsakCenteredFlex}>
         <BodyShort size="small">{søkerIdent}</BodyShort>
         {!harMerEnnEnRelatertSøker && åpenBehandling ? (
-          <UnlockedFilled className={styles.relatertFagsak__lock} width="1.25em" height="1.25em" />
+          <UnlockedFilled className={styles.relatertFagsakLock} width="1.25em" height="1.25em" />
         ) : (
-          <LockedFilled className={styles.relatertFagsak__lock} width="1.25em" height="1.25em" />
+          <LockedFilled className={styles.relatertFagsakLock} width="1.25em" height="1.25em" />
         )}
         {harMerEnnEnRelatertSøker && (
           <Link
-            className={`${styles.relatertFagsak__selector} ${styles['relatertFagsak__selector--pushLeft']}`}
-            href={`/k9/web${pathToFagsak(saksnummer)}`}
+            className={`${styles.relatertFagsakSelector} ${styles['relatertFagsakSelectorPushLeft']}`}
+            href={`/k9/web${pathToFagsak(saksnummer ?? '')}`}
             target="_blank"
           >
             Åpne sak
