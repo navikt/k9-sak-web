@@ -64,7 +64,7 @@ export type Historikkinnslag = Readonly<{
   opprettetTidspunkt: string;
   type: Kodeverk;
   behandlingId?: number;
-  kjoenn: Kodeverk;
+  kjoenn?: Kodeverk;
   aktoer: Kodeverk;
   dokumentLinks?: HistorikkInnslagDokumentLink[];
   historikkinnslagDeler: HistorikkinnslagDel[];

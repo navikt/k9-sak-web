@@ -83,6 +83,7 @@ const velgHistorikkMal = (histType: Kodeverk) => {
       return HistorikkMalType6;
     case historikkinnslagType.OVERSTYRT:
     case historikkinnslagType.FJERNET_OVERSTYRING:
+    case historikkinnslagType.FASTSATT_UTTAKSGRAD:
       return HistorikkMalType7;
     case historikkinnslagType.OPPTJENING:
       return HistorikkMalType8;
