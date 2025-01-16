@@ -12,6 +12,7 @@ import MenyVergeIndex, { getMenytekst as getVergeMenytekst } from '@fpsak-fronte
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import MenyData from '@k9-sak-web/gui/sak/meny/MenyData.js';
 import { MenySakIndex as MenySakIndexV2 } from '@k9-sak-web/gui/sak/meny/MenySakIndex.js';
+import MenyMarkerBehandlingV2 from '@k9-sak-web/gui/sak/meny/marker-behandling/MenyMarkerBehandling.js';
 import MenySettPaVentIndexV2 from '@k9-sak-web/gui/sak/meny/sett-paa-vent/MenySettPaVentIndex.js';
 import MenyTaAvVentIndexV2 from '@k9-sak-web/gui/sak/meny/ta-av-vent/MenyTaAvVentIndex.js';
 import MenyMarkerBehandling, {
@@ -111,7 +112,7 @@ export const BehandlingMenuIndex = ({
   const navigate = useNavigate();
   const location = useLocation();
 
-  const ref = useRef<number>();
+  const ref = useRef<number>(0);
   useEffect(() => {
     // Når antallet har endret seg er det laget en ny behandling og denne må da velges
     if (ref.current > 0) {
@@ -262,7 +263,7 @@ export const BehandlingMenuIndex = ({
             ),
           ),
           new MenyData(featureToggles?.LOS_MARKER_BEHANDLING, getMenytekstMarkerBehandling()).medModal(lukkModal => (
-            <MenyMarkerBehandling
+            <MenyMarkerBehandlingV2
               behandlingUuid={behandling?.uuid}
               markerBehandling={markerBehandling}
               lukkModal={lukkModal}
