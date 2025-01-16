@@ -1,12 +1,8 @@
-import { FC } from 'react';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import HistorikkSakIndex from './HistorikkSakIndex';
-import defaultHistorikk from './mock/defaultHistorikk';
-import overlappendeSakHistorikk from './mock/OverlappendeSak';
 import { Meta, StoryObj } from '@storybook/react';
-import { Historikkinnslag } from '@k9-sak-web/types';
 import behandlingStartet, { innsynOpprettet, nyeRegisteropplysninger, overlappendeSak } from './mock/historikkinnslag';
-import { userEvent, within, expect, fireEvent, fn } from '@storybook/test';
+import { expect } from '@storybook/test';
 
 const locationMock = {
   key: '1',
