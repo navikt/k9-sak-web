@@ -102,6 +102,7 @@ const KroniskSykObjektTilMikrofrontend = ({
           skalVilkarsUtfallVises,
           vilkar,
           aksjonspunkt.begrunnelse,
+          vilkar?.perioder[0].begrunnelse,
           'Utvidet Rett',
         ),
         losAksjonspunkt: (harDokumentasjonOgFravaerRisiko, begrunnelse, avslagsårsakKode, fraDato) => {
@@ -130,7 +131,13 @@ const KroniskSykObjektTilMikrofrontend = ({
         aksjonspunktLost: false,
         soknadsdato: soknad.soknadsdato,
         vedtakFattetVilkarOppfylt: true,
-        informasjonOmVilkar: generereInfoForVurdertVilkar(true, vilkar, '', 'Utvidet Rett'),
+        informasjonOmVilkar: generereInfoForVurdertVilkar(
+          true,
+          vilkar,
+          '',
+          vilkar?.perioder[0].begrunnelse,
+          'Utvidet Rett',
+        ),
         formState: FormState,
       } as VilkarKroniskSyktBarnProps,
     };
