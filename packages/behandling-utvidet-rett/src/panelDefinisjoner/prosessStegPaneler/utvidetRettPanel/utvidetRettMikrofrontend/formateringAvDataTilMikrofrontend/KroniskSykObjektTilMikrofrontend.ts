@@ -1,15 +1,15 @@
-import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 import { FormState } from '@fpsak-frontend/form/index';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
-import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
+import Komponenter from '@k9-sak-web/prosess-omsorgsdager/src/types/Komponenter';
+import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 import {
   InformasjonTilLesemodusKroniskSyk,
   VilkarKroniskSyktBarnProps,
 } from '../../../../../types/utvidetRettMikrofrontend/VilkarKroniskSyktBarnProps';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import Komponenter from '@k9-sak-web/prosess-omsorgsdager/src/types/Komponenter';
+import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 
 interface OwnProps {
   behandlingsID: string;
@@ -98,13 +98,13 @@ const KroniskSykObjektTilMikrofrontend = ({
         soknadsdato: soknad.soknadsdato,
         informasjonTilLesemodus: formatereLesemodusObjektForKroniskSyk(vilkar, aksjonspunkt),
         vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
-        informasjonOmVilkar: generereInfoForVurdertVilkar(
+        informasjonOmVilkar: generereInfoForVurdertVilkar({
           skalVilkarsUtfallVises,
-          vilkar,
-          aksjonspunkt.begrunnelse,
-          vilkar?.perioder[0].begrunnelse,
-          'Utvidet Rett',
-        ),
+          vilkår: vilkar,
+          begrunnelseFraAksjonspunkt: aksjonspunkt.begrunnelse,
+          begrunnelseFraVilkår: vilkar?.perioder[0].begrunnelse,
+          navnPåAksjonspunkt: 'Utvidet Rett',
+        }),
         losAksjonspunkt: (harDokumentasjonOgFravaerRisiko, begrunnelse, avslagsårsakKode, fraDato) => {
           submitCallback([
             formatereLosAksjonspunktObjektForKroniskSyk(
@@ -131,13 +131,13 @@ const KroniskSykObjektTilMikrofrontend = ({
         aksjonspunktLost: false,
         soknadsdato: soknad.soknadsdato,
         vedtakFattetVilkarOppfylt: true,
-        informasjonOmVilkar: generereInfoForVurdertVilkar(
-          true,
-          vilkar,
-          '',
-          vilkar?.perioder[0].begrunnelse,
-          'Utvidet Rett',
-        ),
+        informasjonOmVilkar: generereInfoForVurdertVilkar({
+          skalVilkarsUtfallVises: true,
+          vilkår: vilkar,
+          begrunnelseFraAksjonspunkt: '',
+          begrunnelseFraVilkår: vilkar?.perioder[0].begrunnelse,
+          navnPåAksjonspunkt: 'Utvidet Rett',
+        }),
         formState: FormState,
       } as VilkarKroniskSyktBarnProps,
     };

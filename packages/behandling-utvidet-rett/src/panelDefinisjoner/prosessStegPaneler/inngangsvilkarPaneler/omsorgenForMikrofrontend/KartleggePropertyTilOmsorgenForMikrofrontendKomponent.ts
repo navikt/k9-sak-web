@@ -3,8 +3,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Behandling } from '@k9-sak-web/types';
 import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
+import { Behandling } from '@k9-sak-web/types';
 import {
   AksjonspunktInformasjon,
   VilkarInformasjon,
@@ -72,13 +72,13 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
         barn: angitteBarn.map(barn => barn.personIdent),
         harBarnSoktForRammevedtakOmKroniskSyk,
         vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
-        informasjonOmVilkar: generereInfoForVurdertVilkar(
+        informasjonOmVilkar: generereInfoForVurdertVilkar({
           skalVilkarsUtfallVises,
-          omsorgenForVilkar,
-          aksjonspunkt.begrunnelse,
-          omsorgenForVilkar?.perioder[0].begrunnelse,
-          'Omsorgen for',
-        ),
+          vilkår: omsorgenForVilkar,
+          begrunnelseFraAksjonspunkt: aksjonspunkt.begrunnelse,
+          begrunnelseFraVilkår: omsorgenForVilkar?.perioder[0].begrunnelse,
+          navnPåAksjonspunkt: 'Omsorgen for',
+        }),
         losAksjonspunkt: (harOmsorgen, begrunnelse) => {
           submitCallback([
             {
@@ -103,13 +103,13 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
         barn: angitteBarn.map(barn => barn.personIdent),
         harBarnSoktForRammevedtakOmKroniskSyk,
         vedtakFattetVilkarOppfylt: true,
-        informasjonOmVilkar: generereInfoForVurdertVilkar(
-          true,
-          omsorgenForVilkar,
-          '',
-          omsorgenForVilkar.perioder[0].begrunnelse,
-          'Omsorgen for',
-        ),
+        informasjonOmVilkar: generereInfoForVurdertVilkar({
+          skalVilkarsUtfallVises: true,
+          vilkår: omsorgenForVilkar,
+          begrunnelseFraAksjonspunkt: '',
+          begrunnelseFraVilkår: omsorgenForVilkar?.perioder[0].begrunnelse,
+          navnPåAksjonspunkt: 'Omsorgen for',
+        }),
         formState: FormState,
       },
     };
