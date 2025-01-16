@@ -50,6 +50,8 @@ describe('<AvregningProsessIndex>', () => {
         isAksjonspunktOpen
         previewFptilbakeCallback={vi.fn()}
         featureToggles={{}}
+        simuleringResultat={undefined}
+        tilbakekrevingvalg={undefined}
       />,
       { messages },
     );

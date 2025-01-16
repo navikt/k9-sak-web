@@ -1,6 +1,5 @@
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import {
   AndreSakerPåSøkerStripe,
   DataFetchPendingModal,
@@ -14,7 +13,6 @@ import {
   BehandlingPerioderårsakMedVilkår,
   Fagsak,
   FagsakPerson,
-  FeatureToggles,
   Kodeverk,
   KodeverkMedNavn,
   MerknadFraLos,
@@ -22,14 +20,17 @@ import {
   Personopplysninger,
   SaksbehandlereInfo,
 } from '@k9-sak-web/types';
-import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
 import RelatertFagsak from '@k9-sak-web/types/src/relatertFagsak';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
 import { SaksbehandlernavnContext } from '@navikt/ft-plattform-komponenter';
+import { DirekteOvergangDto } from '@navikt/k9-sak-typescript-client';
 import {
   behandlingerRoutePath,
   erBehandlingValgt,
@@ -145,13 +146,22 @@ const FagsakIndex = () => {
   const { data: behandlingPersonopplysninger, state: personopplysningerState } =
     restApiHooks.useRestApi<Personopplysninger>(K9sakApiKeys.BEHANDLING_PERSONOPPLYSNINGER, undefined, options);
 
+  const behandlingPersonopplysningerV2 = useMemo(() => {
+    if (!behandlingPersonopplysninger) {
+      return undefined;
+    }
+    const deepCopy = JSON.parse(JSON.stringify(behandlingPersonopplysninger));
+    konverterKodeverkTilKode(deepCopy, false);
+    return deepCopy;
+  }, [behandlingPersonopplysninger]);
+
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
   const { data: arbeidsgiverOpplysninger } = restApiHooks.useRestApi<ArbeidsgiverOpplysningerWrapper>(
     K9sakApiKeys.ARBEIDSGIVERE,
     {},
     {
-      updateTriggers: [!behandling],
+      updateTriggers: [behandlingId],
       suspendRequest: !behandling,
     },
   );
@@ -177,26 +187,16 @@ const FagsakIndex = () => {
     },
   );
 
-  const { data: direkteOvergangFraInfotrygd } = restApiHooks.useRestApi<OvergangFraInfotrygd>(
+  const { data: direkteOvergangFraInfotrygd } = restApiHooks.useRestApi<DirekteOvergangDto>(
     K9sakApiKeys.DIREKTE_OVERGANG_FRA_INFOTRYGD,
     {},
     {
-      updateTriggers: [!behandling],
+      updateTriggers: [behandlingId],
       suspendRequest: !behandling,
     },
   );
 
-  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
-    K9sakApiKeys.FEATURE_TOGGLE,
-  );
-  const featureToggles = useMemo<FeatureToggles>(
-    () =>
-      featureTogglesData?.reduce((acc, curr) => {
-        acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
-        return acc;
-      }, {}),
-    [featureTogglesData],
-  );
+  const featureToggles = useContext(FeatureTogglesContext);
 
   const showSøknadsperiodestripe = featureToggles?.SOKNADPERIODESTRIPE && erPleiepengerSyktBarn(fagsak);
 
@@ -216,7 +216,7 @@ const FagsakIndex = () => {
     K9sakApiKeys.LOS_HENTE_MERKNAD,
     {},
     {
-      updateTriggers: [!behandling],
+      updateTriggers: [behandlingId],
       suspendRequest: !behandling || !featureToggles?.LOS_MARKER_BEHANDLING,
     },
   );
@@ -319,10 +319,9 @@ const FagsakIndex = () => {
 
               return (
                 <div style={{ overflow: 'hidden' }}>
-                  <VisittkortSakIndex
-                    personopplysninger={behandlingPersonopplysninger}
-                    alleKodeverk={alleKodeverkK9Sak}
-                    sprakkode={behandling?.sprakkode}
+                  <VisittkortPanel
+                    personopplysninger={behandlingPersonopplysningerV2}
+                    sprakkode={behandling?.sprakkode.kode}
                     fagsakPerson={fagsakPerson || fagsak.person}
                     harTilbakekrevingVerge={erTilbakekreving(behandling?.type) && harVerge}
                     relaterteFagsaker={relaterteFagsaker}

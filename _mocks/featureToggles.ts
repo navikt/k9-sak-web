@@ -70,10 +70,6 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_NYE_NOKKELTALL,
   },
   {
-    key: 'PROSESS_VILKAR_SOKNADSFRIST',
-    value: process.env.VITE_PROSESS_VILKAR_SOKNADSFRIST,
-  },
-  {
     key: 'UTVIDET_VARSELFELT',
     value: process.env.VITE_UTVIDET_VARSELFELT,
   },
@@ -101,4 +97,9 @@ export const featureTogglesFactory = () => [
     key: 'SAK_MENY_V2',
     value: process.env.VITE_SAK_MENY_V2,
   },
+  {
+    key: 'AKSJONSPUNKT_OVERLAPPENDE_SAKER',
+    value: process.env.VITE_AKSJONSPUNKT_OVERLAPPENDE_SAKER,
+  },
+  { key: 'OMS_NYOPPSTARTET', value: process.env.VITE_OMS_NYOPPSTARTET },
 ];

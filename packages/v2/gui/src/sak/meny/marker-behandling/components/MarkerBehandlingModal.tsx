@@ -1,10 +1,10 @@
 import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
 import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
-import { useFeatureToggles } from '@k9-sak-web/gui/utils/hooks/useFeatureToggles.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import { goToLos, goToSearch } from '@k9-sak-web/sak-app/src/app/paths';
 import { Alert, BodyShort, Button, ErrorMessage, Heading, Label, Modal, VStack } from '@navikt/ds-react';
 import { Form, Formik, type FormikProps } from 'formik';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import * as Yup from 'yup';
 import Merknadkode from '../Merknadkode';
@@ -37,7 +37,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   erVeileder,
 }) => {
   const intl = useIntl();
-  const [featureToggles] = useFeatureToggles();
+  const featureToggles = useContext(FeatureTogglesContext);
   const [showIngenEndringerError, setShowIngenEndringerError] = useState(false);
   if (!brukHastekøMarkering && !brukVanskeligKøMarkering) {
     return null;

@@ -2,7 +2,7 @@ import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { FilterFilled } from '@navikt/ds-icons';
 import { Button, Checkbox } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useState, type JSX } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import styles from './filterList.module.css';
 

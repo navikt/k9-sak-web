@@ -12,7 +12,7 @@ interface OwnProps {
 
 const ReduxFormStateCleaner = ({ behandlingId, behandlingVersjon }: OwnProps) => {
   const dispatch = useDispatch();
-  const ref = useRef<number>();
+  const ref = useRef<number>(undefined);
 
   useEffect(() => {
     if (ref.current && ref.current !== behandlingVersjon) {

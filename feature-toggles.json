@@ -76,10 +76,6 @@
     "value": "${NYE_NOKKELTALL}"
   },
   {
-    "key": "PROSESS_VILKAR_SOKNADSFRIST",
-    "value": "${PROSESS_VILKAR_SOKNADSFRIST}"
-  },
-  {
     "key": "UTVIDET_VARSELFELT",
     "value": "${UTVIDET_VARSELFELT}"
   },
@@ -106,5 +102,13 @@
   {
     "key": "SAK_MENY_V2",
     "value": "${SAK_MENY_V2}"
+  },
+  {
+    "key": "OMS_NYOPPSTARTET",
+    "value": "${OMS_NYOPPSTARTET}"
+  },
+  {
+    "key": "AKSJONSPUNKT_OVERLAPPENDE_SAKER",
+    "value": "${AKSJONSPUNKT_OVERLAPPENDE_SAKER}"
   }
 ]

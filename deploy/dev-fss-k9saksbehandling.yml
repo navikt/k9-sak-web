@@ -103,8 +103,6 @@ spec:
       value: "true"
     - name: NYE_NOKKELTALL
       value: "true"
-    - name: PROSESS_VILKAR_SOKNADSFRIST
-      value: "true"
     - name: UTVIDET_VARSELFELT
       value: "true"
     - name: SKILL_UT_PRIVATPERSON
@@ -117,4 +115,8 @@ spec:
       value: "true"
     - name: BRUK_INNTEKTSGRADERING_I_UTTAK
     - name: SAK_MENY_V2
+      value: "true"
+    - name: OMS_NYOPPSTARTET
+      value: "true"
+    - name: AKSJONSPUNKT_OVERLAPPENDE_SAKER
       value: "true"

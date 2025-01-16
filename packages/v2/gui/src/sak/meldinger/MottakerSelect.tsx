@@ -85,7 +85,6 @@ const MottakerSelect = ({
       <Select
         label="Mottaker"
         size="small"
-        placeholder="Velg mottaker"
         value={valgtMottakerId}
         onChange={e => onChange?.(resolveMottaker(e.target.value))}
         error={error}

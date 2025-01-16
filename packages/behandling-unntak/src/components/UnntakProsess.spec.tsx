@@ -7,12 +7,10 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { requestUnntakApi, UnntakBehandlingApiKeys } from '../data/unntakBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
 import UnntakProsess from './UnntakProsess';
@@ -126,7 +124,6 @@ describe('<UnntakProsess>', () => {
   };
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     requestUnntakApi.mock(UnntakBehandlingApiKeys.MEDLEMSKAP, []);
     renderWithIntlAndReduxForm(
       <UnntakProsess
@@ -156,8 +153,6 @@ describe('<UnntakProsess>', () => {
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     renderWithIntlAndReduxForm(
       <UnntakProsess

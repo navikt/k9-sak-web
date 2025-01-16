@@ -3,13 +3,13 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {
   AksjonspunktBox,
-  EditedIcon,
   FlexColumn,
   FlexContainer,
   FlexRow,
   Image,
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
+import { EditedIcon } from '@k9-sak-web/gui/shared/EditedIcon.js';
 import OverstyrBekreftKnappPanel from '@k9-sak-web/gui/shared/overstyrBekreftKnappPanel/OverstyrBekreftKnappPanel.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { VilkarResultPickerPeriodisertRHF } from '@k9-sak-web/prosess-felles';

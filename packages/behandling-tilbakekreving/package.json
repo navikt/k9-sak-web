@@ -16,9 +16,9 @@
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-kodeverk": "^2.5.9",
-    "@navikt/ft-prosess-tilbakekreving-foreldelse": "3.5.9",
-    "react": "18.3.1",
-    "react-intl": "7.0.1"
+    "@navikt/ft-kodeverk": "^2.5.14-react19beta.0",
+    "@navikt/ft-prosess-tilbakekreving-foreldelse": "^4.0.3-react19beta.0",
+    "react": "19.0.0",
+    "react-intl": "7.1.0"
   }
 }

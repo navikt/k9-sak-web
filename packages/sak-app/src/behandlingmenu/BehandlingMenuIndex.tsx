@@ -15,6 +15,7 @@ import { MenySakIndex as MenySakIndexV2 } from '@k9-sak-web/gui/sak/meny/MenySak
 import MenyMarkerBehandlingV2 from '@k9-sak-web/gui/sak/meny/marker-behandling/MenyMarkerBehandling.js';
 import MenySettPaVentIndexV2 from '@k9-sak-web/gui/sak/meny/sett-paa-vent/MenySettPaVentIndex.js';
 import MenyTaAvVentIndexV2 from '@k9-sak-web/gui/sak/meny/ta-av-vent/MenyTaAvVentIndex.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import MenyMarkerBehandling, {
   getMenytekst as getMenytekstMarkerBehandling,
 } from '@k9-sak-web/sak-meny-marker-behandling';
@@ -23,14 +24,13 @@ import {
   BehandlingAppKontekst,
   Fagsak,
   FagsakPerson,
-  FeatureToggles,
   KodeverkMedNavn,
   MerknadFraLos,
   NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
 import moment from 'moment';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import MenySakIndex from '../../../sak-meny';
 import ApplicationContextPath from '../app/ApplicationContextPath';
@@ -112,7 +112,7 @@ export const BehandlingMenuIndex = ({
   const navigate = useNavigate();
   const location = useLocation();
 
-  const ref = useRef<number>(0);
+  const ref = useRef<number>(undefined);
   useEffect(() => {
     // Når antallet har endret seg er det laget en ny behandling og denne må da velges
     if (ref.current > 0) {
@@ -171,18 +171,8 @@ export const BehandlingMenuIndex = ({
 
   const merknaderFraLos = restApiHooks.useGlobalStateRestApiData<MerknadFraLos>(K9sakApiKeys.LOS_HENTE_MERKNAD);
 
-  // FIX remove this when unntaksløype er lansert
-  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
-    K9sakApiKeys.FEATURE_TOGGLE,
-  );
-  const featureToggles = useMemo<FeatureToggles>(
-    () =>
-      featureTogglesData.reduce((acc, curr) => {
-        acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
-        return acc;
-      }, {}),
-    [featureTogglesData],
-  );
+  const featureToggles = useContext(FeatureTogglesContext);
+
   if (featureToggles?.UNNTAKSBEHANDLING && !BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.includes(BehandlingType.UNNTAK)) {
     BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES.push(BehandlingType.UNNTAK);
   }

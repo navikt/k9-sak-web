@@ -1,8 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import { AbstractRequestApi } from '@k9-sak-web/rest-api';
 import { render } from '@testing-library/react';
-import React, { useEffect } from 'react';
-import { act } from 'react-dom/test-utils';
+import React, { useEffect, act } from 'react';
 import { RestApiErrorProvider } from '../error/RestApiErrorContext';
 import { RestApiProvider } from './RestApiContext';
 import getUseGlobalStateRestApi from './useGlobalStateRestApi';

@@ -5,4 +5,5 @@ export default interface GraderingMotTilsyn {
   andreSøkeresTilsyn: number;
   tilgjengeligForSøker: number;
   overseEtablertTilsynÅrsak?: OverseEtablertTilsynÅrsak;
+  andreSøkeresTilsynReberegnet?: boolean;
 }
