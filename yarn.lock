@@ -4669,7 +4669,6 @@ __metadata:
     "@k9-sak-web/sak-meldinger": 1.0.0
     "@k9-sak-web/sak-meny-marker-behandling": 1.0.0
     "@k9-sak-web/sak-notat": 1.0.0
-    "@k9-sak-web/sak-soknadsperiodestripe": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ds-react": 7.6.0
     "@navikt/ft-fakta-beregning": ^8.0.3-react19beta.0
@@ -4766,19 +4765,6 @@ __metadata:
     date-fns: 4.1.0
     react: 19.0.0
     react-hook-form: 7.53.2
-    react-intl: 7.1.0
-  languageName: unknown
-  linkType: soft
-
-"@k9-sak-web/sak-soknadsperiodestripe@1.0.0, @k9-sak-web/sak-soknadsperiodestripe@workspace:packages/sak-soknadsperiodestripe":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/sak-soknadsperiodestripe@workspace:packages/sak-soknadsperiodestripe"
-  dependencies:
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-    react: 19.0.0
     react-intl: 7.1.0
   languageName: unknown
   linkType: soft
