@@ -1,7 +1,6 @@
 .relatertFagsak {
   align-items: center;
   display: flex;
-  height: 56px;
   z-index: 2;
 }
 
@@ -9,23 +8,23 @@
   padding: 0 0 0 1rem;
 }
 
-.relatertFagsak__nameGenderContainer {
+.relatertFagsakNameGenderContainer {
   align-items: center;
   display: flex;
   padding: 0 0.75rem;
 }
 
-.relatertFagsak__icon {
+.relatertFagsakIcon {
   height: 2.125rem;
   margin-right: 0.5rem;
   width: 2.125rem;
 }
 
-.relatertFagsak__description {
+.relatertFagsakDescription {
   margin: 0 0.125rem 0 0;
 }
 
-.relatertFagsak__selector {
+.relatertFagsakSelector {
   align-items: center;
   background: transparent;
   border: none;
@@ -40,7 +39,7 @@
 }
 
 @supports (-webkit-line-clamp: 2) {
-  .relatertFagsak__selector {
+  .relatertFagsakSelector {
     -webkit-box-orient: vertical;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -50,32 +49,32 @@
   }
 }
 
-.relatertFagsak__selector:hover {
+.relatertFagsakSelector:hover {
   text-decoration: none;
 }
 
-.relatertFagsak__selector--pushLeft {
+.relatertFagsakSelectorPushLeft {
   margin-left: 0.75rem;
 }
 
-.relatertFagsak__name:global(.navds-body-short) {
+.relatertFagsakName:global(.navds-body-short) {
   color: var(--a-blue-500);
   font-weight: 400;
   line-height: 1.25rem;
   padding: 0 1.5px;
 }
 
-.relatertFagsak__centeredFlex {
+.relatertFagsakCenteredFlex {
   align-items: center;
   display: flex;
   padding: 0 0.625rem 0 0.75rem;
 }
 
-.relatertFagsak__søkerSelect {
+.relatertFagsakSøkerSelect {
   margin-left: 0.375rem;
 }
 
-.relatertFagsak__søkerSelect :global .skjemaelement__label {
+.relatertFagsakSøkerSelect :global .skjemaelement__label {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
   height: 1px;
@@ -85,10 +84,10 @@
   width: 1px;
 }
 
-.relatertFagsak__marginLeft {
+.relatertFagsakMarginLeft {
   margin-left: 0.75em;
 }
 
-.relatertFagsak__lock {
+.relatertFagsakLock {
   margin-left: 0.75em;
 }
