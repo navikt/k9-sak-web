@@ -1,10 +1,10 @@
-import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 import { FormState } from '@fpsak-frontend/form/index';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
-import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
+import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 import { VilkarMidlertidigAleneProps } from '../../../../../types/utvidetRettMikrofrontend/VilkarMidlertidigAleneProps';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
+import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 
 interface OwnProps {
   behandlingsID: string;
@@ -89,13 +89,13 @@ const MidlertidigAleneObjektTilMikrofrontend = ({
         soknadsdato: soknad.soknadsdato,
       },
       vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
-      informasjonOmVilkar: generereInfoForVurdertVilkar(
+      informasjonOmVilkar: generereInfoForVurdertVilkar({
         skalVilkarsUtfallVises,
-        vilkar,
-        aksjonspunkt.begrunnelse,
-        vilkar?.perioder[0].begrunnelse,
-        'Utvidet Rett',
-      ),
+        vilkår: vilkar,
+        begrunnelseFraAksjonspunkt: aksjonspunkt.begrunnelse,
+        begrunnelseFraVilkår: vilkar?.perioder[0].begrunnelse,
+        navnPåAksjonspunkt: 'Utvidet Rett',
+      }),
       informasjonTilLesemodus: formatereLesemodusObjektForMidlertidigAlene(vilkar, aksjonspunkt, status),
       losAksjonspunkt: ({ begrunnelse, erSokerenMidlertidigAleneOmOmsorgen, fra, til, avslagsårsakKode }) => {
         submitCallback([

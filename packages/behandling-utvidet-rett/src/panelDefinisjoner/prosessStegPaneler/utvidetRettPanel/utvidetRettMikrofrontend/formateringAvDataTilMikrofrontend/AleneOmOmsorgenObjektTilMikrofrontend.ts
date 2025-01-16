@@ -1,17 +1,17 @@
-import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import { FormState } from '@fpsak-frontend/form/index';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
+import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
+import AvslagskoderAleneOmOmsorgen from '../../../../../types/utvidetRettMikrofrontend/AvslagskoderAleneOmOmsorgen';
 import {
   AleneOmOmsorgenAksjonspunktObjekt,
   AleneOmOmsorgenLosAksjonspunktK9Format,
   AleneOmOmsorgenProps,
 } from '../../../../../types/utvidetRettMikrofrontend/VilkarAleneOmOmsorgenProps';
-import AvslagskoderAleneOmOmsorgen from '../../../../../types/utvidetRettMikrofrontend/AvslagskoderAleneOmOmsorgen';
+import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 
 interface OwnProps {
   behandling: Behandling;
@@ -103,13 +103,13 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
         fraDatoFraVilkar: vilkar?.perioder[0]?.periode?.fom,
         vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
         erBehandlingstypeRevurdering: erBehandlingRevurdering,
-        informasjonOmVilkar: generereInfoForVurdertVilkar(
+        informasjonOmVilkar: generereInfoForVurdertVilkar({
           skalVilkarsUtfallVises,
-          vilkar,
-          aksjonspunkt.begrunnelse,
-          vilkar?.perioder[0].begrunnelse,
-          'Utvidet Rett',
-        ),
+          vilkår: vilkar,
+          begrunnelseFraAksjonspunkt: aksjonspunkt.begrunnelse,
+          begrunnelseFraVilkår: vilkar?.perioder[0].begrunnelse,
+          navnPåAksjonspunkt: 'Utvidet Rett',
+        }),
         informasjonTilLesemodus: formatereLesemodusObjekt(vilkar, aksjonspunkt, status),
         losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, avslagsårsakKode, fraDato, tilDato }) => {
           submitCallback([
@@ -137,13 +137,13 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
         fraDatoFraVilkar: vilkar?.perioder[0]?.periode?.fom,
         vedtakFattetVilkarOppfylt: true,
         erBehandlingstypeRevurdering: erBehandlingRevurdering,
-        informasjonOmVilkar: generereInfoForVurdertVilkar(
-          true,
-          vilkar,
-          '',
-          vilkar?.perioder[0].begrunnelse,
-          'Utvidet Rett',
-        ),
+        informasjonOmVilkar: generereInfoForVurdertVilkar({
+          skalVilkarsUtfallVises: true,
+          vilkår: vilkar,
+          begrunnelseFraAksjonspunkt: '',
+          begrunnelseFraVilkår: vilkar?.perioder[0].begrunnelse,
+          navnPåAksjonspunkt: 'Utvidet Rett',
+        }),
         formState: FormState,
       } as AleneOmOmsorgenProps,
     };
