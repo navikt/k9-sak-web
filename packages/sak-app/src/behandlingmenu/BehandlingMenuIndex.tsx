@@ -12,6 +12,7 @@ import MenyVergeIndex, { getMenytekst as getVergeMenytekst } from '@fpsak-fronte
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import MenyData from '@k9-sak-web/gui/sak/meny/MenyData.js';
 import { MenySakIndex as MenySakIndexV2 } from '@k9-sak-web/gui/sak/meny/MenySakIndex.js';
+import MenyHenleggIndexV2 from '@k9-sak-web/gui/sak/meny/henlegg-behandling/MenyHenleggIndex.js';
 import MenyMarkerBehandlingV2 from '@k9-sak-web/gui/sak/meny/marker-behandling/MenyMarkerBehandling.js';
 import MenySettPaVentIndexV2 from '@k9-sak-web/gui/sak/meny/sett-paa-vent/MenySettPaVentIndex.js';
 import MenyTaAvVentIndexV2 from '@k9-sak-web/gui/sak/meny/ta-av-vent/MenyTaAvVentIndex.js';
@@ -262,17 +263,16 @@ export const BehandlingMenuIndex = ({
             />
           )),
           new MenyData(behandlingRettigheter?.behandlingKanHenlegges, getHenleggMenytekst()).medModal(lukkModal => (
-            <MenyHenleggIndex
+            <MenyHenleggIndexV2
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
               forhandsvisHenleggBehandling={previewHenleggBehandling}
               henleggBehandling={shelveBehandling}
-              ytelseType={fagsak.sakstype}
-              behandlingType={behandling?.type}
-              behandlingUuid={behandling?.uuid}
-              behandlingResultatTyper={menyKodeverk.getKodeverkForValgtBehandling(
-                kodeverkTyper.BEHANDLING_RESULTAT_TYPE,
-              )}
+              ytelseType={fagsak.sakstype.kode}
+              behandlingType={behandling?.type.kode}
+              behandlingResultatTyper={menyKodeverk
+                .getKodeverkForValgtBehandling(kodeverkTyper.BEHANDLING_RESULTAT_TYPE)
+                .map(kodeverk => kodeverk.kode)}
               lukkModal={lukkModal}
               gaaTilSokeside={gaaTilSokeside}
               personopplysninger={personopplysninger}

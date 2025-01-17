@@ -1,17 +1,18 @@
-import type { ArbeidsgiverOversiktDto, PersonopplysningDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/generated';
 import { SelectField } from '@navikt/ft-form-hooks';
 import { required } from '@navikt/ft-form-validators';
 import type { Klagepart } from '../types/Klagepart';
+import type { Personopplysninger } from '../types/Personopplysninger';
 
 interface OwnProps {
   brevmottakere: Klagepart[] | undefined;
-  personopplysninger?: PersonopplysningDto;
+  personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysninger?: ArbeidsgiverOversiktDto['arbeidsgivere'];
 }
 
 function lagVisningsnavnForMottakere(
   partId: string,
-  personopplysninger?: PersonopplysningDto,
+  personopplysninger?: Personopplysninger,
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOversiktDto['arbeidsgivere'],
 ): string {
   if (

@@ -4,15 +4,15 @@ import {
   behandlingResultatType as behandlingResultatTypeK9Sak,
   sakstype as fagsakYtelseType,
   type ArbeidsgiverOversiktDto,
-  type PersonopplysningDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType as BehandlingTypeK9SAK } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { Bleed, Button, Detail, Fieldset, HGrid, Modal, VStack } from '@navikt/ds-react';
 import { Form, SelectField, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, required } from '@navikt/ft-form-validators';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import type { Klagepart } from '../types/Klagepart';
+import type { Personopplysninger } from '../types/Personopplysninger';
 import Brevmottakere from './Brevmottakere';
 import dokumentMalType from './dokumentMalType';
 import styles from './henleggBehandlingModal.module.css';
@@ -31,7 +31,7 @@ const previewHenleggBehandlingDoc =
     behandlingType?: string,
     valgtMottaker?: Klagepart,
   ) =>
-  (e: React.MouseEvent | React.KeyboardEvent): void => {
+  (): void => {
     const data = erTilbakekrevingType(behandlingType)
       ? {
           ytelseType,
@@ -46,24 +46,11 @@ const previewHenleggBehandlingDoc =
           overstyrtMottaker: valgtMottaker?.identifikasjon,
         };
     previewHenleggBehandling(true, data);
-    e.preventDefault();
   };
 
 const showHenleggelseFritekst = (behandlingTypeKode: string, årsakKode?: string): boolean =>
   BehandlingTypeK9Klage.REVURDERING_TILBAKEKREVING === behandlingTypeKode &&
   'HENLAGT_FEILOPPRETTET_MED_BREV' === årsakKode; // hvilken backend kommer denne fra?
-
-const disableHovedKnapp = (
-  behandlingTypeKode: string,
-  årsakKode?: string,
-  begrunnelse?: string,
-  fritekst?: string,
-): boolean => {
-  if (showHenleggelseFritekst(behandlingTypeKode, årsakKode)) {
-    return !(årsakKode && begrunnelse && fritekst);
-  }
-  return !(årsakKode && begrunnelse);
-};
 
 type Årsaker =
   | 'HENLAGT_SØKNAD_TRUKKET'
@@ -151,7 +138,7 @@ interface HenleggBehandlingModalProps {
   behandlingResultatTyper: string[];
   behandlingType: string;
   brevmottakere?: Klagepart[];
-  personopplysninger?: PersonopplysningDto;
+  personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOversiktDto['arbeidsgivere'];
   handleSubmit: (formValues: any) => void;
 }
@@ -189,12 +176,7 @@ export const HenleggBehandlingModal = ({
       valgtMottaker: '',
     },
   });
-  const [årsakKode, begrunnelse, fritekst, valgtMottaker] = formMethods.watch([
-    'årsakKode',
-    'begrunnelse',
-    'fritekst',
-    'valgtMottaker',
-  ]);
+  const [årsakKode, fritekst, valgtMottaker] = formMethods.watch(['årsakKode', 'fritekst', 'valgtMottaker']);
   const showLink = getShowLink(årsakKode, fritekst, behandlingType);
 
   const henleggArsaker = useMemo(
@@ -266,12 +248,7 @@ export const HenleggBehandlingModal = ({
                 )}
                 <HGrid gap="1" columns={{ xs: '7fr 4fr 1fr' }}>
                   <div>
-                    <Button
-                      variant="primary"
-                      size="small"
-                      className={styles.button}
-                      disabled={disableHovedKnapp(behandlingType, årsakKode, begrunnelse, fritekst)}
-                    >
+                    <Button variant="primary" size="small" className={styles.button} type="submit">
                       Henlegg behandling
                     </Button>
                     <Button variant="secondary" type="button" size="small" onClick={cancelEvent}>

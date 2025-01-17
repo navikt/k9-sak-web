@@ -1,12 +1,10 @@
-import { useCallback, useState } from 'react';
-
-import type { ArbeidsgiverOversiktDto, PersonopplysningDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { ArbeidsgiverOversiktDto } from '@k9-sak-web/backend/k9sak/generated';
 import { useQuery } from '@tanstack/react-query';
+import { useCallback, useState } from 'react';
 import HenlagtBehandlingModal from './components/HenlagtBehandlingModal';
 import HenleggBehandlingModal, { type HenleggBehandlingFormvalues } from './components/HenleggBehandlingModal';
 import type { Klagepart } from './types/Klagepart';
-
-export const getMenytekst = (): string => 'Henlegg behandlingen og avslutt';
+import type { Personopplysninger } from './types/Personopplysninger';
 
 interface OwnProps {
   behandlingId: number;
@@ -23,12 +21,12 @@ interface OwnProps {
   behandlingResultatTyper: string[];
   gaaTilSokeside: () => void;
   lukkModal: () => void;
-  personopplysninger?: PersonopplysningDto;
+  personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOversiktDto['arbeidsgivere'];
   hentMottakere: () => Promise<Klagepart[]>;
 }
 
-const MenyHenleggIndex = ({
+const MenyHenleggIndexV2 = ({
   behandlingId,
   behandlingVersjon,
   henleggBehandling,
@@ -90,4 +88,4 @@ const MenyHenleggIndex = ({
   );
 };
 
-export default MenyHenleggIndex;
+export default MenyHenleggIndexV2;
