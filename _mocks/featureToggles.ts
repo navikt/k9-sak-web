@@ -22,10 +22,6 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_UNNTAKSBEHANDLING,
   },
   {
-    key: 'SOKNADPERIODESTRIPE',
-    value: process.env.VITE_SOKNADPERIODESTRIPE,
-  },
-  {
     key: 'TYPE_MEDISINSKE_OPPLYSNINGER_BREV',
     value: process.env.VITE_TYPE_MEDISINSKE_OPPLYSNINGER_BREV,
   },
