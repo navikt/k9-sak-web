@@ -5,7 +5,6 @@ import { goToLos, goToSearch } from '@k9-sak-web/sak-app/src/app/paths';
 import { Alert, BodyShort, Button, ErrorMessage, Heading, Label, Modal, VStack } from '@navikt/ds-react';
 import { Form, Formik, type FormikProps } from 'formik';
 import React, { useContext, useRef, useState } from 'react';
-import { useIntl } from 'react-intl';
 import * as Yup from 'yup';
 import Merknadkode from '../Merknadkode';
 import type { MerknadDto } from '../types/MerknadDto';
@@ -36,7 +35,6 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   merknaderFraLos,
   erVeileder,
 }) => {
-  const intl = useIntl();
   const featureToggles = useContext(FeatureTogglesContext);
   const [showIngenEndringerError, setShowIngenEndringerError] = useState(false);
   if (!brukHastekøMarkering && !brukVanskeligKøMarkering) {
@@ -168,7 +166,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
                   <TextAreaFormik
                     textareaClass={styles.textArea}
                     name="begrunnelse"
-                    label={intl.formatMessage({ id: 'MenyMarkerBehandling.Kommentar' })}
+                    label="Kommentar"
                     validate={[]}
                     maxLength={100000}
                     readOnly={!featureToggles?.['LOS_MARKER_BEHANDLING_SUBMIT']}
@@ -176,9 +174,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
                 </div>
               )}
               {showIngenEndringerError && (
-                <ErrorMessage className={styles.errorMessage}>
-                  {intl.formatMessage({ id: 'ValidationMessage.ManglendeEndringerError' })}
-                </ErrorMessage>
+                <ErrorMessage className={styles.errorMessage}>Du må gjøre endringer før du kan lagre</ErrorMessage>
               )}
               <div className={styles.buttonContainer}>
                 <Button

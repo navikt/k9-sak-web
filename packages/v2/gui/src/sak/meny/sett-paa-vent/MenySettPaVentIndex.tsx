@@ -1,6 +1,6 @@
 import { goToLos } from '@k9-sak-web/lib/paths/paths.js';
 import { useCallback } from 'react';
-import SettPaVentModal from '../../../shared/settPaVentModal/SettPaVentModal';
+import SettPaVentModal, { type FormState } from './settPaVentModal/SettPaVentModal';
 
 interface OwnProps {
   behandlingId: number;
@@ -23,7 +23,7 @@ export const MenySettPaVentIndexV2 = ({
   erTilbakekreving,
 }: OwnProps) => {
   const submit = useCallback(
-    formValues => {
+    (formValues: FormState) => {
       const values = {
         behandlingVersjon,
         behandlingId,

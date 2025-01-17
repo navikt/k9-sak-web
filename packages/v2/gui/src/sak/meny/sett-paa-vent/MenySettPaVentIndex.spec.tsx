@@ -2,11 +2,14 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { add, format } from 'date-fns';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 import { combineReducers, createStore } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import MenySettPaVentIndexV2 from './MenySettPaVentIndex';
 
 vi.mock('react-router-dom', async () => {
@@ -19,15 +22,6 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-const ventearsaker = [
-  {
-    kode: venteArsakType.UTV_FRIST,
-    kodeverk: 'VENT_ARSAK_TYPE',
-    navn: 'Utvid frist',
-    kanVelges: 'true',
-  },
-];
-
 const testDato = add(new Date(), { months: 2, days: 1 });
 
 describe('<MenySettPaVentIndex>', () => {
@@ -38,19 +32,25 @@ describe('<MenySettPaVentIndex>', () => {
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
         <MemoryRouter>
-          <MenySettPaVentIndexV2
-            behandlingId={3}
-            behandlingVersjon={1}
-            settBehandlingPaVent={settBehandlingPaVent}
-            ventearsaker={ventearsaker}
-            lukkModal={lukkModalCallback}
-            erTilbakekreving={false}
-          />
+          <KodeverkProvider
+            behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+            kodeverk={alleKodeverkV2}
+            klageKodeverk={{}}
+            tilbakeKodeverk={{}}
+          >
+            <MenySettPaVentIndexV2
+              behandlingId={3}
+              behandlingVersjon={1}
+              settBehandlingPaVent={settBehandlingPaVent}
+              lukkModal={lukkModalCallback}
+              erTilbakekreving={false}
+            />
+          </KodeverkProvider>
         </MemoryRouter>
       </Provider>,
     );
 
-    expect(await screen.getByTestId('ventModalForm')).toBeInTheDocument();
+    expect(await screen.getByTestId('SettPaVentModal')).toBeInTheDocument();
     expect(screen.getAllByText('Behandlingen settes på vent med frist')).toHaveLength(2);
 
     /**

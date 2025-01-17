@@ -80,12 +80,6 @@ const automatiskeVentearsakerForTilbakekreving = [
 const inkluderVentearsak = (ventearsak: KodeverkObject, valgtVentearsak?: string): boolean =>
   automatiskeVentearsakerForTilbakekreving.includes(ventearsak.kode) ? ventearsak.kode === valgtVentearsak : true;
 
-type FormValues = {
-  frist?: string;
-  ventearsak?: string;
-  ventearsakVariant?: string;
-};
-
 interface PureOwnProps {
   submitCallback: (formData: any) => void;
   cancelEvent: () => void;
@@ -98,7 +92,7 @@ interface PureOwnProps {
   ventearsakVariant?: string;
 }
 
-interface FormState {
+export interface FormState {
   ventearsak: string;
   frist: string;
   ventearsakVariant: string;
@@ -325,10 +319,10 @@ const buildInitialValues = (
   frist: string | undefined,
   hasManualPaVent: boolean,
   ventearsakVariant: string | undefined,
-): FormValues => ({
-  ventearsak: ventearsak,
-  frist: frist || hasManualPaVent === false ? frist : initFrist(),
-  ventearsakVariant: ventearsakVariant,
+): FormState => ({
+  ventearsak: ventearsak ?? '',
+  frist: frist ? frist : hasManualPaVent === false ? '' : initFrist(),
+  ventearsakVariant: ventearsakVariant ?? '',
 });
 
 export default SettPaVentModal;
