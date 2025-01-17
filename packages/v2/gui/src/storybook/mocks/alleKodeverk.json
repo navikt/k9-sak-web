@@ -254,6 +254,11 @@
       "kode": "NY_GRUNNLAG_MOTTATT",
       "navn": "NY_GRUNNLAG_MOTTATT",
       "kodeverk": "HISTORIKKINNSLAG_TYPE"
+    },
+    {
+      "kode": "FASTSATT_UTTAKSGRAD",
+      "kodeverk": "HISTORIKKINNSLAG_TYPE",
+      "navn": "Manuelt fastsatt uttaksgrad"
     }
   ],
   "UttakUtsettelseType": [
