@@ -2,7 +2,6 @@ import { BodyShort, Button, HStack, Modal } from '@navikt/ds-react';
 import styles from './okAvbrytModal.module.css';
 
 interface OwnProps {
-  textCode?: string;
   headerText?: string;
   okButtonText?: string;
   showModal: boolean;

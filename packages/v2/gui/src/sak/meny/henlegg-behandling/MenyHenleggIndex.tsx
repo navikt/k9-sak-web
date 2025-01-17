@@ -57,8 +57,8 @@ const MenyHenleggIndexV2 = ({
         behandlingId,
         årsakKode: formValues.årsakKode,
         begrunnelse: formValues.begrunnelse,
-        fritekst: formValues.fritekst,
-        valgtMottaker: valgtMottakerObjekt,
+        fritekst: formValues.fritekst || null,
+        valgtMottaker: valgtMottakerObjekt ?? null,
       };
       henleggBehandling(henleggBehandlingDto).then(() => {
         setHenlagt(true);

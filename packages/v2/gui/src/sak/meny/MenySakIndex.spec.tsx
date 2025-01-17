@@ -13,11 +13,11 @@ describe('<MenySakIndex>', () => {
       />,
     );
 
-    expect(screen.queryByRole('button', { name: 'Lag ny behandling' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Lag ny behandling' })).not.toBeInTheDocument();
     await act(async () => {
       await userEvent.click(screen.getByRole('button', { name: 'Behandlingsmeny' }));
     });
-    expect(screen.getByRole('button', { name: 'Lag ny behandling' })).toBeInTheDocument();
+    expect(screen.getByRole('menuitem', { name: 'Lag ny behandling' })).toBeInTheDocument();
   });
 
   it('skal åpne modal ved trykk på menyinnslag og så lukke den ved å bruke funksjon for lukking', async () => {
@@ -29,14 +29,14 @@ describe('<MenySakIndex>', () => {
       />,
     );
 
-    expect(screen.queryByRole('button', { name: 'Lag ny behandling' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Lag ny behandling' })).not.toBeInTheDocument();
     await act(async () => {
       await userEvent.click(screen.getByRole('button', { name: 'Behandlingsmeny' }));
     });
-    expect(screen.getByRole('button', { name: 'Lag ny behandling' })).toBeInTheDocument();
+    expect(screen.getByRole('menuitem', { name: 'Lag ny behandling' })).toBeInTheDocument();
     await act(async () => {
       await userEvent.click(screen.getByRole('button', { name: 'Behandlingsmeny' }));
     });
-    expect(screen.queryByRole('button', { name: 'Lag ny behandling' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Lag ny behandling' })).not.toBeInTheDocument();
   });
 });

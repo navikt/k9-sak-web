@@ -1,9 +1,18 @@
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import MenyHenleggIndexV2 from './MenyHenleggIndex';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 describe('<MenyHenleggIndex>', () => {
   it('skal vise modal og så henlegge behandling', async () => {
@@ -11,21 +20,23 @@ describe('<MenyHenleggIndex>', () => {
     const lukkModalCallback = vi.fn();
 
     render(
-      <MenyHenleggIndexV2
-        behandlingId={3}
-        behandlingVersjon={1}
-        henleggBehandling={henleggBehandlingCallback}
-        forhandsvisHenleggBehandling={vi.fn()}
-        ytelseType={fagsakYtelseType.PLEIEPENGER}
-        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
-        behandlingResultatTyper={[
-          behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
-          behandlingResultatType.HENLAGT_FEILOPPRETTET,
-        ]}
-        gaaTilSokeside={vi.fn()}
-        lukkModal={lukkModalCallback}
-        hentMottakere={vi.fn()}
-      />,
+      <QueryClientProvider client={queryClient}>
+        <MenyHenleggIndexV2
+          behandlingId={3}
+          behandlingVersjon={1}
+          henleggBehandling={henleggBehandlingCallback}
+          forhandsvisHenleggBehandling={vi.fn()}
+          ytelseType={fagsakYtelseType.PLEIEPENGER}
+          behandlingType={behandlingType.FORSTEGANGSSOKNAD}
+          behandlingResultatTyper={[
+            behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
+            behandlingResultatType.HENLAGT_FEILOPPRETTET,
+          ]}
+          gaaTilSokeside={vi.fn()}
+          lukkModal={lukkModalCallback}
+          hentMottakere={vi.fn()}
+        />
+      </QueryClientProvider>,
     );
 
     expect(screen.getByRole('dialog', { name: 'Behandlingen henlegges' })).toBeInTheDocument();
@@ -43,6 +54,7 @@ describe('<MenyHenleggIndex>', () => {
       behandlingVersjon: 1,
       årsakKode: 'HENLAGT_SØKNAD_TRUKKET',
       begrunnelse: 'Dette er en begrunnelse',
+      fritekst: null,
       valgtMottaker: null,
     });
   });
