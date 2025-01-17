@@ -78,6 +78,7 @@ describe('<MenySettPaVentIndex>', () => {
       behandlingId: 3,
       frist: format(testDato, 'yyyy-MM-dd'),
       ventearsak: venteArsakType.UTV_FRIST,
+      ventearsakVariant: '',
     });
   });
 });

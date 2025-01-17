@@ -8,7 +8,7 @@ describe('<SettPaVentModal>', () => {
     render(
       <SettPaVentModal
         cancelEvent={cancelEventCallback}
-        frist="frist"
+        frist="2099-10-10"
         submitCallback={vi.fn()}
         ventearsak="ventearsak"
         hasManualPaVent
@@ -44,7 +44,7 @@ describe('<SettPaVentModal>', () => {
       <SettPaVentModal
         showModal
         cancelEvent={vi.fn()}
-        frist="20-10-10"
+        frist="1999-10-10"
         ventearsak="ventearsak"
         submitCallback={vi.fn()}
         hasManualPaVent
@@ -146,6 +146,6 @@ describe('<SettPaVentModal>', () => {
       />,
     );
     expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
-    expect(screen.getByText('Behandlingen settes på vent med frist')).toBeInTheDocument();
+    expect(screen.getAllByText('Behandlingen er satt på vent med frist:')).toHaveLength(2);
   });
 });
