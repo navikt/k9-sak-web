@@ -4,7 +4,7 @@ import MenyData from './MenyData';
 import MenySakIndex from './MenySakIndex';
 
 export default {
-  title: 'gui/sak/meny',
+  title: 'gui/sak/meny/ta-av-vent',
   component: MenySakIndex,
 };
 

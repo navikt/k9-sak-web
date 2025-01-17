@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions';
 import MenyMarkerBehandlingV2 from './MenyMarkerBehandling';
 
 export default {
-  title: 'sak/sak-meny-marker-behandling',
+  title: 'gui/sak/meny/marker-behandling',
   component: MenyMarkerBehandlingV2,
 };
 

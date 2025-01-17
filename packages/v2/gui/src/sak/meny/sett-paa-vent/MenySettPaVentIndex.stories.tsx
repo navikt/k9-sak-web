@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import MenySettPaVentIndexV2 from './MenySettPaVentIndex';
 
 export default {
-  title: 'sak/sak-meny-sett-pa-vent',
+  title: 'gui/sak/meny/sett-pa-vent',
   component: MenySettPaVentIndexV2,
 };
 

@@ -1,30 +1,16 @@
 import { useCallback, useState } from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
-
-import { safeJSONParse } from '@fpsak-frontend/utils';
-import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
+import type { ArbeidsgiverOversiktDto, PersonopplysningDto } from '@k9-sak-web/backend/k9sak/generated';
+import { useQuery } from '@tanstack/react-query';
 import HenlagtBehandlingModal from './components/HenlagtBehandlingModal';
-import HenleggBehandlingModal from './components/HenleggBehandlingModal';
+import HenleggBehandlingModal, { type HenleggBehandlingFormvalues } from './components/HenleggBehandlingModal';
+import type { Klagepart } from './types/Klagepart';
 
-import messages from '../i18n/nb_NO.json';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
-
-export const getMenytekst = (): string => intl.formatMessage({ id: 'MenyHenleggIndex.HenleggBehandling' });
+export const getMenytekst = (): string => 'Henlegg behandlingen og avslutt';
 
 interface OwnProps {
-  behandlingId?: number;
-  behandlingVersjon?: number;
+  behandlingId: number;
+  behandlingVersjon: number;
   henleggBehandling: (params: {
     behandlingVersjon: number;
     behandlingId: number;
@@ -32,15 +18,14 @@ interface OwnProps {
     begrunnelse: string;
   }) => Promise<any>;
   forhandsvisHenleggBehandling: (erHenleggelse: boolean, data: any) => void;
-  ytelseType: Kodeverk;
-  behandlingType: Kodeverk;
-  behandlingUuid: string;
-  behandlingResultatTyper: KodeverkMedNavn[];
+  ytelseType: string;
+  behandlingType: string;
+  behandlingResultatTyper: string[];
   gaaTilSokeside: () => void;
   lukkModal: () => void;
-  personopplysninger?: Personopplysninger;
-  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
-  hentMottakere: () => Promise<KlagePart[]>;
+  personopplysninger?: PersonopplysningDto;
+  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOversiktDto['arbeidsgivere'];
+  hentMottakere: () => Promise<Klagepart[]>;
 }
 
 const MenyHenleggIndex = ({
@@ -50,7 +35,6 @@ const MenyHenleggIndex = ({
   forhandsvisHenleggBehandling,
   ytelseType,
   behandlingType,
-  behandlingUuid,
   behandlingResultatTyper,
   gaaTilSokeside,
   lukkModal,
@@ -60,15 +44,23 @@ const MenyHenleggIndex = ({
 }: OwnProps) => {
   const [erHenlagt, setHenlagt] = useState(false);
 
+  const { data: brevmottakere } = useQuery<Klagepart[]>({
+    queryKey: ['brevmottakere', behandlingId],
+    queryFn: hentMottakere,
+  });
+
   const submit = useCallback(
-    formValues => {
+    (formValues: HenleggBehandlingFormvalues) => {
+      const valgtMottakerObjekt = brevmottakere?.find(
+        mottaker => mottaker.identifikasjon.id === formValues.valgtMottaker,
+      );
       const henleggBehandlingDto = {
         behandlingVersjon,
         behandlingId,
         årsakKode: formValues.årsakKode,
         begrunnelse: formValues.begrunnelse,
         fritekst: formValues.fritekst,
-        valgtMottaker: safeJSONParse(formValues.valgtMottaker),
+        valgtMottaker: valgtMottakerObjekt,
       };
       henleggBehandling(henleggBehandlingDto).then(() => {
         setHenlagt(true);
@@ -78,25 +70,23 @@ const MenyHenleggIndex = ({
   );
 
   return (
-    <RawIntlProvider value={intl}>
+    <>
       {!erHenlagt && (
         <HenleggBehandlingModal
-          // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
-          onSubmit={submit}
+          handleSubmit={submit}
           cancelEvent={lukkModal}
           previewHenleggBehandling={forhandsvisHenleggBehandling}
           behandlingId={behandlingId}
           ytelseType={ytelseType}
           behandlingType={behandlingType}
-          behandlingUuid={behandlingUuid}
           behandlingResultatTyper={behandlingResultatTyper}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-          hentMottakere={hentMottakere}
+          brevmottakere={brevmottakere}
         />
       )}
       {erHenlagt && <HenlagtBehandlingModal showModal closeEvent={gaaTilSokeside} />}
-    </RawIntlProvider>
+    </>
   );
 };
 

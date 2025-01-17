@@ -1,5 +1,4 @@
 import { action } from '@storybook/addon-actions';
-import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import OkAvbrytModal from './OkAvbrytModal';
 
@@ -16,7 +15,7 @@ const intl = createIntl(
 );
 
 export default {
-  title: 'sharedComponents/OkAvbrytModal',
+  title: 'gui/shared/OkAvbrytModal',
   component: OkAvbrytModal,
 };
 
