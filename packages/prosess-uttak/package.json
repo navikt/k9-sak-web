@@ -10,11 +10,11 @@
   "author": "NAV IT",
   "license": "MIT",
   "devDependencies": {
-    "vite": "^6.0.3",
+    "vite": "^6.0.7",
     "vite-plugin-node-polyfills": "^0.22.0"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.9.1",
+    "@hookform/resolvers": "^3.10.0",
     "@navikt/ds-css": "7.6.0",
     "@navikt/ds-react": "7.6.0",
     "@navikt/ft-form-hooks": "^6.0.3-react19beta.0",
