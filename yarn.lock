@@ -3247,7 +3247,7 @@ __metadata:
     classnames: 2.5.1
     css-tree: 3.1.0
     date-fns: 4.1.0
-    editorjs-html: 3.4.3
+    editorjs-html: 4.0.0
     formik: 2.4.6
     moment: 2.30.1
     prop-types: 15.8.1
@@ -9886,10 +9886,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"editorjs-html@npm:3.4.3":
-  version: 3.4.3
-  resolution: "editorjs-html@npm:3.4.3"
-  checksum: 117903e05d8c251fc072d3ebd707df951ec46802b652e3c140a6fa190e95666f1b725a5b815eb811ee4320cce93c50587ebd82a938bd0a19791cf8dbc44489d2
+"editorjs-html@npm:4.0.0":
+  version: 4.0.0
+  resolution: "editorjs-html@npm:4.0.0"
+  checksum: 2ba224ba63d5cd427796de630c8e75559a40a2e8d26201e3e59882a555fafa140b5c239275e88de83c2e70f6ed6f5f138d9a85208dbe68b586c1b89fb49cd96e
   languageName: node
   linkType: hard
 
