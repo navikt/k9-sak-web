@@ -81,10 +81,6 @@ spec:
       value: "true"
     - name: LOS_MARKER_BEHANDLING_SUBMIT
       value: "true"
-    - name: AKSJONSPUNKT_9015
-      value: "true"
-    - name: ALDERSVILKAR_KRONISK_SYK
-      value: "true"
     - name: FRITEKST_REDIGERING
       value: "true"
     - name: INKLUDER_KALENDER_PILS
