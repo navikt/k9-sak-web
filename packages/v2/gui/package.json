@@ -26,6 +26,6 @@
     "axios": "1.7.9",
     "object-hash": "^3.0.0",
     "react": "19.0.0",
-    "react-hook-form": "7.53.2"
+    "react-hook-form": "7.54.2"
   }
 }
