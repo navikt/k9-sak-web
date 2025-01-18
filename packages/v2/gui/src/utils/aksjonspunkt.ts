@@ -3,7 +3,7 @@ import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/Aksjonspu
 
 export const kanAksjonspunktRedigeres = (aksjonspunkt: AksjonspunktDto): boolean => {
   const { status, erAktivt, kanLoses } = aksjonspunkt;
-  return status === aksjonspunktStatus.UTFORT && erAktivt && kanLoses === true;
+  return status === aksjonspunktStatus.UTFORT && erAktivt === true && kanLoses === true;
 };
 
 export const erAksjonspunktReadOnly = (aksjonspunkt: AksjonspunktDto): boolean => {
