@@ -3319,7 +3319,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.64.1
+    "@tanstack/react-query": ^5.64.2
     react: 19.0.0
     react-intl: 7.1.0
   languageName: unknown
@@ -3551,7 +3551,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@tanstack/react-query": ^5.64.1
+    "@tanstack/react-query": ^5.64.2
     react: 19.0.0
     react-intl: 7.1.0
   languageName: unknown
@@ -4042,7 +4042,7 @@ __metadata:
   dependencies:
     "@navikt/k9-klage-typescript-client": 1.0.20241206133624
     "@navikt/k9-sak-typescript-client": 1.0.20250102132051
-    "@tanstack/eslint-plugin-query": ^5.62.16
+    "@tanstack/eslint-plugin-query": ^5.64.2
   languageName: unknown
   linkType: soft
 
@@ -4424,8 +4424,8 @@ __metadata:
     react-collapse: 5.1.1
     react-dom: 19.0.0
     react-hook-form: 7.53.2
-    vite: ^6.0.7
-    vite-plugin-node-polyfills: ^0.22.0
+    vite: ^6.0.9
+    vite-plugin-node-polyfills: ^0.23.0
   languageName: unknown
   linkType: soft
 
@@ -4446,8 +4446,8 @@ __metadata:
     react-collapse: 5.1.1
     react-dom: 19.0.0
     react-hook-form: 7.53.2
-    vite: ^6.0.7
-    vite-plugin-node-polyfills: ^0.22.0
+    vite: ^6.0.9
+    vite-plugin-node-polyfills: ^0.23.0
   languageName: unknown
   linkType: soft
 
@@ -4473,7 +4473,7 @@ __metadata:
     "@navikt/ds-react": 7.6.0
     "@navikt/ft-plattform-komponenter": ^7.0.3-react19beta.0
     "@popperjs/core": 2.11.8
-    "@tanstack/react-query": ^5.64.1
+    "@tanstack/react-query": ^5.64.2
     axios: 1.7.9
     classnames: 2.5.1
     cors: ^2.8.5
@@ -4484,8 +4484,8 @@ __metadata:
     react-dom: 19.0.0
     react-hook-form: 7.53.2
     react-outside-click-handler: 1.3.0
-    vite: ^6.0.7
-    vite-plugin-node-polyfills: ^0.22.0
+    vite: ^6.0.9
+    vite-plugin-node-polyfills: ^0.23.0
   languageName: unknown
   linkType: soft
 
@@ -4504,8 +4504,8 @@ __metadata:
     react-dom: 19.0.0
     react-hook-form: 7.53.2
     tailwindcss: ^3.4.17
-    vite: ^6.0.7
-    vite-plugin-node-polyfills: ^0.22.0
+    vite: ^6.0.9
+    vite-plugin-node-polyfills: ^0.23.0
   languageName: unknown
   linkType: soft
 
@@ -4528,8 +4528,8 @@ __metadata:
     react-dom: 19.0.0
     react-hook-form: 7.53.2
     react-intl: 7.1.0
-    vite: ^6.0.7
-    vite-plugin-node-polyfills: ^0.22.0
+    vite: ^6.0.9
+    vite-plugin-node-polyfills: ^0.23.0
   languageName: unknown
   linkType: soft
 
@@ -4585,7 +4585,7 @@ __metadata:
     "@navikt/ft-form-hooks": ^6.0.3-react19beta.0
     "@navikt/ft-form-validators": ^3.0.3-react19beta.0
     "@navikt/ft-utils": ^3.0.3-react19beta.0
-    "@tanstack/react-query": ^5.64.1
+    "@tanstack/react-query": ^5.64.2
     "@types/object-hash": ^3.0.6
     axios: 1.7.9
     object-hash: ^3.0.0
@@ -4682,8 +4682,8 @@ __metadata:
     react: 19.0.0
     react-dom: 19.0.0
     react-hook-form: 7.53.2
-    vite: ^6.0.7
-    vite-plugin-node-polyfills: ^0.22.0
+    vite: ^6.0.9
+    vite-plugin-node-polyfills: ^0.23.0
     vitest-axe: ^0.1.0
   languageName: unknown
   linkType: soft
@@ -4738,8 +4738,8 @@ __metadata:
     react-collapse: 5.1.1
     react-dom: 19.0.0
     react-hook-form: 7.53.2
-    vite: ^6.0.7
-    vite-plugin-node-polyfills: ^0.22.0
+    vite: ^6.0.9
+    vite-plugin-node-polyfills: ^0.23.0
     yup: 1.6.1
   languageName: unknown
   linkType: soft
@@ -4856,7 +4856,7 @@ __metadata:
     "@navikt/ft-ui-komponenter": ^3.0.3-react19beta.0
     "@sentry/browser": 8.50.0
     "@sentry/react": ^8.50.0
-    "@tanstack/react-query": ^5.64.1
+    "@tanstack/react-query": ^5.64.2
     axios: 1.7.9
     classnames: 2.5.1
     history: 5.3.0
@@ -4883,7 +4883,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@tanstack/react-query": ^5.64.1
+    "@tanstack/react-query": ^5.64.2
     classnames: 2.5.1
     history: 5.3.0
     moment: 2.30.1
@@ -4939,7 +4939,7 @@ __metadata:
     "@navikt/ds-react": 7.6.0
     "@navikt/ft-form-hooks": ^6.0.3-react19beta.0
     "@navikt/ft-form-validators": ^3.0.3-react19beta.0
-    "@tanstack/react-query": ^5.64.1
+    "@tanstack/react-query": ^5.64.2
     date-fns: 4.1.0
     react: 19.0.0
     react-hook-form: 7.53.2
@@ -5859,66 +5859,66 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/cli-darwin@npm:2.40.0":
-  version: 2.40.0
-  resolution: "@sentry/cli-darwin@npm:2.40.0"
+"@sentry/cli-darwin@npm:2.41.0":
+  version: 2.41.0
+  resolution: "@sentry/cli-darwin@npm:2.41.0"
   conditions: os=darwin
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-arm64@npm:2.40.0":
-  version: 2.40.0
-  resolution: "@sentry/cli-linux-arm64@npm:2.40.0"
+"@sentry/cli-linux-arm64@npm:2.41.0":
+  version: 2.41.0
+  resolution: "@sentry/cli-linux-arm64@npm:2.41.0"
   conditions: (os=linux | os=freebsd) & cpu=arm64
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-arm@npm:2.40.0":
-  version: 2.40.0
-  resolution: "@sentry/cli-linux-arm@npm:2.40.0"
+"@sentry/cli-linux-arm@npm:2.41.0":
+  version: 2.41.0
+  resolution: "@sentry/cli-linux-arm@npm:2.41.0"
   conditions: (os=linux | os=freebsd) & cpu=arm
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-i686@npm:2.40.0":
-  version: 2.40.0
-  resolution: "@sentry/cli-linux-i686@npm:2.40.0"
+"@sentry/cli-linux-i686@npm:2.41.0":
+  version: 2.41.0
+  resolution: "@sentry/cli-linux-i686@npm:2.41.0"
   conditions: (os=linux | os=freebsd) & (cpu=x86 | cpu=ia32)
   languageName: node
   linkType: hard
 
-"@sentry/cli-linux-x64@npm:2.40.0":
-  version: 2.40.0
-  resolution: "@sentry/cli-linux-x64@npm:2.40.0"
+"@sentry/cli-linux-x64@npm:2.41.0":
+  version: 2.41.0
+  resolution: "@sentry/cli-linux-x64@npm:2.41.0"
   conditions: (os=linux | os=freebsd) & cpu=x64
   languageName: node
   linkType: hard
 
-"@sentry/cli-win32-i686@npm:2.40.0":
-  version: 2.40.0
-  resolution: "@sentry/cli-win32-i686@npm:2.40.0"
+"@sentry/cli-win32-i686@npm:2.41.0":
+  version: 2.41.0
+  resolution: "@sentry/cli-win32-i686@npm:2.41.0"
   conditions: os=win32 & (cpu=x86 | cpu=ia32)
   languageName: node
   linkType: hard
 
-"@sentry/cli-win32-x64@npm:2.40.0":
-  version: 2.40.0
-  resolution: "@sentry/cli-win32-x64@npm:2.40.0"
+"@sentry/cli-win32-x64@npm:2.41.0":
+  version: 2.41.0
+  resolution: "@sentry/cli-win32-x64@npm:2.41.0"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@sentry/cli@npm:2.40.0":
-  version: 2.40.0
-  resolution: "@sentry/cli@npm:2.40.0"
+"@sentry/cli@npm:2.41.0":
+  version: 2.41.0
+  resolution: "@sentry/cli@npm:2.41.0"
   dependencies:
-    "@sentry/cli-darwin": 2.40.0
-    "@sentry/cli-linux-arm": 2.40.0
-    "@sentry/cli-linux-arm64": 2.40.0
-    "@sentry/cli-linux-i686": 2.40.0
-    "@sentry/cli-linux-x64": 2.40.0
-    "@sentry/cli-win32-i686": 2.40.0
-    "@sentry/cli-win32-x64": 2.40.0
+    "@sentry/cli-darwin": 2.41.0
+    "@sentry/cli-linux-arm": 2.41.0
+    "@sentry/cli-linux-arm64": 2.41.0
+    "@sentry/cli-linux-i686": 2.41.0
+    "@sentry/cli-linux-x64": 2.41.0
+    "@sentry/cli-win32-i686": 2.41.0
+    "@sentry/cli-win32-x64": 2.41.0
     https-proxy-agent: ^5.0.0
     node-fetch: ^2.6.7
     progress: ^2.0.3
@@ -5941,7 +5941,7 @@ __metadata:
       optional: true
   bin:
     sentry-cli: bin/sentry-cli
-  checksum: 2b59d2c3e405d62b63d62ec3833dedb6f0a22d68cffe8ad74ee35306f42171fc56c25d9daff87a459d79b17b86d94be34620185cfeb41eb4a4718f7eef4f811e
+  checksum: a847ce6c88ff1104fab3db0c959baaf95f5f76bfcde4b106bce872e14ef74f674cf05ad4fbef9b737726b61cfc2485fab05818f010fa0c0fd89ccc52a8473673
   languageName: node
   linkType: hard
 
@@ -6768,32 +6768,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/eslint-plugin-query@npm:^5.62.16":
-  version: 5.62.16
-  resolution: "@tanstack/eslint-plugin-query@npm:5.62.16"
+"@tanstack/eslint-plugin-query@npm:^5.64.2":
+  version: 5.64.2
+  resolution: "@tanstack/eslint-plugin-query@npm:5.64.2"
   dependencies:
     "@typescript-eslint/utils": ^8.18.1
   peerDependencies:
     eslint: ^8.57.0 || ^9.0.0
-  checksum: d71a17126fecc5f32aaa5760b05a5ccee5fd22a4edce0f1a7d8c5ab5c8240c02767d0e102af8d989dd7e662e9fec3b0b38f367472752e31e7d3ce74580a4c0e3
+  checksum: 5259840eaf4378b92e97c86b2beb62377d1340bbf74067acfd33bf1a9ca9117b72705c3b65562b08dd9c38d6ab318ea395e0124a858e7b1ee82522a245b44aa0
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.64.1":
-  version: 5.64.1
-  resolution: "@tanstack/query-core@npm:5.64.1"
-  checksum: cdead4a1589600c21a6a61d8cec8f54b2e806635d8c573972d4b2e448c66bc5c4b553eba366326d9346fe8e806f67f79e7973534904194b479a98dfa8231a453
+"@tanstack/query-core@npm:5.64.2":
+  version: 5.64.2
+  resolution: "@tanstack/query-core@npm:5.64.2"
+  checksum: 219a0cbcd6663bf2246a7c90cdb3c356271b5f88a19e8fe8ec3e97a5aaadce16b8829a39101b420ccbe3656f4064d607e31a373de6e3f83788544a89fb9ee1cd
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.64.1":
-  version: 5.64.1
-  resolution: "@tanstack/react-query@npm:5.64.1"
+"@tanstack/react-query@npm:^5.64.2":
+  version: 5.64.2
+  resolution: "@tanstack/react-query@npm:5.64.2"
   dependencies:
-    "@tanstack/query-core": 5.64.1
+    "@tanstack/query-core": 5.64.2
   peerDependencies:
     react: ^18 || ^19
-  checksum: 4272c7319c2805aadbe201ace10989c717828b1b7ed5d478edd28e28d0d3692afe0f712f5f0c8584c667c0d25fc8395d585d0056d315e57101acb7ab7062c862
+  checksum: e8e886220e9cef2514dc08af8c1bbf4def05e0607d01b3321a37d9f85e00ffe817d66e87b642e087bbab46bb0d31e036bb2c96cc0b5d2fd0fb898307985d5eec
   languageName: node
   linkType: hard
 
@@ -13690,7 +13690,7 @@ __metadata:
     "@playwright/test": ^1.49.1
     "@popperjs/core": 2.11.8
     "@sentry/browser": 8.50.0
-    "@sentry/cli": 2.40.0
+    "@sentry/cli": 2.41.0
     "@sentry/react": ^8.50.0
     "@storybook/addon-a11y": ^8.5.0
     "@storybook/addon-actions": ^8.5.0
@@ -13730,7 +13730,7 @@ __metadata:
     husky: 9.1.7
     i18n-iso-countries: 7.13.0
     jsdom: 25.0.1
-    lint-staged: 15.4.0
+    lint-staged: 15.4.1
     msw: 2.7.0
     msw-storybook-addon: ^2.0.4
     node-cache: 5.1.2
@@ -13748,7 +13748,7 @@ __metadata:
     typed-css-modules: ^0.9.1
     typescript: 5.7.3
     typescript-eslint: ^8.20.0
-    vite: ^6.0.7
+    vite: ^6.0.9
     vite-plugin-html: ^3.2.2
     vite-plugin-svgr: 4.3.0
     vitest: 2.1.8
@@ -13849,9 +13849,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:15.4.0":
-  version: 15.4.0
-  resolution: "lint-staged@npm:15.4.0"
+"lint-staged@npm:15.4.1":
+  version: 15.4.1
+  resolution: "lint-staged@npm:15.4.1"
   dependencies:
     chalk: ~5.4.1
     commander: ~12.1.0
@@ -13865,7 +13865,7 @@ __metadata:
     yaml: ~2.6.1
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: b292d85c8946c2b148d4d512f895fc6a37ed5b68edefcb7423e15f0022a61687413d1da203e9bc5c0dba35fa1463ed426b26acf495b691c7352d95182f428644
+  checksum: 6c17747e9379a08ad3d15aab869a362c750d357182c76ca88121f01143910a2a2d5b1673536f3ba9db2331bf2102ffee115532736dd9c3fa2696344732a47d3d
   languageName: node
   linkType: hard
 
@@ -18648,15 +18648,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-node-polyfills@npm:^0.22.0":
-  version: 0.22.0
-  resolution: "vite-plugin-node-polyfills@npm:0.22.0"
+"vite-plugin-node-polyfills@npm:^0.23.0":
+  version: 0.23.0
+  resolution: "vite-plugin-node-polyfills@npm:0.23.0"
   dependencies:
     "@rollup/plugin-inject": ^5.0.5
     node-stdlib-browser: ^1.2.0
   peerDependencies:
-    vite: ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
-  checksum: c08d3df0d5cc3102280483d3f7b216f92a18e0708fcb9f67f78f01ab865474254756bacee17caa90b3f46afe5834cb9d8de0dd0e58c1bbbdae1b949edc1e6b57
+    vite: ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0
+  checksum: 66fb397bf0db6ec706a64ecf76513133c963422aab1e2612c4f84f2d2ba363162e6ce941504b45f67489729c438f454fbf6d01898aa70eeb2a11fcede0c907da
   languageName: node
   linkType: hard
 
@@ -18713,9 +18713,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^6.0.7":
-  version: 6.0.7
-  resolution: "vite@npm:6.0.7"
+"vite@npm:^6.0.9":
+  version: 6.0.9
+  resolution: "vite@npm:6.0.9"
   dependencies:
     esbuild: ^0.24.2
     fsevents: ~2.3.3
@@ -18761,7 +18761,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 0a948bcd33cf1891a1079ccea6d7e2d1e030ed5d1ad86c9de41a5cb2935da50f77ef699a57ea12fa4a332d9def5494e80d75ea6504758d9d1d9a139f3c1c7fbe
+  checksum: f29c654116192228b2a6024e1cce4aaefe74a0561b7dc5ac8072261f6fcb8f602b555ffd7052774754ad88c9af2eec0aa8c71584e3efda41506addc7674c3462
   languageName: node
   linkType: hard
 
