@@ -20,10 +20,6 @@
     "value": "${UNNTAKSBEHANDLING}"
   },
   {
-    "key": "SOKNADPERIODESTRIPE",
-    "value": "${SOKNADPERIODESTRIPE}"
-  },
-  {
     "key": "TYPE_MEDISINSKE_OPPLYSNINGER_BREV",
     "value": "${TYPE_MEDISINSKE_OPPLYSNINGER_BREV}"
   },
@@ -34,14 +30,6 @@
   {
     "key": "LOS_MARKER_BEHANDLING_SUBMIT",
     "value": "${LOS_MARKER_BEHANDLING_SUBMIT}"
-  },
-  {
-    "key": "AKSJONSPUNKT_9015",
-    "value": "${AKSJONSPUNKT_9015}"
-  },
-  {
-    "key": "ALDERSVILKAR_KRONISK_SYK",
-    "value": "${ALDERSVILKAR_KRONISK_SYK}"
   },
   {
     "key": "FRITEKST_REDIGERING",
