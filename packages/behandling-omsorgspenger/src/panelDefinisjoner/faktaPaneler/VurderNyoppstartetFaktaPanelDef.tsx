@@ -19,7 +19,8 @@ class VurderNyoppstartetFaktaPanelDef extends FaktaPanelDef {
     return <VurderNyoppstartet {...props} {...deepCopyProps} />;
   };
 
-  getOverstyrVisningAvKomponent = (_, featureToggles) => !!featureToggles['OMS_NYOPPSTARTET'];
+  getOverstyrVisningAvKomponent = (props, featureToggles, apCodes) =>
+    !!featureToggles['OMS_NYOPPSTARTET'] && this.getAksjonspunktKoder().some(a => apCodes.includes(a)); // TODO: Dette kan fjernes når featureToggle fjernes. Sjekk på aksjonspunkt skjer i skalVisePanel
 }
 
 export default VurderNyoppstartetFaktaPanelDef;

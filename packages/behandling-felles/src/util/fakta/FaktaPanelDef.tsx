@@ -42,7 +42,7 @@ abstract class FaktaPanelDef {
    * For å avgjøre om komponent skal vises brukes denne i @see skalVisePanel
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected getOverstyrVisningAvKomponent = (_data: any, featureToggles?: any): boolean => false;
+  protected getOverstyrVisningAvKomponent = (_data: any, featureToggles?: any, apCodes?: string[]): boolean => false;
 
   /**
    * Data som skal sendes med til komponent. Dette er data som frontend allerede har tilgang til (Trenger ikke hente på nytt)
@@ -56,7 +56,7 @@ abstract class FaktaPanelDef {
    */
   public skalVisePanel = (apCodes: string[], data: any, featureToggles?: any): boolean =>
     this.getAksjonspunktKoder().some(a => apCodes.includes(a)) ||
-    this.getOverstyrVisningAvKomponent(data, featureToggles);
+    this.getOverstyrVisningAvKomponent(data, featureToggles, apCodes);
 }
 
 export default FaktaPanelDef;
