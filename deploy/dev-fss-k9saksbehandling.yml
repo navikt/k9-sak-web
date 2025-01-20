@@ -115,3 +115,5 @@ spec:
       value: "true"
     - name: AKSJONSPUNKT_OVERLAPPENDE_SAKER
       value: "true"
+    - name: ALDERSVILKAR_TIL_SLUTT
+      value: "true"

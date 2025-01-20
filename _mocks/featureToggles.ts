@@ -90,4 +90,8 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_AKSJONSPUNKT_OVERLAPPENDE_SAKER,
   },
   { key: 'OMS_NYOPPSTARTET', value: process.env.VITE_OMS_NYOPPSTARTET },
+  {
+    key: 'ALDERSVILKAR_TIL_SLUTT',
+    value: process.env.VITE_ALDERSVILKAR_TIL_SLUTT
+  }
 ];
