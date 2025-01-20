@@ -12,6 +12,7 @@ import MenyVergeIndex, { getMenytekst as getVergeMenytekst } from '@fpsak-fronte
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import MenyData from '@k9-sak-web/gui/sak/meny/MenyData.js';
 import { MenySakIndex as MenySakIndexV2 } from '@k9-sak-web/gui/sak/meny/MenySakIndex.js';
+import MenyEndreBehandlendeEnhetIndexV2 from '@k9-sak-web/gui/sak/meny/endre-enhet/MenyEndreBehandlendeEnhetIndex.js';
 import MenyHenleggIndexV2 from '@k9-sak-web/gui/sak/meny/henlegg-behandling/MenyHenleggIndex.js';
 import MenyMarkerBehandlingV2 from '@k9-sak-web/gui/sak/meny/marker-behandling/MenyMarkerBehandling.js';
 import MenySettPaVentIndexV2 from '@k9-sak-web/gui/sak/meny/sett-paa-vent/MenySettPaVentIndex.js';
@@ -281,7 +282,7 @@ export const BehandlingMenuIndex = ({
             />
           )),
           new MenyData(behandlingRettigheter?.behandlingKanBytteEnhet, getMenytekst()).medModal(lukkModal => (
-            <MenyEndreBehandlendeEnhetIndex
+            <MenyEndreBehandlendeEnhetIndexV2
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
               behandlendeEnhetId={behandling?.behandlendeEnhetId}
