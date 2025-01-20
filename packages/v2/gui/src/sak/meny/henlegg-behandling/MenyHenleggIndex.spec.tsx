@@ -1,6 +1,4 @@
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { behandlingResultatType, behandlingType, fagsakYtelseType } from '@k9-sak-web/backend/k9sak/generated';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -26,10 +24,10 @@ describe('<MenyHenleggIndex>', () => {
           behandlingVersjon={1}
           henleggBehandling={henleggBehandlingCallback}
           forhandsvisHenleggBehandling={vi.fn()}
-          ytelseType={fagsakYtelseType.PLEIEPENGER}
-          behandlingType={behandlingType.FORSTEGANGSSOKNAD}
+          ytelseType={fagsakYtelseType.PSB}
+          behandlingType={behandlingType.BT_002}
           behandlingResultatTyper={[
-            behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
+            behandlingResultatType.HENLAGT_SØKNAD_TRUKKET,
             behandlingResultatType.HENLAGT_FEILOPPRETTET,
           ]}
           gaaTilSokeside={vi.fn()}

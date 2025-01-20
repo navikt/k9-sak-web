@@ -1,5 +1,5 @@
 import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
-import { goToLos, goToSearch } from '@k9-sak-web/sak-app/src/app/paths';
+import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { Alert, BodyShort, Button, Heading, Label, Modal, VStack } from '@navikt/ds-react';
 import { CheckboxField, Form, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';

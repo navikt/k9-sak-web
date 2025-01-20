@@ -15,3 +15,9 @@ export const goToLos = () => {
     window.location.assign(path);
   }
 };
+
+const getBackendUrl = () => (window.location.pathname.includes('/ung/web') ? 'ung' : 'k9');
+
+export const goToSearch = () => {
+  window.location.assign(`/${getBackendUrl()}/web`);
+};

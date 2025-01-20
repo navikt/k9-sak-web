@@ -1,9 +1,9 @@
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { VenteÅrsakType } from '@k9-sak-web/backend/k9sak/kodeverk/VenteÅrsakType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { type KodeverkObject, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
-import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
+import { goToLos } from '@k9-sak-web/lib/paths/paths.js';
+import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Label, Modal, Select } from '@navikt/ds-react';
 import { Datepicker, Form, SelectField, TextAreaField } from '@navikt/ft-form-hooks';
 import {
@@ -183,7 +183,7 @@ export const SettPaVentModal = ({
       <Form<FormState> formMethods={formMethods} onSubmit={handleSubmit} data-testid="ventModalForm">
         <Modal.Header>
           <div className={styles.topContainer}>
-            <img className={styles.image} alt="På vent" src={innvilgetImageUrl} />
+            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
             <div className={styles.divider} />
             <div className={styles.calendarContainer}>
               <BodyShort size="small" className={styles.label}>

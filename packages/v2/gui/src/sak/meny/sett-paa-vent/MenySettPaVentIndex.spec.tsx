@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router';
 import { combineReducers, createStore } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
-import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
+import { venteårsak } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
@@ -66,7 +66,7 @@ describe('<MenySettPaVentIndex>', () => {
      * Velg en venteårsak
      */
     const venteArsakFelt = screen.getByLabelText('Hva venter vi på?');
-    await userEvent.selectOptions(venteArsakFelt, venteArsakType.UTV_FRIST);
+    await userEvent.selectOptions(venteArsakFelt, venteårsak.UTV_FRIST);
 
     /**
      * Ssubmit
@@ -77,7 +77,7 @@ describe('<MenySettPaVentIndex>', () => {
       behandlingVersjon: 1,
       behandlingId: 3,
       frist: format(testDato, 'yyyy-MM-dd'),
-      ventearsak: venteArsakType.UTV_FRIST,
+      ventearsak: venteårsak.UTV_FRIST,
       ventearsakVariant: '',
     });
   });

@@ -21,6 +21,6 @@ export default {
 
 export const visModal = () => (
   <RawIntlProvider value={intl}>
-    <OkAvbrytModal textCode="Test.Test" showModal submit={action('button-click')} cancel={action('button-click')} />
+    <OkAvbrytModal showModal submit={action('button-click')} cancel={action('button-click')} />
   </RawIntlProvider>
 );
