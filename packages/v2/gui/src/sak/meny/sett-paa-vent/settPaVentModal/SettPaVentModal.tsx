@@ -183,7 +183,9 @@ export const SettPaVentModal = ({
       <Form<FormState> formMethods={formMethods} onSubmit={handleSubmit} data-testid="ventModalForm">
         <Modal.Header>
           <div className={styles.topContainer}>
-            <CheckmarkCircleFillIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
+            <div>
+              <CheckmarkCircleFillIcon fontSize={30} style={{ color: 'var(--a-surface-success)' }} />
+            </div>
             <div className={styles.divider} />
             <div className={styles.calendarContainer}>
               <BodyShort size="small" className={styles.label}>

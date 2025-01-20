@@ -42,6 +42,10 @@
   margin-top: -0.3125rem;
 }
 
+.datePicker label {
+  @apply sr-only;
+}
+
 .flexContainer {
   display: flex;
 }
