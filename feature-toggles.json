@@ -88,10 +88,6 @@
     "value": "${BRUK_INNTEKTSGRADERING_I_UTTAK}"
   },
   {
-    "key": "OMS_NYOPPSTARTET",
-    "value": "${OMS_NYOPPSTARTET}"
-  },
-  {
     "key": "AKSJONSPUNKT_OVERLAPPENDE_SAKER",
     "value": "${AKSJONSPUNKT_OVERLAPPENDE_SAKER}"
   }
