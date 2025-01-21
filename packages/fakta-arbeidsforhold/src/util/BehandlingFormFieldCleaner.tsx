@@ -9,15 +9,15 @@ import { getBehandlingFormName } from '@fpsak-frontend/form';
 const findAllNames = children =>
   children
     ? React.Children.map(children, child => {
-      let all = [];
-      if (child && child.props && child.props.children) {
-        all = findAllNames(child.props.children);
-      }
-      if (child && child.props && child.props.name) {
-        all.push(child.props.name);
-      }
-      return all;
-    })
+        let all = [];
+        if (child && child.props && child.props.children) {
+          all = findAllNames(child.props.children);
+        }
+        if (child && child.props && child.props.name) {
+          all.push(child.props.name);
+        }
+        return all;
+      })
     : [];
 
 interface PureOwnProps {
@@ -25,7 +25,7 @@ interface PureOwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   fieldNames: string[];
-  children: ReactNode | ReactElement;
+  children: ReactNode | ReactElement<any>;
 }
 
 interface MappedOwnProps {

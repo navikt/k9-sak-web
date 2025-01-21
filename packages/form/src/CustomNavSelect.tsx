@@ -3,7 +3,7 @@ import { Select } from '@navikt/ds-react';
 import React, { Component } from 'react';
 
 interface CustomNavSelectProps {
-  selectValues: React.ReactElement[];
+  selectValues: React.ReactElement<any>[];
   placeholder?: React.ReactNode;
   value?: React.ReactNode;
   hideValueOnDisable?: boolean;

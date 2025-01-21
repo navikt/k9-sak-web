@@ -4,8 +4,9 @@ import { Alert, Tabs, VStack } from '@navikt/ds-react';
 import { Box, ChildIcon, Infostripe, Margin, PageContainer } from '@navikt/ft-plattform-komponenter';
 import { useQuery } from '@tanstack/react-query';
 import classnames from 'classnames';
-import React, { useMemo } from 'react';
+import React, { useMemo, type JSX } from 'react';
 import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+
 import { DiagnosekodeResponse } from '../../../types/DiagnosekodeResponse';
 import Dokument from '../../../types/Dokument';
 import { NyeDokumenterResponse } from '../../../types/NyeDokumenterResponse';

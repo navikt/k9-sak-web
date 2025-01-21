@@ -10,7 +10,7 @@ import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
 
 interface OwnProps {
-  children: ReactElement;
+  children: ReactElement<any>;
 }
 
 const NO_PARAMS = {};

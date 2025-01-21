@@ -2,7 +2,7 @@
 import { Period } from '@fpsak-frontend/utils';
 import { ErrorMessage } from '@navikt/ds-react';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
+import React, { type JSX } from 'react';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { DatepickerLimitations } from '../DatepickerLimitations';
 import PureDatepicker from '../PureDatepicker';

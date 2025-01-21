@@ -1,7 +1,7 @@
 import { Period } from '@fpsak-frontend/utils';
 import { Heading } from '@navikt/ds-react';
 import { Box, InteractiveList, Margin } from '@navikt/ft-plattform-komponenter';
-import React, { useEffect } from 'react';
+import React, { useEffect, type JSX } from 'react';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import { usePrevious } from '../../../util/hooks';
 import { sortPeriodsByFomDate } from '../../../util/periodUtils';

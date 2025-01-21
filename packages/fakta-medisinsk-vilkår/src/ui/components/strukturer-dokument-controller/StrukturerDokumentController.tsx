@@ -1,8 +1,9 @@
 import { httpUtils } from '@fpsak-frontend/utils';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import { Alert } from '@navikt/ds-react';
-import React, { useMemo } from 'react';
+import React, { useMemo, type JSX } from 'react';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+
 import Dokument from '../../../types/Dokument';
 import Link from '../../../types/Link';
 import scrollUp from '../../../util/viewUtils';

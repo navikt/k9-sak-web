@@ -53,7 +53,7 @@ const renderListItems = ({
   intl: IntlShape;
   alleSøknadsperioder: UseQueryResult<PerioderMedBehandlingsId, unknown>[];
   activeFilters: string[];
-}): ReactElement[] => {
+}): ReactElement<any>[] => {
   const sorterteOgFiltrerteBehandlinger = sortBehandlinger(behandlinger).filter(behandling => {
     if (activeFilters.length === 0) {
       return true;
@@ -95,7 +95,7 @@ const renderListItems = ({
 };
 
 const usePrevious = (value: number): number => {
-  const ref = useRef<number>();
+  const ref = useRef<number>(undefined);
   useEffect(() => {
     ref.current = value;
   });

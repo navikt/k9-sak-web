@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { Period } from '@fpsak-frontend/utils';
 import { CalendarIcon } from '@navikt/ft-plattform-komponenter';
 import { UseFormReturn } from 'react-hook-form';

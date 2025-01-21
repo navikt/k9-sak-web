@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import styles from './dokumentasjonFooter.module.css';
 
 interface DokumentasjonFooterProps {

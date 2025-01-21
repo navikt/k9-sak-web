@@ -108,8 +108,8 @@ const Timeline = (
   }: Props & TimelineEventsHandlers,
   ref: ForwardedRef<Partial<VisTimeline>>,
 ) => {
-  const el = useRef();
-  const timeline = useRef<VisTimeline>();
+  const el = useRef(undefined);
+  const timeline = useRef<VisTimeline>(undefined);
   const items: DataSet<K9TimelineItem> = useMemo(() => new DataSet<K9TimelineItem>(), []);
   const groups: DataSet<TimelineGroup> = useMemo(() => new DataSet<TimelineGroup>(), []);
 

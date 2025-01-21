@@ -11,20 +11,21 @@
     "./utils/*": "./src/utils/*",
     "./kodeverk/*": "./src/kodeverk/*",
     "./storybook/*": "./src/storybook/*",
-    "./prosess/*": "./src/prosess/*"
+    "./prosess/*": "./src/prosess/*",
+    "./fakta/*": "./src/fakta/*"
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
     "@k9-sak-web/backend": "workspace:^",
     "@k9-sak-web/lib": "1.0.0",
-    "@navikt/ft-form-hooks": "5.2.9",
-    "@navikt/ft-form-validators": "2.5.7",
-    "@navikt/ft-utils": "2.5.4",
-    "@tanstack/react-query": "^5.62.8",
+    "@navikt/ft-form-hooks": "^6.0.3-react19beta.0",
+    "@navikt/ft-form-validators": "^3.0.3-react19beta.0",
+    "@navikt/ft-utils": "^3.0.3-react19beta.0",
+    "@tanstack/react-query": "^5.64.1",
     "@types/object-hash": "^3.0.6",
     "axios": "1.7.9",
     "object-hash": "^3.0.0",
-    "react": "18.3.1",
+    "react": "19.0.0",
     "react-hook-form": "7.53.2"
   }
 }

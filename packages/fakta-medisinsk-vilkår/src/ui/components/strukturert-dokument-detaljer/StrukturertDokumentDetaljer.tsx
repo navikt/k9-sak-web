@@ -1,8 +1,9 @@
 import { Alert, Link } from '@navikt/ds-react';
 import { Box, DetailView, LabelledContent, LinkButton, Margin } from '@navikt/ft-plattform-komponenter';
 import { prettifyDateString } from '@fpsak-frontend/utils';
-import React from 'react';
+import React, { type JSX } from 'react';
 import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+
 import LinkRel from '../../../constants/LinkRel';
 import Dokument, { dokumentLabel, Dokumenttype } from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';

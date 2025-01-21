@@ -1,6 +1,6 @@
 import { get, Period } from '@fpsak-frontend/utils';
 import { Box, Margin, NavigationWithDetailView, PageContainer } from '@navikt/ft-plattform-komponenter';
-import React, { useMemo } from 'react';
+import React, { useMemo, type JSX } from 'react';
 import Step, { langvarigSykdomSteg, StepId } from '../../../types/Step';
 import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
 import Vurderingselement from '../../../types/Vurderingselement';
