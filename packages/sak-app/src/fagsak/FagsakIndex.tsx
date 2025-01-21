@@ -7,10 +7,8 @@ import {
   Punsjstripe,
 } from '@fpsak-frontend/shared-components';
 import { Merknadkode } from '@k9-sak-web/sak-meny-marker-behandling';
-import Soknadsperiodestripe from '@k9-sak-web/sak-soknadsperiodestripe';
 import {
   ArbeidsgiverOpplysningerWrapper,
-  BehandlingPerioderårsakMedVilkår,
   Fagsak,
   FagsakPerson,
   Kodeverk,
@@ -198,20 +196,6 @@ const FagsakIndex = () => {
 
   const featureToggles = useContext(FeatureTogglesContext);
 
-  const showSøknadsperiodestripe = featureToggles?.SOKNADPERIODESTRIPE && erPleiepengerSyktBarn(fagsak);
-
-  const { data: behandlingPerioderMedVilkår } = restApiHooks.useRestApi<BehandlingPerioderårsakMedVilkår>(
-    K9sakApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR,
-    {},
-    {
-      updateTriggers: [behandlingId, behandlingVersjon],
-      suspendRequest:
-        !behandling ||
-        (!erPleiepengerSyktBarn(fagsak) && !erPleiepengerLivetsSluttfase(fagsak)) ||
-        !showSøknadsperiodestripe,
-    },
-  );
-
   const { data: merknaderFraLos } = restApiHooks.useGlobalStateRestApi<MerknadFraLos>(
     K9sakApiKeys.LOS_HENTE_MERKNAD,
     {},
@@ -341,10 +325,6 @@ const FagsakIndex = () => {
                         />
                       )}
                     </>
-                  )}
-
-                  {showSøknadsperiodestripe && (
-                    <Soknadsperiodestripe behandlingPerioderMedVilkår={behandlingPerioderMedVilkår} />
                   )}
                 </div>
               );
