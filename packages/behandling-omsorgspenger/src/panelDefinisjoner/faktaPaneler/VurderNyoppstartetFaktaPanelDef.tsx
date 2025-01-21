@@ -18,8 +18,6 @@ class VurderNyoppstartetFaktaPanelDef extends FaktaPanelDef {
     konverterKodeverkTilKode(deepCopyProps, false);
     return <VurderNyoppstartet {...props} {...deepCopyProps} />;
   };
-
-  getOverstyrVisningAvKomponent = (_, featureToggles) => !!featureToggles['OMS_NYOPPSTARTET'];
 }
 
 export default VurderNyoppstartetFaktaPanelDef;
