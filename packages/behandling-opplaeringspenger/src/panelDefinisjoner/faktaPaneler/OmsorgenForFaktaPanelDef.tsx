@@ -1,6 +1,6 @@
 import React from 'react';
 
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
@@ -19,7 +19,7 @@ class OmsorgenForFaktaPanelDef extends FaktaPanelDef {
   getKomponent = props => <OmsorgenFor {...props} />;
 
   getOverstyrVisningAvKomponent = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => {
-    const erPleiepengesak = fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;
+    const erPleiepengesak = fagsak.sakstype === fagsakYtelsesType.PSB;
     const søknadsfristErIkkeUnderVurdering = behandling.stegTilstand?.stegType?.kode !== 'VURDER_SØKNADSFRIST';
     return erPleiepengesak && søknadsfristErIkkeUnderVurdering;
   };

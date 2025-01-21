@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-curly-brace-presence */
-import ytelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { KodeverkMedNavn, UtenlandsoppholdPerioder, UtenlandsoppholdType } from '@k9-sak-web/types';
 import { Alert, Heading, ReadMore } from '@navikt/ds-react';
@@ -18,7 +18,7 @@ const Utenlandsopphold = ({
 }: {
   utenlandsopphold: UtenlandsoppholdPerioder;
   kodeverk: { UtenlandsoppholdÅrsak: KodeverkMedNavn[] };
-  fagsakYtelseType?: string;
+  fagsakYtelseType?: FagsakYtelsesType;
 }) => {
   const finnÅrsaker = (periode: UtenlandsoppholdType, erEØS: boolean) => {
     if (erEØS || periode.landkode.kode === 'CHE') {
@@ -69,7 +69,7 @@ const Utenlandsopphold = ({
     return { fom, tom, items: mapItems(periode) };
   });
 
-  const erPleiepenger = fagsakYtelseType === ytelseType.PLEIEPENGER;
+  const erPleiepenger = fagsakYtelseType === fagsakYtelsesType.PSB;
 
   return (
     <div className={styles.utenlandsopphold}>

@@ -1,5 +1,5 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
@@ -23,7 +23,7 @@ describe('<BehandleKlageFormNfpImpl>', () => {
   it('skal vise lenke til forhåndsvis brev når fritekst er fylt, og klagevurdering valgt', () => {
     renderWithIntlAndReduxForm(
       <BehandleKlageFormNfpImpl
-        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
+        fagsak={{ sakstype: fagsakYtelsesType.OMP }}
         readOnly={false}
         readOnlySubmitButton
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
@@ -47,7 +47,7 @@ describe('<BehandleKlageFormNfpImpl>', () => {
   it('skal ikke vise lenke til forhåndsvis brev når fritekst fylt, og klagevurdering ikke valgt', () => {
     renderWithIntlAndReduxForm(
       <BehandleKlageFormNfpImpl
-        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
+        fagsak={{ sakstype: fagsakYtelsesType.OMP }}
         readOnly={false}
         readOnlySubmitButton
         formValues={formValues2}
@@ -71,7 +71,7 @@ describe('<BehandleKlageFormNfpImpl>', () => {
   it('skal ikke vise lenke til forhåndsvis brev når fritekst ikke fylt, og klagevurdering valgt', () => {
     renderWithIntlAndReduxForm(
       <BehandleKlageFormNfpImpl
-        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
+        fagsak={{ sakstype: fagsakYtelsesType.OMP }}
         readOnly={false}
         readOnlySubmitButton
         formValues={formValues3}

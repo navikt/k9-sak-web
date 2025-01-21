@@ -1,4 +1,4 @@
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats';
 import { BodyShort, Label } from '@navikt/ds-react';
@@ -10,11 +10,11 @@ import { createSelector } from 'reselect';
 
 const ytelseNavnMap = kode => {
   switch (kode) {
-    case fagsakYtelseType.FRISINN:
+    case fagsakYtelsesType.FRISINN:
       return 'Frilans og selvstendig næringsdrivende inntektskompensasjon';
-    case fagsakYtelseType.OMSORGSPENGER:
+    case fagsakYtelsesType.OMP:
       return 'Omsorgspenger';
-    case fagsakYtelseType.PLEIEPENGER:
+    case fagsakYtelsesType.PSB:
       return 'Pleiepenger';
     default:
       return 'Ytelsen';

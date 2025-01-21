@@ -8,15 +8,15 @@ import Step, {
   tilsynOgPleieSteg,
   toOmsorgspersonerSteg,
 } from '../types/Step';
-import FagsakYtelseType from '../constants/FagsakYtelseType';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 type Steg = typeof dokumentSteg | typeof tilsynOgPleieSteg | typeof toOmsorgspersonerSteg;
 
-export const stegForSakstype = (fagsakYtelseType: FagsakYtelseType): Step[] => {
-  if (fagsakYtelseType === FagsakYtelseType.OPPLÆRINGSPENGER) {
+export const stegForSakstype = (fagsakYtelseType: FagsakYtelsesType): Step[] => {
+  if (fagsakYtelseType === fagsakYtelsesType.OLP) {
     return [opplæringspengerDokumentSteg, langvarigSykdomSteg];
   }
-  if (fagsakYtelseType === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+  if (fagsakYtelseType === fagsakYtelsesType.PPN) {
     return [sluttfaseDokumentSteg, livetsSluttfaseSteg];
   }
   return [dokumentSteg, tilsynOgPleieSteg, toOmsorgspersonerSteg];

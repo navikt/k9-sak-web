@@ -1,5 +1,4 @@
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import {
   AndreSakerPåSøkerStripe,
@@ -47,22 +46,19 @@ import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
 import FagsakGrid from './components/FagsakGrid';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   behandlingType &&
   (BehandlingType.TILBAKEKREVING === behandlingType.kode ||
     BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
 
-const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER;
-const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) =>
-  fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
+const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelsesType.PSB;
+const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelsesType.PPN;
 const erOmsorgspenger = (fagsak: Fagsak) =>
-  [
-    fagsakYtelseType.OMSORGSPENGER,
-    fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN,
-    fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN,
-    fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE,
-  ].includes(fagsak?.sakstype?.kode);
+  [fagsakYtelsesType.OMP, fagsakYtelsesType.OMP_KS, fagsakYtelsesType.OMP_AO, fagsakYtelsesType.OMP_MA].some(
+    sakstype => sakstype === fagsak.sakstype,
+  );
 
 /**
  * FagsakIndex
@@ -328,7 +324,7 @@ const FagsakIndex = () => {
                         <AndreSakerPåSøkerStripe
                           søkerIdent={fagsakPerson.personnummer}
                           saksnummer={fagsak.saksnummer}
-                          fagsakYtelseType={fagsak.sakstype.kode}
+                          fagsakYtelseType={fagsak.sakstype}
                         />
                       )}
                     </>

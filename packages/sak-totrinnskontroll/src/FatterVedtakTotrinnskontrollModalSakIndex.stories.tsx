@@ -1,6 +1,6 @@
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus.js';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { Behandling } from '@k9-sak-web/types';
 import { action } from '@storybook/addon-actions';
@@ -34,10 +34,7 @@ export const visModalEtterGodkjenning = () => (
     behandling={behandling}
     closeEvent={action('button-click')}
     allAksjonspunktApproved
-    fagsakYtelseType={{
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: '',
-    }}
+    fagsakYtelseType={fagsakYtelsesType.FP}
     erKlageWithKA={false}
     harSammeResultatSomOriginalBehandling={false}
   />
@@ -56,10 +53,7 @@ export const visModalEtterGodkjenningAvKlage = () => (
     }
     closeEvent={action('button-click')}
     allAksjonspunktApproved
-    fagsakYtelseType={{
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: '',
-    }}
+    fagsakYtelseType={fagsakYtelsesType.FP}
     erKlageWithKA={false}
     harSammeResultatSomOriginalBehandling={false}
   />
@@ -70,10 +64,7 @@ export const visModalEtterTilbakesendingTilSaksbehandler = () => (
     behandling={behandling}
     closeEvent={action('button-click')}
     allAksjonspunktApproved={false}
-    fagsakYtelseType={{
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: '',
-    }}
+    fagsakYtelseType={fagsakYtelsesType.FP}
     erKlageWithKA={false}
     harSammeResultatSomOriginalBehandling={false}
   />

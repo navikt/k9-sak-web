@@ -3,10 +3,10 @@ import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import Relasjon from '../../../types/Relasjon';
-import Ytelsestype from '../../../types/Ytelsestype';
 import ContainerContext from '../../context/ContainerContext';
 import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
 import styles from './omsorgsperiodeVurderingsdetaljer.module.css';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 interface OmsorgsperiodeVurderingsdetaljerProps {
   omsorgsperiode: Omsorgsperiode;
@@ -21,7 +21,7 @@ const OmsorgsperiodeVurderingsdetaljer = ({
 }: OmsorgsperiodeVurderingsdetaljerProps): JSX.Element => {
   const intl = useIntl();
   const { sakstype } = useContext(ContainerContext);
-  const erOMP = sakstype === Ytelsestype.OMP;
+  const erOMP = sakstype === fagsakYtelsesType.OMP;
   const begrunnelseRenderer = () => {
     let label = intl.formatMessage({ id: 'vurdering.hjemmel' });
     let begrunnelse = '';

@@ -5,8 +5,8 @@ import { expect, userEvent, waitFor, within } from '@storybook/test';
 import { mockUrlPrepend } from '../../mock/constants';
 import { handlers } from '../../mock/handlers';
 import BehandlingType from '../constants/BehandlingType';
-import FagsakYtelseType from '../constants/FagsakYtelseType';
 import MedisinskVilkårContainer from './MedisinskVilkårContainer';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const meta: Meta<typeof MedisinskVilkårContainer> = {
   title: 'fakta/fakta-medisinsk-vilkår',
@@ -28,7 +28,7 @@ const meta: Meta<typeof MedisinskVilkårContainer> = {
       readOnly: false,
       onFinished: () => console.log('Aksjonspunkt løst'),
       visFortsettknapp: true,
-      fagsakYtelseType: FagsakYtelseType.PLEIEPENGER,
+      fagsakYtelseType: fagsakYtelsesType.PSB,
       behandlingType: BehandlingType.FORSTEGANGSSOKNAD,
       httpErrorHandler: undefined,
     },

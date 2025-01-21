@@ -14,7 +14,7 @@ import Vurderingsdetaljer from '../vurderingsdetaljer/Vurderingsdetaljer';
 
 import VurderingsoversiktSluttfaseMessages from '../vurderingsoversikt-sluttfase-messages/VurderingsoversiktSluttfaseMessages';
 import BehandlingType from '../../../constants/BehandlingType';
-import FagsakYtelseType from '../../../constants/FagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 interface VilkårsvurderingAvLivetsSluttfaseProps {
   navigerTilNesteSteg: (steg: Step, ikkeMarkerSteg?: boolean) => void;
@@ -135,16 +135,12 @@ const VilkårsvurderingAvLivetsSluttfase = ({
   };
 
   const skalViseOpprettVurderingKnapp = () => {
-    if (
-      fagsakYtelseType === FagsakYtelseType.PLEIEPENGER_SLUTTFASE &&
-      BehandlingType.FORSTEGANGSSOKNAD === behandlingType
-    )
-      return false;
+    if (fagsakYtelseType === fagsakYtelsesType.PPN && BehandlingType.FORSTEGANGSSOKNAD === behandlingType) return false;
 
     return !vurderingsoversikt?.harPerioderSomSkalVurderes() &&
       !skalViseRadForNyVurdering &&
       harGyldigSignatur &&
-      fagsakYtelseType === FagsakYtelseType.PLEIEPENGER_SLUTTFASE
+      fagsakYtelseType === fagsakYtelsesType.PPN
       ? behandlingType !== BehandlingType.FORSTEGANGSSOKNAD
       : true;
   };

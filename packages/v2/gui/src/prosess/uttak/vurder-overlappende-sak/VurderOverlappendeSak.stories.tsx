@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import type { AksjonspunktDto, BehandlingDto, EgneOverlappendeSakerDto } from '@k9-sak-web/backend/k9sak/generated';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import VurderOverlappendeSak, { type BekreftVurderOverlappendeSakerAksjonspunktRequest } from './VurderOverlappendeSak';
 import { FakeBehandlingUttakBackendApi } from '../../../storybook/mocks/FakeBehandlingUttakBackendApi';
 import { formatDate, subDays, subWeeks } from 'date-fns';
@@ -98,7 +99,7 @@ type Story = StoryObj<typeof meta>;
 
 const behandling: Omit<BehandlingDto, 'uuid' | 'status'> = {
   opprettet: subDays(new Date(), 5).toISOString(),
-  sakstype: 'PSB',
+  sakstype: fagsakYtelsesType.PSB,
   type: 'BT-002',
   versjon: 1,
   id: 123,

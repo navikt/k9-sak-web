@@ -1,12 +1,12 @@
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import * as messages from '../nb_NO';
-import Ytelsestype from '../types/Ytelsestype';
 
-export const teksterForSakstype = (sakstype: string) => {
-  if (sakstype === Ytelsestype.PSB) {
+export const teksterForSakstype = (sakstype: FagsakYtelsesType) => {
+  if (sakstype === fagsakYtelsesType.PSB) {
     return messages.pleiepenger;
   }
 
-  if (sakstype === Ytelsestype.OMP) {
+  if (sakstype === fagsakYtelsesType.OMP) {
     return messages.omsorgspenger;
   }
   return messages.pleiepenger;

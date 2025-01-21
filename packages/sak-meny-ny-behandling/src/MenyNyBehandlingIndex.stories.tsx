@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions';
 
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Meta } from '@storybook/react';
 import MenyNyBehandlingIndex from './MenyNyBehandlingIndex';
 
@@ -64,10 +64,7 @@ const behandlingOppretting = [
 
 export const visMenyForÅLageNyBehandling = () => (
   <MenyNyBehandlingIndex
-    ytelseType={{
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: 'YTELSE_TYPE',
-    }}
+    ytelseType={fagsakYtelsesType.FP} // YTELSE_TYPE
     saksnummer="123"
     behandlingId={1}
     behandlingVersjon={2}
@@ -104,10 +101,7 @@ export const visMenyForÅLageNyBehandling = () => (
 
 export const visMenyForÅLageNyTilbakekrevingsbehandling = () => (
   <MenyNyBehandlingIndex
-    ytelseType={{
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: 'YTELSE_TYPE',
-    }}
+    ytelseType={fagsakYtelsesType.FP} // YTELSE_TYPE
     saksnummer="123"
     behandlingId={1}
     behandlingVersjon={2}

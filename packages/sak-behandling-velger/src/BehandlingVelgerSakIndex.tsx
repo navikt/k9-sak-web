@@ -1,9 +1,9 @@
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { BehandlingAppKontekst, Fagsak, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Location } from 'history';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import BehandlingPicker from './components/BehandlingPicker';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const cache = createIntlCache();
 
@@ -35,11 +35,11 @@ const BehandlingVelgerSakIndex = ({
   createLocationForSkjermlenke,
 }: OwnProps) => {
   const hentSøknadsperioder = ![
-    fagsakYtelseType.FRISINN,
-    fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN,
-    fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN,
-    fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE,
-  ].includes(fagsak.sakstype.kode);
+    fagsakYtelsesType.FRISINN,
+    fagsakYtelsesType.OMP_AO,
+    fagsakYtelsesType.OMP_KS,
+    fagsakYtelsesType.OMP_MA,
+  ].some(sakstype => sakstype === fagsak.sakstype);
 
   return (
     <RawIntlProvider value={intl}>
@@ -50,7 +50,7 @@ const BehandlingVelgerSakIndex = ({
         getKodeverkFn={getKodeverkFn}
         behandlingId={behandlingId}
         createLocationForSkjermlenke={createLocationForSkjermlenke}
-        sakstypeKode={fagsak.sakstype.kode}
+        sakstypeKode={fagsak.sakstype}
         hentSøknadsperioder={hentSøknadsperioder}
       />
     </RawIntlProvider>

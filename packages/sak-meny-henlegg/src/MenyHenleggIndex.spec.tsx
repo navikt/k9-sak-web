@@ -1,6 +1,6 @@
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -19,10 +19,7 @@ describe('<MenyHenleggIndex>', () => {
         behandlingVersjon={1}
         henleggBehandling={henleggBehandlingCallback}
         forhandsvisHenleggBehandling={vi.fn()}
-        ytelseType={{
-          kode: fagsakYtelseType.FORELDREPENGER,
-          kodeverk: 'FAGSAK_YTELSE_TYPE',
-        }}
+        ytelseType={fagsakYtelsesType.FP}
         behandlingType={{
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: 'BEHANDLING_TYPE',

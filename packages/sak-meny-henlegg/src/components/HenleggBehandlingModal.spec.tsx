@@ -1,6 +1,6 @@
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
@@ -13,10 +13,7 @@ import { HenleggBehandlingModalImpl, getHenleggArsaker } from './HenleggBehandli
 const intlMock = intlWithMessages(messages);
 
 describe('<HenleggBehandlingModal>', () => {
-  const ytelseType = {
-    kode: fagsakYtelseType.FORELDREPENGER,
-    kodeverk: 'FAGSAK_YTELSE_TYPE',
-  };
+  const ytelseType = fagsakYtelsesType.FP;
 
   const behandlingResultatTyper = [
     {
@@ -156,10 +153,8 @@ describe('<HenleggBehandlingModal>', () => {
 
   it('skal bruke behandlingsresultat-typer for førstegangsbehandling når ytelsestype er Engangsstønad', () => {
     const behandlingsType = { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'BEHANDLING_TYPE' };
-    const resultat = getHenleggArsaker(behandlingResultatTyper, behandlingsType, {
-      kode: fagsakYtelseType.ENGANGSSTONAD,
-      kodeverk: 'FAGSAK_YTELSE_TYPE',
-    });
+    const resultat = getHenleggArsaker(behandlingResultatTyper, behandlingsType, fagsakYtelsesType.ES);
+
     expect(resultat.map(r => r.kode)).toEqual([
       behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
       behandlingResultatType.HENLAGT_FEILOPPRETTET,

@@ -2,7 +2,7 @@ import { httpUtils } from '@fpsak-frontend/utils';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import { Alert } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
-import FagsakYtelseType from '../../../constants/FagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import Dokument from '../../../types/Dokument';
 import Link from '../../../types/Link';
 import scrollUp from '../../../util/viewUtils';
@@ -99,7 +99,7 @@ const StrukturerDokumentController = ({
           strukturerteDokumenter={strukturerteDokumenter}
         />
       )}
-      {fagsakYtelseType === FagsakYtelseType.PLEIEPENGER_SLUTTFASE && (
+      {fagsakYtelseType === fagsakYtelsesType.PPN && (
         <StrukturerDokumentSluttfaseForm
           key={dokument.id}
           dokument={dokument}
@@ -109,7 +109,7 @@ const StrukturerDokumentController = ({
           strukturerteDokumenter={strukturerteDokumenter}
         />
       )}
-      {fagsakYtelseType === FagsakYtelseType.OPPLÆRINGSPENGER && (
+      {fagsakYtelseType === fagsakYtelsesType.OLP && (
         <StrukturerDokumentOpplaeringspengerForm
           key={dokument.id}
           dokument={dokument}

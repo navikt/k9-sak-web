@@ -1,6 +1,6 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import FatterVedtakApprovalModal from './FatterVedtakApprovalModal';
@@ -14,10 +14,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         allAksjonspunktApproved
         behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
         behandlingTypeKode={BehandlingType.KLAGE}
-        fagsakYtelseType={{
-          kode: fagsakYtelseType.FORELDREPENGER,
-          kodeverk: '',
-        }}
+        fagsakYtelseType={fagsakYtelsesType.FP}
         erKlageWithKA
       />,
     );
@@ -33,10 +30,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         allAksjonspunktApproved
         behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-        fagsakYtelseType={{
-          kode: fagsakYtelseType.ENGANGSSTONAD,
-          kodeverk: '',
-        }}
+        fagsakYtelseType={fagsakYtelsesType.ES}
         erKlageWithKA
       />,
     );
@@ -54,10 +48,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         allAksjonspunktApproved
         behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-        fagsakYtelseType={{
-          kode: fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN,
-          kodeverk: '',
-        }}
+        fagsakYtelseType={fagsakYtelsesType.OMP_KS}
         erKlageWithKA
       />,
     );

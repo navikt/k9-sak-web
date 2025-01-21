@@ -10,7 +10,7 @@ import { AksjonspunktDto, BehandlingDto } from '@navikt/k9-sak-typescript-client
 import TilkjentYtelseProsessIndex from './TilkjentYtelseProsessIndex';
 
 const fagsak = {
-  sakstype: { kode: fagsakYtelsesType.PSB, kodeverk: 'FAGSAK_YTELSE' },
+  sakstype: fagsakYtelsesType.PSB, // FAGSAK_YTELSE
 };
 
 const behandling = {

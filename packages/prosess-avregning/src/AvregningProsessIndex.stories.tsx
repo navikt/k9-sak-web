@@ -2,15 +2,13 @@ import { action } from '@storybook/addon-actions';
 import React from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import AvregningProsessIndex from './AvregningProsessIndex';
 
 const fagsak = {
   saksnummer: 123,
-  fagsakYtelseType: {
-    kode: fagsakYtelseType.FORELDREPENGER,
-  },
+  fagsakYtelseType: fagsakYtelsesType.FP,
 };
 
 const behandling = {

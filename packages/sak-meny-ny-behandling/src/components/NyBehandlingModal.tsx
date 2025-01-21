@@ -5,6 +5,7 @@ import { required } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
 import { ModalBody, ModalFooter } from '@navikt/ds-react/Modal';
+import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ReactElement, useEffect } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -34,13 +35,13 @@ export type FormValues = {
 };
 
 interface PureOwnProps {
-  ytelseType: Kodeverk;
+  ytelseType: FagsakYtelsesType;
   saksnummer: number;
   cancelEvent: () => void;
   submitCallback: (
     data: {
       eksternUuid?: string;
-      fagsakYtelseType: Kodeverk;
+      fagsakYtelseType: FagsakYtelsesType;
     } & FormValues,
   ) => void;
   behandlingOppretting: BehandlingOppretting[];

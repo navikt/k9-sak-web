@@ -1,7 +1,7 @@
 import calendarImg from '@fpsak-frontend/assets/images/calendar-2.svg';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { DateLabel, Image } from '@fpsak-frontend/shared-components';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
 import { Periode } from '@k9-sak-web/types';
@@ -25,7 +25,7 @@ interface BehandlingSelectedProps {
   søknadsperioder: Periode[];
   behandlingTypeKode: string;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
-  sakstypeKode: string;
+  sakstypeKode: FagsakYtelsesType;
 }
 
 const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
@@ -80,9 +80,9 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
     );
   };
 
-  const ytelserMedFaktapanelSøknadsperioder = [fagsakYtelseType.PLEIEPENGER, fagsakYtelseType.PLEIEPENGER_SLUTTFASE];
+  const ytelserMedFaktapanelSøknadsperioder = [fagsakYtelsesType.PSB, fagsakYtelsesType.PPN];
 
-  const visLenkeTilFaktapanel = ytelserMedFaktapanelSøknadsperioder.includes(sakstypeKode);
+  const visLenkeTilFaktapanel = ytelserMedFaktapanelSøknadsperioder.some(type => sakstypeKode === type);
 
   return (
     <div data-testid="behandlingSelected" className={containerCls}>
