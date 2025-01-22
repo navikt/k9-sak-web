@@ -93,6 +93,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
       suspendRequest: !skalBrukeFpTilbakeHistorikk || erBehandlingEndret,
     },
   );
+  // TODO: I dev, Kall historikk innslag v2 også.
 
   const { data: historikkKlage, state: historikkKlageState } = restApiHooks.useRestApi<Historikkinnslag[]>(
     K9sakApiKeys.HISTORY_KLAGE,
@@ -109,6 +110,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
   );
 
   if (
+    // TODO sjekk historikkv2 kall også, viss relevant
     isRequestNotDone(historikkK9SakState) ||
     (skalBrukeFpTilbakeHistorikk && isRequestNotDone(historikkTilbakeState)) ||
     (skalBrukeKlageHistorikk && isRequestNotDone(historikkKlageState))
@@ -116,6 +118,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
     return <LoadingPanel />;
   }
 
+  // TODO Hent render resultat både med v2 (viss aktuelt), og gammal kode. Samanlikn og rapporter/vis diff?
   return (
     <div className="grid gap-5">
       {historikkInnslag.map(innslag => {
@@ -126,6 +129,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
         if (innslag.erKlage) {
           alleKodeverk = alleKodeverkKlage;
         }
+        // TODO: Viss historikkinnslag v2, returner resultat frå ny v2 render komponent. Else gammal kode:
         return (
           <HistorikkSakIndex
             key={innslag.opprettetTidspunkt + innslag.type.kode}
