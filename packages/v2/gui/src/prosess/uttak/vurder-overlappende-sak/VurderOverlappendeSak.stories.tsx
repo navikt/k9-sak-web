@@ -73,12 +73,12 @@ const bekreftAksjonspunktRequest: BekreftVurderOverlappendeSakerAksjonspunktRequ
           // k9-sak påkrever begrunnelse i hver periode, og det kan ikke være en tom streng
           begrunnelse: 'Dette er en grundig begrunnelse',
           periode: { fom: fom1.toISOString(), tom: tom1.toISOString() },
-          søkersUttaksgrad: '40',
+          søkersUttaksgrad: 40,
         },
         {
           begrunnelse: 'Dette er en grundig begrunnelse',
           periode: { fom: fom2.toISOString(), tom: tom2.toISOString() },
-          søkersUttaksgrad: '60',
+          søkersUttaksgrad: 60,
         },
       ],
     },
