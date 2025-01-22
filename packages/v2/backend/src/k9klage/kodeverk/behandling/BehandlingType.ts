@@ -1,5 +1,5 @@
-import type { BehandlingDto } from '../../generated';
 import type { Kodeverk } from '../../../shared/Kodeverk.js';
+import type { BehandlingDto } from '../../generated';
 
 export type BehandlingType = BehandlingDto['type'];
 

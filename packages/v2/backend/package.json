@@ -12,7 +12,8 @@
     "./k9sak/errorhandling/*": "./src/k9sak/errorhandling/*",
     "./k9formidling/*": "./src/k9formidling/*",
     "./k9klage/generated": "./src/k9klage/generated/index.js",
-    "./k9klage/kodeverk/*": "./src/k9klage/kodeverk/*"
+    "./k9klage/kodeverk/*": "./src/k9klage/kodeverk/*",
+    "./k9tilbake/kodeverk/*": "./src/k9tilbake/kodeverk/*"
   },
   "dependencies": {
     "@navikt/k9-klage-typescript-client": "1.0.20241206133624",
