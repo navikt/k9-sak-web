@@ -40,7 +40,7 @@ export interface VurderOverlappendeSakFormData {
   begrunnelse: string;
   perioder: {
     periode: { fom: string; tom: string };
-    søkersUttaksgrad: number;
+    søkersUttaksgrad: number | undefined;
     saksnummer: string[];
   }[];
 }
@@ -52,7 +52,7 @@ export type BekreftVurderOverlappendeSakerAksjonspunktRequest = BekreftData['req
     perioder: Array<{
       begrunnelse: string;
       periode: { fom: string; tom: string };
-      søkersUttaksgrad: number | string;
+      søkersUttaksgrad: number | undefined;
     }>;
   }>;
 };
