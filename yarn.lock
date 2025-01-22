@@ -3403,7 +3403,7 @@ __metadata:
     "@fpsak-frontend/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-types": ^2.5.15-react19beta.0
+    "@navikt/ft-types": ^3.0.0
     moment: 2.30.1
     react: 19.0.0
     react-intl: 7.1.0
@@ -4145,7 +4145,7 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-kodeverk": ^2.5.14-react19beta.0
+    "@navikt/ft-kodeverk": ^3.0.0
     "@navikt/ft-prosess-tilbakekreving-foreldelse": ^4.0.3-react19beta.0
     react: 19.0.0
     react-intl: 7.1.0
@@ -5052,6 +5052,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ft-kodeverk@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@navikt/ft-kodeverk@npm:3.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F3.0.0%2Fea0c122c12db155492f220b588ac8f17c00babdd"
+  checksum: 3fb3de8df8641277b1135ad82daabe26f3a9eb4ae04f1792a009ad175c800193cf5d2a176900af70b12c3088af81993546359bb059ae7750c9c4903b186bbaae
+  languageName: node
+  linkType: hard
+
 "@navikt/ft-konstanter@npm:^2.4.14-react19beta.0":
   version: 2.4.14-react19beta.0
   resolution: "@navikt/ft-konstanter@npm:2.4.14-react19beta.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-konstanter%2F2.4.14-react19beta.0%2Fd619583177383381267bc5d295152b7bef7f1df0"
@@ -5165,6 +5172,17 @@ __metadata:
   peerDependencies:
     "@navikt/ft-kodeverk": 2.x
   checksum: d7031c487a5895b72fbed462467eaef5f680e9c47a7f8d01b07b86a3dec810988b6484432868cc99941282f9a22fd839856c31ab7784d1e6771ae9ff83900e3e
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-types@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@navikt/ft-types@npm:3.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-types%2F3.0.0%2F53c59c51bb81f986141bb1158cdbb515bfba1c16"
+  dependencies:
+    "@navikt/ft-kodeverk": ^3.0.0
+  peerDependencies:
+    "@navikt/ft-kodeverk": 2.x
+  checksum: 042ff62953a8a85f6a2b604c8ff978309b637f45575ddf6f4469a00d72c6820c1b058b7cb8720d7264a0c0351fce2ba82c20dc459479325f0d04312d6154ccd4
   languageName: node
   linkType: hard
 
