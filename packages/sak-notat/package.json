@@ -11,7 +11,7 @@
     "@navikt/ds-react": "7.6.0",
     "@navikt/ft-form-hooks": "^6.0.3-react19beta.0",
     "@navikt/ft-form-validators": "^3.0.3-react19beta.0",
-    "@tanstack/react-query": "^5.64.1",
+    "@tanstack/react-query": "^5.64.2",
     "date-fns": "4.1.0",
     "react": "19.0.0",
     "react-hook-form": "7.53.2",
