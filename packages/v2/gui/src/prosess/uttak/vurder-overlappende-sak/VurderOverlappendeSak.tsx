@@ -55,7 +55,7 @@ export type BekreftVurderOverlappendeSakerAksjonspunktRequest = BekreftData['req
     perioder: Array<{
       begrunnelse: string;
       periode: { fom: string; tom: string };
-      søkersUttaksgrad: number | undefined;
+      søkersUttaksgrad: number;
     }>;
   }>;
 };
