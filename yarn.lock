@@ -13438,6 +13438,7 @@ __metadata:
     i18n-iso-countries: 7.13.0
     jsdom: 25.0.1
     lint-staged: 15.4.1
+    loose-ts-check: ^2.0.0
     msw: 2.7.0
     msw-storybook-addon: ^2.0.4
     node-cache: 5.1.2
@@ -13698,6 +13699,20 @@ __metadata:
   bin:
     loose-envify: cli.js
   checksum: 6517e24e0cad87ec9888f500c5b5947032cdfe6ef65e1c1936a0c48a524b81e65542c9c3edc91c97d5bddc806ee2a985dbc79be89215d613b1de5db6d1cfe6f4
+  languageName: node
+  linkType: hard
+
+"loose-ts-check@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "loose-ts-check@npm:2.0.0"
+  dependencies:
+    chalk: ^4.1.0
+    minimatch: ^5.1.2
+    ts-invariant: ^0.10.3
+    yargs: ^17.6.2
+  bin:
+    loose-ts-check: bin/loose-ts-check
+  checksum: 1db97ef79d41b081fb5d7d03ae52a4ed152e3b330c7a47b9deb44a5309d3758cc72d1d1ee2af824c18f24bf64a3526dd4d54aaaf5e75796ecbd957e991528d9d
   languageName: node
   linkType: hard
 
@@ -14002,7 +14017,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^5.0.1":
+"minimatch@npm:^5.0.1, minimatch@npm:^5.1.2":
   version: 5.1.6
   resolution: "minimatch@npm:5.1.6"
   dependencies:
@@ -17697,6 +17712,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ts-invariant@npm:^0.10.3":
+  version: 0.10.3
+  resolution: "ts-invariant@npm:0.10.3"
+  dependencies:
+    tslib: ^2.1.0
+  checksum: bb07d56fe4aae69d8860e0301dfdee2d375281159054bc24bf1e49e513fb0835bf7f70a11351344d213a79199c5e695f37ebbf5a447188a377ce0cd81d91ddb5
+  languageName: node
+  linkType: hard
+
 "tsconfig-paths@npm:^4.2.0":
   version: 4.2.0
   resolution: "tsconfig-paths@npm:4.2.0"
@@ -18948,7 +18972,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^17.3.1, yargs@npm:^17.7.2":
+"yargs@npm:^17.3.1, yargs@npm:^17.6.2, yargs@npm:^17.7.2":
   version: 17.7.2
   resolution: "yargs@npm:17.7.2"
   dependencies:
