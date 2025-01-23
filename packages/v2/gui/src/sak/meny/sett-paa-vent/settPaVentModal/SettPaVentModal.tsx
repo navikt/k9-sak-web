@@ -145,7 +145,6 @@ export const SettPaVentModal = ({
   const showSelect = erVenterEtterlysInntektsmelding ? !showEndreFrist : true;
   const showKommentarInput = venterårsakerMedKommentarmulighet.includes(ventearsak);
 
-  // TODO: #KODEVERK Må finne ut hvordan vi vet hvilke venteårsaker som kan velges
   const venteArsakerSomKanVelges = [...ventearsaker.filter(va => va.kanVelges === 'true').map(va => va.kode)];
 
   const toggleEndreFrist = () => setShowEndreFrist(!showEndreFrist);

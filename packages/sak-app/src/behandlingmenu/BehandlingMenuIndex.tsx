@@ -1,6 +1,7 @@
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import MenySakIndex from '@fpsak-frontend/sak-meny';
 import MenyEndreBehandlendeEnhetIndex, { getMenytekst } from '@fpsak-frontend/sak-meny-endre-enhet';
 import MenyHenleggIndex, { getMenytekst as getHenleggMenytekst } from '@fpsak-frontend/sak-meny-henlegg';
 import MenyNyBehandlingIndex, {
@@ -36,7 +37,6 @@ import {
 import moment from 'moment';
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import MenySakIndex from '../../../sak-meny';
 import ApplicationContextPath from '../app/ApplicationContextPath';
 import { getLocationWithDefaultProsessStegAndFakta, getPathToK9Los, pathToBehandling } from '../app/paths';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';

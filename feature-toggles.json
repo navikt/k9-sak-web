@@ -92,10 +92,6 @@
     "value": "${SAK_MENY_V2}"
   },
   {
-    "key": "OMS_NYOPPSTARTET",
-    "value": "${OMS_NYOPPSTARTET}"
-  },
-  {
     "key": "AKSJONSPUNKT_OVERLAPPENDE_SAKER",
     "value": "${AKSJONSPUNKT_OVERLAPPENDE_SAKER}"
   }

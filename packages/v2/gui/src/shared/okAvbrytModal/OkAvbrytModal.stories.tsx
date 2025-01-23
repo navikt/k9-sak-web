@@ -1,26 +1,21 @@
 import { action } from '@storybook/addon-actions';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import type { Meta, StoryObj } from '@storybook/react';
+import { expect } from '@storybook/test';
 import OkAvbrytModal from './OkAvbrytModal';
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages: {
-      'OkAvbrytModal.Ok': 'Ok',
-      'OkAvbrytModal.Avbryt': 'Avbryt',
-      'Test.Test': 'Dette er ein test',
-    },
-  },
-  createIntlCache(),
-);
 
 export default {
   title: 'gui/shared/OkAvbrytModal',
   component: OkAvbrytModal,
-};
+} satisfies Meta<typeof OkAvbrytModal>;
 
-export const visModal = () => (
-  <RawIntlProvider value={intl}>
-    <OkAvbrytModal showModal submit={action('button-click')} cancel={action('button-click')} />
-  </RawIntlProvider>
-);
+export const Default: StoryObj<typeof OkAvbrytModal> = {
+  args: {
+    showModal: true,
+    submit: action('button-click'),
+    cancel: action('button-click'),
+  },
+  play: async ({ canvas }) => {
+    expect(canvas.getByRole('dialog', { name: 'Bekreft eller avbryt' })).toBeInTheDocument();
+    expect(canvas.getByRole('button', { name: 'OK' })).toBeInTheDocument();
+  },
+};

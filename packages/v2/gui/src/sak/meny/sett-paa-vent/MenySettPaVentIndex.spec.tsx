@@ -1,26 +1,11 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { add, format } from 'date-fns';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router';
-import { combineReducers, createStore } from 'redux';
-import { reducer as formReducer } from 'redux-form';
-
 import { venteårsak } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { add, format } from 'date-fns';
 import MenySettPaVentIndexV2 from './MenySettPaVentIndex';
-
-vi.mock('react-router-dom', async () => {
-  const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
-  return {
-    ...actual,
-    useHistory: () => ({
-      push: vi.fn(),
-    }),
-  };
-});
 
 const testDato = add(new Date(), { months: 2, days: 1 });
 
@@ -30,24 +15,20 @@ describe('<MenySettPaVentIndex>', () => {
     const settBehandlingPaVent = vi.fn(() => Promise.resolve());
 
     render(
-      <Provider store={createStore(combineReducers({ form: formReducer }))}>
-        <MemoryRouter>
-          <KodeverkProvider
-            behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
-            kodeverk={alleKodeverkV2}
-            klageKodeverk={{}}
-            tilbakeKodeverk={{}}
-          >
-            <MenySettPaVentIndexV2
-              behandlingId={3}
-              behandlingVersjon={1}
-              settBehandlingPaVent={settBehandlingPaVent}
-              lukkModal={lukkModalCallback}
-              erTilbakekreving={false}
-            />
-          </KodeverkProvider>
-        </MemoryRouter>
-      </Provider>,
+      <KodeverkProvider
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <MenySettPaVentIndexV2
+          behandlingId={3}
+          behandlingVersjon={1}
+          settBehandlingPaVent={settBehandlingPaVent}
+          lukkModal={lukkModalCallback}
+          erTilbakekreving={false}
+        />
+      </KodeverkProvider>,
     );
 
     expect(await screen.getByTestId('SettPaVentModal')).toBeInTheDocument();

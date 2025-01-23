@@ -32,7 +32,7 @@ const MenyEndreBehandlendeEnhetIndexV2 = ({
 }: OwnProps) => {
   const filtrerteBehandlendeEnheter = useMemo(
     () => behandlendeEnheter.filter(enhet => enhet.enhetId !== behandlendeEnhetId),
-    [behandlendeEnheter],
+    [behandlendeEnheter, behandlendeEnhetId],
   );
 
   const submit = useCallback(
