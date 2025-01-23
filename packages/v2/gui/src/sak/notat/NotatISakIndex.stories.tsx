@@ -1,6 +1,7 @@
+import { notatGjelderType, type notatGjelderType as NotatGjelderType } from '@k9-sak-web/backend/k9sak/generated';
 import { HttpResponse, delay, http } from 'msw';
-import React from 'react';
 import NotatISakIndex from './NotaterIndex';
+import type { NotatResponse } from './types/NotatResponse';
 
 export default {
   title: 'sak/sak-notat',
@@ -21,50 +22,38 @@ export const VisNotatISakPanel = () => (
       fagsakHarPleietrengende
       navAnsatt={{
         brukernavn: 'saksbeh',
-        funksjonellTid: '2023-08-28T16:11:44.107219587',
-        kanBehandleKode6: false,
-        kanBehandleKode7: false,
-        kanBehandleKodeEgenAnsatt: false,
-        kanBeslutte: false,
-        kanOverstyre: false,
-        kanSaksbehandle: true,
-        kanVeilede: false,
-        navn: 'Sara Saksbehandler',
       }}
     />
   </div>
 );
 
-const notater = [
+const notater: NotatResponse[] = [
   {
-    id: 1,
     notatTekst: 'Saken er tidligere rettet opp i punsj på grunn av manglende funksjonalitet.',
-    gjelderType: { navn: 'FAGSAK' },
+    gjelderType: { navn: 'FAGSAK', kode: notatGjelderType.FAGSAK },
     versjon: 1,
     opprettetAv: 'Saksbehandler Huldra',
-    opprettetTidspunkt: new Date(),
-    endretAv: undefined,
-    endretTidspunkt: undefined,
-    fagsakId: '1',
+    opprettetTidspunkt: new Date().toISOString(),
+    endretAv: '',
+    endretTidspunkt: null,
     skjult: false,
     kanRedigere: true,
+    notatId: 1,
   },
   {
-    id: 2,
     notatTekst:
       // eslint-disable-next-line max-len
       'Bruker venter på legeerklæring fra sykehus, men har fått beskjed om at sykehuslege er på ferie og det kan derfor ta litt tid før den kommer inn. Setter derfor fristen lenger frem i tid enn normalt.',
-    gjelderType: { navn: 'PLEIETRENGENDE' },
+    gjelderType: { navn: 'PLEIETRENGENDE', kode: notatGjelderType.PLEIETRENGENDE },
     versjon: 1,
     opprettetAv: 'saksbeh',
-    opprettetTidspunkt: new Date(),
-    endretAv: undefined,
-    endretTidspunkt: undefined,
-    fagsakId: undefined,
-    aktørId: '123',
+    opprettetTidspunkt: new Date().toISOString(),
+    endretAv: '',
+    endretTidspunkt: null,
     sakstype: 'PSB',
     skjult: false,
     kanRedigere: true,
+    notatId: 2,
   },
 ];
 
@@ -72,7 +61,7 @@ type LeggTilNotatRequestBody = {
   id: number;
   notatTekst: string;
   endretAv: string;
-  notatGjelderType: { navn: string };
+  notatGjelderType: { navn: string; kode: NotatGjelderType };
   fagsakId: number;
   opprettetAv: string;
 };
@@ -84,28 +73,31 @@ VisNotatISakPanel.parameters = {
         await delay(250);
         return HttpResponse.json(notater, { status: 200 });
       }),
-      http.post<undefined, LeggTilNotatRequestBody>('/k9/sak/api/notat', async ({ request }) => {
+      http.post<object, LeggTilNotatRequestBody>('/k9/sak/api/notat', async ({ request }) => {
         const nyttNotat = await request.json();
-        const redigertNotatIndex = notater.findIndex(notat => notat.id === nyttNotat.id);
+        const redigertNotatIndex = notater.findIndex(notat => notat.notatId === nyttNotat.id);
         if (redigertNotatIndex >= 0) {
           notater[redigertNotatIndex] = {
             ...notater[redigertNotatIndex],
+            notatId: notater[redigertNotatIndex]?.notatId || nyttNotat.id,
+            opprettetAv: notater[redigertNotatIndex]?.opprettetAv || nyttNotat.opprettetAv,
+            opprettetTidspunkt: notater[redigertNotatIndex]?.opprettetTidspunkt || new Date().toISOString(),
+            skjult: notater[redigertNotatIndex]?.skjult || false,
+            kanRedigere: notater[redigertNotatIndex]?.kanRedigere || true,
             notatTekst: nyttNotat.notatTekst,
-            versjon: notater[redigertNotatIndex].versjon + 1,
+            versjon: notater[redigertNotatIndex] ? notater[redigertNotatIndex].versjon + 1 : 0,
             endretTidspunkt: new Date(),
             endretAv: nyttNotat.endretAv,
           };
         } else {
           notater.push({
-            id: notater.length + 1,
+            notatId: notater.length + 1,
             notatTekst: nyttNotat.notatTekst,
             gjelderType: nyttNotat.notatGjelderType,
-            fagsakId: nyttNotat.fagsakId,
             opprettetAv: nyttNotat.opprettetAv,
-            opprettetTidspunkt: new Date(),
+            opprettetTidspunkt: new Date().toISOString(),
             endretAv: '',
-            endretTidspunkt: undefined,
-            aktørId: '123',
+            endretTidspunkt: null,
             sakstype: 'PSB',
             versjon: 1,
             skjult: false,

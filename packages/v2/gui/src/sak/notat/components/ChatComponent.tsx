@@ -1,4 +1,4 @@
-import { NavAnsatt, NotatResponse } from '@k9-sak-web/types';
+import type { InnloggetAnsattDto } from '@k9-sak-web/backend/k9sak/generated';
 import { EyeSlashIcon, EyeWithPupilIcon, PencilIcon } from '@navikt/aksel-icons';
 import { BodyLong, Button, Chat, Label, Tag } from '@navikt/ds-react';
 import { Form, TextAreaField } from '@navikt/ft-form-hooks';
@@ -6,8 +6,8 @@ import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
-import { FormattedMessage } from 'react-intl';
+import { useSaksbehandlerOppslag } from '../../../shared/hooks/useSaksbehandlerOppslag';
+import type { NotatResponse } from '../types/NotatResponse';
 import styles from './chatComponent.module.css';
 
 export enum ChatPosition {
@@ -33,7 +33,7 @@ interface ChatComponentProps {
     saksnummer: string;
     versjon: number;
   }) => void;
-  navAnsatt: NavAnsatt;
+  navAnsatt: Pick<InnloggetAnsattDto, 'brukernavn'>;
   skjulNotat: ({
     skjul,
     id,
@@ -138,10 +138,10 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
               />
               <div className={styles.nyttNotatKnappContainer}>
                 <Button type="submit" size="small" variant="primary">
-                  <FormattedMessage id="NotatISakIndex.LagreEndringer" />
+                  Lagre endringer
                 </Button>
                 <Button onClick={toggleReadOnly} variant="secondary" size="small">
-                  <FormattedMessage id="NotatISakIndex.Avbryt" />
+                  Avbryt
                 </Button>
               </div>
             </>
@@ -149,10 +149,10 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
           <div className={styles.notatContainer}>
             <div className={styles.labelTagContainer}>
               <Label as="p" size="small">
-                <FormattedMessage id="NotatISakIndex.Gjelder" />
+                Gjelder:
               </Label>
               <Tag className={styles.navnTag} size="small" variant="neutral">
-                {gjelderType.navn}
+                {gjelderType?.navn}
               </Tag>
             </div>
             {readOnly && (
@@ -165,7 +165,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
                     variant="tertiary"
                     icon={<PencilIcon aria-hidden />}
                   >
-                    <FormattedMessage id="NotatISakIndex.Rediger" />
+                    Rediger
                   </Button>
                 )}
                 <Button
@@ -176,11 +176,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
                   icon={skjult ? <EyeSlashIcon aria-hidden /> : <EyeWithPupilIcon aria-hidden />}
                   type="button"
                 >
-                  {skjult ? (
-                    <FormattedMessage id="NotatISakIndex.VisNotat" />
-                  ) : (
-                    <FormattedMessage id="NotatISakIndex.SkjulNotat" />
-                  )}
+                  {skjult ? 'Vis notat' : 'Skjul notat'}
                 </Button>
               </div>
             )}

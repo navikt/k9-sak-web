@@ -2,7 +2,8 @@ import { httpErrorHandler } from '@fpsak-frontend/utils';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
 import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
-import { apiPaths } from '@k9-sak-web/rest-api';
+import { apiPaths as notatISakApiPaths } from '@k9-sak-web/gui/sak/notat/apiPaths.js';
+import { NotatResponse } from '@k9-sak-web/gui/sak/notat/types/NotatResponse.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
   ArbeidsgiverOpplysningerWrapper,
@@ -10,7 +11,6 @@ import {
   Fagsak,
   FeatureToggles,
   NavAnsatt,
-  NotatResponse,
   Personopplysninger,
 } from '@k9-sak-web/types';
 import {
@@ -37,7 +37,7 @@ import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
 import HistorikkIndex from './historikk/HistorikkIndex';
 import MeldingIndex from './melding/MeldingIndex';
-import NotaterIndex from './notater/NotaterIndex';
+import Notater from './notater/Notater';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
 
@@ -179,7 +179,7 @@ const BehandlingSupportIndex = ({
 
   const getNotater = (signal: AbortSignal) =>
     axios
-      .get<NotatResponse[]>(apiPaths.notatISak, {
+      .get<NotatResponse[]>(notatISakApiPaths.notatISak, {
         signal,
         params: {
           saksnummer: fagsak.saksnummer,
@@ -333,7 +333,7 @@ const BehandlingSupportIndex = ({
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.NOTATER}>
-            <NotaterIndex navAnsatt={navAnsatt} fagsak={fagsak} />
+            <Notater navAnsatt={navAnsatt} fagsak={fagsak} />
           </Tabs.Panel>
         </div>
       </div>

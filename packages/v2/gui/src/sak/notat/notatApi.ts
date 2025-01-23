@@ -1,7 +1,8 @@
-import { apiPaths } from '@k9-sak-web/rest-api';
-import { NotatGjelderType, NotatResponse } from '@k9-sak-web/types';
+import { notatGjelderType as NotatGjelderType } from '@k9-sak-web/backend/k9sak/generated';
 import axios from 'axios';
-import { Inputs } from './Notater';
+import { apiPaths } from './apiPaths';
+import { type Inputs } from './Notater';
+import type { NotatResponse } from './types/NotatResponse';
 
 export const postNotat = (
   data: Inputs,
@@ -12,7 +13,7 @@ export const postNotat = (
 ) => {
   let notatGjelderType;
   if (!id) {
-    notatGjelderType = data.visNotatIAlleSaker ? NotatGjelderType.pleietrengende : NotatGjelderType.fagsak;
+    notatGjelderType = data.visNotatIAlleSaker ? NotatGjelderType.PLEIETRENGENDE : NotatGjelderType.FAGSAK;
   }
   const postUrl = id ? '/k9/sak/api/notat/endre' : '/k9/sak/api/notat';
   return axios.post(postUrl, {

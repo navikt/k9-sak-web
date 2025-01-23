@@ -1,22 +1,11 @@
-import { NavAnsatt, NotatResponse } from '@k9-sak-web/types';
+import type { InnloggetAnsattDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Alert, Button, Heading, Loader, Switch } from '@navikt/ds-react';
 import { CheckboxField, Form, TextAreaField } from '@navikt/ft-form-hooks';
 import React, { useState } from 'react';
-import { UseFormReturn } from 'react-hook-form';
-import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
-import messages from '../i18n/nb_NO.json';
+import { type UseFormReturn } from 'react-hook-form';
 import ChatComponent from './components/ChatComponent';
 import styles from './notater.module.css';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
+import type { NotatResponse } from './types/NotatResponse';
 
 export type Inputs = {
   notatTekst: string;
@@ -32,7 +21,7 @@ export interface skjulNotatMutationVariables {
 
 interface NotaterProps {
   fagsakId: string;
-  navAnsatt: NavAnsatt;
+  navAnsatt: Pick<InnloggetAnsattDto, 'brukernavn'>;
   submitNotat: (data: Inputs, id?: number, fagsakIdFraRedigertNotat?: string, versjon?: number) => void;
   submitSkjulNotat: ({ skjul, id, saksnummer, versjon }: skjulNotatMutationVariables) => void;
   isLoading: boolean;
@@ -66,56 +55,52 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
   const alleNotaterErSkjulte = notater?.every(notat => notat.skjult);
 
   return (
-    <RawIntlProvider value={intl}>
+    <>
       {isLoading ? (
         <Loader className={styles.loader} variant="neutral" size="xlarge" title="venter..." />
       ) : (
         <>
           <div className={styles.heading}>
             <Heading level="3" size="xsmall">
-              <FormattedMessage id="NotatISakIndex.NotaterISak" />
+              Notater i sak
             </Heading>
             <Switch checked={visSkjulteNotater} size="small" onClick={toggleVisSkjulteNotater}>
-              <FormattedMessage id="NotatISakIndex.VisSkjulteNotater" />
+              Vis skjulte notater
             </Switch>
           </div>
           <Form<Inputs> formMethods={formMethods} onSubmit={submit}>
             <div className={styles.nyttNotat}>
-              <TextAreaField
-                name="notatTekst"
-                size="small"
-                label={<FormattedMessage id="NotatISakIndex.SkrivNyttNotat" />}
-              />
+              <TextAreaField name="notatTekst" size="small" label="Skriv et nytt notat" />
             </div>
             {fagsakHarPleietrengende && (
               <CheckboxField
                 className={styles.visAlleNotater}
                 name="visNotatIAlleSaker"
-                label={<FormattedMessage id="NotatISakIndex.VisNotatTilknyttetPleietrengende" />}
+                label="Vis notat i alle saker tilknyttet pleietrengende"
               />
             )}
             <Button type="submit" className={styles.leggTilNotatKnapp} size="small" variant="primary">
-              <FormattedMessage id="NotatISakIndex.LeggTilNotatButton" />
+              Legg til notat
             </Button>
           </Form>
           {!hasGetNotaterError && notater?.length === 0 && (
             <Alert className={styles.alert} size="small" variant="info">
-              <FormattedMessage id="NotatISakIndex.IngenNotaterAlert" />
+              Ingen notater er publisert i saken
             </Alert>
           )}
           {alleNotaterErSkjulte && !visSkjulteNotater && notater?.length > 0 && (
             <Alert className={styles.alert} size="small" variant="info">
-              <FormattedMessage id="NotatISakIndex.IngenAktiveNotaterAlert" />
+              Ingen aktive notater i saken
             </Alert>
           )}
           {hasGetNotaterError && (
             <Alert className={styles.alert} size="small" variant="error">
-              <FormattedMessage id="NotatISakIndex.NoeGikkGaltHentingNotater" />
+              Noe gikk galt ved henting av notater, vennligst prøv igjen senere
             </Alert>
           )}
           {postNotatMutationError && (
             <Alert className={styles.alert} size="small" variant="error">
-              <FormattedMessage id="NotatISakIndex.NoeGikkGaltLagringNotater" />
+              Noe gikk galt ved lagring av notater, vennligst prøv igjen senere
             </Alert>
           )}
           {notater?.length > 0 && (
@@ -136,7 +121,7 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
           )}
         </>
       )}
-    </RawIntlProvider>
+    </>
   );
 };
 export default Notater;

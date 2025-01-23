@@ -1,13 +1,13 @@
-import { NavAnsatt } from '@k9-sak-web/types';
+import type { InnloggetAnsattDto } from '@k9-sak-web/backend/k9sak/generated';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import Notater, { Inputs, skjulNotatMutationVariables } from './Notater';
+import Notater, { type Inputs, type skjulNotatMutationVariables } from './Notater';
 import { getNotater, postNotat, skjulNotat } from './notatApi';
 
 interface NotaterIndexProps {
   fagsakId: string;
-  navAnsatt: NavAnsatt;
+  navAnsatt: Pick<InnloggetAnsattDto, 'brukernavn'>;
   fagsakHarPleietrengende: boolean;
 }
 
@@ -33,7 +33,7 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsak
   const {
     isLoading: getNotaterLoading,
     isError: hasGetNotaterError,
-    data: notater,
+    data: notater = [],
   } = useQuery({
     queryKey: notaterQueryKey,
     queryFn: ({ signal }) => getNotater(signal, fagsakId),
