@@ -66,7 +66,7 @@ describe('<MenySettPaVentIndex>', () => {
      * Velg en venteårsak
      */
     const venteArsakFelt = screen.getByLabelText('Hva venter vi på?');
-    await userEvent.selectOptions(venteArsakFelt, venteårsak.UTV_FRIST);
+    await userEvent.selectOptions(venteArsakFelt, venteårsak.MEDISINSKE_OPPLYSNINGER);
 
     /**
      * Ssubmit
@@ -77,7 +77,7 @@ describe('<MenySettPaVentIndex>', () => {
       behandlingVersjon: 1,
       behandlingId: 3,
       frist: format(testDato, 'yyyy-MM-dd'),
-      ventearsak: venteårsak.UTV_FRIST,
+      ventearsak: venteårsak.MEDISINSKE_OPPLYSNINGER,
       ventearsakVariant: '',
     });
   });
