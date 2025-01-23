@@ -90,7 +90,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
   });
 
   const vurderOverlappendeSakFormSchema: ObjectSchema<VurderOverlappendeSakFormData> = yup.object({
-    begrunnelse: yup.string().required(),
+    begrunnelse: yup.string().required('Begrunnelse må fylles ut'),
     perioder: yup
       .array(
         yup.object({
@@ -98,7 +98,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
           søkersUttaksgrad: yup
             .number()
             .transform(v => (Number.isNaN(v) ? undefined : v))
-            .required(),
+            .required('Søkers uttaksgrad må fylles ut'),
           saksnummer: yup.array(yup.string().required()).required(),
         }),
       )
