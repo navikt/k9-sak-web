@@ -37,7 +37,7 @@ export type FormValues = {
 
 interface NyBehandlingModalProps {
   ytelseType: string;
-  saksnummer: number;
+  saksnummer: string;
   cancelEvent: () => void;
   submitCallback: (
     data: {
@@ -58,7 +58,7 @@ interface NyBehandlingModalProps {
   behandlingUuid?: string;
   uuidForSistLukkede?: string;
   erTilbakekrevingAktivert: boolean;
-  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: number; uuid: string }) => void;
+  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
   sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { uuid: string }) => void;
   aktorId?: string;
   gjeldendeVedtakBehandlendeEnhetId?: string;

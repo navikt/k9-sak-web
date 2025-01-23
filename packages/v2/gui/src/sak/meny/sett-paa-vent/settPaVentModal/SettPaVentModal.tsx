@@ -98,6 +98,10 @@ export interface FormState {
   ventearsakVariant: string;
 }
 
+interface UtvidetKodeverkObject extends KodeverkObject {
+  kanVelges: string;
+}
+
 const maxLength200 = maxLength(200);
 export const SettPaVentModal = ({
   submitCallback,
@@ -117,7 +121,7 @@ export const SettPaVentModal = ({
   const ventearsak = useWatch({ control: formMethods.control, name: 'ventearsak' });
   const ventearsakVariant = useWatch({ control: formMethods.control, name: 'ventearsakVariant' });
   const { hentKodeverkForKode } = useKodeverkContext();
-  const ventearsaker = hentKodeverkForKode(KodeverkType.VENT_AARSAK) as KodeverkObject[];
+  const ventearsaker = hentKodeverkForKode(KodeverkType.VENT_AARSAK) as UtvidetKodeverkObject[];
 
   const venteArsakHasChanged = !(originalVentearsak === ventearsak || (!ventearsak && !originalVentearsak));
   const ventearsakVariantHasChanged =
@@ -142,7 +146,7 @@ export const SettPaVentModal = ({
   const showKommentarInput = venterårsakerMedKommentarmulighet.includes(ventearsak);
 
   // TODO: #KODEVERK Må finne ut hvordan vi vet hvilke venteårsaker som kan velges
-  const venteArsakerSomKanVelges = [...ventearsaker.map(va => va.kode)];
+  const venteArsakerSomKanVelges = [...ventearsaker.filter(va => va.kanVelges === 'true').map(va => va.kode)];
 
   const toggleEndreFrist = () => setShowEndreFrist(!showEndreFrist);
 

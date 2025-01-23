@@ -6,12 +6,12 @@ import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakType } from '@k9-
 import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent } from '@storybook/test';
-import MenyNyBehandlingIndex from './MenyNyBehandlingIndex';
+import MenyNyBehandlingIndexV2 from './MenyNyBehandlingIndex';
 
 export default {
   title: 'gui/sak/meny/ny-behandling',
-  component: MenyNyBehandlingIndex,
-} satisfies Meta<typeof MenyNyBehandlingIndex>;
+  component: MenyNyBehandlingIndexV2,
+} satisfies Meta<typeof MenyNyBehandlingIndexV2>;
 
 const behandlingstyper = [
   {
@@ -52,10 +52,10 @@ const behandlingOppretting = [
   },
 ];
 
-export const Default: StoryObj<typeof MenyNyBehandlingIndex> = {
+export const Default: StoryObj<typeof MenyNyBehandlingIndexV2> = {
   args: {
     ytelseType: fagsakYtelseType.PSB,
-    saksnummer: 123,
+    saksnummer: '123',
     behandlingId: 1,
     behandlingVersjon: 2,
     behandlingType: BehandlingTypeK9Sak.FØRSTEGANGSSØKNAD,
@@ -133,9 +133,9 @@ export const Default: StoryObj<typeof MenyNyBehandlingIndex> = {
 };
 
 export const visMenyForÅLageNyTilbakekrevingsbehandling = () => (
-  <MenyNyBehandlingIndex
+  <MenyNyBehandlingIndexV2
     ytelseType={fagsakYtelseType.PSB}
-    saksnummer={123}
+    saksnummer="123"
     behandlingId={1}
     behandlingVersjon={2}
     behandlingType={BehandlingTypeK9Sak.FØRSTEGANGSSØKNAD}

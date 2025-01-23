@@ -2,7 +2,7 @@ import { fagsakYtelseType } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import MenyNyBehandlingIndex from './MenyNyBehandlingIndex';
+import MenyNyBehandlingIndexV2 from './MenyNyBehandlingIndex';
 
 describe('<MenyNyBehandlingIndex>', () => {
   it('skal vise modal og så lage ny behandling', async () => {
@@ -21,9 +21,9 @@ describe('<MenyNyBehandlingIndex>', () => {
     ];
 
     render(
-      <MenyNyBehandlingIndex
+      <MenyNyBehandlingIndexV2
         ytelseType={fagsakYtelseType.PSB}
-        saksnummer={123}
+        saksnummer="123"
         behandlingId={3}
         behandlingVersjon={1}
         behandlingType={BehandlingTypeK9Sak.FØRSTEGANGSSØKNAD}

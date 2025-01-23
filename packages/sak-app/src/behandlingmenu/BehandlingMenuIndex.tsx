@@ -15,6 +15,7 @@ import { MenySakIndex as MenySakIndexV2 } from '@k9-sak-web/gui/sak/meny/MenySak
 import MenyEndreBehandlendeEnhetIndexV2 from '@k9-sak-web/gui/sak/meny/endre-enhet/MenyEndreBehandlendeEnhetIndex.js';
 import MenyHenleggIndexV2 from '@k9-sak-web/gui/sak/meny/henlegg-behandling/MenyHenleggIndex.js';
 import MenyMarkerBehandlingV2 from '@k9-sak-web/gui/sak/meny/marker-behandling/MenyMarkerBehandling.js';
+import MenyNyBehandlingIndexV2 from '@k9-sak-web/gui/sak/meny/ny-behandling/MenyNyBehandlingIndex.js';
 import MenySettPaVentIndexV2 from '@k9-sak-web/gui/sak/meny/sett-paa-vent/MenySettPaVentIndex.js';
 import MenyTaAvVentIndexV2 from '@k9-sak-web/gui/sak/meny/ta-av-vent/MenyTaAvVentIndex.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
@@ -293,14 +294,17 @@ export const BehandlingMenuIndex = ({
             />
           )),
           new MenyData(!sakRettigheter.sakSkalTilInfotrygd, getNyBehandlingMenytekst()).medModal(lukkModal => (
-            <MenyNyBehandlingIndex
+            <MenyNyBehandlingIndexV2
               saksnummer={fagsak.saksnummer}
               behandlingId={behandlingId}
               behandlingUuid={behandling?.uuid}
               behandlingVersjon={behandlingVersjon}
-              behandlingType={behandling?.type}
+              behandlingType={behandling?.type.kode}
               uuidForSistLukkede={uuidForSistLukkede}
-              behandlingOppretting={sakRettigheter.behandlingTypeKanOpprettes}
+              behandlingOppretting={sakRettigheter.behandlingTypeKanOpprettes.map(b => ({
+                behandlingType: b.behandlingType.kode,
+                kanOppretteBehandling: b.kanOppretteBehandling,
+              }))}
               kanTilbakekrevingOpprettes={{
                 kanBehandlingOpprettes,
                 kanRevurderingOpprettes,
@@ -318,7 +322,7 @@ export const BehandlingMenuIndex = ({
                 BehandlingType.REVURDERING,
                 kodeverkTyper.BEHANDLING_AARSAK,
               )}
-              ytelseType={fagsak.sakstype}
+              ytelseType={fagsak.sakstype.kode}
               lagNyBehandling={lagNyBehandling}
               sjekkOmTilbakekrevingKanOpprettes={sjekkTilbakeKanOpprettes}
               sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkTilbakeRevurdKanOpprettes}

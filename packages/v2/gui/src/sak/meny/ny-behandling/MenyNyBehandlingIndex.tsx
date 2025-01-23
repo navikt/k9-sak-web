@@ -13,7 +13,7 @@ const TILBAKEKREVING_BEHANDLINGSTYPER = [
 
 interface OwnProps {
   ytelseType: string;
-  saksnummer: number;
+  saksnummer: string;
   behandlingId?: number;
   behandlingUuid?: string;
   behandlingVersjon?: number;
@@ -29,14 +29,14 @@ interface OwnProps {
   };
   uuidForSistLukkede?: string;
   erTilbakekrevingAktivert: boolean;
-  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: number; uuid: string }) => void;
+  sjekkOmTilbakekrevingKanOpprettes: (params: { saksnummer: string; uuid: string }) => void;
   sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: { uuid: string }) => void;
   lukkModal: () => void;
   aktorId?: string;
   gjeldendeVedtakBehandlendeEnhetId?: string;
 }
 
-const MenyNyBehandlingIndex = ({
+const MenyNyBehandlingIndexV2 = ({
   ytelseType,
   saksnummer,
   behandlingId,
@@ -98,4 +98,4 @@ const MenyNyBehandlingIndex = ({
   );
 };
 
-export default MenyNyBehandlingIndex;
+export default MenyNyBehandlingIndexV2;
