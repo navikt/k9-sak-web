@@ -4,7 +4,7 @@ import NotatISakIndex from './NotaterIndex';
 import type { NotatResponse } from './types/NotatResponse';
 
 export default {
-  title: 'sak/sak-notat',
+  title: 'gui/sak/notat',
   component: NotatISakIndex,
 };
 
