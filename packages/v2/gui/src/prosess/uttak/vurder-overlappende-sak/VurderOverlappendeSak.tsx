@@ -67,7 +67,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
   const [rediger, setRediger] = useState<boolean>(false);
   const sakAvsluttet = status === 'AVSLU';
 
-  const buildInitialValues = (data: EgneOverlappendeSakerDto | undefined): VurderOverlappendeSakFormData => {
+  const buildInitialValues = (data: EgneOverlappendeSakerDto | undefined) => {
     return {
       begrunnelse: aksjonspunkt?.begrunnelse || '',
       perioder:
@@ -95,7 +95,10 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
       .array(
         yup.object({
           periode: yup.object({ fom: yup.string().required(), tom: yup.string().required() }),
-          søkersUttaksgrad: yup.number().required(),
+          søkersUttaksgrad: yup
+            .number()
+            .transform(v => (Number.isNaN(v) ? undefined : v))
+            .required(),
           saksnummer: yup.array(yup.string().required()).required(),
         }),
       )
