@@ -5728,7 +5728,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-a11y@npm:^8.5.1":
+"@storybook/addon-a11y@npm:^8.4.7":
   version: 8.5.1
   resolution: "@storybook/addon-a11y@npm:8.5.1"
   dependencies:
@@ -5742,7 +5742,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-actions@npm:8.5.1, @storybook/addon-actions@npm:^8.5.1":
+"@storybook/addon-actions@npm:8.5.1, @storybook/addon-actions@npm:^8.4.7":
   version: 8.5.1
   resolution: "@storybook/addon-actions@npm:8.5.1"
   dependencies:
@@ -5783,7 +5783,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-docs@npm:8.5.1, @storybook/addon-docs@npm:^8.5.1":
+"@storybook/addon-docs@npm:8.5.1, @storybook/addon-docs@npm:^8.4.7":
   version: 8.5.1
   resolution: "@storybook/addon-docs@npm:8.5.1"
   dependencies:
@@ -5800,7 +5800,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-essentials@npm:^8.5.1":
+"@storybook/addon-essentials@npm:^8.4.7":
   version: 8.5.1
   resolution: "@storybook/addon-essentials@npm:8.5.1"
   dependencies:
@@ -5831,7 +5831,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-interactions@npm:^8.5.1":
+"@storybook/addon-interactions@npm:^8.4.7":
   version: 8.5.1
   resolution: "@storybook/addon-interactions@npm:8.5.1"
   dependencies:
@@ -5924,7 +5924,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/cli@npm:^8.5.1":
+"@storybook/cli@npm:^8.4.7":
   version: 8.5.1
   resolution: "@storybook/cli@npm:8.5.1"
   dependencies:
@@ -6095,7 +6095,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/react-vite@npm:^8.5.1":
+"@storybook/react-vite@npm:^8.4.7":
   version: 8.5.1
   resolution: "@storybook/react-vite@npm:8.5.1"
   dependencies:
@@ -6121,7 +6121,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/react@npm:8.5.1, @storybook/react@npm:^8.5.1":
+"@storybook/react@npm:8.5.1, @storybook/react@npm:^8.4.7":
   version: 8.5.1
   resolution: "@storybook/react@npm:8.5.1"
   dependencies:
@@ -6177,7 +6177,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/test@npm:8.5.1, @storybook/test@npm:^8.5.1":
+"@storybook/test@npm:8.5.1, @storybook/test@npm:^8.4.7":
   version: 8.5.1
   resolution: "@storybook/test@npm:8.5.1"
   dependencies:
@@ -6195,7 +6195,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/theming@npm:8.5.1, @storybook/theming@npm:^8.5.1":
+"@storybook/theming@npm:8.5.1, @storybook/theming@npm:^8.4.7":
   version: 8.5.1
   resolution: "@storybook/theming@npm:8.5.1"
   peerDependencies:
@@ -13387,17 +13387,17 @@ __metadata:
     "@sentry/browser": 8.51.0
     "@sentry/cli": 2.41.1
     "@sentry/react": ^8.51.0
-    "@storybook/addon-a11y": ^8.5.1
-    "@storybook/addon-actions": ^8.5.1
-    "@storybook/addon-docs": ^8.5.1
-    "@storybook/addon-essentials": ^8.5.1
-    "@storybook/addon-interactions": ^8.5.1
-    "@storybook/cli": ^8.5.1
-    "@storybook/react": ^8.5.1
-    "@storybook/react-vite": ^8.5.1
-    "@storybook/test": ^8.5.1
+    "@storybook/addon-a11y": ^8.4.7
+    "@storybook/addon-actions": ^8.4.7
+    "@storybook/addon-docs": ^8.4.7
+    "@storybook/addon-essentials": ^8.4.7
+    "@storybook/addon-interactions": ^8.4.7
+    "@storybook/cli": ^8.4.7
+    "@storybook/react": ^8.4.7
+    "@storybook/react-vite": ^8.4.7
+    "@storybook/test": ^8.4.7
     "@storybook/test-runner": ^0.21.0
-    "@storybook/theming": ^8.5.1
+    "@storybook/theming": ^8.4.7
     "@testing-library/dom": 10.4.0
     "@testing-library/jest-dom": ^6.6.3
     "@testing-library/react": 16.2.0
@@ -13436,7 +13436,7 @@ __metadata:
     react: 19.0.0
     react-dom: 19.0.0
     react-router: 7.1.1
-    storybook: ^8.5.1
+    storybook: ^8.4.7
     stylelint: 16.13.2
     stylelint-config-standard: ^36.0.1
     stylelint-order: 6.0.4
@@ -16914,7 +16914,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"storybook@npm:8.5.1, storybook@npm:^8.5.1":
+"storybook@npm:8.5.1, storybook@npm:^8.4.7":
   version: 8.5.1
   resolution: "storybook@npm:8.5.1"
   dependencies:
