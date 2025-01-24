@@ -74,7 +74,8 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
   const skalBrukeKlageHistorikk = enabledApplicationContexts.includes(ApplicationContextPath.KLAGE);
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
   const forrigeSaksnummer = usePrevious(saksnummer);
-  const erBehandlingEndret = forrigeSaksnummer && erBehandlingEndretFraUndefined;
+  const erBehandlingEndret: boolean =
+    forrigeSaksnummer !== undefined && forrigeSaksnummer.length > 0 && erBehandlingEndretFraUndefined;
 
   const { data: historikkK9Sak, state: historikkK9SakState } = restApiHooks.useRestApi<Historikkinnslag[]>(
     K9sakApiKeys.HISTORY_K9SAK,
