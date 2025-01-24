@@ -19,6 +19,6 @@
     "@navikt/ft-kodeverk": "^2.5.14-react19beta.0",
     "@navikt/ft-prosess-tilbakekreving-foreldelse": "^4.0.3-react19beta.0",
     "react": "19.0.0",
-    "react-intl": "7.1.0"
+    "react-intl": "7.1.4"
   }
 }
