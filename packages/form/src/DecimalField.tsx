@@ -26,7 +26,7 @@ interface DecimalFieldProps {
 
 const createNormalizeOnBlurField = WrappedNavFieldComponent => {
   interface FieldComponentProps {
-    normalizeOnBlur: (value: any) => void;
+    normalizeOnBlur?: (value: any) => void;
     component?: () => reduxFormField;
   }
   class FieldComponent extends Component<FieldComponentProps & WrappedComponentProps> {
@@ -41,7 +41,6 @@ const createNormalizeOnBlurField = WrappedNavFieldComponent => {
         // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
         <Comp
           {...props}
-          // @ts-expect-error Migrert frå ts-ignore, uvisst kvifor denne trengs
           input={{
             ...input,
             onBlur: event => {

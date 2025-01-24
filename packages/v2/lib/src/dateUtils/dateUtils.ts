@@ -121,14 +121,12 @@ export const convertHoursToDays = (hoursToConvert: number) => {
 };
 
 export const splitWeeksAndDays = (weeks: number, days: number) => {
-  const returnArray = [];
   const allDays = weeks ? weeks * 5 + days : days;
   const firstPeriodDays = allDays % 2 === 0 ? allDays / 2 : allDays / 2 + 0.5;
   const secondPeriodDays = allDays % 2 === 0 ? allDays / 2 : allDays / 2 - 0.5;
   const firstPeriodWeeksAndDays = { weeks: Math.trunc(firstPeriodDays / 5), days: firstPeriodDays % 5 };
   const secondPeriodWeeksAndDays = { weeks: Math.trunc(secondPeriodDays / 5), days: secondPeriodDays % 5 };
-  returnArray.push(secondPeriodWeeksAndDays, firstPeriodWeeksAndDays);
-  return returnArray;
+  return [secondPeriodWeeksAndDays, firstPeriodWeeksAndDays];
 };
 
 export const formatDate = (date: string) => initializeDate(date).format(DDMMYYYY_DATE_FORMAT);
