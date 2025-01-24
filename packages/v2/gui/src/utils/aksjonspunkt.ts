@@ -1,11 +1,13 @@
-import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated';
+import { behandlingStatus, type AksjonspunktDto, type BehandlingDto } from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 
-export const kanAksjonspunktRedigeres = (aksjonspunkt: AksjonspunktDto): boolean => {
-  const { status, erAktivt } = aksjonspunkt;
-  return status === aksjonspunktStatus.UTFØRT && erAktivt === true;
+export const kanAksjonspunktRedigeres = (
+  { status: apStatus, erAktivt }: Pick<AksjonspunktDto, 'status' | 'erAktivt'>,
+  { status: behStatus }: Pick<BehandlingDto, 'status'>,
+): boolean => {
+  return apStatus === aksjonspunktStatus.UTFORT && erAktivt === true && behStatus === behandlingStatus.UTRED;
 };
 
-export const erAksjonspunktReadOnly = (aksjonspunkt: AksjonspunktDto): boolean => {
-  return aksjonspunkt.kanLoses === false && aksjonspunkt.status === aksjonspunktStatus.UTFØRT;
+export const erAksjonspunktReadOnly = ({ kanLoses, status }: Pick<AksjonspunktDto, 'kanLoses' | 'status'>): boolean => {
+  return kanLoses === false && status === aksjonspunktStatus.UTFORT;
 };

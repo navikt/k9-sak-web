@@ -1,13 +1,12 @@
 import { LinkPanel } from '@navikt/ds-react';
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 import { pathToFagsak } from '@k9-sak-web/sak-app/src/app/paths';
+import { Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
+import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
 import styles from './aktoerGrid.module.css';
 
 interface OwnProps {
@@ -23,7 +22,7 @@ const AktoerGrid = ({ aktorInfo, alleKodeverk }: OwnProps) => {
 
   return (
     <>
-      <VisittkortSakIndex alleKodeverk={alleKodeverk} fagsakPerson={aktorInfo.person} />
+      <VisittkortPanel fagsakPerson={aktorInfo.person} />
       <div className={styles.list}>
         {aktorInfo.fagsaker.length ? (
           aktorInfo.fagsaker.map(fagsak => (

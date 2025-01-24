@@ -30,13 +30,14 @@ jobs:
         run: yarn build
 
       - name: Build and push to docker registry
-        uses: nais/docker-build-push@v0
+        uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@main
         id: docker-push
         with:
-          tag: 'dev-next1'
-          team: k9saksbehandling
+          additional-tag: 'dev-next1'
+          without_navikt_prefix: true
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          push-image: true
       - name: Deploy to nais
         uses: nais/deploy/actions/deploy@v2
         env:

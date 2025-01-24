@@ -2,17 +2,15 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import {Behandling} from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
 import {
   AksjonspunktInformasjon,
   SaksinformasjonUtvidetRett,
   VilkarInformasjon,
 } from '../../../../types/utvidetRettMikrofrontend/KartleggePropertyTilMikrofrontendTypes';
-import AleneOmOmsorgenObjektTilMikrofrontend
-  from './formateringAvDataTilMikrofrontend/AleneOmOmsorgenObjektTilMikrofrontend';
+import AleneOmOmsorgenObjektTilMikrofrontend from './formateringAvDataTilMikrofrontend/AleneOmOmsorgenObjektTilMikrofrontend';
 import KroniskSykObjektTilMikrofrontend from './formateringAvDataTilMikrofrontend/KroniskSykObjektTilMikrofrontend';
-import MidlertidigAleneObjektTilMikrofrontend
-  from './formateringAvDataTilMikrofrontend/MidlertidigAleneObjektTilMikrofrontend';
+import MidlertidigAleneObjektTilMikrofrontend from './formateringAvDataTilMikrofrontend/MidlertidigAleneObjektTilMikrofrontend';
 
 const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
   saksInformasjon: SaksinformasjonUtvidetRett,
@@ -33,8 +31,9 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
 
   const eksistererAksjonspunktOgVilkar = aksjonspunkt && vilkar;
   const eksistererVilkarForAutomatiskInnvilget =
-    (fagsaksType === FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN || fagsaksType === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN)
-    && vilkar;
+    (fagsaksType === FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN ||
+      fagsaksType === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN) &&
+    vilkar;
 
   if (eksistererAksjonspunktOgVilkar || eksistererVilkarForAutomatiskInnvilget) {
     const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;

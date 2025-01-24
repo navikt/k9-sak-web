@@ -70,7 +70,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
       perioder:
         data?.perioderMedOverlapp.map(periode => ({
           periode: { fom: periode.periode.fom || '', tom: periode.periode.tom || '' },
-          søkersUttaksgrad: periode.fastsattUttaksgrad,
+          søkersUttaksgrad: periode.fastsattUttaksgrad ?? undefined,
           saksnummer: periode.saksnummer.map(saksNr => saksNr || ''),
         })) || [],
     };
@@ -235,7 +235,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                         Ny uttaksgrad vil ikke være synlig i uttak før du har bekreftet.
                       </Alert>
                     )}
-                    {readOnly && kanAksjonspunktRedigeres(aksjonspunkt) && (
+                    {readOnly && kanAksjonspunktRedigeres(aksjonspunkt, { status }) && (
                       <HStack>
                         <Button size="small" variant="secondary" onClick={toggleRediger}>
                           Rediger

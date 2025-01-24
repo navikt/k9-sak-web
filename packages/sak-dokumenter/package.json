@@ -9,9 +9,9 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@tanstack/react-query": "^5.62.8",
-    "react": "18.3.1",
-    "react-intl": "7.0.1"
+    "@tanstack/react-query": "^5.64.2",
+    "react": "19.0.0",
+    "react-intl": "7.1.0"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0"

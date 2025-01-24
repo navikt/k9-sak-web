@@ -1,5 +1,5 @@
 import { Button, Modal } from '@navikt/ds-react';
-import React from 'react';
+import React, { type JSX } from 'react';
 import styles from './confirmationModal.module.css';
 
 interface ConfirmationModalProps {

@@ -72,18 +72,12 @@ spec:
       value: 'true'
     - name: TILBAKE
       value: 'true'
-    - name: SOKNADPERIODESTRIPE
-      value: 'false'
     - name: TYPE_MEDISINSKE_OPPLYSNINGER_BREV
       value: 'true'
     - name: LOS_MARKER_BEHANDLING
       value: 'true'
     - name: LOS_MARKER_BEHANDLING_SUBMIT
       value: 'false'
-    - name: AKSJONSPUNKT_9015
-      value: 'true'
-    - name: ALDERSVILKAR_KRONISK_SYK
-      value: 'true'
     - name: FRITEKST_REDIGERING
       value: 'true'
     - name: INKLUDER_KALENDER_PILS
@@ -107,7 +101,7 @@ spec:
     - name: AUTOMATISK_VURDERT_MEDLEMSKAP
       value: "true"
     - name: "BRUK_V2_SAK_DOKUMENTER"
-      value: "false"
+      value: "true"
     - name: OPPTJENING_READ_ONLY_PERIODER
       value: "true"
     - name: BRUK_INNTEKTSGRADERING_I_UTTAK
