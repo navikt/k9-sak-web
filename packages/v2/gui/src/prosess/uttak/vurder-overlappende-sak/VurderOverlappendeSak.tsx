@@ -138,7 +138,6 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
   }, [overlappendeSuccess, egneOverlappendeSaker, reset]);
 
   const submit = async (data: VurderOverlappendeSakFormData) => {
-    console.debug('SUBMIT', data);
     setLoading(true);
     const requestBody: BekreftVurderOverlappendeSakerAksjonspunktRequest = {
       behandlingId: `${id}`,
