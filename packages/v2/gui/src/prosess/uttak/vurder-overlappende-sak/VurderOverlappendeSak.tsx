@@ -1,6 +1,8 @@
 import React, { useEffect, useState, type FC } from 'react';
+import * as yup from 'yup';
 import { useQuery } from '@tanstack/react-query';
 import { useFieldArray, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Alert,
   BodyShort,
@@ -28,6 +30,7 @@ import type { BehandlingUttakBackendApiType } from '../BehandlingUttakBackendApi
 import { erAksjonspunktReadOnly, kanAksjonspunktRedigeres } from '../../../utils/aksjonspunkt';
 
 import styles from './VurderOverlappendeSak.module.css';
+import type { ObjectSchema } from 'yup';
 
 interface Props {
   behandling: Pick<BehandlingDto, 'uuid' | 'id' | 'versjon' | 'status'>;
@@ -52,7 +55,7 @@ export type BekreftVurderOverlappendeSakerAksjonspunktRequest = BekreftData['req
     perioder: Array<{
       begrunnelse: string;
       periode: { fom: string; tom: string };
-      søkersUttaksgrad: number | string;
+      søkersUttaksgrad: number;
     }>;
   }>;
 };
@@ -64,7 +67,7 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
   const [rediger, setRediger] = useState<boolean>(false);
   const sakAvsluttet = status === 'AVSLU';
 
-  const buildInitialValues = (data: EgneOverlappendeSakerDto | undefined): VurderOverlappendeSakFormData => {
+  const buildInitialValues = (data: EgneOverlappendeSakerDto | undefined) => {
     return {
       begrunnelse: aksjonspunkt?.begrunnelse || '',
       perioder:
@@ -86,7 +89,24 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
     queryFn: async () => await api.getEgneOverlappendeSaker(uuid),
   });
 
+  const vurderOverlappendeSakFormSchema: ObjectSchema<VurderOverlappendeSakFormData> = yup.object({
+    begrunnelse: yup.string().required('Begrunnelse må fylles ut'),
+    perioder: yup
+      .array(
+        yup.object({
+          periode: yup.object({ fom: yup.string().required(), tom: yup.string().required() }),
+          søkersUttaksgrad: yup
+            .number()
+            .transform(v => (Number.isNaN(v) ? undefined : v))
+            .required('Søkers uttaksgrad må fylles ut'),
+          saksnummer: yup.array(yup.string().required()).required(),
+        }),
+      )
+      .required(),
+  });
+
   const formMethods = useForm<VurderOverlappendeSakFormData>({
+    resolver: yupResolver(vurderOverlappendeSakFormSchema),
     defaultValues: {
       perioder: [],
     },

@@ -3880,7 +3880,7 @@ __metadata:
   resolution: "@k9-sak-web/backend@workspace:packages/v2/backend"
   dependencies:
     "@navikt/k9-klage-typescript-client": 1.0.20241206133624
-    "@navikt/k9-sak-typescript-client": 1.0.20250102132051
+    "@navikt/k9-sak-typescript-client": 1.0.20250117142601
     "@tanstack/eslint-plugin-query": ^5.64.2
   languageName: unknown
   linkType: soft
@@ -4419,6 +4419,7 @@ __metadata:
   resolution: "@k9-sak-web/gui@workspace:packages/v2/gui"
   dependencies:
     "@hookform/error-message": ^2.0.1
+    "@hookform/resolvers": ^3.10.0
     "@k9-sak-web/backend": "workspace:^"
     "@k9-sak-web/lib": 1.0.0
     "@navikt/ft-form-hooks": ^6.0.3-react19beta.0
@@ -4430,6 +4431,7 @@ __metadata:
     object-hash: ^3.0.0
     react: 19.0.0
     react-hook-form: 7.53.2
+    yup: ^1.6.1
   languageName: unknown
   linkType: soft
 
@@ -5218,10 +5220,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-sak-typescript-client@npm:1.0.20250102132051":
-  version: 1.0.20250102132051
-  resolution: "@navikt/k9-sak-typescript-client@npm:1.0.20250102132051::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F1.0.20250102132051%2F4e479eb94a99316d0d63abb6640787cf4a663f8d"
-  checksum: 2d2adb83d6894bb543788d2a72fc571f207f152d6297f1cd6366f9d298b72d720fbae0c408ca38f66539fe1c6d8dbcc5901be438ffe7405b66ff019a04e661ca
+"@navikt/k9-sak-typescript-client@npm:1.0.20250117142601":
+  version: 1.0.20250117142601
+  resolution: "@navikt/k9-sak-typescript-client@npm:1.0.20250117142601::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-sak-typescript-client%2F1.0.20250117142601%2F30277ac79c5450c19cb50545e9225ddaac4f3030"
+  checksum: e94a579efa2e8739a10cc503128aa868fbdaf2fe5be34b0f4f6f2806c377745928ed6fa73dd2d427a33fc542e5a4a2c7b0503dd02dc5a2d0db848c6354855d46
   languageName: node
   linkType: hard
 
@@ -19011,7 +19013,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yup@npm:1.6.1":
+"yup@npm:1.6.1, yup@npm:^1.6.1":
   version: 1.6.1
   resolution: "yup@npm:1.6.1"
   dependencies:
