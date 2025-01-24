@@ -57,7 +57,7 @@ describe('<DocumentList>', () => {
       journalpostId: '1',
       dokumentId: '1',
       tittel: 'Terminbekreftelse',
-      tidspunkt: null,
+      tidspunkt: undefined,
       kommunikasjonsretning: kommunikasjonsretning.INN,
     };
 
