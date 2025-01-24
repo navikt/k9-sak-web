@@ -16,9 +16,8 @@ import {
   TextField,
   VStack,
 } from '@navikt/ds-react';
-import { Form, NumberField, TextAreaField } from '@navikt/ft-form-hooks';
+import { Form } from '@navikt/ft-form-hooks';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
-import { hasValidInteger, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { formatPeriod } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import type {
   AksjonspunktDto,
@@ -90,15 +89,26 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
   });
 
   const vurderOverlappendeSakFormSchema: ObjectSchema<VurderOverlappendeSakFormData> = yup.object({
-    begrunnelse: yup.string().required('Begrunnelse må fylles ut'),
+    begrunnelse: yup
+      .string()
+      .min(3, 'Du må skrive minst tre tegn')
+      .max(2000, 'Maks 2000 tegn tillatt.')
+      .required('Begrunnelse må fylles ut'),
     perioder: yup
       .array(
         yup.object({
           periode: yup.object({ fom: yup.string().required(), tom: yup.string().required() }),
           søkersUttaksgrad: yup
             .number()
+            // Handter tal tasta inn med , som desimalteikn:
+            .transform((v, origV) =>
+              Number.isNaN(v) && typeof origV === 'string' ? Number(origV.replace(',', '.')) : v,
+            )
+            // Vi vil ha undefined istadenfor NaN
             .transform(v => (Number.isNaN(v) ? undefined : v))
-            .required('Søkers uttaksgrad må fylles ut'),
+            .required('Søkers uttaksgrad må fylles ut')
+            .min(0, 'Minimum 0%')
+            .max(100, 'Maks 100%'),
           saksnummer: yup.array(yup.string().required()).required(),
         }),
       )
@@ -112,7 +122,12 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
     },
   });
 
-  const { reset, control, register } = formMethods;
+  const {
+    reset,
+    control,
+    register,
+    formState: { errors },
+  } = formMethods;
   const { fields } = useFieldArray({ control, name: 'perioder' });
 
   useEffect(() => {
@@ -215,36 +230,24 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                   } = field;
                   return (
                     <div key={`${fom}-${tom}-${saksnummer}`}>
-                      {readOnly ? (
-                        <TextField
-                          label={`Sett uttaksgrad i prosent for perioden ${formatPeriod(fom || '', tom || '')}`}
-                          size="small"
-                          className={styles['uttaksgradField']}
-                          readOnly
-                          {...register(`perioder.${index}.søkersUttaksgrad`)}
-                        />
-                      ) : (
-                        <NumberField
-                          label={`Sett uttaksgrad i prosent for perioden ${formatPeriod(fom || '', tom || '')}`}
-                          name={`perioder.${index}.søkersUttaksgrad`}
-                          validate={[required, hasValidInteger, minLength(1), maxLength(3)]}
-                          className={styles['uttaksgradField']}
-                          readOnly={readOnly}
-                        />
-                      )}
+                      <TextField
+                        label={`Sett uttaksgrad i prosent for perioden ${formatPeriod(fom || '', tom || '')}`}
+                        inputMode="numeric"
+                        size="small"
+                        className={styles['uttaksgradField']}
+                        readOnly={readOnly}
+                        {...register(`perioder.${index}.søkersUttaksgrad`)}
+                        error={errors.perioder?.[index]?.søkersUttaksgrad?.message}
+                      />
                     </div>
                   );
                 })}
-                {readOnly ? (
-                  <Textarea label="Begrunnelse" readOnly {...register('begrunnelse')} />
-                ) : (
-                  <TextAreaField
-                    name="begrunnelse"
-                    label="Begrunnelse"
-                    validate={[required, maxLength(2000), minLength(3)]}
-                    readOnly={readOnly}
-                  />
-                )}
+                <Textarea
+                  label="Begrunnelse"
+                  readOnly={readOnly}
+                  {...register('begrunnelse')}
+                  error={errors.begrunnelse?.message}
+                />
 
                 {saksbehandler && <AssessedBy ident={saksbehandler} date={vurdertTidspunkt} />}
 
