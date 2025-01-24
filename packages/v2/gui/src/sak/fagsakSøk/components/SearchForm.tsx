@@ -1,7 +1,7 @@
 import { Alert, Button, Heading } from '@navikt/ds-react';
 import { Form, InputField } from '@navikt/ft-form-hooks';
-import { hasValidSaksnummerOrFodselsnummerFormat } from '@navikt/ft-form-validators';
 import { useForm } from 'react-hook-form';
+import { hasValidSaksnummerOrFodselsnummerFormat } from '../../../utils/validation/validators';
 import styles from './searchForm.module.css';
 
 const isButtonDisabled = (searchStarted: boolean, searchString?: string): boolean =>
