@@ -229,9 +229,9 @@ export const LøstAksjonspunktKanRedigeres: Story = {
 
       await expect(knapp).toHaveTextContent('Rediger');
       await userEvent.click(knapp);
-      await expect(feltEn.getAttribute('readonly')).toEqual('');
-      await expect(feltTo.getAttribute('readonly')).toEqual('');
-      await expect(begrunnelseFelt.getAttribute('readonly')).toEqual('');
+      await expect(feltEn).not.toHaveAttribute('readonly');
+      await expect(feltTo).not.toHaveAttribute('readonly');
+      await expect(begrunnelseFelt).not.toHaveAttribute('readonly');
 
       await userEvent.click(await canvas.getByRole('button', { name: /Avbryt/i }));
       await expect(feltTo).toHaveAttribute('readonly');
