@@ -1,4 +1,4 @@
-import type { utilgjengeligÅrsak } from '@k9-sak-web/backend/k9sak/generated';
+import type { BrevMottakerinfoEregResponseDtoUtilgjengeligÅrsak as utilgjengeligÅrsak } from '@k9-sak-web/backend/k9sak/generated';
 
 export interface EregOrganizationLookupResponse {
   readonly name?: string | undefined;

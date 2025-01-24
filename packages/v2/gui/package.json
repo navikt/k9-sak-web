@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
+    "@hookform/resolvers": "^3.10.0",
     "@k9-sak-web/backend": "workspace:^",
     "@k9-sak-web/lib": "1.0.0",
     "@navikt/ft-form-hooks": "^6.0.3-react19beta.0",
@@ -26,6 +27,7 @@
     "axios": "1.7.9",
     "object-hash": "^3.0.0",
     "react": "19.0.0",
-    "react-hook-form": "7.53.2"
+    "react-hook-form": "7.53.2",
+    "yup": "^1.6.1"
   }
 }

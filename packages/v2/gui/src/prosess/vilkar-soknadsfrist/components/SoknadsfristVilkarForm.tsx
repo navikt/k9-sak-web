@@ -177,7 +177,7 @@ export const SoknadsfristVilkarForm = ({
     ap =>
       ap.definisjon === aksjonspunktkodeDefinisjonType.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST &&
       ap.aksjonspunktType === aksjonspunktType.MANUELL &&
-      ap.status === aksjonspunktStatus.UTFORT,
+      ap.status === aksjonspunktStatus.UTFØRT,
   );
 
   const isSolvable =
