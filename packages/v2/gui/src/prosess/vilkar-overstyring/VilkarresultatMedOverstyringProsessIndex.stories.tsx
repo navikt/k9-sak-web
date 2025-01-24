@@ -1,4 +1,8 @@
-import { behandlingStatus, merknad, sakstype } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  BehandlingDtoStatus as behandlingStatus,
+  VilkårPeriodeDtoMerknad as merknad,
+  FagsakDtoSakstype as sakstype,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { aksjonspunktkodeDefinisjonType } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktkodeDefinisjon.js';
 import { aksjonspunktStatus } from '@k9-sak-web/backend/k9sak/kodeverk/AksjonspunktStatus.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
@@ -19,7 +23,7 @@ const vilkarOpptjening = [
     perioder: [
       {
         vilkarStatus: vilkårStatus.OPPFYLT,
-        merknad: merknad['VM_7847_B'],
+        merknad: merknad.VM_7847_B,
         periode: {
           fom: '2020-01-30',
           tom: '2020-02-29',
@@ -27,7 +31,7 @@ const vilkarOpptjening = [
       },
       {
         vilkarStatus: vilkårStatus.OPPFYLT,
-        merknad: merknad['UDEFINERT'],
+        merknad: merknad.UDEFINERT,
         periode: {
           fom: '2020-03-01',
           tom: '2020-03-31',
@@ -67,8 +71,8 @@ const behandling = {
   versjon: 1,
   type: behandlingType.FØRSTEGANGSSØKNAD,
   opprettet: '2020-01-01',
-  sakstype: sakstype['_'],
-  status: behandlingStatus['OPPRE'],
+  sakstype: sakstype.UDEFINERT,
+  status: behandlingStatus.OPPRETTET,
   uuid: 'testUuid',
 };
 
@@ -153,7 +157,7 @@ export const VisOverstyrtAksjonspunktSomErBekreftet: Story = {
     aksjonspunkter: [
       {
         definisjon: aksjonspunktkodeDefinisjonType.OVERSTYRING_AV_OPPTJENINGSVILKARET,
-        status: aksjonspunktStatus.UTFORT,
+        status: aksjonspunktStatus.UTFØRT,
         kanLoses: false,
         begrunnelse: 'Dette er en begrunnelse',
       },
@@ -195,7 +199,7 @@ export const VisOverstyrtAksjonspunktSomIkkeErBekreftet: Story = {
         perioder: [
           {
             vilkarStatus: vilkårStatus.IKKE_VURDERT,
-            merknad: merknad['VM_7847_B'],
+            merknad: merknad.VM_7847_B,
             periode: {
               fom: '2020-01-30',
               tom: '2020-02-29',

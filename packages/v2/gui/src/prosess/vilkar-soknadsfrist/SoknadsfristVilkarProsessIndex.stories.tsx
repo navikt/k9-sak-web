@@ -281,19 +281,19 @@ export const VisSoknadsfristAksjonspunkt5077: Story = {
           {
             perioder: [
               {
-                avslagKode: null,
+                avslagKode: undefined,
                 merknadParametere: {},
                 vilkarStatus: 'IKKE_VURDERT', // kodeverk: 'VILKAR_UTFALL_TYPE'
                 periode: { fom: '2021-04-28', tom: '2021-04-30' },
-                begrunnelse: null,
+                begrunnelse: undefined,
                 vurderesIBehandlingen: true,
               },
               {
-                avslagKode: null,
+                avslagKode: undefined,
                 merknadParametere: {},
                 vilkarStatus: 'OPPFYLT', // kodeverk: 'VILKAR_UTFALL_TYPE'
                 periode: { fom: '2021-05-01', tom: '2021-05-05' },
-                begrunnelse: null,
+                begrunnelse: undefined,
                 vurderesIBehandlingen: true,
               },
             ],
@@ -369,23 +369,23 @@ export const visSoknadsfristAksjonspunkt5077Delvis: Story = {
                 merknadParametere: {},
                 vilkarStatus: 'IKKE_OPPFYLT', // kodeverk: 'VILKAR_UTFALL_TYPE'
                 periode: { fom: '2021-04-26', tom: '2021-04-27' },
-                begrunnelse: null,
+                begrunnelse: undefined,
                 vurderesIBehandlingen: true,
               },
               {
-                avslagKode: null,
+                avslagKode: undefined,
                 merknadParametere: {},
                 vilkarStatus: 'OPPFYLT', // kodeverk: 'VILKAR_UTFALL_TYPE'
                 periode: { fom: '2021-04-28', tom: '2021-04-30' },
-                begrunnelse: null,
+                begrunnelse: undefined,
                 vurderesIBehandlingen: true,
               },
               {
-                avslagKode: null,
+                avslagKode: undefined,
                 merknadParametere: {},
                 vilkarStatus: 'OPPFYLT', // kodeverk: 'VILKAR_UTFALL_TYPE'
                 periode: { fom: '2021-05-01', tom: '2021-05-06' },
-                begrunnelse: null,
+                begrunnelse: undefined,
                 vurderesIBehandlingen: true,
               },
             ],
@@ -467,26 +467,26 @@ export const VisSoknadsfristAksjonspunkt5077FlereSøknader: Story = {
             lovReferanse: '§ 22-13 tredje ledd',
             perioder: [
               {
-                avslagKode: null,
+                avslagKode: undefined,
                 merknadParametere: {},
                 vilkarStatus: 'IKKE_VURDERT', // kodeverk: 'VILKAR_UTFALL_TYPE'
                 periode: {
                   fom: '2024-03-04',
                   tom: '2024-03-08',
                 },
-                begrunnelse: null,
+                begrunnelse: undefined,
                 vurderesIBehandlingen: true,
                 vurdersIBehandlingen: true,
               },
               {
-                avslagKode: null,
+                avslagKode: undefined,
                 merknadParametere: {},
                 vilkarStatus: 'IKKE_VURDERT', // kodeverk: 'VILKAR_UTFALL_TYPE'
                 periode: {
                   fom: '2024-03-25',
                   tom: '2024-03-29',
                 },
-                begrunnelse: null,
+                begrunnelse: undefined,
                 vurderesIBehandlingen: true,
                 vurdersIBehandlingen: true,
               },

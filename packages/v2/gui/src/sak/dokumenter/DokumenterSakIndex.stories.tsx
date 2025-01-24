@@ -37,7 +37,7 @@ const dokumenter = [
 ];
 
 const fagsak = {
-  sakstype: fagsakYtelsesType.PSB,
+  sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
   person: {
     personnummer: '12345678910',
   },

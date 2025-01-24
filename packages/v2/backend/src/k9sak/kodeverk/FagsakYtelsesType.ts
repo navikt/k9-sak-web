@@ -1,6 +1,6 @@
 import {
-  type fagsakYtelseType as generatedFagsakYtelseTypeEnumUnion,
-  fagsakYtelseType as generatedFagsakYtelseType,
+  type FagsakDtoSakstype as generatedFagsakYtelseTypeEnumUnion,
+  FagsakDtoSakstype as generatedFagsakYtelseType,
 } from '../generated';
 import type { Kodeverk } from '../../shared/Kodeverk.js';
 
