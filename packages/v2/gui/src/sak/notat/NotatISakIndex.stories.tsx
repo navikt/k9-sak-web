@@ -1,4 +1,7 @@
-import { notatGjelderType, type notatGjelderType as NotatGjelderType } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  OpprettNotatDtoNotatGjelderType,
+  type OpprettNotatDtoNotatGjelderType as NotatGjelderType,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { HttpResponse, delay, http } from 'msw';
 import NotatISakIndex from './NotaterIndex';
 import type { NotatResponse } from './types/NotatResponse';
@@ -30,7 +33,7 @@ export const VisNotatISakPanel = () => (
 const notater: NotatResponse[] = [
   {
     notatTekst: 'Saken er tidligere rettet opp i punsj på grunn av manglende funksjonalitet.',
-    gjelderType: { navn: 'FAGSAK', kode: notatGjelderType.FAGSAK },
+    gjelderType: { navn: 'FAGSAK', kode: OpprettNotatDtoNotatGjelderType.FAGSAK },
     versjon: 1,
     opprettetAv: 'Saksbehandler Huldra',
     opprettetTidspunkt: new Date().toISOString(),
@@ -44,7 +47,7 @@ const notater: NotatResponse[] = [
     notatTekst:
       // eslint-disable-next-line max-len
       'Bruker venter på legeerklæring fra sykehus, men har fått beskjed om at sykehuslege er på ferie og det kan derfor ta litt tid før den kommer inn. Setter derfor fristen lenger frem i tid enn normalt.',
-    gjelderType: { navn: 'PLEIETRENGENDE', kode: notatGjelderType.PLEIETRENGENDE },
+    gjelderType: { navn: 'PLEIETRENGENDE', kode: OpprettNotatDtoNotatGjelderType.PLEIETRENGENDE },
     versjon: 1,
     opprettetAv: 'saksbeh',
     opprettetTidspunkt: new Date().toISOString(),

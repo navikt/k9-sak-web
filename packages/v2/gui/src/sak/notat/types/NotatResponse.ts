@@ -1,9 +1,9 @@
-import type { notatGjelderType } from '@k9-sak-web/backend/k9sak/generated';
+import type { OpprettNotatDtoNotatGjelderType } from '@k9-sak-web/backend/k9sak/generated';
 
 export interface NotatResponse {
   endretAv: string;
   endretTidspunkt: null | Date;
-  gjelderType?: { kode: notatGjelderType; navn: string };
+  gjelderType?: { kode: OpprettNotatDtoNotatGjelderType; navn: string };
   notatId: number;
   notatTekst: string;
   opprettetAv: string;
