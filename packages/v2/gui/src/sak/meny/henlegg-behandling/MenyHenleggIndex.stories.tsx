@@ -1,6 +1,9 @@
 import { behandlingResultatType as behandlingResultatTypeK9Klage } from '@k9-sak-web/backend/k9klage/generated';
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
-import { behandlingResultatType as behandlingResultatTypeK9Sak, sakstype } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  BehandlingsresultatDtoType as behandlingResultatTypeK9Sak,
+  BehandlingDtoSakstype as fagsakYtelseType,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType as BehandlingTypeK9SAK } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
@@ -28,7 +31,7 @@ export const HenleggFørstegangssøknadPleiepenger: StoryObj<typeof MenyHenleggI
     behandlingVersjon: 2,
     henleggBehandling: action('button-click') as (params: HenleggParams) => Promise<any>,
     forhandsvisHenleggBehandling: action('button-click'),
-    ytelseType: sakstype.PSB,
+    ytelseType: fagsakYtelseType.PLEIEPENGER_SYKT_BARN,
     behandlingType: BehandlingTypeK9SAK.FØRSTEGANGSSØKNAD,
     behandlingResultatTyper: [
       behandlingResultatTypeK9Sak.HENLAGT_FEILOPPRETTET,

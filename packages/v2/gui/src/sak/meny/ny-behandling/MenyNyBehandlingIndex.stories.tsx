@@ -1,5 +1,5 @@
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
-import { fagsakYtelseType } from '@k9-sak-web/backend/k9sak/generated';
+import { BehandlingDtoSakstype as fagsakYtelseType } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { behandlingÅrsakType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingÅrsakType.js';
 import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
@@ -54,7 +54,7 @@ const behandlingOppretting = [
 
 export const Default: StoryObj<typeof MenyNyBehandlingIndexV2> = {
   args: {
-    ytelseType: fagsakYtelseType.PSB,
+    ytelseType: fagsakYtelseType.PLEIEPENGER_SYKT_BARN,
     saksnummer: '123',
     behandlingId: 1,
     behandlingVersjon: 2,
@@ -134,7 +134,7 @@ export const Default: StoryObj<typeof MenyNyBehandlingIndexV2> = {
 
 export const visMenyForÅLageNyTilbakekrevingsbehandling = () => (
   <MenyNyBehandlingIndexV2
-    ytelseType={fagsakYtelseType.PSB}
+    ytelseType={fagsakYtelseType.PLEIEPENGER_SYKT_BARN}
     saksnummer="123"
     behandlingId={1}
     behandlingVersjon={2}

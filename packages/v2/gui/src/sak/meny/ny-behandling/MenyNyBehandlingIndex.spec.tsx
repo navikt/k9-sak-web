@@ -1,4 +1,4 @@
-import { fagsakYtelseType } from '@k9-sak-web/backend/k9sak/generated';
+import { BehandlingDtoSakstype as fagsakYtelseType } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -22,7 +22,7 @@ describe('<MenyNyBehandlingIndex>', () => {
 
     render(
       <MenyNyBehandlingIndexV2
-        ytelseType={fagsakYtelseType.PSB}
+        ytelseType={fagsakYtelseType.PLEIEPENGER_SYKT_BARN}
         saksnummer="123"
         behandlingId={3}
         behandlingVersjon={1}
@@ -62,7 +62,7 @@ describe('<MenyNyBehandlingIndex>', () => {
       eksternUuid: '2323',
       saksnummer: '123',
       behandlingType: BehandlingTypeK9Sak.FØRSTEGANGSSØKNAD,
-      fagsakYtelseType: fagsakYtelseType.PSB,
+      fagsakYtelseType: fagsakYtelseType.PLEIEPENGER_SYKT_BARN,
     });
 
     expect(lukkModalCallback.mock.calls).toHaveLength(1);

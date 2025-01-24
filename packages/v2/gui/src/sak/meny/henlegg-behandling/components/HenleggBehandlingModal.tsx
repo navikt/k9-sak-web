@@ -1,8 +1,8 @@
 import { behandlingResultatType as behandlingResultatTypeK9Klage } from '@k9-sak-web/backend/k9klage/generated';
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import {
-  behandlingResultatType as behandlingResultatTypeK9Sak,
-  sakstype as fagsakYtelseType,
+  BehandlingDtoBehandlingResultatType as behandlingResultatTypeK9Sak,
+  BehandlingDtoSakstype as fagsakYtelseType,
   type ArbeidsgiverOversiktDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType as BehandlingTypeK9SAK } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
@@ -108,8 +108,8 @@ export const getHenleggArsaker = (
   return typerForBehandlingType
     .filter(
       type =>
-        ytelseType !== fagsakYtelseType.ES ||
-        (ytelseType === fagsakYtelseType.ES && type !== behandlingResultatTypeK9Sak.MANGLER_BEREGNINGSREGLER),
+        ytelseType !== fagsakYtelseType.ENGANGSTØNAD ||
+        (ytelseType === fagsakYtelseType.ENGANGSTØNAD && type !== behandlingResultatTypeK9Sak.MANGLER_BEREGNINGSREGLER),
     )
     .map(type => behandlingResultatTyper.find(brt => brt === type))
     .filter((type): type is Årsaker => type !== undefined);

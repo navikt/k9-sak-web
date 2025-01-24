@@ -1,4 +1,4 @@
-import { venteårsak } from '@k9-sak-web/backend/k9sak/generated';
+import { AksjonspunktDtoVenteårsak } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
@@ -47,7 +47,7 @@ describe('<MenySettPaVentIndex>', () => {
      * Velg en venteårsak
      */
     const venteArsakFelt = screen.getByLabelText('Hva venter vi på?');
-    await userEvent.selectOptions(venteArsakFelt, venteårsak.MEDISINSKE_OPPLYSNINGER);
+    await userEvent.selectOptions(venteArsakFelt, AksjonspunktDtoVenteårsak.MEDISINSKE_OPPLYSNINGER);
 
     /**
      * Ssubmit
@@ -58,7 +58,7 @@ describe('<MenySettPaVentIndex>', () => {
       behandlingVersjon: 1,
       behandlingId: 3,
       frist: format(testDato, 'yyyy-MM-dd'),
-      ventearsak: venteårsak.MEDISINSKE_OPPLYSNINGER,
+      ventearsak: AksjonspunktDtoVenteårsak.MEDISINSKE_OPPLYSNINGER,
       ventearsakVariant: '',
     });
   });

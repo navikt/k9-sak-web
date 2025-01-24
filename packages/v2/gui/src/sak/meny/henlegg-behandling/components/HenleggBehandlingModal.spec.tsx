@@ -1,14 +1,14 @@
 import { behandlingResultatType as behandlingResultatTypeK9Klage } from '@k9-sak-web/backend/k9klage/generated';
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import {
-  behandlingResultatType as behandlingResultatTypeK9Sak,
-  sakstype as fagsakYtelseType,
+  BehandlingDtoBehandlingResultatType as behandlingResultatTypeK9Sak,
+  BehandlingDtoSakstype as fagsakYtelseType,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType as BehandlingTypeK9SAK } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { getHenleggArsaker } from './HenleggBehandlingModal';
 
 describe('<HenleggBehandlingModal>', () => {
-  const ytelseType = fagsakYtelseType.PSB;
+  const ytelseType = fagsakYtelseType.PLEIEPENGER_SYKT_BARN;
 
   const behandlingResultatTyper = [
     behandlingResultatTypeK9Klage.HENLAGT_KLAGE_TRUKKET,
@@ -60,7 +60,7 @@ describe('<HenleggBehandlingModal>', () => {
 
   it('skal bruke behandlingsresultat-typer for førstegangsbehandling når ytelsestype er Engangsstønad', () => {
     const behandlingsType = BehandlingTypeK9SAK.FØRSTEGANGSSØKNAD;
-    const resultat = getHenleggArsaker(behandlingResultatTyper, behandlingsType, fagsakYtelseType.ES);
+    const resultat = getHenleggArsaker(behandlingResultatTyper, behandlingsType, fagsakYtelseType.ENGANGSTØNAD);
     expect(resultat.map(r => r)).toEqual([
       behandlingResultatTypeK9Sak.HENLAGT_SØKNAD_TRUKKET,
       behandlingResultatTypeK9Sak.HENLAGT_FEILOPPRETTET,
