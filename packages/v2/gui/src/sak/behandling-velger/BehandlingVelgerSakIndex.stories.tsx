@@ -12,6 +12,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect } from '@storybook/test';
 import BehandlingVelgerSakV2 from './BehandlingVelgerSakIndex';
 
 const behandlinger = [
@@ -200,5 +201,15 @@ export const Default: StoryObj<typeof BehandlingVelgerSakV2> = {
     behandlinger,
     noExistingBehandlinger: false,
     behandlingId: 1,
+  },
+  play: async ({ canvas, step }) => {
+    await step('skal rendre komponent', () => {
+      expect(canvas.getByText('2. REVURDERING')).toBeInTheDocument();
+      expect(canvas.getByText('20.12.2021')).toBeInTheDocument();
+    });
+
+    await step('skal vise forklarende tekst når det ikke finnes behandlinger', () => {
+      expect(canvas.getByText('Ingen behandlinger er opprettet')).toBeInTheDocument();
+    });
   },
 };
