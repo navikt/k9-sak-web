@@ -69,7 +69,7 @@ const Utenlandsopphold = ({
     return { fom, tom, items: mapItems(periode) };
   });
 
-  const erPleiepenger = fagsakYtelseType === fagsakYtelsesType.PSB;
+  const erPleiepenger = fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
 
   return (
     <div className={styles.utenlandsopphold}>

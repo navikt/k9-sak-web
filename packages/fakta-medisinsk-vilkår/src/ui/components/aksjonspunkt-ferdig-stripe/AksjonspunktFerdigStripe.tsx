@@ -10,7 +10,7 @@ const AksjonspunktFerdigStripe = (): JSX.Element => {
   const { onFinished } = React.useContext(ContainerContext);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const { fagsakYtelseType } = React.useContext(ContainerContext);
-  const erPleiepengerSluttfaseFagsak = fagsakYtelseType === fagsakYtelsesType.PPN;
+  const erPleiepengerSluttfaseFagsak = fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
 
   return (
     <Box marginBottom={Margin.medium}>

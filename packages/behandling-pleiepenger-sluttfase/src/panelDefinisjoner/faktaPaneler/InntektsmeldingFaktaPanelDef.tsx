@@ -29,7 +29,8 @@ class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
     dokumenter,
   });
 
-  getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) => fagsak.sakstype === fagsakYtelsesType.PPN;
+  getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) =>
+    fagsak.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
 }
 
 export default InntektsmeldingFaktaPanelDef;

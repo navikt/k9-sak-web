@@ -64,7 +64,7 @@ const behandlingOppretting = [
 
 export const visMenyForÅLageNyBehandling = () => (
   <MenyNyBehandlingIndex
-    ytelseType={fagsakYtelsesType.FP} // YTELSE_TYPE
+    ytelseType={fagsakYtelsesType.FORELDREPENGER} // YTELSE_TYPE
     saksnummer="123"
     behandlingId={1}
     behandlingVersjon={2}
@@ -101,7 +101,7 @@ export const visMenyForÅLageNyBehandling = () => (
 
 export const visMenyForÅLageNyTilbakekrevingsbehandling = () => (
   <MenyNyBehandlingIndex
-    ytelseType={fagsakYtelsesType.FP} // YTELSE_TYPE
+    ytelseType={fagsakYtelsesType.FORELDREPENGER} // YTELSE_TYPE
     saksnummer="123"
     behandlingId={1}
     behandlingVersjon={2}

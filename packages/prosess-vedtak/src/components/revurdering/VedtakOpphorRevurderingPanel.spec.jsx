@@ -41,7 +41,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
         intl={intlMock}
         vilkar={vilkar}
         readOnly
-        ytelseTypeKode={fagsakYtelsesType.FP}
+        ytelseTypeKode={fagsakYtelsesType.FORELDREPENGER}
         aksjonspunkter={[]}
         behandlingsresultat={behandlingsresultat}
         revurderingsAarsakString="Test"
@@ -84,7 +84,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
         intl={intlMock}
         vilkar={vilkar}
         readOnly
-        ytelseTypeKode={fagsakYtelsesType.SVP}
+        ytelseTypeKode={fagsakYtelsesType.SVANGERSKAPSPENGER}
         aksjonspunkter={[]}
         behandlingsresultat={behandlingsresultat}
         revurderingsAarsakString="Test"

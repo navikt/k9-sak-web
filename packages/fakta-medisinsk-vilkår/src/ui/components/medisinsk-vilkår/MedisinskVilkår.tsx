@@ -67,11 +67,11 @@ const TabItem = ({ label, showWarningIcon }: TabItemProps) => {
 };
 
 const sykdomTittel = (fagsakYtelseType: FagsakYtelsesType) => {
-  if (fagsakYtelseType === fagsakYtelsesType.OLP) {
+  if (fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
     return 'Sykdom og opplæring';
   }
 
-  if (fagsakYtelseType === fagsakYtelsesType.PPN) {
+  if (fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'Livets sluttfase';
   }
 
@@ -95,9 +95,9 @@ const MedisinskVilkår = (): JSX.Element => {
 
   const finnNesteStegFn = (nesteSteg: SykdomsstegStatusResponse, isOnMount?: boolean) => {
     switch (fagsakYtelseType) {
-      case fagsakYtelsesType.OLP:
+      case fagsakYtelsesType.OPPLÆRINGSPENGER:
         return finnNesteStegForOpplæringspenger(nesteSteg, isOnMount);
-      case fagsakYtelsesType.PPN:
+      case fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE:
         return finnNesteStegForLivetsSluttfase(nesteSteg, isOnMount);
       default:
         return finnNesteStegForPleiepenger(nesteSteg, isOnMount);

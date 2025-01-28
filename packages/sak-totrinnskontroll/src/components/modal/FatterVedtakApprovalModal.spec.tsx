@@ -14,7 +14,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         allAksjonspunktApproved
         behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
         behandlingTypeKode={BehandlingType.KLAGE}
-        fagsakYtelseType={fagsakYtelsesType.FP}
+        fagsakYtelseType={fagsakYtelsesType.FORELDREPENGER}
         erKlageWithKA
       />,
     );
@@ -30,7 +30,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         allAksjonspunktApproved
         behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-        fagsakYtelseType={fagsakYtelsesType.ES}
+        fagsakYtelseType={fagsakYtelsesType.ENGANGSTØNAD}
         erKlageWithKA
       />,
     );
@@ -48,7 +48,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         allAksjonspunktApproved
         behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-        fagsakYtelseType={fagsakYtelsesType.OMP_KS}
+        fagsakYtelseType={fagsakYtelsesType.OMSORGSPENGER_KS}
         erKlageWithKA
       />,
     );

@@ -87,7 +87,7 @@ export const visÅpentAksjonspunktOgInnvilgetForForeldrepenger = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={fagsakYtelsesType.FP}
+        ytelseType={fagsakYtelsesType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -126,7 +126,7 @@ export const visDelvisInnvilgetForOmsorgspenger = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseTypeKode={fagsakYtelsesType.OMP}
+        ytelseTypeKode={fagsakYtelsesType.OMSORGSPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -176,7 +176,7 @@ export const visAvslagForForeldrepenger = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={fagsakYtelsesType.FP}
+        ytelseType={fagsakYtelsesType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -217,7 +217,7 @@ export const visÅpentAksjonspunktForSvangerskapspenger = args => {
             erAktivt: true,
           },
         ]}
-        ytelseType={fagsakYtelsesType.SVP}
+        ytelseType={fagsakYtelsesType.SVANGERSKAPSPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -279,7 +279,7 @@ export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = args => 
             erAktivt: true,
           },
         ]}
-        ytelseType={fagsakYtelsesType.SVP}
+        ytelseType={fagsakYtelsesType.SVANGERSKAPSPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -320,7 +320,7 @@ export const visÅpentAksjonspunktForEngangsstønad = args => {
             erAktivt: true,
           },
         ]}
-        ytelseType={fagsakYtelsesType.ES}
+        ytelseType={fagsakYtelsesType.ENGANGSTØNAD}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -364,7 +364,7 @@ export const visAtBehandlingErHenlagt = args => {
             erAktivt: true,
           },
         ]}
-        ytelseType={fagsakYtelsesType.FP}
+        ytelseType={fagsakYtelsesType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -424,7 +424,7 @@ export const visInnvilgetForForeldrepengerRevurdering = args => {
             kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
           },
         }}
-        ytelseType={fagsakYtelsesType.FP}
+        ytelseType={fagsakYtelsesType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -466,7 +466,7 @@ export const visOpphørtForForeldrepengerRevurdering = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={fagsakYtelsesType.FP}
+        ytelseType={fagsakYtelsesType.FORELDREPENGER}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -500,7 +500,7 @@ export const visInnvilgetForEngangsstønadRevurdering = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={fagsakYtelsesType.ES}
+        ytelseType={fagsakYtelsesType.ENGANGSTØNAD}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -553,7 +553,7 @@ export const visAvslåttForEngangsstønadRevurdering = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={fagsakYtelsesType.ES}
+        ytelseType={fagsakYtelsesType.ENGANGSTØNAD}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -594,7 +594,7 @@ export const visOverlappendeYtelser = args => {
 
   const overlappendeYtelser = [
     {
-      ytelseType: fagsakYtelsesType.PSB, // FAGSAK_YTELSE
+      ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
       kilde: {
         kode: 'INFOTRYGD',
         kodeverk: 'FAGSYSTEM',
@@ -608,7 +608,7 @@ export const visOverlappendeYtelser = args => {
       ],
     },
     {
-      ytelseType: fagsakYtelsesType.PSB, // FAGSAK_YTELSE
+      ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
       kilde: {
         kode: 'INFOTRYGD',
         kodeverk: 'FAGSYSTEM',
@@ -626,7 +626,7 @@ export const visOverlappendeYtelser = args => {
       ],
     },
     {
-      ytelseType: fagsakYtelsesType.PSB, // FAGSAK_YTELSE
+      ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
       kilde: {
         kode: 'INFOTRYGD',
         kodeverk: 'FAGSYSTEM',
@@ -644,7 +644,7 @@ export const visOverlappendeYtelser = args => {
       ],
     },
     {
-      ytelseType: fagsakYtelsesType.PSB, // FAGSAK_YTELSE
+      ytelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
       kilde: {
         kode: 'INFOTRYGD',
         kodeverk: 'FAGSYSTEM',
@@ -696,7 +696,7 @@ export const visOverlappendeYtelser = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[aksjonspunkt5040]}
-        ytelseType={fagsakYtelsesType.ES}
+        ytelseType={fagsakYtelsesType.ENGANGSTØNAD}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}
@@ -726,7 +726,7 @@ export const brevMedFritekstfelt = args => {
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskap={{ fom: '2019-01-01' }}
         aksjonspunkter={[]}
-        ytelseType={fagsakYtelsesType.PSB}
+        ytelseType={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
         previewCallback={action('button-click')}
         submitCallback={action('button-click')}
         alleKodeverk={alleKodeverk}

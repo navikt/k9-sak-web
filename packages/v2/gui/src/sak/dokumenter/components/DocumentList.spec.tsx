@@ -45,7 +45,7 @@ describe('<DocumentList>', () => {
           behandlingId={1}
           saksnummer={1}
           behandlingUuid="1"
-          sakstype={fagsakYtelsesType.PSB}
+          sakstype={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
         />,
       ),
     );
@@ -71,7 +71,7 @@ describe('<DocumentList>', () => {
           behandlingId={1}
           saksnummer={1}
           behandlingUuid="1"
-          sakstype={fagsakYtelsesType.PSB}
+          sakstype={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
         />
       </QueryClientProvider>,
     );
@@ -88,7 +88,7 @@ describe('<DocumentList>', () => {
           behandlingId={1}
           saksnummer={1}
           behandlingUuid="1"
-          sakstype={fagsakYtelsesType.PSB}
+          sakstype={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
         />
       </QueryClientProvider>,
     );

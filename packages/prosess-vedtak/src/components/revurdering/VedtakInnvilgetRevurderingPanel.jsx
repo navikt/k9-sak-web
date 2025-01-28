@@ -55,9 +55,9 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      {(ytelseTypeKode === fagsakYtelsesType.OMP ||
+      {(ytelseTypeKode === fagsakYtelsesType.OMSORGSPENGER ||
         ytelseTypeKode === fagsakYtelsesType.FRISINN ||
-        ytelseTypeKode === fagsakYtelsesType.PSB) && (
+        ytelseTypeKode === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) && (
         <div data-testid="innvilgetRevurdering">
           <Label size="small" as="p">
             {intl.formatMessage({ id: 'VedtakForm.Resultat' })}

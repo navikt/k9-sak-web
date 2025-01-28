@@ -11,7 +11,7 @@ describe('<UtvidetRettBarnFakta>', () => {
         barn: [{ fnr: '123456', fodselsdato: '2019-04-13' }],
         barnSoktFor: [],
       },
-      fagsaksType: fagsakYtelsesType.OMP_MA,
+      fagsaksType: fagsakYtelsesType.OMSORGSPENGER_MA,
       rammevedtak: [],
     };
 

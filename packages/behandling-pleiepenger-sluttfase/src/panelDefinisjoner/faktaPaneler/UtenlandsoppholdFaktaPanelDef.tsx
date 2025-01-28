@@ -18,7 +18,7 @@ class UtenlandsoppholdFaktaPanelDef extends FaktaPanelDef {
     <Utenlandsopphold
       utenlandsopphold={props.utenlandsopphold}
       kodeverk={props.alleKodeverk}
-      fagsakYtelseType={fagsakYtelsesType.PPN}
+      fagsakYtelseType={fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE}
     />
   );
 

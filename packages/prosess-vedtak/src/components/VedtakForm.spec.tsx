@@ -106,7 +106,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelsesType.PSB}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -171,7 +171,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelsesType.PSB}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -226,7 +226,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelsesType.FP}
+          ytelseTypeKode={fagsakYtelsesType.FORELDREPENGER}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -280,7 +280,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelsesType.PSB}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -344,7 +344,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelsesType.PSB}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -406,7 +406,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelsesType.PSB}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -467,7 +467,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelsesType.PSB}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -528,7 +528,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelsesType.PSB}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -603,7 +603,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelsesType.PSB}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -645,7 +645,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelsesType.PSB}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -688,7 +688,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelsesType.PSB}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -740,7 +740,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelsesType.PSB}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}

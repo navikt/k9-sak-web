@@ -73,12 +73,12 @@ describe('<FagsakIndex>', () => {
     ],
     [KodeverkTypeV2.FAGSAK_YTELSE]: [
       {
-        kode: fagsakYtelsesType.FP,
+        kode: fagsakYtelsesType.FORELDREPENGER,
         kodeverk: KodeverkTypeV2.FAGSAK_YTELSE,
         navn: 'Foreldrepenger',
       },
       {
-        kode: fagsakYtelsesType.PSB,
+        kode: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
         navn: 'Pleiepenger sykt barn',
         kodeverk: KodeverkTypeV2.FAGSAK_YTELSE,
       },
@@ -97,7 +97,7 @@ describe('<FagsakIndex>', () => {
       kode: fagsakStatus.OPPRETTET,
       kodeverk: 'FAGSAK_STATUS',
     },
-    sakstype: fagsakYtelsesType.PSB, // FAGSAK_YTELSE
+    sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
   };
 
   const behandling = {

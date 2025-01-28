@@ -13,7 +13,7 @@ import { HenleggBehandlingModalImpl, getHenleggArsaker } from './HenleggBehandli
 const intlMock = intlWithMessages(messages);
 
 describe('<HenleggBehandlingModal>', () => {
-  const ytelseType = fagsakYtelsesType.FP;
+  const ytelseType = fagsakYtelsesType.FORELDREPENGER;
 
   const behandlingResultatTyper = [
     {
@@ -153,7 +153,7 @@ describe('<HenleggBehandlingModal>', () => {
 
   it('skal bruke behandlingsresultat-typer for førstegangsbehandling når ytelsestype er Engangsstønad', () => {
     const behandlingsType = { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'BEHANDLING_TYPE' };
-    const resultat = getHenleggArsaker(behandlingResultatTyper, behandlingsType, fagsakYtelsesType.ES);
+    const resultat = getHenleggArsaker(behandlingResultatTyper, behandlingsType, fagsakYtelsesType.ENGANGSTØNAD);
 
     expect(resultat.map(r => r.kode)).toEqual([
       behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,

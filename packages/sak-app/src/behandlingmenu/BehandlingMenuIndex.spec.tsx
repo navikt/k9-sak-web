@@ -26,7 +26,7 @@ const navAnsatt = {
 
 const fagsak = {
   saksnummer: '123',
-  sakstype: fagsakYtelsesType.FP, // BEHANDLING_TYPE
+  sakstype: fagsakYtelsesType.FORELDREPENGER, // BEHANDLING_TYPE
   status: {
     kode: fagsakStatus.UNDER_BEHANDLING,
     kodeverk: '',

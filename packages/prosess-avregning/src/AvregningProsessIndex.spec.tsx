@@ -9,8 +9,8 @@ import AvregningProsessIndex from './AvregningProsessIndex';
 describe('<AvregningProsessIndex>', () => {
   const fagsak = {
     saksnummer: '123',
-    sakstype: fagsakYtelsesType.FP,
-    fagsakYtelseType: fagsakYtelsesType.FP,
+    sakstype: fagsakYtelsesType.FORELDREPENGER,
+    fagsakYtelseType: fagsakYtelsesType.FORELDREPENGER,
   };
 
   const behandling = {

@@ -21,7 +21,7 @@ const OmsorgsperiodeVurderingsdetaljer = ({
 }: OmsorgsperiodeVurderingsdetaljerProps): JSX.Element => {
   const intl = useIntl();
   const { sakstype } = useContext(ContainerContext);
-  const erOMP = sakstype === fagsakYtelsesType.OMP;
+  const erOMP = sakstype === fagsakYtelsesType.OMSORGSPENGER;
   const begrunnelseRenderer = () => {
     let label = intl.formatMessage({ id: 'vurdering.hjemmel' });
     let begrunnelse = '';

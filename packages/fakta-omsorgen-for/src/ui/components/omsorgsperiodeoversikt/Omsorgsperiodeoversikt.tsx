@@ -38,7 +38,7 @@ const Omsorgsperiodeoversikt = ({ omsorgsperiodeoversikt }: Omsorgsperiodeoversi
   return (
     <>
       <OmsorgsperiodeoversiktMessages omsorgsperiodeoversikt={omsorgsperiodeoversikt} />
-      {sakstype === fagsakYtelsesType.OMP && !readOnly && <Fosterbarn setFosterbarn={setFosterbarn} />}
+      {sakstype === fagsakYtelsesType.OMSORGSPENGER && !readOnly && <Fosterbarn setFosterbarn={setFosterbarn} />}
       <NavigationWithDetailView
         navigationSection={() => (
           <Periodenavigasjon

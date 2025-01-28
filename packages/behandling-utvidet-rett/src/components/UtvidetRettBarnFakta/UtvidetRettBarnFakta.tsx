@@ -14,7 +14,7 @@ interface OwnProps {
 }
 
 const UtvidetRettBarnFakta = ({ personopplysninger, rammevedtak, fagsaksType }: OwnProps) => {
-  const erFagsakYtelseTypeKroniskSyktBarn = fagsakYtelsesType.OMP_KS === fagsaksType;
+  const erFagsakYtelseTypeKroniskSyktBarn = fagsakYtelsesType.OMSORGSPENGER_KS === fagsaksType;
   const barn = erFagsakYtelseTypeKroniskSyktBarn
     ? personopplysninger?.barnSoktFor || []
     : personopplysninger?.barn || [];

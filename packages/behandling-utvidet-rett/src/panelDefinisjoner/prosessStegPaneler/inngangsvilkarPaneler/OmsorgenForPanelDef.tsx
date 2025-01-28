@@ -32,7 +32,7 @@ class OmsorgenForPanelDef extends ProsessStegPanelDef {
     angitteBarn: soknad.angittePersoner.filter(person => person.rolle === 'BARN'),
     fagsaksType: fagsak.sakstype,
     harBarnSoktForRammevedtakOmKroniskSyk:
-      fagsak.sakstype === fagsakYtelsesType.OMP_KS
+      fagsak.sakstype === fagsakYtelsesType.OMSORGSPENGER_KS
         ? harBarnSoktForRammevedtakOmKroniskSyk(personopplysninger?.barnSoktFor || [], rammevedtak?.rammevedtak || [])
         : false,
   });

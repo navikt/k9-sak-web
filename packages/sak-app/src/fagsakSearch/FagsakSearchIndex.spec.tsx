@@ -28,7 +28,7 @@ vi.mock('react-router', async () => {
 describe('<FagsakSearchIndex>', () => {
   const fagsak: Partial<Fagsak> = {
     saksnummer: '12345',
-    sakstype: fagsakYtelsesType.ES, // FAGSAK_YTELSE
+    sakstype: fagsakYtelsesType.ENGANGSTØNAD, // FAGSAK_YTELSE
     status: {
       kode: 'OPPR',
       kodeverk: 'FAGSAK_STATUS',

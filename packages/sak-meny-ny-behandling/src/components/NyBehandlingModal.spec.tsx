@@ -19,7 +19,7 @@ describe('<NyBehandlingModal>', () => {
   const submitEventCallback = vi.fn();
   const cancelEventCallback = vi.fn();
 
-  const ytelseType = fagsakYtelsesType.FP;
+  const ytelseType = fagsakYtelsesType.FORELDREPENGER;
 
   it('skal rendre komponent korrekt', () => {
     const behandlingstyper = [

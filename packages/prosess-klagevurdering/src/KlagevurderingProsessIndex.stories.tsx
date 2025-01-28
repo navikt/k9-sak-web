@@ -61,7 +61,7 @@ visPanelForKlagevurderingMedAksjonspunktNk.args = {
 export const visPanelForKlagevurderingMedAksjonspunktNfp = args => (
   <KlagevurderingProsessIndex
     behandling={behandling}
-    fagsak={{ sakstype: fagsakYtelsesType.PSB }}
+    fagsak={{ sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN }}
     aksjonspunkter={[
       {
         definisjon: {

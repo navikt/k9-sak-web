@@ -37,7 +37,7 @@ const getInfoTextCode = (
   }
   // HVIS AVSLÅTT
   if (behandlingsresultat?.type.kode === behandlingResultatType.AVSLATT) {
-    if (ytelseType === fagsakYtelsesType.PSB) {
+    if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
       return 'Pleiepenger er avslått';
     }
     if (ytelseType === fagsakYtelsesType.FRISINN) {
@@ -46,14 +46,14 @@ const getInfoTextCode = (
     if (erFagytelseTypeUtvidetRett(ytelseType)) {
       return 'Ekstra omsorgsdager er avslått';
     }
-    if (ytelseType === fagsakYtelsesType.PPN) {
+    if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
       return 'Pleiepenger i livets sluttfase er avslått';
     }
     return 'Omsorgspenger er avslått';
   }
   // HVIS OPPHØRT
   if (isOpphor) {
-    if (ytelseType === fagsakYtelsesType.PSB) {
+    if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
       return 'Pleiepenger er opphørt.';
     }
     if (ytelseType === fagsakYtelsesType.FRISINN) {
@@ -62,7 +62,7 @@ const getInfoTextCode = (
     if (erFagytelseTypeUtvidetRett(ytelseType)) {
       return 'Ekstra omsorgsdager er opphørt.';
     }
-    if (ytelseType === fagsakYtelsesType.PPN) {
+    if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
       return 'Pleiepenger i livet sluttfase er opphørt.';
     }
     return 'Omsorgspenger er opphørt.';
@@ -72,13 +72,13 @@ const getInfoTextCode = (
   if (ytelseType === fagsakYtelsesType.FRISINN) {
     return 'Engangsstønad er innvilget og vedtaket blir iverksatt';
   }
-  if (ytelseType === fagsakYtelsesType.PSB) {
+  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
     return 'Pleiepenger er innvilget og vedtaket blir iverksatt';
   }
   if (erFagytelseTypeUtvidetRett(ytelseType)) {
     return 'Ekstra omsorgsdager er innvilget og vedtaket blir iverksatt';
   }
-  if (ytelseType === fagsakYtelsesType.PPN) {
+  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt';
   }
   return 'Omsorgspenger er innvilget og vedtaket blir iverksatt';
@@ -102,13 +102,13 @@ const getModalDescriptionTextCode = (
   if (ytelseType === fagsakYtelsesType.FRISINN) {
     return 'FRISINN er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
-  if (ytelseType === fagsakYtelsesType.PSB) {
+  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
     return 'Pleiepenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
   if (erFagytelseTypeUtvidetRett(ytelseType)) {
     return 'Ekstra omsorgsdager er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
-  if (ytelseType === fagsakYtelsesType.PPN) {
+  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
   return 'Omsorgspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
@@ -145,9 +145,9 @@ const getAltImgTextCode = (ytelseType: FagsakYtelsesType) => {
   switch (ytelseType) {
     case fagsakYtelsesType.FRISINN:
       return 'Engangsstønad er innvilget og vedtaket blir iverksatt';
-    case fagsakYtelsesType.PSB:
+    case fagsakYtelsesType.PLEIEPENGER_SYKT_BARN:
       return 'Pleiepenger er innvilget og vedtaket blir iverksatt';
-    case fagsakYtelsesType.PPN:
+    case fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE:
       return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt';
     default:
       return 'Omsorgspenger er innvilget og vedtaket blir iverksatt';

@@ -35,7 +35,7 @@ describe('<BeslutterModalIndex>', () => {
     renderWithIntl(
       <BeslutterModalIndex
         behandling={behandling}
-        fagsakYtelseType={fagsakYtelsesType.FP}
+        fagsakYtelseType={fagsakYtelsesType.FORELDREPENGER}
         allAksjonspunktApproved={false}
         erKlageWithKA={false}
       />,

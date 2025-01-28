@@ -476,7 +476,7 @@ VisPanelUtenPerioder.args = {
     endretAvBrukernavn: 'k9-sak',
     erPaaVent: false,
     fagsakId: 1346602,
-    sakstype: fagsakYtelsesType.PSB, // FAGSAK_YTELSE
+    sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
     førsteÅrsak: {
       erAutomatiskRevurdering: false,
       behandlingArsakType: {

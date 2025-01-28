@@ -96,8 +96,8 @@ export const getHenleggArsaker = (
   return typerForBehandlingType
     .filter(
       type =>
-        ytelseType !== fagsakYtelsesType.ES ||
-        (ytelseType === fagsakYtelsesType.ES && type !== behandlingResultatType.MANGLER_BEREGNINGSREGLER),
+        ytelseType !== fagsakYtelsesType.ENGANGSTØNAD ||
+        (ytelseType === fagsakYtelsesType.ENGANGSTØNAD && type !== behandlingResultatType.MANGLER_BEREGNINGSREGLER),
     )
     .map(type => behandlingResultatTyper.find(brt => brt.kode === type));
 };

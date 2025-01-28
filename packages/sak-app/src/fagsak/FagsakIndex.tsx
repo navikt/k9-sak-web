@@ -53,12 +53,15 @@ const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   (BehandlingType.TILBAKEKREVING === behandlingType.kode ||
     BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
 
-const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelsesType.PSB;
-const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelsesType.PPN;
+const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
+const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
 const erOmsorgspenger = (fagsak: Fagsak) =>
-  [fagsakYtelsesType.OMP, fagsakYtelsesType.OMP_KS, fagsakYtelsesType.OMP_AO, fagsakYtelsesType.OMP_MA].some(
-    sakstype => sakstype === fagsak.sakstype,
-  );
+  [
+    fagsakYtelsesType.OMSORGSPENGER,
+    fagsakYtelsesType.OMSORGSPENGER_KS,
+    fagsakYtelsesType.OMSORGSPENGER_AO,
+    fagsakYtelsesType.OMSORGSPENGER_MA,
+  ].some(sakstype => sakstype === fagsak.sakstype);
 
 /**
  * FagsakIndex

@@ -239,7 +239,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype === fagsakYtelsesType.OMP) {
+  if (fagsak.sakstype === fagsakYtelsesType.OMSORGSPENGER) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -254,7 +254,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype === fagsakYtelsesType.PPN) {
+  if (fagsak.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -299,7 +299,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype === fagsakYtelsesType.OLP) {
+  if (fagsak.sakstype === fagsakYtelsesType.OPPLÆRINGSPENGER) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>

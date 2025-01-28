@@ -80,7 +80,10 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
     );
   };
 
-  const ytelserMedFaktapanelSøknadsperioder = [fagsakYtelsesType.PSB, fagsakYtelsesType.PPN];
+  const ytelserMedFaktapanelSøknadsperioder = [
+    fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
+    fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
+  ];
 
   const visLenkeTilFaktapanel = ytelserMedFaktapanelSøknadsperioder.some(type => sakstypeKode === type);
 

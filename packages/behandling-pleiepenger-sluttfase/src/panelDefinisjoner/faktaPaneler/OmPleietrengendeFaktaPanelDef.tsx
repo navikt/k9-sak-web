@@ -18,7 +18,7 @@ class OmPleietrengendeFaktaPanelDef extends FaktaPanelDef {
 
   getOverstyrVisningAvKomponent = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => {
     const søknadsfristErIkkeUnderVurdering = behandling.stegTilstand?.stegType?.kode !== 'VURDER_SØKNADSFRIST';
-    return fagsak.sakstype === fagsakYtelsesType.PPN && søknadsfristErIkkeUnderVurdering;
+    return fagsak.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE && søknadsfristErIkkeUnderVurdering;
   };
 }
 

@@ -149,7 +149,7 @@ const behandlingsresultat = {
 
 const fagsak = {
   saksnummer: '1DoJZD0',
-  sakstype: fagsakYtelsesType.PSB, // FAGSAK_YTELSE
+  sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
   gyldigPeriode: { fom: '2022-11-28', tom: '2023-01-20' },
   status: { kode: 'UBEH', kodeverk: 'FAGSAK_STATUS' },
   kanRevurderingOpprettes: false,
@@ -181,7 +181,7 @@ export const visPanelForÅpentAksjonspunkt = args => (
   <OpptjeningVilkarProsessIndex
     fagsak={{
       ...fagsak,
-      sakstype: fagsakYtelsesType.OMP, // FAGSAK_YTELSE
+      sakstype: fagsakYtelsesType.OMSORGSPENGER, // FAGSAK_YTELSE
     }}
     behandling={
       {
@@ -397,7 +397,7 @@ export const visPanelForNårEnIkkeHarAksjonspunkt = args => (
   <OpptjeningVilkarProsessIndex
     fagsak={{
       ...fagsak,
-      sakstype: fagsakYtelsesType.OMP, // FAGSAK_YTELSE
+      sakstype: fagsakYtelsesType.OMSORGSPENGER, // FAGSAK_YTELSE
     }}
     behandling={
       {

@@ -19,7 +19,7 @@ describe('<MenyHenleggIndex>', () => {
         behandlingVersjon={1}
         henleggBehandling={henleggBehandlingCallback}
         forhandsvisHenleggBehandling={vi.fn()}
-        ytelseType={fagsakYtelsesType.FP}
+        ytelseType={fagsakYtelsesType.FORELDREPENGER}
         behandlingType={{
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: 'BEHANDLING_TYPE',

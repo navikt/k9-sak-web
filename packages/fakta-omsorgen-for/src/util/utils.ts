@@ -2,11 +2,11 @@ import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/
 import * as messages from '../nb_NO';
 
 export const teksterForSakstype = (sakstype: FagsakYtelsesType) => {
-  if (sakstype === fagsakYtelsesType.PSB) {
+  if (sakstype === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
     return messages.pleiepenger;
   }
 
-  if (sakstype === fagsakYtelsesType.OMP) {
+  if (sakstype === fagsakYtelsesType.OMSORGSPENGER) {
     return messages.omsorgspenger;
   }
   return messages.pleiepenger;

@@ -29,7 +29,7 @@ describe('<MenyNyBehandlingIndex>', () => {
 
     renderWithIntlAndReduxForm(
       <MenyNyBehandlingIndex
-        ytelseType={fagsakYtelsesType.FP}
+        ytelseType={fagsakYtelsesType.FORELDREPENGER}
         saksnummer="123"
         behandlingId={3}
         behandlingVersjon={1}
@@ -72,7 +72,7 @@ describe('<MenyNyBehandlingIndex>', () => {
       eksternUuid: '2323',
       saksnummer: '123',
       behandlingType: behandlingType.FORSTEGANGSSOKNAD,
-      fagsakYtelseType: fagsakYtelsesType.FP,
+      fagsakYtelseType: fagsakYtelsesType.FORELDREPENGER,
     });
 
     expect(lukkModalCallback.mock.calls).toHaveLength(1);

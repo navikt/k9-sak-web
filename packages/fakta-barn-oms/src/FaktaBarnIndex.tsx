@@ -72,11 +72,11 @@ const FaktaBarnIndex = ({ barn = [], rammevedtak = [], fagsaksType }: FaktaBarnI
   const midlertidigAleneansvar = rammevedtak.find(rv => rv.type === RammevedtakEnum.MIDLERTIDIG_ALENEOMSORG);
   let vanligeBarnTekstId;
   switch (fagsaksType) {
-    case fagsakYtelsesType.OMP_KS: {
+    case fagsakYtelsesType.OMSORGSPENGER_KS: {
       vanligeBarnTekstId = 'FaktaBarn.UtvidetRettKroniskSyk';
       break;
     }
-    case fagsakYtelsesType.OMP_MA: {
+    case fagsakYtelsesType.OMSORGSPENGER_MA: {
       vanligeBarnTekstId = 'FaktaBarn.UtvidetRettMidlertidigAlene';
       break;
     }

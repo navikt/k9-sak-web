@@ -28,7 +28,7 @@ const meta: Meta<typeof MedisinskVilkårContainer> = {
       readOnly: false,
       onFinished: () => console.log('Aksjonspunkt løst'),
       visFortsettknapp: true,
-      fagsakYtelseType: fagsakYtelsesType.PSB,
+      fagsakYtelseType: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
       behandlingType: BehandlingType.FORSTEGANGSSOKNAD,
       httpErrorHandler: undefined,
     },

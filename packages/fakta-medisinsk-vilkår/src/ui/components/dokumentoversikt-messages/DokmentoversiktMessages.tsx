@@ -31,7 +31,7 @@ const DokumentoversiktMessages = ({
   const visHåndterNyeDokumenterMelding =
     !dokumentoversikt.harGyldigSignatur() && dokumentoversikt.harDokumenter() && !visFristForDokumentasjonUtløptMelding;
 
-  const erPleiepengerSluttfaseFagsak = fagsakYtelseType === fagsakYtelsesType.PPN;
+  const erPleiepengerSluttfaseFagsak = fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
 
   return (
     <>
@@ -61,7 +61,7 @@ const DokumentoversiktMessages = ({
           </Box>
         </>
       )}
-      {visHåndterNyeDokumenterMelding && fagsakYtelseType !== fagsakYtelsesType.PPN && (
+      {visHåndterNyeDokumenterMelding && fagsakYtelseType !== fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE && (
         <Box marginBottom={Margin.large}>
           <Alert size="small" variant="warning">
             Dokumentasjon signert av sykehuslege/spesialisthelsetjenesten mangler. Håndter eventuelle nye dokumenter,

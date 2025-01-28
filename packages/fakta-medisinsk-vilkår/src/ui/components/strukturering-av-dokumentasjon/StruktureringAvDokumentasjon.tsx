@@ -58,16 +58,17 @@ const StruktureringAvDokumentasjon = ({
     visRedigeringAvDokument,
   } = state;
 
-  const skalViseInnleggelsesperioderOgDiagnosekoder = ![fagsakYtelsesType.PPN, fagsakYtelsesType.OLP].some(
-    ytelseType => ytelseType === fagsakYtelseType,
-  );
+  const skalViseInnleggelsesperioderOgDiagnosekoder = ![
+    fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
+    fagsakYtelsesType.OPPLÆRINGSPENGER,
+  ].some(ytelseType => ytelseType === fagsakYtelseType);
 
   const nesteStegErVurderingFn = (nesteSteg: SykdomsstegStatusResponse) => {
-    if (fagsakYtelseType === fagsakYtelsesType.PPN) {
+    if (fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
       return nesteStegErLivetssluttfase(nesteSteg);
     }
 
-    if (fagsakYtelseType === fagsakYtelsesType.OLP) {
+    if (fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
       return nesteStegErOpplæringspenger(nesteSteg);
     }
 

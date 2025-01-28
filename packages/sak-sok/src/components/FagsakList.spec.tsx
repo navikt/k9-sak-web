@@ -29,7 +29,7 @@ const alleKodeverk = {
   ],
   [KodeverkTypeV2.FAGSAK_YTELSE]: [
     {
-      kode: fagsakYtelsesType.ES,
+      kode: fagsakYtelsesType.ENGANGSTØNAD,
       navn: 'Engangsstønad',
       kodeverk: KodeverkTypeV2.FAGSAK_YTELSE,
     },
@@ -39,7 +39,7 @@ const alleKodeverk = {
 describe('<FagsakList>', () => {
   const fagsak = {
     saksnummer: '12345',
-    sakstype: fagsakYtelsesType.ES,
+    sakstype: fagsakYtelsesType.ENGANGSTØNAD,
     relasjonsRolleType: {
       kode: 'TEST',
       kodeverk: '',
@@ -82,7 +82,7 @@ describe('<FagsakList>', () => {
   it('skal sortere søkeresultat der avsluttede skal vises sist, mens sist endrede skal vises først', () => {
     const fagsak2 = {
       saksnummer: '23456',
-      sakstype: fagsakYtelsesType.ES,
+      sakstype: fagsakYtelsesType.ENGANGSTØNAD,
       relasjonsRolleType: {
         kode: 'TEST',
         kodeverk: '',
@@ -99,7 +99,7 @@ describe('<FagsakList>', () => {
 
     const fagsak3 = {
       saksnummer: '34567',
-      sakstype: fagsakYtelsesType.ES,
+      sakstype: fagsakYtelsesType.ENGANGSTØNAD,
       status: {
         kode: 'AVSLU',
         kodeverk: FAGSAK_STATUS_KODEVERK,

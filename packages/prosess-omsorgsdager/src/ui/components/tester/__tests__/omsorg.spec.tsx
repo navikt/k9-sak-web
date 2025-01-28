@@ -9,7 +9,7 @@ describe('<Omsorg>', () => {
   test('Omsorg viser åpen aksjonspunkt for midlertidig alene som forventet', () => {
     const props = {
       behandlingsID: '123',
-      fagytelseType: fagsakYtelsesType.OMP_MA,
+      fagytelseType: fagsakYtelsesType.OMSORGSPENGER_MA,
       aksjonspunktLost: false,
       lesemodus: false,
       informasjonTilLesemodus: {
@@ -56,7 +56,7 @@ describe('<Omsorg>', () => {
   test('Omsorg viser åpen aksjonspunkt med informasjon fra tidigare lost vilkar (kommer tillbake etter totrinnskontroll)', () => {
     const props = {
       behandlingsID: '123',
-      fagytelseType: fagsakYtelsesType.OMP_MA,
+      fagytelseType: fagsakYtelsesType.OMSORGSPENGER_MA,
       aksjonspunktLost: false,
       lesemodus: false,
       informasjonTilLesemodus: {
@@ -85,7 +85,7 @@ describe('<Omsorg>', () => {
   test('Omsorg viser åpen aksjonspunkt for kronisk syk som forventet', () => {
     const props = {
       behandlingsID: '123',
-      fagytelseType: fagsakYtelsesType.OMP_KS,
+      fagytelseType: fagsakYtelsesType.OMSORGSPENGER_KS,
       aksjonspunktLost: false,
       lesemodus: false,
       informasjonTilLesemodus: {
@@ -132,7 +132,7 @@ describe('<Omsorg>', () => {
   test('Omsorg viser lesemodus for midlertidig alene', () => {
     const props = {
       behandlingsID: '123',
-      fagytelseType: fagsakYtelsesType.OMP_MA,
+      fagytelseType: fagsakYtelsesType.OMSORGSPENGER_MA,
       aksjonspunktLost: false,
       lesemodus: true,
       informasjonTilLesemodus: {
@@ -181,7 +181,7 @@ describe('<Omsorg>', () => {
   test('Omsorg viser lesemodus for kronisk syk', () => {
     const props = {
       behandlingsID: '123',
-      fagytelseType: fagsakYtelsesType.OMP_KS,
+      fagytelseType: fagsakYtelsesType.OMSORGSPENGER_KS,
       aksjonspunktLost: false,
       lesemodus: true,
       informasjonTilLesemodus: {
@@ -230,7 +230,7 @@ describe('<Omsorg>', () => {
   test('Omsorg viser lesemodus med redigera vurdering mulighet', () => {
     const props = {
       behandlingsID: '123',
-      fagytelseType: fagsakYtelsesType.OMP_KS,
+      fagytelseType: fagsakYtelsesType.OMSORGSPENGER_KS,
       aksjonspunktLost: true,
       lesemodus: true,
       informasjonTilLesemodus: {
@@ -262,7 +262,7 @@ describe('<Omsorg>', () => {
       //   fagytelseType: FagsakYtelsesType;
       // } =
       behandlingsID: '123',
-      fagytelseType: fagsakYtelsesType.OMP_KS,
+      fagytelseType: fagsakYtelsesType.OMSORGSPENGER_KS,
       aksjonspunktLost: false,
       lesemodus: false,
       informasjonTilLesemodus: {
@@ -303,7 +303,7 @@ describe('<Omsorg>', () => {
   test('Omsorg viser informasjon om vilkar ikke oppfylt etter fattet vedtak', () => {
     const props = {
       behandlingsID: '123',
-      fagytelseType: fagsakYtelsesType.OMP_KS,
+      fagytelseType: fagsakYtelsesType.OMSORGSPENGER_KS,
       aksjonspunktLost: false,
       lesemodus: false,
       informasjonTilLesemodus: {
@@ -338,7 +338,7 @@ describe('<Omsorg>', () => {
   test('Den har ingen a11y violations', async () => {
     const props = {
       behandlingsID: '123',
-      fagytelseType: fagsakYtelsesType.OMP_KS,
+      fagytelseType: fagsakYtelsesType.OMSORGSPENGER_KS,
       aksjonspunktLost: false,
       lesemodus: true,
       informasjonTilLesemodus: {

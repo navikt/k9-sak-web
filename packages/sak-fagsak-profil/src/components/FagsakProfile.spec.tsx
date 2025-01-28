@@ -24,7 +24,7 @@ describe('<FagsakProfile>', () => {
       >
         <FagsakProfile
           saksnummer="12345"
-          fagsakYtelseType={fagsakYtelsesType.ES}
+          fagsakYtelseType={fagsakYtelsesType.ENGANGSTØNAD}
           fagsakStatus={status}
           renderBehandlingMeny={vi.fn()}
           renderBehandlingVelger={vi.fn()}
@@ -54,7 +54,7 @@ describe('<FagsakProfile>', () => {
       >
         <FagsakProfile
           saksnummer="12345"
-          fagsakYtelseType={fagsakYtelsesType.FP}
+          fagsakYtelseType={fagsakYtelsesType.FORELDREPENGER}
           fagsakStatus={status}
           renderBehandlingMeny={vi.fn()}
           renderBehandlingVelger={vi.fn()}
@@ -85,7 +85,7 @@ describe('<FagsakProfile>', () => {
       >
         <FagsakProfile
           saksnummer="12345"
-          fagsakYtelseType={fagsakYtelsesType.FP}
+          fagsakYtelseType={fagsakYtelsesType.FORELDREPENGER}
           fagsakStatus={status}
           renderBehandlingMeny={vi.fn()}
           renderBehandlingVelger={vi.fn()}
@@ -115,7 +115,7 @@ describe('<FagsakProfile>', () => {
       >
         <FagsakProfile
           saksnummer="12345"
-          fagsakYtelseType={fagsakYtelsesType.FP}
+          fagsakYtelseType={fagsakYtelsesType.FORELDREPENGER}
           fagsakStatus={status}
           renderBehandlingMeny={vi.fn()}
           renderBehandlingVelger={vi.fn()}

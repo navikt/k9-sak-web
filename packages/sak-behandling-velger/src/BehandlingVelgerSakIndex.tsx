@@ -36,9 +36,9 @@ const BehandlingVelgerSakIndex = ({
 }: OwnProps) => {
   const hentSøknadsperioder = ![
     fagsakYtelsesType.FRISINN,
-    fagsakYtelsesType.OMP_AO,
-    fagsakYtelsesType.OMP_KS,
-    fagsakYtelsesType.OMP_MA,
+    fagsakYtelsesType.OMSORGSPENGER_AO,
+    fagsakYtelsesType.OMSORGSPENGER_KS,
+    fagsakYtelsesType.OMSORGSPENGER_MA,
   ].some(sakstype => sakstype === fagsak.sakstype);
 
   return (

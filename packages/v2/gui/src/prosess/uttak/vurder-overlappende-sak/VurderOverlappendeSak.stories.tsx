@@ -99,7 +99,7 @@ type Story = StoryObj<typeof meta>;
 
 const behandling: Omit<BehandlingDto, 'uuid' | 'status'> = {
   opprettet: subDays(new Date(), 5).toISOString(),
-  sakstype: fagsakYtelsesType.PSB,
+  sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
   type: 'BT-002',
   versjon: 1,
   id: 123,

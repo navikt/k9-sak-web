@@ -45,7 +45,7 @@ const TilkjentYtelseProsessIndex = ({
       submitCallback={submitCallback}
       readOnlySubmitButton={readOnlySubmitButton}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-      isUngdomsytelseFagsak={fagsak.sakstype === fagsakYtelsesType.UNGDOMSYTELSE}
+      isUngdomsytelseFagsak={fagsak.sakstype === fagsakYtelsesType.UNGDOMSYTELSEDOMSYTELSE}
     />
   </RawIntlProvider>
 );

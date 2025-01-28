@@ -91,7 +91,7 @@ describe('<FaktaBarnIndex>', () => {
             utvidetRettFor: '150915 #2',
           },
         ]}
-        fagsaksType={fagsakYtelsesType.OMP_KS}
+        fagsaksType={fagsakYtelsesType.OMSORGSPENGER_KS}
       />,
       { messages },
     );
@@ -133,7 +133,7 @@ describe('<FaktaBarnIndex>', () => {
             utvidetRettFor: '150915 #2',
           },
         ]}
-        fagsaksType={fagsakYtelsesType.OMP_MA}
+        fagsaksType={fagsakYtelsesType.OMSORGSPENGER_MA}
       />,
       { messages },
     );

@@ -15,7 +15,7 @@ export const TILBAKEKREVING_HJEMMEL = '22-15';
 
 const utledHjemler = fagsak => {
   switch (fagsak.sakstype) {
-    case fagsakYtelsesType.PSB:
+    case fagsakYtelsesType.PLEIEPENGER_SYKT_BARN:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
@@ -26,10 +26,10 @@ const utledHjemler = fagsak => {
         { kode: '22-13', navn: '§ 22-13' },
       ];
 
-    case fagsakYtelsesType.OMP:
-    case fagsakYtelsesType.OMP_KS:
-    case fagsakYtelsesType.OMP_MA:
-    case fagsakYtelsesType.OMP_AO:
+    case fagsakYtelsesType.OMSORGSPENGER:
+    case fagsakYtelsesType.OMSORGSPENGER_KS:
+    case fagsakYtelsesType.OMSORGSPENGER_MA:
+    case fagsakYtelsesType.OMSORGSPENGER_AO:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
@@ -40,7 +40,7 @@ const utledHjemler = fagsak => {
         { kode: '22-13', navn: '§ 22-13' },
       ];
 
-    case fagsakYtelsesType.PPN:
+    case fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },

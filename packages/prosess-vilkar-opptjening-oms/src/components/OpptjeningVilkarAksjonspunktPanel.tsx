@@ -87,12 +87,12 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   };
 
   const erOmsorgspenger =
-    fagsakType === fagsakYtelsesType.OMP ||
-    fagsakType === fagsakYtelsesType.OMP_AO ||
-    fagsakType === fagsakYtelsesType.OMP_KS ||
-    fagsakType === fagsakYtelsesType.OMP_MA;
+    fagsakType === fagsakYtelsesType.OMSORGSPENGER ||
+    fagsakType === fagsakYtelsesType.OMSORGSPENGER_AO ||
+    fagsakType === fagsakYtelsesType.OMSORGSPENGER_KS ||
+    fagsakType === fagsakYtelsesType.OMSORGSPENGER_MA;
 
-  const erPleiepenger = fagsakType === fagsakYtelsesType.PSB;
+  const erPleiepenger = fagsakType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
 
   const finnesOpptjeningsaktiviteterVidOpptjeningTom: boolean = !erPleiepenger
     ? true

@@ -24,7 +24,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal vise to options når klage opprettholdt', () => {
     renderWithIntlAndReduxForm(
       <KlageVurderingRadioOptionsNfp
-        fagsak={{ sakstype: fagsakYtelsesType.OMP }}
+        fagsak={{ sakstype: fagsakYtelsesType.OMSORGSPENGER }}
         readOnly={false}
         readOnlySubmitButton
         medholdReasons={medholdReasons}
@@ -44,7 +44,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal vise fem options når klage medhold', () => {
     renderWithIntlAndReduxForm(
       <KlageVurderingRadioOptionsNfp
-        fagsak={{ sakstype: fagsakYtelsesType.OMP }}
+        fagsak={{ sakstype: fagsakYtelsesType.OMSORGSPENGER }}
         readOnly={false}
         readOnlySubmitButton
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
@@ -68,7 +68,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal vise hjemler når klagevurdering er opprettholdt', () => {
     renderWithIntlAndReduxForm(
       <KlageVurderingRadioOptionsNfp
-        fagsak={{ sakstype: fagsakYtelsesType.OMP }}
+        fagsak={{ sakstype: fagsakYtelsesType.OMSORGSPENGER }}
         readOnly={false}
         readOnlySubmitButton
         medholdReasons={medholdReasons}

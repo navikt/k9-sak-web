@@ -5,9 +5,9 @@ import { RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak
 
 export const erFagytelseTypeUtvidetRett = (fagytelseType: FagsakYtelsesType) => {
   switch (fagytelseType) {
-    case fagsakYtelsesType.OMP_AO:
-    case fagsakYtelsesType.OMP_MA:
-    case fagsakYtelsesType.OMP_KS:
+    case fagsakYtelsesType.OMSORGSPENGER_AO:
+    case fagsakYtelsesType.OMSORGSPENGER_MA:
+    case fagsakYtelsesType.OMSORGSPENGER_KS:
       return true;
     default:
       return false;

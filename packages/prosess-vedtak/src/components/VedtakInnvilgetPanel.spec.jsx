@@ -8,7 +8,7 @@ import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakInnvilgetPanelImpl } from './VedtakInnvilgetPanel';
 
-const foreldrepenger = fagsakYtelsesType.FP;
+const foreldrepenger = fagsakYtelsesType.FORELDREPENGER;
 const behandlingsresultat = {
   type: {
     kode: 'INNVILGET',

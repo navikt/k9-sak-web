@@ -100,7 +100,7 @@ const StrukturerDokumentController = ({
           strukturerteDokumenter={strukturerteDokumenter}
         />
       )}
-      {fagsakYtelseType === fagsakYtelsesType.PPN && (
+      {fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE && (
         <StrukturerDokumentSluttfaseForm
           key={dokument.id}
           dokument={dokument}
@@ -110,7 +110,7 @@ const StrukturerDokumentController = ({
           strukturerteDokumenter={strukturerteDokumenter}
         />
       )}
-      {fagsakYtelseType === fagsakYtelsesType.OLP && (
+      {fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER && (
         <StrukturerDokumentOpplaeringspengerForm
           key={dokument.id}
           dokument={dokument}

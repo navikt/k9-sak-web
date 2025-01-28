@@ -95,7 +95,7 @@ export const SendMeldingPanel: Story = {
     featureToggles: { BRUK_V2_MELDINGER: false },
     fagsak: {
       saksnummer: '100',
-      sakstype: fagsakYtelsesType.PSB, // FAGSAK_YTELSE
+      sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
       status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
       person: {
         aktørId: 'person-aktørid-1',

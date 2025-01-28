@@ -208,7 +208,9 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
   const harFritekstbrev =
     kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) || kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev);
 
-  const kanInkludereKalender = ytelseTypeKode === fagsakYtelsesType.PSB || ytelseTypeKode === fagsakYtelsesType.PPN;
+  const kanInkludereKalender =
+    ytelseTypeKode === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN ||
+    ytelseTypeKode === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
 
   const harAlternativeMottakere =
     kanOverstyreMottakere(tilgjengeligeVedtaksbrev) && !formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV];

@@ -21,7 +21,7 @@ interface StrukturertDokumentDetaljerProps {
 }
 
 const renderDokumenttypeLabel = (fagsakYtelseType: FagsakYtelsesType) => {
-  if (fagsakYtelseType === fagsakYtelsesType.OLP) {
+  if (fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
     return 'Inneholder dokumentet medisinske opplysninger eller dokumentasjon av opplæring?';
   }
 
@@ -30,7 +30,7 @@ const renderDokumenttypeLabel = (fagsakYtelseType: FagsakYtelsesType) => {
 
 const renderDokumenttypeContent = (dokumenttype: Dokumenttype, fagsakYtelseType: FagsakYtelsesType) => {
   if (dokumenttype === Dokumenttype.LEGEERKLÆRING) {
-    return fagsakYtelseType === fagsakYtelsesType.PPN ? (
+    return fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE ? (
       <span>Ja, dokumentet inneholder medisinske opplysninger</span>
     ) : (
       <span>Ja, legeerklæring fra sykehus/spesialisthelsetjenesten</span>
@@ -52,7 +52,7 @@ const renderDokumenttypeContent = (dokumenttype: Dokumenttype, fagsakYtelseType:
     return <span>Ja, andre medisinske opplysninger (f.eks. legeerklæring fra fastlege, uttalelse fra psykolog)</span>;
   }
   if (dokumenttype === Dokumenttype.MANGLER_MEDISINSKE_OPPLYSNINGER) {
-    if (fagsakYtelseType === fagsakYtelsesType.OLP) {
+    if (fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
       return <span>Nei, dokumentet inneholder ikke medisinske opplysninger eller dokumentasjon av opplæring</span>;
     }
     return <span>Dokumentet inneholder ikke medisinske opplysninger</span>;

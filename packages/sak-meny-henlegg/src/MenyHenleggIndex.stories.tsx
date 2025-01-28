@@ -25,7 +25,7 @@ export const visMenyForÅHenleggeEnBehandling = () => (
     behandlingVersjon={2}
     henleggBehandling={action('button-click') as (params: HenleggParams) => Promise<any>}
     forhandsvisHenleggBehandling={action('button-click')}
-    ytelseType={fagsakYtelsesType.FP} // YTELSE_TYPE
+    ytelseType={fagsakYtelsesType.FORELDREPENGER} // YTELSE_TYPE
     behandlingType={{
       kode: behandlingType.FORSTEGANGSSOKNAD,
       kodeverk: 'BEHANDLING_TYPE',

@@ -17,7 +17,8 @@ class SoknadsperioderFaktaPanelDef extends FaktaPanelDef {
 
   getKomponent = props => <SoknadsperioderIndex {...props} />;
 
-  getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) => fagsak.sakstype === fagsakYtelsesType.PPN;
+  getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) =>
+    fagsak.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
 }
 
 export default SoknadsperioderFaktaPanelDef;

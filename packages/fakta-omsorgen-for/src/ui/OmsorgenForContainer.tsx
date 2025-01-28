@@ -57,7 +57,7 @@ const OmsorgenForContainer = ({ data }: MainComponentProps): JSX.Element => {
   return (
     <IntlProvider locale="nb-NO" messages={teksterForSakstype(sakstype)}>
       <ContainerContext.Provider value={data}>
-        <h1 style={{ fontSize: 22 }}>{sakstype === fagsakYtelsesType.OMP ? 'Omsorgen for' : 'Omsorg'}</h1>
+        <h1 style={{ fontSize: 22 }}>{sakstype === fagsakYtelsesType.OMSORGSPENGER ? 'Omsorgen for' : 'Omsorg'}</h1>
         <Box marginTop={Margin.large}>
           <PageContainer isLoading={isLoading} hasError={omsorgsperiodeoversiktHarFeilet}>
             <div className={styles.mainComponent}>

@@ -170,8 +170,8 @@ const UtvidetRettProsess = ({
 
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
     prosessStegUtvidetRettPanelDefinisjoner(
-      fagsak.sakstype === fagsakYtelsesType.OMP_AO,
-      fagsak.sakstype === fagsakYtelsesType.OMP_KS,
+      fagsak.sakstype === fagsakYtelsesType.OMSORGSPENGER_AO,
+      fagsak.sakstype === fagsakYtelsesType.OMSORGSPENGER_KS,
       data.vilkar,
     ),
     dataTilUtledingAvFpPaneler,

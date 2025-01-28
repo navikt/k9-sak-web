@@ -135,12 +135,16 @@ const VilkårsvurderingAvLivetsSluttfase = ({
   };
 
   const skalViseOpprettVurderingKnapp = () => {
-    if (fagsakYtelseType === fagsakYtelsesType.PPN && BehandlingType.FORSTEGANGSSOKNAD === behandlingType) return false;
+    if (
+      fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE &&
+      BehandlingType.FORSTEGANGSSOKNAD === behandlingType
+    )
+      return false;
 
     return !vurderingsoversikt?.harPerioderSomSkalVurderes() &&
       !skalViseRadForNyVurdering &&
       harGyldigSignatur &&
-      fagsakYtelseType === fagsakYtelsesType.PPN
+      fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE
       ? behandlingType !== BehandlingType.FORSTEGANGSSOKNAD
       : true;
   };

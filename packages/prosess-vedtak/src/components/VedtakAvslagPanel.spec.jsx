@@ -10,10 +10,10 @@ import messages from '../../i18n/nb_NO.json';
 import { VedtakAvslagPanelImpl } from './VedtakAvslagPanel';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
-const pleiepenger = fagsakYtelsesType.PSB;
-const omsorgspenger = fagsakYtelsesType.OMP;
-const kroniskSyktBarn = fagsakYtelsesType.OMP_KS;
-const midlertidigAlene = fagsakYtelsesType.OMP_MA;
+const pleiepenger = fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
+const omsorgspenger = fagsakYtelsesType.OMSORGSPENGER;
+const kroniskSyktBarn = fagsakYtelsesType.OMSORGSPENGER_KS;
+const midlertidigAlene = fagsakYtelsesType.OMSORGSPENGER_MA;
 
 describe('<VedtakAvslagPanel>', () => {
   const behandling = {

@@ -8,7 +8,7 @@ import AvregningProsessIndex from './AvregningProsessIndex';
 
 const fagsak = {
   saksnummer: 123,
-  fagsakYtelseType: fagsakYtelsesType.FP,
+  fagsakYtelseType: fagsakYtelsesType.FORELDREPENGER,
 };
 
 const behandling = {

@@ -26,7 +26,7 @@ const avsluttedeBehandlinger = [
 ];
 
 const fagsak = {
-  sakstype: fagsakYtelsesType.PSB,
+  sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
 };
 
 export default {

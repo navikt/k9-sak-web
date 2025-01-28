@@ -80,7 +80,7 @@ class PanelDef extends ProsessStegPanelDef {
     kvoteInfo: uttak?.uttaksplan?.kvoteInfo,
     virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
     arbeidsgiverOpplysningerPerId,
-    erFagytelsetypeLivetsSluttfase: fagsak.sakstype === fagsakYtelsesType.PPN,
+    erFagytelsetypeLivetsSluttfase: fagsak.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
     alleKodeverk,
   });
 }

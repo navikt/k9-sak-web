@@ -33,7 +33,7 @@ vi.mock('react-router', async () => {
 describe('<FagsakProfileIndex>', () => {
   const fagsak = {
     saksnummer: '123',
-    sakstype: fagsakYtelsesType.FP, // FAGSAK_YTELSE
+    sakstype: fagsakYtelsesType.FORELDREPENGER, // FAGSAK_YTELSE
     status: {
       kode: fagsakStatus.OPPRETTET,
       kodeverk: 'FAGSAK_STATUS',
@@ -74,7 +74,7 @@ describe('<FagsakProfileIndex>', () => {
     ],
     [KodeverkTypeV2.FAGSAK_YTELSE]: [
       {
-        kode: fagsakYtelsesType.FP,
+        kode: fagsakYtelsesType.FORELDREPENGER,
         kodeverk: KodeverkTypeV2.FAGSAK_YTELSE,
         navn: 'Foreldrepenger',
       },

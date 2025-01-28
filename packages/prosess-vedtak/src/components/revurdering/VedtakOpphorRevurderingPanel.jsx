@@ -12,9 +12,9 @@ const ytelseNavnMap = kode => {
   switch (kode) {
     case fagsakYtelsesType.FRISINN:
       return 'Frilans og selvstendig næringsdrivende inntektskompensasjon';
-    case fagsakYtelsesType.OMP:
+    case fagsakYtelsesType.OMSORGSPENGER:
       return 'Omsorgspenger';
-    case fagsakYtelsesType.PSB:
+    case fagsakYtelsesType.PLEIEPENGER_SYKT_BARN:
       return 'Pleiepenger';
     default:
       return 'Ytelsen';

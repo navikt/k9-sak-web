@@ -41,7 +41,7 @@ export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode, ytel
     return 'VedtakForm.ResultatKlageMedhold';
   }
 
-  if (ytelseType === fagsakYtelsesType.OMP) {
+  if (ytelseType === fagsakYtelsesType.OMSORGSPENGER) {
     return 'VedtakForm.VilkarStatusDelvisInnvilgetOmsorgspenger';
   }
 
@@ -53,7 +53,7 @@ export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode, ytel
     return 'VedtakForm.VilkarStatusDelvisInnvilgetUtvidetRett';
   }
 
-  if (ytelseType === fagsakYtelsesType.PPN) {
+  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'VedtakForm.VilkarStatusDelvisInnvilgetLivetsSluttfase';
   }
 
@@ -68,7 +68,7 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType
     return 'VedtakForm.ResultatKlageMedhold';
   }
 
-  if (ytelseType === fagsakYtelsesType.OMP) {
+  if (ytelseType === fagsakYtelsesType.OMSORGSPENGER) {
     return 'VedtakForm.VilkarStatusInnvilgetOmsorgspenger';
   }
 
@@ -80,11 +80,11 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType
     return 'VedtakForm.VilkarStatusInnvilgetUtvidetRett';
   }
 
-  if (ytelseType === fagsakYtelsesType.PPN) {
+  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'VedtakForm.VilkarStatusInnvilgetLivetsSluttfase';
   }
 
-  if (ytelseType === fagsakYtelsesType.UNG) {
+  if (ytelseType === fagsakYtelsesType.UNGDOMSYTELSE) {
     return 'VedtakForm.VilkarStatusInnvilgetUngdomsytelse';
   }
 
@@ -99,11 +99,11 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
     return 'VedtakForm.ResultatKlageAvvist';
   }
 
-  if (ytelseType === fagsakYtelsesType.OMP) {
+  if (ytelseType === fagsakYtelsesType.OMSORGSPENGER) {
     return 'VedtakForm.OmsorgspengerIkkeInnvilget';
   }
 
-  if (ytelseType === fagsakYtelsesType.OMP) {
+  if (ytelseType === fagsakYtelsesType.OMSORGSPENGER) {
     return 'VedtakForm.OmsorgspengerIkkeInnvilget';
   }
 
@@ -115,11 +115,11 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
     return 'VedtakForm.FrisinnIkkeInnvilget';
   }
 
-  if (ytelseType === fagsakYtelsesType.PPN) {
+  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'VedtakForm.LivetsSluttfaseIkkeInnvilget';
   }
 
-  if (ytelseType === fagsakYtelsesType.UNG) {
+  if (ytelseType === fagsakYtelsesType.UNGDOMSYTELSE) {
     return 'VedtakForm.UngdomsytelseIkkeInnvilget';
   }
 

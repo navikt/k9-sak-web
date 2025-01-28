@@ -19,7 +19,9 @@ const DetailViewVurdering = (props: DetailViewVurderingProps): JSX.Element => {
   const harPerioder = perioder.length > 0 && perioder[0].isValid();
 
   const skalViseRedigerVurderingKnapp =
-    fagsakYtelseType === fagsakYtelsesType.PPN ? behandlingType !== BehandlingType.REVURDERING : true;
+    fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE
+      ? behandlingType !== BehandlingType.REVURDERING
+      : true;
 
   return (
     <DetailView

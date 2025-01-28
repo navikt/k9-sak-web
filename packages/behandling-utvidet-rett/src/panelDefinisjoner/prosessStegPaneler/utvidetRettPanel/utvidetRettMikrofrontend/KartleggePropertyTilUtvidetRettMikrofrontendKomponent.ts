@@ -31,7 +31,8 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
 
   const eksistererAksjonspunktOgVilkar = aksjonspunkt && vilkar;
   const eksistererVilkarForAutomatiskInnvilget =
-    (fagsaksType === fagsakYtelsesType.OMP_AO || fagsaksType === fagsakYtelsesType.OMP_KS) && vilkar;
+    (fagsaksType === fagsakYtelsesType.OMSORGSPENGER_AO || fagsaksType === fagsakYtelsesType.OMSORGSPENGER_KS) &&
+    vilkar;
 
   if (eksistererAksjonspunktOgVilkar || eksistererVilkarForAutomatiskInnvilget) {
     const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;
@@ -40,7 +41,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
     const behandlingsID = behandling.id.toString();
 
     switch (fagsaksType) {
-      case fagsakYtelsesType.OMP_KS:
+      case fagsakYtelsesType.OMSORGSPENGER_KS:
         return KroniskSykObjektTilMikrofrontend({
           behandlingsID,
           aksjonspunktLost,
@@ -52,7 +53,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
           soknad,
         });
 
-      case fagsakYtelsesType.OMP_MA:
+      case fagsakYtelsesType.OMSORGSPENGER_MA:
         return MidlertidigAleneObjektTilMikrofrontend({
           behandlingsID,
           aksjonspunktLost,
@@ -65,7 +66,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
           soknad,
         });
 
-      case fagsakYtelsesType.OMP_AO:
+      case fagsakYtelsesType.OMSORGSPENGER_AO:
         return AleneOmOmsorgenObjektTilMikrofrontend({
           behandling,
           aksjonspunktLost,

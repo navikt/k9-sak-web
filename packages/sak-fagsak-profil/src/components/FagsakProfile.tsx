@@ -8,7 +8,7 @@ import { ReactNode } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 
 const visSakDekningsgrad = (saksKode: FagsakYtelsesType, dekningsgrad?: number): boolean => {
-  const erForeldrepenger = saksKode === fagsakYtelsesType.FP;
+  const erForeldrepenger = saksKode === fagsakYtelsesType.FORELDREPENGER;
   const gyldigDekningsGrad = dekningsgrad === 100 || dekningsgrad === 80;
 
   return erForeldrepenger && gyldigDekningsGrad;

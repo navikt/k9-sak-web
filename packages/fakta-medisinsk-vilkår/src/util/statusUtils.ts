@@ -13,10 +13,10 @@ import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/
 type Steg = typeof dokumentSteg | typeof tilsynOgPleieSteg | typeof toOmsorgspersonerSteg;
 
 export const stegForSakstype = (fagsakYtelseType: FagsakYtelsesType): Step[] => {
-  if (fagsakYtelseType === fagsakYtelsesType.OLP) {
+  if (fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
     return [opplæringspengerDokumentSteg, langvarigSykdomSteg];
   }
-  if (fagsakYtelseType === fagsakYtelsesType.PPN) {
+  if (fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return [sluttfaseDokumentSteg, livetsSluttfaseSteg];
   }
   return [dokumentSteg, tilsynOgPleieSteg, toOmsorgspersonerSteg];

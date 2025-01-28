@@ -135,12 +135,13 @@ const VilkårsvurderingLangvarigSykdom = ({
   };
 
   const skalViseOpprettVurderingKnapp = () => {
-    if (fagsakYtelseType === fagsakYtelsesType.OLP && BehandlingType.FORSTEGANGSSOKNAD === behandlingType) return false;
+    if (fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER && BehandlingType.FORSTEGANGSSOKNAD === behandlingType)
+      return false;
 
     return !vurderingsoversikt?.harPerioderSomSkalVurderes() &&
       !skalViseRadForNyVurdering &&
       harGyldigSignatur &&
-      fagsakYtelseType === fagsakYtelsesType.OLP
+      fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER
       ? behandlingType !== BehandlingType.FORSTEGANGSSOKNAD
       : true;
   };

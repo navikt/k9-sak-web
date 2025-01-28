@@ -59,7 +59,7 @@ const VurderingAvOmsorgsperioderForm = ({
   fosterbarn,
 }: VurderingAvOmsorgsperioderFormProps): JSX.Element => {
   const { onFinished, readOnly, sakstype } = React.useContext(ContainerContext);
-  const erOMP = sakstype === fagsakYtelsesType.OMP;
+  const erOMP = sakstype === fagsakYtelsesType.OMSORGSPENGER;
   const intl = useIntl();
   const formMethods = useForm({
     defaultValues: {

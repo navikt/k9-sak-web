@@ -51,15 +51,15 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     beskrivelseTilVedtakVilkar: `Søker har omsorgen for ${barnetEllerBarna}`,
     feilIngenVurdering: 'Resultat må oppgis.',
     instruksjon:
-      fagytelseType === fagsakYtelsesType.OMP_KS || fagytelseType === fagsakYtelsesType.OMP_AO
+      fagytelseType === fagsakYtelsesType.OMSORGSPENGER_KS || fagytelseType === fagsakYtelsesType.OMSORGSPENGER_AO
         ? tekstKroniskSyk.instruksjon
         : tekstMidlertidigAlene.instruksjon,
     sporsmalHarOmsorgen:
-      fagytelseType === fagsakYtelsesType.OMP_KS || fagytelseType === fagsakYtelsesType.OMP_AO
+      fagytelseType === fagsakYtelsesType.OMSORGSPENGER_KS || fagytelseType === fagsakYtelsesType.OMSORGSPENGER_AO
         ? tekstKroniskSyk.sporsmalHarOmsorgen
         : tekstMidlertidigAlene.sporsmalHarOmsorgen,
     begrunnelse:
-      fagytelseType === fagsakYtelsesType.OMP_KS || fagytelseType === fagsakYtelsesType.OMP_AO
+      fagytelseType === fagsakYtelsesType.OMSORGSPENGER_KS || fagytelseType === fagsakYtelsesType.OMSORGSPENGER_AO
         ? tekstKroniskSyk.begrunnelse
         : tekstMidlertidigAlene.begrunnelse,
     begrunnelseLesemodus: 'Vurdering',

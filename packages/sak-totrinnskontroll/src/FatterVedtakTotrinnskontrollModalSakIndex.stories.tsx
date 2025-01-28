@@ -34,7 +34,7 @@ export const visModalEtterGodkjenning = () => (
     behandling={behandling}
     closeEvent={action('button-click')}
     allAksjonspunktApproved
-    fagsakYtelseType={fagsakYtelsesType.FP}
+    fagsakYtelseType={fagsakYtelsesType.FORELDREPENGER}
     erKlageWithKA={false}
     harSammeResultatSomOriginalBehandling={false}
   />
@@ -53,7 +53,7 @@ export const visModalEtterGodkjenningAvKlage = () => (
     }
     closeEvent={action('button-click')}
     allAksjonspunktApproved
-    fagsakYtelseType={fagsakYtelsesType.FP}
+    fagsakYtelseType={fagsakYtelsesType.FORELDREPENGER}
     erKlageWithKA={false}
     harSammeResultatSomOriginalBehandling={false}
   />
@@ -64,7 +64,7 @@ export const visModalEtterTilbakesendingTilSaksbehandler = () => (
     behandling={behandling}
     closeEvent={action('button-click')}
     allAksjonspunktApproved={false}
-    fagsakYtelseType={fagsakYtelsesType.FP}
+    fagsakYtelseType={fagsakYtelsesType.FORELDREPENGER}
     erKlageWithKA={false}
     harSammeResultatSomOriginalBehandling={false}
   />

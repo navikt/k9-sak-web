@@ -13,7 +13,7 @@ const PERSONSTATUS_TYPE_KODEVERK = 'PERSONSTATUS_TYPE';
 const fagsaker = [
   {
     saksnummer: '1',
-    sakstype: fagsakYtelsesType.FP,
+    sakstype: fagsakYtelsesType.FORELDREPENGER,
     relasjonsRolleType: {
       kode: '',
       kodeverk: '',
@@ -37,7 +37,7 @@ const fagsaker = [
   },
   {
     saksnummer: '2',
-    sakstype: fagsakYtelsesType.ES,
+    sakstype: fagsakYtelsesType.ENGANGSTØNAD,
     status: {
       kode: fagsakStatus.OPPRETTET,
       kodeverk: FAGSAK_STATUS_KODEVERK,
