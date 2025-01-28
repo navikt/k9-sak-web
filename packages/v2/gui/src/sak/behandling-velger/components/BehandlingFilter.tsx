@@ -29,12 +29,17 @@ interface BehandlingfilterProps {
 const BehandlingFilter = ({ text, filters, activeFilters, onFilterChange }: BehandlingfilterProps): JSX.Element => (
   <ActionMenu>
     <ActionMenu.Trigger>
-      <Button variant="secondary-neutral" icon={<ChevronDownIcon aria-hidden />} iconPosition="right">
+      <Button
+        className="-mt-[9px]"
+        variant="secondary-neutral"
+        icon={<ChevronDownIcon aria-hidden />}
+        iconPosition="right"
+      >
         {text}
       </Button>
     </ActionMenu.Trigger>
     <ActionMenu.Content>
-      {[...filters].sort(sortFilters).map(({ label, value }) => {
+      {filters.toSorted(sortFilters).map(({ label, value }) => {
         if (value === automatiskBehandling) {
           return (
             <ActionMenu.CheckboxItem

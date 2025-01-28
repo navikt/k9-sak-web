@@ -9,4 +9,5 @@ export type Behandling = {
   opprettet: BehandlingDto['opprettet'];
   status: BehandlingDto['status'];
   type: BehandlingDto['type'];
+  uuid: BehandlingDto['uuid'];
 };

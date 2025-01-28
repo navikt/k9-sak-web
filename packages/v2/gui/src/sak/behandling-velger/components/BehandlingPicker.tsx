@@ -6,10 +6,10 @@ import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { AddCircle } from '@navikt/ds-icons';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import { type UseQueryResult, useQueries } from '@tanstack/react-query';
-import axios from 'axios';
 import { type Location } from 'history';
 import { type ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router';
+import type { BehandlingVelgerBackendApiType } from '../BehandlingVelgerBackendApiType';
 import type { Behandling } from '../types/Behandling';
 import type { PerioderMedBehandlingsId } from '../types/PerioderMedBehandlingsId';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
@@ -106,15 +106,15 @@ const usePrevious = (value: number | undefined): number | undefined => {
 
 const behandlingPerioderÅrsakRel = 'behandling-perioder-årsak-med-vilkår';
 
-const getBehandlingPerioderÅrsaker = (behandling: Behandling): Promise<PerioderMedBehandlingsId> =>
-  axios
-    .get(behandling.links?.find(link => link.rel === behandlingPerioderÅrsakRel)?.href ?? '')
-    .then(response => ({ data: response.data, id: behandling.id }))
-    .then(({ data, id }) => ({
-      id,
-      perioder: data.perioderMedÅrsak?.perioderTilVurdering,
-      perioderMedÅrsak: data.perioderMedÅrsak?.perioderMedÅrsak,
-    }));
+const getBehandlingPerioderÅrsaker = (
+  behandling: Behandling,
+  api: BehandlingVelgerBackendApiType,
+): Promise<PerioderMedBehandlingsId> =>
+  api.getBehandlingPerioderÅrsaker(behandling).then(response => ({
+    id: behandling.id,
+    perioder: response.perioderMedÅrsak?.perioderTilVurdering ?? [],
+    perioderMedÅrsak: response.perioderMedÅrsak?.perioderMedÅrsak ?? [],
+  }));
 
 interface OwnProps {
   behandlinger: Behandling[];
@@ -124,6 +124,7 @@ interface OwnProps {
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
   sakstypeKode: string;
   hentSøknadsperioder: boolean;
+  api: BehandlingVelgerBackendApiType;
 }
 
 /**
@@ -139,6 +140,7 @@ const BehandlingPicker = ({
   createLocationForSkjermlenke,
   sakstypeKode,
   hentSøknadsperioder,
+  api,
 }: OwnProps) => {
   const { kodeverkNavnFraKode } = useKodeverkContext();
   const firstRender = useRef(true);
@@ -197,8 +199,8 @@ const BehandlingPicker = ({
   );
   const søknadsperioder = useQueries({
     queries: behandlingerMedPerioderMedÅrsak.map(behandling => ({
-      queryKey: ['behandlingId', behandling.id],
-      queryFn: () => getBehandlingPerioderÅrsaker(behandling),
+      queryKey: ['behandlingId', behandling.id, api],
+      queryFn: () => getBehandlingPerioderÅrsaker(behandling, api),
       staleTime: 3 * 60 * 1000,
       enabled: hentSøknadsperioder,
     })),
@@ -247,7 +249,7 @@ const BehandlingPicker = ({
     }
     const årsaker: string[] = [];
     if (søknadsperiode.data) {
-      [...søknadsperiode.data.perioderMedÅrsak].reverse().forEach(periode =>
+      søknadsperiode.data.perioderMedÅrsak.toReversed().forEach(periode =>
         periode.årsaker?.forEach(årsak => {
           // TODO: try/catch skal ikke være nødvendig etter at backend har lagt inn alle behandlingsårsaker
           try {

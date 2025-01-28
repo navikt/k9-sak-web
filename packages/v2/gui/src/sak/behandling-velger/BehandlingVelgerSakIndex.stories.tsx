@@ -3,8 +3,6 @@ import {
   BehandlingDtoStatus,
   BehandlingDtoType,
   BehandlingsresultatDtoType,
-  VilkårResultatDtoAvslagsårsak,
-  VilkårResultatDtoUtfall,
   type BehandlingDto,
 } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
@@ -22,64 +20,7 @@ const behandlinger = [
     behandlingsresultat: {
       erRevurderingMedUendretUtfall: false,
       type: BehandlingsresultatDtoType.INNVILGET,
-      vilkårResultat: {
-        MEDLEMSKAPSVILKÅRET: [
-          {
-            periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: VilkårResultatDtoAvslagsårsak.UDEFINERT,
-            utfall: VilkårResultatDtoUtfall.UDEFINERT,
-          },
-        ],
-        MEDISINSKEVILKÅR_UNDER_18_ÅR: [
-          {
-            periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: VilkårResultatDtoAvslagsårsak.UDEFINERT,
-            utfall: VilkårResultatDtoUtfall.UDEFINERT,
-          },
-        ],
-        OPPTJENINGSPERIODEVILKÅR: [
-          {
-            periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: VilkårResultatDtoAvslagsårsak.UDEFINERT,
-            utfall: VilkårResultatDtoUtfall.UDEFINERT,
-          },
-        ],
-        ALDERSVILKÅR: [
-          {
-            periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: VilkårResultatDtoAvslagsårsak.UDEFINERT,
-            utfall: VilkårResultatDtoUtfall.UDEFINERT,
-          },
-        ],
-        SØKNADSFRIST: [
-          {
-            periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: VilkårResultatDtoAvslagsårsak.UDEFINERT,
-            utfall: VilkårResultatDtoUtfall.UDEFINERT,
-          },
-        ],
-        BEREGNINGSGRUNNLAGVILKÅR: [
-          {
-            periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: VilkårResultatDtoAvslagsårsak.UDEFINERT,
-            utfall: VilkårResultatDtoUtfall.UDEFINERT,
-          },
-        ],
-        OPPTJENINGSVILKÅRET: [
-          {
-            periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: VilkårResultatDtoAvslagsårsak.UDEFINERT,
-            utfall: VilkårResultatDtoUtfall.UDEFINERT,
-          },
-        ],
-        OMSORGEN_FOR: [
-          {
-            periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: VilkårResultatDtoAvslagsårsak.UDEFINERT,
-            utfall: VilkårResultatDtoUtfall.UDEFINERT,
-          },
-        ],
-      },
+      vilkårResultat: {},
       vedtaksdato: '2021-12-20',
     } as BehandlingDto['behandlingsresultat'],
     id: 999955,
@@ -87,6 +28,7 @@ const behandlinger = [
     opprettet: '2021-12-20T09:22:38',
     status: BehandlingDtoStatus.AVSLUTTET,
     type: BehandlingDtoType.REVURDERING,
+    uuid: '1',
   },
   {
     ansvarligSaksbehandler: 'saksbeh',
@@ -94,64 +36,7 @@ const behandlinger = [
     behandlingsresultat: {
       erRevurderingMedUendretUtfall: false,
       type: BehandlingsresultatDtoType.INNVILGET,
-      vilkårResultat: {
-        MEDLEMSKAPSVILKÅRET: [
-          {
-            periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: VilkårResultatDtoAvslagsårsak.UDEFINERT,
-            utfall: VilkårResultatDtoUtfall.UDEFINERT,
-          },
-        ],
-        MEDISINSKEVILKÅR_UNDER_18_ÅR: [
-          {
-            periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: VilkårResultatDtoAvslagsårsak.UDEFINERT,
-            utfall: VilkårResultatDtoUtfall.UDEFINERT,
-          },
-        ],
-        OPPTJENINGSPERIODEVILKÅR: [
-          {
-            periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: VilkårResultatDtoAvslagsårsak.UDEFINERT,
-            utfall: VilkårResultatDtoUtfall.UDEFINERT,
-          },
-        ],
-        ALDERSVILKÅR: [
-          {
-            periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: VilkårResultatDtoAvslagsårsak.UDEFINERT,
-            utfall: VilkårResultatDtoUtfall.UDEFINERT,
-          },
-        ],
-        SØKNADSFRIST: [
-          {
-            periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: VilkårResultatDtoAvslagsårsak.UDEFINERT,
-            utfall: VilkårResultatDtoUtfall.UDEFINERT,
-          },
-        ],
-        BEREGNINGSGRUNNLAGVILKÅR: [
-          {
-            periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: VilkårResultatDtoAvslagsårsak.UDEFINERT,
-            utfall: VilkårResultatDtoUtfall.UDEFINERT,
-          },
-        ],
-        OPPTJENINGSVILKÅRET: [
-          {
-            periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: VilkårResultatDtoAvslagsårsak.UDEFINERT,
-            utfall: VilkårResultatDtoUtfall.UDEFINERT,
-          },
-        ],
-        OMSORGEN_FOR: [
-          {
-            periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: VilkårResultatDtoAvslagsårsak.UDEFINERT,
-            utfall: VilkårResultatDtoUtfall.UDEFINERT,
-          },
-        ],
-      },
+      vilkårResultat: {},
       vedtaksdato: '2021-12-20',
     },
     id: 999951,
@@ -159,6 +44,7 @@ const behandlinger = [
     opprettet: '2021-12-20T09:21:41',
     status: BehandlingDtoStatus.AVSLUTTET,
     type: BehandlingDtoType.FØRSTEGANGSSØKNAD,
+    uuid: '1',
   },
 ];
 

@@ -8,7 +8,6 @@ import { CalendarIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, HStack, Label } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 import { type Location } from 'history';
-import React from 'react';
 import { NavLink, useLocation } from 'react-router';
 import DateLabel from '../../../shared/dateLabel/DateLabel';
 import skjermlenkeCodes from '../constants/skjermlenkeCodes';
@@ -29,24 +28,20 @@ interface BehandlingSelectedProps {
   sakstypeKode: string;
 }
 
-const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
-  const {
-    avsluttetDato,
-    behandlingsresultatTypeKode,
-    behandlingsresultatTypeNavn,
-    behandlingsårsaker,
-    behandlingTypeKode,
-    behandlingTypeNavn,
-    opprettetDato,
-    søknadsperioder,
-    createLocationForSkjermlenke,
-    sakstypeKode,
-  } = props;
-
+const BehandlingSelected = ({
+  avsluttetDato,
+  behandlingsresultatTypeKode,
+  behandlingsresultatTypeNavn,
+  behandlingsårsaker,
+  behandlingTypeKode,
+  behandlingTypeNavn,
+  opprettetDato,
+  søknadsperioder,
+  createLocationForSkjermlenke,
+  sakstypeKode,
+}: BehandlingSelectedProps) => {
   const location = useLocation();
-
   const erFerdigstilt = !!avsluttetDato;
-
   const containerCls = cx('behandlingSelectedContainer', {
     aapen:
       !behandlingsresultatTypeKode || behandlingsresultatTypeKode === BehandlingDtoBehandlingResultatType.IKKE_FASTSATT,
@@ -65,6 +60,7 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
       funnedeÅrsaker.push(årsak);
       return !erDuplikat;
     });
+
     return (
       <div className={styles.årsakerContainer}>
         <Heading size="small" level="3" className={styles.font18}>
