@@ -27,6 +27,7 @@ const getAxiosHttpClientApi = () => {
   axiosInstance.interceptors.response.use((response: AxiosResponse) => {
     if (
       response.status === 200 &&
+      response.config.url &&
       response.config.url.includes('/api/') &&
       !response.config.url.includes('/api/kodeverk')
     ) {
