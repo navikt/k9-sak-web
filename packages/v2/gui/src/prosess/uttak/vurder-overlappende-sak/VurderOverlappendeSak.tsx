@@ -205,13 +205,14 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                       saksnummer,
                     } = periodeMedOverlapp;
                     return (
-                      <React.Fragment key={`${fom}-${tom}-${saksnummer}`}>
+                      <React.Fragment key={`${fom}-${tom}-${saksnummer.toString()}`}>
                         <List as="ul" size="small">
                           <List.Item>
                             <BodyShort as="span">
                               {formatPeriod(fom || '', tom || '')} (
-                              {saksnummer.map(sakNr => (
+                              {saksnummer.map((sakNr, index) => (
                                 <a key={`${fom}-${tom}-${sakNr}-link`} href={`/k9/web/fagsak/${sakNr}`} target="_blank">
+                                  {index > 0 && ', '}
                                   {sakNr}
                                 </a>
                               ))}
