@@ -34,7 +34,7 @@ describe('TilkjentYteleseUtils', () => {
     });
 
     it('should return empty string if aktivitetStatus is null', () => {
-      expect(getAktivitet(null, kodeverkNavnFraKodeMock)).toBe('');
+      expect(getAktivitet(undefined, kodeverkNavnFraKodeMock)).toBe('');
     });
 
     it('should return the correct aktivitet status name', () => {

@@ -1,4 +1,4 @@
-import { navBrukerKjonn } from '@k9-sak-web/backend/k9sak/generated';
+import { PersonopplysningDtoNavBrukerKjonn as navBrukerKjonn } from '@k9-sak-web/backend/k9sak/generated';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent } from '@storybook/test';
 import VisittkortPanel from './VisittkortPanel';
@@ -16,7 +16,7 @@ const fagsakPerson = {
 
 const personopplysningerSoker: Personopplysninger = {
   fodselsdato: '1990-01-01',
-  navBrukerKjonn: navBrukerKjonn.K, // NAV_BRUKER_KJONN
+  navBrukerKjonn: navBrukerKjonn.KVINNE, // NAV_BRUKER_KJONN
   avklartPersonstatus: {
     orginalPersonstatus: 'BOSA', // PERSONSTATUS_TYPE
     overstyrtPersonstatus: 'BOSA', // PERSONSTATUS_TYPE

@@ -1,6 +1,6 @@
 import {
-  navBrukerKjonn,
-  personstatus,
+  PersonopplysningDtoNavBrukerKjonn as navBrukerKjonn,
+  PersonDtoPersonstatusType as personstatus,
   type DirekteOvergangDto,
   type RelatertSakDto,
 } from '@k9-sak-web/backend/k9sak/generated';
@@ -17,10 +17,10 @@ import VisittkortLabels from './VisittkortLabels';
 import styles from './visittkortPanel.module.css';
 
 const utledKjonn = (kjonn: string): Gender => {
-  if (kjonn === navBrukerKjonn.K) {
+  if (kjonn === navBrukerKjonn.KVINNE) {
     return Gender.female;
   }
-  return kjonn === navBrukerKjonn.M ? Gender.male : Gender.unknown;
+  return kjonn === navBrukerKjonn.MANN ? Gender.male : Gender.unknown;
 };
 
 export interface VisittkortPanelProps {

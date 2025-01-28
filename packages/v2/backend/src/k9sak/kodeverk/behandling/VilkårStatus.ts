@@ -1,11 +1,8 @@
 import type { Kodeverk } from '../../../shared/Kodeverk.ts';
-import {
-  type vilkarStatus as generatedVilkarStatusEnumUnion,
-  vilkarStatus as generatedVilkarStatusType,
-} from '../../generated';
+import { type VilkårDtoVilkarStatus as typeUnion, VilkårDtoVilkarStatus as enumObj } from '../../generated';
 
-export type VilkårStatus = generatedVilkarStatusEnumUnion;
+export type VilkårStatus = typeUnion;
 
 export type VilkårStatusKodeverk = Kodeverk<VilkårStatus, 'VILKAR_STATUS'>;
 
-export const vilkårStatus = generatedVilkarStatusType;
+export const vilkårStatus = enumObj;
