@@ -12,7 +12,7 @@ import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtel
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
+import { expect, userEvent } from '@storybook/test';
 import BehandlingVelgerSakV2 from './BehandlingVelgerSakIndex';
 
 const behandlinger = [
@@ -203,12 +203,24 @@ export const Default: StoryObj<typeof BehandlingVelgerSakV2> = {
     behandlingId: 1,
   },
   play: async ({ canvas, step }) => {
-    await step('skal rendre komponent', () => {
-      expect(canvas.getByText('2. REVURDERING')).toBeInTheDocument();
-      expect(canvas.getByText('20.12.2021')).toBeInTheDocument();
+    await step('skal rendre komponent', async () => {
+      await userEvent.click(canvas.getByText('Se alle behandlinger'));
+      expect(canvas.getByText('2. Viderebehandling')).toBeInTheDocument();
+      expect(canvas.getAllByText('20.12.2021')).toHaveLength(4);
     });
+  },
+};
 
-    await step('skal vise forklarende tekst når det ikke finnes behandlinger', () => {
+export const IngenBehandlinger: StoryObj<typeof BehandlingVelgerSakV2> = {
+  args: {
+    getBehandlingLocation: () => locationMock,
+    fagsak,
+    createLocationForSkjermlenke: () => locationMock,
+    behandlinger: [],
+    noExistingBehandlinger: true,
+  },
+  play: async ({ canvas, step }) => {
+    await step('skal vise forklarende tekst når det ikke finnes behandlinger', async () => {
       expect(canvas.getByText('Ingen behandlinger er opprettet')).toBeInTheDocument();
     });
   },
