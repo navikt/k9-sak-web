@@ -211,10 +211,16 @@ const VurderOverlappendeSak: FC<Props> = ({ behandling, aksjonspunkt, api, oppda
                             <BodyShort as="span">
                               {formatPeriod(fom || '', tom || '')} (
                               {saksnummer.map((sakNr, index) => (
-                                <a key={`${fom}-${tom}-${sakNr}-link`} href={`/k9/web/fagsak/${sakNr}`} target="_blank">
+                                <>
                                   {index > 0 && ', '}
-                                  {sakNr}
-                                </a>
+                                  <a
+                                    key={`${fom}-${tom}-${sakNr}-link`}
+                                    href={`/k9/web/fagsak/${sakNr}`}
+                                    target="_blank"
+                                  >
+                                    {sakNr}
+                                  </a>
+                                </>
                               ))}
                               )
                             </BodyShort>
