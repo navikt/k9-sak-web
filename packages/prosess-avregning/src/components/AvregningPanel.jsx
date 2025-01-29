@@ -9,7 +9,7 @@ import {
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
@@ -336,7 +336,7 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       fagsak,
       featureToggles,
     } = ownProps;
-    const erFrisinn = fagsakYtelseType.FRISINN === fagsak.sakstype?.kode;
+    const erFrisinn = fagsak.sakstype === fagsakYtelsesType.FRISINN;
     const hasOpenTilbakekrevingsbehandling =
       tilbakekrevingvalg !== undefined &&
       tilbakekrevingvalg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;

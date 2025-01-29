@@ -2,7 +2,7 @@ import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, required, safeJSONParse } from '@fpsak-frontend/utils';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
@@ -23,7 +23,7 @@ const maxLength1500 = maxLength(1500);
 const previewHenleggBehandlingDoc =
   (
     previewHenleggBehandling: (erHenleggelse: boolean, data: any) => void,
-    ytelseType: Kodeverk,
+    ytelseType: FagsakYtelsesType,
     fritekst: string,
     behandlingId: number,
     behandlingUuid?: string,
@@ -90,15 +90,14 @@ const henleggArsakerPerBehandlingType = {
 export const getHenleggArsaker = (
   behandlingResultatTyper: KodeverkMedNavn[],
   behandlingType: Kodeverk,
-  ytelseType: Kodeverk,
+  ytelseType: FagsakYtelsesType,
 ): KodeverkMedNavn[] => {
   const typerForBehandlingType = henleggArsakerPerBehandlingType[behandlingType.kode];
   return typerForBehandlingType
     .filter(
       type =>
-        ytelseType.kode !== fagsakYtelseType.ENGANGSSTONAD ||
-        (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD &&
-          type !== behandlingResultatType.MANGLER_BEREGNINGSREGLER),
+        ytelseType !== fagsakYtelsesType.ENGANGSTØNAD ||
+        (ytelseType === fagsakYtelsesType.ENGANGSTØNAD && type !== behandlingResultatType.MANGLER_BEREGNINGSREGLER),
     )
     .map(type => behandlingResultatTyper.find(brt => brt.kode === type));
 };
@@ -107,7 +106,7 @@ interface PureOwnProps {
   cancelEvent: () => void;
   previewHenleggBehandling: (erHenleggelse: boolean, data: any) => void;
   behandlingUuid?: string;
-  ytelseType: Kodeverk;
+  ytelseType: FagsakYtelsesType;
   behandlingId?: number;
   behandlingResultatTyper: KodeverkMedNavn[];
   behandlingType: Kodeverk;
