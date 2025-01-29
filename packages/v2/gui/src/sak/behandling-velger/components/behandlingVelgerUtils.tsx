@@ -63,7 +63,7 @@ export const getStatusText = (
 };
 
 export const sortBehandlinger = (behandlinger: Behandling[]): Behandling[] =>
-  [...behandlinger].sort((b1, b2) => {
+  behandlinger.toSorted((b1, b2) => {
     if (b1.avsluttet && !b2.avsluttet) {
       return 1;
     }

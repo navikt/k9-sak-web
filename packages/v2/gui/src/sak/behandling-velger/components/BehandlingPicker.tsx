@@ -175,6 +175,7 @@ const BehandlingPicker = ({
     }
   }, [behandlingId, åpenBehandlingId, firstRender.current]);
 
+  // TODO: refactor
   const behandlingerSomSkalVises = useMemo(() => {
     const sorterteBehandlinger = sortBehandlinger(behandlinger);
     const indexOfValgtBehandling = sorterteBehandlinger.findIndex(behandling => behandling.id === valgtBehandlingId);
