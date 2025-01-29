@@ -2,9 +2,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Aksjonspunkt, Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
 import Rettigheter from '../../types/rettigheterTsType';
 import { ProsessStegDef } from './ProsessStegDef';
@@ -72,7 +72,7 @@ const useProsessStegPaneler = (
         urlKode === prosessStegCodes.SIMULERING ||
         urlKode === prosessStegCodes.VEDTAK ||
         urlKode === prosessStegCodes.KLAGE_RESULTAT ||
-        (fagsak.sakstype === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN && urlKode === prosessStegCodes.UTTAK)
+        (fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER && urlKode === prosessStegCodes.UTTAK)
       ) {
         return panel;
       }

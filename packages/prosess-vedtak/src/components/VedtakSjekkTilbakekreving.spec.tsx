@@ -6,7 +6,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
@@ -98,7 +98,7 @@ describe('<AvslagårsakListe>', () => {
           previewCallback={vi.fn()}
           submitCallback={vi.fn()}
           alleKodeverk={alleKodeverk}
-          ytelseTypeKode={fagsakYtelsesType.OMSORGSPENGER}
+          ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
           arbeidsgiverOpplysningerPerId={{}}
           lagreDokumentdata={vi.fn()}
           hentFritekstbrevHtmlCallback={vi.fn()}
@@ -164,7 +164,7 @@ describe('<AvslagårsakListe>', () => {
           previewCallback={vi.fn()}
           submitCallback={vi.fn()}
           alleKodeverk={alleKodeverk}
-          ytelseTypeKode={fagsakYtelsesType.OMSORGSPENGER}
+          ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
           arbeidsgiverOpplysningerPerId={{}}
           lagreDokumentdata={vi.fn()}
           hentFritekstbrevHtmlCallback={vi.fn()}

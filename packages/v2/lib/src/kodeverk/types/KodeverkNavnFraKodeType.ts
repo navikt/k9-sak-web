@@ -1,8 +1,8 @@
-import { KodeverkKlageType, KodeverkTilbakeType, KodeverkType, KodeverkTypeV2 } from '../types';
+import { KodeverkKlageType, KodeverkTilbakeType, KodeverkType } from '../types';
 
 export type KodeverkNavnFraKodeType = (
   kode: string,
-  kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType | KodeverkTypeV2,
+  kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType,
   kilde?: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' | undefined,
   ukjentTekst?: string | undefined,
 ) => string;

@@ -4,11 +4,9 @@ import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Table } from '@navikt/ds-react';
 import React from 'react';
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 
 import { useIntl } from 'react-intl';
 import styles from './fagsakList.module.css';
-import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 
 const headerTextCodes = ['FagsakList.Saksnummer', 'FagsakList.Sakstype', 'FagsakList.Status'];
 const lagFagsakSortObj = (fagsak: Fagsak) => ({
@@ -48,7 +46,6 @@ interface OwnProps {
  */
 const FagsakList = ({ fagsaker, selectFagsakCallback, alleKodeverk }: OwnProps) => {
   const intl = useIntl();
-  const { kodeverkNavnFraKode } = useKodeverkContext();
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
   return (
@@ -71,7 +68,7 @@ const FagsakList = ({ fagsaker, selectFagsakCallback, alleKodeverk }: OwnProps) 
             shadeOnHover={false}
           >
             <Table.DataCell>{fagsak.saksnummer}</Table.DataCell>
-            <Table.DataCell>{kodeverkNavnFraKode(fagsak.sakstype, KodeverkTypeV2.FAGSAK_YTELSE)}</Table.DataCell>
+            <Table.DataCell>{getKodeverknavn(fagsak.sakstype)}</Table.DataCell>
             <Table.DataCell>{getKodeverknavn(fagsak.status)}</Table.DataCell>
           </Table.Row>
         ))}

@@ -2,8 +2,7 @@ import { get } from '@fpsak-frontend/utils';
 import { Box, Margin, NavigationWithDetailView, PageContainer } from '@navikt/ft-plattform-komponenter';
 import axios from 'axios';
 import React, { useMemo, type JSX } from 'react';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-
+import FagsakYtelseType from '../../../constants/FagsakYtelseType';
 import Dokument from '../../../types/Dokument';
 import Dokumentoversikt from '../../../types/Dokumentoversikt';
 import { DokumentoversiktResponse } from '../../../types/DokumentoversiktResponse';
@@ -59,16 +58,16 @@ const StruktureringAvDokumentasjon = ({
   } = state;
 
   const skalViseInnleggelsesperioderOgDiagnosekoder = ![
-    fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
-    fagsakYtelsesType.OPPLÆRINGSPENGER,
-  ].some(ytelseType => ytelseType === fagsakYtelseType);
+    FagsakYtelseType.PLEIEPENGER_SLUTTFASE,
+    FagsakYtelseType.OPPLÆRINGSPENGER,
+  ].includes(fagsakYtelseType);
 
   const nesteStegErVurderingFn = (nesteSteg: SykdomsstegStatusResponse) => {
-    if (fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
+    if (fagsakYtelseType === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
       return nesteStegErLivetssluttfase(nesteSteg);
     }
 
-    if (fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+    if (fagsakYtelseType === FagsakYtelseType.OPPLÆRINGSPENGER) {
       return nesteStegErOpplæringspenger(nesteSteg);
     }
 

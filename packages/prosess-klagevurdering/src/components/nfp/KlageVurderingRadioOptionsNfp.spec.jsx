@@ -1,5 +1,5 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
@@ -24,7 +24,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal vise to options når klage opprettholdt', () => {
     renderWithIntlAndReduxForm(
       <KlageVurderingRadioOptionsNfp
-        fagsak={{ sakstype: fagsakYtelsesType.OMSORGSPENGER }}
+        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
         readOnly={false}
         readOnlySubmitButton
         medholdReasons={medholdReasons}
@@ -44,7 +44,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal vise fem options når klage medhold', () => {
     renderWithIntlAndReduxForm(
       <KlageVurderingRadioOptionsNfp
-        fagsak={{ sakstype: fagsakYtelsesType.OMSORGSPENGER }}
+        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
         readOnly={false}
         readOnlySubmitButton
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
@@ -68,7 +68,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal vise hjemler når klagevurdering er opprettholdt', () => {
     renderWithIntlAndReduxForm(
       <KlageVurderingRadioOptionsNfp
-        fagsak={{ sakstype: fagsakYtelsesType.OMSORGSPENGER }}
+        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
         readOnly={false}
         readOnlySubmitButton
         medholdReasons={medholdReasons}
@@ -87,7 +87,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal ikke vise hjemler når klagevurdering er opprettholdt og behandling er frisinn', () => {
     renderWithIntlAndReduxForm(
       <KlageVurderingRadioOptionsNfp
-        fagsak={{ sakstype: fagsakYtelsesType.FRISINN }}
+        fagsak={{ sakstype: { kode: fagsakYtelseType.FRISINN } }}
         readOnly={false}
         readOnlySubmitButton
         medholdReasons={medholdReasons}

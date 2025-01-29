@@ -10,7 +10,7 @@ import FagsakSearch from './FagsakSearch';
 describe('<FagsakSearch>', () => {
   const fagsak: Fagsak = {
     saksnummer: '12345',
-    sakstype: fagsakYtelsesType.FORELDREPENGER, // FAGSAK_YTELSE
+    sakstype: { kode: fagsakYtelsesType.FORELDREPENGER, kodeverk: 'FAGSAK_YTELSE' },
     relasjonsRolleType: {
       kode: 'TEST',
       kodeverk: '',

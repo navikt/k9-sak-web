@@ -1,6 +1,5 @@
 import { HttpResponse, delay, http } from 'msw';
 import React from 'react';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import NotatISakIndex from './NotaterIndex';
 
 export default {
@@ -63,7 +62,7 @@ const notater = [
     endretTidspunkt: undefined,
     fagsakId: undefined,
     aktørId: '123',
-    sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
+    sakstype: 'PSB',
     skjult: false,
     kanRedigere: true,
   },
@@ -107,7 +106,7 @@ VisNotatISakPanel.parameters = {
             endretAv: '',
             endretTidspunkt: undefined,
             aktørId: '123',
-            sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
+            sakstype: 'PSB',
             versjon: 1,
             skjult: false,
             kanRedigere: true,

@@ -1,5 +1,5 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 
@@ -8,7 +8,7 @@ import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakInnvilgetPanelImpl } from './VedtakInnvilgetPanel';
 
-const foreldrepenger = fagsakYtelsesType.FORELDREPENGER;
+const foreldrepenger = fagsakYtelseType.FORELDREPENGER;
 const behandlingsresultat = {
   type: {
     kode: 'INNVILGET',

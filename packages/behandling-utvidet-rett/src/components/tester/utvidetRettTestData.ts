@@ -53,7 +53,7 @@ const utvidetRettTestData = {
   } as Behandling,
   fagsak: {
     saksnummer: '111111',
-    sakstype: fagsakYtelsesType.OMSORGSPENGER_KS, // FAGSAK_YTELSE
+    sakstype: { kode: fagsakYtelsesType.OMSORGSPENGER_KS, kodeverk: 'FAGSAK_YTELSE' },
     status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
   } as Fagsak,
   fagsakPerson: {
