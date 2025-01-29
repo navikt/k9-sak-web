@@ -18,9 +18,9 @@
   "dependencies": {
     "@fpsak-frontend/form": "1.0.0",
     "@navikt/diagnosekoder": "^1.2025.0",
-    "@navikt/ds-css": "7.6.0",
+    "@navikt/ds-css": "7.10.0",
     "@navikt/ds-icons": "3.4.3",
-    "@navikt/ds-react": "7.6.0",
+    "@navikt/ds-react": "7.10.0",
     "@navikt/ft-plattform-komponenter": "^7.0.3-react19beta.0",
     "@popperjs/core": "2.11.8",
     "@tanstack/react-query": "^5.64.2",
