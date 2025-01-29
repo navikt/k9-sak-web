@@ -1,5 +1,5 @@
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
@@ -55,9 +55,9 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      {(ytelseTypeKode === fagsakYtelseType.OMSORGSPENGER ||
-        ytelseTypeKode === fagsakYtelseType.FRISINN ||
-        ytelseTypeKode === fagsakYtelseType.PLEIEPENGER) && (
+      {(ytelseTypeKode === fagsakYtelsesType.OMSORGSPENGER ||
+        ytelseTypeKode === fagsakYtelsesType.FRISINN ||
+        ytelseTypeKode === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) && (
         <div data-testid="innvilgetRevurdering">
           <Label size="small" as="p">
             {intl.formatMessage({ id: 'VedtakForm.Resultat' })}

@@ -4,7 +4,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { Aksjonspunkt, Behandling, Venteaarsak } from '@k9-sak-web/types';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import SettPaVentParams from '../../types/settPaVentParamsTsType';
 
 interface BehandlingPaVentProps {
@@ -70,6 +70,7 @@ const BehandlingPaVent = ({
       erTilbakekreving={erTilbakekreving}
       ventearsakVariant={ventearsakVariant}
       showModal
+      isSubmitting={false}
     />
   );
 };

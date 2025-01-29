@@ -2,7 +2,6 @@ import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import { SettPaVentModal } from './SettPaVentModal';
 
@@ -22,6 +21,7 @@ describe('<SettPaVentModal>', () => {
         ventearsaker={[]}
         erTilbakekreving={false}
         showModal
+        isSubmitting={false}
         {...reduxFormPropsMock}
       />,
       { messages },
@@ -45,6 +45,7 @@ describe('<SettPaVentModal>', () => {
         hasManualPaVent
         ventearsaker={[]}
         erTilbakekreving={false}
+        isSubmitting={false}
         {...reduxFormPropsMock}
       />,
       { messages },
@@ -67,6 +68,7 @@ describe('<SettPaVentModal>', () => {
         hasManualPaVent
         ventearsaker={[]}
         erTilbakekreving={false}
+        isSubmitting={false}
         {...reduxFormPropsMock}
       />,
       { messages },
@@ -89,6 +91,7 @@ describe('<SettPaVentModal>', () => {
         hasManualPaVent
         ventearsaker={[]}
         erTilbakekreving={false}
+        isSubmitting={false}
         {...reduxFormPropsMock}
       />,
       { messages },
@@ -111,6 +114,7 @@ describe('<SettPaVentModal>', () => {
         hasManualPaVent
         ventearsaker={[]}
         erTilbakekreving={false}
+        isSubmitting={false}
         {...reduxFormPropsMock}
       />,
       { messages },
@@ -130,6 +134,7 @@ describe('<SettPaVentModal>', () => {
         hasManualPaVent={false}
         ventearsaker={[]}
         erTilbakekreving={false}
+        isSubmitting={false}
         {...reduxFormPropsMock}
       />,
       { messages },
@@ -148,6 +153,7 @@ describe('<SettPaVentModal>', () => {
         ventearsaker={[]}
         hasManualPaVent={false}
         erTilbakekreving={false}
+        isSubmitting={false}
         {...reduxFormPropsMock}
       />,
       { messages },
@@ -166,6 +172,7 @@ describe('<SettPaVentModal>', () => {
         ventearsaker={[]}
         hasManualPaVent={false}
         erTilbakekreving={false}
+        isSubmitting={false}
         {...reduxFormPropsMock}
       />,
       { messages },
@@ -191,6 +198,7 @@ describe('<SettPaVentModal>', () => {
         ventearsak="VENT_PÅ_TILBAKEKREVINGSGRUNNLAG"
         hasManualPaVent={false}
         erTilbakekreving
+        isSubmitting={false}
         {...reduxFormPropsMock}
       />,
       { messages },

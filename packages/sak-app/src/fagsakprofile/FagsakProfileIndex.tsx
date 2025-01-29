@@ -67,10 +67,9 @@ export const FagsakProfileIndex = ({
   const featureToggles = useContext(FeatureTogglesContext);
 
   const fagsakStatusMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
-  const fagsakYtelseTypeMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.sakstype);
 
   const { data: behandlendeEnheter } = restApiHooks.useRestApi<BehandlendeEnheter>(K9sakApiKeys.BEHANDLENDE_ENHETER, {
-    ytelseType: fagsak.sakstype.kode,
+    ytelseType: fagsak.sakstype,
   });
 
   const match = useMatch('/fagsak/:saksnummer/');
@@ -95,7 +94,7 @@ export const FagsakProfileIndex = ({
       {harHentetBehandlinger && !shouldRedirectToBehandlinger && (
         <FagsakProfilSakIndex
           saksnummer={fagsak.saksnummer}
-          fagsakYtelseType={fagsakYtelseTypeMedNavn}
+          fagsakYtelseType={fagsak.sakstype}
           fagsakStatus={fagsakStatusMedNavn}
           dekningsgrad={fagsak.dekningsgrad}
           renderBehandlingMeny={() => {

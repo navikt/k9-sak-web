@@ -1,6 +1,6 @@
 import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required, safeJSONParse } from '@fpsak-frontend/utils';
@@ -155,7 +155,7 @@ interface BrevPanelProps {
   behandlingResultat: Behandlingsresultat;
   overstyrtMottaker?: Brevmottaker;
   formikProps: FormikProps<any>;
-  ytelseTypeKode: string;
+  ytelseTypeKode: FagsakYtelsesType;
   dokumentdata: DokumentDataType;
   aktiverteInformasjonsbehov: any;
   lagreDokumentdata: (any) => void;
@@ -209,7 +209,8 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) || kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev);
 
   const kanInkludereKalender =
-    ytelseTypeKode === fagsakYtelseType.PLEIEPENGER || ytelseTypeKode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
+    ytelseTypeKode === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN ||
+    ytelseTypeKode === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
 
   const harAlternativeMottakere =
     kanOverstyreMottakere(tilgjengeligeVedtaksbrev) && !formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV];
