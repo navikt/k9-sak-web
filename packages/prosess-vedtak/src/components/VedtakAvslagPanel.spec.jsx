@@ -1,4 +1,5 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
@@ -8,12 +9,11 @@ import React from 'react';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakAvslagPanelImpl } from './VedtakAvslagPanel';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
-const pleiepenger = fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
-const omsorgspenger = fagsakYtelsesType.OMSORGSPENGER;
-const kroniskSyktBarn = fagsakYtelsesType.OMSORGSPENGER_KS;
-const midlertidigAlene = fagsakYtelsesType.OMSORGSPENGER_MA;
+const pleiepenger = fagsakYtelseType.PLEIEPENGER;
+const omsorgspenger = fagsakYtelseType.OMSORGSPENGER;
+const kroniskSyktBarn = fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN;
+const midlertidigAlene = fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE;
 
 describe('<VedtakAvslagPanel>', () => {
   const behandling = {

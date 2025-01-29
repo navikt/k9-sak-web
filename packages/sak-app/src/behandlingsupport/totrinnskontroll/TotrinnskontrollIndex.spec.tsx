@@ -1,5 +1,5 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
@@ -27,7 +27,10 @@ vi.mock('react-router', async () => {
 describe('<TotrinnskontrollIndex>', () => {
   const fagsak = {
     saksnummer: '1',
-    sakstype: fagsakYtelsesType.FORELDREPENGER,
+    sakstype: {
+      kode: fagsakYtelseType.FORELDREPENGER,
+      kodeverk: '',
+    },
     person: {
       aktørId: '123',
     },

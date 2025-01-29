@@ -11,13 +11,18 @@ import TextArea from '../react-hook-form-wrappers/TextArea';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styles from './omsorg.module.css';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 type FormData = {
   harOmsorgen: string;
   begrunnelse: string;
   åpenForRedigering: boolean;
 };
+
+enum FagYtelseType {
+  KRONISK_SYK = 'OMP_KS',
+  MIDLERTIDIG_ALENE = 'OMP_MA',
+  ALENE_OM_OMSORGEN = 'OMP_AO',
+}
 
 const Omsorg: React.FunctionComponent<OmsorgProps> = ({
   behandlingsID,
@@ -51,15 +56,15 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     beskrivelseTilVedtakVilkar: `Søker har omsorgen for ${barnetEllerBarna}`,
     feilIngenVurdering: 'Resultat må oppgis.',
     instruksjon:
-      fagytelseType === fagsakYtelsesType.OMSORGSPENGER_KS || fagytelseType === fagsakYtelsesType.OMSORGSPENGER_AO
+      fagytelseType === FagYtelseType.KRONISK_SYK || fagytelseType === FagYtelseType.ALENE_OM_OMSORGEN
         ? tekstKroniskSyk.instruksjon
         : tekstMidlertidigAlene.instruksjon,
     sporsmalHarOmsorgen:
-      fagytelseType === fagsakYtelsesType.OMSORGSPENGER_KS || fagytelseType === fagsakYtelsesType.OMSORGSPENGER_AO
+      fagytelseType === FagYtelseType.KRONISK_SYK || fagytelseType === FagYtelseType.ALENE_OM_OMSORGEN
         ? tekstKroniskSyk.sporsmalHarOmsorgen
         : tekstMidlertidigAlene.sporsmalHarOmsorgen,
     begrunnelse:
-      fagytelseType === fagsakYtelsesType.OMSORGSPENGER_KS || fagytelseType === fagsakYtelsesType.OMSORGSPENGER_AO
+      fagytelseType === FagYtelseType.KRONISK_SYK || fagytelseType === FagYtelseType.ALENE_OM_OMSORGEN
         ? tekstKroniskSyk.begrunnelse
         : tekstMidlertidigAlene.begrunnelse,
     begrunnelseLesemodus: 'Vurdering',

@@ -1,5 +1,5 @@
-import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import BehandlingType from '../constants/BehandlingType';
+import FagsakYtelseType from '../constants/FagsakYtelseType';
 
 interface ContainerContract {
   endpoints: {
@@ -20,7 +20,7 @@ interface ContainerContract {
   httpErrorHandler: (statusCode: number, locationHeader?: string) => void;
   visFortsettknapp: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  fagsakYtelseType?: FagsakYtelsesType;
+  fagsakYtelseType?: FagsakYtelseType;
   behandlingType?: BehandlingType;
 }
 

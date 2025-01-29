@@ -1,5 +1,5 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -29,7 +29,10 @@ describe('<MenyNyBehandlingIndex>', () => {
 
     renderWithIntlAndReduxForm(
       <MenyNyBehandlingIndex
-        ytelseType={fagsakYtelsesType.FORELDREPENGER}
+        ytelseType={{
+          kode: fagsakYtelseType.FORELDREPENGER,
+          kodeverk: 'FAGSAK_YTELSE_TYPE',
+        }}
         saksnummer="123"
         behandlingId={3}
         behandlingVersjon={1}
@@ -72,7 +75,10 @@ describe('<MenyNyBehandlingIndex>', () => {
       eksternUuid: '2323',
       saksnummer: '123',
       behandlingType: behandlingType.FORSTEGANGSSOKNAD,
-      fagsakYtelseType: fagsakYtelsesType.FORELDREPENGER,
+      fagsakYtelseType: {
+        kode: fagsakYtelseType.FORELDREPENGER,
+        kodeverk: 'FAGSAK_YTELSE_TYPE',
+      },
     });
 
     expect(lukkModalCallback.mock.calls).toHaveLength(1);

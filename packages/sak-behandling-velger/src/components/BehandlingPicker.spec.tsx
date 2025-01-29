@@ -42,7 +42,10 @@ describe('<BehandlingPicker>', () => {
 
   const fagsak = {
     saksnummer: '35425245',
-    sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
+    sakstype: {
+      kode: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
+      kodeverk: 'FAGSAK_YTELSE',
+    },
     relasjonsRolleType: {
       kode: relasjonsRolleType.MOR,
       kodeverk: '',

@@ -7,7 +7,6 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Aksjonspunkt, Fagsak, OpptjeningBehandling } from '@k9-sak-web/types';
 import OpptjeningVilkarProsessIndex from './OpptjeningVilkarProsessIndex';
 import opptjeningAktivitetKlassifisering from './kodeverk/opptjeningAktivitetKlassifisering';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const opptjening = {
   fastsattOpptjening: {
@@ -149,7 +148,7 @@ const behandlingsresultat = {
 
 const fagsak = {
   saksnummer: '1DoJZD0',
-  sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
+  sakstype: { kode: 'PSB', kodeverk: 'FAGSAK_YTELSE' },
   gyldigPeriode: { fom: '2022-11-28', tom: '2023-01-20' },
   status: { kode: 'UBEH', kodeverk: 'FAGSAK_STATUS' },
   kanRevurderingOpprettes: false,
@@ -181,7 +180,10 @@ export const visPanelForÅpentAksjonspunkt = args => (
   <OpptjeningVilkarProsessIndex
     fagsak={{
       ...fagsak,
-      sakstype: fagsakYtelsesType.OMSORGSPENGER, // FAGSAK_YTELSE
+      sakstype: {
+        kode: 'OMP',
+        kodeverk: 'FAGSAK_YTELSE',
+      },
     }}
     behandling={
       {
@@ -397,7 +399,10 @@ export const visPanelForNårEnIkkeHarAksjonspunkt = args => (
   <OpptjeningVilkarProsessIndex
     fagsak={{
       ...fagsak,
-      sakstype: fagsakYtelsesType.OMSORGSPENGER, // FAGSAK_YTELSE
+      sakstype: {
+        kode: 'OMP',
+        kodeverk: 'FAGSAK_YTELSE',
+      },
     }}
     behandling={
       {

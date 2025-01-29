@@ -1,5 +1,5 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { Behandling } from '@k9-sak-web/types';
@@ -35,7 +35,10 @@ describe('<BeslutterModalIndex>', () => {
     renderWithIntl(
       <BeslutterModalIndex
         behandling={behandling}
-        fagsakYtelseType={fagsakYtelsesType.FORELDREPENGER}
+        fagsakYtelseType={{
+          kode: fagsakYtelseType.FORELDREPENGER,
+          kodeverk: '',
+        }}
         allAksjonspunktApproved={false}
         erKlageWithKA={false}
       />,

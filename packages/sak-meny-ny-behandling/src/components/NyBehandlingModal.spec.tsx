@@ -1,6 +1,6 @@
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
@@ -19,7 +19,10 @@ describe('<NyBehandlingModal>', () => {
   const submitEventCallback = vi.fn();
   const cancelEventCallback = vi.fn();
 
-  const ytelseType = fagsakYtelsesType.FORELDREPENGER;
+  const ytelseType = {
+    kode: fagsakYtelseType.FORELDREPENGER,
+    kodeverk: '',
+  };
 
   it('skal rendre komponent korrekt', () => {
     const behandlingstyper = [

@@ -4,7 +4,7 @@ import { NavigateFunction, useLocation, useNavigate } from 'react-router';
 
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
@@ -239,7 +239,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype === fagsakYtelsesType.OMSORGSPENGER) {
+  if (fagsak.sakstype.kode === FagsakYtelseType.OMSORGSPENGER) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -254,7 +254,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
+  if (fagsak.sakstype.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -269,7 +269,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (erFagytelseTypeUtvidetRett(fagsak.sakstype)) {
+  if (erFagytelseTypeUtvidetRett(fagsak.sakstype.kode)) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -284,7 +284,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype === fagsakYtelsesType.FRISINN) {
+  if (fagsak.sakstype.kode === FagsakYtelseType.FRISINN) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -299,7 +299,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+  if (fagsak.sakstype.kode === FagsakYtelseType.OPPLAERINGSPENGER) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>

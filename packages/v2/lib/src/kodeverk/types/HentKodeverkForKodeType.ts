@@ -3,11 +3,10 @@ import {
   type KodeverkMedUndertype,
   KodeverkTilbakeType,
   KodeverkType,
-  KodeverkTypeV2,
   type KodeverkV2,
 } from '../types';
 
 export type HentKodeverkForKodeType = (
-  kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType | KodeverkTypeV2,
+  kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType,
   kilde?: 'kodeverk' | 'kodeverkTilbake' | 'kodeverkKlage' | undefined,
 ) => KodeverkV2[] | KodeverkMedUndertype | undefined;

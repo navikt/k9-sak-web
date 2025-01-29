@@ -5,8 +5,7 @@ import { Box, ChildIcon, Infostripe, Margin, PageContainer } from '@navikt/ft-pl
 import { useQuery } from '@tanstack/react-query';
 import classnames from 'classnames';
 import React, { useMemo, type JSX } from 'react';
-import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-
+import FagsakYtelseType from '../../../constants/FagsakYtelseType';
 import { DiagnosekodeResponse } from '../../../types/DiagnosekodeResponse';
 import Dokument from '../../../types/Dokument';
 import { NyeDokumenterResponse } from '../../../types/NyeDokumenterResponse';
@@ -66,12 +65,12 @@ const TabItem = ({ label, showWarningIcon }: TabItemProps) => {
   );
 };
 
-const sykdomTittel = (fagsakYtelseType: FagsakYtelsesType) => {
-  if (fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
+const sykdomTittel = (fagsakYtelseType: FagsakYtelseType) => {
+  if (fagsakYtelseType === FagsakYtelseType.OPPLÆRINGSPENGER) {
     return 'Sykdom og opplæring';
   }
 
-  if (fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
+  if (fagsakYtelseType === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
     return 'Livets sluttfase';
   }
 
@@ -95,9 +94,9 @@ const MedisinskVilkår = (): JSX.Element => {
 
   const finnNesteStegFn = (nesteSteg: SykdomsstegStatusResponse, isOnMount?: boolean) => {
     switch (fagsakYtelseType) {
-      case fagsakYtelsesType.OPPLÆRINGSPENGER:
+      case FagsakYtelseType.OPPLÆRINGSPENGER:
         return finnNesteStegForOpplæringspenger(nesteSteg, isOnMount);
-      case fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE:
+      case FagsakYtelseType.PLEIEPENGER_SLUTTFASE:
         return finnNesteStegForLivetsSluttfase(nesteSteg, isOnMount);
       default:
         return finnNesteStegForPleiepenger(nesteSteg, isOnMount);

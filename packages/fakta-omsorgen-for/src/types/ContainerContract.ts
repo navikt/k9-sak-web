@@ -1,5 +1,3 @@
-import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-
 export interface ContainerContract {
   endpoints: {
     omsorgsperioder: string;
@@ -7,5 +5,5 @@ export interface ContainerContract {
   readOnly: boolean;
   onFinished: (vurdering, fosterbarnForOmsorgspenger) => void;
   httpErrorHandler: (statusCode: number, locationHeader?: string) => void;
-  sakstype?: FagsakYtelsesType;
+  sakstype?: string;
 }

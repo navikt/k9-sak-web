@@ -4,7 +4,7 @@ import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
 import { Fagsak } from '@k9-sak-web/types';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { OpplaeringspengerBehandlingApiKeys } from '../../data/opplaeringspengerBehandlingApi';
 import Inntektsmelding from '../../components/Inntektsmelding';
@@ -29,7 +29,7 @@ class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
   });
 
   getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) =>
-    fagsak.sakstype === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
+    fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;
 }
 
 export default InntektsmeldingFaktaPanelDef;

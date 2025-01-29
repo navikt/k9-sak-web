@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { decodeHtmlEntity, safeJSONParse } from '@fpsak-frontend/utils';
 import {
@@ -73,7 +73,7 @@ interface Props {
   hentFritekstbrevHtmlCallback: () => void;
   readOnly: boolean;
   sprakkode: Kodeverk;
-  ytelseTypeKode: FagsakYtelsesType;
+  ytelseTypeKode: string;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   personopplysninger: Personopplysninger;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
@@ -270,7 +270,7 @@ export const VedtakForm: React.FC<Props> = ({
     return { ...initialValues, ...vedtakContext.vedtakFormState };
   };
 
-  const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelsesType.FRISINN;
+  const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN;
 
   const aktiverteInformasjonsbehov = (informasjonsbehovVedtaksbrev?.informasjonsbehov || []).filter(
     ({ type }) => type === 'FRITEKST',

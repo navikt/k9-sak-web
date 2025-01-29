@@ -1,6 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { Behandling } from '@k9-sak-web/types';
 import {
@@ -31,7 +31,8 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
 
   const eksistererAksjonspunktOgVilkar = aksjonspunkt && vilkar;
   const eksistererVilkarForAutomatiskInnvilget =
-    (fagsaksType === fagsakYtelsesType.OMSORGSPENGER_AO || fagsaksType === fagsakYtelsesType.OMSORGSPENGER_KS) &&
+    (fagsaksType === FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN ||
+      fagsaksType === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN) &&
     vilkar;
 
   if (eksistererAksjonspunktOgVilkar || eksistererVilkarForAutomatiskInnvilget) {
@@ -41,7 +42,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
     const behandlingsID = behandling.id.toString();
 
     switch (fagsaksType) {
-      case fagsakYtelsesType.OMSORGSPENGER_KS:
+      case FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN:
         return KroniskSykObjektTilMikrofrontend({
           behandlingsID,
           aksjonspunktLost,
@@ -53,7 +54,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
           soknad,
         });
 
-      case fagsakYtelsesType.OMSORGSPENGER_MA:
+      case FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE:
         return MidlertidigAleneObjektTilMikrofrontend({
           behandlingsID,
           aksjonspunktLost,
@@ -66,7 +67,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
           soknad,
         });
 
-      case fagsakYtelsesType.OMSORGSPENGER_AO:
+      case FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN:
         return AleneOmOmsorgenObjektTilMikrofrontend({
           behandling,
           aksjonspunktLost,

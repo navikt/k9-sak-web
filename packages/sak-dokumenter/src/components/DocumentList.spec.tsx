@@ -2,7 +2,6 @@
 import { DokumentDtoKommunikasjonsretning as kommunikasjonsretning } from '@navikt/k9-sak-typescript-client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import DocumentList from './DocumentList';
 
 const queryClient = new QueryClient({
@@ -43,7 +42,7 @@ describe('<DocumentList>', () => {
           behandlingId={1}
           saksnummer={1}
           behandlingUuid="1"
-          sakstype={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          sakstype="PSB"
         />,
       ),
     );
@@ -64,13 +63,7 @@ describe('<DocumentList>', () => {
 
     render(
       <QueryClientProvider client={queryClient}>
-        <DocumentList
-          documents={[document]}
-          behandlingId={1}
-          saksnummer={1}
-          behandlingUuid="1"
-          sakstype={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
-        />
+        <DocumentList documents={[document]} behandlingId={1} saksnummer={1} behandlingUuid="1" sakstype="PSB" />
       </QueryClientProvider>,
     );
     await waitFor(() => {
@@ -81,13 +74,7 @@ describe('<DocumentList>', () => {
   it('skal ikke vise tabell når det ikke finnes dokumenter', async () => {
     render(
       <QueryClientProvider client={queryClient}>
-        <DocumentList
-          documents={[]}
-          behandlingId={1}
-          saksnummer={1}
-          behandlingUuid="1"
-          sakstype={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
-        />
+        <DocumentList documents={[]} behandlingId={1} saksnummer={1} behandlingUuid="1" sakstype="PSB" />
       </QueryClientProvider>,
     );
 

@@ -7,7 +7,7 @@ import users from '@fpsak-frontend/assets/images/users.svg';
 import user from '@fpsak-frontend/assets/images/user.svg';
 import { Rammevedtak } from '@k9-sak-web/types';
 import { RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
-import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import MidlertidigAlene from './components/MidlertidigAlene';
 import messages from '../i18n/nb_NO.json';
 import BarnSeksjon from './components/BarnSeksjon';
@@ -28,7 +28,7 @@ const intl = createIntl(
 interface FaktaBarnIndexProps {
   barn: BarnDto[];
   rammevedtak: Rammevedtak[];
-  fagsaksType?: FagsakYtelsesType;
+  fagsaksType?: string;
 }
 
 const mapRammevedtakBarn = (
@@ -72,11 +72,11 @@ const FaktaBarnIndex = ({ barn = [], rammevedtak = [], fagsaksType }: FaktaBarnI
   const midlertidigAleneansvar = rammevedtak.find(rv => rv.type === RammevedtakEnum.MIDLERTIDIG_ALENEOMSORG);
   let vanligeBarnTekstId;
   switch (fagsaksType) {
-    case fagsakYtelsesType.OMSORGSPENGER_KS: {
+    case FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN: {
       vanligeBarnTekstId = 'FaktaBarn.UtvidetRettKroniskSyk';
       break;
     }
-    case fagsakYtelsesType.OMSORGSPENGER_MA: {
+    case FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE: {
       vanligeBarnTekstId = 'FaktaBarn.UtvidetRettMidlertidigAlene';
       break;
     }

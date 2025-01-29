@@ -15,7 +15,7 @@ import KlageProsess from './KlageProsess';
 describe('<KlageProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: fagsakYtelsesType.FORELDREPENGER, // FAGSAK_YTELSE
+    sakstype: { kode: fagsakYtelsesType.FORELDREPENGER, kodeverk: 'FAGSAK_YTELSE' },
     status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
   } as Fagsak;
 
@@ -104,7 +104,7 @@ describe('<KlageProsess>', () => {
     renderWithIntl(
       <KlageProsess
         data={{ aksjonspunkter, klageVurdering }}
-        fagsak={{ ...fagsak, sakstype: fagsakYtelsesType.FRISINN }} // FAGSAK_YTELSE
+        fagsak={{ ...fagsak, sakstype: { kode: fagsakYtelsesType.FRISINN, kodeverk: 'FAGSAK_YTELSE' } }}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
@@ -132,7 +132,7 @@ describe('<KlageProsess>', () => {
     renderWithIntl(
       <KlageProsess
         data={{ aksjonspunkter, klageVurdering }}
-        fagsak={{ ...fagsak, sakstype: fagsakYtelsesType.FRISINN }} // FAGSAK_YTELSE
+        fagsak={{ ...fagsak, sakstype: { kode: fagsakYtelsesType.FRISINN, kodeverk: 'FAGSAK_YTELSE' } }}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}

@@ -15,7 +15,7 @@ import {
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -134,7 +134,9 @@ export const buildInitialValues = createSelector(
     klageMedholdArsak: klageVurderingResultat ? klageVurderingResultat.klageMedholdArsak : null,
     klageVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.klageVurderingOmgjoer : null,
     klageHjemmel:
-      fagsak.sakstype !== fagsakYtelsesType.FRISINN && klageVurderingResultat && klageVurderingResultat.hjemmel !== '-'
+      fagsak.sakstype.kode !== fagsakYtelseType.FRISINN &&
+      klageVurderingResultat &&
+      klageVurderingResultat.hjemmel !== '-'
         ? klageVurderingResultat.hjemmel
         : null,
     klageVurdering: klageVurderingResultat ? klageVurderingResultat.klageVurdering : null,
@@ -147,7 +149,7 @@ export const transformValues = (values, fagsak, erPåklagdBehandlingTilbakekrevi
   let klageHjemmel = null;
 
   if (
-    fagsak.sakstype !== fagsakYtelsesType.FRISINN &&
+    fagsak.sakstype.kode !== fagsakYtelseType.FRISINN &&
     values.klageVurdering === klageVurderingType.STADFESTE_YTELSESVEDTAK
   ) {
     klageHjemmel = erPåklagdBehandlingTilbakekreving ? TILBAKEKREVING_HJEMMEL : values.klageHjemmel;

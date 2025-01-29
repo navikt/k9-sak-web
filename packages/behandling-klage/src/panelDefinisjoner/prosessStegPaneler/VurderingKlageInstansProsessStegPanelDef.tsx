@@ -1,7 +1,7 @@
 import React from 'react';
 
 import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
@@ -13,7 +13,7 @@ class PanelDef extends ProsessStegPanelDef {
   getAksjonspunktKoder = () => [aksjonspunktCodes.BEHANDLE_KLAGE_NK];
 
   getOverstyrVisningAvKomponent = ({ fagsak, featureToggles }: { fagsak: Fagsak; featureToggles: FeatureToggles }) =>
-    featureToggles?.KLAGE_KABAL ? fagsak.sakstype === fagsakYtelsesType.FRISINN : true;
+    featureToggles?.KLAGE_KABAL ? fagsak.sakstype.kode === fagsakYtelseType.FRISINN : true;
 
   getData = ({ fagsak, saveKlageText, klageVurdering, previewCallback, hentFritekstbrevHtmlCallback }) => ({
     fagsak,

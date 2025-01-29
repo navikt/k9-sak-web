@@ -1,4 +1,4 @@
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
@@ -48,13 +48,13 @@ export const VedtakAvslagRevurderingPanelImpl = ({
       <Label size="small" as="p">
         {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
       </Label>
-      {(ytelseTypeKode === fagsakYtelsesType.FRISINN || ytelseTypeKode === fagsakYtelsesType.OMSORGSPENGER) && (
+      {(ytelseTypeKode === fagsakYtelseType.FRISINN || ytelseTypeKode === fagsakYtelseType.OMSORGSPENGER) && (
         <BodyShort size="small">
           {intl.formatMessage({ id: findAvslagResultatText(undefined, ytelseTypeKode) })}
           {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
         </BodyShort>
       )}
-      {ytelseTypeKode !== fagsakYtelsesType.FRISINN && ytelseTypeKode !== fagsakYtelsesType.OMSORGSPENGER && (
+      {ytelseTypeKode !== fagsakYtelseType.FRISINN && ytelseTypeKode !== fagsakYtelseType.OMSORGSPENGER && (
         <BodyShort size="small">
           {intl.formatMessage({ id: resultText(beregningResultat, originaltBeregningResultat) })}
           {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}

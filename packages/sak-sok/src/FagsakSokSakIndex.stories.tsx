@@ -2,18 +2,22 @@ import { action } from '@storybook/addon-actions';
 import React, { useState } from 'react';
 
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import FagsakSokSakIndex from './FagsakSokSakIndex';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const FAGSAK_STATUS_KODEVERK = 'FAGSAK_STATUS';
+const FAGSAK_YTELSE_KODEVERK = 'FAGSAK_YTELSE';
 const PERSONSTATUS_TYPE_KODEVERK = 'PERSONSTATUS_TYPE';
 
 const fagsaker = [
   {
     saksnummer: '1',
-    sakstype: fagsakYtelsesType.FORELDREPENGER,
+    sakstype: {
+      kode: fagsakYtelseType.FORELDREPENGER,
+      kodeverk: FAGSAK_YTELSE_KODEVERK,
+    },
     relasjonsRolleType: {
       kode: '',
       kodeverk: '',
@@ -37,7 +41,10 @@ const fagsaker = [
   },
   {
     saksnummer: '2',
-    sakstype: fagsakYtelsesType.ENGANGSTØNAD,
+    sakstype: {
+      kode: fagsakYtelseType.ENGANGSSTONAD,
+      kodeverk: FAGSAK_YTELSE_KODEVERK,
+    },
     status: {
       kode: fagsakStatus.OPPRETTET,
       kodeverk: FAGSAK_STATUS_KODEVERK,

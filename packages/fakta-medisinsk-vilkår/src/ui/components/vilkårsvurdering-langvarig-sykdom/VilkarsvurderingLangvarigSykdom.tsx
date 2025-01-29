@@ -13,7 +13,7 @@ import vilkårsvurderingReducer from './reducer';
 import Vurderingsdetaljer from '../vurderingsdetaljer/Vurderingsdetaljer';
 
 import BehandlingType from '../../../constants/BehandlingType';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import FagsakYtelseType from '../../../constants/FagsakYtelseType';
 import VurderingsoversiktLangvarigSykdomMessages from '../vurderingsoversikt-langvarig-sykdom-messages/VurderingsoversiktLangvarigSykdomMessages';
 
 interface VilkårsvurderingLangvarigSykdomProps {
@@ -135,13 +135,13 @@ const VilkårsvurderingLangvarigSykdom = ({
   };
 
   const skalViseOpprettVurderingKnapp = () => {
-    if (fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER && BehandlingType.FORSTEGANGSSOKNAD === behandlingType)
+    if (fagsakYtelseType === FagsakYtelseType.OPPLÆRINGSPENGER && BehandlingType.FORSTEGANGSSOKNAD === behandlingType)
       return false;
 
     return !vurderingsoversikt?.harPerioderSomSkalVurderes() &&
       !skalViseRadForNyVurdering &&
       harGyldigSignatur &&
-      fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER
+      fagsakYtelseType === FagsakYtelseType.OPPLÆRINGSPENGER
       ? behandlingType !== BehandlingType.FORSTEGANGSSOKNAD
       : true;
   };
