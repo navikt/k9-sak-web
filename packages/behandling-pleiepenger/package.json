@@ -39,6 +39,6 @@
     "@navikt/ft-prosess-beregningsgrunnlag": "^8.0.3-react19beta.0",
     "axios": "1.7.9",
     "react": "19.0.0",
-    "react-intl": "7.1.0"
+    "react-intl": "7.1.5"
   }
 }

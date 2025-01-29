@@ -13,7 +13,7 @@
     "date-fns": "4.1.0",
     "formik": "2.4.6",
     "react": "19.0.0",
-    "react-intl": "7.1.0",
+    "react-intl": "7.1.5",
     "yup": "1.6.1"
   }
 }

@@ -28,7 +28,7 @@
     "react-collapse": "5.1.1",
     "react-dom": "19.0.0",
     "react-hook-form": "7.53.2",
-    "react-intl": "7.1.0"
+    "react-intl": "7.1.5"
   },
   "msw": {
     "workerDirectory": "public"
