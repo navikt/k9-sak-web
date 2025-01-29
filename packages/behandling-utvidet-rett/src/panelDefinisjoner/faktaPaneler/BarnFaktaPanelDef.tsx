@@ -1,7 +1,6 @@
 import React from 'react';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import { Fagsak } from '@k9-sak-web/types';
 import UtvidetRettBarnFakta from '../../components/UtvidetRettBarnFakta/UtvidetRettBarnFakta';
 
 class BarnFaktaPanelDef extends FaktaPanelDef {
@@ -13,10 +12,10 @@ class BarnFaktaPanelDef extends FaktaPanelDef {
 
   getOverstyrVisningAvKomponent = ({ rammevedtak }) => !!rammevedtak;
 
-  getData = ({ personopplysninger, fagsak, rammevedtak }: { personopplysninger; fagsak: Fagsak; rammevedtak }) => ({
+  getData = ({ personopplysninger, fagsak, rammevedtak }) => ({
     personopplysninger,
     rammevedtak: rammevedtak?.rammevedtak || [],
-    fagsaksType: fagsak.sakstype,
+    fagsaksType: fagsak.sakstype.kode,
   });
 }
 export default BarnFaktaPanelDef;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
@@ -19,7 +19,7 @@ class OmBarnetFaktaPanelDef extends FaktaPanelDef {
   getKomponent = props => <OmBarnet {...props} />;
 
   getOverstyrVisningAvKomponent = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => {
-    const erPleiepengesak = fagsak.sakstype === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
+    const erPleiepengesak = fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;
     const søknadsfristErIkkeUnderVurdering = behandling.stegTilstand?.stegType?.kode !== 'VURDER_SØKNADSFRIST';
     return erPleiepengesak && søknadsfristErIkkeUnderVurdering;
   };

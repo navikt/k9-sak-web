@@ -3,7 +3,7 @@ import React from 'react';
 
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import MenyHenleggIndex from './MenyHenleggIndex';
 
@@ -25,7 +25,10 @@ export const visMenyForÅHenleggeEnBehandling = () => (
     behandlingVersjon={2}
     henleggBehandling={action('button-click') as (params: HenleggParams) => Promise<any>}
     forhandsvisHenleggBehandling={action('button-click')}
-    ytelseType={fagsakYtelsesType.FORELDREPENGER} // YTELSE_TYPE
+    ytelseType={{
+      kode: fagsakYtelseType.FORELDREPENGER,
+      kodeverk: 'YTELSE_TYPE',
+    }}
     behandlingType={{
       kode: behandlingType.FORSTEGANGSSOKNAD,
       kodeverk: 'BEHANDLING_TYPE',

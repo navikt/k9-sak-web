@@ -1,4 +1,4 @@
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
@@ -41,7 +41,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
         intl={intlMock}
         vilkar={vilkar}
         readOnly
-        ytelseTypeKode={fagsakYtelsesType.FORELDREPENGER}
+        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
         aksjonspunkter={[]}
         behandlingsresultat={behandlingsresultat}
         revurderingsAarsakString="Test"
@@ -84,7 +84,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
         intl={intlMock}
         vilkar={vilkar}
         readOnly
-        ytelseTypeKode={fagsakYtelsesType.SVANGERSKAPSPENGER}
+        ytelseTypeKode={fagsakYtelseType.SVANGERSKAPSPENGER}
         aksjonspunkter={[]}
         behandlingsresultat={behandlingsresultat}
         revurderingsAarsakString="Test"

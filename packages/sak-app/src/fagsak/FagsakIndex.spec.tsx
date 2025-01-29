@@ -1,8 +1,7 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
@@ -71,16 +70,16 @@ describe('<FagsakIndex>', () => {
         kodeverk: 'BEHANDLING_RESULTAT_TYPE',
       },
     ],
-    [KodeverkTypeV2.FAGSAK_YTELSE]: [
+    [kodeverkTyper.FAGSAK_YTELSE]: [
       {
-        kode: fagsakYtelsesType.FORELDREPENGER,
-        kodeverk: KodeverkTypeV2.FAGSAK_YTELSE,
+        kode: fagsakYtelseType.FORELDREPENGER,
+        kodeverk: 'FAGSAK_YTELSE',
         navn: 'Foreldrepenger',
       },
       {
-        kode: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
+        kode: fagsakYtelseType.PLEIEPENGER,
         navn: 'Pleiepenger sykt barn',
-        kodeverk: KodeverkTypeV2.FAGSAK_YTELSE,
+        kodeverk: 'FAGSAK_YTELSE',
       },
     ],
     [kodeverkTyper.FAGSAK_STATUS]: [
@@ -97,7 +96,10 @@ describe('<FagsakIndex>', () => {
       kode: fagsakStatus.OPPRETTET,
       kodeverk: 'FAGSAK_STATUS',
     },
-    sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
+    sakstype: {
+      kode: fagsakYtelseType.PLEIEPENGER,
+      kodeverk: 'FAGSAK_YTELSE',
+    },
   };
 
   const behandling = {

@@ -70,7 +70,7 @@ export const DefaultStory: Story = {
   args: {
     fagsak: {
       saksnummer: '100',
-      sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
+      sakstype: { kode: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, kodeverk: 'FAGSAK_YTELSE' },
       status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
       person: {
         aktørId: 'person-aktørid-1',

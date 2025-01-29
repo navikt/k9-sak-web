@@ -9,7 +9,6 @@ import {
   requestIntentionallyAborted,
   type RequestIntentionallyAborted,
 } from '@k9-sak-web/backend/shared/RequestIntentionallyAborted.js';
-import type { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { fakePdf } from './fakePdf.js';
 import { delay } from '../../utils/delay.js';
 
@@ -29,7 +28,7 @@ export class FakeMessagesBackendApi implements BackendApi {
   }
 
   async hentInnholdBrevmal(
-    sakstype: FagsakYtelsesType,
+    sakstype: string,
     eksternReferanse: string,
     avsenderApplikasjon: AvsenderApplikasjon,
     maltype: string,

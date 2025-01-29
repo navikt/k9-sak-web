@@ -25,7 +25,7 @@ import {
 describe('<prosessStegUtils>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: fagsakYtelsesType.FORELDREPENGER, // FAGSAK_YTELSE
+    sakstype: { kode: fagsakYtelsesType.FORELDREPENGER, kodeverk: 'FAGSAK_YTELSE' },
     status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
   } as Fagsak;
 

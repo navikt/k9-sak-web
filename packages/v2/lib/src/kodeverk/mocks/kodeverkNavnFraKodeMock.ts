@@ -5,12 +5,11 @@ import type {
   KodeverkNavnFraKodeType,
   KodeverkTilbakeType,
   KodeverkType,
-  KodeverkTypeV2,
 } from '../types';
 
 export const kodeverkNavnFraKodeMock = (
   kode: string,
-  kodeverkType: KodeverkType | KodeverkTilbakeType | KodeverkKlageType | KodeverkTypeV2,
+  kodeverkType: KodeverkType | KodeverkTilbakeType | KodeverkKlageType,
   alleKodeverk: AlleKodeverk,
   ukjentTekst?: string | undefined,
 ) => {

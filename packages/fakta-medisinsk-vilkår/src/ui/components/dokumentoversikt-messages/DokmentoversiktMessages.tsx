@@ -1,7 +1,7 @@
 import { Alert, Button } from '@navikt/ds-react';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import React, { JSX } from 'react';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import React, { type JSX } from 'react';
+import FagsakYtelseType from '../../../constants/FagsakYtelseType';
 import Dokumentoversikt from '../../../types/Dokumentoversikt';
 import ContainerContext from '../../context/ContainerContext';
 import FristForDokumentasjonUtløptPanel from '../frist-for-dokumentasjon-utløpt-panel/FristForDokumentasjonUtløptPanel';
@@ -31,7 +31,7 @@ const DokumentoversiktMessages = ({
   const visHåndterNyeDokumenterMelding =
     !dokumentoversikt.harGyldigSignatur() && dokumentoversikt.harDokumenter() && !visFristForDokumentasjonUtløptMelding;
 
-  const erPleiepengerSluttfaseFagsak = fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
+  const erPleiepengerSluttfaseFagsak = fagsakYtelseType === FagsakYtelseType.PLEIEPENGER_SLUTTFASE;
 
   return (
     <>
@@ -61,7 +61,7 @@ const DokumentoversiktMessages = ({
           </Box>
         </>
       )}
-      {visHåndterNyeDokumenterMelding && fagsakYtelseType !== fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE && (
+      {visHåndterNyeDokumenterMelding && fagsakYtelseType !== FagsakYtelseType.PLEIEPENGER_SLUTTFASE && (
         <Box marginBottom={Margin.large}>
           <Alert size="small" variant="warning">
             Dokumentasjon signert av sykehuslege/spesialisthelsetjenesten mangler. Håndter eventuelle nye dokumenter,

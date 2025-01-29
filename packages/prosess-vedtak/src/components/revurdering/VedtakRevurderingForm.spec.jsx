@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/test-utils';
 import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
@@ -90,7 +90,7 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingPaaVent={revurdering.behandlingPaaVent}
           previewCallback={previewCallback}
           readOnly={false}
-          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           resultatstruktur={resultatstruktur}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
@@ -148,7 +148,7 @@ describe('<VedtakRevurderingForm>', () => {
           personopplysninger={{}}
           previewCallback={previewCallback}
           readOnly={false}
-          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           resultatstruktur={resultatstruktur}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
@@ -191,7 +191,7 @@ describe('<VedtakRevurderingForm>', () => {
           personopplysninger={{}}
           previewCallback={previewCallback}
           readOnly={false}
-          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           resultatstruktur={resultatstruktur}
           arbeidsgiverOpplysningerPerId={{}}
           alleKodeverk={{}}
@@ -232,7 +232,7 @@ describe('<VedtakRevurderingForm>', () => {
           personopplysninger={{}}
           previewCallback={previewCallback}
           readOnly={false}
-          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           resultatstruktur={resultatstruktur}
           alleKodeverk={{}}
           arbeidsgiverOpplysningerPerId={{}}
@@ -266,7 +266,7 @@ describe('<VedtakRevurderingForm>', () => {
           personopplysninger={{}}
           previewCallback={previewCallback}
           readOnly={false}
-          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
           resultatstruktur={resultatstruktur}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}

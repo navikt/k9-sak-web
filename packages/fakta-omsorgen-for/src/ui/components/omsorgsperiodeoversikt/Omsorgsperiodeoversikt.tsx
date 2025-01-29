@@ -9,7 +9,7 @@ import OmsorgsperiodeVurderingsdetaljer from '../omsorgsperiode-vurderingsdetalj
 import VurderingAvOmsorgsperioderForm from '../vurdering-av-omsorgsperioder-form/VurderingAvOmsorgsperioderForm';
 import Fosterbarn from '../fosterbarn/Fosterbarn';
 import ContainerContext from '../../context/ContainerContext';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import Ytelsestype from '../../../types/Ytelsestype';
 
 interface OmsorgsperiodeoversiktProps {
   omsorgsperiodeoversikt: OmsorgsperiodeoversiktType;
@@ -38,7 +38,7 @@ const Omsorgsperiodeoversikt = ({ omsorgsperiodeoversikt }: Omsorgsperiodeoversi
   return (
     <>
       <OmsorgsperiodeoversiktMessages omsorgsperiodeoversikt={omsorgsperiodeoversikt} />
-      {sakstype === fagsakYtelsesType.OMSORGSPENGER && !readOnly && <Fosterbarn setFosterbarn={setFosterbarn} />}
+      {sakstype === Ytelsestype.OMP && !readOnly && <Fosterbarn setFosterbarn={setFosterbarn} />}
       <NavigationWithDetailView
         navigationSection={() => (
           <Periodenavigasjon

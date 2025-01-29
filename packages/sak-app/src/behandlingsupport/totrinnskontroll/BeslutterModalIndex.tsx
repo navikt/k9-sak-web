@@ -1,17 +1,16 @@
 import React, { useCallback } from 'react';
 
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { BehandlingAppKontekst } from '@k9-sak-web/types';
+import { Kodeverk, BehandlingAppKontekst } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { FatterVedtakTotrinnskontrollModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
-import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 import { K9sakApiKeys, restApiHooks, requestApi } from '../../data/k9sakApi';
 import { getPathToK9Los } from '../../app/paths';
 
 interface OwnProps {
   behandling: BehandlingAppKontekst;
-  fagsakYtelseType: FagsakYtelsesType;
+  fagsakYtelseType: Kodeverk;
   allAksjonspunktApproved: boolean;
   erKlageWithKA: boolean;
 }

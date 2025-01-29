@@ -2,7 +2,6 @@ import { httpErrorHandler } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { pathToFagsak } from '@k9-sak-web/sak-app/src/app/paths';
 import { Fagsak } from '@k9-sak-web/types';
-import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Alert, Link } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
@@ -12,7 +11,7 @@ import styles from './andreSakerPåSøkerStripe.module.css';
 interface Props {
   søkerIdent: string;
   saksnummer: string;
-  fagsakYtelseType: FagsakYtelsesType;
+  fagsakYtelseType: string;
 }
 
 const AndreSakerPåSøkerStripe: React.FC<Props> = ({ søkerIdent, saksnummer, fagsakYtelseType }) => {
