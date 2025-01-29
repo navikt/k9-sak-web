@@ -7,6 +7,8 @@ import { Accordion, Alert, BodyLong, Checkbox, CheckboxGroup, Heading, Tag } fro
 import { useFormikContext } from 'formik';
 import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types/KodeverkTypeV2.js';
 import { sorterOverlappendeRader } from '../utils/periodeUtils';
 import styles from './VedtakOverlappendeYtelsePanel.module.css';
 
@@ -24,15 +26,9 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
   harVurdertOverlappendeYtelse,
   setHarVurdertOverlappendeYtelse,
 }) => {
+  const { kodeverkNavnFraKode } = useKodeverkContext();
   const [valgtPeriode, setValgtPeriode] = React.useState<Periode<OverlappendePeriode> | null>(null);
   const { submitCount } = useFormikContext();
-
-  const utledYtelseType = (ytelseTypeKode: string) => {
-    if (alleKodeverk.FagsakYtelseType && alleKodeverk.FagsakYtelseType.length > 0) {
-      return alleKodeverk.FagsakYtelseType.find(ytelseType => ytelseType.kode === ytelseTypeKode).navn;
-    }
-    return ytelseTypeKode;
-  };
 
   const utledFagSystem = (fagSystemKode: string) => {
     if (alleKodeverk.Fagsystem && alleKodeverk.Fagsystem.length > 0) {
@@ -72,7 +68,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
    * Sett opp korresponderende rader til sidekolonnen
    */
   const sideKolonneRader = overlappendeYtelser.map(rad => (
-    <span className={styles.sideKolonne}>{`${utledYtelseType(rad.ytelseType.kode)}`}</span>
+    <span className={styles.sideKolonne}>{`${kodeverkNavnFraKode(rad.ytelseType, KodeverkTypeV2.FAGSAK_YTELSE)}`}</span>
   ));
 
   const velgPeriodeHandler = (eventProps: any) => {
@@ -117,7 +113,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
                 </Tag>
                 <Tag variant="info" className={styles.periodeDetalj}>
                   <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserYtelse' })}</strong>
-                  {utledYtelseType(valgtPeriode.periodeinfo.ytelseType.kode)}
+                  {kodeverkNavnFraKode(valgtPeriode.periodeinfo.ytelseType, KodeverkTypeV2.FAGSAK_YTELSE)}
                 </Tag>
                 <Tag variant="info" className={styles.periodeDetalj}>
                   <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserPeriode' })}</strong>

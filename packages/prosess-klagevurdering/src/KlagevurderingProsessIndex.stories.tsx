@@ -1,6 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { action } from '@storybook/addon-actions';
 import React from 'react';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
@@ -61,8 +61,7 @@ visPanelForKlagevurderingMedAksjonspunktNk.args = {
 export const visPanelForKlagevurderingMedAksjonspunktNfp = args => (
   <KlagevurderingProsessIndex
     behandling={behandling}
-    // fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
-    fagsak={{ sakstype: { kode: fagsakYtelseType.PLEIEPENGER } }}
+    fagsak={{ sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN }}
     aksjonspunkter={[
       {
         definisjon: {
