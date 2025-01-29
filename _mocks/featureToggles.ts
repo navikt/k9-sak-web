@@ -86,6 +86,10 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_AKSJONSPUNKT_OVERLAPPENDE_SAKER,
   },
   {
+    key: 'BRUK_V2_BEHANDLING_VELGER',
+    value: process.env.VITE_BRUK_V2_BEHANDLING_VELGER,
+  },
+  {
     key: 'BRUK_V2_SAK_SOK',
     value: process.env.VITE_BRUK_V2_SAK_SOK,
   },

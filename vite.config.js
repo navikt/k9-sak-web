@@ -106,7 +106,7 @@ export default ({ mode }) => {
     },
     test: {
       deps: {
-        inline: ['@navikt/k9-sak-typescript-client'], // Without this, tests using k9-sak-typescript-client through backend project failed.
+        inline: ['@navikt/k9-sak-typescript-client', '@navikt/k9-klage-typescript-client'], // Without this, tests using k9-*-typescript-client through backend project failed.
         interopDefault: true
       },
       environment: 'jsdom',
