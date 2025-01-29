@@ -1,5 +1,5 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { Fagsak } from '@k9-sak-web/types';
@@ -16,7 +16,7 @@ class EtablertTilsynFaktaPanelDef extends FaktaPanelDef {
   getKomponent = props => <EtablertTilsyn {...props} />;
 
   getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) =>
-    fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;
+    fagsak.sakstype === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
 }
 
 export default EtablertTilsynFaktaPanelDef;

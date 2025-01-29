@@ -5,13 +5,13 @@ import { IntlProvider } from 'react-intl';
 import { ContainerContract } from '../types/ContainerContract';
 import OmsorgsperiodeoversiktType from '../types/Omsorgsperiodeoversikt';
 import OmsorgsperioderResponse from '../types/OmsorgsperioderResponse';
-import Ytelsestype from '../types/Ytelsestype';
 import { teksterForSakstype } from '../util/utils';
 import ActionType from './actionTypes';
 import Omsorgsperiodeoversikt from './components/omsorgsperiodeoversikt/Omsorgsperiodeoversikt';
 import ContainerContext from './context/ContainerContext';
 import styles from './mainComponent.module.css';
 import mainComponentReducer from './reducer';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 interface MainComponentProps {
   data: ContainerContract;
@@ -57,7 +57,7 @@ const OmsorgenForContainer = ({ data }: MainComponentProps): JSX.Element => {
   return (
     <IntlProvider locale="nb-NO" messages={teksterForSakstype(sakstype)}>
       <ContainerContext.Provider value={data}>
-        <h1 style={{ fontSize: 22 }}>{sakstype === Ytelsestype.OMP ? 'Omsorgen for' : 'Omsorg'}</h1>
+        <h1 style={{ fontSize: 22 }}>{sakstype === fagsakYtelsesType.OMSORGSPENGER ? 'Omsorgen for' : 'Omsorg'}</h1>
         <Box marginTop={Margin.large}>
           <PageContainer isLoading={isLoading} hasError={omsorgsperiodeoversiktHarFeilet}>
             <div className={styles.mainComponent}>
