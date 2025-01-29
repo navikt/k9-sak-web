@@ -3,14 +3,15 @@ import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import React from 'react';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import AldersVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-alder';
-import { Aksjonspunkt, Behandling, Fagsak, FeatureToggles, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, FeatureToggles, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
+import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 interface AlderProsessStegProps {
   aksjonspunkter: Aksjonspunkt[];
   alleKodeverk: KodeverkMedNavn[];
   angitteBarn: { personIdent: string }[];
   behandling: Behandling;
-  fagsaksType: Fagsak;
+  fagsaksType: FagsakYtelsesType;
   featureToggles: FeatureToggles;
   formData: any;
   harBarnSoktForRammevedtakOmKroniskSyk: boolean;
