@@ -10,9 +10,12 @@ interface FormValues {
   fom: string | null;
 }
 
-export interface SubmitValues extends FormValues {
+export interface SubmitValues {
   kode: string;
-  fortsettBehandling: boolean;
+  begrunnelse: string | null;
+  avklarNyoppstartet: { fom : string | null;
+  erNyoppstartet : boolean;
+  }
 }
 
 interface VurderNyoppstartetProps {
@@ -38,10 +41,12 @@ export const VurderNyoppstartet = ({
   const onSubmit = (values: FormValues) => {
     submitCallback([
       {
-        ...values,
-        fom: values.erNyoppstartet ? values.fom : '',
+        begrunnelse : values.begrunnelse,
         kode: AksjonspunktCodes.VURDER_NYOPPSTARTET,
-        fortsettBehandling: true, // skal mest sannsynlig bort
+        avklarNyoppstartet : {
+          fom: values.erNyoppstartet ? values.fom : null,
+          erNyoppstartet : !!values.erNyoppstartet,
+        }
       },
     ]);
   };
