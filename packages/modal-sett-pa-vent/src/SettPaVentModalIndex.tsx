@@ -1,5 +1,4 @@
 import { Venteaarsak } from '@k9-sak-web/types';
-import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import SettPaVentModal from './components/SettPaVentModal';
@@ -25,6 +24,7 @@ interface OwnProps {
   hasManualPaVent: boolean;
   erTilbakekreving?: boolean;
   ventearsakVariant?: string;
+  isSubmitting: boolean;
 }
 
 const SettPaVentModalIndex = ({
@@ -38,6 +38,7 @@ const SettPaVentModalIndex = ({
   hasManualPaVent,
   erTilbakekreving,
   ventearsakVariant,
+  isSubmitting,
 }: OwnProps) => (
   <RawIntlProvider value={intl}>
     <SettPaVentModal
@@ -51,6 +52,7 @@ const SettPaVentModalIndex = ({
       hasManualPaVent={hasManualPaVent}
       erTilbakekreving={erTilbakekreving}
       ventearsakVariant={ventearsakVariant}
+      isSubmitting={isSubmitting}
     />
   </RawIntlProvider>
 );

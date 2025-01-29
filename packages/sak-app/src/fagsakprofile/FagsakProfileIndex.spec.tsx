@@ -5,7 +5,8 @@ import { MemoryRouter } from 'react-router';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
@@ -32,10 +33,7 @@ vi.mock('react-router', async () => {
 describe('<FagsakProfileIndex>', () => {
   const fagsak = {
     saksnummer: '123',
-    sakstype: {
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: 'FAGSAK_YTELSE',
-    },
+    sakstype: fagsakYtelsesType.FORELDREPENGER, // FAGSAK_YTELSE
     status: {
       kode: fagsakStatus.OPPRETTET,
       kodeverk: 'FAGSAK_STATUS',
@@ -74,10 +72,10 @@ describe('<FagsakProfileIndex>', () => {
         kodeverk: 'BEHANDLING_RESULTAT_TYPE',
       },
     ],
-    [kodeverkTyper.FAGSAK_YTELSE]: [
+    [KodeverkTypeV2.FAGSAK_YTELSE]: [
       {
-        kode: fagsakYtelseType.FORELDREPENGER,
-        kodeverk: 'FAGSAK_YTELSE',
+        kode: fagsakYtelsesType.FORELDREPENGER,
+        kodeverk: KodeverkTypeV2.FAGSAK_YTELSE,
         navn: 'Foreldrepenger',
       },
     ],

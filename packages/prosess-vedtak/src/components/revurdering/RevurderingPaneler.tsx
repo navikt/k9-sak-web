@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 
 import BehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
@@ -32,7 +32,7 @@ const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
   return aarsakTekstList.join(', ');
 };
 interface OwnProps {
-  ytelseTypeKode: string;
+  ytelseTypeKode: FagsakYtelsesType;
   behandlingresultat: {
     type: {
       kode: string;
@@ -93,7 +93,7 @@ const RevurderingPaneler = ({
     getKodeverknavnFn(alleKodeverk, kodeverkTyper),
   );
   return (
-    <HGrid gap="1" columns={{ xs: ytelseTypeKode === fagsakYtelseType.FRISINN ? '4fr 8fr' : '12fr' }}>
+    <HGrid gap="1" columns={{ xs: ytelseTypeKode === fagsakYtelsesType.FRISINN ? '4fr 8fr' : '12fr' }}>
       <div>
         {isInnvilget(behandlingresultat.type.kode) && (
           <VedtakInnvilgetRevurderingPanel

@@ -1,8 +1,9 @@
+import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import Kodeverk from './kodeverkTsType';
 
 export type ForhåndsvisRequest = Readonly<{
   eksternReferanse: string;
-  ytelseType: any;
+  ytelseType: FagsakYtelsesType;
   saksnummer: string;
   aktørId: string;
   avsenderApplikasjon: string;
@@ -11,8 +12,8 @@ export type ForhåndsvisRequest = Readonly<{
 }>;
 
 export type Fritekstbrev = Readonly<{
-    brødtekst: string,
-    overskrift: string,
-}>
+  brødtekst: string;
+  overskrift: string;
+}>;
 
 export default ForhåndsvisRequest;

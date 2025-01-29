@@ -1,5 +1,5 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
 import React from 'react';
@@ -9,14 +9,8 @@ import AvregningProsessIndex from './AvregningProsessIndex';
 describe('<AvregningProsessIndex>', () => {
   const fagsak = {
     saksnummer: '123',
-    sakstype: {
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: '',
-    },
-    fagsakYtelseType: {
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: '',
-    },
+    sakstype: fagsakYtelsesType.FORELDREPENGER,
+    fagsakYtelseType: fagsakYtelsesType.FORELDREPENGER,
   };
 
   const behandling = {
