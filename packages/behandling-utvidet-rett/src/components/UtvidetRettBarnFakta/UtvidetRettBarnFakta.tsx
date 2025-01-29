@@ -1,5 +1,5 @@
 import React from 'react';
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Rammevedtak } from '@k9-sak-web/types';
 import FaktaBarnIndex from '@k9-sak-web/fakta-barn-oms';
 import BarnDto, { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
@@ -10,11 +10,11 @@ interface OwnProps {
     barnSoktFor: { fnr: string; fodselsdato: string }[];
   };
   rammevedtak: Rammevedtak[];
-  fagsaksType: string;
+  fagsaksType: FagsakYtelsesType;
 }
 
 const UtvidetRettBarnFakta = ({ personopplysninger, rammevedtak, fagsaksType }: OwnProps) => {
-  const erFagsakYtelseTypeKroniskSyktBarn = FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN === fagsaksType;
+  const erFagsakYtelseTypeKroniskSyktBarn = fagsakYtelsesType.OMSORGSPENGER_KS === fagsaksType;
   const barn = erFagsakYtelseTypeKroniskSyktBarn
     ? personopplysninger?.barnSoktFor || []
     : personopplysninger?.barn || [];
@@ -26,7 +26,7 @@ const UtvidetRettBarnFakta = ({ personopplysninger, rammevedtak, fagsaksType }: 
         fødselsdato: fodselsdato,
         harSammeBosted: undefined,
         barnType: BarnType.VANLIG,
-      } as BarnDto),
+      }) as BarnDto,
   );
 
   return <FaktaBarnIndex rammevedtak={rammevedtak} barn={formateradeBarn} fagsaksType={fagsaksType} />;

@@ -24,7 +24,7 @@ import PleiepengerSluttfaseFakta from './PleiepengerSluttfaseFakta';
 describe('<PleiepengerSluttfaseFakta>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE, kodeverk: 'FAGSAK_YTELSE' },
+    sakstype: fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE, // FAGSAK_YTELSE
     status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
   } as Fagsak;
   const fagsakPerson = {

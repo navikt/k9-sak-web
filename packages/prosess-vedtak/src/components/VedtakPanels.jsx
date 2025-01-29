@@ -8,7 +8,7 @@ import { Alert, Button } from '@navikt/ds-react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 import vedtakAksjonspunkterPropType from '../propTypes/vedtakAksjonspunkterPropType';
@@ -65,7 +65,7 @@ const VedtakPanels = ({
   const bg = Array.isArray(beregningsgrunnlag) ? beregningsgrunnlag.filter(Boolean) : [];
   const bgYtelsegrunnlag = bg[0]?.ytelsesspesifiktGrunnlag;
   let bgPeriodeMedAvslagsårsak;
-  if (ytelseTypeKode === fagsakYtelseType.FRISINN && bgYtelsegrunnlag?.avslagsårsakPrPeriode) {
+  if (ytelseTypeKode === fagsakYtelsesType.FRISINN && bgYtelsegrunnlag?.avslagsårsakPrPeriode) {
     bgPeriodeMedAvslagsårsak = finnSistePeriodeMedAvslagsårsakBeregning(
       bgYtelsegrunnlag.avslagsårsakPrPeriode,
       bg[0].beregningsgrunnlagPeriode,

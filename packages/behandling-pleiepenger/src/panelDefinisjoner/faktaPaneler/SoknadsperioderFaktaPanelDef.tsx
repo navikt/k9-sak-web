@@ -1,4 +1,4 @@
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import SoknadsperioderIndex from '@k9-sak-web/fakta-soknadsperioder';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
@@ -18,7 +18,7 @@ class SoknadsperioderFaktaPanelDef extends FaktaPanelDef {
   getKomponent = props => <SoknadsperioderIndex {...props} />;
 
   getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) =>
-    fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;
+    fagsak.sakstype === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
 }
 
 export default SoknadsperioderFaktaPanelDef;

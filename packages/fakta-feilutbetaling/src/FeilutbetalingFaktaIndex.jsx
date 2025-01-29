@@ -38,8 +38,7 @@ const FeilutbetalingFaktaIndex = ({
       behandlingVersjon={behandling.versjon}
       feilutbetalingFakta={feilutbetalingFakta.behandlingFakta}
       feilutbetalingAarsak={
-        Array.isArray(feilutbetalingAarsak) &&
-        feilutbetalingAarsak.find(a => a.ytelseType.kode === fagsakYtelseTypeKode)
+        Array.isArray(feilutbetalingAarsak) && feilutbetalingAarsak.find(a => a.ytelseType === fagsakYtelseTypeKode)
       }
       aksjonspunkter={aksjonspunkter}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
