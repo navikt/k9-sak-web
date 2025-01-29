@@ -22,6 +22,7 @@ import RelatertFagsak from '@k9-sak-web/types/src/relatertFagsak';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
@@ -144,16 +145,15 @@ const FagsakIndex = () => {
   const { data: behandlingPersonopplysninger, state: personopplysningerState } =
     restApiHooks.useRestApi<Personopplysninger>(K9sakApiKeys.BEHANDLING_PERSONOPPLYSNINGER, undefined, options);
 
+  const behandling = alleBehandlinger.find(b => b.id === behandlingId);
   const behandlingPersonopplysningerV2 = useMemo(() => {
     if (!behandlingPersonopplysninger) {
       return undefined;
     }
     const deepCopy = JSON.parse(JSON.stringify(behandlingPersonopplysninger));
-    konverterKodeverkTilKode(deepCopy, false);
+    konverterKodeverkTilKode(deepCopy, behandling?.type.kode === behandlingType.TILBAKEKREVING);
     return deepCopy;
   }, [behandlingPersonopplysninger]);
-
-  const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
   const { data: arbeidsgiverOpplysninger } = restApiHooks.useRestApi<ArbeidsgiverOpplysningerWrapper>(
     K9sakApiKeys.ARBEIDSGIVERE,
