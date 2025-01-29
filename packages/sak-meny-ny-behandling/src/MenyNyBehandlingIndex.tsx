@@ -3,6 +3,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import messages from './i18n/nb_NO.json';
 
 import NyBehandlingModal, { BehandlingOppretting, FormValues } from './components/NyBehandlingModal';
@@ -21,7 +22,7 @@ const intl = createIntl(
 export const getMenytekst = (): string => 'Opprett ny behandling';
 
 interface OwnProps {
-  ytelseType: Kodeverk;
+  ytelseType: FagsakYtelsesType;
   saksnummer: string;
   behandlingId?: number;
   behandlingUuid?: string;

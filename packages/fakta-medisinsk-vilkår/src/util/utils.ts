@@ -1,4 +1,6 @@
-import FagsakYtelseType from '../constants/FagsakYtelseType';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
-export const erFagsakOLPEllerPLS = (fagsakYtelseType: FagsakYtelseType) =>
-  [FagsakYtelseType.OPPLÆRINGSPENGER, FagsakYtelseType.PLEIEPENGER_SLUTTFASE].includes(fagsakYtelseType);
+export const erFagsakOLPEllerPLS = (fagsakYtelseType: FagsakYtelsesType) =>
+  [fagsakYtelsesType.OPPLÆRINGSPENGER, fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE].some(
+    ytelseType => ytelseType === fagsakYtelseType,
+  );

@@ -2,6 +2,7 @@ import {
   OpprettNotatDtoNotatGjelderType,
   type OpprettNotatDtoNotatGjelderType as NotatGjelderType,
 } from '@k9-sak-web/backend/k9sak/generated';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { HttpResponse, delay, http } from 'msw';
 import NotatISakIndex from './NotaterIndex';
 import type { NotatResponse } from './types/NotatResponse';
@@ -53,7 +54,7 @@ const notater: NotatResponse[] = [
     opprettetTidspunkt: new Date().toISOString(),
     endretAv: '',
     endretTidspunkt: null,
-    sakstype: 'PSB',
+    sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
     skjult: false,
     kanRedigere: true,
     notatId: 2,
@@ -101,7 +102,7 @@ VisNotatISakPanel.parameters = {
             opprettetTidspunkt: new Date().toISOString(),
             endretAv: '',
             endretTidspunkt: null,
-            sakstype: 'PSB',
+            sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
             versjon: 1,
             skjult: false,
             kanRedigere: true,

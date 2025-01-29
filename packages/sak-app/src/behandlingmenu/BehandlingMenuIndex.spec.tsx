@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
@@ -26,10 +26,7 @@ const navAnsatt = {
 
 const fagsak = {
   saksnummer: '123',
-  sakstype: {
-    kode: fagsakYtelseType.FORELDREPENGER,
-    kodeverk: 'BEHANDLING_TYPE',
-  },
+  sakstype: fagsakYtelsesType.FORELDREPENGER, // BEHANDLING_TYPE
   status: {
     kode: fagsakStatus.UNDER_BEHANDLING,
     kodeverk: '',
