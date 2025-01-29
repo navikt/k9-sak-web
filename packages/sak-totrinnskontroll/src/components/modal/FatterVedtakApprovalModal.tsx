@@ -2,10 +2,10 @@ import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Image } from '@fpsak-frontend/shared-components';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
-import { Behandling, Kodeverk } from '@k9-sak-web/types';
+import { Behandling } from '@k9-sak-web/types';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
 import styles from './fatterVedtakApprovalModal.module.css';
 
@@ -13,7 +13,7 @@ const getInfoTextCode = (
   behandlingtypeKode: string,
   behandlingsresultat: Behandling['behandlingsresultat'],
   harSammeResultatSomOriginalBehandling: boolean,
-  ytelseType: Kodeverk,
+  ytelseType: FagsakYtelsesType,
   erKlageWithKA: boolean,
   isOpphor: boolean,
 ) => {
@@ -37,48 +37,48 @@ const getInfoTextCode = (
   }
   // HVIS AVSLÅTT
   if (behandlingsresultat?.type.kode === behandlingResultatType.AVSLATT) {
-    if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
+    if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
       return 'Pleiepenger er avslått';
     }
-    if (ytelseType.kode === FagsakYtelseType.FRISINN) {
+    if (ytelseType === fagsakYtelsesType.FRISINN) {
       return 'FRISINN er avslått';
     }
-    if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
+    if (erFagytelseTypeUtvidetRett(ytelseType)) {
       return 'Ekstra omsorgsdager er avslått';
     }
-    if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+    if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
       return 'Pleiepenger i livets sluttfase er avslått';
     }
     return 'Omsorgspenger er avslått';
   }
   // HVIS OPPHØRT
   if (isOpphor) {
-    if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
+    if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
       return 'Pleiepenger er opphørt.';
     }
-    if (ytelseType.kode === FagsakYtelseType.FRISINN) {
+    if (ytelseType === fagsakYtelsesType.FRISINN) {
       return 'FRISINN er opphørt.';
     }
-    if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
+    if (erFagytelseTypeUtvidetRett(ytelseType)) {
       return 'Ekstra omsorgsdager er opphørt.';
     }
-    if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+    if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
       return 'Pleiepenger i livet sluttfase er opphørt.';
     }
     return 'Omsorgspenger er opphørt.';
   }
 
   // HVIS INNVILGET
-  if (ytelseType.kode === FagsakYtelseType.FRISINN) {
+  if (ytelseType === fagsakYtelsesType.FRISINN) {
     return 'Engangsstønad er innvilget og vedtaket blir iverksatt';
   }
-  if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
+  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
     return 'Pleiepenger er innvilget og vedtaket blir iverksatt';
   }
-  if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
+  if (erFagytelseTypeUtvidetRett(ytelseType)) {
     return 'Ekstra omsorgsdager er innvilget og vedtaket blir iverksatt';
   }
-  if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt';
   }
   return 'Omsorgspenger er innvilget og vedtaket blir iverksatt';
@@ -86,7 +86,7 @@ const getInfoTextCode = (
 
 const getModalDescriptionTextCode = (
   isOpphor: boolean,
-  ytelseType: Kodeverk,
+  ytelseType: FagsakYtelsesType,
   erKlageWithKA: boolean,
   behandlingTypeKode: string,
 ) => {
@@ -99,16 +99,16 @@ const getModalDescriptionTextCode = (
   if (isOpphor) {
     return 'Pleiepenger er opphørt. Du kommer nå til forsiden.';
   }
-  if (ytelseType.kode === FagsakYtelseType.FRISINN) {
+  if (ytelseType === fagsakYtelsesType.FRISINN) {
     return 'FRISINN er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
-  if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
+  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
     return 'Pleiepenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
-  if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
+  if (erFagytelseTypeUtvidetRett(ytelseType)) {
     return 'Ekstra omsorgsdager er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
-  if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
   }
   return 'Omsorgspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
@@ -122,7 +122,7 @@ const utledInfoTextCode = (
   behandlingTypeKode: string,
   behandlingsresultat: Behandling['behandlingsresultat'],
   harSammeResultatSomOriginalBehandling: boolean,
-  fagsakYtelseType: Kodeverk,
+  fagsakYtelseType: FagsakYtelsesType,
   erKlageWithKA: boolean,
   isBehandlingsresultatOpphor: boolean,
 ) => {
@@ -141,25 +141,25 @@ const utledInfoTextCode = (
   return 'Vedtak returneres til saksbehandler for ny vurdering.';
 };
 
-const getAltImgTextCode = (ytelseType: Kodeverk) => {
-  switch (ytelseType.kode) {
-    case FagsakYtelseType.FRISINN:
+const getAltImgTextCode = (ytelseType: FagsakYtelsesType) => {
+  switch (ytelseType) {
+    case fagsakYtelsesType.FRISINN:
       return 'Engangsstønad er innvilget og vedtaket blir iverksatt';
-    case FagsakYtelseType.PLEIEPENGER:
+    case fagsakYtelsesType.PLEIEPENGER_SYKT_BARN:
       return 'Pleiepenger er innvilget og vedtaket blir iverksatt';
-    case FagsakYtelseType.PLEIEPENGER_SLUTTFASE:
+    case fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE:
       return 'Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt';
     default:
       return 'Omsorgspenger er innvilget og vedtaket blir iverksatt';
   }
 };
 
-const utledAltImgTextCode = (behandlingStatusKode: string, fagsakYtelseType: Kodeverk) =>
+const utledAltImgTextCode = (behandlingStatusKode: string, fagsakYtelseType: FagsakYtelsesType) =>
   isStatusFatterVedtak(behandlingStatusKode) ? getAltImgTextCode(fagsakYtelseType) : '';
 
 const utledModalDescriptionTextCode = (
   behandlingStatusKode: string,
-  fagsakYtelseType: Kodeverk,
+  fagsakYtelseType: FagsakYtelsesType,
   erKlageWithKA: boolean,
   behandlingTypeKode: string,
   isBehandlingsresultatOpphor: boolean,
@@ -171,7 +171,7 @@ const utledModalDescriptionTextCode = (
 interface OwnProps {
   closeEvent: () => void;
   allAksjonspunktApproved: boolean;
-  fagsakYtelseType: Kodeverk;
+  fagsakYtelseType: FagsakYtelsesType;
   erKlageWithKA?: boolean;
   behandlingsresultat?: Behandling['behandlingsresultat'];
   behandlingStatusKode: string;

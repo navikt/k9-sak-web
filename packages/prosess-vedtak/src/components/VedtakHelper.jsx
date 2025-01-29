@@ -5,7 +5,7 @@ import { isBGAksjonspunktSomGirFritekstfelt } from '@fpsak-frontend/kodeverk/src
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
@@ -41,11 +41,11 @@ export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode, ytel
     return 'VedtakForm.ResultatKlageMedhold';
   }
 
-  if (ytelseType === fagsakYtelseType.OMSORGSPENGER) {
+  if (ytelseType === fagsakYtelsesType.OMSORGSPENGER) {
     return 'VedtakForm.VilkarStatusDelvisInnvilgetOmsorgspenger';
   }
 
-  if (ytelseType === fagsakYtelseType.FRISINN) {
+  if (ytelseType === fagsakYtelsesType.FRISINN) {
     return 'VedtakForm.VilkarStatusDelvisInnvilgetFrisinn';
   }
 
@@ -53,7 +53,7 @@ export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode, ytel
     return 'VedtakForm.VilkarStatusDelvisInnvilgetUtvidetRett';
   }
 
-  if (ytelseType === fagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'VedtakForm.VilkarStatusDelvisInnvilgetLivetsSluttfase';
   }
 
@@ -68,11 +68,11 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType
     return 'VedtakForm.ResultatKlageMedhold';
   }
 
-  if (ytelseType === fagsakYtelseType.OMSORGSPENGER) {
+  if (ytelseType === fagsakYtelsesType.OMSORGSPENGER) {
     return 'VedtakForm.VilkarStatusInnvilgetOmsorgspenger';
   }
 
-  if (ytelseType === fagsakYtelseType.FRISINN) {
+  if (ytelseType === fagsakYtelsesType.FRISINN) {
     return 'VedtakForm.VilkarStatusInnvilgetFrisinn';
   }
 
@@ -80,11 +80,11 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType
     return 'VedtakForm.VilkarStatusInnvilgetUtvidetRett';
   }
 
-  if (ytelseType === fagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'VedtakForm.VilkarStatusInnvilgetLivetsSluttfase';
   }
 
-  if (ytelseType === fagsakYtelseType.UNGDOMSYTELSE) {
+  if (ytelseType === fagsakYtelsesType.UNGDOMSYTELSE) {
     return 'VedtakForm.VilkarStatusInnvilgetUngdomsytelse';
   }
 
@@ -99,11 +99,11 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
     return 'VedtakForm.ResultatKlageAvvist';
   }
 
-  if (ytelseType === fagsakYtelseType.OMSORGSPENGER) {
+  if (ytelseType === fagsakYtelsesType.OMSORGSPENGER) {
     return 'VedtakForm.OmsorgspengerIkkeInnvilget';
   }
 
-  if (ytelseType === fagsakYtelseType.OMSORGSPENGER) {
+  if (ytelseType === fagsakYtelsesType.OMSORGSPENGER) {
     return 'VedtakForm.OmsorgspengerIkkeInnvilget';
   }
 
@@ -111,15 +111,15 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
     return 'VedtakForm.UtvidetRettIkkeInnvilget';
   }
 
-  if (ytelseType === fagsakYtelseType.FRISINN) {
+  if (ytelseType === fagsakYtelsesType.FRISINN) {
     return 'VedtakForm.FrisinnIkkeInnvilget';
   }
 
-  if (ytelseType === fagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'VedtakForm.LivetsSluttfaseIkkeInnvilget';
   }
 
-  if (ytelseType === fagsakYtelseType.UNGDOMSYTELSE) {
+  if (ytelseType === fagsakYtelsesType.UNGDOMSYTELSE) {
     return 'VedtakForm.UngdomsytelseIkkeInnvilget';
   }
 
