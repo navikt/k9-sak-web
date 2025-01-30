@@ -1,9 +1,9 @@
-import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.ts';
+import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Loader } from '@navikt/ds-react';
 import type { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { type SubmitValues, VurderNyoppstartet } from './VurderNyoppstartet.tsx';
+import { type SubmitValues, VurderNyoppstartet } from './VurderNyoppstartet.js';
 
 interface VurderNyoppstartetIndexProps {
   behandlingUUID: string;
@@ -11,6 +11,11 @@ interface VurderNyoppstartetIndexProps {
   harApneAksjonspunkter: boolean;
   readOnly: boolean;
   aksjonspunkter: AksjonspunktDto[];
+}
+
+interface NyoppstartetData {
+  erNyoppstartet: boolean | null;
+  fom: string | null;
 }
 
 export const VurderNyoppstartetIndex = ({
@@ -22,7 +27,7 @@ export const VurderNyoppstartetIndex = ({
 }: VurderNyoppstartetIndexProps) => {
   const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktCodes.VURDER_NYOPPSTARTET);
 
-  const { data: nyoppstartetData, isFetching } = useQuery({
+  const { data: nyoppstartetData, isFetching } = useQuery<NyoppstartetData>({
     queryKey: ['nyoppstartet', behandlingUUID],
     queryFn: () =>
       axios
