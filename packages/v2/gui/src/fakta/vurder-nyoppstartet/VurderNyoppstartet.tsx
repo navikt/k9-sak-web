@@ -13,9 +13,7 @@ interface FormValues {
 export interface SubmitValues {
   kode: string;
   begrunnelse: string | null;
-  avklarNyoppstartet: { fom : string | null;
-  erNyoppstartet : boolean;
-  }
+  avklarNyoppstartet: { fom: string | null; erNyoppstartet: boolean };
 }
 
 interface VurderNyoppstartetProps {
@@ -29,9 +27,8 @@ export const VurderNyoppstartet = ({
   submitCallback,
   harApneAksjonspunkter,
   readOnly,
-  formDefaultValues
+  formDefaultValues,
 }: VurderNyoppstartetProps) => {
-
   const formMethods = useForm<FormValues>({
     defaultValues: formDefaultValues,
   });
@@ -41,12 +38,12 @@ export const VurderNyoppstartet = ({
   const onSubmit = (values: FormValues) => {
     submitCallback([
       {
-        begrunnelse : values.begrunnelse,
+        begrunnelse: values.begrunnelse,
         kode: AksjonspunktCodes.VURDER_NYOPPSTARTET,
-        avklarNyoppstartet : {
+        avklarNyoppstartet: {
           fom: values.erNyoppstartet ? values.fom : null,
-          erNyoppstartet : !!values.erNyoppstartet,
-        }
+          erNyoppstartet: !!values.erNyoppstartet,
+        },
       },
     ]);
   };
