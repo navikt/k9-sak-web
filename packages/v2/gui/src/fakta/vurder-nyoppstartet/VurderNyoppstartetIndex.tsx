@@ -3,6 +3,7 @@ import { Loader } from '@navikt/ds-react';
 import type { AksjonspunktDto } from '@navikt/k9-sak-typescript-client';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import NetworkErrorPage from '../../sak/feilmeldinger/NetworkErrorPage.js';
 import { type SubmitValues, VurderNyoppstartet } from './VurderNyoppstartet.js';
 
 interface VurderNyoppstartetIndexProps {
@@ -27,7 +28,11 @@ export const VurderNyoppstartetIndex = ({
 }: VurderNyoppstartetIndexProps) => {
   const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktCodes.VURDER_NYOPPSTARTET);
 
-  const { data: nyoppstartetData, isFetching } = useQuery<NyoppstartetData>({
+  const {
+    data: nyoppstartetData,
+    isFetching,
+    isError,
+  } = useQuery<NyoppstartetData>({
     queryKey: ['nyoppstartet', behandlingUUID],
     queryFn: () =>
       axios
@@ -43,6 +48,9 @@ export const VurderNyoppstartetIndex = ({
 
   if (isFetching) {
     return <Loader />;
+  }
+  if (isError) {
+    return <NetworkErrorPage />;
   }
   return (
     <VurderNyoppstartet

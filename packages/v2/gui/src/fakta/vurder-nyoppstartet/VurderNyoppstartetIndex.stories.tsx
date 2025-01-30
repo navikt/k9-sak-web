@@ -4,7 +4,7 @@ import { http, HttpResponse } from 'msw';
 import { VurderNyoppstartetIndex } from './VurderNyoppstartetIndex';
 
 const meta: Meta<typeof VurderNyoppstartetIndex> = {
-  title: 'gui/prosess/vurder-nyoppstartet/VurderNyoppstartetIndex',
+  title: 'gui/fakta/vurder-nyoppstartet/VurderNyoppstartetIndex',
   component: VurderNyoppstartetIndex,
 };
 
