@@ -9,8 +9,8 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-form-hooks": "^6.0.3-react19beta.0",
-    "@navikt/ft-form-validators": "^3.0.3-react19beta.0",
+    "@navikt/ft-form-hooks": "^6.1.4",
+    "@navikt/ft-form-validators": "^3.1.2",
     "react": "19.0.0",
     "react-hook-form": "7.53.2",
     "react-intl": "7.1.0"
