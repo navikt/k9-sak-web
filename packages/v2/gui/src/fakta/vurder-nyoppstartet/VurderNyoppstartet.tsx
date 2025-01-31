@@ -1,4 +1,3 @@
-import type { AksjonspunktDto } from '@k9-sak-web/backend/k9sak/generated';
 import AksjonspunktCodes from '@k9-sak-web/lib/kodeverk/types/AksjonspunktCodes.js';
 import { Alert, Box, Button, Heading, HStack, VStack } from '@navikt/ds-react';
 import { Datepicker, Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
@@ -6,36 +5,32 @@ import { hasValidDate, minLength, required } from '@navikt/ft-form-validators';
 import { useForm, useWatch } from 'react-hook-form';
 
 interface FormValues {
-  begrunnelse: string;
-  erNyoppstartet: boolean;
-  fom: string;
+  begrunnelse: string | null;
+  erNyoppstartet: boolean | null;
+  fom: string | null;
 }
 
-interface SubmitValues extends FormValues {
+export interface SubmitValues {
   kode: string;
-  fortsettBehandling: boolean;
+  begrunnelse: string | null;
+  avklarNyoppstartet: { fom: string | null; erNyoppstartet: boolean };
 }
 
 interface VurderNyoppstartetProps {
   submitCallback: (data: SubmitValues[]) => void;
   harApneAksjonspunkter: boolean;
   readOnly: boolean;
-  aksjonspunkter: AksjonspunktDto[];
+  formDefaultValues: FormValues;
 }
 
 export const VurderNyoppstartet = ({
   submitCallback,
   harApneAksjonspunkter,
   readOnly,
-  aksjonspunkter,
+  formDefaultValues,
 }: VurderNyoppstartetProps) => {
-  const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === AksjonspunktCodes.VURDER_NYOPPSTARTET);
   const formMethods = useForm<FormValues>({
-    defaultValues: {
-      begrunnelse: aksjonspunkt?.begrunnelse || undefined,
-      erNyoppstartet: undefined,
-      fom: undefined,
-    },
+    defaultValues: formDefaultValues,
   });
 
   const erNyoppstartet = useWatch({ control: formMethods.control, name: 'erNyoppstartet' });
@@ -43,10 +38,12 @@ export const VurderNyoppstartet = ({
   const onSubmit = (values: FormValues) => {
     submitCallback([
       {
-        ...values,
-        fom: values.erNyoppstartet ? values.fom : '',
+        begrunnelse: values.begrunnelse,
         kode: AksjonspunktCodes.VURDER_NYOPPSTARTET,
-        fortsettBehandling: true, // skal mest sannsynlig bort
+        avklarNyoppstartet: {
+          fom: values.erNyoppstartet ? values.fom : null,
+          erNyoppstartet: !!values.erNyoppstartet,
+        },
       },
     ]);
   };
