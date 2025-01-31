@@ -1,16 +1,15 @@
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
-import React from 'react';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { fagsakStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/FagsakStatus.js';
 import { Fagsak } from '@k9-sak-web/types';
+import { screen } from '@testing-library/react';
 import messages from '../../i18n/nb_NO.json';
 import FagsakSearch from './FagsakSearch';
 
 describe('<FagsakSearch>', () => {
   const fagsak: Fagsak = {
     saksnummer: '12345',
-    sakstype: { kode: fagsakYtelsesType.FORELDREPENGER, kodeverk: 'FAGSAK_YTELSE' },
+    sakstype: fagsakYtelsesType.FORELDREPENGER, // FAGSAK_YTELSE
     relasjonsRolleType: {
       kode: 'TEST',
       kodeverk: '',
@@ -54,7 +53,7 @@ describe('<FagsakSearch>', () => {
       { messages },
     );
     expect(screen.getByLabelText('Saksnummer eller fødselsnummer/D-nummer')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Søk' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Venter… Søk' })).toBeInTheDocument();
   });
 
   it('skal vise søkefelt og label for ingen søketreff når ingen fagsaker blir hentet', () => {

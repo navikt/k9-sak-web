@@ -1,6 +1,5 @@
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import messages from '../i18n/nb_NO.json';
 import { ProsessStegSubmitButton } from './ProsessStegSubmitButton';
 
@@ -129,8 +128,8 @@ describe('<ProsessStegSubmitButton>', () => {
       { messages },
     );
 
-    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Venter… Bekreft og fortsett' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Venter… Bekreft og fortsett' })).toBeDisabled();
   });
 
   it('skal vise knapp som disabled en ikke har fylt ut alle obligatoriske felter', () => {

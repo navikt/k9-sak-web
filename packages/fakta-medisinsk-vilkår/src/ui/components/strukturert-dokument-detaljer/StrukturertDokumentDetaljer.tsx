@@ -2,7 +2,8 @@ import { Alert, Link } from '@navikt/ds-react';
 import { Box, DetailView, LabelledContent, LinkButton, Margin } from '@navikt/ft-plattform-komponenter';
 import { prettifyDateString } from '@fpsak-frontend/utils';
 import React, { type JSX } from 'react';
-import FagsakYtelseType from '../../../constants/FagsakYtelseType';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+
 import LinkRel from '../../../constants/LinkRel';
 import Dokument, { dokumentLabel, Dokumenttype } from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';
@@ -19,17 +20,17 @@ interface StrukturertDokumentDetaljerProps {
   onRemoveDuplikat: () => void;
 }
 
-const renderDokumenttypeLabel = (fagsakYtelseType: FagsakYtelseType) => {
-  if (fagsakYtelseType === FagsakYtelseType.OPPLÆRINGSPENGER) {
+const renderDokumenttypeLabel = (fagsakYtelseType: FagsakYtelsesType) => {
+  if (fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
     return 'Inneholder dokumentet medisinske opplysninger eller dokumentasjon av opplæring?';
   }
 
   return 'Inneholder dokumentet medisinske opplysninger?';
 };
 
-const renderDokumenttypeContent = (dokumenttype: Dokumenttype, fagsakYtelseType: FagsakYtelseType) => {
+const renderDokumenttypeContent = (dokumenttype: Dokumenttype, fagsakYtelseType: FagsakYtelsesType) => {
   if (dokumenttype === Dokumenttype.LEGEERKLÆRING) {
-    return fagsakYtelseType === FagsakYtelseType.PLEIEPENGER_SLUTTFASE ? (
+    return fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE ? (
       <span>Ja, dokumentet inneholder medisinske opplysninger</span>
     ) : (
       <span>Ja, legeerklæring fra sykehus/spesialisthelsetjenesten</span>
@@ -51,7 +52,7 @@ const renderDokumenttypeContent = (dokumenttype: Dokumenttype, fagsakYtelseType:
     return <span>Ja, andre medisinske opplysninger (f.eks. legeerklæring fra fastlege, uttalelse fra psykolog)</span>;
   }
   if (dokumenttype === Dokumenttype.MANGLER_MEDISINSKE_OPPLYSNINGER) {
-    if (fagsakYtelseType === FagsakYtelseType.OPPLÆRINGSPENGER) {
+    if (fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER) {
       return <span>Nei, dokumentet inneholder ikke medisinske opplysninger eller dokumentasjon av opplæring</span>;
     }
     return <span>Dokumentet inneholder ikke medisinske opplysninger</span>;

@@ -67,7 +67,7 @@ describe('<FaktaSubmitButton>', () => {
       />,
     );
 
-    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Venter… Bekreft og fortsett' })).toBeDisabled();
   });
 
   it('skal vise knapp som utgrået når en ikke har gjort endringer og det er tomme obligatoriske felter', () => {

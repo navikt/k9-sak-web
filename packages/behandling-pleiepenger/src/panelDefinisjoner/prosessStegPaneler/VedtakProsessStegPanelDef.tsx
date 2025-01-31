@@ -1,7 +1,7 @@
 import React from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
@@ -58,7 +58,7 @@ class PanelDef extends ProsessStegPanelDef {
     vilkar,
     simuleringResultat,
     beregningsgrunnlag,
-    ytelseTypeKode: fagsakYtelseType.PLEIEPENGER,
+    ytelseTypeKode: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,

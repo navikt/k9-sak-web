@@ -12,6 +12,7 @@ import {
 import { OmsorgenForProps } from '../../../../types/utvidetRettMikrofrontend/OmsorgProps';
 import { InformasjonTilLesemodus } from '../../../../types/utvidetRettMikrofrontend/informasjonTilLesemodus';
 import { generereInfoForVurdertVilkar } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
+import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 interface PropTypes {
   isReadOnly: boolean;
@@ -20,7 +21,7 @@ interface PropTypes {
   behandling: Behandling;
   aksjonspunktInformasjon?: AksjonspunktInformasjon;
   vilkarInformasjon: VilkarInformasjon;
-  fagsaksType: string;
+  fagsaksType: FagsakYtelsesType;
   FormState: FormStateType;
   harBarnSoktForRammevedtakOmKroniskSyk: boolean;
 }

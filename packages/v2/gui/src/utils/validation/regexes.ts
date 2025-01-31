@@ -6,3 +6,5 @@
 // blir sendt. Dette bør derfor avklarast nærmare før ein evt tillater [] teikn i denne valideringa.
 export const invalidTextRegex =
   /[^0-9a-zA-ZæøåÆØÅAaÁáBbCcČčDdĐđEeFfGgHhIiJjKkLlMmNnŊŋOoPpRrSsŠšTtŦŧUuVvZzŽžéôèÉöüäÖÜÄ .'\-‐–‑/%§!?@_()#+:;,="&\s<>~*]/g;
+
+export const saksnummerOrFodselsnummerPattern = /^[a-zA-Z0-9_-]{0,18}$/;

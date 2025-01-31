@@ -3,7 +3,7 @@ import React from 'react';
 import { injectIntl } from 'react-intl';
 
 import { RadioGroupField, SelectField } from '@fpsak-frontend/form';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -14,8 +14,8 @@ import styles from './klageVurderingRadioOptionsNfp.module.css';
 export const TILBAKEKREVING_HJEMMEL = '22-15';
 
 const utledHjemler = fagsak => {
-  switch (fagsak.sakstype.kode) {
-    case fagsakYtelseType.PLEIEPENGER:
+  switch (fagsak.sakstype) {
+    case fagsakYtelsesType.PLEIEPENGER_SYKT_BARN:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
@@ -26,10 +26,10 @@ const utledHjemler = fagsak => {
         { kode: '22-13', navn: '§ 22-13' },
       ];
 
-    case fagsakYtelseType.OMSORGSPENGER:
-    case fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN:
-    case fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE:
-    case fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN:
+    case fagsakYtelsesType.OMSORGSPENGER:
+    case fagsakYtelsesType.OMSORGSPENGER_KS:
+    case fagsakYtelsesType.OMSORGSPENGER_MA:
+    case fagsakYtelsesType.OMSORGSPENGER_AO:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
@@ -40,7 +40,7 @@ const utledHjemler = fagsak => {
         { kode: '22-13', navn: '§ 22-13' },
       ];
 
-    case fagsakYtelseType.PLEIEPENGER_SLUTTFASE:
+    case fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE:
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
@@ -64,7 +64,7 @@ export const KlageVurderingRadioOptionsNfp = ({
   const hjemler = utledHjemler(fagsak);
 
   const skalViseHjemler =
-    fagsak.sakstype.kode !== fagsakYtelseType.FRISINN &&
+    fagsak.sakstype !== fagsakYtelsesType.FRISINN &&
     klageVurdering === klageVurderingType.STADFESTE_YTELSESVEDTAK &&
     hjemler.length > 0;
 
