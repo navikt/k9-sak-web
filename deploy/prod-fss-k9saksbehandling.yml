@@ -108,3 +108,7 @@ spec:
       value: "true"
     - name: AKSJONSPUNKT_OVERLAPPENDE_SAKER
       value: 'false'
+    - name: HISTORIKK_V2_LAST
+      value: "false"
+    - name: HISTORIKK_V2_VIS
+      value: "false"

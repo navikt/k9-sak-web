@@ -85,4 +85,12 @@ export const featureTogglesFactory = () => [
     key: 'AKSJONSPUNKT_OVERLAPPENDE_SAKER',
     value: process.env.VITE_AKSJONSPUNKT_OVERLAPPENDE_SAKER,
   },
+  {
+    key: "HISTORIKK_V2_LAST",
+    value: process.env.VITE_HISTORIKK_V2_LAST,
+  },
+  {
+    key: "HISTORIKK_V2_VIS",
+    value: process.env.VITE_HISTORIKK_V2_VIS,
+  },
 ];

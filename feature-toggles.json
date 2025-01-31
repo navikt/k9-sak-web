@@ -90,5 +90,13 @@
   {
     "key": "AKSJONSPUNKT_OVERLAPPENDE_SAKER",
     "value": "${AKSJONSPUNKT_OVERLAPPENDE_SAKER}"
+  },
+  {
+    "key": "HISTORIKK_V2_LAST",
+    "value": "${HISTORIKK_V2_LAST}"
+  },
+  {
+    "key": "HISTORIKK_V2_VIS",
+    "value": "${HISTORIKK_V2_VIS}"
   }
 ]
