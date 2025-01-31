@@ -19,15 +19,15 @@
     "@hookform/resolvers": "^3.10.0",
     "@k9-sak-web/backend": "workspace:^",
     "@k9-sak-web/lib": "1.0.0",
-    "@navikt/ft-form-hooks": "^6.0.3-react19beta.0",
-    "@navikt/ft-form-validators": "^3.0.3-react19beta.0",
-    "@navikt/ft-utils": "^3.0.3-react19beta.0",
-    "@tanstack/react-query": "^5.64.2",
+    "@navikt/ft-form-hooks": "^6.1.4",
+    "@navikt/ft-form-validators": "^3.1.2",
+    "@navikt/ft-utils": "^3.1.2",
+    "@tanstack/react-query": "^5.66.0",
     "@types/object-hash": "^3.0.6",
     "axios": "1.7.9",
     "object-hash": "^3.0.0",
     "react": "19.0.0",
-    "react-hook-form": "7.53.2",
+    "react-hook-form": "7.54.2",
     "yup": "^1.6.1"
   }
 }
