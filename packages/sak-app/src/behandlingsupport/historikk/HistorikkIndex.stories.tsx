@@ -12,6 +12,7 @@ import { setBaseRequestApiMocks } from '../../../../storybook/stories/mocks/setB
 import { historikkSakV1 } from '../../../../storybook/stories/mocks/historikkSakV1.js';
 import { historikkTilbakeV1 } from '../../../../storybook/stories/mocks/historikkTilbakeV1.js';
 import { historikkTilbakeV2 } from '../../../../storybook/stories/mocks/historikkTilbakeV2.js';
+import { delay } from '@k9-sak-web/gui/utils/delay.js';
 
 const historyK9KlageV1: Historikkinnslag[] = [
   {
@@ -91,6 +92,9 @@ export const HistorikkinnslagV1: Story = {
     await expect(boble6El).toHaveTextContent(
       'Oppgave til INTERESSANT INTUITIV KATT DIAMETER om å sende inntektsmelding for skjæringstidspunkt 2024-10-01',
     );
+    // Vent så lenge for å unngå test feil pga forsinka kall til compareRenderedElementTexts i HistorikkIndex.
+    // Kan fjernast når samanlikningssjekk v1/v2 er fjerna.
+    await delay(1_300);
   },
 };
 

@@ -249,7 +249,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
       } catch (err) {
         Sentry.captureException(err, { level: 'warning' });
       }
-    }, 1_500);
+    }, 1_000);
   }
 
   return (
