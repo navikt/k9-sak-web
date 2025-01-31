@@ -1,4 +1,3 @@
-import moment from 'moment';
 import React, { useCallback, useContext, useMemo, useRef } from 'react';
 import { useLocation } from 'react-router';
 import * as Sentry from '@sentry/browser';
@@ -62,7 +61,7 @@ const sortAndTagTilbakekrevingOgKlage = (
   return historikkK9sak
     .concat(historikkFraTilbakekrevingMedMarkor)
     .concat(historikkFraKlageMedMarkor)
-    .sort((a, b) => moment(b.opprettetTidspunkt).diff(moment(a.opprettetTidspunkt)));
+    .sort((a, b) => dayjs(b.opprettetTidspunkt).diff(dayjs(a.opprettetTidspunkt)));
 };
 
 const sortAndTagUlikeHistorikkinnslagTyper = (
