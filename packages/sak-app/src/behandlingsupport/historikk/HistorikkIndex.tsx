@@ -237,8 +237,8 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
     }
   });
   // Sammenligningsfunksjon fører til feil i storybook-test kjørt i pipeline, så deaktiverer den der.
-  const ikkeStorybookTest = !navigator.webdriver;
-  if (ikkeStorybookTest && v2HistorikkElementer.length > 0) {
+  const erStorybookTest = window.navigator.userAgent.match(/StorybookTestRunner/);
+  if (!erStorybookTest && v2HistorikkElementer.length > 0) {
     // Samanlikning av v1 og v2 render resultat. Sjekker at alle ord rendra i v1 historikkinnslag også bli rendra i v2.
     // (Uavhengig av rekkefølge på orda.) For å unngå fleire køyringer av sjekk pga re-rendering ved initiell lasting
     // er køyring forsinka litt, med clearTimeout på forrige timeout id.
