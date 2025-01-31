@@ -1,20 +1,15 @@
-import type { InnloggetAnsattDto } from '@k9-sak-web/backend/k9sak/generated';
+import type { InnloggetAnsattDto, NotatDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Alert, Button, Heading, Loader, Switch } from '@navikt/ds-react';
 import { CheckboxField, Form, TextAreaField } from '@navikt/ft-form-hooks';
 import React, { useState } from 'react';
 import { type UseFormReturn } from 'react-hook-form';
-import ChatComponent from './components/ChatComponent';
+import ChatComponent, { type EndreNotatPayload, type SkjulNotatPayload } from './components/ChatComponent';
 import styles from './notater.module.css';
-import type { NotatResponse } from './types/NotatResponse';
-
-export type Inputs = {
-  notatTekst: string;
-  visNotatIAlleSaker: boolean;
-};
+import type { FormState } from './types/FormState';
 
 export interface skjulNotatMutationVariables {
   skjul: boolean;
-  id: number;
+  id: string;
   saksnummer: string;
   versjon: number;
 }
@@ -22,27 +17,29 @@ export interface skjulNotatMutationVariables {
 interface NotaterProps {
   fagsakId: string;
   navAnsatt: Pick<InnloggetAnsattDto, 'brukernavn'>;
-  submitNotat: (data: Inputs, id?: number, fagsakIdFraRedigertNotat?: string, versjon?: number) => void;
-  submitSkjulNotat: ({ skjul, id, saksnummer, versjon }: skjulNotatMutationVariables) => void;
+  opprettNotat: (formState: FormState) => void;
+  endreNotat: (formState: FormState, id: string, fagsakIdFraRedigertNotat: string, versjon: number) => void;
+  skjulNotat: ({ skjul, id, saksnummer, versjon }: SkjulNotatPayload) => void;
   isLoading: boolean;
   hasGetNotaterError: boolean;
-  notater: NotatResponse[];
-  postNotatMutationError: boolean;
-  formMethods: UseFormReturn<Inputs>;
+  notater: NotatDto[];
+  hasLagreNotatError: boolean;
+  formMethods: UseFormReturn<FormState>;
   fagsakHarPleietrengende: boolean;
 }
 
 const Notater: React.FunctionComponent<NotaterProps> = ({
   fagsakId,
   navAnsatt,
-  submitNotat,
+  opprettNotat,
   isLoading,
   hasGetNotaterError,
   notater,
-  postNotatMutationError,
-  submitSkjulNotat,
+  hasLagreNotatError,
+  skjulNotat,
   formMethods,
   fagsakHarPleietrengende,
+  endreNotat,
 }) => {
   const [visSkjulteNotater, setVisSkjulteNotater] = useState(false);
 
@@ -50,9 +47,12 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
     setVisSkjulteNotater(current => !current);
   };
 
-  const submit = (data: Inputs) => submitNotat(data);
+  const submitNyttNotat = (data: FormState) => opprettNotat(data);
 
   const alleNotaterErSkjulte = notater?.every(notat => notat.skjult);
+
+  const handleEndreNotat = (data: EndreNotatPayload) =>
+    endreNotat(data.formState, data.id, data.saksnummer, data.versjon);
 
   return (
     <>
@@ -68,7 +68,7 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
               Vis skjulte notater
             </Switch>
           </div>
-          <Form<Inputs> formMethods={formMethods} onSubmit={submit}>
+          <Form<FormState> formMethods={formMethods} onSubmit={submitNyttNotat}>
             <div className={styles.nyttNotat}>
               <TextAreaField name="notatTekst" size="small" label="Skriv et nytt notat" />
             </div>
@@ -98,7 +98,7 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
               Noe gikk galt ved henting av notater, vennligst prøv igjen senere
             </Alert>
           )}
-          {postNotatMutationError && (
+          {hasLagreNotatError && (
             <Alert className={styles.alert} size="small" variant="error">
               Noe gikk galt ved lagring av notater, vennligst prøv igjen senere
             </Alert>
@@ -111,9 +111,9 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
                   <ChatComponent
                     key={notat.notatId}
                     notat={notat}
-                    postNotat={data => submitNotat(data.data, data.id, data.saksnummer, data.versjon)}
+                    endreNotat={handleEndreNotat}
                     navAnsatt={navAnsatt}
-                    skjulNotat={data => submitSkjulNotat(data)}
+                    skjulNotat={data => skjulNotat(data)}
                     fagsakId={fagsakId}
                   />
                 ))}

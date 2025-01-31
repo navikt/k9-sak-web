@@ -1,9 +1,11 @@
-import type { InnloggetAnsattDto } from '@k9-sak-web/backend/k9sak/generated';
+import { type InnloggetAnsattDto, type NotatDto } from '@k9-sak-web/backend/k9sak/generated';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import Notater, { type Inputs, type skjulNotatMutationVariables } from './Notater';
-import { getNotater, postNotat, skjulNotat } from './notatApi';
+import { K9SakClientContext } from '../../app/K9SakClientContext';
+import NotatBackendClient from './NotatBackendClient';
+import Notater, { type skjulNotatMutationVariables } from './Notater.js';
+import { type FormState } from './types/FormState';
 
 interface NotaterIndexProps {
   fagsakId: string;
@@ -11,19 +13,25 @@ interface NotaterIndexProps {
   fagsakHarPleietrengende: boolean;
 }
 
-interface postNotatMutationVariables {
-  data: Inputs;
-  id?: number;
-  fagsakIdFraRedigertNotat?: string;
-  versjon?: number;
+interface opprettNotatMutationVariables {
+  data: FormState;
+}
+
+interface endreNotatMutationVariables {
+  data: FormState;
+  id: string;
+  fagsakIdFraRedigertNotat: string;
+  versjon: number;
 }
 
 const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsakHarPleietrengende }) => {
+  const k9SakClient = useContext(K9SakClientContext);
+  const notatBackendClient = new NotatBackendClient(k9SakClient);
   const queryClient = useQueryClient();
 
   const notaterQueryKey = ['notater', fagsakId];
 
-  const formMethods = useForm<Inputs>({
+  const formMethods = useForm<FormState>({
     defaultValues: {
       notatTekst: '',
       visNotatIAlleSaker: false,
@@ -34,16 +42,23 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsak
     isLoading: getNotaterLoading,
     isError: hasGetNotaterError,
     data: notater = [],
-  } = useQuery({
+  } = useQuery<NotatDto[]>({
     queryKey: notaterQueryKey,
-    queryFn: ({ signal }) => getNotater(signal, fagsakId),
+    queryFn: () => notatBackendClient.getNotater(fagsakId),
     enabled: !!fagsakId,
   });
 
-  const postNotatMutation = useMutation({
-    mutationFn: ({ data, id, fagsakIdFraRedigertNotat, versjon }: postNotatMutationVariables) =>
-      postNotat(data, fagsakId, id, fagsakIdFraRedigertNotat, versjon),
+  const opprettNotatMutation = useMutation({
+    mutationFn: ({ data }: opprettNotatMutationVariables) => notatBackendClient.opprettNotat(data, fagsakId),
+    onSuccess: () => {
+      formMethods.reset();
+      queryClient.invalidateQueries({ queryKey: notaterQueryKey });
+    },
+  });
 
+  const endreNotatMutation = useMutation({
+    mutationFn: ({ data, id, fagsakIdFraRedigertNotat, versjon }: endreNotatMutationVariables) =>
+      notatBackendClient.endreNotat(data, id, fagsakIdFraRedigertNotat, versjon),
     onSuccess: () => {
       formMethods.reset();
       queryClient.invalidateQueries({ queryKey: notaterQueryKey });
@@ -52,30 +67,34 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsak
 
   const skjulNotatMutation = useMutation({
     mutationFn: ({ skjul, id, saksnummer, versjon }: skjulNotatMutationVariables) =>
-      skjulNotat(skjul, id, saksnummer, versjon),
-
+      notatBackendClient.skjulNotat(id, saksnummer, skjul, versjon),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: notaterQueryKey });
     },
   });
 
-  const isLoading = getNotaterLoading || postNotatMutation.isPending;
+  const isLoading = getNotaterLoading || opprettNotatMutation.isPending;
 
-  const submitNotat = (data: Inputs, id?: number, fagsakIdFraRedigertNotat?: string, versjon?: number) =>
-    postNotatMutation.mutate({ data, id, fagsakIdFraRedigertNotat, versjon });
+  const endreNotat = (data: FormState, id: string, fagsakIdFraRedigertNotat: string, versjon: number) =>
+    endreNotatMutation.mutate({ data, id, fagsakIdFraRedigertNotat, versjon });
 
-  const submitSkjulNotat = (data: skjulNotatMutationVariables) => skjulNotatMutation.mutate(data);
+  const opprettNotat = (data: FormState) => opprettNotatMutation.mutate({ data });
+
+  const skjulNotat = (data: skjulNotatMutationVariables) => skjulNotatMutation.mutate(data);
+
+  const hasLagreNotatError = opprettNotatMutation.isError || endreNotatMutation.isError || skjulNotatMutation.isError;
 
   return (
     <Notater
       fagsakId={fagsakId}
       navAnsatt={navAnsatt}
-      submitNotat={submitNotat}
+      opprettNotat={opprettNotat}
+      endreNotat={endreNotat}
       isLoading={isLoading}
       hasGetNotaterError={hasGetNotaterError}
       notater={notater}
-      postNotatMutationError={postNotatMutation.isError}
-      submitSkjulNotat={submitSkjulNotat}
+      hasLagreNotatError={hasLagreNotatError}
+      skjulNotat={skjulNotat}
       formMethods={formMethods}
       fagsakHarPleietrengende={fagsakHarPleietrengende}
     />

@@ -1,11 +1,11 @@
 import { OpprettNotatDtoNotatGjelderType } from '@k9-sak-web/backend/k9sak/generated';
 import axios from 'axios';
 import { apiPaths } from './apiPaths';
-import { type Inputs } from './Notater';
+import { type FormState } from './types/FormState';
 import type { NotatResponse } from './types/NotatResponse';
 
 export const postNotat = (
-  data: Inputs,
+  data: FormState,
   fagsakId: string,
   id?: number,
   fagsakIdFraRedigertNotat?: string,
