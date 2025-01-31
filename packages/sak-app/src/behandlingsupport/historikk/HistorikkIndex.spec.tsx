@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import HistorikkIndex from './HistorikkIndex';
+import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 
 vi.mock('react-router', async () => {
   const actual = (await vi.importActual('react-router')) as Record<string, unknown>;
@@ -65,7 +66,7 @@ describe('<HistorikkIndex>', () => {
 
     render(
       <MemoryRouter>
-        <HistorikkIndex saksnummer="12345" behandlingId={1} behandlingVersjon={2} />
+        <HistorikkIndex saksnummer="12345" behandlingId={1} behandlingVersjon={2} kjønn={kjønn.MANN} />
       </MemoryRouter>,
     );
 

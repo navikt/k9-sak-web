@@ -12,12 +12,12 @@ import historikkEndretFeltVerdiTypeCodes from '../../../kodeverk/historikkEndret
 import historikkOpplysningTypeCodes from '../../../kodeverk/historikkOpplysningTypeCodes';
 import historikkResultatTypeCodes from '../../../kodeverk/historikkResultatTypeCodes';
 
-export const findIdForOpplysningCode = (opplysning: HistorikkInnslagOpplysning): string => {
+export const findIdForOpplysningCode = (opplysning: HistorikkInnslagOpplysning): string | undefined => {
   if (!opplysning) {
-    return null;
+    return undefined;
   }
-  const typeKode = opplysning.opplysningType.kode;
-  const opplysningCode = historikkOpplysningTypeCodes[typeKode];
+  const typeKode = opplysning.opplysningType?.kode;
+  const opplysningCode = typeKode != null ? historikkOpplysningTypeCodes[typeKode] : undefined;
   if (!opplysningCode) {
     return `OpplysningTypeCode ${typeKode} finnes ikke-LEGG DET INN`;
   }
@@ -28,7 +28,7 @@ export const findResultatText = (
   resultat: string,
   intl: IntlShape,
   getKodeverknavn: (kodeverk: Kodeverk) => string,
-): string | React.ReactNode[] => {
+): string | React.ReactNode[] | null => {
   if (!resultat) {
     return null;
   }
@@ -55,11 +55,11 @@ export const findResultatText = (
 export const findHendelseText = (
   hendelse: HistorikkinnslagDel['hendelse'],
   getKodeverknavn: (kodeverk: Kodeverk) => string,
-): string => {
-  if (!hendelse) {
+): string | undefined => {
+  if (!hendelse || hendelse.navn == null) {
     return undefined;
   }
-  if (hendelse.verdi === null) {
+  if (hendelse.verdi == null) {
     return getKodeverknavn(hendelse.navn);
   }
   return `${getKodeverknavn(hendelse.navn)} ${hendelse.verdi}`;
@@ -69,17 +69,17 @@ const convertToBoolean = (verdi: boolean): string => (verdi === true ? 'Ja' : 'N
 
 export const findEndretFeltVerdi = (
   endretFelt: HistorikkinnslagEndretFelt,
-  verdi: string | number | boolean,
+  verdi: string | number | boolean | undefined,
   intl: IntlShape,
   getKodeverknavn: (kodeverk: Kodeverk) => string,
-): string | number => {
-  if (verdi === null) {
+): string | number | null => {
+  if (verdi == null) {
     return null;
   }
   if (typeof verdi === 'boolean') {
     return convertToBoolean(verdi);
   }
-  if (endretFelt.klTilVerdi !== null) {
+  if (endretFelt.klTilVerdi != undefined) {
     const historikkFeltVerdiNavn = getKodeverknavn({
       kode: verdi as string,
       kodeverk: 'HISTORIKK_ENDRET_FELT_VERDI_TYPE',

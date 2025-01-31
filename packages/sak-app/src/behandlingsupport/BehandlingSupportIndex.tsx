@@ -40,6 +40,7 @@ import MeldingIndex from './melding/MeldingIndex';
 import NotaterIndex from './notater/NotaterIndex';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
+import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -302,11 +303,14 @@ const BehandlingSupportIndex = ({
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.HISTORIKK}>
-            <HistorikkIndex
-              saksnummer={fagsak.saksnummer}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-            />
+            {behandlingId !== undefined && (
+              <HistorikkIndex
+                saksnummer={fagsak.saksnummer}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                kjønn={fagsak.person?.erKvinne ? kjønn.KVINNE : kjønn.MANN}
+              />
+            )}
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.MELDINGER}>
             {behandlingId && (

@@ -1,4 +1,4 @@
-import { Aksjonspunkt } from '@k9-sak-web/types';
+import type { Aksjonspunkt } from '@k9-sak-web/types';
 
 const aksjonspunktCodes = {
   FORESLA_VEDTAK: '5015',

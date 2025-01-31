@@ -1,4 +1,4 @@
-import { BeregningAvklaringsbehov } from '@k9-sak-web/types';
+import type { BeregningAvklaringsbehov } from '@k9-sak-web/types';
 
 const avklaringsbehovCodes = {
   FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS: 'FASTSETT_BG_AT_FL',

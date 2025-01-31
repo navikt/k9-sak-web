@@ -7,11 +7,11 @@ import { initialize, mswLoader } from 'msw-storybook-addon';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-// import { switchOnTestMode } from '@k9-sak-web/rest-api';
+import { switchOnTestMode } from '@k9-sak-web/rest-api';
 
 const { VITE_LOCAL_STORYBOOK } = import.meta.env;
 
-// switchOnTestMode();
+switchOnTestMode();
 
 initialize({
   onUnhandledRequest: 'bypass',

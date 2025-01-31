@@ -6,7 +6,7 @@ import type {
 } from '@k9-sak-web/backend/k9sak/generated';
 import { vilkårStatus } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårStatus.js';
 import { dateStringSorter, formatDate } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
-import type { FeatureToggles } from '@k9-sak-web/lib/kodeverk/types/FeatureTogglesType.js';
+import type { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import { useEffect, useState, type SetStateAction } from 'react';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringFormPeriodisert';
