@@ -28,7 +28,8 @@ class HistorikkV1V2Sammenligningsfeil extends Error {
   redactWordsNotFound() {
     for (let i = 0; i < this.wordsNotFound.length; i++) {
       const word = this.wordsNotFound[i];
-      const redaction = word.length > 3 ? '*'.repeat(word.length - 3) : '';
+      const showCharCount = word.length > 5 ? 3 : 1;
+      const redaction = word.length > showCharCount ? '*'.repeat(word.length - showCharCount) : '';
       this.wordsNotFound[i] = this.wordsNotFound[i].substring(0, 3) + redaction;
     }
   }
