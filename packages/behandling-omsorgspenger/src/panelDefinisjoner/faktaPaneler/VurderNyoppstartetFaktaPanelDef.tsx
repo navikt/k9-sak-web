@@ -1,6 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import { VurderNyoppstartet } from '@k9-sak-web/gui/fakta/vurder-nyoppstartet/VurderNyoppstartet.js';
+import { VurderNyoppstartetIndex } from '@k9-sak-web/gui/fakta/vurder-nyoppstartet/VurderNyoppstartetIndex.js';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 
@@ -16,7 +16,7 @@ class VurderNyoppstartetFaktaPanelDef extends FaktaPanelDef {
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, false);
-    return <VurderNyoppstartet {...props} {...deepCopyProps} />;
+    return <VurderNyoppstartetIndex {...props} {...deepCopyProps} behandlingUUID={props.behandling.uuid} />;
   };
 }
 
