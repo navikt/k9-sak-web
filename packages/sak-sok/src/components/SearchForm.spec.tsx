@@ -3,7 +3,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-h
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import messages from '../../i18n/nb_NO.json';
 import { SearchForm } from './SearchForm';
 
@@ -13,7 +12,7 @@ describe('<Search>', () => {
       messages,
     });
     expect(screen.getByLabelText('Search.SaksnummerOrPersonId')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Søk' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Venter… Søk' })).toBeInTheDocument();
   });
 
   it('skal utføre søk når en trykker på søkeknapp', async () => {
