@@ -1,5 +1,5 @@
 import { type InnloggetAnsattDto, type NotatDto } from '@k9-sak-web/backend/k9sak/generated';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { K9SakClientContext } from '../../app/K9SakClientContext';
@@ -27,7 +27,6 @@ interface endreNotatMutationVariables {
 const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsakHarPleietrengende }) => {
   const k9SakClient = useContext(K9SakClientContext);
   const notatBackendClient = new NotatBackendClient(k9SakClient);
-  const queryClient = useQueryClient();
 
   const notaterQueryKey = ['notater', fagsakId];
 
@@ -42,6 +41,7 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsak
     isLoading: getNotaterLoading,
     isError: hasGetNotaterError,
     data: notater = [],
+    refetch: refetchNotater,
   } = useQuery<NotatDto[]>({
     queryKey: notaterQueryKey,
     queryFn: () => notatBackendClient.getNotater(fagsakId),
@@ -52,7 +52,7 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsak
     mutationFn: ({ data }: opprettNotatMutationVariables) => notatBackendClient.opprettNotat(data, fagsakId),
     onSuccess: () => {
       formMethods.reset();
-      queryClient.invalidateQueries({ queryKey: notaterQueryKey });
+      refetchNotater();
     },
   });
 
@@ -61,7 +61,7 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsak
       notatBackendClient.endreNotat(data, id, fagsakIdFraRedigertNotat, versjon),
     onSuccess: () => {
       formMethods.reset();
-      queryClient.invalidateQueries({ queryKey: notaterQueryKey });
+      refetchNotater();
     },
   });
 
@@ -69,7 +69,7 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsak
     mutationFn: ({ skjul, id, saksnummer, versjon }: skjulNotatMutationVariables) =>
       notatBackendClient.skjulNotat(id, saksnummer, skjul, versjon),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: notaterQueryKey });
+      refetchNotater();
     },
   });
 

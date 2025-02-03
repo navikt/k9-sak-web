@@ -132,7 +132,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
                 maxLength={2000}
               />
               <div className={styles.nyttNotatKnappContainer}>
-                <Button type="submit" size="small" variant="primary">
+                <Button size="small" variant="primary">
                   Lagre endringer
                 </Button>
                 <Button onClick={toggleReadOnly} variant="secondary" size="small">
