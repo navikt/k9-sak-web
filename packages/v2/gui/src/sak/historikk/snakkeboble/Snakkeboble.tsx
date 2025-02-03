@@ -33,7 +33,8 @@ export const Snakkeboble = ({
     <Chat
       data-testid={`snakkeboble-${opprettetTidspunkt}`}
       avatar={<Avatar aktørType={aktør.type} kjønn={kjønn} />}
-      timestamp={`${formatDate(opprettetTidspunkt)} // ${rolleNavn} ${aktør.ident || ''}`}
+      timestamp={`${formatDate(opprettetTidspunkt)}`}
+      name={`${rolleNavn} ${aktør.ident || ''}`}
       position={utledPlassering(aktør.type)}
       toptextPosition="left"
       className={getStyle(aktør.type, kjønn)}

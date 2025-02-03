@@ -24,7 +24,8 @@ export const getStyle = (aktørType: HistorikkAktor, kjønn?: string) => {
           ? styles.bubbleSokerMann
           : styles.bubbleSoker,
   };
-  return styleMap[aktørType.kode];
+  const pos = utledPlassering(aktørType) === 'right' ? styles.chatRight : '';
+  return `${styleMap[aktørType.kode]} ${pos}`;
 };
 
 export const formatDate = (date: string) => `${dateFormat(date)} - ${timeFormat(date)}`;

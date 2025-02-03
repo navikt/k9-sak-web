@@ -45,3 +45,7 @@
   --ac-chat-bubble-bg: var(--a-lightblue-100);
   --ac-chat-avatar-bg: var(--a-lightblue-300);
 }
+
+.chatRight {
+  margin-left: auto;
+}

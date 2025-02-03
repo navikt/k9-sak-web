@@ -6,6 +6,7 @@ declare const styles: {
   readonly "bubbleSokerKvinne": string;
   readonly "bubbleSokerMann": string;
   readonly "bubbleVedtakslosningen": string;
+  readonly "chatRight": string;
 };
 export = styles;
 
