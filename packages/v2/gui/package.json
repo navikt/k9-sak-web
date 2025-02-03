@@ -28,6 +28,7 @@
     "object-hash": "^3.0.0",
     "react": "19.0.0",
     "react-hook-form": "7.54.2",
+    "react-router": "7.1.4",
     "yup": "^1.6.1"
   }
 }
