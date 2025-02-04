@@ -96,10 +96,6 @@
     "value": "${BRUK_V2_SAK_SOK}"
   },
   {
-    "key": "HISTORIKK_V2_LAST",
-    "value": "${HISTORIKK_V2_LAST}"
-  },
-  {
     "key": "HISTORIKK_V2_VIS",
     "value": "${HISTORIKK_V2_VIS}"
   }
