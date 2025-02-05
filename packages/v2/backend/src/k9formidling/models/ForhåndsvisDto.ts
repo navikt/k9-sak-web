@@ -1,6 +1,6 @@
 import type { FritekstbrevinnholdDto, MottakerDto } from '@navikt/k9-sak-typescript-client';
 import type { AvsenderApplikasjon } from './AvsenderApplikasjon.js';
-import type { FagsakYtelsesTypeKodeverk } from '../../k9sak/kodeverk/FagsakYtelsesType.ts';
+import type { FagsakYtelsesType } from '../../k9sak/kodeverk/FagsakYtelsesType.ts';
 
 /**
  * Denne typen finnast ikkje i k9-formidling koden, der er det berre generell JsonNode type. Men ut frå inspeksjon av
@@ -16,7 +16,7 @@ export interface Dokumentdata {
  */
 export interface ForhåndsvisDto {
   eksternReferanse: string;
-  ytelseType: FagsakYtelsesTypeKodeverk;
+  ytelseType: FagsakYtelsesType;
   saksnummer: string;
   aktørId: string;
   overstyrtMottaker?: MottakerDto; // Bruker denne type frå k9-sak, av same grunn som over, reknar med dei må vere like.

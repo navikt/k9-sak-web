@@ -269,7 +269,7 @@ const Messages = ({
     const loadFritekstForslag = async () => {
       if (valgtMalkode !== undefined) {
         const innhold = await api.hentInnholdBrevmal(
-          fagsak.sakstype.kode,
+          fagsak.sakstype,
           behandling.uuid,
           bestemAvsenderApp(behandling.type.kode),
           valgtMalkode,

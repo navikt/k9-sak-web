@@ -1,7 +1,7 @@
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { Venteaarsak } from '@k9-sak-web/types';
-import React, { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 
@@ -39,8 +39,10 @@ const MenySettPaVentIndex = ({
   lukkModal,
   erTilbakekreving,
 }: OwnProps) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const submit = useCallback(
     formValues => {
+      setIsSubmitting(true);
       const values = {
         behandlingVersjon,
         behandlingId,
@@ -48,7 +50,13 @@ const MenySettPaVentIndex = ({
         ventearsak: formValues.ventearsak,
         ventearsakVariant: formValues.ventearsakVariant,
       };
-      settBehandlingPaVent(values).then(() => goToLos());
+      settBehandlingPaVent(values)
+        .then(() => {
+          goToLos();
+        })
+        .finally(() => {
+          setIsSubmitting(false);
+        });
     },
     [behandlingId, behandlingVersjon],
   );
@@ -62,6 +70,7 @@ const MenySettPaVentIndex = ({
         ventearsaker={ventearsaker}
         erTilbakekreving={erTilbakekreving}
         hasManualPaVent
+        isSubmitting={isSubmitting}
       />
     </RawIntlProvider>
   );

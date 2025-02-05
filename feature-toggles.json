@@ -94,5 +94,13 @@
   {
     "key": "AKSJONSPUNKT_OVERLAPPENDE_SAKER",
     "value": "${AKSJONSPUNKT_OVERLAPPENDE_SAKER}"
+  },
+  {
+    "key": "BRUK_V2_SAK_SOK",
+    "value": "${BRUK_V2_SAK_SOK}"
+  },
+  {
+    "key": "HISTORIKK_V2_VIS",
+    "value": "${HISTORIKK_V2_VIS}"
   }
 ]

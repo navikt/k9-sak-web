@@ -4,6 +4,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 
 import { safeJSONParse } from '@fpsak-frontend/utils';
+import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import HenlagtBehandlingModal from './components/HenlagtBehandlingModal';
 import HenleggBehandlingModal from './components/HenleggBehandlingModal';
@@ -32,7 +33,7 @@ interface OwnProps {
     begrunnelse: string;
   }) => Promise<any>;
   forhandsvisHenleggBehandling: (erHenleggelse: boolean, data: any) => void;
-  ytelseType: Kodeverk;
+  ytelseType: FagsakYtelsesType;
   behandlingType: Kodeverk;
   behandlingUuid: string;
   behandlingResultatTyper: KodeverkMedNavn[];
