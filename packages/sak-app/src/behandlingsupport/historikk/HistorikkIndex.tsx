@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useContext, useMemo, useRef } from 'react';
+import React, { useCallback, useState, useContext, useMemo, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import * as Sentry from '@sentry/browser';
 
@@ -19,7 +19,7 @@ import { Kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverkContext.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import { compareRenderedElementTexts } from './v1v2Sammenligningssjekk.js';
-import { HStack, Spacer, Switch, HelpText } from '@navikt/ds-react';
+import { HStack, Switch, HelpText } from '@navikt/ds-react';
 
 type HistorikkMedTilbakekrevingIndikator = Historikkinnslag & {
   erTilbakekreving?: boolean;
@@ -92,7 +92,6 @@ interface OwnProps {
 const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }: OwnProps) => {
   const featureToggles = useContext(FeatureTogglesContext);
   const [visV2, setVisV2] = useState(featureToggles?.['HISTORIKK_V2_VIS'] === true); // Rendra historikk innslag v2 skal visast (ikkje berre samanliknast)
-  const lastV2 = featureToggles?.['HISTORIKK_V2_LAST'] === true; // last historikk innslag v2 frå nytt endepunkt, samanlikn med v1
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
   const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
   const compareTimeoutIdRef = useRef(0);
@@ -146,7 +145,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
     { saksnummer },
     {
       updateTriggers: [behandlingId, behandlingVersjon],
-      suspendRequest: !lastV2 || !skalBrukeFpTilbakeHistorikk || erBehandlingEndret,
+      suspendRequest: !skalBrukeFpTilbakeHistorikk || erBehandlingEndret,
     },
   );
 
@@ -164,15 +163,15 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
     [historikkK9Sak, historikkTilbake, historikkKlage],
   );
   const historikkInnslagV1V2 = useMemo(
-    () => (lastV2 ? sortAndTagUlikeHistorikkinnslagTyper(historikkK9Sak, historikkTilbakeV2, historikkKlage) : []),
-    [lastV2, historikkK9Sak, historikkTilbakeV2, historikkKlage],
+    () => sortAndTagUlikeHistorikkinnslagTyper(historikkK9Sak, historikkTilbakeV2, historikkKlage),
+    [historikkK9Sak, historikkTilbakeV2, historikkKlage],
   );
 
   if (
     isRequestNotDone(historikkK9SakState) ||
     (skalBrukeFpTilbakeHistorikk && isRequestNotDone(historikkTilbakeState)) ||
     (skalBrukeKlageHistorikk && isRequestNotDone(historikkKlageState)) ||
-    (lastV2 && skalBrukeFpTilbakeHistorikk && isRequestNotDone(historikkTilbakeStateV2))
+    (skalBrukeFpTilbakeHistorikk && isRequestNotDone(historikkTilbakeStateV2))
   ) {
     return <LoadingPanel />;
   }
@@ -240,37 +239,41 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
     // Samanlikning av v1 og v2 render resultat. Sjekker at alle ord rendra i v1 historikkinnslag også bli rendra i v2.
     // (Uavhengig av rekkefølge på orda.) For å unngå fleire køyringer av sjekk pga re-rendering ved initiell lasting
     // er køyring forsinka litt, med clearTimeout på forrige timeout id.
-    if (compareTimeoutIdRef.current > 0) {
-      window.clearTimeout(compareTimeoutIdRef.current);
-    }
-    compareTimeoutIdRef.current = window.setTimeout(() => {
-      try {
-        compareRenderedElementTexts(historikkInnslag, v1HistorikkElementer, v2HistorikkElementer);
-      } catch (err) {
-        Sentry.captureException(err, { level: 'warning' });
+    useEffect(() => {
+      if (compareTimeoutIdRef.current > 0) {
+        window.clearTimeout(compareTimeoutIdRef.current);
       }
-    }, 1_000);
+      compareTimeoutIdRef.current = window.setTimeout(() => {
+        try {
+          compareRenderedElementTexts(historikkInnslag, v1HistorikkElementer, v2HistorikkElementer);
+        } catch (err) {
+          setVisV2(false);
+          Sentry.captureException(err, { level: 'warning' });
+        }
+      }, 1_000);
+    }, [historikkInnslag]); // Ønsker bevisst å berre køyre samanlikningssjekk ein gang.
   }
 
   return (
     <div className="grid gap-5">
-      {lastV2 ? (
-        <HStack align="center">
-          <Switch size="small" checked={visV2} onChange={ev => setVisV2(ev.target.checked)}>
-            Vis versjon 2 av historikkinnslag
-          </Switch>
-          <Spacer />
-          <HelpText>
-            <p>Vi er i ferd med å gå over til ny visning av historikk innslag.</p>
-            <p>I en overgangsperiode kan du med denne bryter bytte mellom ny og gammel visning.</p>
-            <p>
-              Ved å gjøre det kan du undersøke om ny visning har mangler, og melde fra om dette så vi kan korrigere evt
-              mangler før gammel visning forsvinner.
-            </p>
-          </HelpText>
-        </HStack>
-      ) : null}
-      {lastV2 && visV2 ? v2HistorikkElementer : v1HistorikkElementer}
+      <HStack align="center">
+        <Switch size="small" checked={visV2} onChange={ev => setVisV2(ev.target.checked)}>
+          Ny visning&nbsp;
+        </Switch>
+        <HelpText>
+          <p>Vi er i ferd med å gå over til nytt format/visning av historikk innslag.</p>
+          <p>I en overgangsperiode kan du med denne bryter bytte mellom ny og gammel visning.</p>
+          <p>
+            Ved å gjøre det kan du undersøke om ny visning har mangler, og melde fra om dette så vi kan korrigere evt
+            mangler før gammel visning forsvinner.
+          </p>
+          <p>
+            Bare noen av innslagene vil ha ny/gammel visning tilgjengelig samtidig, så ikke alle vil forandre seg når du
+            skrur på/av denne bryter.
+          </p>
+        </HelpText>
+      </HStack>
+      {visV2 ? v2HistorikkElementer : v1HistorikkElementer}
     </div>
   );
 };
