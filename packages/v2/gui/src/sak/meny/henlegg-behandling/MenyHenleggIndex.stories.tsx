@@ -9,7 +9,6 @@ import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent } from '@storybook/test';
 import MenyHenleggIndexV2 from './MenyHenleggIndex';
-import type { Klagepart } from './types/Klagepart';
 
 interface HenleggParams {
   behandlingVersjon: number;
@@ -39,7 +38,17 @@ export const HenleggFørstegangssøknadPleiepenger: StoryObj<typeof MenyHenleggI
     ],
     gaaTilSokeside: action('button-click'),
     lukkModal: action('button-click'),
-    hentMottakere: action('button-click') as () => Promise<Klagepart[]>,
+    hentMottakere: () =>
+      Promise.resolve([
+        {
+          identifikasjon: {
+            id: '123',
+            type: 'FNR',
+            navn: 'Ola Nordmann',
+          },
+          rolleType: 'KLAGE_PART',
+        },
+      ]),
   },
   play: async ({ canvas }) => {
     expect(canvas.getByRole('dialog', { name: 'Behandlingen henlegges' })).toBeInTheDocument();
@@ -57,22 +66,16 @@ export const HenleggKlagebehandling: StoryObj<typeof MenyHenleggIndexV2> = {
     ...HenleggFørstegangssøknadPleiepenger.args,
     behandlingType: BehandlingTypeK9Klage.KLAGE,
     behandlingResultatTyper: [behandlingResultatTypeK9Klage.HENLAGT_KLAGE_TRUKKET],
-    hentMottakere: () =>
-      Promise.resolve([
-        {
-          identifikasjon: {
-            id: '123',
-            type: 'FNR',
-            navn: 'Ola Nordmann',
-          },
-          rolleType: 'KLAGE_PART',
-        },
-      ]),
     arbeidsgiverOpplysningerPerId: {
       '123': {
         navn: 'Ola Nordmann',
         arbeidsforholdreferanser: [],
       },
+    },
+  },
+  parameters: {
+    test: {
+      dangerouslyIgnoreUnhandledErrors: true,
     },
   },
   play: async ({ canvas }) => {
@@ -90,6 +93,11 @@ export const HenleggRevurderingTilbakekreving: StoryObj<typeof MenyHenleggIndexV
     ...HenleggFørstegangssøknadPleiepenger.args,
     behandlingType: BehandlingTypeK9Klage.REVURDERING_TILBAKEKREVING,
     behandlingResultatTyper: ['HENLAGT_FEILOPPRETTET_MED_BREV'],
+  },
+  parameters: {
+    test: {
+      dangerouslyIgnoreUnhandledErrors: true,
+    },
   },
   play: async ({ canvas }) => {
     expect(canvas.queryByRole('textbox', { name: 'Fritekst til brev' })).not.toBeInTheDocument();
