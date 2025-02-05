@@ -7,7 +7,8 @@
   "exports": {
     "./kodeverk/*": "./src/kodeverk/*",
     "./types/*": "./src/types/*",
-    "./dateUtils/*": "./src/dateUtils/*"
+    "./dateUtils/*": "./src/dateUtils/*",
+    "./paths/*": "./src/paths/*"
   },
   "dependencies": {
     "dayjs": "1.11.13"
