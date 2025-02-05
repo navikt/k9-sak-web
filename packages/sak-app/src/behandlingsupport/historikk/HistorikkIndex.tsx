@@ -167,15 +167,6 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
     [historikkK9Sak, historikkTilbakeV2, historikkKlage],
   );
 
-  if (
-    isRequestNotDone(historikkK9SakState) ||
-    (skalBrukeFpTilbakeHistorikk && isRequestNotDone(historikkTilbakeState)) ||
-    (skalBrukeKlageHistorikk && isRequestNotDone(historikkKlageState)) ||
-    (skalBrukeFpTilbakeHistorikk && isRequestNotDone(historikkTilbakeStateV2))
-  ) {
-    return <LoadingPanel />;
-  }
-
   const getTilbakeKodeverknavn = getKodeverkNavnFraKodeFn('kodeverkTilbake');
 
   const v1HistorikkElementer = historikkInnslag.map(innslag => {
@@ -235,23 +226,30 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
       throw new Error(`Ugylding innslag objekt på saksnummer ${saksnummer}`);
     }
   });
-  if (v2HistorikkElementer.length > 0) {
-    // Samanlikning av v1 og v2 render resultat. Sjekker at alle ord rendra i v1 historikkinnslag også bli rendra i v2.
-    // (Uavhengig av rekkefølge på orda.) For å unngå fleire køyringer av sjekk pga re-rendering ved initiell lasting
-    // er køyring forsinka litt, med clearTimeout på forrige timeout id.
-    useEffect(() => {
-      if (compareTimeoutIdRef.current > 0) {
-        window.clearTimeout(compareTimeoutIdRef.current);
+  // Samanlikning av v1 og v2 render resultat. Sjekker at alle ord rendra i v1 historikkinnslag også bli rendra i v2.
+  // (Uavhengig av rekkefølge på orda.) For å unngå fleire køyringer av sjekk pga re-rendering ved initiell lasting
+  // er køyring forsinka litt, med clearTimeout på forrige timeout id.
+  useEffect(() => {
+    if (compareTimeoutIdRef.current > 0) {
+      window.clearTimeout(compareTimeoutIdRef.current);
+    }
+    compareTimeoutIdRef.current = window.setTimeout(() => {
+      try {
+        compareRenderedElementTexts(historikkInnslag, v1HistorikkElementer, v2HistorikkElementer);
+      } catch (err) {
+        setVisV2(false);
+        Sentry.captureException(err, { level: 'warning' });
       }
-      compareTimeoutIdRef.current = window.setTimeout(() => {
-        try {
-          compareRenderedElementTexts(historikkInnslag, v1HistorikkElementer, v2HistorikkElementer);
-        } catch (err) {
-          setVisV2(false);
-          Sentry.captureException(err, { level: 'warning' });
-        }
-      }, 1_000);
-    }, [historikkInnslag]); // Ønsker bevisst å berre køyre samanlikningssjekk ein gang.
+    }, 1_000);
+  }, [historikkInnslag]); // Ønsker bevisst å berre køyre samanlikningssjekk ein gang.
+
+  if (
+    isRequestNotDone(historikkK9SakState) ||
+    (skalBrukeFpTilbakeHistorikk && isRequestNotDone(historikkTilbakeState)) ||
+    (skalBrukeKlageHistorikk && isRequestNotDone(historikkKlageState)) ||
+    (skalBrukeFpTilbakeHistorikk && isRequestNotDone(historikkTilbakeStateV2))
+  ) {
+    return <LoadingPanel />;
   }
 
   return (
