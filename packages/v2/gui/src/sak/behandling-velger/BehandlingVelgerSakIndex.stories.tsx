@@ -22,7 +22,7 @@ const behandlinger = [
       type: BehandlingsresultatDtoType.INNVILGET,
       vilkårResultat: {},
       vedtaksdato: '2021-12-20',
-    } as BehandlingDto['behandlingsresultat'],
+    } satisfies BehandlingDto['behandlingsresultat'],
     id: 999955,
     links: [],
     opprettet: '2021-12-20T09:22:38',
