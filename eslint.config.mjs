@@ -31,6 +31,7 @@ const config = tseslint.config(
       globals: {
         ...globals.browser,
       },
+      parserOptions: { "project": "./tsconfig.json" },
     },
     linterOptions: {
       // Vurder å enable denne seinare
@@ -38,6 +39,7 @@ const config = tseslint.config(
     },
     rules: {
       '@typescript-eslint/no-explicit-any': OFF,
+      "@typescript-eslint/no-floating-promises": ["error"],
       '@typescript-eslint/no-unused-vars': [
         "error",
         {
