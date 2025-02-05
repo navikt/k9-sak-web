@@ -7,11 +7,11 @@ import {
 } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent } from '@storybook/test';
 import BehandlingVelgerSakV2 from './BehandlingVelgerSakIndex';
+import withKodeverkContext from '../../storybook/decorators/withKodeverkContext.js';
+import withMaxWidth from '../../storybook/decorators/withMaxWidth.js';
 
 const behandlinger = [
   {
@@ -63,20 +63,7 @@ const locationMock = {
 export default {
   title: 'gui/sak/behandling-velger',
   component: BehandlingVelgerSakV2,
-  decorators: [
-    Story => (
-      <KodeverkProvider
-        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
-        kodeverk={alleKodeverkV2}
-        klageKodeverk={{}}
-        tilbakeKodeverk={{}}
-      >
-        <div style={{ width: '600px' }}>
-          <Story />
-        </div>
-      </KodeverkProvider>
-    ),
-  ],
+  decorators: [withKodeverkContext({ behandlingType: behandlingType.FØRSTEGANGSSØKNAD }), withMaxWidth(600)],
 } satisfies Meta<typeof BehandlingVelgerSakV2>;
 
 export const Default: StoryObj<typeof BehandlingVelgerSakV2> = {
