@@ -115,3 +115,5 @@ spec:
       value: "true"
     - name: BRUK_V2_SAK_SOK
       value: "true"
+    - name: HISTORIKK_V2_VIS
+      value: "true"

@@ -93,4 +93,8 @@ export const featureTogglesFactory = () => [
     key: 'BRUK_V2_SAK_SOK',
     value: process.env.VITE_BRUK_V2_SAK_SOK,
   },
+  {
+    key: "HISTORIKK_V2_VIS",
+    value: process.env.VITE_HISTORIKK_V2_VIS,
+  },
 ];
