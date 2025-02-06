@@ -90,3 +90,7 @@ Katalog med brukergrensesnitt-komponenter blir publisert i storybook på https:/
 ## For NAV-ansatte
 
 Interne henvendelser kan sendes via Slack i kanalen **#sif-teknisk**.
+
+## Kode generert av GitHub Copilot
+
+Dette repoet bruker GitHub Copilot til å generere kode.
