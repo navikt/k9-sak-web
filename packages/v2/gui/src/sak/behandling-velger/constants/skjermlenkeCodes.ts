@@ -1,0 +1,263 @@
+import prosessStegCodes from './prosessStegCodes';
+import faktaPanelCodes from './faktaPanelCodes';
+
+const skjermlenkeCodes = {
+  BEREGNING: {
+    kode: 'BEREGNING',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.BEREGNINGSGRUNNLAG,
+  },
+  BEREGNING_ENGANGSSTOENAD: {
+    kode: 'BEREGNING_ENGANGSSTOENAD',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.BEREGNING,
+  },
+  BEREGNING_FORELDREPENGER: {
+    kode: 'BEREGNING_FORELDREPENGER',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.BEREGNINGSGRUNNLAG,
+  },
+  FAKTA_OM_ADOPSJON: {
+    kode: 'FAKTA_OM_ADOPSJON',
+    faktaNavn: faktaPanelCodes.ADOPSJONSVILKARET,
+    punktNavn: '',
+  },
+  FAKTA_OM_BEREGNING: {
+    kode: 'FAKTA_OM_BEREGNING',
+    faktaNavn: faktaPanelCodes.BEREGNING,
+    punktNavn: '',
+  },
+  FAKTA_OM_FOEDSEL: {
+    kode: 'FAKTA_OM_FOEDSEL',
+    faktaNavn: faktaPanelCodes.FODSELSVILKARET,
+    punktNavn: '',
+  },
+  FAKTA_OM_FORDELING: {
+    kode: 'FAKTA_OM_FORDELING',
+    faktaNavn: faktaPanelCodes.FORDELING,
+    punktNavn: '',
+  },
+  FAKTA_OM_MEDLEMSKAP: {
+    kode: 'FAKTA_OM_MEDLEMSKAP',
+    faktaNavn: faktaPanelCodes.MEDLEMSKAPSVILKARET,
+    punktNavn: '',
+  },
+  FAKTA_FOR_OMSORG: {
+    kode: 'FAKTA_FOR_OMSORG',
+    faktaNavn: faktaPanelCodes.OMSORG,
+    punktNavn: '',
+  },
+  FAKTA_FOR_OPPTJENING: {
+    kode: 'FAKTA_FOR_OPPTJENING',
+    faktaNavn: faktaPanelCodes.OPPTJENINGSVILKARET,
+    punktNavn: '',
+  },
+  FAKTA_OM_OPPTJENING: {
+    kode: 'FAKTA_OM_OPPTJENING',
+    faktaNavn: faktaPanelCodes.OPPTJENINGSVILKARET,
+    punktNavn: '',
+  },
+  FAKTA_OM_OMSORG_OG_FORELDREANSVAR: {
+    kode: 'FAKTA_OM_OMSORG_OG_FORELDREANSVAR',
+    faktaNavn: faktaPanelCodes.OMSORGSVILKARET,
+    punktNavn: '',
+  },
+  FAKTA_OM_ARBEIDSFORHOLD: {
+    kode: 'FAKTA_OM_ARBEIDSFORHOLD',
+    faktaNavn: faktaPanelCodes.ARBEIDSFORHOLD,
+    punktNavn: '',
+  },
+  PUNKT_FOR_FORELDREANSVAR: {
+    kode: 'PUNKT_FOR_FORELDREANSVAR',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
+  },
+  KLAGE_BEH_NFP: {
+    kode: 'KLAGE_BEH_NFP',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.KLAGE_NAV_FAMILIE_OG_PENSJON,
+  },
+  KLAGE_BEH_NK: {
+    kode: 'KLAGE_BEH_NK',
+    skjermlenkeId: 'Skjermlenke.Klage.ResolveKlage.Title',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.KLAGE_NAV_KLAGEINSTANS,
+  },
+  FORMKRAV_KLAGE_NFP: {
+    kode: 'FORMKRAV_KLAGE_NFP',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.FORMKRAV_KLAGE_NAV_FAMILIE_OG_PENSJON,
+  },
+  FORMKRAV_KLAGE_KA: {
+    kode: 'FORMKRAV_KLAGE_KA',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.FORMKRAV_KLAGE_NAV_KLAGEINSTANS,
+  },
+  ANKE_VURDERING: {
+    kode: 'ANKE_VURDERING',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.ANKEBEHANDLING,
+  },
+  KONTROLL_AV_SAKSOPPLYSNINGER: {
+    kode: 'KONTROLL_AV_SAKSOPPLYSNINGER',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.SAKSOPPLYSNINGER,
+  },
+  OPPLYSNINGSPLIKT: {
+    kode: 'OPPLYSNINGSPLIKT',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.OPPLYSNINGSPLIKT,
+  },
+  PUNKT_FOR_ADOPSJON: {
+    kode: 'PUNKT_FOR_ADOPSJON',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
+  },
+  PUNKT_FOR_FOEDSEL: {
+    kode: 'PUNKT_FOR_FOEDSEL',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
+  },
+  PUNKT_FOR_MEDLEMSKAP: {
+    kode: 'PUNKT_FOR_MEDLEMSKAP',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.OPPTJENING,
+  },
+  PUNKT_FOR_MEDISINSK: {
+    kode: 'PUNKT_FOR_MEDISINSK',
+    faktaNavn: prosessStegCodes.PUNKT_FOR_MEDISINSK,
+    punktNavn: faktaPanelCodes.DEFAULT,
+  },
+  PUNKT_FOR_OMSORG: {
+    kode: 'PUNKT_FOR_OMSORG',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
+  },
+  PUNKT_FOR_OPPTJENING: {
+    kode: 'PUNKT_FOR_OPPTJENING',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.OPPTJENING,
+  },
+  SOEKNADSFRIST: {
+    kode: 'SOEKNADSFRIST',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
+  },
+  VEDTAK: {
+    kode: 'VEDTAK',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.VEDTAK,
+  },
+  FAKTA_OM_UTTAK: {
+    kode: 'FAKTA_OM_UTTAK',
+    faktaNavn: faktaPanelCodes.UTTAK,
+    punktNavn: '',
+  },
+  UTTAK: {
+    kode: 'UTTAK',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.UTTAK,
+  },
+  FAKTA_OM_UTVIDETRETT: {
+    kode: 'FAKTA_OM_UTVIDETRETT',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.UTVIDET_RETT,
+  },
+  FAKTA_OM_OMSORGEN_FOR: {
+    kode: 'FAKTA_OM_OMSORGEN_FOR',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
+  },
+  FAKTA_OM_ALDERSVILKÅR_BARN: {
+    kode: 'FAKTA_OM_ALDERSVILKÅR_BARN',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.ALDER,
+  },
+  FAKTA_OM_VERGE: {
+    kode: 'FAKTA_OM_VERGE',
+    faktaNavn: faktaPanelCodes.VERGE,
+    punktNavn: '',
+  },
+  TILKJENT_YTELSE: {
+    kode: 'TILKJENT_YTELSE',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.TILKJENT_YTELSE,
+  },
+
+  FAKTA_OM_SIMULERING: {
+    kode: 'SIMULERING',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.SIMULERING,
+  },
+  FAKTA_OM_FEILUTBETALING: {
+    kode: 'FAKTA_OM_FEILUTBETALING',
+    faktaNavn: faktaPanelCodes.FEILUTBETALING,
+    punktNavn: '',
+  },
+  UTLAND: {
+    kode: 'UTLAND',
+    faktaNavn: faktaPanelCodes.SAKEN,
+    punktNavn: '',
+  },
+  FORELDELSE: {
+    kode: 'FORELDELSE',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.FORELDELSE,
+  },
+  TILBAKEKREVING: {
+    kode: 'TILBAKEKREVING',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.TILBAKEKREVING,
+  },
+  VURDER_FARESIGNALER: {
+    kode: 'VURDER_FARESIGNALER',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: '',
+  },
+  PUNKT_FOR_MEDLEMSKAP_LØPENDE: {
+    kode: 'PUNKT_FOR_MEDLEMSKAP_LØPENDE',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.FORTSATTMEDLEMSKAP,
+  },
+  FAKTA_OM_MEDISINSK: {
+    kode: 'FAKTA_OM_MEDISINSK',
+    faktaNavn: faktaPanelCodes.MEDISINSKVILKAAR_V2,
+    punktNavn: prosessStegCodes.MEDISINSK_VILKAR,
+  },
+  FAKTA_OM_ÅRSKVANTUM: {
+    kode: 'FAKTA_OM_ÅRSKVANTUM',
+    faktaNavn: faktaPanelCodes.NØKKELTALL,
+    punktNavn: prosessStegCodes.UTTAK,
+  },
+  PUNKT_FOR_MAN_VILKÅRSVURDERING: {
+    kode: 'PUNKT_FOR_MAN_VILKÅRSVURDERING',
+    faktaNavn: '',
+    punktNavn: prosessStegCodes.UNNTAK,
+  },
+  VURDER_BEREDSKAP: {
+    kode: 'VURDER_BEREDSKAP',
+    faktaNavn: faktaPanelCodes.ETABLERT_TILSYN,
+    punktNavn: '',
+  },
+  VURDER_NATTEVÅK: {
+    kode: 'VURDER_NATTEVÅK',
+    faktaNavn: faktaPanelCodes.ETABLERT_TILSYN,
+    punktNavn: '',
+  },
+  FAKTA_OM_SOKNADSPERIODER: {
+    kode: 'FAKTA_OM_SOKNADSPERIODER',
+    faktaNavn: faktaPanelCodes.SOKNADSPERIODER,
+  },
+  INFOTRYGD_MIGRERING: {
+    kode: 'INFOTRYGD_MIGRERING',
+    faktaNavn: faktaPanelCodes.INFOTRYGDMIGRERING,
+    punktNavn: '',
+  },
+  OVERSTYR_INPUT_BEREGNING: {
+    kode: 'OVERSTYR_INPUT_BEREGNING',
+    faktaNavn: faktaPanelCodes.OVERSTYRING,
+    punktNavn: '',
+  },
+};
+
+export default skjermlenkeCodes;
