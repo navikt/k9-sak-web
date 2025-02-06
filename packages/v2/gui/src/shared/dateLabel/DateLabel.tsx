@@ -1,5 +1,9 @@
-import { format } from 'date-fns';
-import { toZonedTime } from 'date-fns-tz';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 interface OwnProps {
   dateString: string;
@@ -31,7 +35,7 @@ const DateLabel = ({ dateString }: OwnProps) => {
   if (!isValidDate(date)) {
     return null;
   }
-  const formatedDate = format(toZonedTime(date, 'Europe/Oslo'), 'dd.MM.yyyy');
+  const formatedDate = dayjs.tz(date, 'Europe/Oslo').format('DD.MM.YYYY');
   // eslint-disable-next-line react/jsx-no-useless-fragment
   return <>{formatedDate}</>;
 };

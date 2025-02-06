@@ -1,5 +1,6 @@
-import type { HentPerioderMedVilkårForBehandlingResponse, K9SakClient } from '@k9-sak-web/backend/k9sak/generated';
+import type { K9SakClient } from '@k9-sak-web/backend/k9sak/generated';
 import type { Behandling } from './types/Behandling';
+import type { PerioderMedBehandlingsId } from './types/PerioderMedBehandlingsId';
 
 export default class BehandlingVelgerBackendClient {
   #k9sak: K9SakClient;
@@ -7,7 +8,11 @@ export default class BehandlingVelgerBackendClient {
     this.#k9sak = k9sakClient;
   }
 
-  async getBehandlingPerioderÅrsaker(behandling: Behandling): Promise<HentPerioderMedVilkårForBehandlingResponse> {
-    return this.#k9sak.perioder.hentPerioderMedVilkårForBehandling(`${behandling.uuid}`);
+  async getBehandlingPerioderÅrsaker(behandling: Behandling): Promise<PerioderMedBehandlingsId> {
+    return this.#k9sak.perioder.hentPerioderMedVilkårForBehandling(behandling.uuid).then(response => ({
+      id: behandling.id,
+      perioder: response.perioderMedÅrsak?.perioderTilVurdering ?? [],
+      perioderMedÅrsak: response.perioderMedÅrsak?.perioderMedÅrsak ?? [],
+    }));
   }
 }

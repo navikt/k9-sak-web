@@ -42,24 +42,24 @@ const renderListItems = ({
   getBehandlingLocation,
   setValgtBehandlingId,
   alleSøknadsperioder,
-  activeFilters,
+  aktiveFilter,
   kodeverkNavnFraKode,
 }: {
   behandlinger: Behandling[];
   getBehandlingLocation: (behandlingId: number) => Location;
   setValgtBehandlingId: React.Dispatch<React.SetStateAction<number | undefined>>;
   alleSøknadsperioder: UseQueryResult<PerioderMedBehandlingsId, unknown>[];
-  activeFilters: string[];
+  aktiveFilter: string[];
   kodeverkNavnFraKode: KodeverkNavnFraKodeType;
-}): ReactElement<any>[] => {
+}): ReactElement<void>[] => {
   const sorterteOgFiltrerteBehandlinger = sortBehandlinger(behandlinger).filter(behandling => {
-    if (activeFilters.length === 0) {
+    if (aktiveFilter.length === 0) {
       return true;
     }
-    if (activeFilters.includes(automatiskBehandling)) {
+    if (aktiveFilter.includes(automatiskBehandling)) {
       return erAutomatiskBehandlet(behandling);
     }
-    return activeFilters.includes(behandling.type);
+    return aktiveFilter.includes(behandling.type);
   });
 
   return sorterteOgFiltrerteBehandlinger.map((behandling, index) => {
@@ -106,16 +106,6 @@ const usePrevious = (value: number | undefined): number | undefined => {
 
 const behandlingPerioderÅrsakRel = 'behandling-perioder-årsak-med-vilkår';
 
-const getBehandlingPerioderÅrsaker = (
-  behandling: Behandling,
-  api: BehandlingVelgerBackendApiType,
-): Promise<PerioderMedBehandlingsId> =>
-  api.getBehandlingPerioderÅrsaker(behandling).then(response => ({
-    id: behandling.id,
-    perioder: response.perioderMedÅrsak?.perioderTilVurdering ?? [],
-    perioderMedÅrsak: response.perioderMedÅrsak?.perioderMedÅrsak ?? [],
-  }));
-
 interface OwnProps {
   behandlinger: Behandling[];
   getBehandlingLocation: (behandlingId: number) => Location;
@@ -152,7 +142,7 @@ const BehandlingPicker = ({
 
   const [valgtBehandlingId, setValgtBehandlingId] = useState(behandlingId || finnÅpenBehandling());
   const previousBehandlingId = usePrevious(behandlingId || finnÅpenBehandling());
-  const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  const [aktiveFilter, setAktiveFilter] = useState<string[]>([]);
   const [numberOfBehandlingperioderToFetch, setNumberOfBehandlingPerioderToFetch] = useState(10);
 
   useEffect(() => {
@@ -175,21 +165,38 @@ const BehandlingPicker = ({
     }
   }, [behandlingId, åpenBehandlingId, firstRender.current]);
 
-  // TODO: refactor
-  const behandlingerSomSkalVises = useMemo(() => {
-    const sorterteBehandlinger = sortBehandlinger(behandlinger);
+  const getBehandlingerSomSkalVises = (
+    sorterteBehandlinger: Behandling[],
+    valgtBehandlingId: number | undefined,
+    numberOfBehandlingperioderToFetch: number,
+    aktiveFilter: string[],
+  ) => {
     const indexOfValgtBehandling = sorterteBehandlinger.findIndex(behandling => behandling.id === valgtBehandlingId);
-    if (indexOfValgtBehandling > -1) {
+    const valgtBehandlingFinnes = indexOfValgtBehandling > -1;
+    if (valgtBehandlingFinnes) {
       if (indexOfValgtBehandling + 1 > numberOfBehandlingperioderToFetch) {
         setNumberOfBehandlingPerioderToFetch(indexOfValgtBehandling + 1);
       }
+      // Returner valgt behandling
       return sorterteBehandlinger.slice(indexOfValgtBehandling, indexOfValgtBehandling + 1);
     }
-    if (activeFilters.length > 0 && !activeFilters.includes(automatiskBehandling)) {
+    // Hvis det er aktive filtre, og automatisk behandling ikke er valgt, vis alle behandlinger som matcher filteret
+    if (aktiveFilter.length > 0 && !aktiveFilter.includes(automatiskBehandling)) {
       return sorterteBehandlinger;
     }
+    // Returner antallet behandlinger som det er begrenset til med numberOfBehandlingperioderToFetch
     return sorterteBehandlinger.slice(0, numberOfBehandlingperioderToFetch);
-  }, [behandlinger, numberOfBehandlingperioderToFetch, valgtBehandlingId, activeFilters]);
+  };
+
+  const behandlingerSomSkalVises = useMemo(() => {
+    const sorterteBehandlinger = sortBehandlinger(behandlinger);
+    return getBehandlingerSomSkalVises(
+      sorterteBehandlinger,
+      valgtBehandlingId,
+      numberOfBehandlingperioderToFetch,
+      aktiveFilter,
+    );
+  }, [behandlinger, numberOfBehandlingperioderToFetch, valgtBehandlingId, aktiveFilter]);
 
   const behandlingerMedPerioderMedÅrsak = useMemo(
     () =>
@@ -201,7 +208,7 @@ const BehandlingPicker = ({
   const søknadsperioder = useQueries({
     queries: behandlingerMedPerioderMedÅrsak.map(behandling => ({
       queryKey: ['behandlingId', behandling.id, api],
-      queryFn: () => getBehandlingPerioderÅrsaker(behandling, api),
+      queryFn: () => api.getBehandlingPerioderÅrsaker(behandling),
       staleTime: 3 * 60 * 1000,
       enabled: hentSøknadsperioder,
     })),
@@ -212,15 +219,15 @@ const BehandlingPicker = ({
     : null;
 
   const skalViseHentFlereBehandlingerKnapp =
-    (activeFilters.length === 0 || activeFilters.includes(automatiskBehandling)) &&
+    (aktiveFilter.length === 0 || aktiveFilter.includes(automatiskBehandling)) &&
     behandlinger.length > numberOfBehandlingperioderToFetch &&
     !valgtBehandling;
 
   const updateFilter = (valgtFilter: string) => {
-    if (activeFilters.includes(valgtFilter)) {
-      setActiveFilters(activeFilters.filter(v => v !== valgtFilter));
+    if (aktiveFilter.includes(valgtFilter)) {
+      setAktiveFilter(aktiveFilter.filter(v => v !== valgtFilter));
     } else {
-      setActiveFilters(activeFilters.concat([valgtFilter]));
+      setAktiveFilter(aktiveFilter.concat([valgtFilter]));
     }
   };
 
@@ -290,7 +297,7 @@ const BehandlingPicker = ({
             </Heading>
             <BehandlingFilter
               filters={getFilterListe()}
-              activeFilters={activeFilters}
+              aktiveFilter={aktiveFilter}
               onFilterChange={updateFilter}
               text="Filtrer"
             />
@@ -307,7 +314,7 @@ const BehandlingPicker = ({
                 getBehandlingLocation,
                 setValgtBehandlingId,
                 alleSøknadsperioder: søknadsperioder,
-                activeFilters,
+                aktiveFilter,
                 kodeverkNavnFraKode,
               })}
           </ul>

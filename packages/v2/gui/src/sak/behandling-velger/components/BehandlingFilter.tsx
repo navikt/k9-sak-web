@@ -21,12 +21,12 @@ const sortFilters = (filterA: FilterType, filterB: FilterType) => {
 
 interface BehandlingfilterProps {
   text: string;
-  activeFilters: string[];
+  aktiveFilter: string[];
   filters: FilterType[];
   onFilterChange: (value: string) => void;
 }
 
-const BehandlingFilter = ({ text, filters, activeFilters, onFilterChange }: BehandlingfilterProps): JSX.Element => (
+const BehandlingFilter = ({ text, filters, aktiveFilter, onFilterChange }: BehandlingfilterProps): JSX.Element => (
   <ActionMenu>
     <ActionMenu.Trigger>
       <Button
@@ -43,7 +43,7 @@ const BehandlingFilter = ({ text, filters, activeFilters, onFilterChange }: Beha
         if (value === automatiskBehandling) {
           return (
             <ActionMenu.CheckboxItem
-              checked={activeFilters.includes(automatiskBehandling)}
+              checked={aktiveFilter.includes(automatiskBehandling)}
               onCheckedChange={() => onFilterChange(automatiskBehandling)}
               key={value}
             >
@@ -54,7 +54,7 @@ const BehandlingFilter = ({ text, filters, activeFilters, onFilterChange }: Beha
         return (
           <ActionMenu.CheckboxItem
             key={value}
-            checked={activeFilters.includes(value)}
+            checked={aktiveFilter.includes(value)}
             onCheckedChange={() => onFilterChange(value)}
           >
             {label}
