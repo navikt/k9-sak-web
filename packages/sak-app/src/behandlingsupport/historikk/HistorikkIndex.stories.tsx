@@ -28,11 +28,7 @@ const historyK9KlageV1: Historikkinnslag[] = [
 const meta = {
   title: 'sak/sak-app/behandlingsupport/historikk/HistorikkIndex',
   component: HistorikkIndex,
-  decorators: [
-    withMaxWidth(600),
-    withKodeverkContext(),
-    withFeatureToggles({ HISTORIKK_V2_VIS: true, HISTORIKK_V2_LAST: true }),
-  ],
+  decorators: [withMaxWidth(600), withKodeverkContext(), withFeatureToggles({ HISTORIKK_V2_VIS: true })],
   beforeEach: () => {
     requestApi.clearAllMockData();
     setBaseRequestApiMocks(requestApi);
