@@ -9,9 +9,9 @@ import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/Be
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent } from '@storybook/test';
-import BehandlingVelgerSakV2 from './BehandlingVelgerSakIndex';
 import withKodeverkContext from '../../storybook/decorators/withKodeverkContext.js';
 import withMaxWidth from '../../storybook/decorators/withMaxWidth.js';
+import BehandlingVelgerSakV2 from './BehandlingVelgerSakIndex';
 
 const behandlinger = [
   {
@@ -60,13 +60,15 @@ const locationMock = {
   hash: 'test',
 };
 
-export default {
+const meta = {
   title: 'gui/sak/behandling-velger',
   component: BehandlingVelgerSakV2,
   decorators: [withKodeverkContext({ behandlingType: behandlingType.FØRSTEGANGSSØKNAD }), withMaxWidth(600)],
 } satisfies Meta<typeof BehandlingVelgerSakV2>;
 
-export const Default: StoryObj<typeof BehandlingVelgerSakV2> = {
+export default meta;
+
+export const Default: StoryObj<typeof meta> = {
   args: {
     getBehandlingLocation: () => locationMock,
     fagsak,
@@ -84,7 +86,7 @@ export const Default: StoryObj<typeof BehandlingVelgerSakV2> = {
   },
 };
 
-export const IngenBehandlinger: StoryObj<typeof BehandlingVelgerSakV2> = {
+export const IngenBehandlinger: StoryObj<typeof meta> = {
   args: {
     getBehandlingLocation: () => locationMock,
     fagsak,

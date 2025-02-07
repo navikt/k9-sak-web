@@ -129,7 +129,7 @@ const BehandlingSelected = ({
       {getÅrsakerForBehandling()}
       {visLenkeTilFaktapanel && (
         <NavLink
-          to={createLocationForSkjermlenke(location as Location, skjermlenkeCodes.FAKTA_OM_SOKNADSPERIODER.kode)}
+          to={createLocationForSkjermlenke(location, skjermlenkeCodes.FAKTA_OM_SOKNADSPERIODER.kode)}
           onClick={() => window.scroll(0, 0)}
           className={styles.faktapanelLenke}
         >
