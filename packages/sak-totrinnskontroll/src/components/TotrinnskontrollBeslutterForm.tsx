@@ -31,8 +31,8 @@ const buildInitialValues = (totrinnskontrollContext: TotrinnskontrollSkjermlenke
     .map(ap => ({
       aksjonspunktKode: ap.aksjonspunktKode,
       totrinnskontrollGodkjent: ap.totrinnskontrollGodkjent,
-      besluttersBegrunnelse: decodeHtmlEntity(ap.besluttersBegrunnelse),
-      ...finnArsaker(ap.vurderPaNyttArsaker),
+      besluttersBegrunnelse: ap.besluttersBegrunnelse ? decodeHtmlEntity(ap.besluttersBegrunnelse) : '',
+      ...(ap.vurderPaNyttArsaker ? finnArsaker(ap.vurderPaNyttArsaker) : []),
     })),
 });
 
@@ -41,7 +41,6 @@ interface PureOwnProps {
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
   behandlingKlageVurdering?: KlageVurdering;
   readOnly: boolean;
-  erTilbakekreving: boolean;
   arbeidsforholdHandlingTyper: KodeverkMedNavn[];
   skjermlenkeTyper: KodeverkMedNavn[];
   lagLenke: (skjermlenkeCode: string) => Location;
@@ -62,7 +61,6 @@ export const TotrinnskontrollBeslutterForm = ({
   behandlingKlageVurdering,
   arbeidsforholdHandlingTyper,
   skjermlenkeTyper,
-  erTilbakekreving,
   totrinnskontrollSkjermlenkeContext,
   lagLenke,
   toTrinnFormState,
@@ -114,7 +112,6 @@ export const TotrinnskontrollBeslutterForm = ({
       <AksjonspunktGodkjenningFieldArray
         klagebehandlingVurdering={behandlingKlageVurdering}
         behandlingStatus={behandling.status}
-        erTilbakekreving={erTilbakekreving}
         arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
         readOnly={readOnly}
         klageKA={!!behandlingKlageVurdering?.klageVurderingResultatNK}

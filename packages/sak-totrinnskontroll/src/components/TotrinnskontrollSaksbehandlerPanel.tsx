@@ -28,7 +28,6 @@ const TotrinnskontrollSaksbehandlerPanel = ({
   behandlingKlageVurdering,
   behandlingStatus,
   arbeidsforholdHandlingTyper,
-  erTilbakekreving,
   skjermlenkeTyper,
   vurderArsaker,
   lagLenke,
@@ -55,16 +54,15 @@ const TotrinnskontrollSaksbehandlerPanel = ({
             </NavLink>
             {aksjonspunkter.map(aksjonspunkt => {
               const aksjonspunktTexts = getAksjonspunkttekst(
-                behandlingKlageVurdering,
                 behandlingStatus,
                 arbeidsforholdHandlingTyper,
-                erTilbakekreving,
                 aksjonspunkt,
+                behandlingKlageVurdering,
               );
 
               return (
                 <div key={aksjonspunkt.aksjonspunktKode} className={styles.approvalItemContainer}>
-                  {aksjonspunktTexts.map((formattedMessage: string, index: number) => (
+                  {aksjonspunktTexts?.map((formattedMessage: string, index: number) => (
                     <div
                       key={aksjonspunkt.aksjonspunktKode.concat('_'.concat(index.toString()))}
                       className={styles.aksjonspunktTextContainer}
@@ -82,18 +80,20 @@ const TotrinnskontrollSaksbehandlerPanel = ({
                       </div>
                     ) : (
                       <div className={styles.approvalItem}>
-                        {aksjonspunkt.vurderPaNyttArsaker.map(item => (
+                        {aksjonspunkt.vurderPaNyttArsaker?.map(item => (
                           <div key={`${item.kode}${aksjonspunkt.aksjonspunktKode}`}>
                             <span>
                               <Image src={avslattImg} className={styles.image} />
                             </span>
-                            <span>{vurderArsaker.find(arsak => item.kode === arsak.kode).navn}</span>
+                            <span>{vurderArsaker.find(arsak => item.kode === arsak.kode)?.navn}</span>
                           </div>
                         ))}
                       </div>
                     )}
                   </div>
-                  <pre className={styles.approvalItem}>{decodeHtmlEntity(aksjonspunkt.besluttersBegrunnelse)}</pre>
+                  <pre className={styles.approvalItem}>
+                    {aksjonspunkt.besluttersBegrunnelse && decodeHtmlEntity(aksjonspunkt.besluttersBegrunnelse)}
+                  </pre>
                 </div>
               );
             })}

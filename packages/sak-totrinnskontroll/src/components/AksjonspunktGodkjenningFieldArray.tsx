@@ -35,7 +35,6 @@ interface OwnProps {
   klagebehandlingVurdering?: KlageVurdering;
   behandlingStatus: Kodeverk;
   arbeidsforholdHandlingTyper: KodeverkMedNavn[];
-  erTilbakekreving: boolean;
   skjermlenkeTyper: KodeverkMedNavn[];
   lagLenke: (skjermlenkeCode: string) => Location;
 }
@@ -48,7 +47,6 @@ export const AksjonspunktGodkjenningFieldArray = ({
   klagebehandlingVurdering,
   behandlingStatus,
   arbeidsforholdHandlingTyper,
-  erTilbakekreving,
   skjermlenkeTyper,
   lagLenke,
 }: OwnProps) => {
@@ -64,7 +62,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
         const context = totrinnskontrollSkjermlenkeContext.find(c =>
           c.totrinnskontrollAksjonspunkter.some(ta => ta.aksjonspunktKode === aksjonspunktKode),
         );
-        const totrinnskontrollAksjonspunkt = context.totrinnskontrollAksjonspunkter.find(
+        const totrinnskontrollAksjonspunkt = context?.totrinnskontrollAksjonspunkter.find(
           c => c.aksjonspunktKode === aksjonspunktKode,
         );
 
@@ -74,28 +72,29 @@ export const AksjonspunktGodkjenningFieldArray = ({
         const visKunBegrunnelse = erAnke || erKlageKA ? totrinnskontrollGodkjent : showBegrunnelse;
         const visArsaker = erAnke || erKlageKA || totrinnskontrollGodkjent === false;
 
-        const aksjonspunktText = getAksjonspunkttekst(
-          klagebehandlingVurdering,
-          behandlingStatus,
-          arbeidsforholdHandlingTyper,
-          erTilbakekreving,
-          totrinnskontrollAksjonspunkt,
-        );
+        const aksjonspunktText =
+          totrinnskontrollAksjonspunkt &&
+          getAksjonspunkttekst(
+            behandlingStatus,
+            arbeidsforholdHandlingTyper,
+            totrinnskontrollAksjonspunkt,
+            klagebehandlingVurdering,
+          );
 
         const skjermlenkeTypeKodeverk = skjermlenkeTyper.find(
-          skjermlenkeType => skjermlenkeType.kode === context.skjermlenkeType,
+          skjermlenkeType => skjermlenkeType.kode === context?.skjermlenkeType,
         );
 
         const hentSkjermlenkeTypeKodeverkNavn = () => {
           try {
-            if (skjermlenkeTypeKodeverk.navn === 'Vedtak') {
+            if (skjermlenkeTypeKodeverk?.navn === 'Vedtak') {
               return 'Brev';
             }
-            return skjermlenkeTypeKodeverk.navn;
+            return skjermlenkeTypeKodeverk?.navn;
           } catch {
             Sentry.captureEvent({
               message: 'Kunne ikke hente skjermlenkeTypeKodeverk.navn',
-              extra: { skjermlenkeTyper, skjermlenkeTypeKodeverk, skjermlenkeTypeContext: context.skjermlenkeType },
+              extra: { skjermlenkeTyper, skjermlenkeTypeKodeverk, skjermlenkeTypeContext: context?.skjermlenkeType },
             });
             return '';
           }
@@ -107,9 +106,9 @@ export const AksjonspunktGodkjenningFieldArray = ({
             : '';
 
         return (
-          <div className={index > 0 && 'mt-2'} key={field.id}>
+          <div className={index > 0 ? 'mt-2' : ''} key={field.id}>
             <NavLink
-              to={lagLenke(context.skjermlenkeType)}
+              to={lagLenke(context?.skjermlenkeType ?? '')}
               onClick={() => window.scroll(0, 0)}
               className={styles.lenke}
             >
@@ -117,7 +116,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
             </NavLink>
             <div className={styles.approvalItemContainer}>
               {aksjonspunktText
-                .filter(text => !!text)
+                ?.filter(text => !!text)
                 .map((formattedMessage, i) => (
                   <div
                     key={aksjonspunktKode.concat('_'.concat(i.toString()))}

@@ -62,7 +62,7 @@ export const OpptjeningTotrinnText = ({ aktivitet }: OwnProps) => {
     return (
       <>
         {mapAktivitetTextEndring(
-          aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
+          aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : '',
           aktivitet.arbeidsgiverNavn,
           aktivitet.orgnr,
         )}
@@ -73,7 +73,7 @@ export const OpptjeningTotrinnText = ({ aktivitet }: OwnProps) => {
     return (
       <>
         {mapAktivitetTextGodkjenning(
-          aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
+          aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : '',
           aktivitet.arbeidsgiverNavn,
           aktivitet.orgnr,
         )}
@@ -83,7 +83,7 @@ export const OpptjeningTotrinnText = ({ aktivitet }: OwnProps) => {
   return (
     <>
       {mapAktivitetTextUnderkjenning(
-        aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,
+        aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : '',
         aktivitet.arbeidsgiverNavn,
         aktivitet.orgnr,
       )}

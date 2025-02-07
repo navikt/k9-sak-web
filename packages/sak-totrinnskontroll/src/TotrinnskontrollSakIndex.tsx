@@ -38,7 +38,7 @@ const sorterteSkjermlenkeCodesForTilbakekreving = [
 ];
 
 const getArsaker = (apData: AksjonspunktGodkjenningData): string[] => {
-  const arsaker = [];
+  const arsaker: string[] = [];
   if (apData.feilFakta) {
     arsaker.push(vurderPaNyttArsakType.FEIL_FAKTA);
   }
@@ -113,7 +113,7 @@ const TotrinnskontrollSakIndex = ({
       erTilbakekreving
         ? sorterteSkjermlenkeCodesForTilbakekreving
             .map(s => totrinnskontrollSkjermlenkeContext.find(el => el.skjermlenkeType === s.kode))
-            .filter(s => s)
+            .filter(s => s != undefined)
         : totrinnskontrollSkjermlenkeContext,
     [erTilbakekreving, totrinnskontrollSkjermlenkeContext],
   );
@@ -139,7 +139,6 @@ const TotrinnskontrollSakIndex = ({
           behandlingKlageVurdering={behandlingKlageVurdering}
           arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
           skjermlenkeTyper={skjermlenkeTyper}
-          erTilbakekreving={erTilbakekreving}
           lagLenke={lagLenke}
           toTrinnFormState={toTrinnFormState}
           setToTrinnFormState={setToTrinnFormState}
