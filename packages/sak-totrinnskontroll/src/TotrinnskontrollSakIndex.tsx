@@ -8,11 +8,11 @@ import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
-import { KlageVurdering, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { KodeverkObject, KodeverkType, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
 import { AksjonspunktGodkjenningData } from './components/AksjonspunktGodkjenningFieldArray';
 import { FormState } from './components/FormState';
 import TotrinnskontrollBeslutterForm from './components/TotrinnskontrollBeslutterForm';
@@ -57,8 +57,7 @@ interface TotrinnskontrollSakIndexProps {
   behandling: Behandling;
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
   location: Location;
-  behandlingKlageVurdering?: KlageVurdering;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  behandlingKlageVurdering?: KlagebehandlingDto;
   readOnly: boolean;
   onSubmit: (...args: any[]) => any;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;

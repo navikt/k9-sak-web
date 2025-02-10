@@ -1,6 +1,4 @@
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
-import { KlageVurdering } from '@k9-sak-web/types';
 import {
   BehandlingDtoStatus,
   TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker,
@@ -147,8 +145,7 @@ export const SenderBehandlingTilbakeTilSaksbehandler: Story = {
       klageVurderingResultatNFP: {
         klageVurdering: 'STADFESTE_YTELSESVEDTAK',
       },
-    } as KlageVurdering,
-    alleKodeverk: alleKodeverk as any,
+    },
     createLocationForSkjermlenke: () => location,
     readOnly: false,
   },
@@ -283,14 +280,11 @@ export const visTotrinnskontrollForSaksbehandler = () => (
       location={location}
       readOnly
       onSubmit={action('button-click')}
-      behandlingKlageVurdering={
-        {
-          klageVurderingResultatNFP: {
-            klageVurdering: 'STADFESTE_YTELSESVEDTAK',
-          },
-        } as KlageVurdering
-      }
-      alleKodeverk={alleKodeverk as any}
+      behandlingKlageVurdering={{
+        klageVurderingResultatNFP: {
+          klageVurdering: 'STADFESTE_YTELSESVEDTAK',
+        },
+      }}
       createLocationForSkjermlenke={() => location}
     />
   </div>

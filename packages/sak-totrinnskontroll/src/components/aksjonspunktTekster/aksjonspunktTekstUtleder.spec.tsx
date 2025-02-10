@@ -1,12 +1,14 @@
-import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
-import { KlageVurdering } from '@k9-sak-web/types';
-import { definisjon as KlageAksjonspunktDtoDefinisjon } from '@navikt/k9-klage-typescript-client';
+import {
+  definisjon as KlageAksjonspunktDtoDefinisjon,
+  KlagebehandlingDto,
+  klageVurdering as klageVurderingCodes,
+  klageVurderingOmgjoer as klageVurderingOmgjoerCodes,
+} from '@navikt/k9-klage-typescript-client';
 import {
   AksjonspunktDtoDefinisjon,
   BehandlingAksjonspunktDtoBehandlingStatus,
   BehandlingDtoStatus,
+  FaktaOmBeregningDtoFaktaOmBeregningTilfeller,
   TotrinnsArbeidsforholdDtoArbeidsforholdHandlingType,
 } from '@navikt/k9-sak-typescript-client';
 import { render, screen } from '@testing-library/react';
@@ -14,13 +16,13 @@ import { TotrinnskontrollAksjonspunkt } from '../../types/TotrinnskontrollAksjon
 import getAksjonspunkttekst, { getFaktaOmArbeidsforholdMessages } from './aksjonspunktTekstUtleder';
 
 const medholdIKlage = {
-  klageVurdering: klageVurderingCodes.MEDHOLD_I_KLAGE,
+  KlagebehandlingDto: klageVurderingCodes.MEDHOLD_I_KLAGE,
   klageVurderingOmgjoer: klageVurderingOmgjoerCodes.GUNST_MEDHOLD_I_KLAGE,
 };
-const oppheveYtelsesVedtak = { klageVurdering: klageVurderingCodes.OPPHEVE_YTELSESVEDTAK };
-const avvistKlage = { klageVurdering: klageVurderingCodes.AVVIS_KLAGE };
+const oppheveYtelsesVedtak = { KlagebehandlingDto: klageVurderingCodes.OPPHEVE_YTELSESVEDTAK };
+const avvistKlage = { KlagebehandlingDto: klageVurderingCodes.AVVIS_KLAGE };
 const behandlingStatusFVED = BehandlingAksjonspunktDtoBehandlingStatus.FATTER_VEDTAK;
-const stadfesteKlage = { klageVurdering: klageVurderingCodes.STADFESTE_YTELSESVEDTAK };
+const stadfesteKlage = { KlagebehandlingDto: klageVurderingCodes.STADFESTE_YTELSESVEDTAK };
 
 const arbeidsforholdHandlingTyper = [
   { kode: 'BRUK', navn: 'aaa', kodeverk: '' },
@@ -230,7 +232,7 @@ describe('aksjonspunktTekstUtleder', () => {
     } as TotrinnskontrollAksjonspunkt;
     const klagebehandlingVurdering = {
       klageVurderingResultatNFP: medholdIKlage,
-    } as KlageVurdering;
+    } as KlagebehandlingDto;
     const message = getAksjonspunkttekst(behandlingStatusFVED, [], aksjonspunkt, klagebehandlingVurdering);
     render(<div>{message}</div>);
     expect(screen.getByText('Omgjort til gunst')).toBeInTheDocument();
@@ -243,7 +245,7 @@ describe('aksjonspunktTekstUtleder', () => {
     } as TotrinnskontrollAksjonspunkt;
     const klagebehandlingVurdering = {
       klageVurderingResultatNK: medholdIKlage,
-    } as KlageVurdering;
+    } as KlagebehandlingDto;
     const message = getAksjonspunkttekst(behandlingStatusFVED, [], aksjonspunkt, klagebehandlingVurdering);
     render(<div>{message}</div>);
     expect(screen.getByText('Omgjort til gunst')).toBeInTheDocument();
@@ -253,7 +255,7 @@ describe('aksjonspunktTekstUtleder', () => {
   it('skal vise korrekt tekst for aksjonspunkt 5035 avslag ytelsesvedtak opphevet', () => {
     const klagebehandlingVurdering = {
       klageVurderingResultatNFP: oppheveYtelsesVedtak,
-    } as KlageVurdering;
+    } as KlagebehandlingDto;
     const aksjonspunkt = {
       aksjonspunktKode: KlageAksjonspunktDtoDefinisjon._5035,
       besluttersBegrunnelse: 'begrunnelse',
@@ -266,7 +268,7 @@ describe('aksjonspunktTekstUtleder', () => {
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag ytelsesvedtak opphevet', () => {
     const klagebehandlingVurdering = {
       klageVurderingResultatNK: oppheveYtelsesVedtak,
-    } as KlageVurdering;
+    } as KlagebehandlingDto;
     const aksjonspunkt = {
       aksjonspunktKode: KlageAksjonspunktDtoDefinisjon._5036,
       besluttersBegrunnelse: 'begrunnelse',
@@ -280,7 +282,7 @@ describe('aksjonspunktTekstUtleder', () => {
   it('skal vise korrekt tekst for aksjonspunkt 5035 avslag klage avvist', () => {
     const klagebehandlingVurdering = {
       klageVurderingResultatNFP: avvistKlage,
-    } as KlageVurdering;
+    } as KlagebehandlingDto;
     const aksjonspunkt = {
       aksjonspunktKode: KlageAksjonspunktDtoDefinisjon._5035,
       besluttersBegrunnelse: 'begrunnelse',
@@ -293,7 +295,7 @@ describe('aksjonspunktTekstUtleder', () => {
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag klage avvist', () => {
     const klagebehandlingVurdering = {
       klageVurderingResultatNK: avvistKlage,
-    } as KlageVurdering;
+    } as KlagebehandlingDto;
     const aksjonspunkt = {
       aksjonspunktKode: KlageAksjonspunktDtoDefinisjon._5036,
       besluttersBegrunnelse: 'begrunnelse',
@@ -307,7 +309,7 @@ describe('aksjonspunktTekstUtleder', () => {
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag ikke fastsatt', () => {
     const klagebehandlingVurdering = {
       klageVurderingResultatNFP: stadfesteKlage,
-    } as KlageVurdering;
+    } as KlagebehandlingDto;
     const aksjonspunkt = {
       aksjonspunktKode: KlageAksjonspunktDtoDefinisjon._5036,
       besluttersBegrunnelse: 'begrunnelse',
@@ -320,7 +322,7 @@ describe('aksjonspunktTekstUtleder', () => {
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag ytelsesvedtak stadfestet', () => {
     const klagebehandlingVurdering = {
       klageVurderingResultatNK: stadfesteKlage,
-    } as KlageVurdering;
+    } as KlagebehandlingDto;
     const aksjonspunkt = {
       aksjonspunktKode: KlageAksjonspunktDtoDefinisjon._5036,
       besluttersBegrunnelse: 'begrunnelse',
@@ -333,7 +335,7 @@ describe('aksjonspunktTekstUtleder', () => {
 
   it('skal vise korrekt tekst for aksjonspunkt 5058 vurder tidsbegrenset', () => {
     const beregningDto = {
-      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD],
+      faktaOmBeregningTilfeller: [FaktaOmBeregningDtoFaktaOmBeregningTilfeller.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD],
       skjæringstidspunkt: '2022-01-01',
     };
     const aksjonspunkt = {
@@ -351,7 +353,7 @@ describe('aksjonspunktTekstUtleder', () => {
   });
   it('skal vise korrekt tekst for aksjonspunkt 5058 ATFL i samme org', () => {
     const beregningDto = {
-      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON],
+      faktaOmBeregningTilfeller: [FaktaOmBeregningDtoFaktaOmBeregningTilfeller.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON],
       skjæringstidspunkt: '2022-01-01',
     };
     const aksjonspunkt = {
@@ -369,7 +371,7 @@ describe('aksjonspunktTekstUtleder', () => {
   });
   it('skal vise korrekte tekster for kombinasjon av aksjonspunkt 5058', () => {
     const beregningDto = {
-      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD],
+      faktaOmBeregningTilfeller: [FaktaOmBeregningDtoFaktaOmBeregningTilfeller.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD],
       skjæringstidspunkt: '2022-01-01',
     };
     const aksjonspunkt = {

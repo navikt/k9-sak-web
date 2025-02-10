@@ -2,11 +2,11 @@ import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Image } from '@fpsak-frontend/shared-components';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
-import { Behandling } from '@k9-sak-web/types';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
+import { Behandling } from '../../types/Behandling';
 import styles from './fatterVedtakApprovalModal.module.css';
 
 const getInfoTextCode = (
@@ -36,7 +36,7 @@ const getInfoTextCode = (
     return 'Resultat: Ingen endring, behandlingen avsluttes';
   }
   // HVIS AVSLÅTT
-  if (behandlingsresultat?.type.kode === behandlingResultatType.AVSLATT) {
+  if (behandlingsresultat?.type === behandlingResultatType.AVSLATT) {
     if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
       return 'Pleiepenger er avslått';
     }
@@ -195,17 +195,16 @@ const FatterVedtakApprovalModal = ({
   fagsakYtelseType,
   erKlageWithKA,
 }: OwnProps) => {
-  const isBehandlingsresultatOpphor =
-    behandlingsresultat && behandlingsresultat.type.kode === behandlingResultatType.OPPHOR;
+  const isBehandlingsresultatOpphor = behandlingsresultat && behandlingsresultat.type === behandlingResultatType.OPPHOR;
   const infoTextCode = utledInfoTextCode(
     allAksjonspunktApproved,
     behandlingStatusKode,
     behandlingTypeKode,
     behandlingsresultat,
-    harSammeResultatSomOriginalBehandling,
+    !!harSammeResultatSomOriginalBehandling,
     fagsakYtelseType,
-    erKlageWithKA,
-    isBehandlingsresultatOpphor,
+    !!erKlageWithKA,
+    !!isBehandlingsresultatOpphor,
   );
 
   const altImgText = utledAltImgTextCode(behandlingStatusKode, fagsakYtelseType);
@@ -213,9 +212,9 @@ const FatterVedtakApprovalModal = ({
   const modalDescriptionText = utledModalDescriptionTextCode(
     behandlingStatusKode,
     fagsakYtelseType,
-    erKlageWithKA,
+    !!erKlageWithKA,
     behandlingTypeKode,
-    isBehandlingsresultatOpphor,
+    !!isBehandlingsresultatOpphor,
   );
 
   return (

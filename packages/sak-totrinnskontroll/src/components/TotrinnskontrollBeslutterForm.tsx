@@ -1,9 +1,9 @@
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { ariaCheck, decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { KodeverkObject, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
-import { KlageVurdering } from '@k9-sak-web/types';
 import { Button } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
+import { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
 import { TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker } from '@navikt/k9-sak-typescript-client';
 import { Location } from 'history';
 import { useEffect } from 'react';
@@ -36,7 +36,7 @@ const buildInitialValues = (totrinnskontrollContext: TotrinnskontrollSkjermlenke
 interface PureOwnProps {
   behandling: Behandling;
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
-  behandlingKlageVurdering?: KlageVurdering;
+  behandlingKlageVurdering?: KlagebehandlingDto;
   readOnly: boolean;
   arbeidsforholdHandlingTyper: KodeverkV2[];
   skjermlenkeTyper: KodeverkV2[];

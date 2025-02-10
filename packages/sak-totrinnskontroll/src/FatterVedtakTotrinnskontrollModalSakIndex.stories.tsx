@@ -1,10 +1,6 @@
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus.js';
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
-import { Behandling } from '@k9-sak-web/types';
+import { BehandlingDtoStatus, BehandlingDtoType, BehandlingsresultatDtoType } from '@navikt/k9-sak-typescript-client';
 import { action } from '@storybook/addon-actions';
-import React from 'react';
 import FatterVedtakTotrinnskontrollModalSakIndex from './FatterVedtakTotrinnskontrollModalSakIndex';
 
 export default {
@@ -14,20 +10,13 @@ export default {
 
 const behandling = {
   id: 1,
-  status: {
-    kode: behandlingStatus.FATTER_VEDTAK,
-    kodeverk: '',
-  },
-  type: {
-    kode: behandlingType.FØRSTEGANGSSØKNAD,
-    kodeverk: 'BEHANDLING_TYPE',
-  },
+  status: BehandlingDtoStatus.FATTER_VEDTAK,
+  type: BehandlingDtoType.FØRSTEGANGSSØKNAD,
   behandlingsresultat: {
-    type: {
-      kode: behandlingResultatType.OPPHOR,
-    },
+    type: BehandlingsresultatDtoType.OPPHØR,
   },
-} as Behandling;
+  toTrinnsBehandling: false,
+};
 
 export const visModalEtterGodkjenning = () => (
   <FatterVedtakTotrinnskontrollModalSakIndex
@@ -42,15 +31,10 @@ export const visModalEtterGodkjenning = () => (
 
 export const visModalEtterGodkjenningAvKlage = () => (
   <FatterVedtakTotrinnskontrollModalSakIndex
-    behandling={
-      {
-        ...behandling,
-        type: {
-          kode: behandlingType.KLAGE,
-          kodeverk: 'BEHANDLING_TYPE',
-        },
-      } as Behandling
-    }
+    behandling={{
+      ...behandling,
+      type: BehandlingDtoType.FØRSTEGANGSSØKNAD,
+    }}
     closeEvent={action('button-click')}
     allAksjonspunktApproved
     fagsakYtelseType={fagsakYtelsesType.FORELDREPENGER}

@@ -1,8 +1,8 @@
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { BehandlingAppKontekst } from '@k9-sak-web/types';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import FatterVedtakApprovalModal from './components/modal/FatterVedtakApprovalModal';
+import { Behandling } from './types/Behandling';
 
 const cache = createIntlCache();
 
@@ -14,7 +14,7 @@ const intl = createIntl(
 );
 
 interface OwnProps {
-  behandling: BehandlingAppKontekst;
+  behandling: Behandling;
   closeEvent: () => void;
   allAksjonspunktApproved: boolean;
   fagsakYtelseType: FagsakYtelsesType;
@@ -37,8 +37,8 @@ const FatterVedtakTotrinnskontrollModalSakIndex = ({
       fagsakYtelseType={fagsakYtelseType}
       erKlageWithKA={erKlageWithKA}
       behandlingsresultat={behandling.behandlingsresultat}
-      behandlingStatusKode={behandling.status.kode}
-      behandlingTypeKode={behandling.type.kode}
+      behandlingStatusKode={behandling.status}
+      behandlingTypeKode={behandling.type}
       harSammeResultatSomOriginalBehandling={harSammeResultatSomOriginalBehandling}
     />
   </RawIntlProvider>

@@ -1,6 +1,5 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import { KlageVurdering } from '@k9-sak-web/types';
 import { BodyShort, Detail, Fieldset } from '@navikt/ds-react';
 import * as Sentry from '@sentry/browser';
 import { Location } from 'history';
@@ -11,6 +10,7 @@ import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder
 import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { CheckboxField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
+import { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { Behandling } from '../types/Behandling';
 import { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
@@ -35,7 +35,7 @@ interface OwnProps {
   readOnly: boolean;
   showBegrunnelse?: boolean;
   klageKA?: boolean;
-  klagebehandlingVurdering?: KlageVurdering;
+  klagebehandlingVurdering?: KlagebehandlingDto;
   behandlingStatus: Behandling['status'];
   arbeidsforholdHandlingTyper: KodeverkObject[];
   skjermlenkeTyper: KodeverkObject[];

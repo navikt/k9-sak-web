@@ -19,6 +19,7 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
     type: 'BT-002',
     status: BehandlingDtoStatus.FATTER_VEDTAK,
     toTrinnsBehandling: true,
+    behandlingsresultat: undefined,
   };
 
   it('skal ikke vise preview brev link for tilbakekreving', () => {

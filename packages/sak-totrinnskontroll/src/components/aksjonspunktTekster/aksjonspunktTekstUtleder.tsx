@@ -6,8 +6,9 @@ import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforh
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
-import { KlageVurdering, KodeverkMedNavn } from '@k9-sak-web/types';
 
+import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
 import { TotrinnsArbeidsforholdDto, TotrinnsBeregningDto } from '@navikt/k9-sak-typescript-client';
 import hash from 'object-hash';
 import vurderFaktaOmBeregningTotrinnText from '../../VurderFaktaBeregningTotrinnText';
@@ -29,7 +30,7 @@ const buildVarigEndretArbeidssituasjonBeregningText = (beregningDto: TotrinnsBer
 // Eksportert kun for test
 export const getFaktaOmArbeidsforholdMessages = (
   arbeidforholdDto: TotrinnsArbeidsforholdDto,
-  arbeidsforholdHandlingTyper: KodeverkMedNavn[],
+  arbeidsforholdHandlingTyper: KodeverkObject[],
 ) => {
   const formattedMessages: JSX.Element[] = [];
   if (arbeidforholdDto.brukPermisjon === true) {
@@ -50,7 +51,7 @@ export const getFaktaOmArbeidsforholdMessages = (
 
 const buildArbeidsforholdText = (
   aksjonspunkt: TotrinnskontrollAksjonspunkt,
-  arbeidsforholdHandlingTyper: KodeverkMedNavn[],
+  arbeidsforholdHandlingTyper: KodeverkObject[],
 ) =>
   aksjonspunkt.arbeidsforholdDtos?.map(arbeidforholdDto => {
     const formattedMessages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
@@ -103,7 +104,9 @@ const omgjoerTekstMap = {
 };
 
 const getTextForKlageHelper = (
-  klageVurderingResultat: KlageVurdering['klageVurderingResultatNK'] | KlageVurdering['klageVurderingResultatNFP'],
+  klageVurderingResultat:
+    | KlagebehandlingDto['klageVurderingResultatNK']
+    | KlagebehandlingDto['klageVurderingResultatNFP'],
 ) => {
   let aksjonspunktText = '';
   if (!klageVurderingResultat) {
@@ -138,7 +141,7 @@ const getTextForKlageHelper = (
   return aksjonspunktText;
 };
 
-const getTextForKlage = (klagebehandlingVurdering: KlageVurdering, behandlingStaus: Behandling['status']) => {
+const getTextForKlage = (klagebehandlingVurdering: KlagebehandlingDto, behandlingStaus: Behandling['status']) => {
   if (behandlingStaus === behandlingStatusCode.FATTER_VEDTAK) {
     if (klagebehandlingVurdering.klageVurderingResultatNK) {
       return getTextForKlageHelper(klagebehandlingVurdering.klageVurderingResultatNK);
@@ -158,9 +161,9 @@ const erKlageAksjonspunkt = (aksjonspunkt: TotrinnskontrollAksjonspunkt) =>
 
 const getAksjonspunkttekst = (
   behandlingStatus: Behandling['status'],
-  arbeidsforholdHandlingTyper: KodeverkMedNavn[],
+  arbeidsforholdHandlingTyper: KodeverkObject[],
   aksjonspunkt: TotrinnskontrollAksjonspunkt,
-  klagebehandlingVurdering?: KlageVurdering,
+  klagebehandlingVurdering?: KlagebehandlingDto,
 ): ReactNode[] | null => {
   if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) {
     return buildOpptjeningText(aksjonspunkt);
