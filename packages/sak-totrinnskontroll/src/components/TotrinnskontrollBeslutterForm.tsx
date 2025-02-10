@@ -1,28 +1,25 @@
-import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { ariaCheck, decodeHtmlEntity } from '@fpsak-frontend/utils';
-import {
-  Behandling,
-  KlageVurdering,
-  Kodeverk,
-  KodeverkMedNavn,
-  TotrinnskontrollAksjonspunkt,
-  TotrinnskontrollSkjermlenkeContext,
-} from '@k9-sak-web/types';
+import { KodeverkObject, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
+import { KlageVurdering } from '@k9-sak-web/types';
 import { Button } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
+import { TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker } from '@navikt/k9-sak-typescript-client';
 import { Location } from 'history';
 import { useEffect } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
+import { Behandling } from '../types/Behandling';
+import { TotrinnskontrollAksjonspunkt } from '../types/TotrinnskontrollAksjonspunkt';
+import { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
 import AksjonspunktGodkjenningFieldArray from './AksjonspunktGodkjenningFieldArray';
 import { FormState } from './FormState';
 import styles from './totrinnskontrollBeslutterForm.module.css';
 
-const erAlleGodkjent = (formState: TotrinnskontrollAksjonspunkt[] = []) =>
-  formState.every(ap => ap.totrinnskontrollGodkjent && ap.totrinnskontrollGodkjent === true);
+const erAlleGodkjent = (aksjonspunktGodkjenning: FormState['aksjonspunktGodkjenning'] = []) =>
+  aksjonspunktGodkjenning.every(ap => ap.totrinnskontrollGodkjent && ap.totrinnskontrollGodkjent === true);
 
-const erAlleGodkjentEllerAvvist = (formState: TotrinnskontrollAksjonspunkt[] = []) =>
-  formState.every(ap => ap.totrinnskontrollGodkjent !== null);
+const erAlleGodkjentEllerAvvist = (aksjonspunktGodkjenning: FormState['aksjonspunktGodkjenning'] = []) =>
+  aksjonspunktGodkjenning.every(ap => ap.totrinnskontrollGodkjent !== null);
 
 const buildInitialValues = (totrinnskontrollContext: TotrinnskontrollSkjermlenkeContext[]): FormState => ({
   aksjonspunktGodkjenning: totrinnskontrollContext
@@ -31,7 +28,7 @@ const buildInitialValues = (totrinnskontrollContext: TotrinnskontrollSkjermlenke
     .map(ap => ({
       aksjonspunktKode: ap.aksjonspunktKode,
       totrinnskontrollGodkjent: ap.totrinnskontrollGodkjent,
-      besluttersBegrunnelse: ap.besluttersBegrunnelse ? decodeHtmlEntity(ap.besluttersBegrunnelse) : '',
+      besluttersBegrunnelse: ap.besluttersBegrunnelse ? decodeHtmlEntity(ap.besluttersBegrunnelse) : undefined,
       ...(ap.vurderPaNyttArsaker ? finnArsaker(ap.vurderPaNyttArsaker) : []),
     })),
 });
@@ -41,8 +38,8 @@ interface PureOwnProps {
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
   behandlingKlageVurdering?: KlageVurdering;
   readOnly: boolean;
-  arbeidsforholdHandlingTyper: KodeverkMedNavn[];
-  skjermlenkeTyper: KodeverkMedNavn[];
+  arbeidsforholdHandlingTyper: KodeverkV2[];
+  skjermlenkeTyper: KodeverkV2[];
   lagLenke: (skjermlenkeCode: string) => Location;
   handleSubmit: (formValues: FormState) => void;
   toTrinnFormState?: FormState;
@@ -112,11 +109,11 @@ export const TotrinnskontrollBeslutterForm = ({
       <AksjonspunktGodkjenningFieldArray
         klagebehandlingVurdering={behandlingKlageVurdering}
         behandlingStatus={behandling.status}
-        arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
+        arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper as KodeverkObject[]}
         readOnly={readOnly}
         klageKA={!!behandlingKlageVurdering?.klageVurderingResultatNK}
         totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
-        skjermlenkeTyper={skjermlenkeTyper}
+        skjermlenkeTyper={skjermlenkeTyper as KodeverkObject[]}
         lagLenke={lagLenke}
       />
       <div className={styles.buttonRow}>
@@ -150,18 +147,18 @@ export const TotrinnskontrollBeslutterForm = ({
   );
 };
 
-const finnArsaker = (vurderPaNyttArsaker: Kodeverk[]) =>
-  vurderPaNyttArsaker.reduce((acc, arsak) => {
-    if (arsak.kode === vurderPaNyttArsakType.FEIL_FAKTA) {
+const finnArsaker = (vurderPaNyttArsaker?: TotrinnskontrollAksjonspunkt['vurderPaNyttArsaker']) =>
+  vurderPaNyttArsaker?.reduce((acc, arsak) => {
+    if (arsak === TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker.FEIL_FAKTA) {
       return { ...acc, feilFakta: true };
     }
-    if (arsak.kode === vurderPaNyttArsakType.FEIL_LOV) {
+    if (arsak === TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker.FEIL_LOV) {
       return { ...acc, feilLov: true };
     }
-    if (arsak.kode === vurderPaNyttArsakType.FEIL_REGEL) {
+    if (arsak === TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker.FEIL_REGEL) {
       return { ...acc, feilRegel: true };
     }
-    if (arsak.kode === vurderPaNyttArsakType.ANNET) {
+    if (arsak === TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker.ANNET) {
       return { ...acc, annet: true };
     }
     return {};

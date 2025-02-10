@@ -2,7 +2,7 @@ import avslattImg from '@fpsak-frontend/assets/images/avslaatt.svg';
 import checkImg from '@fpsak-frontend/assets/images/check.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
+import { KlageVurdering, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort } from '@navikt/ds-react';
 import { Location } from 'history';
 import React from 'react';
@@ -10,12 +10,14 @@ import { NavLink } from 'react-router';
 
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 
+import { Behandling } from '../types/Behandling';
+import { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
 import styles from './totrinnskontrollSaksbehandlerPanel.module.css';
 
 interface OwnProps {
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
   behandlingKlageVurdering?: KlageVurdering;
-  behandlingStatus: Kodeverk;
+  behandlingStatus: Behandling['status'];
   erTilbakekreving: boolean;
   arbeidsforholdHandlingTyper: KodeverkMedNavn[];
   skjermlenkeTyper: KodeverkMedNavn[];
@@ -81,11 +83,11 @@ const TotrinnskontrollSaksbehandlerPanel = ({
                     ) : (
                       <div className={styles.approvalItem}>
                         {aksjonspunkt.vurderPaNyttArsaker?.map(item => (
-                          <div key={`${item.kode}${aksjonspunkt.aksjonspunktKode}`}>
+                          <div key={`${item}${aksjonspunkt.aksjonspunktKode}`}>
                             <span>
                               <Image src={avslattImg} className={styles.image} />
                             </span>
-                            <span>{vurderArsaker.find(arsak => item.kode === arsak.kode)?.navn}</span>
+                            <span>{vurderArsaker.find(arsak => item === arsak.kode)?.navn}</span>
                           </div>
                         ))}
                       </div>

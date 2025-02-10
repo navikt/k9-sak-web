@@ -1,11 +1,16 @@
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
-import { Behandling, KlageVurdering, TotrinnskontrollAksjonspunkt } from '@k9-sak-web/types';
+import { KlageVurdering } from '@k9-sak-web/types';
+import {
+  BehandlingDtoStatus,
+  TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker,
+} from '@navikt/k9-sak-typescript-client';
 import { action } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, waitFor } from '@storybook/test';
 import TotrinnskontrollSakIndex from './TotrinnskontrollSakIndex';
+import { Behandling } from './types/Behandling';
+import { TotrinnskontrollAksjonspunkt } from './types/TotrinnskontrollAksjonspunkt';
 
 const data = [
   {
@@ -15,8 +20,8 @@ const data = [
         aksjonspunktKode: '5082',
         opptjeningAktiviteter: [],
         beregningDtoer: [],
-        besluttersBegrunnelse: null,
-        totrinnskontrollGodkjent: null,
+        besluttersBegrunnelse: undefined,
+        totrinnskontrollGodkjent: undefined,
         vurderPaNyttArsaker: [],
         uttakPerioder: [],
         arbeidsforholdDtos: [],
@@ -36,8 +41,8 @@ const data = [
             skjæringstidspunkt: '2020-01-01',
           },
         ],
-        besluttersBegrunnelse: null,
-        totrinnskontrollGodkjent: null,
+        besluttersBegrunnelse: undefined,
+        totrinnskontrollGodkjent: undefined,
         vurderPaNyttArsaker: [],
         arbeidsforholdDtos: [],
       },
@@ -48,7 +53,7 @@ const data = [
           {
             fastsattVarigEndringNaering: true,
             fastsattVarigEndring: true,
-            faktaOmBeregningTilfeller: null,
+            faktaOmBeregningTilfeller: undefined,
             skjæringstidspunkt: '2020-01-01',
           },
           {
@@ -58,10 +63,9 @@ const data = [
             skjæringstidspunkt: '2020-02-01',
           },
         ],
-        besluttersBegrunnelse: null,
-        totrinnskontrollGodkjent: null,
+        besluttersBegrunnelse: undefined,
+        totrinnskontrollGodkjent: undefined,
         vurderPaNyttArsaker: [],
-        uttakPerioder: [],
         arbeidsforholdDtos: [],
       },
     ] as TotrinnskontrollAksjonspunkt[],
@@ -75,16 +79,13 @@ const data = [
         opptjeningAktiviteter: [],
         beregningDtoer: [
           {
-            fastsattVarigEndringNaering: null,
-            faktaOmBeregningTilfeller: [
-              { kode: 'VURDER_LØNNSENDRING', kodeverk: 'FAKTA_OM_BEREGNING_TILFELLE' },
-              { kode: 'VURDER_MOTTAR_YTELSE', kodeverk: 'FAKTA_OM_BEREGNING_TILFELLE' },
-            ],
+            fastsattVarigEndringNaering: undefined,
+            faktaOmBeregningTilfeller: ['VURDER_LØNNSENDRING', 'VURDER_MOTTAR_YTELSE'],
             skjæringstidspunkt: '2020-01-01',
           },
         ],
-        besluttersBegrunnelse: null,
-        totrinnskontrollGodkjent: null,
+        besluttersBegrunnelse: undefined,
+        totrinnskontrollGodkjent: undefined,
         vurderPaNyttArsaker: [],
         arbeidsforholdDtos: [],
       },
@@ -103,14 +104,8 @@ const dataReadOnly = [
         besluttersBegrunnelse: 'asdfa',
         totrinnskontrollGodkjent: false,
         vurderPaNyttArsaker: [
-          {
-            kode: 'FEIL_REGEL',
-            kodeverk: '',
-          },
-          {
-            kode: 'FEIL_FAKTA',
-            kodeverk: '',
-          },
+          TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker.FEIL_REGEL,
+          TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker.FEIL_FAKTA,
         ],
         uttakPerioder: [],
         arbeidsforholdDtos: [],
@@ -128,17 +123,8 @@ const location = {
 };
 
 const behandling = {
-  id: 1,
-  versjon: 2,
-  status: {
-    kode: behandlingStatus.FATTER_VEDTAK,
-    kodeverk: '',
-  },
-  type: {
-    kode: behandlingType.FØRSTEGANGSSØKNAD,
-    kodeverk: 'BEHANDLING_TYPE',
-  },
-  behandlingÅrsaker: [],
+  status: BehandlingDtoStatus.FATTER_VEDTAK,
+  type: behandlingType.FØRSTEGANGSSØKNAD,
   toTrinnsBehandling: true,
 } as Behandling;
 
@@ -187,19 +173,19 @@ export const SenderBehandlingTilbakeTilSaksbehandler: Story = {
           {
             aksjonspunktKode: '5082',
             godkjent: true,
-            begrunnelse: null,
+            begrunnelse: undefined,
             arsaker: [],
           },
           {
             aksjonspunktKode: '5038',
             godkjent: true,
-            begrunnelse: null,
+            begrunnelse: undefined,
             arsaker: [],
           },
           {
             aksjonspunktKode: '5039',
             godkjent: true,
-            begrunnelse: null,
+            begrunnelse: undefined,
             arsaker: [],
           },
           {
@@ -236,25 +222,25 @@ export const GodkjennerVedtak: Story = {
           {
             aksjonspunktKode: '5082',
             godkjent: true,
-            begrunnelse: null,
+            begrunnelse: undefined,
             arsaker: [],
           },
           {
             aksjonspunktKode: '5038',
             godkjent: true,
-            begrunnelse: null,
+            begrunnelse: undefined,
             arsaker: [],
           },
           {
             aksjonspunktKode: '5039',
             godkjent: true,
-            begrunnelse: null,
+            begrunnelse: undefined,
             arsaker: [],
           },
           {
             aksjonspunktKode: '5058',
             godkjent: true,
-            begrunnelse: null,
+            begrunnelse: undefined,
             arsaker: [],
           },
         ],
@@ -291,10 +277,7 @@ export const visTotrinnskontrollForSaksbehandler = () => (
     <TotrinnskontrollSakIndex
       behandling={{
         ...behandling,
-        status: {
-          kode: behandlingStatus.BEHANDLING_UTREDES,
-          kodeverk: '',
-        },
+        status: BehandlingDtoStatus.UTREDES,
       }}
       totrinnskontrollSkjermlenkeContext={dataReadOnly}
       location={location}

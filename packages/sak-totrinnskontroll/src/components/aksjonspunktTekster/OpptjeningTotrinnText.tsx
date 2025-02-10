@@ -1,4 +1,4 @@
-import { OpptjeningAktiviteter } from '@k9-sak-web/types';
+import { OpptjeningAktivitet } from '../../types/OpptjeningAktivitet';
 
 const mapAktivitetTextEndring = (aktivitetType: string, arbeidsgiverNavn?: string, orgnr?: string) => {
   if (arbeidsgiverNavn && orgnr) {
@@ -49,7 +49,7 @@ const mapAktivitetTextGodkjenning = (aktivitetType: string, arbeidsgiverNavn?: s
 };
 
 interface OwnProps {
-  aktivitet: OpptjeningAktiviteter;
+  aktivitet: OpptjeningAktivitet;
 }
 
 /*

@@ -1,6 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
+import { KlageVurdering } from '@k9-sak-web/types';
 import { BodyShort, Detail, Fieldset } from '@navikt/ds-react';
 import * as Sentry from '@sentry/browser';
 import { Location } from 'history';
@@ -8,9 +8,12 @@ import { NavLink } from 'react-router';
 
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 
+import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { CheckboxField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import { Behandling } from '../types/Behandling';
+import { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
 import styles from './aksjonspunktGodkjenningFieldArray.module.css';
 import { FormState } from './FormState';
 
@@ -33,9 +36,9 @@ interface OwnProps {
   showBegrunnelse?: boolean;
   klageKA?: boolean;
   klagebehandlingVurdering?: KlageVurdering;
-  behandlingStatus: Kodeverk;
-  arbeidsforholdHandlingTyper: KodeverkMedNavn[];
-  skjermlenkeTyper: KodeverkMedNavn[];
+  behandlingStatus: Behandling['status'];
+  arbeidsforholdHandlingTyper: KodeverkObject[];
+  skjermlenkeTyper: KodeverkObject[];
   lagLenke: (skjermlenkeCode: string) => Location;
 }
 

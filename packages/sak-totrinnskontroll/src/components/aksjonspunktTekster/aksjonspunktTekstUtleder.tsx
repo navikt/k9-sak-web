@@ -6,18 +6,14 @@ import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforh
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
-import {
-  KlageVurdering,
-  Kodeverk,
-  KodeverkMedNavn,
-  TotrinnsBeregningDto,
-  TotrinnskontrollAksjonspunkt,
-  TotrinnskontrollArbeidsforhold,
-} from '@k9-sak-web/types';
+import { KlageVurdering, KodeverkMedNavn } from '@k9-sak-web/types';
 
+import { TotrinnsArbeidsforholdDto, TotrinnsBeregningDto } from '@navikt/k9-sak-typescript-client';
 import hash from 'object-hash';
 import vurderFaktaOmBeregningTotrinnText from '../../VurderFaktaBeregningTotrinnText';
 import totrinnskontrollaksjonspunktTextCodes from '../../totrinnskontrollaksjonspunktTextCodes';
+import { Behandling } from '../../types/Behandling';
+import { TotrinnskontrollAksjonspunkt } from '../../types/TotrinnskontrollAksjonspunkt';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 
 const buildVarigEndringBeregningText = (beregningDto: TotrinnsBeregningDto) =>
@@ -32,22 +28,21 @@ const buildVarigEndretArbeidssituasjonBeregningText = (beregningDto: TotrinnsBer
 
 // Eksportert kun for test
 export const getFaktaOmArbeidsforholdMessages = (
-  arbeidforholdDto: TotrinnskontrollArbeidsforhold,
+  arbeidforholdDto: TotrinnsArbeidsforholdDto,
   arbeidsforholdHandlingTyper: KodeverkMedNavn[],
 ) => {
   const formattedMessages: JSX.Element[] = [];
-  const { kode } = arbeidforholdDto.arbeidsforholdHandlingType;
   if (arbeidforholdDto.brukPermisjon === true) {
     formattedMessages.push(<b>Søker er i permisjon.</b>);
     return formattedMessages;
   }
   if (arbeidforholdDto.brukPermisjon === false) {
     formattedMessages.push(<b> Søker er ikke i permisjon.</b>);
-    if (kode === arbeidsforholdHandlingType.BRUK) {
+    if (arbeidforholdDto.arbeidsforholdHandlingType === arbeidsforholdHandlingType.BRUK) {
       return formattedMessages;
     }
   }
-  const type = arbeidsforholdHandlingTyper.find(t => t.kode === kode);
+  const type = arbeidsforholdHandlingTyper.find(t => t.kode === arbeidforholdDto.arbeidsforholdHandlingType);
   const melding = type !== undefined && type !== null ? type.navn : '';
   formattedMessages.push(<b> {melding}.</b>);
   return formattedMessages;
@@ -83,7 +78,7 @@ const getTextFromAksjonspunktkode = (aksjonspunkt: TotrinnskontrollAksjonspunkt)
 };
 
 const lagBgTilfelleTekst = (bg: TotrinnsBeregningDto): ReactNode => {
-  const aksjonspunktTexts = bg.faktaOmBeregningTilfeller.map(({ kode }) => vurderFaktaOmBeregningTotrinnText[kode]);
+  const aksjonspunktTexts = bg.faktaOmBeregningTilfeller?.map(kode => vurderFaktaOmBeregningTotrinnText[kode]) ?? [];
   return (
     <React.Fragment key={hash(aksjonspunktTexts)}>
       <Label size="small" as="p">
@@ -143,8 +138,8 @@ const getTextForKlageHelper = (
   return aksjonspunktText;
 };
 
-const getTextForKlage = (klagebehandlingVurdering: KlageVurdering, behandlingStaus: Kodeverk) => {
-  if (behandlingStaus.kode === behandlingStatusCode.FATTER_VEDTAK) {
+const getTextForKlage = (klagebehandlingVurdering: KlageVurdering, behandlingStaus: Behandling['status']) => {
+  if (behandlingStaus === behandlingStatusCode.FATTER_VEDTAK) {
     if (klagebehandlingVurdering.klageVurderingResultatNK) {
       return getTextForKlageHelper(klagebehandlingVurdering.klageVurderingResultatNK);
     }
@@ -162,7 +157,7 @@ const erKlageAksjonspunkt = (aksjonspunkt: TotrinnskontrollAksjonspunkt) =>
   aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA;
 
 const getAksjonspunkttekst = (
-  behandlingStatus: Kodeverk,
+  behandlingStatus: Behandling['status'],
   arbeidsforholdHandlingTyper: KodeverkMedNavn[],
   aksjonspunkt: TotrinnskontrollAksjonspunkt,
   klagebehandlingVurdering?: KlageVurdering,

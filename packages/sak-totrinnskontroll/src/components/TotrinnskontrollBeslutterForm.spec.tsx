@@ -1,7 +1,9 @@
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { Behandling, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
+import { BehandlingDtoStatus } from '@navikt/k9-sak-typescript-client';
 import { screen } from '@testing-library/react';
+import { Behandling } from '../types/Behandling';
+import { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
 import { TotrinnskontrollBeslutterForm } from './TotrinnskontrollBeslutterForm';
 
 const location = {
@@ -14,34 +16,9 @@ const location = {
 
 describe('<TotrinnskontrollBeslutterForm>', () => {
   const behandling: Behandling = {
-    id: 1234,
-    uuid: 'uuid-1234',
-    versjon: 123,
-    type: {
-      kode: 'BT-002',
-      kodeverk: 'BEHANDLING_TYPE',
-    },
-    opprettet: '‎29.08.‎2017‎ ‎09‎:‎54‎:‎22',
-    status: {
-      kode: 'FVED',
-      kodeverk: '',
-    },
-    behandlingHenlagt: false,
-    behandlingPaaVent: false,
-    gjeldendeVedtak: false,
-    links: [],
+    type: 'BT-002',
+    status: BehandlingDtoStatus.FATTER_VEDTAK,
     toTrinnsBehandling: true,
-    sprakkode: { kode: 'NO', kodeverk: 'SPRAAK_KODE' },
-    behandlendeEnhetId: 'XX',
-    behandlendeEnhetNavn: 'YYY',
-    behandlingKoet: false,
-    behandlingÅrsaker: [
-      {
-        behandlingArsakType: { kode: '-', kodeverk: '' },
-        manueltOpprettet: true,
-        erAutomatiskRevurdering: false,
-      },
-    ],
   };
 
   it('skal ikke vise preview brev link for tilbakekreving', () => {
@@ -58,7 +35,6 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
         behandling={behandling}
         totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
         readOnly={false}
-        erTilbakekreving
         lagLenke={() => location}
         arbeidsforholdHandlingTyper={[]}
         skjermlenkeTyper={[]}
