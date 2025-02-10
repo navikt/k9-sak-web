@@ -1,5 +1,5 @@
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { ariaCheck, decodeHtmlEntity } from '@fpsak-frontend/utils';
+import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import { KodeverkObject, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Button } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';

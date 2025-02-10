@@ -1,6 +1,5 @@
 import { Location } from 'history';
 import { useCallback, useMemo } from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
@@ -19,15 +18,6 @@ import TotrinnskontrollBeslutterForm from './components/TotrinnskontrollBeslutte
 import TotrinnskontrollSaksbehandlerPanel from './components/TotrinnskontrollSaksbehandlerPanel';
 import { Behandling } from './types/Behandling';
 import { TotrinnskontrollSkjermlenkeContext } from './types/TotrinnskontrollSkjermlenkeContext';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-  },
-  cache,
-);
 
 const sorterteSkjermlenkeCodesForTilbakekreving = [
   skjermlenkeCodes.FAKTA_OM_FEILUTBETALING,
@@ -126,7 +116,7 @@ const TotrinnskontrollSakIndex = ({
   const vurderArsaker = hentKodeverkForKode(KodeverkType.VURDER_AARSAK);
 
   return (
-    <RawIntlProvider value={intl}>
+    <>
       {erStatusFatterVedtak && (
         <TotrinnskontrollBeslutterForm
           behandling={behandling}
@@ -153,14 +143,14 @@ const TotrinnskontrollSakIndex = ({
           vurderArsaker={vurderArsaker as KodeverkObject[]}
         />
       )}
-    </RawIntlProvider>
+    </>
   );
 };
 
 const TotrinnskontrollSakIndexPropsTransformer = (props: TotrinnskontrollSakIndexProps) => {
-  const deepCopyProps = JSON.parse(JSON.stringify(props));
-  konverterKodeverkTilKode(deepCopyProps, false);
-  return <TotrinnskontrollSakIndex {...props} {...deepCopyProps} />;
+  const v2Props = JSON.parse(JSON.stringify(props));
+  konverterKodeverkTilKode(v2Props, false);
+  return <TotrinnskontrollSakIndex {...props} {...v2Props} />;
 };
 
 export default TotrinnskontrollSakIndexPropsTransformer;

@@ -1,7 +1,5 @@
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/redux-form-test-helper';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { BehandlingDtoStatus } from '@navikt/k9-sak-typescript-client';
-import { screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Behandling } from '../types/Behandling';
 import { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
 import { TotrinnskontrollBeslutterForm } from './TotrinnskontrollBeslutterForm';
@@ -30,9 +28,9 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
       },
     ] as TotrinnskontrollSkjermlenkeContext[];
 
-    renderWithIntlAndReduxForm(
+    render(
       <TotrinnskontrollBeslutterForm
-        {...reduxFormPropsMock}
+        handleSubmit={vi.fn()}
         behandling={behandling}
         totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
         readOnly={false}
