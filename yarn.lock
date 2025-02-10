@@ -3373,7 +3373,6 @@ __metadata:
     "@fpsak-frontend/utils-test": "npm:1.0.0"
     "@k9-sak-web/behandling-utvidet-rett": "npm:1.0.0"
     "@k9-sak-web/konstanter": "npm:1.0.0"
-    "@k9-sak-web/types": "npm:1.0.0"
     history: "npm:5.3.0"
     object-hash: "npm:3.0.0"
     react: "npm:19.0.0"

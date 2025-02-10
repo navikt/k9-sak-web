@@ -1,9 +1,9 @@
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { OpptjeningAktiviteter } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
+import { OpptjeningAktivitet } from '../../types/OpptjeningAktivitet';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 
-const lagOpptjeningAktivitetArbeidMedNavn = (resultat: string): OpptjeningAktiviteter => ({
+const lagOpptjeningAktivitetArbeidMedNavn = (resultat: string): OpptjeningAktivitet => ({
   erEndring: resultat === 'ENDRING',
   aktivitetType: 'Arbeid',
   arbeidsgiverNavn: 'Andersen Transport AS',
@@ -11,19 +11,19 @@ const lagOpptjeningAktivitetArbeidMedNavn = (resultat: string): OpptjeningAktivi
   godkjent: resultat === 'GODKJENT',
 });
 
-const lagOpptjeningAktivitetArbeidUtenNavn = (resultat: string): OpptjeningAktiviteter => ({
+const lagOpptjeningAktivitetArbeidUtenNavn = (resultat: string): OpptjeningAktivitet => ({
   erEndring: resultat === 'ENDRING',
   aktivitetType: 'Arbeid',
-  arbeidsgiverNavn: null,
+  arbeidsgiverNavn: '',
   orgnr: '1234567890',
   godkjent: resultat === 'GODKJENT',
 });
 
-const lagOpptjeningAktivitet = (resultat: string): OpptjeningAktiviteter => ({
+const lagOpptjeningAktivitet = (resultat: string): OpptjeningAktivitet => ({
   erEndring: resultat === 'ENDRING',
   aktivitetType: 'Aktivitet',
-  arbeidsgiverNavn: null,
-  orgnr: null,
+  arbeidsgiverNavn: '',
+  orgnr: '',
   godkjent: resultat === 'GODKJENT',
 });
 
@@ -67,7 +67,7 @@ describe('<OpptjeningTotrinnnText>', () => {
     expect(
       screen.getAllByText(
         (_, element) =>
-          element.textContent === 'Aktivitet arbeid for Andersen Transport AS (1234567890) er ikke godkjent.',
+          element?.textContent === 'Aktivitet arbeid for Andersen Transport AS (1234567890) er ikke godkjent.',
       )[0],
     ).toBeInTheDocument();
   });
@@ -77,7 +77,7 @@ describe('<OpptjeningTotrinnnText>', () => {
     expect(
       screen.getAllByText(
         (_, element) =>
-          element.textContent === 'Aktivitet arbeid for organisasjonen med orgnr. 1234567890 er ikke godkjent.',
+          element?.textContent === 'Aktivitet arbeid for organisasjonen med orgnr. 1234567890 er ikke godkjent.',
       )[0],
     ).toBeInTheDocument();
   });
@@ -85,7 +85,7 @@ describe('<OpptjeningTotrinnnText>', () => {
   it('skal vise korrekt tekst for opptjening med underkjenning av aktivitet', () => {
     renderWithIntl(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitet('UNDERKJENNING')} />);
     expect(
-      screen.getAllByText((_, element) => element.textContent === 'Aktivitet aktivitet er ikke godkjent.')[0],
+      screen.getAllByText((_, element) => element?.textContent === 'Aktivitet aktivitet er ikke godkjent.')[0],
     ).toBeInTheDocument();
   });
 });
