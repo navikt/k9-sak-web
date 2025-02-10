@@ -1,17 +1,14 @@
-import { Location } from 'history';
-import { useCallback, useMemo } from 'react';
-
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
-import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
-
+import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { KodeverkObject, KodeverkType, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
+import { AksjonspunktDtoDefinisjon, BehandlingAksjonspunktDtoBehandlingStatus } from '@navikt/k9-sak-typescript-client';
+import { Location } from 'history';
+import { useCallback, useMemo } from 'react';
+import aksjonspunktCodesTilbakekreving from './aksjonspunktCodesTilbakekreving';
 import { AksjonspunktGodkjenningData } from './components/AksjonspunktGodkjenningFieldArray';
 import { FormState } from './components/FormState';
 import TotrinnskontrollBeslutterForm from './components/TotrinnskontrollBeslutterForm';
@@ -68,7 +65,7 @@ const TotrinnskontrollSakIndex = ({
 }: TotrinnskontrollSakIndexProps) => {
   const { hentKodeverkForKode } = useKodeverkContext();
   const erTilbakekreving =
-    BehandlingType.TILBAKEKREVING === behandling.type || BehandlingType.TILBAKEKREVING_REVURDERING === behandling.type;
+    behandlingType.TILBAKEKREVING === behandling.type || behandlingType.REVURDERING_TILBAKEKREVING === behandling.type;
 
   const submitHandler = useCallback(
     (values: FormState) => {
@@ -80,7 +77,9 @@ const TotrinnskontrollSakIndex = ({
       }));
 
       const fatterVedtakAksjonspunktDto = {
-        '@type': erTilbakekreving ? aksjonspunktCodesTilbakekreving.FATTER_VEDTAK : aksjonspunktCodes.FATTER_VEDTAK,
+        '@type': erTilbakekreving
+          ? aksjonspunktCodesTilbakekreving.FATTER_VEDTAK
+          : AksjonspunktDtoDefinisjon.FATTER_VEDTAK,
         begrunnelse: null,
         aksjonspunktGodkjenningDtos,
       };
@@ -110,7 +109,7 @@ const TotrinnskontrollSakIndex = ({
     [location],
   );
 
-  const erStatusFatterVedtak = behandling.status === BehandlingStatus.FATTER_VEDTAK;
+  const erStatusFatterVedtak = behandling.status === BehandlingAksjonspunktDtoBehandlingStatus.FATTER_VEDTAK;
   const skjermlenkeTyper = hentKodeverkForKode(KodeverkType.SKJERMLENKE_TYPE);
   const arbeidsforholdHandlingTyper = hentKodeverkForKode(KodeverkType.ARBEIDSFORHOLD_HANDLING_TYPE);
   const vurderArsaker = hentKodeverkForKode(KodeverkType.VURDER_AARSAK);
