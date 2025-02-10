@@ -241,9 +241,9 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
       window.clearTimeout(compareTimeoutIdRef.current);
     }
     if (!isLoading) {
-      compareTimeoutIdRef.current = window.setTimeout(() => {
+      compareTimeoutIdRef.current = window.setTimeout(async () => {
         try {
-          compareRenderedElementTexts(historikkInnslag, v1HistorikkElementer, v2HistorikkElementer);
+          await compareRenderedElementTexts(historikkInnslag, v1HistorikkElementer, v2HistorikkElementer);
         } catch (err) {
           setVisV2(false);
           Sentry.captureException(err, { level: 'warning' });
