@@ -14,7 +14,7 @@ import {
   type Mottaker,
   type UtilgjengeligÅrsak,
   utilgjengeligÅrsaker,
-} from '@k9-sak-web/backend/k9formidling/models/Mottaker.ts';
+} from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import { makeFakeExtendedApiError } from '../../storybook/mocks/fakeExtendedApiError.js';
 import { action } from '@storybook/addon-actions';
 import { StickyStateReducer } from '../../utils/StickyStateReducer.js';
@@ -70,7 +70,7 @@ export const DefaultStory: Story = {
   args: {
     fagsak: {
       saksnummer: '100',
-      sakstype: { kode: fagsakYtelsesType.PSB, kodeverk: 'FAGSAK_YTELSE' },
+      sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
       status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
       person: {
         aktørId: 'person-aktørid-1',

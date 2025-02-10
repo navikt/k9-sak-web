@@ -29,7 +29,7 @@ import { BodyShort, Tabs, Tooltip } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
@@ -40,6 +40,7 @@ import MeldingIndex from './melding/MeldingIndex';
 import NotaterIndex from './notater/NotaterIndex';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
+import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -302,11 +303,14 @@ const BehandlingSupportIndex = ({
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.HISTORIKK}>
-            <HistorikkIndex
-              saksnummer={fagsak.saksnummer}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-            />
+            {behandlingId !== undefined && (
+              <HistorikkIndex
+                saksnummer={fagsak.saksnummer}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                kjønn={fagsak.person?.erKvinne ? kjønn.KVINNE : kjønn.MANN}
+              />
+            )}
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.MELDINGER}>
             {behandlingId && (

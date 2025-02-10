@@ -7,7 +7,7 @@ import { required } from '@fpsak-frontend/utils';
 import { InstitusjonVurderingMedPerioder, Vurderingsresultat } from '@k9-sak-web/types';
 import { Button } from '@navikt/ds-react';
 import { Formik } from 'formik';
-import React from 'react';
+import React, { type JSX } from 'react';
 
 enum fieldname {
   BEGRUNNELSE = 'BEGRUNNELSE',

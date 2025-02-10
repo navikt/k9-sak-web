@@ -1,5 +1,5 @@
 import { IndicatorWithOverlay, InstitutionIcon, GreenCheckIconFilled } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
+import React, { type JSX } from 'react';
 
 const InnleggelsesperiodeIkonOverOppfylt = (): JSX.Element => (
   <IndicatorWithOverlay

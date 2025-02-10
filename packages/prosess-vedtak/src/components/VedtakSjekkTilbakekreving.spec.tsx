@@ -1,14 +1,12 @@
 import { screen } from '@testing-library/react';
-import React from 'react';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
@@ -73,8 +71,6 @@ const alleKodeverk = {};
 
 describe('<AvslagårsakListe>', () => {
   it('Skal vise ap for sjekk tilbakekreving riktig', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-
     renderWithIntl(
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => {}}>
         <VedtakProsessIndex
@@ -102,10 +98,22 @@ describe('<AvslagårsakListe>', () => {
           previewCallback={vi.fn()}
           submitCallback={vi.fn()}
           alleKodeverk={alleKodeverk}
-          ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
+          ytelseTypeKode={fagsakYtelsesType.OMSORGSPENGER}
           arbeidsgiverOpplysningerPerId={{}}
           lagreDokumentdata={vi.fn()}
           hentFritekstbrevHtmlCallback={vi.fn()}
+          beregningresultatForeldrepenger={undefined}
+          tilbakekrevingvalg={undefined}
+          simuleringResultat={undefined}
+          beregningsgrunnlag={undefined}
+          beregningsresultatOriginalBehandling={undefined}
+          personopplysninger={undefined}
+          vedtakVarsel={undefined}
+          tilgjengeligeVedtaksbrev={undefined}
+          informasjonsbehovVedtaksbrev={undefined}
+          dokumentdataHente={undefined}
+          fritekstdokumenter={undefined}
+          overlappendeYtelser={undefined}
         />
       </ProsessStegContainer>,
     );
@@ -119,8 +127,6 @@ describe('<AvslagårsakListe>', () => {
   });
 
   it('Skal IKKE vise ap for sjekk tilbakekreving', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-
     renderWithIntl(
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => {}}>
         <VedtakProsessIndex
@@ -158,10 +164,22 @@ describe('<AvslagårsakListe>', () => {
           previewCallback={vi.fn()}
           submitCallback={vi.fn()}
           alleKodeverk={alleKodeverk}
-          ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
+          ytelseTypeKode={fagsakYtelsesType.OMSORGSPENGER}
           arbeidsgiverOpplysningerPerId={{}}
           lagreDokumentdata={vi.fn()}
           hentFritekstbrevHtmlCallback={vi.fn()}
+          beregningresultatForeldrepenger={undefined}
+          tilbakekrevingvalg={undefined}
+          simuleringResultat={undefined}
+          beregningsgrunnlag={undefined}
+          beregningsresultatOriginalBehandling={undefined}
+          personopplysninger={undefined}
+          vedtakVarsel={undefined}
+          tilgjengeligeVedtaksbrev={undefined}
+          informasjonsbehovVedtaksbrev={undefined}
+          dokumentdataHente={undefined}
+          fritekstdokumenter={undefined}
+          overlappendeYtelser={undefined}
         />
       </ProsessStegContainer>,
     );

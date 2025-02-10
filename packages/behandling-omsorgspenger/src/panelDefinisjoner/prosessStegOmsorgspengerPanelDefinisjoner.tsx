@@ -1,15 +1,13 @@
-import VarselProsessStegPanelDef from './prosessStegPaneler/VarselProsessStegPanelDef';
-import SaksopplysningerProsessStegPanelDef from './prosessStegPaneler/SaksopplysningerProsessStegPanelDef';
-import InngangsvilkarProsessStegPanelDef from './prosessStegPaneler/InngangsvilkarProsessStegPanelDef';
 import BeregningsgrunnlagProsessStegPanelDef from './prosessStegPaneler/BeregningsgrunnlagProsessStegPanelDef';
-import UttakProsessStegPanelDef from './prosessStegPaneler/UttakProsessStegPanelDef';
-import TilkjentYtelseProsessStegPanelDef from './prosessStegPaneler/TilkjentYtelseProsessStegPanelDef';
+import InngangsvilkarProsessStegPanelDef from './prosessStegPaneler/InngangsvilkarProsessStegPanelDef';
 import SimuleringProsessStegPanelDef from './prosessStegPaneler/SimuleringProsessStegPanelDef';
+import TilkjentYtelseProsessStegPanelDef from './prosessStegPaneler/TilkjentYtelseProsessStegPanelDef';
+import UttakProsessStegPanelDef from './prosessStegPaneler/UttakProsessStegPanelDef';
+import VarselProsessStegPanelDef from './prosessStegPaneler/VarselProsessStegPanelDef';
 import VedtakProsessStegPanelDef from './prosessStegPaneler/VedtakProsessStegPanelDef';
 
 const prosessStegPanelDefinisjoner = [
   new VarselProsessStegPanelDef(),
-  new SaksopplysningerProsessStegPanelDef(),
   new InngangsvilkarProsessStegPanelDef(),
   new UttakProsessStegPanelDef(),
   new BeregningsgrunnlagProsessStegPanelDef(),

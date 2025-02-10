@@ -90,7 +90,7 @@ const Tidslinje = ({
   sideContentRader,
   withBorder,
 }: TidslinjeProps<any>) => {
-  const timelineRef = useRef();
+  const timelineRef = useRef(undefined);
 
   useEffect(() => setTimelineRef && setTimelineRef(timelineRef), [timelineRef]);
 

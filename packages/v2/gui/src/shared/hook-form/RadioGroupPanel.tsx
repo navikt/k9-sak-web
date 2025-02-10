@@ -8,7 +8,7 @@ interface RadioProps {
   value: string;
   label: React.ReactNode;
   id?: string;
-  element?: ReactElement;
+  element?: ReactElement<any>;
 }
 
 interface RadioGroupPanelProps {
@@ -54,7 +54,7 @@ const RadioGroupPanel = ({
             {radios.map(radio => (
               <React.Fragment key={radio.value}>
                 <Radio
-                  id={radio.id || radio.value}
+                  id={radio.id ? `${name}-${radio.id}` : `${name}-${radio.value}`}
                   name={name}
                   onChange={() => {
                     if (customOnChange) {

@@ -10,6 +10,7 @@ import MenyNyBehandlingIndex, {
 import MenySettPaVentIndex, { getMenytekst as getSettPaVentMenytekst } from '@fpsak-frontend/sak-meny-sett-pa-vent';
 import MenyTaAvVentIndex, { getMenytekst as getTaAvVentMenytekst } from '@fpsak-frontend/sak-meny-ta-av-vent';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import ApplicationContextPath from '@k9-sak-web/sak-app/src/app/ApplicationContextPath';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import SakRettigheter from '@k9-sak-web/sak-app/src/fagsak/sakRettigheterTsType';
@@ -21,15 +22,14 @@ import {
   BehandlingAppKontekst,
   Fagsak,
   FagsakPerson,
-  FeatureToggles,
   KodeverkMedNavn,
   MerknadFraLos,
   NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
 import moment from 'moment';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router';
 import { getLocationWithDefaultProsessStegAndFakta, getPathToK9Los, pathToBehandling } from '../app/paths';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
 import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
@@ -102,7 +102,7 @@ export const BehandlingMenuIndex = ({
   const navigate = useNavigate();
   const location = useLocation();
 
-  const ref = useRef<number>();
+  const ref = useRef<number>(undefined);
   useEffect(() => {
     // Når antallet har endret seg er det laget en ny behandling og denne må da velges
     if (ref.current > 0) {
@@ -132,7 +132,7 @@ export const BehandlingMenuIndex = ({
     window.location.assign(getPathToK9Los() || '/');
   }, []);
 
-  const { startRequest: lagNyBehandlingK9Sak } = restApiHooks.useRestApiRunner<boolean>(
+  const { startRequest: lagNyBehandlingUngSak } = restApiHooks.useRestApiRunner<boolean>(
     UngSakApiKeys.NEW_BEHANDLING_UNGSAK,
   );
   const { startRequest: hentMottakere } = restApiHooks.useRestApiRunner<KlagePart[]>(
@@ -143,23 +143,12 @@ export const BehandlingMenuIndex = ({
 
   const merknaderFraLos = restApiHooks.useGlobalStateRestApiData<MerknadFraLos>(UngSakApiKeys.LOS_HENTE_MERKNAD);
 
-  // FIX remove this when unntaksløype er lansert
-  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
-    UngSakApiKeys.FEATURE_TOGGLE,
-  );
-  const featureToggles = useMemo<FeatureToggles>(
-    () =>
-      featureTogglesData.reduce((acc, curr) => {
-        acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
-        return acc;
-      }, {}),
-    [featureTogglesData],
-  );
+  const featureToggles = useContext(FeatureTogglesContext);
 
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(UngSakApiKeys.SAK_BRUKER);
 
   const lagNyBehandling = useCallback((bTypeKode: string, params: any) => {
-    const lagNy = lagNyBehandlingK9Sak;
+    const lagNy = lagNyBehandlingUngSak;
     lagNy(params).then(() => oppfriskBehandlinger());
   }, []);
 

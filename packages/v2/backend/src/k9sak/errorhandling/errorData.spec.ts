@@ -15,11 +15,11 @@ describe('isK9SakErrorData', () => {
         {
           melding:
             '[asdsa🥲dfvd] matcher ikke tillatt pattern [^[\\p{Pd}\\p{Graph}\\p{Space}\\p{Sc}\\p{L}\\p{M}\\p{N}§]*$]',
-          metainformasjon: null,
+          metainformasjon: undefined,
           navn: 'fritekst',
         },
       ],
-      feilkode: null,
+      feilkode: undefined,
       type: 'VALIDERINGS_FEIL',
     };
     expect(isK9SakErrorData(inp2)).toBe(true);

@@ -6,13 +6,11 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { renderHook } from '@testing-library/react';
-import React from 'react';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 import { ProsessStegPanelUtledet, ProsessStegUtledet } from './ProsessStegUtledet';
 import prosessStegHooks from './prosessStegHooks';
@@ -20,7 +18,7 @@ import prosessStegHooks from './prosessStegHooks';
 describe('<prosessStegHooks>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
+    sakstype: fagsakYtelsesType.FORELDREPENGER, // FAGSAK_YTELSE
     status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
   } as Fagsak;
 
@@ -90,7 +88,6 @@ describe('<prosessStegHooks>', () => {
   }
 
   it('skal utlede prosesstegpaneler, valgt panel og paneler formatert for meny', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const ekstraPanelData = {
       soknad: 'test_soknad',
     };
@@ -147,7 +144,6 @@ describe('<prosessStegHooks>', () => {
   });
 
   it('skal velge første prosess-steg', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const isReadOnlyCheck = () => false;
     const toggleOverstyring = () => undefined;
     const stegDef = new OpplysningspliktProsessStegPanelDef();
@@ -190,7 +186,6 @@ describe('<prosessStegHooks>', () => {
   });
 
   it('skal skjule prosess-steg når en velger steg som allerede vises', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const isReadOnlyCheck = () => false;
     const toggleOverstyring = () => undefined;
     const stegDef = new OpplysningspliktProsessStegPanelDef();
@@ -232,7 +227,6 @@ describe('<prosessStegHooks>', () => {
   });
 
   it('skal bekrefte aksjonspunkt', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const isReadOnlyCheck = () => false;
     const toggleOverstyring = () => undefined;
     const stegDef = new OpplysningspliktProsessStegPanelDef();

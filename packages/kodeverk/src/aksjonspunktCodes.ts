@@ -1,4 +1,4 @@
-import { Aksjonspunkt } from '@k9-sak-web/types';
+import type { Aksjonspunkt } from '@k9-sak-web/types';
 
 const aksjonspunktCodes = {
   FORESLA_VEDTAK: '5015',
@@ -97,6 +97,8 @@ const aksjonspunktCodes = {
   VURDER_GJENNOMGÅTT_OPPLÆRING: '9302',
   VURDER_REISETID: '9303',
   VURDER_DATO_NY_REGEL_UTTAK: '9291',
+  VURDER_NYOPPSTARTET: '9016',
+  VURDER_OVERLAPPENDE_SØSKENSAK_KODE: '9292',
 };
 
 const klageAksjonspunkter = [

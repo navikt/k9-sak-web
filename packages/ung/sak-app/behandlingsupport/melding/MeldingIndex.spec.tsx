@@ -15,8 +15,9 @@ import { Mottaker } from '@k9-sak-web/backend/k9formidling/models/Mottaker.js';
 import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { MeldingerSakIndexBackendApi } from '@k9-sak-web/sak-meldinger';
 import { requestApi, UngSakApiKeys } from '../../data/ungsakApi';
-import MeldingIndex, { type BackendApi } from './MeldingIndex';
+import MeldingIndex from './MeldingIndex';
 
 const mockHistoryPush = vi.fn();
 
@@ -116,7 +117,7 @@ describe('<MeldingIndex>', () => {
     ): Promise<FritekstbrevDokumentdata[]> {
       throw new Error('Not implemented for test');
     },
-  } satisfies BackendApi;
+  } satisfies MeldingerSakIndexBackendApi;
   /* eslint-enable */
 
   const meldingMal: SendMeldingPayload = {

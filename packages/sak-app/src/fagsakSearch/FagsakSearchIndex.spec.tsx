@@ -1,21 +1,24 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 import { combineReducers, createStore } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
 import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
 import { Fagsak } from '@k9-sak-web/types';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 
 import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import FagsakSearchIndex from './FagsakSearchIndex';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const mockNavigate = vi.fn();
 
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
+vi.mock('react-router', async () => {
+  const actual = await vi.importActual<typeof import('react-router')>('react-router');
   return {
     ...actual,
     useNavigate: () => mockNavigate,
@@ -25,10 +28,7 @@ vi.mock('react-router-dom', async () => {
 describe('<FagsakSearchIndex>', () => {
   const fagsak: Partial<Fagsak> = {
     saksnummer: '12345',
-    sakstype: {
-      kode: 'ES',
-      kodeverk: 'FAGSAK_YTELSE',
-    },
+    sakstype: fagsakYtelsesType.ENGANGSTØNAD, // FAGSAK_YTELSE
     status: {
       kode: 'OPPR',
       kodeverk: 'FAGSAK_STATUS',
@@ -49,11 +49,18 @@ describe('<FagsakSearchIndex>', () => {
     requestApi.mock(K9sakApiKeys.SEARCH_FAGSAK, fagsaker);
 
     render(
-      <Provider store={createStore(combineReducers({ form: formReducer }))}>
-        <MemoryRouter>
-          <FagsakSearchIndex />
-        </MemoryRouter>
-      </Provider>,
+      <KodeverkProvider
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <Provider store={createStore(combineReducers({ form: formReducer }))}>
+          <MemoryRouter>
+            <FagsakSearchIndex />
+          </MemoryRouter>
+        </Provider>
+      </KodeverkProvider>,
     );
 
     expect(screen.getByTestId('FagsakSearch')).toBeInTheDocument();
@@ -74,13 +81,20 @@ describe('<FagsakSearchIndex>', () => {
     requestApi.mock(K9sakApiKeys.SEARCH_FAGSAK, fagsaker);
 
     render(
-      <Provider store={createStore(combineReducers({ form: formReducer }))}>
-        <MemoryRouter>
-          <RestApiErrorProvider>
-            <FagsakSearchIndex />
-          </RestApiErrorProvider>
-        </MemoryRouter>
-      </Provider>,
+      <KodeverkProvider
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <Provider store={createStore(combineReducers({ form: formReducer }))}>
+          <MemoryRouter>
+            <RestApiErrorProvider>
+              <FagsakSearchIndex />
+            </RestApiErrorProvider>
+          </MemoryRouter>
+        </Provider>
+      </KodeverkProvider>,
     );
 
     expect(await screen.getByTestId('FagsakSearch')).toBeInTheDocument();
@@ -94,7 +108,7 @@ describe('<FagsakSearchIndex>', () => {
     expect(screen.queryAllByRole('table').length).toBe(1);
     expect(screen.queryAllByRole('cell', { name: '12345' }).length).toBe(1);
 
-    await userEvent.click(screen.getByRole('row', { name: '12345' }));
+    await userEvent.click(screen.getByRole('row', { name: '12345 Engangsstønad' }));
 
     expect(mockNavigate.mock.calls[0][0]).toBe('/fagsak/12345/');
   });

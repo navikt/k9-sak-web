@@ -8,4 +8,6 @@ export * from './types/KodeverkNavnFraUndertypeKodeType';
 export * from './types/KodeverkResponse';
 export * from './types/KodeverkTilbakeType';
 export * from './types/KodeverkType';
+export * from './types/KodeverkTypeV2';
 export * from './types/KodeverkV2';
+export * from './types/Periode';

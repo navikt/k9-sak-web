@@ -1,15 +1,15 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { VergeBehandlingmenyValg } from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
-import { requestApi, UngSakApiKeys } from '../data/ungsakApi';
+import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
 import { BehandlingMenuIndex } from './BehandlingMenuIndex';
 
 const navAnsatt = {
@@ -26,10 +26,7 @@ const navAnsatt = {
 
 const fagsak = {
   saksnummer: '123',
-  sakstype: {
-    kode: fagsakYtelseType.FORELDREPENGER,
-    kodeverk: 'BEHANDLING_TYPE',
-  },
+  sakstype: fagsakYtelsesType.FORELDREPENGER, // BEHANDLING_TYPE
   status: {
     kode: fagsakStatus.UNDER_BEHANDLING,
     kodeverk: '',
@@ -58,8 +55,8 @@ const alleBehandlinger = [
   },
 ];
 
-vi.mock('react-router-dom', async () => {
-  const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
+vi.mock('react-router', async () => {
+  const actual = (await vi.importActual('react-router')) as Record<string, unknown>;
   return {
     ...actual,
     useHistory: () => ({
@@ -76,11 +73,15 @@ vi.mock('react-router-dom', async () => {
 
 describe('BehandlingMenuIndex', () => {
   it('skal vise meny der alle menyhandlinger er synlige', async () => {
+    requestApi.mock(UngSakApiKeys.INIT_FETCH_TILBAKE, {});
+    requestApi.mock(UngSakApiKeys.INIT_FETCH_KLAGE, {});
     requestApi.mock(UngSakApiKeys.NAV_ANSATT, navAnsatt);
     requestApi.mock(UngSakApiKeys.BEHANDLENDE_ENHETER, []);
-    requestApi.mock(UngSakApiKeys.FEATURE_TOGGLE, []);
+
     requestApi.mock(UngSakApiKeys.SAK_BRUKER, []);
     requestApi.mock(UngSakApiKeys.KODEVERK, {});
+    requestApi.mock(UngSakApiKeys.KODEVERK_TILBAKE, {});
+    requestApi.mock(UngSakApiKeys.KODEVERK_KLAGE, {});
     requestApi.mock(UngSakApiKeys.KAN_TILBAKEKREVING_OPPRETTES, false);
     requestApi.mock(UngSakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES, false);
     requestApi.mock(UngSakApiKeys.LOS_HENTE_MERKNAD, false);
@@ -126,11 +127,12 @@ describe('BehandlingMenuIndex', () => {
     expect(await knapp).not.toBeNull();
 
     expect(screen.queryByText('Fortsett behandlingen')).toBeNull();
-    expect(screen.queryByText('Sett behandlingen på vent')).not.toBeVisible();
-    expect(screen.queryByText('Henlegg behandlingen og avslutt')).not.toBeVisible();
-    expect(screen.queryByText('Endre behandlende enhet')).not.toBeVisible();
+    expect(screen.queryByText('Sett behandlingen på vent')).not.toBeInTheDocument();
+    expect(screen.queryByText('Henlegg behandlingen og avslutt')).not.toBeInTheDocument();
+    expect(screen.queryByText('Endre behandlende enhet')).not.toBeInTheDocument();
     // expect(screen.queryByText('Marker behandling')).not.toBeVisible();
-    expect(screen.queryByText('Opprett ny behandling')).not.toBeVisible();
+    expect(screen.queryByText('Opprett ny behandling')).not.toBeInTheDocument();
+    expect(screen.queryByText('Opprett verge/fullmektig')).not.toBeInTheDocument();
 
     /**
      * Åpne behandlingsmenyen
@@ -140,10 +142,11 @@ describe('BehandlingMenuIndex', () => {
     });
 
     expect(screen.queryByText('Fortsett behandlingen')).toBeNull();
-    expect(screen.queryByRole('button', { name: 'Sett behandlingen på vent' })).toBeVisible();
-    expect(screen.queryByRole('button', { name: 'Henlegg behandlingen og avslutt' })).toBeVisible();
-    expect(screen.queryByRole('button', { name: 'Endre behandlende enhet' })).toBeVisible();
+    expect(screen.getByRole('menuitem', { name: 'Sett behandlingen på vent' })).toBeInTheDocument();
+    expect(screen.getByRole('menuitem', { name: 'Henlegg behandlingen og avslutt' })).toBeInTheDocument();
+    expect(screen.getByRole('menuitem', { name: 'Endre behandlende enhet' })).toBeInTheDocument();
     // expect(screen.queryByRole('button', { name: 'Marker behandling' })).toBeVisible();
-    expect(screen.queryByRole('button', { name: 'Opprett ny behandling' })).toBeVisible();
+    expect(screen.getByRole('menuitem', { name: 'Opprett ny behandling' })).toBeInTheDocument();
+    expect(screen.getByRole('menuitem', { name: 'Opprett verge/fullmektig' })).toBeInTheDocument();
   });
 });

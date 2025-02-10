@@ -1,6 +1,6 @@
-import { findEndpointsForMicrofrontend, httpErrorHandler as httpErrorHandlerFn } from '@fpsak-frontend/utils';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { findEndpointsFromRels, httpErrorHandler as httpErrorHandlerFn } from '@fpsak-frontend/utils';
 import { InntektsmeldingContainer } from '@k9-sak-web/fakta-inntektsmelding';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 export default ({
   behandling,
@@ -24,7 +24,7 @@ export default ({
         dokumenter,
         readOnly,
         onFinished: løsAksjonspunkt,
-        endpoints: findEndpointsForMicrofrontend(behandling.links, [
+        endpoints: findEndpointsFromRels(behandling.links, [
           { rel: 'kompletthet-beregning', desiredName: 'kompletthetBeregning' },
         ]),
         aksjonspunkter,

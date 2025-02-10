@@ -9,6 +9,7 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = ({
     behandling,
     uttaksperioder,
+    inntektsgraderinger,
     perioderTilVurdering,
     utsattePerioder,
     arbeidsgiverOpplysningerPerId,
@@ -25,6 +26,7 @@ class PanelDef extends ProsessStegPanelDef {
       uuid={behandling.uuid}
       behandling={behandling}
       uttaksperioder={uttaksperioder}
+      inntektsgraderinger={inntektsgraderinger}
       perioderTilVurdering={perioderTilVurdering}
       utsattePerioder={utsattePerioder}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
@@ -43,6 +45,7 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.VENT_ANNEN_PSB_SAK,
     aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK,
     aksjonspunktCodes.OVERSTYRING_AV_UTTAK_KODE,
+    aksjonspunktCodes.VURDER_OVERLAPPENDE_SØSKENSAK_KODE,
   ];
 
   getOverstyrVisningAvKomponent = () => true;
@@ -68,15 +71,20 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
-  getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk }) => ({
-    uttaksperioder: uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder,
-    perioderTilVurdering: uttak?.perioderTilVurdering,
-    utsattePerioder: uttak?.utsattePerioder,
-    virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
-    arbeidsgiverOpplysningerPerId,
-    alleKodeverk,
-    relevanteAksjonspunkter: this.getAksjonspunktKoder(),
-  });
+  getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk, pleiepengerInntektsgradering, featureToggles }) => {
+    return {
+      uttaksperioder: uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder,
+      inntektsgraderinger: featureToggles.BRUK_INNTEKTSGRADERING_I_UTTAK
+        ? pleiepengerInntektsgradering?.perioder
+        : undefined,
+      perioderTilVurdering: uttak?.perioderTilVurdering,
+      utsattePerioder: uttak?.utsattePerioder,
+      virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
+      arbeidsgiverOpplysningerPerId,
+      alleKodeverk,
+      relevanteAksjonspunkter: this.getAksjonspunktKoder(),
+    };
+  };
 }
 
 class UttakProsessStegPanelDef extends ProsessStegDef {

@@ -1,12 +1,12 @@
 import { DetailView, DetailViewProps, LinkButton } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
+import React, { type JSX } from 'react';
 import { Period } from '@fpsak-frontend/utils';
 import PeriodList from '../period-list/PeriodList';
 import styles from './detailViewVurdering.module.css';
 import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
 import ContainerContext from '../../context/ContainerContext';
 import BehandlingType from '../../../constants/BehandlingType';
-import FagsakYtelseType from '../../../constants/FagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 type DetailViewVurderingProps = DetailViewProps & {
   perioder: Period[];
@@ -19,7 +19,9 @@ const DetailViewVurdering = (props: DetailViewVurderingProps): JSX.Element => {
   const harPerioder = perioder.length > 0 && perioder[0].isValid();
 
   const skalViseRedigerVurderingKnapp =
-    fagsakYtelseType === FagsakYtelseType.PLEIEPENGER_SLUTTFASE ? behandlingType !== BehandlingType.REVURDERING : true;
+    fagsakYtelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE
+      ? behandlingType !== BehandlingType.REVURDERING
+      : true;
 
   return (
     <DetailView

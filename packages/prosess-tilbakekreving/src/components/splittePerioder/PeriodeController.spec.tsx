@@ -2,7 +2,6 @@ import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import messages from '../../../i18n/nb_NO.json';
 import DataForPeriode from '../../types/dataForPeriodeTsType';
 import { PeriodeController } from './PeriodeController';
@@ -25,8 +24,8 @@ describe('<PeriodeController>', () => {
     );
 
     expect(screen.getByText('Del opp perioden')).toBeInTheDocument();
-    expect(screen.getByText('Forrige periode')).toBeInTheDocument();
-    expect(screen.getByText('Neste periode')).toBeInTheDocument();
+    expect(screen.getByLabelText('Forrige periode')).toBeInTheDocument();
+    expect(screen.getByLabelText('Neste periode')).toBeInTheDocument();
   });
 
   it('skal ikke vise knapp for å dele opp perioder når readonly', () => {
@@ -46,8 +45,8 @@ describe('<PeriodeController>', () => {
     );
 
     expect(screen.queryByText('Del opp perioden')).not.toBeInTheDocument();
-    expect(screen.getByText('Forrige periode')).toBeInTheDocument();
-    expect(screen.getByText('Neste periode')).toBeInTheDocument();
+    expect(screen.getByLabelText('Forrige periode')).toBeInTheDocument();
+    expect(screen.getByLabelText('Neste periode')).toBeInTheDocument();
   });
 
   it('skal splitte periode via modal', async () => {

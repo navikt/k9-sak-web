@@ -234,22 +234,6 @@ som fra core/og muligen import fra alla andra komponenter
   border-color: #c9c9c9;
 }
 
-.undefined {
-  background-color: rgb(255 145 0 / 80%);
-  border-color: rgb(255 145 0 / 80%);
-  border-radius: 8px;
-}
-
-.undefined:active {
-  background-color: var(--a-orange-200);
-  border-color: var(--a-orange-500);
-}
-
-.undefined.vis-item.vis-selected {
-  background-color: var(--a-orange-500);
-  border: 1px solid #4a4a4a;
-}
-
 .avslatt.vis-item.vis-selected {
   background-color: #ba3a26;
 }

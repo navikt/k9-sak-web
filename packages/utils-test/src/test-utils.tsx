@@ -8,7 +8,7 @@ import { reducer, reduxForm } from 'redux-form';
 import defaultMessages from '../../../public/sprak/nb_NO.json';
 export { default as messages } from '../../../public/sprak/nb_NO.json';
 
-export function renderWithIntl(ui: ReactElement, { locale, messages, ...renderOptions }: any = {}) {
+export function renderWithIntl(ui: ReactElement<any>, { locale, messages, ...renderOptions }: any = {}) {
   const Wrapper = ({ children }) => (
     <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages}>
       {children}
@@ -18,16 +18,8 @@ export function renderWithIntl(ui: ReactElement, { locale, messages, ...renderOp
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
 }
 
-export function renderWithReduxForm(ui: ReactElement, { ...renderOptions } = {}) {
-  const Wrapper = ({ children }) => (
-    <Provider store={createStore(combineReducers({ form: reducer }))}>{children}</Provider>
-  );
-
-  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
-}
-
 export function renderWithIntlAndReduxForm(
-  ui: ReactElement,
+  ui: ReactElement<any>,
   { locale, messages, initialValues, ...renderOptions }: any = {},
 ) {
   const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
@@ -51,7 +43,7 @@ const createTestReactQueryClient = () =>
     },
   });
 
-export function renderWithIntlAndReactQueryClient(ui: React.ReactElement, { locale, messages }: any = {}) {
+export function renderWithIntlAndReactQueryClient(ui: React.ReactElement<any>, { locale, messages }: any = {}) {
   const testQueryClient = createTestReactQueryClient();
   const { rerender, ...result } = rtlRender(
     <QueryClientProvider client={testQueryClient}>
@@ -62,7 +54,7 @@ export function renderWithIntlAndReactQueryClient(ui: React.ReactElement, { loca
   );
   return {
     ...result,
-    rerender: (rerenderUi: React.ReactElement) =>
+    rerender: (rerenderUi: React.ReactElement<any>) =>
       rerender(
         <QueryClientProvider client={testQueryClient}>
           <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages} onError={() => null}>

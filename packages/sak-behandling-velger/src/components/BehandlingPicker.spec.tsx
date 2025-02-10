@@ -5,8 +5,7 @@ import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/te
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { screen } from '@testing-library/react';
-import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 import messages from '../../i18n/nb_NO.json';
 import BehandlingVelgerSakIndex from '../BehandlingVelgerSakIndex';
 import { sortBehandlinger } from './behandlingVelgerUtils';
@@ -43,10 +42,7 @@ describe('<BehandlingPicker>', () => {
 
   const fagsak = {
     saksnummer: '35425245',
-    sakstype: {
-      kode: fagsakYtelsesType.PSB,
-      kodeverk: 'FAGSAK_YTELSE',
-    },
+    sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
     relasjonsRolleType: {
       kode: relasjonsRolleType.MOR,
       kodeverk: '',
@@ -82,8 +78,6 @@ describe('<BehandlingPicker>', () => {
           getKodeverkFn={vi.fn()}
           createLocationForSkjermlenke={() => locationMock}
           fagsak={fagsak}
-          showAll={false}
-          toggleShowAll={vi.fn()}
         />
       </MemoryRouter>,
       {
@@ -122,8 +116,6 @@ describe('<BehandlingPicker>', () => {
           getKodeverkFn={vi.fn()}
           createLocationForSkjermlenke={() => locationMock}
           fagsak={fagsak}
-          showAll={false}
-          toggleShowAll={vi.fn()}
         />
       </MemoryRouter>,
       {
@@ -213,8 +205,6 @@ describe('<BehandlingPicker>', () => {
           behandlingId={1}
           createLocationForSkjermlenke={() => locationMock}
           fagsak={fagsak}
-          showAll={false}
-          toggleShowAll={vi.fn()}
         />
       </MemoryRouter>,
       {

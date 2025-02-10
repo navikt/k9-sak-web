@@ -1,13 +1,12 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { HistorikkInnslagDokumentLink } from '@k9-sak-web/types';
+import { HistorikkInnslagDokumentLink } from '@k9-sak-web/gui/sak/historikk/historikkinnslagTsTypeV2.js';
 
 import { FileIcon } from '@navikt/aksel-icons';
 import { Link } from '@navikt/ds-react';
 import styles from '../historikkMalType.module.css';
-
-const DOCUMENT_SERVER_URL = '/k9/sak/api/dokument/hent-dokument';
+import { DOCUMENT_SERVER_URL } from '@k9-sak-web/gui/sak/historikk/documentServerUrl.js';
 
 interface OwnProps {
   dokumentLenke: HistorikkInnslagDokumentLink;

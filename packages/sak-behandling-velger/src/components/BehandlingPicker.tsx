@@ -10,12 +10,13 @@ import axios from 'axios';
 import { Location } from 'history';
 import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
 import styles from './behandlingPicker.module.css';
 import { sortBehandlinger } from './behandlingVelgerUtils';
+import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const getBehandlingNavn = (
   behandling: BehandlingAppKontekst,
@@ -52,7 +53,7 @@ const renderListItems = ({
   intl: IntlShape;
   alleSøknadsperioder: UseQueryResult<PerioderMedBehandlingsId, unknown>[];
   activeFilters: string[];
-}): ReactElement[] => {
+}): ReactElement<any>[] => {
   const sorterteOgFiltrerteBehandlinger = sortBehandlinger(behandlinger).filter(behandling => {
     if (activeFilters.length === 0) {
       return true;
@@ -94,7 +95,7 @@ const renderListItems = ({
 };
 
 const usePrevious = (value: number): number => {
-  const ref = useRef<number>();
+  const ref = useRef<number>(undefined);
   useEffect(() => {
     ref.current = value;
   });
@@ -120,7 +121,8 @@ interface OwnProps {
   getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
   behandlingId?: number;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
-  sakstypeKode: string;
+  sakstypeKode: FagsakYtelsesType;
+  hentSøknadsperioder: boolean;
 }
 
 /**
@@ -136,6 +138,7 @@ const BehandlingPicker = ({
   getKodeverkFn,
   createLocationForSkjermlenke,
   sakstypeKode,
+  hentSøknadsperioder,
 }: OwnProps) => {
   const firstRender = useRef(true);
   const navigate = useNavigate();
@@ -197,6 +200,7 @@ const BehandlingPicker = ({
       queryKey: ['behandlingId', behandling.id],
       queryFn: () => getBehandlingPerioderÅrsaker(behandling),
       staleTime: 3 * 60 * 1000,
+      enabled: hentSøknadsperioder,
     })),
   });
 

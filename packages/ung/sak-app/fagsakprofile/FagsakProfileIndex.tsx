@@ -11,8 +11,8 @@ import {
   Personopplysninger,
 } from '@k9-sak-web/types';
 import { Location } from 'history';
-import { useCallback, useEffect, useState } from 'react';
-import { Navigate, useLocation, useMatch } from 'react-router-dom';
+import { useCallback } from 'react';
+import { Navigate, useLocation, useMatch } from 'react-router';
 import {
   createLocationForSkjermlenke,
   getLocationWithDefaultProsessStegAndFakta,
@@ -59,21 +59,13 @@ export const FagsakProfileIndex = ({
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
 }: OwnProps) => {
-  const [showAll, setShowAll] = useState(!behandlingId);
-  const toggleShowAll = useCallback(() => setShowAll(!showAll), [showAll]);
-
   const getKodeverkFn = useGetKodeverkFn();
 
   const fagsakStatusMedNavn = useUngSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
-  const fagsakYtelseTypeMedNavn = useUngSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.sakstype);
 
   const { data: behandlendeEnheter } = restApiHooks.useRestApi<BehandlendeEnheter>(UngSakApiKeys.BEHANDLENDE_ENHETER, {
-    ytelseType: fagsak.sakstype.kode,
+    ytelseType: fagsak.sakstype,
   });
-
-  useEffect(() => {
-    setShowAll(!behandlingId);
-  }, [behandlingId]);
 
   const match = useMatch('/fagsak/:saksnummer/');
   const shouldRedirectToBehandlinger = !!match;
@@ -97,7 +89,7 @@ export const FagsakProfileIndex = ({
       {harHentetBehandlinger && !shouldRedirectToBehandlinger && (
         <FagsakProfilSakIndex
           saksnummer={fagsak.saksnummer}
-          fagsakYtelseType={fagsakYtelseTypeMedNavn}
+          fagsakYtelseType={fagsak.sakstype}
           fagsakStatus={fagsakStatusMedNavn}
           dekningsgrad={fagsak.dekningsgrad}
           renderBehandlingMeny={() => {
@@ -126,8 +118,6 @@ export const FagsakProfileIndex = ({
               noExistingBehandlinger={alleBehandlinger.length === 0}
               behandlingId={behandlingId}
               getKodeverkFn={getKodeverkFn}
-              showAll={showAll}
-              toggleShowAll={toggleShowAll}
               fagsak={fagsak}
               createLocationForSkjermlenke={createLocationForSkjermlenke}
             />

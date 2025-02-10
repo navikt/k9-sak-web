@@ -4,6 +4,8 @@ import classNames from 'classnames/bind';
 import * as React from 'react';
 import styles from './uttakUtregning.module.css';
 
+import type { JSX } from 'react';
+
 const cx = classNames.bind(styles);
 
 interface UttakUtregningProps {

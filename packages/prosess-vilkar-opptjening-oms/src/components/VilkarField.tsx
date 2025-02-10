@@ -1,12 +1,5 @@
 import { RadioGroupField } from '@fpsak-frontend/form';
-import {
-  FlexColumn,
-  FlexContainer,
-  FlexRow,
-  Image,
-  useFeatureToggles,
-  VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { FeatureToggles, Opptjening, Vilkarperiode } from '@k9-sak-web/types';
@@ -16,8 +9,10 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 
-import styles from './VilkarFields.module.css';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import dayjs from 'dayjs';
+import { useContext } from 'react';
+import styles from './VilkarFields.module.css';
 
 export const opptjeningMidlertidigInaktivKoder = {
   TYPE_A: '7847A',
@@ -70,7 +65,7 @@ export const VilkarField = ({
   skalValgMidlertidigInaktivTypeBVises,
 }: VilkarFieldsProps & Partial<FormValues>) => {
   const intl = useIntl();
-  const [featureToggles] = useFeatureToggles();
+  const featureToggles = useContext(FeatureTogglesContext);
   const erIkkeOppfyltText = (
     <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt" values={{ b: chunks => <b>{chunks}</b> }} />
   );

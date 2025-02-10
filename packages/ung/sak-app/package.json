@@ -18,7 +18,6 @@
     "@fpsak-frontend/sak-meny-ta-av-vent": "1.0.0",
     "@fpsak-frontend/sak-sok": "1.0.0",
     "@fpsak-frontend/sak-totrinnskontroll": "1.0.0",
-    "@fpsak-frontend/sak-visittkort": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/gui": "workspace:^",

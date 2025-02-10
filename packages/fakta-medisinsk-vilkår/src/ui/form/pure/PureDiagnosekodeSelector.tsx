@@ -6,6 +6,8 @@ import DeleteButton from '../../components/delete-button/DeleteButton';
 import styles from './diagnosekodeSelector.module.css';
 import { type DiagnosekodeSearcherPromise, toLegacyDiagnosekode } from '../../../util/diagnosekodeSearcher';
 
+import type { JSX } from 'react';
+
 interface Suggestion {
   key: string;
   value: string;

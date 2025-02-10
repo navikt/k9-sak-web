@@ -1,10 +1,10 @@
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { BarnType } from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import { screen } from '@testing-library/react';
 import React from 'react';
 import messages from '../i18n/nb_NO.json';
 import FaktaBarnIndex from './FaktaBarnIndex';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 describe('<FaktaBarnIndex>', () => {
   it('hvis ingen barn, rendres info om dette', () => {
@@ -91,7 +91,7 @@ describe('<FaktaBarnIndex>', () => {
             utvidetRettFor: '150915 #2',
           },
         ]}
-        fagsaksType={FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN}
+        fagsaksType={fagsakYtelsesType.OMSORGSPENGER_KS}
       />,
       { messages },
     );
@@ -133,7 +133,7 @@ describe('<FaktaBarnIndex>', () => {
             utvidetRettFor: '150915 #2',
           },
         ]}
-        fagsaksType={FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE}
+        fagsaksType={fagsakYtelsesType.OMSORGSPENGER_MA}
       />,
       { messages },
     );

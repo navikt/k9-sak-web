@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, type JSX } from 'react';
 import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import hash from 'object-hash';
 import OmsorgsperiodeoversiktType from '../../../types/Omsorgsperiodeoversikt';
@@ -9,7 +9,7 @@ import OmsorgsperiodeVurderingsdetaljer from '../omsorgsperiode-vurderingsdetalj
 import VurderingAvOmsorgsperioderForm from '../vurdering-av-omsorgsperioder-form/VurderingAvOmsorgsperioderForm';
 import Fosterbarn from '../fosterbarn/Fosterbarn';
 import ContainerContext from '../../context/ContainerContext';
-import Ytelsestype from '../../../types/Ytelsestype';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 interface OmsorgsperiodeoversiktProps {
   omsorgsperiodeoversikt: OmsorgsperiodeoversiktType;
@@ -38,7 +38,7 @@ const Omsorgsperiodeoversikt = ({ omsorgsperiodeoversikt }: Omsorgsperiodeoversi
   return (
     <>
       <OmsorgsperiodeoversiktMessages omsorgsperiodeoversikt={omsorgsperiodeoversikt} />
-      {sakstype === Ytelsestype.OMP && !readOnly && <Fosterbarn setFosterbarn={setFosterbarn} />}
+      {sakstype === fagsakYtelsesType.OMSORGSPENGER && !readOnly && <Fosterbarn setFosterbarn={setFosterbarn} />}
       <NavigationWithDetailView
         navigationSection={() => (
           <Periodenavigasjon

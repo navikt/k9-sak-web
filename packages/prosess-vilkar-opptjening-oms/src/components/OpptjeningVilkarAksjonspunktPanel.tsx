@@ -1,5 +1,5 @@
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, FeatureToggles, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
 import { HelpText, Label } from '@navikt/ds-react';
@@ -26,7 +26,7 @@ interface OpptjeningVilkarAksjonspunktPanelImplProps {
   behandlingVersjon: number;
   isApOpen: boolean;
   lovReferanse?: string;
-  fagsakType?: string;
+  fagsakType?: FagsakYtelsesType;
   readOnly: boolean;
   readOnlySubmitButton: boolean;
   status: string;
@@ -87,12 +87,12 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   };
 
   const erOmsorgspenger =
-    fagsakType === FagsakYtelseType.OMSORGSPENGER ||
-    fagsakType === FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN ||
-    fagsakType === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-    fagsakType === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE;
+    fagsakType === fagsakYtelsesType.OMSORGSPENGER ||
+    fagsakType === fagsakYtelsesType.OMSORGSPENGER_AO ||
+    fagsakType === fagsakYtelsesType.OMSORGSPENGER_KS ||
+    fagsakType === fagsakYtelsesType.OMSORGSPENGER_MA;
 
-  const erPleiepenger = fagsakType === FagsakYtelseType.PLEIEPENGER;
+  const erPleiepenger = fagsakType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
 
   const finnesOpptjeningsaktiviteterVidOpptjeningTom: boolean = !erPleiepenger
     ? true
