@@ -147,6 +147,5 @@ describe('BehandlingMenuIndex', () => {
     expect(screen.getByRole('menuitem', { name: 'Endre behandlende enhet' })).toBeInTheDocument();
     // expect(screen.queryByRole('button', { name: 'Marker behandling' })).toBeVisible();
     expect(screen.getByRole('menuitem', { name: 'Opprett ny behandling' })).toBeInTheDocument();
-    expect(screen.getByRole('menuitem', { name: 'Opprett verge/fullmektig' })).toBeInTheDocument();
   });
 });

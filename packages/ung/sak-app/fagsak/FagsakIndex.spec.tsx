@@ -1,18 +1,19 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import { screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { vi } from 'vitest';
 import type useTrackRouteParam from '../app/useTrackRouteParam.js';
-import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
+import { UngSakApiKeys, requestApi } from '../data/ungsakApi.js';
 import FagsakIndex from './FagsakIndex';
 
-vi.mock('react-router-dom', async () => {
-  const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
+vi.mock('react-router', async () => {
+  const actual = (await vi.importActual('react-router')) as Record<string, unknown>;
   return {
     ...actual,
     useLocation: () => ({
@@ -70,16 +71,16 @@ describe('<FagsakIndex>', () => {
         kodeverk: 'BEHANDLING_RESULTAT_TYPE',
       },
     ],
-    [kodeverkTyper.FAGSAK_YTELSE]: [
+    [KodeverkTypeV2.FAGSAK_YTELSE]: [
       {
-        kode: fagsakYtelseType.FORELDREPENGER,
-        kodeverk: 'FAGSAK_YTELSE',
+        kode: fagsakYtelsesType.FORELDREPENGER,
+        kodeverk: KodeverkTypeV2.FAGSAK_YTELSE,
         navn: 'Foreldrepenger',
       },
       {
-        kode: fagsakYtelseType.PLEIEPENGER,
+        kode: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
         navn: 'Pleiepenger sykt barn',
-        kodeverk: 'FAGSAK_YTELSE',
+        kodeverk: KodeverkTypeV2.FAGSAK_YTELSE,
       },
     ],
     [kodeverkTyper.FAGSAK_STATUS]: [
@@ -96,10 +97,7 @@ describe('<FagsakIndex>', () => {
       kode: fagsakStatus.OPPRETTET,
       kodeverk: 'FAGSAK_STATUS',
     },
-    sakstype: {
-      kode: fagsakYtelseType.PLEIEPENGER,
-      kodeverk: 'FAGSAK_YTELSE',
-    },
+    sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
   };
 
   const behandling = {
@@ -135,7 +133,6 @@ describe('<FagsakIndex>', () => {
     });
     requestApi.mock(UngSakApiKeys.BEHANDLINGER_UNGSAK, [behandling]);
     requestApi.mock(UngSakApiKeys.HENT_SAKSBEHANDLERE, {});
-    requestApi.mock(UngSakApiKeys.FEATURE_TOGGLE, []);
     requestApi.mock(UngSakApiKeys.LOS_HENTE_MERKNAD, []);
     requestApi.mock(UngSakApiKeys.NAV_ANSATT, {});
     requestApi.mock(UngSakApiKeys.KONTROLLRESULTAT, {});

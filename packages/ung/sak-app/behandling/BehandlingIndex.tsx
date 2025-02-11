@@ -1,23 +1,22 @@
 import { Location } from 'history';
-import { Suspense, useCallback, useEffect, useMemo } from 'react';
-import { NavigateFunction, useLocation, useNavigate } from 'react-router-dom';
+import { Suspense, useCallback, useContext, useEffect, useMemo } from 'react';
+import { NavigateFunction, useLocation, useNavigate } from 'react-router';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/utils';
+import BehandlingUngdomsytelseIndex from '@k9-sak-web/behandling-ungdomsytelse/src/BehandlingUngdomsytelseIndex';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
+import getAccessRights from '@k9-sak-web/sak-app/src/app/util/access';
 import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
   Fagsak,
   FagsakPerson,
-  FeatureToggles,
   KodeverkMedNavn,
   NavAnsatt,
 } from '@k9-sak-web/types';
-
-import BehandlingUngdomsytelseIndex from '@k9-sak-web/behandling-ungdomsytelse/src/BehandlingUngdomsytelseIndex';
-import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
-import getAccessRights from '@k9-sak-web/sak-app/src/app/util/access';
 import {
   getFaktaLocation,
   getLocationWithDefaultProsessStegAndFakta,
@@ -99,17 +98,7 @@ const BehandlingIndex = ({
   const kodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(UngSakApiKeys.KODEVERK);
 
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(UngSakApiKeys.SAK_BRUKER);
-  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
-    UngSakApiKeys.FEATURE_TOGGLE,
-  );
-  const featureToggles = useMemo<FeatureToggles>(
-    () =>
-      featureTogglesData.reduce((acc, curr) => {
-        acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
-        return acc;
-      }, {}),
-    [featureTogglesData],
-  );
+  const featureToggles = useContext(FeatureTogglesContext);
 
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(UngSakApiKeys.NAV_ANSATT);
   const rettigheter = useMemo(

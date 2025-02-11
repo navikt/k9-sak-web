@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import { parseQueryString } from '@fpsak-frontend/utils';
 import ForbiddenPage from '@k9-sak-web/gui/sak/feilmeldinger/ForbiddenPage.js';
@@ -19,7 +19,8 @@ import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
-import { restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 
 const EMPTY_ARRAY = [];
 
@@ -33,6 +34,7 @@ const AppIndex = () => {
   const location = useLocation();
   const [headerHeight, setHeaderHeight] = useState(0);
   const [hasCrashed, setCrashed] = useState(false);
+  const queryClient = new QueryClient();
 
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(UngSakApiKeys.NAV_ANSATT);
 
@@ -68,19 +70,21 @@ const AppIndex = () => {
 
   return (
     <ErrorBoundary errorMessageCallback={addErrorMessageAndSetAsCrashed} doNotShowErrorPage>
-      <AppConfigResolver>
-        <LanguageProvider>
-          <Dekorator
-            hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
-            queryStrings={queryStrings}
-            setSiteHeight={setSiteHeight}
-            pathname={location.pathname}
-          />
-          {shouldRenderHome && <Home headerHeight={headerHeight} />}
-          {forbiddenErrors.length > 0 && <ForbiddenPage />}
-          {unauthorizedErrors.length > 0 && <UnauthorizedPage />}
-        </LanguageProvider>
-      </AppConfigResolver>
+      <QueryClientProvider client={queryClient}>
+        <AppConfigResolver>
+          <LanguageProvider>
+            <Dekorator
+              hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
+              queryStrings={queryStrings}
+              setSiteHeight={setSiteHeight}
+              pathname={location.pathname}
+            />
+            {shouldRenderHome && <Home headerHeight={headerHeight} />}
+            {forbiddenErrors.length > 0 && <ForbiddenPage />}
+            {unauthorizedErrors.length > 0 && <UnauthorizedPage />}
+          </LanguageProvider>
+        </AppConfigResolver>
+      </QueryClientProvider>
     </ErrorBoundary>
   );
 };

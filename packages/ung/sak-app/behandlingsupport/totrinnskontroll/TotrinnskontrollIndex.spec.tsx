@@ -1,15 +1,15 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { UngSakApiKeys, requestApi } from '../../data/ungsakApi';
 import TotrinnskontrollIndex from './TotrinnskontrollIndex';
 
-vi.mock('react-router-dom', async () => {
-  const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
+vi.mock('react-router', async () => {
+  const actual = (await vi.importActual('react-router')) as Record<string, unknown>;
   return {
     ...actual,
     useHistory: () => ({
@@ -27,10 +27,7 @@ vi.mock('react-router-dom', async () => {
 describe('<TotrinnskontrollIndex>', () => {
   const fagsak = {
     saksnummer: '1',
-    sakstype: {
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: '',
-    },
+    sakstype: fagsakYtelsesType.FORELDREPENGER,
     person: {
       aktørId: '123',
     },

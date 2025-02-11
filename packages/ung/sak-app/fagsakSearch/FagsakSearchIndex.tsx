@@ -1,11 +1,13 @@
 import { useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
-import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 import { errorOfType, ErrorTypes, getErrorResponseData } from '@k9-sak-web/rest-api';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import FagsakSøkSakIndexV2 from '@k9-sak-web/gui/sak/fagsakSøk/FagsakSøkSakIndex.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { pathToFagsak } from '../app/paths';
 import { restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
 
@@ -37,7 +39,7 @@ const FagsakSearchIndex = () => {
   } = restApiHooks.useRestApiRunner<Fagsak[]>(UngSakApiKeys.SEARCH_FAGSAK);
 
   const searchResultAccessDenied = useMemo(
-    () => (errorOfType(error, ErrorTypes.MANGLER_TILGANG_FEIL) ? getErrorResponseData(error) : undefined),
+    () => (error && errorOfType(error, ErrorTypes.MANGLER_TILGANG_FEIL) ? getErrorResponseData(error) : undefined),
     [error],
   );
 
@@ -49,16 +51,20 @@ const FagsakSearchIndex = () => {
     }
   }, [sokFerdig, fagsaker]);
 
+  const fagsakerV2 = JSON.parse(JSON.stringify(fagsaker));
+  konverterKodeverkTilKode(fagsakerV2, false);
+
   return (
-    <FagsakSokSakIndex
-      fagsaker={fagsaker}
-      searchFagsakCallback={searchFagsaker}
-      searchResultReceived={sokFerdig}
-      selectFagsakCallback={(e, saksnummer: string) => goToFagsak(saksnummer)}
-      searchStarted={sokeStatus === RestApiState.LOADING}
-      searchResultAccessDenied={searchResultAccessDenied}
-      alleKodeverk={alleKodeverk}
-    />
+    <KodeverkProvider behandlingType={undefined} kodeverk={alleKodeverk}>
+      <FagsakSøkSakIndexV2
+        fagsaker={fagsakerV2}
+        searchFagsakCallback={searchFagsaker}
+        searchResultReceived={sokFerdig}
+        selectFagsakCallback={(e, saksnummer: string) => goToFagsak(saksnummer)}
+        searchStarted={sokeStatus === RestApiState.LOADING}
+        searchResultAccessDenied={searchResultAccessDenied}
+      />
+    </KodeverkProvider>
   );
 };
 

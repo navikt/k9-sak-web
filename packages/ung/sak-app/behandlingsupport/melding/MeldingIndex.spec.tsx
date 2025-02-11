@@ -5,7 +5,7 @@ import type { MottakerDto } from '@navikt/k9-sak-typescript-client';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 import { combineReducers, createStore } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
@@ -16,13 +16,13 @@ import type { BestillBrevDto } from '@k9-sak-web/backend/k9sak/generated';
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { MeldingerSakIndexBackendApi } from '@k9-sak-web/sak-meldinger';
-import { requestApi, UngSakApiKeys } from '../../data/ungsakApi';
+import { UngSakApiKeys, requestApi } from '../../data/ungsakApi';
 import MeldingIndex from './MeldingIndex';
 
 const mockHistoryPush = vi.fn();
 
-vi.mock('react-router-dom', async () => {
-  const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
+vi.mock('react-router', async () => {
+  const actual = (await vi.importActual('react-router')) as Record<string, unknown>;
   return {
     ...actual,
     useHistory: () => ({
@@ -89,10 +89,10 @@ describe('<MeldingIndex>', () => {
     },
   } satisfies Brevmaler;
 
-  beforeAll(() => {
+  beforeEach(() => {
+    requestApi.clearAllMockData();
     requestApi.mock(UngSakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
     requestApi.mock(UngSakApiKeys.KODEVERK, kodeverk);
-    requestApi.mock(UngSakApiKeys.FEATURE_TOGGLE, [{ key: 'TYPE_MEDISINSKE_OPPLYSNINGER_BREV', value: true }]);
     requestApi.mock(UngSakApiKeys.BREVMALER, templates);
   });
 
@@ -241,7 +241,6 @@ describe('<MeldingIndex>', () => {
   });
 
   it('skal sende melding til tredjepartsmottaker hvis det er valgt og utfyllt', async () => {
-    requestApi.clearMockData(UngSakApiKeys.SUBMIT_MESSAGE);
     requestApi.mock(UngSakApiKeys.SUBMIT_MESSAGE);
 
     render(

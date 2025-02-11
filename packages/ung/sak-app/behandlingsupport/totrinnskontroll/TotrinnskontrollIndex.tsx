@@ -11,7 +11,7 @@ import {
   TotrinnskontrollSkjermlenkeContext,
 } from '@k9-sak-web/types';
 import React, { useCallback, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { createLocationForSkjermlenke } from '../../app/paths';
 import { UngSakApiKeys, requestApi, restApiHooks } from '../../data/ungsakApi';
 import { useKodeverk } from '../../data/useKodeverk';

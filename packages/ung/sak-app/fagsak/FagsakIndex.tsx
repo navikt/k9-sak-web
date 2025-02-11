@@ -1,11 +1,4 @@
 import { DataFetchPendingModal, LoadingPanel } from '@fpsak-frontend/shared-components';
-import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
-import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
-import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
-import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
-import FagsakGrid from '@k9-sak-web/sak-app/src/fagsak/components/FagsakGrid';
 import {
   ArbeidsgiverOpplysningerWrapper,
   Fagsak,
@@ -15,9 +8,17 @@ import {
   Personopplysninger,
   SaksbehandlereInfo,
 } from '@k9-sak-web/types';
-import { SaksbehandlernavnContext } from '@navikt/ft-plattform-komponenter';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
+import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
+import FagsakGrid from '@k9-sak-web/sak-app/src/fagsak/components/FagsakGrid';
+import { SaksbehandlernavnContext } from '@navikt/ft-plattform-komponenter';
 import { behandlingerRoutePath, erBehandlingValgt, erUrlUnderBehandling, pathToMissingPage } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
