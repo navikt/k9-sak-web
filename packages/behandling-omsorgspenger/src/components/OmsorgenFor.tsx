@@ -19,7 +19,7 @@ interface OmsorgenForProps {
 
 export default ({ behandling, fagsak, readOnly, aksjonspunkter, submitCallback }: OmsorgenForProps) => {
   const { links } = behandling;
-  const sakstype = fagsak.sakstype.kode;
+  const sakstype = fagsak.sakstype;
 
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>

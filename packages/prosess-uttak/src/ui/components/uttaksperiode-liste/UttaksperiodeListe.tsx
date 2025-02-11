@@ -1,7 +1,7 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { Alert, BodyShort, Button, Label, Table } from '@navikt/ds-react';
 import dayjs from 'dayjs';
-import React from 'react';
+import React, { type JSX } from 'react';
 import { Uttaksperiode, UttaksperiodeMedInntektsgradering } from '../../../types/Uttaksperiode';
 import ContainerContext from '../../context/ContainerContext';
 import Uttak from '../uttak/Uttak';

@@ -1,17 +1,16 @@
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
-
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
-import { behandlingResultatType, vilkarStatus } from '@navikt/k9-sak-typescript-client';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { BehandlingDtoBehandlingResultatType, VilkårDtoVilkarStatus } from '@navikt/k9-sak-typescript-client';
+import { screen } from '@testing-library/react';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakAvslagPanelImpl } from './VedtakAvslagPanel';
 
-const pleiepenger = fagsakYtelseType.PLEIEPENGER;
-const omsorgspenger = fagsakYtelseType.OMSORGSPENGER;
-const kroniskSyktBarn = fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN;
-const midlertidigAlene = fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE;
+const pleiepenger = fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
+const omsorgspenger = fagsakYtelsesType.OMSORGSPENGER;
+const kroniskSyktBarn = fagsakYtelsesType.OMSORGSPENGER_KS;
+const midlertidigAlene = fagsakYtelsesType.OMSORGSPENGER_MA;
 
 describe('<VedtakAvslagPanel>', () => {
   const vilkarUtenSoknadsfrist = [
@@ -20,7 +19,7 @@ describe('<VedtakAvslagPanel>', () => {
       lovReferanse: '§ 22-13, 2. ledd',
       perioder: [
         {
-          vilkarStatus: vilkarStatus.IKKE_OPPFYLT,
+          vilkarStatus: VilkårDtoVilkarStatus.IKKE_OPPFYLT,
           periode: { fom: '', tom: '' },
         },
       ],
@@ -29,7 +28,7 @@ describe('<VedtakAvslagPanel>', () => {
 
   const behandlingsresultat = {
     id: 1,
-    type: behandlingResultatType.IKKE_FASTSATT,
+    type: BehandlingDtoBehandlingResultatType.IKKE_FASTSATT,
   };
 
   it('skal rendre avslagspanel for pleiepenger', () => {

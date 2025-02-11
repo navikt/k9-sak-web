@@ -113,6 +113,7 @@ interface PureOwnProps {
   frist?: string;
   ventearsak?: string;
   ventearsakVariant?: string;
+  isSubmitting: boolean;
 }
 
 interface MappedOwnProps {
@@ -140,6 +141,7 @@ export const SettPaVentModal = ({
   hasManualPaVent,
   ventearsakVariant,
   originalVentearsakVariant,
+  isSubmitting,
 }: PureOwnProps & Partial<MappedOwnProps> & WrappedComponentProps & InjectedFormProps) => {
   const venteArsakHasChanged = !(originalVentearsak === ventearsak || (!ventearsak && !originalVentearsak));
   const ventearsakVariantHasChanged =
@@ -310,6 +312,7 @@ export const SettPaVentModal = ({
                   erVenterEtterlysInntektsmelding,
                   formHasChanges,
                 )}
+                loading={isSubmitting}
               >
                 {getHovedknappTekst()}
               </Button>

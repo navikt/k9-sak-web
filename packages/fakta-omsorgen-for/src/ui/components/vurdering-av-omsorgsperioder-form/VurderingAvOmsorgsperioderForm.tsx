@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 
@@ -10,12 +10,12 @@ import { Box, DetailView, Form, LabelledContent, Margin } from '@navikt/ft-platt
 import Omsorgsperiode from '../../../types/Omsorgsperiode';
 import Relasjon from '../../../types/Relasjon';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
-import Ytelsestype from '../../../types/Ytelsestype';
 import ContainerContext from '../../context/ContainerContext';
 import { required } from '../../form/validators/index';
 import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
 import styles from './vurderingAvOmsorgsperioderForm.module.css';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 export enum FieldName {
   BEGRUNNELSE = 'begrunnelse',
@@ -59,7 +59,7 @@ const VurderingAvOmsorgsperioderForm = ({
   fosterbarn,
 }: VurderingAvOmsorgsperioderFormProps): JSX.Element => {
   const { onFinished, readOnly, sakstype } = React.useContext(ContainerContext);
-  const erOMP = sakstype === Ytelsestype.OMP;
+  const erOMP = sakstype === fagsakYtelsesType.OMSORGSPENGER;
   const intl = useIntl();
   const formMethods = useForm({
     defaultValues: {

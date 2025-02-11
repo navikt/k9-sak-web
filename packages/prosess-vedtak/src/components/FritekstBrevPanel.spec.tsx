@@ -1,7 +1,6 @@
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { act, screen } from '@testing-library/react';
 
 import { MemoryRouter } from 'react-router';
@@ -9,10 +8,6 @@ import messages from '../../i18n/nb_NO.json';
 import FritekstBrevPanel from './FritekstBrevPanel';
 
 describe('<FritekstBrevPanel>', () => {
-  beforeEach(() => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'FRITEKST_REDIGERING', value: true }]);
-  });
-
   const eventCallback = vi.fn();
 
   it('skal vise manuelt fritekstbrev i read only', async () => {
@@ -27,7 +22,7 @@ describe('<FritekstBrevPanel>', () => {
     };
 
     await act(() => {
-      renderWithIntl(
+      renderWithIntlAndReactQueryClient(
         <MemoryRouter>
           <FritekstBrevPanel
             previewBrev={eventCallback}
@@ -70,7 +65,7 @@ describe('<FritekstBrevPanel>', () => {
     };
 
     await act(() => {
-      renderWithIntl(
+      renderWithIntlAndReactQueryClient(
         <MemoryRouter>
           <FritekstBrevPanel
             previewBrev={eventCallback}
@@ -111,7 +106,7 @@ describe('<FritekstBrevPanel>', () => {
     };
 
     await act(() => {
-      renderWithIntl(
+      renderWithIntlAndReactQueryClient(
         <MemoryRouter>
           <FritekstBrevPanel
             previewBrev={eventCallback}

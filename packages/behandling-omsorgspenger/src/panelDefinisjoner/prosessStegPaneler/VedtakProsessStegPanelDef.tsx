@@ -1,6 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 
@@ -61,7 +62,7 @@ class PanelDef extends ProsessStegPanelDef {
     vilkar,
     simuleringResultat,
     beregningsgrunnlag,
-    ytelseTypeKode: fagsakYtelseType.OMSORGSPENGER,
+    ytelseTypeKode: fagsakYtelsesType.OMSORGSPENGER,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     uttaksperioder: forbrukteDager?.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder),
     personopplysninger,

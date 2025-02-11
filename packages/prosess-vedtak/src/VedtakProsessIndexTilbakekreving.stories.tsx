@@ -2,11 +2,11 @@ import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArs
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {
-  aksjonspunktType,
-  behandlingResultatType,
-  definisjon,
-  status,
-  venteårsak,
+  AksjonspunktDtoAksjonspunktType,
+  AksjonspunktDtoDefinisjon,
+  AksjonspunktDtoStatus,
+  AksjonspunktDtoVenteårsak,
+  BehandlingDtoBehandlingResultatType,
 } from '@navikt/k9-sak-typescript-client';
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent } from '@storybook/test';
@@ -20,7 +20,7 @@ const behandling = {
   sprakkode: 'NO',
   behandlingsresultat: {
     vedtaksbrev: 'FRITEKST',
-    type: behandlingResultatType.IKKE_FASTSATT,
+    type: BehandlingDtoBehandlingResultatType.IKKE_FASTSATT,
   },
   behandlingPaaVent: false,
   behandlingHenlagt: false,
@@ -39,19 +39,19 @@ const meta: Meta<typeof VedtakProsessIndex> = {
 export default meta;
 
 const aksjonspunkt5085 = {
-  aksjonspunktType: aksjonspunktType.MANU,
+  aksjonspunktType: AksjonspunktDtoAksjonspunktType.MANUELL,
   begrunnelse: null,
   besluttersBegrunnelse: null,
-  definisjon: definisjon._5085,
+  definisjon: AksjonspunktDtoDefinisjon.SJEKK_TILBAKEKREVING,
   erAktivt: true,
   fristTid: null,
   kanLoses: true,
-  status: status.OPPR,
+  status: AksjonspunktDtoStatus.OPPRETTET,
   toTrinnsBehandling: false,
   toTrinnsBehandlingGodkjent: null,
   vilkarType: null,
   vurderPaNyttArsaker: null,
-  venteårsak: venteårsak._,
+  AksjonspunktDtoVenteårsak: AksjonspunktDtoVenteårsak.UDEFINERT,
 };
 
 export const visSjekkTilbakekreving: StoryObj<typeof meta> = {

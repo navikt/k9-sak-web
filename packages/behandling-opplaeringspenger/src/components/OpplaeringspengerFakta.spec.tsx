@@ -25,7 +25,7 @@ import OpplaeringspengerFakta from './OpplaeringspengerFakta';
 describe('<OpplaeringspengerFakta>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelsesType.PSB, kodeverk: 'FAGSAK_YTELSE' },
+    sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
     status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
   } as Fagsak;
   const fagsakPerson = {

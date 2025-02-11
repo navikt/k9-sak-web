@@ -1,6 +1,6 @@
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
@@ -37,11 +37,11 @@ const mapFraAvslagskodeTilTekst = kode => {
  * Denne bruker behandlingsresultat.type som i tidligere kodeverk hadde flere attributer bakt inn. Dette skal skrives bort
  * så type blir en string som andre kodeverk
  */
-export const lagKonsekvensForYtelsenTekst = (konsekvenser, kodeverkNavnFraKode) => {
+export const lagKonsekvensForYtelsenTekst = (konsekvenser, kodeverkNavnFraKode: KodeverkNavnFraKodeType) => {
   if (!konsekvenser || konsekvenser.length < 1) {
     return '';
   }
-  return konsekvenser.map(k => kodeverkNavnFraKode(k, KodeverkType.KONSEKVENS_FOR_YTELSEN)).join(' og ');
+  return konsekvenser.map(k => kodeverkNavnFraKode(k.type, KodeverkType.BEHANDLING_RESULTAT_TYPE)).join(' og ');
 };
 
 const lagPeriodevisning = periodeMedÅrsak => {
@@ -77,9 +77,9 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      {(ytelseTypeKode === fagsakYtelseType.OMSORGSPENGER ||
-        ytelseTypeKode === fagsakYtelseType.FRISINN ||
-        ytelseTypeKode === fagsakYtelseType.PLEIEPENGER) && (
+      {(ytelseTypeKode === fagsakYtelsesType.OMSORGSPENGER ||
+        ytelseTypeKode === fagsakYtelsesType.FRISINN ||
+        ytelseTypeKode === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) && (
         <div data-testid="innvilgetRevurdering">
           <Label size="small" as="p">
             {intl.formatMessage({ id: 'VedtakForm.Resultat' })}

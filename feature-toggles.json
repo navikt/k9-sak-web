@@ -20,10 +20,6 @@
     "value": "${UNNTAKSBEHANDLING}"
   },
   {
-    "key": "SOKNADPERIODESTRIPE",
-    "value": "${SOKNADPERIODESTRIPE}"
-  },
-  {
     "key": "TYPE_MEDISINSKE_OPPLYSNINGER_BREV",
     "value": "${TYPE_MEDISINSKE_OPPLYSNINGER_BREV}"
   },
@@ -34,14 +30,6 @@
   {
     "key": "LOS_MARKER_BEHANDLING_SUBMIT",
     "value": "${LOS_MARKER_BEHANDLING_SUBMIT}"
-  },
-  {
-    "key": "AKSJONSPUNKT_9015",
-    "value": "${AKSJONSPUNKT_9015}"
-  },
-  {
-    "key": "ALDERSVILKAR_KRONISK_SYK",
-    "value": "${ALDERSVILKAR_KRONISK_SYK}"
   },
   {
     "key": "FRITEKST_REDIGERING",
@@ -76,10 +64,6 @@
     "value": "${NYE_NOKKELTALL}"
   },
   {
-    "key": "PROSESS_VILKAR_SOKNADSFRIST",
-    "value": "${PROSESS_VILKAR_SOKNADSFRIST}"
-  },
-  {
     "key": "UTVIDET_VARSELFELT",
     "value": "${UTVIDET_VARSELFELT}"
   },
@@ -102,5 +86,21 @@
   {
     "key": "BRUK_INNTEKTSGRADERING_I_UTTAK",
     "value": "${BRUK_INNTEKTSGRADERING_I_UTTAK}"
+  },
+  {
+    "key": "AKSJONSPUNKT_OVERLAPPENDE_SAKER",
+    "value": "${AKSJONSPUNKT_OVERLAPPENDE_SAKER}"
+  },
+  {
+    "key": "BRUK_V2_BEHANDLING_VELGER",
+    "value": "${BRUK_V2_BEHANDLING_VELGER}"
+  },
+  {
+    "key": "BRUK_V2_SAK_SOK",
+    "value": "${BRUK_V2_SAK_SOK}"
+  },
+  {
+    "key": "HISTORIKK_V2_VIS",
+    "value": "${HISTORIKK_V2_VIS}"
   }
 ]

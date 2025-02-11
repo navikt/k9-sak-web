@@ -1,7 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { decodeHtmlEntity, safeJSONParse } from '@fpsak-frontend/utils';
 import {
@@ -19,6 +18,7 @@ import {
   kanHindreUtsending,
   kanKunVelge,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { FagsakYtelsesType, fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/gui/utils/formidling.js';
@@ -70,7 +70,6 @@ const transformRedusertUtbetalingÅrsaker = formikValues =>
 
 interface Props {
   aksjonspunkter: AksjonspunktDto[];
-
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   behandlingPaaVent: boolean;
   behandlingresultat: BehandlingsresultatDto;
@@ -96,7 +95,7 @@ interface Props {
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
   vedtakVarsel: VedtakVarsel;
   vilkar: VilkårMedPerioderDto[];
-  ytelseTypeKode: string;
+  ytelseTypeKode: FagsakYtelsesType;
 }
 
 export const VedtakForm: React.FC<Props> = ({
@@ -255,7 +254,7 @@ export const VedtakForm: React.FC<Props> = ({
     return { ...initialValues, ...vedtakContext.vedtakFormState };
   };
 
-  const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN;
+  const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelsesType.FRISINN;
 
   const aktiverteInformasjonsbehov = (informasjonsbehovVedtaksbrev?.informasjonsbehov || []).filter(
     ({ type }) => type === 'FRITEKST',

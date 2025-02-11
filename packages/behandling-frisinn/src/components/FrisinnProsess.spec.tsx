@@ -7,19 +7,17 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import FetchedData from '../types/fetchedDataTsType';
 import FrisinnProsess from './FrisinnProsess';
 
 describe('<FrisinnProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
+    sakstype: fagsakYtelsesType.FORELDREPENGER, // FAGSAK_YTELSE
     status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
   } as Fagsak;
 
@@ -93,7 +91,6 @@ describe('<FrisinnProsess>', () => {
   };
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     renderWithIntl(
       <FrisinnProsess
         data={fetchedData as FetchedData}
@@ -121,7 +118,6 @@ describe('<FrisinnProsess>', () => {
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     renderWithIntl(
       <FrisinnProsess

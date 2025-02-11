@@ -1,7 +1,8 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { screen } from '@testing-library/react';
@@ -70,16 +71,16 @@ describe('<FagsakIndex>', () => {
         kodeverk: 'BEHANDLING_RESULTAT_TYPE',
       },
     ],
-    [kodeverkTyper.FAGSAK_YTELSE]: [
+    [KodeverkTypeV2.FAGSAK_YTELSE]: [
       {
-        kode: fagsakYtelseType.FORELDREPENGER,
-        kodeverk: 'FAGSAK_YTELSE',
+        kode: fagsakYtelsesType.FORELDREPENGER,
+        kodeverk: KodeverkTypeV2.FAGSAK_YTELSE,
         navn: 'Foreldrepenger',
       },
       {
-        kode: fagsakYtelseType.PLEIEPENGER,
+        kode: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
         navn: 'Pleiepenger sykt barn',
-        kodeverk: 'FAGSAK_YTELSE',
+        kodeverk: KodeverkTypeV2.FAGSAK_YTELSE,
       },
     ],
     [kodeverkTyper.FAGSAK_STATUS]: [
@@ -96,10 +97,7 @@ describe('<FagsakIndex>', () => {
       kode: fagsakStatus.OPPRETTET,
       kodeverk: 'FAGSAK_STATUS',
     },
-    sakstype: {
-      kode: fagsakYtelseType.PLEIEPENGER,
-      kodeverk: 'FAGSAK_YTELSE',
-    },
+    sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
   };
 
   const behandling = {
@@ -193,7 +191,6 @@ describe('<FagsakIndex>', () => {
     requestApi.mock(K9sakApiKeys.BEHANDLINGER_TILBAKE, [behandling2]);
     requestApi.mock(K9sakApiKeys.BEHANDLINGER_KLAGE, [behandling3]);
     requestApi.mock(K9sakApiKeys.HENT_SAKSBEHANDLERE, {});
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, []);
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, {});
     requestApi.mock(K9sakApiKeys.RISIKO_AKSJONSPUNKT, {});

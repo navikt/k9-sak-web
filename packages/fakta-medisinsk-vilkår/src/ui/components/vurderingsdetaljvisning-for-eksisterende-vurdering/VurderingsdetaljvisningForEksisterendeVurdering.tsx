@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { addYearsToDate } from '@fpsak-frontend/utils';
 import Vurderingselement from '../../../types/Vurderingselement';
 // eslint-disable-next-line max-len

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, ReactNode } from 'react';
+import React, { createContext, useReducer, ReactNode, type JSX } from 'react';
 
 const defaultInitialState = {};
 

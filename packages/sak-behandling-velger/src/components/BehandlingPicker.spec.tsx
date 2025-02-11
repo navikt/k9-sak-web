@@ -42,10 +42,7 @@ describe('<BehandlingPicker>', () => {
 
   const fagsak = {
     saksnummer: '35425245',
-    sakstype: {
-      kode: fagsakYtelsesType.PSB,
-      kodeverk: 'FAGSAK_YTELSE',
-    },
+    sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
     relasjonsRolleType: {
       kode: relasjonsRolleType.MOR,
       kodeverk: '',
@@ -81,8 +78,6 @@ describe('<BehandlingPicker>', () => {
           getKodeverkFn={vi.fn()}
           createLocationForSkjermlenke={() => locationMock}
           fagsak={fagsak}
-          showAll={false}
-          toggleShowAll={vi.fn()}
         />
       </MemoryRouter>,
       {
@@ -121,8 +116,6 @@ describe('<BehandlingPicker>', () => {
           getKodeverkFn={vi.fn()}
           createLocationForSkjermlenke={() => locationMock}
           fagsak={fagsak}
-          showAll={false}
-          toggleShowAll={vi.fn()}
         />
       </MemoryRouter>,
       {
@@ -212,8 +205,6 @@ describe('<BehandlingPicker>', () => {
           behandlingId={1}
           createLocationForSkjermlenke={() => locationMock}
           fagsak={fagsak}
-          showAll={false}
-          toggleShowAll={vi.fn()}
         />
       </MemoryRouter>,
       {

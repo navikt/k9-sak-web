@@ -1,7 +1,8 @@
+import { type JSX } from 'react';
 import { useIntl } from 'react-intl';
 
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { HGrid } from '@navikt/ds-react';
 import {
@@ -19,7 +20,7 @@ import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
 
 interface OwnProps {
-  ytelseTypeKode: string;
+  ytelseTypeKode: FagsakYtelsesType;
   behandlingresultat: BeregningResultat;
   tilbakekrevingvalg: TilbakekrevingValgDto;
   simuleringResultat: VedtakSimuleringResultat;
@@ -53,7 +54,7 @@ const RevurderingPaneler = ({
   const { kodeverkNavnFraKode } = useKodeverkContext();
 
   return (
-    <HGrid gap="1" columns={{ xs: ytelseTypeKode === fagsakYtelseType.FRISINN ? '4fr 8fr' : '12fr' }}>
+    <HGrid gap="1" columns={{ xs: ytelseTypeKode === fagsakYtelsesType.FRISINN ? '4fr 8fr' : '12fr' }}>
       <div>
         {isInnvilget(behandlingresultat.type) && (
           <VedtakInnvilgetRevurderingPanel

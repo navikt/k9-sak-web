@@ -75,17 +75,11 @@ spec:
       value: "true"
     - name: TILBAKE
       value: "true"
-    - name: SOKNADPERIODESTRIPE
-      value: "false"
     - name: TYPE_MEDISINSKE_OPPLYSNINGER_BREV
       value: "true"
     - name: LOS_MARKER_BEHANDLING
       value: "true"
     - name: LOS_MARKER_BEHANDLING_SUBMIT
-      value: "true"
-    - name: AKSJONSPUNKT_9015
-      value: "true"
-    - name: ALDERSVILKAR_KRONISK_SYK
       value: "true"
     - name: FRITEKST_REDIGERING
       value: "true"
@@ -103,8 +97,6 @@ spec:
       value: "true"
     - name: NYE_NOKKELTALL
       value: "true"
-    - name: PROSESS_VILKAR_SOKNADSFRIST
-      value: "true"
     - name: UTVIDET_VARSELFELT
       value: "true"
     - name: SKILL_UT_PRIVATPERSON
@@ -116,4 +108,12 @@ spec:
     - name: OPPTJENING_READ_ONLY_PERIODER
       value: "true"
     - name: BRUK_INNTEKTSGRADERING_I_UTTAK
+      value: "true"
+    - name: AKSJONSPUNKT_OVERLAPPENDE_SAKER
+      value: "true"
+    - name: BRUK_V2_BEHANDLING_VELGER
+      value: "true"
+    - name: BRUK_V2_SAK_SOK
+      value: "true"
+    - name: HISTORIKK_V2_VIS
       value: "true"

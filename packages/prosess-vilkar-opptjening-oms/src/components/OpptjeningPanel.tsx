@@ -26,7 +26,7 @@ interface OwnProps {
   formName: string;
   readOnlySubmitButton: boolean;
   originalErVilkarOk?: boolean;
-  rendreFakta?: () => void;
+  rendreFakta?: () => ReactNode;
   readOnly: boolean;
   isDirty?: boolean;
   children: ReactNode | ReactNode[];

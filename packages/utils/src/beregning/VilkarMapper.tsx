@@ -1,5 +1,6 @@
-import { Vilkar as FTVilkarType } from '@navikt/ft-types';
 import { BeregningReferanse } from '@k9-sak-web/types';
+import { Vilkar as FTVilkarType } from '@navikt/ft-types';
+import { VilkårMedPerioderDto } from '@navikt/k9-sak-typescript-client';
 
 type Periode = { fom: string; tom: string };
 
@@ -11,8 +12,7 @@ const erForlengelse = (beregningreferanserTilVurdering: BeregningReferanse[], pe
   return undefined;
 };
 
-// TODO: Legg til type for vilkar når kodeverkjobben er gjort. Formattering her skal vere på nytt format (må gjøres utenfor)
-const mapVilkar = (vilkar, beregningreferanserTilVurdering: BeregningReferanse[]): FTVilkarType =>
+const mapVilkar = (vilkar: VilkårMedPerioderDto, beregningreferanserTilVurdering: BeregningReferanse[]): FTVilkarType =>
   ({
     vilkarType: vilkar.vilkarType,
     overstyrbar: vilkar.overstyrbar,
@@ -26,6 +26,6 @@ const mapVilkar = (vilkar, beregningreferanserTilVurdering: BeregningReferanse[]
       vilkarStatus: p.vilkarStatus,
       erForlengelse: erForlengelse(beregningreferanserTilVurdering, p.periode),
     })),
-  } as FTVilkarType);
+  }) as FTVilkarType;
 
 export default mapVilkar;

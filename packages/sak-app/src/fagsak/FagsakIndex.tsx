@@ -1,6 +1,5 @@
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
+
 import {
   AndreSakerPåSøkerStripe,
   DataFetchPendingModal,
@@ -8,13 +7,10 @@ import {
   Punsjstripe,
 } from '@fpsak-frontend/shared-components';
 import { Merknadkode } from '@k9-sak-web/sak-meny-marker-behandling';
-import Soknadsperiodestripe from '@k9-sak-web/sak-soknadsperiodestripe';
 import {
   ArbeidsgiverOpplysningerWrapper,
-  BehandlingPerioderårsakMedVilkår,
   Fagsak,
   FagsakPerson,
-  FeatureToggles,
   Kodeverk,
   KodeverkMedNavn,
   MerknadFraLos,
@@ -22,14 +18,17 @@ import {
   Personopplysninger,
   SaksbehandlereInfo,
 } from '@k9-sak-web/types';
-import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
 import RelatertFagsak from '@k9-sak-web/types/src/relatertFagsak';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
 import { SaksbehandlernavnContext } from '@navikt/ft-plattform-komponenter';
+import { DirekteOvergangDto } from '@navikt/k9-sak-typescript-client';
 import {
   behandlingerRoutePath,
   erBehandlingValgt,
@@ -47,22 +46,22 @@ import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
 import FagsakGrid from './components/FagsakGrid';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 
 const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   behandlingType &&
   (BehandlingType.TILBAKEKREVING === behandlingType.kode ||
     BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
 
-const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER;
-const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) =>
-  fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
+const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN;
+const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE;
 const erOmsorgspenger = (fagsak: Fagsak) =>
   [
-    fagsakYtelseType.OMSORGSPENGER,
-    fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN,
-    fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN,
-    fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE,
-  ].includes(fagsak?.sakstype?.kode);
+    fagsakYtelsesType.OMSORGSPENGER,
+    fagsakYtelsesType.OMSORGSPENGER_KS,
+    fagsakYtelsesType.OMSORGSPENGER_AO,
+    fagsakYtelsesType.OMSORGSPENGER_MA,
+  ].some(sakstype => sakstype === fagsak.sakstype);
 
 /**
  * FagsakIndex
@@ -145,13 +144,22 @@ const FagsakIndex = () => {
   const { data: behandlingPersonopplysninger, state: personopplysningerState } =
     restApiHooks.useRestApi<Personopplysninger>(K9sakApiKeys.BEHANDLING_PERSONOPPLYSNINGER, undefined, options);
 
+  const behandlingPersonopplysningerV2 = useMemo(() => {
+    if (!behandlingPersonopplysninger) {
+      return undefined;
+    }
+    const deepCopy = JSON.parse(JSON.stringify(behandlingPersonopplysninger));
+    konverterKodeverkTilKode(deepCopy, false);
+    return deepCopy;
+  }, [behandlingPersonopplysninger]);
+
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
   const { data: arbeidsgiverOpplysninger } = restApiHooks.useRestApi<ArbeidsgiverOpplysningerWrapper>(
     K9sakApiKeys.ARBEIDSGIVERE,
     {},
     {
-      updateTriggers: [!behandling],
+      updateTriggers: [behandlingId],
       suspendRequest: !behandling,
     },
   );
@@ -177,46 +185,22 @@ const FagsakIndex = () => {
     },
   );
 
-  const { data: direkteOvergangFraInfotrygd } = restApiHooks.useRestApi<OvergangFraInfotrygd>(
+  const { data: direkteOvergangFraInfotrygd } = restApiHooks.useRestApi<DirekteOvergangDto>(
     K9sakApiKeys.DIREKTE_OVERGANG_FRA_INFOTRYGD,
     {},
     {
-      updateTriggers: [!behandling],
+      updateTriggers: [behandlingId],
       suspendRequest: !behandling,
     },
   );
 
-  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
-    K9sakApiKeys.FEATURE_TOGGLE,
-  );
-  const featureToggles = useMemo<FeatureToggles>(
-    () =>
-      featureTogglesData?.reduce((acc, curr) => {
-        acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
-        return acc;
-      }, {}),
-    [featureTogglesData],
-  );
-
-  const showSøknadsperiodestripe = featureToggles?.SOKNADPERIODESTRIPE && erPleiepengerSyktBarn(fagsak);
-
-  const { data: behandlingPerioderMedVilkår } = restApiHooks.useRestApi<BehandlingPerioderårsakMedVilkår>(
-    K9sakApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR,
-    {},
-    {
-      updateTriggers: [behandlingId, behandlingVersjon],
-      suspendRequest:
-        !behandling ||
-        (!erPleiepengerSyktBarn(fagsak) && !erPleiepengerLivetsSluttfase(fagsak)) ||
-        !showSøknadsperiodestripe,
-    },
-  );
+  const featureToggles = useContext(FeatureTogglesContext);
 
   const { data: merknaderFraLos } = restApiHooks.useGlobalStateRestApi<MerknadFraLos>(
     K9sakApiKeys.LOS_HENTE_MERKNAD,
     {},
     {
-      updateTriggers: [!behandling],
+      updateTriggers: [behandlingId],
       suspendRequest: !behandling || !featureToggles?.LOS_MARKER_BEHANDLING,
     },
   );
@@ -319,10 +303,9 @@ const FagsakIndex = () => {
 
               return (
                 <div style={{ overflow: 'hidden' }}>
-                  <VisittkortSakIndex
-                    personopplysninger={behandlingPersonopplysninger}
-                    alleKodeverk={alleKodeverkK9Sak}
-                    sprakkode={behandling?.sprakkode}
+                  <VisittkortPanel
+                    personopplysninger={behandlingPersonopplysningerV2}
+                    sprakkode={behandling?.sprakkode.kode}
                     fagsakPerson={fagsakPerson || fagsak.person}
                     harTilbakekrevingVerge={erTilbakekreving(behandling?.type) && harVerge}
                     relaterteFagsaker={relaterteFagsaker}
@@ -338,14 +321,10 @@ const FagsakIndex = () => {
                         <AndreSakerPåSøkerStripe
                           søkerIdent={fagsakPerson.personnummer}
                           saksnummer={fagsak.saksnummer}
-                          fagsakYtelseType={fagsak.sakstype.kode}
+                          fagsakYtelseType={fagsak.sakstype}
                         />
                       )}
                     </>
-                  )}
-
-                  {showSøknadsperiodestripe && (
-                    <Soknadsperiodestripe behandlingPerioderMedVilkår={behandlingPerioderMedVilkår} />
                   )}
                 </div>
               );

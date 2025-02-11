@@ -2,19 +2,18 @@ import { screen } from '@testing-library/react';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
 import {
-  aksjonspunktType,
-  behandlingArsakType,
-  behandlingResultatType,
-  definisjon,
-  status,
-  venteårsak,
+  AksjonspunktDtoAksjonspunktType,
+  AksjonspunktDtoDefinisjon,
+  AksjonspunktDtoStatus,
+  AksjonspunktDtoVenteårsak,
+  BehandlingDtoBehandlingResultatType,
+  BehandlingÅrsakDtoBehandlingArsakType,
 } from '@navikt/k9-sak-typescript-client';
 
 const behandling = {
@@ -25,37 +24,35 @@ const behandling = {
   sprakkode: 'NO',
   behandlingsresultat: {
     vedtaksbrev: 'FRITEKST',
-    type: behandlingResultatType.IKKE_FASTSATT,
+    type: BehandlingDtoBehandlingResultatType.IKKE_FASTSATT,
   },
   behandlingHenlagt: false,
   behandlingPaaVent: false,
   behandlingÅrsaker: [
     {
-      behandlingArsakType: behandlingArsakType.ETTER_KLAGE,
+      behandlingArsakType: BehandlingÅrsakDtoBehandlingArsakType.ETTER_KLAGE,
     },
   ],
 };
 
 const aksjonspunkt5085 = {
-  aksjonspunktType: aksjonspunktType.MANU,
+  aksjonspunktType: AksjonspunktDtoAksjonspunktType.MANUELL,
   begrunnelse: null,
   besluttersBegrunnelse: null,
-  definisjon: definisjon._5085,
+  definisjon: AksjonspunktDtoDefinisjon.SJEKK_TILBAKEKREVING,
   erAktivt: true,
   fristTid: null,
   kanLoses: true,
-  status: status.OPPR,
+  status: AksjonspunktDtoStatus.OPPRETTET,
   toTrinnsBehandling: false,
   toTrinnsBehandlingGodkjent: null,
   vilkarType: null,
   vurderPaNyttArsaker: null,
-  venteårsak: venteårsak._,
+  venteårsak: AksjonspunktDtoVenteårsak.UDEFINERT,
 };
 
 describe('<AvslagårsakListe>', () => {
   it('Skal vise ap for sjekk tilbakekreving riktig', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-
     renderWithIntl(
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => {}}>
         <VedtakProsessIndex
@@ -63,7 +60,7 @@ describe('<AvslagårsakListe>', () => {
             ...behandling,
             type: behandlingType.SOKNAD,
             behandlingsresultat: {
-              type: behandlingResultatType.IKKE_FASTSATT,
+              type: BehandlingDtoBehandlingResultatType.IKKE_FASTSATT,
             },
           }}
           vilkar={[]}
@@ -72,7 +69,7 @@ describe('<AvslagårsakListe>', () => {
           isReadOnly={false}
           previewCallback={vi.fn()}
           submitCallback={vi.fn()}
-          ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
+          ytelseTypeKode={fagsakYtelsesType.OMSORGSPENGER}
           arbeidsgiverOpplysningerPerId={{}}
           lagreDokumentdata={vi.fn()}
           hentFritekstbrevHtmlCallback={vi.fn()}
@@ -99,8 +96,6 @@ describe('<AvslagårsakListe>', () => {
   });
 
   it('Skal IKKE vise ap for sjekk tilbakekreving', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
-
     renderWithIntl(
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => {}}>
         <VedtakProsessIndex
@@ -108,14 +103,14 @@ describe('<AvslagårsakListe>', () => {
             ...behandling,
             type: behandlingType.SOKNAD,
             behandlingsresultat: {
-              type: behandlingResultatType.IKKE_FASTSATT,
+              type: BehandlingDtoBehandlingResultatType.IKKE_FASTSATT,
             },
           }}
           vilkar={[]}
           medlemskap={{ fom: '2019-01-01' }}
           aksjonspunkter={[
             {
-              definisjon: definisjon._5015,
+              definisjon: AksjonspunktDtoDefinisjon.FORESLÅ_VEDTAK,
               begrunnelse: undefined,
               kanLoses: true,
               erAktivt: true,
@@ -124,7 +119,7 @@ describe('<AvslagårsakListe>', () => {
           isReadOnly={false}
           previewCallback={vi.fn()}
           submitCallback={vi.fn()}
-          ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
+          ytelseTypeKode={fagsakYtelsesType.OMSORGSPENGER}
           arbeidsgiverOpplysningerPerId={{}}
           lagreDokumentdata={vi.fn()}
           hentFritekstbrevHtmlCallback={vi.fn()}

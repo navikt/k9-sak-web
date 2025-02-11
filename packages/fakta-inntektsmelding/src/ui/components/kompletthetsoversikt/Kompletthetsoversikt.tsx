@@ -1,7 +1,7 @@
 import { Period } from '@fpsak-frontend/utils';
 import { Button } from '@navikt/ds-react';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import React, { useState } from 'react';
+import React, { useState, type JSX } from 'react';
 import { useForm } from 'react-hook-form';
 import ContainerContext from '../../../context/ContainerContext';
 import AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayload';

@@ -8,6 +8,7 @@
     "./shared/*": "./src/shared/*",
     "./combined/*": "./src/combined/*",
     "./k9sak/generated": "./src/k9sak/generated/index.js",
+    "./k9sak/generated/metadata": "./src/k9sak/generated/metadata.js",
     "./k9sak/kodeverk/*": "./src/k9sak/kodeverk/*",
     "./k9sak/errorhandling/*": "./src/k9sak/errorhandling/*",
     "./k9formidling/*": "./src/k9formidling/*",
@@ -15,7 +16,10 @@
     "./k9klage/kodeverk/*": "./src/k9klage/kodeverk/*"
   },
   "dependencies": {
-    "@navikt/k9-klage-typescript-client": "1.0.20240513162434-997f3da",
-    "@navikt/k9-sak-typescript-client": "1.0.20241203201014"
+    "@navikt/k9-klage-typescript-client": "1.0.20241206133624",
+    "@navikt/k9-sak-typescript-client": "1.0.20250205155930"
+  },
+  "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.66.0"
   }
 }

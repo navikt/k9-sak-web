@@ -77,7 +77,7 @@ interface OwnProps {
   kjoenn?: Kodeverk;
   rolleNavn?: string;
   opprettetAv: string;
-  children: React.ReactElement;
+  children: React.ReactElement<any>;
 }
 
 const SnakkebobleContainer = ({ dato, aktoer, rolleNavn = '', opprettetAv, children }: OwnProps) => {
@@ -86,6 +86,7 @@ const SnakkebobleContainer = ({ dato, aktoer, rolleNavn = '', opprettetAv, child
   return (
     <div className={pilHøyre(aktoer) ? styles.chatRight : styles.chatLeft}>
       <Chat
+        data-testid={`snakkeboble-${dato}`}
         timestamp={formatDate(dato)}
         position={pilHøyre(aktoer) ? 'right' : 'left'}
         name={`${rolleNavn} ${hentSaksbehandlerNavn(opprettetAv) || ''}`}

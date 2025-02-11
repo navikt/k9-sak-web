@@ -1,5 +1,4 @@
 import { BodyShort, Button, Modal } from '@navikt/ds-react';
-import React from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import FlexColumn from './flexGrid/FlexColumn';
 import FlexContainer from './flexGrid/FlexContainer';
@@ -38,7 +37,6 @@ const OkAvbrytModal = ({
     <Modal.Header>
       <BodyShort size="small">{text || <FormattedMessage id={textCode} />}</BodyShort>
     </Modal.Header>
-    {/* <VerticalSpacer fourtyPx /> */}
     <Modal.Body>
       <FlexContainer>
         <FlexRow>

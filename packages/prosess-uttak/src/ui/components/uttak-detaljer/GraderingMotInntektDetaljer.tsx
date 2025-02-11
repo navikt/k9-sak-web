@@ -3,9 +3,12 @@ import { tilNOK } from '@k9-sak-web/gui/utils/formatters.js';
 import { BodyShort, Box, Tag, VStack } from '@navikt/ds-react';
 import UttakDetaljerEkspanderbar from './UttakDetaljerEkspanderbar';
 import { ArbeidsgiverOpplysninger, Inntektsgradering } from '../../../types';
+import classNames from 'classnames/bind';
+import { Arbeidstype } from '../../../constants';
 
 import styles from './nyUttakDetaljer.module.css';
-import { Arbeidstype } from '../../../constants';
+
+const cx = classNames.bind(styles);
 
 interface ownProps {
   alleArbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
@@ -29,7 +32,7 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
               key={`${arbeidsgiverIdentifikator}_avkorting_inntekt_grunnlag`}
               className={styles.uttakDetaljer__beregningFirma}
             >
-              <BodyShort size="small" weight="semibold">
+              <BodyShort size="small" weight="semibold" className="leading-6">
                 {arbeidsforholdData?.navn || 'Mangler navn'} (
                 {arbeidsforholdData?.identifikator || arbeidsgiverIdentifikator}){' '}
                 {inntForhold.erNytt && (
@@ -60,9 +63,15 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
                     </Tag>
                   )}
                 </BodyShort>
-                <BodyShort size="small">Inntekt: {tilNOK.format(inntForhold.bruttoInntekt)}</BodyShort>
-                <BodyShort size="small">Jobber: {inntForhold.arbeidstidprosent} %</BodyShort>
-                <BodyShort size="small">= {tilNOK.format(inntForhold.løpendeInntekt)} i utbetalt lønn</BodyShort>
+                <BodyShort className="leading-6" size="small">
+                  Inntekt: {tilNOK.format(inntForhold.bruttoInntekt)}
+                </BodyShort>
+                <BodyShort className="leading-6" size="small">
+                  Jobber: {inntForhold.arbeidstidprosent} %
+                </BodyShort>
+                <BodyShort className="leading-6" size="small">
+                  = {tilNOK.format(inntForhold.løpendeInntekt)} i utbetalt lønn
+                </BodyShort>
               </Box>
             </React.Fragment>
           );
@@ -86,22 +95,22 @@ const GraderingMotInntektDetaljer: FC<ownProps> = ({ alleArbeidsforhold, inntekt
       </UttakDetaljerEkspanderbar>
 
       <VStack className={styles.uttakDetaljer__nyGradering}>
-        <BodyShort as="div" size="small" weight="semibold">
+        <BodyShort as="div" size="small" weight="semibold" className="leading-6">
           Ny gradering
         </BodyShort>
-        <BodyShort as="div" size="small">
+        <BodyShort as="div" size="small" className="leading-6">
           {løpendeInntekt} (utbetalt lønn) /
         </BodyShort>
-        <BodyShort as="div" size="small" className={styles.uttakDetaljer__beregningStrek}>
+        <BodyShort as="div" size="small" className={cx({ uttakDetaljer__beregningStrek: true, 'leading-6': true })}>
           {beregningsgrunnlag} (beregningsgrunnlag)
         </BodyShort>
-        <BodyShort as="div" size="small" className={styles.uttakDetaljer__beregningSum}>
+        <BodyShort as="div" size="small" className={cx({ uttakDetaljer__beregningSum: true, 'leading-6': true })}>
           = {reduksjonsProsent} % reduksjon pga. utbetalt lønn
         </BodyShort>
       </VStack>
 
       <Box>
-        <BodyShort as="div" className={styles.uttakDetaljer__detailSum} size="small">
+        <BodyShort as="div" size="small" className={cx({ uttakDetaljer__detailSum: true, 'leading-6': true })}>
           = {graderingsProsent} % totalt inntektstap
         </BodyShort>
       </Box>

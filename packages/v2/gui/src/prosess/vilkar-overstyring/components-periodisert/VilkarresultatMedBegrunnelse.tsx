@@ -12,8 +12,8 @@ interface VilkarresultatMedBegrunnelseProps {
   readOnly: boolean;
   erMedlemskapsPanel: boolean;
   visPeriodisering: boolean;
-  customVilkarIkkeOppfyltText?: string | React.ReactElement;
-  customVilkarOppfyltText?: string | React.ReactElement;
+  customVilkarIkkeOppfyltText?: string | React.ReactElement<any>;
+  customVilkarOppfyltText?: string | React.ReactElement<any>;
   skalViseBegrunnelse?: boolean;
   periodeFom: string;
   periodeTom: string;

@@ -2,7 +2,7 @@ import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/t
 import { vilkarType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/VilkårType.js';
 import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
-import { behandlingType, utfall } from '@navikt/k9-sak-typescript-client';
+import { BehandlingAksjonspunktDtoBehandlingType, VilkårDtoVilkarStatus } from '@navikt/k9-sak-typescript-client';
 import AvslagsårsakListe from './AvslagsårsakListe';
 
 describe('<AvslagårsakListe>', () => {
@@ -19,7 +19,7 @@ describe('<AvslagårsakListe>', () => {
               antattGodkjentArbeid: 'P0D',
               antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',
             },
-            vilkarStatus: utfall.IKKE_OPPFYLT, // VILKAR_UTFALL_TYPE
+            vilkarStatus: VilkårDtoVilkarStatus.IKKE_OPPFYLT, // VILKAR_UTFALL_TYPE
             periode: { fom: '2020-03-16', tom: '2020-03-19' },
             begrunnelse: null,
           },
@@ -29,7 +29,7 @@ describe('<AvslagårsakListe>', () => {
               antattGodkjentArbeid: 'P0D',
               antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',
             },
-            vilkarStatus: utfall.IKKE_OPPFYLT, // VILKAR_UTFALL_TYPE
+            vilkarStatus: VilkårDtoVilkarStatus.IKKE_OPPFYLT, // VILKAR_UTFALL_TYPE
             periode: { fom: '2020-03-23', tom: '2020-03-26' },
             begrunnelse: null,
           },
@@ -43,7 +43,7 @@ describe('<AvslagårsakListe>', () => {
           {
             avslagKode: '1020',
             merknadParametere: {},
-            vilkarStatus: utfall.IKKE_OPPFYLT, // VILKAR_UTFALL_TYPE
+            vilkarStatus: VilkårDtoVilkarStatus.IKKE_OPPFYLT, // VILKAR_UTFALL_TYPE
             periode: { fom: '2020-03-16', tom: '2020-03-26' },
             begrunnelse: null,
           },
@@ -53,7 +53,7 @@ describe('<AvslagårsakListe>', () => {
 
     renderWithIntlAndReduxForm(
       <KodeverkProvider
-        behandlingType={behandlingType.BT_002}
+        behandlingType={BehandlingAksjonspunktDtoBehandlingType.FØRSTEGANGSSØKNAD}
         kodeverk={alleKodeverkV2}
         klageKodeverk={{}}
         tilbakeKodeverk={{}}

@@ -1,15 +1,16 @@
+import { Kodeverk } from '@k9-sak-web/types';
 import getPackageIntl from '../i18n/getPackageIntl';
 
 const intl = getPackageIntl();
 
-export const replaceNorwegianCharacters = str => {
+export const replaceNorwegianCharacters = (str: string) => {
   let result = str.split('æ').join('ae');
   result = result.split('ø').join('oe');
   return result.split('å').join('aa');
 };
 
 // TODO Fjern bruk av denne
-export const getLanguageCodeFromSprakkode = sprakkode => {
+export const getLanguageCodeFromSprakkode = (sprakkode: Kodeverk) => {
   if (!sprakkode) {
     return 'Malform.Bokmal';
   }

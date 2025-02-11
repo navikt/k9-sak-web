@@ -1,12 +1,11 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/test-utils';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
-import { behandlingType, videreBehandling } from '@navikt/k9-sak-typescript-client';
+import { BehandlingDtoType, TilbakekrevingValgDtoVidereBehandling } from '@navikt/k9-sak-typescript-client';
 import VedtakForm from '../VedtakForm';
 
 const createBehandling = behandlingResultatType => ({
@@ -55,11 +54,10 @@ const createBehandlingOpphor = () => createBehandling(BehandlingResultatType.OPP
 
 describe('<VedtakRevurderingForm>', () => {
   it('skal vise result ved avslag, og submitpanel', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const previewCallback = vi.fn();
     const revurdering = createBehandlingAvslag();
 
-    revurdering.type = behandlingType.BT_004;
+    revurdering.type = BehandlingDtoType.REVURDERING;
 
     revurdering.aksjonspunkter.push({
       id: 0,
@@ -85,7 +83,7 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingPaaVent={revurdering.behandlingPaaVent}
           previewCallback={previewCallback}
           readOnly={false}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
           personopplysninger={personopplysninger}
@@ -96,7 +94,10 @@ describe('<VedtakRevurderingForm>', () => {
           hentFritekstbrevHtmlCallback={vi.fn()}
           lagreDokumentdata={vi.fn()}
           simuleringResultat={{}}
-          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          tilbakekrevingvalg={{
+            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            erTilbakekrevingVilkårOppfylt: false,
+          }}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
           medlemskapFom={null}
           overlappendeYtelser={[]}
@@ -115,7 +116,6 @@ describe('<VedtakRevurderingForm>', () => {
   });
 
   it('Revurdering, skal vise resultat ved endret belop, hovedknappen for totrinnskontroll', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const previewCallback = vi.fn();
     const revurdering = createBehandlingAvslag();
 
@@ -144,7 +144,7 @@ describe('<VedtakRevurderingForm>', () => {
           personopplysninger={personopplysninger}
           previewCallback={previewCallback}
           readOnly={false}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
           vilkar={[]}
@@ -154,7 +154,10 @@ describe('<VedtakRevurderingForm>', () => {
           hentFritekstbrevHtmlCallback={vi.fn()}
           lagreDokumentdata={vi.fn()}
           simuleringResultat={{}}
-          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          tilbakekrevingvalg={{
+            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            erTilbakekrevingVilkårOppfylt: false,
+          }}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
           medlemskapFom={null}
           overlappendeYtelser={[]}
@@ -174,7 +177,6 @@ describe('<VedtakRevurderingForm>', () => {
   });
 
   it('skal vise result ved ingen endring, hovedknappen', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const previewCallback = vi.fn();
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
@@ -194,7 +196,7 @@ describe('<VedtakRevurderingForm>', () => {
           personopplysninger={personopplysninger}
           previewCallback={previewCallback}
           readOnly={false}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
           vilkar={[]}
@@ -204,7 +206,10 @@ describe('<VedtakRevurderingForm>', () => {
           hentFritekstbrevHtmlCallback={vi.fn()}
           lagreDokumentdata={vi.fn()}
           simuleringResultat={{}}
-          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          tilbakekrevingvalg={{
+            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            erTilbakekrevingVilkårOppfylt: false,
+          }}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
           medlemskapFom={null}
           overlappendeYtelser={[]}
@@ -223,7 +228,6 @@ describe('<VedtakRevurderingForm>', () => {
   });
 
   it('skal vise result ved ingen endring, og submitpanel', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const previewCallback = vi.fn();
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
@@ -243,7 +247,8 @@ describe('<VedtakRevurderingForm>', () => {
           personopplysninger={personopplysninger}
           previewCallback={previewCallback}
           readOnly={false}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          alleKodeverk={{}}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
           erRevurdering
@@ -252,7 +257,10 @@ describe('<VedtakRevurderingForm>', () => {
           hentFritekstbrevHtmlCallback={vi.fn()}
           lagreDokumentdata={vi.fn()}
           simuleringResultat={{}}
-          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          tilbakekrevingvalg={{
+            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            erTilbakekrevingVilkårOppfylt: false,
+          }}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
           medlemskapFom={null}
           overlappendeYtelser={[]}
@@ -272,7 +280,6 @@ describe('<VedtakRevurderingForm>', () => {
   });
 
   it('skal vise opphørspanel når behandlingsresultat er opphør', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const previewCallback = vi.fn();
     const revurdering = createBehandlingOpphor();
 
@@ -287,7 +294,7 @@ describe('<VedtakRevurderingForm>', () => {
           personopplysninger={personopplysninger}
           previewCallback={previewCallback}
           readOnly={false}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
           erRevurdering
@@ -296,7 +303,10 @@ describe('<VedtakRevurderingForm>', () => {
           hentFritekstbrevHtmlCallback={vi.fn()}
           lagreDokumentdata={vi.fn()}
           simuleringResultat={{}}
-          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          tilbakekrevingvalg={{
+            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            erTilbakekrevingVilkårOppfylt: false,
+          }}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
           medlemskapFom={null}
           overlappendeYtelser={[]}

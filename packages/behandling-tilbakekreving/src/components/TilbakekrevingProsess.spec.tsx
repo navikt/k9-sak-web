@@ -6,13 +6,11 @@ import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurd
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { Behandling, Fagsak, FeilutbetalingPerioderWrapper } from '@k9-sak-web/types';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
 import { requestTilbakekrevingApi, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
 import vedtakResultatType from '../kodeverk/vedtakResultatType';
 import TilbakekrevingProsess from './TilbakekrevingProsess';
@@ -20,7 +18,7 @@ import TilbakekrevingProsess from './TilbakekrevingProsess';
 describe('<TilbakekrevingProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
+    sakstype: fagsakYtelsesType.FORELDREPENGER, // FAGSAK_YTELSE
     status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
   } as Fagsak;
 
@@ -115,7 +113,6 @@ describe('<TilbakekrevingProsess>', () => {
   };
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VILKARVURDERINGSPERIODER, {
       perioder: [{ vilkarResultat: undefined, begrunnelse: '', vilkarResultatInfo: undefined, ytelser: [] }],
     });
@@ -150,7 +147,6 @@ describe('<TilbakekrevingProsess>', () => {
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.VILKARVURDERINGSPERIODER, {
       perioder: [{ vilkarResultat: undefined, begrunnelse: '', vilkarResultatInfo: undefined, ytelser: [] }],
     });

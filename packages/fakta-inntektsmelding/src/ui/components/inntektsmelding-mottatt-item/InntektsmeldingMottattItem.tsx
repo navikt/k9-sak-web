@@ -1,6 +1,6 @@
 import { Link } from '@navikt/ds-react';
 import { GreenCheckIconFilled } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
+import React, { type JSX } from 'react';
 import ContainerContext from '../../../context/ContainerContext';
 import { DokumentOpplysninger } from '../../../types/ContainerContract';
 import { Status } from '../../../types/KompletthetData';

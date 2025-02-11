@@ -2,6 +2,8 @@ import { AssessedBy, GreenCheckIcon, LabelledContent } from '@navikt/ft-plattfor
 import { RettVedDød } from '../../../types/RettVedDød';
 import RettVedDødUtfallType from '../../../types/RettVedDødType';
 
+import type { JSX } from 'react';
+
 interface RettVedDødVurderingsdetaljerProps {
   rettVedDød: RettVedDød;
 }

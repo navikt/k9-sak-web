@@ -1,6 +1,6 @@
 import { get, Period } from '@fpsak-frontend/utils';
 import { Box, Margin, NavigationWithDetailView, PageContainer } from '@navikt/ft-plattform-komponenter';
-import React, { useMemo } from 'react';
+import React, { useMemo, type JSX } from 'react';
 import Step, { langvarigSykdomSteg, StepId } from '../../../types/Step';
 import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
 import Vurderingselement from '../../../types/Vurderingselement';
@@ -13,7 +13,7 @@ import vilkårsvurderingReducer from './reducer';
 import Vurderingsdetaljer from '../vurderingsdetaljer/Vurderingsdetaljer';
 
 import BehandlingType from '../../../constants/BehandlingType';
-import FagsakYtelseType from '../../../constants/FagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import VurderingsoversiktLangvarigSykdomMessages from '../vurderingsoversikt-langvarig-sykdom-messages/VurderingsoversiktLangvarigSykdomMessages';
 
 interface VilkårsvurderingLangvarigSykdomProps {
@@ -135,13 +135,13 @@ const VilkårsvurderingLangvarigSykdom = ({
   };
 
   const skalViseOpprettVurderingKnapp = () => {
-    if (fagsakYtelseType === FagsakYtelseType.OPPLÆRINGSPENGER && BehandlingType.FORSTEGANGSSOKNAD === behandlingType)
+    if (fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER && BehandlingType.FORSTEGANGSSOKNAD === behandlingType)
       return false;
 
     return !vurderingsoversikt?.harPerioderSomSkalVurderes() &&
       !skalViseRadForNyVurdering &&
       harGyldigSignatur &&
-      fagsakYtelseType === FagsakYtelseType.OPPLÆRINGSPENGER
+      fagsakYtelseType === fagsakYtelsesType.OPPLÆRINGSPENGER
       ? behandlingType !== BehandlingType.FORSTEGANGSSOKNAD
       : true;
   };

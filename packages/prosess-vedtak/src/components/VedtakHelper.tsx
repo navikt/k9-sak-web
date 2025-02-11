@@ -1,14 +1,14 @@
-import { klageBehandlingsresultat } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/KlageBehandlingsresultat.js';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import { TIDENES_ENDE } from '@k9-sak-web/lib/dateUtils/dateUtils.js';
 import { KodeverkNavnFraKodeType } from '@k9-sak-web/lib/kodeverk/types.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { behandlingResultatType as klageBehandlingsresultat } from '@navikt/k9-klage-typescript-client';
 import {
   AvslagsårsakPrPeriodeDto,
   BeregningsgrunnlagPeriodeDto,
   TilbakekrevingValgDto,
-  fagsakYtelseType,
-  videreBehandling as generatedVidereBehandling,
+  TilbakekrevingValgDtoVidereBehandling,
 } from '@navikt/k9-sak-typescript-client';
 import moment from 'moment';
 import VedtakSimuleringResultat from '../types/VedtakSimuleringResultat';
@@ -17,7 +17,7 @@ const tilbakekrevingMedInntrekk = (
   tilbakekrevingKode: TilbakekrevingValgDto['videreBehandling'],
   simuleringResultat: VedtakSimuleringResultat,
 ) =>
-  tilbakekrevingKode === generatedVidereBehandling.OPPRETT_TILBAKEKREVING &&
+  tilbakekrevingKode === TilbakekrevingValgDtoVidereBehandling.OPPRETT_TILBAKEKREVING &&
   (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
 
 export const findTilbakekrevingText = (props: {
@@ -43,11 +43,11 @@ export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode: stri
     return 'VedtakForm.ResultatKlageMedhold';
   }
 
-  if (ytelseType === fagsakYtelseType.OMP) {
+  if (ytelseType === fagsakYtelsesType.OMSORGSPENGER) {
     return 'VedtakForm.VilkarStatusDelvisInnvilgetOmsorgspenger';
   }
 
-  if (ytelseType === fagsakYtelseType.FRISINN) {
+  if (ytelseType === fagsakYtelsesType.FRISINN) {
     return 'VedtakForm.VilkarStatusDelvisInnvilgetFrisinn';
   }
 
@@ -55,7 +55,7 @@ export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode: stri
     return 'VedtakForm.VilkarStatusDelvisInnvilgetUtvidetRett';
   }
 
-  if (ytelseType === fagsakYtelseType.PPN) {
+  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'VedtakForm.VilkarStatusDelvisInnvilgetLivetsSluttfase';
   }
 
@@ -70,11 +70,11 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, yt
     return 'VedtakForm.ResultatKlageMedhold';
   }
 
-  if (ytelseType === fagsakYtelseType.OMP) {
+  if (ytelseType === fagsakYtelsesType.OMSORGSPENGER) {
     return 'VedtakForm.VilkarStatusInnvilgetOmsorgspenger';
   }
 
-  if (ytelseType === fagsakYtelseType.FRISINN) {
+  if (ytelseType === fagsakYtelsesType.FRISINN) {
     return 'VedtakForm.VilkarStatusInnvilgetFrisinn';
   }
 
@@ -82,7 +82,7 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode: string, yt
     return 'VedtakForm.VilkarStatusInnvilgetUtvidetRett';
   }
 
-  if (ytelseType === fagsakYtelseType.PPN) {
+  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'VedtakForm.VilkarStatusInnvilgetLivetsSluttfase';
   }
 
@@ -97,7 +97,7 @@ export const findAvslagResultatText = (behandlingResultatTypeKode: string, ytels
     return 'VedtakForm.ResultatKlageAvvist';
   }
 
-  if (ytelseType === fagsakYtelseType.OMP) {
+  if (ytelseType === fagsakYtelsesType.OMSORGSPENGER) {
     return 'VedtakForm.OmsorgspengerIkkeInnvilget';
   }
 
@@ -105,11 +105,11 @@ export const findAvslagResultatText = (behandlingResultatTypeKode: string, ytels
     return 'VedtakForm.UtvidetRettIkkeInnvilget';
   }
 
-  if (ytelseType === fagsakYtelseType.FRISINN) {
+  if (ytelseType === fagsakYtelsesType.FRISINN) {
     return 'VedtakForm.FrisinnIkkeInnvilget';
   }
 
-  if (ytelseType === fagsakYtelseType.PPN) {
+  if (ytelseType === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return 'VedtakForm.LivetsSluttfaseIkkeInnvilget';
   }
 

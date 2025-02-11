@@ -10,7 +10,7 @@ import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 
 const fagsak = {
   saksnummer: '35425245',
-  sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
+  sakstype: fagsakYtelsesType.FORELDREPENGER,
   relasjonsRolleType: {
     kode: relasjonsRolleType.MOR,
     kodeverk: '',

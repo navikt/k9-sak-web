@@ -4,6 +4,7 @@ import Periode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/
 import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types/KodeverkTypeV2.js';
 import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types/KodeverkV2.js';
 import { Accordion, Alert, BodyLong, Checkbox, CheckboxGroup, Heading, Tag } from '@navikt/ds-react';
 import { OverlappendeYtelseDto } from '@navikt/k9-sak-typescript-client';
@@ -27,20 +28,9 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
   harVurdertOverlappendeYtelse,
   setHarVurdertOverlappendeYtelse,
 }) => {
-  const { hentKodeverkForKode } = useKodeverkContext();
+  const { hentKodeverkForKode, kodeverkNavnFraKode } = useKodeverkContext();
   const [valgtPeriode, setValgtPeriode] = React.useState<Periode<Periodeinfo> | null>(null);
   const { submitCount } = useFormikContext();
-
-  const utledYtelseType = (ytelseTypeKode: string) => {
-    const fagsakYtelseTyper = hentKodeverkForKode(KodeverkType.FAGSAK_YTELSE);
-    if (fagsakYtelseTyper && Array.isArray(fagsakYtelseTyper) && fagsakYtelseTyper.length > 0) {
-      const fagsakYtelseType = fagsakYtelseTyper.find(
-        (ytelseType: KodeverkObject) => ytelseType.kode === ytelseTypeKode,
-      );
-      return typeof fagsakYtelseType !== 'string' ? fagsakYtelseType.navn : ytelseTypeKode;
-    }
-    return ytelseTypeKode;
-  };
 
   const utledFagSystem = (fagSystemKode: string) => {
     const fagSystemer = hentKodeverkForKode(KodeverkType.FAGSYSTEM);
@@ -80,7 +70,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
    * Sett opp korresponderende rader til sidekolonnen
    */
   const sideKolonneRader = overlappendeYtelser.map(rad => (
-    <span className={styles.sideKolonne}>{`${utledYtelseType(rad.ytelseType)}`}</span>
+    <span className={styles.sideKolonne}>{`${kodeverkNavnFraKode(rad.ytelseType, KodeverkTypeV2.FAGSAK_YTELSE)}`}</span>
   ));
 
   const velgPeriodeHandler = (eventProps: any) => {
@@ -125,7 +115,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
                 </Tag>
                 <Tag variant="info" className={styles.periodeDetalj}>
                   <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserYtelse' })}</strong>
-                  {utledYtelseType(valgtPeriode.periodeinfo.ytelseType)}
+                  {kodeverkNavnFraKode(valgtPeriode.periodeinfo.ytelseType, KodeverkTypeV2.FAGSAK_YTELSE)}
                 </Tag>
                 <Tag variant="info" className={styles.periodeDetalj}>
                   <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserPeriode' })}</strong>

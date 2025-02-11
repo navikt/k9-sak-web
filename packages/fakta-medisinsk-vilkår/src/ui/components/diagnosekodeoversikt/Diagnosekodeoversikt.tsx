@@ -3,7 +3,7 @@ import { Box, Margin, TitleWithUnderline } from '@navikt/ft-plattform-komponente
 
 import { Alert, Loader } from '@navikt/ds-react';
 import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
-import React, { useMemo } from 'react';
+import React, { type JSX } from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Diagnosekode from '../../../types/Diagnosekode';
 import { DiagnosekodeResponse } from '../../../types/DiagnosekodeResponse';
@@ -36,7 +36,7 @@ interface DiagnosekodeoversiktProps {
 const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktProps): JSX.Element => {
   const { endpoints, httpErrorHandler } = React.useContext(ContainerContext);
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
-  const addButtonRef = React.useRef<HTMLButtonElement>();
+  const addButtonRef = React.useRef<HTMLButtonElement>(undefined);
 
   const hentDiagnosekoder = () =>
     httpUtils
@@ -53,18 +53,19 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
   const { diagnosekoder, links, behandlingUuid, versjon } = data;
   const endreDiagnosekoderLink = findLinkByRel(LinkRel.ENDRE_DIAGNOSEKODER, links);
 
-  const diagnosekoderMedNavnResponses = useQueries({
+  const { diagnosekodeObjekter, diagnosekodeObjekterLaster } = useQueries({
     queries: diagnosekoder.map(diagnosekode => ({
       queryKey: ['diagnosekode', diagnosekode],
       queryFn: () => fetchDiagnosekoderByQuery(diagnosekode),
       refetchOnWindowFocus: false,
     })),
+    combine: results => {
+      return {
+        diagnosekodeObjekter: results.map(r => r.data),
+        diagnosekodeObjekterLaster: results.some(r => r.isPending),
+      };
+    },
   });
-
-  const diagnosekoderMedNavn = useMemo(
-    () => diagnosekoderMedNavnResponses.filter(response => !!response.data).map(response => response.data),
-    [diagnosekoderMedNavnResponses],
-  );
 
   const focusAddButton = () => {
     if (addButtonRef.current) {
@@ -144,8 +145,8 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
               Ingen diagnosekode registrert.
             </Alert>
           )}
-          {diagnosekoder.length >= 1 && (
-            <Diagnosekodeliste diagnosekoder={diagnosekoderMedNavn} onDeleteClick={slettDiagnosekodeMutation.mutate} />
+          {diagnosekoder.length >= 1 && !diagnosekodeObjekterLaster && (
+            <Diagnosekodeliste diagnosekoder={diagnosekodeObjekter} onDeleteClick={slettDiagnosekodeMutation.mutate} />
           )}
         </Box>
       )}

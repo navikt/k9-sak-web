@@ -1,15 +1,15 @@
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { screen } from '@testing-library/react';
 
-import { behandlingResultatType } from '@navikt/k9-sak-typescript-client';
+import { BehandlingDtoBehandlingResultatType } from '@navikt/k9-sak-typescript-client';
 import { intlMock } from '../../i18n';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakInnvilgetPanelImpl } from './VedtakInnvilgetPanel';
 
-const foreldrepenger = fagsakYtelseType.PLEIEPENGER;
+const foreldrepenger = fagsakYtelsesType.FORELDREPENGER;
 const behandlingsresultat = {
-  type: behandlingResultatType.INNVILGET,
+  type: BehandlingDtoBehandlingResultatType.INNVILGET,
 };
 
 describe('<VedtakInnvilgetPanel>', () => {

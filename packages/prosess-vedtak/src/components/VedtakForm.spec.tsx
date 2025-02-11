@@ -1,32 +1,25 @@
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
-import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-
 import behandlingStatuser from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
-import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
+import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { TilgjengeligeVedtaksbrev, TilgjengeligeVedtaksbrevMedMaler } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import {
-  definisjon as generatedAksjonspunktDefinisjon,
-  status as generatedAksjonspunktStatus,
-  behandlingResultatType as generatedBehandlingResultatType,
-  behandlingStatus as generatedBehandlingStatus,
-  videreBehandling,
+  AksjonspunktDtoDefinisjon,
+  AksjonspunktDtoStatus,
+  BehandlingDtoBehandlingResultatType,
+  BehandlingDtoStatus,
+  TilbakekrevingValgDtoVidereBehandling,
 } from '@navikt/k9-sak-typescript-client';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import messages from '../../i18n/nb_NO.json';
 import { VedtakForm } from './VedtakForm';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
 
 describe('<VedtakForm>', () => {
-  beforeEach(() => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'FRITEKST_REDIGERING', value: true }]);
-  });
-
   const sprakkode = 'NO';
 
   const ingenTilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler = {
@@ -56,8 +49,8 @@ describe('<VedtakForm>', () => {
     mangler: [],
   };
   const aksjonspunktBase = {
-    definisjon: generatedAksjonspunktDefinisjon._5033,
-    status: generatedAksjonspunktStatus.OPPR,
+    definisjon: AksjonspunktDtoDefinisjon.VURDERE_ANNEN_YTELSE_FØR_VEDTAK,
+    status: AksjonspunktDtoStatus.OPPRETTET,
     toTrinnsBehandling: true,
     kanLoses: true,
     erAktivt: true,
@@ -80,7 +73,7 @@ describe('<VedtakForm>', () => {
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
-      type: generatedBehandlingResultatType.INNVILGET,
+      type: BehandlingDtoBehandlingResultatType.INNVILGET,
     };
 
     renderWithIntlAndReduxForm(
@@ -95,10 +88,14 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          tilbakekrevingvalg={{
+            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            erTilbakekrevingVilkårOppfylt: false,
+          }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -124,12 +121,12 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: generatedBehandlingResultatType.AVSLÅTT,
+      type: BehandlingDtoBehandlingResultatType.AVSLÅTT,
     };
     const aksjonspunkter = [
       {
-        definisjon: generatedAksjonspunktDefinisjon._5033,
-        status: generatedAksjonspunktStatus.OPPR,
+        definisjon: AksjonspunktDtoDefinisjon.VURDERE_ANNEN_YTELSE_FØR_VEDTAK,
+        status: AksjonspunktDtoStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -146,10 +143,14 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          tilbakekrevingvalg={{
+            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            erTilbakekrevingVilkårOppfylt: false,
+          }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -174,7 +175,7 @@ describe('<VedtakForm>', () => {
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
-      type: generatedBehandlingResultatType.INNVILGET,
+      type: BehandlingDtoBehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter = [aksjonspunktBase];
     const vedtakVarsel = {
@@ -193,10 +194,14 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+          ytelseTypeKode={fagsakYtelsesType.FORELDREPENGER}
+          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          tilbakekrevingvalg={{
+            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            erTilbakekrevingVilkårOppfylt: false,
+          }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -220,7 +225,7 @@ describe('<VedtakForm>', () => {
     const previewCallback = vi.fn();
     const behandlingsresultat = {
       id: 1,
-      type: generatedBehandlingResultatType.INNVILGET,
+      type: BehandlingDtoBehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter = [aksjonspunktBase];
     const vedtakVarsel = {
@@ -239,10 +244,14 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          tilbakekrevingvalg={{
+            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            erTilbakekrevingVilkårOppfylt: false,
+          }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -268,7 +277,7 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: generatedBehandlingResultatType.AVSLÅTT,
+      type: BehandlingDtoBehandlingResultatType.AVSLÅTT,
     };
     const aksjonspunkter = [
       {
@@ -295,10 +304,14 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          tilbakekrevingvalg={{
+            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            erTilbakekrevingVilkårOppfylt: false,
+          }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -324,7 +337,7 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: generatedBehandlingResultatType.INNVILGET,
+      type: BehandlingDtoBehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter = [
       {
@@ -341,7 +354,7 @@ describe('<VedtakForm>', () => {
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
-          behandlingStatus={generatedBehandlingStatus.AVSLU}
+          behandlingStatus={BehandlingDtoStatus.AVSLUTTET}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
           behandlingPaaVent={false}
@@ -349,10 +362,14 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          tilbakekrevingvalg={{
+            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            erTilbakekrevingVilkårOppfylt: false,
+          }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -376,7 +393,7 @@ describe('<VedtakForm>', () => {
   it('skal ikke vise knapper når status er iverksetter vedtak', () => {
     const behandlingsresultat = {
       id: 1,
-      type: generatedBehandlingResultatType.INNVILGET,
+      type: BehandlingDtoBehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter = [
       {
@@ -394,7 +411,7 @@ describe('<VedtakForm>', () => {
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
-          behandlingStatus={generatedBehandlingStatus.IVED}
+          behandlingStatus={BehandlingDtoStatus.IVERKSETTER_VEDTAK}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
           behandlingPaaVent={false}
@@ -402,10 +419,14 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          tilbakekrevingvalg={{
+            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            erTilbakekrevingVilkårOppfylt: false,
+          }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -431,7 +452,7 @@ describe('<VedtakForm>', () => {
 
     const behandlingsresultat = {
       id: 1,
-      type: generatedBehandlingResultatType.INNVILGET,
+      type: BehandlingDtoBehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter = [
       {
@@ -447,7 +468,7 @@ describe('<VedtakForm>', () => {
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => null}>
         <VedtakForm
           intl={intlWithMessages(messages)}
-          behandlingStatus={generatedBehandlingStatus.FVED}
+          behandlingStatus={BehandlingDtoStatus.FATTER_VEDTAK}
           aksjonspunkter={aksjonspunkter}
           behandlingresultat={behandlingsresultat}
           behandlingPaaVent={false}
@@ -455,10 +476,14 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          tilbakekrevingvalg={{
+            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            erTilbakekrevingVilkårOppfylt: false,
+          }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -483,7 +508,7 @@ describe('<VedtakForm>', () => {
   const previewCallback = vi.fn();
   const behandlingsresultat = {
     id: 1,
-    type: generatedBehandlingResultatType.INNVILGET,
+    type: BehandlingDtoBehandlingResultatType.INNVILGET,
   };
   const aksjonspunkter = [
     {
@@ -522,10 +547,14 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          tilbakekrevingvalg={{
+            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            erTilbakekrevingVilkårOppfylt: false,
+          }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -559,10 +588,14 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          tilbakekrevingvalg={{
+            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            erTilbakekrevingVilkårOppfylt: false,
+          }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -597,10 +630,14 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          tilbakekrevingvalg={{
+            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            erTilbakekrevingVilkårOppfylt: false,
+          }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -644,10 +681,14 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
+          alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
-          tilbakekrevingvalg={{ videreBehandling: videreBehandling.UDEFINIERT, erTilbakekrevingVilkårOppfylt: false }}
+          tilbakekrevingvalg={{
+            videreBehandling: TilbakekrevingValgDtoVidereBehandling.UDEFINIERT,
+            erTilbakekrevingVilkårOppfylt: false,
+          }}
           vilkar={[]}
           tilgjengeligeVedtaksbrev={vedtaksbrevmalerUtenAutomatisk}
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}

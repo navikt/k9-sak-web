@@ -1,5 +1,3 @@
-import React from 'react';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -9,16 +7,15 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { Behandling, Fagsak, KlageVurdering } from '@k9-sak-web/types';
 
 import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import KlageProsess from './KlageProsess';
 
 describe('<KlageProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelsesType.FP, kodeverk: 'FAGSAK_YTELSE' },
+    sakstype: fagsakYtelsesType.FORELDREPENGER, // FAGSAK_YTELSE
     status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'FAGSAK_STATUS' },
   } as Fagsak;
 
@@ -79,7 +76,6 @@ describe('<KlageProsess>', () => {
   } as KlageVurdering;
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     renderWithIntl(
       <KlageProsess
         data={{ aksjonspunkter, klageVurdering }}
@@ -105,11 +101,10 @@ describe('<KlageProsess>', () => {
   });
 
   it('skal vise alle aktuelle prosessSteg i meny (frisinn)', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     renderWithIntl(
       <KlageProsess
         data={{ aksjonspunkter, klageVurdering }}
-        fagsak={{ ...fagsak, sakstype: { kode: fagsakYtelsesType.FRISINN, kodeverk: 'FAGSAK_YTELSE' } }}
+        fagsak={{ ...fagsak, sakstype: fagsakYtelsesType.FRISINN }} // FAGSAK_YTELSE
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
@@ -133,12 +128,11 @@ describe('<KlageProsess>', () => {
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny (frisinn)', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     renderWithIntl(
       <KlageProsess
         data={{ aksjonspunkter, klageVurdering }}
-        fagsak={{ ...fagsak, sakstype: { kode: fagsakYtelsesType.FRISINN, kodeverk: 'FAGSAK_YTELSE' } }}
+        fagsak={{ ...fagsak, sakstype: fagsakYtelsesType.FRISINN }} // FAGSAK_YTELSE
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
@@ -165,7 +159,6 @@ describe('<KlageProsess>', () => {
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', async () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = vi.fn();
     renderWithIntl(
       <KlageProsess
