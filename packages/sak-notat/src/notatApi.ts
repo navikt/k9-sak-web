@@ -1,10 +1,10 @@
 import { apiPaths } from '@k9-sak-web/rest-api';
 import { NotatGjelderType, NotatResponse } from '@k9-sak-web/types';
-import { sakstype as GeneratedSakstype } from '@navikt/k9-sak-typescript-client';
+import { BehandlingDtoSakstype } from '@navikt/k9-sak-typescript-client';
 import axios from 'axios';
 import { Inputs } from './Notater';
 
-const isSakstypeUng = (sakstype: string) => sakstype === GeneratedSakstype.UNG;
+const isSakstypeUng = (sakstype: string) => sakstype === BehandlingDtoSakstype.UNGDOMSYTELSE;
 
 export const postNotat = (
   data: Inputs,
