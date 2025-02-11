@@ -1,8 +1,9 @@
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
+import BehandlingVelgerSakV2 from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerSakIndex.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
 import SakRettigheter from '@k9-sak-web/sak-app/src/fagsak/sakRettigheterTsType';
-import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
 import {
   ArbeidsgiverOpplysningerPerId,
   BehandlingAppKontekst,
@@ -10,6 +11,7 @@ import {
   KodeverkMedNavn,
   Personopplysninger,
 } from '@k9-sak-web/types';
+import { behandlingType } from '@navikt/k9-klage-typescript-client';
 import { Location } from 'history';
 import { useCallback } from 'react';
 import { Navigate, useLocation, useMatch } from 'react-router';
@@ -21,7 +23,7 @@ import {
 } from '../app/paths';
 import BehandlingMenuIndex, { BehandlendeEnheter } from '../behandlingmenu/BehandlingMenuIndex';
 import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
-import { useGetKodeverkFn, useUngSakKodeverkMedNavn } from '../data/useKodeverk';
+import { useUngSakKodeverkMedNavn } from '../data/useKodeverk';
 import styles from './fagsakProfileIndex.module.css';
 
 const findPathToBehandling = (saksnummer: string, location: Location, alleBehandlinger: BehandlingAppKontekst[]) => {
@@ -59,8 +61,6 @@ export const FagsakProfileIndex = ({
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
 }: OwnProps) => {
-  const getKodeverkFn = useGetKodeverkFn();
-
   const fagsakStatusMedNavn = useUngSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
 
   const { data: behandlendeEnheter } = restApiHooks.useRestApi<BehandlendeEnheter>(UngSakApiKeys.BEHANDLENDE_ENHETER, {
@@ -111,17 +111,25 @@ export const FagsakProfileIndex = ({
               />
             );
           }}
-          renderBehandlingVelger={() => (
-            <BehandlingVelgerSakIndex
-              behandlinger={alleBehandlinger}
-              getBehandlingLocation={getBehandlingLocation}
-              noExistingBehandlinger={alleBehandlinger.length === 0}
-              behandlingId={behandlingId}
-              getKodeverkFn={getKodeverkFn}
-              fagsak={fagsak}
-              createLocationForSkjermlenke={createLocationForSkjermlenke}
-            />
-          )}
+          renderBehandlingVelger={() => {
+            const behandlingerV2 = JSON.parse(JSON.stringify(alleBehandlinger));
+            const fagsakV2 = JSON.parse(JSON.stringify(fagsak));
+            const erTilbakekreving = alleBehandlinger.some(
+              behandling => behandling.type.kode === behandlingType.BT_007,
+            );
+            konverterKodeverkTilKode(behandlingerV2, erTilbakekreving);
+            konverterKodeverkTilKode(fagsakV2, erTilbakekreving);
+            return (
+              <BehandlingVelgerSakV2
+                behandlinger={behandlingerV2}
+                getBehandlingLocation={getBehandlingLocation}
+                noExistingBehandlinger={alleBehandlinger.length === 0}
+                behandlingId={behandlingId}
+                fagsak={fagsakV2}
+                createLocationForSkjermlenke={createLocationForSkjermlenke}
+              />
+            );
+          }}
         />
       )}
     </div>
