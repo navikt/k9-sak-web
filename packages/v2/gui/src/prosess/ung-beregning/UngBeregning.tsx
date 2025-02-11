@@ -33,7 +33,7 @@ const UngBeregning = ({ api, behandling }: Props) => {
     isSuccess: satserSuccess,
     isError: satserIsError,
   } = useQuery<UngdomsytelseSatsPeriodeDto[]>({
-    queryKey: ['satser'],
+    queryKey: ['satser', behandling.uuid],
     queryFn: () => api.getSatser(behandling.uuid),
   });
 
