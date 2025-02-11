@@ -92,6 +92,10 @@
     "value": "${AKSJONSPUNKT_OVERLAPPENDE_SAKER}"
   },
   {
+    "key": "BRUK_V2_BEHANDLING_VELGER",
+    "value": "${BRUK_V2_BEHANDLING_VELGER}"
+  },
+  {
     "key": "BRUK_V2_SAK_SOK",
     "value": "${BRUK_V2_SAK_SOK}"
   },

@@ -35,7 +35,7 @@ class HistorikkV1V2Sammenligningsfeil extends Error {
   }
 }
 
-const extractBubbleWrapperStrings = (node: ReactNode): string[] => {
+const extractBubbleWrapperStrings = async (node: ReactNode): Promise<string[]> => {
   const div = document.createElement('div');
   const root = createRoot(div);
   flushSync(() => {
@@ -44,7 +44,25 @@ const extractBubbleWrapperStrings = (node: ReactNode): string[] => {
   });
   const bubble = div.querySelector('.navds-chat__bubble-wrapper');
   if (bubble instanceof HTMLElement) {
-    return extractStringsRecursively(bubble);
+    // If the bubble has expandable (BubbleText) components, click the expand button so that we compare the full text.
+    const expandButtons = () =>
+      bubble
+        .querySelectorAll('button[aria-label="Åpne tekstfelt"][aria-expanded="false"]')
+        .values()
+        .filter(el => el instanceof HTMLButtonElement);
+    expandButtons().forEach(btn => btn.click());
+    // Must wait until click handler has run and re-render is done before proceeding:
+    return new Promise((resolve, reject) => {
+      // callback in requestAnimationFrame should be called after rendering of changes from expand button click is done
+      requestAnimationFrame(() => {
+        try {
+          const strings = extractStringsRecursively(bubble);
+          resolve(strings);
+        } catch (e) {
+          reject(e);
+        }
+      });
+    });
   } else {
     console.warn('extractString: fant ikkje bubble wrapper klasse i rendra html.');
     return ['bubble-wrapper not found!'];
@@ -75,11 +93,15 @@ const extractStringsRecursively = (element: HTMLElement): string[] => {
 };
 
 const extractWords = (txt: string): string[] =>
-  txt.split(/[\s\n\r-(),-]+/u).filter(v => v.length > 1 || Number.isFinite(parseFloat(v)));
+  txt.split(/([\s\n\r-(),-]|\p{P})+/u).filter(v => v.length > 1 || Number.isFinite(parseFloat(v)));
 
-const checkRenderedElementTexts = (v1Innslag: Historikkinnslag, v1Element: JSX.Element, v2Element: JSX.Element) => {
-  const v1Words = extractBubbleWrapperStrings(v1Element);
-  const v2Words = extractBubbleWrapperStrings(v2Element);
+const checkRenderedElementTexts = async (
+  v1Innslag: Historikkinnslag,
+  v1Element: JSX.Element,
+  v2Element: JSX.Element,
+) => {
+  const v1Words = await extractBubbleWrapperStrings(v1Element);
+  const v2Words = await extractBubbleWrapperStrings(v2Element);
   const v1WordsNotInV2 = v1Words.filter(
     v1Word => !v2Words.some(v2Word => v1Word.toLowerCase() === v2Word.toLowerCase()),
   );
@@ -113,7 +135,7 @@ const allMissingWordsAreExcempted = (historikkInnslagV1Type: string, wordsMissin
   return wordsMissing.length === 0;
 };
 
-export const compareRenderedElementTexts = (
+export const compareRenderedElementTexts = async (
   v1Innslag: Historikkinnslag[],
   v1Elementer: JSX.Element[],
   v2Elementer: JSX.Element[],
@@ -134,13 +156,13 @@ export const compareRenderedElementTexts = (
   }
   for (let i = 0; i < v1Elementer.length; i++) {
     try {
-      checkRenderedElementTexts(v1Innslag[i], v1Elementer[i], v2Elementer[i]);
+      await checkRenderedElementTexts(v1Innslag[i], v1Elementer[i], v2Elementer[i]);
     } catch (err) {
       if (err instanceof HistorikkV1V2Sammenligningsfeil) {
         if (allMissingWordsAreExcempted(err.historikkInnslagV1Type, err.wordsNotFound)) {
           // Alle orda er unntatt feilrapportering, logger berre som debug
           console.info(
-            `historikk innslag v2 mangler ord fra v1, men disse er unntatt feilrapportering. (${err.wordsNotFound.join(', ')})`,
+            `historikk innslag (${err.historikkInnslagV1Type}) v2 mangler ord fra v1, men disse er unntatt feilrapportering. (${err.wordsNotFound.join(', ')})`,
           );
         } else {
           err.message = `historikk innslag nr ${i + 1}: ${err.message}`;
