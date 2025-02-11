@@ -32,7 +32,7 @@ import InformasjonsbehovAutomatiskVedtaksbrev, {
   InformasjonsbehovVedtaksbrev,
 } from './InformasjonsbehovAutomatiskVedtaksbrev';
 
-const kanResultatForhåndsvises = behandlingResultat => {
+const kanResultatForhåndsvises = (behandlingResultat: BehandlingsresultatDto) => {
   if (!behandlingResultat) {
     return true;
   }
@@ -40,7 +40,7 @@ const kanResultatForhåndsvises = behandlingResultat => {
   if (!type) {
     return true;
   }
-  return type.kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' && type.kode !== 'INGEN_ENDRING';
+  return type !== 'INGEN_ENDRING';
 };
 
 export const manuellBrevPreview = ({
