@@ -1,5 +1,7 @@
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
+import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
+import BehandlingVelgerBackendClient from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerK9BackendClient.js';
 import BehandlingVelgerSakV2 from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerSakIndex.js';
 import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
@@ -65,6 +67,8 @@ export const FagsakProfileIndex = ({
 }: OwnProps) => {
   const getKodeverkFn = useGetKodeverkFn();
   const featureToggles = useContext(FeatureTogglesContext);
+  const k9SakClient = useContext(K9SakClientContext);
+  const behandlingVelgerBackendClient = new BehandlingVelgerBackendClient(k9SakClient);
 
   const fagsakStatusMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
 
@@ -133,6 +137,7 @@ export const FagsakProfileIndex = ({
                   behandlingId={behandlingId}
                   fagsak={fagsakV2}
                   createLocationForSkjermlenke={createLocationForSkjermlenke}
+                  api={behandlingVelgerBackendClient}
                 />
               );
             }

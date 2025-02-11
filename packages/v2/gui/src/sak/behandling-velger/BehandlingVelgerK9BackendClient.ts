@@ -2,7 +2,7 @@ import type { K9SakClient } from '@k9-sak-web/backend/k9sak/generated';
 import type { Behandling } from './types/Behandling';
 import type { PerioderMedBehandlingsId } from './types/PerioderMedBehandlingsId';
 
-export default class BehandlingVelgerBackendClient {
+export default class BehandlingVelgerK9BackendClient {
   #k9sak: K9SakClient;
   constructor(k9sakClient: K9SakClient) {
     this.#k9sak = k9sakClient;
