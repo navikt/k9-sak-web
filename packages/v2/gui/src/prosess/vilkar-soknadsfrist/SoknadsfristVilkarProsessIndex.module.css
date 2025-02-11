@@ -12,7 +12,7 @@
 
 .mainContainerWithSideMenu {
   display: flex;
-  margin-left: -32px;
+  margin-left: -8px;
 }
 
 .warningIcon {

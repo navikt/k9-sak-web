@@ -5,6 +5,7 @@ import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysn
 
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import { safeJSONParse } from '@fpsak-frontend/utils';
+import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import HenleggBehandlingModal from './components/HenleggBehandlingModal';
 import HenlagtBehandlingModal from './components/HenlagtBehandlingModal';
 
@@ -32,7 +33,7 @@ interface OwnProps {
     begrunnelse: string;
   }) => Promise<any>;
   forhandsvisHenleggBehandling: (erHenleggelse: boolean, data: any) => void;
-  ytelseType: Kodeverk;
+  ytelseType: FagsakYtelsesType;
   behandlingType: Kodeverk;
   behandlingUuid: string;
   behandlingResultatTyper: KodeverkMedNavn[];

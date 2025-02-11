@@ -88,7 +88,6 @@ const OpptjeningVilkarProsessIndex = ({
                 ) : null,
             }))}
             onClick={setActiveTab}
-            theme="arrow"
             heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
           />
         </div>
@@ -98,7 +97,7 @@ const OpptjeningVilkarProsessIndex = ({
             behandlingVersjon={behandling.versjon}
             status={activePeriode.vilkarStatus.kode}
             lovReferanse={lovReferanse}
-            fagsakType={fagsak.sakstype.kode}
+            fagsakType={fagsak.sakstype}
             aksjonspunkter={aksjonspunkter}
             submitCallback={submitCallback}
             readOnly={isReadOnly}

@@ -1,9 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { findAksjonspunkt, findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
+import { findAksjonspunkt, findEndpointsFromRels, httpErrorHandler } from '@fpsak-frontend/utils';
+import { OmsorgenFor } from '@k9-sak-web/fakta-omsorgen-for';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Aksjonspunkt, BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
-import React from 'react';
-import { OmsorgenFor } from '@k9-sak-web/fakta-omsorgen-for';
 
 interface OmsorgenForProps {
   behandling: BehandlingAppKontekst;
@@ -20,7 +19,7 @@ interface OmsorgenForProps {
 
 export default ({ behandling, fagsak, readOnly, aksjonspunkter, submitCallback }: OmsorgenForProps) => {
   const { links } = behandling;
-  const sakstype = fagsak.sakstype.kode;
+  const sakstype = fagsak.sakstype;
 
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
@@ -44,7 +43,7 @@ export default ({ behandling, fagsak, readOnly, aksjonspunkter, submitCallback }
     <OmsorgenFor
       data={{
         httpErrorHandler: httpErrorHandlerCaller,
-        endpoints: findEndpointsForMicrofrontend(links, [
+        endpoints: findEndpointsFromRels(links, [
           {
             rel: 'omsorgen-for',
             desiredName: 'omsorgsperioder',

@@ -16,8 +16,6 @@ import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
 import { useFpSakKodeverk } from '../../data/useKodeverk';
 import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
 
-export interface BackendApi extends MeldingerSakIndexBackendApi {}
-
 interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
@@ -26,7 +24,7 @@ interface OwnProps {
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   readonly featureToggles?: FeatureToggles;
-  readonly backendApi: BackendApi;
+  readonly backendApi: MeldingerSakIndexBackendApi;
 }
 
 /**

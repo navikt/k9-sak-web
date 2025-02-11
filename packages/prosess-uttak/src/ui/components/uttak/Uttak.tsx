@@ -13,35 +13,43 @@ import * as React from 'react';
 import { Collapse } from 'react-collapse';
 import AnnenPart from '../../../constants/AnnenPart';
 import Årsaker from '../../../constants/Årsaker';
-import { Uttaksperiode } from '../../../types/Uttaksperiode';
+import { UttaksperiodeMedInntektsgradering } from '../../../types';
 import { harÅrsak } from '../../../util/årsakUtils';
 import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
 import ContainerContext from '../../context/ContainerContext';
 import Endringsstatus from '../icons/Endringsstatus';
-import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
+import GammelUttakDetaljer from '../uttak-detaljer/GammelUttakDetaljer';
+import NyUttakDetaljer from '../uttak-detaljer/NyUttakDetaljer';
 
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import styles from './uttak.module.css';
+
+import type { JSX } from 'react';
 
 const cx = classNames.bind(styles);
 
 interface UttakProps {
-  uttak: Uttaksperiode;
+  uttak: UttaksperiodeMedInntektsgradering;
   erValgt: boolean;
   velgPeriode: () => void;
   withBorderTop?: boolean;
 }
 
 const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
+  const featureToggles = React.useContext(FeatureTogglesContext);
   const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, endringsstatus, manueltOverstyrt } = uttak;
   const { erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
 
   const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsaker.UTENOM_PLEIEBEHOV);
   const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
+  const erGradertMotInntekt = uttak.inntektsgradering !== undefined;
 
   const uttakGradIndikatorCls = cx('uttak__indikator', {
     uttak__indikator__avslått: uttaksgrad === 0,
     uttak__indikator__innvilget: uttaksgrad > 0,
-    'uttak__indikator__innvilget--delvis': årsaker.some(årsak => årsak === Årsaker.GRADERT_MOT_TILSYN),
+    'uttak__indikator__innvilget--delvis--inntekt': erGradertMotInntekt,
+    'uttak__indikator__innvilget--delvis':
+      !erGradertMotInntekt && årsaker.some(årsak => årsak === Årsaker.GRADERT_MOT_TILSYN),
   });
 
   const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsaker.INNGANGSVILKÅR_IKKE_OPPFYLT);
@@ -53,7 +61,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
           {periode.getFirstAndLastWeek()}
         </Table.DataCell>
         <Table.DataCell className={`${withBorderTop ? styles.borderTop : ''}`}>
-          <BodyShort>
+          <BodyShort as="div">
             {periode.prettifyPeriod()}
             {manueltOverstyrt && (
               <>
@@ -120,11 +128,17 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
         </Table.DataCell>
       </Table.Row>
       <tr className={`${erValgt ? '' : styles.collapseRow} ${styles.expandedRow}`}>
-        <td colSpan={erFagytelsetypeLivetsSluttfase ? 7 : 6}>
+        <td colSpan={erFagytelsetypeLivetsSluttfase ? 8 : 7}>
           <Collapse isOpened={erValgt}>
             <div className={styles.expanded}>
               {harOppfyltAlleInngangsvilkår ? (
-                <UttakDetaljer uttak={uttak} />
+                <>
+                  {featureToggles.BRUK_INNTEKTSGRADERING_I_UTTAK ? (
+                    <NyUttakDetaljer uttak={uttak} manueltOverstyrt={manueltOverstyrt} />
+                  ) : (
+                    <GammelUttakDetaljer uttak={uttak} />
+                  )}
+                </>
               ) : (
                 <Vilkårsliste inngangsvilkår={inngangsvilkår} />
               )}

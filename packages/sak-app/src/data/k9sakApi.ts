@@ -1,6 +1,6 @@
+import { KlageBehandlingApiKeys } from '@k9-sak-web/behandling-klage/src/data/klageBehandlingApi';
 import { RestApiConfigBuilder, createRequestApi } from '@k9-sak-web/rest-api';
 import { RestApiHooks } from '@k9-sak-web/rest-api-hooks';
-import { KlageBehandlingApiKeys } from '@k9-sak-web/behandling-klage/src/data/klageBehandlingApi';
 
 // NB! ALDRI BRUK DETTE UTENFOR PAKKEN 'SAK-APP'
 
@@ -22,7 +22,6 @@ export enum K9sakApiKeys {
   NAV_ANSATT = 'NAV_ANSATT',
   HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
   BEHANDLENDE_ENHETER = 'BEHANDLENDE_ENHETER',
-  FEATURE_TOGGLE = 'FEATURE_TOGGLE',
   SEARCH_FAGSAK = 'SEARCH_FAGSAK',
   MATCH_FAGSAK = 'MATCH_FAGSAK',
   FETCH_FAGSAK = 'FETCH_FAGSAK',
@@ -38,6 +37,7 @@ export enum K9sakApiKeys {
   NEW_BEHANDLING_KLAGE = 'NEW_BEHANDLING_KLAGE',
   HISTORY_K9SAK = 'HISTORY_K9SAK',
   HISTORY_TILBAKE = 'HISTORY_TILBAKE',
+  HISTORY_TILBAKE_V2 = 'HISTORY_TILBAKE_V2',
   HISTORY_KLAGE = 'HISTORY_KLAGE',
   KONTROLLRESULTAT = 'KONTROLLRESULTAT',
   RISIKO_AKSJONSPUNKT = 'RISIKO_AKSJONSPUNKT',
@@ -86,9 +86,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('arbeidsgivere', K9sakApiKeys.ARBEIDSGIVERE)
   .withPost('/k9/sak/api/brev/mottaker-info/ereg', K9sakApiKeys.BREV_MOTTAKER_ORGANISASJON)
 
-  // Feature toggles
-  .withGet('/k9/feature-toggle/toggles.json', K9sakApiKeys.FEATURE_TOGGLE)
-
   // Fagsak
   .withRel('fagsak', K9sakApiKeys.FETCH_FAGSAK)
   .withRel('sak-bruker', K9sakApiKeys.SAK_BRUKER)
@@ -97,6 +94,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('klage-sak-rettigheter', K9sakApiKeys.SAK_RETTIGHETER_KLAGE)
   .withRel('sak-historikk', K9sakApiKeys.HISTORY_K9SAK)
   .withRel('tilbake-historikk', K9sakApiKeys.HISTORY_TILBAKE)
+  .withRel('tilbake-historikkinnslag', K9sakApiKeys.HISTORY_TILBAKE_V2)
   .withRel('klage-historikk', K9sakApiKeys.HISTORY_KLAGE)
   .withRel('sak-dokumentliste', K9sakApiKeys.ALL_DOCUMENTS)
   .withRel('sak-alle-behandlinger', K9sakApiKeys.BEHANDLINGER_K9SAK)
@@ -108,7 +106,6 @@ const endpoints = new RestApiConfigBuilder()
   // Behandling
   .withRel('soeker-personopplysninger', K9sakApiKeys.BEHANDLING_PERSONOPPLYSNINGER)
   .withRel('kontrollresultat', K9sakApiKeys.KONTROLLRESULTAT)
-  .withRel('risikoklassifisering-aksjonspunkt', K9sakApiKeys.RISIKO_AKSJONSPUNKT)
   .withRel('klage-vurdering', K9sakApiKeys.TOTRINNS_KLAGE_VURDERING)
   .withRel('totrinnskontroll-arsaker', K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER)
   .withRel('totrinnskontroll-arsaker-readOnly', K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY)

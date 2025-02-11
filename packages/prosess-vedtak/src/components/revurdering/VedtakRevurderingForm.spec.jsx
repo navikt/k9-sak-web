@@ -1,13 +1,10 @@
-import React from 'react';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { intlMock } from '@fpsak-frontend/utils-test/intl-test-helper';
 import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/test-utils';
 import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
 import VedtakForm from '../VedtakForm';
 
@@ -60,7 +57,6 @@ const createBehandlingOpphor = () => createBehandling(BehandlingResultatType.OPP
 
 describe('<VedtakRevurderingForm>', () => {
   it('skal vise result ved avslag, og submitpanel', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const previewCallback = vi.fn();
     const revurdering = createBehandlingAvslag();
 
@@ -94,7 +90,7 @@ describe('<VedtakRevurderingForm>', () => {
           behandlingPaaVent={revurdering.behandlingPaaVent}
           previewCallback={previewCallback}
           readOnly={false}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           resultatstruktur={resultatstruktur}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
@@ -115,7 +111,6 @@ describe('<VedtakRevurderingForm>', () => {
   });
 
   it('Revurdering, skal vise resultat ved endret belop, hovedknappen for totrinnskontroll', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const previewCallback = vi.fn();
     const revurdering = createBehandlingAvslag();
 
@@ -153,7 +148,7 @@ describe('<VedtakRevurderingForm>', () => {
           personopplysninger={{}}
           previewCallback={previewCallback}
           readOnly={false}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           resultatstruktur={resultatstruktur}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
@@ -174,7 +169,6 @@ describe('<VedtakRevurderingForm>', () => {
   });
 
   it('skal vise result ved ingen endring, hovedknappen', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const previewCallback = vi.fn();
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
@@ -197,7 +191,7 @@ describe('<VedtakRevurderingForm>', () => {
           personopplysninger={{}}
           previewCallback={previewCallback}
           readOnly={false}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           resultatstruktur={resultatstruktur}
           arbeidsgiverOpplysningerPerId={{}}
           alleKodeverk={{}}
@@ -216,7 +210,6 @@ describe('<VedtakRevurderingForm>', () => {
   });
 
   it('skal vise result ved ingen endring, og submitpanel', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const previewCallback = vi.fn();
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
@@ -239,7 +232,7 @@ describe('<VedtakRevurderingForm>', () => {
           personopplysninger={{}}
           previewCallback={previewCallback}
           readOnly={false}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           resultatstruktur={resultatstruktur}
           alleKodeverk={{}}
           arbeidsgiverOpplysningerPerId={{}}
@@ -258,7 +251,6 @@ describe('<VedtakRevurderingForm>', () => {
   });
 
   it('skal vise opphørspanel når behandlingsresultat er opphør', () => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const previewCallback = vi.fn();
     const revurdering = createBehandlingOpphor();
 
@@ -274,7 +266,7 @@ describe('<VedtakRevurderingForm>', () => {
           personopplysninger={{}}
           previewCallback={previewCallback}
           readOnly={false}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           resultatstruktur={resultatstruktur}
           arbeidsgiverOpplysningerPerId={{}}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}

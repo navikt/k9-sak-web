@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { decodeHtmlEntity, safeJSONParse } from '@fpsak-frontend/utils';
 import {
@@ -73,7 +73,7 @@ interface Props {
   hentFritekstbrevHtmlCallback: () => void;
   readOnly: boolean;
   sprakkode: Kodeverk;
-  ytelseTypeKode: string;
+  ytelseTypeKode: FagsakYtelsesType;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   personopplysninger: Personopplysninger;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
@@ -270,7 +270,7 @@ export const VedtakForm: React.FC<Props> = ({
     return { ...initialValues, ...vedtakContext.vedtakFormState };
   };
 
-  const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN;
+  const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelsesType.FRISINN;
 
   const aktiverteInformasjonsbehov = (informasjonsbehovVedtaksbrev?.informasjonsbehov || []).filter(
     ({ type }) => type === 'FRITEKST',
@@ -416,7 +416,7 @@ export const VedtakForm: React.FC<Props> = ({
         await getPreviewManuellBrevCallback(values);
         submitCallback(createPayload(values));
         return;
-      } catch (e) {
+      } catch {
         setErrorOnSubmit('Noe gikk galt ved innsending.');
         actions.setSubmitting(false);
         return;
@@ -440,7 +440,7 @@ export const VedtakForm: React.FC<Props> = ({
         await getPreviewAutomatiskBrevCallback(values)({ aapneINyttVindu: false })(undefined);
         submitCallback(createPayload(values));
         return;
-      } catch (e) {
+      } catch {
         setErrorOnSubmit('Noe gikk galt ved innsending.');
         actions.setSubmitting(false);
         return;

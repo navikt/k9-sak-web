@@ -38,28 +38,21 @@ const getOptions = (nyePerioder: PeriodeMedId[]) => {
 
 const createTooltipContent = (
   item: PeriodeMedId,
-  getKodeverknavn,
+  getKodeverknavn: (kode: string, kodeverkType: KodeverkType) => string,
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 ) => {
   const periodeDato = `${initializeDate(item.fom).format(DDMMYY_DATE_FORMAT)} - ${initializeDate(item.tom).format(DDMMYY_DATE_FORMAT)}`;
-  return `
-  <p>
-    ${periodeDato}
-     ${calcDaysAndWeeksWithWeekends(initializeDate(item.fom), initializeDate(item.tom))}
-    <br />
-    ${`Dagsats: ${item.dagsats}kr`}
-    <br />
-    ${
-      (item.andeler || []).length > 1
-        ? item.andeler
-            .map(andel => {
-              `${createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}: ${Number(andel.refusjon) + Number(andel.tilSoker)} kr`;
-            })
-            .join('<br />')
-        : ''
-    }
-   </p>
-`;
+  const getArbeidsgiverAndeler = () => {
+    let arbeidsgiverAndeler = '';
+    (item.andeler || []).forEach((andel, index) => {
+      arbeidsgiverAndeler += `${index > 0 ? ', ' : ''}${createArbeidsgiverVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}: ${Number(andel.refusjon) + Number(andel.tilSoker)} kr`;
+    });
+    return arbeidsgiverAndeler;
+  };
+  return `${periodeDato}
+${calcDaysAndWeeksWithWeekends(initializeDate(item.fom), initializeDate(item.tom))}
+${`Dagsats: ${item.dagsats}kr`}
+${getArbeidsgiverAndeler()}`;
 };
 
 const sumUtBetalingsgrad = (andeler: PeriodeMedId['andeler']) =>

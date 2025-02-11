@@ -1,6 +1,8 @@
 import * as React from 'react';
 import styles from './PillIcon.module.css';
 
+import type { JSX } from 'react';
+
 interface PillIconProps {
   text: string;
   type: 'success' | 'warning' | 'info';

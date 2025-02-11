@@ -1,6 +1,6 @@
 import { ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 
-const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
+const getEndCharFromId = (id: string) => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
 export const utledArbeidsforholdNavn = (
   arbeidsforhold: ArbeidsforholdV2,
@@ -21,8 +21,3 @@ export const utledArbeidsforholdNavn = (
 
 export const arbeidsforholdHarAksjonspunktÅrsak = (arbeidsforhold: ArbeidsforholdV2): boolean =>
   Array.isArray(arbeidsforhold.aksjonspunktÅrsaker) && arbeidsforhold.aksjonspunktÅrsaker.length > 0;
-
-export const utledArbeidsforholdYrkestittel = (arbeidsforhold: ArbeidsforholdV2) =>
-  arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
-    ? `${arbeidsforhold.yrkestittel} (${getEndCharFromId(arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId)})`
-    : `${arbeidsforhold.yrkestittel}`;

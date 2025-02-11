@@ -5,6 +5,7 @@ import { required } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
 import { ModalBody, ModalFooter } from '@navikt/ds-react/Modal';
+import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { ReactElement, useEffect } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
@@ -12,7 +13,7 @@ import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
 import { createSelector } from 'reselect';
 import styles from './nyBehandlingModal.module.css';
 
-const createOptions = (bt: KodeverkMedNavn, enabledBehandlingstyper: KodeverkMedNavn[]): ReactElement => {
+const createOptions = (bt: KodeverkMedNavn, enabledBehandlingstyper: KodeverkMedNavn[]): ReactElement<any> => {
   const navn = bt.kode === bType.REVURDERING ? 'Revurderingsbehandling' : bt.navn;
 
   const isEnabled = enabledBehandlingstyper.some(b => b.kode === bt.kode);
@@ -34,13 +35,13 @@ export type FormValues = {
 };
 
 interface PureOwnProps {
-  ytelseType: Kodeverk;
+  ytelseType: FagsakYtelsesType;
   saksnummer: number;
   cancelEvent: () => void;
   submitCallback: (
     data: {
       eksternUuid?: string;
-      fagsakYtelseType: Kodeverk;
+      fagsakYtelseType: FagsakYtelsesType;
     } & FormValues,
   ) => void;
   behandlingOppretting: BehandlingOppretting[];
@@ -108,8 +109,7 @@ export const NyBehandlingModal = ({
   }, []);
   const erFørstegangsbehandling = valgtBehandlingTypeKode === bType.FORSTEGANGSSOKNAD;
   const erRevurdering = valgtBehandlingTypeKode === bType.REVURDERING;
-  const visÅrsak =
-    (erRevurdering && steg === 'inngangsvilkår') || (!erRevurdering && behandlingArsakTyper.length > 0);
+  const visÅrsak = (erRevurdering && steg === 'inngangsvilkår') || (!erRevurdering && behandlingArsakTyper.length > 0);
   return (
     <Modal
       className={styles.modal}

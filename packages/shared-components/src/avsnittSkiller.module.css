@@ -1,7 +1,0 @@
-.linje {
-  background-image: linear-gradient(to right, #262626 10%, rgb(255 255 255 / 0%) 0%);
-  background-position: top;
-  background-repeat: repeat-x;
-  background-size: 8px 1px;
-  padding: 1px;
-}

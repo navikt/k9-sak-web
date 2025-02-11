@@ -1,6 +1,11 @@
 import { aktivitetStatusType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/AktivitetStatus.js';
 import { inntektskategorier } from '@k9-sak-web/backend/k9sak/kodeverk/Inntektskategori.js';
-import { KodeverkKlageType, KodeverkTilbakeType, KodeverkType } from '@k9-sak-web/lib/kodeverk/types.js';
+import {
+  KodeverkKlageType,
+  KodeverkTilbakeType,
+  KodeverkType,
+  KodeverkTypeV2,
+} from '@k9-sak-web/lib/kodeverk/types.js';
 import type { ArbeidsgiverOpplysningerPerId } from '../types/arbeidsgiverOpplysningerType';
 import type { NyPeriodeFormAndeler } from './manuellePerioder/FormState';
 import {
@@ -12,7 +17,7 @@ import {
 
 describe('TilkjentYteleseUtils', () => {
   const kodeverkNavnFraKodeMock = vi.fn(
-    (_: string, kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType) => {
+    (_: string, kodeverkType: KodeverkType | KodeverkKlageType | KodeverkTilbakeType | KodeverkTypeV2) => {
       if (kodeverkType === KodeverkType.AKTIVITET_STATUS) {
         return 'AktivitetStatus';
       }
@@ -29,7 +34,7 @@ describe('TilkjentYteleseUtils', () => {
     });
 
     it('should return empty string if aktivitetStatus is null', () => {
-      expect(getAktivitet(null, kodeverkNavnFraKodeMock)).toBe('');
+      expect(getAktivitet(undefined, kodeverkNavnFraKodeMock)).toBe('');
     });
 
     it('should return the correct aktivitet status name', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -14,7 +14,7 @@ class PanelDef extends ProsessStegPanelDef {
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA];
 
   getOverstyrVisningAvKomponent = ({ fagsak, featureToggles }: { fagsak: Fagsak; featureToggles: FeatureToggles }) =>
-    featureToggles?.KLAGE_KABAL ? fagsak.sakstype.kode === fagsakYtelseType.FRISINN : true;
+    featureToggles?.KLAGE_KABAL ? fagsak.sakstype === fagsakYtelsesType.FRISINN : true;
 
   getData = ({
     alleBehandlinger,
@@ -22,14 +22,14 @@ class PanelDef extends ProsessStegPanelDef {
     parterMedKlagerett,
     valgtPartMedKlagerett,
     arbeidsgiverOpplysningerPerId,
-    fagsak
+    fagsak,
   }) => ({
     avsluttedeBehandlinger: alleBehandlinger.filter(b => b.status.kode === behandlingStatus.AVSLUTTET),
     klageVurdering,
     parterMedKlagerett,
     valgtPartMedKlagerett,
     arbeidsgiverOpplysningerPerId,
-    fagsak
+    fagsak,
   });
 }
 

@@ -2,6 +2,8 @@ import * as React from 'react';
 import { BucketIcon } from '@navikt/ft-plattform-komponenter';
 import styles from './deleteButton.module.css';
 
+import type { JSX } from 'react';
+
 interface DeleteButtonProps {
   onClick: () => void;
 }

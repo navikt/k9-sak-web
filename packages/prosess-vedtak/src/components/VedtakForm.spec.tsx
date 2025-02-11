@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/test-utils';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -8,10 +6,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatuser from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { intlWithMessages } from '@fpsak-frontend/utils-test/intl-test-helper';
 import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
-import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
@@ -22,10 +19,6 @@ import { VedtakForm } from './VedtakForm';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
 
 describe('<VedtakForm>', () => {
-  beforeEach(() => {
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'FRITEKST_REDIGERING', value: true }]);
-  });
-
   const sprakkode = {
     kode: 'NO',
     kodeverk: '',
@@ -113,7 +106,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -178,7 +171,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -233,7 +226,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+          ytelseTypeKode={fagsakYtelsesType.FORELDREPENGER}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -287,7 +280,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -351,7 +344,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -413,7 +406,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -474,7 +467,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -535,7 +528,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -610,7 +603,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -652,7 +645,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -695,7 +688,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}
@@ -747,7 +740,7 @@ describe('<VedtakForm>', () => {
           hentFritekstbrevHtmlCallback={() => undefined}
           readOnly={false}
           sprakkode={sprakkode}
-          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          ytelseTypeKode={fagsakYtelsesType.PLEIEPENGER_SYKT_BARN}
           alleKodeverk={{}}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={{}}

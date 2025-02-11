@@ -1,28 +1,30 @@
-import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import { DataFetchPendingModal, LoadingPanel } from '@fpsak-frontend/shared-components';
-import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
-import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
-import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
-import FagsakGrid from '@k9-sak-web/sak-app/src/fagsak/components/FagsakGrid';
 import {
   ArbeidsgiverOpplysningerWrapper,
   Fagsak,
   FagsakPerson,
-  FeatureToggles,
   KodeverkMedNavn,
   NavAnsatt,
   Personopplysninger,
   SaksbehandlereInfo,
 } from '@k9-sak-web/types';
+import { useCallback, useContext, useMemo, useState } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import VisittkortPanel from '@k9-sak-web/gui/sak/visittkort/VisittkortPanel.js';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
+import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
+import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
+import FagsakGrid from '@k9-sak-web/sak-app/src/fagsak/components/FagsakGrid';
 import { SaksbehandlernavnContext } from '@navikt/ft-plattform-komponenter';
-import { useCallback, useMemo, useState } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { behandlingerRoutePath, erBehandlingValgt, erUrlUnderBehandling, pathToMissingPage } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
 import useBehandlingEndret from '../behandling/useBehandlingEndret';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
-import { restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
+import { UngSakApiKeys, restApiHooks } from '../data/ungsakApi';
 import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
@@ -34,11 +36,8 @@ import useHentFagsakRettigheter from './useHentFagsakRettigheter';
  */
 const FagsakIndex = () => {
   const [behandlingerTeller, setBehandlingTeller] = useState(0);
-
   const [requestPendingMessage, setRequestPendingMessage] = useState<string>();
-
   const [behandlingIdOgVersjon, setIdOgVersjon] = useState({ behandlingId: undefined, behandlingVersjon: undefined });
-
   const setBehandlingIdOgVersjon = useCallback(
     (behandlingId, behandlingVersjon) => setIdOgVersjon({ behandlingId, behandlingVersjon }),
     [],
@@ -102,13 +101,22 @@ const FagsakIndex = () => {
   const { data: behandlingPersonopplysninger, state: personopplysningerState } =
     restApiHooks.useRestApi<Personopplysninger>(UngSakApiKeys.BEHANDLING_PERSONOPPLYSNINGER, undefined, options);
 
+  const behandlingPersonopplysningerV2 = useMemo(() => {
+    if (!behandlingPersonopplysninger) {
+      return undefined;
+    }
+    const deepCopy = JSON.parse(JSON.stringify(behandlingPersonopplysninger));
+    konverterKodeverkTilKode(deepCopy, false);
+    return deepCopy;
+  }, [behandlingPersonopplysninger]);
+
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
   const { data: arbeidsgiverOpplysninger } = restApiHooks.useRestApi<ArbeidsgiverOpplysningerWrapper>(
     UngSakApiKeys.ARBEIDSGIVERE,
     {},
     {
-      updateTriggers: [!behandling],
+      updateTriggers: [behandlingId],
       suspendRequest: !behandling,
     },
   );
@@ -125,17 +133,7 @@ const FagsakIndex = () => {
     options,
   );
 
-  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
-    UngSakApiKeys.FEATURE_TOGGLE,
-  );
-  const featureToggles = useMemo<FeatureToggles>(
-    () =>
-      featureTogglesData?.reduce((acc, curr) => {
-        acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
-        return acc;
-      }, {}),
-    [featureTogglesData],
-  );
+  const featureToggles = useContext(FeatureTogglesContext);
 
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(UngSakApiKeys.NAV_ANSATT);
 
@@ -221,10 +219,9 @@ const FagsakIndex = () => {
 
               return (
                 <div style={{ overflow: 'hidden' }}>
-                  <VisittkortSakIndex
-                    personopplysninger={behandlingPersonopplysninger}
-                    alleKodeverk={alleKodeverkUngSak}
-                    sprakkode={behandling?.sprakkode}
+                  <VisittkortPanel
+                    personopplysninger={behandlingPersonopplysningerV2}
+                    sprakkode={behandling?.sprakkode.kode}
                     fagsakPerson={fagsakPerson || fagsak.person}
                     erPbSak={fagsak.erPbSak}
                   />

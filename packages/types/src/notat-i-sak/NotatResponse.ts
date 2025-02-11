@@ -8,7 +8,7 @@ interface NotatResponse {
   notatTekst: string;
   opprettetAv: string;
   opprettetTidspunkt: string;
-  sakstype?: string;
+  sakstype?: string; // Er dette fagsaktype eller behandlingstype?
   skjult: boolean;
   versjon: number;
   kanRedigere: boolean;

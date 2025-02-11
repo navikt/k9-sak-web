@@ -1,0 +1,93 @@
+import {
+  BehandlingAksjonspunktDtoBehandlingType as behandlingType,
+  BehandlingAksjonspunktDtoFagsakStatus as fagsakStatus,
+  MatchFagsakYtelseType as fagsakYtelseType,
+} from '@k9-sak-web/backend/k9sak/generated';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
+import { action } from '@storybook/addon-actions';
+import type { Meta, StoryObj } from '@storybook/react';
+import { expect } from '@storybook/test';
+import FagsakSøkSakIndexV2 from './FagsakSøkSakIndex';
+
+const fagsaker = [
+  {
+    saksnummer: '1',
+    sakstype: fagsakYtelseType.PLEIEPENGER_SYKT_BARN,
+    status: fagsakStatus.OPPRETTET,
+    opprettet: '2017-08-02T00:54:25.455',
+    endret: '',
+  },
+  {
+    saksnummer: '2',
+    sakstype: fagsakYtelseType.OMSORGSPENGER,
+    status: fagsakStatus.OPPRETTET,
+    opprettet: '2017-08-02T00:54:25.455',
+    endret: '',
+  },
+];
+const meta = {
+  title: 'gui/sak/sok',
+  component: FagsakSøkSakIndexV2,
+  decorators: [
+    Story => (
+      <KodeverkProvider
+        behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+        kodeverk={alleKodeverkV2}
+        klageKodeverk={{}}
+        tilbakeKodeverk={{}}
+      >
+        <Story />
+      </KodeverkProvider>
+    ),
+  ],
+} satisfies Meta<typeof FagsakSøkSakIndexV2>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    fagsaker,
+    searchFagsakCallback: action('button-click'),
+    selectFagsakCallback: action('button-click'),
+    searchResultReceived: false,
+    searchStarted: false,
+  },
+  play: async ({ canvas }) => {
+    expect(canvas.getByLabelText('Saksnummer eller fødselsnummer/D-nummer')).toBeInTheDocument();
+    expect(canvas.getByRole('button', { name: 'Søk' })).toBeInTheDocument();
+    expect(canvas.getByText('Pleiepenger sykt barn')).toBeInTheDocument();
+    expect(canvas.getByText('Omsorgspenger')).toBeInTheDocument();
+  },
+};
+
+export const SøkUtenTreff: Story = {
+  args: {
+    fagsaker: [],
+    searchFagsakCallback: action('button-click'),
+    selectFagsakCallback: action('button-click'),
+    searchResultReceived: true,
+    searchStarted: true,
+  },
+  play: async ({ canvas }) => {
+    expect(canvas.getByText('Søket ga ingen treff')).toBeInTheDocument();
+  },
+};
+
+export const SøkDerEnIkkeHarAdgang: Story = {
+  args: {
+    fagsaker: [],
+    searchFagsakCallback: action('button-click'),
+    selectFagsakCallback: action('button-click'),
+    searchResultReceived: false,
+    searchStarted: false,
+    searchResultAccessDenied: {
+      feilmelding: 'Har ikke adgang',
+    },
+  },
+  play: async ({ canvas }) => {
+    expect(canvas.getByText('Har ikke adgang')).toBeInTheDocument();
+  },
+};

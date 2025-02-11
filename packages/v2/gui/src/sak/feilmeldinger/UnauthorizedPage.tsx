@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import { BigError } from '@k9-sak-web/gui/sak/feilmeldinger/BigError.js';
+import { Link } from 'react-router';
 
 /**
  * UnauthorizedPage

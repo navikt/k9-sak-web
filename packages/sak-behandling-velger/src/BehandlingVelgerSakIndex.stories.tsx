@@ -5,7 +5,6 @@ import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType'
 import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import { Fagsak, Kodeverk } from '@k9-sak-web/types';
-import React, { useState } from 'react';
 import BehandlingVelgerSakIndex from './BehandlingVelgerSakIndex';
 
 const behandlinger = [
@@ -252,10 +251,7 @@ const behandlinger = [
 
 const fagsak = {
   saksnummer: '35425245',
-  sakstype: {
-    kode: fagsakYtelsesType.PSB,
-    kodeverk: 'FAGSAK_YTELSE',
-  },
+  sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
   relasjonsRolleType: {
     kode: relasjonsRolleType.MOR,
     kodeverk: '',
@@ -293,14 +289,10 @@ export default {
 };
 
 export const visPanelForValgAvBehandlinger = props => {
-  const [visAlle, toggleVisAlle] = useState(false);
-
   return (
     <div style={{ width: '600px' }}>
       <BehandlingVelgerSakIndex
         getBehandlingLocation={() => locationMock}
-        showAll={visAlle}
-        toggleShowAll={() => toggleVisAlle(!visAlle)}
         getKodeverkFn={getKodeverkFn}
         fagsak={fagsak}
         createLocationForSkjermlenke={() => locationMock}

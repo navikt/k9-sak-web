@@ -1,140 +1,8 @@
-import React from 'react';
 import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
 import HistorikkSakIndex from './HistorikkSakIndex';
-
-const history = [
-  {
-    behandlingId: 999951,
-    type: {
-      kode: 'NYE_REGOPPLYSNINGER',
-      kodeverk: 'HISTORIKKINNSLAG_TYPE',
-    },
-    aktoer: {
-      kode: 'VL',
-      kodeverk: 'HISTORIKK_AKTOER',
-    },
-    kjoenn: {
-      kode: '-',
-      kodeverk: 'BRUKER_KJOENN',
-    },
-    opprettetAv: 'Srvengangsstonad',
-    opprettetTidspunkt: '2019-09-19T12:16:14.499',
-    dokumentLinks: [],
-    historikkinnslagDeler: [
-      {
-        begrunnelse: {
-          kode: 'SAKSBEH_START_PA_NYTT',
-          kodeverk: 'HISTORIKK_BEGRUNNELSE_TYPE',
-        },
-        begrunnelseFritekst: null,
-        hendelse: {
-          navn: {
-            kode: 'NYE_REGOPPLYSNINGER',
-            kodeverk: 'HISTORIKKINNSLAG_TYPE',
-          },
-          verdi: null,
-        },
-        opplysninger: null,
-        soeknadsperiode: null,
-        skjermlenke: null,
-        aarsak: null,
-        tema: null,
-        gjeldendeFra: null,
-        resultat: null,
-        endredeFelter: null,
-        aksjonspunkter: null,
-      },
-    ],
-  },
-  {
-    behandlingId: null,
-    type: {
-      kode: 'INNSYN_OPPR',
-      kodeverk: 'HISTORIKKINNSLAG_TYPE',
-    },
-    aktoer: {
-      kode: 'SBH',
-      kodeverk: 'HISTORIKK_AKTOER',
-    },
-    kjoenn: {
-      kode: '-',
-      kodeverk: 'BRUKER_KJOENN',
-    },
-    opprettetAv: 'Z991110',
-    opprettetTidspunkt: '2019-09-18T15:25:31.291',
-    dokumentLinks: [],
-    historikkinnslagDeler: [
-      {
-        begrunnelse: null,
-        begrunnelseFritekst: 'Krav om innsyn mottatt 18.09.2019',
-        hendelse: {
-          navn: {
-            kode: 'INNSYN_OPPR',
-            kodeverk: 'HISTORIKKINNSLAG_TYPE',
-          },
-          verdi: null,
-        },
-        opplysninger: null,
-        soeknadsperiode: null,
-        skjermlenke: null,
-        aarsak: null,
-        tema: null,
-        gjeldendeFra: null,
-        resultat: null,
-        endredeFelter: null,
-        aksjonspunkter: null,
-      },
-    ],
-  },
-  {
-    behandlingId: 999952,
-    type: {
-      kode: 'BEH_STARTET',
-      kodeverk: 'HISTORIKKINNSLAG_TYPE',
-    },
-    aktoer: {
-      kode: 'SOKER',
-      kodeverk: 'HISTORIKK_AKTOER',
-    },
-    kjoenn: {
-      kode: 'K',
-      kodeverk: 'BRUKER_KJOENN',
-    },
-    opprettetAv: 'Srvengangsstonad',
-    opprettetTidspunkt: '2019-09-18T13:12:48.874',
-    dokumentLinks: [
-      {
-        tag: 'Søknad',
-        url: 'http://127.0.0.1:8080/fpsak/api/dokument/hent-dokument?journalpostId=453471722&dokumentId=470153809',
-        journalpostId: '453471722',
-        dokumentId: '470153809',
-        utgått: false,
-      },
-    ],
-    historikkinnslagDeler: [
-      {
-        begrunnelse: null,
-        begrunnelseFritekst: null,
-        hendelse: {
-          navn: {
-            kode: 'BEH_STARTET',
-            kodeverk: 'HISTORIKKINNSLAG_TYPE',
-          },
-          verdi: null,
-        },
-        opplysninger: null,
-        soeknadsperiode: null,
-        skjermlenke: null,
-        aarsak: null,
-        tema: null,
-        gjeldendeFra: null,
-        resultat: null,
-        endredeFelter: null,
-        aksjonspunkter: null,
-      },
-    ],
-  },
-];
+import { Meta, StoryObj } from '@storybook/react';
+import behandlingStartet, { innsynOpprettet, nyeRegisteropplysninger, overlappendeSak } from './mock/historikkinnslag';
+import { expect } from '@storybook/test';
 
 const locationMock = {
   key: '1',
@@ -144,31 +12,78 @@ const locationMock = {
   hash: 'test',
 };
 
-export default {
-  title: 'sak/sak-historikk',
-  component: HistorikkSakIndex,
+const saksnummer = '1';
+const getBehandlingLocation = () => locationMock;
+const createLocationForSkjermlenke = () => locationMock;
+const erTilbakekreving = false;
+
+const defaultArgs = {
+  saksnummer,
+  getBehandlingLocation,
+  alleKodeverk: alleKodeverk as any,
+  createLocationForSkjermlenke,
+  erTilbakekreving,
 };
 
-export const visHistorikk = () => (
-  <div
-    style={{
-      width: '600px',
-      backgroundColor: 'white',
-      padding: '30px',
-    }}
-  >
-    <div className="grid gap-5">
-      {history.map(h => (
-        <HistorikkSakIndex
-          key={h.behandlingId}
-          historikkinnslag={h}
-          saksnummer="2"
-          getBehandlingLocation={() => locationMock}
-          alleKodeverk={alleKodeverk as any}
-          createLocationForSkjermlenke={() => locationMock}
-          erTilbakekreving={false}
-        />
-      ))}
-    </div>
-  </div>
-);
+const meta = {
+  title: 'sak/sak-historikk/Historikkinnslag',
+  component: HistorikkSakIndex,
+  argTypes: { alleKodeverk: { control: false } },
+} satisfies Meta<typeof HistorikkSakIndex>;
+
+type Story = StoryObj<typeof meta>;
+
+export const BehandlingStartet: Story = {
+  args: { ...defaultArgs, historikkinnslag: behandlingStartet },
+  play: async ({ canvas, step }) => {
+    await step('Skal vise historikkinnslag for behandling startet', async () => {
+      await expect(canvas.getByText('Behandling startet')).toBeInTheDocument();
+      await expect(canvas.getByRole('link', { name: 'DokumentSøknad' }));
+      await expect(canvas.getByRole('link').getAttribute('href')).toContain(
+        'hent-dokument?saksnummer=1&journalpostId=2&dokumentId=3',
+      );
+    });
+  },
+};
+
+export const InnsynOpprettet: Story = {
+  args: { ...defaultArgs, historikkinnslag: innsynOpprettet },
+  play: async ({ canvas, step }) => {
+    await step('Skal vise historikkinnslag for innsyn opprettet', async () => {
+      await expect(canvas.getByText('Innsynsbehandling opprettet'));
+      await expect(canvas.getByRole('heading', { name: 'Saksbehandler S123456 18.09.2019 - 15:25' }));
+      await expect(
+        canvas.getByRole('paragraph', {
+          name: (_, element) => element.textContent === 'Krav om innsyn mottatt 18.09.2019',
+        }),
+      );
+    });
+  },
+};
+
+export const NyeRegisteropplysninger: Story = {
+  args: { ...defaultArgs, historikkinnslag: nyeRegisteropplysninger },
+  play: async ({ canvas, step }) => {
+    await step('Skal vise historikkinnslag for nye registeropplysninger', async () => {
+      await expect(canvas.getByRole('heading', { name: 'Vedtaksløsningen 19.09.2019 - 12:16' }));
+      await expect(canvas.getByText('Nye registeropplysninger'));
+    });
+  },
+};
+
+export const OverlappendeSak: Story = {
+  args: { ...defaultArgs, historikkinnslag: overlappendeSak },
+  play: async ({ canvas, step }) => {
+    await step('Skal vise historikkinnslag for innsyn opprettet', async () => {
+      await expect(canvas.getByText('Manuelt fastsatt uttaksgrad'));
+      await expect(canvas.getByRole('heading', { name: 'Saksbehandler S123456 16.01.2025 - 09:27' }));
+      await expect(
+        canvas.getByRole('paragraph', {
+          name: (_, element) => element.textContent === 'Det må da være lov å ha litt overlappende uttak.',
+        }),
+      );
+    });
+  },
+};
+
+export default meta;

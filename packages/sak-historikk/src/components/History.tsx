@@ -35,6 +35,7 @@ const velgHistorikkMal = (histType: Kodeverk) => {
     case historikkinnslagType.VEDLEGG_MOTTATT:
     case historikkinnslagType.BREV_SENT:
     case historikkinnslagType.BREV_BESTILT:
+    case historikkinnslagType.INNTEKTSMELDING_FORESPURT:
     case historikkinnslagType.REVURD_OPPR:
     case historikkinnslagType.MANGELFULL_SOKNAD:
     case historikkinnslagType.INNSYN_OPPR:
@@ -81,6 +82,7 @@ const velgHistorikkMal = (histType: Kodeverk) => {
       return HistorikkMalType6;
     case historikkinnslagType.OVERSTYRT:
     case historikkinnslagType.FJERNET_OVERSTYRING:
+    case historikkinnslagType.FASTSATT_UTTAKSGRAD:
       return HistorikkMalType7;
     case historikkinnslagType.OPPTJENING:
       return HistorikkMalType8;

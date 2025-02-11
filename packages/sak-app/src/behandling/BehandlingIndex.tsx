@@ -1,10 +1,10 @@
 import { Location } from 'history';
-import React, { Suspense, useCallback, useEffect, useMemo } from 'react';
-import { NavigateFunction, useLocation, useNavigate } from 'react-router-dom';
+import React, { Suspense, useCallback, useContext, useEffect, useMemo } from 'react';
+import { NavigateFunction, useLocation, useNavigate } from 'react-router';
 
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { parseQueryString, replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
@@ -13,13 +13,13 @@ import {
   BehandlingAppKontekst,
   Fagsak,
   FagsakPerson,
-  FeatureToggles,
   KodeverkMedNavn,
   NavAnsatt,
 } from '@k9-sak-web/types';
 
 import BehandlingPleiepengerSluttfaseIndex from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import ErrorBoundary from '../app/ErrorBoundary';
 import {
   getFaktaLocation,
@@ -120,17 +120,7 @@ const BehandlingIndex = ({
   );
 
   const fagsakPerson = restApiHooks.useGlobalStateRestApiData<FagsakPerson>(K9sakApiKeys.SAK_BRUKER);
-  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
-    K9sakApiKeys.FEATURE_TOGGLE,
-  );
-  const featureToggles = useMemo<FeatureToggles>(
-    () =>
-      featureTogglesData.reduce((acc, curr) => {
-        acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
-        return acc;
-      }, {}),
-    [featureTogglesData],
-  );
+  const featureToggles = useContext(FeatureTogglesContext);
 
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
   const rettigheter = useMemo(
@@ -249,7 +239,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype.kode === FagsakYtelseType.OMSORGSPENGER) {
+  if (fagsak.sakstype === fagsakYtelsesType.OMSORGSPENGER) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -264,7 +254,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+  if (fagsak.sakstype === fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -279,7 +269,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (erFagytelseTypeUtvidetRett(fagsak.sakstype.kode)) {
+  if (erFagytelseTypeUtvidetRett(fagsak.sakstype)) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -294,7 +284,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype.kode === FagsakYtelseType.FRISINN) {
+  if (fagsak.sakstype === fagsakYtelsesType.FRISINN) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
@@ -309,7 +299,7 @@ const BehandlingIndex = ({
     );
   }
 
-  if (fagsak.sakstype.kode === FagsakYtelseType.OPPLAERINGSPENGER) {
+  if (fagsak.sakstype === fagsakYtelsesType.OPPLÆRINGSPENGER) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>

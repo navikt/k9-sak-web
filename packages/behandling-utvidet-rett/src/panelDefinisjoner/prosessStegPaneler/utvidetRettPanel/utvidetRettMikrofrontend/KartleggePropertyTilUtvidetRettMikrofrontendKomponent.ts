@@ -1,6 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { Behandling } from '@k9-sak-web/types';
 import {
@@ -30,17 +30,18 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
   const vilkaret = vilkar.find(v => v.vilkarType.kode === vilkarType.UTVIDETRETTVILKARET);
 
   const eksistererAksjonspunktOgVilkar = aksjonspunkt && vilkar;
-  const eksistererVilkarForAutomatiskInnvilgetAleneOmOmsorgen =
-    fagsaksType === FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN && vilkar;
+  const eksistererVilkarForAutomatiskInnvilget =
+    (fagsaksType === fagsakYtelsesType.OMSORGSPENGER_AO || fagsaksType === fagsakYtelsesType.OMSORGSPENGER_KS) &&
+    vilkar;
 
-  if (eksistererAksjonspunktOgVilkar || eksistererVilkarForAutomatiskInnvilgetAleneOmOmsorgen) {
+  if (eksistererAksjonspunktOgVilkar || eksistererVilkarForAutomatiskInnvilget) {
     const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;
     const lesemodus = isReadOnly || !isAksjonspunktOpen;
     const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
     const behandlingsID = behandling.id.toString();
 
     switch (fagsaksType) {
-      case FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN:
+      case fagsakYtelsesType.OMSORGSPENGER_KS:
         return KroniskSykObjektTilMikrofrontend({
           behandlingsID,
           aksjonspunktLost,
@@ -52,7 +53,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
           soknad,
         });
 
-      case FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE:
+      case fagsakYtelsesType.OMSORGSPENGER_MA:
         return MidlertidigAleneObjektTilMikrofrontend({
           behandlingsID,
           aksjonspunktLost,
@@ -65,7 +66,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
           soknad,
         });
 
-      case FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN:
+      case fagsakYtelsesType.OMSORGSPENGER_AO:
         return AleneOmOmsorgenObjektTilMikrofrontend({
           behandling,
           aksjonspunktLost,

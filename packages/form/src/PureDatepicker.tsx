@@ -5,7 +5,7 @@ import { DDMMYYYY_DATE_FORMAT } from '@k9-sak-web/lib/dateUtils/formats.js';
 import { DatePicker, useDatepicker } from '@navikt/ds-react';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import React from 'react';
+import React, { type JSX } from 'react';
 import { DatepickerLimitations } from './DatepickerLimitations';
 import styles from './datepicker.module.css';
 

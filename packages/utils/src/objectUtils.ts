@@ -1,39 +1,26 @@
-const throwError = message => {
-  throw new Error(message);
-};
+export const isEqual = (obj1: object, obj2: object) => JSON.stringify(obj1) === JSON.stringify(obj2);
 
-export const notNull = value => (value === undefined || value === null ? throwError(`Value is ${value}`) : value);
-
-export const isObjectEmpty = object => Object.keys(object).length === 0;
-
-export const isEqual = (obj1, obj2) => JSON.stringify(obj1) === JSON.stringify(obj2);
-
-export const isObject = variable => variable !== undefined && variable !== null && variable.constructor === Object;
-
-export const isEqualToOneOf = (value, acceptedValues) =>
-  !acceptedValues.includes(value) ? throwError(`${value} is not one of ${acceptedValues}`) : value;
-
-export const omit = (object, ...keysToOmit) =>
+export const omit = (object: object, ...keysToOmit: string[]) =>
   Object.keys(object)
     .filter(key => !keysToOmit.includes(key))
     .map(key => ({ [key]: object[key] }))
     .reduce((a, b) => Object.assign(a, b), {});
 
-const isNullOrUndefined = obj => obj === null || typeof obj === 'undefined';
-const isNotNullAndObject = obj => obj !== null && typeof obj === 'object' && obj.constructor;
+const isNullOrUndefined = (value: unknown): boolean => value === null || value === undefined;
+const isNotNullAndObject = (value: unknown): value is object => value !== null && typeof value === 'object';
 
-const redefineIfUndefined = (obj, otherObjOfType) => {
+const redefineIfUndefined = <T>(obj: T, otherObjOfType: T): T | null => {
   if (isNullOrUndefined(obj) && isNotNullAndObject(otherObjOfType)) {
     try {
-      return new otherObjOfType.constructor();
-    } catch (e) {
+      return new (otherObjOfType.constructor as { new (): T })();
+    } catch {
       return null;
     }
   }
   return obj;
 };
 
-export const diff = (a, b) => {
+export const diff = (a: unknown, b: unknown) => {
   const thing1 = redefineIfUndefined(a, b);
   const thing2 = redefineIfUndefined(b, a);
   if (typeof thing1 !== typeof thing2) {
@@ -69,12 +56,3 @@ export const diff = (a, b) => {
       return thing1 !== thing2;
   }
 };
-
-export const arrayToObject = (array, keyFunction, valueFunction) =>
-  array.reduce(
-    (acc, data) => ({
-      ...acc,
-      ...{ [keyFunction(data)]: valueFunction(data) },
-    }),
-    {},
-  );

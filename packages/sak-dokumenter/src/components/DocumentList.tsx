@@ -81,9 +81,11 @@ interface OwnProps {
 const DocumentList = ({ documents, behandlingId, fagsakPerson, saksnummer, behandlingUuid, sakstype }: OwnProps) => {
   const [selectedFilter, setSelectedFilter] = useState(alleBehandlinger);
 
-  const erStøttetFagsakYtelseType = [fagsakYtelsesType.PSB, fagsakYtelsesType.OMP, fagsakYtelsesType.PPN].some(
-    t => t === sakstype,
-  );
+  const erStøttetFagsakYtelseType = [
+    fagsakYtelsesType.PLEIEPENGER_SYKT_BARN,
+    fagsakYtelsesType.OMSORGSPENGER,
+    fagsakYtelsesType.PLEIEPENGER_NÆRSTÅENDE,
+  ].some(t => t === sakstype);
 
   const getInntektsmeldingerIBruk = (signal?: AbortSignal) =>
     axios
