@@ -1,5 +1,7 @@
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
+import { UngSakClientContext } from '@k9-sak-web/gui/app/UngSakClientContext.js';
+import BehandlingVelgerBackendClient from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerBackendClient.js';
 import BehandlingVelgerSakV2 from '@k9-sak-web/gui/sak/behandling-velger/BehandlingVelgerSakIndex.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import BehandlingRettigheter from '@k9-sak-web/sak-app/src/behandling/behandlingRettigheterTsType';
@@ -13,7 +15,7 @@ import {
 } from '@k9-sak-web/types';
 import { behandlingType } from '@navikt/k9-klage-typescript-client';
 import { Location } from 'history';
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 import { Navigate, useLocation, useMatch } from 'react-router';
 import {
   createLocationForSkjermlenke,
@@ -62,6 +64,8 @@ export const FagsakProfileIndex = ({
   arbeidsgiverOpplysningerPerId,
 }: OwnProps) => {
   const fagsakStatusMedNavn = useUngSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
+  const ungSakClient = useContext(UngSakClientContext);
+  const behandlingVelgerBackendClient = new BehandlingVelgerBackendClient(ungSakClient);
 
   const { data: behandlendeEnheter } = restApiHooks.useRestApi<BehandlendeEnheter>(UngSakApiKeys.BEHANDLENDE_ENHETER, {
     ytelseType: fagsak.sakstype,
@@ -127,6 +131,7 @@ export const FagsakProfileIndex = ({
                 behandlingId={behandlingId}
                 fagsak={fagsakV2}
                 createLocationForSkjermlenke={createLocationForSkjermlenke}
+                api={behandlingVelgerBackendClient}
               />
             );
           }}
