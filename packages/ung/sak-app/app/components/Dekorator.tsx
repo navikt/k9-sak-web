@@ -91,7 +91,7 @@ const Dekorator = ({
 
   return (
     <HeaderWithErrorPanel
-      navAnsattName={navAnsatt?.navn}
+      navAnsattName={navAnsatt?.navn ?? navAnsatt?.brukernavn}
       navBrukernavn={navAnsatt?.brukernavn}
       removeErrorMessage={removeErrorMessages}
       errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}

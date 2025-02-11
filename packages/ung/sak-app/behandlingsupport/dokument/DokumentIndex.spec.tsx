@@ -34,7 +34,7 @@ describe('<DokumentIndex>', () => {
 
   const fagsak = {
     saksnummer: '35425245',
-    sakstype: fagsakYtelsesType.PSB, // FAGSAK_YTELSE
+    sakstype: fagsakYtelsesType.PLEIEPENGER_SYKT_BARN, // FAGSAK_YTELSE
     relasjonsRolleType: relasjonsRolleType.MOR,
     status: fagsakStatus.UNDER_BEHANDLING, // FAGSAK_STATUS
     barnFodt: '2020-01-01',

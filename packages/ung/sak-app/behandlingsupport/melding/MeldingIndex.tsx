@@ -2,7 +2,7 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import MeldingerSakIndex, { MeldingerSakIndexBackendApi } from '@k9-sak-web/sak-meldinger';
+import MeldingerSakIndex, { type MeldingerSakIndexBackendApi } from '@k9-sak-web/sak-meldinger';
 import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
@@ -16,8 +16,6 @@ import { UngSakApiKeys, requestApi, restApiHooks } from '../../data/ungsakApi';
 import { useUngSakKodeverk } from '../../data/useKodeverk';
 import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
 
-export interface BackendApi extends MeldingerSakIndexBackendApi {}
-
 interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
@@ -26,7 +24,7 @@ interface OwnProps {
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   readonly featureToggles?: FeatureToggles;
-  readonly backendApi: BackendApi;
+  readonly backendApi: MeldingerSakIndexBackendApi;
 }
 
 /**

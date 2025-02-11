@@ -3,12 +3,14 @@ import { ReactElement, useEffect } from 'react';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
-import { requestApi, restApiHooks, UngSakApiKeys } from '../data/ungsakApi';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+import { useFeatureToggles } from '@k9-sak-web/gui/utils/featureToggles/useFeatureToggles.js';
+import { UngSakApiKeys, requestApi, restApiHooks } from '../data/ungsakApi';
 import useHentInitLenker from './useHentInitLenker';
 import useHentKodeverk from './useHentKodeverk';
 
 interface OwnProps {
-  children: ReactElement;
+  children: ReactElement<any>;
 }
 
 const NO_PARAMS = {};
@@ -31,16 +33,7 @@ const AppConfigResolver = ({ children }: OwnProps) => {
 
   const { state: navAnsattState } = restApiHooks.useGlobalStateRestApi(UngSakApiKeys.NAV_ANSATT, NO_PARAMS, options);
 
-  const { state: featureToggleState } = restApiHooks.useGlobalStateRestApi<{
-    featureToggles: { [key: string]: boolean };
-  }>(
-    UngSakApiKeys.FEATURE_TOGGLE,
-    {},
-    {
-      ...options,
-      suspendRequest: options.suspendRequest,
-    },
-  );
+  const { featureToggles } = useFeatureToggles();
 
   const { state: sprakFilState } = restApiHooks.useGlobalStateRestApi(UngSakApiKeys.LANGUAGE_FILE, NO_PARAMS);
 
@@ -53,9 +46,13 @@ const AppConfigResolver = ({ children }: OwnProps) => {
     harHentetFerdigKodeverk &&
     navAnsattState === RestApiState.SUCCESS &&
     sprakFilState === RestApiState.SUCCESS &&
-    (featureToggleState === RestApiState.NOT_STARTED || featureToggleState === RestApiState.SUCCESS);
+    !!featureToggles;
 
-  return harFeilet || erFerdig ? children : <LoadingPanel />;
+  return (
+    <FeatureTogglesContext.Provider value={featureToggles}>
+      {harFeilet || erFerdig ? children : <LoadingPanel />}
+    </FeatureTogglesContext.Provider>
+  );
 };
 
 export default AppConfigResolver;

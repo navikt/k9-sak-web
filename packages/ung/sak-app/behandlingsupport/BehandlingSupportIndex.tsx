@@ -1,4 +1,5 @@
 import { httpErrorHandler } from '@fpsak-frontend/utils';
+import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
 import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
@@ -30,7 +31,7 @@ import { BodyShort, Tabs, Tooltip } from '@navikt/ds-react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import styles from './behandlingSupportIndex.module.css';
@@ -302,11 +303,14 @@ const BehandlingSupportIndex = ({
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.HISTORIKK}>
-            <HistorikkIndex
-              saksnummer={fagsak.saksnummer}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-            />
+            {behandlingId !== undefined && (
+              <HistorikkIndex
+                saksnummer={fagsak.saksnummer}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                kjønn={fagsak.person?.erKvinne ? kjønn.KVINNE : kjønn.MANN}
+              />
+            )}
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.MELDINGER}>
             {behandlingId && (
@@ -329,6 +333,7 @@ const BehandlingSupportIndex = ({
               behandlingVersjon={behandlingVersjon}
               fagsak={fagsak}
               behandlingUuid={behandling?.uuid}
+              featureToggles={featureToggles}
             />
           </Tabs.Panel>
           <Tabs.Panel value={SupportTabs.NOTATER}>

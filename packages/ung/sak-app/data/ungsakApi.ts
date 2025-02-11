@@ -21,7 +21,6 @@ export enum UngSakApiKeys {
   NAV_ANSATT = 'NAV_ANSATT',
   HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
   BEHANDLENDE_ENHETER = 'BEHANDLENDE_ENHETER',
-  FEATURE_TOGGLE = 'FEATURE_TOGGLE',
   SEARCH_FAGSAK = 'SEARCH_FAGSAK',
   MATCH_FAGSAK = 'MATCH_FAGSAK',
   FETCH_FAGSAK = 'FETCH_FAGSAK',
@@ -39,7 +38,6 @@ export enum UngSakApiKeys {
   HISTORY_TILBAKE = 'HISTORY_TILBAKE',
   HISTORY_KLAGE = 'HISTORY_KLAGE',
   KONTROLLRESULTAT = 'KONTROLLRESULTAT',
-  RISIKO_AKSJONSPUNKT = 'RISIKO_AKSJONSPUNKT',
   TOTRINNS_KLAGE_VURDERING = 'TOTRINNS_KLAGE_VURDERING',
   TOTRINNSAKSJONSPUNKT_ARSAKER = 'TOTRINNSAKSJONSPUNKT_ARSAKER',
   TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY = 'TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY',
@@ -83,9 +81,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('arbeidsgivere', UngSakApiKeys.ARBEIDSGIVERE)
   .withPost('/ung/sak/api/brev/mottaker-info/ereg', UngSakApiKeys.BREV_MOTTAKER_ORGANISASJON)
 
-  // Feature toggles
-  .withGet('/ung/feature-toggle/toggles.json', UngSakApiKeys.FEATURE_TOGGLE)
-
   // Fagsak
   .withRel('fagsak', UngSakApiKeys.FETCH_FAGSAK)
   .withRel('sak-bruker', UngSakApiKeys.SAK_BRUKER)
@@ -105,7 +100,6 @@ const endpoints = new RestApiConfigBuilder()
   // Behandling
   .withRel('soeker-personopplysninger', UngSakApiKeys.BEHANDLING_PERSONOPPLYSNINGER)
   .withRel('kontrollresultat', UngSakApiKeys.KONTROLLRESULTAT)
-  .withRel('risikoklassifisering-aksjonspunkt', UngSakApiKeys.RISIKO_AKSJONSPUNKT)
   .withRel('klage-vurdering', UngSakApiKeys.TOTRINNS_KLAGE_VURDERING)
   .withRel('totrinnskontroll-arsaker', UngSakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER)
   .withRel('totrinnskontroll-arsaker-readOnly', UngSakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY)

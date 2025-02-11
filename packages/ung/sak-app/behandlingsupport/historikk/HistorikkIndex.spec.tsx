@@ -1,11 +1,12 @@
 import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
+import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { UngSakApiKeys, requestApi } from '../../data/ungsakApi';
 import HistorikkIndex from './HistorikkIndex';
 
-vi.mock('react-router-dom', async () => {
-  const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
+vi.mock('react-router', async () => {
+  const actual = (await vi.importActual('react-router')) as Record<string, unknown>;
   return {
     ...actual,
     useLocation: () => ({
@@ -20,6 +21,8 @@ vi.mock('react-router-dom', async () => {
 describe('<HistorikkIndex>', () => {
   it('skal slå sammen og sortere historikk for k9sak, tilbake og klage', () => {
     requestApi.mock(UngSakApiKeys.KODEVERK, {});
+    requestApi.mock(UngSakApiKeys.KODEVERK_TILBAKE, {});
+    requestApi.mock(UngSakApiKeys.KODEVERK_KLAGE, {});
     requestApi.mock(UngSakApiKeys.HISTORY_UNGSAK, [
       {
         opprettetTidspunkt: '2019-01-01',
@@ -41,7 +44,7 @@ describe('<HistorikkIndex>', () => {
 
     render(
       <MemoryRouter>
-        <HistorikkIndex saksnummer="12345" behandlingId={1} behandlingVersjon={2} />
+        <HistorikkIndex saksnummer="12345" behandlingId={1} behandlingVersjon={2} kjønn={kjønn.MANN} />
       </MemoryRouter>,
     );
 
