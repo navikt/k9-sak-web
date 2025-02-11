@@ -21,7 +21,7 @@ export const NotaterIndex = ({ fagsak, navAnsatt }: OwnProps) => {
     <ErrorBoundary errorMessageCallback={addErrorMessage}>
       <Notater
         fagsakId={fagsak.saksnummer}
-        sakstype={fagsak.sakstype.kode}
+        sakstype={fagsak.sakstype}
         navAnsatt={navAnsatt}
         fagsakHarPleietrengende={!!fagsak.pleietrengendeAktørId}
       />
