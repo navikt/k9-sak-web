@@ -1,8 +1,6 @@
 import { FagsakDtoSakstype, type FagsakDto } from '@k9-sak-web/backend/k9sak/generated';
 import { type Location } from 'history';
-import { useContext } from 'react';
-import { K9SakClientContext } from '../../app/K9SakClientContext';
-import BehandlingVelgerBackendClient from './BehandlingVelgerBackendClient';
+import type { BehandlingVelgerBackendApiType } from './BehandlingVelgerBackendApiType';
 import BehandlingPicker from './components/BehandlingPicker';
 import type { Behandling } from './types/Behandling';
 
@@ -13,6 +11,7 @@ interface OwnProps {
   behandlingId?: number;
   fagsak: Pick<FagsakDto, 'sakstype'>;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
+  api: BehandlingVelgerBackendApiType;
 }
 
 const BehandlingVelgerSakV2 = ({
@@ -22,10 +21,8 @@ const BehandlingVelgerSakV2 = ({
   behandlingId,
   fagsak,
   createLocationForSkjermlenke,
+  api,
 }: OwnProps) => {
-  const k9SakClient = useContext(K9SakClientContext);
-  const behandlingVelgerBackendClient = new BehandlingVelgerBackendClient(k9SakClient);
-
   const hentSøknadsperioder = ![
     FagsakDtoSakstype.FRISINN,
     FagsakDtoSakstype.OMSORGSPENGER_AO,
@@ -42,7 +39,7 @@ const BehandlingVelgerSakV2 = ({
       createLocationForSkjermlenke={createLocationForSkjermlenke}
       sakstypeKode={fagsak.sakstype}
       hentSøknadsperioder={hentSøknadsperioder}
-      api={behandlingVelgerBackendClient}
+      api={api}
     />
   );
 };

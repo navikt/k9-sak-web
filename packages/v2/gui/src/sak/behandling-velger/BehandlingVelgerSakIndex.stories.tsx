@@ -11,6 +11,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent } from '@storybook/test';
 import withKodeverkContext from '../../storybook/decorators/withKodeverkContext.js';
 import withMaxWidth from '../../storybook/decorators/withMaxWidth.js';
+import { FakeBehandlingVelgerBackendApi } from '../../storybook/mocks/FakeBehandlingVelgerBackendApi.js';
 import BehandlingVelgerSakV2 from './BehandlingVelgerSakIndex';
 
 const behandlinger = [
@@ -68,6 +69,8 @@ const meta = {
 
 export default meta;
 
+const api = new FakeBehandlingVelgerBackendApi();
+
 export const Default: StoryObj<typeof meta> = {
   args: {
     getBehandlingLocation: () => locationMock,
@@ -76,6 +79,7 @@ export const Default: StoryObj<typeof meta> = {
     behandlinger,
     noExistingBehandlinger: false,
     behandlingId: 1,
+    api,
   },
   play: async ({ canvas, step }) => {
     await step('skal rendre komponent', async () => {
@@ -93,6 +97,7 @@ export const IngenBehandlinger: StoryObj<typeof meta> = {
     createLocationForSkjermlenke: () => locationMock,
     behandlinger: [],
     noExistingBehandlinger: true,
+    api,
   },
   play: async ({ canvas, step }) => {
     await step('skal vise forklarende tekst når det ikke finnes behandlinger', async () => {
