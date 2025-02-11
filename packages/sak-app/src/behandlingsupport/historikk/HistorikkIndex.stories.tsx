@@ -12,6 +12,7 @@ import { setBaseRequestApiMocks } from '../../../../storybook/stories/mocks/setB
 import { historikkSakV1 } from '../../../../storybook/stories/mocks/historikkSakV1.js';
 import { historikkTilbakeV1 } from '../../../../storybook/stories/mocks/historikkTilbakeV1.js';
 import { historikkTilbakeV2 } from '../../../../storybook/stories/mocks/historikkTilbakeV2.js';
+import type { HistorikkinnslagV2 as HistorikkinnslagDtoV2 } from '@k9-sak-web/gui/sak/historikk/historikkinnslagTsTypeV2.js';
 
 const historyK9KlageV1: Historikkinnslag[] = [
   {
@@ -93,6 +94,135 @@ export const HistorikkinnslagV1: Story = {
 export const HistorikkinnslagV2: Story = {
   args: HistorikkinnslagV1.args,
   play: HistorikkinnslagV1.play,
+};
+
+// Midlertidig story lagt til for å vise aktuelle differanseproblem i overgang frå v1 til v2.
+// Kan fjernast når problem er avklara og overgang er ferdig.
+export const ProblemReprod: Story = {
+  args: HistorikkinnslagV1.args,
+  beforeEach: () => {
+    const begrunnelseTekst =
+      'Den 10.12.2025 har bruker fått utsatt frist til den 26.12.2025 for å uttale seg om vårt varsel.';
+    const v1Hist: Historikkinnslag[] = [
+      {
+        behandlingId: 12802,
+        behandlingUuid: 'ad2dc9bb-5c07-4bbd-864d-d833da6fafee',
+        type: {
+          kode: 'SAK_RETUR',
+          kodeverk: 'HISTORIKKINNSLAG_TYPE',
+        },
+        aktoer: {
+          kode: 'BESL',
+          kodeverk: 'HISTORIKK_AKTOER',
+        },
+        opprettetAv: 'Z990422',
+        opprettetTidspunkt: '2025-01-23T14:47:25.437',
+        dokumentLinks: [],
+        historikkinnslagDeler: [
+          {
+            begrunnelse: undefined,
+            begrunnelsetekst: undefined,
+            begrunnelseFritekst: undefined,
+            hendelse: {
+              navn: {
+                kode: 'SAK_RETUR',
+                kodeverk: 'HISTORIKKINNSLAG_TYPE',
+              },
+              verdi: undefined,
+            },
+            opplysninger: undefined,
+            skjermlenke: {
+              kode: 'FAKTA_OM_FEILUTBETALING',
+              kodeverk: 'SKJERMLENKE_TYPE',
+            },
+            aarsak: undefined,
+            årsaktekst: undefined,
+            tema: undefined,
+            gjeldendeFra: undefined,
+            resultat: undefined,
+            endredeFelter: undefined,
+            aksjonspunkter: [{ aksjonspunktKode: '7003', godkjent: true }],
+          },
+          {
+            skjermlenke: {
+              kode: 'VEDTAK',
+              kodeverk: 'SKJERMLENKE_TYPE',
+            },
+            aksjonspunkter: [
+              {
+                aksjonspunktBegrunnelse: begrunnelseTekst,
+                godkjent: false,
+                aksjonspunktKode: '5004',
+              },
+            ],
+          },
+          {
+            skjermlenke: {
+              kode: 'TILBAKEKREVING',
+              kodeverk: 'SKJERMLENKE_TYPE',
+            },
+            aksjonspunkter: [
+              {
+                godkjent: true,
+                aksjonspunktKode: '5002',
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    const v2Hist: HistorikkinnslagDtoV2[] = [
+      {
+        behandlingUuid: 'ad2dc9bb-5c07-4bbd-864d-d833da6fafee',
+        aktør: {
+          type: {
+            kode: 'BESL',
+            kodeverk: 'HISTORIKK_AKTOER',
+          },
+          ident: 'Z990422',
+        },
+        skjermlenke: {
+          kode: 'VEDTAK',
+          kodeverk: 'SKJERMLENKE_TYPE',
+        },
+        opprettetTidspunkt: '2025-01-23T14:47:25.437',
+        dokumenter: null,
+        tittel: 'Sak retur',
+        linjer: [
+          {
+            type: 'TEKST',
+            tekst: '__Avklart fakta for feilutbetaling er godkjent__',
+          },
+          {
+            type: 'LINJESKIFT',
+            tekst: null,
+          },
+          {
+            type: 'TEKST',
+            tekst: '__Foreslå vedtak må vurderes på nytt__',
+          },
+          {
+            type: 'TEKST',
+            tekst: 'Kommentar: ' + begrunnelseTekst,
+          },
+          {
+            type: 'LINJESKIFT',
+            tekst: null,
+          },
+          {
+            type: 'TEKST',
+            tekst: '__Vurder tilbakekreving. er godkjent__',
+          },
+        ],
+      },
+    ];
+    requestApi.clearAllMockData();
+    setBaseRequestApiMocks(requestApi);
+    requestApi.mock(K9sakApiKeys.HISTORY_K9SAK, []);
+    requestApi.mock(K9sakApiKeys.HISTORY_TILBAKE, v1Hist);
+    requestApi.mock(K9sakApiKeys.HISTORY_TILBAKE_V2, v2Hist);
+    requestApi.mock(K9sakApiKeys.HISTORY_KLAGE, []);
+  },
 };
 
 export default meta;
