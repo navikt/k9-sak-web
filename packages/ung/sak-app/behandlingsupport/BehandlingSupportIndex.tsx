@@ -191,7 +191,7 @@ const BehandlingSupportIndex = ({
         httpErrorHandler(error?.response?.status, addErrorMessage, error?.response?.headers?.location);
       });
 
-  const notaterQueryKey = ['notater', fagsak?.saksnummer];
+  const notaterQueryKey = ['notater', fagsak?.saksnummer, fagsak.sakstype];
   const { data: notater } = useQuery({
     queryKey: notaterQueryKey,
     queryFn: ({ signal }) => getNotater(signal),

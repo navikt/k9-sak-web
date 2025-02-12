@@ -4,7 +4,7 @@ export class FakeUngBeregningBackendApi {
   async getSatser(): Promise<UngdomsytelseSatsPeriodeDto[]> {
     return [
       {
-        antallBarn: null,
+        antallBarn: 0,
         dagsatsBarnetillegg: 0,
         fom: '2024-01-01',
         tom: '2024-02-01',

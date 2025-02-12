@@ -43,7 +43,7 @@ export const InnvilgetStory: Story = {
         vilkarType: 'UNG_VK_XXX',
         perioder: [
           {
-            avslagKode: null,
+            avslagKode: undefined,
 
             vilkarStatus: 'OPPFYLT',
           },
@@ -53,7 +53,7 @@ export const InnvilgetStory: Story = {
         vilkarType: 'K9_VK_3',
         perioder: [
           {
-            avslagKode: null,
+            avslagKode: undefined,
             vilkarStatus: 'OPPFYLT',
           },
         ],
@@ -70,7 +70,7 @@ export const AvslåttStory: Story = {
         vilkarType: 'UNG_VK_XXX',
         perioder: [
           {
-            avslagKode: null,
+            avslagKode: undefined,
             vilkarStatus: 'OPPFYLT',
           },
         ],
