@@ -124,6 +124,7 @@ historikkInnslagMissingWordsExcemptions.set(historikkinnslagType.FAKTA_OM_FEILUT
   'endret',
   'fra',
 ]);
+historikkInnslagMissingWordsExcemptions.set(historikkinnslagType.SAK_RETUR, ['Om']);
 
 const allMissingWordsAreExcempted = (historikkInnslagV1Type: string, wordsMissing: string[]): boolean => {
   const wordsKnownMissing = historikkInnslagMissingWordsExcemptions.get(historikkInnslagV1Type);
