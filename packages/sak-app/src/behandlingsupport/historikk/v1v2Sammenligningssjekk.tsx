@@ -93,7 +93,7 @@ const extractStringsRecursively = (element: HTMLElement): string[] => {
 };
 
 const extractWords = (txt: string): string[] =>
-  txt.split(/[\s\n\r-(),-]+/u).filter(v => v.length > 1 || Number.isFinite(parseFloat(v)));
+  txt.split(/([\s\n\r-(),-]|\p{P})+/u).filter(v => v.length > 1 || Number.isFinite(parseFloat(v)));
 
 const checkRenderedElementTexts = async (
   v1Innslag: Historikkinnslag,
