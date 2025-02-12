@@ -6,8 +6,6 @@ import { AktivitetStatus } from '@navikt/ft-kodeverk';
 import { NyInntektFaktaIndex } from './NyInntektFaktaIndex';
 import { type VurderNyttInntektsforholdAP } from './src/types/interface/VurderNyttInntektsforholdAP';
 import { type Vilkår } from './src/types/Vilkår';
-import { beregningsgrunnlag as bgFlerePerioderMedForlengelse } from './testdata/FlerePerioderMedForlengelse';
-import { beregningsgrunnlag as bgFlerePerioderMedHelg } from './testdata/FlerePerioderMedHelg';
 import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelse } from './testdata/TilkommetAktivitetMedForlengelse';
 import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelseLukketAP } from './testdata/TilkommetAktivitetMedForlengelseLukketAP';
 import { beregningsgrunnlag as bgTilkommetInntektsforholdMedRevurdering } from './testdata/TilkommetAktivitetRevurderingLøstTidligere';
@@ -17,6 +15,7 @@ import { beregningsgrunnlag as bgTilkommetAktivitetTrePerioderHelgMellom } from 
 import '@navikt/ds-css';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
+import { expect, fn, userEvent, waitFor } from '@storybook/test';
 
 const agOpplysninger = {
   874652202: {
@@ -92,34 +91,6 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<typeof meta>;
-
-export const FlerePerioderMedHelg: Story = {
-  args: {
-    readOnly: false,
-    beregningsgrunnlagListe: bgFlerePerioderMedHelg,
-    beregningsgrunnlagVilkår: lagVilkår(
-      bgFlerePerioderMedHelg.map(bg => ({
-        fom: bg.vilkårsperiodeFom,
-        tom: '9999-12-31',
-        vurderesIBehandlingen: true,
-      })),
-    ),
-  },
-};
-
-export const FlerePerioderMedForlengelse: Story = {
-  args: {
-    readOnly: false,
-    beregningsgrunnlagListe: bgFlerePerioderMedForlengelse,
-    beregningsgrunnlagVilkår: lagVilkår(
-      bgFlerePerioderMedForlengelse.map(bg => ({
-        fom: bg.vilkårsperiodeFom,
-        tom: '9999-12-31',
-        vurderesIBehandlingen: true,
-      })),
-    ),
-  },
-};
 
 export const TilkommetAktivitet: Story = {
   args: {
@@ -386,6 +357,50 @@ export const TilkommetAktivitet: Story = {
         vurderesIBehandlingen: true,
       },
     ]),
+    submitCallback: fn(),
+  },
+  play: async ({ args, canvas, step }) => {
+    await step('skal kunne løse aksjonspunkt for tilkommet aktivitet', async () => {
+      expect(canvas.getByText('Søker har et nytt arbeidsforhold i AA-registeret')).toBeInTheDocument();
+      expect(
+        await canvas.findByText(
+          'Har søker inntekt fra Arbeidsgiveren (999999997)...123 som reduserer søkers inntektstap?',
+        ),
+      ).toBeInTheDocument();
+      expect(canvas.getByText('Årsinntekt')).toBeInTheDocument();
+      await userEvent.click(canvas.getByLabelText('Ja'));
+      await userEvent.type(canvas.getByLabelText('Begrunnelse'), 'En saklig begrunnelse');
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
+      await waitFor(() => expect(args.submitCallback).toHaveBeenCalledTimes(1));
+      expect(args.submitCallback).toHaveBeenCalledWith({
+        begrunnelse: 'En saklig begrunnelse',
+        grunnlag: [
+          {
+            periode: {
+              fom: '2022-11-08',
+              tom: '2022-11-08',
+            },
+            begrunnelse: 'En saklig begrunnelse',
+            tilkomneInntektsforhold: [
+              {
+                fom: '2022-11-09',
+                tom: '9999-12-31',
+                tilkomneInntektsforhold: [
+                  {
+                    aktivitetStatus: 'AT',
+                    arbeidsforholdId: '123',
+                    arbeidsgiverId: '999999997',
+                    bruttoInntektPrÅr: 480000,
+                    skalRedusereUtbetaling: true,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        kode: 'VURDER_NYTT_INNTKTSFRHLD',
+      });
+    });
   },
 };
 
@@ -401,6 +416,88 @@ export const TilkommetAktivitetMedForlengelse: Story = {
         erForlengelse: true,
       },
     ]),
+    submitCallback: fn(),
+  },
+  play: async ({ args, canvas, step }) => {
+    await step('skal kunne løse aksjonspunkt for tilkommet aktivitet med forlengelse', async () => {
+      expect(canvas.getByText('Søker har et nytt arbeidsforhold i AA-registeret')).toBeInTheDocument();
+
+      expect(await canvas.findByText('09.11.2022 - 15.11.2022')).toBeInTheDocument();
+      await userEvent.click(canvas.getByText('09.11.2022 - 15.11.2022'));
+
+      expect(canvas.getAllByText('Årsinntekt')).toHaveLength(2);
+      expect(canvas.getAllByText('450 000 kr')).toHaveLength(2);
+
+      expect(canvas.getByText('Reduserer inntektstap')).toBeInTheDocument();
+
+      expect(canvas.getAllByText('Arbeidsgiveren (999999997)...123')).toHaveLength(2);
+      expect(canvas.getAllByText('Nei')).toHaveLength(3);
+
+      expect(canvas.getAllByText('Nav Troms og Finnmark (974652293)...456')).toHaveLength(2);
+      expect(canvas.getAllByText('Ja')).toHaveLength(3);
+
+      expect(canvas.getByText('300 000 kr')).toBeInTheDocument();
+      expect(canvas.getByText('16.11.2022 - 20.11.2022')).toBeInTheDocument();
+      expect(
+        canvas.getByText('Har søker inntekt fra Arbeidsgiveren (999999997)...123 som reduserer søkers inntektstap?'),
+      ).toBeInTheDocument();
+      const neiLabels = canvas.getAllByLabelText('Nei');
+      if (neiLabels[0]) {
+        await userEvent.click(neiLabels[0]);
+      }
+
+      expect(
+        canvas.getByText(
+          'Har søker inntekt fra Nav Troms og Finnmark (974652293)...456 som reduserer søkers inntektstap?',
+        ),
+      ).toBeInTheDocument();
+
+      const jaLabels = canvas.getAllByLabelText('Ja');
+      if (jaLabels[1]) {
+        await userEvent.click(jaLabels[1]);
+      }
+      expect(canvas.getByLabelText('Fastsett årsinntekt')).toBeInTheDocument();
+
+      await userEvent.type(canvas.getByLabelText('Fastsett årsinntekt'), '1349');
+      await userEvent.type(canvas.getByLabelText('Begrunnelse'), 'En saklig begrunnelse');
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
+      await waitFor(() => expect(args.submitCallback).toHaveBeenCalledTimes(1));
+      expect(args.submitCallback).toHaveBeenCalledWith({
+        begrunnelse: 'En saklig begrunnelse',
+        grunnlag: [
+          {
+            periode: {
+              fom: '2022-11-08',
+              tom: '2022-11-20',
+            },
+            begrunnelse: 'En saklig begrunnelse',
+            tilkomneInntektsforhold: [
+              {
+                fom: '2022-11-16',
+                tom: '2022-11-20',
+                tilkomneInntektsforhold: [
+                  {
+                    aktivitetStatus: 'AT',
+                    arbeidsforholdId: '123',
+                    arbeidsgiverId: '999999997',
+                    bruttoInntektPrÅr: undefined,
+                    skalRedusereUtbetaling: false,
+                  },
+                  {
+                    aktivitetStatus: 'AT',
+                    arbeidsforholdId: '456',
+                    arbeidsgiverId: '974652293',
+                    bruttoInntektPrÅr: 1349,
+                    skalRedusereUtbetaling: true,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        kode: 'VURDER_NYTT_INNTKTSFRHLD',
+      });
+    });
   },
 };
 
@@ -455,7 +552,7 @@ export const TilkommetAktiviteTreLikePerioderHelgMellomAlle: Story = {
   args: {
     readOnly: false,
     beregningsgrunnlagListe: bgTilkommetAktivitetTrePerioderHelgMellom,
-    submitCallback: action('button-click', { depth: 20 }) as (data: any) => Promise<any>,
+    submitCallback: fn(),
     beregningsgrunnlagVilkår: lagVilkår([
       {
         fom: '2023-04-10',
@@ -464,5 +561,143 @@ export const TilkommetAktiviteTreLikePerioderHelgMellomAlle: Story = {
         erForlengelse: false,
       },
     ]),
+  },
+  play: async ({ args, canvas, step }) => {
+    await step('skal kunne løse aksjonspunkt for tilkommet i revurdering og legge til nye perioder', async () => {
+      await expect(canvas.getByText('Søker har et nytt arbeidsforhold i AA-registeret')).toBeInTheDocument();
+      await expect(await canvas.findByText('10.04.2023 - 28.04.2023')).toBeInTheDocument();
+      await expect(canvas.getByText('Del opp periode')).toBeInTheDocument();
+
+      await userEvent.click(canvas.getByText('Del opp periode'));
+      await expect(canvas.getByText('Hvilken periode ønsker du å dele opp?')).toBeInTheDocument();
+      await expect(canvas.getAllByText('Del opp periode')[2]?.closest('button')).toBeDisabled();
+
+      await expect(await canvas.queryByText('Opprett ny vurdering fra')).not.toBeInTheDocument();
+      await userEvent.selectOptions(
+        canvas.getByLabelText('Hvilken periode ønsker du å dele opp?'),
+        '10.04.2023 - 28.04.2023',
+      );
+      await expect(canvas.getAllByText('Del opp periode')[2]?.closest('button')).toBeDisabled();
+      await expect(canvas.getByText('Opprett ny vurdering fra')).toBeInTheDocument();
+
+      await userEvent.click(canvas.getByLabelText('Åpne datovelger'));
+      await userEvent.click(canvas.getByText('18'));
+      await expect(await canvas.getAllByText('Del opp periode')[2]?.closest('button')).toBeEnabled();
+      await expect(canvas.getByText('Nye perioder til vurdering:')).toBeInTheDocument();
+      await expect(canvas.getByText('10.04.2023 - 17.04.2023')).toBeInTheDocument();
+      await expect(canvas.getByText('18.04.2023 - 28.04.2023')).toBeInTheDocument();
+      const delOppPeriodeButtons = canvas.getAllByRole('button', { name: 'Del opp periode' });
+      if (delOppPeriodeButtons[1]) {
+        await userEvent.click(delOppPeriodeButtons[1]);
+      }
+      await expect(await canvas.findByText('10.04.2023 - 17.04.2023')).toBeInTheDocument();
+      await expect(canvas.getByText('18.04.2023 - 28.04.2023')).toBeInTheDocument();
+
+      await expect(canvas.getAllByText('Ja')).toHaveLength(4);
+      await expect(canvas.getAllByText('Nei')).toHaveLength(4);
+
+      const neiLabels = canvas.getAllByLabelText('Nei');
+      // 10.04.2023 - 17.04.2023
+      if (neiLabels[0] && neiLabels[1]) {
+        await userEvent.click(neiLabels[0]);
+        await userEvent.click(neiLabels[1]);
+      }
+
+      const jaLabels = canvas.getAllByLabelText('Ja');
+      // 18.04.2023 - 28.04.2023
+      if (jaLabels[2] && jaLabels[3]) {
+        await userEvent.click(jaLabels[2]);
+        await userEvent.click(jaLabels[3]);
+      }
+      await expect(canvas.getAllByLabelText('Fastsett årsinntekt')).toHaveLength(2);
+
+      const fastsettAarsinntektElements = canvas.getAllByLabelText('Fastsett årsinntekt');
+      if (fastsettAarsinntektElements[0]) {
+        await userEvent.type(fastsettAarsinntektElements[0], '200000');
+      }
+      if (fastsettAarsinntektElements[1]) {
+        await userEvent.type(fastsettAarsinntektElements[1], '350000');
+      }
+
+      // Begrunnelse og submit
+      await userEvent.type(canvas.getByLabelText('Begrunnelse for alle perioder'), 'En saklig begrunnelse');
+      await userEvent.click(canvas.getByRole('button', { name: 'Bekreft og fortsett' }));
+
+      await waitFor(() => expect(args.submitCallback).toHaveBeenCalledTimes(1));
+      await expect(args.submitCallback).toHaveBeenCalledWith({
+        begrunnelse: 'En saklig begrunnelse',
+        grunnlag: [
+          {
+            periode: {
+              fom: '2023-04-10',
+              tom: '2023-04-28',
+            },
+            begrunnelse: 'En saklig begrunnelse',
+            tilkomneInntektsforhold: [
+              {
+                fom: '2023-04-10',
+                tom: '2023-04-14',
+                tilkomneInntektsforhold: [
+                  {
+                    aktivitetStatus: 'AT',
+                    arbeidsforholdId: '123',
+                    arbeidsgiverId: '999999997',
+                    bruttoInntektPrÅr: undefined,
+                    skalRedusereUtbetaling: false,
+                  },
+                ],
+              },
+              {
+                fom: '2023-04-17',
+                tom: '2023-04-17',
+                tilkomneInntektsforhold: [
+                  {
+                    aktivitetStatus: 'AT',
+                    arbeidsforholdId: '123',
+                    arbeidsgiverId: '999999997',
+                    bruttoInntektPrÅr: undefined,
+                    skalRedusereUtbetaling: false,
+                  },
+                ],
+              },
+              {
+                fom: '2023-04-18',
+                tom: '2023-04-21',
+                tilkomneInntektsforhold: [
+                  {
+                    aktivitetStatus: 'AT',
+                    arbeidsforholdId: '123',
+                    arbeidsgiverId: '999999997',
+                    bruttoInntektPrÅr: 200000,
+                    skalRedusereUtbetaling: true,
+                  },
+                ],
+              },
+              {
+                fom: '2023-04-24',
+                tom: '2023-04-28',
+                tilkomneInntektsforhold: [
+                  {
+                    aktivitetStatus: 'AT',
+                    arbeidsforholdId: '123',
+                    arbeidsgiverId: '999999997',
+                    bruttoInntektPrÅr: 200000,
+                    skalRedusereUtbetaling: true,
+                  },
+                  {
+                    aktivitetStatus: 'AT',
+                    arbeidsforholdId: '456',
+                    arbeidsgiverId: '974652293',
+                    bruttoInntektPrÅr: 350000,
+                    skalRedusereUtbetaling: true,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        kode: 'VURDER_NYTT_INNTKTSFRHLD',
+      });
+    });
   },
 };
