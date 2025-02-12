@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { AktivitetStatus } from '@navikt/ft-kodeverk';
 
-import { FordelBeregningsgrunnlagFaktaIndex } from '../FordelBeregningsgrunnlagFaktaIndex';
+import { NyInntektFaktaIndex } from '../NyInntektFaktaIndex';
 import { beregningsgrunnlag as bgFlerePerioderMedForlengelse } from '../testdata/FlerePerioderMedForlengelse';
 import { beregningsgrunnlag as bgFlerePerioderMedHelg } from '../testdata/FlerePerioderMedHelg';
 import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelse } from '../testdata/TilkommetAktivitetMedForlengelse';
@@ -80,14 +80,14 @@ const lagVilkår = (perioder: any[]): Vilkår => ({
 
 const meta = {
   title: 'gui/fakta/ny-inntekt',
-  component: FordelBeregningsgrunnlagFaktaIndex,
+  component: NyInntektFaktaIndex,
   args: {
     submitCallback: action('button-click', { depth: 20 }) as (data: VurderNyttInntektsforholdAP) => Promise<void>,
     arbeidsgiverOpplysningerPerId: agOpplysninger,
     setFormData: () => undefined,
     submittable: true,
   },
-} satisfies Meta<typeof FordelBeregningsgrunnlagFaktaIndex>;
+} satisfies Meta<typeof NyInntektFaktaIndex>;
 
 export default meta;
 

@@ -5,12 +5,12 @@ import { DDMMYYYY_DATE_FORMAT } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { finnVilkårsperiode, vurderesIBehandlingen } from './src/components/felles/vilkårsperiodeUtils';
-import { FordelBeregningsgrunnlagPanel } from './src/components/FordelBeregningsgrunnlagPanel';
-import type { TilkommetAktivitetFormValues } from './src/types/FordelBeregningsgrunnlagPanelValues';
+import { finnVilkårsperiode, vurderesIBehandlingen } from './src/components/felles/vilkårsperiodeUtils.js';
+import { FordelBeregningsgrunnlagPanel } from './src/components/FordelBeregningsgrunnlagPanel.js';
+import type { TilkommetAktivitetFormValues } from './src/types/FordelBeregningsgrunnlagPanelValues.js';
 import { FaktaFordelBeregningAvklaringsbehovCode } from './src/types/interface/FaktaFordelBeregningAvklaringsbehovCode.js';
-import { type VurderNyttInntektsforholdAP } from './src/types/interface/VurderNyttInntektsforholdAP';
-import type { Vilkår, Vilkårperiode } from './src/types/Vilkår';
+import { type VurderNyttInntektsforholdAP } from './src/types/interface/VurderNyttInntektsforholdAP.js';
+import type { Vilkår, Vilkårperiode } from './src/types/Vilkår.js';
 
 import messages from './i18n/nb_NO.json';
 import type { ArbeidsgiverOpplysningerPerId } from './src/types/ArbeidsgiverOpplysninger.js';
@@ -46,7 +46,7 @@ const kreverManuellBehandlingFn = (bg: Beregningsgrunnlag) =>
 const skalVurderes = (bg: Beregningsgrunnlag, vilkårsperioder: Vilkårperiode[]) =>
   kreverManuellBehandlingFn(bg) && vurderesIBehandlingen(vilkårsperioder, bg.vilkårsperiodeFom);
 
-type FordelBeregningsgrunnlagFaktaIndexProps = {
+type NyInntektFaktaIndexProps = {
   beregningsgrunnlagVilkår: Vilkår;
   beregningsgrunnlagListe: Beregningsgrunnlag[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
@@ -57,7 +57,7 @@ type FordelBeregningsgrunnlagFaktaIndexProps = {
   setFormData: (data: TilkommetAktivitetFormValues) => void;
 };
 
-export const FordelBeregningsgrunnlagFaktaIndex = ({
+export const NyInntektFaktaIndex = ({
   beregningsgrunnlagVilkår,
   beregningsgrunnlagListe,
   submitCallback,
@@ -66,7 +66,7 @@ export const FordelBeregningsgrunnlagFaktaIndex = ({
   arbeidsgiverOpplysningerPerId,
   formData,
   setFormData,
-}: FordelBeregningsgrunnlagFaktaIndexProps) => {
+}: NyInntektFaktaIndexProps) => {
   const bgMedAvklaringsbehov = beregningsgrunnlagListe.filter(bg => kreverManuellBehandlingFn(bg));
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
 

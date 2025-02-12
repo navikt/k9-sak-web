@@ -2,31 +2,26 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { konverterKodeverkTilKode, transformBeregningValues } from '@fpsak-frontend/utils';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import { NyInntektFaktaIndex } from '@k9-sak-web/gui/fakta/ny-inntekt/NyInntektFaktaIndex.js';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import { FordelBeregningsgrunnlagFaktaIndex } from '@navikt/ft-fakta-fordel-beregningsgrunnlag';
-import '@navikt/ft-fakta-fordel-beregningsgrunnlag/dist/style.css';
 
-class FordelBeregningPanelDef extends FaktaPanelDef {
-  getUrlKode = () => faktaPanelCodes.FORDELING;
+class NyInntektPanelDef extends FaktaPanelDef {
+  getUrlKode = () => faktaPanelCodes.NY_INNTEKT;
 
-  getTekstKode = () => 'FordelBeregningsgrunnlag.Title';
+  getTekstKode = () => 'NyInntekt.Title';
 
-  getAksjonspunktKoder = () => [
-    aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG,
-    aksjonspunktCodes.VURDER_REFUSJON_BERGRUNN,
-  ];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_NYTT_INNTKTSFORHOLD];
 
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
     return (
-      <FordelBeregningsgrunnlagFaktaIndex
+      <NyInntektFaktaIndex
         {...props}
         beregningsgrunnlagVilkår={bgVilkaret}
         beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-        kodeverkSamling={deepCopyProps.alleKodeverk}
         submitCallback={data => props.submitCallback(transformBeregningValues([data]))} // Returnerer alltid kun eitt aksjonspunkt om gangen
         formData={props.formData}
         setFormData={props.setFormData}
@@ -37,10 +32,10 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
   getOverstyrVisningAvKomponent = () => false;
 
   getData = ({ beregningsgrunnlag, arbeidsgiverOpplysningerPerId, vilkar }) => ({
+    vilkar,
     beregningsgrunnlag,
     arbeidsgiverOpplysningerPerId,
-    vilkar,
   });
 }
 
-export default FordelBeregningPanelDef;
+export default NyInntektPanelDef;
