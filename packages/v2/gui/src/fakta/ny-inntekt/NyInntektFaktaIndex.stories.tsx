@@ -3,16 +3,16 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { AktivitetStatus } from '@navikt/ft-kodeverk';
 
-import { NyInntektFaktaIndex } from '../NyInntektFaktaIndex';
-import { beregningsgrunnlag as bgFlerePerioderMedForlengelse } from '../testdata/FlerePerioderMedForlengelse';
-import { beregningsgrunnlag as bgFlerePerioderMedHelg } from '../testdata/FlerePerioderMedHelg';
-import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelse } from '../testdata/TilkommetAktivitetMedForlengelse';
-import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelseLukketAP } from '../testdata/TilkommetAktivitetMedForlengelseLukketAP';
-import { beregningsgrunnlag as bgTilkommetInntektsforholdMedRevurdering } from '../testdata/TilkommetAktivitetRevurderingLøstTidligere';
-import { beregningsgrunnlag as bgTilkommetInntektsforholdMedRevurdering1MaiSplitt } from '../testdata/TilkommetAktivitetRevurderingLøstTidligere1MaiKryss';
-import { beregningsgrunnlag as bgTilkommetAktivitetTrePerioderHelgMellom } from '../testdata/TilkommetAktivitetTrePerioderHelgMellom';
-import { type VurderNyttInntektsforholdAP } from './types/interface/VurderNyttInntektsforholdAP';
-import { type Vilkår } from './types/Vilkår';
+import { NyInntektFaktaIndex } from './NyInntektFaktaIndex';
+import { type VurderNyttInntektsforholdAP } from './src/types/interface/VurderNyttInntektsforholdAP';
+import { type Vilkår } from './src/types/Vilkår';
+import { beregningsgrunnlag as bgFlerePerioderMedForlengelse } from './testdata/FlerePerioderMedForlengelse';
+import { beregningsgrunnlag as bgFlerePerioderMedHelg } from './testdata/FlerePerioderMedHelg';
+import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelse } from './testdata/TilkommetAktivitetMedForlengelse';
+import { beregningsgrunnlag as bgTilkommetInntektsforholdMedForlengelseLukketAP } from './testdata/TilkommetAktivitetMedForlengelseLukketAP';
+import { beregningsgrunnlag as bgTilkommetInntektsforholdMedRevurdering } from './testdata/TilkommetAktivitetRevurderingLøstTidligere';
+import { beregningsgrunnlag as bgTilkommetInntektsforholdMedRevurdering1MaiSplitt } from './testdata/TilkommetAktivitetRevurderingLøstTidligere1MaiKryss';
+import { beregningsgrunnlag as bgTilkommetAktivitetTrePerioderHelgMellom } from './testdata/TilkommetAktivitetTrePerioderHelgMellom';
 
 import '@navikt/ds-css';
 import '@navikt/ft-form-hooks/dist/style.css';

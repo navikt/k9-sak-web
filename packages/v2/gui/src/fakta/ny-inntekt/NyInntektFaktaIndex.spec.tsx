@@ -2,7 +2,7 @@ import { composeStories } from '@storybook/react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import * as stories from './FordelBeregningsgrunnlagFaktaIndex.stories';
+import * as stories from './NyInntektFaktaIndex.stories';
 
 const { TilkommetAktivitet, TilkommetAktivitetMedForlengelse, TilkommetAktiviteTreLikePerioderHelgMellomAlle } =
   composeStories(stories);
