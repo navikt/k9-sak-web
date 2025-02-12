@@ -1,4 +1,4 @@
-import { BehandlingDtoBehandlingResultatType, type AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated';
+import { behandlingResultatType, type AksjonspunktDto } from '@k9-sak-web/backend/ungsak/generated';
 import { FileSearchIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Fieldset, HStack, Label, VStack } from '@navikt/ds-react';
 import { CheckboxField, Form } from '@navikt/ft-form-hooks';
@@ -33,8 +33,8 @@ export const UngVedtak = ({ api, behandling, aksjonspunkter, submitCallback, vil
   const formMethods = useForm<FormData>({
     defaultValues: buildInitialValues(),
   });
-  const behandlingErInnvilget = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.INNVILGET;
-  const behandlingErAvslått = behandling.behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.AVSLÅTT;
+  const behandlingErInnvilget = behandling.behandlingsresultat?.type === behandlingResultatType.INNVILGET;
+  const behandlingErAvslått = behandling.behandlingsresultat?.type === behandlingResultatType.AVSLÅTT;
   const harAksjonspunkt = aksjonspunkter.filter(ap => ap.kanLoses).length > 0;
   const redigerAutomatiskBrev = useWatch({ control: formMethods.control, name: 'redigerAutomatiskBrev' });
   const hindreUtsendingAvBrev = useWatch({ control: formMethods.control, name: 'hindreUtsendingAvBrev' });
