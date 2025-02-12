@@ -117,3 +117,5 @@ spec:
       value: "true"
     - name: HISTORIKK_V2_VIS
       value: "true"
+    - name: VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK
+      value: "true"
