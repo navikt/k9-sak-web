@@ -15,6 +15,7 @@
     "./k9klage/generated": "./src/k9klage/generated/index.js",
     "./k9klage/kodeverk/*": "./src/k9klage/kodeverk/*",
     "./ungsak/generated": "./src/ungsak/generated/index.js",
+    "./ungsak/generated/metadata": "./src/ungsak/generated/metadata.js",
     "./ungsak/errorhandling/*": "./src/ungsak/errorhandling/*"
   },
   "dependencies": {

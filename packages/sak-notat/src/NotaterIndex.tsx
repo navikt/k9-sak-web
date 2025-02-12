@@ -22,7 +22,7 @@ interface postNotatMutationVariables {
 const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsakHarPleietrengende, sakstype }) => {
   const queryClient = useQueryClient();
 
-  const notaterQueryKey = ['notater', fagsakId];
+  const notaterQueryKey = ['notater', fagsakId, sakstype];
 
   const formMethods = useForm<Inputs>({
     defaultValues: {

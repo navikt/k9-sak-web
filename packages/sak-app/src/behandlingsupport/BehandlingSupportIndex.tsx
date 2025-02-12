@@ -1,4 +1,5 @@
 import { httpErrorHandler } from '@fpsak-frontend/utils';
+import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { FormidlingClientContext } from '@k9-sak-web/gui/app/FormidlingClientContext.js';
 import { K9SakClientContext } from '@k9-sak-web/gui/app/K9SakClientContext.js';
 import MeldingerBackendClient from '@k9-sak-web/gui/sak/meldinger/MeldingerBackendClient.js';
@@ -40,7 +41,6 @@ import MeldingIndex from './melding/MeldingIndex';
 import NotaterIndex from './notater/NotaterIndex';
 import SupportTabs from './supportTabs';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
-import { kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
@@ -191,7 +191,7 @@ const BehandlingSupportIndex = ({
         httpErrorHandler(error?.response?.status, addErrorMessage, error?.response?.headers?.location);
       });
 
-  const notaterQueryKey = ['notater', fagsak?.saksnummer];
+  const notaterQueryKey = ['notater', fagsak?.saksnummer, fagsak.sakstype];
   const { data: notater } = useQuery({
     queryKey: notaterQueryKey,
     queryFn: ({ signal }) => getNotater(signal),
