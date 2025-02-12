@@ -1,6 +1,6 @@
 import { Alert, Button, Fieldset, HStack, RadioGroup } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React from 'react';
+import React, { useContext } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { VilkarKroniskSyktBarnProps } from '../../../types/VilkarKroniskSyktBarnProps';
 import { booleanTilTekst, formatereDato, formatereDatoTilLesemodus, tekstTilBoolean } from '../../../util/stringUtils';
@@ -14,6 +14,7 @@ import TextArea from '../react-hook-form-wrappers/TextArea';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styles from './vilkarKronisSyktBarn.module.css';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext';
 
 type FormData = {
   harDokumentasjonOgFravaerRisiko: string;
@@ -49,6 +50,7 @@ const tekst = {
   feilmedlingUgyldigDato: 'Ugyldig dato.',
   feilmedlingerDatoIkkeIFremtid: 'Fra-dato kan ikke være frem i tid.',
   soknadsdato: 'Søknadsdato',
+  begrunnelseFraBruker: 'Begrunnelse for risiko for økt fravær',
 };
 
 const mapTilAvslagstekst = (avslagsKode: string): string => {
@@ -78,7 +80,10 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   informasjonOmVilkar,
   formState,
   soknadsdato,
+  begrunnelseFraBruker,
 }) => {
+  const featureToggles = useContext(FeatureTogglesContext);
+  const visBegrunnelseFraBruker = featureToggles?.['VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK'] === true;
   const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus?.begrunnelse.length > 0;
   const methods = useForm<FormData>({
     defaultValues: {
@@ -198,6 +203,15 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
               <p className={styleLesemodus.label}>{tekst.soknadsdato}</p>
               <p className={styleLesemodus.text}>{formatereDatoTilLesemodus(soknadsdato)}</p>
             </>
+
+            {visBegrunnelseFraBruker &&
+              typeof begrunnelseFraBruker !== 'undefined' &&
+              begrunnelseFraBruker.length > 0 && (
+                <>
+                  <p className={styleLesemodus.label}>{tekst.begrunnelseFraBruker}</p>
+                  <p className={styleLesemodus.text}>{begrunnelseFraBruker}</p>
+                </>
+              )}
 
             <form className={styles.form} onSubmit={handleSubmit(bekreftAksjonspunkt)}>
               <TextArea label={tekst.begrunnelse} name="begrunnelse" />
