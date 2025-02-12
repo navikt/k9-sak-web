@@ -14,7 +14,7 @@ import TextArea from '../react-hook-form-wrappers/TextArea';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styles from './vilkarKronisSyktBarn.module.css';
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext';
+import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 
 type FormData = {
   harDokumentasjonOgFravaerRisiko: string;
