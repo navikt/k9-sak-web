@@ -48,7 +48,7 @@ function excludeMsw() {
 }
 
 export default ({ mode }) => {
-  process.env = { ...process.env, ...loadEnv(mode, `${process.cwd()}/envDir`) };
+  process.env = { ...process.env, ...loadEnv(mode, `${process.cwd()}/envDir/ung`) };
   return defineConfig({
     server: {
       port: 9005,
