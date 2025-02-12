@@ -1,7 +1,7 @@
 import type { InnloggetAnsattDto, NotatDto } from '@k9-sak-web/backend/k9sak/generated';
 import { Alert, Button, Heading, Loader, Switch } from '@navikt/ds-react';
 import { CheckboxField, Form, TextAreaField } from '@navikt/ft-form-hooks';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { type UseFormReturn } from 'react-hook-form';
 import ChatComponent, { type EndreNotatPayload, type SkjulNotatPayload } from './components/ChatComponent';
 import styles from './notater.module.css';
@@ -49,7 +49,7 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
 
   const submitNyttNotat = (data: FormState) => opprettNotat(data);
 
-  const alleNotaterErSkjulte = notater?.every(notat => notat.skjult);
+  const alleNotaterErSkjulte = useMemo(() => notater?.every(notat => notat.skjult), [notater]);
 
   const handleEndreNotat = (data: EndreNotatPayload) =>
     endreNotat(data.formState, data.id, data.saksnummer, data.versjon);
@@ -64,7 +64,7 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
             <Heading level="3" size="xsmall">
               Notater i sak
             </Heading>
-            <Switch checked={visSkjulteNotater} size="small" onClick={toggleVisSkjulteNotater}>
+            <Switch checked={visSkjulteNotater} size="small" onChange={toggleVisSkjulteNotater}>
               Vis skjulte notater
             </Switch>
           </div>
@@ -113,7 +113,7 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
                     notat={notat}
                     endreNotat={handleEndreNotat}
                     navAnsatt={navAnsatt}
-                    skjulNotat={data => skjulNotat(data)}
+                    skjulNotat={skjulNotat}
                     fagsakId={fagsakId}
                   />
                 ))}
