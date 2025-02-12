@@ -12,6 +12,8 @@ import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { renderWithIntlAndReactQueryClient } from '@fpsak-frontend/utils-test/test-utils';
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import { KodeverkProvider } from '@k9-sak-web/gui/kodeverk/index.js';
+import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import { UngSakApiKeys, requestApi } from '../data/ungsakApi';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
 
@@ -166,13 +168,20 @@ describe('<FagsakProfileIndex>', () => {
     renderWithIntlAndReactQueryClient(
       <MemoryRouter>
         <IntlProvider locale="nb-NO">
-          <FagsakProfileIndex
-            fagsak={fagsak as Fagsak}
-            alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
-            harHentetBehandlinger
-            oppfriskBehandlinger={vi.fn()}
-            fagsakRettigheter={fagsakRettigheter}
-          />
+          <KodeverkProvider
+            behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+            kodeverk={alleKodeverkV2}
+            klageKodeverk={{}}
+            tilbakeKodeverk={{}}
+          >
+            <FagsakProfileIndex
+              fagsak={fagsak as Fagsak}
+              alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
+              harHentetBehandlinger
+              oppfriskBehandlinger={vi.fn()}
+              fagsakRettigheter={fagsakRettigheter}
+            />
+          </KodeverkProvider>
         </IntlProvider>
       </MemoryRouter>,
     );
@@ -200,14 +209,21 @@ describe('<FagsakProfileIndex>', () => {
     renderWithIntlAndReactQueryClient(
       <MemoryRouter>
         <IntlProvider locale="nb-NO">
-          <FagsakProfileIndex
-            fagsak={fagsak as Fagsak}
-            alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
-            harHentetBehandlinger
-            oppfriskBehandlinger={vi.fn()}
-            behandlingId={1}
-            fagsakRettigheter={fagsakRettigheter}
-          />
+          <KodeverkProvider
+            behandlingType={behandlingType.FØRSTEGANGSSØKNAD}
+            kodeverk={alleKodeverkV2}
+            klageKodeverk={{}}
+            tilbakeKodeverk={{}}
+          >
+            <FagsakProfileIndex
+              fagsak={fagsak as Fagsak}
+              alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
+              harHentetBehandlinger
+              oppfriskBehandlinger={vi.fn()}
+              behandlingId={1}
+              fagsakRettigheter={fagsakRettigheter}
+            />
+          </KodeverkProvider>
         </IntlProvider>
       </MemoryRouter>,
     );
