@@ -3,7 +3,14 @@ import { jsonSerializerOption } from '@k9-sak-web/backend/shared/jsonSerializerO
 import { UngSakHttpRequest } from '@k9-sak-web/backend/ungsak/errorhandling/UngSakHttpRequest.js';
 import type { ApiRequestOptions } from '@k9-sak-web/backend/ungsak/generated';
 import { UngSakClient } from '@k9-sak-web/backend/ungsak/generated';
+import { clientVersion } from '@k9-sak-web/backend/ungsak/generated/metadata';
 import { createContext } from 'react';
+
+// generert klientversjon over 0.1 har /api prefix satt på paths generert inn i klientkalla, som er det korrekte.
+// for versjoner under må vi legge /api til på baseUrl for at kalla skal fungere, sidan openapi spesifikasjon generert
+// til fil mangla /api på paths då.
+// Kan fjernast når vi veit vi er komt over på version >= 0.2 av klient.
+const baseUrl = Number(clientVersion.minor) > 1 ? '/ung/sak' : '/ung/sak/api';
 
 // Current client generator hardcode accept: application/json into every request, which causes requests for binary content
 // (pdf) to be denied by the server. To work around this until client generator works properly, we override the accept
@@ -29,7 +36,7 @@ const headerResolver = async (options: ApiRequestOptions<Record<string, string>>
 export const UngSakClientContext = createContext(
   new UngSakClient(
     {
-      BASE: '/ung/sak/api',
+      BASE: baseUrl,
       HEADERS: headerResolver,
     },
     UngSakHttpRequest,
