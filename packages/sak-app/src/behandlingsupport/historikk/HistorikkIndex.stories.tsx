@@ -181,17 +181,13 @@ export const ProblemReprod: Story = {
           },
           ident: 'Z990422',
         },
-        skjermlenke: {
-          kode: 'VEDTAK',
-          kodeverk: 'SKJERMLENKE_TYPE',
-        },
         opprettetTidspunkt: '2025-01-23T14:47:25.437',
         dokumenter: null,
         tittel: 'Sak retur',
         linjer: [
           {
             type: 'TEKST',
-            tekst: '__Avklart fakta for feilutbetaling er godkjent__',
+            tekst: '__Avklar fakta for feilutbetaling er godkjent__',
           },
           {
             type: 'LINJESKIFT',
@@ -211,7 +207,7 @@ export const ProblemReprod: Story = {
           },
           {
             type: 'TEKST',
-            tekst: '__Vurder tilbakekreving. er godkjent__',
+            tekst: '__Vurder tilbakekreving er godkjent__',
           },
         ],
       },
