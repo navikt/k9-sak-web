@@ -1,5 +1,4 @@
 import { useCallback, useMemo, useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Button, Modal, Select } from '@navikt/ds-react';
 import dayjs from 'dayjs';
@@ -50,7 +49,6 @@ export const PeriodesplittModal = ({
   skalViseModal,
   lukkModal,
 }: Props) => {
-  const intl = useIntl();
   const [valgtSplittdato, setValgtSplittdato] = useState<string | undefined>(undefined);
   const [valgtPeriode, setValgtPeriode] = useState<Periode | undefined>(undefined);
 
@@ -80,16 +78,10 @@ export const PeriodesplittModal = ({
 
   return (
     <Modal width="500px" open={skalViseModal} onClose={lukkModal} aria-label="Del opp periode">
-      <Modal.Header>
-        <FormattedMessage id="TilkommetAktivitet.Modal.Tittel" />
-      </Modal.Header>
+      <Modal.Header>Del opp periode</Modal.Header>
       <Modal.Body>
         <div>
-          <Select
-            label={intl.formatMessage({ id: 'TilkommetAktivitet.Modal.Select' })}
-            onChange={endreValgtPeriode}
-            size="small"
-          >
+          <Select label="Hvilken periode ønsker du å dele opp?" onChange={endreValgtPeriode} size="small">
             <option value={undefined}>Velg periode</option>
             {perioder.map(periode => (
               <option key={periode.fom} value={periode.fom}>
@@ -123,12 +115,12 @@ export const PeriodesplittModal = ({
                 autoFocus
                 type="button"
               >
-                <FormattedMessage id="TilkommetAktivitet.Modal.DelOppKnapp" />
+                Del opp periode
               </Button>
             </FlexColumn>
             <FlexColumn>
               <Button size="small" variant="secondary" onClick={lukkModal} disabled={false} autoFocus type="button">
-                <FormattedMessage id="TilkommetAktivitet.Modal.AvbrytKnapp" />
+                Avbryt
               </Button>
             </FlexColumn>
           </FlexRow>

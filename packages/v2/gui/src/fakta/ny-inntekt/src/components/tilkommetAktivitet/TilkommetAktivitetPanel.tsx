@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import { useIntl } from 'react-intl';
 
 import { ScissorsIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button, Heading, Label } from '@navikt/ds-react';
@@ -49,7 +48,6 @@ export const TilkommetAktivitetPanel = ({
   erAksjonspunktÅpent,
   arbeidsgiverOpplysningerPerId,
 }: Props) => {
-  const intl = useIntl();
   const [modalErÅpen, setModalErÅpen] = useState<boolean>(false);
 
   const { control, watch } = useFormContext<TilkommetAktivitetFormValues>();
@@ -75,7 +73,7 @@ export const TilkommetAktivitetPanel = ({
     const antallStatuser = !unikestatuser ? 0 : unikestatuser.length;
 
     if (antallStatuser > 1) {
-      return intl.formatMessage({ id: 'TilkommetAktivitet.AlertHeading.FlereStatuser' });
+      return 'Søker har nye aktiviteter';
     }
 
     const harSNAktvitet = finnAktivitetStatus(
@@ -83,20 +81,20 @@ export const TilkommetAktivitetPanel = ({
       vurderInntektsforholdPerioder,
     );
     if (harSNAktvitet) {
-      return intl.formatMessage({ id: 'TilkommetAktivitet.AlertHeading.SelvstendigNæringsdrivende' });
+      return 'Søker har opplyst om ny inntekt som selvstendig næringsdrivende.';
     }
 
     const harFrilanserAktvitet = finnAktivitetStatus(AktivitetStatus.FRILANSER, vurderInntektsforholdPerioder);
     if (harFrilanserAktvitet) {
-      return intl.formatMessage({ id: 'TilkommetAktivitet.AlertHeading.Frilans' });
+      return 'Søker har en ny frilansaktivitet i AA-registeret.';
     }
 
     const harDagpengerAktivitet = finnAktivitetStatus(AktivitetStatus.DAGPENGER, vurderInntektsforholdPerioder);
     if (harDagpengerAktivitet) {
-      return intl.formatMessage({ id: 'TilkommetAktivitet.AlertHeading.Dagpenger' });
+      return 'Søker har en ny periode med dagpenger';
     }
 
-    return intl.formatMessage({ id: 'TilkommetAktivitet.AlertHeading.Arbeidsforhold' });
+    return 'Søker har et nytt arbeidsforhold i AA-registeret';
   };
 
   const getAksjonspunktText = () => {
@@ -106,17 +104,17 @@ export const TilkommetAktivitetPanel = ({
           <Heading size="xsmall" level="3">
             {getAlertHeading()}
           </Heading>
-          {intl.formatMessage({ id: 'TilkommetAktivitet.AksjonspunktHelpText' })}
+          Vurder om pleiepengene skal reduseres på grunn av den nye inntekten.
         </Alert>
       );
     }
     return (
       <>
         <Label size="small">
-          {intl.formatMessage({ id: 'HelpText.Aksjonspunkt.BehandletAksjonspunkt' })}
+          {`Behandlet aksjonspunkt: `}
           {getAlertHeading()}
         </Label>
-        <BodyShort size="small">{intl.formatMessage({ id: 'TilkommetAktivitet.AksjonspunktHelpText' })}</BodyShort>
+        <BodyShort size="small">Vurder om pleiepengene skal reduseres på grunn av den nye inntekten.</BodyShort>
       </>
     );
   };
@@ -210,7 +208,9 @@ export const TilkommetAktivitetPanel = ({
         <>
           <VerticalSpacer eightPx />
           <Alert size="small" variant="info" title="">
-            {intl.formatMessage({ id: 'TilkommetAktivitet.AksjonspunktAlert' })}
+            Inntekter som kommer til underveis i en løpende pleiepengeperiode er ikke en del av søkers
+            beregningsgrunnlag. Dersom inntekten reduserer søkers inntektstap, må det vurderes om pleiepengene skal
+            graderes mot den nye inntekten.
           </Alert>
         </>
       )}
@@ -220,7 +220,7 @@ export const TilkommetAktivitetPanel = ({
         <FlexRow className={styles.tittelRad}>
           <FlexColumn>
             <Heading size="small" level="3">
-              {intl.formatMessage({ id: 'TilkommetAktivitet.Heading' })}
+              Perioder med ny aktivitet
             </Heading>
           </FlexColumn>
           <FlexColumn className={styles.modalKnapp}>
@@ -233,7 +233,7 @@ export const TilkommetAktivitetPanel = ({
               type="button"
               icon={<ScissorsIcon height={32} width={32} />}
             >
-              {intl.formatMessage({ id: 'TilkommetAktivitet.Modal.Knapp' })}
+              Del opp periode
             </Button>
           </FlexColumn>
         </FlexRow>

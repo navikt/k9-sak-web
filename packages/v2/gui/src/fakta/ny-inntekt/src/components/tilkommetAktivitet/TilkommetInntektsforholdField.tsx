@@ -1,6 +1,4 @@
-import { type ReactElement } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Alert, Label, ReadMore } from '@navikt/ds-react';
 
@@ -54,35 +52,46 @@ export const TilkommetInntektsforholdField = ({
   arbeidsgiverOpplysningerPerId,
 }: Props) => {
   const formMethods = useFormContext<TilkommetAktivitetFormValues>();
-  const intl = useIntl();
   const skalRedusereValg = formMethods.watch(
     `${formName}.${formFieldIndex}.perioder.${periodeFieldIndex}.inntektsforhold.${inntektsforholdFieldIndex}.skalRedusereUtbetaling`,
   );
 
-  const lagHjelpetekst = (): ReactElement => {
+  const lagHjelpetekst = (): string => {
     switch (field.aktivitetStatus) {
       case AktivitetStatus.ARBEIDSTAKER:
-        return <FormattedMessage id="BeregningInfoPanel.TilkommetAktivitet.LesMerArbeid" values={{ br: <br /> }} />;
+        return `Kontakt bruker for å dokumentere inntekten i det nye arbeidsforholdet. 
+          Enten ved å be arbeidsgiver sende inn inntektsmelding eller så kan bruker selv 
+          dokumenterer inntekten med arbeidskontrakt, lønnsslipper eller lignende. 
+          
+          Dersom arbeidsforholdet har vart så lenge at utbetalt lønn er rapportert i a-ordningen, 
+          kan § 8-28 filtret benyttes for å fastsette årsinntekten. 
+          Hvis mulig, benytt de 3 siste månedene og regn om til årsinntekt. Dersom arbeidsforholdet har vart kortere, 
+          kan du benytte en kortere periode.`;
       case AktivitetStatus.FRILANSER:
-        return <FormattedMessage id="BeregningInfoPanel.TilkommetAktivitet.LesMerFrilans" values={{ br: <br /> }} />;
+        return `Kontakt bruker for å dokumentere hva inntekten utgjør hvis det ikke er rapportert inntekt fra frilansoppdrag i a-ordningen. 
+        
+        Hvis oppdraget har vart så lenge at inntekten er rapportert i a-ordningen, kan § 8-28 filtret benyttes for å fastsette årsinntekten. 
+        Benytt de 3 siste månedene hvis mulig og regn om til årsinntekt. Hvis oppdraget har vart kortere, kan du benytte en kortere periode.`;
       case AktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE:
-        return <FormattedMessage id="BeregningInfoPanel.TilkommetAktivitet.LesMerNæring" />;
+        return `Benytt opplysninger oppgitt av bruker i søknaden, eller be bruker sannsynliggjøre forventet inntekt.`;
       default:
-        return <FormattedMessage id="BeregningInfoPanel.TilkommetAktivitet.LesMerArbeid" />;
+        return `Kontakt bruker for å dokumentere inntekten i det nye arbeidsforholdet. Enten ved å be arbeidsgiver sende inn inntektsmelding 
+        eller så kan bruker selv dokumenterer inntekten med arbeidskontrakt, lønnsslipper eller lignende. 
+        
+        Dersom arbeidsforholdet har vart så lenge at utbetalt lønn er rapportert i a-ordningen, kan § 8-28 filtret benyttes for å fastsette 
+        årsinntekten. Hvis mulig,  benytt de 3 siste månedene og regn om til årsinntekt. Dersom arbeidsforholdet har vart kortere, kan du 
+        benytte en kortere periode.`;
     }
   };
 
   const getRadioGroupLabel = (): string => {
     if (field.aktivitetStatus === AktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE) {
-      return intl.formatMessage({ id: 'BeregningInfoPanel.TilkommetAktivitet.VurderTekstNæring' });
+      return 'Har søker inntekt fra den nye næringsaktiviteten som reduserer søkers inntektstap?';
     }
     if (field.aktivitetStatus === AktivitetStatus.FRILANSER) {
-      return intl.formatMessage({ id: 'BeregningInfoPanel.TilkommetAktivitet.VurderTekstFrilans' });
+      return 'Har søker inntekt fra den nye frilanseraktiviteten som reduserer søkers inntektstap?';
     }
-    return intl.formatMessage(
-      { id: 'BeregningInfoPanel.TilkommetAktivitet.VurderTekstArbeid' },
-      { arbeidsforhold: getAktivitetNavnFraField(field, arbeidsgiverOpplysningerPerId) },
-    );
+    return `Har søker inntekt fra ${getAktivitetNavnFraField(field, arbeidsgiverOpplysningerPerId)} som reduserer søkers inntektstap?`;
   };
 
   return (
@@ -91,8 +100,8 @@ export const TilkommetInntektsforholdField = ({
         label={getRadioGroupLabel()}
         name={`${formName}.${formFieldIndex}.perioder.${periodeFieldIndex}.inntektsforhold.${inntektsforholdFieldIndex}.skalRedusereUtbetaling`}
         radios={[
-          { value: 'true', label: intl.formatMessage({ id: 'BeregningInfoPanel.TilkommetAktivitet.Ja' }) },
-          { value: 'false', label: intl.formatMessage({ id: 'BeregningInfoPanel.TilkommetAktivitet.Nei' }) },
+          { value: 'true', label: 'Ja' },
+          { value: 'false', label: 'Nei' },
         ]}
         isReadOnly={readOnly}
         validate={[required]}
@@ -102,19 +111,19 @@ export const TilkommetInntektsforholdField = ({
         <>
           <VerticalSpacer sixteenPx />
           <Alert size="small" variant="info">
-            {intl.formatMessage({ id: 'BeregningInfoPanel.TilkommetAktivitet.Alert' })}
+            Utgangspunktet er at all tilkommet aktivitet med inntekt skal føre til reduksjon i utbetaling. Det kan
+            likevel være feil eller mangler i opplysningene fra AA-registeret. F. eks. internt bytte av org. nummer pga.
+            endret lønns- og personalsystem eller manglende registrert sluttdato i gammel stilling ved overgang til ny
+            stilling. Gjør derfor en konkret vurdering av hvorfor tilkommet aktivitet og inntekt ikke skal føre til
+            reduksjon.
           </Alert>
         </>
       )}
       {skalRedusereValg && (
         <>
           <VerticalSpacer sixteenPx />
-          <Label size="small">
-            <FormattedMessage id="BeregningInfoPanel.TilkommetAktivitet.Fastsett" />
-          </Label>
-          <ReadMore header={<FormattedMessage id="BeregningInfoPanel.TilkommetAktivitet.LesMer" />}>
-            {lagHjelpetekst()}
-          </ReadMore>
+          <Label size="small">Fastsett årsinntekt</Label>
+          <ReadMore header="Hvordan fastsette årsinntekten?">{lagHjelpetekst()}</ReadMore>
           <VerticalSpacer eightPx />
           <div className={styles.bruttoInntektContainer}>
             <InputField

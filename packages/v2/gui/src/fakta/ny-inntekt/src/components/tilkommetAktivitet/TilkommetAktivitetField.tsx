@@ -1,6 +1,5 @@
 import React from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import { FormattedMessage } from 'react-intl';
 
 import { BodyShort, Label, Tag } from '@navikt/ds-react';
 
@@ -66,18 +65,14 @@ export const TilkommetAktivitetField = ({
     inntektsforhold => !!inntektsforhold.periode,
   );
 
-  const headerCodes = [
-    'BeregningInfoPanel.TilkommetAktivitet.Aktivitet',
-    harInntektsforholdMedÅrsinntekt
-      ? 'BeregningInfoPanel.TilkommetAktivitet.Årsinntekt'
-      : 'BeregningInfoPanel.TilkommetAktivitet.TomTekst',
-    harInntektsforholdMedPeriode
-      ? 'BeregningInfoPanel.TilkommetAktivitet.Periode'
-      : 'BeregningInfoPanel.TilkommetAktivitet.TomTekst',
+  const headerTexts = [
+    'Aktivitet',
+    harInntektsforholdMedÅrsinntekt ? 'Årsinntekt' : ' ',
+    harInntektsforholdMedPeriode ? 'Inntektsperiode' : ' ',
   ];
-  const headerComponents = headerCodes.map(id => (
-    <Label size="small" key={id}>
-      <FormattedMessage id={id} />{' '}
+  const headerComponents = headerTexts.map(text => (
+    <Label size="small" key={text}>
+      {`${text} `}
     </Label>
   ));
 

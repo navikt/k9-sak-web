@@ -1,5 +1,3 @@
-import { useIntl } from 'react-intl';
-
 import { Tag } from '@navikt/ds-react';
 import classnames from 'classnames/bind';
 
@@ -18,11 +16,10 @@ export interface Props {
  */
 
 export const VurdertIForrigeBehandlingIcon = ({ className = '' }: Props) => {
-  const intl = useIntl();
   return (
     <span data-testid="vurdertIForrigeIcon" className={classNames('vurdertIForrigeIcon', className)}>
       <Tag size="small" variant="neutral">
-        {intl.formatMessage({ id: 'Fordeling.VurdertTidligere' })}
+        Vurdert i en tidligere behandling
       </Tag>
     </span>
   );

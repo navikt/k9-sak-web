@@ -1,5 +1,4 @@
 import { type JSX } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
 
 import { BodyShort, Label, Tag } from '@navikt/ds-react';
 import { EditedIcon, Table, TableColumn, TableRow } from '@navikt/ft-ui-komponenter';
@@ -23,7 +22,6 @@ export const TidligereVurderteAktiviteterPanel = ({
   arbeidsgiverOpplysningerPerId,
   vurderInntektsforholdPeriode,
 }: Props) => {
-  const intl = useIntl();
   const getInntektsforholdTableRows = (inntektsforholdPeriode: VurderInntektsforholdPeriode): JSX.Element[] => {
     const tableRows: JSX.Element[] = [];
     inntektsforholdPeriode.inntektsforholdListe.forEach(inntektsforhold => {
@@ -37,11 +35,7 @@ export const TidligereVurderteAktiviteterPanel = ({
             </BodyShort>
           </TableColumn>
           <TableColumn>
-            <BodyShort size="small">
-              {inntektsforhold.skalRedusereUtbetaling
-                ? intl.formatMessage({ id: 'BeregningInfoPanel.TilkommetAktivitet.Ja' })
-                : intl.formatMessage({ id: 'BeregningInfoPanel.TilkommetAktivitet.Nei' })}
-            </BodyShort>
+            <BodyShort size="small">{inntektsforhold.skalRedusereUtbetaling ? 'Ja' : 'Nei'}</BodyShort>
           </TableColumn>
           {(harBruttoInntekt || harInntektsmelding) && (
             <TableColumn>
@@ -73,16 +67,10 @@ export const TidligereVurderteAktiviteterPanel = ({
     inntektsforhold => inntektsforhold.bruttoInntektPrÅr,
   );
 
-  const headerCodes = [
-    'BeregningInfoPanel.TilkommetAktivitet.Aktivitet',
-    'BeregningInfoPanel.TilkommetAktivitet.RedusererUtbetaling',
-    harInntektsforholdMedÅrsinntekt
-      ? 'BeregningInfoPanel.TilkommetAktivitet.Årsinntekt'
-      : 'BeregningInfoPanel.TilkommetAktivitet.TomTekst',
-  ];
-  const headerComponents = headerCodes.map(id => (
-    <Label size="small" key={id}>
-      <FormattedMessage id={id} />{' '}
+  const headerTexts = ['Aktivitet', 'Reduserer inntektstap', harInntektsforholdMedÅrsinntekt ? 'Årsinntekt' : ' '];
+  const headerComponents = headerTexts.map(text => (
+    <Label size="small" key={text}>
+      {`${text} `}
     </Label>
   ));
 

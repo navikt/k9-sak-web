@@ -4,19 +4,6 @@ import { Button } from '@navikt/ds-react';
 
 import { ariaCheck } from '@navikt/ft-form-validators';
 
-import { createIntl, createIntlCache } from 'react-intl';
-import messages from '../../../i18n/nb_NO.json';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
-
 const isDisabled = (isDirty: boolean, isSubmitting: boolean, isSubmittable: boolean): boolean => {
   if (!isSubmittable || isSubmitting) {
     return true;
@@ -45,7 +32,7 @@ export const SubmitButton = ({ isReadOnly, isSubmittable, onClick, isSubmitting,
         onClick={onClick || ariaCheck}
         type={onClick ? 'button' : 'submit'}
       >
-        {intl.formatMessage({ id: 'SubmitButton.ConfirmInformation' })}
+        Bekreft og fortsett
       </Button>
     );
   }
