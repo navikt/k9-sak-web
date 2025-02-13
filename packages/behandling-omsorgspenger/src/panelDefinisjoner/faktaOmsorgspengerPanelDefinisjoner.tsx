@@ -5,6 +5,7 @@ import FordelBeregningPanelDef from './faktaPaneler/FordelBeregningPanelDef';
 import InntektOgYtelserFaktaPanelDef from './faktaPaneler/InntektOgYtelserFaktaPanelDef';
 import InntektsmeldingFaktaPanelDef from './faktaPaneler/InntektsmeldingFaktaPanelDef';
 import MedlemskapsvilkaretFaktaPanelDef from './faktaPaneler/MedlemskapsvilkaretFaktaPanelDef';
+import NyInntektPanelDef from './faktaPaneler/NyInntektPanelDef';
 import OmsorgenForFaktaPanelDef from './faktaPaneler/OmsorgenForFaktaPanelDef';
 import OpptjeningsvilkaretFaktaPanelDef from './faktaPaneler/OpptjeningsvilkaretFaktaPanelDef';
 import UttakFaktaPanelDef from './faktaPaneler/UttakFaktaPanelDef';
@@ -20,6 +21,7 @@ export const faktaPanelDefinisjonerUtenOmsorgenFor = [
   new UttakFaktaPanelDef(),
   new BarnFaktaPanelDef(),
   new BeregningFaktaPanelDef(),
+  new NyInntektPanelDef(),
   new FordelBeregningPanelDef(),
   new InntektOgYtelserFaktaPanelDef(),
   new VurderNyoppstartetFaktaPanelDef(),

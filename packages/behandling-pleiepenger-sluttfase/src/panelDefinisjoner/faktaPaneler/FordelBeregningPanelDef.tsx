@@ -14,7 +14,6 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG,
     aksjonspunktCodes.VURDER_REFUSJON_BERGRUNN,
-    aksjonspunktCodes.VURDER_NYTT_INNTKTSFORHOLD,
   ];
 
   getKomponent = props => {

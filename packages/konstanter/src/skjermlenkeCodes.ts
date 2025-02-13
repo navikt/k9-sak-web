@@ -1,5 +1,5 @@
-import prosessStegCodes from './prosessStegCodes';
 import faktaPanelCodes from './faktaPanelCodes';
+import prosessStegCodes from './prosessStegCodes';
 
 const skjermlenkeCodes = {
   BEREGNING: {
@@ -40,6 +40,11 @@ const skjermlenkeCodes = {
   FAKTA_OM_MEDLEMSKAP: {
     kode: 'FAKTA_OM_MEDLEMSKAP',
     faktaNavn: faktaPanelCodes.MEDLEMSKAPSVILKARET,
+    punktNavn: '',
+  },
+  FAKTA_OM_NY_INNTEKT: {
+    kode: 'FAKTA_OM_NY_INNTEKT',
+    faktaNavn: faktaPanelCodes.NY_INNTEKT,
     punktNavn: '',
   },
   FAKTA_FOR_OMSORG: {
