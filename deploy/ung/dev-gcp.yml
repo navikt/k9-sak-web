@@ -82,7 +82,7 @@ spec:
     - name: OVERSTYR_BEREGNING
       value: "true"
     - name: "BRUK_V2_MELDINGER"
-      value: "true"
+      value: "false"
     - name: NYE_NOKKELTALL
       value: "true"
     - name: PROSESS_VILKAR_SOKNADSFRIST
