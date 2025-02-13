@@ -1,4 +1,4 @@
-import { behandlingType } from '@k9-sak-web/backend/ungsak/generated';
+import { BehandlingDtoType } from '@k9-sak-web/backend/ungsak/generated';
 import alleKodeverkV2 from '@k9-sak-web/lib/kodeverk/mocks/alleKodeverkV2.json';
 import type { Meta, StoryObj } from '@storybook/react';
 import { KodeverkProvider } from '../../kodeverk';
@@ -17,7 +17,7 @@ const meta = {
   component: UngVedtak,
   render: props => (
     <KodeverkProvider
-      behandlingType={behandlingType.BT_002}
+      behandlingType={BehandlingDtoType.FØRSTEGANGSSØKNAD}
       kodeverk={alleKodeverkV2}
       klageKodeverk={{}}
       tilbakeKodeverk={{}}
