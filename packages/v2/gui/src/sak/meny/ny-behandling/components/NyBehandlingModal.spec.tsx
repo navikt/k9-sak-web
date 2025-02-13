@@ -1,6 +1,6 @@
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
+import { BehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import { behandlingÅrsakType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingÅrsakType.js';
 import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import {
@@ -51,27 +51,27 @@ describe('<NyBehandlingModal>', () => {
   it('skal finne filtrerte behandlingsårsaker når det er valgt behandlingstype REVURDERING', () => {
     const behandlingÅrsakerK9Sak = [
       {
-        kode: behandlingÅrsakType.ANNET,
+        kode: BehandlingÅrsakDtoBehandlingArsakType.RE_ANNET,
         navn: 'annet',
         kodeverk: '',
       },
       {
-        kode: behandlingÅrsakType.FEIL_I_LOVANDVENDELSE,
+        kode: BehandlingÅrsakDtoBehandlingArsakType.RE_FEIL_I_LOVANDVENDELSE,
         navn: 'feil i lovandvendelse',
         kodeverk: '',
       },
       {
-        kode: behandlingÅrsakType.FEIL_ELLER_ENDRET_FAKTA,
+        kode: BehandlingÅrsakDtoBehandlingArsakType.RE_FEIL_ELLER_ENDRET_FAKTA,
         navn: 'feil eller endret fakta',
         kodeverk: '',
       },
       {
-        kode: behandlingÅrsakType.FEIL_REGELVERKSFORSTAELSE,
+        kode: BehandlingÅrsakDtoBehandlingArsakType.RE_FEIL_REGELVERKSFORSTÅELSE,
         navn: 'feil regelverksforstaelse',
         kodeverk: '',
       },
       {
-        kode: behandlingÅrsakType.FEIL_PROSESSUELL,
+        kode: BehandlingÅrsakDtoBehandlingArsakType.RE_FEIL_PROSESSUELL,
         navn: 'feil prosessuell',
         kodeverk: '',
       },

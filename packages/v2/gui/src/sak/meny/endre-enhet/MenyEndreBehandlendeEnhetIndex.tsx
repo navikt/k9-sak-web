@@ -48,7 +48,7 @@ const MenyEndreBehandlendeEnhetIndexV2 = ({
       nyBehandlendeEnhet(values);
       lukkModal();
     },
-    [behandlingId, behandlingVersjon, nyBehandlendeEnhet],
+    [behandlingId, behandlingVersjon, nyBehandlendeEnhet, lukkModal],
   );
   return (
     <EndreBehandlendeEnhetModal

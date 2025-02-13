@@ -8,14 +8,8 @@ import { behandlingType as BehandlingTypeK9SAK } from '@k9-sak-web/backend/k9sak
 import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent } from '@storybook/test';
+import { asyncAction } from '../../../storybook/asyncAction';
 import MenyHenleggIndexV2 from './MenyHenleggIndex';
-
-interface HenleggParams {
-  behandlingVersjon: number;
-  behandlingId: number;
-  årsakKode: string;
-  begrunnelse: string;
-}
 
 const meta = {
   title: 'gui/sak/meny/henlegg-behandling',
@@ -28,8 +22,8 @@ export const HenleggFørstegangssøknadPleiepenger: StoryObj<typeof MenyHenleggI
   args: {
     behandlingId: 1,
     behandlingVersjon: 2,
-    henleggBehandling: action('button-click') as (params: HenleggParams) => Promise<any>,
-    forhandsvisHenleggBehandling: action('button-click'),
+    henleggBehandling: asyncAction('henlegg behandling'),
+    forhandsvisHenleggBehandling: action('forhåndsvis henlegg behandling'),
     ytelseType: fagsakYtelseType.PLEIEPENGER_SYKT_BARN,
     behandlingType: BehandlingTypeK9SAK.FØRSTEGANGSSØKNAD,
     behandlingResultatTyper: [

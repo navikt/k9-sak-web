@@ -1,8 +1,10 @@
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
-import { BehandlingDtoSakstype as fagsakYtelseType } from '@k9-sak-web/backend/k9sak/generated';
+import {
+  BehandlingÅrsakDtoBehandlingArsakType,
+  BehandlingDtoSakstype as fagsakYtelseType,
+} from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import { behandlingÅrsakType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingÅrsakType.js';
-import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
+import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
 import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent } from '@storybook/test';
@@ -64,16 +66,20 @@ export const Default: StoryObj<typeof MenyNyBehandlingIndexV2> = {
     tilbakekrevingRevurderingArsaker: [],
     revurderingArsaker: [
       {
-        kode: behandlingÅrsakType.KLAGE_U_INNTK as string,
+        kode: BehandlingÅrsakDtoBehandlingArsakType.RE_KLAGE_UTEN_END_INNTEKT as string,
         kodeverk: 'BEHANDLING_ARSAK_TYPE',
         navn: 'Klage uten inntekt',
       },
       {
-        kode: behandlingÅrsakType.BEREEGNINGSGRUNNLAG as string,
+        kode: BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG as string,
         kodeverk: 'BEHANDLING_ARSAK_TYPE',
         navn: 'Beregningsgrunnlag',
       },
-      { kode: behandlingÅrsakType.FEIL_I_LOVANDVENDELSE ?? '', navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' },
+      {
+        kode: BehandlingÅrsakDtoBehandlingArsakType.RE_FEIL_I_LOVANDVENDELSE ?? '',
+        navn: 'FEIL_I_LOVANDVENDELSE',
+        kodeverk: 'ARSAK',
+      },
     ],
     behandlingOppretting: behandlingOppretting,
     kanTilbakekrevingOpprettes: {
@@ -143,24 +149,24 @@ export const visMenyForÅLageNyTilbakekrevingsbehandling = () => (
     behandlingstyper={behandlingstyper}
     tilbakekrevingRevurderingArsaker={[
       {
-        kode: tilbakekrevingBehandlingÅrsakType.RE_KLAGE_KA,
+        kode: tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_KLAGE_KA,
         kodeverk: 'BEHANDLING_ARSAK_TYPE',
         navn: 'Klage KA',
       },
       {
-        kode: tilbakekrevingBehandlingÅrsakType.RE_KLAGE_NFP,
+        kode: tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_KLAGE_NFP,
         kodeverk: 'BEHANDLING_ARSAK_TYPE',
         navn: 'Klage NFP',
       },
     ]}
     revurderingArsaker={[
       {
-        kode: behandlingÅrsakType.KLAGE_U_INNTK as string,
+        kode: BehandlingÅrsakDtoBehandlingArsakType.RE_KLAGE_UTEN_END_INNTEKT as string,
         kodeverk: 'BEHANDLING_ARSAK_TYPE',
         navn: 'Klage uten inntekt',
       },
       {
-        kode: behandlingÅrsakType.BEREEGNINGSGRUNNLAG as string,
+        kode: BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG as string,
         kodeverk: 'BEHANDLING_ARSAK_TYPE',
         navn: 'Beregningsgrunnlag',
       },

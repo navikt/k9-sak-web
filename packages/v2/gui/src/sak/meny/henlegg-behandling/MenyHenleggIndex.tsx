@@ -64,7 +64,7 @@ const MenyHenleggIndexV2 = ({
         setHenlagt(true);
       });
     },
-    [behandlingId, behandlingVersjon],
+    [behandlingId, behandlingVersjon, brevmottakere],
   );
 
   return (

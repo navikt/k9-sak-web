@@ -1,10 +1,7 @@
 import { behandlingType as BehandlingTypeK9Klage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
+import { BehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9sak/generated';
 import { behandlingType as BehandlingTypeK9Sak } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
-import {
-  behandlingÅrsakType,
-  type BehandlingÅrsakType,
-} from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingÅrsakType.js';
-import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
+import { behandlingÅrsakType as tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType } from '@k9-sak-web/backend/k9tilbake/kodeverk/behandling/BehandlingÅrsakType.js';
 import type { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Button, Fieldset, HStack, Modal, VStack } from '@navikt/ds-react';
 import { ModalBody, ModalFooter } from '@navikt/ds-react/Modal';
@@ -29,7 +26,7 @@ export type BehandlingOppretting = Readonly<{
 export type FormValues = {
   behandlingType: string;
   nyBehandlingEtterKlage?: string;
-  behandlingÅrsakType?: string;
+  BehandlingÅrsakDtoBehandlingArsakType?: string;
   steg?: 'inngangsvilkår' | 'RE-ENDRET-FORDELING';
   fom: string;
   tom: string;
@@ -104,7 +101,7 @@ export const NyBehandlingModal = ({
     defaultValues: {
       behandlingType: '',
       nyBehandlingEtterKlage: '',
-      behandlingÅrsakType: '',
+      BehandlingÅrsakDtoBehandlingArsakType: '',
       steg: undefined,
       fom: '',
       tom: '',
@@ -119,12 +116,14 @@ export const NyBehandlingModal = ({
   );
   const erFørstegangsbehandling = valgtBehandlingTypeKode === BehandlingTypeK9Klage.FØRSTEGANGSSØKNAD;
   const erRevurdering = valgtBehandlingTypeKode === BehandlingTypeK9Klage.REVURDERING;
-  const behandlingÅrsakTyper = getBehandlingAarsaker(
+  const BehandlingÅrsakDtoBehandlingArsakTyper = getBehandlingAarsaker(
     revurderingArsaker,
     tilbakekrevingRevurderingArsaker,
     valgtBehandlingTypeKode,
   );
-  const visÅrsak = (erRevurdering && steg === 'inngangsvilkår') || (!erRevurdering && behandlingÅrsakTyper.length > 0);
+  const visÅrsak =
+    (erRevurdering && steg === 'inngangsvilkår') ||
+    (!erRevurdering && BehandlingÅrsakDtoBehandlingArsakTyper.length > 0);
   const erTilbakekreving =
     behandlingType === BehandlingTypeK9Klage.TILBAKEKREVING ||
     behandlingType === BehandlingTypeK9Klage.REVURDERING_TILBAKEKREVING;
@@ -186,10 +185,10 @@ export const NyBehandlingModal = ({
             )}
             {visÅrsak && (
               <SelectField
-                name="behandlingÅrsakType"
+                name="BehandlingÅrsakDtoBehandlingArsakType"
                 label="Hva er årsaken til den nye behandlingen?"
                 validate={[required]}
-                selectValues={behandlingÅrsakTyper.map(b => (
+                selectValues={BehandlingÅrsakDtoBehandlingArsakTyper.map(b => (
                   <option key={b?.kode} value={b?.kode}>
                     {b?.navn}
                   </option>
@@ -230,32 +229,35 @@ export const NyBehandlingModal = ({
 };
 
 const manuelleRevurderingsArsaker = [
-  behandlingÅrsakType.BEREEGNINGSGRUNNLAG,
-  behandlingÅrsakType.MEDLEMSKAP,
-  behandlingÅrsakType.OPPTJENING,
-  behandlingÅrsakType.FORDELING,
-  behandlingÅrsakType.INNTEKT,
-  behandlingÅrsakType.DØD,
-  behandlingÅrsakType.SØKERS_RELASJON,
-  behandlingÅrsakType.SØKNADSFRIST,
-  behandlingÅrsakType.KLAGE_U_INNTK,
-  behandlingÅrsakType.KLAGE_M_INNTK,
-  behandlingÅrsakType.ANNET,
-  behandlingÅrsakType.FEIL_I_LOVANDVENDELSE,
-  behandlingÅrsakType.FEIL_ELLER_ENDRET_FAKTA,
-  behandlingÅrsakType.FEIL_REGELVERKSFORSTAELSE,
-  behandlingÅrsakType.FEIL_PROSESSUELL,
-  behandlingÅrsakType.ETTER_KLAGE,
+  BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_BEREGNINGSGRUNNLAG,
+  BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_MEDLEMSKAP,
+  BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_OPPTJENING,
+  BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_FORDELING,
+  BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_INNTEKT,
+  BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_DØD,
+  BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_SØKERS_REL,
+  BehandlingÅrsakDtoBehandlingArsakType.RE_OPPLYSNINGER_OM_SØKNAD_FRIST,
+  BehandlingÅrsakDtoBehandlingArsakType.RE_KLAGE_UTEN_END_INNTEKT,
+  BehandlingÅrsakDtoBehandlingArsakType.RE_KLAGE_MED_END_INNTEKT,
+  BehandlingÅrsakDtoBehandlingArsakType.RE_ANNET,
+  BehandlingÅrsakDtoBehandlingArsakType.RE_FEIL_I_LOVANDVENDELSE,
+  BehandlingÅrsakDtoBehandlingArsakType.RE_FEIL_ELLER_ENDRET_FAKTA,
+  BehandlingÅrsakDtoBehandlingArsakType.RE_FEIL_REGELVERKSFORSTÅELSE,
+  BehandlingÅrsakDtoBehandlingArsakType.RE_FEIL_PROSESSUELL,
+  BehandlingÅrsakDtoBehandlingArsakType.ETTER_KLAGE,
 ];
 
-const unntakVurderingsArsaker = [behandlingÅrsakType.UNNT_GENERELL, behandlingÅrsakType.ANNET];
+const unntakVurderingsArsaker = [
+  BehandlingÅrsakDtoBehandlingArsakType.UNNT_GENERELL,
+  BehandlingÅrsakDtoBehandlingArsakType.RE_ANNET,
+];
 
 const tilbakekrevingRevurderingArsaker = [
-  tilbakekrevingBehandlingÅrsakType.RE_FORELDELSE,
-  tilbakekrevingBehandlingÅrsakType.RE_VILKÅR,
-  tilbakekrevingBehandlingÅrsakType.RE_KLAGE_KA,
-  tilbakekrevingBehandlingÅrsakType.RE_KLAGE_NFP,
-  tilbakekrevingBehandlingÅrsakType.RE_FEILUTBETALT_BELØP_REDUSERT,
+  tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_FORELDELSE,
+  tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_VILKÅR,
+  tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_KLAGE_KA,
+  tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_KLAGE_NFP,
+  tilbakekrevingBehandlingÅrsakDtoBehandlingArsakType.RE_FEILUTBETALT_BELØP_REDUSERT,
 ];
 
 export const getBehandlingAarsaker = (
@@ -270,13 +272,13 @@ export const getBehandlingAarsaker = (
   }
   if (valgtBehandlingType === BehandlingTypeK9Klage.REVURDERING) {
     return revurderingArsaker
-      .filter(bat => manuelleRevurderingsArsaker.indexOf(bat.kode as BehandlingÅrsakType) > -1)
+      .filter(bat => manuelleRevurderingsArsaker.some(m => m === bat.kode))
       .sort((bat1, bat2) => bat1.navn.localeCompare(bat2.navn));
   }
 
   if (valgtBehandlingType === BehandlingTypeK9Sak.UNNTAKSBEHANDLING) {
     return revurderingArsaker
-      .filter(bat => unntakVurderingsArsaker.indexOf(bat.kode as BehandlingÅrsakType) > -1)
+      .filter(bat => unntakVurderingsArsaker.some(u => u === bat.kode))
       .sort((bat1, bat2) => bat1.navn.localeCompare(bat2.navn));
   }
 
