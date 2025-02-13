@@ -46,10 +46,9 @@ const extractBubbleWrapperStrings = async (node: ReactNode): Promise<string[]> =
   if (bubble instanceof HTMLElement) {
     // If the bubble has expandable (BubbleText) components, click the expand button so that we compare the full text.
     const expandButtons = () =>
-      bubble
-        .querySelectorAll('button[aria-label="Åpne tekstfelt"][aria-expanded="false"]')
-        .values()
-        .filter(el => el instanceof HTMLButtonElement);
+      Array.from(bubble.querySelectorAll('button[aria-label="Åpne tekstfelt"][aria-expanded="false"]')).filter(
+        el => el instanceof HTMLButtonElement,
+      );
     expandButtons().forEach(btn => btn.click());
     // Must wait until click handler has run and re-render is done before proceeding:
     return new Promise((resolve, reject) => {
@@ -124,6 +123,7 @@ historikkInnslagMissingWordsExcemptions.set(historikkinnslagType.FAKTA_OM_FEILUT
   'endret',
   'fra',
 ]);
+historikkInnslagMissingWordsExcemptions.set(historikkinnslagType.SAK_RETUR, ['Om']);
 
 const allMissingWordsAreExcempted = (historikkInnslagV1Type: string, wordsMissing: string[]): boolean => {
   const wordsKnownMissing = historikkInnslagMissingWordsExcemptions.get(historikkInnslagV1Type);
