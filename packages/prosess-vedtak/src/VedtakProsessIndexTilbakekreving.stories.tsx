@@ -1,45 +1,32 @@
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import alleKodeverk from '@k9-sak-web/gui/storybook/mocks/alleKodeverk.json';
-import { expect, fn, userEvent } from '@storybook/test';
+import {
+  AksjonspunktDtoAksjonspunktType,
+  AksjonspunktDtoDefinisjon,
+  AksjonspunktDtoStatus,
+  AksjonspunktDtoVenteårsak,
+  BehandlingDtoBehandlingResultatType,
+} from '@navikt/k9-sak-typescript-client';
 import { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, userEvent } from '@storybook/test';
 import VedtakProsessIndex from './VedtakProsessIndex';
 
 const behandling = {
   id: 1,
   versjon: 1,
-  type: {
-    kode: behandlingType.SOKNAD,
-    kodeverk: '',
-  },
-  status: {
-    kode: behandlingStatus.BEHANDLING_UTREDES,
-    kodeverk: '',
-  },
-  sprakkode: {
-    kode: 'NO',
-    kodeverk: '',
-  },
+  type: behandlingType.SOKNAD,
+  status: behandlingStatus.BEHANDLING_UTREDES,
+  sprakkode: 'NO',
   behandlingsresultat: {
-    vedtaksbrev: {
-      kode: 'FRITEKST',
-      kodeverk: '',
-    },
-    type: {
-      kode: behandlingResultatType.IKKE_FASTSATT,
-      kodeverk: '',
-    },
+    vedtaksbrev: 'FRITEKST',
+    type: BehandlingDtoBehandlingResultatType.IKKE_FASTSATT,
   },
   behandlingPaaVent: false,
   behandlingHenlagt: false,
   behandlingArsaker: [
     {
-      behandlingArsakType: {
-        kode: klageBehandlingArsakType.ETTER_KLAGE,
-        kodeverk: '',
-      },
+      behandlingArsakType: klageBehandlingArsakType.ETTER_KLAGE,
     },
   ],
 };
@@ -52,34 +39,28 @@ const meta: Meta<typeof VedtakProsessIndex> = {
 export default meta;
 
 const aksjonspunkt5085 = {
-  aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
+  aksjonspunktType: AksjonspunktDtoAksjonspunktType.MANUELL,
   begrunnelse: null,
   besluttersBegrunnelse: null,
-  definisjon: {
-    kode: '5085',
-    kodeverk: 'AKSJONSPUNKT_DEF',
-  },
+  definisjon: AksjonspunktDtoDefinisjon.SJEKK_TILBAKEKREVING,
   erAktivt: true,
   fristTid: null,
   kanLoses: true,
-  status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
+  status: AksjonspunktDtoStatus.OPPRETTET,
   toTrinnsBehandling: false,
   toTrinnsBehandlingGodkjent: null,
   vilkarType: null,
   vurderPaNyttArsaker: null,
-  venteårsak: { kode: '-', kodeverk: 'VENT_AARSAK' },
+  AksjonspunktDtoVenteårsak: AksjonspunktDtoVenteårsak.UDEFINERT,
 };
 
 export const visSjekkTilbakekreving: StoryObj<typeof meta> = {
   args: {
     behandling,
-    sendVarselOmRevurdering: false,
-    employeeHasAccess: false,
     isReadOnly: false,
     vilkar: [],
     medlemskap: { fom: '2019-01-01' },
     aksjonspunkter: [aksjonspunkt5085],
-    alleKodeverk,
     previewCallback: fn(),
     submitCallback: fn(),
   },
@@ -90,7 +71,7 @@ export const visSjekkTilbakekreving: StoryObj<typeof meta> = {
       await userEvent.click(neiRadio);
       const bekreftBtn = canvas.getByText('Bekreft');
       await userEvent.click(bekreftBtn);
-      await expect(args.submitCallback).toHaveBeenCalledWith([{ kode: aksjonspunkt5085.definisjon.kode }]);
+      await expect(args.submitCallback).toHaveBeenCalledWith([{ kode: aksjonspunkt5085.definisjon }]);
     });
   },
 };

@@ -1,32 +1,33 @@
 import { Button, ErrorMessage } from '@navikt/ds-react';
-import React, { type JSX } from 'react';
-import { IntlShape, injectIntl } from 'react-intl';
+import { type JSX } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Aksjonspunkt } from '@k9-sak-web/types';
 
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 
+import { AksjonspunktDto, BehandlingÅrsakDto } from '@navikt/k9-sak-typescript-client';
+import { FormikState } from 'formik';
 import styles from '../vedtakForm.module.css';
 
 interface OwnProps {
-  intl: IntlShape;
-  formikValues: any;
+  formikValues: FormikState<any>['values'];
   readOnly: boolean;
   harRedusertUtbetaling: boolean;
   visFeilmeldingFordiArsakerMangler: () => void;
   behandlingStatusKode: string;
   isSubmitting: boolean;
   handleSubmit: (event: any) => void;
-  aksjonspunkter: Aksjonspunkt[];
-  errorOnSubmit: boolean;
+  aksjonspunkter: AksjonspunktDto[];
+  errorOnSubmit: string;
+  behandlingÅrsaker: BehandlingÅrsakDto[];
 }
 
-export const submitKnappTekst = aksjonspunkter =>
+export const submitKnappTekst = (aksjonspunkter: AksjonspunktDto[]) =>
   aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
     ? 'VedtakForm.SendTilBeslutter'
     : 'VedtakForm.FattVedtak';
@@ -42,7 +43,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   handleSubmit,
   aksjonspunkter,
   errorOnSubmit,
-}: OwnProps): JSX.Element => {
+}: OwnProps & WrappedComponentProps): JSX.Element => {
   const onClick = event =>
     !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formikValues[a])
       ? handleSubmit(event)
@@ -86,7 +87,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
 };
 
 const erArsakTypeBehandlingEtterKlage = createSelector(
-  [ownProps => ownProps.behandlingArsaker],
+  [ownProps => ownProps.behandlingÅrsaker],
   (behandlingArsakTyper = []) =>
     behandlingArsakTyper
       .map(({ behandlingArsakType }) => behandlingArsakType)
@@ -98,7 +99,7 @@ const erArsakTypeBehandlingEtterKlage = createSelector(
       ),
 );
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, ownProps: OwnProps) => ({
   erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(ownProps),
 });
 

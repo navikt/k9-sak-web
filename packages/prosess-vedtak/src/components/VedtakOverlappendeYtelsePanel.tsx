@@ -2,37 +2,41 @@ import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import Tidslinje from '@fpsak-frontend/tidslinje/src/components/pleiepenger/Tidslinje';
 import Periode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
 import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
-import { KodeverkMedNavn, OverlappendePeriode } from '@k9-sak-web/types';
+import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
+import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types/KodeverkTypeV2.js';
+import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types/KodeverkV2.js';
 import { Accordion, Alert, BodyLong, Checkbox, CheckboxGroup, Heading, Tag } from '@navikt/ds-react';
+import { OverlappendeYtelseDto } from '@navikt/k9-sak-typescript-client';
 import { useFormikContext } from 'formik';
 import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
-import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { KodeverkTypeV2 } from '@k9-sak-web/lib/kodeverk/types/KodeverkTypeV2.js';
+import { Periodeinfo } from '../types/Periodeinfo';
 import { sorterOverlappendeRader } from '../utils/periodeUtils';
 import styles from './VedtakOverlappendeYtelsePanel.module.css';
 
 interface Props {
-  overlappendeYtelser: any;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  overlappendeYtelser: Array<OverlappendeYtelseDto>;
+
   harVurdertOverlappendeYtelse: boolean;
   setHarVurdertOverlappendeYtelse: (harVurdertOverlappendeYtelse: boolean) => void;
 }
 
 const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = ({
   overlappendeYtelser,
-  alleKodeverk,
   intl,
   harVurdertOverlappendeYtelse,
   setHarVurdertOverlappendeYtelse,
 }) => {
-  const { kodeverkNavnFraKode } = useKodeverkContext();
-  const [valgtPeriode, setValgtPeriode] = React.useState<Periode<OverlappendePeriode> | null>(null);
+  const { hentKodeverkForKode, kodeverkNavnFraKode } = useKodeverkContext();
+  const [valgtPeriode, setValgtPeriode] = React.useState<Periode<Periodeinfo> | null>(null);
   const { submitCount } = useFormikContext();
 
   const utledFagSystem = (fagSystemKode: string) => {
-    if (alleKodeverk.Fagsystem && alleKodeverk.Fagsystem.length > 0) {
-      return alleKodeverk.Fagsystem.find(system => system.kode === fagSystemKode).navn;
+    const fagSystemer = hentKodeverkForKode(KodeverkType.FAGSYSTEM);
+    if (fagSystemer && Array.isArray(fagSystemer) && fagSystemer.length > 0) {
+      const fagSystem = fagSystemer.find((system: KodeverkObject) => system.kode === fagSystemKode);
+      return typeof fagSystem !== 'string' ? fagSystem.navn : fagSystemKode;
     }
     return fagSystemKode;
   };
@@ -41,15 +45,13 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
    * Set opp radene som brukes i Tidslinjen
    */
   const usorterteRader = overlappendeYtelser.map(
-    (rad, radIndex): TidslinjeRad<OverlappendePeriode> => ({
+    (rad, radIndex): TidslinjeRad<Periodeinfo> => ({
       id: `rad-${radIndex}`,
       perioder: rad.overlappendePerioder.map((periode, periodeIndex) => ({
         fom: periode.fom,
         tom: periode.tom,
         id: `rad-${radIndex}-periode-${periodeIndex}`,
-        hoverText: `${intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserKilde' })} ${utledFagSystem(
-          rad.kilde.kode,
-        )}`,
+        hoverText: `${intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserKilde' })} ${utledFagSystem(rad.kilde)}`,
         periodeinfo: {
           kilde: rad.kilde,
           ytelseType: rad.ytelseType,
@@ -72,7 +74,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
   ));
 
   const velgPeriodeHandler = (eventProps: any) => {
-    const raden: TidslinjeRad<OverlappendePeriode> = rader.find(rad =>
+    const raden: TidslinjeRad<Periodeinfo> = rader.find(rad =>
       rad.perioder.find(periode => periode.id === eventProps.items[0]),
     );
     if (raden) {
@@ -109,7 +111,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
               <div className={styles.periodeDetaljer}>
                 <Tag variant="warning" className={styles.periodeDetalj}>
                   <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserKilde' })}</strong>
-                  {utledFagSystem(valgtPeriode.periodeinfo.kilde.kode)}
+                  {utledFagSystem(valgtPeriode.periodeinfo.kilde)}
                 </Tag>
                 <Tag variant="info" className={styles.periodeDetalj}>
                   <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserYtelse' })}</strong>
