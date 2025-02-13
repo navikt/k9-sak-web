@@ -4,6 +4,7 @@ import { VerticalSpacer } from '@navikt/ft-ui-komponenter';
 import { DDMMYYYY_DATE_FORMAT } from '@navikt/ft-utils';
 import dayjs from 'dayjs';
 import { useState } from 'react';
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { finnVilkårsperiode, vurderesIBehandlingen } from './src/components/felles/vilkårsperiodeUtils.js';
 import { FordelBeregningsgrunnlagPanel } from './src/components/FordelBeregningsgrunnlagPanel.js';
 import type { TilkommetAktivitetFormValues } from './src/types/FordelBeregningsgrunnlagPanelValues.js';
@@ -13,6 +14,15 @@ import type { Vilkår, Vilkårperiode } from './src/types/Vilkår.js';
 
 import type { ArbeidsgiverOpplysningerPerId } from './src/types/ArbeidsgiverOpplysninger.js';
 import type { Beregningsgrunnlag } from './src/types/Beregningsgrunnlag.js';
+
+const cache = createIntlCache();
+
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+  },
+  cache,
+);
 
 const { VURDER_NYTT_INNTKTSFRHLD } = FaktaFordelBeregningAvklaringsbehovCode;
 
@@ -65,7 +75,7 @@ export const NyInntektFaktaIndex = ({
   const skalBrukeTabs = bgMedAvklaringsbehov.length > 1;
 
   return (
-    <>
+    <RawIntlProvider value={intl}>
       {skalBrukeTabs && (
         <Tabs
           value={aktivtBeregningsgrunnlagIndeks.toString()}
@@ -97,6 +107,6 @@ export const NyInntektFaktaIndex = ({
         formData={formData}
         setFormData={setFormData}
       />
-    </>
+    </RawIntlProvider>
   );
 };
