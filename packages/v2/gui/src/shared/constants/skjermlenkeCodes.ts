@@ -1,5 +1,5 @@
-import prosessStegCodes from './prosessStegCodes';
 import faktaPanelCodes from './faktaPanelCodes';
+import prosessStegCodes from './prosessStegCodes';
 
 const skjermlenkeCodes = {
   BEREGNING: {

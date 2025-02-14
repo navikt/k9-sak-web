@@ -1,18 +1,6 @@
-import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { PersonopplysningerBasic } from '@k9-sak-web/types/src/personopplysningerTsType';
 import { Rammevedtak } from '@k9-sak-web/types';
 import { RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
-
-export const erFagytelseTypeUtvidetRett = (fagytelseType: FagsakYtelsesType) => {
-  switch (fagytelseType) {
-    case fagsakYtelsesType.OMSORGSPENGER_AO:
-    case fagsakYtelsesType.OMSORGSPENGER_MA:
-    case fagsakYtelsesType.OMSORGSPENGER_KS:
-      return true;
-    default:
-      return false;
-  }
-};
+import { PersonopplysningerBasic } from '@k9-sak-web/types/src/personopplysningerTsType';
 
 export const harBarnSoktForRammevedtakOmKroniskSyk = (
   barnSoktFor: PersonopplysningerBasic[],
