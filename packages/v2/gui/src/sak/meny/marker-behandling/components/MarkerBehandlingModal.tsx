@@ -40,8 +40,8 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   const buildInitialValues = (): FormValues => {
     if (merknaderFraLos) {
       return {
-        markerSomHastesak: !!merknaderFraLos.merknadKoder?.includes(Merknadkode.HASTESAK),
-        markerSomVanskelig: !!merknaderFraLos.merknadKoder?.includes(Merknadkode.VANSKELIG_SAK),
+        markerSomHastesak: !!merknaderFraLos.merknadKoder?.some(kode => kode === Merknadkode.HASTESAK),
+        markerSomVanskelig: !!merknaderFraLos.merknadKoder?.some(kode => kode === Merknadkode.VANSKELIG_SAK),
         begrunnelse: merknaderFraLos.fritekst ?? '',
       };
     }
