@@ -1,5 +1,4 @@
 import { FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import FatterVedtakApprovalModal from './components/modal/FatterVedtakApprovalModal';
 import { Behandling } from './types/Behandling';
 
@@ -32,12 +31,4 @@ const FatterVedtakTotrinnskontrollModalSakIndex = ({
   />
 );
 
-const FatterVedtakTotrinnskontrollModalSakIndexPropsTransformer = (
-  props: FatterVedtakTotrinnskontrollModalSakIndexProps,
-) => {
-  const v2Props = JSON.parse(JSON.stringify(props));
-  konverterKodeverkTilKode(v2Props, false);
-  return <FatterVedtakTotrinnskontrollModalSakIndex {...props} {...v2Props} />;
-};
-
-export default FatterVedtakTotrinnskontrollModalSakIndexPropsTransformer;
+export default FatterVedtakTotrinnskontrollModalSakIndex;
