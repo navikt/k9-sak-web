@@ -1,6 +1,6 @@
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router';
-import * as Sentry from '@sentry/browser';
+//import * as Sentry from '@sentry/browser';
 
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
@@ -17,14 +17,16 @@ import { Snakkeboble } from '@k9-sak-web/gui/sak/historikk/snakkeboble/Snakkebob
 import dayjs from 'dayjs';
 import { Kjønn } from '@k9-sak-web/backend/k9sak/kodeverk/Kjønn.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/hooks/useKodeverkContext.js';
-import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
-import { compareRenderedElementTexts } from './v1v2Sammenligningssjekk.js';
+//import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
+//import { compareRenderedElementTexts } from './v1v2Sammenligningssjekk.js';
 import { HelpText, HStack, Switch } from '@navikt/ds-react';
 
+/*
 type HistorikkMedTilbakekrevingIndikator = Historikkinnslag & {
   erTilbakekreving?: boolean;
   erKlage?: boolean;
 };
+ */
 
 type SakHistorikkInnslagV1 = Historikkinnslag & {
   erKlage?: never;
@@ -46,6 +48,7 @@ type TilbakeHistorikkInnslagV2 = HistorikkinnslagV2 & {
 
 type UlikeHistorikkinnslagTyper = SakHistorikkInnslagV1 | KlageHistorikkInnslagV1 | TilbakeHistorikkInnslagV2;
 
+/*
 const sortAndTagTilbakekrevingOgKlage = (
   historikkK9sak: Historikkinnslag[] = [],
   historikkTilbake: Historikkinnslag[] = [],
@@ -64,6 +67,7 @@ const sortAndTagTilbakekrevingOgKlage = (
     .concat(historikkFraKlageMedMarkor)
     .sort((a, b) => dayjs(b.opprettetTidspunkt).diff(dayjs(a.opprettetTidspunkt)));
 };
+ */
 
 const sortAndTagUlikeHistorikkinnslagTyper = (
   historikkK9sak: Historikkinnslag[] = [],
@@ -90,11 +94,12 @@ interface OwnProps {
  * Container komponent. Har ansvar for å hente historiken for en fagsak fra state og vise den
  */
 const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }: OwnProps) => {
-  const featureToggles = useContext(FeatureTogglesContext);
-  const [visV2, setVisV2] = useState(featureToggles?.['HISTORIKK_V2_VIS'] === true); // Rendra historikk innslag v2 skal visast (ikkje berre samanliknast)
+  //const featureToggles = useContext(FeatureTogglesContext);
+  //const [visV2, setVisV2] = useState(featureToggles?.['HISTORIKK_V2_VIS'] === true); // Rendra historikk innslag v2 skal visast (ikkje berre samanliknast)
+  const visV2 = true; // Alltid true inntil omskriving av historikk frå klage og sak er i gang.
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
   const { getKodeverkNavnFraKodeFn } = useKodeverkContext();
-  const compareTimeoutIdRef = useRef(0);
+  //const compareTimeoutIdRef = useRef(0);
 
   const alleKodeverkK9Sak = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(
     K9sakApiKeys.KODEVERK,
@@ -131,6 +136,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
     },
   );
 
+  /*
   const { data: historikkTilbake, state: historikkTilbakeState } = restApiHooks.useRestApi<Historikkinnslag[]>(
     K9sakApiKeys.HISTORY_TILBAKE,
     { saksnummer },
@@ -139,6 +145,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
       suspendRequest: !skalBrukeFpTilbakeHistorikk || erBehandlingEndret,
     },
   );
+   */
 
   const { data: historikkTilbakeV2, state: historikkTilbakeStateV2 } = restApiHooks.useRestApi<HistorikkinnslagV2[]>(
     K9sakApiKeys.HISTORY_TILBAKE_V2,
@@ -158,10 +165,12 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
     },
   );
 
+  /*
   const historikkInnslag = useMemo(
     () => sortAndTagTilbakekrevingOgKlage(historikkK9Sak, historikkTilbake, historikkKlage),
     [historikkK9Sak, historikkTilbake, historikkKlage],
   );
+   */
   const historikkInnslagV1V2 = useMemo(
     () => sortAndTagUlikeHistorikkinnslagTyper(historikkK9Sak, historikkTilbakeV2, historikkKlage),
     [historikkK9Sak, historikkTilbakeV2, historikkKlage],
@@ -169,6 +178,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
 
   const getTilbakeKodeverknavn = getKodeverkNavnFraKodeFn('kodeverkTilbake');
 
+  /*
   const v1HistorikkElementer = historikkInnslag.map(innslag => {
     let alleKodeverk = alleKodeverkK9Sak;
     if (innslag.erTilbakekreving) {
@@ -189,6 +199,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
       />
     );
   });
+   */
   const v2HistorikkElementer = historikkInnslagV1V2.map((innslag, idx) => {
     let alleKodeverk = alleKodeverkK9Sak;
     if (innslag.erTilbakekreving) {
@@ -229,13 +240,14 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
 
   const isLoading =
     isRequestNotDone(historikkK9SakState) ||
-    (skalBrukeFpTilbakeHistorikk && isRequestNotDone(historikkTilbakeState)) ||
+    //(skalBrukeFpTilbakeHistorikk && isRequestNotDone(historikkTilbakeState)) ||
     (skalBrukeKlageHistorikk && isRequestNotDone(historikkKlageState)) ||
     (skalBrukeFpTilbakeHistorikk && isRequestNotDone(historikkTilbakeStateV2));
 
   // Samanlikning av v1 og v2 render resultat. Sjekker at alle ord rendra i v1 historikkinnslag også bli rendra i v2.
   // (Uavhengig av rekkefølge på orda.) For å unngå fleire køyringer av sjekk pga re-rendering ved initiell lasting
   // er køyring forsinka litt, med clearTimeout på forrige timeout id.
+  /*
   useEffect(() => {
     if (compareTimeoutIdRef.current > 0) {
       window.clearTimeout(compareTimeoutIdRef.current);
@@ -251,6 +263,7 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
       }, 1_000);
     }
   }, [isLoading, historikkInnslag, historikkInnslagV1V2]); // Ønsker bevisst å berre køyre samanlikningssjekk ein gang.
+   */
 
   if (isLoading) {
     return <LoadingPanel />;
@@ -259,23 +272,20 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon, kjønn }:
   return (
     <div className="grid gap-5">
       <HStack align="center">
-        <Switch size="small" checked={visV2} onChange={ev => setVisV2(ev.target.checked)}>
+        <Switch size="small" checked={visV2} disabled /*onChange={ev => setVisV2(ev.target.checked)} */>
           Ny visning&nbsp;
         </Switch>
         <HelpText>
           <p>Vi er i ferd med å gå over til nytt format/visning av historikk innslag.</p>
           <p>I en overgangsperiode kan du med denne bryter bytte mellom ny og gammel visning.</p>
           <p>
-            Ved å gjøre det kan du undersøke om ny visning har mangler, og melde fra om dette så vi kan korrigere evt
-            mangler før gammel visning forsvinner.
+            Akkurat nå er bytte av visning deaktivert. Historikk fra tilbakekrevinger viser på nytt format, andre er på
+            gammelt format.
           </p>
-          <p>
-            Bare noen av innslagene vil ha ny/gammel visning tilgjengelig samtidig, så ikke alle vil forandre seg når du
-            skrur på/av denne bryter.
-          </p>
+          <p>Andre historikkinnslag vil snart være tilgjengelig både på nytt og gammelt format i en testperiode.</p>
         </HelpText>
       </HStack>
-      {visV2 ? v2HistorikkElementer : v1HistorikkElementer}
+      {visV2 ? v2HistorikkElementer : v2HistorikkElementer}
     </div>
   );
 };
