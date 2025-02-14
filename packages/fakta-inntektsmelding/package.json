@@ -15,7 +15,7 @@
     "vite-plugin-node-polyfills": "^0.23.0"
   },
   "dependencies": {
-    "@navikt/ds-css": "7.10.0",
+    "@navikt/ds-css": "7.13.0",
     "@navikt/ds-icons": "3.4.3",
     "@navikt/ds-react": "7.10.0",
     "@navikt/ft-form-hooks": "^6.1.5",
