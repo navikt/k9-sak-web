@@ -1,6 +1,5 @@
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
 import { BehandlingAksjonspunktDtoBehandlingStatus } from '@navikt/k9-sak-typescript-client';
-import { screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import TotrinnskontrollSaksbehandlerPanel from './TotrinnskontrollSaksbehandlerPanel';
 
@@ -108,7 +107,7 @@ const location = {
 
 describe('<TotrinnskontrollSaksbehandlerPanel>', () => {
   it('skal vise korrekt antall element og navn', () => {
-    renderWithIntl(
+    render(
       <MemoryRouter>
         <TotrinnskontrollSaksbehandlerPanel
           totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}

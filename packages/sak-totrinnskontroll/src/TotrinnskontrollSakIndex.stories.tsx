@@ -1,4 +1,5 @@
 import { behandlingType } from '@k9-sak-web/backend/k9sak/kodeverk/behandling/BehandlingType.js';
+import withKodeverkContext from '@k9-sak-web/gui/storybook/decorators/withKodeverkContext.js';
 import {
   BehandlingDtoStatus,
   TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker,
@@ -129,6 +130,7 @@ const behandling = {
 const meta: Meta<typeof TotrinnskontrollSakIndex> = {
   title: 'sak/sak-totrinnskontroll',
   component: TotrinnskontrollSakIndex,
+  decorators: [withKodeverkContext({ behandlingType: behandlingType.FØRSTEGANGSSØKNAD })],
 };
 
 export default meta;

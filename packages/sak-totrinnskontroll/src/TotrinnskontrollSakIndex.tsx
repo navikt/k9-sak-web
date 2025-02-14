@@ -1,11 +1,14 @@
-import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import { behandlingType } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { useKodeverkContext } from '@k9-sak-web/gui/kodeverk/index.js';
-import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
+import skjermlenkeCodes from '@k9-sak-web/gui/shared/constants/skjermlenkeCodes.js';
 import { konverterKodeverkTilKode } from '@k9-sak-web/lib/kodeverk/konverterKodeverkTilKode.js';
 import { KodeverkObject, KodeverkType, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
-import { AksjonspunktDtoDefinisjon, BehandlingAksjonspunktDtoBehandlingStatus } from '@navikt/k9-sak-typescript-client';
+import {
+  AksjonspunktDtoDefinisjon,
+  AksjonspunktDtoVurderPaNyttArsaker,
+  BehandlingAksjonspunktDtoBehandlingStatus,
+} from '@navikt/k9-sak-typescript-client';
 import { Location } from 'history';
 import { useCallback, useMemo } from 'react';
 import aksjonspunktCodesTilbakekreving from './aksjonspunktCodesTilbakekreving';
@@ -26,16 +29,16 @@ const sorterteSkjermlenkeCodesForTilbakekreving = [
 const getArsaker = (apData: AksjonspunktGodkjenningData): string[] => {
   const arsaker: string[] = [];
   if (apData.feilFakta) {
-    arsaker.push(vurderPaNyttArsakType.FEIL_FAKTA);
+    arsaker.push(AksjonspunktDtoVurderPaNyttArsaker.FEIL_FAKTA);
   }
   if (apData.feilLov) {
-    arsaker.push(vurderPaNyttArsakType.FEIL_LOV);
+    arsaker.push(AksjonspunktDtoVurderPaNyttArsaker.FEIL_LOV);
   }
   if (apData.feilRegel) {
-    arsaker.push(vurderPaNyttArsakType.FEIL_REGEL);
+    arsaker.push(AksjonspunktDtoVurderPaNyttArsaker.FEIL_REGEL);
   }
   if (apData.annet) {
-    arsaker.push(vurderPaNyttArsakType.ANNET);
+    arsaker.push(AksjonspunktDtoVurderPaNyttArsaker.ANNET);
   }
   return arsaker;
 };
@@ -91,7 +94,7 @@ const TotrinnskontrollSakIndex = ({
         ),
       });
     },
-    [erTilbakekreving],
+    [erTilbakekreving, onSubmit],
   );
 
   const sorterteTotrinnskontrollSkjermlenkeContext = useMemo(
@@ -106,7 +109,7 @@ const TotrinnskontrollSakIndex = ({
 
   const lagLenke = useCallback(
     (skjermlenkeCode: string): Location => createLocationForSkjermlenke(location, skjermlenkeCode),
-    [location],
+    [location, createLocationForSkjermlenke],
   );
 
   const erStatusFatterVedtak = behandling.status === BehandlingAksjonspunktDtoBehandlingStatus.FATTER_VEDTAK;

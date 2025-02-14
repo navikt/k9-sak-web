@@ -1,11 +1,13 @@
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { Image } from '@fpsak-frontend/shared-components';
+import { behandlingType as behandlingTypeKlage } from '@k9-sak-web/backend/k9klage/kodeverk/behandling/BehandlingType.js';
 import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
-import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
+import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/gui/utils/utvidetRettHjelpfunksjoner.js';
+import { CheckmarkCircleFillIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, HGrid, Modal } from '@navikt/ds-react';
+import {
+  BehandlingDtoBehandlingResultatType,
+  BehandlingDtoStatus,
+  BehandlingsresultatDtoType,
+} from '@navikt/k9-sak-typescript-client';
 import { Behandling } from '../../types/Behandling';
 import styles from './fatterVedtakApprovalModal.module.css';
 
@@ -18,14 +20,14 @@ const getInfoTextCode = (
   isOpphor: boolean,
 ) => {
   // HVIS TILBAKEKREVING
-  if (behandlingtypeKode === BehandlingType.TILBAKEKREVING) {
+  if (behandlingtypeKode === behandlingTypeKlage.TILBAKEKREVING) {
     return 'Tilbakekreving er vedtatt og iverksatt';
   }
-  if (behandlingtypeKode === BehandlingType.TILBAKEKREVING_REVURDERING) {
+  if (behandlingtypeKode === behandlingTypeKlage.REVURDERING_TILBAKEKREVING) {
     return 'Tilbakekreving revurdering er vedtatt og iverksatt';
   }
   // HVIS KLAGE
-  if (behandlingtypeKode === BehandlingType.KLAGE) {
+  if (behandlingtypeKode === behandlingTypeKlage.KLAGE) {
     if (erKlageWithKA) {
       return 'Klagen returneres til saksbehandler for iverksettelse.';
     }
@@ -36,7 +38,7 @@ const getInfoTextCode = (
     return 'Resultat: Ingen endring, behandlingen avsluttes';
   }
   // HVIS AVSLÅTT
-  if (behandlingsresultat?.type === behandlingResultatType.AVSLATT) {
+  if (behandlingsresultat?.type === BehandlingDtoBehandlingResultatType.AVSLÅTT) {
     if (ytelseType === fagsakYtelsesType.PLEIEPENGER_SYKT_BARN) {
       return 'Pleiepenger er avslått';
     }
@@ -90,7 +92,7 @@ const getModalDescriptionTextCode = (
   erKlageWithKA: boolean,
   behandlingTypeKode: string,
 ) => {
-  if (behandlingTypeKode === BehandlingType.KLAGE) {
+  if (behandlingTypeKode === behandlingTypeKlage.KLAGE) {
     if (erKlageWithKA) {
       return 'Klagen returneres til saksbehandler for iverksettelse.';
     }
@@ -114,7 +116,8 @@ const getModalDescriptionTextCode = (
   return 'Omsorgspenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.';
 };
 
-const isStatusFatterVedtak = (behandlingStatusKode: string) => behandlingStatusKode === behandlingStatus.FATTER_VEDTAK;
+const isStatusFatterVedtak = (behandlingStatusKode: string) =>
+  behandlingStatusKode === BehandlingDtoStatus.FATTER_VEDTAK;
 
 const utledInfoTextCode = (
   allAksjonspunktApproved: boolean,
@@ -195,7 +198,8 @@ const FatterVedtakApprovalModal = ({
   fagsakYtelseType,
   erKlageWithKA,
 }: OwnProps) => {
-  const isBehandlingsresultatOpphor = behandlingsresultat && behandlingsresultat.type === behandlingResultatType.OPPHOR;
+  const isBehandlingsresultatOpphor =
+    behandlingsresultat && behandlingsresultat.type === BehandlingsresultatDtoType.OPPHØR;
   const infoTextCode = utledInfoTextCode(
     allAksjonspunktApproved,
     behandlingStatusKode,
@@ -222,7 +226,11 @@ const FatterVedtakApprovalModal = ({
       <Modal.Body>
         <HGrid gap="1" columns={{ xs: '1fr 10fr 1fr' }}>
           <div className="relative">
-            <Image className={styles.image} alt={altImgText ?? ''} src={innvilgetImageUrl} />
+            <CheckmarkCircleFillIcon
+              title={altImgText}
+              fontSize={30}
+              style={{ color: 'var(--a-surface-success)', marginTop: '6px' }}
+            />
             <div className={styles.divider} />
           </div>
           <div>

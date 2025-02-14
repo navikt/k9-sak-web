@@ -1,21 +1,20 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import { BodyShort, Detail, Fieldset } from '@navikt/ds-react';
-import * as Sentry from '@sentry/browser';
-import { Location } from 'history';
-import { NavLink } from 'react-router';
-
-import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
-
 import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
+import { BodyShort, Detail, Fieldset, HStack, VStack } from '@navikt/ds-react';
 import { CheckboxField, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-validators';
+import { ArrowBox } from '@navikt/ft-ui-komponenter';
 import { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
+import * as Sentry from '@sentry/browser';
+import { Location } from 'history';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import { NavLink } from 'react-router';
 import { Behandling } from '../types/Behandling';
 import { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
 import styles from './aksjonspunktGodkjenningFieldArray.module.css';
+import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 import { FormState } from './FormState';
+
+const MANUELL_VURDERING_AV_ANKE = '5093';
 
 const minLength3 = minLength(3);
 const maxLength2000 = maxLength(2000);
@@ -70,8 +69,7 @@ export const AksjonspunktGodkjenningFieldArray = ({
         );
 
         const erKlageKA = klageKA && totrinnskontrollGodkjent;
-        const erAnke =
-          aksjonspunktKode === aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE && totrinnskontrollGodkjent === true;
+        const erAnke = aksjonspunktKode === MANUELL_VURDERING_AV_ANKE && totrinnskontrollGodkjent === true;
         const visKunBegrunnelse = erAnke || erKlageKA ? totrinnskontrollGodkjent : showBegrunnelse;
         const visArsaker = erAnke || erKlageKA || totrinnskontrollGodkjent === false;
 
@@ -148,48 +146,42 @@ export const AksjonspunktGodkjenningFieldArray = ({
                 {visArsaker && (
                   <ArrowBox alignOffset={erKlageKA ? 1 : 110}>
                     {!visKunBegrunnelse && (
-                      <FlexContainer wrap>
-                        <FlexRow>
-                          <FlexColumn>
-                            <Detail className="blokk-xs">Årsak</Detail>
-                          </FlexColumn>
-                        </FlexRow>
-                        <FlexRow>
-                          <Fieldset legend="" hideLegend>
-                            <div className="grid grid-cols-2 gap-20">
-                              <div>
-                                <CheckboxField
-                                  name={`aksjonspunktGodkjenning.${index}.feilFakta`}
-                                  label="Feil fakta"
-                                  readOnly={readOnly}
-                                />
-                                <CheckboxField
-                                  name={`aksjonspunktGodkjenning.${index}.feilRegel`}
-                                  label="Feil regelforståelse"
-                                  readOnly={readOnly}
-                                />
-                              </div>
-                              <div>
-                                <CheckboxField
-                                  name={`aksjonspunktGodkjenning.${index}.feilLov`}
-                                  label="Feil lovanvendelse"
-                                  readOnly={readOnly}
-                                />
-                                <CheckboxField
-                                  name={`aksjonspunktGodkjenning.${index}.annet`}
-                                  label="Annet"
-                                  readOnly={readOnly}
-                                />
-                              </div>
+                      <VStack gap="2">
+                        <Detail className="blokk-xs">Årsak</Detail>
+                        <Fieldset legend="" hideLegend>
+                          <HStack gap="20">
+                            <div>
+                              <CheckboxField
+                                name={`aksjonspunktGodkjenning.${index}.feilFakta`}
+                                label="Feil fakta"
+                                readOnly={readOnly}
+                              />
+                              <CheckboxField
+                                name={`aksjonspunktGodkjenning.${index}.feilRegel`}
+                                label="Feil regelforståelse"
+                                readOnly={readOnly}
+                              />
                             </div>
-                            {checkboxRequiredError && (
-                              <div className="navds-error-message navds-label navds-label--small">
-                                {checkboxRequiredError}
-                              </div>
-                            )}
-                          </Fieldset>
-                        </FlexRow>
-                      </FlexContainer>
+                            <div>
+                              <CheckboxField
+                                name={`aksjonspunktGodkjenning.${index}.feilLov`}
+                                label="Feil lovanvendelse"
+                                readOnly={readOnly}
+                              />
+                              <CheckboxField
+                                name={`aksjonspunktGodkjenning.${index}.annet`}
+                                label="Annet"
+                                readOnly={readOnly}
+                              />
+                            </div>
+                          </HStack>
+                          {checkboxRequiredError && (
+                            <div className="navds-error-message navds-label navds-label--small">
+                              {checkboxRequiredError}
+                            </div>
+                          )}
+                        </Fieldset>
+                      </VStack>
                     )}
                     <div className="mt-4">
                       <TextAreaField

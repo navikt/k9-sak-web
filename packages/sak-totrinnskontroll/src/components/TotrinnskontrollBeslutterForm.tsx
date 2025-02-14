@@ -1,8 +1,9 @@
-import { ariaCheck, decodeHtmlEntity } from '@fpsak-frontend/utils';
 import AksjonspunktHelpText from '@k9-sak-web/gui/shared/aksjonspunktHelpText/AksjonspunktHelpText.js';
 import { KodeverkObject, KodeverkV2 } from '@k9-sak-web/lib/kodeverk/types.js';
 import { Button } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
+import { ariaCheck } from '@navikt/ft-form-validators';
+import { decodeHtmlEntity } from '@navikt/ft-utils';
 import { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
 import { TotrinnskontrollAksjonspunkterDtoVurderPaNyttArsaker } from '@navikt/k9-sak-typescript-client';
 import { Location } from 'history';

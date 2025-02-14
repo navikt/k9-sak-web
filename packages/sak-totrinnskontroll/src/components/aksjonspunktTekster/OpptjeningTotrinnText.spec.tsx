@@ -1,5 +1,4 @@
-import { renderWithIntl } from '@fpsak-frontend/utils-test/test-utils';
-import { screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { OpptjeningAktivitet } from '../../types/OpptjeningAktivitet';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 
@@ -29,41 +28,41 @@ const lagOpptjeningAktivitet = (resultat: string): OpptjeningAktivitet => ({
 
 describe('<OpptjeningTotrinnnText>', () => {
   it('skal vise korrekt tekst for opptjening med endring av arbeid med navn', () => {
-    renderWithIntl(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidMedNavn('ENDRING')} />);
+    render(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidMedNavn('ENDRING')} />);
     expect(screen.getByText('Perioden arbeid for Andersen Transport AS (1234567890) er endret.')).toBeInTheDocument();
   });
 
   it('skal vise korrekt tekst for opptjening med endring av arbeid uten navn', () => {
-    renderWithIntl(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidUtenNavn('ENDRING')} />);
+    render(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidUtenNavn('ENDRING')} />);
     expect(screen.getByText('Perioden arbeid for organisasjonen med orgnr. 1234567890 er endret.')).toBeInTheDocument();
   });
 
   it('skal vise korrekt tekst for opptjening med endring av aktivitet', () => {
-    renderWithIntl(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitet('ENDRING')} />);
+    render(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitet('ENDRING')} />);
     expect(screen.getByText('Perioden aktivitet er endret.')).toBeInTheDocument();
   });
 
   it('skal vise korrekt tekst for opptjening med godkjenning av arbeid med navn', () => {
-    renderWithIntl(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidMedNavn('GODKJENT')} />);
+    render(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidMedNavn('GODKJENT')} />);
     expect(
       screen.getByText('Aktivitet arbeid for Andersen Transport AS (1234567890) er godkjent.'),
     ).toBeInTheDocument();
   });
 
   it('skal vise korrekt tekst for opptjening med godkjenning av arbeid uten navn', () => {
-    renderWithIntl(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidUtenNavn('GODKJENT')} />);
+    render(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidUtenNavn('GODKJENT')} />);
     expect(
       screen.getByText('Aktivitet arbeid for organisasjonen med orgnr. 1234567890 er godkjent.'),
     ).toBeInTheDocument();
   });
 
   it('skal vise korrekt tekst for opptjening med godkjenning av aktivitet', () => {
-    renderWithIntl(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitet('GODKJENT')} />);
+    render(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitet('GODKJENT')} />);
     expect(screen.getByText('Aktivitet aktivitet er godkjent.')).toBeInTheDocument();
   });
 
   it('skal vise korrekt tekst for opptjening med underkjenning av arbeid med navn', () => {
-    renderWithIntl(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidMedNavn('UNDERKJENNING')} />);
+    render(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidMedNavn('UNDERKJENNING')} />);
     expect(
       screen.getAllByText(
         (_, element) =>
@@ -73,7 +72,7 @@ describe('<OpptjeningTotrinnnText>', () => {
   });
 
   it('skal vise korrekt tekst for opptjening med underkjenning av arbeid uten navn', () => {
-    renderWithIntl(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidUtenNavn('UNDERKJENNING')} />);
+    render(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitetArbeidUtenNavn('UNDERKJENNING')} />);
     expect(
       screen.getAllByText(
         (_, element) =>
@@ -83,7 +82,7 @@ describe('<OpptjeningTotrinnnText>', () => {
   });
 
   it('skal vise korrekt tekst for opptjening med underkjenning av aktivitet', () => {
-    renderWithIntl(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitet('UNDERKJENNING')} />);
+    render(<OpptjeningTotrinnText aktivitet={lagOpptjeningAktivitet('UNDERKJENNING')} />);
     expect(
       screen.getAllByText((_, element) => element?.textContent === 'Aktivitet aktivitet er ikke godkjent.')[0],
     ).toBeInTheDocument();

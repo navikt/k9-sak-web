@@ -1,18 +1,14 @@
-import avslattImg from '@fpsak-frontend/assets/images/avslaatt.svg';
-import checkImg from '@fpsak-frontend/assets/images/check.svg';
-import { Image } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
+import { CheckmarkIcon, XMarkOctagonIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
+import { decodeHtmlEntity } from '@navikt/ft-utils';
+import { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
 import { Location } from 'history';
 import React from 'react';
 import { NavLink } from 'react-router';
-
-import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
-
-import { KodeverkObject } from '@k9-sak-web/lib/kodeverk/types.js';
-import { KlagebehandlingDto } from '@navikt/k9-klage-typescript-client';
 import { Behandling } from '../types/Behandling';
 import { TotrinnskontrollSkjermlenkeContext } from '../types/TotrinnskontrollSkjermlenkeContext';
+import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 import styles from './totrinnskontrollSaksbehandlerPanel.module.css';
 
 interface OwnProps {
@@ -77,7 +73,7 @@ const TotrinnskontrollSaksbehandlerPanel = ({
                     {aksjonspunkt.totrinnskontrollGodkjent ? (
                       <div>
                         <span>
-                          <Image src={checkImg} className={styles.image} />
+                          <CheckmarkIcon fontSize={24} style={{ color: 'var(--a-surface-success)' }} />
                         </span>
                         <span>Godkjent</span>
                       </div>
@@ -86,7 +82,7 @@ const TotrinnskontrollSaksbehandlerPanel = ({
                         {aksjonspunkt.vurderPaNyttArsaker?.map(item => (
                           <div key={`${item}${aksjonspunkt.aksjonspunktKode}`}>
                             <span>
-                              <Image src={avslattImg} className={styles.image} />
+                              <XMarkOctagonIcon fontSize={20} style={{ color: 'var(--a-surface-danger)' }} />
                             </span>
                             <span>{vurderArsaker.find(arsak => item === arsak.kode)?.navn}</span>
                           </div>
