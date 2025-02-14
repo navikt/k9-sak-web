@@ -1,6 +1,6 @@
 import { type Location } from 'history';
 
-import { BodyLong, BodyShort, Chat, VStack } from '@navikt/ds-react';
+import { BodyLong, Chat, VStack } from '@navikt/ds-react';
 import type { HistorikkinnslagV2 } from '../historikkinnslagTsTypeV2.js';
 
 import { HistorikkDokumentLenke } from './HistorikkDokumentLenke';
@@ -9,6 +9,7 @@ import { Avatar } from './Avatar';
 import { Skjermlenke } from './Skjermlenke';
 import type { KodeverkNavnFraKodeFnType } from '@k9-sak-web/lib/kodeverk/types/GetKodeverkNavnFraKodeFnType.js';
 import { KodeverkType } from '@k9-sak-web/lib/kodeverk/types/KodeverkType.js';
+import { Tittel } from './Tittel.js';
 
 interface Props {
   behandlingLocation: Location;
@@ -40,7 +41,7 @@ export const Snakkeboble = ({
       className={getStyle(aktør.type, kjønn)}
     >
       <Chat.Bubble>
-        {tittel && <BodyShort size="small">{tittel}</BodyShort>}
+        {tittel && <Tittel>{tittel}</Tittel>}
 
         <Skjermlenke
           skjermlenke={skjermlenke}

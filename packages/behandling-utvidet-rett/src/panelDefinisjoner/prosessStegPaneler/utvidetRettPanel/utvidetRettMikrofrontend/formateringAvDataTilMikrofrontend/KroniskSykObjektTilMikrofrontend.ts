@@ -96,6 +96,7 @@ const KroniskSykObjektTilMikrofrontend = ({
         aksjonspunktLost,
         lesemodus,
         soknadsdato: soknad.soknadsdato,
+        begrunnelseFraBruker: soknad.angittePersoner[0]?.tilleggsopplysninger || '',
         informasjonTilLesemodus: formatereLesemodusObjektForKroniskSyk(vilkar, aksjonspunkt),
         vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
         informasjonOmVilkar: generereInfoForVurdertVilkar(
