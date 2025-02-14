@@ -25,7 +25,6 @@ describe('<MenyNyBehandlingIndex>', () => {
         ytelseType={fagsakYtelseType.PLEIEPENGER_SYKT_BARN}
         saksnummer="123"
         behandlingId={3}
-        behandlingVersjon={1}
         behandlingType={BehandlingTypeK9Sak.FØRSTEGANGSSØKNAD}
         lagNyBehandling={lagNyBehandlingCallback}
         behandlingOppretting={behandlingOppretting}

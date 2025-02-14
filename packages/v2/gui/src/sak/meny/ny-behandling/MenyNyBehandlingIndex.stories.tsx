@@ -59,7 +59,6 @@ export const Default: StoryObj<typeof MenyNyBehandlingIndexV2> = {
     ytelseType: fagsakYtelseType.PLEIEPENGER_SYKT_BARN,
     saksnummer: '123',
     behandlingId: 1,
-    behandlingVersjon: 2,
     behandlingType: BehandlingTypeK9Sak.FØRSTEGANGSSØKNAD,
     lagNyBehandling: action('button-click'),
     behandlingstyper: behandlingstyper,
@@ -143,7 +142,6 @@ export const visMenyForÅLageNyTilbakekrevingsbehandling = () => (
     ytelseType={fagsakYtelseType.PLEIEPENGER_SYKT_BARN}
     saksnummer="123"
     behandlingId={1}
-    behandlingVersjon={2}
     behandlingType={BehandlingTypeK9Sak.FØRSTEGANGSSØKNAD}
     lagNyBehandling={action('button-click')}
     behandlingstyper={behandlingstyper}

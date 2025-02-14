@@ -16,7 +16,6 @@ interface OwnProps {
   saksnummer: string;
   behandlingId?: number;
   behandlingUuid?: string;
-  behandlingVersjon?: number;
   behandlingType?: string;
   lagNyBehandling: (behandlingTypeKode: string, data: any) => void;
   behandlingstyper: KodeverkObject[];
@@ -41,7 +40,6 @@ const MenyNyBehandlingIndexV2 = ({
   saksnummer,
   behandlingId,
   behandlingUuid,
-  behandlingVersjon,
   behandlingType,
   lagNyBehandling,
   behandlingstyper,
@@ -72,7 +70,7 @@ const MenyNyBehandlingIndexV2 = ({
 
       lukkModal();
     },
-    [behandlingId, behandlingVersjon, saksnummer, lagNyBehandling, lukkModal],
+    [behandlingId, saksnummer, lagNyBehandling, lukkModal],
   );
   return (
     <NyBehandlingModal
