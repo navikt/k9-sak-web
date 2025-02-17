@@ -20,7 +20,7 @@ const useFaktaPaneler = (
   rettigheter: Rettigheter,
   aksjonspunkter: Aksjonspunkt[],
   valgtFaktaPanelKode: string,
-  featureToggles?: FeatureToggles,
+  featureToggles: FeatureToggles,
 ): [FaktaPanelUtledet[], FaktaPanelUtledet, FaktaPanelMenyRad[]] => {
   const faktaPaneler = useMemo(
     () => utledFaktaPaneler(faktaPanelDefinisjoner, panelData, behandling, rettigheter, aksjonspunkter, featureToggles),
@@ -28,13 +28,13 @@ const useFaktaPaneler = (
   );
 
   const valgtPanel = useMemo(
-    () => finnValgtPanel(faktaPaneler, valgtFaktaPanelKode),
+    () => finnValgtPanel(faktaPaneler, valgtFaktaPanelKode, featureToggles),
     [behandling.versjon, valgtFaktaPanelKode],
   );
 
   const urlCode = valgtPanel ? valgtPanel.getUrlKode() : undefined;
   const sidemenyPaneler = useMemo(
-    () => formaterPanelerForSidemeny(faktaPaneler, urlCode),
+    () => formaterPanelerForSidemeny(faktaPaneler, urlCode, featureToggles),
     [behandling.versjon, urlCode],
   );
 
@@ -45,9 +45,10 @@ const useFaktaAksjonspunktNotifikator = (
   faktaPaneler: FaktaPanelUtledet[],
   setApentFaktaPanel: ({ urlCode, textCode }) => void,
   behandlingVersjon: number,
+  featureToggles?: FeatureToggles,
 ) => {
   useEffect(() => {
-    const panelMedApentAp = faktaPaneler.find(p => p.getHarApneAksjonspunkter());
+    const panelMedApentAp = faktaPaneler.find(p => p.getHarApneAksjonspunkter(featureToggles));
     if (panelMedApentAp) {
       setApentFaktaPanel({ urlCode: panelMedApentAp.getUrlKode(), textCode: panelMedApentAp.getTekstKode() });
     } else {

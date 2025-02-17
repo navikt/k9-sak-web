@@ -1,8 +1,9 @@
-import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 
-import getAlleMerknaderFraBeslutter from '../getAlleMerknaderFraBeslutter';
+import { FeatureToggles } from '@k9-sak-web/lib/types/FeatureTogglesType.js';
 import Rettigheter from '../../types/rettigheterTsType';
+import getAlleMerknaderFraBeslutter from '../getAlleMerknaderFraBeslutter';
 import readOnlyUtils from '../readOnlyUtils';
 import FaktaPanelDef from './FaktaPanelDef';
 
@@ -25,21 +26,28 @@ class FaktaPanelUtledet {
 
   public getTekstKode = (): string => this.faktaPanelDef.getTekstKode();
 
-  private getFiltrerteAksjonspunkter = (): Aksjonspunkt[] =>
-    this.aksjonspunkter.filter(ap => this.faktaPanelDef.getAksjonspunktKoder().includes(ap.definisjon.kode));
+  private getFiltrerteAksjonspunkter = (featureToggles?: FeatureToggles): Aksjonspunkt[] =>
+    this.aksjonspunkter.filter(ap =>
+      this.faktaPanelDef.getAksjonspunktKoder(featureToggles).includes(ap.definisjon.kode),
+    );
 
-  public getHarApneAksjonspunkter = (): boolean =>
-    this.getFiltrerteAksjonspunkter().some(ap => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses);
+  public getHarApneAksjonspunkter = (featureToggles?: FeatureToggles): boolean =>
+    this.getFiltrerteAksjonspunkter(featureToggles).some(ap => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses);
 
-  public getKomponentData = (rettigheter: Rettigheter, ekstraPanelData: any, hasFetchError: boolean) => {
-    const filtrerteAksjonspunkter = this.getFiltrerteAksjonspunkter();
+  public getKomponentData = (
+    rettigheter: Rettigheter,
+    ekstraPanelData: any,
+    hasFetchError: boolean,
+    featureToggles: FeatureToggles,
+  ) => {
+    const filtrerteAksjonspunkter = this.getFiltrerteAksjonspunkter(featureToggles);
     return {
       aksjonspunkter: filtrerteAksjonspunkter,
       readOnly: readOnlyUtils.erReadOnly(this.behandling, filtrerteAksjonspunkter, [], rettigheter, hasFetchError),
       submittable:
         !filtrerteAksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode)) ||
         filtrerteAksjonspunkter.some(ap => ap.kanLoses),
-      harApneAksjonspunkter: this.getHarApneAksjonspunkter(),
+      harApneAksjonspunkter: this.getHarApneAksjonspunkter(featureToggles),
       alleMerknaderFraBeslutter: getAlleMerknaderFraBeslutter(this.behandling, filtrerteAksjonspunkter),
       ...this.faktaPanelDef.getData({
         ...ekstraPanelData,

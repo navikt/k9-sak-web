@@ -1,8 +1,8 @@
 import { Aksjonspunkt, Behandling, Fagsak, FeatureToggles } from '@k9-sak-web/types';
 
+import FaktaPanelMenyRad from '../../types/faktaPanelMenyRadTsType';
 import Rettigheter from '../../types/rettigheterTsType';
 import FaktaPanelDef from './FaktaPanelDef';
-import FaktaPanelMenyRad from '../../types/faktaPanelMenyRadTsType';
 import FaktaPanelUtledet from './FaktaPanelUtledet';
 
 export const DEFAULT_FAKTA_KODE = 'default';
@@ -23,9 +23,13 @@ export const utledFaktaPaneler = (
     .map(panelDef => new FaktaPanelUtledet(panelDef, behandling, aksjonspunkter));
 };
 
-export const finnValgtPanel = (faktaPaneler: FaktaPanelUtledet[], valgtFaktaPanelKode: string): FaktaPanelUtledet => {
+export const finnValgtPanel = (
+  faktaPaneler: FaktaPanelUtledet[],
+  valgtFaktaPanelKode: string,
+  featureToggles: FeatureToggles,
+): FaktaPanelUtledet => {
   if (valgtFaktaPanelKode === DEFAULT_FAKTA_KODE) {
-    const index = faktaPaneler.findIndex(i => i.getHarApneAksjonspunkter());
+    const index = faktaPaneler.findIndex(i => i.getHarApneAksjonspunkter(featureToggles));
     return index !== -1 ? faktaPaneler[index] : faktaPaneler[0];
   }
   if (valgtFaktaPanelKode) {
@@ -37,11 +41,12 @@ export const finnValgtPanel = (faktaPaneler: FaktaPanelUtledet[], valgtFaktaPane
 export const formaterPanelerForSidemeny = (
   faktaPaneler: FaktaPanelUtledet[],
   valgtFaktaPanelKode: string,
+  featureToggles: FeatureToggles,
 ): FaktaPanelMenyRad[] =>
   faktaPaneler.map(panel => ({
     tekstKode: panel.getTekstKode(),
     erAktiv: panel.getUrlKode() === valgtFaktaPanelKode,
-    harAksjonspunkt: panel.getHarApneAksjonspunkter(),
+    harAksjonspunkt: panel.getHarApneAksjonspunkter(featureToggles),
   }));
 
 export const getBekreftAksjonspunktCallback =

@@ -94,11 +94,15 @@ export const featureTogglesFactory = () => [
     value: process.env.VITE_BRUK_V2_SAK_SOK,
   },
   {
-    key: "HISTORIKK_V2_VIS",
+    key: 'HISTORIKK_V2_VIS',
     value: process.env.VITE_HISTORIKK_V2_VIS,
   },
   {
-    key: "VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK",
+    key: 'VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK',
     value: process.env.VITE_VIS_BEGRUNNELSE_FRA_BRUKER_I_KRONISK_SYK,
-  }
+  },
+  {
+    key: 'NY_INNTEKT_EGET_PANEL',
+    value: process.env.VITE_NY_INNTEKT_EGET_PANEL,
+  },
 ];
