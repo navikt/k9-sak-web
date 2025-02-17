@@ -1,9 +1,9 @@
-import { fagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { fagsakYtelsesType, FagsakYtelsesType } from '@k9-sak-web/backend/k9sak/kodeverk/FagsakYtelsesType.js';
+import { PersonopplysningerBasic } from '@k9-sak-web/types/src/personopplysningerTsType';
 import { Rammevedtak } from '@k9-sak-web/types';
 import { RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
-import { PersonopplysningerBasic } from '@k9-sak-web/types/src/personopplysningerTsType';
 
-export const erFagytelseTypeUtvidetRett = (fagytelseType: string) => {
+export const erFagytelseTypeUtvidetRett = (fagytelseType: FagsakYtelsesType) => {
   switch (fagytelseType) {
     case fagsakYtelsesType.OMSORGSPENGER_AO:
     case fagsakYtelsesType.OMSORGSPENGER_MA:
