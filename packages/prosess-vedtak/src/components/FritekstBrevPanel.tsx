@@ -1,7 +1,3 @@
-import { Alert, Heading } from '@navikt/ds-react';
-import React, { useCallback } from 'react';
-import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
-
 import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
@@ -11,7 +7,10 @@ import {
   kanHaManueltFritekstbrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
-import { useContext } from 'react';
+import { Alert, Heading } from '@navikt/ds-react';
+import { FormikProps, FormikValues } from 'formik';
+import React, { useCallback, useContext } from 'react';
+import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 
@@ -20,7 +19,6 @@ import styles from './vedtakForm.module.css';
 
 import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import { fieldnames } from '../konstanter';
-import { CustomFormikProps } from './brev/CustomFormikProps';
 
 const maxLength200 = maxLength(200);
 const maxLength100000 = maxLength(100000);
@@ -35,7 +33,7 @@ interface OwnProps {
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   kanInkludereKalender: boolean;
   intl: IntlShape;
-  formikProps: CustomFormikProps;
+  formikProps: FormikProps<FormikValues>;
   dokumentdata: DokumentDataType;
   dokumentdataInformasjonsbehov: any;
   overstyrtMottaker?: Brevmottaker;

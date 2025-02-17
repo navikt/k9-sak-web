@@ -1,5 +1,6 @@
 import { Tag, Textarea } from '@navikt/ds-react';
 import { Field as FormikField, FormikState, connect, getIn } from 'formik';
+import React from 'react';
 import { useIntl } from 'react-intl';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
@@ -16,7 +17,6 @@ interface TextAreaFieldProps {
   maxLength?: number;
   placeholder?: string;
   formik?: FormikState<any>;
-  badges?: { type: string; text: string; title: string }[];
 }
 
 const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges, touched, error, intl, disabled }) => {

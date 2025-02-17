@@ -1,4 +1,5 @@
 import { Kodeverk } from '@k9-sak-web/types';
+
 import getPackageIntl from '../i18n/getPackageIntl';
 
 const intl = getPackageIntl();
@@ -25,12 +26,12 @@ export const getLanguageCodeFromSprakkode = (sprakkode: Kodeverk) => {
   }
 };
 
-export const getLanguageFromSprakkode = (sprakkode?: string): string => {
+export const getLanguageFromSprakkode = (sprakkode?: Kodeverk): string => {
   if (!sprakkode) {
     return intl.formatMessage({ id: 'Malform.Bokmal' });
   }
 
-  switch (sprakkode) {
+  switch (sprakkode.kode) {
     case 'NN':
       return intl.formatMessage({ id: 'Malform.Nynorsk' });
     case 'EN':
