@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
+import type { MerknadDto } from '@k9-sak-web/backend/k9sak/generated';
 import MarkerBehandlingModal from './components/MarkerBehandlingModal';
-import type { MerknadDto } from './types/MerknadDto';
 
 interface OwnProps {
   lukkModal: () => void;

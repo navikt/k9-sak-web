@@ -1,5 +1,5 @@
 interface MerknadFraLos {
-  merknadKoder?: Array<'HASTESAK' | 'VANSKELIG_SAK' | null> | null;
+  merknadKoder?: Array<'HASTESAK' | null> | null;
   fritekst?: string;
 }
 

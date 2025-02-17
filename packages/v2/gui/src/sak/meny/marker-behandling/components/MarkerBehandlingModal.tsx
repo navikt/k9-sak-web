@@ -1,3 +1,4 @@
+import type { MerknadDto } from '@k9-sak-web/backend/k9sak/generated';
 import FeatureTogglesContext from '@k9-sak-web/gui/utils/featureToggles/FeatureTogglesContext.js';
 import { goToLos, goToSearch } from '@k9-sak-web/lib/paths/paths.js';
 import { Alert, BodyShort, Button, Heading, Label, Modal, VStack } from '@navikt/ds-react';
@@ -6,7 +7,6 @@ import { hasValidText, maxLength, minLength, required } from '@navikt/ft-form-va
 import React, { useContext } from 'react';
 import { useForm, useFormState } from 'react-hook-form';
 import Merknadkode from '../Merknadkode';
-import type { MerknadDto } from '../types/MerknadDto';
 import styles from './markerBehandlingModal.module.css';
 
 const minLength3 = minLength(3);
