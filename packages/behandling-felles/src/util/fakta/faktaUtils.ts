@@ -26,7 +26,7 @@ export const utledFaktaPaneler = (
 export const finnValgtPanel = (
   faktaPaneler: FaktaPanelUtledet[],
   valgtFaktaPanelKode: string,
-  featureToggles: FeatureToggles,
+  featureToggles?: FeatureToggles,
 ): FaktaPanelUtledet => {
   if (valgtFaktaPanelKode === DEFAULT_FAKTA_KODE) {
     const index = faktaPaneler.findIndex(i => i.getHarApneAksjonspunkter(featureToggles));
@@ -41,7 +41,7 @@ export const finnValgtPanel = (
 export const formaterPanelerForSidemeny = (
   faktaPaneler: FaktaPanelUtledet[],
   valgtFaktaPanelKode: string,
-  featureToggles: FeatureToggles,
+  featureToggles?: FeatureToggles,
 ): FaktaPanelMenyRad[] =>
   faktaPaneler.map(panel => ({
     tekstKode: panel.getTekstKode(),

@@ -38,7 +38,7 @@ class FaktaPanelUtledet {
     rettigheter: Rettigheter,
     ekstraPanelData: any,
     hasFetchError: boolean,
-    featureToggles: FeatureToggles,
+    featureToggles?: FeatureToggles,
   ) => {
     const filtrerteAksjonspunkter = this.getFiltrerteAksjonspunkter(featureToggles);
     return {
